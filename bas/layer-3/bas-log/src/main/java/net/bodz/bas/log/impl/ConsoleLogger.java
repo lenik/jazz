@@ -1,8 +1,8 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.SinkBasedLogger;
 
 public class ConsoleLogger
         extends SinkBasedLogger {

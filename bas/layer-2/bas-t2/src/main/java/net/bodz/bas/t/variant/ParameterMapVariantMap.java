@@ -3,8 +3,6 @@ package net.bodz.bas.t.variant;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.t.variant.AbstractVariantMap;
-
 public class ParameterMapVariantMap
         extends AbstractVariantMap<String> {
 

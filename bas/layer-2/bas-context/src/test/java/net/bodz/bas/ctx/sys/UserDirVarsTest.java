@@ -8,7 +8,6 @@ import org.junit.Test;
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.Scopes;
 import net.bodz.bas.ctx.scope.impl.ClassScopeInstance;
-import net.bodz.bas.ctx.sys.UserDirVars;
 
 public class UserDirVarsTest
         extends Assert {

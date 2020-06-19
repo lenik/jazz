@@ -4,10 +4,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import net.bodz.bas.ui.dialog.AbstractTryBlock;
-import net.bodz.bas.ui.dialog.ConsoleDialogs;
-import net.bodz.bas.ui.dialog.TryBlock;
-
 public class TryBlockTest
         extends Assert {
 

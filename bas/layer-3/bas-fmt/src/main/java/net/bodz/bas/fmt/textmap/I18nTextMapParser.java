@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.lang.StringTypers;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.AbstractiStringTypers;
+import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 

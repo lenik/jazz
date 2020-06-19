@@ -3,9 +3,9 @@ package net.bodz.bas.log.impl;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Log4jLogSink.ErrorSink;
 import net.bodz.bas.log.impl.Log4jLogSink.FatalSink;

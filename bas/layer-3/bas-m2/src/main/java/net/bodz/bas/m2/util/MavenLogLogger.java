@@ -2,9 +2,9 @@ package net.bodz.bas.m2.util;
 
 import org.apache.maven.plugin.logging.Log;
 
-import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
+import net.bodz.bas.log.SinkBasedLogger;
 import net.bodz.bas.log.impl.NullLogSink;
 import net.bodz.bas.m2.util.MavenLogSink.DebugSink;
 import net.bodz.bas.m2.util.MavenLogSink.ErrorSink;
