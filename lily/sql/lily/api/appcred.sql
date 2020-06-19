@@ -8,10 +8,10 @@
 --\mixin lily.mixin.ExVer
         
         app         int not null
-            references app(id) on update cascade,
+            references app on update cascade,
         
         api         int not null
-            references api(id) on update cascade,
+            references api on update cascade,
         
         credit      numeric(20, 4) not null
     );

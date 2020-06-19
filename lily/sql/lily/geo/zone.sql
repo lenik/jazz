@@ -10,11 +10,11 @@
 
         -- default 'abstract'
         cat         int not null default 1
-            references zonecat(id) on update cascade,
+            references zonecat on update cascade,
 
         country     char(2),
         parent      int
-            references zone(id) on update cascade on delete cascade,
+            references zone on update cascade on delete cascade,
         depth       int not null default -1,
 
         telcode     varchar(10),

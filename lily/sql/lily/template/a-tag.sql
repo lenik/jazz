@@ -6,7 +6,7 @@
 --\mixin lily.mixin.LabelExVer
 
         parent      int
-            references $1tag(id) on update cascade on delete cascade,
+            references $1tag on update cascade on delete cascade,
 
         depth       int not null default -1,
         nref        int not null default 0 -- redundant.

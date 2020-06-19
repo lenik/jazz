@@ -9,10 +9,10 @@
 --\mixin lily.mixin.LabelExVer
 
         "$1"        ${2=int} not null
-            references "$1"(id) on update cascade on delete cascade,
+            references "$1" on update cascade on delete cascade,
 
         site        int not null
-            references extsite(id) on update cascade on delete cascade,
+            references extsite on update cascade on delete cascade,
         key         varchar(30),
 
         -- @Redundant

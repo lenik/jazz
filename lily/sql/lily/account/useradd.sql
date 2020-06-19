@@ -14,7 +14,7 @@
         -- timestamp of the request
 
         whom        int not null
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
 
         response    varchar(200)
     );

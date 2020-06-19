@@ -7,10 +7,10 @@
 --\mixin lily.mixin.Ver
 
         "$1"        ${2=int} not null
-            references "$1"(id) on update cascade on delete cascade,
+            references "$1" on update cascade on delete cascade,
 
         parm        int not null
-            references $1parm(id) on update cascade,
+            references $1parm on update cascade,
 
         ival        int,
         fval        double precision,

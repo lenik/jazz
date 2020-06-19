@@ -3,10 +3,10 @@
 
     create table role_user(
         "role" int not null
-            references "role"(id) on update cascade on delete cascade,
+            references "role" on update cascade on delete cascade,
         
         "user" int not null
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
         
 --\mixin lily.mixin.Label
         -- a descriptive role name.

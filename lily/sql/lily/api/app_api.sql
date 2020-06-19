@@ -12,10 +12,10 @@
 --\mixin lily.mixin.Props
         
         app         int not null
-            references app(id) on update cascade on delete cascade,
+            references app on update cascade on delete cascade,
         
         api         int not null
-            references api(id) on update cascade,
+            references api on update cascade,
         
         -- mode        int not null default -1
         

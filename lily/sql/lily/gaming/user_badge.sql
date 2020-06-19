@@ -8,9 +8,9 @@
 --\mixin lily.mixin.Ver
 
         "user"      int
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
         badge       int
-            references badge(id) on update cascade on delete cascade
+            references badge on update cascade on delete cascade
     );
 
     create index user_badge_lastmod      on user_badge(lastmod desc);

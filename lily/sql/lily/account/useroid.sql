@@ -13,11 +13,11 @@
 --\mixin lily.mixin.Props
 
         "user"      int not null
-            references "user"(id) on update cascade on delete cascade,
+            references "user" on update cascade on delete cascade,
 
         -- openid, etc.
         "type"      int not null
-            references useroidtype(id) on update cascade,
+            references useroidtype on update cascade,
 
         -- actual id in the id provider.
         oid         varchar(100) not null,

@@ -11,10 +11,10 @@
         -- the actual storage layout is undefined.
         -- it can be '/data/b/ba/name' or '/data/dir/name' or whatever.
         storage     int
-            references storage(id) on update cascade,
+            references storage on update cascade,
 
         parent      int not null
-            references $1_dir(id) on update cascade on delete cascade,
+            references $1_dir on update cascade on delete cascade,
         name        varchar(50) not null,
         
         -- cache

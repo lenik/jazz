@@ -13,7 +13,7 @@
         prop        varchar(30) not null default 'Measure',
 
         std         int
-            references uom(id) on update cascade,
+            references uom on update cascade,
 
         scale       double precision not null default 0
     );

@@ -6,10 +6,10 @@
         id          bigint primary key default nextval('$1_fav_seq'),
 
         "$1"         ${2=int} not null
-            references "$1"(id) on update cascade on delete cascade,
+            references "$1" on update cascade on delete cascade,
 
         "user"      int not null
-            references "user"(id) on update cascade on delete cascade
+            references "user" on update cascade on delete cascade
     );
 
     create or replace view v_$1_fav as

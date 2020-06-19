@@ -9,7 +9,7 @@
 --\mixin lily.mixin.LabelExVer
 
         parm        int not null
-            references _parm(id) on update cascade on delete cascade,
+            references _parm on update cascade on delete cascade,
 
         val         text not null
     );

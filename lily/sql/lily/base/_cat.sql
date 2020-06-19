@@ -8,10 +8,10 @@
 --\mixin lily.mixin.LabelExVer
 
         schema      int not null
-            references _schema(id) on update cascade on delete cascade,
+            references _schema on update cascade on delete cascade,
 
         parent      int
-            references _cat(id) on update cascade on delete cascade,
+            references _cat on update cascade on delete cascade,
 
         depth       int not null default -1,
 

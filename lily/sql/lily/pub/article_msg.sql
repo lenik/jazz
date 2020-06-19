@@ -12,10 +12,10 @@
 --\mixin lily.mixin.Msg
 
         article        bigint not null
-            references article(id) on update cascade on delete cascade,
+            references article on update cascade on delete cascade,
 
         parent      bigint
-            references article_msg(id) on update cascade on delete cascade
+            references article_msg on update cascade on delete cascade
     );
 
     create index article_msg_lastmod    on article_msg(lastmod desc);

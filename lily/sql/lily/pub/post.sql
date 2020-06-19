@@ -11,10 +11,10 @@
 --\mixin lily.mixin.Msg
 
         parent      int
-            references post(id) on update cascade on delete set null,
+            references post on update cascade on delete set null,
 
         cat         int
-            references postcat(id) on update cascade,
+            references postcat on update cascade,
 
     -- props:
         -- seealso.orig: for template
