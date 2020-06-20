@@ -1,14 +1,18 @@
-package net.bodz.lily.model.mixin;
+package net.bodz.lily.t.struct;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.List;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
 public class UserClickInfo
-        implements IUserVotable, IUserPinnable, Serializable {
+        extends MixinStruct
+        implements IUserVotable, IUserPinnable {
 
     private static final long serialVersionUID = 1L;
 
@@ -141,6 +145,33 @@ public class UserClickInfo
 
     public void setReadCount(int readCount) {
         this.readCount = readCount;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        voteUps = o.getInt("voteUps", voteUps);
+        voteDowns = o.getInt("voteDowns", voteDowns);
+        // voteRecords;
+
+        pinCount = o.getInt("pinCount", pinCount);
+        // pinRecords;
+
+        flagCount = o.getInt("flagCount", flagCount);
+        // flagRecords;
+
+        readCount = o.getInt("readCount", readCount);
+
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.entry("voteUps", voteUps);
+        out.entry("voteDowns", voteDowns);
+        out.entry("pinCount", pinCount);
+        out.entry("flagCount", flagCount);
+        out.entry("readCount", readCount);
     }
 
 }

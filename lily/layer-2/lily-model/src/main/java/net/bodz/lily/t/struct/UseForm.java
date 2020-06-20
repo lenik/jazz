@@ -1,13 +1,16 @@
-package net.bodz.lily.model.mixin;
+package net.bodz.lily.t.struct;
 
-import java.io.Serializable;
+import java.io.IOException;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.schema.FormDef;
 
 public class UseForm
-        implements Serializable {
+        extends MixinStruct {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +62,20 @@ public class UseForm
 
     public void setArgs(String args) {
         this.args = args;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        def = o.readInto("def", def, new FormDef());
+        args = o.getString("args", args);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.entryNotNull("def", def);
+        out.entry("args", args);
     }
 
 }

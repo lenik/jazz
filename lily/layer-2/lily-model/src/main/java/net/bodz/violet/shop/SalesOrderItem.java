@@ -14,7 +14,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.model.mixin.IOrderItem;
+import net.bodz.lily.t.struct.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
 /**

@@ -1,6 +1,11 @@
-package net.bodz.lily.model.mixin;
+package net.bodz.lily.t.struct;
+
+import java.io.IOException;
 
 import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.lily.security.User;
 
 public class UserVoteRecord
@@ -25,6 +30,22 @@ public class UserVoteRecord
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        super.readObject(o);
+        user = o.readInto("user", user, new User());
+        value = o.getInt("value", value);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        super.writeObject(out);
+        out.entryNotNull("user", user);
+        out.entry("value", value);
     }
 
     @Override

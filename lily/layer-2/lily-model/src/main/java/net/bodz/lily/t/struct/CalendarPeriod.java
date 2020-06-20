@@ -7,7 +7,6 @@ import org.joda.time.Period;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.lily.model.mixin.MixinStruct;
 
 public class CalendarPeriod
         extends MixinStruct {
