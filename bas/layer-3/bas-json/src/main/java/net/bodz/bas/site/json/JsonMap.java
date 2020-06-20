@@ -47,7 +47,7 @@ public class JsonMap
             throws ParseException {
         map.clear();
         for (String key : o.keySet()) {
-            Object val = o._get(key);
+            Object val = o.get(key);
             if (!readFromJson(key, val))
                 map.put(key, JsonFn.unwrap(val));
         }

@@ -12,7 +12,7 @@ public class JsonWrapper_jsonTest
     @Test
     public void test()
             throws Exception {
-        JsonWrapper jw = JsonWrapper.wrap(true);
+        JsonWrapper jw = JsonWrapper.wrap(true, "value");
         JsonWrapper_json v = new JsonWrapper_json();
         JsonStringer out = new JsonStringer();
         v.buildJsonView(null, out, UiValue.wrap(jw));
