@@ -15,8 +15,10 @@ import org.json.JSONObject;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
+@FnHelper
 public class JsonFn {
 
     public static Object parseAny(String json)

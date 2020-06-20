@@ -2,10 +2,12 @@ package net.bodz.bas.html.viz.fn;
 
 import java.io.IOException;
 
+import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.ui.dom1.IUiRef;
 
+@FnHelper
 public class RedirectFn {
 
     public static boolean addSlash(IHttpViewContext ctx, IUiRef<?> ref)

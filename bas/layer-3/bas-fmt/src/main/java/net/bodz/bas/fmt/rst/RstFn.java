@@ -13,7 +13,9 @@ import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.BTreeOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.WriterPrintOut;
+import net.bodz.bas.meta.source.FnHelper;
 
+@FnHelper
 public class RstFn {
 
     public static String toString(IRstSerializable obj) {

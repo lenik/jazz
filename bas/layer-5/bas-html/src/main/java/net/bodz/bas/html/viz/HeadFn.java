@@ -8,8 +8,10 @@ import net.bodz.bas.html.artifact.IArtifact;
 import net.bodz.bas.html.artifact.IArtifactManager;
 import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.html.io.IHtmlOut;
+import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.xml.dom.XmlCopy;
 
+@FnHelper
 public class HeadFn {
 
     public static void writeHeadData(IHtmlViewContext ctx, IHtmlOut head)

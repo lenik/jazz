@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.type.IndexedTypes;
+import net.bodz.bas.meta.source.FnHelper;
 
+@FnHelper
 public class GenericAnnotationFn {
 
     Set<Class<? extends Annotation>> concreteAnnotationClasses = new HashSet<Class<? extends Annotation>>();
