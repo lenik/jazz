@@ -45,10 +45,24 @@ public class AbstractJsonResponse<self_t>
     }
 
     public AbstractJsonResponse(AbstractJsonResponse<?> o) {
+        this(o, false);
+    }
+
+    public AbstractJsonResponse(AbstractJsonResponse<?> o, boolean shallowCopy) {
         this.status = o.status;
         this.message = o.message;
         this.exception = o.exception;
         this.data = o.data;
+
+        this.headerOrder = o.headerOrder;
+        if (shallowCopy) {
+            this.headers = o.headers;
+            this.logger = o.logger;
+        } else {
+            this.headers = createMap(headerOrder);
+            this.headers.putAll(o.headers);
+            this.logger.getRecords().addAll(o.logger.getRecords());
+        }
     }
 
     public boolean isSuccess() {
