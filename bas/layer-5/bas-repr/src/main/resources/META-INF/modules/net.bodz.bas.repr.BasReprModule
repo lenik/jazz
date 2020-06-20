@@ -31,6 +31,7 @@ net.bodz.bas.repr.form.validate.MaxLength
 net.bodz.bas.repr.form.validate.NotNull
 net.bodz.bas.repr.meta.Face
 net.bodz.bas.repr.meta.FaceQualifiers
+net.bodz.bas.repr.meta.RealType
 net.bodz.bas.repr.path.AbstractPathDispatcher
 net.bodz.bas.repr.path.builtin.BuiltinPathDispatcherPriorities
 net.bodz.bas.repr.path.builtin.ClassResourcePathDispatcher

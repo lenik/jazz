@@ -35,7 +35,6 @@ net.bodz.bas.log.impl.Slf4jLogger
 net.bodz.bas.log.impl.Slf4jLogSink
 net.bodz.bas.log.IStatusSink
 net.bodz.bas.log.log4j.Log4jMdcConfigurer
-net.bodz.bas.log.LogEntry
 net.bodz.bas.log.Logger
 net.bodz.bas.log.LoggerFactory
 net.bodz.bas.log.LoggerVars

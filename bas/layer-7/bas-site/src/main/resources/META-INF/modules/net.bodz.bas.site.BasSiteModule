@@ -16,10 +16,6 @@ net.bodz.bas.servlet.persist.AppFileFormat
 net.bodz.bas.servlet.persist.AppPersistor
 net.bodz.bas.servlet.persist.RegistryScheme
 net.bodz.bas.servlet.persist.ServletContextRegistry
-net.bodz.bas.site.ajax.AbstractJsonResult
-net.bodz.bas.site.ajax.AbstractJsonViewBuilder
-net.bodz.bas.site.ajax.AjaxResult
-net.bodz.bas.site.ajax.HttpPayload
 net.bodz.bas.site.artifact.LibFontsArtifacts
 net.bodz.bas.site.artifact.LibJsArtifacts
 net.bodz.bas.site.artifact.ZwkArtifacts
@@ -45,6 +41,9 @@ net.bodz.bas.site.file.UploadHandler
 net.bodz.bas.site.file.UploadResult
 net.bodz.bas.site.file.UploadResult_json
 net.bodz.bas.site.IBasicSiteAnchors
+net.bodz.bas.site.json.AbstractJsonViewBuilder
+net.bodz.bas.site.json.AjaxResult
+net.bodz.bas.site.json.HttpPayload
 net.bodz.bas.site.json.JsonWrapper_json
 net.bodz.bas.site.json.TableData
 net.bodz.bas.site.json.TableData_json
