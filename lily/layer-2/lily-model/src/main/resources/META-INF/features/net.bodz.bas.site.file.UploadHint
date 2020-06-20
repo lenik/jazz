@@ -4,7 +4,6 @@ net.bodz.lily.contact.PartyCategory
 net.bodz.lily.contact.Person
 net.bodz.lily.geo.Zone
 net.bodz.lily.geo.ZoneCategory
-net.bodz.lily.model.mx.Mail
 net.bodz.lily.pub.Article
 net.bodz.lily.pub.ArticleCategory
 net.bodz.lily.pub.ArticleTalk
@@ -14,6 +13,7 @@ net.bodz.lily.pub.PostTalk
 net.bodz.lily.security.Group
 net.bodz.lily.security.Role
 net.bodz.lily.security.User
+net.bodz.lily.t.mail.Mail
 net.bodz.violet.art.Artifact
 net.bodz.violet.art.ArtifactCategory
 net.bodz.violet.art.ArtifactDoc

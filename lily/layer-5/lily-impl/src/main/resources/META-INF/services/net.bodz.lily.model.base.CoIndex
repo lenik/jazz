@@ -16,8 +16,6 @@ net.bodz.lily.contact.impl.PersonIndex
 net.bodz.lily.contact.impl.PersonRoleIndex
 net.bodz.lily.geo.impl.ZoneCategoryIndex
 net.bodz.lily.geo.impl.ZoneIndex
-net.bodz.lily.model.mx.CoMessageIndex
-net.bodz.lily.model.mx.impl.MailIndex
 net.bodz.lily.pub.impl.ArticleBackrefIndex
 net.bodz.lily.pub.impl.ArticleCategoryIndex
 net.bodz.lily.pub.impl.ArticleFavIndex
@@ -54,6 +52,8 @@ net.bodz.lily.security.impl.UserOtherIdIndex
 net.bodz.lily.security.impl.UserOtherIdTypeIndex
 net.bodz.lily.security.impl.UserRunIndex
 net.bodz.lily.security.impl.UserSecretIndex
+net.bodz.lily.t.base.CoMessageIndex
+net.bodz.lily.t.mail.MailIndex
 net.bodz.lily.template.CoCategoryIndex
 net.bodz.violet.art.impl.ArtifactBackrefIndex
 net.bodz.violet.art.impl.ArtifactCategoryIndex
