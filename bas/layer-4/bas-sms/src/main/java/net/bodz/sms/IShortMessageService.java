@@ -23,9 +23,9 @@ public interface IShortMessageService
             throws IOException;
 
     /**
-     * @return <code>true</code> if function supported.
+     * @return <code>true</code> if <code>templateName</code> is defined.
      */
-    boolean sendPrepared(String recipient, String preparedId, String... params)
+    boolean sendPrepared(String recipient, String templateName, String... params)
             throws IOException, ParseException;
 
 }
