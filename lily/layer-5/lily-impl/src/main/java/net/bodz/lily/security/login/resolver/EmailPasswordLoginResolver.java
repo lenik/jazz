@@ -45,7 +45,7 @@ public class EmailPasswordLoginResolver
      * @return Non-<code>null</code> result.
      */
     public Result login(ISignatureChecker checker, String email, String sign) {
-        List<User> users = userMapper.selectByMobile(email);
+        List<User> users = userMapper.selectByPhoneNumber(email);
         switch (users.size()) {
         case 0:
             return failed("Not registered email: %s", email);

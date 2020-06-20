@@ -112,8 +112,8 @@
         <if test="m.primaryGroupId != null">and a.gid0 = #{m.primaryGroupId}</if>
         <if test="m.name != null">and a.name = #{m.name}</if>
         <if test="m.password != null">and s.passwd = #{m.password}</if>
-        <if test="m.email != null">and (o.type = 1 and o.oid = #{m.email})</if>
-        <if test="m.mobile != null">and (o.type = 2 and o.oid = #{m.mobile})</if>
+        <if test="m.phone != null">and (o.type = 1 and o.oid = #{m.phone})</if>
+        <if test="m.email != null">and (o.type = 2 and o.oid = #{m.email})</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -141,20 +141,38 @@
         </where>
     </select>
 
+    <select id="selectByOtherId" resultMap="objedit_map">
+        <include refid="objedit_sql" />
+        <where>
+            and o.type = #{type.id}
+            and o.oid = #{oid}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="selectByOtherId2" resultMap="objedit_map">
+        <include refid="objedit_sql" />
+        <where>
+            and o.type = #{typeId}
+            and o.oid = #{oid}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="selectByPhoneNumber" resultMap="objedit_map">
+        <include refid="objedit_sql" />
+        <where>
+            and o.type = 1
+            and o.oid = #{phone}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
     <select id="selectByEmail" resultMap="objedit_map">
         <include refid="objedit_sql" />
         <where>
             and o.type = 2
             and o.oid = #{email}
-            <!-- and o.state = VALIDATED -->
-        </where>
-    </select>
-
-    <select id="selectByMobile" resultMap="objedit_map">
-        <include refid="objedit_sql" />
-        <where>
-            and o.type = 2
-            and o.oid = #{mobile}
             <!-- and o.state = VALIDATED -->
         </where>
     </select>

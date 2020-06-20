@@ -23,6 +23,10 @@ public class LoginResult
         super(o);
     }
 
+    public LoginResult(AbstractJsonResponse<?> o, boolean shallowCopy) {
+        super(o, shallowCopy);
+    }
+
     public String getServerChallenge() {
         return serverChallenge;
     }

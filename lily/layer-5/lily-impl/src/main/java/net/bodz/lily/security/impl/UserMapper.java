@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.UserOtherIdType;
 
 /**
  * @mapper.xml UserMapper.xml
@@ -15,11 +16,15 @@ public interface UserMapper
 
     User selectByName(@Param("name") String name);
 
+    List<User> selectByOtherId(//
+            @Param("type") UserOtherIdType type, //
+            @Param("oid") String oid);
+
+    List<User> selectByPhoneNumber(//
+            @Param("phone") String mobile);
+
     List<User> selectByEmail(//
             @Param("email") String email);
-
-    List<User> selectByMobile(//
-            @Param("mobile") String mobile);
 
     List<User> findForLogin(//
             @Param("name") String name, //

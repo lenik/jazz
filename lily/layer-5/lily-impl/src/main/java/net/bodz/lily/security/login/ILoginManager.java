@@ -5,9 +5,10 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 public interface ILoginManager {
 
-    String USAGE_LOGIN = "login";
-    String USAGE_REGISTER = "register";
-    String USAGE_RESET_PASSWORD = "reset-password";
+    String VERIFY = "verify";
+    String LOGIN = "login";
+    String REGISTER = "register";
+    String RESET_PASSWORD = "reset-password";
 
     /**
      * @return server challenge

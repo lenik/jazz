@@ -28,31 +28,35 @@ public class PhonePasswordLoginResolver
 
     @Override
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
-        String mobile = q.getString("mobile");
-        if (mobile == null)
-            mobile = q.getString("tel");
-        if (mobile == null)
+        String phone = q.getString("phone");
+        if (phone == null)
+            phone = q.getString("tel");
+        if (phone == null)
             return null;
 
         String sign = q.getString(K_PASSWD);
         if (sign == null)
             return null;
 
-        List<User> users = userMapper.selectByMobile(mobile);
+        return login(checker, phone, sign);
+    }
+
+    public Result login(ISignatureChecker checker, String phone, String sign) {
+        List<User> users = userMapper.selectByPhoneNumber(phone);
         switch (users.size()) {
         case 0:
-            return failed("Not registered mobile number: %s", mobile);
+            return failed("Not registered phone number: %s", phone);
         case 1:
             break;
         default:
-            return failed("Multiple users using the same mobile number %s.", mobile);
+            return failed("Multiple users using the same phone number %s.", phone);
         }
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().userName(mobile), SelectOptions.ALL);
+                new UserSecretMask().userName(phone), SelectOptions.ALL);
         if (userSecrets.isEmpty())
-            return failed("User %s has no secret.", mobile);
+            return failed("User %s has no secret.", phone);
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
@@ -61,7 +65,7 @@ public class PhonePasswordLoginResolver
             }
         }
 
-        return failed("Incorrect password for user %s.", mobile);
+        return failed("Incorrect password for user %s.", phone);
     }
 
 }

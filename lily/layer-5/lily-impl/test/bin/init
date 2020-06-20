@@ -1,0 +1,3 @@
+#!/bin/sh
+curl --silent "http://cam19.lo:8307/session/init?uid=0&phone=13819471680"
+

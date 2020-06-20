@@ -5,6 +5,7 @@ import java.util.List;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.UserOtherIdTypes;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.login.DataBackedLoginResolver;
@@ -24,36 +25,36 @@ public class PhoneCheckLoginResolver
 
     @Override
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
-        String mobile = q.getString("mobile");
-        if (mobile == null)
+        String phone = q.getString("phone");
+        if (phone == null)
             return null;
 
         String sign = q.getString("e_cr");
         if (sign == null)
-            return failed("Password isn't specified.");
+            return null; // failed("Password isn't specified.");
 
-        return login(checker, mobile, sign);
+        return login(checker, phone, sign);
     }
 
     /**
      * @return Non-<code>null</code> result.
      */
-    public Result login(ISignatureChecker checker, String mobile, String sign) {
-        List<User> users = userMapper.selectByMobile(mobile);
+    public Result login(ISignatureChecker checker, String phone, String sign) {
+        List<User> users = userMapper.selectByPhoneNumber(phone);
+        users = userMapper.selectByOtherId(UserOtherIdTypes.MOBILE, phone);
         switch (users.size()) {
         case 0:
-            return failed("Not registered mobile number: %s", mobile);
+            return failed("Not registered phone number: %s", phone);
         case 1:
             break;
         default:
-            return failed("Multiple users using the same mobile number %s.", mobile);
+            return failed("Multiple users using the same phone number %s.", phone);
         }
 
         User matchedUser = users.get(0);
-        if (checker.checkSignature(mobile, sign))
+        if (checker.checkSignature(phone, sign))
             return new Result(matchedUser);
 
-        return failed("Incorrect verification code for mobile number %s.", mobile);
+        return failed("Incorrect verification code for phone number %s.", phone);
     }
-
 }

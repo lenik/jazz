@@ -53,7 +53,7 @@ public interface ILoginResolver {
         }
 
         public LoginResult toLoginResult(LoginManager manager) {
-            LoginResult result = new LoginResult(this);
+            LoginResult result = new LoginResult(this, true);
             if (isSuccess())
                 result.token = manager.newToken(user);
             return result;
