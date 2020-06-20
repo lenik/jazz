@@ -1,17 +1,15 @@
-package net.bodz.lily.model.mixin;
+package net.bodz.lily.t.struct;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.i18n.geo.GeoZones;
 
 public class GeoLocation
-        implements Serializable, IJsonSerializable {
+        extends MixinStruct {
 
     private static final long serialVersionUID = 1L;
 

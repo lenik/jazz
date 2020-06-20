@@ -1,6 +1,7 @@
-package net.bodz.lily.model.mixin;
+package net.bodz.lily.t.struct;
 
 import java.util.Collection;
+
 
 /**
  * @label Likable

@@ -11,7 +11,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.LilyGroups;
 import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.model.mixin.IOrderItem;
+import net.bodz.lily.t.struct.IOrderItem;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.shop.SalesOrder;
 import net.bodz.violet.shop.SalesOrderItem;

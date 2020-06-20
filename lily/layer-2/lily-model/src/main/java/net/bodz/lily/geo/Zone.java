@@ -5,7 +5,7 @@ import javax.persistence.Table;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoNode;
-import net.bodz.lily.model.mixin.GeoLocation;
+import net.bodz.lily.t.struct.GeoLocation;
 import net.bodz.lily.template.RichProperties;
 
 @Table(name = "zone")
