@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
 
-    <resultMap id="MAP_ALL" type="net.bodz.lily.model.mx.CoMessage" extends="co.MAP_ALL">
+    <resultMap id="MAP_ALL" type="net.bodz.lily.t.base.CoMessage" extends="co.MAP_ALL">
         <result property="properties.jsonForm" column="props" />
 
         <result property="beginTime" column="t0" />
