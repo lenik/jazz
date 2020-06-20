@@ -15,7 +15,7 @@ public class SmsRecord
     private static final long serialVersionUID = 1L;
 
     public String recipient;
-    public String preparedId;
+    public String templateName;
     public String text;
     public List<String> parameters;
 
@@ -27,9 +27,9 @@ public class SmsRecord
         this.text = text;
     }
 
-    public SmsRecord(String recipient, String preparedId, List<String> parameters) {
+    public SmsRecord(String recipient, String templateName, List<String> parameters) {
         this.recipient = recipient;
-        this.preparedId = preparedId;
+        this.templateName = templateName;
         this.parameters = parameters;
     }
 
@@ -37,7 +37,7 @@ public class SmsRecord
     public void readObject(JsonObject o)
             throws ParseException {
         recipient = o.getString("recipient", recipient);
-        preparedId = o.getString("preparedId", preparedId);
+        templateName = o.getString("templateName", templateName);
         text = o.getString("text", text);
         parameters = o.getStrings("parameters", parameters);
 
@@ -47,7 +47,7 @@ public class SmsRecord
     public void writeObject(IJsonOut out)
             throws IOException {
         out.entry("recipient", recipient);
-        out.entry("preparedId", preparedId);
+        out.entry("templateName", templateName);
         out.entry("text", text);
         if (parameters != null) {
             out.key("parameters");

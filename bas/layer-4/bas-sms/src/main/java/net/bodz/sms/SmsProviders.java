@@ -59,10 +59,10 @@ public class SmsProviders
     }
 
     @Override
-    public boolean sendPrepared(String recipient, String preparedId, String... params)
+    public boolean sendPrepared(String recipient, String templateName, String... params)
             throws IOException, ParseException {
         for (IShortMessageService impl : allImpls)
-            if (impl.sendPrepared(recipient, preparedId, params))
+            if (impl.sendPrepared(recipient, templateName, params))
                 return true;
         return false;
     }

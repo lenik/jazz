@@ -1,12 +1,7 @@
 package net.bodz.sms;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
@@ -16,6 +11,7 @@ public abstract class AbstractSmsImpl
 
     boolean autoCommit;
     LinkedList<SmsRecord> records = new LinkedList<>();
+    Map<String, SmsTemplate> templates = new HashMap<>();
 
     @Override
     public int getPriority() {
@@ -49,10 +45,23 @@ public abstract class AbstractSmsImpl
         return true;
     }
 
+    public SmsTemplate getTemplate(String name) {
+        return templates.get(name);
+    }
+
+    public void addTemplate(String name, Object id) {
+        addTemplate(name, id, null);
+    }
+
+    public void addTemplate(String name, Object id, String content) {
+        SmsTemplate template = new SmsTemplate(name, id, content);
+        templates.put(name, template);
+    }
+
     @Override
-    public boolean sendPrepared(String recipient, String preparedId, String... parameters)
+    public boolean sendPrepared(String recipient, String templateName, String... parameters)
             throws IOException, ParseException {
-        SmsRecord record = new SmsRecord(recipient, preparedId, Arrays.asList(parameters));
+        SmsRecord record = new SmsRecord(recipient, templateName, Arrays.asList(parameters));
         if (!canSend(record))
             return false;
         records.addLast(record);
@@ -75,10 +84,10 @@ public abstract class AbstractSmsImpl
     protected abstract void send(LinkedList<SmsRecord> records)
             throws IOException, ParseException;
 
-    protected Map<String, List<SmsRecord>> map(List<SmsRecord> records, String nullKey) {
+    protected Map<String, List<SmsRecord>> divideByTemplate(List<SmsRecord> records, String nullKey) {
         Map<String, List<SmsRecord>> map = new LinkedHashMap<>();
         for (SmsRecord record : records) {
-            String k = record.preparedId;
+            String k = record.templateName;
             if (k == null)
                 k = nullKey;
             List<SmsRecord> list = map.get(k);
