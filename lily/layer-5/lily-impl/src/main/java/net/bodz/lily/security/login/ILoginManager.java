@@ -33,16 +33,16 @@ public interface ILoginManager {
     void verifyEmail(String address, String usage)
             throws LoginException;
 
-    void registerByPhone(String phone, String code)
+    LoginResult registerByPhone(String phone, String code)
             throws LoginException;
 
-    void registerByEmail(String email, String code)
+    LoginResult registerByEmail(String email, String code)
             throws LoginException;
 
-    void resetPasswordByPhone(String phone, String code)
+    LoginResult resetPasswordByPhone(String phone, String code, String password)
             throws LoginException;
 
-    void resetPasswordByEmail(String email, String code)
+    LoginResult resetPasswordByEmail(String email, String code, String password)
             throws LoginException;
 
 }

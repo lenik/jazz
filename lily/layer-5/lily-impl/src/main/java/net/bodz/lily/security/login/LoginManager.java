@@ -8,6 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -21,10 +22,11 @@ import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.ILoginResolver.Result;
 import net.bodz.lily.security.login.key.FlyingSignatureChecker;
+import net.bodz.lily.security.login.key.IFlyingCode;
 import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
 import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
-import net.bodz.sms.ucpaas.DefaultUcpaasClient;
-import net.bodz.sms.ucpaas.IUcpaasClient;
+import net.bodz.sms.IShortMessageService;
+import net.bodz.sms.SmsProviders;
 
 public class LoginManager
         extends LoginTokenManager
@@ -163,32 +165,52 @@ public class LoginManager
     @Override
     public void verifyPhone(String phone, String usage)
             throws LoginException {
-        IUcpaasClient client = DefaultUcpaasClient.getInstance();
+        IShortMessageService sms = SmsProviders.getSms();
+        IFlyingCode flyingCode = signChecker.getFlyingCode(phone);
+        String code = flyingCode.getCodeForNow();
+        sms.sendPrepared(phone, preparedId, code);
     }
 
     @Override
     public void verifyEmail(String address, String usage)
             throws LoginException {
+        throw new NotImplementedException("mail service isn't supported.");
     }
 
     @Override
-    public void registerByPhone(String phone, String code)
+    public LoginResult registerByPhone(String phone, String code)
             throws LoginException {
+        LoginResult result = new LoginResult();
+        if (!signChecker.checkSignature(phone, code))
+            return result.fail("Invalid code.");
+        return result.succeed();
     }
 
     @Override
-    public void registerByEmail(String email, String code)
+    public LoginResult registerByEmail(String email, String code)
             throws LoginException {
+        LoginResult result = new LoginResult();
+        if (!signChecker.checkSignature(email, code))
+            return result.fail("Invalid code.");
+        return result.succeed();
     }
 
     @Override
-    public void resetPasswordByPhone(String phone, String code)
+    public LoginResult resetPasswordByPhone(String phone, String code, String password)
             throws LoginException {
+        LoginResult result = new LoginResult();
+        if (!signChecker.checkSignature(phone, code))
+            return result.fail("Invalid code.");
+        return result.succeed();
     }
 
     @Override
-    public void resetPasswordByEmail(String email, String code)
+    public LoginResult resetPasswordByEmail(String email, String code, String password)
             throws LoginException {
+        LoginResult result = new LoginResult();
+        if (!signChecker.checkSignature(email, code))
+            return result.fail("Invalid code.");
+        return result.succeed();
     }
 
 }
