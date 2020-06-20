@@ -76,4 +76,11 @@ public class DefaultUcpaasClientTest
         result.ensureSucceded();
     }
 
+    public static void main(String[] args)
+            throws Exception {
+        SendSmsResult result = client.sendSms(ucid, "1234user", "544801", "13819471680", "KHFD", "3");
+        System.out.println("Send sms: " + result);
+        result.ensureSucceded();
+    }
+
 }
