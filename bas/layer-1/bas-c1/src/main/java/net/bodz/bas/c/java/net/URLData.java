@@ -17,7 +17,7 @@ public class URLData {
 
     /**
      * Read the contents as UTF-8 lines.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @return Non-<code>null</code> array of lines.
@@ -31,7 +31,7 @@ public class URLData {
 
     /**
      * Read the contents as lines with specific charset.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName
@@ -46,9 +46,9 @@ public class URLData {
     }
 
     /**
-     *
+     * 
      * Read the contents with specific charset.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charset
@@ -78,7 +78,7 @@ public class URLData {
 
     /**
      * Read the contents as UTF-8 lines.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @return Non-<code>null</code> array of lines.
@@ -92,7 +92,7 @@ public class URLData {
 
     /**
      * Read the contents as lines with specific charset.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName
@@ -107,9 +107,9 @@ public class URLData {
     }
 
     /**
-     *
+     * 
      * Read the contents as lines with specific charset.
-     *
+     * 
      * @param url
      *            Non-<code>null</code> URL to be opened and read.
      * @param charsetName

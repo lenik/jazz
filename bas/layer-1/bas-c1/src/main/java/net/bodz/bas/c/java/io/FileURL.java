@@ -46,7 +46,7 @@ public class FileURL {
 
     /**
      * Convert the url to file is possible, otherwise return <code>null</code>.
-     *
+     * 
      * @return The corresponding file, or <code>null</code> if not available.
      */
     public static File toFile(URL url, File fallback) {
@@ -68,7 +68,7 @@ public class FileURL {
 
     /**
      * If url is an entry of a jar file, then the jar file is returned.
-     *
+     * 
      * @return The nearest local file for the url. If no such file exists, returns <code>null</code>
      */
     public static File toNearestFile(URL url) {

@@ -24,7 +24,7 @@ public class TypeChain {
 
     public static Class<?>[] listSuperFirst(Class<?> clazz) {
         Class<?>[] list = listSuperLast(clazz);
-        Arrays.reverse(list);
+        Arrays.<Class<?>> reverse(list);
         return list;
     }
 

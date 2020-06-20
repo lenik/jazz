@@ -29,7 +29,7 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractParser;
 import net.bodz.bas.typer.std.IParser;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("all")
 public class Providers
         implements II18nCapable {
 

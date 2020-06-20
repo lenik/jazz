@@ -167,7 +167,7 @@ public abstract class JSONObjectWrapper<self_t>
         return (self_t) this;
     }
 
-    public self_t put(String key, Collection value)
+    public self_t put(String key, Collection<?> value)
             throws JSONException {
         wrapped.put(key, value);
         return (self_t) this;
@@ -191,7 +191,7 @@ public abstract class JSONObjectWrapper<self_t>
         return (self_t) this;
     }
 
-    public self_t put(String key, Map value)
+    public self_t put(String key, Map<String, ?> value)
             throws JSONException {
         wrapped.put(key, value);
         return (self_t) this;

@@ -121,7 +121,7 @@ public class TypeArray {
 
     /**
      * Get class for each component in the object array.
-     *
+     * 
      * @param nullClass
      *            Which class to be assumed for <code>null</code>-value in the object array.
      * @param objects

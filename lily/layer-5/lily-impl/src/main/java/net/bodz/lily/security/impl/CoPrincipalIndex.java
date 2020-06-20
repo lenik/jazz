@@ -6,7 +6,7 @@ import net.bodz.lily.security.CoPrincipal;
 public abstract class CoPrincipalIndex<T extends CoPrincipal, M extends CoPrincipalMask>
         extends CoIndex<T, M> {
 
-    private String schema;
+    String schema;
 
     public CoPrincipalIndex(String schema) {
         this.schema = schema;

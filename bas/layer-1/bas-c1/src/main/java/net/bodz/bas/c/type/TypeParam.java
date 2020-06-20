@@ -52,7 +52,7 @@ public class TypeParam {
 
     /**
      * Recursive get the first concrete type bound of the type (or type variable).
-     *
+     * 
      * @return Non-<code>null</code> first concrete type bound.
      * @throws Error
      *             If failed to get the type bound.
@@ -164,14 +164,14 @@ public class TypeParam {
      * Traverse and search interested base class (<code>interesting</code>) with-in the start class
      * (<code>clazz</code>), and map the type parameters (<code>argv</code>) to be the parameters
      * for the interesting base.
-     *
+     * 
      * <p>
      * If interesting base is not generic, an empty array is immediately returned.
-     *
+     * 
      * <p>
      * If the interesting isn't an interface, no generic interface is looked into. This maybe
      * slightly more efficient then query interesting interface.
-     *
+     * 
      * @param clazz
      *            Start class to traverse.
      * @param interesting
