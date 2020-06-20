@@ -1,4 +1,4 @@
-package net.bodz.http;
+package net.bodz.bas.http;
 
 import java.io.IOException;
 
