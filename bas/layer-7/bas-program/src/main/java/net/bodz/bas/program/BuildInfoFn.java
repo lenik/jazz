@@ -7,8 +7,10 @@ import java.util.Properties;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.io.res.tools.StreamLoading;
 import net.bodz.bas.meta.build.BuildInfo;
+import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
+@FnHelper
 public class BuildInfoFn {
 
     /**

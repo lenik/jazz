@@ -5,8 +5,10 @@ import java.util.List;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.lily.entity.ILazyId;
 
+@FnHelper
 public class UploadFn {
 
     static final Logger logger = LoggerFactory.getLogger(UploadFn.class);

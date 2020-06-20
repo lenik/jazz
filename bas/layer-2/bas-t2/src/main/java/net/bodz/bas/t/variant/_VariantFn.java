@@ -3,7 +3,9 @@ package net.bodz.bas.t.variant;
 import java.lang.reflect.Array;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.meta.source.FnHelper;
 
+@FnHelper
 public class _VariantFn {
 
     static String[] toStringArray(Object scalarOrArray) {
