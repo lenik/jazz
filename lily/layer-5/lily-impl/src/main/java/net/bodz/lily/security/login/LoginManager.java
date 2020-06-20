@@ -21,10 +21,14 @@ import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.ILoginResolver.Result;
 import net.bodz.lily.security.login.key.FlyingSignatureChecker;
+import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
+import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
+import net.bodz.sms.ucpaas.DefaultUcpaasClient;
+import net.bodz.sms.ucpaas.IUcpaasClient;
 
 public class LoginManager
         extends LoginTokenManager
-        implements IPathDispatchable {
+        implements ILoginManager, IPathDispatchable {
 
     // long timeout = 3600_000;
     DataContext dataContext;
@@ -54,7 +58,7 @@ public class LoginManager
 
         switch (token) {
         case "init":
-            target = initiate(q);
+            target = initiateLogin(q);
             break;
 
         case "login":
@@ -78,7 +82,8 @@ public class LoginManager
     int distance = 10 * 60; // 10 minutes
     FlyingSignatureChecker signChecker = new FlyingSignatureChecker(window, distance);
 
-    public LoginResult initiate(IVariantMap<String> q) {
+    @Override
+    public LoginResult initiateLogin(IVariantMap<String> q) {
         LoginResult result = new LoginResult();
         String serverChallenge = signChecker.getSalt();
         result.setServerChallenge(serverChallenge);
@@ -102,20 +107,29 @@ public class LoginManager
         return result;
     }
 
+    @Override
     public LoginResult login(IVariantMap<String> q) {
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
             Result rr = resolver.login(signChecker, q);
             if (rr == null)
                 continue;
-            if (rr.isSuccess()) {
-                User user = rr.getUser();
-                LoginResult result = new LoginResult();
-                result.token = new LoginToken(this, 123, user);
-                return result.succeed();
-            }
-            return new LoginResult(rr);
+            return rr.toLoginResult(this);
         }
         return new LoginResult().fail("No successful login.");
+    }
+
+    @Override
+    public LoginResult loginByPhone(String phone, String sign)
+            throws LoginException {
+        PhoneCheckLoginResolver resolver = new PhoneCheckLoginResolver(dataContext);
+        return resolver.login(signChecker, phone, sign).toLoginResult(this);
+    }
+
+    @Override
+    public LoginResult loginByEmail(String email, String sign)
+            throws LoginException {
+        EmailPasswordLoginResolver resolver = new EmailPasswordLoginResolver(dataContext);
+        return resolver.login(signChecker, email, sign).toLoginResult(this);
     }
 
     String getAnyPassword(int userId) {
@@ -129,7 +143,8 @@ public class LoginManager
         return null;
     }
 
-    JsonResponse logout() {
+    @Override
+    public JsonResponse logout() {
         JsonResponse r = new JsonResponse();
         LoginToken token = LoginToken.fromSession();
         if (token != null) {
@@ -143,6 +158,37 @@ public class LoginManager
             LoginToken.clearSession();
         }
         return r.succeed();
+    }
+
+    @Override
+    public void verifyPhone(String phone, String usage)
+            throws LoginException {
+        IUcpaasClient client = DefaultUcpaasClient.getInstance();
+    }
+
+    @Override
+    public void verifyEmail(String address, String usage)
+            throws LoginException {
+    }
+
+    @Override
+    public void registerByPhone(String phone, String code)
+            throws LoginException {
+    }
+
+    @Override
+    public void registerByEmail(String email, String code)
+            throws LoginException {
+    }
+
+    @Override
+    public void resetPasswordByPhone(String phone, String code)
+            throws LoginException {
+    }
+
+    @Override
+    public void resetPasswordByEmail(String email, String code)
+            throws LoginException {
     }
 
 }
