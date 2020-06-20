@@ -1,12 +1,12 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.sms.AbstractSmsImpl;
-import net.bodz.sms.SmsRecord;
-import net.bodz.sms.SmsTemplate;
+import net.bodz.bas.sms.AbstractSmsImpl;
+import net.bodz.bas.sms.SmsRecord;
+import net.bodz.bas.sms.SmsTemplate;
 
 public class UcpaasSmsImpl
         extends AbstractSmsImpl {

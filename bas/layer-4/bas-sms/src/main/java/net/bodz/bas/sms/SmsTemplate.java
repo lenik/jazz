@@ -1,4 +1,4 @@
-package net.bodz.sms;
+package net.bodz.bas.sms;
 
 public class SmsTemplate {
 

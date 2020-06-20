@@ -1,4 +1,4 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.sms.ucpaas.*;
 
 public class DefaultUcpaasClientTest
         extends Assert {

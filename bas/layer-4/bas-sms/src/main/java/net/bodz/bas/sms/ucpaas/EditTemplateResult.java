@@ -1,20 +1,15 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 
-public class GetTemplateResult
+public class EditTemplateResult
         extends AbstractUcpaasResult {
 
     public String templateId;
-    public String type;
+    public int type;
     public String autograph;
     public String content;
-
-    public String examine;
-    public String npreason;
-    public String locked;
-
     public String updateDate;
 
     public String getTemplateId() {
@@ -25,11 +20,11 @@ public class GetTemplateResult
         this.templateId = templateId;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -49,30 +44,6 @@ public class GetTemplateResult
         this.content = content;
     }
 
-    public String getExamine() {
-        return examine;
-    }
-
-    public void setExamine(String examine) {
-        this.examine = examine;
-    }
-
-    public String getNpreason() {
-        return npreason;
-    }
-
-    public void setNpreason(String npreason) {
-        this.npreason = npreason;
-    }
-
-    public String getLocked() {
-        return locked;
-    }
-
-    public void setLocked(String locked) {
-        this.locked = locked;
-    }
-
     public String getUpdateDate() {
         return updateDate;
     }
@@ -86,14 +57,11 @@ public class GetTemplateResult
             throws ParseException {
         super.readObject(o);
         templateId = o.getString("templateid");
-        type = o.getString("type");
+        String _type = o.getString("type");
+        if (_type != null)
+            type = Integer.valueOf(_type);
         autograph = o.getString("autograph");
         content = o.getString("content");
-
-        examine = o.getString("examine");
-        npreason = o.getString("npreason");
-        locked = o.getString("locked");
-
         updateDate = o.getString("delete_date");
     }
 

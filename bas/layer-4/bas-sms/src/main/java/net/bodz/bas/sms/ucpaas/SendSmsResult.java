@@ -1,4 +1,4 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
