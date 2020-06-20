@@ -13,17 +13,22 @@ public class FlyingSignatureChecker
         this.distance = distance;
     }
 
-    @Override
-    public boolean checkSignature(final String textData, String signature) {
+    public IFlyingCode getFlyingCode(final String text) {
         IFlyingCode flyingCode = new AbstractFlyingCode(window) {
             @Override
             public String getCode(long index) {
                 String salt = salt(index);
-                String guard = salt + textData + salt;
+                String guard = salt + text + salt;
                 String sha = DigestUtils.shaHex(guard);
                 return sha;
             }
         };
+        return flyingCode;
+    }
+
+    @Override
+    public boolean checkSignature(String textData, String signature) {
+        IFlyingCode flyingCode = getFlyingCode(textData);
         FlyingIndex fi = flyingCode.lastIndexOf(signature, distance);
         return fi.exists();
     }
