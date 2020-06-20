@@ -15,6 +15,8 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.sms.IShortMessageService;
+import net.bodz.bas.sms.SmsProviders;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
@@ -25,8 +27,6 @@ import net.bodz.lily.security.login.key.FlyingSignatureChecker;
 import net.bodz.lily.security.login.key.IFlyingCode;
 import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
 import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
-import net.bodz.sms.IShortMessageService;
-import net.bodz.sms.SmsProviders;
 
 public class LoginManager
         extends LoginTokenManager
@@ -168,7 +168,11 @@ public class LoginManager
         IShortMessageService sms = SmsProviders.getSms();
         IFlyingCode flyingCode = signChecker.getFlyingCode(phone);
         String code = flyingCode.getCodeForNow();
-        sms.sendPrepared(phone, preparedId, code);
+        try {
+            sms.sendPrepared(phone, VERIFY, code);
+        } catch (Exception e) {
+            throw new LoginException("sms error: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -183,6 +187,12 @@ public class LoginManager
         LoginResult result = new LoginResult();
         if (!signChecker.checkSignature(phone, code))
             return result.fail("Invalid code.");
+
+        // 1. check if phone is in use
+
+        // 2. auto create a user (random name)
+        // 3. bind user with phone (other-id)
+        // 4. auto login
         return result.succeed();
     }
 
