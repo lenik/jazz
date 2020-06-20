@@ -1,2 +1,2 @@
 net.bodz.bas.http.HttpModFilter
-net.bodz.bas.http.ctx.CurrentHttpService
+net.bodz.bas.servlet.ctx.CurrentHttpService

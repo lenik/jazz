@@ -344,5 +344,6 @@ net.bodz.bas.t.ref.StackedVar
 net.bodz.bas.t.ref.ThreadLocalVar
 net.bodz.bas.t.ref.Value
 net.bodz.bas.t.ref.WeakThreadLocalVar
+net.bodz.lily.entity.EntityFn
 net.bodz.lily.entity.IId
 net.bodz.lily.entity.ILazyId
