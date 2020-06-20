@@ -15,7 +15,6 @@ net.bodz.lily.contact.impl.PersonMapper
 net.bodz.lily.contact.impl.PersonRoleMapper
 net.bodz.lily.geo.impl.ZoneCategoryMapper
 net.bodz.lily.geo.impl.ZoneMapper
-net.bodz.lily.model.mx.impl.MailMapper
 net.bodz.lily.pub.impl.ArticleBackrefMapper
 net.bodz.lily.pub.impl.ArticleCategoryMapper
 net.bodz.lily.pub.impl.ArticleFavMapper
@@ -51,6 +50,7 @@ net.bodz.lily.security.impl.UserOtherIdMapper
 net.bodz.lily.security.impl.UserOtherIdTypeMapper
 net.bodz.lily.security.impl.UserRunMapper
 net.bodz.lily.security.impl.UserSecretMapper
+net.bodz.lily.t.mail.MailMapper
 net.bodz.lily.util.mapper.ProfileMapper
 net.bodz.violet.art.impl.ArtifactBackrefMapper
 net.bodz.violet.art.impl.ArtifactCategoryMapper

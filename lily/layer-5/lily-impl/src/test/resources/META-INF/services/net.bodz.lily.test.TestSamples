@@ -26,7 +26,7 @@ net.bodz.lily.schema.TagGroupDefSamples
 net.bodz.lily.security.GroupSamples
 net.bodz.lily.security.PolicySamples
 net.bodz.lily.security.RoleSamples
-net.bodz.lily.security.UserIdSamples
+net.bodz.lily.security.UserOtherIdSamples
 net.bodz.lily.security.UserSamples
 net.bodz.lily.security.UserSecretSamples
 net.bodz.violet.art.ArtifactCategorySamples
