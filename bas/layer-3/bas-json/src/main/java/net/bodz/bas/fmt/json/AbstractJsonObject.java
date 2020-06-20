@@ -1,6 +1,8 @@
 package net.bodz.bas.fmt.json;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.json.JSONArray;
@@ -234,6 +236,206 @@ public abstract class AbstractJsonObject<self_t>
             return defaultValue;
         JSONArray array = getJSONArray(key);
         return new JsonArray(array);
+    }
+
+    public byte[] getByteArray(String key, byte[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Byte> list = getBytes(key, null);
+        byte[] v = new byte[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public short[] getShortArray(String key, short[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Short> list = getShorts(key, null);
+        short[] v = new short[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public int[] getIntArray(String key, int[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Integer> list = getInts(key, null);
+        int[] v = new int[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public long[] getLongArray(String key, long[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Long> list = getLongs(key, null);
+        long[] v = new long[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public float[] getFloatArray(String key, float[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Float> list = getFloats(key, null);
+        float[] v = new float[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public double[] getDoubleArray(String key, double[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Double> list = getDoubles(key, null);
+        double[] v = new double[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Boolean> list = getBooleans(key, null);
+        boolean[] v = new boolean[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public char[] getCharArray(String key, char[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<Character> list = getChars(key, null);
+        char[] v = new char[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public String[] getStringArray(String key, String[] defaultValue) {
+        if (!has(key))
+            return defaultValue;
+        List<String> list = getStrings(key, null);
+        String[] v = new String[list.size()];
+        for (int i = 0; i < v.length; i++)
+            v[i] = list.get(i);
+        return v;
+    }
+
+    public List<Byte> getBytes(String key, List<Byte> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add((byte) array.getInt(i));
+        }
+        return list;
+    }
+
+    public List<Short> getShorts(String key, List<Short> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add((short) array.getInt(i));
+        }
+        return list;
+    }
+
+    public List<Integer> getInts(String key, List<Integer> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add(array.getInt(i));
+        }
+        return list;
+    }
+
+    public List<Long> getLongs(String key, List<Long> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add(array.getLong(i));
+        }
+        return list;
+    }
+
+    public List<Float> getFloats(String key, List<Float> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add((float) array.getDouble(i));
+        }
+        return list;
+    }
+
+    public List<Double> getDoubles(String key, List<Double> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add(array.getDouble(i));
+        }
+        return list;
+    }
+
+    public List<Boolean> getBooleans(String key, List<Boolean> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add(array.getBoolean(i));
+        }
+        return list;
+    }
+
+    public List<Character> getChars(String key, List<Character> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++) {
+                String item = array.getString(i);
+                list.add(item.isEmpty() ? '\0' : item.charAt(0));
+            }
+        }
+        return list;
+    }
+
+    public List<String> getStrings(String key, List<String> list) {
+        if (list == null)
+            list = new ArrayList<>();
+        JsonArray array = getJsonArray(key);
+        if (array != null) {
+            int n = array.length();
+            for (int i = 0; i < n; i++)
+                list.add(array.getString(i));
+        }
+        return list;
     }
 
     /**
