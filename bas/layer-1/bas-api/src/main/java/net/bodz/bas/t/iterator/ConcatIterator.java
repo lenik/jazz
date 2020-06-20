@@ -37,7 +37,10 @@ public class ConcatIterator<T>
         while (current != null) {
             if (current.hasNext())
                 return true;
-            current = iterators.next();
+            if (iterators.hasNext())
+                current = iterators.next();
+            else
+                current = null;
         }
         return false;
     }
