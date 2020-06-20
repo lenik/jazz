@@ -63,7 +63,7 @@ public class FilePath {
 
     /**
      * This function return a relative path used for href: it treats trailing slash carefully.
-     *
+     * 
      * @param path
      *            Should be in canonical form
      * @param ref
@@ -195,7 +195,7 @@ public class FilePath {
 
     /**
      * Get the extension name from the given path string.
-     *
+     * 
      * @param path
      *            The path string, can't be <code>null</code>.
      * @param includeDot
@@ -311,7 +311,7 @@ public class FilePath {
 
     /**
      * Find program using system default PATHEXT (win32 only).
-     *
+     * 
      * @return <code>null</code> if couldn't find name.
      */
     public static File which(String name, File... paths) {

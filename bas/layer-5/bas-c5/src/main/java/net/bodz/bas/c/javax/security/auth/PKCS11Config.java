@@ -17,7 +17,7 @@ import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.IPrintOut;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("all")
 public class PKCS11Config {
 
     private String name;
@@ -136,18 +136,18 @@ public class PKCS11Config {
      * they are supported by both the Sun PKCS#11 provider and PKCS#11 token. All other mechanisms
      * will be ignored. Each entry in the list is the name of a PKCS#11 mechanism. Here is an
      * example that lists two PKCS#11 mechanisms.
-     * 
+     *
      * <pre>
      * enabledMechanisms = {
      *   CKM_RSA_PKCS
      *   CKM_RSA_PKCS_KEY_PAIR_GEN
      * }
      * </pre>
-     * 
+     *
      * At most one of enabledMechanisms or disabledMechanisms may be specified. If neither is
      * specified, the mechanisms enabled are those that are supported by both the Sun PKCS#11
      * provider and the PKCS#11 token.
-     * 
+     *
      * @see PKCS11Constants
      * @see PKCS11Constants#CKM_RSA_PKCS
      * @see PKCS11Constants#CKM_RSA_PKCS_KEY_PAIR_GEN
@@ -180,7 +180,7 @@ public class PKCS11Config {
      * At most one of enabledMechanisms or disabledMechanisms may be specified. If neither is
      * specified, the mechanisms enabled are those that are supported by both the Sun PKCS#11
      * provider and the PKCS#11 token
-     * 
+     *
      * @see PKCS11Constants
      * @see PKCS11Constants#CKM_RSA_PKCS
      * @see PKCS11Constants#CKM_RSA_PKCS_KEY_PAIR_GEN

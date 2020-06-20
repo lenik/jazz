@@ -111,7 +111,7 @@ public class URLClassLoaders {
 
     /**
      * try to not add duplicated urls.
-     *
+     * 
      * @return <code>false</code> if specified url is already existed in ucl or its parents.
      */
     public static int addURLs(URLClassLoader urlClassLoader, URL... urls) {

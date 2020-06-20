@@ -2,7 +2,7 @@ package net.bodz.bas.servlet.ctx;
 
 /**
  * A relative path abstraction.
- *
+ * 
  * @see WebAppAnchor
  * @see PathAnchor
  * @see URLAnchor
@@ -13,18 +13,18 @@ public interface IAnchor {
 
     /**
      * Get the absolute href.
-     *
+     * 
      * @return The absolute href, contains the trailing slash.
      */
     String absoluteHref();
 
     /**
      * Get the href string (relative path) from other path.
-     *
+     * 
      * Example:
-     *
+     * 
      * "/foo/bar/".from("/foo/def/[xyz]") = ../bar/
-     *
+     * 
      * @param otherPath
      *            The other path. Must be non-<code>null</code> absolute path.
      * @return The relative path from <code>otherPath</code> to this base path. Never

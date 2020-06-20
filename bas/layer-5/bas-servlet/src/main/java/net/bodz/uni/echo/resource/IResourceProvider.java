@@ -11,7 +11,7 @@ public interface IResourceProvider
 
     /**
      * Get a system-wide accessible resource.
-     *
+     * 
      * @param path
      *            Non-null path string, without the leading "/".
      * @return <code>null</code> if the resource isn't existed.
@@ -21,7 +21,7 @@ public interface IResourceProvider
 
     /**
      * Get resources with same path.
-     *
+     * 
      * @param path
      *            Non-null path string, without the leading "/".
      * @return List of matched resources.
@@ -31,7 +31,7 @@ public interface IResourceProvider
 
     /**
      * Get resources with same path.
-     *
+     * 
      * @param path
      *            Non-null path string, without the leading "/".
      * @return List of matched resources.

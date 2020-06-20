@@ -43,7 +43,7 @@ public class TypeSpace {
      * Get the inheritance-distance from <code>declType</code> to <code>actualType</code>.
      * <p>
      * The distance is directed, i.e., <b>dist(a, b) != decl(b, a) with exception of a==b</b>.
-     *
+     * 
      * @param declType
      *            The "base" type
      * @param actualType
@@ -78,7 +78,7 @@ public class TypeSpace {
 
     /**
      * Calculate distance from one base type vector to another derived type vector.
-     *
+     * 
      * @param nullDistance
      *            The fallback distance from declType to <code>null</code>.
      * @return -1 If <code>actualTypes</code> is not compatible with <code>declTypes</code>. I.e.,

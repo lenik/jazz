@@ -69,7 +69,7 @@ public class ContentRange
      * <ul>
      * <li><code>bytes 21010-47021/47022</code>
      * </ul>
-     *
+     * 
      * @param str
      *            Non-<code>null</code> Content-Range field to be parsed.
      * @return Error message. <code>null</code> if succeeded.

@@ -1,6 +1,5 @@
 package net.bodz.bas.c.system;
 
-
 public class SystemProperties {
 
     public static boolean developMode;

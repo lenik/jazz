@@ -1148,7 +1148,8 @@ public class Arrays
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
      */
-    public static Object[] reverse(Object... array) {
+    @SafeVarargs
+    public static <T> T[] reverse(T... array) {
         reverse(array, 0, array.length);
         return array;
     }
@@ -2372,7 +2373,7 @@ public class Arrays
         long sum = 0L;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (long) (sum / n);
+        return sum / n;
     }
 
     /**
@@ -2408,7 +2409,7 @@ public class Arrays
         float sum = 0.0f;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (float) (sum / n);
+        return sum / n;
     }
 
     /**
@@ -2444,7 +2445,7 @@ public class Arrays
         double sum = 0.0;
         for (int i = begin; i < end; i++)
             sum = sum + array[i];
-        return (double) (sum / n);
+        return sum / n;
     }
 
     /**
@@ -2516,7 +2517,7 @@ public class Arrays
         BigDecimal sum = BigDecimal.ZERO;
         for (int i = begin; i < end; i++)
             sum = sum.add(array[i]);
-        return (BigDecimal) (sum.divide(BigDecimal.valueOf(n)));
+        return (sum.divide(BigDecimal.valueOf(n)));
     }
 
     /**
@@ -2552,7 +2553,7 @@ public class Arrays
         BigInteger sum = BigInteger.ZERO;
         for (int i = begin; i < end; i++)
             sum = sum.add(array[i]);
-        return (BigInteger) (sum.divide(BigInteger.valueOf(n)));
+        return (sum.divide(BigInteger.valueOf(n)));
     }
 
     /**

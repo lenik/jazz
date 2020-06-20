@@ -89,7 +89,7 @@ public class FileData {
     /**
      * Trim the file to the length, or extend the file, the extension part may be filled with
      * unknown bytes. If the file isn't existed, a new file may be created.
-     *
+     * 
      * @param newLength
      *            New length to be set. The length should be >= <code>0</code>.
      * @return <code>false</code> If the given file object does not denote an existing, writable
