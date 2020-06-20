@@ -1,16 +1,21 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 
-public class DeleteTemplateResult
+public class GetTemplateResult
         extends AbstractUcpaasResult {
 
     public String templateId;
     public String type;
     public String autograph;
     public String content;
-    public String deleteDate;
+
+    public String examine;
+    public String npreason;
+    public String locked;
+
+    public String updateDate;
 
     public String getTemplateId() {
         return templateId;
@@ -44,12 +49,36 @@ public class DeleteTemplateResult
         this.content = content;
     }
 
-    public String getDeleteDate() {
-        return deleteDate;
+    public String getExamine() {
+        return examine;
     }
 
-    public void setDeleteDate(String deleteDate) {
-        this.deleteDate = deleteDate;
+    public void setExamine(String examine) {
+        this.examine = examine;
+    }
+
+    public String getNpreason() {
+        return npreason;
+    }
+
+    public void setNpreason(String npreason) {
+        this.npreason = npreason;
+    }
+
+    public String getLocked() {
+        return locked;
+    }
+
+    public void setLocked(String locked) {
+        this.locked = locked;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 
     @Override
@@ -60,7 +89,12 @@ public class DeleteTemplateResult
         type = o.getString("type");
         autograph = o.getString("autograph");
         content = o.getString("content");
-        deleteDate = o.getString("delete_date");
+
+        examine = o.getString("examine");
+        npreason = o.getString("npreason");
+        locked = o.getString("locked");
+
+        updateDate = o.getString("delete_date");
     }
 
 }

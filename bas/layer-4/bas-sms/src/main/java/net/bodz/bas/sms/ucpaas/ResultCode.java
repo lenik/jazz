@@ -1,4 +1,4 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 public interface ResultCode {
 

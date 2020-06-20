@@ -1,16 +1,16 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 
-public class EditTemplateResult
+public class DeleteTemplateResult
         extends AbstractUcpaasResult {
 
     public String templateId;
-    public int type;
+    public String type;
     public String autograph;
     public String content;
-    public String updateDate;
+    public String deleteDate;
 
     public String getTemplateId() {
         return templateId;
@@ -20,11 +20,11 @@ public class EditTemplateResult
         this.templateId = templateId;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -44,12 +44,12 @@ public class EditTemplateResult
         this.content = content;
     }
 
-    public String getUpdateDate() {
-        return updateDate;
+    public String getDeleteDate() {
+        return deleteDate;
     }
 
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
+    public void setDeleteDate(String deleteDate) {
+        this.deleteDate = deleteDate;
     }
 
     @Override
@@ -57,12 +57,10 @@ public class EditTemplateResult
             throws ParseException {
         super.readObject(o);
         templateId = o.getString("templateid");
-        String _type = o.getString("type");
-        if (_type != null)
-            type = Integer.valueOf(_type);
+        type = o.getString("type");
         autograph = o.getString("autograph");
         content = o.getString("content");
-        updateDate = o.getString("delete_date");
+        deleteDate = o.getString("delete_date");
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.sms;
+package net.bodz.bas.sms;
 
 import java.io.IOException;
 import java.util.ArrayList;

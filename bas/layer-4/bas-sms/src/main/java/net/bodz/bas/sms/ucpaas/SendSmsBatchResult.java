@@ -1,4 +1,4 @@
-package net.bodz.sms.ucpaas;
+package net.bodz.bas.sms.ucpaas;
 
 import java.util.ArrayList;
 import java.util.List;
