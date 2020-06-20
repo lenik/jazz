@@ -38,6 +38,13 @@ public class EmailPasswordLoginResolver
         if (sign == null)
             return null;
 
+        return login(checker, email, sign);
+    }
+
+    /**
+     * @return Non-<code>null</code> result.
+     */
+    public Result login(ISignatureChecker checker, String email, String sign) {
         List<User> users = userMapper.selectByMobile(email);
         switch (users.size()) {
         case 0:

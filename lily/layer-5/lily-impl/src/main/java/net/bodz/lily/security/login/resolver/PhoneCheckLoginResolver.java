@@ -29,10 +29,16 @@ public class PhoneCheckLoginResolver
             return null;
 
         String sign = q.getString("e_cr");
-        if (sign == null) {
+        if (sign == null)
             return failed("Password isn't specified.");
-        }
 
+        return login(checker, mobile, sign);
+    }
+
+    /**
+     * @return Non-<code>null</code> result.
+     */
+    public Result login(ISignatureChecker checker, String mobile, String sign) {
         List<User> users = userMapper.selectByMobile(mobile);
         switch (users.size()) {
         case 0:

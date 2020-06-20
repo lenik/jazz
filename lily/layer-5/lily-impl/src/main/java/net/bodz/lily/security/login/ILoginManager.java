@@ -1,6 +1,9 @@
 package net.bodz.lily.security.login;
 
-public interface ILoginService {
+import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.t.variant.IVariantMap;
+
+public interface ILoginManager {
 
     String USAGE_LOGIN = "login";
     String USAGE_REGISTER = "register";
@@ -9,29 +12,25 @@ public interface ILoginService {
     /**
      * @return server challenge
      */
-    String initLogin()
+    LoginResult initiateLogin(IVariantMap<String> q)
             throws LoginException;
 
-    /**
-     * @param mode
-     *            means features to request to be used in the logged in session.
-     */
-    void login(String user, String cr, String mode)
+    LoginResult login(IVariantMap<String> q)
             throws LoginException;
 
-    void logout()
+    LoginResult loginByPhone(String phone, String code)
+            throws LoginException;
+
+    LoginResult loginByEmail(String email, String code)
+            throws LoginException;
+
+    JsonResponse logout()
             throws LoginException;
 
     void verifyPhone(String number, String usage)
             throws LoginException;
 
     void verifyEmail(String address, String usage)
-            throws LoginException;
-
-    boolean loginByPhone(String number, String code)
-            throws LoginException;
-
-    boolean loginByEmail(String email, String code)
             throws LoginException;
 
     void registerByPhone(String phone, String code)
