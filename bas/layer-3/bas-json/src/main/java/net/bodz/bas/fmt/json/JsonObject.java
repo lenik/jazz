@@ -1,30 +1,21 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.Writer;
 import java.util.*;
 
-import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.t.factory.IFactory;
-import net.bodz.bas.t.model.IWrapper;
-import net.bodz.bas.t.variant.conv.*;
 
 public class JsonObject
-        implements IWrapper<JSONObject> {
-
-    private final JSONObject jsonObj;
+        extends AbstractJsonObject<JsonObject> {
 
     public JsonObject(JSONObject jsonObj) {
-        if (jsonObj == null)
-            throw new NullPointerException("jsonObj");
-        this.jsonObj = jsonObj;
+        super(jsonObj);
     }
 
     /**
@@ -145,402 +136,6 @@ public class JsonObject
         return new JsonObject(jsonObj);
     }
 
-    @Override
-    public JSONObject getWrapped() {
-        return jsonObj;
-    }
-
-    public boolean containsKey(String key) {
-        return jsonObj.has(key);
-    }
-
-    public boolean has(String key) {
-        return jsonObj.has(key);
-    }
-
-    public boolean isNull(String key) {
-        return jsonObj.isNull(key);
-    }
-
-    public Set<String> keySet() {
-        return jsonObj.keySet();
-    }
-
-    public int length() {
-        return jsonObj.length();
-    }
-
-    public JSONArray names() {
-        return jsonObj.names();
-    }
-
-    public Object _get(String key)
-            throws JSONException {
-        Object val = _get(key, null);
-        if (val == JSONObject.NULL)
-            return null;
-        return val;
-    }
-
-    public Object _get(String key, Object defaultValue)
-            throws JSONException {
-        if (!jsonObj.has(key))
-            return defaultValue;
-        Object val = jsonObj.get(key);
-        // if (val instanceof JSONObject)
-        // return new JsonObject((JSONObject) val);
-        return val;
-    }
-
-    public Boolean getBoolean(String key) {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return BooleanVarConverter.INSTANCE.from(val);
-    }
-
-    public boolean getBoolean(String key, boolean defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return BooleanVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Float getFloat(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return FloatVarConverter.INSTANCE.from(val);
-    }
-
-    public float getFloat(String key, float defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return FloatVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Double getDouble(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return DoubleVarConverter.INSTANCE.from(val);
-    }
-
-    public double getDouble(String key, double defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return DoubleVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Byte getByte(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return ByteVarConverter.INSTANCE.from(val);
-    }
-
-    public byte getByte(String key, byte defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return ByteVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Short getShort(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return ShortVarConverter.INSTANCE.from(val);
-    }
-
-    public short getShort(String key, short defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return ShortVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Integer getInt(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return IntegerVarConverter.INSTANCE.from(val);
-    }
-
-    public int getInt(String key, int defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return IntegerVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Long getLong(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return LongVarConverter.INSTANCE.from(val);
-    }
-
-    public long getLong(String key, long defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return LongVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Character getChar(String key)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return null;
-        return CharacterVarConverter.INSTANCE.from(val);
-    }
-
-    public char getChar(String key, char defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return CharacterVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public String getString(String key)
-            throws JSONException {
-        return getString(key, null);
-    }
-
-    public String getString(String key, String defaultValue)
-            throws JSONException {
-        Object val = _get(key);
-        if (val == null)
-            return defaultValue;
-        return StringVarConverter.INSTANCE.from(val);
-    }
-
-    public JSONArray getJSONArray(String key)
-            throws JSONException {
-        return jsonObj.getJSONArray(key);
-    }
-
-    public JSONArray getJSONArray(String key, JSONArray defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        return jsonObj.getJSONArray(key);
-    }
-
-    public JSONObject getJSONObject(String key)
-            throws JSONException {
-        return jsonObj.getJSONObject(key);
-    }
-
-    public JSONObject getJSONObject(String key, JSONObject defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        return jsonObj.getJSONObject(key);
-    }
-
-    public final JsonArray getJsonArray(String key)
-            throws JSONException {
-        return getJsonArray(key, null);
-    }
-
-    public JsonArray getJsonArray(String key, JsonArray defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        JSONArray array = getJSONArray(key);
-        return new JsonArray(array);
-    }
-
-    /**
-     * See {@link #getChild(String)}
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public final JsonObject getJsonObject(String key)
-            throws JSONException {
-        return getChild(key);
-    }
-
-    /**
-     * See {@link #getChild(String, JsonObject)}
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public JsonObject getJsonObject(String key, JsonObject defaultValue)
-            throws JSONException {
-        return getChild(key, defaultValue);
-    }
-
-    public JsonObject getChild(String key)
-            throws JSONException {
-        return getChild(key, null);
-    }
-
-    public JsonObject getChild(String key, JsonObject defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        Object _val = _get(key);
-        if (_val instanceof JSONObject) {
-            JSONObject val = (JSONObject) _val;
-            return new JsonObject(val);
-        }
-        return null;
-    }
-
-    public JSONObject put(String key, boolean value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, Collection<?> value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, double value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, int value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, long value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, Map<String, ?> value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject put(String key, Object value)
-            throws JSONException {
-        return jsonObj.put(key, value);
-    }
-
-    public JSONObject putOnce(String key, Object value)
-            throws JSONException {
-        return jsonObj.putOnce(key, value);
-    }
-
-    public JSONObject putOpt(String key, Object value)
-            throws JSONException {
-        return jsonObj.putOpt(key, value);
-    }
-
-    public JSONObject accumulate(String key, Object value)
-            throws JSONException {
-        return jsonObj.accumulate(key, value);
-    }
-
-    public JSONObject append(String key, Object value)
-            throws JSONException {
-        return jsonObj.append(key, value);
-    }
-
-    public JSONObject increment(String key)
-            throws JSONException {
-        return jsonObj.increment(key);
-    }
-
-    public Object remove(String key) {
-        return jsonObj.remove(key);
-    }
-
-    public Writer write(Writer writer)
-            throws JSONException {
-        return jsonObj.write(writer);
-    }
-
-    public JSONArray toJSONArray(JSONArray names)
-            throws JSONException {
-        return jsonObj.toJSONArray(names);
-    }
-
-    @Override
-    public String toString() {
-        return jsonObj.toString();
-    }
-
-    public String toString(int indentFactor)
-            throws JSONException {
-        return jsonObj.toString(indentFactor);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0xc59e4544;
-        hash += jsonObj.hashCode();
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (obj.getClass() != JsonObject.class)
-            return false;
-        JsonObject o = (JsonObject) obj;
-        return jsonObj.equals(o.jsonObj);
-    }
-
     public <T extends IJsonSerializable> T readInto(String key, T obj)
             throws ParseException {
         return readInto(key, obj, null);
@@ -551,7 +146,7 @@ public class JsonObject
         if (!has(key)) // nothing to change
             return obj;
 
-        Object _node = _get(key);
+        Object _node = get(key);
         if (_node == null) // force set to null
             return null;
 
@@ -584,7 +179,7 @@ public class JsonObject
         if (!has(key)) // nothing to change
             return set;
 
-        Object _node = _get(key);
+        Object _node = get(key);
         if (_node == null) // force set to null
             return null;
 
@@ -613,42 +208,6 @@ public class JsonObject
         }
 
         return set;
-    }
-
-    public <T> T getVar(Class<T> type, String key) {
-        return getVar(type, key, null);
-    }
-
-    public <T> T getVar(Class<T> type, String key, T defaultValue) {
-        if (!has(key))
-            return defaultValue;
-        Object val = _get(key);
-        IVarConverter<Object> converter = VarConverters.getConverter(type);
-        if (converter == null)
-            throw new UnsupportedOperationException(String.format(//
-                    "No converter for class %s.", type.getName()));
-        // try {
-        T var = (T) converter.from(val);
-        // } catch (TypeConvertException e) {
-        // throw new JSONException(e);
-        // }
-        return var;
-    }
-
-    public Date getDate(String key) {
-        return getDate(key, null);
-    }
-
-    public Date getDate(String key, Date defaultValue) {
-        return getVar(Date.class, key, defaultValue);
-    }
-
-    public DateTime getDateTime(String key) {
-        return getDateTime(key, null);
-    }
-
-    public DateTime getDateTime(String key, DateTime defaultValue) {
-        return getVar(DateTime.class, key, defaultValue);
     }
 
 }

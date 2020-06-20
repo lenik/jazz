@@ -48,10 +48,10 @@ public class CoEntity<Id>
             throws ParseException {
         super.readObject(o);
 
-        Object _id = o._get("id");
+        Object _id = o.get("id");
         if (_id != null) {
             IVarConverter<Id> idConv = VarConverters.getConverter(idType());
-            Id newId = idConv.from(o._get("id"));
+            Id newId = idConv.from(_id);
             this.id = newId;
         }
     }

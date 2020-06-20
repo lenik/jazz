@@ -129,7 +129,7 @@ public class CsvRow
             int index = 0;
             for (Object key : o.keySet()) {
                 String field = (String) key;
-                Object value = o._get(field);
+                Object value = o.get(field);
                 set(index, (String) value);
                 index++;
             }
@@ -142,7 +142,7 @@ public class CsvRow
                     continue;
                 }
                 if (o.has(field)) {
-                    Object value = o._get(field);
+                    Object value = o.get(field);
                     set(index, (String) value);
                 }
             }

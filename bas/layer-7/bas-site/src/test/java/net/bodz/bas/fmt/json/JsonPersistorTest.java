@@ -103,7 +103,6 @@ public class JsonPersistorTest
         assertEquals(obj, back);
     }
 
-    @Test(expected = NotImplementedException.class)
     public void testNonSerializable()
             throws IOException, ParseException {
         Foo obj = new Foo();
@@ -112,7 +111,25 @@ public class JsonPersistorTest
         String json = out.toString();
         dump("non-serializable", json);
         Object back = persistor.readTyped(json);
-        assertEquals(obj, back);
+        assertNull(back);
+    }
+
+    @Test(expected = NotImplementedException.class)
+    public void testNonSerializable2()
+            throws IOException, ParseException {
+        Foo obj = new Foo();
+        populate(obj);
+        // persistor.writeTyped(out, obj);
+        {
+            out.object();
+            out.entry(JsonPersistor.KEY_TYPE, obj.getClass().getName());
+            out.entry(JsonPersistor.KEY_VALUE, "unknown format");
+            out.endObject();
+        }
+        String json = out.toString();
+        dump("non-serializable", json);
+        Object back = persistor.readTyped(json);
+        assertEquals(obj, back); // shouldn't run here.
     }
 
     @Test

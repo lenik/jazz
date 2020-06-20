@@ -51,6 +51,10 @@ public class JsonPersistor {
 
     public Object readTyped(JsonObject in)
             throws ParseException {
+        Object val = in.get(KEY_VALUE);
+        if (val == null)
+            return null;
+
         String typeName = in.getString(KEY_TYPE);
         if ("null".equals(typeName))
             return null;

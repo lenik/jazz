@@ -102,7 +102,7 @@ public class BeanJsonLoader
                 logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 continue;
             }
-            Object jsonVal = node._get(propertyName);
+            Object jsonVal = node.get(propertyName);
 
             try {
                 if (jsonVal == null) {
