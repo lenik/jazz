@@ -43,6 +43,19 @@ public class Group
     private User admin;
     private List<User> users;
 
+    public Group() {
+    }
+
+    public Group(int id) {
+        setId(id);
+    }
+
+    public Group(int id, String name, String fullName) {
+        setId(id);
+        setName(name);
+        setFullName(fullName);
+    }
+
     /**
      * 管理员
      */

@@ -45,7 +45,7 @@ public class User
 
     private UserCategory category;
     private List<Group> groups = new ArrayList<>();
-    private Group primaryGroup;
+    private Group primaryGroup = StdGroups.user;
 
     private List<UserSecret> secrets = new ArrayList<>();
     private List<UserOtherId> oids = new ArrayList<>();
@@ -54,6 +54,12 @@ public class User
     private UserRun runningState;
 
     public User() {
+    }
+
+    public User(int id, String name, String fullName) {
+        setId(id);
+        setName(name);
+        setFullName(fullName);
     }
 
     /**

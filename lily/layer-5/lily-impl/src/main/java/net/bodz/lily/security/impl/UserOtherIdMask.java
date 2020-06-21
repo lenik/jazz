@@ -1,12 +1,12 @@
 package net.bodz.lily.security.impl;
 
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoMomentIntervalMask;
 
 /**
  * @see net.bodz.lily.security.UserOtherId
  */
 public class UserOtherIdMask
-        extends CoObjectMask {
+        extends CoMomentIntervalMask {
 
     Integer userId;
     Integer typeId;
