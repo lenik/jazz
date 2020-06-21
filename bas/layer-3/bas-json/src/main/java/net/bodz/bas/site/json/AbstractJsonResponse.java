@@ -216,8 +216,6 @@ public class AbstractJsonResponse<self_t>
         }
 
         if (headers != null) {
-            out.key("headers");
-            out.object();
             for (Map.Entry<String, ?> entry : headers.entrySet()) {
                 Object value = entry.getValue();
                 if (value == null)
@@ -226,15 +224,12 @@ public class AbstractJsonResponse<self_t>
                     IJsonSerializable child = (IJsonSerializable) value;
                     child.writeObject(out);
                 } else {
-                    out.key(entry.getKey());
-                    out.value(value);
+                    out.entry(entry.getKey(), value);
                 }
             }
-            out.endObject();
         }
 
-        if (data != null)
-            out.entry("data", data);
+        out.entryNotNull("data", data);
     }
 
 }
