@@ -166,6 +166,10 @@ public class JsonFn {
         };
     }
 
+    public static JsonUnion union(IJsonSerializable... array) {
+        return new JsonUnion(array);
+    }
+
 }
 
 class JSONArrayIterator<T>
