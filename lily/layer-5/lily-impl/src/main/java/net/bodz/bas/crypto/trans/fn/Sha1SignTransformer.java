@@ -17,8 +17,8 @@ public class Sha1SignTransformer
     @Override
     public Sha1OfTextBin transform(ICodeBin input)
             throws TransformException {
-        String str = input.getStringForm();
-        return new Sha1OfTextBin(key + str + key);
+        String guard = input.getStringForm();
+        return new Sha1OfTextBin(guard + key + guard);
     }
 
 }

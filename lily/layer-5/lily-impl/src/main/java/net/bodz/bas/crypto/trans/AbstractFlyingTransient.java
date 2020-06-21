@@ -1,7 +1,11 @@
 package net.bodz.bas.crypto.trans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.bodz.bas.crypto.trans.fn.ICodeBin;
 import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.TransformerArray;
 
 public abstract class AbstractFlyingTransient
         implements IFlyingTransient {
@@ -18,8 +22,9 @@ public abstract class AbstractFlyingTransient
     }
 
     @Override
-    public final ICodeBin getCodeForNow() {
-        return getCodeAtTime(System.currentTimeMillis());
+    public final String snapshot() {
+        ICodeBin bin = getCodeAtTime(System.currentTimeMillis());
+        return bin.toString();
     }
 
     @Override
@@ -75,6 +80,18 @@ public abstract class AbstractFlyingTransient
     @Override
     public IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin> transformer) {
         return new TransformedFlyingTransient<>(this, transformer);
+    }
+
+    @Override
+    public IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers) {
+        List<ITransformer<ICodeBin, ICodeBin>> list = new ArrayList<>();
+        for (ITransformer<? extends ICodeBin, ? extends ICodeBin> item : transformers) {
+            @SuppressWarnings("unchecked")
+            ITransformer<ICodeBin, ICodeBin> cast = (ITransformer<ICodeBin, ICodeBin>) item;
+            list.add(cast);
+        }
+        TransformerArray<ICodeBin> array = new TransformerArray<ICodeBin>(list);
+        return transform(array);
     }
 
 }

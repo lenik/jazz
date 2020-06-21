@@ -2,6 +2,7 @@ package net.bodz.lily.security.login.resolver;
 
 import java.util.List;
 
+import net.bodz.bas.crypto.trans.FlyingIndex;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -49,8 +50,11 @@ public class UserPasswordLoginResolver
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
-            if (checker.checkSignature(passwd, sign)) {
-                return new Result(namedUser);
+            FlyingIndex fi = checker.checkSignature(passwd, sign);
+            if (fi.exists()) {
+                Result result = new Result(namedUser);
+                result.set("fi", fi);
+                return result;
             }
         }
 
