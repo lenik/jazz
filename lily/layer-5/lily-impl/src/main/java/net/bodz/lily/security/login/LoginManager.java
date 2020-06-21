@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
+import net.bodz.bas.crypto.trans.EpochTransient;
+import net.bodz.bas.crypto.trans.IFlyingSupport;
+import net.bodz.bas.crypto.trans.IFlyingTransient;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -16,6 +18,7 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.sms.IShortMessageService;
+import net.bodz.bas.sms.SmsCommitLog;
 import net.bodz.bas.sms.SmsProviders;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
@@ -23,14 +26,12 @@ import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.ILoginResolver.Result;
-import net.bodz.lily.security.login.key.FlyingSignatureChecker;
-import net.bodz.lily.security.login.key.IFlyingCode;
 import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
 import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
 
 public class LoginManager
         extends LoginTokenManager
-        implements ILoginManager, IPathDispatchable {
+        implements ILoginManager, IPathDispatchable, IFlyingSupport {
 
     // long timeout = 3600_000;
     DataContext dataContext;
@@ -67,10 +68,42 @@ public class LoginManager
             target = login(q);
             break;
 
+        case "loginByPhone":
+            target = loginByPhone(q.getString("phone"), q.getString("e_cr"));
+            break;
+
+        case "loginByEmail":
+            target = loginByPhone(q.getString("email"), q.getString("e_cr"));
+            break;
+
         case "exit":
         case "quit":
         case "logout":
             target = logout();
+            break;
+
+        case "verify-phone":
+            target = verifyPhone(q.getString("phone"), q.getString("usage"));
+            break;
+
+        case "verify-email":
+            target = verifyEmail(q.getString("email"), q.getString("usage"));
+            break;
+
+        case "register-by-phone":
+            target = registerByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
+            break;
+
+        case "register-by-email":
+            target = registerByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
+            break;
+
+        case "reset-password-by-phone":
+            target = resetPasswordByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
+            break;
+
+        case "reset-password-by-email":
+            target = resetPasswordByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
             break;
         }
 
@@ -82,12 +115,14 @@ public class LoginManager
     boolean debug = true;
     int window = 1_000;
     int distance = 10 * 60; // 10 minutes
-    FlyingSignatureChecker signChecker = new FlyingSignatureChecker(window, distance);
+    IFlyingTransient core = new EpochTransient(window).transform(tr.partialMd5(6, 10));
+    LoginCrypto crypto = new LoginCrypto(core, distance);
+    int timeout = crypto.getTimeout(60_000);
 
     @Override
     public LoginResult initiateLogin(IVariantMap<String> q) {
         LoginResult result = new LoginResult();
-        String serverChallenge = signChecker.getSalt();
+        String serverChallenge = core.snapshot();
         result.setServerChallenge(serverChallenge);
 
         // diag helper.
@@ -96,13 +131,14 @@ public class LoginManager
             if (userId != null) {
                 String password = getAnyPassword(userId);
                 if (password != null) {
-                    String ecr = DigestUtils.shaHex(serverChallenge + password + serverChallenge);
+                    // encrypted client response
+                    String ecr = crypto.passwordSign(password).snapshot();
                     result.set("e_passwd", ecr);
                 }
             }
             String phone = q.getString("phone");
             if (phone != null) {
-                String ecr = DigestUtils.shaHex(serverChallenge + phone + serverChallenge);
+                String ecr = crypto.shortVerificationCode(phone).snapshot();
                 result.set("e_cr", ecr);
             }
         }
@@ -112,26 +148,26 @@ public class LoginManager
     @Override
     public LoginResult login(IVariantMap<String> q) {
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
-            Result rr = resolver.login(signChecker, q);
-            if (rr == null)
-                continue;
-            return rr.toLoginResult(this);
+            Result rr = resolver.login(crypto.signChecker, q);
+            if (rr != null) {
+                LoginResult result = rr.toLoginResult(this);
+                result.set("resolverClass", resolver.getClass().getName());
+                return result;
+            }
         }
         return new LoginResult().fail("No successful login.");
     }
 
     @Override
-    public LoginResult loginByPhone(String phone, String sign)
-            throws LoginException {
+    public LoginResult loginByPhone(String phone, String sign) {
         PhoneCheckLoginResolver resolver = new PhoneCheckLoginResolver(dataContext);
-        return resolver.login(signChecker, phone, sign).toLoginResult(this);
+        return resolver.login(crypto.signChecker, phone, sign).toLoginResult(this);
     }
 
     @Override
-    public LoginResult loginByEmail(String email, String sign)
-            throws LoginException {
+    public LoginResult loginByEmail(String email, String sign) {
         EmailPasswordLoginResolver resolver = new EmailPasswordLoginResolver(dataContext);
-        return resolver.login(signChecker, email, sign).toLoginResult(this);
+        return resolver.login(crypto.signChecker, email, sign).toLoginResult(this);
     }
 
     String getAnyPassword(int userId) {
@@ -163,64 +199,100 @@ public class LoginManager
     }
 
     @Override
-    public void verifyPhone(String phone, String usage)
-            throws LoginException {
+    public JsonResponse verifyPhone(String phone, String usage) {
+        JsonResponse resp = new JsonResponse();
+        String shortCode = crypto.shortVerificationCode(phone).snapshot();
+        if (debug)
+            resp.set("e_cr", shortCode);
+
         IShortMessageService sms = SmsProviders.getSms();
-        IFlyingCode flyingCode = signChecker.getFlyingCode(phone);
-        String code = flyingCode.getCodeForNow();
+        SmsCommitLog log = new SmsCommitLog();
         try {
-            sms.sendPrepared(phone, VERIFY, code);
+            sms.addSmsListener(log);
+            if (!debug)
+                if (!sms.sendPrepared(phone, usage, shortCode, timeout))
+                    return resp.fail("sms isn't available.");
         } catch (Exception e) {
-            throw new LoginException("sms error: " + e.getMessage(), e);
+            return resp.fail(e, "send sms error: " + e.getMessage());
+        } finally {
+            sms.removeSmsListener(log);
+            resp.set("logs", JsonFn.union(log));
         }
+        return resp.succeed();
     }
 
     @Override
-    public void verifyEmail(String address, String usage)
-            throws LoginException {
+    public JsonResponse verifyEmail(String address, String usage) {
+        JsonResponse resp = new JsonResponse();
+        String sign = crypto.sign(address).snapshot();
+        resp.set("sign", sign);
         throw new NotImplementedException("mail service isn't supported.");
     }
 
     @Override
-    public LoginResult registerByPhone(String phone, String code)
-            throws LoginException {
+    public LoginResult registerByPhone(String phone, String ecr, String password) {
         LoginResult result = new LoginResult();
-        if (!signChecker.checkSignature(phone, code))
+        if (phone == null)
+            return result.fail("phone isn't specified.");
+        if (ecr == null)
+            return result.fail("ecr isn't specified.");
+        if (password == null)
+            return result.fail("password isn't specified.");
+
+        if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
 
-        // 1. check if phone is in use
-
-        // 2. auto create a user (random name)
-        // 3. bind user with phone (other-id)
-        // 4. auto login
-        return result.succeed();
+        PhoneOids impl = new PhoneOids(dataContext);
+        return impl.register(this, phone, password);
     }
 
     @Override
-    public LoginResult registerByEmail(String email, String code)
-            throws LoginException {
+    public LoginResult registerByEmail(String email, String ecr, String password) {
         LoginResult result = new LoginResult();
-        if (!signChecker.checkSignature(email, code))
+        if (email == null)
+            return result.fail("email isn't specified.");
+        if (ecr == null)
+            return result.fail("ecr isn't specified.");
+        if (password == null)
+            return result.fail("password isn't specified.");
+
+        if (!crypto.checkShortVerificationCode(email, ecr, result).exists())
             return result.fail("Invalid code.");
-        return result.succeed();
+
+        return result.fail("Not implemented.");
     }
 
     @Override
-    public LoginResult resetPasswordByPhone(String phone, String code, String password)
-            throws LoginException {
+    public LoginResult resetPasswordByPhone(String phone, String ecr, String password) {
         LoginResult result = new LoginResult();
-        if (!signChecker.checkSignature(phone, code))
+        if (phone == null)
+            return result.fail("phone isn't specified.");
+        if (ecr == null)
+            return result.fail("ecr isn't specified.");
+        if (password == null)
+            return result.fail("password isn't specified.");
+
+        if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
-        return result.succeed();
+
+        PhoneOids impl = new PhoneOids(dataContext);
+        return impl.resetPassword(this, phone, password);
     }
 
     @Override
-    public LoginResult resetPasswordByEmail(String email, String code, String password)
-            throws LoginException {
+    public LoginResult resetPasswordByEmail(String email, String ecr, String password) {
         LoginResult result = new LoginResult();
-        if (!signChecker.checkSignature(email, code))
+        if (email == null)
+            return result.fail("email isn't specified.");
+        if (ecr == null)
+            return result.fail("ecr isn't specified.");
+        if (password == null)
+            return result.fail("password isn't specified.");
+
+        if (!crypto.checkShortVerificationCode(email, ecr, result).exists())
             return result.fail("Invalid code.");
-        return result.succeed();
+
+        return result.fail("Not implemented.");
     }
 
 }

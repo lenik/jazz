@@ -13,37 +13,26 @@ public interface ILoginManager {
     /**
      * @return server challenge
      */
-    LoginResult initiateLogin(IVariantMap<String> q)
-            throws LoginException;
+    LoginResult initiateLogin(IVariantMap<String> q);
 
-    LoginResult login(IVariantMap<String> q)
-            throws LoginException;
+    LoginResult login(IVariantMap<String> q);
 
-    LoginResult loginByPhone(String phone, String code)
-            throws LoginException;
+    LoginResult loginByPhone(String phone, String code);
 
-    LoginResult loginByEmail(String email, String code)
-            throws LoginException;
+    LoginResult loginByEmail(String email, String code);
 
-    JsonResponse logout()
-            throws LoginException;
+    JsonResponse logout();
 
-    void verifyPhone(String number, String usage)
-            throws LoginException;
+    JsonResponse verifyPhone(String number, String usage);
 
-    void verifyEmail(String address, String usage)
-            throws LoginException;
+    JsonResponse verifyEmail(String address, String usage);
 
-    LoginResult registerByPhone(String phone, String code)
-            throws LoginException;
+    LoginResult registerByPhone(String phone, String ecr, String password);
 
-    LoginResult registerByEmail(String email, String code)
-            throws LoginException;
+    LoginResult registerByEmail(String email, String ecr, String password);
 
-    LoginResult resetPasswordByPhone(String phone, String code, String password)
-            throws LoginException;
+    LoginResult resetPasswordByPhone(String phone, String ecr, String password);
 
-    LoginResult resetPasswordByEmail(String email, String code, String password)
-            throws LoginException;
+    LoginResult resetPasswordByEmail(String email, String ecr, String password);
 
 }

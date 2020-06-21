@@ -2,10 +2,10 @@ package net.bodz.bas.crypto.trans;
 
 import net.bodz.bas.crypto.trans.fn.TextBin;
 
-public class TimeHashTransient
+public class EpochTransient
         extends AbstractFlyingTransient {
 
-    public TimeHashTransient(long window) {
+    public EpochTransient(long window) {
         super(window);
     }
 

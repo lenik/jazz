@@ -20,10 +20,10 @@ public class FlyingSignatureChecker
     }
 
     @Override
-    public boolean checkSignature(String textData, String signature) {
+    public FlyingIndex checkSignature(String textData, String signature) {
         IFlyingTransient flyingCode = fly(textData);
         FlyingIndex fi = flyingCode.lastIndexOf(signature, distance);
-        return fi.exists();
+        return fi;
     }
 
 }

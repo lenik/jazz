@@ -1,19 +1,24 @@
 package net.bodz.bas.crypto.trans;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import net.bodz.bas.c.java.util.TimeZones;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonObject;
 
 public class FlyingIndex
-        implements IFlyingIndex {
+        implements IFlyingIndex, IJsonSerializable {
 
     public static final long INDEX_NA = 0L;
 
-    final long window;
-    final long time;
-    final long index;
+    long window;
+    long time;
+    long index;
 
     public FlyingIndex(long index, long window, long time) {
         this.index = index;
@@ -93,6 +98,26 @@ public class FlyingIndex
         else
             ts = "+" + timeFormat.format(relativeTime);
         return String.format("index %+d, time %s", relativeIndex, ts);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        window = o.getLong("window", window);
+        time = o.getLong("time", time);
+        index = o.getLong("index", index);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.entry("window", window);
+        out.entry("time", time);
+        out.entry("index", index);
+        long relativeIndex = getRelativeIndex();
+        long relativeTime = getRelativeTime();
+        out.entry("relativeIndex", relativeIndex);
+        out.entry("relativeTime", relativeTime);
     }
 
 }

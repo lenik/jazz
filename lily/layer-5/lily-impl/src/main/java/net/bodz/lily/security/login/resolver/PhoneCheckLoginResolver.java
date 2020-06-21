@@ -2,6 +2,7 @@ package net.bodz.lily.security.login.resolver;
 
 import java.util.List;
 
+import net.bodz.bas.crypto.trans.FlyingIndex;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
@@ -52,9 +53,12 @@ public class PhoneCheckLoginResolver
         }
 
         User matchedUser = users.get(0);
-        if (checker.checkSignature(phone, sign))
-            return new Result(matchedUser);
-
+        FlyingIndex fi = checker.checkSignature(phone, sign);
+        if (fi.exists()) {
+            Result result = new Result(matchedUser);
+            result.set("fi", fi);
+            return result;
+        }
         return failed("Incorrect verification code for phone number %s.", phone);
     }
 }

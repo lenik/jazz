@@ -12,7 +12,7 @@ public interface IFlyingTransient {
      */
     long getWindow();
 
-    ICodeBin getCodeForNow();
+    String snapshot();
 
     ICodeBin getCodeAtTime(long time);
 
@@ -29,5 +29,8 @@ public interface IFlyingTransient {
     IFlyingTransient getCore();
 
     IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin> transformer);
+
+    @SuppressWarnings("unchecked")
+    IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers);
 
 }
