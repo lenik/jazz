@@ -15,6 +15,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.ControlBreak;
 import net.bodz.bas.err.control.ControlContinue;
 import net.bodz.bas.err.control.ControlExit;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
@@ -318,7 +319,7 @@ public abstract class BasicCLI
         return Iterables.transform(expandWildcards(pathnames), vfsFileResolver);
     }
 
-    private static final ITransformer<String, File> pojfFileResolver = new ITransformer<String, File>() {
+    private static final ITransformer<String, File> pojfFileResolver = new AbstractTransformer<String, File>() {
         /** @throws FileResolveException */
         @Override
         public File transform(String pathname) {
@@ -327,7 +328,7 @@ public abstract class BasicCLI
         }
     };
 
-    private static final ITransformer<String, IFile> vfsFileResolver = new ITransformer<String, IFile>() {
+    private static final ITransformer<String, IFile> vfsFileResolver = new AbstractTransformer<String, IFile>() {
         /** @throws FileResolveException */
         @Override
         public IFile transform(String pathname) {

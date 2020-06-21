@@ -2,10 +2,10 @@ package net.bodz.bas.c.java.util;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 
 public class GetKeyTransformer<K>
-        implements ITransformer<Entry<K, ?>, K> {
+        extends AbstractTransformer<Entry<K, ?>, K> {
 
     @Override
     public K transform(Entry<K, ?> input)

@@ -5,7 +5,7 @@ import java.util.*;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.t.pojo.Pair;
 
 public abstract class AbstractFramedMap<K, V>
@@ -297,7 +297,7 @@ class VarNode {
     }
 
     public static class GetData<T>
-            implements ITransformer<VarNode, T> {
+            extends AbstractTransformer<VarNode, T> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -308,7 +308,7 @@ class VarNode {
     }
 
     public static class GetEntryOfData<K, T>
-            implements ITransformer<Map.Entry<K, VarNode>, Map.Entry<K, T>> {
+            extends AbstractTransformer<Map.Entry<K, VarNode>, Map.Entry<K, T>> {
 
         @SuppressWarnings("unchecked")
         @Override

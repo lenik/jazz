@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 
 public class Sha1Transformer
-        implements ITransformer<ICodeBin, Sha1OfTextBin> {
+        extends AbstractTransformer<ICodeBin, Sha1OfTextBin> {
 
     public Sha1Transformer() {
     }
