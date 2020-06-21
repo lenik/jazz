@@ -14,6 +14,11 @@ public class UserMask
     String email;
     String mobile;
 
+    public UserMask name(String name) {
+        setName(name);
+        return this;
+    }
+
     public UserMask categoryId(Integer categoryId) {
         setCategoryId(categoryId);
         return this;
