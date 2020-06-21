@@ -10,8 +10,8 @@ import org.apache.commons.vfs.*;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
@@ -227,7 +227,7 @@ public class ApacheFile
     }
 
     Iterable<ApacheFile> convertFiles(Iterable<FileObject> fileObjects) {
-        return Iterables.transform(fileObjects, new ITransformer<FileObject, ApacheFile>() {
+        return Iterables.transform(fileObjects, new AbstractTransformer<FileObject, ApacheFile>() {
             @Override
             public ApacheFile transform(FileObject input) {
                 return new ApacheFile(getDevice(), input);
@@ -236,7 +236,7 @@ public class ApacheFile
     }
 
     /** ⇱ Implementation Of {@link IFileAttributes}. */
-/* _____________________________ */static section.iface __ATTRIBUTES__;
+    /* _____________________________ */static section.iface __ATTRIBUTES__;
 
     @Override
     public boolean isBlob() {

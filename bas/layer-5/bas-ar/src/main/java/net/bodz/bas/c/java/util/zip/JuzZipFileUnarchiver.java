@@ -8,7 +8,7 @@ import java.util.zip.ZipFile;
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.t.iterator.Iterators;
 
 public class JuzZipFileUnarchiver
@@ -62,7 +62,7 @@ public class JuzZipFileUnarchiver
     }
 
     class EntryTransformer
-            implements ITransformer<ZipEntry, JuzZipEntry> {
+            extends AbstractTransformer<ZipEntry, JuzZipEntry> {
 
         @Override
         public JuzZipEntry transform(ZipEntry input)

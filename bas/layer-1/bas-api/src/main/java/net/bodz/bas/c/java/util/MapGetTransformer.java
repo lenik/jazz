@@ -3,10 +3,10 @@ package net.bodz.bas.c.java.util;
 import java.util.Map;
 
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 
 public class MapGetTransformer<K, V>
-        implements ITransformer<K, V> {
+        extends AbstractTransformer<K, V> {
 
     private final Map<?, ? extends V> map;
 

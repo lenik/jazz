@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 
 public class PartialMd5Transformer
-        implements ITransformer<ICodeBin, PartialMd5OfTextBin> {
+        extends AbstractTransformer<ICodeBin, PartialMd5OfTextBin> {
 
     int length;
     int radix;

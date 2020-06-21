@@ -5,8 +5,10 @@ import net.bodz.bas.err.TransformException;
 public interface ITransformer<S, T>
         extends ITransformerX<S, T, TransformException> {
 
+    <Y> ITransformer<S, Y> join(ITransformer<? super T, Y> o);
+
     class Nop<T>
-            implements ITransformer<T, T> {
+            extends AbstractTransformer<T, T> {
 
         @Override
         public T transform(T input)

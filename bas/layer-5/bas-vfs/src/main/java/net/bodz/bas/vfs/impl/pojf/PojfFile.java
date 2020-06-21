@@ -15,8 +15,8 @@ import java.util.Arrays;
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
@@ -169,7 +169,7 @@ public class PojfFile
     }
 
     Iterable<? extends IFile> convertNames(Iterable<String> names) {
-        return Iterables.transform(names, new ITransformer<String, PojfFile>() {
+        return Iterables.transform(names, new AbstractTransformer<String, PojfFile>() {
             @Override
             public PojfFile transform(String input) {
                 return PojfFile.this.getChild(input);
@@ -178,7 +178,7 @@ public class PojfFile
     }
 
     Iterable<? extends IFile> convertFiles(Iterable<File> files) {
-        return Iterables.transform(files, new ITransformer<File, PojfFile>() {
+        return Iterables.transform(files, new AbstractTransformer<File, PojfFile>() {
             @Override
             public PojfFile transform(File input) {
                 return new PojfFile(input);

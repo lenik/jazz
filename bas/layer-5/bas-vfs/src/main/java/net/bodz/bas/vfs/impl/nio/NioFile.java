@@ -13,8 +13,8 @@ import java.util.Collections;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
@@ -174,7 +174,7 @@ public class NioFile
     }
 
     static class Path2NioFile
-            implements ITransformer<Path, NioFile> {
+            extends AbstractTransformer<Path, NioFile> {
 
         @Override
         public NioFile transform(Path input)

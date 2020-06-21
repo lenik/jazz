@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.ITransformer;
+import net.bodz.bas.fn.AbstractTransformer;
 
 public class Md5SignTransformer
-        implements ITransformer<ICodeBin, Md5OfTextBin> {
+        extends AbstractTransformer<ICodeBin, Md5OfTextBin> {
 
     String key;
 
