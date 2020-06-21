@@ -25,7 +25,11 @@ public interface IShortMessageService
     /**
      * @return <code>true</code> if <code>templateName</code> is defined.
      */
-    boolean sendPrepared(String recipient, String templateName, String... params)
+    boolean sendPrepared(String recipient, String templateName, Object... params)
             throws IOException, ParseException;
+
+    void addSmsListener(ISmsListener listener);
+
+    void removeSmsListener(ISmsListener listener);
 
 }

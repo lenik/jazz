@@ -13,6 +13,8 @@ public abstract class AbstractSmsImpl
     LinkedList<SmsRecord> records = new LinkedList<>();
     Map<String, SmsTemplate> templates = new HashMap<>();
 
+    List<ISmsListener> listeners = new ArrayList<>();
+
     @Override
     public int getPriority() {
         return 0;
@@ -59,7 +61,7 @@ public abstract class AbstractSmsImpl
     }
 
     @Override
-    public boolean sendPrepared(String recipient, String templateName, String... parameters)
+    public boolean sendPrepared(String recipient, String templateName, Object... parameters)
             throws IOException, ParseException {
         SmsRecord record = new SmsRecord(recipient, templateName, Arrays.asList(parameters));
         if (!canSend(record))
@@ -79,12 +81,45 @@ public abstract class AbstractSmsImpl
             records = new LinkedList<>();
         }
         send(dump);
+
+        for (SmsRecord record : dump) {
+            SmsSendState state = SmsSendState.IGNORED;
+            if (record.response != null)
+                state = record.response.getSendState();
+            for (ISmsListener listener : listeners) {
+                switch (state) {
+                case SUCCESS:
+                    listener.sent(record);
+                    break;
+                case FAILED:
+                    listener.failed(record);
+                    break;
+                case IGNORED:
+                    listener.ignored(record);
+                    break;
+                default:
+                }
+                listener.completed(record);
+            }
+        }
     }
 
     protected abstract void send(LinkedList<SmsRecord> records)
             throws IOException, ParseException;
 
-    protected Map<String, List<SmsRecord>> divideByTemplate(List<SmsRecord> records, String nullKey) {
+    @Override
+    public void addSmsListener(ISmsListener listener) {
+        if (listener == null)
+            throw new NullPointerException("listener");
+        listeners.add(listener);
+    }
+
+    @Override
+    public void removeSmsListener(ISmsListener listener) {
+        listeners.remove(listener);
+    }
+
+    protected static Map<String, List<SmsRecord>> divideByTemplate(List<SmsRecord> records, String nullKey) {
         Map<String, List<SmsRecord>> map = new LinkedHashMap<>();
         for (SmsRecord record : records) {
             String k = record.templateName;

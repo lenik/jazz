@@ -59,12 +59,24 @@ public class SmsProviders
     }
 
     @Override
-    public boolean sendPrepared(String recipient, String templateName, String... params)
+    public boolean sendPrepared(String recipient, String templateName, Object... params)
             throws IOException, ParseException {
         for (IShortMessageService impl : allImpls)
             if (impl.sendPrepared(recipient, templateName, params))
                 return true;
         return false;
+    }
+
+    @Override
+    public void addSmsListener(ISmsListener listener) {
+        for (IShortMessageService impl : allImpls)
+            impl.addSmsListener(listener);
+    }
+
+    @Override
+    public void removeSmsListener(ISmsListener listener) {
+        for (IShortMessageService impl : allImpls)
+            impl.removeSmsListener(listener);
     }
 
     static SmsProviders instance = new SmsProviders();

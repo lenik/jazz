@@ -1,10 +1,18 @@
 package net.bodz.bas.sms.ucpaas;
 
+import java.io.IOException;
+
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.sms.ISmsSendResponse;
+import net.bodz.bas.sms.SmsSendState;
 
 public class SendSmsResult
-        extends AbstractUcpaasResult {
+        extends AbstractUcpaasResult
+        implements ISmsSendResponse {
+
+    private static final long serialVersionUID = 1L;
 
     public int count;
     public String smsid;
@@ -44,6 +52,30 @@ public class SendSmsResult
 
         smsid = o.getString("smsid");
         mobile = o.getString("mobile");
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        super.writeObject(out);
+        out.entry("count", count);
+        out.entry("smsid", smsid);
+        out.entry("mobile", mobile);
+    }
+
+    @Override
+    public SmsSendState getSendState() {
+        if (count == 0)
+            return SmsSendState.IGNORED;
+        if (isSucceeded())
+            return SmsSendState.SUCCESS;
+        else
+            return SmsSendState.FAILED;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return msg;
     }
 
 }

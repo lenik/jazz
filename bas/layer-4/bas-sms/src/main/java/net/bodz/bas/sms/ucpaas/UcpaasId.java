@@ -2,11 +2,13 @@ package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.fmt.json.JsonStruct;
 
 public class UcpaasId
-        implements IJsonSerializable {
+        extends JsonStruct {
+
+    private static final long serialVersionUID = 1L;
 
     public String sid;
     public String token;
@@ -22,6 +24,9 @@ public class UcpaasId
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        sid = o.getString("sid", sid);
+        token = o.getString("token", token);
+        appid = o.getString("appid", appid);
     }
 
     @Override
