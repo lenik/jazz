@@ -6,20 +6,26 @@
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.UserOtherId" extends="mi.objlist_map">
         <result property="properties.jsonForm" column="props" />
-        <result property="oid" column="oid" />
+        <result property="otherId" column="oid" />
         <result property="auth.jsonForm" column="auth" />
-        <association property="user" javaType="net.bodz.lily.security.User">
-            <id property="id" column="user" />
-            <result property="label" column="user_label" />
-            <collection property="secrets" javaType="java.util.ArrayList" ofType="net.bodz.violet.store.StoreOrderItem">
-                <id property="id" column="sec_id" />
-                <result property="passwd" column="sec_passwd" />
-            </collection>
-        </association>
+        <association property="user" resultMap="user" />
         <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
             <id property="id" column="type" />
             <result property="label" column="type_label" />
         </association>
+    </resultMap>
+
+    <resultMap id="user" type="net.bodz.lily.security.User">
+        <id property="id" column="user" />
+        <result property="label" column="user_label" />
+        <collection property="secrets" resultMap="secret">
+        </collection>
+    </resultMap>
+
+    <resultMap id="secret" type="net.bodz.lily.security.UserSecret">
+        <id property="id" column="sec_id" />
+        <result property="password" column="sec_passwd" />
+        <association property="user" resultMap="user" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -32,7 +38,7 @@
         from useroid a
             left join "user" u on a."user" = u.id
             left join useroidtype type on a.type = type.id
-            left join usersec s on a."user" = s."user";
+            left join usersec s on a."user" = s."user"
         ]]>
     </sql>
 
@@ -46,7 +52,7 @@
         from useroid a
             left join "user" u on a."user" = u.id
             left join useroidtype type on a.type = type.id
-            left join usersec s on a."user" = s."user";
+            left join usersec s on a."user" = s."user"
         ]]>
     </sql>
 
@@ -56,6 +62,9 @@
         <include refid="co.filter-ui" />
         <include refid="co.filter-version" />
         <include refid="mi.filter-all" />
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.typeId != null">and a.type = #{m.typeId}</if>
+        <if test="m.otherId != null">and a.oid = #{m.otherId}</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -88,8 +97,8 @@
             #{priority}, #{flags}, #{state},
             #{properties.jsonForm},
             #{user.id}, #{type.id},
-            #{oid},
-            #{auth.jsonForm},
+            #{otherId},
+            #{auth.jsonForm}
         ); --
     ]]></insert>
 
@@ -100,8 +109,9 @@
             props = #{properties.jsonForm},
             "user" = #{user.id},
             type = #{type.id},
-            oid = #{oid},
-            auth = #{auth.jsonForm},
+            oid = #{otherId},
+            auth =
+            #{auth.jsonForm},
         </set>
         <where>
             id = #{id}

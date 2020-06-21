@@ -24,6 +24,19 @@ public class Role
     private int rank = RANK_NORMAL;
     private List<User> users;
 
+    public Role() {
+    }
+
+    public Role(int id) {
+        setId(id);
+    }
+
+    public Role(int id, String name, String fullName) {
+        setId(id);
+        setName(name);
+        setFullName(fullName);
+    }
+
     public int getRank() {
         return rank;
     }

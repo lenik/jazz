@@ -12,7 +12,7 @@ public class UserMask
 
     String password;
     String email;
-    String mobile;
+    String phone;
 
     public UserMask name(String name) {
         setName(name);
@@ -44,8 +44,8 @@ public class UserMask
         return this;
     }
 
-    public UserMask mobile(String mobile) {
-        setMobile(mobile);
+    public UserMask phone(String phone) {
+        setPhone(phone);
         return this;
     }
 
@@ -89,12 +89,12 @@ public class UserMask
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 }

@@ -5,7 +5,7 @@ import javax.persistence.Table;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.template.RichProperties;
 
 /**
@@ -14,7 +14,7 @@ import net.bodz.lily.template.RichProperties;
 @Table(name = "useroid")
 @IdType(Integer.class)
 public class UserOtherId
-        extends CoEntity<Integer> {
+        extends CoMomentInterval<Integer> {
 
     private static final long serialVersionUID = 1L;
 

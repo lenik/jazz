@@ -112,12 +112,12 @@
     </sql>
 
     <sql id="modefilt">
-        <if test="m.login != null &amp;&amp; !m.login.ignoreAcl">
+        <if test="m.loginToken != null &amp;&amp; !m.loginToken.ignoreAcl">
             and (
-            a.uid=#{m.login.user.id}
-            <if test="!m.login.user.groupIds.empty">
+            a.uid=#{m.loginToken.user.id}
+            <if test="!m.loginToken.user.groupIds.empty">
                 or (a.mode::bit(9) &amp; b'000100000' != b'000000000') and a.gid in
-                <foreach collection="m.login.user.groupIds" item="item" open="(" close=")" separator=", ">
+                <foreach collection="m.loginToken.user.groupIds" item="item" open="(" close=")" separator=", ">
                     #{item}
                 </foreach>
             </if>

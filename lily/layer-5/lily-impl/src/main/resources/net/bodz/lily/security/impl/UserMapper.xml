@@ -11,22 +11,8 @@
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
         </association>
-        <association property="primaryGroup" javaType="net.bodz.lily.security.Group">
-            <id property="id" column="gid0" />
-            <result property="name" column="g_name" />
-            <result property="label" column="g_label" />
-            <result property="description" column="g_description" />
-            <association property="admin" javaType="net.bodz.lily.security.User">
-                <id property="id" column="g_admin" />
-            </association>
-        </association>
-        <collection property="otherIds" javaType="ArrayList" ofType="net.bodz.lily.security.UserOtherId">
-            <id property="id" column="o_id" />
-            <result property="otherId" column="o_oid" />
-            <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
-                <id property="id" column="o_type" />
-            </association>
-        </collection>
+        <association property="primaryGroup" resultMap="group" columnPrefix="g_" />
+        <collection property="otherIds" javaType="ArrayList" resultMap="oid" columnPrefix="o_" />
     </resultMap>
 
     <resultMap id="objedit_map" type="net.bodz.lily.security.User" extends="objlist_map">
@@ -35,25 +21,39 @@
             <result property="lastLoginTime" column="lastlog" />
             <result property="lastLoginIP" column="lastlogip" />
         </association>
-        <collection property="groups" javaType="ArrayList" ofType="net.bodz.lily.security.Group">
-            <id property="id" column="y_id" />
-            <result property="name" column="y_name" />
-            <result property="label" column="y_label" />
-            <result property="description" column="y_description" />
-            <association property="admin" javaType="net.bodz.lily.security.User">
-                <id property="id" column="y_admin" />
-            </association>
-        </collection>
-        <collection property="secrets" javaType="ArrayList" ofType="net.bodz.lily.security.UserSecret">
-            <id property="id" column="s_id" />
-            <result property="password" column="s_passwd" />
-        </collection>
+        <collection property="groups" javaType="ArrayList" resultMap="group" columnPrefix="y_" />
+        <collection property="secrets" javaType="ArrayList" resultMap="secret" />
+    </resultMap>
+
+    <resultMap id="group" type="net.bodz.lily.security.Group">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <association property="admin" javaType="net.bodz.lily.security.User">
+            <id property="id" column="admin" />
+        </association>
+    </resultMap>
+
+    <resultMap id="oid" type="net.bodz.lily.security.UserOtherId">
+        <id property="id" column="id" />
+        <result property="otherId" column="oid" />
+        <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
+            <id property="id" column="type" />
+        </association>
+    </resultMap>
+
+    <resultMap id="secret" type="net.bodz.lily.security.UserSecret">
+        <id property="id" column="s_id" />
+        <result property="password" column="s_passwd" />
+        <association property="user" resultMap="objedit_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
             a.*,
             cat.label "cat_label",
+            g.id "g_id",
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
@@ -84,6 +84,7 @@
             o.id "o_id",
             o.type "o_type",
             o.oid "o_oid",
+            g.id "g_id",
             g.name "g_name",
             g.label "g_label",
             g.description "g_description",
