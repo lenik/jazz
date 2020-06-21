@@ -69,6 +69,9 @@ public interface IJsonOut {
     IJsonOut object()
             throws JSONException;
 
+    IJsonOut object(Object object)
+            throws JSONException;
+
     /**
      * Append either the value <code>true</code> or the value <code>false</code>.
      *
