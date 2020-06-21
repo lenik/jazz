@@ -9,7 +9,7 @@ import net.bodz.bas.err.UnexpectedException;
 public abstract class AbstractSmsImpl
         implements IShortMessageService {
 
-    boolean autoCommit;
+    boolean autoCommit = true;
     LinkedList<SmsRecord> records = new LinkedList<>();
     Map<String, SmsTemplate> templates = new HashMap<>();
 
