@@ -36,11 +36,9 @@ public class UcpaasSmsImpl
         if (record.templateName == null)
             return false;
 
-        if (checkTemplate) {
-            SmsTemplate template = getTemplate(record.templateName);
-            if (template == null)
-                return false;
-        }
+        SmsTemplate template = getTemplate(record.templateName);
+        if (template == null)
+            return false;
 
         return true;
     }
@@ -48,7 +46,6 @@ public class UcpaasSmsImpl
     @Override
     protected void send(LinkedList<SmsRecord> records)
             throws IOException, ParseException {
-        String uid = "callback-id";
         for (SmsRecord record : records) {
             if (record.templateName == null) // plain text isn't supported.
                 continue;
@@ -56,13 +53,9 @@ public class UcpaasSmsImpl
             if (template == null) // template is undefined.
                 continue;
             String templateId = template.id.toString();
-            String[] params;
-            if (record.parameters == null)
-                params = new String[0];
-            else
-                params = record.parameters.toArray(new String[0]);
-
-            client.sendSms(ucid, uid, templateId, record.recipient, params);
+            String[] params = record.getParametersAsStringArray();
+            record.response = client.sendSms(//
+                    ucid, record.uid, templateId, record.recipient, params);
         }
     }
 

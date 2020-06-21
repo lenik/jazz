@@ -4,14 +4,16 @@ import java.io.IOException;
 
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.bas.fmt.json.JsonSupport;
+import net.bodz.bas.fmt.json.JsonStruct;
 import net.bodz.bas.meta.cache.Derived;
 
 public class AbstractUcpaasResult
-        extends JsonSupport {
+        extends JsonStruct {
 
-    public String _code;
+    private static final long serialVersionUID = 1L;
+
     public int code;
     public String msg;
     public String createDate;
@@ -35,12 +37,21 @@ public class AbstractUcpaasResult
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        _code = o.getString("code");
+        String _code = o.getString("code");
         if (_code != null)
             code = Integer.parseInt(_code);
         msg = o.getString("msg");
         createDate = o.getString("create_date");
         uid = o.getString("uid");
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException {
+        out.entry("code", code);
+        out.entry("msg", msg);
+        out.entry("createDate", createDate);
+        out.entry("uid", uid);
     }
 
     @Override
@@ -54,14 +65,6 @@ public class AbstractUcpaasResult
         }
         js.endObject();
         return js.toString().replace(",", ",\n");
-    }
-
-    public String get_code() {
-        return _code;
-    }
-
-    public void set_code(String _code) {
-        this._code = _code;
     }
 
     public int getCode() {
