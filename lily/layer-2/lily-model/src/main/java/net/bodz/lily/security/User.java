@@ -102,16 +102,21 @@ public class User
         return gids;
     }
 
-    public UserSecret getSecret() {
+    public UserSecret getOrCreateSecret() {
+        UserSecret secret;
+        if (secrets.isEmpty()) {
+            secret = new UserSecret();
+            secret.setUser(this);
+            secrets.add(secret);
+        } else
+            secret = secrets.get(0);
+        return secret;
+    }
+
+    public synchronized UserSecret getSecret() {
         if (secrets.isEmpty())
             return null;
-        else
-            try {
-                return secrets.get(0);
-            } catch (IndexOutOfBoundsException e) {
-                // TODO better solution?
-                return null;
-            }
+        return secrets.get(0);
     }
 
     public void setSecret(UserSecret secret) {
