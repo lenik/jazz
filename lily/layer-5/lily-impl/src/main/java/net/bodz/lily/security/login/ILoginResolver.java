@@ -7,7 +7,6 @@ import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.site.json.AbstractJsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
-import net.bodz.lily.security.login.key.ISignatureChecker;
 
 @IndexedType
 public interface ILoginResolver {

@@ -12,7 +12,7 @@ import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserSecretMapper;
 import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.DataBackedLoginResolver;
-import net.bodz.lily.security.login.key.ISignatureChecker;
+import net.bodz.lily.security.login.ISignatureChecker;
 
 public class PhonePasswordLoginResolver
         extends DataBackedLoginResolver

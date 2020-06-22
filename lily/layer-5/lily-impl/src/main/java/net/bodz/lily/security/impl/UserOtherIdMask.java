@@ -1,6 +1,7 @@
 package net.bodz.lily.security.impl;
 
 import net.bodz.lily.model.base.CoMomentIntervalMask;
+import net.bodz.lily.security.User;
 
 /**
  * @see net.bodz.lily.security.UserOtherId
@@ -11,6 +12,11 @@ public class UserOtherIdMask
     Integer userId;
     Integer typeId;
     String otherId;
+
+    public UserOtherIdMask user(User user) {
+        this.userId = user.getId();
+        return this;
+    }
 
     public UserOtherIdMask userId(Integer userId) {
         setUserId(userId);

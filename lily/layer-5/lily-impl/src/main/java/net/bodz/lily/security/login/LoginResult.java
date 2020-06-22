@@ -14,7 +14,7 @@ public class LoginResult
         implements IJsonSerializable {
 
     String serverChallenge;
-    LoginToken token;
+    public LoginToken token;
 
     public LoginResult() {
     }

@@ -1,10 +1,11 @@
-package net.bodz.lily.security.login;
+package net.bodz.lily.security.ops;
 
 import java.util.List;
 
 import net.bodz.bas.db.ctx.AbstractDataContextAware;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdTypes;
@@ -14,15 +15,17 @@ import net.bodz.lily.security.impl.UserMask;
 import net.bodz.lily.security.impl.UserOtherIdMapper;
 import net.bodz.lily.security.impl.UserOtherIdMask;
 import net.bodz.lily.security.impl.UserSecretMapper;
+import net.bodz.lily.security.login.LoginManager;
+import net.bodz.lily.security.login.LoginResult;
 
-public class PhoneOids
+public class UserOps_PhoneId
         extends AbstractDataContextAware {
 
     UserMapper userMapper;
     UserSecretMapper secretMapper;
     UserOtherIdMapper oidMapper;
 
-    public PhoneOids(DataContext dataContext) {
+    public UserOps_PhoneId(DataContext dataContext) {
         super(dataContext);
         userMapper = dataContext.getMapper(UserMapper.class);
         secretMapper = dataContext.getMapper(UserSecretMapper.class);
@@ -90,6 +93,65 @@ public class PhoneOids
         // 3. auto login
         resp.token = loginManager.newToken(user);
         return resp.succeed();
+    }
+
+    public JsonResponse bind(int uid, String phone) {
+        JsonResponse resp = new JsonResponse();
+
+        User user = checkUserId(resp, uid);
+        if (user == null)
+            return resp;
+
+        if (checkInUse(resp, phone))
+            return resp;
+
+        UserOtherId oid = new UserOtherId();
+        oid.setUser(user);
+        oid.setOtherId(phone);
+        // priority...
+        try {
+            oidMapper.insert(oid);
+        } catch (Exception e) {
+            return resp.fail("failed to insert: " + e.getMessage(), e);
+        }
+        return resp.succeed();
+    }
+
+    public JsonResponse unbind(int uid, String phone) {
+        JsonResponse resp = new JsonResponse();
+        // 1. check uid
+        User user = checkUserId(resp, uid);
+        if (user == null)
+            return resp;
+
+        try {
+            oidMapper.deleteFor(new UserOtherIdMask()//
+                    .user(user).otherId(phone));
+        } catch (Exception e) {
+            return resp.fail(e, "Failed to delete: " + e.getMessage());
+        }
+        return resp.succeed();
+    }
+
+    User checkUserId(JsonResponse resp, int uid) {
+        // 1. check uid
+        User user = userMapper.select(uid);
+        if (user == null)
+            resp.fail("No such user: id=%d.", uid);
+        return user;
+    }
+
+    boolean checkInUse(JsonResponse resp, String phone) {
+        // 2. check if the phone is in use.
+        List<UserOtherId> oids = oidMapper.filter(//
+                new UserOtherIdMask().otherId(phone), SelectOptions.ALL);
+        if (oids.isEmpty())
+            return false;
+
+        UserOtherId oid = oids.get(0);
+        resp.fail("Phone number is already in use: user = %s.", //
+                oid.getUser().getName());
+        return true;
     }
 
 }

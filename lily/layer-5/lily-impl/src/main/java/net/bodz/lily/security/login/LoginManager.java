@@ -23,6 +23,7 @@ import net.bodz.lily.security.impl.UserSecretMask;
 import net.bodz.lily.security.login.ILoginResolver.Result;
 import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
 import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
+import net.bodz.lily.security.ops.UserOps_PhoneId;
 
 public class LoginManager
         extends LoginTokenManager
@@ -175,8 +176,8 @@ public class LoginManager
         if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
 
-        PhoneOids impl = new PhoneOids(dataContext);
-        return impl.register(this, phone, password);
+        UserOps_PhoneId ops = new UserOps_PhoneId(dataContext);
+        return ops.register(this, phone, password);
     }
 
     @Override
@@ -208,8 +209,8 @@ public class LoginManager
         if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
 
-        PhoneOids impl = new PhoneOids(dataContext);
-        return impl.resetPassword(this, phone, password);
+        UserOps_PhoneId ops = new UserOps_PhoneId(dataContext);
+        return ops.resetPassword(this, phone, password);
     }
 
     @Override
