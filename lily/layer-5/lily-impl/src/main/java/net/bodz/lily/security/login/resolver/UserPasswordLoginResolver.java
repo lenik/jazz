@@ -53,7 +53,7 @@ public class UserPasswordLoginResolver
             FlyingIndex fi = checker.checkSignature(passwd, sign);
             if (fi.exists()) {
                 Result result = new Result(namedUser);
-                result.set("fi", fi);
+                result.setHeader("fi", fi);
                 return result;
             }
         }

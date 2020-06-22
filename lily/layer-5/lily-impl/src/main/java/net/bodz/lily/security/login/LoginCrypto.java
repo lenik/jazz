@@ -30,7 +30,7 @@ public class LoginCrypto {
         FlyingIndex fi = signTransient.lastIndexOf(verificationCode, distance);
         if (resp != null)
             if (fi.exists())
-                resp.set("fi", fi);
+                resp.setHeader("fi", fi);
         return fi;
     }
 
@@ -47,7 +47,7 @@ public class LoginCrypto {
         FlyingIndex fi = signTransient.lastIndexOf(signature, distance);
         if (resp != null)
             if (fi.exists())
-                resp.set("fi", fi);
+                resp.setHeader("fi", fi);
         return fi;
     }
 

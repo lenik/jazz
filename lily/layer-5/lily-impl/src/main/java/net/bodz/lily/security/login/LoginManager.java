@@ -133,13 +133,13 @@ public class LoginManager
                 if (password != null) {
                     // encrypted client response
                     String ecr = crypto.passwordSign(password).snapshot();
-                    result.set("e_passwd", ecr);
+                    result.setHeader("e_passwd", ecr);
                 }
             }
             String phone = q.getString("phone");
             if (phone != null) {
                 String ecr = crypto.shortVerificationCode(phone).snapshot();
-                result.set("e_cr", ecr);
+                result.setHeader("e_cr", ecr);
             }
         }
         return result;
@@ -151,7 +151,7 @@ public class LoginManager
             Result rr = resolver.login(crypto.signChecker, q);
             if (rr != null) {
                 LoginResult result = rr.toLoginResult(this);
-                result.set("resolverClass", resolver.getClass().getName());
+                result.setHeader("resolverClass", resolver.getClass().getName());
                 return result;
             }
         }
@@ -203,7 +203,7 @@ public class LoginManager
         JsonResponse resp = new JsonResponse();
         String shortCode = crypto.shortVerificationCode(phone).snapshot();
         if (debug)
-            resp.set("e_cr", shortCode);
+            resp.setHeader("e_cr", shortCode);
 
         IShortMessageService sms = SmsProviders.getSms();
         SmsCommitLog log = new SmsCommitLog();
@@ -216,7 +216,7 @@ public class LoginManager
             return resp.fail(e, "send sms error: " + e.getMessage());
         } finally {
             sms.removeSmsListener(log);
-            resp.set("logs", JsonFn.union(log));
+            resp.setHeader("logs", JsonFn.union(log));
         }
         return resp.succeed();
     }
@@ -225,7 +225,7 @@ public class LoginManager
     public JsonResponse verifyEmail(String address, String usage) {
         JsonResponse resp = new JsonResponse();
         String sign = crypto.sign(address).snapshot();
-        resp.set("sign", sign);
+        resp.setHeader("sign", sign);
         throw new NotImplementedException("mail service isn't supported.");
     }
 

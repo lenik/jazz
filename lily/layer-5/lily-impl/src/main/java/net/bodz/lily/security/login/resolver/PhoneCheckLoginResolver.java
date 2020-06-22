@@ -56,7 +56,7 @@ public class PhoneCheckLoginResolver
         FlyingIndex fi = checker.checkSignature(phone, sign);
         if (fi.exists()) {
             Result result = new Result(matchedUser);
-            result.set("fi", fi);
+            result.setHeader("fi", fi);
             return result;
         }
         return failed("Incorrect verification code for phone number %s.", phone);
