@@ -26,6 +26,8 @@ public class AbstractJsonResponse<self_t>
     public static final int ERROR = 400;
     public static final int FATAL_ERROR = 500;
 
+    public static final String sectionsRoot = "root";
+
     int status = OK;
     String message;
     Throwable exception;
@@ -164,22 +166,31 @@ public class AbstractJsonResponse<self_t>
         return headers;
     }
 
-    public Object get(String header) {
+    public Object getHeader(String header) {
         if (headers == null)
             return null;
         else
             return headers.get(header);
     }
 
-    public self_t set(String header, Object content) {
+    public self_t setHeader(String header, Object content) {
         getHeaders().put(header, content);
         return (self_t) this;
     }
 
     public JsonWriter begin(String key) {
         StringWriter buf = new StringWriter();
-        set(key, new JsonVerbatimBuf(key, buf));
+        setHeader(key, new JsonVerbatimBuf(key, buf));
         return new JsonWriter(buf);
+    }
+
+    public synchronized JsonSection getRoot() {
+        JsonSection root = (JsonSection) getHeader(sectionsRoot);
+        if (root == null) {
+            root = new JsonSection();
+            setHeader(sectionsRoot, root);
+        }
+        return root;
     }
 
     public ILogger getLogger() {
@@ -217,17 +228,29 @@ public class AbstractJsonResponse<self_t>
 
         if (headers != null) {
             for (Map.Entry<String, ?> entry : headers.entrySet()) {
+                String key = entry.getKey();
                 Object value = entry.getValue();
+
                 if (value == null)
                     continue;
+                out.key(key);
+
+                switch (key) {
+                case sectionsRoot:
+                    JsonSection root = (JsonSection) value;
+                    root.writeObject(out);
+                    continue;
+                }
+
                 if (value instanceof JsonVerbatimBuf) {
                     IJsonSerializable child = (IJsonSerializable) value;
                     child.writeObject(out);
-                } else {
-                    out.entry(entry.getKey(), value);
+                    continue;
                 }
+
+                out.object(value);
             }
-        }
+        } // headers
 
         out.entryNotNull("data", data);
     }

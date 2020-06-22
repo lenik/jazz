@@ -5,6 +5,7 @@ import java.io.Writer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONWriter;
 
 /*
  Copyright (c) 2006 JSON.org
@@ -349,6 +350,7 @@ public class JSONWriter_patch {
      * @return this
      * @throws JSONException
      *             If the value is out of sequence.
+     * @see JSONWriter#value(Object)
      */
     public JSONWriter_patch value(Object object)
             throws JSONException {
