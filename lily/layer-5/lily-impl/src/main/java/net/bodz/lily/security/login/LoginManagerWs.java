@@ -7,12 +7,12 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
 
-public class LoginManagerWso
+public class LoginManagerWs
         implements IPathDispatchable {
 
     LoginManager impl;
 
-    public LoginManagerWso(LoginManager impl) {
+    public LoginManagerWs(LoginManager impl) {
         this.impl = impl;
     }
 

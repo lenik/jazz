@@ -1,4 +1,4 @@
-package net.bodz.lily.security.login.key;
+package net.bodz.lily.security.login;
 
 import net.bodz.bas.crypto.trans.FlyingIndex;
 

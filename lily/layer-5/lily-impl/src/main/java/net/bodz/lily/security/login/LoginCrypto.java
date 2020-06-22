@@ -4,7 +4,6 @@ import net.bodz.bas.crypto.trans.FlyingIndex;
 import net.bodz.bas.crypto.trans.IFlyingSupport.tr;
 import net.bodz.bas.crypto.trans.IFlyingTransient;
 import net.bodz.bas.site.json.AbstractJsonResponse;
-import net.bodz.lily.security.login.key.ISignatureChecker;
 
 public class LoginCrypto {
 
