@@ -11,6 +11,7 @@ import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.codegen.doc.WsDocSite;
 import net.bodz.lily.security.login.LoginManager;
+import net.bodz.lily.security.login.LoginManagerWso;
 
 public abstract class LilyStartSite
         extends BasicSite {
@@ -45,7 +46,9 @@ public abstract class LilyStartSite
         CoIndexServiceGroup group = new CoIndexServiceGroup(dataContext);
         pathMap.install("data", group);
         pathMap.install(group.getNameMap());
-        pathMap.install("session", new LoginManager(dataContext));
+
+        LoginManager loginManager = new LoginManager(dataContext);
+        pathMap.install("session", new LoginManagerWso(loginManager));
         pathMap.install("ws-doc", new WsDocSite());
     }
 

@@ -11,11 +11,6 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.repr.path.IPathArrival;
-import net.bodz.bas.repr.path.IPathDispatchable;
-import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.repr.path.PathArrival;
-import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.sms.IShortMessageService;
 import net.bodz.bas.sms.SmsCommitLog;
@@ -31,7 +26,7 @@ import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
 
 public class LoginManager
         extends LoginTokenManager
-        implements ILoginManager, IPathDispatchable, IFlyingSupport {
+        implements ILoginManager, IFlyingSupport {
 
     // long timeout = 3600_000;
     DataContext dataContext;
@@ -48,68 +43,6 @@ public class LoginManager
         for (ILoginListener listener : ServiceLoader.load(ILoginListener.class)) {
             loginListeners.add(listener);
         }
-    }
-
-    @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException {
-        String token = tokens.peek();
-        if (token == null)
-            return null;
-
-        Object target = null;
-
-        switch (token) {
-        case "init":
-            target = initiateLogin(q);
-            break;
-
-        case "login":
-            target = login(q);
-            break;
-
-        case "loginByPhone":
-            target = loginByPhone(q.getString("phone"), q.getString("e_cr"));
-            break;
-
-        case "loginByEmail":
-            target = loginByPhone(q.getString("email"), q.getString("e_cr"));
-            break;
-
-        case "exit":
-        case "quit":
-        case "logout":
-            target = logout();
-            break;
-
-        case "verify-phone":
-            target = verifyPhone(q.getString("phone"), q.getString("usage"));
-            break;
-
-        case "verify-email":
-            target = verifyEmail(q.getString("email"), q.getString("usage"));
-            break;
-
-        case "register-by-phone":
-            target = registerByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
-            break;
-
-        case "register-by-email":
-            target = registerByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
-            break;
-
-        case "reset-password-by-phone":
-            target = resetPasswordByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
-            break;
-
-        case "reset-password-by-email":
-            target = resetPasswordByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
-            break;
-        }
-
-        if (target != null)
-            return PathArrival.shift(previous, target, tokens);
-        return null;
     }
 
     boolean debug = true;
