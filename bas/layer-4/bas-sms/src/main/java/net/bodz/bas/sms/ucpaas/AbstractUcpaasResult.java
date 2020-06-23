@@ -12,8 +12,6 @@ import net.bodz.bas.meta.cache.Derived;
 public class AbstractUcpaasResult
         extends JsonStruct {
 
-    private static final long serialVersionUID = 1L;
-
     public int code;
     public String msg;
     public String createDate;

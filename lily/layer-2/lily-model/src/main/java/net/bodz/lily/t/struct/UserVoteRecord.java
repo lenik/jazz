@@ -11,8 +11,6 @@ import net.bodz.lily.security.User;
 public class UserVoteRecord
         extends AbstractUserClickRecord {
 
-    private static final long serialVersionUID = 1L;
-
     private User user;
     private int value;
 

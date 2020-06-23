@@ -8,8 +8,6 @@ import net.bodz.bas.fmt.json.JsonStruct;
 public class UcpaasId
         extends JsonStruct {
 
-    private static final long serialVersionUID = 1L;
-
     public String sid;
     public String token;
     public String appid;

@@ -11,8 +11,6 @@ import net.bodz.bas.fmt.json.JsonObject;
 public abstract class AbstractUserClickRecord
         extends MixinStruct {
 
-    private static final long serialVersionUID = 1L;
-
     DateTime time;
 
     public DateTime getTime() {

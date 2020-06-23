@@ -12,8 +12,6 @@ import net.bodz.lily.schema.FormDef;
 public class UseForm
         extends MixinStruct {
 
-    private static final long serialVersionUID = 1L;
-
     private FormDef def;
     private String args;
 

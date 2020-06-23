@@ -11,8 +11,6 @@ import net.bodz.bas.fmt.json.JsonObject;
 public class ValidControl
         extends MixinStruct {
 
-    private static final long serialVersionUID = 1L;
-
     boolean valid;
     DateTime since;
     DateTime until;
