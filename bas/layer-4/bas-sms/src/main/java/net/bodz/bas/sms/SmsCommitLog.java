@@ -13,8 +13,6 @@ public class SmsCommitLog
         extends JsonStruct
         implements ISmsListener {
 
-    private static final long serialVersionUID = 1L;
-
     List<SmsRecord> records = new ArrayList<>();
 
     @Override

@@ -10,8 +10,6 @@ import net.bodz.lily.security.User;
 public class UserPinRecord
         extends AbstractUserClickRecord {
 
-    private static final long serialVersionUID = 1L;
-
     private User user;
 
     public User getUser() {

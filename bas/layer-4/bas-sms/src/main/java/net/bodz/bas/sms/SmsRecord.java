@@ -11,8 +11,6 @@ import net.bodz.bas.fmt.json.JsonStruct;
 public class SmsRecord
         extends JsonStruct {
 
-    private static final long serialVersionUID = 1L;
-
     public String uid;
     public String recipient;
     public String templateName;

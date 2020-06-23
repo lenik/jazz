@@ -11,8 +11,6 @@ import net.bodz.bas.fmt.json.JsonObject;
 public class CalendarDate
         extends MixinStruct {
 
-    private static final long serialVersionUID = 1L;
-
     short year;
     short month;
     short day;

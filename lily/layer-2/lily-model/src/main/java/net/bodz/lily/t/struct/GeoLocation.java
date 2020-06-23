@@ -11,8 +11,6 @@ import net.bodz.bas.i18n.geo.GeoZones;
 public class GeoLocation
         extends MixinStruct {
 
-    private static final long serialVersionUID = 1L;
-
     double longitude;
     double latitude;
     GeoZone zone;

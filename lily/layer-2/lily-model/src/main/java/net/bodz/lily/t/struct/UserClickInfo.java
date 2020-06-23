@@ -14,8 +14,6 @@ public class UserClickInfo
         extends MixinStruct
         implements IUserVotable, IUserPinnable {
 
-    private static final long serialVersionUID = 1L;
-
     private int voteUps;
     private int voteDowns;
     private List<UserVoteRecord> voteRecords;

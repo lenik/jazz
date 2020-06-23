@@ -10,8 +10,6 @@ import net.bodz.lily.security.User;
 public class UserFlagRecord
         extends AbstractUserClickRecord {
 
-    private static final long serialVersionUID = 1L;
-
     private UserFlagType type;
     private User user;
 

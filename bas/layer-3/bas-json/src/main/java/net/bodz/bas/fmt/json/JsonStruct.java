@@ -1,11 +1,7 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.Serializable;
-
 public abstract class JsonStruct
-        implements IJsonSerializable, Serializable {
-
-    private static final long serialVersionUID = 1L;
+        implements IJsonSerializable {
 
     @Override
     public boolean equals(Object obj) {

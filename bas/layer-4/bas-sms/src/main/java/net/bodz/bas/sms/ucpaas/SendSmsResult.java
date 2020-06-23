@@ -12,8 +12,6 @@ public class SendSmsResult
         extends AbstractUcpaasResult
         implements ISmsSendResponse {
 
-    private static final long serialVersionUID = 1L;
-
     public int count;
     public String smsid;
     public String mobile;
