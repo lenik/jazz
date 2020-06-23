@@ -8,20 +8,21 @@ import net.bodz.bas.err.TransformException;
 public class TransformerArray<T>
         extends AbstractTransformer<T, T> {
 
-    List<ITransformer<T, T>> list;
+    List<? extends ITransformer<? super T, ? extends T>> list;
 
-    public TransformerArray(ITransformer<T, T>... array) {
+    @SuppressWarnings("unchecked")
+    public TransformerArray(ITransformer<? super T, ? extends T>... array) {
         this.list = Arrays.asList(array);
     }
 
-    public TransformerArray(List<ITransformer<T, T>> list) {
+    public TransformerArray(List<? extends ITransformer<? super T, ? extends T>> list) {
         this.list = list;
     }
 
     @Override
     public T transform(T input)
             throws TransformException {
-        for (ITransformer<T, T> transformer : list) {
+        for (ITransformer<? super T, ? extends T> transformer : list) {
             input = transformer.transform(input);
         }
         return input;
