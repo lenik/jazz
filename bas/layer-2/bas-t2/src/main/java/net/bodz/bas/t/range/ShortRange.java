@@ -1,10 +1,12 @@
 package net.bodz.bas.t.range;
 
+import java.util.Comparator;
+
 import net.bodz.bas.c.primitive.ShortComparator;
 import net.bodz.bas.err.ParseException;
 
 public class ShortRange
-        extends AbstractRange<ShortRange, Short> {
+        extends Range<ShortRange, Short> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,21 @@ public class ShortRange
         super(ORDER, start, end);
     }
 
-    @Override
-    public ShortRange create(Short start, Short end) {
-        return new ShortRange(start, end);
+    public ShortRange(boolean startInclusive, Short start, boolean endInclusive, Short end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+    }
+
+    public ShortRange(Comparator<? super Short> order) {
+        super(order);
+    }
+
+    public ShortRange(Comparator<? super Short> order, Short start, Short end) {
+        super(order, start, end);
+    }
+
+    public ShortRange(Comparator<? super Short> order, boolean startInclusive, Short start, boolean endInclusive,
+            Short end) {
+        super(order, startInclusive, start, endInclusive, end);
     }
 
     @Override

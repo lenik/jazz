@@ -17,27 +17,44 @@ import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.ParseException;
 
 public class DateTimeRange
-        extends AbstractRange<DateTimeRange, DateTime> {
+        extends Range<DateTimeRange, DateTime> {
 
     private static final long serialVersionUID = 1L;
 
     static final DateTimeComparator ORDER = DateTimeComparator.getInstance();
 
     Chronology chrono = GregorianChronology.getInstance();
-    DateTimeZone timeZone = DateTimeZone.getDefault();
+    DateTimeZone timeZone;
     Locale locale = Locale.getDefault();
 
     DateTimeFormatter format;
     DateTimeParser parser;
 
-    public DateTimeRange() {
+    public DateTimeRange(DateTimeZone timeZone) {
         super(ORDER);
+        this.timeZone = timeZone;
         init();
     }
 
-    public DateTimeRange(DateTime start, DateTime end) {
+    public DateTimeRange(DateTimeZone timeZone, DateTime start, DateTime end) {
         super(ORDER, start, end);
+        this.timeZone = timeZone;
         init();
+    }
+
+    public DateTimeRange(DateTimeZone timeZone, boolean startInclusive, DateTime start, boolean endInclusive,
+            DateTime end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+        this.timeZone = timeZone;
+        init();
+    }
+
+    public DateTimeRange() {
+        this(DateTimeZone.getDefault());
+    }
+
+    public DateTimeRange(DateTime start, DateTime end) {
+        this(DateTimeZone.getDefault(), start, end);
     }
 
     void init() {
@@ -68,11 +85,6 @@ public class DateTimeRange
     public void setHistoryDays(int days) {
         start = now().minusDays(days);
         end = null;
-    }
-
-    @Override
-    public DateTimeRange create(DateTime start, DateTime end) {
-        return new DateTimeRange(start, end);
     }
 
     @Override

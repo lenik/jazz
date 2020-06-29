@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import net.bodz.bas.err.ParseException;
 
-public abstract class AbstractRange<self_t, val_t>
+public abstract class Range<self_t, val_t>
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,13 +18,21 @@ public abstract class AbstractRange<self_t, val_t>
     boolean startInclusive = true;
     boolean endInclusive;
 
-    public AbstractRange(Comparator<? super val_t> order) {
+    public Range(Comparator<? super val_t> order) {
         this.order = order;
     }
 
-    public AbstractRange(Comparator<? super val_t> order, val_t start, val_t end) {
+    public Range(Comparator<? super val_t> order, val_t start, val_t end) {
         this.order = order;
         this.start = start;
+        this.end = end;
+    }
+
+    public Range(Comparator<? super val_t> order, boolean startInclusive, val_t start, boolean endInclusive, val_t end) {
+        this.order = order;
+        this.startInclusive = startInclusive;
+        this.start = start;
+        this.endInclusive = endInclusive;
         this.end = end;
     }
 
@@ -40,6 +48,12 @@ public abstract class AbstractRange<self_t, val_t>
         start = end = val;
         startInclusive = true;
         endInclusive = true;
+    }
+
+    @SuppressWarnings("unchecked")
+    public self_t point(val_t val) {
+        setPointValue(val);
+        return (self_t) this;
     }
 
     public boolean isUnspecified() {
@@ -212,22 +226,53 @@ public abstract class AbstractRange<self_t, val_t>
         this.end = afterTo;
     }
 
+    @SuppressWarnings("unchecked")
     public self_t parse(String s)
             throws ParseException {
-        int colon = s.indexOf(':');
-        if (colon == -1) {
-            val_t point = parseValue(s);
-            val_t succ = successor(point);
-            return create(point, succ);
-        }
-        String startStr = s.substring(0, colon);
-        String endStr = s.substring(colon + 1);
-        val_t start = startStr.isEmpty() ? null : parseValue(startStr);
-        val_t end = endStr.isEmpty() ? null : parseValue(endStr);
-        return create(start, end);
-    }
+        s = s.trim();
+        if (s.isEmpty())
+            throw new ParseException("No empty string.");
 
-    public abstract self_t create(val_t start, val_t end);
+        char startType = s.charAt(0);
+        switch (startType) {
+        case '[':
+            this.setStartInclusive(true);
+            break;
+        case '(':
+            this.setStartInclusive(false);
+            break;
+        default:
+            val_t point = parseValue(s);
+            setPointValue(point);
+            return (self_t) this;
+        }
+
+        char endType = s.charAt(s.length() - 1);
+        switch (endType) {
+        case ']':
+            this.setEndInclusive(true);
+            break;
+        case ')':
+            this.setEndInclusive(false);
+            break;
+        default:
+            throw new ParseException("Range should be in the format of ?START, END?.");
+        }
+
+        int comma = s.indexOf(',');
+        if (comma == -1)
+            throw new ParseException("Range should be in the format of ?START, END?.");
+
+        String part1 = s.substring(1, comma).trim();
+        String part2 = s.substring(comma + 1, s.length() - 1).trim();
+        this.start = null;
+        this.end = null;
+        if (!part1.isEmpty())
+            this.start = parseValue(part1);
+        if (!part2.isEmpty())
+            this.end = parseValue(part2);
+        return (self_t) this;
+    }
 
     public abstract val_t parseValue(String s)
             throws ParseException;
@@ -296,6 +341,51 @@ public abstract class AbstractRange<self_t, val_t>
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((end == null) ? 0 : end.hashCode());
+        result = prime * result + (endInclusive ? 1231 : 1237);
+        result = prime * result + ((start == null) ? 0 : start.hashCode());
+        result = prime * result + (startInclusive ? 1231 : 1237);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        Range<?, ?> other = (Range<?, ?>) obj;
+
+        if (start == null) {
+            if (other.start != null)
+                return false;
+        } else if (!start.equals(other.start))
+            return false;
+        if (startInclusive != other.startInclusive)
+            return false;
+
+        if (end == null) {
+            if (other.end != null)
+                return false;
+        } else if (!end.equals(other.end))
+            return false;
+        if (endInclusive != other.endInclusive)
+            return false;
+
+        return equalsPartial(other);
+    }
+
+    protected boolean equalsPartial(Range<?, ?> o) {
+        return true;
     }
 
 }
