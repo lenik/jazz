@@ -109,6 +109,9 @@
     </sql>
 
     <sql id="filtconds">
+        <include refid="co.filter-id" />
+        <include refid="co.filter-ui" />
+        <include refid="co.filter-version" />
         <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
         <if test="m.primaryGroupId != null">and a.gid0 = #{m.primaryGroupId}</if>
         <if test="m.name != null">and a.name = #{m.name}</if>

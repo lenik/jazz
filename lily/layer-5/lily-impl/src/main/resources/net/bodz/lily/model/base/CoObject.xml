@@ -128,10 +128,7 @@
 
     <sql id="filter-id">
         <if test="m.idRange != null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+            ${m.idRange.matchSql("a.id")}
         </if>
     </sql>
 
