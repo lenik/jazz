@@ -11,7 +11,9 @@ import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.t.range.DateTimeRange;
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.LongRange;
+import net.bodz.bas.t.range.RangeFn;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
@@ -23,7 +25,7 @@ import net.bodz.lily.security.login.LoginToken;
 public class CoObjectMask
         implements IVarMapSerializable {
 
-    final LongRange idRange = new LongRange();
+    LongRange idRange;
 
     String codeName;
     String label;
@@ -36,14 +38,26 @@ public class CoObjectMask
 
     Set<Integer> priorities;
     Set<Integer> flags;
-    Integer state;
+    IntegerRange stateRange;
     Set<Integer> states;
-    Integer ownerId;
-    Integer ownerGroupId;
+    IntegerRange ownerIdRange;
+    IntegerRange ownerGroupIdRange;
     Set<Integer> acls;
+
+    public Long getId() {
+        return idRange == null ? null : idRange.getPointValue();
+    }
+
+    public void setId(Long id) {
+        this.idRange = id == null ? null : new LongRange().point(id);
+    }
 
     public LongRange getIdRange() {
         return idRange;
+    }
+
+    public void setIdRange(LongRange idRange) {
+        this.idRange = idRange;
     }
 
     public String getCodeName() {
@@ -114,11 +128,19 @@ public class CoObjectMask
     }
 
     public Integer getState() {
-        return state;
+        return stateRange == null ? null : stateRange.getPointValue();
     }
 
     public void setState(Integer state) {
-        this.state = state;
+        this.stateRange = state == null ? null : new IntegerRange().point(state);
+    }
+
+    public IntegerRange getStateRange() {
+        return stateRange;
+    }
+
+    public void setStateRange(IntegerRange stateRange) {
+        this.stateRange = stateRange;
     }
 
     public Set<Integer> getStates() {
@@ -133,21 +155,35 @@ public class CoObjectMask
     }
 
     public Integer getOwnerId() {
-        return ownerId;
+        return ownerIdRange == null ? null : ownerIdRange.getPointValue();
     }
 
-    public CoObjectMask setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
-        return this;
+    public void setOwnerId(Integer ownerId) {
+        this.ownerIdRange = ownerId == null ? null : new IntegerRange().point(ownerId);
+    }
+
+    public IntegerRange getOwnerIdRange() {
+        return ownerIdRange;
+    }
+
+    public void setOwnerIdRange(IntegerRange ownerIdRange) {
+        this.ownerIdRange = ownerIdRange;
     }
 
     public Integer getOwnerGroupId() {
-        return ownerGroupId;
+        return ownerGroupIdRange == null ? null : ownerGroupIdRange.getPointValue();
     }
 
-    public CoObjectMask setOwnerGroupId(Integer ownerGroupId) {
-        this.ownerGroupId = ownerGroupId;
-        return this;
+    public void setOwnerGroupId(Integer ownerGroupId) {
+        this.ownerGroupIdRange = ownerGroupId == null ? null : new IntegerRange().point(ownerGroupId);
+    }
+
+    public IntegerRange getOwnerGroupIdRange() {
+        return ownerGroupIdRange;
+    }
+
+    public void setOwnerGroupIdRange(IntegerRange ownerGroupIdRange) {
+        this.ownerGroupIdRange = ownerGroupIdRange;
     }
 
     public Set<Integer> getAcls() {
@@ -167,8 +203,8 @@ public class CoObjectMask
 
         codeName = map.getString("code", codeName);
         queryText = map.getString("q", queryText);
-        ownerId = map.getInt("uid", ownerId);
-        ownerGroupId = map.getInt("gid", ownerGroupId);
+        ownerIdRange = RangeFn.getFrom(map, "uid", ownerIdRange);
+        ownerGroupIdRange = RangeFn.getFrom(map, "gid", ownerGroupIdRange);
     }
 
     @Override
