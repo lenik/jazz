@@ -96,12 +96,18 @@ public class DateTimeRange
 
     @Override
     public DateTime preceding(DateTime val) {
-        return null;
+        long millis = val.getMillis();
+        millis--;
+        DateTime prec = new DateTime(millis);
+        return prec;
     }
 
     @Override
     public DateTime successor(DateTime val) {
-        return null;
+        long millis = val.getMillis();
+        millis++;
+        DateTime succ = new DateTime(millis);
+        return succ;
     }
 
     public DateTimeRange minMax(DateTime min, DateTime max) {

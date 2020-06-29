@@ -28,6 +28,20 @@ public abstract class AbstractRange<self_t, val_t>
         this.end = end;
     }
 
+    public boolean isPoint() {
+        return startInclusive && endInclusive && start == end && start != null;
+    }
+
+    public val_t getPointValue() {
+        return start;
+    }
+
+    public void setPointValue(val_t val) {
+        start = end = val;
+        startInclusive = true;
+        endInclusive = true;
+    }
+
     public boolean isUnspecified() {
         return start == null && end == null;
     }
@@ -131,37 +145,71 @@ public abstract class AbstractRange<self_t, val_t>
     public val_t getFrom() {
         if (start == null)
             return null;
-        else if (startInclusive)
+        if (startInclusive)
             return start;
-        else
-            return successor(start);
+        val_t afterStart = successor(start);
+        if (afterStart == null) {
+            // allow -inf
+            return null;
+        }
+        return afterStart;
     }
 
     public void setFrom(val_t from) {
-        if (from == null)
+        if (from == null) {
             this.start = null;
-        else if (startInclusive)
+            return;
+        }
+        if (startInclusive) {
             this.start = from;
-        else
-            this.start = preceding(from);
+            return;
+        }
+        val_t beforeFrom = preceding(from);
+        if (beforeFrom == null) {
+            // allow for -inf
+            this.start = null;
+            return;
+        }
+        this.start = beforeFrom;
     }
 
+    /**
+     * @return <code>null</code> if empty.
+     */
     public val_t getTo() {
         if (end == null)
             return null;
-        else if (endInclusive)
+        if (endInclusive)
             return end;
-        else
-            return preceding(end);
+        val_t beforeEnd = preceding(end);
+        if (beforeEnd == null) {
+            // assert end >= start;
+            return null;
+        }
+        return beforeEnd;
     }
 
+    /**
+     * @param to
+     *            Set to be right-open for <code>null</code> to. The same as if <code>to</code> is
+     *            too large.
+     */
     public void setTo(val_t to) {
-        if (to == null)
+        if (to == null) {
             this.end = null;
-        else if (endInclusive)
+            return;
+        }
+        if (endInclusive) {
             this.end = to;
-        else
-            this.end = successor(to);
+            return;
+        }
+        val_t afterTo = successor(to);
+        if (afterTo == null) {
+            // allow for +inf.
+            this.end = null;
+            return;
+        }
+        this.end = afterTo;
     }
 
     public self_t parse(String s)
@@ -184,8 +232,14 @@ public abstract class AbstractRange<self_t, val_t>
     public abstract val_t parseValue(String s)
             throws ParseException;
 
+    /**
+     * @return <code>null</code> if no preceding.
+     */
     public abstract val_t preceding(val_t val);
 
+    /**
+     * @return <code>null</code> if no successor.
+     */
     public abstract val_t successor(val_t val);
 
     public void include(val_t val) {
@@ -198,6 +252,50 @@ public abstract class AbstractRange<self_t, val_t>
             end = val;
         else if (order.compare(end, val) < 0)
             end = val;
+    }
+
+    public String valueSql(val_t val) {
+        if (val == null)
+            return "null";
+        return val.toString();
+    }
+
+    public String matchSql(String var) {
+        if (isUnspecified())
+            return "";
+        if (isPoint())
+            return var + " = " + valueSql(getPointValue());
+
+        StringBuilder sb = new StringBuilder(100);
+        if (start != null && end != null && startInclusive && endInclusive) {
+            sb.append(" and ");
+            sb.append(var);
+            if (startInclusive)
+                sb.append(" between ");
+            sb.append(valueSql(start));
+            sb.append(" and ");
+            sb.append(valueSql(end));
+        } else {
+            if (start != null) {
+                sb.append(" and ");
+                sb.append(var);
+                if (startInclusive)
+                    sb.append(" >= ");
+                else
+                    sb.append(" > ");
+                sb.append(valueSql(start));
+            }
+            if (end != null) {
+                sb.append(" and ");
+                sb.append(var);
+                if (endInclusive)
+                    sb.append(" <= ");
+                else
+                    sb.append(" < ");
+                sb.append(valueSql(end));
+            }
+        }
+        return sb.toString();
     }
 
 }

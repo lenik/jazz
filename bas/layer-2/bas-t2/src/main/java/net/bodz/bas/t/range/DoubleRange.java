@@ -35,12 +35,24 @@ public class DoubleRange
 
     @Override
     public Double preceding(Double val) {
-        return val - Double.MIN_VALUE;
+        double prec = val.doubleValue();
+        if (prec == Double.NEGATIVE_INFINITY)
+            return null;
+        if (prec == Double.NaN)
+            return Double.NaN;
+        prec -= Double.MIN_VALUE;
+        return prec;
     }
 
     @Override
     public Double successor(Double val) {
-        return val + Double.MIN_VALUE;
+        double succ = val.doubleValue();
+        if (succ == Double.POSITIVE_INFINITY)
+            return null;
+        if (succ == Double.NaN)
+            return Double.NaN;
+        succ += Double.MIN_VALUE;
+        return succ;
     }
 
     @Override
