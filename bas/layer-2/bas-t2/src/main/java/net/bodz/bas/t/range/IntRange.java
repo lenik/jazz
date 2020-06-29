@@ -1,10 +1,12 @@
 package net.bodz.bas.t.range;
 
+import java.util.Comparator;
+
 import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
 
 public class IntRange
-        extends AbstractRange<IntRange, Integer> {
+        extends Range<IntRange, Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,21 @@ public class IntRange
         super(ORDER, start, end);
     }
 
-    @Override
-    public IntRange create(Integer start, Integer end) {
-        return new IntRange(start, end);
+    public IntRange(boolean startInclusive, Integer start, boolean endInclusive, Integer end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+    }
+
+    public IntRange(Comparator<? super Integer> order) {
+        super(order);
+    }
+
+    public IntRange(Comparator<? super Integer> order, Integer start, Integer end) {
+        super(order, start, end);
+    }
+
+    public IntRange(Comparator<? super Integer> order, boolean startInclusive, Integer start, boolean endInclusive,
+            Integer end) {
+        super(order, startInclusive, start, endInclusive, end);
     }
 
     @Override

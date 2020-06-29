@@ -1,10 +1,12 @@
 package net.bodz.bas.t.range;
 
+import java.util.Comparator;
+
 import net.bodz.bas.c.primitive.LongComparator;
 import net.bodz.bas.err.ParseException;
 
 public class LongRange
-        extends AbstractRange<LongRange, Long> {
+        extends Range<LongRange, Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,20 @@ public class LongRange
         super(ORDER, start, end);
     }
 
-    @Override
-    public LongRange create(Long start, Long end) {
-        return new LongRange(start, end);
+    public LongRange(boolean startInclusive, Long start, boolean endInclusive, Long end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+    }
+
+    public LongRange(Comparator<? super Long> order) {
+        super(order);
+    }
+
+    public LongRange(Comparator<? super Long> order, Long start, Long end) {
+        super(order, start, end);
+    }
+
+    public LongRange(Comparator<? super Long> order, boolean startInclusive, Long start, boolean endInclusive, Long end) {
+        super(order, startInclusive, start, endInclusive, end);
     }
 
     @Override

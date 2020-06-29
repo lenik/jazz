@@ -1,10 +1,12 @@
 package net.bodz.bas.t.range;
 
+import java.util.Comparator;
+
 import net.bodz.bas.c.primitive.DoubleComparator;
 import net.bodz.bas.err.ParseException;
 
 public class DoubleRange
-        extends AbstractRange<DoubleRange, Double> {
+        extends Range<DoubleRange, Double> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,21 @@ public class DoubleRange
         super(ORDER, start, end);
     }
 
-    @Override
-    public DoubleRange create(Double start, Double end) {
-        return new DoubleRange(start, end);
+    public DoubleRange(boolean startInclusive, Double start, boolean endInclusive, Double end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+    }
+
+    public DoubleRange(Comparator<? super Double> order) {
+        super(order);
+    }
+
+    public DoubleRange(Comparator<? super Double> order, Double start, Double end) {
+        super(order, start, end);
+    }
+
+    public DoubleRange(Comparator<? super Double> order, boolean startInclusive, Double start, boolean endInclusive,
+            Double end) {
+        super(order, startInclusive, start, endInclusive, end);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package net.bodz.bas.t.range;
 
+import java.util.Comparator;
+
 import net.bodz.bas.c.primitive.FloatComparator;
 import net.bodz.bas.err.ParseException;
 
 public class FloatRange
-        extends AbstractRange<FloatRange, Float> {
+        extends Range<FloatRange, Float> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,9 +20,21 @@ public class FloatRange
         super(ORDER, start, end);
     }
 
-    @Override
-    public FloatRange create(Float start, Float end) {
-        return new FloatRange(start, end);
+    public FloatRange(boolean startInclusive, Float start, boolean endInclusive, Float end) {
+        super(ORDER, startInclusive, start, endInclusive, end);
+    }
+
+    public FloatRange(Comparator<? super Float> order) {
+        super(order);
+    }
+
+    public FloatRange(Comparator<? super Float> order, Float start, Float end) {
+        super(order, start, end);
+    }
+
+    public FloatRange(Comparator<? super Float> order, boolean startInclusive, Float start, boolean endInclusive,
+            Float end) {
+        super(order, startInclusive, start, endInclusive, end);
     }
 
     @Override
