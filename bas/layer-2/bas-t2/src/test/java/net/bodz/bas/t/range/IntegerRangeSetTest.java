@@ -3,12 +3,12 @@ package net.bodz.bas.t.range;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class IntRangeSetTest
+public class IntegerRangeSetTest
         extends Assert {
 
     @Test
     public void test1() {
-        IntRangeSet range = new IntRangeSet(10, 20);
+        IntegerRangeSet range = new IntegerRangeSet(10, 20);
         assertEquals(10, range.size());
         assertEquals(10, (int) range.ceiling(3));
         assertEquals(19, (int) range.floor(100));

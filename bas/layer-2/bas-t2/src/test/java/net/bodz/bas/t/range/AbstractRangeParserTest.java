@@ -14,20 +14,20 @@ public class AbstractRangeParserTest
     @Test
     public void testParse()
             throws ParseException {
-        IntRange range = new IntRange();
+        IntegerRange range = new IntegerRange();
         range.parse("[2, 3)");
-        IntRange expected = new IntRange(true, 2, false, 3);
+        IntegerRange expected = new IntegerRange(true, 2, false, 3);
         assertEquals(expected, range);
     }
 
     @Test
     public void testResolveParser()
             throws ParseException {
-        IParser<IntRange> parser = Typers.getTyper(IntRange.class, IParser.class);
+        IParser<IntegerRange> parser = Typers.getTyper(IntegerRange.class, IParser.class);
         if (parser == null)
             throw new NotImplementedException("no parser");
-        IntRange range = parser.parse("(10, 30]");
-        IntRange expected = new IntRange(false, 10, true, 30);
+        IntegerRange range = parser.parse("(10, 30]");
+        IntegerRange expected = new IntegerRange(false, 10, true, 30);
         assertEquals(expected, range);
     }
 

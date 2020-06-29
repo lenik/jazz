@@ -5,34 +5,34 @@ import java.util.Comparator;
 import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
 
-public class IntRange
-        extends Range<IntRange, Integer> {
+public class IntegerRange
+        extends Range<IntegerRange, Integer> {
 
     private static final long serialVersionUID = 1L;
 
     static final IntegerComparator ORDER = IntegerComparator.INSTANCE;
 
-    public IntRange() {
+    public IntegerRange() {
         super(ORDER);
     }
 
-    public IntRange(Integer start, Integer end) {
+    public IntegerRange(Integer start, Integer end) {
         super(ORDER, start, end);
     }
 
-    public IntRange(boolean startInclusive, Integer start, boolean endInclusive, Integer end) {
+    public IntegerRange(boolean startInclusive, Integer start, boolean endInclusive, Integer end) {
         super(ORDER, startInclusive, start, endInclusive, end);
     }
 
-    public IntRange(Comparator<? super Integer> order) {
+    public IntegerRange(Comparator<? super Integer> order) {
         super(order);
     }
 
-    public IntRange(Comparator<? super Integer> order, Integer start, Integer end) {
+    public IntegerRange(Comparator<? super Integer> order, Integer start, Integer end) {
         super(order, start, end);
     }
 
-    public IntRange(Comparator<? super Integer> order, boolean startInclusive, Integer start, boolean endInclusive,
+    public IntegerRange(Comparator<? super Integer> order, boolean startInclusive, Integer start, boolean endInclusive,
             Integer end) {
         super(order, startInclusive, start, endInclusive, end);
     }

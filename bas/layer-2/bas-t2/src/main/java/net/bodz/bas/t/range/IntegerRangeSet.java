@@ -5,35 +5,35 @@ import java.util.*;
 import net.bodz.bas.c.primitive.IntegerComparator;
 import net.bodz.bas.err.ParseException;
 
-public class IntRangeSet
+public class IntegerRangeSet
         extends AbstractSet<Integer>
         implements NavigableSet<Integer> {
 
     public int start;
     public int end;
 
-    public IntRangeSet(int start, int end) {
+    public IntegerRangeSet(int start, int end) {
         this.start = start;
         this.end = end;
     }
 
-    public static IntRangeSet minMax(int min, int max) {
-        return new IntRangeSet(min, max + 1);
+    public static IntegerRangeSet minMax(int min, int max) {
+        return new IntegerRangeSet(min, max + 1);
     }
 
-    public static IntRangeSet parse(String s)
+    public static IntegerRangeSet parse(String s)
             throws ParseException {
         try {
             int colon = s.indexOf(':');
             if (colon == -1) {
                 int point = Integer.parseInt(s);
-                return new IntRangeSet(point, point + 1);
+                return new IntegerRangeSet(point, point + 1);
             }
             String startStr = s.substring(0, colon);
             String endStr = s.substring(colon + 1);
             int start = startStr.isEmpty() ? Integer.MIN_VALUE : Integer.parseInt(startStr);
             int end = endStr.isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(endStr);
-            return new IntRangeSet(start, end);
+            return new IntegerRangeSet(start, end);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
@@ -270,7 +270,7 @@ public class IntRangeSet
         if (inclusive)
             toElement++;
         int _end = Math.min(end, toElement);
-        return new IntRangeSet(start, _end);
+        return new IntegerRangeSet(start, _end);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class IntRangeSet
         if (!inclusive)
             fromElement++;
         int _start = Math.max(start, fromElement);
-        return new IntRangeSet(_start, end);
+        return new IntegerRangeSet(_start, end);
     }
 
     @Override
@@ -300,7 +300,7 @@ public class IntRangeSet
             toElement++;
         int _start = Math.max(start, fromElement);
         int _end = Math.min(end, toElement);
-        return new IntRangeSet(_start, _end);
+        return new IntegerRangeSet(_start, _end);
     }
 
     @Override

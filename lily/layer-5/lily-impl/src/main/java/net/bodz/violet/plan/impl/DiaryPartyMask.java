@@ -1,6 +1,6 @@
 package net.bodz.violet.plan.impl;
 
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
@@ -13,7 +13,7 @@ public class DiaryPartyMask
     Integer userId;
     Integer personId;
     Integer orgId;
-    IntRange valueRange;
+    IntegerRange valueRange;
 
     public Long getDiaryId() {
         return diaryId;
@@ -47,11 +47,11 @@ public class DiaryPartyMask
         this.orgId = orgId;
     }
 
-    public IntRange getValueRange() {
+    public IntegerRange getValueRange() {
         return valueRange;
     }
 
-    public void setValueRange(IntRange valueRange) {
+    public void setValueRange(IntegerRange valueRange) {
         this.valueRange = valueRange;
     }
 
