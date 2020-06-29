@@ -1,6 +1,7 @@
 package net.bodz.bas.typer;
 
 import java.util.List;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.rtx.QueryException;
@@ -13,7 +14,7 @@ public class Typers {
      * <p>
      * For specific typers on the instance object, {@link #getTyper(Class, Object, Class)} should be
      * called.
-     * 
+     *
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.
      * @param typerClass
@@ -34,7 +35,8 @@ public class Typers {
 
         objType = Primitives.box(objType);
 
-        for (ITyperProvider provider : TyperProviders.sorted()) {
+        TreeSet<ITyperProvider> providers = TyperProviders.sorted();
+        for (ITyperProvider provider : providers) {
             T typer = provider.getTyper(objType, typerClass);
             if (typer != null)
                 return typer;
@@ -60,7 +62,7 @@ public class Typers {
 
     /**
      * Query for specific typer on the object instance.
-     * 
+     *
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.
      * @param obj
@@ -97,7 +99,7 @@ public class Typers {
     /**
      * Shortcut for {@link #getTyper(Class, Object, Class)} with the <code>objType</code> set to
      * <code>obj.getClass()</code>.
-     * 
+     *
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.
      * @param typerClass
