@@ -1,7 +1,10 @@
 package net.bodz.bas.typer.spi;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
@@ -12,13 +15,15 @@ import net.bodz.bas.rtx.QueryException;
 public class FriendTyperProvider
         extends AbstractTyperProvider {
 
+    static final Logger logger = Logger.getLogger(FriendTyperProvider.class.getName());
+
     private final int priority;
 
     private final String prefixName;
     private final String suffixFamilyName = "Typers";
     private final boolean flatten;
 
-    private Map<Class<?>, Object> friendTyperMap = new HashMap<Class<?>, Object>();
+    private Map<Class<?>, Object> friendTyperInstantiationCache = new HashMap<Class<?>, Object>();
 
     public FriendTyperProvider() {
         this.priority = BuiltinProviderOrder.friend.getPriority();
@@ -52,26 +57,30 @@ public class FriendTyperProvider
     @Override
     public <T> T getTyper(Class<?> objType, Class<T> typerClass)
             throws QueryException {
-        String objTypeName = flatten ? objType.getSimpleName() : objType.getName();
+        Class<?> queryType = objType;
+        while (queryType != null) {
+            String typeName = flatten ? queryType.getSimpleName() : queryType.getName();
 
-        String simpleTyperName = typerClass.getSimpleName();
-        if (isStandardInterfaceName(simpleTyperName))
-            simpleTyperName = simpleTyperName.substring(1);
+            String simpleTyperName = typerClass.getSimpleName();
+            if (isStandardInterfaceName(simpleTyperName))
+                simpleTyperName = simpleTyperName.substring(1);
 
-        String friendTyperName = prefixName + objTypeName + simpleTyperName;
-        T typer = loadTyper(friendTyperName, typerClass);
-        if (typer != null)
-            return typer;
+            String friendTyperName = prefixName + typeName + simpleTyperName;
+            T typer = loadTyper(friendTyperName, typerClass, objType);
+            if (typer != null)
+                return typer;
 
-        String friendTyperFamilyName = prefixName + objTypeName + suffixFamilyName;
-        typer = loadTyper(friendTyperFamilyName, typerClass);
-        if (typer != null)
-            return typer;
+            String friendTyperFamilyName = prefixName + typeName + suffixFamilyName;
+            typer = loadTyper(friendTyperFamilyName, typerClass, objType);
+            if (typer != null)
+                return typer;
 
+            queryType = queryType.getSuperclass();
+        }
         return null;
     }
 
-    public <T> T loadTyper(String friendTyperImplName, Class<T> typerClass)
+    public <T> T loadTyper(String friendTyperImplName, Class<T> typerClass, Class<?> objClass)
             throws QueryException {
         Class<?> friendTyperImplClass;
         try {
@@ -80,11 +89,31 @@ public class FriendTyperProvider
             return null;
         }
 
-        Object friendTyperImpl = friendTyperMap.get(friendTyperImplClass);
+        if (friendTyperImplClass.isInterface())
+            return null;
+        int modifiers = friendTyperImplClass.getModifiers();
+        if (Modifier.isAbstract(modifiers))
+            return null;
+
+        Object friendTyperImpl = friendTyperInstantiationCache.get(friendTyperImplClass);
         if (friendTyperImpl == null)
             try {
-                friendTyperImpl = friendTyperImplClass.newInstance();
-                friendTyperMap.put(friendTyperImplClass, friendTyperImpl);
+                for (Constructor<?> ctor : friendTyperImplClass.getConstructors()) {
+                    Class<?>[] pv = ctor.getParameterTypes();
+                    if (pv.length == 0) { // default ctor()
+                        friendTyperImpl = ctor.newInstance();
+                        break;
+                    }
+                    if (pv.length == 1 && pv[0] == Class.class) { // ctor(val_t.class)
+                        friendTyperImpl = ctor.newInstance(objClass);
+                        break;
+                    }
+                }
+                if (friendTyperImpl == null) {
+                    logger.fine("No useful constructor: " + friendTyperImplClass);
+                    return null;
+                }
+                friendTyperInstantiationCache.put(friendTyperImplClass, friendTyperImpl);
             } catch (ReflectiveOperationException e) {
                 throw new QueryException(e);
             }
