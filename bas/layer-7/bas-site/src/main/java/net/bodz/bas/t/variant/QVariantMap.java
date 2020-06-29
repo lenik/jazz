@@ -4,14 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.joda.time.DateTimeZone;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
-import net.bodz.bas.t.range.DateTimeRange;
-import net.bodz.bas.t.range.DoubleRange;
-import net.bodz.bas.t.range.FloatRange;
-import net.bodz.bas.t.range.IntRange;
-import net.bodz.bas.t.range.LongRange;
+import net.bodz.bas.t.range.*;
 import net.bodz.lily.entity.IId;
 
 /**
@@ -75,49 +73,44 @@ public class QVariantMap<K>
         return ints;
     }
 
-    public IntRange getIntRange(K key, IntRange defaultValue)
+    public <range_t extends Range<?, ?>> range_t getRange(range_t newRange, K key, range_t defaultValue)
             throws ParseException {
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        return new IntRange().parse(s);
+        range_t range = newRange;
+        range.parse(s);
+        return range;
+    }
+
+    public ShortRange getShortRange(K key, ShortRange defaultValue)
+            throws ParseException {
+        return getRange(new ShortRange(), key, defaultValue);
+    }
+
+    public IntegerRange getIntRange(K key, IntegerRange defaultValue)
+            throws ParseException {
+        return getRange(new IntegerRange(), key, defaultValue);
     }
 
     public LongRange getLongRange(K key, LongRange defaultValue)
             throws ParseException {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        return new LongRange().parse(s);
+        return getRange(new LongRange(), key, defaultValue);
     }
 
     public FloatRange getFloatRange(K key, FloatRange defaultValue)
             throws ParseException {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        FloatRange range = new FloatRange();
-        return range.parse(s);
+        return getRange(new FloatRange(), key, defaultValue);
     }
 
     public DoubleRange getDoubleRange(K key, DoubleRange defaultValue)
             throws ParseException {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        DoubleRange range = new DoubleRange();
-        return range.parse(s);
+        return getRange(new DoubleRange(), key, defaultValue);
     }
 
-    public DateTimeRange getDateRange(K key, DateTimeRange defaultValue)
+    public DateTimeRange getDateRange(K key, DateTimeRange defaultValue, DateTimeZone timeZone)
             throws ParseException {
-        String s = getString(key);
-        if (s == null || s.isEmpty())
-            return defaultValue;
-        DateTimeRange range = new DateTimeRange();
-        // TODO timeZone, ...
-        range.parse(s, false);
-        return range;
+        return getRange(new DateTimeRange(timeZone), key, defaultValue);
     }
 
     public <T extends IId<Integer>> T getIntIdRef(K key, T skel) {
