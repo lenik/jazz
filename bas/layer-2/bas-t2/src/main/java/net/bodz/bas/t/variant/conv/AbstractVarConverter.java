@@ -28,129 +28,29 @@ public abstract class AbstractVarConverter<T>
     public AbstractVarConverter(Class<T> type) {
         this.type = type;
 
-        frommap.put(type, new AbstractTransformer<Object, T>() {
-            @Override
-            public T transform(Object input) {
-                return AbstractVarConverter.this.type.cast(input);
-            }
-        });
-        frommap.put(String.class, new AbstractTransformer<Object, T>() {
-            @Override
-            public T transform(Object input) {
-                return fromString((String) input);
-            };
-        });
-        frommap.put(Number.class, new AbstractTransformer<Object, T>() {
-            @Override
-            public T transform(Object input) {
-                return fromNumber((Number) input);
-            };
-        });
-        frommap.put(byte[].class, new AbstractTransformer<Object, T>() {
-            @Override
-            public T transform(Object input) {
-                return fromByteArray((byte[]) input);
-            };
-        });
-        frommap.put(String[].class, new AbstractTransformer<Object, T>() {
-            @Override
-            public T transform(Object input) {
-                return fromStringArray((String[]) input);
-            };
-        });
+        frommap.put(type, new CastTr());
+        frommap.put(String.class, new FromStringTr());
+        frommap.put(Number.class, new FromNumberTr());
+        frommap.put(byte[].class, new FromByteArrayTr());
+        frommap.put(String[].class, new FromStringArrayTr());
 
-        tomap.put(Byte.class, new AbstractTransformer<T, Byte>() {
-            @Override
-            public Byte transform(T input) {
-                return toByte(input);
-            }
-        });
-        tomap.put(Short.class, new AbstractTransformer<T, Short>() {
-            @Override
-            public Short transform(T input) {
-                return toShort(input);
-            }
-        });
-        tomap.put(Integer.class, new AbstractTransformer<T, Integer>() {
-            @Override
-            public Integer transform(T input) {
-                return toInt(input);
-            }
-        });
-        tomap.put(Long.class, new AbstractTransformer<T, Long>() {
-            @Override
-            public Long transform(T input) {
-                return toLong(input);
-            }
-        });
+        tomap.put(Byte.class, new ToByteTr());
+        tomap.put(Short.class, new ToShortTr());
+        tomap.put(Integer.class, new ToIntTr());
+        tomap.put(Long.class, new ToLongTr());
 
         tomap.put(type, AbstractTransformer.Nop.<T> getInstance());
-        tomap.put(Float.class, new AbstractTransformer<T, Float>() {
-            @Override
-            public Float transform(T input) {
-                return toFloat(input);
-            }
-        });
-        tomap.put(Double.class, new AbstractTransformer<T, Double>() {
-            @Override
-            public Double transform(T input) {
-                return toDouble(input);
-            }
-        });
-        tomap.put(Boolean.class, new AbstractTransformer<T, Boolean>() {
-            @Override
-            public Boolean transform(T input) {
-                return toBoolean(input);
-            }
-        });
-        tomap.put(Character.class, new AbstractTransformer<T, Character>() {
-            @Override
-            public Character transform(T input) {
-                return toChar(input);
-            }
-        });
-        tomap.put(String.class, new AbstractTransformer<T, String>() {
-            @Override
-            public String transform(T input) {
-                return AbstractVarConverter.this.toString(input);
-            }
-        });
-        tomap.put(BigInteger.class, new AbstractTransformer<T, BigInteger>() {
-            @Override
-            public BigInteger transform(T input) {
-                return toBigInteger(input);
-            }
-        });
-        tomap.put(BigDecimal.class, new AbstractTransformer<T, BigDecimal>() {
-            @Override
-            public BigDecimal transform(T input) {
-                return toBigDecimal(input);
-            }
-        });
-        tomap.put(Calendar.class, new AbstractTransformer<T, Calendar>() {
-            @Override
-            public Calendar transform(T input) {
-                return toCalendar(input);
-            }
-        });
-        tomap.put(Date.class, new AbstractTransformer<T, Date>() {
-            @Override
-            public Date transform(T input) {
-                return toDate(input);
-            }
-        });
-        tomap.put(java.sql.Date.class, new AbstractTransformer<T, java.sql.Date>() {
-            @Override
-            public java.sql.Date transform(T input) {
-                return toSqlDate(input);
-            }
-        });
-        tomap.put(DateTime.class, new AbstractTransformer<T, DateTime>() {
-            @Override
-            public DateTime transform(T input) {
-                return toDateTime(input);
-            }
-        });
+        tomap.put(Float.class, new ToFloatTr());
+        tomap.put(Double.class, new ToDoubleTr());
+        tomap.put(Boolean.class, new ToBooleanTr());
+        tomap.put(Character.class, new ToCharTr());
+        tomap.put(String.class, new ToStringTr());
+        tomap.put(BigInteger.class, new ToBigIntegerTr());
+        tomap.put(BigDecimal.class, new ToBigDecimalTr());
+        tomap.put(Calendar.class, new ToCalendarTr());
+        tomap.put(Date.class, new ToDateTr());
+        tomap.put(java.sql.Date.class, new ToSqlDateTr());
+        tomap.put(DateTime.class, new ToDateTimeTr());
 
         extensions = VarConverterExtensions.getExtensions(type);
         Iterator<IVarConverterExtension<T>> it = extensions.iterator();
@@ -365,6 +265,166 @@ public abstract class AbstractVarConverter<T>
     @Override
     public DateTime toDateTime(T value) {
         return DateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    class CastTr
+            extends AbstractTransformer<Object, T> {
+        @Override
+        public T transform(Object input) {
+            return AbstractVarConverter.this.type.cast(input);
+        }
+    }
+
+    class FromStringTr
+            extends AbstractTransformer<Object, T> {
+        @Override
+        public T transform(Object input) {
+            return fromString((String) input);
+        };
+    }
+
+    class FromNumberTr
+            extends AbstractTransformer<Object, T> {
+        @Override
+        public T transform(Object input) {
+            return fromNumber((Number) input);
+        };
+    }
+
+    class FromByteArrayTr
+            extends AbstractTransformer<Object, T> {
+        @Override
+        public T transform(Object input) {
+            return fromByteArray((byte[]) input);
+        };
+    }
+
+    class FromStringArrayTr
+            extends AbstractTransformer<Object, T> {
+        @Override
+        public T transform(Object input) {
+            return fromStringArray((String[]) input);
+        };
+    }
+
+    class ToByteTr
+            extends AbstractTransformer<T, Byte> {
+        @Override
+        public Byte transform(T input) {
+            return toByte(input);
+        }
+    }
+
+    class ToShortTr
+            extends AbstractTransformer<T, Short> {
+        @Override
+        public Short transform(T input) {
+            return toShort(input);
+        }
+    }
+
+    class ToIntTr
+            extends AbstractTransformer<T, Integer> {
+        @Override
+        public Integer transform(T input) {
+            return toInt(input);
+        }
+    }
+
+    class ToLongTr
+            extends AbstractTransformer<T, Long> {
+        @Override
+        public Long transform(T input) {
+            return toLong(input);
+        }
+    }
+
+    class ToFloatTr
+            extends AbstractTransformer<T, Float> {
+        @Override
+        public Float transform(T input) {
+            return toFloat(input);
+        }
+    }
+
+    class ToDoubleTr
+            extends AbstractTransformer<T, Double> {
+        @Override
+        public Double transform(T input) {
+            return toDouble(input);
+        }
+    }
+
+    class ToBooleanTr
+            extends AbstractTransformer<T, Boolean> {
+        @Override
+        public Boolean transform(T input) {
+            return toBoolean(input);
+        }
+    }
+
+    class ToCharTr
+            extends AbstractTransformer<T, Character> {
+        @Override
+        public Character transform(T input) {
+            return toChar(input);
+        }
+    }
+
+    class ToStringTr
+            extends AbstractTransformer<T, String> {
+        @Override
+        public String transform(T input) {
+            return AbstractVarConverter.this.toString(input);
+        }
+    }
+
+    class ToBigIntegerTr
+            extends AbstractTransformer<T, BigInteger> {
+        @Override
+        public BigInteger transform(T input) {
+            return toBigInteger(input);
+        }
+    }
+
+    class ToBigDecimalTr
+            extends AbstractTransformer<T, BigDecimal> {
+        @Override
+        public BigDecimal transform(T input) {
+            return toBigDecimal(input);
+        }
+    }
+
+    class ToCalendarTr
+            extends AbstractTransformer<T, Calendar> {
+        @Override
+        public Calendar transform(T input) {
+            return toCalendar(input);
+        }
+    }
+
+    class ToDateTr
+            extends AbstractTransformer<T, Date> {
+        @Override
+        public Date transform(T input) {
+            return toDate(input);
+        }
+    }
+
+    class ToDateTimeTr
+            extends AbstractTransformer<T, DateTime> {
+        @Override
+        public DateTime transform(T input) {
+            return toDateTime(input);
+        }
+    }
+
+    class ToSqlDateTr
+            extends AbstractTransformer<T, java.sql.Date> {
+        @Override
+        public java.sql.Date transform(T input) {
+            return toSqlDate(input);
+        }
     }
 
 }
