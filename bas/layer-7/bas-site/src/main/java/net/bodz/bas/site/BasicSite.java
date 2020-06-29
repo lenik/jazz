@@ -31,6 +31,8 @@ public abstract class BasicSite
         extends AbstractXjdocContent
         implements IQueryable, IPathDispatchable, ICrawlable {
 
+    public static final String PATH_UPLOAD = "upload";
+
     private IQueryable queryContext;
     private Map<String, IJazzModule> modules = new TreeMap<String, IJazzModule>();
     protected final PathMap pathMap;

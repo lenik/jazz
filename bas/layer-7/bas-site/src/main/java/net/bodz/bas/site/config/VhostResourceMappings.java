@@ -7,18 +7,22 @@ import net.bodz.bas.servlet.config.AbstractResourceMappings;
 import net.bodz.bas.servlet.config.ServletContextConfig;
 import net.bodz.bas.servlet.config.ServletDescriptor;
 import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.site.DefaultSiteDirs;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
 public class VhostResourceMappings
         extends AbstractResourceMappings
         implements IBasicSiteAnchors {
 
+    /**
+     * @see DefaultSiteDirs#getDataAnchor(String)
+     */
     public static final IAnchor filesAnchor = _webApp_.join("files/");
 
     ServletContextConfig config;
 
-    ServletDescriptor homeLink;
-    ServletDescriptor sitesVLink;
+    public ServletDescriptor siteHomeAlias;
+    public ServletDescriptor siteFilesAlias;
 
     @Override
     public void servlets(ServletContextConfig config) {
@@ -30,7 +34,8 @@ public class VhostResourceMappings
         if ((sitesDir.isDirectory())) {
             // if (!filesDir.mkdirs())
             // throw new LazyLoadException("Failed to mkdirs: " + filesDir);
-            sitesVLink = fn.localVLink(config, "/files", sitesDir.getPath(), 30);
+            siteHomeAlias = fn.vdirAlias(config, "", sitesDir.getPath(), 30);
+            siteFilesAlias = fn.vdirAlias(config, "/files", sitesDir.getPath(), 30);
         }
     }
 

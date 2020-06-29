@@ -2,6 +2,7 @@ package net.bodz.bas.site;
 
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.servlet.ctx.WebAppAnchor;
+import net.bodz.bas.site.config.EmbeddedResourceMappings;
 import net.bodz.bas.site.config.MyResourceMappings;
 import net.bodz.bas.site.config.UsrShareResourceMappings;
 
@@ -23,10 +24,13 @@ public interface IBasicSiteAnchors {
     IAnchor _jQueryUI_ = _webApp_.join("libjs-alt/jquery-ui/");
     IAnchor _jQueryUIThemes_ = _webApp_.join("libjs-alt/jquery-ui-themes/");
 
-    /** @see UsrShareResourceMappings#webjarsDir */
+    /** @see EmbeddedResourceMappings#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");
 
     /** @see MyResourceMappings#chunkDir */
     IAnchor _chunk_ = _webApp_.join("chunk/");
+
+    /** @see MyResourceMappings#publicDir */
+    IAnchor _public_ = _webApp_.join("public/");
 
 }

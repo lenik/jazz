@@ -28,7 +28,7 @@ public class UserResourceMappings
         this.config = config;
 
         if (new File(homeDir, "_public_").exists())
-            homeLink = fn.localLink(config, "/.home", homeDir.getPath(), 30);
+            homeLink = fn.dirAlias(config, "/.home", homeDir.getPath(), 30);
 
         // if ((filesDir.isDirectory())) {
         // // if (!filesDir.mkdirs())

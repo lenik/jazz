@@ -10,10 +10,14 @@ import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.site.config.VhostResourceMappings;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 
+/**
+ * @see VhostResourceMappings#siteFilesAlias
+ */
 public class DefaultSiteDirs
         implements IBasicSiteAnchors {
 
@@ -41,10 +45,23 @@ public class DefaultSiteDirs
         }
     }
 
+    /**
+     * Where upload and other data files goes to.
+     *
+     * @see #getUploadDir(String, String)
+     */
     public File getDataDir(String instanceName) {
         return new File(clusterDataDir, instanceName);
     }
 
+    /**
+     * How will the href part looks alike.
+     *
+     * After upload completes, the data anchor is used to fetch back the content.
+     *
+     * @see #getUploadedAnchor(HttpServletRequest)
+     * @see VhostResourceMappings#siteFilesAlias
+     */
     public IAnchor getDataAnchor(String instanceName) {
         return _webApp_.join("files/");
     }
@@ -73,15 +90,6 @@ public class DefaultSiteDirs
         return filesDir;
     }
 
-    public IAnchor getUploadAnchor(String instanceName, String schema) {
-        if (instanceName == null)
-            throw new NullPointerException("instanceName");
-        checkSchema(schema);
-
-        IAnchor data = getDataAnchor(instanceName);
-        return data.join(schema + "/");
-    }
-
     public File getUploadDir(HttpServletRequest request) {
         IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
         if (vhost == null)
@@ -95,7 +103,22 @@ public class DefaultSiteDirs
         return dir;
     }
 
-    public IAnchor getUploadAnchor(HttpServletRequest request) {
+    /**
+     * @see BasicSite#PATH_UPLOAD
+     */
+    public IAnchor getUploadedAnchor(String instanceName, String schema) {
+        if (instanceName == null)
+            throw new NullPointerException("instanceName");
+        checkSchema(schema);
+
+        IAnchor data = getDataAnchor(instanceName);
+        return data.join(schema + "/");
+    }
+
+    /**
+     * @see BasicSite#PATH_UPLOAD
+     */
+    public IAnchor getUploadedAnchor(HttpServletRequest request) {
         IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
@@ -104,7 +127,7 @@ public class DefaultSiteDirs
         if (schema == null)
             throw new IllegalArgumentException("Missing schema parameter");
 
-        return getUploadAnchor(vhost.getName(), schema);
+        return getUploadedAnchor(vhost.getName(), schema);
     }
 
     static DefaultSiteDirs instance = new DefaultSiteDirs();

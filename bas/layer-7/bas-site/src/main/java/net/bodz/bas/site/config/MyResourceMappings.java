@@ -10,9 +10,9 @@ import net.bodz.bas.servlet.config.ServletDescriptor;
 public class MyResourceMappings
         extends AbstractResourceMappings {
 
-    ServletContextConfig config;
-    ServletDescriptor chunkDir;
-    ServletDescriptor publicDir;
+    public ServletContextConfig config;
+    public ServletDescriptor chunkDir;
+    public ServletDescriptor publicDir;
 
     @Override
     public void servlets(ServletContextConfig config) {
@@ -24,10 +24,10 @@ public class MyResourceMappings
         File chunk = new File(home, ".chunk");
         if (!chunk.exists())
             chunk = new File(home, "chunk");
-        chunkDir = fn.localLink(config, "/chunk", chunk.getPath(), 365).install(config);
+        chunkDir = fn.dirAlias(config, "/chunk", chunk.getPath(), 365).install(config);
 
         File public_ = new File(home, "public");
-        publicDir = fn.localLink(config, "/public", public_.getPath(), 1).install(config);
+        publicDir = fn.dirAlias(config, "/public", public_.getPath(), 1).install(config);
     }
 
 }
