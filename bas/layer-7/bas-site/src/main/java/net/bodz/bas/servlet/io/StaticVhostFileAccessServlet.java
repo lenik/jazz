@@ -13,6 +13,12 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 
+/**
+ * Notice:
+ *<p>
+ * If you can't (http-)get a static existed file, it could be false-cached. Restart the server or
+ * invalidate the cache then try again.
+ */
 public class StaticVhostFileAccessServlet
         extends AbstractFileAccessServlet {
 
