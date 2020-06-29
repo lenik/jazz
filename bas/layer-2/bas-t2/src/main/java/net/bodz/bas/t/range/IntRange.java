@@ -35,12 +35,20 @@ public class IntRange
 
     @Override
     public Integer preceding(Integer val) {
-        return val - 1;
+        int prec = val.intValue();
+        if (prec == Integer.MIN_VALUE)
+            return null;
+        prec--;
+        return prec;
     }
 
     @Override
     public Integer successor(Integer val) {
-        return val + 1;
+        int succ = val.intValue();
+        if (succ == Integer.MAX_VALUE)
+            return null;
+        succ++;
+        return succ;
     }
 
     @Override

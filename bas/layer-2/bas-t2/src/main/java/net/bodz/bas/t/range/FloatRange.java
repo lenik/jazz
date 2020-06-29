@@ -35,12 +35,24 @@ public class FloatRange
 
     @Override
     public Float preceding(Float val) {
-        return val - Float.MIN_VALUE;
+        float prec = val.floatValue();
+        if (prec == Float.NEGATIVE_INFINITY)
+            return null;
+        if (prec == Float.NaN)
+            return Float.NaN;
+        prec -= Float.MIN_VALUE;
+        return prec;
     }
 
     @Override
     public Float successor(Float val) {
-        return val + Float.MIN_VALUE;
+        float succ = val.floatValue();
+        if (succ == Float.POSITIVE_INFINITY)
+            return null;
+        if (succ == Float.NaN)
+            return Float.NaN;
+        succ += Float.MIN_VALUE;
+        return succ;
     }
 
     @Override

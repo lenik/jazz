@@ -35,12 +35,20 @@ public class LongRange
 
     @Override
     public Long preceding(Long val) {
-        return val - 1L;
+        long prec = val.longValue();
+        if (prec == Long.MIN_VALUE)
+            return null;
+        prec--;
+        return prec;
     }
 
     @Override
     public Long successor(Long val) {
-        return val + 1L;
+        long succ = val.longValue();
+        if (succ == Long.MAX_VALUE)
+            return null;
+        succ++;
+        return val;
     }
 
     @Override
