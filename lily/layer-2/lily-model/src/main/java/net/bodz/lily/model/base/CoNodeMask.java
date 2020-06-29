@@ -1,13 +1,13 @@
 package net.bodz.lily.model.base;
 
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntegerRange;
 
 public class CoNodeMask
         extends CoObjectMask {
 
     public Long parentId;
     public Integer maxDepth;
-    final IntRange depthRange = new IntRange();
+    final IntegerRange depthRange = new IntegerRange();
 
     public Long getParentId() {
         return parentId;
@@ -25,7 +25,7 @@ public class CoNodeMask
         this.maxDepth = maxDepth;
     }
 
-    public IntRange getDepthRange() {
+    public IntegerRange getDepthRange() {
         return depthRange;
     }
 

@@ -3,17 +3,17 @@ package net.bodz.bas.t.range;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 
-public class IntRangeVarConverter
-        extends AbstractRangeVarConverter<IntRange, Integer> {
+public class IntegerRangeVarConverter
+        extends AbstractRangeVarConverter<IntegerRange, Integer> {
 
-    public IntRangeVarConverter() {
-        super(IntRange.class);
+    public IntegerRangeVarConverter() {
+        super(IntegerRange.class);
     }
 
     @Override
-    public IntRange fromString(String in)
+    public IntegerRange fromString(String in)
             throws TypeConvertException {
-        IntRange range = new IntRange();
+        IntegerRange range = new IntegerRange();
         try {
             return range.parse(in);
         } catch (ParseException e) {
@@ -22,23 +22,23 @@ public class IntRangeVarConverter
     }
 
     @Override
-    public IntRange fromNumber(Number in)
+    public IntegerRange fromNumber(Number in)
             throws TypeConvertException {
         if (in == null)
             return null;
         int val = in.intValue();
-        return new IntRange().point(val);
+        return new IntegerRange().point(val);
     }
 
     @Override
-    public Integer toNumber(IntRange value) {
+    public Integer toNumber(IntegerRange value) {
         if (value == null)
             return null;
         return value.getPointValue();
     }
 
     @Override
-    public boolean toBoolean(IntRange value) {
+    public boolean toBoolean(IntegerRange value) {
         Integer number = toNumber(value);
         if (number == null)
             return false;
@@ -47,6 +47,6 @@ public class IntRangeVarConverter
         return true;
     }
 
-    public static final IntRangeVarConverter INSTANCE = new IntRangeVarConverter();
+    public static final IntegerRangeVarConverter INSTANCE = new IntegerRangeVarConverter();
 
 }

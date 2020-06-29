@@ -3,7 +3,7 @@ package net.bodz.lily.t.base;
 import java.util.Collection;
 
 import net.bodz.bas.t.range.DateTimeRange;
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 
 public abstract class CoMessageMask
@@ -19,9 +19,9 @@ public abstract class CoMessageMask
 
     public DateTimeRange mailDateRange;
 
-    public IntRange voteCountRange;
-    public IntRange likerCountRange;
-    public IntRange readCountRange;
+    public IntegerRange voteCountRange;
+    public IntegerRange likerCountRange;
+    public IntegerRange readCountRange;
 
     public boolean noForm;
     public boolean noOp;
@@ -81,30 +81,30 @@ public abstract class CoMessageMask
     /**
      * Vote Count Range
      */
-    public IntRange getVoteCountRange() {
+    public IntegerRange getVoteCountRange() {
         return voteCountRange;
     }
 
-    public void setVoteCountRange(IntRange voteCountRange) {
+    public void setVoteCountRange(IntegerRange voteCountRange) {
         this.voteCountRange = voteCountRange;
     }
 
     /**
      * Liker Count Range
      */
-    public IntRange getLikerCountRange() {
+    public IntegerRange getLikerCountRange() {
         return likerCountRange;
     }
 
-    public void setLikerCountRange(IntRange likerCountRange) {
+    public void setLikerCountRange(IntegerRange likerCountRange) {
         this.likerCountRange = likerCountRange;
     }
 
-    public IntRange getReadCountRange() {
+    public IntegerRange getReadCountRange() {
         return readCountRange;
     }
 
-    public void setReadCountRange(IntRange readCountRange) {
+    public void setReadCountRange(IntegerRange readCountRange) {
         this.readCountRange = readCountRange;
     }
 

@@ -1,7 +1,7 @@
 net.bodz.bas.t.range.DateTimeRangeVarConverter
 net.bodz.bas.t.range.DoubleRangeVarConverter
 net.bodz.bas.t.range.FloatRangeVarConverter
-net.bodz.bas.t.range.IntRangeVarConverter
+net.bodz.bas.t.range.IntegerRangeVarConverter
 net.bodz.bas.t.range.LongRangeVarConverter
 net.bodz.bas.t.range.ShortRangeVarConverter
 net.bodz.bas.t.variant.conv.BigDecimalVarConverter

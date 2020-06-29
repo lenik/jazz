@@ -1,6 +1,6 @@
 package net.bodz.violet.edu.impl;
 
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
@@ -10,8 +10,8 @@ public class TestPaperMask
         extends CoObjectMask {
 
     Integer course;
-    IntRange timeoutRange;
-    IntRange totalScoreRange;
+    IntegerRange timeoutRange;
+    IntegerRange totalScoreRange;
 
     public Integer getCourse() {
         return course;
@@ -21,19 +21,19 @@ public class TestPaperMask
         this.course = course;
     }
 
-    public IntRange getTimeoutRange() {
+    public IntegerRange getTimeoutRange() {
         return timeoutRange;
     }
 
-    public void setTimeoutRange(IntRange timeoutRange) {
+    public void setTimeoutRange(IntegerRange timeoutRange) {
         this.timeoutRange = timeoutRange;
     }
 
-    public IntRange getTotalScoreRange() {
+    public IntegerRange getTotalScoreRange() {
         return totalScoreRange;
     }
 
-    public void setTotalScoreRange(IntRange totalScoreRange) {
+    public void setTotalScoreRange(IntegerRange totalScoreRange) {
         this.totalScoreRange = totalScoreRange;
     }
 

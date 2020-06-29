@@ -1,6 +1,6 @@
 package net.bodz.violet.edu.impl;
 
-import net.bodz.bas.t.range.IntRange;
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoObjectMask;
 
 /**
@@ -10,7 +10,7 @@ public class CourseMask
         extends CoObjectMask {
 
     Integer categoryId;
-    IntRange creditRange;
+    IntegerRange creditRange;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -20,11 +20,11 @@ public class CourseMask
         this.categoryId = categoryId;
     }
 
-    public IntRange getCreditRange() {
+    public IntegerRange getCreditRange() {
         return creditRange;
     }
 
-    public void setCreditRange(IntRange creditRange) {
+    public void setCreditRange(IntegerRange creditRange) {
         this.creditRange = creditRange;
     }
 
