@@ -10,10 +10,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.LongRange;
-import net.bodz.bas.t.range.RangeFn;
+import net.bodz.bas.t.range.RangeVarsFn;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
@@ -197,14 +198,14 @@ public class CoObjectMask
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws LoaderException, ParseException {
         VarMapLoader loader = new VarMapLoader();
         loader.load(getClass(), this, map);
 
         codeName = map.getString("code", codeName);
         queryText = map.getString("q", queryText);
-        ownerIdRange = RangeFn.getFrom(map, "uid", ownerIdRange);
-        ownerGroupIdRange = RangeFn.getFrom(map, "gid", ownerGroupIdRange);
+        ownerIdRange = RangeVarsFn.getFrom(map, "uid", ownerIdRange);
+        ownerGroupIdRange = RangeVarsFn.getFrom(map, "gid", ownerGroupIdRange);
     }
 
     @Override
