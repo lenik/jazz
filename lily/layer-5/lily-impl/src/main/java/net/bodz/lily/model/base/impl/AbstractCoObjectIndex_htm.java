@@ -3,6 +3,7 @@ package net.bodz.lily.model.base.impl;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -51,7 +52,7 @@ public abstract class AbstractCoObjectIndex_htm<T extends CoObjectIndex<E>, E ex
                 // HttpSession session = request.getSession();
                 try {
                     mask.readObject(VariantMaps.fromRequest(request));
-                } catch (LoaderException e) {
+                } catch (LoaderException | ParseException e) {
                     throw new ViewBuilderException("Failed to decode mask: " + e.getMessage(), e);
                 }
                 return mask;

@@ -127,9 +127,7 @@
     </sql>
 
     <sql id="filter-id">
-        <if test="m.idRange != null">
-            ${m.idRange.matchSql("a.id")}
-        </if>
+        <if test="m.idRange != null">${m.idRange.matchSql("a.id")}</if>
     </sql>
 
     <sql id="filter-ui">
