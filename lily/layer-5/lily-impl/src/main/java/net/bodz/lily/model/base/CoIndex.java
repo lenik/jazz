@@ -201,7 +201,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             tableData.setList(list);
         } catch (ReflectiveOperationException e) {
             throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (LoaderException e) {
+        } catch (LoaderException | ParseException e) {
             throw new RequestHandlerException("Error decode mask of " + maskType, e);
         }
         return tableData;

@@ -1,6 +1,8 @@
 package net.bodz.lily.t.struct;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.joda.time.LocalDateTime;
 
@@ -11,14 +13,29 @@ import net.bodz.bas.fmt.json.JsonObject;
 public class CalendarDate
         extends MixinStruct {
 
-    short year;
-    short month;
-    short day;
-    short week;
-    short weekDay;
-    short hour;
-    short minute;
-    short second;
+    short year = 0;
+    short month = 0;
+    short day = 0;
+    short week = 0;
+    short weekDay = 0;
+    short hour = -1;
+    short minute = -1;
+    short second = -1;
+
+    public CalendarDate() {
+    }
+
+    public CalendarDate(short year, short month, short day, short week, short weekDay, short hour, short minute,
+            short second) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.week = week;
+        this.weekDay = weekDay;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
 
     public short getYear() {
         return year;
@@ -113,6 +130,90 @@ public class CalendarDate
         out.entry("hour", hour);
         out.entry("minute", minute);
         out.entry("second", second);
+    }
+
+    public String getAsString() {
+        StringBuilder sb = new StringBuilder(30);
+        if (year != 0 || month != 0 || day != 0) {
+            sb.append(year);
+            sb.append("-");
+            sb.append(month);
+            sb.append("-");
+            sb.append(day);
+        }
+        if (week != 0 || weekDay != 0) {
+            sb.append("w");
+            sb.append(week);
+            sb.append("-");
+            sb.append(weekDay);
+        }
+        if (hour != -1 || minute != -1 || second != -1) {
+            sb.append(" ");
+            sb.append(hour);
+            sb.append(":");
+            sb.append(minute);
+            sb.append(":");
+            sb.append(second);
+        }
+        return sb.toString();
+    }
+
+    public void setAsString(String spec)
+            throws ParseException {
+        spec = spec.trim();
+        int sp = spec.indexOf(' ');
+        String dateSpec, timeSpec;
+        if (sp == -1) {
+            dateSpec = spec;
+            timeSpec = null;
+        } else {
+            dateSpec = spec.substring(0, sp);
+            timeSpec = spec.substring(sp + 1);
+        }
+        parseDateSpec(dateSpec);
+        parseTimeSpec(timeSpec);
+    }
+
+    static Pattern dateSpecPattern = Pattern.compile("^(\\d+)-(\\d+)-(\\d+)(w(\\d+)-(\\d+))?$");
+    static Pattern timeSpecPattern = Pattern.compile("^(\\d+):(\\d+):(\\d+)$");
+
+    void parseDateSpec(String spec)
+            throws ParseException {
+        Matcher matcher = dateSpecPattern.matcher(spec);
+        if (matcher.matches()) {
+            String _year = matcher.group(1);
+            String _month = matcher.group(2);
+            String _day = matcher.group(3);
+            String _week = matcher.group(5);
+            String _weekDay = matcher.group(6);
+            year = Short.parseShort(_year);
+            month = Short.parseShort(_month);
+            day = Short.parseShort(_day);
+            week = Short.parseShort(_week);
+            weekDay = Short.parseShort(_weekDay);
+        } else {
+            throw new ParseException("Illegal date spec: " + spec);
+        }
+    }
+
+    void parseTimeSpec(String spec)
+            throws ParseException {
+        Matcher matcher = timeSpecPattern.matcher(spec);
+        if (matcher.matches()) {
+            String _hour = matcher.group(1);
+            String _minute = matcher.group(2);
+            String _second = matcher.group(3);
+            hour = Short.parseShort(_hour);
+            minute = Short.parseShort(_minute);
+            second = Short.parseShort(_second);
+        } else {
+            throw new ParseException("Illegal time spec: " + spec);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return getAsString();
     }
 
 }
