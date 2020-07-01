@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.joda.time.LocalDateTime;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
@@ -109,6 +110,11 @@ public class CalendarDate
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        String spec = o.getString("asString");
+        if (spec != null) {
+            setAsString(spec);
+            return;
+        }
         year = o.getShort("year", year);
         month = o.getShort("month", month);
         day = o.getShort("day", day);
@@ -122,6 +128,7 @@ public class CalendarDate
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
+        out.entry("asString", getAsString());
         out.entry("year", year);
         out.entry("month", month);
         out.entry("day", day);
@@ -135,25 +142,33 @@ public class CalendarDate
     public String getAsString() {
         StringBuilder sb = new StringBuilder(30);
         if (year != 0 || month != 0 || day != 0) {
-            sb.append(year);
+            if (year > 0)
+                sb.append(year);
             sb.append("-");
-            sb.append(month);
+            if (month > 0)
+                sb.append(month);
             sb.append("-");
-            sb.append(day);
+            if (day > 0)
+                sb.append(day);
         }
         if (week != 0 || weekDay != 0) {
             sb.append("w");
-            sb.append(week);
+            if (week > 0)
+                sb.append(week);
             sb.append("-");
-            sb.append(weekDay);
+            if (weekDay > 0)
+                sb.append(weekDay);
         }
         if (hour != -1 || minute != -1 || second != -1) {
             sb.append(" ");
-            sb.append(hour);
+            if (hour >= 0)
+                sb.append(hour);
             sb.append(":");
-            sb.append(minute);
+            if (minute >= 0)
+                sb.append(minute);
             sb.append(":");
-            sb.append(second);
+            if (second >= 0)
+                sb.append(second);
         }
         return sb.toString();
     }
@@ -164,18 +179,39 @@ public class CalendarDate
         int sp = spec.indexOf(' ');
         String dateSpec, timeSpec;
         if (sp == -1) {
-            dateSpec = spec;
+            dateSpec = spec.trim();
             timeSpec = null;
         } else {
-            dateSpec = spec.substring(0, sp);
-            timeSpec = spec.substring(sp + 1);
+            dateSpec = spec.substring(0, sp).trim();
+            timeSpec = spec.substring(sp + 1).trim();
         }
-        parseDateSpec(dateSpec);
-        parseTimeSpec(timeSpec);
+        if (dateSpec.contains(":")) {
+            String tmp = dateSpec;
+            dateSpec = timeSpec;
+            timeSpec = tmp;
+        }
+
+        if (!Nullables.isEmpty(dateSpec)) {
+            parseDateSpec(dateSpec);
+        } else {
+            year = 0;
+            month = 0;
+            day = 0;
+            week = 0;
+            weekDay = 0;
+        }
+
+        if (!Nullables.isEmpty(timeSpec)) {
+            parseTimeSpec(timeSpec);
+        } else {
+            hour = -1;
+            minute = -1;
+            second = -1;
+        }
     }
 
-    static Pattern dateSpecPattern = Pattern.compile("^(\\d+)-(\\d+)-(\\d+)(w(\\d+)-(\\d+))?$");
-    static Pattern timeSpecPattern = Pattern.compile("^(\\d+):(\\d+):(\\d+)$");
+    static Pattern dateSpecPattern = Pattern.compile("^(-?\\d*)-(-?\\d*)-(-?\\d*)(w(-?\\d*)-(-?\\d*))?$");
+    static Pattern timeSpecPattern = Pattern.compile("^(-?\\d*):(-?\\d*)(:(-?\\d*))?$");
 
     void parseDateSpec(String spec)
             throws ParseException {
@@ -186,11 +222,16 @@ public class CalendarDate
             String _day = matcher.group(3);
             String _week = matcher.group(5);
             String _weekDay = matcher.group(6);
-            year = Short.parseShort(_year);
-            month = Short.parseShort(_month);
-            day = Short.parseShort(_day);
-            week = Short.parseShort(_week);
-            weekDay = Short.parseShort(_weekDay);
+            year = _year.isEmpty() ? 0 : Short.parseShort(_year);
+            month = _month.isEmpty() ? 0 : Short.parseShort(_month);
+            day = _day.isEmpty() ? 0 : Short.parseShort(_day);
+            if (_week != null) {
+                week = _week.isEmpty() ? 0 : Short.parseShort(_week);
+                weekDay = _weekDay.isEmpty() ? 0 : Short.parseShort(_weekDay);
+            } else {
+                week = 0;
+                weekDay = 0;
+            }
         } else {
             throw new ParseException("Illegal date spec: " + spec);
         }
@@ -202,10 +243,13 @@ public class CalendarDate
         if (matcher.matches()) {
             String _hour = matcher.group(1);
             String _minute = matcher.group(2);
-            String _second = matcher.group(3);
-            hour = Short.parseShort(_hour);
-            minute = Short.parseShort(_minute);
-            second = Short.parseShort(_second);
+            String _second = matcher.group(4);
+            hour = _hour.isEmpty() ? -1 : Short.parseShort(_hour);
+            minute = _minute.isEmpty() ? -1 : Short.parseShort(_minute);
+            if (_second != null)
+                second = _second.isEmpty() ? -1 : Short.parseShort(_second);
+            else
+                second = -1;
         } else {
             throw new ParseException("Illegal time spec: " + spec);
         }
