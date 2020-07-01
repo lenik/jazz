@@ -129,7 +129,7 @@ public class BeanJsonLoader
                     continue;
 
                 Object obj = propertyValue;
-                boolean create = setter == null;
+                boolean create = setter != null;
                 Constructor<?> ctor0 = null;
                 if (create) {
                     try {
