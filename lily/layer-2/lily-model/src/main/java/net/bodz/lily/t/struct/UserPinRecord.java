@@ -25,10 +25,12 @@ public class UserPinRecord
             throws ParseException {
         super.readObject(o);
 
-        JsonObject _user = o.getChild("user");
-        if (_user != null) {
+        JsonObject js_user = o.getChild("user");
+        if (js_user != null) {
             user = new User();
-            user.setId(_user.getInt("id"));
+            int js_userId = js_user.getInt("id", -1);
+            if (js_userId != -1)
+                user.setId(js_userId);
         }
     }
 
