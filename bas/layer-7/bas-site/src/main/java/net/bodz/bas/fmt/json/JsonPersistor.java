@@ -221,11 +221,11 @@ public class JsonPersistor {
         out.entry(KEY_TYPE, type.getName());
         if (type.isArray())
             out.entry(KEY_CTYPE, type.getComponentType().getName());
-        writeVal(out, obj);
+        writeNonNullVal(out, obj);
         out.endObject();
     }
 
-    public void writeVal(IJsonOut out, Object obj)
+    public void writeNonNullVal(IJsonOut out, Object obj)
             throws IOException {
         Class<?> type = obj.getClass();
         if (type.isArray()) {
