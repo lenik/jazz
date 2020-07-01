@@ -1,6 +1,9 @@
 package net.bodz.lily.contact;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.t.predef.Predef;
+import net.bodz.bas.t.predef.PredefJsonFn;
 import net.bodz.bas.t.predef.PredefMetadata;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocAware;
 
@@ -45,6 +48,11 @@ public class Gender
 
     static {
         IXjdocAware.fn.injectFields(Gender.class, false);
+    }
+
+    public static Gender jsonGet(JsonObject o, String propertyName, Gender defaultValue)
+            throws ParseException {
+        return PredefJsonFn.jsonGet(o, propertyName, Gender.class, defaultValue);
     }
 
 }
