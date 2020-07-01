@@ -55,7 +55,7 @@ public class TableData_json
                             String column = columns.get(i);
                             String fmt = data.getFormat(column);
                             Object cell = row.get(i);
-                            dumpValue(out, cell, fmt);
+                            dumpObject(out, getRemainingProperty(column), cell, fmt);
                         }
                         out.endArray();
                     } else {
@@ -64,7 +64,7 @@ public class TableData_json
                             String column = columns.get(i);
                             String fmt = data.getFormat(column);
                             out.key(column);
-                            dumpValue(out, row.get(i), fmt);
+                            dumpObject(out, getRemainingProperty(column), row.get(i), fmt);
                         }
                         out.endObject();
                     }
@@ -76,6 +76,32 @@ public class TableData_json
         }
 
         out.endObject();
+    }
+
+    static String getRemainingProperty(String property) {
+        int dot = property.indexOf('.');
+        if (dot == -1)
+            return null;
+        else
+            return property.substring(dot + 1);
+    }
+
+    void dumpObject(IJsonOut out, String property, Object val, String fmt)
+            throws IOException {
+        if (property != null) {
+            int dot = property.indexOf('.');
+            String head = property;
+            if (dot == -1)
+                property = null;
+            else
+                property = property.substring(dot + 1);
+            out.object();
+            out.key(head);
+            dumpObject(out, property, val, fmt);
+            out.endObject();
+        } else {
+            dumpValue(out, val, fmt);
+        }
     }
 
     void dumpValue(IJsonOut out, Object val, String fmt)
