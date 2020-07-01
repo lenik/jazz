@@ -31,6 +31,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
+import net.bodz.bas.repr.state.StateJsonFn;
 import net.bodz.bas.repr.state.StdStates;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.JsonMap;
@@ -569,20 +570,28 @@ public abstract class CoObject
     /** ⇱ Implementation Of {@link IJsonSerializable}. */
     /* _____________________________ */static section.iface __JSON__;
 
+    protected Boolean overrided_readObject = false;
+
+    boolean checkAutoMode() {
+        if (overrided_readObject == null)
+            synchronized (this) {
+                if (overrided_readObject == null)
+                    try {
+                        getClass().getMethod("readObject", JsonObject.class);
+                        overrided_readObject = true;
+                    } catch (NoSuchMethodException e) {
+                        overrided_readObject = false;
+                    }
+            }
+        return !overrided_readObject;
+    }
+
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
         if (o == null)
             throw new NullPointerException("o");
-
-        boolean autoMode = false;
-        try {
-            getClass().getMethod("readObject", JsonObject.class);
-        } catch (NoSuchMethodException e) {
-            autoMode = true;
-        }
-
-        if (autoMode) {
+        if (checkAutoMode()) {
             try {
                 new BeanJsonLoader().load(this, o, false);
             } catch (Exception e) {
@@ -597,7 +606,7 @@ public abstract class CoObject
 
             flags = o.getInt("flags", flags);
             priority = o.getInt("priority", priority);
-            // state = o.getEnum("state", state, State.class);
+            state = StateJsonFn.getFrom(o, "state", state);
 
             creationDate = o.getDateTime("creationDate", creationDate);
             lastModifiedDate = o.getDateTime("lastModifiedDate", lastModifiedDate);
