@@ -14,6 +14,7 @@ import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -232,8 +233,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         JsonResponse result = new JsonResponse();
 
         T obj;
-        Long id = content.getLong("id");
-        boolean create = id == null;
+        long id = content.getLong("id", -1);
+        boolean create = id == -1;
         if (create) {
             try {
                 obj = create();
@@ -241,8 +242,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 throw new RequestHandlerException("Failed to instantiate: " + e.getMessage(), e);
             }
         } else {
-            assert id != null;
+            assert id != -1;
             obj = load(id);
+            if (obj == null)
+                throw new RequestHandlerException(String.format(//
+                        "Edit non-existing record with id=%s.", id));
         }
 
         JsonVarMap contentMap = new JsonVarMap(content);
@@ -291,6 +295,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected T create()
             throws ReflectiveOperationException {
         T instance = Instantiables._instantiate(getObjectType());
+        if (instance == null)
+            throw new IllegalUsageException("null instantiated.");
         return instance;
     }
 
