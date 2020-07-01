@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.joda.time.Period;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
@@ -31,6 +32,11 @@ public class CalendarPeriod
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        String spec = o.getString("asString");
+        if (spec != null) {
+            setAsString(spec);
+            return;
+        }
         years = o.getInt("years", years);
         months = o.getInt("months", months);
         weeks = o.getInt("weeks", weeks);
@@ -44,6 +50,7 @@ public class CalendarPeriod
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
+        out.entry("asString", getAsString());
         out.entry("years", years);
         out.entry("months", months);
         out.entry("weeks", weeks);
@@ -57,13 +64,16 @@ public class CalendarPeriod
     public String getAsString() {
         StringBuilder sb = new StringBuilder(30);
         if (years != 0 || months != 0 || days != 0) {
-            sb.append(years);
+            if (years > 0)
+                sb.append(years);
             sb.append("-");
-            sb.append(months);
+            if (months > 0)
+                sb.append(months);
             sb.append("-");
-            sb.append(days);
+            if (days > 0)
+                sb.append(days);
         }
-        if (weeks != 0) {
+        if (weeks > 0) {
             sb.append("w");
             sb.append(weeks);
         }
@@ -73,11 +83,14 @@ public class CalendarPeriod
 
         if (hours != 0 || minutes != 0 || seconds != 0) {
             sb.append(" ");
-            sb.append(hours);
+            if (hours > 0)
+                sb.append(hours);
             sb.append(":");
-            sb.append(minutes);
+            if (minutes > 0)
+                sb.append(minutes);
             sb.append(":");
-            sb.append(seconds);
+            if (seconds > 0)
+                sb.append(seconds);
         }
         return sb.toString();
     }
@@ -88,18 +101,38 @@ public class CalendarPeriod
         int sp = spec.indexOf(' ');
         String dateSpec, timeSpec;
         if (sp == -1) {
-            dateSpec = spec;
+            dateSpec = spec.trim();
             timeSpec = null;
         } else {
-            dateSpec = spec.substring(0, sp);
-            timeSpec = spec.substring(sp + 1);
+            dateSpec = spec.substring(0, sp).trim();
+            timeSpec = spec.substring(sp + 1).trim();
         }
-        parseDateSpec(dateSpec);
-        parseTimeSpec(timeSpec);
+        if (dateSpec.contains(":")) {
+            String tmp = dateSpec;
+            dateSpec = timeSpec;
+            timeSpec = tmp;
+        }
+        if (!Nullables.isEmpty(dateSpec)) {
+            parseDateSpec(dateSpec);
+        } else {
+            years = 0;
+            months = 0;
+            days = 0;
+            weeks = 0;
+            workDays = false;
+        }
+
+        if (!Nullables.isEmpty(timeSpec)) {
+            parseTimeSpec(timeSpec);
+        } else {
+            hours = 0;
+            minutes = 0;
+            days = 0;
+        }
     }
 
-    static Pattern dateSpecPattern = Pattern.compile("^(\\d+)-(\\d+)-(\\d+)(w(\\d+))?(\\*?)$");
-    static Pattern timeSpecPattern = Pattern.compile("^(\\d+):(\\d+):(\\d+)$");
+    static Pattern dateSpecPattern = Pattern.compile("^(-?\\d*)-(-?\\d*)-(-?\\d*)(w(-?\\d+))?(-?\\*?)$");
+    static Pattern timeSpecPattern = Pattern.compile("^(-?\\d*):(-?\\d*)(:(-?\\d*))?$");
 
     void parseDateSpec(String spec)
             throws ParseException {
@@ -110,10 +143,13 @@ public class CalendarPeriod
             String _days = matcher.group(3);
             String _weeks = matcher.group(5);
             String _workDay = matcher.group(6);
-            years = Integer.parseInt(_years);
-            months = Integer.parseInt(_months);
-            days = Integer.parseInt(_days);
-            weeks = _weeks == null ? 0 : Integer.parseInt(_weeks);
+            years = _years.isEmpty() ? 0 : Integer.parseInt(_years);
+            months = _months.isEmpty() ? 0 : Integer.parseInt(_months);
+            days = _days.isEmpty() ? 0 : Integer.parseInt(_days);
+            if (_weeks != null)
+                weeks = _weeks.isEmpty() ? 0 : Integer.parseInt(_weeks);
+            else
+                weeks = 0;
             workDays = _workDay.equals("*");
         } else {
             throw new ParseException("Illegal date spec: " + spec);
@@ -126,10 +162,13 @@ public class CalendarPeriod
         if (matcher.matches()) {
             String _hours = matcher.group(1);
             String _minutes = matcher.group(2);
-            String _seconds = matcher.group(3);
-            hours = Integer.parseInt(_hours);
-            minutes = Integer.parseInt(_minutes);
-            seconds = Integer.parseInt(_seconds);
+            String _seconds = matcher.group(4);
+            hours = _hours.isEmpty() ? 0 : Integer.parseInt(_hours);
+            minutes = _minutes.isEmpty() ? 0 : Integer.parseInt(_minutes);
+            if (_seconds != null)
+                seconds = _seconds.isEmpty() ? 0 : Integer.parseInt(_seconds);
+            else
+                seconds = 0;
         } else {
             throw new ParseException("Illegal time spec: " + spec);
         }
