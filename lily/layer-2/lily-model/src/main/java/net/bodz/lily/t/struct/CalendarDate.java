@@ -4,24 +4,44 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
-public class CalendarDate
+/**
+ * final class => final accessors => same as public fields.
+ */
+public final class CalendarDate
         extends MixinStruct {
 
-    short year = 0;
-    short month = 0;
-    short day = 0;
-    short week = 0;
-    short weekDay = 0;
-    short hour = -1;
-    short minute = -1;
-    short second = -1;
+    public static final int NO_YEAR = 0;
+    public static final int NO_MONTH = 0;
+    public static final int NO_DAY = 0;
+    public static final int NO_WEEK = 0;
+    public static final int NO_WEEKDAY = 0;
+    public static final int NO_HOUR = -1;
+    public static final int NO_MINUTE = -1;
+    public static final int NO_SECOND = -1;
+
+    static final Logger logger = LoggerFactory.getLogger(CalendarDate.class);
+
+    short year = NO_YEAR;
+    short month = NO_MONTH;
+    short day = NO_DAY;
+    short week = NO_WEEK;
+    short weekDay = NO_WEEKDAY;
+    short hour = NO_HOUR;
+    short minute = NO_MINUTE;
+    short second = NO_SECOND;
+    DateTimeZone timeZone; // null for local-tz
 
     public CalendarDate() {
     }
@@ -102,9 +122,33 @@ public class CalendarDate
         this.second = second;
     }
 
+    public DateTime toDateTime() {
+        DateTime t = new DateTime(year, month, day, hour, minute, second, timeZone);
+        return t;
+    }
+
     public LocalDateTime toLocalDateTime() {
         LocalDateTime t = new LocalDateTime(year, month, day, hour, minute, second);
         return t;
+    }
+
+    public DateTime alignFrom(DateTime from) {
+        TimeVec fromTime = new TimeVec(from);
+// new TimeVec pattern=
+        fromTime.future(pattern);
+        int year = this.year;
+        int month = this.month;
+        int day = this.day;
+        int week = this.week;
+        int weekDay = this.weekDay;
+        int hour = this.hour;
+        int minute = this.minute;
+        int second = this.second;
+        boolean carry = false;
+
+        @SuppressWarnings("unused")
+        DateTime aligned = from;
+        return from;
     }
 
     @Override
@@ -141,33 +185,33 @@ public class CalendarDate
 
     public String getAsString() {
         StringBuilder sb = new StringBuilder(30);
-        if (year != 0 || month != 0 || day != 0) {
-            if (year > 0)
+        if (year != NO_YEAR || month != NO_MONTH || day != NO_DAY) {
+            if (year > NO_YEAR)
                 sb.append(year);
             sb.append("-");
-            if (month > 0)
+            if (month > NO_MONTH)
                 sb.append(month);
             sb.append("-");
-            if (day > 0)
+            if (day > NO_DAY)
                 sb.append(day);
         }
-        if (week != 0 || weekDay != 0) {
+        if (week != NO_WEEK || weekDay != NO_WEEKDAY) {
             sb.append("w");
-            if (week > 0)
+            if (week != NO_WEEK)
                 sb.append(week);
             sb.append("-");
-            if (weekDay > 0)
+            if (weekDay != NO_WEEKDAY)
                 sb.append(weekDay);
         }
-        if (hour != -1 || minute != -1 || second != -1) {
+        if (hour != NO_HOUR || minute != NO_MINUTE || second != NO_SECOND) {
             sb.append(" ");
-            if (hour >= 0)
+            if (hour != NO_HOUR)
                 sb.append(hour);
             sb.append(":");
-            if (minute >= 0)
+            if (minute != NO_MINUTE)
                 sb.append(minute);
             sb.append(":");
-            if (second >= 0)
+            if (second != NO_SECOND)
                 sb.append(second);
         }
         return sb.toString();
@@ -194,19 +238,19 @@ public class CalendarDate
         if (!Nullables.isEmpty(dateSpec)) {
             parseDateSpec(dateSpec);
         } else {
-            year = 0;
-            month = 0;
-            day = 0;
-            week = 0;
-            weekDay = 0;
+            year = NO_YEAR;
+            month = NO_MONTH;
+            day = NO_DAY;
+            week = NO_WEEK;
+            weekDay = NO_WEEKDAY;
         }
 
         if (!Nullables.isEmpty(timeSpec)) {
             parseTimeSpec(timeSpec);
         } else {
-            hour = -1;
-            minute = -1;
-            second = -1;
+            hour = NO_HOUR;
+            minute = NO_MINUTE;
+            second = NO_SECOND;
         }
     }
 
@@ -222,15 +266,15 @@ public class CalendarDate
             String _day = matcher.group(3);
             String _week = matcher.group(5);
             String _weekDay = matcher.group(6);
-            year = _year.isEmpty() ? 0 : Short.parseShort(_year);
-            month = _month.isEmpty() ? 0 : Short.parseShort(_month);
-            day = _day.isEmpty() ? 0 : Short.parseShort(_day);
+            year = _year.isEmpty() ? NO_YEAR : Short.parseShort(_year);
+            month = _month.isEmpty() ? NO_MONTH : Short.parseShort(_month);
+            day = _day.isEmpty() ? NO_DAY : Short.parseShort(_day);
             if (_week != null) {
-                week = _week.isEmpty() ? 0 : Short.parseShort(_week);
-                weekDay = _weekDay.isEmpty() ? 0 : Short.parseShort(_weekDay);
+                week = _week.isEmpty() ? NO_WEEK : Short.parseShort(_week);
+                weekDay = _weekDay.isEmpty() ? NO_WEEKDAY : Short.parseShort(_weekDay);
             } else {
-                week = 0;
-                weekDay = 0;
+                week = NO_WEEK;
+                weekDay = NO_WEEKDAY;
             }
         } else {
             throw new ParseException("Illegal date spec: " + spec);
@@ -244,12 +288,12 @@ public class CalendarDate
             String _hour = matcher.group(1);
             String _minute = matcher.group(2);
             String _second = matcher.group(4);
-            hour = _hour.isEmpty() ? -1 : Short.parseShort(_hour);
-            minute = _minute.isEmpty() ? -1 : Short.parseShort(_minute);
+            hour = _hour.isEmpty() ? NO_HOUR : Short.parseShort(_hour);
+            minute = _minute.isEmpty() ? NO_MINUTE : Short.parseShort(_minute);
             if (_second != null)
-                second = _second.isEmpty() ? -1 : Short.parseShort(_second);
+                second = _second.isEmpty() ? NO_SECOND : Short.parseShort(_second);
             else
-                second = -1;
+                second = NO_SECOND;
         } else {
             throw new ParseException("Illegal time spec: " + spec);
         }
@@ -258,6 +302,127 @@ public class CalendarDate
     @Override
     public String toString() {
         return getAsString();
+    }
+
+    public TimeVec toVector() {
+        TimeVec vec = new TimeVec(timeZone);
+        if (year != NO_YEAR)
+            vec.fields[TimeVec.FIELD_YEAR] = year;
+        if (month != NO_YEAR)
+            vec.fields[TimeVec.FIELD_MONTH] = month;
+        if (day != NO_YEAR)
+            vec.fields[TimeVec.FIELD_DAY] = day;
+        if (week != NO_YEAR)
+            vec.fields[TimeVec.FIELD_WEEK] = week;
+        if (weekDay != NO_YEAR)
+            vec.fields[TimeVec.FIELD_WEEKDAY] = weekDay;
+        if (hour != NO_YEAR)
+            vec.fields[TimeVec.FIELD_HOUR] = hour;
+        if (minute != NO_MINUTE)
+            vec.fields[TimeVec.FIELD_MINUTE] = minute;
+        if (second != NO_SECOND)
+            vec.fields[TimeVec.FIELD_SECOND] = second;
+        return vec;
+    }
+
+}
+
+class TimeVec {
+
+    static final int FIELD_YEAR = 0;
+    static final int FIELD_MONTH = 1;
+    static final int FIELD_DAY = 2;
+    static final int FIELD_WEEK = 3;
+    static final int FIELD_WEEKDAY = 4;
+    static final int FIELD_HOUR = 5;
+    static final int FIELD_MINUTE = 6;
+    static final int FIELD_SECOND = 7;
+
+    final int[] fields = new int[8];
+    final DateTimeZone zone;
+
+    // backward map
+    static final int[] bmap = new int[] { -1, // year
+            FIELD_YEAR, // month
+            FIELD_WEEKDAY, // day
+            FIELD_MONTH, // week
+            FIELD_WEEK, // weekday
+            FIELD_DAY, // hour
+            FIELD_HOUR, // minute
+            FIELD_MINUTE, // second
+    };
+
+    public TimeVec(CalendarDate pattern) {
+
+    }
+
+    public TimeVec(DateTimeZone zone) {
+        this.zone = zone;
+        for (int i = 0; i < fields.length; i++)
+            fields[i] = -1;
+    }
+
+    public TimeVec(DateTime dateTime) {
+        this.zone = dateTime.getZone();
+        setFields(dateTime);
+    }
+
+    public void setFields(DateTime dateTime) {
+        fields[FIELD_YEAR] = dateTime.get(DateTimeFieldType.year());
+        fields[FIELD_MONTH] = dateTime.get(DateTimeFieldType.monthOfYear());
+        fields[FIELD_DAY] = dateTime.get(DateTimeFieldType.dayOfMonth());
+        fields[FIELD_WEEK] = dateTime.get(DateTimeFieldType.weekOfWeekyear());
+        fields[FIELD_WEEKDAY] = dateTime.get(DateTimeFieldType.dayOfWeek());
+        fields[FIELD_HOUR] = dateTime.get(DateTimeFieldType.hourOfDay());
+        fields[FIELD_MINUTE] = dateTime.get(DateTimeFieldType.minuteOfHour());
+        fields[FIELD_SECOND] = dateTime.get(DateTimeFieldType.secondOfMinute());
+    }
+
+    void future(int[] pattern) {
+        assert fields.length == pattern.length;
+        int firstBeforeField = -1;
+        for (int i = 0; i < fields.length; i++) {
+            if (pattern[i] != -1 && pattern[i] < fields[i]) { // is before than
+                firstBeforeField = i;
+                break;
+            }
+        }
+
+        if (firstBeforeField != -1) { // any before-than field was found.
+            DateTime x = new DateTime(//
+                    fields[FIELD_YEAR], //
+                    fields[FIELD_MONTH], //
+                    fields[FIELD_DAY], //
+                    fields[FIELD_HOUR], //
+                    fields[FIELD_MINUTE], //
+                    fields[FIELD_SECOND], //
+                    zone);
+            switch (firstBeforeField) {
+            case FIELD_YEAR:
+                x.plusYears(1);
+                break;
+            case FIELD_MONTH:
+                x.plusMonths(1);
+                break;
+            case FIELD_DAY:
+            case FIELD_WEEKDAY:
+                x.plusDays(1);
+                break;
+            case FIELD_HOUR:
+                x.plusHours(1);
+                break;
+            case FIELD_MINUTE:
+                x.plusMinutes(1);
+                break;
+            case FIELD_SECOND:
+                x.plusSeconds(1);
+                break;
+            case FIELD_WEEK:
+                x.plusWeeks(1);
+                break;
+            }
+            setFields(x);
+        }
     }
 
 }
