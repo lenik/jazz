@@ -10,6 +10,7 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonObject;
@@ -20,7 +21,8 @@ import net.bodz.bas.log.LoggerFactory;
  * final class => final accessors => same as public fields.
  */
 public final class CalendarDate
-        extends MixinStruct {
+        extends MixinStruct
+        implements IFieldVector {
 
     public static final int NO_YEAR = 0;
     public static final int NO_MONTH = 0;
@@ -44,10 +46,23 @@ public final class CalendarDate
     DateTimeZone timeZone; // null for local-tz
 
     public CalendarDate() {
+        this(DateTimeZone.getDefault());
+    }
+
+    public CalendarDate(DateTimeZone tz) {
+        if (tz == null)
+            throw new NullPointerException("tz");
+        this.timeZone = tz;
     }
 
     public CalendarDate(short year, short month, short day, short week, short weekDay, short hour, short minute,
             short second) {
+        this(DateTimeZone.getDefault(), year, month, day, week, weekDay, hour, minute, second);
+    }
+
+    public CalendarDate(DateTimeZone tz, short year, short month, short day, short week, short weekDay, short hour,
+            short minute, short second) {
+        this(tz);
         this.year = year;
         this.month = month;
         this.day = day;
@@ -133,22 +148,59 @@ public final class CalendarDate
     }
 
     public DateTime alignFrom(DateTime from) {
-        TimeVec fromTime = new TimeVec(from);
-// new TimeVec pattern=
-        fromTime.future(pattern);
-        int year = this.year;
-        int month = this.month;
-        int day = this.day;
-        int week = this.week;
-        int weekDay = this.weekDay;
-        int hour = this.hour;
-        int minute = this.minute;
-        int second = this.second;
-        boolean carry = false;
+        TimeVec fromVec = new TimeVec(from);
+        int[] point = fromVec.fields;
 
-        @SuppressWarnings("unused")
-        DateTime aligned = from;
-        return from;
+        int[] vals = toVector().fields;
+        Field[] fields = new Field[8];
+        int lastSpecField = -1;
+        for (int i = 0; i < fields.length; i++) {
+            int val = vals[i];
+            if (val != -1) {
+                fields[i] = new Field(val, val, val);
+                lastSpecField = i;
+                continue;
+            }
+            Field field = new Field(val, 0, 59);
+            switch (i) {
+            case FIELD_YEAR:
+                field.setRange(point[FIELD_YEAR], 2100);
+                break;
+            case FIELD_MONTH:
+                field.setRange(1, 12);
+                break;
+            case FIELD_DAY:
+                field.setRange(1, 31);
+                break;
+            case FIELD_WEEK:
+                field.setRange(1, 53);
+                break;
+            case FIELD_WEEKDAY:
+                field.setRange(1, 7);
+                break;
+            case FIELD_HOUR:
+                field.setRange(0, 23);
+                break;
+            }
+            fields[i] = field;
+        }
+
+        for (int i = lastSpecField; i < fields.length; i++) {
+            assert (fields[i].value == -1);
+            fields[i].value = fields[i].min;
+        }
+
+        RangeResolver resolver = new RangeResolver(fields, fromVec.fields, lastSpecField);
+        DateTime start = resolver.start(0, false);
+        System.out.println("nconvert: " + resolver.nconvert);
+        return start;
+    }
+
+    public DateTime alignFrom2(DateTime from) {
+        TimeVec vector = new TimeVec(from);
+        TimeVec pattern = toVector();
+        vector.future(pattern.fields);
+        return vector.toDateTime();
     }
 
     @Override
@@ -327,7 +379,7 @@ public final class CalendarDate
 
 }
 
-class TimeVec {
+interface IFieldVector {
 
     static final int FIELD_YEAR = 0;
     static final int FIELD_MONTH = 1;
@@ -338,8 +390,13 @@ class TimeVec {
     static final int FIELD_MINUTE = 6;
     static final int FIELD_SECOND = 7;
 
+}
+
+class TimeVec
+        implements IFieldVector {
+
     final int[] fields = new int[8];
-    final DateTimeZone zone;
+    final DateTimeZone timeZone;
 
     // backward map
     static final int[] bmap = new int[] { -1, // year
@@ -352,18 +409,14 @@ class TimeVec {
             FIELD_MINUTE, // second
     };
 
-    public TimeVec(CalendarDate pattern) {
-
-    }
-
     public TimeVec(DateTimeZone zone) {
-        this.zone = zone;
+        this.timeZone = zone;
         for (int i = 0; i < fields.length; i++)
             fields[i] = -1;
     }
 
     public TimeVec(DateTime dateTime) {
-        this.zone = dateTime.getZone();
+        this.timeZone = dateTime.getZone();
         setFields(dateTime);
     }
 
@@ -378,51 +431,193 @@ class TimeVec {
         fields[FIELD_SECOND] = dateTime.get(DateTimeFieldType.secondOfMinute());
     }
 
+    public DateTime toDateTime() {
+        DateTime dateTime = new DateTime(//
+                fields[FIELD_YEAR], //
+                fields[FIELD_MONTH], //
+                fields[FIELD_DAY], //
+                fields[FIELD_HOUR], //
+                fields[FIELD_MINUTE], //
+                fields[FIELD_SECOND], //
+                timeZone);
+        return dateTime;
+    }
+
     void future(int[] pattern) {
         assert fields.length == pattern.length;
         int firstBeforeField = -1;
         for (int i = 0; i < fields.length; i++) {
-            if (pattern[i] != -1 && pattern[i] < fields[i]) { // is before than
-                firstBeforeField = i;
-                break;
+            int p = pattern[i];
+            if (p != -1) {
+                if (p < fields[i]) { // is before than
+                    firstBeforeField = i;
+                }
+            } else { // unspecified
+                if (firstBeforeField != -1)
+                    pattern[i] = 0;
             }
         }
 
+        DateTime base = toDateTime();
+        DateTime future = base;
         if (firstBeforeField != -1) { // any before-than field was found.
-            DateTime x = new DateTime(//
-                    fields[FIELD_YEAR], //
-                    fields[FIELD_MONTH], //
-                    fields[FIELD_DAY], //
-                    fields[FIELD_HOUR], //
-                    fields[FIELD_MINUTE], //
-                    fields[FIELD_SECOND], //
-                    zone);
             switch (firstBeforeField) {
             case FIELD_YEAR:
-                x.plusYears(1);
+                future = base.plusYears(1);
                 break;
             case FIELD_MONTH:
-                x.plusMonths(1);
+                future = base.plusMonths(1);
                 break;
             case FIELD_DAY:
             case FIELD_WEEKDAY:
-                x.plusDays(1);
+                future = base.plusDays(1);
                 break;
             case FIELD_HOUR:
-                x.plusHours(1);
+                future = base.plusHours(1);
                 break;
             case FIELD_MINUTE:
-                x.plusMinutes(1);
+                future = base.plusMinutes(1);
                 break;
             case FIELD_SECOND:
-                x.plusSeconds(1);
+                future = base.plusSeconds(1);
                 break;
             case FIELD_WEEK:
-                x.plusWeeks(1);
+                future = base.plusWeeks(1);
                 break;
             }
-            setFields(x);
         }
+        setFields(future);
     }
 
+    @Override
+    public String toString() {
+        return StringArray.join(", ", fields);
+    }
+
+}
+
+class Field {
+    int value;
+    int min;
+    int max;
+    Field prev;
+
+    public Field(int value, int min, int max) {
+        this(value, min, max, null);
+    }
+
+    public Field(int value, int min, int max, Field prev) {
+        this.value = value;
+        this.min = min;
+        this.max = max;
+        this.prev = prev;
+    }
+
+    int getMax() {
+        return max;
+    }
+
+    public void setRange(int min, int max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    boolean isFixed() {
+        return value == min && min == max;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s<%s..%s>", value, min, max);
+    }
+
+}
+
+class RangeResolver
+        implements IFieldVector {
+
+    Field[] fields;
+    int n;
+    int[] point;
+    DateTimeZone timeZone;
+    int nconvert;
+
+    public RangeResolver(Field[] fields, int[] point, int r) {
+        this.fields = fields;
+        this.n = r;
+        this.point = point;
+    }
+
+    DateTime start(int i, boolean restart) {
+        if (i >= n)
+            return convert();
+
+        Field field = fields[i];
+        if (field.isFixed())
+            return start(i + 1, restart);
+
+        int start = restart ? field.min : point[i];
+        int max = field.max;
+        if (i == FIELD_DAY) {
+            int year = fields[FIELD_YEAR].value;
+            int month = fields[FIELD_MONTH].value;
+            DateTime dt = new DateTime(year, month, 1, 0, 0, 0);
+            dt = dt.plusMonths(1).minusDays(1);
+            int monthSize = dt.getDayOfMonth();
+            max = monthSize;
+        }
+        for (int val = start; val <= max; val++) {
+            push(i, val);
+            DateTime t = start(i + 1, restart || val > start);
+            pop(i);
+            if (t != null)
+                return t;
+        }
+        return null;
+    }
+
+    Field[] push(int i, int val) {
+        Field f = fields[i];
+        fields[i] = new Field(val, f.min, f.max, f);
+        return fields;
+    }
+
+    Field[] pop(int i) {
+        fields[i] = fields[i].prev;
+        return fields;
+    }
+
+    @Override
+    public String toString() {
+        short[] vec = new short[8];
+        for (int i = 0; i < vec.length; i++)
+            vec[i] = (short) fields[i].value;
+        return new CalendarDate(//
+                vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7]).toString();
+    };
+
+    DateTime convert() {
+        System.out.println(" -- " + this);
+        nconvert++;
+        DateTime dateTime = new DateTime( //
+                fields[FIELD_YEAR].value, //
+                fields[FIELD_MONTH].value, //
+                fields[FIELD_DAY].value, //
+                fields[FIELD_HOUR].value, //
+                fields[FIELD_MINUTE].value, //
+                fields[FIELD_SECOND].value, //
+                timeZone);
+
+        int week = fields[FIELD_WEEK].value;
+        int weekDay = fields[FIELD_WEEKDAY].value;
+        if (week != -1) {
+            if (week != dateTime.getWeekOfWeekyear())
+                return null;
+        }
+        if (weekDay != -1) {
+            if (weekDay != dateTime.getDayOfWeek())
+                return null;
+        }
+        return dateTime;
+    }
 }
