@@ -1,0 +1,7 @@
+
+1. crypt/签名 each request，不符合分层设计
+    所以 txn 似乎不必要？
+    txn 为了避免重复play，属于误操作。和crypt不冲突。
+    token 则是为了 session 显式化。
+    但 cookie 的 session 同样是一种分层设计
+    
