@@ -12,7 +12,6 @@ import java.util.Set;
 
 import org.joda.time.base.AbstractDateTime;
 import org.joda.time.format.ISODateTimeFormat;
-import org.json.JSONException;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
@@ -23,6 +22,7 @@ import net.bodz.bas.t.set.StackSet;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
+import net.bodz.json.JSONException;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractJsonDumper<self_t>

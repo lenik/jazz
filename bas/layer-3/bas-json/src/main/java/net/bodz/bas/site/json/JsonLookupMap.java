@@ -2,9 +2,9 @@ package net.bodz.bas.site.json;
 
 import java.util.Set;
 
-import org.json.JSONObject;
 
 import net.bodz.bas.t.variant.ILookupMap;
+import net.bodz.json.JSONObject;
 
 public class JsonLookupMap
         implements ILookupMap<String, Object>, IJSONSupport {

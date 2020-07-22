@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.bodz.bas.t.model.IWrapper;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
 
 @SuppressWarnings("unchecked")
 public abstract class JSONObjectWrapper<self_t>

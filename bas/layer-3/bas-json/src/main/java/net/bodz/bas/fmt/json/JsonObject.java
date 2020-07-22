@@ -2,14 +2,14 @@ package net.bodz.bas.fmt.json;
 
 import java.util.*;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.t.factory.IFactory;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
+import net.bodz.json.JSONTokener;
 
 public class JsonObject
         extends AbstractJsonObject<JsonObject> {

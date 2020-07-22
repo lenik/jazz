@@ -3,9 +3,9 @@ package net.bodz.bas.fmt.json;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
 
 public class JSONSortedObject
         extends JSONObject {

@@ -9,12 +9,12 @@ import java.util.Map;
 import org.apache.ibatis.type.Alias;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import org.json.JSONObject;
 import org.postgresql.util.PGobject;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.json.JSONObject;
 
 /**
  * @see JsonFormTypeHandler

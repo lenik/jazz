@@ -1,7 +1,7 @@
 package net.bodz.bas.site.json;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONObject;
 
 public interface IJSONSupport {
 

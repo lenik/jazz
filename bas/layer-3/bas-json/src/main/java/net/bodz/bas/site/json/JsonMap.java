@@ -8,7 +8,6 @@ import java.util.TreeMap;
 
 import section.obj;
 
-import org.json.JSONObject;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.org.json.JsonObj;
@@ -18,6 +17,7 @@ import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.rtx.IAttributed;
+import net.bodz.json.JSONObject;
 
 /**
  * @see net.bodz.bas.c.org.json.JsonFormTypeHandler

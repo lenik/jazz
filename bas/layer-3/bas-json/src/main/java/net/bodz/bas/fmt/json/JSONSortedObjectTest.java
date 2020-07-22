@@ -1,6 +1,6 @@
 package net.bodz.bas.fmt.json;
 
-import org.json.JSONObject;
+import net.bodz.json.JSONObject;
 
 public class JSONSortedObjectTest {
 

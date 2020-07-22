@@ -1,11 +1,11 @@
 package net.bodz.bas.c.org.json;
 
-import org.json.JSONObject;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.json.JSONObject;
 
 public class DefaultJsonForm
         implements IJsonForm {

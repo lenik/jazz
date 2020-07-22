@@ -1,8 +1,7 @@
 package net.bodz.bas.c.org.json;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.err.ParseException;
+import net.bodz.json.JSONObject;
 
 public class JsonObj
         implements IJsonForm {

@@ -235,7 +235,7 @@ Dependency Management-->
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
-                <version>20140107</version>
+                <version>20200518</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>

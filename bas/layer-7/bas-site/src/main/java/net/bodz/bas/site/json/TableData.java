@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONObject;
-
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
@@ -22,6 +20,7 @@ import net.bodz.bas.repr.form.PathField;
 import net.bodz.bas.repr.form.PathFieldList;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.json.JSONObject;
 
 public class TableData
         implements IVarMapSerializable {

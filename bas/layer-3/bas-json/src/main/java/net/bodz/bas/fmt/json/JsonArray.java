@@ -4,9 +4,9 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
 
 public class JsonArray {
 

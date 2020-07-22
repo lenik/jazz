@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.ibatis.type.JdbcType;
-import org.json.JSONObject;
-import org.json.JSONWriter;
 
 import net.bodz.bas.db.ibatis.TypeHandler;
+import net.bodz.json.JSONObject;
+import net.bodz.json.JSONWriter;
 
 public abstract class AbstractMapTypeHandler<map_t extends Map<K, V>, K, V>
         extends TypeHandler<map_t> {

@@ -11,9 +11,6 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -28,6 +25,9 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
 
 public class BeanJsonLoader
         extends AbstractJsonLoader {

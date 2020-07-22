@@ -1,10 +1,10 @@
 package net.bodz.bas.site.json;
 
-import org.json.JSONArray;
 
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.variant.conv.AbstractVarConverter;
+import net.bodz.json.JSONArray;
 
 /**
  * TODO not implemented well, yet.

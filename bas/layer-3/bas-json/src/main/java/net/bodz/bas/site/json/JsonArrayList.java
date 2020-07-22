@@ -2,7 +2,7 @@ package net.bodz.bas.site.json;
 
 import java.util.AbstractList;
 
-import org.json.JSONArray;
+import net.bodz.json.JSONArray;
 
 public class JsonArrayList
         extends AbstractList<Object>

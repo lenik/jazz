@@ -2,9 +2,10 @@ package net.bodz.bas.fmt.json;
 
 import java.util.Map;
 
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.json.JSONObject;
 
 public class JsonFnTest
         extends Assert {

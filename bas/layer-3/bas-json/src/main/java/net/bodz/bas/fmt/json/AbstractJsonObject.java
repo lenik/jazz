@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.*;
+import net.bodz.json.JSONArray;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONObject;
 
 public abstract class AbstractJsonObject<self_t>
         extends JSONObjectWrapper<self_t> {

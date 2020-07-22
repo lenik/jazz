@@ -2,15 +2,15 @@ package net.bodz.bas.c.org.json;
 
 import java.io.IOException;
 
-import org.json.JSONException;
-
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONStringer;
 
 /**
  * @see JsonBuffer
  */
 public class JsonStringer
-        extends JSONStringer_patch
+        extends JSONStringer
         implements IJsonOut {
 
     public JsonStringer() {
