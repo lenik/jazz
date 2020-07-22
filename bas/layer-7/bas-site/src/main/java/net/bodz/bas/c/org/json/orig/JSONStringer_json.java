@@ -6,14 +6,13 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONStringer;
-
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.json.JSONStringer;
 
 public class JSONStringer_json
         extends AbstractHttpViewBuilder<JSONStringer> {

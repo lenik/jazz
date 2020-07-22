@@ -5,8 +5,6 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
-import org.json.JSONException;
-
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.data.codec.builtin.Base64Codec;
@@ -20,6 +18,7 @@ import net.bodz.bas.fmt.rst.RstInput;
 import net.bodz.bas.fmt.rst.RstLoader;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.json.JSONException;
 
 public class JsonPersistor {
 

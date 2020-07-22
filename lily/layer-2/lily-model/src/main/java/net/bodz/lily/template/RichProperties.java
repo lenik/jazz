@@ -3,13 +3,12 @@ package net.bodz.lily.template;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.json.JsonMap;
+import net.bodz.json.JSONArray;
 
 /**
  * A common support for object icon, etc.

@@ -8,13 +8,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.json.JSONObject;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.t.variant.AbstractVariantMap;
+import net.bodz.json.JSONObject;
 
 public class JsonSection
         extends AbstractVariantMap<String>

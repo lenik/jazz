@@ -3,12 +3,12 @@ package net.bodz.bas.c.org.json;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.json.JSONException;
-
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.json.JSONException;
+import net.bodz.json.JSONWriter;
 
 public class JsonWriter
-        extends JSONWriter_patch
+        extends JSONWriter
         implements IJsonOut {
 
     char lastMode;
@@ -23,7 +23,7 @@ public class JsonWriter
     }
 
     public Writer getWriter() {
-        return super.writer;
+        return (Writer) super.writer;
     }
 
     @Override

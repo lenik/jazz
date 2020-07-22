@@ -1,9 +1,9 @@
 package net.bodz.bas.site.json;
 
-import org.json.JSONObject;
 
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.t.variant.VariantMapImpl;
+import net.bodz.json.JSONObject;
 
 public class JsonVarMap
         extends VariantMapImpl<String>
