@@ -2,24 +2,29 @@ package net.bodz.bas.site.json;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.org.json.JsonWriter;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOptions;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
 import net.bodz.bas.log.ILogger;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.log.impl.BufferedLogger;
 
 @SuppressWarnings("unchecked")
 public class AbstractJsonResponse<self_t>
         implements IJsonSerializable {
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractJsonResponse.class);
 
     public static final int OK = 0;
     public static final int WARN = 300;
@@ -31,16 +36,16 @@ public class AbstractJsonResponse<self_t>
     int status = OK;
     String message;
     Throwable exception;
-    Object data;
+    IJsonSerializable data = null;
 
     private Boolean headerOrder;
     private Map<String, Object> headers;
-    private BufferedLogger logger = new BufferedLogger();
+    private BufferedLogger logbuf = new BufferedLogger();
 
     public AbstractJsonResponse() {
     }
 
-    public AbstractJsonResponse(int status, String message, Object data) {
+    public AbstractJsonResponse(int status, String message, IJsonSerializable data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -59,11 +64,11 @@ public class AbstractJsonResponse<self_t>
         this.headerOrder = o.headerOrder;
         if (shallowCopy) {
             this.headers = o.headers;
-            this.logger = o.logger;
+            this.logbuf = o.logbuf;
         } else {
             this.headers = createMap(headerOrder);
             this.headers.putAll(o.headers);
-            this.logger.getRecords().addAll(o.logger.getRecords());
+            this.logbuf.getRecords().addAll(o.logbuf.getRecords());
         }
     }
 
@@ -127,7 +132,7 @@ public class AbstractJsonResponse<self_t>
     }
 
     public self_t fail(Throwable e, int status, String message) {
-        logger.warn(e, "ajax failed with: " + message);
+        logbuf.warn(e, "ajax failed with: " + message);
         this.exception = e;
         return fail(message);
     }
@@ -180,7 +185,7 @@ public class AbstractJsonResponse<self_t>
 
     public JsonWriter begin(String key) {
         StringWriter buf = new StringWriter();
-        setHeader(key, new JsonVerbatimBuf(key, buf));
+        setHeader(key, new JsonVerbatimBuf(null, buf));
         return new JsonWriter(buf);
     }
 
@@ -194,19 +199,71 @@ public class AbstractJsonResponse<self_t>
     }
 
     public ILogger getLogger() {
-        return logger;
+        return logbuf;
     }
 
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        throw new NotImplementedException();
+        status = o.getInt("status");
+        message = o.getString("message");
+
+        JsonObject ex = o.getChild("exception");
+        if (ex != null) {
+            String exClassName = ex.getString("type");
+            String message = ex.getString("message");
+            try {
+                Class<?> exType = Class.forName(exClassName);
+                if (Throwable.class.isAssignableFrom(exType)) {
+                    Constructor<?> ctor = exType.getConstructor(String.class);
+                    this.exception = (Throwable) ctor.newInstance(message);
+                } else {
+                    // assert false.
+                    logger.error("Invalid exception class: " + exType);
+                }
+            } catch (ReflectiveOperationException e) {
+                logger.error("Can't re-instantiate the exception: " + e.getMessage(), e);
+            }
+        }
+
+        String dataTypeName = o.getString("dataType");
+        if (dataTypeName != null) {
+            IJsonSerializable data;
+            try {
+                Class<?> dataType = Class.forName(dataTypeName);
+                if (IJsonSerializable.class.isAssignableFrom(dataType))
+                    data = (IJsonSerializable) dataType.newInstance();
+                else
+                    throw new ParseException("Unsupported data type: " + dataTypeName);
+            } catch (ReflectiveOperationException e) {
+                throw new ParseException("Can't instantiate data of " + dataTypeName, e);
+            }
+            JsonObject dataNode = o.getChild("data");
+            data.readObject(dataNode);
+            this.data = data;
+        }
+
+        for (String key : o.keySet()) {
+            Object val = o.get(key);
+            if (!(val instanceof JsonObject))
+                continue;
+            switch (key) {
+            case "exception":
+            case "data":
+                continue;
+            }
+            JsonObject node = (JsonObject) val;
+            JsonSection section = new JsonSection();
+            section.readObject(node);
+            setHeader(key, section);
+        }
     }
 
     @Override
     public void writeObject(IJsonOut out)
             throws IOException {
         out.entry("status", status);
+
         if (status < ERROR)
             out.entry("success", true);
         if (status >= WARN)
@@ -233,26 +290,37 @@ public class AbstractJsonResponse<self_t>
 
                 if (value == null)
                     continue;
-                out.key(key);
 
-                switch (key) {
-                case sectionsRoot:
-                    JsonSection root = (JsonSection) value;
-                    root.writeObject(out);
-                    continue;
+                if (value instanceof IJsonSerializable) {
+                    IJsonSerializable jsable = (IJsonSerializable) value;
+                    IJsonOptions opts = IJsonOptions.NULL;
+                    if (value instanceof IJsonOptions)
+                        opts = (IJsonOptions) value;
+
+                    if (opts.isMixedIn()) {
+                        jsable.writeObject(out);
+                        continue;
+                    }
+
+                    out.key(key);
+                    if (opts.isSelfContained()) {
+                        jsable.writeObject(out);
+                    } else {
+                        out.object();
+                        jsable.writeObject(out);
+                        out.endObject();
+                    }
+                } else {
+                    out.key(key);
+                    out.object(value);
                 }
-
-                if (value instanceof JsonVerbatimBuf) {
-                    IJsonSerializable child = (IJsonSerializable) value;
-                    child.writeObject(out);
-                    continue;
-                }
-
-                out.object(value);
             }
         } // headers
 
-        out.entryNotNull("data", data);
+        if (data != null) {
+            out.entry("dataType", data.getClass());
+            out.entry("data", data);
+        }
     }
 
 }
