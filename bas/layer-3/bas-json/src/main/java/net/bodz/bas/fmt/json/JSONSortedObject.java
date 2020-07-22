@@ -1,6 +1,7 @@
 package net.bodz.bas.fmt.json;
 
 import java.util.Iterator;
+import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.json.JSONArray;
@@ -15,8 +16,13 @@ public class JSONSortedObject
     }
 
     @Override
-    public Iterator keys() {
-        return new TreeSet<String>(super.keySet()).iterator();
+    public Iterator<String> keys() {
+        return keySet().iterator();
+    }
+
+    @Override
+    public Set<String> keySet() {
+        return new TreeSet<String>(super.keySet());
     }
 
     @Override

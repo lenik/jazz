@@ -6,16 +6,24 @@ import java.io.StringWriter;
 import net.bodz.bas.err.ParseException;
 
 public class JsonVerbatimBuf
-        implements IJsonSerializable {
+        implements IJsonSerializable, IJsonOptions {
 
     String key;
     StringWriter buf;
 
     public JsonVerbatimBuf(String key, StringWriter buf) {
-        if (key == null)
-            throw new NullPointerException("key");
         this.key = key;
         this.buf = buf;
+    }
+
+    @Override
+    public boolean isMixedIn() {
+        return key == null;
+    }
+
+    @Override
+    public boolean isSelfContained() {
+        return key == null;
     }
 
     @Override
@@ -28,7 +36,8 @@ public class JsonVerbatimBuf
     public void writeObject(IJsonOut out)
             throws IOException {
         String js = buf.toString();
-        out.key(key);
+        if (key != null)
+            out.key(key);
         out.verbatim(js);
     }
 
