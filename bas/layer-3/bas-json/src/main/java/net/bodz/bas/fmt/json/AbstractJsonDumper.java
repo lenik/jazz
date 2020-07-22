@@ -106,7 +106,7 @@ public abstract class AbstractJsonDumper<self_t>
         }
 
         if (!isIncluded(prefix)) {
-            out.value("<excluded>");
+            // out.value("<excluded>");
             return;
         }
 
@@ -114,6 +114,7 @@ public abstract class AbstractJsonDumper<self_t>
             _dumpImpl(enclosed, obj, depth, prefix);
             marks.pop();
         } else {
+            // TODO use StackMap to print dup ref info.
             out.value("<dup>");
         }
     }

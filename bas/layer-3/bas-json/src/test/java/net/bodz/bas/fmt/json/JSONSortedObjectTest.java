@@ -10,7 +10,7 @@ public class JSONSortedObjectTest {
         JSONObject c = mkTest();
         a.put("b", b);
         a.put("c", c);
-        System.out.println(a);
+        System.out.println(a.keySet());
         System.out.println();
         System.out.println(new JSONSortedObject(a));
     }

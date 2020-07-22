@@ -2,7 +2,7 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 
-import org.json.JSONException;
+import net.bodz.json.JSONException;
 
 public interface IJsonOut {
 
@@ -148,16 +148,21 @@ public interface IJsonOut {
         public static void dumpTree(IJsonOut out, Object value)
                 throws IOException {
             if (value instanceof IJsonSerializable) {
+                IJsonOptions opts = IJsonOptions.NULL;
+                if (value instanceof IJsonOptions)
+                    opts = (IJsonOptions) value;
                 IJsonSerializable jsVal = (IJsonSerializable) value;
-                out.object();
-                jsVal.writeObject(out);
-                out.endObject();
+                if (opts.isSelfContained()) {
+                    jsVal.writeObject(out);
+                } else {
+                    out.object();
+                    jsVal.writeObject(out);
+                    out.endObject();
+                }
                 return;
             }
-            // else:
             out.value(value);
         }
-
     }
 
 }
