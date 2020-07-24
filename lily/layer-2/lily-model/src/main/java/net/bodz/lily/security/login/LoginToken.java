@@ -29,15 +29,19 @@ public class LoginToken
     static final Random RANDOM = new Random();
 
     final ILoginTokenManager tokenManager;
-    final long id;
+    long id;
     long expireDate;
 
-    final User user;
-    final UserSecret secret;
+    User user;
+    UserSecret secret;
 
     private long transaction;
 
     PrefixMap<String> permissions = new PrefixMap<>();
+
+    private LoginToken() {
+        this.tokenManager = null;
+    }
 
     LoginToken(ILoginTokenManager manager, long id, User user) {
         if (manager == null)
@@ -49,6 +53,10 @@ public class LoginToken
         this.user = user;
         this.secret = user.getSecret();
         this.transaction = next();
+    }
+
+    public static LoginToken create() {
+        return new LoginToken();
     }
 
     public long getId() {
@@ -106,7 +114,8 @@ public class LoginToken
     }
 
     public LoginToken detach() {
-        tokenManager.removeToken(id);
+        if (tokenManager != null)
+            tokenManager.removeToken(id);
         return this;
     }
 

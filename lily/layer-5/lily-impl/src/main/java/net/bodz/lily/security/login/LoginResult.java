@@ -2,7 +2,6 @@ package net.bodz.lily.security.login;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
@@ -46,7 +45,13 @@ public class LoginResult
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        throw new NotImplementedException();
+        super.readObject(o);
+        serverChallenge = o.getString("sc");
+        JsonObject tokenNode = o.getChild("token");
+        if (tokenNode != null) {
+            this.token = LoginToken.create();
+            token.readObject(tokenNode);
+        }
     }
 
     @Override
