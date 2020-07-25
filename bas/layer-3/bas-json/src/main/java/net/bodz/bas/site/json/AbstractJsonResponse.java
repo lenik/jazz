@@ -183,6 +183,9 @@ public class AbstractJsonResponse<self_t>
         return (self_t) this;
     }
 
+    /**
+     * Begins a new section.
+     */
     public JsonWriter begin(String key) {
         StringWriter buf = new StringWriter();
         setHeader(key, new JsonVerbatimBuf(null, buf));
@@ -244,18 +247,20 @@ public class AbstractJsonResponse<self_t>
         }
 
         for (String key : o.keySet()) {
-            Object val = o.get(key);
-            if (!(val instanceof JsonObject))
-                continue;
             switch (key) {
             case "exception":
             case "data":
                 continue;
             }
-            JsonObject node = (JsonObject) val;
-            JsonSection section = new JsonSection();
-            section.readObject(node);
-            setHeader(key, section);
+            Object val = o.get(key);
+            if (val instanceof JsonObject) {
+                JsonObject node = (JsonObject) val;
+                JsonSection section = new JsonSection();
+                section.readObject(node);
+                setHeader(key, section);
+            } else {
+                setHeader(key, val);
+            }
         }
     }
 
@@ -311,8 +316,9 @@ public class AbstractJsonResponse<self_t>
                         out.endObject();
                     }
                 } else {
-                    out.key(key);
-                    out.object(value);
+                    out.entry(key, value);
+                    // out.key(key);
+                    // out.object(value);
                 }
             }
         } // headers
