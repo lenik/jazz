@@ -13,6 +13,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOptions;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
 import net.bodz.bas.log.ILogger;
@@ -208,11 +209,39 @@ public class AbstractJsonResponse<self_t>
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        status = o.getInt("status");
-        message = o.getString("message");
+        for (String key : o.keySet()) {
+            boolean handled = readRootEntry(o, key);
+            if (handled)
+                continue;
+            Object val = o.get(key);
+            if (val instanceof JsonObject) {
+                JsonObject node = (JsonObject) val;
+                JsonSection section = new JsonSection();
+                section.readObject(node);
+                setHeader(key, section);
+            } else {
+                setHeader(key, val);
+            }
+        }
+    }
 
-        JsonObject ex = o.getChild("exception");
-        if (ex != null) {
+    protected boolean readRootEntry(JsonObject o, String key)
+            throws ParseException {
+        switch (key) {
+        case "success":
+        case "warn":
+        case "failed":
+            return true;
+        case "status":
+            status = o.getInt("status");
+            return true;
+
+        case "message":
+            message = o.getString("message");
+            return true;
+
+        case "exception":
+            JsonObject ex = o.getChild("exception");
             String exClassName = ex.getString("type");
             String message = ex.getString("message");
             try {
@@ -227,10 +256,12 @@ public class AbstractJsonResponse<self_t>
             } catch (ReflectiveOperationException e) {
                 logger.error("Can't re-instantiate the exception: " + e.getMessage(), e);
             }
-        }
+            return true;
 
-        String dataTypeName = o.getString("dataType");
-        if (dataTypeName != null) {
+        case "data":
+            return true;
+        case "dataType":
+            String dataTypeName = o.getString("dataType");
             IJsonSerializable data;
             try {
                 Class<?> dataType = Class.forName(dataTypeName);
@@ -244,24 +275,9 @@ public class AbstractJsonResponse<self_t>
             JsonObject dataNode = o.getChild("data");
             data.readObject(dataNode);
             this.data = data;
+            return true;
         }
-
-        for (String key : o.keySet()) {
-            switch (key) {
-            case "exception":
-            case "data":
-                continue;
-            }
-            Object val = o.get(key);
-            if (val instanceof JsonObject) {
-                JsonObject node = (JsonObject) val;
-                JsonSection section = new JsonSection();
-                section.readObject(node);
-                setHeader(key, section);
-            } else {
-                setHeader(key, val);
-            }
-        }
+        return false;
     }
 
     @Override
@@ -327,6 +343,11 @@ public class AbstractJsonResponse<self_t>
             out.entry("dataType", data.getClass());
             out.entry("data", data);
         }
+    }
+
+    @Override
+    public String toString() {
+        return JsonFn.toJson(this);
     }
 
 }
