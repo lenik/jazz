@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
@@ -185,7 +184,16 @@ public class LoginToken
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        throw new NotImplementedException();
+        id = o.getInt("id");
+        transaction = o.getLong("txn");
+        // timeout = o.getLong("timeout");
+
+        JsonObject _user = o.getChild("user");
+        if (_user != null) {
+            User user = new User();
+            user.readObject(_user);
+            this.user = user;
+        }
     }
 
     @Override

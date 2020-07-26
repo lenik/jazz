@@ -50,7 +50,7 @@ public class LoginCrypto {
         return fi;
     }
 
-    class SignChecker
+    class PasswordSignChecker
             implements ISignatureChecker {
 
         @Override
@@ -60,6 +60,17 @@ public class LoginCrypto {
 
     }
 
-    SignChecker signChecker = new SignChecker();
+    class ShortVerificationCodeChecker
+            implements ISignatureChecker {
+
+        @Override
+        public FlyingIndex checkSignature(String textData, String signature) {
+            return LoginCrypto.this.checkShortVerificationCode(textData, signature, null);
+        }
+
+    }
+
+    ISignatureChecker passwordSignChecker = new PasswordSignChecker();
+    ISignatureChecker shortVerificationCodeChecker = new ShortVerificationCodeChecker();
 
 }

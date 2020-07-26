@@ -43,15 +43,21 @@ public class LoginResult
     }
 
     @Override
-    public void readObject(JsonObject o)
+    protected boolean readRootEntry(JsonObject o, String key)
             throws ParseException {
-        super.readObject(o);
-        serverChallenge = o.getString("sc");
-        JsonObject tokenNode = o.getChild("token");
-        if (tokenNode != null) {
-            this.token = LoginToken.create();
-            token.readObject(tokenNode);
+        switch (key) {
+        case "sc":
+            serverChallenge = o.getString("sc");
+            return true;
+        case "token":
+            JsonObject tokenNode = o.getChild("token");
+            if (tokenNode != null) {
+                this.token = LoginToken.create();
+                token.readObject(tokenNode);
+            }
+            return true;
         }
+        return super.readRootEntry(o, key);
     }
 
     @Override

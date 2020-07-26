@@ -34,11 +34,11 @@ public class LoginManagerWs
             target = impl.login(q);
             break;
 
-        case "loginByPhone":
+        case "login-by-phone":
             target = impl.loginByPhone(q.getString("phone"), q.getString("e_cr"));
             break;
 
-        case "loginByEmail":
+        case "login-by-email":
             target = impl.loginByPhone(q.getString("email"), q.getString("e_cr"));
             break;
 
