@@ -82,7 +82,7 @@ public class LoginManager
     @Override
     public LoginResult login(IVariantMap<String> q) {
         for (ILoginResolver resolver : resolverProvider.getResolvers()) {
-            Result rr = resolver.login(crypto.signChecker, q);
+            Result rr = resolver.login(crypto.passwordSignChecker, q);
             if (rr != null) {
                 LoginResult result = rr.toLoginResult(this);
                 result.setHeader("resolverClass", resolver.getClass().getName());
@@ -95,13 +95,13 @@ public class LoginManager
     @Override
     public LoginResult loginByPhone(String phone, String sign) {
         PhoneCheckLoginResolver resolver = new PhoneCheckLoginResolver(dataContext);
-        return resolver.login(crypto.signChecker, phone, sign).toLoginResult(this);
+        return resolver.login(crypto.shortVerificationCodeChecker, phone, sign).toLoginResult(this);
     }
 
     @Override
     public LoginResult loginByEmail(String email, String sign) {
         EmailPasswordLoginResolver resolver = new EmailPasswordLoginResolver(dataContext);
-        return resolver.login(crypto.signChecker, email, sign).toLoginResult(this);
+        return resolver.login(crypto.shortVerificationCodeChecker, email, sign).toLoginResult(this);
     }
 
     String getAnyPassword(int userId) {
@@ -132,6 +132,11 @@ public class LoginManager
         return r.succeed();
     }
 
+    /**
+     * @param usage
+     *            The reason to verify.
+     * @see ILoginManager#VERIFY
+     */
     @Override
     public JsonResponse verifyPhone(String phone, String usage) {
         JsonResponse resp = new JsonResponse();
@@ -143,9 +148,9 @@ public class LoginManager
         SmsCommitLog log = new SmsCommitLog();
         try {
             sms.addSmsListener(log);
-            if (!debug)
-                if (!sms.sendPrepared(phone, usage, shortCode, timeout))
-                    return resp.fail("sms isn't available.");
+            // if (!debug)
+            if (!sms.sendPrepared(phone, usage, shortCode, timeout))
+                return resp.fail("sms isn't available.");
         } catch (Exception e) {
             return resp.fail(e, "send sms error: " + e.getMessage());
         } finally {
