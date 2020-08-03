@@ -138,6 +138,38 @@ public class AbstractJsonResponse<self_t>
         return fail(message);
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Throwable getException() {
+        return exception;
+    }
+
+    public void setException(Throwable exception) {
+        this.exception = exception;
+    }
+
+    public IJsonSerializable getData() {
+        return data;
+    }
+
+    public void setData(IJsonSerializable data) {
+        this.data = data;
+    }
+
     public Boolean getHeaderOrder() {
         return headerOrder;
     }
