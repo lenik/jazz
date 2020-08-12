@@ -7,6 +7,7 @@ import net.bodz.mda.xjdoc.taglib.TagLibrarySet;
 public class Xjdocs {
 
     static IXjdocProvider defaultProvider = UnionXjdocProvider.getInstance();
+    static TagLibrarySet defaultTagLibrary;
 
     public static IXjdocProvider getDefaultProvider() {
         return defaultProvider;
@@ -16,10 +17,16 @@ public class Xjdocs {
         Xjdocs.defaultProvider = defaultProvider;
     }
 
-    public static ITagLibrary getDefaultTagLibrary() {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        TagLibrarySet tagLibrarySet = TagLibraryLoader.allFor(classLoader);
-        return tagLibrarySet;
+    public static synchronized ITagLibrary getDefaultTagLibrary() {
+        if (defaultTagLibrary == null) {
+            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            defaultTagLibrary = TagLibraryLoader.allFor(classLoader);
+        }
+        return defaultTagLibrary;
+    }
+
+    public static void setDefaultTagLibrary(TagLibrarySet defaultTagLibrary) {
+        Xjdocs.defaultTagLibrary = defaultTagLibrary;
     }
 
 }
