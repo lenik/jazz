@@ -1,10 +1,5 @@
 package net.bodz.bas.fmt.rst.obj;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
-import com.googlecode.openbeans.Transient;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -13,6 +8,12 @@ import java.lang.reflect.Type;
 import net.bodz.bas.fmt.rst.AbstractRstDumper;
 import net.bodz.bas.fmt.rst.IRstFormat;
 import net.bodz.bas.fmt.rst.IRstOutput;
+import net.bodz.bas.meta.bean.Transient;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanRstDumper
         extends AbstractRstDumper {

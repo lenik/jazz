@@ -1,13 +1,14 @@
 package net.bodz.bas.c.bean;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.t.ref.AbstractRef;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanPropertyRef<T>
         extends AbstractRef<T> {

@@ -2,7 +2,6 @@ package net.bodz.bas.site.json;
 
 import java.util.Set;
 
-
 import net.bodz.bas.t.variant.ILookupMap;
 import net.bodz.json.JSONObject;
 

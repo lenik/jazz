@@ -1,11 +1,11 @@
 package net.bodz.bas.t.tree;
 
-import java.beans.Transient;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.t.iterator.RecIterator;
 
 public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>

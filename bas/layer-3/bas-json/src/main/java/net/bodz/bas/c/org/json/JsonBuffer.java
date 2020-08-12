@@ -2,7 +2,6 @@ package net.bodz.bas.c.org.json;
 
 import java.io.StringWriter;
 
-
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.json.JSONException;
 

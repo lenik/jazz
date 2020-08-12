@@ -1,11 +1,12 @@
 package net.bodz.bas.potato.provider.bean;
 
-import com.googlecode.openbeans.EventSetDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.potato.element.AbstractEvent;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+
+import com.googlecode.openbeans.EventSetDescriptor;
 
 public class BeanEvent
         extends AbstractEvent {

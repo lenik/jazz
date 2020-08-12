@@ -1,9 +1,10 @@
 package user.bean;
 
+import java.lang.reflect.Method;
+
 import com.googlecode.openbeans.BeanInfo;
 import com.googlecode.openbeans.PropertyDescriptor;
 import com.googlecode.openbeans.SimpleBeanInfo;
-import java.lang.reflect.Method;
 
 public class DogBeanInfo
         extends SimpleBeanInfo {

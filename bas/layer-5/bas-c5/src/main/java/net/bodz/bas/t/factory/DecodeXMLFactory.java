@@ -1,10 +1,10 @@
 package net.bodz.bas.t.factory;
 
-import com.googlecode.openbeans.ExceptionListener;
-
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public class DecodeXMLFactory
         extends AbstractFactory<Object> {

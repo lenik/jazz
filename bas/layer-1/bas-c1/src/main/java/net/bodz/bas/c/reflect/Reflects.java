@@ -1,10 +1,11 @@
 package net.bodz.bas.c.reflect;
 
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class Reflects {
 

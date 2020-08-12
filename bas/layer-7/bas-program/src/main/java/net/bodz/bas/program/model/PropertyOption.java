@@ -1,6 +1,5 @@
 package net.bodz.bas.program.model;
 
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
@@ -8,6 +7,8 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.provider.bean.BeanProperty;
 import net.bodz.mda.xjdoc.model.MethodDoc;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class PropertyOption
         extends AbstractOption {

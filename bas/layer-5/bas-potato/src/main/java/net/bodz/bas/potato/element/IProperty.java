@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.element;
 
-import com.googlecode.openbeans.PropertyDescriptor;
-
 import net.bodz.bas.t.event.IPropertyChangeListener;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public interface IProperty
         extends IPotatoElement, IPropertyAccessor {

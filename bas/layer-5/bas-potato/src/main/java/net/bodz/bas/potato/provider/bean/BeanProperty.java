@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.provider.bean;
 
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -10,6 +9,8 @@ import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanProperty
         extends AbstractProperty {

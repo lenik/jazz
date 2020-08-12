@@ -1,11 +1,12 @@
 package net.bodz.bas.potato.element;
 
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
 
 import net.bodz.bas.c.object.Nullables;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public final class PropertyKey
         implements Serializable {

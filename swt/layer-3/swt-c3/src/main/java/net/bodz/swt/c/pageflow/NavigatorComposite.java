@@ -1,7 +1,5 @@
 package net.bodz.swt.c.pageflow;
 
-import com.googlecode.openbeans.PropertyChangeEvent;
-import com.googlecode.openbeans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;
@@ -25,6 +23,9 @@ import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
 import net.bodz.swt.c.resources.SWTResources;
+
+import com.googlecode.openbeans.PropertyChangeEvent;
+import com.googlecode.openbeans.PropertyChangeListener;
 
 public class NavigatorComposite
         extends Composite

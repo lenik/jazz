@@ -1,10 +1,5 @@
 package net.bodz.bas.potato.provider.bean;
 
-import com.googlecode.openbeans.BeanDescriptor;
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.EventSetDescriptor;
-import com.googlecode.openbeans.MethodDescriptor;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -21,6 +16,12 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
+
+import com.googlecode.openbeans.BeanDescriptor;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.EventSetDescriptor;
+import com.googlecode.openbeans.MethodDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanType
         extends AbstractType {

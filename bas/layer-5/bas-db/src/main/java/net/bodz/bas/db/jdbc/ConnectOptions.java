@@ -1,12 +1,12 @@
 package net.bodz.bas.db.jdbc;
 
-import java.beans.Transient;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Properties;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.meta.bean.Transient;
 
 public class ConnectOptions
         implements Serializable, Cloneable {

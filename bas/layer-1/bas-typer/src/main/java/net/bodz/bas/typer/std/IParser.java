@@ -1,11 +1,12 @@
 package net.bodz.bas.typer.std;
 
-import com.googlecode.openbeans.ExceptionListener;
 import java.text.ParsePosition;
 import java.util.logging.Logger;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public interface IParser<T>
         extends IStdTyper {

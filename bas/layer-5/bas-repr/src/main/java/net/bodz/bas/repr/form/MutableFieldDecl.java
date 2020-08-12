@@ -1,6 +1,5 @@
 package net.bodz.bas.repr.form;
 
-import java.beans.Transient;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -11,6 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Priority;
