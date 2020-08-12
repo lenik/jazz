@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.form;
 
-import com.googlecode.openbeans.Transient;
+import java.beans.Transient;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -108,6 +108,7 @@ public class MutableFieldDecl
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }

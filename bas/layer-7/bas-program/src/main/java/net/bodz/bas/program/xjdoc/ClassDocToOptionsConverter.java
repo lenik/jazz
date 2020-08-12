@@ -1,9 +1,5 @@
 package net.bodz.bas.program.xjdoc;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
@@ -23,6 +19,11 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class ClassDocToOptionsConverter
         implements IMapEntryLoader<Class<?>, IOptionGroup> {
@@ -53,7 +54,7 @@ public class ClassDocToOptionsConverter
 
     /**
      * Whether to scan superclass for options.
-     * 
+     *
      * For Bean-Properties:
      * <ul>
      * <li>reflective-mode:
@@ -82,7 +83,7 @@ public class ClassDocToOptionsConverter
 
     /**
      * The option group inheritance mode.
-     * 
+     *
      * @see OptionGroupInheritance#reflective
      * @see OptionGroupInheritance#reduceEmptyParents
      * @see OptionGroupInheritance#flatten
@@ -289,14 +290,14 @@ public class ClassDocToOptionsConverter
         }
 
         if (includeProperties) {
-            int flags = Introspector.USE_ALL_BEANINFO;
+            //int flags = Introspector.USE_ALL_BEANINFO;
             Class<?> stopClass = null;
             if (inheritance != OptionGroupInheritance.flatten)
                 stopClass = clazz.getSuperclass();
 
             BeanInfo beanInfo;
             try {
-                beanInfo = Introspector.getBeanInfo(clazz, stopClass, flags);
+                beanInfo = Introspector.getBeanInfo(clazz, stopClass/*, flags*/);
             } catch (IntrospectionException e) {
                 throw new ParseException(e.getMessage(), e);
             }

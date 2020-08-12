@@ -1,6 +1,6 @@
 package net.bodz.bas.t.tree;
 
-import com.googlecode.openbeans.Transient;
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -95,7 +95,7 @@ public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<no
         if (remainingPath == null)
             return child;
         else
-            return (node_t) child.resolve(remainingPath);
+            return child.resolve(remainingPath);
     }
 
     @Override
