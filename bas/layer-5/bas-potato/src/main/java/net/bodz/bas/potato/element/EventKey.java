@@ -1,9 +1,10 @@
 package net.bodz.bas.potato.element;
 
-import com.googlecode.openbeans.EventSetDescriptor;
 import java.io.Serializable;
 
 import net.bodz.bas.c.object.Nullables;
+
+import com.googlecode.openbeans.EventSetDescriptor;
 
 public class EventKey
         implements Serializable {

@@ -1,10 +1,10 @@
 package net.bodz.bas.potato.provider.bean;
 
-import com.googlecode.openbeans.MethodDescriptor;
-
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 import net.bodz.mda.xjdoc.model.IElementDoc;
+
+import com.googlecode.openbeans.MethodDescriptor;
 
 public class BeanMethod
         extends ReflectMethod {

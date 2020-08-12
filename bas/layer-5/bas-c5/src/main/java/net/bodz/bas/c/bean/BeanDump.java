@@ -1,9 +1,5 @@
 package net.bodz.bas.c.bean;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,6 +7,11 @@ import java.util.Comparator;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.t.iterator.Iterables;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanDump {
 

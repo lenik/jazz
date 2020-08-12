@@ -2,7 +2,6 @@ package net.bodz.bas.fmt.json;
 
 import java.util.*;
 
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.t.factory.IFactory;

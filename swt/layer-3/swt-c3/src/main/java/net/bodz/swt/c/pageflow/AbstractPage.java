@@ -1,7 +1,5 @@
 package net.bodz.swt.c.pageflow;
 
-import com.googlecode.openbeans.PropertyChangeListener;
-import com.googlecode.openbeans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,6 +21,9 @@ import net.bodz.bas.ui.style.ImageUsage;
 import net.bodz.bas.ui.xjdoc.UiElementDoc;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+
+import com.googlecode.openbeans.PropertyChangeListener;
+import com.googlecode.openbeans.PropertyChangeSupport;
 
 public abstract class AbstractPage
         implements IPage, II18nCapable {

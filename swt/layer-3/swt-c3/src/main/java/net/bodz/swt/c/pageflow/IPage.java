@@ -1,6 +1,5 @@
 package net.bodz.swt.c.pageflow;
 
-import com.googlecode.openbeans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -8,6 +7,8 @@ import org.eclipse.swt.widgets.Control;
 
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.err.UiValidationException;
+
+import com.googlecode.openbeans.PropertyChangeListener;
 
 public interface IPage {
 

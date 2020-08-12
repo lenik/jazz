@@ -1,9 +1,10 @@
 package net.bodz.bas.typer.std;
 
-import com.googlecode.openbeans.ExceptionListener;
 import java.util.Iterator;
 
 import net.bodz.bas.rtx.IOptions;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public interface ISearcher<T>
         extends IStdTyper {

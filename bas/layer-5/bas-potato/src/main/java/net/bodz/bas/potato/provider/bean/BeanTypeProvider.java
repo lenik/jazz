@@ -1,15 +1,15 @@
 package net.bodz.bas.potato.provider.bean;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-
 import net.bodz.bas.potato.AbstractTypeProvider;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.UnionXjdocProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
 
 public class BeanTypeProvider
         extends AbstractTypeProvider {

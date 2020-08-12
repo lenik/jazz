@@ -1,6 +1,5 @@
 package net.bodz.bas.fmt.json.obj;
 
-import java.beans.Transient;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -17,6 +16,7 @@ import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;

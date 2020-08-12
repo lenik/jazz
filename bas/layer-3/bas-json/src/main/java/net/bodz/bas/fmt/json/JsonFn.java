@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;

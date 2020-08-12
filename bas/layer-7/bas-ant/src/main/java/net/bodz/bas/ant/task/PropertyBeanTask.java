@@ -1,8 +1,5 @@
 package net.bodz.bas.ant.task;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -34,6 +31,10 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.t.preorder.PrefixSet;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class PropertyBeanTask
         extends Task

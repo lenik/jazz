@@ -1,10 +1,5 @@
 package net.bodz.bas.fmt.rst.obj;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
-import com.googlecode.openbeans.Transient;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.LinkedHashMap;
@@ -15,7 +10,13 @@ import net.bodz.bas.fmt.rst.AbstractElementHandler;
 import net.bodz.bas.fmt.rst.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IElementHandler;
 import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Final;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanElementHandler
         extends AbstractElementHandler {

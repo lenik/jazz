@@ -1,10 +1,11 @@
 package net.bodz.bas.typer.std;
 
-import com.googlecode.openbeans.ExceptionListener;
 import java.io.Writer;
 
 import net.bodz.bas.err.FormatterException;
 import net.bodz.bas.rtx.IOptions;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public interface IFormatter<T>
         extends IStdTyper {

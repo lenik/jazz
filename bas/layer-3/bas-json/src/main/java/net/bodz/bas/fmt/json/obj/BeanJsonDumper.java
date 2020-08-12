@@ -1,6 +1,5 @@
 package net.bodz.bas.fmt.json.obj;
 
-import java.beans.Transient;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
@@ -12,6 +11,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Stop;
 
 import com.googlecode.openbeans.BeanInfo;

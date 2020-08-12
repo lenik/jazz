@@ -1,6 +1,5 @@
 package net.bodz.bas.io.res.tools;
 
-import com.googlecode.openbeans.XMLEncoder;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.OutputStream;
@@ -8,6 +7,8 @@ import java.util.Collection;
 
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.IStreamOutputTargetWrapper;
+
+import com.googlecode.openbeans.XMLEncoder;
 
 public class StreamDumping
         implements IStreamDumping {

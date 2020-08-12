@@ -1,11 +1,11 @@
 package net.bodz.bas.t.tree;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.meta.bean.Transient;
 
 public abstract class AbstractMutableTreeNode<node_t extends IMutableTreeNode<node_t>>
         extends AbstractTreeNode<node_t>

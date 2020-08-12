@@ -1,12 +1,13 @@
 package net.bodz.bas.c.reflect;
 
-import com.googlecode.openbeans.MethodDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeSpace;
+
+import com.googlecode.openbeans.MethodDescriptor;
 
 public class MethodSignature {
 

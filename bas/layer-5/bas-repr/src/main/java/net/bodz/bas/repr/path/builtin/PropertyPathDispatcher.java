@@ -1,8 +1,5 @@
 package net.bodz.bas.repr.path.builtin;
 
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,10 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
+
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class PropertyPathDispatcher
         extends AbstractPathDispatcher {

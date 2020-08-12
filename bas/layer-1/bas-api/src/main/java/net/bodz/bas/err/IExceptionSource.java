@@ -1,8 +1,8 @@
 package net.bodz.bas.err;
 
-import com.googlecode.openbeans.ExceptionListener;
-
 import net.bodz.bas.meta.decl.EventSource;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public interface IExceptionSource
         extends EventSource {

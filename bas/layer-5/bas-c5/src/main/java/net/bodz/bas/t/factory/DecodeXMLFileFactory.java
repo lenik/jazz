@@ -1,6 +1,5 @@
 package net.bodz.bas.t.factory;
 
-import com.googlecode.openbeans.ExceptionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,6 +7,8 @@ import java.io.IOException;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
+
+import com.googlecode.openbeans.ExceptionListener;
 
 public class DecodeXMLFileFactory
         extends AbstractFactory<Object> {

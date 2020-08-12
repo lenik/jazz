@@ -1,11 +1,12 @@
 package net.bodz.mda.xjdoc.model;
 
-import com.googlecode.openbeans.PropertyDescriptor;
 import java.io.IOException;
 
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
+
+import com.googlecode.openbeans.PropertyDescriptor;
 
 /**
  * Not used.
