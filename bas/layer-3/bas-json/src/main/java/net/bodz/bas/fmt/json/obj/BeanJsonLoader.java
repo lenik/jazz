@@ -1,16 +1,11 @@
 package net.bodz.bas.fmt.json.obj;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
-import com.googlecode.openbeans.Transient;
+import java.beans.Transient;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
-
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -28,6 +23,11 @@ import net.bodz.bas.typer.std.IParser;
 import net.bodz.json.JSONArray;
 import net.bodz.json.JSONException;
 import net.bodz.json.JSONObject;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanJsonLoader
         extends AbstractJsonLoader {
@@ -253,7 +253,7 @@ public class BeanJsonLoader
                 }
                 if (map != null) {
                     JSONObject jsonMap = (JSONObject) jsonVal;
-                    for (String key : (Set<String>) jsonMap.keySet()) {
+                    for (String key : jsonMap.keySet()) {
                         Object jsonItemVal = jsonMap.get(key);
                         Object item = convert(vtype, null, jsonItemVal);
                         map.put(key, item);

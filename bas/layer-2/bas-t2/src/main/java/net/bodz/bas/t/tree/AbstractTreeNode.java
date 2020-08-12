@@ -1,6 +1,6 @@
 package net.bodz.bas.t.tree;
 
-import com.googlecode.openbeans.Transient;
+import java.beans.Transient;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -80,7 +80,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
                 return null;
         }
 
-        return (node_t) next.getDescendant(path);
+        return next.getDescendant(path);
     }
 
     @Override
@@ -111,7 +111,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
             node_t next = getParent();
             if (next == null)
                 next = _this;
-            return (node_t) next.resolve(path);
+            return next.resolve(path);
         }
 
         return _resolveChild(key, path);
@@ -122,7 +122,7 @@ public abstract class AbstractTreeNode<node_t extends ITreeNode<node_t>>
         if (child == null)
             return null;
         else
-            return (node_t) child.resolve(remainingPath);
+            return child.resolve(remainingPath);
     }
 
     @Override

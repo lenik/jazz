@@ -1,11 +1,5 @@
 package net.bodz.bas.c.xml;
 
-import com.googlecode.openbeans.Encoder;
-import com.googlecode.openbeans.ExceptionListener;
-import com.googlecode.openbeans.Expression;
-import com.googlecode.openbeans.PersistenceDelegate;
-import com.googlecode.openbeans.XMLDecoder;
-import com.googlecode.openbeans.XMLEncoder;
 import java.io.*;
 import java.net.URL;
 
@@ -16,12 +10,19 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import net.bodz.bas.c.com.googlecode.openbeans.Jdk7XMLEncoder;
+import net.bodz.bas.c.java.beans.Jdk7XMLEncoder;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.err.ExceptionBuffer;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
+
+import com.googlecode.openbeans.Encoder;
+import com.googlecode.openbeans.ExceptionListener;
+import com.googlecode.openbeans.Expression;
+import com.googlecode.openbeans.PersistenceDelegate;
+import com.googlecode.openbeans.XMLDecoder;
+import com.googlecode.openbeans.XMLEncoder;
 
 public class XMLs {
 

@@ -1,6 +1,6 @@
 package net.bodz.lily.security;
 
-import com.googlecode.openbeans.Transient;
+import java.beans.Transient;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -96,8 +96,8 @@ public class User
         this.groups = groups;
     }
 
-    @Derived
     @Transient
+    @Derived
     public Set<Integer> getGroupIds() {
         Set<Integer> gids = new HashSet<>();
         if (primaryGroup != null)
