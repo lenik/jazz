@@ -1,6 +1,6 @@
 package net.bodz.pkg.sis;
 
-import java.beans.PropertyChangeSupport;
+import com.googlecode.openbeans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;

@@ -1,10 +1,10 @@
 package net.bodz.bas.fmt.json.obj;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.beans.Transient;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
+import com.googlecode.openbeans.Transient;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Method;

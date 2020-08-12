@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.MethodDescriptor;
+import com.googlecode.openbeans.MethodDescriptor;
 
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;

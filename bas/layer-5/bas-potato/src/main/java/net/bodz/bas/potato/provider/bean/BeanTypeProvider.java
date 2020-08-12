@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.IntrospectionException;
+import com.googlecode.openbeans.Introspector;
 
 import net.bodz.bas.potato.AbstractTypeProvider;
 import net.bodz.bas.potato.ITypeProvider;

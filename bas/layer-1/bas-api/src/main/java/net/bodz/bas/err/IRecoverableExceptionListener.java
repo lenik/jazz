@@ -1,6 +1,6 @@
 package net.bodz.bas.err;
 
-import java.beans.ExceptionListener;
+import com.googlecode.openbeans.ExceptionListener;
 
 public interface IRecoverableExceptionListener
         extends ExceptionListener {

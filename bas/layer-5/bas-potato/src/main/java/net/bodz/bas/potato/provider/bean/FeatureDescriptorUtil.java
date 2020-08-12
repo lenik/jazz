@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.FeatureDescriptor;
+import com.googlecode.openbeans.FeatureDescriptor;
 
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IPotatoElement;

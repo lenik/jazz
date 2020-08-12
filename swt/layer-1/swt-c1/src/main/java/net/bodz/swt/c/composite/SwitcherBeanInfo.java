@@ -1,6 +1,6 @@
 package net.bodz.swt.c.composite;
 
-import net.bodz.bas.c.java.beans.AbstractBeanInfo;
+import net.bodz.bas.c.com.googlecode.openbeans.AbstractBeanInfo;
 
 public class SwitcherBeanInfo
         extends AbstractBeanInfo {

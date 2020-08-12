@@ -1,6 +1,6 @@
 package net.bodz.bas.c.java.beans;
 
-import java.beans.XMLEncoder;
+import com.googlecode.openbeans.XMLEncoder;
 import java.io.OutputStream;
 
 public class Jdk7XMLEncoder {

@@ -1,6 +1,6 @@
 package net.bodz.bas.db.jdbc;
 
-import java.beans.Transient;
+import com.googlecode.openbeans.Transient;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Properties;

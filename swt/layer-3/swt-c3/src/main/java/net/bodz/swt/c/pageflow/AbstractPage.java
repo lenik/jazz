@@ -1,7 +1,7 @@
 package net.bodz.swt.c.pageflow;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import com.googlecode.openbeans.PropertyChangeListener;
+import com.googlecode.openbeans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

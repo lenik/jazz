@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @see java.beans.PropertyChangeSupport
+ * @see com.googlecode.openbeans.PropertyChangeSupport
  */
 public class PropertyChangeSupport
         implements Serializable, IPropertyChangeSource {

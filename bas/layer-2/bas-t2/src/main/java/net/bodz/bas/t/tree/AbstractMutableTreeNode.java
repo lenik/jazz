@@ -1,6 +1,6 @@
 package net.bodz.bas.t.tree;
 
-import java.beans.Transient;
+import com.googlecode.openbeans.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

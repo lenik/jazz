@@ -9,7 +9,7 @@ import net.bodz.bas.meta.decl.EventSource;
  * equality methods ( {@link Object#hashCode()}, {@link Object#equals(Object)}), rather then
  * identity equality, to store listeners.
  * 
- * @see java.beans.PropertyChangeSupport
+ * @see com.googlecode.openbeans.PropertyChangeSupport
  */
 public interface IPropertyChangeSource
         extends EventSource {

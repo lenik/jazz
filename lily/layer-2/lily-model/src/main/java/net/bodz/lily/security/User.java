@@ -1,6 +1,6 @@
 package net.bodz.lily.security;
 
-import java.beans.Transient;
+import com.googlecode.openbeans.Transient;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;

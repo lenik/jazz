@@ -1,8 +1,8 @@
 net.bodz.bas.c.BasC1Module
 net.bodz.bas.c.enm.Enums
 net.bodz.bas.c.java.awt.DesktopApps
-net.bodz.bas.c.java.beans.AbstractBeanInfo
-net.bodz.bas.c.java.beans.Jdk7XMLEncoder
+net.bodz.bas.c.com.googlecode.openbeans.AbstractBeanInfo
+net.bodz.bas.c.com.googlecode.openbeans.Jdk7XMLEncoder
 net.bodz.bas.c.java.io.FileData
 net.bodz.bas.c.java.io.FileDirs
 net.bodz.bas.c.java.io.FileGlob

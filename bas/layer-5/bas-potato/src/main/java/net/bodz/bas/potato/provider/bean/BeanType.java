@@ -1,10 +1,10 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.BeanDescriptor;
-import java.beans.BeanInfo;
-import java.beans.EventSetDescriptor;
-import java.beans.MethodDescriptor;
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.BeanDescriptor;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.EventSetDescriptor;
+import com.googlecode.openbeans.MethodDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 

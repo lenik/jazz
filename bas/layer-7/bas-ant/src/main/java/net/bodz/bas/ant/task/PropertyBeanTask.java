@@ -1,8 +1,8 @@
 package net.bodz.bas.ant.task;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;

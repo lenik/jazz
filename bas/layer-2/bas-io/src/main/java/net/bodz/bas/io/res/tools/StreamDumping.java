@@ -1,6 +1,6 @@
 package net.bodz.bas.io.res.tools;
 
-import java.beans.XMLEncoder;
+import com.googlecode.openbeans.XMLEncoder;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.OutputStream;

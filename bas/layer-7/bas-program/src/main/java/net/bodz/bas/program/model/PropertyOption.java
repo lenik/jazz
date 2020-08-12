@@ -1,6 +1,6 @@
 package net.bodz.bas.program.model;
 
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 

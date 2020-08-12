@@ -1,6 +1,6 @@
 package net.bodz.bas.t.factory;
 
-import java.beans.ExceptionListener;
+import com.googlecode.openbeans.ExceptionListener;
 
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;

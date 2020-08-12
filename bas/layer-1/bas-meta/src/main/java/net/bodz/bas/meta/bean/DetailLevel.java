@@ -11,14 +11,14 @@ import net.bodz.bas.meta.meta.Implicit;
  * level, then only elements with detail level smaller then the the display detail level is
  * displayed.
  * <p>
- * Detail level compared to Java Beans' {@link java.beans.PropertyDescriptor}:
+ * Detail level compared to Java Beans' {@link com.googlecode.openbeans.PropertyDescriptor}:
  * <table>
  * <tr>
  * <th>Java Bean</th>
  * <th>Detail Level</th>
  * </tr>
  * <tr>
- * <td> {@link java.beans.FeatureDescriptor#isPreferred()}</td>
+ * <td> {@link com.googlecode.openbeans.FeatureDescriptor#isPreferred()}</td>
  * <td> {@value #DETAIL_CRITICAL}</td>
  * </tr>
  * <tr>
@@ -30,11 +30,11 @@ import net.bodz.bas.meta.meta.Implicit;
  * <td> {@value #DETAIL_EXTEND}</td>
  * </tr>
  * <tr>
- * <td> {@link java.beans.FeatureDescriptor#isExpert()}</td>
+ * <td> {@link com.googlecode.openbeans.FeatureDescriptor#isExpert()}</td>
  * <td> {@value #DETAIL_EXPERT}</td>
  * </tr>
  * <tr>
- * <td> {@link java.beans.FeatureDescriptor#isHidden()}</td>
+ * <td> {@link com.googlecode.openbeans.FeatureDescriptor#isHidden()}</td>
  * <td> {@value #DETAIL_HIDDEN}</td>
  * </tr>
  * </table>

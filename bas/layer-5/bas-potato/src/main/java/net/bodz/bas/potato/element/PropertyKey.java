@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.element;
 
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;

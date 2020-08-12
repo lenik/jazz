@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.element;
 
-import java.beans.EventSetDescriptor;
+import com.googlecode.openbeans.EventSetDescriptor;
 import java.io.Serializable;
 
 import net.bodz.bas.c.object.Nullables;

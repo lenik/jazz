@@ -1,6 +1,6 @@
 package net.bodz.bas.c.reflect;
 
-import java.beans.MethodDescriptor;
+import com.googlecode.openbeans.MethodDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;

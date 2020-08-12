@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
