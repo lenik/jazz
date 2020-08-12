@@ -1,8 +1,8 @@
 package user.bean;
 
-import java.beans.BeanInfo;
-import java.beans.PropertyDescriptor;
-import java.beans.SimpleBeanInfo;
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.PropertyDescriptor;
+import com.googlecode.openbeans.SimpleBeanInfo;
 import java.lang.reflect.Method;
 
 public class DogBeanInfo

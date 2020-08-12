@@ -1,6 +1,6 @@
 package net.bodz.bas.c.java.beans;
 
-import java.beans.SimpleBeanInfo;
+import com.googlecode.openbeans.SimpleBeanInfo;
 
 public class AbstractBeanInfo
         extends SimpleBeanInfo {

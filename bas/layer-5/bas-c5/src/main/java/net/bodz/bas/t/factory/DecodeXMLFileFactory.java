@@ -1,6 +1,6 @@
 package net.bodz.bas.t.factory;
 
-import java.beans.ExceptionListener;
+import com.googlecode.openbeans.ExceptionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package net.bodz.swt.c.pageflow;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import com.googlecode.openbeans.PropertyChangeEvent;
+import com.googlecode.openbeans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.SWT;

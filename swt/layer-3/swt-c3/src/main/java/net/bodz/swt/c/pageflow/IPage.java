@@ -1,6 +1,6 @@
 package net.bodz.swt.c.pageflow;
 
-import java.beans.PropertyChangeListener;
+import com.googlecode.openbeans.PropertyChangeListener;
 import java.util.Collection;
 
 import org.eclipse.swt.graphics.ImageData;

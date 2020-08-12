@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.form;
 
-import java.beans.Transient;
+import com.googlecode.openbeans.Transient;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;

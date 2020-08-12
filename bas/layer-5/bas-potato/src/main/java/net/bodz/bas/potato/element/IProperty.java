@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.element;
 
-import java.beans.PropertyDescriptor;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 import net.bodz.bas.t.event.IPropertyChangeListener;
 

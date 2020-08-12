@@ -1,6 +1,6 @@
 package net.bodz.bas.typer.std;
 
-import java.beans.ExceptionListener;
+import com.googlecode.openbeans.ExceptionListener;
 import java.io.Writer;
 
 import net.bodz.bas.err.FormatterException;

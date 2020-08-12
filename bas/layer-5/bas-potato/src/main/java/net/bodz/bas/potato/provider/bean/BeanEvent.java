@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.provider.bean;
 
-import java.beans.EventSetDescriptor;
+import com.googlecode.openbeans.EventSetDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 

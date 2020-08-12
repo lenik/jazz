@@ -1,6 +1,6 @@
 package net.bodz.bas.t.tree;
 
-import java.beans.Transient;
+import com.googlecode.openbeans.Transient;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
