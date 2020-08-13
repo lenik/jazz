@@ -19,7 +19,7 @@ public class Xjdocs {
 
     public static synchronized ITagLibrary getDefaultTagLibrary() {
         if (defaultTagLibrary == null) {
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            ClassLoader classLoader = Xjdocs.class.getClassLoader();
             defaultTagLibrary = TagLibraryLoader.allFor(classLoader);
         }
         return defaultTagLibrary;
