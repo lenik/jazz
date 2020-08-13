@@ -35,7 +35,7 @@ public abstract class BasicSite
 
     private IQueryable queryContext;
     private Map<String, IJazzModule> modules = new TreeMap<String, IJazzModule>();
-    protected final PathMap pathMap;
+    protected final ServiceMap serviceMap;
 
     public BasicSite() {
         for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
@@ -43,7 +43,7 @@ public abstract class BasicSite
             name = Strings.hyphenatize(name);
             modules.put(name, module);
         }
-        pathMap = new PathMap();
+        serviceMap = new ServiceMap();
     }
 
     public IQueryable getQueryContext() {
@@ -148,8 +148,8 @@ public abstract class BasicSite
             throws PathDispatchException {
         String token = tokens.peek();
 
-        if (pathMap != null) {
-            Object target = pathMap.get(token);
+        if (serviceMap != null) {
+            Object target = serviceMap.get(token);
             if (target != null)
                 return PathArrival.shift(previous, target, tokens);
         }
