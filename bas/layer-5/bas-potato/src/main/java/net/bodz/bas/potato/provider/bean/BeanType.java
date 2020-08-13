@@ -99,6 +99,8 @@ public class BeanType
 
         if ((infoset & ITypeProvider.I_Methods) != 0) {
             MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
+            if (methodDescriptors == null)
+                methodDescriptors = new MethodDescriptor[0];
             for (MethodDescriptor methodDescriptor : methodDescriptors) {
                 Method method = methodDescriptor.getMethod();
                 if (declaredOnly)
