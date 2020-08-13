@@ -37,6 +37,7 @@ public class FieldCategory
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }
@@ -48,11 +49,11 @@ public class FieldCategory
 
     static Map<Class<?>, FieldCategory> registry = new HashMap<Class<?>, FieldCategory>();
 
-    public static FieldCategory fromTagClass(Class<?> clazz) {
-        FieldCategory category = registry.get(clazz);
+    public static FieldCategory fromTagClass(Class<?> tagClass) {
+        FieldCategory category = registry.get(tagClass);
         if (category == null) {
-            category = new FieldCategory(clazz);
-            IType type = PotatoTypes.getInstance().loadType(clazz);
+            category = new FieldCategory(tagClass);
+            IType type = PotatoTypes.getInstance().loadType(tagClass);
 
             IMutableElement.fn.copy1(type, category);
             category.setName(type.getType().getSimpleName());
@@ -65,7 +66,7 @@ public class FieldCategory
             if (aDetailLevel != null)
                 category.setDetailLevel(aDetailLevel.value());
 
-            registry.put(clazz, category);
+            registry.put(tagClass, category);
         }
         return category;
     }
