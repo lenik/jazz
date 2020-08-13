@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.err.LoaderException;
@@ -24,6 +23,13 @@ import net.bodz.json.JSONObject;
 
 public class TableData
         implements IVarMapSerializable {
+
+    /**
+     * Specify the row format
+     */
+    public static final String K_ROW = "row";
+    public static final String ROW_ARRAY = "array";
+    public static final String ROW_OBJECT = "object";// default
 
     Class<?> objectType;
     Map<String, IPropertyAccessor> colmap = new LinkedHashMap<String, IPropertyAccessor>();
@@ -96,7 +102,7 @@ public class TableData
 
     public TableData parseFormats(String json) {
         JSONObject obj = new JSONObject(json);
-        for (String key : (Set<String>) obj.keySet()) {
+        for (String key : obj.keySet()) {
             String format = obj.getString(key);
             formats.put(key, format);
         }

@@ -44,12 +44,12 @@ public abstract class LilyStartSite
 
     void setupServices() {
         CoIndexServiceGroup group = new CoIndexServiceGroup(dataContext);
-        pathMap.install("data", group);
-        pathMap.install(group.getNameMap());
+        serviceMap.install("data", group);
+        serviceMap.install(group.getNameMap());
 
         LoginManager loginManager = new LoginManager(dataContext);
-        pathMap.install("session", new LoginManagerWs(loginManager));
-        pathMap.install("ws-doc", new WsDocSite());
+        serviceMap.install("session", new LoginManagerWs(loginManager));
+        serviceMap.install("ws-doc", new WsDocSite());
     }
 
 }
