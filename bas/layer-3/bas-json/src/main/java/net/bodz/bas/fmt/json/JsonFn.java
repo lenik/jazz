@@ -169,6 +169,13 @@ public class JsonFn {
         return new JsonUnion(array);
     }
 
+    public static <T extends IJsonSerializable> T readObject(T context, JsonObject node)
+            throws ParseException {
+        if (node != null)
+            context.readObject(node);
+        return context;
+    }
+
 }
 
 class JSONArrayIterator<T>
