@@ -145,12 +145,16 @@ public class JsonObject
         if (!has(key)) // nothing to change
             return obj;
 
+        JsonObject node = null;
         Object _node = get(key);
         if (_node == null) // force set to null
             return null;
+        if (_node instanceof JSONObject)
+            node = JsonObject.wrap((JSONObject) _node);
+        else if (_node instanceof JsonObject)
+            node = (JsonObject) _node;
 
-        if (_node instanceof JSONObject) {
-            JsonObject node = JsonObject.wrap((JSONObject) _node);
+        if (node != null) {
             if (obj == null) {
                 if (newObj == null) // don't auto-create
                     return null;
