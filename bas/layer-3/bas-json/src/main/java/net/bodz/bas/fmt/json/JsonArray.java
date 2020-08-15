@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.json.JSONArray;
 import net.bodz.json.JSONException;
 import net.bodz.json.JSONObject;
@@ -254,6 +255,37 @@ public class JsonArray {
     public Writer write(Writer writer)
             throws JSONException {
         return array.write(writer);
+    }
+
+    public <T extends IJsonSerializable> T readInto(int index, T obj)
+            throws ParseException {
+        return readInto(index, obj, null);
+    }
+
+    public <T extends IJsonSerializable> T readInto(int index, T obj, T newObj)
+            throws ParseException {
+        if (index >= length())
+            return obj;
+
+        JsonObject node = null;
+        Object _node = get(index);
+        if (_node == null) // force set to null
+            return null;
+        if (_node instanceof JSONObject)
+            node = JsonObject.wrap((JSONObject) _node);
+        else if (_node instanceof JsonObject)
+            node = (JsonObject) _node;
+
+        if (node != null) {
+            if (obj == null) {
+                if (newObj == null) // don't auto-create
+                    return null;
+                obj = newObj;
+            }
+            obj.readObject(node);
+        }
+
+        return obj;
     }
 
 }
