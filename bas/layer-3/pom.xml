@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-c3</module>
+        <module>bas-crypto</module>
         <module>bas-data</module>
         <module>bas-fmt</module>
         <module>bas-http</module>

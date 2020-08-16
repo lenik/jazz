@@ -5,20 +5,20 @@ import net.bodz.bas.err.TransformException;
 public class ConjunctTransformer<S, T>
         extends AbstractTransformer<S, T> {
 
-    ITransformer<S, ?> a;
-    ITransformer<Object, T> b;
+    ITransformer<S, ?> first;
+    ITransformer<Object, T> second;
 
     @SuppressWarnings("unchecked")
-    public <X> ConjunctTransformer(ITransformer<S, ? extends X> a, ITransformer<? super X, T> b) {
-        this.a = a;
-        this.b = (ITransformer<Object, T>) b;
+    public <X> ConjunctTransformer(ITransformer<S, ? extends X> first, ITransformer<? super X, T> second) {
+        this.first = first;
+        this.second = (ITransformer<Object, T>) second;
     }
 
     @Override
     public T transform(S input)
             throws TransformException {
-        Object tmp = a.transform(input);
-        T output = b.transform(tmp);
+        Object tmp = first.transform(input);
+        T output = second.transform(tmp);
         return output;
     }
 
