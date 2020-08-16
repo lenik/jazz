@@ -1,11 +1,11 @@
 package net.bodz.lily.security.login;
 
 import net.bodz.bas.crypto.trans.FlyingIndex;
-import net.bodz.bas.crypto.trans.IFlyingSupport.tr;
 import net.bodz.bas.crypto.trans.IFlyingTransient;
 import net.bodz.bas.site.json.AbstractJsonResponse;
 
-public class LoginCrypto {
+public class LoginCrypto
+        implements ILoginCryptoConsts {
 
     IFlyingTransient core;
     int distance;
@@ -21,7 +21,7 @@ public class LoginCrypto {
     }
 
     public IFlyingTransient shortVerificationCode(String key) {
-        return core.transform(tr.md5Sign(key).join(tr.partialMd5(6, 10)));
+        return core.transform(tr.md5Sign(key).join(SHORT_TEXT));
     }
 
     public FlyingIndex checkShortVerificationCode(String key, String verificationCode, AbstractJsonResponse<?> resp) {
