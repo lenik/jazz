@@ -12,6 +12,8 @@ public class SendSmsResult
         extends AbstractUcpaasResult
         implements ISmsSendResponse {
 
+    int ERROR_NO_ROW = -1;
+
     public int count;
     public String smsid;
     public String mobile;
@@ -50,6 +52,8 @@ public class SendSmsResult
 
         smsid = o.getString("smsid");
         mobile = o.getString("mobile");
+
+        fix_noRow();
     }
 
     @Override
@@ -59,6 +63,14 @@ public class SendSmsResult
         out.entry("count", count);
         out.entry("smsid", smsid);
         out.entry("mobile", mobile);
+    }
+
+    void fix_noRow() {
+        if (this.count == 0) {
+            if (this.code == 0) {
+                this.code = ERROR_NO_ROW;
+            }
+        }
     }
 
     @Override

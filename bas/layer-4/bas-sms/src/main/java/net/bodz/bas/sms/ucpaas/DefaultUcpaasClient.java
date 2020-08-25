@@ -12,21 +12,24 @@ import net.bodz.bas.http.HttpClients;
 public class DefaultUcpaasClient
         implements IUcpaasClient {
 
+    /**
+     * @return Result with no row means something wrong.
+     */
     @Override
     public SendSmsResult sendSms(UcpaasId ucid, String uid, String templateId, String mobile, String... params)
             throws IOException, ParseException {
         String url = getUrl("sendsms");
-        JsonBuffer js = new JsonBuffer();
-        js.object();
+        JsonBuffer sendContent = new JsonBuffer();
+        sendContent.object();
         {
-            ucid.writeObject(js);
-            js.entry("templateid", templateId);
-            js.entry("param", StringArray.join(",", params));
-            js.entry("mobile", mobile);
-            js.entry("uid", uid);
+            ucid.writeObject(sendContent);
+            sendContent.entry("templateid", templateId);
+            sendContent.entry("param", StringArray.join(",", params));
+            sendContent.entry("mobile", mobile);
+            sendContent.entry("uid", uid);
         }
-        js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        sendContent.endObject();
+        JsonObject jo = HttpClients.postJson(url, sendContent.toString());
         SendSmsResult result = new SendSmsResult();
         result.readObject(jo);
         return result;
