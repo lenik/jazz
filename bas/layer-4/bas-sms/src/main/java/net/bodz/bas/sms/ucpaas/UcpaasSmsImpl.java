@@ -54,8 +54,9 @@ public class UcpaasSmsImpl
                 continue;
             String templateId = template.id.toString();
             String[] params = record.getParametersAsStringArray();
-            record.response = client.sendSms(//
+            SendSmsResult result = client.sendSms(//
                     ucid, record.uid, templateId, record.recipient, params);
+            record.response = result;
         }
     }
 
