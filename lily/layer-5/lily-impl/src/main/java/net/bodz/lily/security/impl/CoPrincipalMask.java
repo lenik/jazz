@@ -6,12 +6,14 @@ import net.bodz.lily.model.base.CoObjectMask;
 public class CoPrincipalMask
         extends CoObjectMask {
 
+    String name;
+
     public String getName() {
-        return super.getCodeName();
+        return name;
     }
 
-    public void setName(String loginName) {
-        super.setCodeName(loginName);
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName1() {

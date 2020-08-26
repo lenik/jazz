@@ -95,6 +95,9 @@ public class StringUtil {
         return buf.toByteArray();
     }
 
+    /**
+     * foobar: fDDMMoobar
+     */
     public static String enc1(String s) {
         if (s == null || s.isEmpty())
             return s;

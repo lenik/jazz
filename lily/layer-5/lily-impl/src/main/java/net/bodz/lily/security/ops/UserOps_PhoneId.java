@@ -42,15 +42,17 @@ public class UserOps_PhoneId
 
         // 2. auto create a user (random name)
         User user = new User();
-        long tmp = System.currentTimeMillis();
+        int dup = 0;
         do {
-            String name = "user-" + tmp;
+            String name = "user-" + phone;
+            if (dup != 0)
+                name += "-" + dup;
             List<User> dups = userMapper.filter(new UserMask().name(name), SelectOptions.ALL);
             if (dups.isEmpty()) {
                 user.setName(name);
                 break;
             }
-            tmp++;
+            dup++;
         } while (true);
 
         UserSecret secret = user.getOrCreateSecret();
