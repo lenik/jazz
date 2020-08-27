@@ -76,7 +76,7 @@ public class PathDispatchersTest
                 return null;
 
             if ("bar".equals(token)) {
-                return PathArrival.shift(previous, "Bar", tokens);
+                return PathArrival.shift(previous, this, "Bar", tokens);
             }
             return null;
         }

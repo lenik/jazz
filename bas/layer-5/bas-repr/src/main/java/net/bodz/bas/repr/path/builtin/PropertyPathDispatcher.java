@@ -57,7 +57,7 @@ public class PropertyPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return PathArrival.shift(previous, result, tokens);
+        return PathArrival.shift(previous, this, result, tokens);
     }
 
     static final String CLS_PROPERTY_MAP_ID;

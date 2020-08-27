@@ -14,6 +14,7 @@ public class PathArrival
 
     private IPathArrival parent;
     private String[] consumedTokens = new String[0];
+    private Object resolver;
     private Object target;
     private boolean multiple;
     private String remainingPath;
@@ -24,38 +25,41 @@ public class PathArrival
         this.remainingPath = remainingPath;
     }
 
-    public PathArrival(IPathArrival parent, Object target, String[] consumedTokens, String remainingPath) {
+    public PathArrival(IPathArrival parent, Object resolver, Object target, String[] consumedTokens,
+            String remainingPath) {
         if (consumedTokens == null)
             throw new NullPointerException("consumedTokens");
         this.parent = parent;
+        this.resolver = resolver;
         this.target = target;
         this.consumedTokens = consumedTokens;
         this.remainingPath = remainingPath;
     }
 
-    public PathArrival(IPathArrival parent, Object target, String consumedToken, String remainingPath) {
-        this(parent, target, new String[] { consumedToken }, remainingPath);
+    public PathArrival(IPathArrival parent, Object resolver, Object target, String consumedToken, String remainingPath) {
+        this(parent, resolver, target, new String[] { consumedToken }, remainingPath);
     }
 
     public PathArrival(IPathArrival o) {
         this.parent = o.getPrevious();
+        this.resolver = o.getResolver();
         this.target = o.getTarget();
         this.multiple = o.isMultiple();
         this.consumedTokens = o.getConsumedTokens();
         this.remainingPath = o.getRemainingPath();
     }
 
-    public static PathArrival shift(IPathArrival parent, Object target, ITokenQueue tokens) {
-        return shift(1, parent, target, tokens);
+    public static PathArrival shift(IPathArrival parent, Object resolver, Object target, ITokenQueue tokens) {
+        return shift(1, parent, resolver, target, tokens);
     }
 
-    public static PathArrival shift(int n, IPathArrival parent, Object target, ITokenQueue tokens) {
+    public static PathArrival shift(int n, IPathArrival parent, Object resolver, Object target, ITokenQueue tokens) {
         String[] array = tokens.shift(n);
         if (parent != null && parent.getTarget() == target) {
             String[] cat = Arrays.append(parent.getConsumedTokens(), array);
-            return new PathArrival(parent.getPrevious(), target, cat, tokens.getRemainingPath());
+            return new PathArrival(parent.getPrevious(), resolver, target, cat, tokens.getRemainingPath());
         }
-        return new PathArrival(parent, target, array, tokens.getRemainingPath());
+        return new PathArrival(parent, resolver, target, array, tokens.getRemainingPath());
     }
 
     @Override
@@ -117,6 +121,14 @@ public class PathArrival
     @Override
     public String getRemainingPath() {
         return remainingPath;
+    }
+
+    public Object getResolver() {
+        return resolver;
+    }
+
+    public void setResolver(Object resolver) {
+        this.resolver = resolver;
     }
 
     @Override

@@ -99,7 +99,7 @@ public class CoIndexServiceGroup
         }
 
         if (target != null)
-            return PathArrival.shift(previous, target, tokens);
+            return PathArrival.shift(previous, this, target, tokens);
         return null;
     }
 

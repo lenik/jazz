@@ -40,7 +40,7 @@ public class InvocationPathDispatcher
         Invocation invocation = new Invocation(obj, method);
 
         tokens.stop();
-        return PathArrival.shift(previous, invocation, tokens);
+        return PathArrival.shift(previous, this, invocation, tokens);
     }
 
 }

@@ -99,22 +99,22 @@ public abstract class CoObjectIndex<T extends CoObject>
         case "new":
             try {
                 Object obj = Instantiables._instantiate(getObjectType());
-                return PathArrival.shift(previous, _access(obj), tokens);
+                return PathArrival.shift(previous, this, _access(obj), tokens);
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
 
         case "index.html":
-            return PathArrival.shift(previous, this, tokens);
+            return PathArrival.shift(previous, this, this, tokens);
 
         case "data.json":
             viewOptions.setContentType(ContentTypes.text_javascript);
             viewOptions.setOrigin(true);
-            return PathArrival.shift(previous, this, tokens);
+            return PathArrival.shift(previous, this, this, tokens);
 
         case "iframe.html":
             viewOptions.setOrigin(true);
-            return PathArrival.shift(previous, this, tokens);
+            return PathArrival.shift(previous, this, this, tokens);
         }
 
         String name = FilePath.stripExtension(token);
@@ -129,7 +129,7 @@ public abstract class CoObjectIndex<T extends CoObject>
 
             Object obj = mapper.select(id);
             if (obj != null)
-                return PathArrival.shift(previous, _access(obj), tokens);
+                return PathArrival.shift(previous, this, _access(obj), tokens);
         }
 
         return null;

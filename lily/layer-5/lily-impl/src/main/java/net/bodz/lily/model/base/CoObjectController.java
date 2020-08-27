@@ -62,7 +62,7 @@ public abstract class CoObjectController<T extends CoObject>
         if (property != null) {
             try {
                 Object value = property.getValue(this);
-                return PathArrival.shift(previous, value, tokens);
+                return PathArrival.shift(previous, this, value, tokens);
             } catch (ReflectiveOperationException e) {
                 throw new PathDispatchException(String.format(//
                         "Failed to get controller property %s: %s", property, e.getMessage()), e);
@@ -73,7 +73,7 @@ public abstract class CoObjectController<T extends CoObject>
         if (method != null) {
             try {
                 Object result = method.invoke(this);
-                return PathArrival.shift(previous, result, tokens);
+                return PathArrival.shift(previous, this, result, tokens);
             } catch (ReflectiveOperationException e) {
                 throw new PathDispatchException(String.format(//
                         "Failed to invoke controller method %s: %s", method, e.getMessage()), e);

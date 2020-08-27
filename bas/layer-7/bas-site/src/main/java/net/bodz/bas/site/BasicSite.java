@@ -151,12 +151,12 @@ public abstract class BasicSite
         if (serviceMap != null) {
             Object target = serviceMap.get(token);
             if (target != null)
-                return PathArrival.shift(previous, target, tokens);
+                return PathArrival.shift(previous, this, target, tokens);
         }
 
         switch (token) {
         case "sitemap.xml":
-            return PathArrival.shift(previous, getSitemap(), tokens);
+            return PathArrival.shift(previous, this, getSitemap(), tokens);
 
         case "robots.txt":
             break;
@@ -167,7 +167,7 @@ public abstract class BasicSite
                 HttpServletRequest request = CurrentHttpService.getRequest();
                 Locale locale = Locale.forLanguageTag(lang); // non-null.
                 request.setAttribute(LocaleVars.LOCALE.getName(), locale);
-                return PathArrival.shift(2, previous, this, tokens);
+                return PathArrival.shift(2, previous, this, this, tokens);
             }
             break;
         }
