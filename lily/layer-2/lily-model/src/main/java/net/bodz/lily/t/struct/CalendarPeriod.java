@@ -95,8 +95,7 @@ public class CalendarPeriod
         return sb.toString();
     }
 
-    public void setAsString(String spec)
-            throws ParseException {
+    public void setAsString(String spec) {
         spec = spec.trim();
         int sp = spec.indexOf(' ');
         String dateSpec, timeSpec;
@@ -113,7 +112,11 @@ public class CalendarPeriod
             timeSpec = tmp;
         }
         if (!Nullables.isEmpty(dateSpec)) {
-            parseDateSpec(dateSpec);
+            try {
+                parseDateSpec(dateSpec);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e.getMessage(), e);
+            }
         } else {
             years = 0;
             months = 0;
@@ -123,7 +126,11 @@ public class CalendarPeriod
         }
 
         if (!Nullables.isEmpty(timeSpec)) {
-            parseTimeSpec(timeSpec);
+            try {
+                parseTimeSpec(timeSpec);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e.getMessage(), e);
+            }
         } else {
             hours = 0;
             minutes = 0;

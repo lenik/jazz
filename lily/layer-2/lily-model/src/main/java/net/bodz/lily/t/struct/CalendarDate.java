@@ -269,8 +269,7 @@ public final class CalendarDate
         return sb.toString();
     }
 
-    public void setAsString(String spec)
-            throws ParseException {
+    public void setAsString(String spec) {
         spec = spec.trim();
         int sp = spec.indexOf(' ');
         String dateSpec, timeSpec;
@@ -288,7 +287,11 @@ public final class CalendarDate
         }
 
         if (!Nullables.isEmpty(dateSpec)) {
-            parseDateSpec(dateSpec);
+            try {
+                parseDateSpec(dateSpec);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Parse date: " + e.getMessage(), e);
+            }
         } else {
             year = NO_YEAR;
             month = NO_MONTH;
@@ -298,7 +301,11 @@ public final class CalendarDate
         }
 
         if (!Nullables.isEmpty(timeSpec)) {
-            parseTimeSpec(timeSpec);
+            try {
+                parseTimeSpec(timeSpec);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Parse time: " + e.getMessage(), e);
+            }
         } else {
             hour = NO_HOUR;
             minute = NO_MINUTE;
