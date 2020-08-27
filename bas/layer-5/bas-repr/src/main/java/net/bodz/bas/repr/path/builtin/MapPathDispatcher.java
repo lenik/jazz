@@ -39,7 +39,7 @@ public class MapPathDispatcher
             return null;
 
         Object result = map.get(key);
-        return PathArrival.shift(previous, result, tokens);
+        return PathArrival.shift(previous, this, result, tokens);
     }
 
 }

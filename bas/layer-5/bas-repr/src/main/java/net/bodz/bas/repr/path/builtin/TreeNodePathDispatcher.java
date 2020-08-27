@@ -39,7 +39,7 @@ public class TreeNodePathDispatcher
         if (child == null)
             return null;
 
-        return PathArrival.shift(previous, child, tokens);
+        return PathArrival.shift(previous, this, child, tokens);
     }
 
 }

@@ -33,7 +33,7 @@ public class NoPathRefDispatcher
             throw new PathDispatchException(e.getMessage(), e);
         }
         // if (target != null)
-        return new PathArrival(arrival, target, new String[0], arrival.getRemainingPath());
+        return new PathArrival(arrival, this, target, new String[0], arrival.getRemainingPath());
     }
 
 }

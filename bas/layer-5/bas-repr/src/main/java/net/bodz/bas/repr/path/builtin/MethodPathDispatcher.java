@@ -154,7 +154,7 @@ public class MethodPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return new PathArrival(previous, result, consumedTokens, tokens.getRemainingPath());
+        return new PathArrival(previous, this, result, consumedTokens, tokens.getRemainingPath());
     }
 
     static final String CLS_METHOD_MAP_ID;

@@ -71,7 +71,7 @@ public class ClassResourcePathDispatcher
             return null;
 
         URLResource resource = new URLResource(url);
-        return new PathArrival(previous, resource, tokens.shiftAll(), "");
+        return new PathArrival(previous, this, resource, tokens.shiftAll(), "");
     }
 
     protected boolean shouldStop(Class<?> clazz) {

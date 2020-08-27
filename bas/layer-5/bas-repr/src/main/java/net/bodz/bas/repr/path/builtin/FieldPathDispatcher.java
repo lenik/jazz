@@ -49,7 +49,7 @@ public class FieldPathDispatcher
             throw new PathDispatchException(e);
         }
 
-        return PathArrival.shift(previous, result, tokens);
+        return PathArrival.shift(previous, this, result, tokens);
     }
 
     static final String CLS_FIELD_MAP_ID;
