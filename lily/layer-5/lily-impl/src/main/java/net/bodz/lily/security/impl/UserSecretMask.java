@@ -11,7 +11,7 @@ public class UserSecretMask
     Integer userId;
     String userName;
     String password;
-    String mobile;
+    String phone;
     String email;
 
     public UserSecretMask() {
@@ -46,6 +46,22 @@ public class UserSecretMask
         this.password = password;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public UserSecretMask userId(int id) {
         this.userId = id;
         return this;
@@ -56,8 +72,13 @@ public class UserSecretMask
         return this;
     }
 
-    public UserSecretMask mobile(String mobile) {
-        this.mobile = mobile;
+    public UserSecretMask password(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserSecretMask phone(String phone) {
+        this.phone = phone;
         return this;
     }
 
