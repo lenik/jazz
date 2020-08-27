@@ -80,11 +80,13 @@ public class BeanJsonLoader
         }
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-            Class<?> propertyType = propertyDescriptor.getPropertyType();
             Method getter = propertyDescriptor.getReadMethod();
             Method setter = propertyDescriptor.getWriteMethod();
             if (getter == null)
                 continue;
+
+            Class<?> propertyClass = propertyDescriptor.getPropertyType();
+            // Type ReturnType = getter.getGenericReturnType();
 
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
@@ -113,7 +115,7 @@ public class BeanJsonLoader
                     continue;
                 }
 
-                Object value = convert(propertyType, propertyValue, jsonVal);
+                Object value = convert(propertyClass, propertyValue, jsonVal);
                 if (value != NonTerm) {
                     if (setter != null)
                         setter.invoke(ctx, new Object[] { value });
@@ -133,7 +135,7 @@ public class BeanJsonLoader
                 Constructor<?> ctor0 = null;
                 if (create) {
                     try {
-                        ctor0 = propertyType.getConstructor();
+                        ctor0 = propertyClass.getConstructor();
                     } catch (NoSuchMethodException e) {
                         create = false;
                     }
@@ -157,7 +159,10 @@ public class BeanJsonLoader
         }
     }
 
-    static final Object NonTerm = new Object();
+    static class NonTerm {
+    }
+
+    static final Object NonTerm = new NonTerm();
 
     Object convert(Class<?> type, Object orig, Object jsonVal)
             throws ReflectiveOperationException, ParseException {
@@ -215,6 +220,10 @@ public class BeanJsonLoader
 
         if (Collection.class.isAssignableFrom(type)) {
             Class<?> ctype = TypeParam.infer1(type, Collection.class, 0);
+            if (ctype == Object.class)
+                // not supported.
+                return NonTerm;
+
             Collection<Object> coll = null;
             try {
                 Constructor<?> ctor0 = type.getConstructor();

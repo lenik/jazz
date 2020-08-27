@@ -15,6 +15,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.rtx.IAttributed;
 import net.bodz.json.JSONObject;
 
@@ -34,6 +35,11 @@ public class JsonMap
 
     public JsonMap(Map<String, Object> map) {
         this.map = map;
+    }
+
+    @Transient
+    public Map<String, Object> getMap() {
+        return map;
     }
 
     public final void readObject(JSONObject o)

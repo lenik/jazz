@@ -23,6 +23,7 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.json.JSONException;
+import net.bodz.lily.entity.IId;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractJsonDumper<self_t>
@@ -38,6 +39,8 @@ public abstract class AbstractJsonDumper<self_t>
     protected Set<String> excludes = new HashSet<String>();
 
     protected int maxDepth;
+
+    String hintProperty = "_hint";
 
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
@@ -101,11 +104,15 @@ public abstract class AbstractJsonDumper<self_t>
     protected void _dumpOnce(boolean enclosed, Object obj, int depth, String prefix)
             throws IOException {
         if (obj == null) {
+            if (!enclosed)
+                out.key(hintProperty);
             out.value(null);
             return;
         }
 
         if (!isIncluded(prefix)) {
+            if (!enclosed)
+                out.key(hintProperty);
             // out.value("<excluded>");
             return;
         }
@@ -114,6 +121,8 @@ public abstract class AbstractJsonDumper<self_t>
             _dumpImpl(enclosed, obj, depth, prefix);
             marks.pop();
         } else {
+            if (!enclosed)
+                out.key(hintProperty);
             // TODO use StackMap to print dup ref info.
             out.value("<dup>");
         }
@@ -183,7 +192,17 @@ public abstract class AbstractJsonDumper<self_t>
                 IJsonSerializable jser = (IJsonSerializable) obj;
                 if (enclosed)
                     out.object();
-                jser.writeObject(out);
+
+                if (jser instanceof IId) {
+                    // XXX As most jser implementations use BeanDumper, so...
+                    // jser.writeObject(out);
+                    // BeanJsonDumper dumper = new BeanJsonDumper(out);
+                    // this.dump(jser, false);
+                    this._dumpImpl(false, jser, 0, prefix); // reset the depth to dump in obj.
+                } else {
+                    jser.writeObject(out);
+                }
+
                 if (enclosed)
                     out.endObject();
                 return;
