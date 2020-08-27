@@ -55,7 +55,7 @@ public class PhonePasswordLoginResolver
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().userName(phone), SelectOptions.ALL);
+                new UserSecretMask().phone(phone), SelectOptions.ALL);
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", phone);
 
