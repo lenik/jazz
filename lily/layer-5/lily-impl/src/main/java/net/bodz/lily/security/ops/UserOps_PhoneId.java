@@ -55,7 +55,7 @@ public class UserOps_PhoneId
             dup++;
         } while (true);
 
-        UserSecret secret = user.getOrCreateSecret();
+        UserSecret secret = user.makeSecret();
         secret.setPassword(password);
 
         userMapper.insert(user);
@@ -88,7 +88,7 @@ public class UserOps_PhoneId
         User user = userMapper.select(userId);
 
         // 2. update password
-        UserSecret secret = user.getOrCreateSecret();
+        UserSecret secret = user.makeSecret();
         secret.setPassword(password);
         secretMapper.update(secret);
 

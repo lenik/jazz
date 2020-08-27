@@ -1,6 +1,5 @@
 package net.bodz.lily.security;
 
-import net.bodz.bas.meta.bean.Transient;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +10,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.lily.entity.IdType;
@@ -108,7 +108,7 @@ public class User
         return gids;
     }
 
-    public UserSecret getOrCreateSecret() {
+    public UserSecret makeSecret() {
         UserSecret secret;
         if (secrets.isEmpty()) {
             secret = new UserSecret();
@@ -122,7 +122,8 @@ public class User
     public synchronized UserSecret getSecret() {
         if (secrets.isEmpty())
             return null;
-        return secrets.get(0);
+        Object first = secrets.get(0);
+        return (UserSecret) first;
     }
 
     public void setSecret(UserSecret secret) {
@@ -138,6 +139,10 @@ public class User
     public void setSecrets(List<UserSecret> secrets) {
         if (secrets == null)
             throw new NullPointerException("secrets");
+        for (Object o : secrets) {
+            if (!(o instanceof UserSecret))
+                throw new IllegalArgumentException("Invalid type: " + o);
+        }
         this.secrets = secrets;
     }
 
