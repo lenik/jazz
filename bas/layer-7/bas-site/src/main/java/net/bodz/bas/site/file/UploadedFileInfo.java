@@ -17,6 +17,9 @@ public class UploadedFileInfo
     String deleteUrl;
     String deleteType = "DELETE";
 
+    public UploadedFileInfo() {
+    }
+
     public UploadedFileInfo(FileItem item) {
         setName(item.getName());
         setLabel(item.getName());
