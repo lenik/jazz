@@ -1,14 +1,20 @@
 package net.bodz.mda.xjdoc.conv;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.flatf.FlatfInput;
 import net.bodz.bas.fmt.flatf.FlatfLoader;
 import net.bodz.bas.fmt.flatf.IFlatfInput;
-import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.AbstractXjdocProvider;
@@ -19,6 +25,8 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class FlatfXjdocProvider
         extends AbstractXjdocProvider {
+
+    static final Logger logger = LoggerFactory.getLogger(FlatfXjdocProvider.class);
 
     public static final String DEFAULT_EXTENSION = "ff";
 
@@ -35,13 +43,13 @@ public class FlatfXjdocProvider
     @Override
     public ClassDoc loadClassDoc(Class<?> clazz)
             throws XjdocLoaderException {
-        return load(clazz, DEFAULT_EXTENSION);
+        return loadExtension(clazz, DEFAULT_EXTENSION);
     }
 
     /**
      * @return <code>null</code> if no classdoc resource available.
      */
-    public ClassDoc load(Class<?> clazz, String extension)
+    public ClassDoc loadExtension(Class<?> clazz, String extension)
             throws XjdocLoaderException {
         if (clazz == null)
             throw new NullPointerException("clazz");
@@ -55,19 +63,35 @@ public class FlatfXjdocProvider
         if (resource == null)
             return null;
 
-        IStreamInputSource in = new URLResource(resource);
-        return load(clazz.getName(), in);
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(4096);
+        try {
+            InputStream in = resource.openStream();
+            byte[] block = new byte[4096];
+            int cb;
+            while ((cb = in.read(block, 0, block.length)) != -1) {
+                buf.write(block, 0, cb);
+            }
+        } catch (IOException e) {
+            throw new UnexpectedException("Error read from resource: " + e.getMessage(), e);
+        }
+        String text;
+        try {
+            text = buf.toString("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new UnexpectedException(e);
+        }
+        return loadText(clazz.getName(), text);
     }
 
-    public final ClassDoc load(String fqcn, IStreamInputSource inputSource)
+    public final ClassDoc loadText(String fqcn, String text)
             throws XjdocLoaderException {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
-        if (inputSource == null)
-            throw new NullPointerException("inputSource");
+        if (text == null)
+            throw new NullPointerException("text");
 
         try {
-            Reader reader = inputSource.newReader();
+            Reader reader = new StringReader(text);
             try {
                 FlatfInput in = new FlatfInput(reader);
                 return load(fqcn, in);
