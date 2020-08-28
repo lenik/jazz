@@ -34,16 +34,7 @@ public class UploadResult_json
         UploadResult result = ref.get();
 
         jout.object();
-        {
-            jout.key("files");
-            jout.array();
-            for (UploadedFileInfo item : result) {
-                jout.object();
-                item.writeObject(jout);
-                jout.endObject();
-            }
-            jout.endArray();
-        }
+        result.writeObject(jout);
         jout.endObject();
 
         return ctx.stop();
