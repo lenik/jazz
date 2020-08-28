@@ -1,5 +1,6 @@
 package net.bodz.bas.crypto.trans.fn;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class Sha1OfTextBin
@@ -13,8 +14,10 @@ public class Sha1OfTextBin
 
     @Override
     public String getStringForm() {
-        String sha = DigestUtils.shaHex(text);
-        return sha;
+        // Workaround for: Android < 8
+        // String sha1 = DigestUtils.sha1Hex(text);
+        String sha1 = new String(Hex.encodeHex(DigestUtils.sha1(text)));
+        return sha1;
     }
 
     @Override
