@@ -1,5 +1,6 @@
 package net.bodz.bas.crypto.trans.fn;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class Md5OfTextBin
@@ -13,7 +14,9 @@ public class Md5OfTextBin
 
     @Override
     public String getStringForm() {
-        String md5 = DigestUtils.md5Hex(text);
+        // Workaround for: Android < 8
+        // String md5 = DigestUtils.md5Hex(text);
+        String md5 = new String(Hex.encodeHex(DigestUtils.md5(text)));
         return md5;
     }
 
