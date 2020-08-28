@@ -8,7 +8,6 @@ import org.junit.Assert;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.fmt.flatf.FlatfOutput;
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.Options;
 import net.bodz.mda.xjdoc.Xjdocs;
@@ -74,11 +73,9 @@ public class QdoxTest
                 System.out.println("CLASS: " + fqcn);
                 System.out.println(ff + " ---");
 
-                StringSource ffSource = new StringSource(ff);
-
                 FlatfXjdocProvider ffLoader = new FlatfXjdocProvider();
                 ffLoader.setTagLibrary(tagLibrary);
-                ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
+                ClassDoc doc2 = ffLoader.loadText(fqcn, ff);
 
                 BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);
