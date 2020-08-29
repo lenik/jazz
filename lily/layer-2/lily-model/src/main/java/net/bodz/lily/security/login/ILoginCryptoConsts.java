@@ -9,9 +9,4 @@ public interface ILoginCryptoConsts
 
     PartialMd5Transformer SHORT_TEXT = tr.partialMd5(6, 10);
 
-    class X {
-        void f() {
-        }
-    }
-
 }

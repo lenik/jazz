@@ -49,8 +49,9 @@ public class LoginManager
     boolean debug = true;
     int window = 1_000;
     int distance = 10 * 60; // 10 minutes
+    int allowAhead = 3 * 60; // 3 minutes
     IFlyingTransient core = new EpochTransient(window).transform(tr.partialMd5(6, 10));
-    LoginCrypto crypto = new LoginCrypto(core, distance);
+    LoginCrypto crypto = new LoginCrypto(core, distance, allowAhead);
     int timeout = crypto.getTimeout(60_000);
 
     @Override

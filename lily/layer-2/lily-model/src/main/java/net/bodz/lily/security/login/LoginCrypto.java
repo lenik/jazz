@@ -9,10 +9,12 @@ public class LoginCrypto
 
     IFlyingTransient core;
     int distance;
+    int allowAhead;
 
-    public LoginCrypto(IFlyingTransient core, int distance) {
+    public LoginCrypto(IFlyingTransient core, int distance, int allowAhead) {
         this.core = core;
         this.distance = distance;
+        this.allowAhead = allowAhead;
     }
 
     public int getTimeout(int unit) {
@@ -26,7 +28,7 @@ public class LoginCrypto
 
     public FlyingIndex checkShortVerificationCode(String key, String verificationCode, AbstractJsonResponse<?> resp) {
         IFlyingTransient signTransient = shortVerificationCode(key);
-        FlyingIndex fi = signTransient.lastIndexOf(verificationCode, distance);
+        FlyingIndex fi = signTransient.lastIndexOf(verificationCode, distance, allowAhead);
         if (resp != null)
             if (fi.exists())
                 resp.setHeader("fi", fi);
@@ -43,10 +45,14 @@ public class LoginCrypto
 
     public FlyingIndex checkPasswordSign(String text, String signature, AbstractJsonResponse<?> resp) {
         IFlyingTransient signTransient = sign(text);
-        FlyingIndex fi = signTransient.lastIndexOf(signature, distance);
-        if (resp != null)
-            if (fi.exists())
+        FlyingIndex fi = signTransient.lastIndexOf(signature, distance, allowAhead);
+        if (fi.exists()) {
+            if (resp != null)
                 resp.setHeader("fi", fi);
+        } else {
+            IFlyingTransient ft = signTransient;
+            ft.diag(signature, 10, 10);
+        }
         return fi;
     }
 
