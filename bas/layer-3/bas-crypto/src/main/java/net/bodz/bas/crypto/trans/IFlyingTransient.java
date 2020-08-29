@@ -18,13 +18,13 @@ public interface IFlyingTransient {
 
     ICodeBin getCode(long index);
 
-    FlyingIndex lastIndexOf(ICodeBin code, int distance);
+    FlyingIndex lastIndexOf(ICodeBin code, int distance, int allowAhead);
 
-    FlyingIndex lastIndexOf(long fromIndex, ICodeBin code, int distance);
+    FlyingIndex lastIndexOf(long fromIndex, ICodeBin code, int distance, int allowAhead);
 
-    FlyingIndex lastIndexOf(String codeStr, int distance);
+    FlyingIndex lastIndexOf(String codeStr, int distance, int allowAhead);
 
-    FlyingIndex lastIndexOf(long fromIndex, String codeStr, int distance);
+    FlyingIndex lastIndexOf(long fromIndex, String codeStr, int distance, int allowAhead);
 
     IFlyingTransient getCore();
 
@@ -32,5 +32,7 @@ public interface IFlyingTransient {
 
     @SuppressWarnings("unchecked")
     IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers);
+
+    void diag(String search, int distance, int allowAhead);
 
 }

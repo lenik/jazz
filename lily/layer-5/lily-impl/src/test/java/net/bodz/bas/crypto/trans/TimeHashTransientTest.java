@@ -11,6 +11,7 @@ public class TimeHashTransientTest
 
     static int timeout = 1000;
     static int slots = 10;
+    static int allowAhead = 0;
     static int window = timeout / slots;
     IFlyingTransient trans = new EpochTransient(window)//
             .transform(tr.partialMd5(6, 10));
@@ -23,12 +24,12 @@ public class TimeHashTransientTest
         long snapshotIndex = time / window;
         for (int i = 0; i < slots; i++) {
             long currentIndex = snapshotIndex + i;
-            FlyingIndex fi = trans.lastIndexOf(currentIndex, snapshot, slots);
+            FlyingIndex fi = trans.lastIndexOf(currentIndex, snapshot, slots, allowAhead);
             assertEquals(snapshotIndex, fi.getIndex());
             assertEquals(-i, snapshotIndex - currentIndex);
         }
         long boundary = snapshotIndex + (slots + 1);
-        FlyingIndex fi = trans.lastIndexOf(boundary, snapshot, slots);
+        FlyingIndex fi = trans.lastIndexOf(boundary, snapshot, slots, allowAhead);
         assertFalse(fi.exists());
     }
 
@@ -48,7 +49,7 @@ public class TimeHashTransientTest
             System.out.printf("    future+%d: %s\n", i, c);
         }
 
-        FlyingIndex fi = trans.lastIndexOf(index, "503960", 1000);
+        FlyingIndex fi = trans.lastIndexOf(index, "503960", 1000, allowAhead);
         System.out.println("search: " + fi);
     }
 
