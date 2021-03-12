@@ -13,7 +13,7 @@ public class SmsCommitLog
         extends JsonStruct
         implements ISmsListener {
 
-    List<SmsRecord> records = new ArrayList<>();
+    List<SmsRecord> records = new ArrayList<SmsRecord>();
 
     @Override
     public void sent(SmsRecord record) {

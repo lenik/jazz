@@ -157,22 +157,16 @@ public class LoggerCG {
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
-        switch (target) {
-        case "IL":
+        if ("IL".equals(target))
             cg.makeILogger();
-            break;
-        case "L":
+        else if ("L".equals(target))
             cg.makeLogger();
-            break;
-        case "AL":
+        else if ("AL".equals(target))
             cg.makeAbstractLogger();
-            break;
-        case "SL":
+        else if ("SL".equals(target))
             cg.makeSinkBasedLogger();
-            break;
-        default:
+        else
             assert false;
-        }
     }
 
 }

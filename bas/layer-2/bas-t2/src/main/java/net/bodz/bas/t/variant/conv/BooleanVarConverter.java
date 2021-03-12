@@ -1,6 +1,7 @@
 package net.bodz.bas.t.variant.conv;
 
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.t.variant.Literals;
 
 public class BooleanVarConverter
         extends AbstractVarConverter<Boolean> {
@@ -24,18 +25,10 @@ public class BooleanVarConverter
     public static Boolean _fromString(String in)
             throws TypeConvertException {
         in = in.trim().toLowerCase();
-        switch (in) {
-        case "true":
-        case "on":
-        case "1":
+        if (Literals.trueValues.contains(in))
             return true;
-
-        case "false":
-        case "off":
-        case "0":
-        case "":
+        if (Literals.falseValues.contains(in))
             return false;
-        }
         throw new TypeConvertException("Invalid boolean: " + in);
     }
 

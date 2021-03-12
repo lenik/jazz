@@ -330,7 +330,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Byte> getBytes(String key, List<Byte> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Byte>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -342,7 +342,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Short> getShorts(String key, List<Short> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Short>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -354,7 +354,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Integer> getInts(String key, List<Integer> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Integer>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -366,7 +366,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Long> getLongs(String key, List<Long> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Long>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -378,7 +378,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Float> getFloats(String key, List<Float> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Float>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -390,7 +390,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Double> getDoubles(String key, List<Double> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Double>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -402,7 +402,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Boolean> getBooleans(String key, List<Boolean> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Boolean>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -414,7 +414,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<Character> getChars(String key, List<Character> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<Character>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();
@@ -428,7 +428,7 @@ public abstract class AbstractJsonObject<self_t>
 
     public List<String> getStrings(String key, List<String> list) {
         if (list == null)
-            list = new ArrayList<>();
+            list = new ArrayList<String>();
         JsonArray array = getJsonArray(key);
         if (array != null) {
             int n = array.length();

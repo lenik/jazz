@@ -24,6 +24,10 @@ public abstract class TextPrepByParts
         this.pattern = pattern;
     }
 
+    protected TextPrepByParts(String pattern) {
+        this(Pattern.compile(pattern));
+    }
+
     public Matcher getMatcher() {
         return matcher;
     }
@@ -81,10 +85,14 @@ public abstract class TextPrepByParts
         return getClass() + "-" + System.identityHashCode(this);
     }
 
-    static abstract class Matches
+    public static abstract class Matches
             extends TextPrepByParts {
 
         public Matches(Pattern pattern) {
+            super(pattern);
+        }
+
+        public Matches(String pattern) {
             super(pattern);
         }
 
@@ -95,10 +103,14 @@ public abstract class TextPrepByParts
 
     }
 
-    static abstract class Unmatches
+    public static abstract class Unmatches
             extends TextPrepByParts {
 
         public Unmatches(Pattern pattern) {
+            super(pattern);
+        }
+
+        public Unmatches(String pattern) {
             super(pattern);
         }
 
@@ -109,6 +121,10 @@ public abstract class TextPrepByParts
 
     }
 
+    public static TextPrepByParts match(String pattern, IPartProcessor proc) {
+        return match(Pattern.compile(pattern), proc);
+    }
+
     public static TextPrepByParts match(Pattern pattern, final IPartProcessor proc) {
         return new Matches(pattern) {
             @Override
@@ -116,6 +132,10 @@ public abstract class TextPrepByParts
                 return proc.process(part, matcher);
             }
         };
+    }
+
+    public static TextPrepByParts unmatch(String pattern, IPartProcessor proc) {
+        return unmatch(Pattern.compile(pattern), proc);
     }
 
     public static TextPrepByParts unmatch(Pattern pattern, final IPartProcessor proc) {

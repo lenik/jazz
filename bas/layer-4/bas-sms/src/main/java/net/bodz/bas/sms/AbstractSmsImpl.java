@@ -7,13 +7,14 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 
 public abstract class AbstractSmsImpl
-        implements IShortMessageService {
+        implements
+        IShortMessageService {
 
     boolean autoCommit = true;
-    LinkedList<SmsRecord> records = new LinkedList<>();
-    Map<String, SmsTemplate> templates = new HashMap<>();
+    LinkedList<SmsRecord> records = new LinkedList<SmsRecord>();
+    Map<String, SmsTemplate> templates = new HashMap<String, SmsTemplate>();
 
-    List<ISmsListener> listeners = new ArrayList<>();
+    List<ISmsListener> listeners = new ArrayList<ISmsListener>();
 
     @Override
     public int getPriority() {
@@ -62,7 +63,8 @@ public abstract class AbstractSmsImpl
 
     @Override
     public boolean sendPrepared(String recipient, String templateName, Object... parameters)
-            throws IOException, ParseException {
+            throws IOException,
+            ParseException {
         SmsRecord record = new SmsRecord(recipient, templateName, Arrays.asList(parameters));
         if (!canSend(record))
             return false;
@@ -74,11 +76,12 @@ public abstract class AbstractSmsImpl
 
     @Override
     public synchronized void commit()
-            throws IOException, ParseException {
+            throws IOException,
+            ParseException {
         LinkedList<SmsRecord> dump;
         synchronized (this) {
             dump = records;
-            records = new LinkedList<>();
+            records = new LinkedList<SmsRecord>();
         }
         send(dump);
 
@@ -105,7 +108,8 @@ public abstract class AbstractSmsImpl
     }
 
     protected abstract void send(LinkedList<SmsRecord> records)
-            throws IOException, ParseException;
+            throws IOException,
+            ParseException;
 
     @Override
     public void addSmsListener(ISmsListener listener) {
@@ -120,14 +124,14 @@ public abstract class AbstractSmsImpl
     }
 
     protected static Map<String, List<SmsRecord>> divideByTemplate(List<SmsRecord> records, String nullKey) {
-        Map<String, List<SmsRecord>> map = new LinkedHashMap<>();
+        Map<String, List<SmsRecord>> map = new LinkedHashMap<String, List<SmsRecord>>();
         for (SmsRecord record : records) {
             String k = record.templateName;
             if (k == null)
                 k = nullKey;
             List<SmsRecord> list = map.get(k);
             if (list == null)
-                map.put(k, list = new ArrayList<>());
+                map.put(k, list = new ArrayList<SmsRecord>());
             list.add(record);
         }
         return map;

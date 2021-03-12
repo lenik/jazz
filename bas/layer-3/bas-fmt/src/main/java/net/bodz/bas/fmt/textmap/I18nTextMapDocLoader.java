@@ -22,15 +22,12 @@ public class I18nTextMapDocLoader {
         for (Entry<String, iString> ent : I18nTextMapParser.parse(inputSource, format)) {
             String key = ent.getKey();
             iString value = ent.getValue();
-            switch (key) {
-            case "text":
+            if ("text".equals(key)) {
                 doc.setText(value);
                 break;
-            default:
-                doc.setTag(key, value);
             }
+            doc.setTag(key, value);
         }
-
         return doc;
     }
 

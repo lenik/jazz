@@ -66,7 +66,7 @@ public class NullMap<K, V>
         return Collections.emptySet();
     }
 
-    static final NullMap<Object, Object> instance = new NullMap<>();
+    static final NullMap<Object, Object> instance = new NullMap<Object, Object>();
 
     @SuppressWarnings("unchecked")
     public static <K, V> NullMap<K, V> getInstance() {

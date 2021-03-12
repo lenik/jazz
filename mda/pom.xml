@@ -4,6 +4,7 @@
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
+        <relativePath>../bas/bas-parent</relativePath>
     </parent>
     <groupId>net.bodz.mda</groupId>
     <artifactId>mda</artifactId>

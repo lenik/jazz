@@ -424,7 +424,7 @@ public class ServletContextConfig {
         return buf.toString();
     }
 
-    Map<Class<?>, Integer> lastIdMap = new HashMap<>();
+    Map<Class<?>, Integer> lastIdMap = new HashMap<Class<?>, Integer>();
 
     String generateId(ServletDescriptor sd) {
         String id = generateId(sd.getServletClass());

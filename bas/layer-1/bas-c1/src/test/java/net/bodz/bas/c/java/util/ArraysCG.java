@@ -86,21 +86,17 @@ public class ArraysCG {
 
             List<TypeDef> types;
             boolean no_object = false;
-            switch (mode) {
-            case "_elm":
+            if ("_elm".equals(mode)) {
                 no_object = true;
-            case "elm":
                 types = elmtypes;
-                break;
-            case "alg":
+            } else if ("elm".equals(mode)) {
+                types = elmtypes;
+            } else if ("alg".equals(mode)) {
                 types = algtypes;
-                break;
-            case "int":
+            } else if ("int".equals(mode)) {
                 types = inttypes;
-                break;
-            default:
+            } else
                 throw new RuntimeException("Bad section mode: " + mode);
-            }
 
             for (final TypeDef type : types) {
                 if (no_object)
@@ -120,26 +116,18 @@ public class ArraysCG {
                             String fn = matcher.group(1);
                             String args = matcher.group(2);
                             String argv[] = args.split(", ");
-                            switch (fn) {
-                            case "ADD":
+                            if ("ADD".equals(fn))
                                 part = type.ADD(argv[0], argv[1]);
-                                break;
-                            case "SUB":
+                            else if ("SUB".equals(fn))
                                 part = type.SUB(argv[0], argv[1]);
-                                break;
-                            case "MULTIPLY":
+                            else if ("MULTIPLY".equals(fn))
                                 part = type.MULTIPLY(argv[0], argv[1]);
-                                break;
-                            case "DIVIDE_N":
+                            else if ("DIVIDE_N".equals(fn))
                                 part = type.DIVIDE_N(argv[0], argv[1]);
-                                break;
-                            case "LESS_THAN":
+                            else if ("LESS_THAN".equals(fn))
                                 part = type.LESS_THAN(argv[0], argv[1]);
-                                break;
-                            case "GREATER_THAN":
+                            else if ("GREATER_THAN".equals(fn))
                                 part = type.GREATER_THAN(argv[0], argv[1]);
-                                break;
-                            }
                             return part;
                         }
                     });
@@ -205,7 +193,8 @@ class TypeDef {
 }
 
 class Number_t
-        extends TypeDef {
+        extends
+        TypeDef {
 
     public Number_t(String type_t) {
         super(type_t);
@@ -247,7 +236,8 @@ class Number_t
 }
 
 class BigDecimal_t
-        extends Number_t {
+        extends
+        Number_t {
 
     public BigDecimal_t() {
         super("BigDecimal", "BigDecimal", "BigDecimal", "BigDecimal.ZERO");
@@ -261,7 +251,8 @@ class BigDecimal_t
 }
 
 class BigInteger_t
-        extends Number_t {
+        extends
+        Number_t {
 
     public BigInteger_t() {
         super("BigInteger", "BigInteger", "BigInteger", "BigInteger.ZERO");

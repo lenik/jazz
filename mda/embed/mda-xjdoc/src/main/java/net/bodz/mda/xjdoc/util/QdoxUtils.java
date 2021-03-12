@@ -9,14 +9,14 @@ import com.thoughtworks.qdox.model.JavaSource;
 public class QdoxUtils {
 
     public static List<JavaClass> getAllNestedClasses(JavaSource source) {
-        List<JavaClass> list = new ArrayList<>();
+        List<JavaClass> list = new ArrayList<JavaClass>();
         for (JavaClass c : source.getClasses())
             scanNestedClasses(list, c);
         return list;
     }
 
     public static List<JavaClass> getAllNestedClasses(JavaClass c) {
-        List<JavaClass> list = new ArrayList<>();
+        List<JavaClass> list = new ArrayList<JavaClass>();
         scanNestedClasses(list, c);
         return list;
     }

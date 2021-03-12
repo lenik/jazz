@@ -14,7 +14,7 @@ public class SendSmsBatchResult
      * 总计费条数
      */
     public int countSum;
-    public final List<SendSmsResult> reportList = new ArrayList<>();
+    public final List<SendSmsResult> reportList = new ArrayList<SendSmsResult>();
 
     public int getCountSum() {
         return countSum;

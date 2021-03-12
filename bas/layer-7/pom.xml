@@ -21,6 +21,10 @@
         <module>bas-vcs</module>
         <module>maven-bas-plugin</module>
     </modules>
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
     <build>
         <plugins>
             <plugin>

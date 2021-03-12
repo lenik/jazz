@@ -12,7 +12,7 @@
             <artifactId>sunpkcs11</artifactId>
             <version>1.7.0</version>
             <scope>system</scope>
-            <systemPath>${java.home}/lib/ext/sunpkcs11.jar</systemPath>
+            <systemPath>${JAVA_HOME}/jre/lib/ext/sunpkcs11.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>

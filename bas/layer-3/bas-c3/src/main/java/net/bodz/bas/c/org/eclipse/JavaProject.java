@@ -155,8 +155,8 @@ public class JavaProject
         if (parentURL == null)
             return null;
 
-        switch (parentURL.getProtocol()) {
-        case "file":
+        String protocol = parentURL.getProtocol();
+        if ("file".equals(protocol)) {
             File parentFile = FileURL.toFile(parentURL, null);
             if (parentFile.isDirectory()) {
                 File javaFile = new File(parentFile, fqcn_java);
@@ -164,9 +164,9 @@ public class JavaProject
                     throw new RuntimeException("java source file is missing: " + javaFile);
                 return FileURL.toURL(javaFile);
             }
-            break;
+        }
 
-        case "jar":
+        else if ("jar".equals(protocol)) {
             String embeddedURL = "jar:" + parentURL + "!/" + fqcn_java;
             try {
                 return new URL(embeddedURL);

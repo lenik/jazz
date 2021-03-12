@@ -14,7 +14,7 @@ import net.bodz.bas.t.order.PriorityComparator;
 public class SmsProviders
         implements IReloadable, IShortMessageService {
 
-    List<IShortMessageService> allImpls = new ArrayList<>();
+    List<IShortMessageService> allImpls = new ArrayList<IShortMessageService>();
 
     public SmsProviders() {
         reload();

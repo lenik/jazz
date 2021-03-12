@@ -154,13 +154,8 @@ public abstract class AbstractVariant
         String s = getString();
         if (s == null || s.isEmpty())
             return defaultValue;
-        switch (s) {
-        case "true":
-        case "yes":
-        case "on":
-        case "1":
+        if (Literals.trueValues.contains(s))
             return true;
-        }
         return false;
     }
 
