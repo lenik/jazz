@@ -23,7 +23,8 @@ import net.bodz.bas.log.impl.BufferedLogger;
 
 @SuppressWarnings("unchecked")
 public class AbstractJsonResponse<self_t>
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractJsonResponse.class);
 
@@ -259,20 +260,20 @@ public class AbstractJsonResponse<self_t>
 
     protected boolean readRootEntry(JsonObject o, String key)
             throws ParseException {
-        switch (key) {
-        case "success":
-        case "warn":
-        case "failed":
+        if ("success".equals(key) || "warn".equals(key) || "failed".equals(key))
             return true;
-        case "status":
+
+        if ("status".equals(key)) {
             status = o.getInt("status");
             return true;
+        }
 
-        case "message":
+        if ("message".equals(key)) {
             message = o.getString("message");
             return true;
+        }
 
-        case "exception":
+        if ("exception".equals(key)) {
             JsonObject ex = o.getChild("exception");
             String exClassName = ex.getString("type");
             String message = ex.getString("message");
@@ -289,10 +290,12 @@ public class AbstractJsonResponse<self_t>
                 logger.error("Can't re-instantiate the exception: " + e.getMessage(), e);
             }
             return true;
+        }
 
-        case "data":
+        if ("data".equals(key))
             return true;
-        case "dataType":
+
+        if ("dataType".equals(key)) {
             String dataTypeName = o.getString("dataType");
             IJsonSerializable data;
             try {
@@ -309,6 +312,7 @@ public class AbstractJsonResponse<self_t>
             this.data = data;
             return true;
         }
+
         return false;
     }
 

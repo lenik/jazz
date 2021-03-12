@@ -53,7 +53,11 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 @RcsKeywords(id = "$Id$")
 public abstract class BasicCLI
         extends ArtifactObjectWithOptions
-        implements IProgram, Runnable, II18nCapable, IPerformanceAware {
+        implements
+            IProgram,
+            Runnable,
+            II18nCapable,
+            IPerformanceAware {
 
     private static final Logger logger = LoggerFactory.getLogger(BasicCLI.class);
 

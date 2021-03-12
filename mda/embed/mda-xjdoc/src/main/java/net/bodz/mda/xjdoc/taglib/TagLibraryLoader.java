@@ -106,7 +106,7 @@ public class TagLibraryLoader {
         return set;
     }
 
-    static Map<ClassLoader, TagLibraryLoader> classLoaderMap = new HashMap<>();
+    static Map<ClassLoader, TagLibraryLoader> classLoaderMap = new HashMap<ClassLoader, TagLibraryLoader>();
 
     public static TagLibraryLoader getInstance() {
         return getInstance(TagLibraryLoader.class.getClassLoader());

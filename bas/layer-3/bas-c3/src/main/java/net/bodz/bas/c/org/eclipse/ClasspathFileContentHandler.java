@@ -30,12 +30,11 @@ public class ClasspathFileContentHandler
         String kind = attributes.getValue("kind");
         String path = attributes.getValue("path");
 
-        switch (kind) {
-        case "output":
+        if ("output".equals(kind)) {
             project.defaultOutput = FilePath.canoniOf(baseDir, path);
-            break;
+        }
 
-        case "src":
+        else if ("src".equals(kind)) {
             String output = attributes.getValue("output");
             String nativelib = attributes.getValue("nativelib");
 
@@ -47,9 +46,9 @@ public class ClasspathFileContentHandler
                 sourceFolder.nativeLibraryLocation = FilePath.canoniOf(baseDir, nativelib);
 
             project.addSourceFolder(sourceFolder);
-            break;
+        }
 
-        case "lib":
+        else if ("lib".equals(kind)) {
             String sourcepath = attributes.getValue("sourcepath");
             String javadoc = attributes.getValue("javadoc");
 
@@ -61,19 +60,18 @@ public class ClasspathFileContentHandler
                 library.javadocLocation = FilePath.canoniOf(baseDir, javadoc);
 
             project.addLibraryRef(library);
-            break;
+        }
 
-        case "var":
+        else if ("var".equals(kind)) {
             // String varName = Strings.before(path, "/");
             // String expansion = Strings.after(path, "/");
             // find the var...
-            break;
+        }
 
-        case "con":
+        else if ("con".equals(kind)) {
             // if ("org.eclipse.pde.core.requiredPlugins".equals(path))
             // JUST IGNORE CURRENTLY.
-            break;
-        } // switch
+        }
     }
 
 }

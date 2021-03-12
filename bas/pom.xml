@@ -5,6 +5,7 @@
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-parent</artifactId>
         <version>0.5-SNAPSHOT</version>
+        <relativePath>bas-parent</relativePath>
     </parent>
     <artifactId>bas</artifactId>
     <version>2.0.0-SNAPSHOT</version>
@@ -33,32 +34,12 @@
         <module>build</module>
     </modules>
     <properties>
-        <java.version>1.7</java.version>
-        <javaProfile>JavaSE-7</javaProfile>
         <ffdir>src/main/resources</ffdir>
         <ffdir.test>src/test/resources</ffdir.test>
     </properties>
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                        <encoding>utf-8</encoding>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <configuration>
-                        <source>1.7</source>
-                        <encoding>utf-8</encoding>
-                        <docencoding>utf-8</docencoding>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>

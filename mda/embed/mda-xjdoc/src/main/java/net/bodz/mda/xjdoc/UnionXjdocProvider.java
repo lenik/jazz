@@ -22,16 +22,17 @@ public class UnionXjdocProvider
         for (IXjdocProvider loader : ServiceLoader.load(IXjdocProvider.class))
             loaders.add(loader);
 
-        cache = new WeakHashMap<>();
+        cache = new WeakHashMap<Class<?>, ClassDoc>();
     }
 
     /**
      * Query the cache or re-load from the providers.
-     * 
+     *
      * @param clazz
      *            The class whose class-doc will be returned.
      * @return <code>null</code> if no available class doc.
      */
+    @Override
     public ClassDoc getClassDoc(Class<?> clazz)
             throws XjdocLoaderException {
         if (clazz == null)

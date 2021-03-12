@@ -28,14 +28,12 @@ public class StringVarConverter
 
     @Override
     public Number toNumber(String value) {
-        switch (value) {
-        case "NaN":
+        if ("NaN".equals(value))
             return Double.NaN;
-        case "Infinity":
+        if ("Infinity".equals(value))
             return Double.POSITIVE_INFINITY;
-        case "-Infinity":
+        if ("-Infinity".equals(value))
             return Double.NEGATIVE_INFINITY;
-        }
 
         boolean negative = value.startsWith("-");
 

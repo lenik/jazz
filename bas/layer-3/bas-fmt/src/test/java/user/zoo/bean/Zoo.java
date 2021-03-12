@@ -53,13 +53,14 @@ public class Zoo
 
     @Override
     public IElementHandler beginChild(String name, String[] args)
-            throws ParseException, ElementHandlerException {
-        switch (name) {
-        case "cat":
+            throws ParseException,
+            ElementHandlerException {
+        if ("cat".equals(name)) {
             Cat cat = new Cat();
             cats.add(cat);
             return cat;
-        case "dog":
+        }
+        if ("dog".equals(name)) {
             Dog dog = new Dog();
             dogs.add(dog);
             return dog;

@@ -14,7 +14,7 @@ public class PredefVarConverters
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Collection<IVarConverter<?>> getConverters() {
-        List<IVarConverter<?>> list = new ArrayList<>();
+        List<IVarConverter<?>> list = new ArrayList<IVarConverter<?>>();
         for (Class<? extends Predef> type : IndexedTypes.list(Predef.class, false)) {
             PredefMetadata metadata = PredefMetadata.forClass(type);
             Class<?> keyType = metadata.getKeyType();

@@ -17,12 +17,15 @@ import net.bodz.json.JSONException;
 public class HttpClients {
 
     public static JsonObject postJson(String url, String body)
-            throws IOException, ParseException {
+            throws IOException,
+            ParseException {
         return postJson(url, body, "utf-8", "utf-8");
     }
 
     public static JsonObject postJson(String url, String body, String requestCharset, String fallbackCharset)
-            throws ClientProtocolException, IOException, ParseException {
+            throws ClientProtocolException,
+            IOException,
+            ParseException {
         HttpClient client = HttpClientConfig.DEFAULT.newClient();
 
         HttpPost httpPost = new HttpPost(url);
@@ -54,8 +57,7 @@ public class HttpClients {
                 if (pos == -1)
                     break;
                 String k = s.substring(0, pos).trim();
-                switch (k) {
-                case "charset":
+                if ("charset".equals(k)) {
                     charset = s.substring(pos + 1).trim();
                     break L;
                 }

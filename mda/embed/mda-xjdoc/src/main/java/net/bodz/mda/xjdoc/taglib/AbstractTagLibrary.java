@@ -13,7 +13,7 @@ import net.bodz.mda.xjdoc.tagtype.StringTagType;
 public abstract class AbstractTagLibrary
         implements ITagLibrary {
 
-    private PackageMap<ITagType> tagMap = new PackageMap<>();
+    private PackageMap<ITagType> tagMap = new PackageMap<ITagType>();
 
     // private ITagType defaultTagType = StringTagType.getInstance();
     private ITagType defaultTagType = new RepeatForListTagType(StringTagType.getInstance());

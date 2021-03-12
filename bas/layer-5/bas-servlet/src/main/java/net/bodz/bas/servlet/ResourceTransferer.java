@@ -35,8 +35,7 @@ public class ResourceTransferer {
         String description = null;
         String mode = req.getParameter("mode");
         if (mode != null)
-            switch (mode) {
-            case "attachment":
+            if ("attachment".equals(mode)) {
                 File file = FileURL.toFile(url, null);
                 if (file != null)
                     filename = file.getName();

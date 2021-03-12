@@ -16,7 +16,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 
 /**
  * Example class for the artifact tag library.
- * 
+ *
  * @lang zh, en
  * @label Model-2 Tag Book
  * @label.zh.cn 二级模型标签书
@@ -35,7 +35,7 @@ public class ArtifactTagLibraryTest
     @Test
     public void testGetLangs() {
         String[] langs = (String[]) doc.getTag("lang");
-        Set<String> set = new TreeSet<>(Arrays.asList(langs));
+        Set<String> set = new TreeSet<String>(Arrays.asList(langs));
         assertEquals(2, set.size());
         assertTrue(set.contains("zh"));
         assertTrue(set.contains("en"));
@@ -45,7 +45,7 @@ public class ArtifactTagLibraryTest
     public void testGetSite()
             throws MalformedURLException {
         Map<String, URL> site = (Map<String, URL>) doc.getTag("site");
-        URL def = (URL) site.get(null);
+        URL def = site.get(null);
         URL example = new URL("http://www.example.com");
         assertEquals(example, def);
     }
