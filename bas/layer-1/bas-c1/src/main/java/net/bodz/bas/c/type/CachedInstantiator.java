@@ -103,7 +103,7 @@ class PerCtorEntryLoader
         Constructor<?> ctor;
         try {
             ctor = clazz.getConstructor(key.array);
-        } catch (ReflectiveOperationException e) {
+        } catch (NoSuchMethodException e) {
             throw new LazyLoadException(e.getMessage(), e);
         }
         return new PerInitargs(ctor);

@@ -14,7 +14,7 @@ public class GetInstanceParser
         try {
             Class<?> clazz = Class.forName(className);
             return SingletonUtil.callGetInstance(clazz);
-        } catch (ReflectiveOperationException e) {
+        } catch (Exception e) {
             throw new ParseException(e.getMessage(), e);
         }
     }

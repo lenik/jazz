@@ -24,12 +24,12 @@ public final class ConstructorFactory<T>
     }
 
     public ConstructorFactory(Class<?> clazz)
-            throws ReflectiveOperationException {
+            throws NoSuchMethodException {
         this(clazz, null, EMPTY_PARAMS);
     }
 
     public ConstructorFactory(Class<?> clazz, Class<?>[] parameterTypes, Object... parameters)
-            throws ReflectiveOperationException {
+            throws NoSuchMethodException {
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (parameterTypes == null)
@@ -50,7 +50,7 @@ public final class ConstructorFactory<T>
         Object[] all = Arrays.concat(parameters, args);
         try {
             return constructor.newInstance(all);
-        } catch (ReflectiveOperationException e) {
+        } catch (Exception e) {
             throw new CreateException(e.getMessage(), e);
         }
     }

@@ -12,7 +12,8 @@ import net.bodz.bas.t.iterator.PrefetchedIterator;
  */
 public class LineReader
         extends Reader
-        implements ILineReader {
+        implements
+            ILineReader {
 
     private final Reader reader;
     private StringBuilder buf;
@@ -34,7 +35,7 @@ public class LineReader
     @Override
     public String readLine()
             throws IOException {
-        return readLine(Integer.MAX_VALUE);
+        return readLine(-1);
     }
 
     @Override
@@ -58,23 +59,24 @@ public class LineReader
 
     /**
      * @param maxLineLength
-     *            length includes line term chars.
+     *            length includes line term chars. <code>-1</code> for unlimited.
      * @return line text includes line term chars, <code>null</code> if EOF is reached.
      * @throws IOException
      */
     public synchronized String readLine(int maxLineLength)
             throws IOException {
-        if (maxLineLength < 1)
+        if (maxLineLength < -1)
             throw new IllegalArgumentException("maxLineLength=" + maxLineLength);
+        boolean unlimit = maxLineLength == -1;
         int len = buf.length();
         int reject = 0;
-        while (len < maxLineLength) {
+        while (unlimit || (len < maxLineLength)) {
             int c = reader.read();
             if (c == -1)
                 break;
             buf.append((char) c);
             len++;
-            if (c == '\r' && len < maxLineLength) {
+            if (c == '\r' && (unlimit || len < maxLineLength)) {
                 c = reader.read();
                 if (c == -1)
                     break;
