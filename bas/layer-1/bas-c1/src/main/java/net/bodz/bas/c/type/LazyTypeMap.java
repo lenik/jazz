@@ -13,7 +13,7 @@ import net.bodz.bas.err.LazyLoadException;
 
 /**
  * Naming convention for class-local: cls-VAR. Where cls means 'class-local storage'.
- * 
+ *
  * aka. <code>ClassLocal</code>.
  */
 public class LazyTypeMap<T>
@@ -27,7 +27,7 @@ public class LazyTypeMap<T>
 
     /**
      * Each entry holds a metadata of <code>metadataClass</code>.
-     * 
+     *
      * @param metadataClass
      *            The metadata class. The class must have a public constructor with a single
      *            Class-type parameter.
@@ -40,7 +40,7 @@ public class LazyTypeMap<T>
 
     /**
      * Each entry holds value returned from the parser method.
-     * 
+     *
      * @param classParserMethod
      *            A public static method which receives a single {@link Class} parameter, and
      *            returns the parsed entry value.
@@ -77,7 +77,7 @@ public class LazyTypeMap<T>
                 throws LazyLoadException {
             try {
                 return ctor.newInstance(clazz);
-            } catch (ReflectiveOperationException e) {
+            } catch (Exception e) {
                 throw new LazyLoadException("Failed to load entry for " + clazz, e);
             }
         }
@@ -107,7 +107,7 @@ public class LazyTypeMap<T>
             try {
                 V result = (V) parserMethod.invoke(null, clazz);
                 return result;
-            } catch (ReflectiveOperationException e) {
+            } catch (Exception e) {
                 throw new LazyLoadException("Failed to load entry for " + clazz, e);
             }
         }
@@ -129,9 +129,9 @@ public class LazyTypeMap<T>
 
     /**
      * Get a registered id.
-     * 
+     *
      * If there are multiple registered ids, one of them is returned. However, it's picked randomly.
-     * 
+     *
      * @return One of the registered id. Return <code>null</code> if this class-local isn't
      *         registered at all.
      */

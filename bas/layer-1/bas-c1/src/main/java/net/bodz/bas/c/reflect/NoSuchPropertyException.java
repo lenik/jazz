@@ -1,7 +1,7 @@
 package net.bodz.bas.c.reflect;
 
 public class NoSuchPropertyException
-        extends ReflectiveOperationException {
+        extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 

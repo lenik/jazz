@@ -43,7 +43,7 @@ public class SingletonUtil {
             Method method = clazz.getMethod("getInstance", argTypes);
             Object instance = method.invoke(null, args);
             return clazz.cast(instance);
-        } catch (ReflectiveOperationException e) {
+        } catch (Exception e) {
             throw new LoadException("Failed to get instance: " + e.getMessage(), e);
         }
     }
