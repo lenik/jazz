@@ -8,10 +8,23 @@ import net.bodz.bas.io.adapter.PrintOutPrintWriter;
 
 public abstract class AbstractPrintOut
         extends AbstractCharOut
-        implements IPrintOut {
+        implements
+            IPrintOut {
 
     private final static char[] NULL = "(null)".toCharArray();
     private final static char NEWLINE = '\n';
+
+    @Override
+    public void print(CharSequence s) {
+        try {
+            if (s == null)
+                write(NULL);
+            else
+                write(s);
+        } catch (IOException e) {
+            throw new PrintException(e);
+        }
+    }
 
     @Override
     public void print(String s) {
@@ -97,6 +110,18 @@ public abstract class AbstractPrintOut
     }
 
     @Override
+    public void println(CharSequence x) {
+        print(x);
+        println();
+    }
+
+    @Override
+    public void println(String x) {
+        print(x);
+        println();
+    }
+
+    @Override
     public final void println(boolean x) {
         println(String.valueOf(x));
     }
@@ -136,12 +161,6 @@ public abstract class AbstractPrintOut
     @Override
     public final void println(Object x) {
         println(String.valueOf(x));
-    }
-
-    @Override
-    public void println(String x) {
-        print(x);
-        println();
     }
 
     /**

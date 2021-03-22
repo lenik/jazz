@@ -6,7 +6,10 @@ import java.util.Locale;
 import net.bodz.bas.io.impl.NullPrintOut;
 
 public interface IPrintOut
-        extends ICharOut {
+        extends
+            ICharOut {
+
+    void print(CharSequence s);
 
     void print(String s);
 
@@ -38,6 +41,10 @@ public interface IPrintOut
 
     void println();
 
+    void println(CharSequence x);
+
+    void println(String x);
+
     void println(boolean x);
 
     void println(char x);
@@ -57,8 +64,6 @@ public interface IPrintOut
     void println(long x);
 
     void println(Object x);
-
-    void println(String x);
 
     /**
      * @throws NullPointerException

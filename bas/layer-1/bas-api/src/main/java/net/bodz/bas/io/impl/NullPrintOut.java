@@ -8,7 +8,12 @@ import net.bodz.bas.io.adapter.PrintOutPrintWriter;
 
 public class NullPrintOut
         extends NullCharOut
-        implements IPrintOut {
+        implements
+            IPrintOut {
+
+    @Override
+    public void print(CharSequence s) {
+    }
 
     @Override
     public void print(String s) {
@@ -55,6 +60,14 @@ public class NullPrintOut
     }
 
     @Override
+    public void println(CharSequence x) {
+    }
+
+    @Override
+    public void println(String x) {
+    }
+
+    @Override
     public void println(boolean x) {
     }
 
@@ -84,10 +97,6 @@ public class NullPrintOut
 
     @Override
     public void println(Object x) {
-    }
-
-    @Override
-    public void println(String x) {
     }
 
     @Override
