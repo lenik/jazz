@@ -10,13 +10,14 @@ import java.nio.file.Paths;
 
 public class FilePath {
 
-    private static char fileSeparator;
+    private static String fileSeparator;
+    private static char fileSeparatorChar;
     static {
-        String fs = System.getProperty("file.separator");
-        if (fs == null || fs.isEmpty())
-            fileSeparator = '/';
+        fileSeparator = System.getProperty("file.separator");
+        if (fileSeparator == null || fileSeparator.isEmpty())
+            fileSeparatorChar = '/';
         else
-            fileSeparator = fs.charAt(0);
+            fileSeparatorChar = fileSeparator.charAt(0);
     }
 
     /**
@@ -63,7 +64,7 @@ public class FilePath {
 
     /**
      * This function return a relative path used for href: it treats trailing slash carefully.
-     * 
+     *
      * @param path
      *            Should be in canonical form
      * @param ref
@@ -127,7 +128,7 @@ public class FilePath {
      *             If any parameter is <code>null</code>.
      */
     public static String getRelativePath(String path, String ref) {
-        return getRelativePath(path, ref, fileSeparator);
+        return getRelativePath(path, ref, fileSeparatorChar);
     }
 
     /**
@@ -140,7 +141,7 @@ public class FilePath {
     public static String getRelativePath(File file, File ref) {
         String path = canoniOf(file).getPath();
         String refPath = canoniOf(ref).getPath();
-        return getRelativePath(path, refPath, fileSeparator);
+        return getRelativePath(path, refPath, fileSeparatorChar);
     }
 
     /**
@@ -174,10 +175,32 @@ public class FilePath {
     public static File joinHref(File startFile, String href) {
         if (href == null || href.isEmpty())
             return startFile;
+
         File test = new File(href);
         if (test.isAbsolute())
             return test;
-        return new File(startFile, href);
+
+        File startDir = startFile;
+        if (!startFile.isDirectory())
+            startDir = startFile.getParentFile();
+        return new File(startDir, href);
+    }
+
+    public static String joinHref(String start, String href) {
+        if (href == null || href.isEmpty())
+            return start;
+
+        File test = new File(href);
+        if (test.isAbsolute())
+            return href;
+
+        if (start.endsWith(fileSeparator))
+            return start + href;
+
+        int last = start.lastIndexOf(fileSeparatorChar);
+        if (last != -1)
+            start = start.substring(0, last);
+        return start + fileSeparatorChar + href;
     }
 
     public static String getDirName(String path) {
@@ -198,7 +221,7 @@ public class FilePath {
 
     /**
      * Get the extension name from the given path string.
-     * 
+     *
      * @param path
      *            The path string, can't be <code>null</code>.
      * @param includeDot
@@ -271,7 +294,7 @@ public class FilePath {
         if (path == null)
             return null;
         // if (SystemProperties.getOsName().equals("win32"))
-        path = path.replace(fileSeparator, '/');
+        path = path.replace(fileSeparatorChar, '/');
         // Mac? path = path.replace(":", SLASH);
         return path;
     }
@@ -314,7 +337,7 @@ public class FilePath {
 
     /**
      * Find program using system default PATHEXT (win32 only).
-     * 
+     *
      * @return <code>null</code> if couldn't find name.
      */
     public static File which(String name, File... paths) {
