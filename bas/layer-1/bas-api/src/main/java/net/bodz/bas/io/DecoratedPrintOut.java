@@ -5,7 +5,8 @@ import java.util.Locale;
 
 public abstract class DecoratedPrintOut
         extends DecoratedCharOut
-        implements IPrintOut {
+        implements
+            IPrintOut {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,6 +17,10 @@ public abstract class DecoratedPrintOut
     @Override
     public IPrintOut getWrapped() {
         return (IPrintOut) _orig;
+    }
+
+    public void print(CharSequence s) {
+        getWrapped().print(s);
     }
 
     public void print(String s) {
@@ -62,6 +67,14 @@ public abstract class DecoratedPrintOut
         getWrapped().println();
     }
 
+    public void println(CharSequence x) {
+        getWrapped().println(x);
+    }
+
+    public void println(String x) {
+        getWrapped().println(x);
+    }
+
     public void println(boolean x) {
         getWrapped().println(x);
     }
@@ -91,10 +104,6 @@ public abstract class DecoratedPrintOut
     }
 
     public void println(Object x) {
-        getWrapped().println(x);
-    }
-
-    public void println(String x) {
         getWrapped().println(x);
     }
 
