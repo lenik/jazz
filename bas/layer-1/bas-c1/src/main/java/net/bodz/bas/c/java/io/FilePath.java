@@ -166,15 +166,18 @@ public class FilePath {
     }
 
     /**
-     * @param relativeName
+     * @param href
      *            If doesn't specified (empty or <code>null</code>), the <code>startFile</code> is
      *            returned.
      * @return The {@link File} of joined path.
      */
-    public static File join(File startFile, String relativeName) {
-        if (relativeName == null || relativeName.isEmpty())
+    public static File joinHref(File startFile, String href) {
+        if (href == null || href.isEmpty())
             return startFile;
-        return new File(startFile, relativeName);
+        File test = new File(href);
+        if (test.isAbsolute())
+            return test;
+        return new File(startFile, href);
     }
 
     public static String getDirName(String path) {
