@@ -1,51 +1,40 @@
 package net.bodz.bas.text.trie;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import net.bodz.bas.text.trie.t.ByteArray2ByteSeq;
+import net.bodz.bas.text.trie.t.ByteList2ByteSeq;
+import net.bodz.bas.text.trie.t.ByteSequence;
 
 public class ByteTrie<T>
-        implements ITrie<Byte, T> {
-
-    private final Node<T> root = new Node<T>();
+        extends AbstractTrie<Byte, T, ByteTrie.Node<T>> {
 
     @Override
-    public Node<T> getRoot() {
-        return root;
-    }
-
-    @Override
-    public Node<T> resolve(Iterable<Byte> byteSeq) {
-        Node<T> node = root;
-        for (Byte byt : byteSeq)
-            node = node.getOrAddChild(byt);
-        return node;
+    protected Node<T> createNode(Node<T> parent, Byte key) {
+        return new Node<T>(this, parent, key);
     }
 
     public Node<T> resolve(byte[] bytes) {
         return resolve(bytes, 0, bytes.length);
     }
 
-    public Node<T> resolve(byte[] bytes, int off, int len) {
-        int end = off + len;
-        Node<T> node = root;
-        for (int i = off; i < end; i++)
-            node = node.getOrAddChild(bytes[i]);
-        return node;
+    public Node<T> resolve(byte[] bytes, int start, int end) {
+        return super.resolve(new ByteArray2ByteSeq(bytes, start, end));
+
     }
 
     @Override
     public final int[] scanTries(List<Byte> seq) {
-        return scanTries(new ByteListSeq(seq));
+        return scanTries(new ByteList2ByteSeq(seq));
     }
 
     public final int[] scanTries(byte[] content) {
         return scanTries(content, 0, content.length);
     }
 
-    public final int[] scanTries(byte[] content, int off, int len) {
-        return scanTries(new ByteArraySeq(content, off, len));
+    public final int[] scanTries(byte[] content, int start, int end) {
+        return scanTries(new ByteArray2ByteSeq(content, start, end));
     }
 
     public int[] scanTries(ByteSequence content) {
@@ -59,7 +48,7 @@ public class ByteTrie<T>
     }
 
     void findMaxTrie(ByteSequence content, int start, int end, int heads[]) {
-        Node<?> node = this.root;
+        Node<T> node = this.root;
         for (int i = start; i < end; i++) {
             byte byt = content.byteAt(i);
             node = node.getChild(byt);
@@ -72,120 +61,12 @@ public class ByteTrie<T>
     }
 
     public static class Node<T>
-            implements ITrie.Node<Byte, T> {
-        private Map<Byte, Node<T>> childMap;
-        private T data;
+            extends AbstractTrieNode<Byte, T, Node<T>> {
 
-        public Node() {
-            childMap = new HashMap<Byte, Node<T>>();
+        public Node(ByteTrie<T> trie, Node<T> parent, Byte key) {
+            super(trie, parent, key);
         }
 
-        @Override
-        public boolean isDefined() {
-            return data != null;
-        }
-
-        @Override
-        public void define(T data) {
-            this.data = data;
-        }
-
-        @Override
-        public boolean isChild(Byte childKey) {
-            return childMap.containsKey(childKey);
-        }
-
-        @Override
-        public Node<T> getChild(Byte childKey) {
-            return childMap.get(childKey);
-        }
-
-        @Override
-        public Node<T> getOrAddChild(Byte childKey) {
-            Node<T> child = childMap.get(childKey);
-            if (child == null) {
-                child = new Node<T>();
-                childMap.put(childKey, child);
-            }
-            return child;
-        }
-
-        @Override
-        public T getData() {
-            return data;
-        }
-
-    }
-
-}
-
-interface ByteSequence {
-
-    int length();
-
-    byte byteAt(int index);
-
-    ByteSequence subSequence(int start, int end);
-
-}
-
-class ByteArraySeq
-        implements ByteSequence {
-
-    byte[] array;
-    int off;
-    int len;
-
-    public ByteArraySeq(byte[] array) {
-        this(array, 0, array.length);
-    }
-
-    public ByteArraySeq(byte[] array, int off, int len) {
-        this.array = array;
-        this.off = off;
-        this.len = len;
-    }
-
-    @Override
-    public int length() {
-        return len;
-    }
-
-    @Override
-    public byte byteAt(int index) {
-        return array[off + index];
-    }
-
-    @Override
-    public ByteSequence subSequence(int start, int end) {
-        return new ByteArraySeq(array, off + start, end - start);
-    }
-
-}
-
-class ByteListSeq
-        implements ByteSequence {
-
-    private final List<Byte> list;
-
-    public ByteListSeq(List<Byte> list) {
-        this.list = list;
-    }
-
-    @Override
-    public int length() {
-        return list.size();
-    }
-
-    @Override
-    public byte byteAt(int index) {
-        return list.get(index);
-    }
-
-    @Override
-    public ByteSequence subSequence(int start, int end) {
-        List<Byte> subList = list.subList(start, end);
-        return new ByteListSeq(subList);
     }
 
 }
