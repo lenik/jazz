@@ -102,7 +102,7 @@ public class MutableVirtualHostResolver
 
             HostBinding binding = node.getData();
             if (binding == null)
-                node.setData(binding = new HostBinding());
+                node.define(binding = new HostBinding());
 
             PortMap portMap = spec.isIncludeSubDomains() ? binding.subDomainPortMap : binding.portMap;
             if (spec.getPort() == 0) {

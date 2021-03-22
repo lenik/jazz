@@ -1,27 +1,14 @@
 package net.bodz.bas.text.trie;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TokenTrie<T>
-        implements ITrie<String, T> {
-
-    private final Node<T> root = new Node<T>();
+        extends AbstractTrie<String, T, TokenTrie.Node<T>> {
 
     @Override
-    public Node<T> getRoot() {
-        return root;
-    }
-
-    @Override
-    public Node<T> resolve(Iterable<String> tokens) {
-        Node<T> node = root;
-        for (String token : tokens) {
-            node = node.getOrAddChild(token);
-        }
-        return node;
+    protected Node<T> createNode(Node<T> parent, String key) {
+        return new Node<T>(this, parent, key);
     }
 
     /**
@@ -52,57 +39,10 @@ public class TokenTrie<T>
     }
 
     public static class Node<T>
-            implements ITrie.Node<String, T> {
+            extends AbstractTrieNode<String, T, Node<T>> {
 
-        private Map<String, Node<T>> childMap;
-        private T data;
-
-        public Node() {
-            childMap = new HashMap<String, Node<T>>();
-        }
-
-        @Override
-        public boolean isDefined() {
-            return data != null;
-        }
-
-        @Override
-        public void define(T data) {
-            this.data = data;
-        }
-
-        @Override
-        public boolean isChild(String childKey) {
-            return childMap.containsKey(childKey);
-        }
-
-        @Override
-        public Node<T> getChild(String childKey) {
-            return childMap.get(childKey);
-        }
-
-        @Override
-        public Node<T> getOrAddChild(String childKey) {
-            Node<T> child = childMap.get(childKey);
-            if (child == null) {
-                child = new Node<T>();
-                childMap.put(childKey, child);
-            }
-            return child;
-        }
-
-        @Override
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        @Override
-        public String toString() {
-            return childMap.keySet().toString();
+        public Node(TokenTrie<T> trie, Node<T> parent, String key) {
+            super(trie, parent, key);
         }
 
     }

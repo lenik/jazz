@@ -1,40 +1,32 @@
 package net.bodz.bas.text.trie;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.text.trie.t.CharList2CharSeq;
+import net.bodz.bas.text.trie.t.CharSeqIterable;
+
 public class CharTrie<T>
-        implements ITrie<Character, T> {
-
-    private final Node<T> root = new Node<T>();
+        extends AbstractTrie<Character, T, CharTrie.Node<T>> {
 
     @Override
-    public Node<T> getRoot() {
-        return root;
-    }
-
-    @Override
-    public Node<T> resolve(Iterable<Character> charSeq) {
-        Node<T> node = root;
-        for (Character ch : charSeq)
-            node = node.getOrAddChild(ch);
-        return node;
+    protected Node<T> createNode(Node<T> parent, Character key) {
+        return new Node<T>(this, parent, key);
     }
 
     public Node<T> resolve(CharSequence charSeq) {
-        Node<T> node = root;
-        int len = charSeq.length();
-        for (int i = 0; i < len; i++)
-            node = node.getOrAddChild(charSeq.charAt(i));
-        return node;
+        return resolve(new CharSeqIterable(charSeq));
+    }
+
+    public Node<T> findOverlap(CharSequence charSeq) {
+        return findOverlap(new CharSeqIterable(charSeq));
     }
 
     @Override
     public final int[] scanTries(List<Character> content) {
-        return scanTries(new CharListSeq(content));
+        return scanTries(new CharList2CharSeq(content));
     }
 
     public int[] scanTries(CharSequence content) {
@@ -48,7 +40,7 @@ public class CharTrie<T>
     }
 
     void findMaxTrie(CharSequence content, int start, int end, int heads[]) {
-        Node<?> node = this.root;
+        Node<T> node = this.root;
         for (int i = start; i < end; i++) {
             char ch = content.charAt(i);
             node = node.getChild(ch);
@@ -75,76 +67,12 @@ public class CharTrie<T>
     }
 
     public static class Node<T>
-            implements ITrie.Node<Character, T> {
-        private Map<Character, Node<T>> childMap;
-        private T data;
+            extends AbstractTrieNode<Character, T, Node<T>> {
 
-        public Node() {
-            childMap = new HashMap<Character, Node<T>>();
+        public Node(CharTrie<T> trie, Node<T> parent, Character key) {
+            super(trie, parent, key);
         }
 
-        @Override
-        public boolean isDefined() {
-            return data != null;
-        }
-
-        @Override
-        public void define(T data) {
-            this.data = data;
-        }
-
-        @Override
-        public boolean isChild(Character childKey) {
-            return childMap.containsKey(childKey);
-        }
-
-        @Override
-        public Node<T> getChild(Character childKey) {
-            return childMap.get(childKey);
-        }
-
-        @Override
-        public Node<T> getOrAddChild(Character childKey) {
-            Node<T> child = childMap.get(childKey);
-            if (child == null) {
-                child = new Node<T>();
-                childMap.put(childKey, child);
-            }
-            return child;
-        }
-
-        @Override
-        public T getData() {
-            return data;
-        }
-
-    }
-
-}
-
-class CharListSeq
-        implements CharSequence {
-
-    private final List<Character> list;
-
-    public CharListSeq(List<Character> list) {
-        this.list = list;
-    }
-
-    @Override
-    public int length() {
-        return list.size();
-    }
-
-    @Override
-    public char charAt(int index) {
-        return list.get(index);
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        List<Character> subList = list.subList(start, end);
-        return new CharListSeq(subList);
     }
 
 }

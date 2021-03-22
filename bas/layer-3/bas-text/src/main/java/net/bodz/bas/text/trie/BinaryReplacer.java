@@ -49,7 +49,7 @@ public class BinaryReplacer {
                 }
                 buf.write(input, pos, head - pos);
 
-                byte[] replacement = trie.resolve(input, head, i + 1 - head).getData();
+                byte[] replacement = trie.resolve(input, head, i + 1).getData();
                 buf.write(replacement, 0, replacement.length);
 
                 pos = i + 1;
