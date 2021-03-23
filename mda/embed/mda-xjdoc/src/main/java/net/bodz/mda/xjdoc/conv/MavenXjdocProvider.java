@@ -8,8 +8,7 @@ import net.bodz.mda.xjdoc.AbstractXjdocProvider;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.ClassLibrary;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 
 public class MavenXjdocProvider
@@ -31,16 +30,16 @@ public class MavenXjdocProvider
         ClassLoader classLoader = clazz.getClassLoader();
         ClassDocBuilder classDocBuilder = new ClassDocBuilder(getTagLibrary());
 
-        ClassLibrary classLibrary = new ClassLibrary(classLoader);
-        JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
+        JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
+        projectBuilder.addClassLoader(classLoader);
 
         try {
-            javaDocBuilder.addSource(sourceFile);
+            projectBuilder.addSource(sourceFile);
         } catch (IOException e) {
             throw new XjdocLoaderException("Failed to add source " + sourceFile, e);
         }
 
-        JavaClass javaClass = javaDocBuilder.getClassByName(clazz.getName());
+        JavaClass javaClass = projectBuilder.getClassByName(clazz.getName());
         if (javaClass == null)
             throw new XjdocLoaderException("No class source in file: " + sourceFile);
 

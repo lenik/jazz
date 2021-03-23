@@ -1,5 +1,6 @@
 package net.bodz.mda.xjdoc.conv;
 
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
@@ -51,12 +52,12 @@ public class ClassDocBuilder {
         IOptions options = new Options() //
                 .addOption(ImportMap.class, classImports);
 
-        populate(classDoc, javaClass, options);
+        populate(classDoc, javaClass, javaClass.getName(), options);
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
             FieldDoc fieldDoc = new FieldDoc(classDoc, fieldName);
-            populate(fieldDoc, javaField, options);
+            populate(fieldDoc, javaField, fieldName, options);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
@@ -69,18 +70,22 @@ public class ClassDocBuilder {
          * </pre>
          */
         for (JavaMethod javaMethod : javaClass.getMethods()) {
-            Type[] types = javaMethod.getParameterTypes(true);
-            MethodId methodId = new MethodId(javaMethod.getName(), types.length);
-            for (int i = 0; i < types.length; i++) {
-                Type paramType = types[i];
+            List<JavaType> types = javaMethod.getParameterTypes(true);
+            MethodId methodId = new MethodId(javaMethod.getName(), types.size());
+            for (int i = 0; i < types.size(); i++) {
+                JavaType paramType = types.get(i);
                 String paramFqcn = paramType.getFullyQualifiedName();
-                int paramDims = paramType.getDimensions();
+                int paramDims = 0;
+                if (paramType instanceof JavaClass) {
+                    JavaClass jclass = (JavaClass) paramType;
+                    paramDims = jclass.getDimensions();
+                }
                 methodId.setParameterType(i, paramFqcn, paramDims);
                 classImports.add(paramFqcn);
             }
 
             MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-            populate(methodDoc, javaMethod, options);
+            populate(methodDoc, javaMethod, javaMethod.getName(), options);
 
             for (JavaParameter jparam : javaMethod.getParameters()) {
                 // javadoc may not include all the parameters.
@@ -91,7 +96,7 @@ public class ClassDocBuilder {
             }
 
             // This throws clause is defined in method prototype, but not in javadoc.
-            for (Type exceptionType : javaMethod.getExceptions()) {
+            for (JavaClass exceptionType : javaMethod.getExceptions()) {
                 // javadoc may not include all the exceptions.
                 String exceptionFqcn = exceptionType.getFullyQualifiedName();
                 // String simple = typeNameContext.importTypeName(exceptionFqcn);
@@ -106,7 +111,9 @@ public class ClassDocBuilder {
         return classDoc;
     }
 
-    void populate(MutableElementDoc elementDoc, AbstractJavaEntity javaEntity, IOptions options) {
+    <J extends JavaAnnotatedElement> //
+    void populate(MutableElementDoc elementDoc, //
+            J javaEntity, String name, IOptions options) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             iString text = ParaLangStrings.parse(comment);
@@ -124,7 +131,7 @@ public class ClassDocBuilder {
 
             if (rootTagName == null) {
                 // TODO logging...
-                String mesg = "Undefined tag @" + tagName + " occurred in " + javaEntity.getName();
+                String mesg = "Undefined tag @" + tagName + " occurred in " + name;
                 // throw new IllegalUsageException(mesg);
                 rootTagName = tagName;
             }

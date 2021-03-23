@@ -17,8 +17,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.ClassLibrary;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
@@ -42,9 +41,8 @@ public class QdoxDog
         for (ITagLibrary taglib : ServiceLoader.load(ITagLibrary.class))
             System.out.println(taglib);
 
-        // qdox ClassLibrary.
-        ClassLibrary syslib = new ClassLibrary(scl);
-        JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
+        JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
+        projectBuilder.addClassLoader(scl);
 
         ITagLibrary tagLibrary = Xjdocs.getDefaultTagLibrary();
 
@@ -53,12 +51,13 @@ public class QdoxDog
         File animalSource = pomDir.getSourceFile(Animal.class);
         File dogSource = pomDir.getSourceFile(Dog.class);
 
-        javaDocBuilder.addSource(animalSource);
-        javaDocBuilder.addSource(dogSource);
+        projectBuilder.addSource(animalSource);
+        projectBuilder.addSource(dogSource);
         // javaDocBuilder.addSourceTree(file)
 
-        for (JavaSource jsource : javaDocBuilder.getSources()) {
+        for (JavaSource jsource : projectBuilder.getSources()) {
             // String packageName = jsource.getPackageName();
+            System.out.println("From " + jsource.getURL());
 
             for (JavaClass jclass : jsource.getClasses()) {
                 ClassDocBuilder builder = new ClassDocBuilder(tagLibrary);

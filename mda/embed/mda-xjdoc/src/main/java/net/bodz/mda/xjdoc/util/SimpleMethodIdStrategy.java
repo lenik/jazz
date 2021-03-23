@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.util;
 import java.lang.reflect.Method;
 
 import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.JavaType;
 
 public class SimpleMethodIdStrategy
         implements IMethodIdStrategy {
@@ -42,7 +42,7 @@ public class SimpleMethodIdStrategy
         sb.append(method.getName());
         sb.append('(');
         int index = 0;
-        for (Type type : method.getParameterTypes()) {
+        for (JavaType type : method.getParameterTypes()) {
             if (index++ != 0)
                 sb.append(",");
             String typeName;
