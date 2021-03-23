@@ -1,17 +1,15 @@
 package net.bodz.bas.log.impl;
 
-import org.slf4j.spi.LocationAwareLogger;
+import org.slf4j.Logger;
 
 import net.bodz.bas.log.AbstractLogSink;
 
-public abstract class Slf4jLogSink
+public abstract class Slf4jSimpleLogSink
         extends AbstractLogSink {
 
-    static final String FQCN = Slf4jLogSink.class.getName();
+    protected final Logger slf4j;
 
-    protected final LocationAwareLogger slf4j;
-
-    private Slf4jLogSink(LocationAwareLogger log4jLogger) {
+    private Slf4jSimpleLogSink(Logger log4jLogger) {
         if (log4jLogger == null)
             throw new NullPointerException("slf4jLogger");
         this.slf4j = log4jLogger;
@@ -22,116 +20,106 @@ public abstract class Slf4jLogSink
     }
 
     public static class ErrorSink
-            extends Slf4jLogSink {
+            extends Slf4jSimpleLogSink {
 
-        public ErrorSink(LocationAwareLogger log4jLogger) {
+        public ErrorSink(Logger log4jLogger) {
             super(log4jLogger);
         }
 
         @Override
         public void logMessage(Object obj) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                    msg, null, null);
+            slf4j.error(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                    msg, null, t);
+            slf4j.error(msg, t);
         }
 
     }
 
     public static class WarnSink
-            extends Slf4jLogSink {
+            extends Slf4jSimpleLogSink {
 
-        public WarnSink(LocationAwareLogger log4jLogger) {
+        public WarnSink(Logger log4jLogger) {
             super(log4jLogger);
         }
 
         @Override
         public void logMessage(Object obj) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.WARN_INT, //
-                    msg, null, null);
+            slf4j.warn(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.WARN_INT, //
-                    msg, null, t);
+            slf4j.warn(msg, t);
         }
 
     }
 
     public static class InfoSink
-            extends Slf4jLogSink {
+            extends Slf4jSimpleLogSink {
 
-        public InfoSink(LocationAwareLogger log4jLogger) {
+        public InfoSink(Logger log4jLogger) {
             super(log4jLogger);
         }
 
         @Override
         public void logMessage(Object obj) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.INFO_INT, //
-                    msg, null, null);
+            slf4j.info(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.INFO_INT, //
-                    msg, null, t);
+            slf4j.info(msg, t);
         }
 
     }
 
     public static class DebugSink
-            extends Slf4jLogSink {
+            extends Slf4jSimpleLogSink {
 
-        public DebugSink(LocationAwareLogger log4jLogger) {
+        public DebugSink(Logger log4jLogger) {
             super(log4jLogger);
         }
 
         @Override
         public void logMessage(Object obj) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.DEBUG_INT, //
-                    msg, null, null);
+            slf4j.debug(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.DEBUG_INT, //
-                    msg, null, t);
+            slf4j.debug(msg, t);
         }
 
     }
 
     public static class TraceSink
-            extends Slf4jLogSink {
+            extends Slf4jSimpleLogSink {
 
-        public TraceSink(LocationAwareLogger log4jLogger) {
+        public TraceSink(Logger log4jLogger) {
             super(log4jLogger);
         }
 
         @Override
         public void logMessage(Object obj) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.TRACE_INT, //
-                    msg, null, null);
+            slf4j.trace(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
             String msg = format(obj);
-            slf4j.log(null, FQCN, LocationAwareLogger.TRACE_INT, //
-                    msg, null, t);
+            slf4j.trace(msg, t);
         }
 
     }

@@ -1,25 +1,24 @@
 package net.bodz.bas.log.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
-import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.SinkBasedLogger;
-import net.bodz.bas.log.impl.Slf4jLogSink.DebugSink;
-import net.bodz.bas.log.impl.Slf4jLogSink.ErrorSink;
-import net.bodz.bas.log.impl.Slf4jLogSink.InfoSink;
-import net.bodz.bas.log.impl.Slf4jLogSink.TraceSink;
-import net.bodz.bas.log.impl.Slf4jLogSink.WarnSink;
+import net.bodz.bas.log.impl.Slf4jSimpleLogSink.DebugSink;
+import net.bodz.bas.log.impl.Slf4jSimpleLogSink.ErrorSink;
+import net.bodz.bas.log.impl.Slf4jSimpleLogSink.InfoSink;
+import net.bodz.bas.log.impl.Slf4jSimpleLogSink.TraceSink;
+import net.bodz.bas.log.impl.Slf4jSimpleLogSink.WarnSink;
 
-public class Slf4jLogger
+public class Slf4jSimpleLogger
         extends SinkBasedLogger {
 
-    private static final String FQCN = AbstractLogger.class.getName();
+    private final Logger slf4j;
 
-    private final LocationAwareLogger slf4j;
-
-    public Slf4jLogger(LocationAwareLogger logger) {
+    public Slf4jSimpleLogger(Logger logger) {
         if (logger == null)
             throw new NullPointerException("logger");
         this.slf4j = logger;
@@ -69,34 +68,41 @@ public class Slf4jLogger
 
     @Override
     public boolean _fatal(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                format(message), null, t);
+        slf4j.error(format(message), t);
         return false;
     }
 
     @Override
     public boolean _error(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                format(message), null, t);
+        slf4j.error(format(message), t);
         return false;
     }
 
     @Override
     public void _warn(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.WARN_INT, //
-                format(message), null, t);
+        slf4j.warn(format(message), t);
     }
 
     @Override
     public void _info(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.INFO_INT, //
-                format(message), null, t);
+        slf4j.info(format(message), t);
     }
 
     @Override
     public void _debug(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.DEBUG_INT, //
-                format(message), null, t);
+        slf4j.debug(format(message), t);
+    }
+
+    public static Slf4jSimpleLogger getInstance(Class<?> clazz) {
+        Logger logger = LoggerFactory.getLogger(clazz);
+        LocationAwareLogger lal = (LocationAwareLogger) logger;
+        return new Slf4jSimpleLogger(lal);
+    }
+
+    public static Slf4jSimpleLogger getInstance(String name) {
+        Logger logger = LoggerFactory.getLogger(name);
+        LocationAwareLogger lal = (LocationAwareLogger) logger;
+        return new Slf4jSimpleLogger(lal);
     }
 
 }
