@@ -16,10 +16,10 @@ import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
+import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.log.impl.BufferedLogger;
 
 @SuppressWarnings("unchecked")
 public class AbstractJsonResponse<self_t>

@@ -1,6 +1,7 @@
-package net.bodz.bas.log.impl;
+package net.bodz.bas.log;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,11 +9,7 @@ import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.adapter.PrintStreamPrintOut;
 import net.bodz.bas.jvm.stack.StackTrace;
-import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.log.LogRecord;
-import net.bodz.bas.log.SinkBasedLogger;
+import net.bodz.bas.log.util.IListChangeListener;
 
 public class BufferedLogger
         extends SinkBasedLogger {
@@ -26,6 +23,7 @@ public class BufferedLogger
     // BlockingQueue<E>
     // ConcurrentLinkedQueue<E>
     LinkedList<LogRecord> records;
+    List<IListChangeListener> listChangeListeners;
 
     public BufferedLogger() {
         this("", defaultMaxRecordCount);
@@ -39,6 +37,19 @@ public class BufferedLogger
         this.prefix = prefix;
         this.maxRecordCount = maxRecordCount;
         this.records = new LinkedList<LogRecord>();
+    }
+
+    public synchronized void addListChangeListener(IListChangeListener listener) {
+        if (listener == null)
+            throw new NullPointerException("listener");
+        if (listChangeListeners == null)
+            listChangeListeners = new ArrayList<>();
+        listChangeListeners.add(listener);
+    }
+
+    public synchronized void removeListChangeListener(IListChangeListener listener) {
+        if (listChangeListeners != null)
+            listChangeListeners.remove(listener);
     }
 
     public String getPrefix() {
@@ -62,9 +73,22 @@ public class BufferedLogger
     synchronized void addRecord(LogRecord record) {
         if (record.level.compareTo(getLevel()) > 0)
             return;
+
         while (records.size() >= maxRecordCount)
             records.removeFirst();
+
+        int nRemove = records.size() - maxRecordCount;
+        if (nRemove >= 0) {
+            if (listChangeListeners != null)
+                for (IListChangeListener listener : listChangeListeners)
+                    listener.onRemoved(0, nRemove + 1);
+        }
+
         records.addLast(record);
+
+        if (listChangeListeners != null)
+            for (IListChangeListener listener : listChangeListeners)
+                listener.onInserted(0, 1);
     }
 
     @Override
@@ -77,6 +101,9 @@ public class BufferedLogger
     public void dump() {
         dump(System.out, System.err);
         records.clear();
+        if (listChangeListeners != null)
+            for (IListChangeListener listener : listChangeListeners)
+                listener.onCleared();
     }
 
     @SuppressWarnings("resource")

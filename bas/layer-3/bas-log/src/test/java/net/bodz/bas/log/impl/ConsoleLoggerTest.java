@@ -1,5 +1,7 @@
 package net.bodz.bas.log.impl;
 
+import net.bodz.bas.log.ConsoleLogger;
+
 public class ConsoleLoggerTest {
 
     public static void main(String[] args) {

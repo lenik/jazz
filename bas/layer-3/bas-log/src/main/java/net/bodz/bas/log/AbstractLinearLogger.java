@@ -1,6 +1,5 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.log.impl.ConsoleLogger;
 
 public abstract class AbstractLinearLogger
         extends AbstractLogger {
