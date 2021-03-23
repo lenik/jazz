@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
 import java.io.File;
+import java.util.Collection;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -31,8 +32,7 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.QdoxUtils;
 import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.ClassLibrary;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
@@ -46,6 +46,8 @@ import com.thoughtworks.qdox.model.JavaSource;
  */
 public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
+
+    String version = "1.0";
 
     /**
      * Include test classes.
@@ -130,12 +132,11 @@ public class ClassDocBuilderMojo
             throw new MojoFailureException(e.getMessage(), e);
         }
 
-        ClassLibrary classLibrary = new ClassLibrary(runtimeClassLoader);
-
         TagLibraryLoader taglibLoader = new TagLibraryLoader(runtimeClassLoader);
         TagLibrarySet taglibs = taglibLoader.parseSet(taglibNames);
 
-        JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
+        JavaProjectBuilder projectBuilder = new JavaProjectBuilder();
+        projectBuilder.addClassLoader(runtimeClassLoader);
 
         File srcRoot = getSourceDirectory();
         File outRoot = getOutputDirectory();
@@ -146,10 +147,10 @@ public class ClassDocBuilderMojo
             throw new IllegalUsageException("outRoot");
 
         log.info("Search javadocs in: " + srcRoot);
-        javaDocBuilder.addSourceTree(srcRoot);
+        projectBuilder.addSourceTree(srcRoot);
 
-        JavaSource[] jsources = javaDocBuilder.getSources();
-        log.info("Generating class docs for " + jsources.length + " source files");
+        Collection<JavaSource> jsources = projectBuilder.getSources();
+        log.info("Generating class docs for " + jsources.size() + " source files");
 
         for (JavaSource jsource : jsources) {
             String packageName = jsource.getPackageName();
@@ -192,6 +193,7 @@ public class ClassDocBuilderMojo
                 try {
                     ICharOut charOut = outTarget.newCharOut();
                     FlatfOutput ffOut = new FlatfOutput(charOut);
+                    ffOut.comment("version: " + version);
                     classDoc.writeObject(ffOut, options);
                     charOut.flush();
                 } catch (Exception e) {

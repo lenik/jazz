@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 
 import net.bodz.bas.c.type.ClassResource;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.JavaProjectBuilder;
 
 import user.ExampleClass;
 
@@ -30,7 +30,7 @@ public class JavadocParser {
     public static void main(String[] args)
             throws FileNotFoundException {
         File sourceFile = getSourceFile(ExampleClass.class);
-        JavaDocBuilder builder = new JavaDocBuilder();
+        JavaProjectBuilder builder = new JavaProjectBuilder();
 
         // ClassLibrary lib = builder.getClassLibrary();
         builder.addSourceTree(sourceFile.getParentFile());

@@ -122,19 +122,19 @@ public class ClassDoc
 
     /**
      * classdoc file format.
-     * 
+     *
      * The .classdoc file should be located along with the .class file:
      * <ul>
      * <li>foo/Bar$Inner.class
      * <li>foo/Bar$Inner.classdoc
      * </ul>
-     * 
+     *
      * Example:
-     * 
+     *
      * <pre>
      * #comments
      * %import f.q.c.Name
-     * 
+     *
      * # optional "[type]"
      * [field:...]
      * [method(int,String[],...)]
@@ -148,7 +148,7 @@ public class ClassDoc
      * param.bar = Bar is another parameter.
      * throws.IOException = I/O error occurred.
      * </pre>
-     * 
+     *
      * Features:
      * <ul>
      * <li>'\' in the end-of-line means continuation.

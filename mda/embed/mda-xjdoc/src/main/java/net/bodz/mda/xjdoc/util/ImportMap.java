@@ -5,7 +5,8 @@ import java.util.Map;
 
 import net.bodz.bas.rtx.IOptions;
 
-import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaType;
 
 public class ImportMap {
 
@@ -46,12 +47,15 @@ public class ImportMap {
         }
     }
 
-    public String add(Type type) {
+    public String add(JavaType type) {
         StringBuilder sb = new StringBuilder();
         sb.append(add(type.getFullyQualifiedName()));
-        int dims = type.getDimensions();
-        for (int i = 0; i < dims; i++)
-            sb.append("[]");
+        if (type instanceof JavaClass) {
+            JavaClass jclass = (JavaClass) type;
+            int dims = jclass.getDimensions();
+            for (int i = 0; i < dims; i++)
+                sb.append("[]");
+        }
         return sb.toString();
     }
 
