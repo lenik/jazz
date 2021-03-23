@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.bodz.bas.c.system.SystemProperties;
+import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.impl.BufferedLogger;
 
 /**
  * Keep trace information for debug.

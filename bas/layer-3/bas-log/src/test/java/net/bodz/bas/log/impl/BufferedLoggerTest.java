@@ -3,6 +3,8 @@ package net.bodz.bas.log.impl;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.log.BufferedLogger;
+
 public class BufferedLoggerTest
         extends Assert {
 
