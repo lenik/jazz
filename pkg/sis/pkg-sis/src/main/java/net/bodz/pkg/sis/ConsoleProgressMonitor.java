@@ -2,8 +2,8 @@ package net.bodz.pkg.sis;
 
 import java.util.Arrays;
 
+import net.bodz.bas.log.ConsoleLogger;
 import net.bodz.bas.log.Logger;
-import net.bodz.bas.log.impl.ConsoleLogger;
 import net.bodz.bas.ui.dialog.ConsoleDialogs;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.bas.ui.model.action.AbstractProgressMonitor;
