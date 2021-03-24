@@ -52,6 +52,8 @@ public interface IDateFormatConsts {
     /** <code>801231</code> */
     DateFormat YYMMDD = Dates.format("yyMMdd");
 
+    /** <code>17:30:59.567</code> */
+    DateFormat HH_MM_SS_MS = Dates.format("hh:mm:ss.SSS");
     /** <code>17:30:59</code> */
     DateFormat HH_MM_SS = Dates.format("hh:mm:ss");
     /** <code>173059</code> */
