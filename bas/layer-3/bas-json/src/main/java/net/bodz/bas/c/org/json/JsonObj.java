@@ -38,7 +38,10 @@ public class JsonObj
 
     @Override
     public String toString() {
-        return readInStr();
+        if (obj == null)
+            return null;
+        else
+            return readInStr();
     }
 
 }
