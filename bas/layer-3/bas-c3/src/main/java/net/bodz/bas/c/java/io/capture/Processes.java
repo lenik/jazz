@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -34,48 +33,54 @@ public class Processes {
             String shell = System.getenv("SHELL");
             if (shell == null)
                 shell = "sh";
-            // shvec = new String[] { shell, "-c" };
-            shvec = new String[] { shell };
+            shvec = new String[] { shell, "-c" };
+            // shvec = new String[] { shell };
         }
         shprefix = StringArray.join(" ", shvec) + " ";
+    }
+
+    static String quote(String cmdline) {
+        cmdline = cmdline.replace("\"", "\\\"");
+        cmdline = '"' + cmdline + '"';
+        return cmdline;
     }
 
     public static Process shellExec(String command)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(shprefix + command);
+        String cmdline = shprefix + quote(command);
+        return runtime.exec(cmdline);
     }
 
     public static Process shellExec(String command, String[] envp)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(shprefix + command, envp);
+        String cmdline = shprefix + quote(command);
+        return runtime.exec(cmdline, envp);
     }
 
     public static Process shellExec(String command, String[] envp, File dir)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(shprefix + command, envp, dir);
+        String cmdline = shprefix + quote(command);
+        return runtime.exec(cmdline, envp, dir);
     }
 
     public static Process shellExec(String... cmdarray)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray);
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray, envp);
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp, File dir)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        cmdarray = Arrays.concat(shvec, cmdarray);
         return runtime.exec(cmdarray, envp, dir);
     }
 
