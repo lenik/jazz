@@ -192,8 +192,10 @@ class JSONArrayIterator<T>
     protected T fetch() {
         if (index >= array.length())
             return end();
-        T elm = (T) array.get(index++);
-        return elm;
+        Object item = array.get(index++);
+        @SuppressWarnings("unchecked")
+        T retval = (T) item;
+        return retval;
     }
 
 }

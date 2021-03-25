@@ -31,6 +31,7 @@ public class PropertyRefEntry<T>
         return property;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends T> getValueType() {
         return (Class<? extends T>) property.getPropertyType();
@@ -49,6 +50,7 @@ public class PropertyRefEntry<T>
         callDepth++;
         try {
             Object instance = instanceRef.get();
+            @SuppressWarnings("unchecked")
             T value = (T) property.getValue(instance);
             return value;
         } catch (ReflectiveOperationException e) {

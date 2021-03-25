@@ -5,16 +5,16 @@ import java.util.Iterator;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
-public class ChainIterator<NT extends IChainNode>
+public class ChainIterator<node_t extends IChainNode>
         //
-        extends PrefetchedIterator<NT>
-        implements Iterator<NT> {
+        extends PrefetchedIterator<node_t>
+        implements Iterator<node_t> {
 
-    private NT start;
-    private NT current;
+    private node_t start;
+    private node_t current;
     private int state;
 
-    public ChainIterator(NT start, int mode) {
+    public ChainIterator(node_t start, int mode) {
         this.start = start;
         if (start == null) {
             state = _END;
@@ -27,7 +27,8 @@ public class ChainIterator<NT extends IChainNode>
         case Rewind:
             current = start;
             while (true) {
-                NT prev = (NT) current.getPrev();
+                @SuppressWarnings("unchecked")
+                node_t prev = (node_t) current.getPrev();
                 if (prev == null)
                     break;
                 current = prev;
@@ -54,8 +55,9 @@ public class ChainIterator<NT extends IChainNode>
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    protected NT fetch() {
+    protected node_t fetch() {
         switch (state) {
         case START_PREV:
             state = PREV;
@@ -68,7 +70,7 @@ public class ChainIterator<NT extends IChainNode>
             return current = start;
         case PREV:
         case PREV_ONLY:
-            current = (NT) current.getPrev();
+            current = (node_t) current.getPrev();
             if (current == null) {
                 current = start;
                 state = state == PREV_ONLY ? _END : NEXT;
@@ -76,7 +78,7 @@ public class ChainIterator<NT extends IChainNode>
             }
             return current;
         case NEXT:
-            current = (NT) current.getNext();
+            current = (node_t) current.getNext();
             if (current == null) {
                 state = _END;
                 return end();

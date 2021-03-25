@@ -21,6 +21,7 @@ public class MutableActionContext
         return attributes;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) attributes.get(name);
@@ -28,6 +29,7 @@ public class MutableActionContext
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
+        @SuppressWarnings("unchecked")
         T val = (T) attributes.get(name);
         if (val == null)
             val = defaultValue;

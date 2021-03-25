@@ -33,7 +33,7 @@ public abstract class DecoratedJavaElementDoc
     }
 
     @Override
-    public Object getTag(String tagName) {
+    public <T> T getTag(String tagName) {
         return getWrapped().getTag(tagName);
     }
 

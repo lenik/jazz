@@ -111,6 +111,7 @@ public abstract class AbstractRingBuffer<A, T>
         full = false;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T _get(int absoluteIndex) {
         return (T) Array.get(array, absoluteIndex);

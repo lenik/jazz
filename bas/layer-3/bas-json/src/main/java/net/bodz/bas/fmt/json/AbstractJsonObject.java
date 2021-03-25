@@ -490,10 +490,11 @@ public abstract class AbstractJsonObject<self_t>
             throw new UnsupportedOperationException(String.format(//
                     "No converter for class %s.", type.getName()));
         // try {
-        T var = (T) converter.from(val);
+        Object converted = converter.from(val);
         // } catch (TypeConvertException e) {
         // throw new JSONException(e);
         // }
+        T var = type.cast(converted);
         return var;
     }
 

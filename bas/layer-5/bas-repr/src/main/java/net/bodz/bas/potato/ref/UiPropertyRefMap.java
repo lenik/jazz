@@ -10,6 +10,7 @@ public class UiPropertyRefMap
         super(objRef, order);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> UiPropertyRef<T> getEntry(String name) {
         return (UiPropertyRef<T>) super.getEntry(name);

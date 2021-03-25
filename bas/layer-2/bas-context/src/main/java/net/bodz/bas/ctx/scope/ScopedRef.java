@@ -79,6 +79,7 @@ public class ScopedRef<T>
         remove(getCurrentScope());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T get(IScopeInstance scope) {
         String varName = getName();

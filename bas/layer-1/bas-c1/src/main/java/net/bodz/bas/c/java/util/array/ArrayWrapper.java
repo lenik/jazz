@@ -26,6 +26,7 @@ public class ArrayWrapper<T>
         this.array = array;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T[] allocate(int size) {
         Class<?> componentType = array.getClass().getComponentType();
@@ -124,7 +125,7 @@ public class ArrayWrapper<T>
             return false;
 
         ArrayWrapper<?> o = (ArrayWrapper<?>) obj;
-        Object[] a = (Object[]) o.array;
+        Object[] a = o.array;
         return Arrays.equals(array, a);
     }
 

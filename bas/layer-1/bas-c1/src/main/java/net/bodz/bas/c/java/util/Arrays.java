@@ -15,6 +15,7 @@ import net.bodz.bas.t._int.IntIterator;
 public class Arrays
         extends _Arrays {
 
+    @SuppressWarnings("unchecked")
     public static <T> Class<T[]> getArrayType(Class<T> componentType) {
         Object array = Array.newInstance(componentType, 0);
         return (Class<T[]>) array.getClass();
@@ -154,7 +155,8 @@ public class Arrays
         int len = Array.getLength(array);
 
         if (elements.length == 0) {
-            T copy = (T) Array.newInstance(valType, elements.length);
+            @SuppressWarnings("unchecked")
+            T copy = (T) Array.newInstance(valType, len);
             System.arraycopy(array, 0, copy, 0, len);
             return copy;
         }
@@ -166,7 +168,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -179,10 +181,12 @@ public class Arrays
         for (T[] a : arrays)
             total += a.length;
         if (total == 0) {
+            @SuppressWarnings("unchecked")
             T[] emptyArray = (T[]) Array.newInstance(componentType, 0);
             return emptyArray;
         }
 
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(componentType, total);
         int offset = 0;
         for (T[] a : arrays) {
@@ -195,6 +199,7 @@ public class Arrays
     @SafeVarargs
     public static <T> T[] prepend(T val, T... array) {
         Class<?> componentType = array.getClass().getComponentType();
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(componentType, array.length + 1);
         result[0] = val;
         System.arraycopy(array, 0, result, 1, array.length);
@@ -204,6 +209,7 @@ public class Arrays
     @SafeVarargs
     public static <T> T[] append(T[] array, T... vals) {
         Class<?> componentType = array.getClass().getComponentType();
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(componentType, array.length + vals.length);
         System.arraycopy(array, 0, result, 0, array.length);
         System.arraycopy(vals, 0, result, array.length, vals.length);
@@ -212,7 +218,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -220,6 +226,7 @@ public class Arrays
     public static <T> ArrayAndScalar<T[], T> shift(T... array) {
         if (array.length == 0)
             return null;
+        @SuppressWarnings("unchecked")
         T[] remaining = (T[]) Array.newInstance(array.getClass().getComponentType(), array.length - 1);
         System.arraycopy(array, 1, remaining, 0, array.length - 1);
         return new ArrayAndScalar<T[], T>(remaining, array[0]);
@@ -227,7 +234,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -235,6 +242,7 @@ public class Arrays
     public static <T> ArrayAndScalar<T[], T> pop(T... array) {
         if (array.length == 0)
             return null;
+        @SuppressWarnings("unchecked")
         T[] remaining = (T[]) Array.newInstance(array.getClass().getComponentType(), array.length - 1);
         System.arraycopy(array, 0, remaining, 0, array.length - 1);
         return ArrayAndScalar.of(remaining, array[array.length - 1]);
@@ -242,6 +250,7 @@ public class Arrays
 
     public static <T> T[] map(T[] array, Func1<T, T> fn) {
         Class<?> valType = array.getClass().getComponentType();
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(valType, array.length);
         for (int i = 0; i < array.length; i++) {
             T val = array[i];
@@ -279,7 +288,7 @@ public class Arrays
 
     /**
      * ⇱ Generated Code Begin
-     * 
+     *
      * @see ArraysCG
      * @see ArraysTemplate
      */
@@ -287,7 +296,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -309,7 +318,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -331,7 +340,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -353,7 +362,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -375,7 +384,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -397,7 +406,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -419,7 +428,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -441,7 +450,7 @@ public class Arrays
 
     /**
      * Concat multiple arrays.
-     * 
+     *
      * @throws NullPointerException
      *             If any array is <code>null</code>.
      */
@@ -623,7 +632,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -637,7 +646,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -651,7 +660,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -665,7 +674,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -679,7 +688,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -693,7 +702,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -707,7 +716,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -721,7 +730,7 @@ public class Arrays
 
     /**
      * Shift out from the array.
-     * 
+     *
      * @return A pair contains the shifted value and the remaining array. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -735,7 +744,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -749,7 +758,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -763,7 +772,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -777,7 +786,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -791,7 +800,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -805,7 +814,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -819,7 +828,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -833,7 +842,7 @@ public class Arrays
 
     /**
      * Pop out from the array.
-     * 
+     *
      * @return A pair contains the remaining array and the popped value. Returns <code>null</code>
      *         if the array is empty.
      */
@@ -847,7 +856,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -859,7 +868,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -884,7 +893,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -896,7 +905,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -921,7 +930,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -933,7 +942,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -958,7 +967,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -970,7 +979,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -995,7 +1004,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -1007,7 +1016,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -1032,7 +1041,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -1044,7 +1053,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -1069,7 +1078,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -1081,7 +1090,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -1106,7 +1115,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -1118,7 +1127,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -1143,7 +1152,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @return The input array.
@@ -1156,7 +1165,7 @@ public class Arrays
 
     /**
      * Reverse the order of elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be reversed.
      * @param begin
@@ -1181,7 +1190,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1193,7 +1202,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1217,7 +1226,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1229,7 +1238,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1253,7 +1262,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1265,7 +1274,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1289,7 +1298,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1301,7 +1310,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1325,7 +1334,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1337,7 +1346,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1361,7 +1370,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1373,7 +1382,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1397,7 +1406,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1409,7 +1418,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1433,7 +1442,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1445,7 +1454,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1469,7 +1478,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @return The input array.
@@ -1481,7 +1490,7 @@ public class Arrays
 
     /**
      * Shuffle the elements in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be shuffled.
      * @param begin
@@ -1973,7 +1982,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -1984,7 +1993,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2002,7 +2011,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2013,7 +2022,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2031,7 +2040,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2042,7 +2051,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2060,7 +2069,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2071,7 +2080,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2089,7 +2098,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2100,7 +2109,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2118,7 +2127,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2129,7 +2138,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2147,7 +2156,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2158,7 +2167,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2176,7 +2185,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2187,7 +2196,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2205,7 +2214,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @return The sum value.
@@ -2216,7 +2225,7 @@ public class Arrays
 
     /**
      * Calculate the total value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> array to be summed.
      * @param begin
@@ -2234,7 +2243,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2247,7 +2256,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2270,7 +2279,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2283,7 +2292,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2306,7 +2315,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2319,7 +2328,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2342,7 +2351,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2355,7 +2364,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2378,7 +2387,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2391,7 +2400,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2414,7 +2423,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2427,7 +2436,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2450,7 +2459,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2463,7 +2472,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2486,7 +2495,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2499,7 +2508,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2522,7 +2531,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @return The average value.
@@ -2535,7 +2544,7 @@ public class Arrays
 
     /**
      * Calculate the average value of an array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array to be calculated.
      * @param begin
@@ -2558,7 +2567,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2571,7 +2580,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2598,7 +2607,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2611,7 +2620,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2638,7 +2647,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2651,7 +2660,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2678,7 +2687,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2691,7 +2700,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2718,7 +2727,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2731,7 +2740,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2758,7 +2767,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2771,7 +2780,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2798,7 +2807,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2811,7 +2820,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2838,7 +2847,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2851,7 +2860,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2878,7 +2887,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2891,7 +2900,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2918,7 +2927,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2931,7 +2940,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2958,7 +2967,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -2971,7 +2980,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -2998,7 +3007,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3011,7 +3020,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3038,7 +3047,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3051,7 +3060,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3078,7 +3087,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3091,7 +3100,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3118,7 +3127,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3131,7 +3140,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3158,7 +3167,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3171,7 +3180,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3198,7 +3207,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3211,7 +3220,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin
@@ -3238,7 +3247,7 @@ public class Arrays
 
     /**
      * Get the minimum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @return The minimum element.
@@ -3251,7 +3260,7 @@ public class Arrays
 
     /**
      * Get the maximum element in the array.
-     * 
+     *
      * @param array
      *            Non-<code>null</code> and non-empty array.
      * @param begin

@@ -236,6 +236,7 @@ public class ClassDocToOptionsConverter
         group.setHelpDoc(text.tailPar());
 
         // Import syntax usages into group.
+        @SuppressWarnings("unchecked")
         Map<String, String> usageMap = (Map<String, String>) classDoc.getTag("usage");
         if (usageMap != null)
             for (Entry<String, String> entry : usageMap.entrySet()) {

@@ -144,6 +144,7 @@ public abstract class AbstractVarConverter<T>
                 "Can't convert to %s from %s. ", getType(), type));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <U> U to(T value, Class<U> type)
             throws TypeConvertException {

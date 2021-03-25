@@ -70,6 +70,7 @@ public class DefaultHttpViewContext
         return attributes;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) attributes.get(name);

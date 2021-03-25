@@ -88,7 +88,7 @@ public class LoginToken
     public String getExpectedClientResponse() {
         String salt = String.valueOf(transaction);
         String text = salt + secret + salt;
-        String hex = DigestUtils.shaHex(text);
+        String hex = DigestUtils.sha1Hex(text);
         return hex;
     }
 

@@ -53,6 +53,7 @@ public class VarConverters {
     public static <T> IVarConverter<T> getConverter(Class<?> type) {
         if (type.isPrimitive())
             type = Primitives.box(type);
+        @SuppressWarnings("unchecked")
         IVarConverter<T> converter = (IVarConverter<T>) map.get(type);
         return converter;
     }

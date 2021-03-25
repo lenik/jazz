@@ -58,8 +58,11 @@ public abstract class AbstractViewBuilderFactory
 
         lazyInit();
 
-        if (clazz.isPrimitive())
-            clazz = (Class<? extends T>) Primitives.box(clazz);
+        if (clazz.isPrimitive()) {
+            @SuppressWarnings("unchecked")
+            Class<? extends T> box = (Class<? extends T>) Primitives.box(clazz);
+            clazz = box;
+        }
 
         TaggedType key = new TaggedType(clazz, tags);
         Object cache = viewBuilderCache.get(key);

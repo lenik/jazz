@@ -37,6 +37,7 @@ public class UiValue<T>
     public static <T> UiValue<T> wrap(T obj) {
         if (obj == null)
             throw new NullPointerException("obj");
+        @SuppressWarnings("unchecked")
         Class<T> valueType = (Class<T>) obj.getClass();
         return wrap(valueType, obj);
     }

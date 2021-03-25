@@ -48,7 +48,7 @@ public class SingletonUtil {
         }
     }
 
-    public static <T> T instantiateCached(Class<T> clazz) {
+    public static <T> T instantiateCached(Class<? extends T> clazz) {
         return CachedInstantiator.getInstance().instantiate(clazz);
     }
 

@@ -6,7 +6,7 @@ import net.bodz.bas.t.ref.Ref;
 public class Constant<T>
         implements IEvaluable<T>, Ref<T> {
 
-    private final Class<T> valueType;
+    private final Class<? extends T> valueType;
     private final T value;
 
     public Constant(Class<T> valueType, T value) {
@@ -16,11 +16,12 @@ public class Constant<T>
         this.value = value;
     }
 
+    @SuppressWarnings("unchecked")
     public Constant(T value) {
         if (value == null)
             throw new NullPointerException("value");
         this.value = value;
-        this.valueType = (Class<T>) value.getClass();
+        this.valueType = (Class<? extends T>) value.getClass();
     }
 
     public static <T> Constant<T> of(T value) {

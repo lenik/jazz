@@ -34,6 +34,7 @@ public class ScopedAutoloadRef<T>
         return objectType;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T get() {
         IScopeInstance scopeInstance = info.scopeTeller.tell();
@@ -52,6 +53,7 @@ public class ScopedAutoloadRef<T>
             String id = info.scopeTeller.tellId();
             throw new OutOfScopeException("scope: " + id);
         }
+        @SuppressWarnings("unchecked")
         T obj = (T) scopeInstance.get(name);
         if (obj == null) {
             obj = _load();

@@ -23,6 +23,7 @@ public class AbstractCounterGroup
 
     @Override
     public <T extends Number> ICounter<T> getCounter(String name) {
+        @SuppressWarnings("unchecked")
         ICounter<T> counter = (ICounter<T>) counterMap.get(name);
         return counter;
     }

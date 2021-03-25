@@ -59,6 +59,7 @@ public class StatDump {
             String name = counter.getName();
             Number value = counter.getValue();
 
+            @SuppressWarnings("unchecked")
             ICounterDef<Number> def = (ICounterDef<Number>) counter.getDefinition();
             boolean zero = def.appxEquals(def.getZero(), value);
             if (!zero)
@@ -78,6 +79,7 @@ public class StatDump {
             if (fieldIndex == null)
                 continue;
 
+            @SuppressWarnings("unchecked")
             ICounterDef<Number> def = (ICounterDef<Number>) usedCounterDefs.get(counterName);
             Number value = counter.getValue();
 

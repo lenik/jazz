@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
@@ -14,7 +15,8 @@ import net.bodz.bas.vfs.path.IPath;
 
 @IndexedTypeLoader(IVfsDriverProvider.class)
 public class DefaultFileSystem
-        implements IFileSystem {
+        implements
+            IFileSystem {
 
     private final Map<String, IVfsDriver> driverMap;
     private final TreeSet<VfsDriverKey> fallbacks;
@@ -75,7 +77,12 @@ public class DefaultFileSystem
 
     @Override
     public void removeGenericDriver(IVfsDriver driver) {
-        fallbacks.remove(driver);
+        Iterator<VfsDriverKey> iterator = fallbacks.iterator();
+        while (iterator.hasNext()) {
+            VfsDriverKey key = iterator.next();
+            if (key.driver == driver)
+                iterator.remove();
+        }
     }
 
     @Override
@@ -140,7 +147,8 @@ public class DefaultFileSystem
 }
 
 class VfsDriverKey
-        implements IPriority {
+        implements
+            IPriority {
 
     public final int priority;
     public final IVfsDriver driver;

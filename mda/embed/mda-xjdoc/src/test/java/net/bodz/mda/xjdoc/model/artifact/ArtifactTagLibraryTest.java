@@ -44,6 +44,7 @@ public class ArtifactTagLibraryTest
     @Test
     public void testGetSite()
             throws MalformedURLException {
+        @SuppressWarnings("unchecked")
         Map<String, URL> site = (Map<String, URL>) doc.getTag("site");
         URL def = site.get(null);
         URL example = new URL("http://www.example.com");

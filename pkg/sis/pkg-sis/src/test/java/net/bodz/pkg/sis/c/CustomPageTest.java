@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.pkg.sis.TestSisProject;
-import net.bodz.pkg.sis.c.CustomComponents;
 import net.bodz.swt.test.PageTester;
 
 public class CustomPageTest

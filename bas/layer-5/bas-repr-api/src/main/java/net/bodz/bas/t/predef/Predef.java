@@ -33,8 +33,9 @@ public abstract class Predef<self_t extends Predef<self_t, K>, K extends Compara
         this.name = name;
 
         if (metadata == null) {
-            Class<self_t> type = (Class<self_t>) getClass();
-            metadata = PredefMetadata.forClass(type);
+            @SuppressWarnings("unchecked")
+            Class<self_t> selfClass = (Class<self_t>) getClass();
+            metadata = PredefMetadata.forClass(selfClass);
         }
 
         @SuppressWarnings("unchecked")

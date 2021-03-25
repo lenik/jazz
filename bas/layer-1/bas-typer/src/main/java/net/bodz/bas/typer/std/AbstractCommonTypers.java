@@ -54,7 +54,8 @@ public abstract class AbstractCommonTypers<T>
 
     @Override
     public <spec_t> spec_t query(Class<spec_t> specificationType) {
-        Integer index = commonTyperIndex.get(specificationType);
+        String specification = specificationType.getName();
+        Integer index = commonTyperIndex.get(specification);
         if (index == null)
             return super.query(specificationType);
 

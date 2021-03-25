@@ -16,9 +16,11 @@ public class MapSerializer
     @Override
     public void serialize(Writer s, Object o)
             throws IOException, SerializeException {
+        Class<?> mapType = o.getClass();
+        if (!(o instanceof Map))
+            throw new IllegalArgumentException("Not a map: " + mapType);
         Map<?, ?> map = (Map<?, ?>) o;
-        Class<?> type = map.getClass();
-        s.write(type.getName() + ":" + map.size() + ":{");
+        s.write(mapType.getName() + ":" + map.size() + ":{");
         for (Entry<?, ?> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();
@@ -31,21 +33,25 @@ public class MapSerializer
     @Override
     public Object unserialize(Reader s)
             throws IOException, SerializeException {
-        String stype = readTill(s, ':');
+        String mapTypeName = readTill(s, ':');
 
-        String slen = readTill(s, ':');
-        int len = Integer.parseInt(slen);
+        String mapSize = readTill(s, ':');
+        int size = Integer.parseInt(mapSize);
 
         Map<Object, Object> map;
         try {
-            Class<?> type = Class.forName(stype);
-            map = (Map<Object, Object>) type.newInstance();
+            Class<?> mapType = Class.forName(mapTypeName);
+            if (!Map.class.isAssignableFrom(mapType))
+                throw new SerializeException("Not a map type: " + mapType);
+            @SuppressWarnings("unchecked")
+            Map<Object, Object> instance = (Map<Object, Object>) mapType.newInstance();
+            map = instance;
         } catch (ReflectiveOperationException e) {
             throw new SerializeException(e.getMessage(), e);
         }
 
         s.read(); // {
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < size; i++) {
             Object key = SimpleSerializerRegistry.unserialize(s);
             Object value = SimpleSerializerRegistry.unserialize(s);
             map.put(key, value);

@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import section.obj;
-
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.org.json.JsonObj;
 import net.bodz.bas.err.ParseException;
@@ -18,6 +16,8 @@ import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.rtx.IAttributed;
 import net.bodz.json.JSONObject;
+
+import section.obj;
 
 /**
  * @see net.bodz.bas.c.org.json.JsonFormTypeHandler
@@ -77,6 +77,7 @@ public class JsonMap
     /** ⇱ Implementation Of {@link IAttributed}. */
     /* _____________________________ */static section.iface __ATTRS__;
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) map.get(name);
@@ -84,6 +85,7 @@ public class JsonMap
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
+        @SuppressWarnings("unchecked")
         T val = (T) map.get(name);
         if (val == null)
             val = defaultValue;

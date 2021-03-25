@@ -8,7 +8,8 @@ import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.t.order.DefaultComparator;
 
 public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
-        implements IMetadata {
+        implements
+            IMetadata {
 
     static Random random = new Random();
 
@@ -116,6 +117,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         return nameMap.get(name);
     }
 
+    @SuppressWarnings("unchecked")
     public synchronized void addValue(E value) {
         if (value == null)
             throw new NullPointerException("value");
@@ -133,9 +135,10 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         localNameMap.put(name, value);
         localValueList.add(value);
 
-        Class<E> c = itemClass;
+        // Class<? super E extends Predef<?, K> >
+        Class<? extends Predef<?, K>> c = itemClass;
         while (true) {
-            PredefMetadata<E, K> metadata = forClass(c, keyType);
+            PredefMetadata<Predef<?, K>, K> metadata = (PredefMetadata<Predef<?, K>, K>) forClass(c, keyType);
 
             if (metadata.keyMap.containsKey(key))
                 throw new DuplicatedKeyException(metadata.keyMap, key, "more key");
@@ -145,7 +148,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
             metadata.nameMap.put(name, value);
             metadata.valueList.add(value);
 
-            c = (Class<E>) c.getSuperclass();
+            c = (Class<? extends Predef<?, K>>) c.getSuperclass();
             if (c == null)
                 break;
             if (stopClass.equals(c))
@@ -167,6 +170,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     static <E extends Predef<?, K>, K extends Comparable<K>> //
     PredefMetadata<E, K> forClass(Class<E> type, Class<K> keyType) {
+        @SuppressWarnings("unchecked")
         PredefMetadata<E, K> metadata = (PredefMetadata<E, K>) classLocalMap.get(type);
         if (metadata == null)
             classLocalMap.put(type, metadata = new PredefMetadata<E, K>(type, keyType));

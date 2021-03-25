@@ -40,6 +40,7 @@ public class CommonOpenConfig {
     public void receive(OpenOption... options) {
         for (OpenOption option : options) {
             Class<? extends OpenOption> optionClass = option.getClass();
+            @SuppressWarnings("unchecked")
             IOpenConfigCollector<Object> collector = (IOpenConfigCollector<Object>) collectorMap.get(optionClass);
             collector.collect(this, option);
         }

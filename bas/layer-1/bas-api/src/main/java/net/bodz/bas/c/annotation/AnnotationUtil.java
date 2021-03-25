@@ -10,16 +10,16 @@ public class AnnotationUtil {
 
     /**
      * This is the same to
-     * 
+     *
      * <pre>
      * findAnnotation(annotationClass, ReflectQuery.selectClassChain(startClass))
      * </pre>
-     * 
+     *
      * but slightly faster.
-     * 
+     *
      * <p>
      * If there are more than one occurence, return the first occurence.
-     * 
+     *
      * @throws NullPointerException
      *             If <code>annotationClass</code> or <code>startClass</code> is <code>null</code>.
      * @see net.bodz.bas.c.object.lang.Nullables#getAnnotationValue(Annotation, Class)
@@ -42,7 +42,7 @@ public class AnnotationUtil {
 
     /**
      * If there are more than one occurence, return the first occurence.
-     * 
+     *
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      * @see net.bodz.bas.c.object.lang.Nullables#getAnnotationValue(Annotation, Class)
@@ -74,6 +74,7 @@ public class AnnotationUtil {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T getValue(Annotation a) {
         try {
             Method valueMethod = a.getClass().getMethod("value");

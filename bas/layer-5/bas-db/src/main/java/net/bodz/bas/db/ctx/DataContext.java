@@ -141,6 +141,7 @@ public class DataContext
     /** ⇱ Implementation Of {@link IAttributed}. */
     /* _____________________________ */static section.iface __ATTRS__;
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) attributes.get(name);
@@ -148,6 +149,7 @@ public class DataContext
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
+        @SuppressWarnings("unchecked")
         T value = (T) attributes.get(name);
         if (value == null)
             value = defaultValue;

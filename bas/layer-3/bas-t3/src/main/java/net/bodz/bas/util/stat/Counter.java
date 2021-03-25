@@ -9,6 +9,7 @@ public class Counter<T extends Number>
     private final String name;
     private T value;
 
+    @SuppressWarnings("unchecked")
     public Counter(String name, T initialValue) {
         this(CounterDef.getGenericDef((Class<T>) initialValue.getClass()), name, initialValue);
     }

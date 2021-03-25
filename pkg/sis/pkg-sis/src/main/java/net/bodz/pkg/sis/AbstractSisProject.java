@@ -113,7 +113,9 @@ public class AbstractSisProject
         SisVariable variable = getVariable(varName);
         if (variable == null)
             throw new NoSuchElementException(varName);
-        return (T) variable.getValue();
+        @SuppressWarnings("unchecked")
+        T value = (T) variable.getValue();
+        return value;
     }
 
     @Override

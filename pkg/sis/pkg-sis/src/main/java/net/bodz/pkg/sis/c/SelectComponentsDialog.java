@@ -36,6 +36,7 @@ public class SelectComponentsDialog
     /**
      * @return <code>null</code> if canceled.
      */
+    @SuppressWarnings("unchecked")
     @Override
     public synchronized List<ISisComponent> open() {
         return (List<ISisComponent>) super.open(false);

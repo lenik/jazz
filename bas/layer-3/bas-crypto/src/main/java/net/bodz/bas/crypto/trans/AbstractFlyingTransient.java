@@ -90,11 +90,11 @@ public abstract class AbstractFlyingTransient
         return new TransformedFlyingTransient(this, transformer);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers) {
         List<ITransformer<ICodeBin, ICodeBin>> list = new ArrayList<ITransformer<ICodeBin, ICodeBin>>();
         for (ITransformer<? extends ICodeBin, ? extends ICodeBin> item : transformers) {
-            @SuppressWarnings("unchecked")
             ITransformer<ICodeBin, ICodeBin> cast = (ITransformer<ICodeBin, ICodeBin>) item;
             list.add(cast);
         }

@@ -9,7 +9,6 @@ import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.vfs.impl.pojf.PojfFile;
 import net.bodz.pkg.sis.TestSisProject;
 import net.bodz.pkg.sis.c.SisComponentTester;
-import net.bodz.pkg.sis.c.io.FileCopy;
 
 public class FileCopyTest
         extends SisComponentTester {
@@ -22,7 +21,7 @@ public class FileCopyTest
         File catfile = new File(localdir, "cat");
 
         new PojfFile(catfile).to(StreamWriting.class).writeString("a black fat cat. ");
-        
+
         new FileCopy(section, TestSisProject.BASE_A, "copytest", localdir, catfile);
     }
 

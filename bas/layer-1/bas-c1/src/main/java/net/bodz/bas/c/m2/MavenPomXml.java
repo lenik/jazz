@@ -57,6 +57,7 @@ public class MavenPomXml {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public <node_t extends Node> node_t select(String xpath, int index)
             throws XPathExpressionException {
         NodeList nodes = selectNodes(xpath);

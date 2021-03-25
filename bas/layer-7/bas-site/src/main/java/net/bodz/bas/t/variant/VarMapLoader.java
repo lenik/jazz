@@ -191,6 +191,7 @@ public class VarMapLoader {
         concreteTypes.put(NavigableSet.class, TreeSet.class);
     }
 
+    @SuppressWarnings("unchecked")
     static Collection<Object> newConcrete(Class<?> generic) {
         Class<?> concreteType = concreteTypes.get(generic);
         if (concreteType != null)

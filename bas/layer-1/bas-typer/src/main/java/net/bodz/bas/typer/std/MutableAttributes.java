@@ -27,6 +27,7 @@ public class MutableAttributes
         return valueMap.keySet();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) valueMap.get(name);
@@ -34,6 +35,7 @@ public class MutableAttributes
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
+        @SuppressWarnings("unchecked")
         T value = (T) valueMap.get(name);
         if (value == null && !valueMap.containsKey(name))
             return defaultValue;

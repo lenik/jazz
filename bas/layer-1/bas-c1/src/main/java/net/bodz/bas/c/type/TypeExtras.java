@@ -28,6 +28,7 @@ public class TypeExtras {
         return attributes.keySet();
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getAttribute(String name) {
         return (T) attributes.get(name);
     }

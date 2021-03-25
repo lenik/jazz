@@ -137,7 +137,7 @@ public class Nullables {
      * @throws NoSuchMethodException
      *             If <code>value()</code> method doesn't exist in the annotation declaration.
      */
-    public static <T> T getAnnotationValue(Annotation annotation, Class<T> valueClass)
+    public static <T> T getAnnotationValue(Annotation annotation, Class<? extends T> valueClass)
             throws NoSuchMethodException {
         if (valueClass == null)
             throw new NullPointerException("valueClass");
@@ -161,6 +161,7 @@ public class Nullables {
         if (defaultValue == null)
             throw new NullPointerException("defaultValue");
 
+        @SuppressWarnings("unchecked")
         Class<T> valueClass = (Class<T>) defaultValue.getClass();
 
         return getAnnotationValue(annotation, valueClass);

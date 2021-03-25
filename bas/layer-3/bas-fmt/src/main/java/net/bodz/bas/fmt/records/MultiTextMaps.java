@@ -83,6 +83,7 @@ public class MultiTextMaps
         return value;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Mitorx<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap) {
         return (Mitorx<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);

@@ -55,6 +55,7 @@ public abstract class JavaEnum
     public static <T extends JavaEnum> T valueOf(Class<T> type, String name) {
         Map<String, JavaEnum> nameMap = clNameMap.get(type);
         if (nameMap != null) {
+            @SuppressWarnings("unchecked")
             T value = (T) nameMap.get(name);
             if (value != null)
                 return value;
@@ -71,11 +72,13 @@ public abstract class JavaEnum
     }
 
     protected static <T extends JavaEnum> T[] _values(Class<T> type) {
+        @SuppressWarnings("unchecked")
         T[] values = (T[]) clValues.get(type);
 
         if (values == null) {
             Map<String, JavaEnum> nameMap = clNameMap.get(type);
 
+            @SuppressWarnings("unchecked")
             T[] empty = (T[]) Array.newInstance(type, 0);
             if (nameMap == null)
                 values = empty;

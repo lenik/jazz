@@ -41,7 +41,7 @@ public class ArtifactDoc
             if (domain != null)
                 langs.add(domain);
 
-        String[] langTags = (String[]) getTag("lang");
+        String[] langTags = getTag("lang");
         if (langTags != null)
             for (String langTag : langTags)
                 langs.add(langTag);
@@ -50,7 +50,7 @@ public class ArtifactDoc
     }
 
     public List<Author> getAuthors() {
-        List<Author> authors = (List<Author>) getTag("author");
+        List<Author> authors = getTag("author");
         if (authors == null)
             authors = Collections.emptyList();
         else
@@ -67,7 +67,7 @@ public class ArtifactDoc
     }
 
     public IVersion getVersion() {
-        IVersion version = (IVersion) getTag("version");
+        IVersion version = getTag("version");
         return version;
     }
 

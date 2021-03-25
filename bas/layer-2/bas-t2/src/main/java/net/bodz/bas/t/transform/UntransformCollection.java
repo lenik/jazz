@@ -102,7 +102,7 @@ public class UntransformCollection<S, T>
     }
 
     public boolean retainAll(Collection<?> c) {
-        List<T> removeList = new ArrayList<T>(transformedCollection.size());
+        List<Object> removeList = new ArrayList<>(transformedCollection.size());
         for (T transformed : transformedCollection) {
             S source = transformer.untransform(transformed);
             if (!c.contains(source))
@@ -159,13 +159,15 @@ public class UntransformCollection<S, T>
             // Array.set(sourceArray, i, source);
             sourceArray[i] = (_S) source;
         }
-        return (_S[]) sourceArray;
+        return sourceArray;
     }
 
+    @Override
     public boolean equals(Object o) {
         return transformedCollection.equals(o);
     }
 
+    @Override
     public int hashCode() {
         int hash = 0x61586a4a;
         hash ^= transformer.hashCode() * 0x5597e68a;
