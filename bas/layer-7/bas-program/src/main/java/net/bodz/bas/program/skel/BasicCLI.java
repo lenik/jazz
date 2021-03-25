@@ -26,12 +26,12 @@ import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.program.IPerformanceAware;
 import net.bodz.bas.program.IProgram;
 import net.bodz.bas.program.model.ArtifactObjectWithOptions;
 import net.bodz.bas.program.model.HelpPageFormatter;
 import net.bodz.bas.program.model.IOption;
-import net.bodz.bas.program.model.MethodCall;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ParserUtil;
@@ -258,7 +258,7 @@ public abstract class BasicCLI
                 if (!optionName.equals(entry.getKey()))
                     continue;
                 Object optionValue = option.property().getValue(this);
-                if (optionValue instanceof MethodCall)
+                if (optionValue instanceof Invocation)
                     continue;
                 logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
             }

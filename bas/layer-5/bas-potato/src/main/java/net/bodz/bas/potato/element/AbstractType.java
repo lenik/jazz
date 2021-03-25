@@ -155,6 +155,7 @@ public abstract class AbstractType
         if (property == null) {
             throw new NoSuchPropertyException(propertyName);
         }
+        @SuppressWarnings("unchecked")
         T value = (T) property.getValue(instance);
         return value;
     }

@@ -227,7 +227,9 @@ public class BeanJsonLoader
             Collection<Object> coll = null;
             try {
                 Constructor<?> ctor0 = type.getConstructor();
-                coll = (Collection<Object>) ctor0.newInstance();
+                @SuppressWarnings("unchecked")
+                Collection<Object> instance = (Collection<Object>) ctor0.newInstance();
+                coll = instance;
             } catch (NoSuchMethodException e) {
                 if (List.class.isAssignableFrom(type))
                     coll = new ArrayList<Object>();
@@ -256,7 +258,9 @@ public class BeanJsonLoader
                     break;
                 try {
                     Constructor<?> ctor0 = type.getConstructor();
-                    map = (Map<String, Object>) ctor0.newInstance();
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> instance = (Map<String, Object>) ctor0.newInstance();
+                    map = instance;
                 } catch (NoSuchMethodException e) {
                     map = new HashMap<String, Object>();
                 }

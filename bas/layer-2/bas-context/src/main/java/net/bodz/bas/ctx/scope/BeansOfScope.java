@@ -32,12 +32,13 @@ public class BeansOfScope {
 
     public <T> T getOrLoad(Class<T> clazz) {
         String name = defaultName(clazz);
+        @SuppressWarnings("unchecked")
         T obj = (T) scopeInstance.get(name);
         if (obj == null) {
             // scopeInstance.getIdentity();
             // ScopeIdClass.fn.from();
             try {
-                obj = (T) clazz.newInstance();
+                obj = clazz.newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new LazyLoadException(e.getMessage(), e);
             }

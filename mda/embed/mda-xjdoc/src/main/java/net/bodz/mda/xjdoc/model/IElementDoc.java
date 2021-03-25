@@ -20,18 +20,18 @@ public interface IElementDoc
 
     /**
      * The main text of the element.
-     * 
+     *
      * While tags are strict typed, the main text is always (domain-)string.
-     * 
+     *
      * @return Non-<code>null</code>.
      */
     iString getText();
 
     /**
      * Set the main text of the element.
-     * 
+     *
      * While tags are strict typed, the main text is always (domain-)string.
-     * 
+     *
      * @param text
      *            Non-<code>null</code>. Empty-string if the text isn't specified.
      */
@@ -39,18 +39,18 @@ public interface IElementDoc
 
     /**
      * Get the value of a named tag.
-     * 
+     *
      * The tag value type may be scalar, collection, map, or other user type.
-     * 
+     *
      * @return <code>null</code> if the tag isn't defined.
      */
-    Object getTag(String tagName);
+    <T> T getTag(String tagName);
 
     /**
      * Get the value of a named tag, with value type checked.
-     * 
+     *
      * The tag value type may be scalar, collection, map, or other user type.
-     * 
+     *
      * @param tagValueType
      *            The value type.
      * @return <code>null</code> if the tag isn't defined.
@@ -61,7 +61,7 @@ public interface IElementDoc
 
     /**
      * Set the tag value.
-     * 
+     *
      * @param tagName
      *            Non-<code>null</code> tag name.
      * @param tagValue
@@ -73,7 +73,7 @@ public interface IElementDoc
 
     /**
      * Remove the named tag.
-     * 
+     *
      * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
      *         is <code>null</code>.
      */
@@ -81,7 +81,7 @@ public interface IElementDoc
 
     /**
      * Get the named tag map.
-     * 
+     *
      * @return non-<code>null</code> {@link Map} contains all the tags.
      */
     Map<String, Object> getTagMap();
@@ -98,9 +98,9 @@ public interface IElementDoc
 
     /**
      * Get the value of a named tag.
-     * 
+     *
      * The tag value type may be scalar, collection, map, or other user type.
-     * 
+     *
      * @return <code>null</code> if the tag isn't used.
      */
     iString getTextTag(String tagName);

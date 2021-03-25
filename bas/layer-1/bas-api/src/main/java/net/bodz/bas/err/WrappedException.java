@@ -9,6 +9,7 @@ public class WrappedException
         super(orig);
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Throwable> T unwrap() {
         return (T) getCause();
     }

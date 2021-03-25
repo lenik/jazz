@@ -28,6 +28,7 @@ public final class ConstructorFactory<T>
         this(clazz, null, EMPTY_PARAMS);
     }
 
+    @SuppressWarnings("unchecked")
     public ConstructorFactory(Class<?> clazz, Class<?>[] parameterTypes, Object... parameters)
             throws NoSuchMethodException {
         if (clazz == null)

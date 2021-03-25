@@ -55,6 +55,7 @@ public class MutableAnnotations
 
     @Override
     public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+        @SuppressWarnings("unchecked")
         T annotation = (T) declaredMap.get(annotationClass);
         if (annotation != null)
             return annotation;

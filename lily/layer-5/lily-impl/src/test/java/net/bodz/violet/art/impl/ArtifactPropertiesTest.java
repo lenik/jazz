@@ -6,7 +6,6 @@ import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactProperties;
-import net.bodz.violet.art.impl.ArtifactMapper;
 
 public class ArtifactPropertiesTest
         extends DatabaseTester {

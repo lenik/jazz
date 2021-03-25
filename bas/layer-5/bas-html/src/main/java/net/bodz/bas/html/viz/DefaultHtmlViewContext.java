@@ -30,6 +30,7 @@ public class DefaultHtmlViewContext
 
     @Override
     public <T> IHtmlViewBuilder<T> getViewBuilder(Object obj) {
+        @SuppressWarnings("unchecked")
         IHtmlViewBuilder<T> viewBuilder = (IHtmlViewBuilder<T>) viewBuilderCache.get(obj);
         return viewBuilder;
     }

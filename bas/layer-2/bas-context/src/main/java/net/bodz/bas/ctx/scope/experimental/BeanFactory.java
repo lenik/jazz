@@ -23,6 +23,7 @@ public class BeanFactory
         return getOrLoad(name, objectType);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getOnly(String name, Class<T> objectType) {
         ScopedTypeInfo<T> info = new ScopedTypeInfo<T>(objectType);
         IScopeInstance scopeInstance = info.scopeTeller.tell();
@@ -33,6 +34,7 @@ public class BeanFactory
             throws LoadException {
         ScopedTypeInfo<T> info = new ScopedTypeInfo<T>(objectType);
         IScopeInstance scopeInstance = info.scopeTeller.tell();
+        @SuppressWarnings("unchecked")
         T obj = (T) scopeInstance.get(name);
         if (obj == null) {
             try {

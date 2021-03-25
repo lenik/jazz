@@ -48,6 +48,7 @@ public final class Tooling
                     "No suitable constructor for %s found in the wrapper class %s.", //
                     hostClass.getName(), wrapperClass.getName()));
         try {
+            @SuppressWarnings("unchecked")
             T instance = (T) ctor.newInstance(hostObject);
             return instance;
         } catch (ReflectiveOperationException e) {

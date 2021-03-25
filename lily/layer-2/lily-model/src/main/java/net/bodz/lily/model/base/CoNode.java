@@ -464,6 +464,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         dump(Stdio.cout);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void readObject(JsonObject o)
             throws ParseException {

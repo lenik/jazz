@@ -1,6 +1,5 @@
 package net.bodz.pkg.sis.c;
 
-import net.bodz.pkg.sis.c.ConfigComponent;
 import net.bodz.swt.test.PageTester;
 
 public class ConfigPageTester

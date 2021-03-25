@@ -96,7 +96,7 @@ public class StatNode
         if (node == null)
             return null;
 
-        ICounter<T> counter = (ICounter<T>) node.getCounter(lastEntry);
+        ICounter<T> counter = node.getCounter(lastEntry);
         return counter;
     }
 

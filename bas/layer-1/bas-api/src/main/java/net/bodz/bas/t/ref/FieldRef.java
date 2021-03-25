@@ -19,6 +19,7 @@ public class FieldRef<T>
         this.field = field;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends T> getValueType() {
         return (Class<? extends T>) field.getType();

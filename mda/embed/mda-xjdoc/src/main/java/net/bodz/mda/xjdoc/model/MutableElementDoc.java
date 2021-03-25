@@ -50,9 +50,10 @@ public class MutableElementDoc
         this.text = text;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object getTag(String tagName) {
-        return tagMap.get(tagName);
+    public <T> T getTag(String tagName) {
+        return (T) tagMap.get(tagName);
     }
 
     @Override

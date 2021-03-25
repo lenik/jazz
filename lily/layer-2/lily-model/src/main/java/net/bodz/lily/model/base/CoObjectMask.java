@@ -234,6 +234,7 @@ public class CoObjectMask
             new NameConventionTypeMapper(null, 1, "db.", "Mask", false), //
     };
 
+    @SuppressWarnings("unchecked")
     public static Class<? extends CoObjectMask> findMaskClass(Class<?> objClass) {
         Class<? extends CoObjectMask> maskClass;
         for (NameConventionTypeMapper tmap : maskTmaps) {

@@ -59,7 +59,9 @@ public class ListTagsinput_htm
         }
         if (aTagsinput != null) {
             Class<? extends ITagTyper<?>> typerClass = aTagsinput.typer();
-            tagTyper = (ITagTyper<Object>) SingletonUtil.instantiateCached(typerClass);
+            @SuppressWarnings("unchecked")
+            ITagTyper<Object> instance =  (ITagTyper<Object>) SingletonUtil.instantiateCached(typerClass);
+            tagTyper = instance;
         }
 
         HtmlSelect select = out.select();

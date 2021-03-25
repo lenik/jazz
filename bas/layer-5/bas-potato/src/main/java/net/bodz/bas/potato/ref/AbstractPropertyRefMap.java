@@ -36,6 +36,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
         return cache.keySet();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> PropertyRefEntry<T> getEntry(String name) {
         load();
@@ -103,7 +104,7 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
     public Object put(String key, Object value) {
         if (!(key instanceof String))
             return null;
-        String name = (String) key;
+        String name = key;
         IRefEntry<Object> entry = getEntry(name);
         if (entry == null)
             return null;

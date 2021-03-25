@@ -58,15 +58,16 @@ public class LazyTypeMap<T>
             implements IMapEntryLoader<Class<?>, V> {
 
         // final Class<?> metadataClass;
-        final Constructor<V> ctor;
+        final Constructor<? extends V> ctor;
 
+        @SuppressWarnings("unchecked")
         public MetadataClassEntryLoader(Class<?> metadataClass)
                 throws IllegalUsageException {
             if (metadataClass == null)
                 throw new NullPointerException("metadataClass");
             // this.metadataClass = metadataClass;
             try {
-                this.ctor = (Constructor<V>) metadataClass.getConstructor(Class.class);
+                this.ctor = (Constructor<? extends V>) metadataClass.getConstructor(Class.class);
             } catch (NoSuchMethodException e) {
                 throw new IllegalUsageException(e.getMessage(), e);
             }
@@ -105,6 +106,7 @@ public class LazyTypeMap<T>
         public V loadValue(Class<?> clazz)
                 throws LazyLoadException {
             try {
+                @SuppressWarnings("unchecked")
                 V result = (V) parserMethod.invoke(null, clazz);
                 return result;
             } catch (Exception e) {

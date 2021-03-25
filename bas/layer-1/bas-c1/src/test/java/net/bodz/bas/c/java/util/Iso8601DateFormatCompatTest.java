@@ -9,8 +9,6 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
-import net.bodz.bas.c.java.util.Iso8601DateFormatCompat;
-
 public class Iso8601DateFormatCompatTest {
 
     @Test

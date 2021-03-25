@@ -41,6 +41,7 @@ public class MutablePotatoElement
 
     @Override
     public <T> T getTyper(Class<T> typerClass) {
+        @SuppressWarnings("unchecked")
         T typer = (T) typerMap.get(typerClass);
         return typer;
     }

@@ -48,6 +48,7 @@ public abstract class CoObjectIndex<T extends CoObject>
 
     protected DataContext dataContext;
 
+    @SuppressWarnings("unchecked")
     public CoObjectIndex() {
         this.objectType = (Class<T>) getClass().getAnnotation(ObjectType.class).value();
         // this.objectType = TypeParam.infer1(getClass(), CoObjectIndex.class, 0);

@@ -18,6 +18,7 @@ public class Value<T>
     public static <T> Value<T> of(T val) {
         if (val == null)
             throw new NullPointerException("val");
+        @SuppressWarnings("unchecked")
         Class<? extends T> valType = (Class<? extends T>) val.getClass();
         return new Value<T>(valType, val);
     }

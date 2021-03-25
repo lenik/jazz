@@ -26,6 +26,7 @@ public interface IFactory<T>
             this.instance = instance;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public Class<? extends T> getType() {
             return (Class<? extends T>) instance.getClass();

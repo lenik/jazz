@@ -160,25 +160,27 @@ public class XMLs {
         return xml;
     }
 
-    public static Object decode(int caller, InputStream in, ExceptionListener exceptionListener) {
+    public static <T> T decode(int caller, InputStream in, ExceptionListener exceptionListener) {
         XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
 
-        Object obj = readObject(decoder, caller + 1);
+        @SuppressWarnings("unchecked")
+        T obj = (T) readObject(decoder, caller + 1);
+
         decoder.close();
         return obj;
     }
 
-    public static Object decode(int caller, InputStream in)
+    public static <T> T decode(int caller, InputStream in)
             throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        Object obj = decode(caller + 1, in, eb);
+        T obj = decode(caller + 1, in, eb);
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new DecodeException(errmesg);
         return obj;
     }
 
-    public static Object decode(int caller, String xml, ExceptionListener exceptionListener) {
+    public static <T> T decode(int caller, String xml, ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
             bytes = xml.getBytes("utf-8");
@@ -189,10 +191,13 @@ public class XMLs {
         return decode(caller + 1, in, exceptionListener);
     }
 
-    public static Object decode(int caller, String xml)
+    public static <T> T decode(int caller, String xml)
             throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        Object obj = decode(caller + 1, xml, eb);
+
+        @SuppressWarnings("unchecked")
+        T obj = (T) decode(caller + 1, xml, eb);
+
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new DecodeException(errmesg);
@@ -210,13 +215,14 @@ public class XMLs {
         return decode(1, in);
     }
 
-    public static Object decode(String xml, ExceptionListener exceptionListener) {
+    public static <T> T decode(String xml, ExceptionListener exceptionListener) {
         return decode(1, xml, exceptionListener);
     }
 
-    public static Object decode(String xml)
+    @SuppressWarnings("unchecked")
+    public static <T> T decode(String xml)
             throws DecodeException {
-        return decode(1, xml);
+        return (T) decode(1, xml);
     }
 
     public static String encode(Object obj, ExceptionListener exceptionListener) {

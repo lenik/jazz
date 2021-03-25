@@ -192,7 +192,9 @@ public class JsonObject
                 if (newSetClass == null) // don't auto-create
                     return null;
                 try {
-                    set = (C) newSetClass.newInstance();
+                    @SuppressWarnings("unchecked")
+                    C instance = (C) newSetClass.newInstance();
+                    set = instance;
                 } catch (Exception e) {
                     throw new UnexpectedException(e.getMessage(), e);
                 }

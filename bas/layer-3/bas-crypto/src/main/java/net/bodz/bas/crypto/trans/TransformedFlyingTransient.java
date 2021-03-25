@@ -22,6 +22,7 @@ public class TransformedFlyingTransient<S extends ICodeBin, T extends ICodeBin>
 
     @Override
     public T getCode(long index) {
+        @SuppressWarnings("unchecked")
         S orig = (S) core.getCode(index);
         T dst = transformer.transform(orig);
         return dst;

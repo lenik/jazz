@@ -12,7 +12,7 @@ public class JUnitApp<self_t>
 
     /**
      * Create a new instance like this using JUnit wrapper,
-     * 
+     *
      * @return Wrapped instance.
      */
     public self_t assemble() {
@@ -22,7 +22,7 @@ public class JUnitApp<self_t>
     /**
      * Wrap and wire this object, result in a new one if <code>dropThis</code> is specified, or hack
      * myself if <code>dropThis</code> is disabled. Spring CDI.
-     * 
+     *
      * @param dropThis
      *            Whether should hack into myself.
      *            <p>
@@ -31,6 +31,7 @@ public class JUnitApp<self_t>
      */
     public self_t assemble(boolean dropThis) {
         if (dropThis) {
+            @SuppressWarnings("unchecked")
             self_t wrapped = (self_t) JUnitHelper.createWrappedInstance(getClass());
             return wrapped;
         }

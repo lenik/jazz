@@ -31,7 +31,7 @@ public class NullElementDoc
     }
 
     @Override
-    public Object getTag(String tagName) {
+    public <T> T getTag(String tagName) {
         return null;
     }
 

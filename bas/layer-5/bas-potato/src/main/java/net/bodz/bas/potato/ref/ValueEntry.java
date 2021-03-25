@@ -19,6 +19,7 @@ public class ValueEntry<T>
         this(valueType, null);
     }
 
+    @SuppressWarnings("unchecked")
     public ValueEntry(T value) {
         this((Class<? extends T>) value.getClass(), value);
     }
@@ -61,6 +62,7 @@ public class ValueEntry<T>
     public static <T> ValueEntry<T> wrap(T obj) {
         if (obj == null)
             throw new NullPointerException("obj");
+        @SuppressWarnings("unchecked")
         Class<T> valueType = (Class<T>) obj.getClass();
         return wrap(valueType, obj);
     }

@@ -60,7 +60,11 @@ import net.bodz.lily.template.RichProperties;
 @VirtualHostScope
 public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         extends AbstractCacheControl
-        implements IPathDispatchable, IPathArrivalFrameAware, ICacheControl, IDataContextAware {
+        implements
+            IPathDispatchable,
+            IPathArrivalFrameAware,
+            ICacheControl,
+            IDataContextAware {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 
@@ -70,10 +74,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     public CoIndex() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
-        if (aObjectType != null)
-            objectType = (Class<T>) aObjectType.value();
-        else
+        if (aObjectType != null) {
+            @SuppressWarnings("unchecked")
+            Class<T> objectType = (Class<T>) aObjectType.value();
+            this.objectType = objectType;
+        } else {
             objectType = TypeParam.infer1(getClass(), CoIndex.class, 0);
+        }
         maskType = TypeParam.infer1(getClass(), CoIndex.class, 1);
     }
 
@@ -286,6 +293,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     protected <mapper_t extends IMapperTemplate<T, M>> mapper_t requireMapper() {
         Class<T> entityClass = getObjectType();
         Class<IMapperTemplate<T, M>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
@@ -356,7 +364,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     }
 
     protected class InsertOnRequire
-            implements ILazyId {
+            implements
+                ILazyId {
 
         public InsertOnRequire() {
         }

@@ -3,7 +3,6 @@ package net.bodz.mda.xjdoc.contrib.maven;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,19 +39,20 @@ public class ClassDocBuilderMojoTest
         }
     }
 
-    static void dumpTextMap(Map<?, ?> map, String prefix) {
-        List<String> keys = new ArrayList<String>((Collection<? extends String>) map.keySet());
+    static void dumpTextMap(Map<String, ?> map, String prefix) {
+        List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys);
         for (String key : keys) {
             System.out.printf("%s%s = %s\n", prefix, key, map.get(key));
         }
     }
 
-    static void dumpTextMap2(Map<?, ?> map2) {
-        List<String> keys2 = new ArrayList<String>((Collection<? extends String>) map2.keySet());
+    static void dumpTextMap2(Map<String, ?> map2) {
+        List<String> keys2 = new ArrayList<String>(map2.keySet());
         Collections.sort(keys2);
         for (String key2 : keys2) {
-            Map<?, ?> map1 = (Map<?, ?>) map2.get(key2);
+            @SuppressWarnings("unchecked")
+            Map<String, ?> map1 = (Map<String, ?>) map2.get(key2);
             System.out.printf("%s:\n", key2);
             dumpTextMap(map1, "    ");
             System.out.println();

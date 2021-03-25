@@ -53,8 +53,9 @@ public class TagLibraryLoader {
 
     public ITagLibrary resolve(String name) {
         ITagLibrary taglib = taglibMap.get(name);
-        if (taglib == null)
+        if (taglib == null) {
             try {
+                @SuppressWarnings("unchecked")
                 Class<? extends ITagLibrary> taglibClass = (Class<? extends ITagLibrary>) Class.forName(name);
                 taglib = taglibClass.newInstance();
             } catch (ClassNotFoundException e) {
@@ -62,6 +63,7 @@ public class TagLibraryLoader {
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException("Failed to instantiate taglib: " + name, e);
             }
+        }
         return taglib;
     }
 

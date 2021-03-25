@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import net.bodz.pkg.sis.util.IntAddressBuffer;
-
 public class IntAddressBufferTest {
 
     @Test

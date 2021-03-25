@@ -72,6 +72,7 @@ public class MutableVirtualHost
         return attributes.keySet();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getAttribute(String name) {
         return (T) attributes.get(name);
@@ -79,6 +80,7 @@ public class MutableVirtualHost
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
+        @SuppressWarnings("unchecked")
         T value = (T) attributes.get(name);
         if (value == null)
             if (!attributes.containsKey(name))

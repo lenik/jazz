@@ -9,6 +9,7 @@ public class PathArrivalEntry<T>
 
     private IPathArrival arrival;
 
+    @SuppressWarnings("unchecked")
     public PathArrivalEntry(IPathArrival arrival) {
         super((T) arrival.getTarget());
         this.arrival = arrival;

@@ -5,6 +5,7 @@ import net.bodz.bas.c.type.TypeParam;
 
 public class IdAwares {
 
+    @SuppressWarnings("unchecked")
     public static <X> Class<X> getIdType(Class<? extends IId<X>> clazz) {
         IdType aIdType = clazz.getAnnotation(IdType.class);
         if (aIdType != null)

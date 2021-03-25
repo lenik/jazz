@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.pkg.sis.TestSisProject;
-import net.bodz.pkg.sisi.page.DonePage;
 import net.bodz.swt.test.PageTester;
 
 public class DonePageTest

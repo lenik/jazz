@@ -35,6 +35,7 @@ public class TrueValues {
     }
 
     public static <T> T getTrueValue(Class<?> type) {
+        @SuppressWarnings("unchecked")
         T value = (T) trueValueMap.get(type);
         return value;
     }
