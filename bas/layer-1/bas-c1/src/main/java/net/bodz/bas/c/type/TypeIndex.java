@@ -31,7 +31,7 @@ public class TypeIndex {
 
     /**
      * List all defined extensions for the base type.
-     * 
+     *
      * @param baseType
      *            Which type's extensions to be listed.
      * @return Non-<code>null</code> extension types in iterable form.
@@ -63,7 +63,7 @@ public class TypeIndex {
                 try {
                     extClass = Class.forName(fqcn, true, classLoader);
                 } catch (ClassNotFoundException e) {
-                    logger.severe("Undefined implementation name: " + fqcn);
+                    logger.severe("(skipped) Undefined implementation name: " + fqcn);
                     continue;
                 }
 
