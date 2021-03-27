@@ -7,10 +7,14 @@ import net.bodz.bas.meta.source.SerializableForm;
 @SerializableForm
 public interface IRstSerializable {
 
-    void writeObject(IRstOutput out)
-            throws IOException;
+    default void writeObject(IRstOutput out)
+            throws IOException {
+        RstFn.defaultDump(this, out);
+    }
 
-    IElementHandler getElementHandler();
+    default IRstHandler getElementHandler() {
+        return RstFn.getDefaultHandler(this);
+    }
 
     class rst
             extends RstFn {

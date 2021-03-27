@@ -1,6 +1,5 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.xml;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,24 +7,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.xml.stream.XMLStreamException;
+
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.fmt.api.IStdDumper;
-import net.bodz.bas.fmt.rst.obj.BeanRstHandler;
-import net.bodz.bas.fmt.rst.obj.ReflectRstHandler;
+import net.bodz.bas.fmt.xml.obj.BeanXmlLoader;
+import net.bodz.bas.fmt.xml.obj.ReflectXmlLoader;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.t.set.FramedMarks;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 
-public abstract class AbstractRstDumper
-        implements IStdDumper {
+public abstract class AbstractXmlDumper
+        implements
+            IStdDumper {
 
-    protected final IRstOutput out;
+    protected final IXmlOutput out;
+    protected final String rootTag = null;
     protected final FramedMarks marks;
 
-    public AbstractRstDumper(IRstOutput out) {
+    public AbstractXmlDumper(IXmlOutput out) {
         if (out == null)
             throw new NullPointerException("out");
         this.out = out;
@@ -34,15 +37,18 @@ public abstract class AbstractRstDumper
 
     @Override
     public final void dump(Object obj)
-            throws IOException {
+            throws XMLStreamException {
+        out.beginElement("object");
+        out.attribute("type", obj.getClass().getName());
         formatObject(obj.getClass(), obj);
+        out.endElement();
     }
 
     protected abstract void formatObject(Class<?> clazz, Object obj)
-            throws IOException;
+            throws XMLStreamException;
 
     protected void formatCollectionMember(String name, Class<?> type, Type gtype, Object value)
-            throws IOException {
+            throws XMLStreamException {
         if (value == null)
             return;
 
@@ -73,17 +79,13 @@ public abstract class AbstractRstDumper
     }
 
     protected void formatMember(String name, Class<?> type, Object value)
-            throws IOException {
-        if (value instanceof IRstSerializable) {
-            IRstSerializable obj = (IRstSerializable) value;
+            throws XMLStreamException {
+        if (value instanceof IXmlSerializable) {
+            IXmlSerializable obj = (IXmlSerializable) value;
             if (!marks.add(obj))
                 return;
 
-            String args[] = {};
-            if (obj instanceof IRstOverrides)
-                args = ((IRstOverrides) obj).getRstElementArguments();
-
-            out.beginElement(name, args);
+            out.beginElement(name);
             marks.enter();
             try {
                 obj.writeObject(out);
@@ -193,7 +195,7 @@ public abstract class AbstractRstDumper
             IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
             if (formatter != null) {
                 String str = formatter.format(value);
-                out._attribute(name, str);
+                out.attribute(name, str);
             } else {
                 // not supported, skipped.
             }
@@ -203,8 +205,8 @@ public abstract class AbstractRstDumper
     protected static final Set<Class<?>> stopClasses = new HashSet<Class<?>>();
     {
         stopClasses.add(Object.class);
-        stopClasses.add(ReflectRstHandler.class);
-        stopClasses.add(BeanRstHandler.class);
+        stopClasses.add(ReflectXmlLoader.class);
+        stopClasses.add(BeanXmlLoader.class);
     }
 
 }

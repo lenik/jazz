@@ -1,117 +1,120 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.xml;
 
-import java.io.IOException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import net.bodz.bas.fmt.api.IDataCodec;
 import net.bodz.bas.fmt.api.StdDataCodec;
 import net.bodz.bas.t.set.FramedMarks;
 
-public interface IRstOutput {
+public interface IXmlOutput
+        extends
+            XMLStreamWriter {
 
     IDataCodec codec = new StdDataCodec();
 
     FramedMarks getMarks();
 
-    void element(String name, IRstSerializable child, String... args)
-            throws IOException;
+    void element(String name, IXmlSerializable child)
+            throws XMLStreamException;
 
-    void beginElement(String name, String... args)
-            throws IOException;
+    void beginElement(String name)
+            throws XMLStreamException;
 
     void endElement()
-            throws IOException;
+            throws XMLStreamException;
 
     void _attribute(String name, String data)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, int value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, long value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attributeHex(String name, byte value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attributeHex(String name, short value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attributeHex(String name, int value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attributeHex(String name, long value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, boolean value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, float value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, double value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, char value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, Enum<?> value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, String value)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, byte[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, byte[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, short[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, short[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, int[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, int[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, long[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, long[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, float[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, float[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, double[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, double[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, boolean[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, boolean[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, char[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, char[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, String[] buf)
-            throws IOException;
+            throws XMLStreamException;
 
     void attribute(String name, String[] buf, int off, int len)
-            throws IOException;
+            throws XMLStreamException;
 
 }

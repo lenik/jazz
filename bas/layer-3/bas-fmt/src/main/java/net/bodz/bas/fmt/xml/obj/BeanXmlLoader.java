@@ -1,15 +1,15 @@
-package net.bodz.bas.fmt.rst.obj;
+package net.bodz.bas.fmt.xml.obj;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.AbstractElementHandler;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.api.StdValueParser;
+import net.bodz.bas.fmt.xml.IXmlSerializable;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Final;
 
@@ -18,20 +18,20 @@ import com.googlecode.openbeans.IntrospectionException;
 import com.googlecode.openbeans.Introspector;
 import com.googlecode.openbeans.PropertyDescriptor;
 
-public class BeanElementHandler
-        extends AbstractElementHandler {
+public class BeanXmlLoader
+        extends AbstractXmlLoader {
 
     private Class<?> type;
     private Map<String, PropertyDescriptor> properties = new LinkedHashMap<String, PropertyDescriptor>();
     private Object obj;
 
-    public BeanElementHandler() {
+    public BeanXmlLoader() {
         this.type = getClass();
         this.obj = this;
         init();
     }
 
-    public BeanElementHandler(Object obj) {
+    public BeanXmlLoader(Object obj) {
         if (obj == null)
             throw new NullPointerException("obj");
         this.type = obj.getClass();
@@ -39,7 +39,7 @@ public class BeanElementHandler
         init();
     }
 
-    public BeanElementHandler(Class<?> type, Object obj) {
+    public BeanXmlLoader(Class<?> type, Object obj) {
         if (type == null)
             throw new NullPointerException("type");
         if (obj == null)
@@ -66,7 +66,7 @@ public class BeanElementHandler
     }
 
     @Override
-    public boolean attribute(String attributeName, String attributeData)
+    protected boolean attribute(String attributeName, String attributeData)
             throws ParseException, ElementHandlerException {
         PropertyDescriptor property = _getProperty(attributeName);
         if (property == null)
@@ -92,7 +92,7 @@ public class BeanElementHandler
                 throw new ElementHandlerException("failed to read property " + attributeName, e);
             }
 
-        Parser parser = new Parser(propertyType, value);
+        StdValueParser parser = new StdValueParser(propertyType, value);
         value = parser.parse(attributeName, attributeData);
 
         if (!isFinalField)
@@ -105,8 +105,8 @@ public class BeanElementHandler
     }
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
-            throws ParseException, ElementHandlerException {
+    protected IXmlSerializable getChild(String name)
+            throws LoaderException {
         PropertyDescriptor property = _getProperty(name);
         if (property == null)
             return null; // throw new ElementHandlerException("element is undefined: " + name);
@@ -118,21 +118,21 @@ public class BeanElementHandler
                 || getter.isAnnotationPresent(Final.class);
 
         Class<?> type = property.getPropertyType();
-        if (!IRstSerializable.class.isAssignableFrom(type))
-            throw new ElementHandlerException("field isn't structf-serializable: " + name);
+        if (!IXmlSerializable.class.isAssignableFrom(type))
+            throw new LoaderException("field isn't xml-serializable: " + name);
 
-        IRstSerializable value = null;
+        IXmlSerializable value = null;
         if (isFinalField) {
             try {
-                value = (IRstSerializable) getter.invoke(obj);
+                value = (IXmlSerializable) getter.invoke(obj);
             } catch (ReflectiveOperationException e) {
-                throw new ElementHandlerException("failed to read field " + name, e);
+                throw new LoaderException("failed to read field " + name, e);
             }
         } else {
             try {
-                value = (IRstSerializable) type.newInstance(); // args ...
+                value = (IXmlSerializable) type.newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
-                throw new ElementHandlerException("failed to instantiate " + type, e);
+                throw new LoaderException("failed to instantiate " + type, e);
             }
             try {
                 setter.invoke(obj, value);
@@ -141,7 +141,7 @@ public class BeanElementHandler
             }
         }
 
-        return value.getElementHandler();
+        return value;
     }
 
 }

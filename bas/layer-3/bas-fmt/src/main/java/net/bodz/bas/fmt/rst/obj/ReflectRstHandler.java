@@ -4,31 +4,32 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.AbstractElementHandler;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.api.StdValueParser;
+import net.bodz.bas.fmt.rst.AbstractRstHandler;
+import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.meta.decl.Final;
 
-public class ReflectElementHandler
-        extends AbstractElementHandler {
+public class ReflectRstHandler
+        extends AbstractRstHandler {
 
     private Class<?> type;
     private Object obj;
 
-    public ReflectElementHandler() {
+    public ReflectRstHandler() {
         this.type = getClass();
         this.obj = this;
     }
 
-    public ReflectElementHandler(Object obj) {
+    public ReflectRstHandler(Object obj) {
         if (obj == null)
             throw new NullPointerException("obj");
         this.type = obj.getClass();
         this.obj = obj;
     }
 
-    public ReflectElementHandler(Class<?> type, Object obj) {
+    public ReflectRstHandler(Class<?> type, Object obj) {
         if (type == null)
             throw new NullPointerException("type");
         if (obj == null)
@@ -84,7 +85,7 @@ public class ReflectElementHandler
                 throw new ElementHandlerException("failed to get field " + attributeName, e);
             }
 
-        Parser parser = new Parser(fieldType, value);
+        StdValueParser parser = new StdValueParser(fieldType, value);
         value = parser.parse(attributeName, attributeData);
 
         if (!isFinalField)
@@ -97,7 +98,7 @@ public class ReflectElementHandler
     }
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
+    public IRstHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
         Field field = _getField(name);
         if (field == null)

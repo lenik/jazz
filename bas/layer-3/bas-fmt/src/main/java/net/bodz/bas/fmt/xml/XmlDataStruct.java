@@ -1,11 +1,11 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.xml;
 
 import net.bodz.bas.data.struct.IDataStruct;
 import net.bodz.bas.data.struct.ReflectSizeComputer;
 import net.bodz.bas.io.IDataIn;
 
-public abstract class RstDataStruct
-        extends AbstractRstObject
+public abstract class XmlDataStruct
+        extends XmlObject
         implements IDataStruct {
 
     private static final long serialVersionUID = 1L;

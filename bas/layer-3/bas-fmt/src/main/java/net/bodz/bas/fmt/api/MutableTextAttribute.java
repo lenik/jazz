@@ -1,16 +1,16 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.api;
 
 import java.io.Serializable;
 
-public class RstAttribute
-        implements IRstAttribute, Serializable {
+public class MutableTextAttribute
+        implements ITextAttribute, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
     private String data;
 
-    public RstAttribute(String name, String data) {
+    public MutableTextAttribute(String name, String data) {
         if (name == null)
             throw new NullPointerException("name");
         if (data == null)

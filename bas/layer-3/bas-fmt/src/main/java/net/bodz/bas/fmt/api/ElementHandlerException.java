@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.api;
 
 public class ElementHandlerException
         extends RuntimeException {

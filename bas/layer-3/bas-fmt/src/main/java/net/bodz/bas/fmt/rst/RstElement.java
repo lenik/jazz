@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.fmt.api.ITextAttribute;
+import net.bodz.bas.fmt.api.MutableTextAttribute;
+
 public class RstElement
-        implements IRstElement, IElementHandler, Serializable {
+        implements IRstElement, IRstHandler, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
     private String[] args;
 
-    private List<IRstAttribute> attributes;
+    private List<ITextAttribute> attributes;
     private List<IRstElement> children;
 
     // private transient Map<String, IStructfAttribute> attributeMap;
@@ -28,7 +31,7 @@ public class RstElement
     public RstElement(String name, String... args) {
         this.name = name;
         this.args = args;
-        attributes = new ArrayList<IRstAttribute>();
+        attributes = new ArrayList<ITextAttribute>();
         children = new ArrayList<IRstElement>();
     }
 
@@ -55,7 +58,7 @@ public class RstElement
     }
 
     @Override
-    public List<IRstAttribute> getAttributes() {
+    public List<ITextAttribute> getAttributes() {
         return attributes;
     }
 
@@ -64,18 +67,18 @@ public class RstElement
         return children;
     }
 
-    /** ⇱ Implementation Of {@link IElementHandler}. */
+    /** ⇱ Implementation Of {@link IRstHandler}. */
     /* _____________________________ */static section.iface __ELEMENT_HANDLER__;
 
     @Override
     public boolean attribute(String name, String data) {
-        RstAttribute attribute = new RstAttribute(name, data);
+        MutableTextAttribute attribute = new MutableTextAttribute(name, data);
         attributes.add(attribute);
         return true;
     }
 
     @Override
-    public IElementHandler beginChild(String name, String[] args) {
+    public IRstHandler beginChild(String name, String[] args) {
         return new RstElement(name, args);
     }
 

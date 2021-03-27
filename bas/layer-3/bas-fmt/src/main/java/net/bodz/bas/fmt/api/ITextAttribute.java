@@ -1,6 +1,6 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.api;
 
-public interface IRstAttribute {
+public interface ITextAttribute {
     /**
      * Get the attribute name.
      * 

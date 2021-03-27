@@ -1,31 +1,31 @@
-package net.bodz.bas.fmt.rst.obj;
+package net.bodz.bas.fmt.xml.obj;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import net.bodz.bas.fmt.rst.AbstractRstDumper;
-import net.bodz.bas.fmt.rst.IRstOverrides;
-import net.bodz.bas.fmt.rst.IRstOutput;
+import javax.xml.stream.XMLStreamException;
 
-public class ReflectRstDumper
-        extends AbstractRstDumper {
+import net.bodz.bas.fmt.xml.AbstractXmlDumper;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.IXmlOverrides;
 
-    public ReflectRstDumper(IRstOutput out) {
+public class ReflectXmlDumper extends AbstractXmlDumper {
+
+    public ReflectXmlDumper(IXmlOutput out) {
         super(out);
     }
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws IOException {
+            throws XMLStreamException {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             if (!stopClasses.contains(superclass))
                 formatObject(superclass, obj);
 
-        IRstOverrides formatOverride = null;
-        if (obj instanceof IRstOverrides)
-            formatOverride = (IRstOverrides) obj;
+        IXmlOverrides formatOverride = null;
+        if (obj instanceof IXmlOverrides)
+            formatOverride = (IXmlOverrides) obj;
 
         for (Field field : clazz.getDeclaredFields()) {
             String name = field.getName();
@@ -34,7 +34,7 @@ public class ReflectRstDumper
                 continue;
 
             if (formatOverride != null)
-                if (formatOverride.writeSpecialRstEntry(out, name))
+                if (formatOverride.writeSpecialXmlEntry(out, name))
                     continue;
 
             field.setAccessible(true);

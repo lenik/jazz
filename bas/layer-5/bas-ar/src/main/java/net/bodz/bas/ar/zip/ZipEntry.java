@@ -11,14 +11,14 @@ import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UNIX2;
 import net.bodz.bas.ar.zip.xf3.XF_InfoZip_UnicodePath;
 import net.bodz.bas.ar.zip.xf3.XF_Timestamp;
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.fmt.rst.RstObject;
+import net.bodz.bas.fmt.rst.AbstractRstObject;
 import net.bodz.bas.io.IDataIn;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 import net.bodz.bas.typer.std.ValidationException;
 
 public class ZipEntry
-        extends RstObject
+        extends AbstractRstObject
         implements IZipEntry/* , IDataStruct */{
 
     public static final int SIG_CEN = 0x02014b50;

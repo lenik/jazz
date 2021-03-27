@@ -9,6 +9,12 @@ import java.io.OutputStreamWriter;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.rst.obj.BeanRstDumper;
+import net.bodz.bas.fmt.rst.obj.BeanRstHandler;
+import net.bodz.bas.fmt.rst.obj.ReflectRstDumper;
+import net.bodz.bas.fmt.rst.obj.ReflectRstHandler;
+import net.bodz.bas.fmt.rst.obj.RstSource;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.BTreeOut;
 import net.bodz.bas.io.IPrintOut;
@@ -17,6 +23,23 @@ import net.bodz.bas.meta.source.FnHelper;
 
 @FnHelper
 public class RstFn {
+
+    public static IRstHandler getDefaultHandler(IRstSerializable obj) {
+        RstSource aRstSource = obj.getClass().getAnnotation(RstSource.class);
+        if (aRstSource != null)
+            if (aRstSource.bean() == true)
+                return new BeanRstHandler(obj);
+        return new ReflectRstHandler(obj);
+    }
+
+    public static void defaultDump(IRstSerializable obj, IRstOutput out)
+            throws IOException {
+        RstSource aRstSource = obj.getClass().getAnnotation(RstSource.class);
+        if (aRstSource != null)
+            if (aRstSource.bean() == true)
+                new BeanRstDumper(out).dump(obj);
+        new ReflectRstDumper(out).dump(obj);
+    }
 
     public static String toString(IRstSerializable obj) {
         BCharOut buf = new BCharOut(1024);
