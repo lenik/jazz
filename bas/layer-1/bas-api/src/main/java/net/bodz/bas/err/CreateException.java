@@ -1,5 +1,9 @@
 package net.bodz.bas.err;
 
+/**
+ * XXX deprecated.
+ * @see LoadException
+ */
 public class CreateException
         extends RuntimeException {
 

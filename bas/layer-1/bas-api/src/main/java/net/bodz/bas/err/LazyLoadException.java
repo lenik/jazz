@@ -2,20 +2,16 @@ package net.bodz.bas.err;
 
 /**
  * Failed to load.
- * 
+ *
  * Used in loading processes, like lazy-initialize, etc.
  */
 public class LazyLoadException
-        extends RuntimeException {
+        extends LoadException {
 
     private static final long serialVersionUID = 1L;
 
     public LazyLoadException() {
         super();
-    }
-
-    public LazyLoadException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 
     public LazyLoadException(String message, Throwable cause) {
