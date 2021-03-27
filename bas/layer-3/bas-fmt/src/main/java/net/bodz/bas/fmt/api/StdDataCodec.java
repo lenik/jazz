@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.api;
 
 import net.bodz.bas.c.enm.Enums;
 import net.bodz.bas.c.string.StringArray;
@@ -8,7 +8,7 @@ import net.bodz.bas.c.string.StringStat;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 
-public class DataCodec
+public class StdDataCodec
         implements IDataCodec {
 
     @Override

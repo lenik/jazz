@@ -7,18 +7,19 @@ import java.util.LinkedList;
 import net.bodz.bas.c.object.IEmptyConsts;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.io.res.IStreamInputSource;
 
 class Frame {
 
-    IElementHandler handler;
+    IRstHandler handler;
     RstElement save;
 
     public Frame(String elementName, String[] args) {
         this(elementName, args, null);
     }
 
-    public Frame(String elementName, String[] args, IElementHandler handler) {
+    public Frame(String elementName, String[] args, IRstHandler handler) {
         this.save = new RstElement(elementName, args);
         if (handler == null)
             handler = new RstElement(elementName, args);
@@ -29,7 +30,7 @@ class Frame {
 
 public class RstLoader {
 
-    public void load(IStreamInputSource inputSource, IElementHandler handler)
+    public void load(IStreamInputSource inputSource, IRstHandler handler)
             throws IOException, ParseException, ElementHandlerException {
         Reader reader = inputSource.newReader();
         IRstInput in = null;
@@ -43,7 +44,7 @@ public class RstLoader {
         }
     }
 
-    public void load(IRstInput in, IElementHandler handler)
+    public void load(IRstInput in, IRstHandler handler)
             throws IOException, ParseException, ElementHandlerException {
         int token;
 

@@ -11,7 +11,7 @@ import net.bodz.bas.data.codec.builtin.Base64Codec;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
+import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.RstInput;

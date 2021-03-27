@@ -1,11 +1,28 @@
 package user.zoo.bean;
 
-import net.bodz.bas.fmt.rst.RstObject;
+import java.io.IOException;
+
+import javax.xml.stream.XMLStreamException;
+
+import org.w3c.dom.Element;
+
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.rst.AbstractRstObject;
+import net.bodz.bas.fmt.rst.IRstHandler;
+import net.bodz.bas.fmt.rst.IRstOutput;
+import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.obj.RstSource;
+import net.bodz.bas.fmt.xml.IObjectXmlLoader;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.XmlFn;
 
 @RstSource(bean = true)
 public class Animal
-        extends RstObject {
+        extends AbstractRstObject
+        implements
+            IXmlSerializable {
 
     private String name;
     private boolean male;
@@ -53,6 +70,30 @@ public class Animal
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public void writeObject(IRstOutput out)
+            throws IOException {
+        RstFn.defaultDump(this, out);
+    }
+
+    @Override
+    public IRstHandler getElementHandler() {
+        return RstFn.getDefaultHandler(this);
+    }
+
+    @Override
+    public void writeObject(IXmlOutput out)
+            throws XMLStreamException {
+        XmlFn.defaultDump(this, out);
+    }
+
+    @Override
+    public void readObject(Element element)
+            throws ParseException, LoaderException {
+        IObjectXmlLoader loader = XmlFn.getDefaultLoader(this);
+        loader.loadXmlToObject(this, element);
     }
 
 }

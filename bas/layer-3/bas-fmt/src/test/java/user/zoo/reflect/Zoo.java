@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
-import net.bodz.bas.fmt.rst.RstObject;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.rst.AbstractRstObject;
+import net.bodz.bas.fmt.rst.IRstHandler;
+import net.bodz.bas.fmt.xml.IXmlSerializable;
 
 public class Zoo
-        extends RstObject {
+        extends AbstractRstObject
+        implements
+            IXmlSerializable {
 
     public String owner;
     public int createdYear;
@@ -18,9 +21,8 @@ public class Zoo
     public List<Dog> dogs = new ArrayList<Dog>();
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
-            throws ParseException,
-            ElementHandlerException {
+    public IRstHandler beginChild(String name, String[] args)
+            throws ParseException, ElementHandlerException {
         if ("cat".equals(name)) {
             Cat cat = new Cat();
             cats.add(cat);

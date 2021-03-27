@@ -17,6 +17,9 @@ public class CsvRecordsTest
     public void test1()
             throws IOException {
         URLResource classData = ClassResource.getData(getClass(), "1.csv");
+        if (classData == null)
+            throw new IOException("Can't resolve csv test data");
+
         CsvRecords csv = new CsvRecords(classData, ':');
         csv.setTrim(true);
 

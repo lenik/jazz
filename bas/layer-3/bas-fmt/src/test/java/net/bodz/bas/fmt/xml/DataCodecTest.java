@@ -1,4 +1,4 @@
-package net.bodz.bas.fmt.rst;
+package net.bodz.bas.fmt.xml;
 
 import org.junit.Assert;
 import org.junit.Test;

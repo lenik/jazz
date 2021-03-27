@@ -4,15 +4,15 @@ import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.AbstractElementHandler;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.rst.AbstractRstHandler;
+import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
-public class MapElementHandler<K, V>
-        extends AbstractElementHandler {
+public class MapRstBuffer<K, V>
+        extends AbstractRstHandler {
 
     Map<K, V> map;
     Class<K> keyType;
@@ -21,7 +21,7 @@ public class MapElementHandler<K, V>
     IParser<K> keyParser;
     IParser<V> valueParser;
 
-    public MapElementHandler(Map<K, V> map, Class<K> keyType, Class<V> valueType) {
+    public MapRstBuffer(Map<K, V> map, Class<K> keyType, Class<V> valueType) {
         this.map = map;
         this.keyType = keyType;
         this.valueType = valueType;
@@ -47,7 +47,7 @@ public class MapElementHandler<K, V>
     }
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
+    public IRstHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
         K key = keyParser.parse(name);
         V value = map.get(key);

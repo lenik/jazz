@@ -2,11 +2,11 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.IOException;
 
-public interface IRstFormat {
+public interface IRstOverrides {
 
     String[] getRstElementArguments();
 
-    boolean writeEntryOverride(IRstOutput out, String name)
+    boolean writeSpecialRstEntry(IRstOutput out, String name)
             throws IOException;
 
 }

@@ -16,9 +16,9 @@ import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.AbstractElementHandler;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.rst.AbstractRstHandler;
+import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 
@@ -302,12 +302,12 @@ class RstFoo
     }
 
     @Override
-    public IElementHandler getElementHandler() {
+    public IRstHandler getElementHandler() {
         return new EH();
     }
 
     class EH
-            extends AbstractElementHandler {
+            extends AbstractRstHandler {
 
         @Override
         public boolean attribute(String name, String data)

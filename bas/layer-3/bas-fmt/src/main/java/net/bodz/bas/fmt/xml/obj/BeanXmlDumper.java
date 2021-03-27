@@ -1,13 +1,14 @@
-package net.bodz.bas.fmt.rst.obj;
+package net.bodz.bas.fmt.xml.obj;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
-import net.bodz.bas.fmt.rst.AbstractRstDumper;
-import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstOverrides;
+import javax.xml.stream.XMLStreamException;
+
+import net.bodz.bas.fmt.xml.AbstractXmlDumper;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.IXmlOverrides;
 import net.bodz.bas.meta.bean.Transient;
 
 import com.googlecode.openbeans.BeanInfo;
@@ -15,21 +16,21 @@ import com.googlecode.openbeans.IntrospectionException;
 import com.googlecode.openbeans.Introspector;
 import com.googlecode.openbeans.PropertyDescriptor;
 
-public class BeanRstDumper
-        extends AbstractRstDumper {
+public class BeanXmlDumper
+        extends AbstractXmlDumper {
 
-    public BeanRstDumper(IRstOutput out) {
+    public BeanXmlDumper(IXmlOutput out) {
         super(out);
     }
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws IOException {
+            throws XMLStreamException {
         marks.add(obj);
 
-        IRstOverrides formatOverride = null;
-        if (obj instanceof IRstOverrides)
-            formatOverride = (IRstOverrides) obj;
+        IXmlOverrides formatOverride = null;
+        if (obj instanceof IXmlOverrides)
+            formatOverride = (IXmlOverrides) obj;
 
         BeanInfo beanInfo;
         try {
@@ -59,12 +60,11 @@ public class BeanRstDumper
             if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers))
                 continue;
 
-            // if (getter.isAnnotationPresent(java.beans.Transient.class)) continue;
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
             if (formatOverride != null)
-                if (formatOverride.writeSpecialRstEntry(out, name))
+                if (formatOverride.writeSpecialXmlEntry(out, name))
                     continue;
 
             Object value;
