@@ -191,7 +191,9 @@ public class LoginToken
         JsonObject _user = o.getChild("user");
         if (_user != null) {
             User user = new User();
-            user.readObject(_user);
+            user.setId(_user.getInt("id"));
+            user.setName(_user.getString("name"));
+            user.setFullName(_user.getString("fullName"));
             this.user = user;
         }
     }
