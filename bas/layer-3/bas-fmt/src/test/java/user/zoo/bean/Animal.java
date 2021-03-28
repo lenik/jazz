@@ -90,10 +90,11 @@ public class Animal
     }
 
     @Override
-    public void readObject(Element element)
+    public Animal readObject(Element element)
             throws ParseException, LoaderException {
         IObjectXmlLoader loader = XmlFn.getDefaultLoader(this);
         loader.loadXmlToObject(this, element);
+        return this;
     }
 
 }

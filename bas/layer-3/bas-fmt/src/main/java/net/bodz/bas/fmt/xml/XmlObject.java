@@ -36,9 +36,10 @@ public abstract class XmlObject
     }
 
     @Override
-    public void readObject(Element element)
+    public Object readObject(Element element)
             throws ParseException, LoaderException {
         _loader().loadXmlToObject(this, element);
+        return this;
     }
 
     /** ⇱ Implementation Of {@link IXmlOverrides}. */

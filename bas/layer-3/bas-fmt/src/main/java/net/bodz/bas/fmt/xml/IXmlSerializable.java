@@ -16,10 +16,11 @@ public interface IXmlSerializable {
         XmlFn.defaultDump(this, out);
     }
 
-    default void readObject(Element element)
+    default Object readObject(Element element)
             throws ParseException, LoaderException {
         IObjectXmlLoader loader = XmlFn.getDefaultLoader(this);
         loader.loadXmlToObject(this, element);
+        return this;
     }
 
     class xml
