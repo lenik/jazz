@@ -8,30 +8,30 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.LocaleVars;
 import net.bodz.bas.t.variant.AbstractVariantMap;
 
-public abstract class AbstractNLS
+public abstract class AbstractNlstr
         extends AbstractVariantMap<String>
-        implements NLS {
+        implements INlsTranslator {
 
-    private final NLS parent;
+    private final INlsTranslator parent;
 
     private Locale preferredLocale;
     private String name;
 
-    public AbstractNLS() {
+    public AbstractNlstr() {
         this(null, LocaleVars.LOCALE.get());
     }
 
     /**
      * This constructor doesn't call {@link #reload(Locale)}.
      */
-    public AbstractNLS(NLS parent) {
+    public AbstractNlstr(INlsTranslator parent) {
         this(parent, LocaleVars.LOCALE.get());
     }
 
     /**
      * This constructor doesn't call {@link #reload(Locale)}.
      */
-    public AbstractNLS(NLS parent, Locale preferredLocale) {
+    public AbstractNlstr(INlsTranslator parent, Locale preferredLocale) {
         this.parent = parent;
         this.preferredLocale = preferredLocale;
 
@@ -42,7 +42,7 @@ public abstract class AbstractNLS
     }
 
     @Override
-    public NLS getParent() {
+    public INlsTranslator getParent() {
         return parent;
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractNLS
     @Override
     public String getPath() {
         StringBuilder buf = new StringBuilder(100);
-        NLS node = this;
+        INlsTranslator node = this;
         do {
             String nodeName = node.getName();
 

@@ -17,7 +17,7 @@ public class DefaultJsonForm
     }
 
     @Override
-    public String readInStr() {
+    public String toJsonStr() {
         if (obj == null)
             return null;
         else
@@ -25,7 +25,7 @@ public class DefaultJsonForm
     }
 
     @Override
-    public void writeInStr(String jsonStr)
+    public void fromJsonStr(String jsonStr)
             throws ParseException {
         if (jsonStr == null) {
             obj.readObject(null);

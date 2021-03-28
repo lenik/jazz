@@ -109,12 +109,12 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void _(Object message) {
+    public void sig(Object message) {
         prependMessageBuffer.add(message);
     }
 
     @Override
-    public void _(Object... messagePieces) {
+    public void sig(Object... messagePieces) {
         if (messagePieces == null)
             throw new NullPointerException("messagePieces");
         for (int i = 0; i < messagePieces.length; i++)
@@ -154,13 +154,13 @@ public abstract class AbstractLogSink
             p(line);
         }
         s = s.substring(start);
-        _(s);
+        sig(s);
     }
 
     @Override
     public void write(char[] chars, int off, int len)
             throws IOException {
-        _(new String(chars, off, len));
+        sig(new String(chars, off, len));
     }
 
     @Override
@@ -169,7 +169,7 @@ public abstract class AbstractLogSink
         if (ch == '\n')
             _done();
         else
-            _(ch);
+            sig(ch);
     }
 
 }

@@ -46,7 +46,7 @@ public class TypeSpaceTest
 
     }
 
-    static Class<?>[] _(Class<?>... types) {
+    static Class<?>[] __(Class<?>... types) {
         return types;
     }
 
@@ -64,15 +64,15 @@ public class TypeSpaceTest
         D d = new D();
 
         // illegal numbers
-        d.o(_(A.class), _(B.class, C.class), -1);
+        d.o(__(A.class), __(B.class, C.class), -1);
 
         // B → A
         // C → B
-        d.o(_(A.class, B.class), _(B.class, C.class), 2);
+        d.o(__(A.class, B.class), __(B.class, C.class), 2);
 
         // A → Y → X
         // C → Z1 → Y
-        d.o(_(X.class, Y.class), _(A.class, C.class), 4);
+        d.o(__(X.class, Y.class), __(A.class, C.class), 4);
     }
 
 }

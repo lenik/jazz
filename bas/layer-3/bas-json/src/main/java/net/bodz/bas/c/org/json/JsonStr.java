@@ -5,7 +5,8 @@ import java.sql.SQLException;
 import net.bodz.bas.err.ParseException;
 
 public class JsonStr
-        implements IJsonForm {
+        implements
+            IJsonForm {
 
     String json;
 
@@ -17,20 +18,20 @@ public class JsonStr
     }
 
     @Override
-    public String readInStr() {
+    public String toJsonStr() {
         return json;
     }
 
     @Override
-    public void writeInStr(String jsonStr)
+    public void fromJsonStr(String jsonStr)
             throws ParseException {
         this.json = jsonStr;
     }
 
-    public void writeInStr_sql(String jsonStr)
+    public void fromJsonStr_sql(String jsonStr)
             throws SQLException {
         try {
-            writeInStr(jsonStr);
+            fromJsonStr(jsonStr);
         } catch (ParseException e) {
             throw new SQLException(String.format(//
                     "Failed to parse: %s, json: %s", e.getMessage(), json), e);

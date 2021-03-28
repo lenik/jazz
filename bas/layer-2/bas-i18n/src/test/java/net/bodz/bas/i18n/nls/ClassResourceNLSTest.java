@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.nls;
 
-import static net.bodz.bas.i18n.nls.FoodNLS.FoodNLS;
+import static net.bodz.bas.i18n.nls.FoodNlstr.FoodNLS;
 
 import java.util.Locale;
 

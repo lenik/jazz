@@ -68,13 +68,13 @@ public class DecoratedLogSink
     }
 
     @Override
-    public void _(Object message) {
-        getWrapped()._(message);
+    public void sig(Object message) {
+        getWrapped().sig(message);
     }
 
     @Override
-    public void _(Object... messagePieces) {
-        getWrapped()._(messagePieces);
+    public void sig(Object... messagePieces) {
+        getWrapped().sig(messagePieces);
     }
 
     @Override

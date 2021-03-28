@@ -41,14 +41,14 @@ public class ChildJob {
     public void exec() {
         ILogSink info = getLogger().getInfoSink();
 
-        info._("Loading...   ");
+        info.sig("Loading...   ");
         try {
             new FileInputStream("/!@#$Not-exist file!");
         } catch (FileNotFoundException e) {
             logger.getErrorSink().p("Open failed", e);
         }
 
-        info._("Child execute...");
+        info.sig("Child execute...");
 
         parent.query("query from child");
 

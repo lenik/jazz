@@ -49,11 +49,11 @@ public class NullLogSink
     }
 
     @Override
-    public void _(Object message) {
+    public void sig(Object message) {
     }
 
     @Override
-    public void _(Object... messagePieces) {
+    public void sig(Object... messagePieces) {
     }
 
     @Override

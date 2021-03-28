@@ -26,7 +26,7 @@ public class JsonObjTypeHandler
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JsonObj parameter, JdbcType jdbcType)
             throws SQLException {
-        String json = parameter.readInStr();
+        String json = parameter.toJsonStr();
         PGobject pgo = new PGobject();
         pgo.setType("json"); // jsonb .. similar.
         pgo.setValue(json);
@@ -39,7 +39,7 @@ public class JsonObjTypeHandler
         String json = rs.getString(columnName);
         JsonObj val = new JsonObj();
         try {
-            val.writeInStr(json);
+            val.fromJsonStr(json);
         } catch (ParseException e) {
             throw new SQLException("Failed to parse: " + json, e);
         }
@@ -49,12 +49,12 @@ public class JsonObjTypeHandler
     @Override
     public JsonObj getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        String json = rs.getString(columnIndex);
+        String jsonData = rs.getString(columnIndex);
         JsonObj val = new JsonObj();
         try {
-            val.writeInStr(json);
+            val.fromJsonStr(jsonData);
         } catch (ParseException e) {
-            throw new SQLException("Failed to parse: " + json, e);
+            throw new SQLException("Failed to parse: " + jsonData, e);
         }
         return val;
     }
@@ -65,7 +65,7 @@ public class JsonObjTypeHandler
         String json = cs.getString(columnIndex);
         JsonObj val = new JsonObj();
         try {
-            val.writeInStr(json);
+            val.fromJsonStr(json);
         } catch (ParseException e) {
             throw new SQLException("Failed to parse: " + json, e);
         }

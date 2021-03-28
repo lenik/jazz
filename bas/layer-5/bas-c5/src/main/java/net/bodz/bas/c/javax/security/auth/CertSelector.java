@@ -5,10 +5,13 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.*;
+import java.security.KeyStore;
 import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
+import java.security.KeyStoreException;
+import java.security.Provider;
 import java.security.Provider.Service;
+import java.security.Security;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +137,7 @@ public class CertSelector
             }
         }
         if (type > detType)
-            throw new IllegalArgumentException(tr._("Type(%s) is not completed: %s", type, curl));
+            throw new IllegalArgumentException(nls.tr("Type(%s) is not completed: %s", type, curl));
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -242,7 +245,7 @@ public class CertSelector
                 if (storeFile != null)
                     in = new FileInputStream(storeFile);
                 else
-                    throw new IllegalStateException(tr._("No key store specified?"));
+                    throw new IllegalStateException(nls.tr("No key store specified?"));
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);

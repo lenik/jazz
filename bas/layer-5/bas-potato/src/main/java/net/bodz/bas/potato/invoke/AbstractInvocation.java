@@ -79,7 +79,7 @@ public abstract class AbstractInvocation
         if (value != null) {
             Class<?> type = getParameterType(index);
             if (!Primitives.box(type).isInstance(value)) {
-                String fmt = tr._("Parameter[%d] is %s, but set to %s");
+                String fmt = nls.tr("Parameter[%d] is %s, but set to %s");
                 throw new ClassCastException(String.format(fmt, index, type, value.getClass()));
             }
         }

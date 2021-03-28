@@ -8,7 +8,7 @@ import net.bodz.bas.log.message.StringFormatMessage;
 
 /**
  * Features:
- * 
+ *
  * <ul>
  * <li>Short function names ({@link #p(Object)}, {@link #_(Object)}, etc.)
  * <li>{@link IPrintOut} functions are optional to the underlying.
@@ -19,7 +19,7 @@ public interface ILogSink
 
     /**
      * Device log function, discard any verbose level.
-     * 
+     *
      * @throws NullPointerException
      *             If <code>event</code> is <code>null</code>.
      */
@@ -75,12 +75,12 @@ public interface ILogSink
     /**
      * Message may be buffered, without new line.
      */
-    void _(Object message);
+    void sig(Object message);
 
     /**
      * @see ArrayJoinMessage
      */
-    void _(Object... messagePieces);
+    void sig(Object... messagePieces);
 
     /**
      * All buffered messages composed to a log entry. If there is none, do nothing.
@@ -89,7 +89,7 @@ public interface ILogSink
 
     /**
      * All buffered messages composed to a log entry. If there is none, do nothing.
-     * 
+     *
      * @param exception
      *            Can be <code>null</code> if no exception.
      */
