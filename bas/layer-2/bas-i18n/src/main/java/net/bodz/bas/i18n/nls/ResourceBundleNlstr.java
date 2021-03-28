@@ -6,32 +6,32 @@ import java.util.ResourceBundle;
 
 import net.bodz.bas.c.java.util.UTF8ResourceBundle;
 
-public class ResourceBundleNLS
-        extends AbstractNLS {
+public class ResourceBundleNlstr
+        extends AbstractNlstr {
 
     private final String baseName;
 
     private ResourceBundle resourceBundle;
 
-    ResourceBundleNLS(NLS parent) {
+    ResourceBundleNlstr(INlsTranslator parent) {
         this(parent, Locale.getDefault());
     }
 
-    ResourceBundleNLS(NLS parent, Locale locale) {
+    ResourceBundleNlstr(INlsTranslator parent, Locale locale) {
         super(parent, locale);
         this.baseName = getClass().getName();
         reload();
     }
 
-    public ResourceBundleNLS(NLS parent, String baseName) {
+    public ResourceBundleNlstr(INlsTranslator parent, String baseName) {
         this(parent, baseName, Locale.getDefault());
     }
 
-    public ResourceBundleNLS(NLS parent, String baseName, Locale locale) {
+    public ResourceBundleNlstr(INlsTranslator parent, String baseName, Locale locale) {
         this(parent, baseName, UTF8ResourceBundle.getBundle(baseName, locale));
     }
 
-    protected ResourceBundleNLS(NLS parent, String baseName, ResourceBundle resourceBundle) {
+    protected ResourceBundleNlstr(INlsTranslator parent, String baseName, ResourceBundle resourceBundle) {
         super(parent, resourceBundle.getLocale());
         if (baseName == null)
             throw new NullPointerException("baseName");

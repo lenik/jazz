@@ -4,16 +4,16 @@ import java.util.Locale;
 
 import net.bodz.bas.i18n.LocaleVars;
 
-public final class CombinedNLS
-        extends AbstractNLS {
+public final class CombinedNlstr
+        extends AbstractNlstr {
 
-    private final NLS[] children;
+    private final INlsTranslator[] children;
 
-    public CombinedNLS(NLS parent, NLS... children) {
+    public CombinedNlstr(INlsTranslator parent, INlsTranslator... children) {
         this(LocaleVars.LOCALE.get(), parent, children);
     }
 
-    public CombinedNLS(Locale preferredLocale, NLS parent, NLS... children) {
+    public CombinedNlstr(Locale preferredLocale, INlsTranslator parent, INlsTranslator... children) {
         super(parent, preferredLocale);
         if (children == null)
             throw new NullPointerException("children");
@@ -24,7 +24,7 @@ public final class CombinedNLS
     public void setPreferredLocale(Locale preferredLocale) {
         super.setPreferredLocale(preferredLocale);
         for (int i = 0; i < children.length; i++) {
-            NLS dict = children[i];
+            INlsTranslator dict = children[i];
             dict.setPreferredLocale(preferredLocale);
         }
     }
@@ -56,7 +56,7 @@ public final class CombinedNLS
     @Override
     protected Object localGet(Object key) {
         for (int i = 0; i < children.length; i++) {
-            NLS dict = children[i];
+            INlsTranslator dict = children[i];
             Object value = dict.get(key);
             if (value != null)
                 return value;

@@ -25,7 +25,7 @@ public class JsonFormTypeHandler
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, IJsonForm parameter, JdbcType jdbcType)
             throws SQLException {
-        String json = parameter.readInStr();
+        String json = parameter.toJsonStr();
         PGobject pgo = new PGobject();
         pgo.setType("json"); // jsonb .. similar.
         pgo.setValue(json);
@@ -37,7 +37,7 @@ public class JsonFormTypeHandler
             throws SQLException {
         String json = rs.getString(columnName);
         JsonStr val = new JsonStr();
-        val.writeInStr_sql(json);
+        val.fromJsonStr_sql(json);
         return val;
     }
 
@@ -46,7 +46,7 @@ public class JsonFormTypeHandler
             throws SQLException {
         String json = rs.getString(columnIndex);
         JsonStr val = new JsonStr();
-        val.writeInStr_sql(json);
+        val.fromJsonStr_sql(json);
         return val;
     }
 
@@ -55,7 +55,7 @@ public class JsonFormTypeHandler
             throws SQLException {
         String json = cs.getString(columnIndex);
         JsonStr val = new JsonStr();
-        val.writeInStr_sql(json);
+        val.fromJsonStr_sql(json);
         return val;
     }
 

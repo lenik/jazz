@@ -7,14 +7,14 @@ import org.junit.Test;
 public class ClassSelectionTest
         extends ReflectQueryTestBase {
 
-    static Object[] _(Object... args) {
+    static Object[] sig(Object... args) {
         return args;
     }
 
     @Test
     public void testClassChain()
             throws Exception {
-        assertArrayEquals(_(A2.class, A1.class, A.class, Object.class), //
+        assertArrayEquals(sig(A2.class, A1.class, A.class, Object.class), //
                 new ClassSelection(A2.class).toArray());
     }
 
@@ -23,7 +23,7 @@ public class ClassSelectionTest
             throws Exception {
         Class<?>[] a = new ClassSelection(A2.class).stopAt(A.class).toArray();
         System.out.println(Arrays.asList(a));
-        assertArrayEquals(_(A2.class, A1.class), //
+        assertArrayEquals(sig(A2.class, A1.class), //
                 new ClassSelection(A2.class).stopAt(A.class).toArray());
     }
 

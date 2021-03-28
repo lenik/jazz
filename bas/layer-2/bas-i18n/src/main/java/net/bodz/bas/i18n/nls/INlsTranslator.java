@@ -6,14 +6,14 @@ import java.util.Set;
 import net.bodz.bas.t.variant.ILookupMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
-public interface NLS
+public interface INlsTranslator
         extends IVariantMap<String> {
 
-    NLS getParent();
+    INlsTranslator getParent();
 
     /**
      * The descriptive name.
-     * 
+     *
      * @return A non-<code>null</code> name string.
      */
     String getName();
@@ -44,7 +44,7 @@ public interface NLS
 
     /**
      * Returns whether a specified dict key is defined in the dict.
-     * 
+     *
      * @param key
      *            A non-<code>null</code> dict key to be queried.
      * @return <code>true</code> If the dict key is defined.
@@ -54,7 +54,7 @@ public interface NLS
 
     /**
      * Get the value of the dict entry with the specified <code>key</code>.
-     * 
+     *
      * @param key
      *            The non-<code>null</code> dict key to be queried.
      * @return The value of the dict entry. If the entry isn't existed, <code>null</code> is
@@ -66,7 +66,7 @@ public interface NLS
     /**
      * Get the value of the dict entry in string format with the specified <code>key</code>
      * specified.
-     * 
+     *
      * @param key
      *            A non-<code>null</code> dict key to be queried.
      * @return The value of the dict entry. If the entry isn't existed, <code>defaultValue</code> is
@@ -77,7 +77,7 @@ public interface NLS
 
     /**
      * Get the value of the dict entry with the specified <code>key</code>, and format it to string.
-     * 
+     *
      * @param key
      *            A non-<code>null</code> dict key to be queried.
      * @return A converted string of the value of the dict entry. If the entry isn't existed,
@@ -89,7 +89,7 @@ public interface NLS
     /**
      * Get the value of the dict entry in string format, with the specified <code>key</code>, with a
      * default value specified.
-     * 
+     *
      * @param key
      *            A non-<code>null</code> dict key to be queried.
      * @return A converted string of the value of the dict entry. If the entry isn't existed,
@@ -103,13 +103,13 @@ public interface NLS
      * <code>formatKey</code>.
      * <p>
      * This is just the same as
-     * 
+     *
      * <pre>
      * String.format(getString(formatKey), args)
      * </pre>
-     * 
+     *
      * The <code>formatKey</code> must exist, otherwise {@link NullPointerException} will be thrown.
-     * 
+     *
      * @param formatKey
      *            A non-<code>null</code> dict key to be queried.
      * @param args
@@ -127,7 +127,7 @@ public interface NLS
      * <p>
      * This is just a shortcut for: <code>getString(name, name)</code>, however returns
      * <code>null</code> for <code>null</code> name.
-     * 
+     *
      * @param name
      *            The name to be translated.
      * @return The translated name, or the original <code>name</code> if no translation is

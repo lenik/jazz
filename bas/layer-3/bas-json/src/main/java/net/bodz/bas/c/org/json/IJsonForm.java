@@ -4,9 +4,9 @@ import net.bodz.bas.err.ParseException;
 
 public interface IJsonForm {
 
-    String readInStr();
+    String toJsonStr();
 
-    void writeInStr(String jsonStr)
+    void fromJsonStr(String jsonStr)
             throws ParseException;
 
 }

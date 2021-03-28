@@ -63,7 +63,7 @@ public class Providers
             }
             IParser<Provider> parser = parsers.get(type);
             if (parser == null)
-                throw new ParseException(tr._("No such provider: ") + type);
+                throw new ParseException(nls.tr("No such provider: ") + type);
             return parser.parse(s);
         }
 
@@ -124,7 +124,7 @@ public class Providers
                 throws ParseException {
             CURL curl = new CURL(s);
             if (curl.getType() != null)
-                throw new ParseException(tr._("the type should be stripped."));
+                throw new ParseException(nls.tr("the type should be stripped."));
             Alpha[] alphas = curl.getAlphas();
             String path = alphas[0].formatBetas();
             Provider provider = null;
@@ -154,7 +154,7 @@ public class Providers
                                 throw new ParseException(e);
                             }
                             if (slots.length == 0)
-                                throw new ParseException(tr._("no slot"));
+                                throw new ParseException(nls.tr("no slot"));
                             int got = -1;
                             for (int i = 0; i < slots.length; i++) {
                                 String slotId = ":" + slots[i];
@@ -165,7 +165,7 @@ public class Providers
                                 }
                             }
                             if (got == -1)
-                                throw new ParseException(tr._("no available slot!"));
+                                throw new ParseException(nls.tr("no available slot!"));
                             provider = sprov;
                         }
                     } else
@@ -212,7 +212,7 @@ public class Providers
             } catch (ProviderException e) {
                 FileResource resource = new FileResource(file);
                 String config = resource.to(StreamReading.class).readString();
-                System.err.println(tr._("Config error: ") + e.getMessage());
+                System.err.println(nls.tr("Config error: ") + e.getMessage());
                 System.err.println(config);
                 throw e;
             }

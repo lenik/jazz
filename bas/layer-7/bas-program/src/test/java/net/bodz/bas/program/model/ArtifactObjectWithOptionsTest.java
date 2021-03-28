@@ -2,6 +2,7 @@ package net.bodz.bas.program.model;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -9,33 +10,32 @@ import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
-public class ArtifactObjectWithOptionsTest
-        extends ArtifactObjectWithOptions {
+public class ArtifactObjectWithOptionsTest extends ArtifactObjectWithOptions {
 
     /**
      * My name.
-     * 
+     *
      * @option
      */
     private String myName = "Lucy";
 
     /**
      * A hidden option.
-     * 
+     *
      * @option hidden
      */
     int yourAge = 13;
 
     /**
      * Serial bits.
-     * 
+     *
      * @option
      */
     protected boolean[] serial;
 
     /**
      * The name property.
-     * 
+     *
      * @option
      */
     public String getTheName() {
@@ -48,7 +48,7 @@ public class ArtifactObjectWithOptionsTest
 
     /**
      * Show greeting message.
-     * 
+     *
      * @option
      */
     String hello(String myNameBeingUsed) {
@@ -58,7 +58,7 @@ public class ArtifactObjectWithOptionsTest
 
     /**
      * Show greeting message.
-     * 
+     *
      * @option --hello2
      */
     String hello(String myFirstName, String myLastName) {
@@ -68,21 +68,21 @@ public class ArtifactObjectWithOptionsTest
 
     /**
      * The first feature.
-     * 
+     *
      * @option -a
      */
     boolean feature1;
 
     /**
      * The second feature.
-     * 
+     *
      * @option -b
      */
     boolean feature2;
 
     /**
      * The third feature.
-     * 
+     *
      * @option -c
      */
     boolean feature3;
@@ -103,13 +103,13 @@ public class ArtifactObjectWithOptionsTest
 
         type.getProperty("myName").getValue(this);
 
-        assertEquals("Lucy", type.get(this, "myName"));
-        assertEquals(13, type.get(this, "yourAge"));
+        Assert.assertEquals("Lucy", type.get(this, "myName"));
+        Assert.assertEquals(13, (int) type.get(this, "yourAge"));
 
         type.set(this, "myName", "Linda");
         type.set(this, "yourAge", 17);
-        assertEquals("Linda", myName);
-        assertEquals(17, yourAge);
+        Assert.assertEquals("Linda", myName);
+        Assert.assertEquals(17, yourAge);
     }
 
     @Test
