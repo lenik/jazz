@@ -134,6 +134,7 @@ public class AbstractJsonResponse<self_t>
     }
 
     public self_t fail(Throwable e, int status, String message) {
+        logger.error("A json failure detected: " + message, e);
         logbuf.warn(e, "ajax failed with: " + message);
         this.exception = e;
         return fail(message);
