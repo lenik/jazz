@@ -20,6 +20,7 @@ public class RichProperties
 
     static final String K_IMAGES = "images";
     static final String K_VIDEOS = "videos";
+    static final String K_PDFS = "pdfs";
 
     public final synchronized <T> List<T> getListAttribute(String name) {
         List<T> list = getAttribute(name);
@@ -61,10 +62,9 @@ public class RichProperties
             throws ParseException {
         switch (key) {
         case K_IMAGES:
-            setImages(ItemFile.convert((JSONArray) val));
-            return true;
         case K_VIDEOS:
-            setVideos(ItemFile.convert((JSONArray) val));
+        case K_PDFS:
+            setAttribute(key, ItemFile.convert((JSONArray) val));
             return true;
         }
         return super.readFromJson(key, val);
