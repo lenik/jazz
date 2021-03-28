@@ -36,4 +36,9 @@ public class ClassTypers
         }
     }
 
+    @Override
+    public String format(Class object, IOptions options) {
+        return object.getCanonicalName();
+    }
+
 }
