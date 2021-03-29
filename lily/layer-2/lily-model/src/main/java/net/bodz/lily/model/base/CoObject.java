@@ -55,8 +55,15 @@ import net.bodz.lily.security.login.LoginToken;
  */
 @IncludeMapperXml
 public abstract class CoObject
-        implements IAccessControlled, IContent, IReinitializable, IStated, //
-        Serializable, IVarMapSerializable, IJsonSerializable {
+        implements
+            IAccessControlled,
+            IContent,
+            IReinitializable,
+            IStated, //
+            Serializable,
+            IVarMapSerializable,
+            IJsonSerializable,
+            Cloneable {
 
     private static final long serialVersionUID = 1L;
 
@@ -525,8 +532,7 @@ public abstract class CoObject
     }
 
     /**
-     * <p lang="en>
-     * Access Control List (ACL) applied on this object.
+     * <p lang="en> Access Control List (ACL) applied on this object.
      *
      * <p lang="zh">
      * 在该对象上应用的访问控制列表。
@@ -543,6 +549,15 @@ public abstract class CoObject
 
     public void setAcl(int acl) {
         this.acl = acl;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new UnsupportedOperationException(e.getMessage(), e);
+        }
     }
 
     /** ⇱ Implementation Of {@link IVarMapSerializable}. */

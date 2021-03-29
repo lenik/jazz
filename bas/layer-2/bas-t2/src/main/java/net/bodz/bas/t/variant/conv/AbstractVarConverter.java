@@ -153,8 +153,8 @@ public abstract class AbstractVarConverter<T>
         if (this.type == type)
             return type.cast(value);
 
-        Class<?> boxed = Primitives.box(type);
-        ITransformer<T, ?> fn = tomap.get(boxed);
+        Class<?> boxedType = Primitives.box(type);
+        ITransformer<T, ?> fn = tomap.get(boxedType);
         if (fn != null)
             return (U) fn.transform(value);
 

@@ -8,14 +8,15 @@ import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.IdAwares;
+import net.bodz.lily.entity.IdFn;
 
 /**
  * aka. Common Entity.
  */
 public class CoEntity<Id>
         extends CoObject
-        implements IId<Id> {
+        implements
+            IId<Id> {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +24,7 @@ public class CoEntity<Id>
 
     @Override
     public Class<Id> idType() {
-        return IdAwares._getIdType(getClass());
+        return IdFn._getIdType(getClass());
     }
 
     @FormInput(readOnly = true)
