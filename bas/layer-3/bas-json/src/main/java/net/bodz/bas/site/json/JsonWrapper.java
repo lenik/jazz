@@ -2,8 +2,9 @@ package net.bodz.bas.site.json;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.json.JSONObject;
 
@@ -12,7 +13,9 @@ import net.bodz.json.JSONObject;
  *
  * @see JsonWrapper_json
  */
-public class JsonWrapper {
+public class JsonWrapper
+        implements
+            IVarMapSerializable {
 
     String key;
     Object obj;
@@ -65,22 +68,27 @@ public class JsonWrapper {
         if (json == null)
             return this;
         JSONObject obj = new JSONObject(json);
-        for (String key : (Set<String>) obj.keySet()) {
+        for (String key : obj.keySet()) {
             String format = obj.getString(key);
             formats.put(key, format);
         }
         return this;
     }
 
-    public JsonWrapper params(IVariantMap<String> q) {
-        String formatJson = q.getString("format");
+    @Override
+    public void readObject(IVariantMap<String> map) {
+        String formatJson = map.getString("format");
         if (formatJson != null)
             format(formatJson);
 
-        Integer depth = q.getInt("depth", null);
+        Integer depth = map.getInt("depth", null);
         if (depth != null)
             depth(depth);
-        return this;
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
+        throw new NotImplementedException();
     }
 
     public static JsonWrapper wrap(Object obj) {
