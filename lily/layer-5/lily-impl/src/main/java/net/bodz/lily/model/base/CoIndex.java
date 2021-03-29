@@ -51,6 +51,7 @@ import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ILazyId;
+import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
 import net.bodz.lily.template.RichProperties;
@@ -69,6 +70,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 
     private Class<T> objectType;
+    private Class<?> idType;
     private Class<M> maskType;
     protected DataContext dataContext;
 
@@ -81,6 +83,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         } else {
             objectType = TypeParam.infer1(getClass(), CoIndex.class, 0);
         }
+        idType = IdFn._getIdType(objectType);
         maskType = TypeParam.infer1(getClass(), CoIndex.class, 1);
     }
 
@@ -96,6 +99,10 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     public Class<T> getObjectType() {
         return objectType;
+    }
+
+    public Class<?> getIdType() {
+        return idType;
     }
 
     @Override
@@ -217,13 +224,31 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected JsonWrapper newHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        try {
-            T obj = create();
-            JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").params(q).withNull().withFalse();
-            return wrapper;
-        } catch (Exception e) {
-            throw new RequestHandlerException(e.getMessage(), e);
+        T obj;
+        String idStr = q.getString("templateId");
+        if (idStr != null) {
+            Object id;
+            try {
+                id = IdFn.parseId(idType, idStr);
+            } catch (ParseException e) {
+                throw new RequestHandlerException("invalid id specifier(" + idStr + "): " + e.getMessage(), e);
+            }
+            T template = load(id);
+            if (template != null) {
+                @SuppressWarnings("unchecked")
+                T copy = (T) template.clone();
+                obj = copy;
+            } else
+                throw new RequestHandlerException("template id isn't existed: " + id);
         }
+        try {
+            obj = create();
+        } catch (ReflectiveOperationException e) {
+            throw new RequestHandlerException("failed to create: " + e.getMessage(), e);
+        }
+        JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").withNull().withFalse();
+        wrapper.readObject(q);
+        return wrapper;
     }
 
     protected JsonWrapper loadHandler(String _id, IVariantMap<String> q) {
@@ -231,7 +256,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         IMapperTemplate<T, M> mapper = requireMapper();
         T obj = mapper.select(id);
         obj = postLoad(obj);
-        JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").params(q).withNull().withFalse();
+        JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").withNull().withFalse();
+        wrapper.readObject(q);
         return wrapper;
     }
 
@@ -308,7 +334,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return instance;
     }
 
-    protected T load(long id) {
+    protected T load(Object id) {
         IMapperTemplate<T, M> mapper = requireMapper();
         T instance = mapper.select(id);
         return instance;
