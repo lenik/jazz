@@ -11,7 +11,7 @@ import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
-import net.bodz.lily.entity.IdAwares;
+import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.security.User;
@@ -94,13 +94,13 @@ public class DiaryParty
     public boolean partialEquals(DiaryParty o) {
         if (value != o.value)
             return false;
-        if (!IdAwares._nullable.idEquals(diary, o.diary))
+        if (!IdFn.idEquals(diary, o.diary))
             return false;
-        if (!IdAwares._nullable.idEquals(user, o.user))
+        if (!IdFn.idEquals(user, o.user))
             return false;
-        if (!IdAwares._nullable.idEquals(person, o.person))
+        if (!IdFn.idEquals(person, o.person))
             return false;
-        if (!IdAwares._nullable.idEquals(org, o.org))
+        if (!IdFn.idEquals(org, o.org))
             return false;
         return super.partialEquals(o);
     }

@@ -9,6 +9,9 @@ import net.bodz.bas.meta.source.SerializableForm;
 @SerializableForm
 public interface IVarMapSerializable {
 
+    /**
+     * @return Reference to <code>this</code>.
+     */
     void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException;
 

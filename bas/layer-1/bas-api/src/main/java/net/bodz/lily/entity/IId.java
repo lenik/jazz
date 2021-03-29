@@ -8,8 +8,4 @@ public interface IId<Id> {
 
     void setId(Id id);
 
-    class fn
-            extends EntityFn {
-    }
-
 }

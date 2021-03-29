@@ -16,7 +16,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.pojo.Pair;
-import net.bodz.lily.entity.IdAwares;
+import net.bodz.lily.entity.IdFn;
 
 public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         extends AbstractCache<K, T> {
@@ -40,7 +40,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         if (dataContext == null)
             throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
-        this.idType = IdAwares.getIdType(entityClass);
+        this.idType = IdFn._getIdType(entityClass);
     }
 
     protected IMapperTemplate<T, ?> getMapper() {
