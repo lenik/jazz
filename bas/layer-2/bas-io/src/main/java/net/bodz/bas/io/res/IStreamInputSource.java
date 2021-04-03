@@ -15,7 +15,9 @@ import net.bodz.bas.io.impl.LAReader;
 import net.bodz.bas.sugar.IToChain;
 
 public interface IStreamInputSource
-        extends ISimpleStreamInputSource, IToChain {
+        extends
+            ISimpleStreamInputSource,
+            IToChain {
 
     /**
      * Set the charset of the file.

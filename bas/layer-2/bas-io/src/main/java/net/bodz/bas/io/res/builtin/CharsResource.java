@@ -45,6 +45,11 @@ public class CharsResource
             return buffer.size();
     }
 
+    @Override
+    public boolean isCharInPreferred() {
+        return true;
+    }
+
     /**
      * @return {@link Writer} with {@link Writer#close()} filtered out.
      */

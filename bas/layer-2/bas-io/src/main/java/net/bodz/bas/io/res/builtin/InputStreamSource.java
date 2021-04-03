@@ -24,6 +24,11 @@ public class InputStreamSource
         this.in = in;
     }
 
+    @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
     /**
      * @return {@link InputStream} with {@link InputStream#close()} filtered out.
      */

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 import java.security.MessageDigest;
 import java.util.Arrays;
@@ -24,7 +25,8 @@ import net.bodz.bas.t.iterator.immed.Mitorx;
 import net.bodz.bas.t.iterator.immed.OverlappedMitor;
 
 public class StreamReading
-        implements IStreamReading {
+        implements
+            IStreamReading {
 
     private final IStreamInputSource source;
     private OpenOption[] openOptions = {};
@@ -72,7 +74,7 @@ public class StreamReading
 
     @Override
     public byte[] read()
-            throws IOException, OutOfMemoryError {
+            throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
         IByteIn in = source.newByteIn(openOptions);
@@ -115,28 +117,23 @@ public class StreamReading
         return buffer.toByteArray();
     }
 
-    /**
-     * @seecopy {@link #read()}
-     */
-    @CopyAndPaste
     @Override
     public char[] readChars()
-            throws IOException, OutOfMemoryError {
-        CharArrayWriter buffer = new CharArrayWriter();
-        char block[] = new char[blockSize];
-        ICharIn in = source.newCharIn(openOptions);
-        try {
-            while (true) {
-                int readSize = block.length;
-                int n = in.read(block, 0, readSize);
-                if (n == -1)
-                    break;
-                buffer.write(block, 0, n);
-            }
-        } finally {
-            in.close();
-        }
-        return buffer.toCharArray();
+            throws IOException {
+        if (source.isCharInPreferred())
+            return readCharsByChars();
+        else
+            return readCharsByBytes();
+    }
+
+    public char[] readCharsByBytes()
+            throws IOException {
+        return readStringByBytes().toCharArray();
+    }
+
+    public char[] readCharsByChars()
+            throws IOException {
+        return readStringByChars().toCharArray();
     }
 
     /**
@@ -174,7 +171,23 @@ public class StreamReading
     @CopyAndPaste
     @Override
     public String readString()
-            throws IOException, OutOfMemoryError {
+            throws IOException {
+        if (source.isCharInPreferred())
+            return readStringByChars();
+        else
+            return readStringByBytes();
+    }
+
+    public String readStringByBytes()
+            throws IOException {
+        byte[] buf = read();
+        Charset charset = source.getCharset();
+        String str = new String(buf, charset);
+        return str;
+    }
+
+    public String readStringByChars()
+            throws IOException {
         CharArrayWriter buffer = new CharArrayWriter();
         char block[] = new char[blockSize];
         ICharIn in = source.newCharIn(openOptions);

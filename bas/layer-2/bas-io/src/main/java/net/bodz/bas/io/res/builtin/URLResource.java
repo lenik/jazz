@@ -69,6 +69,11 @@ public class URLResource
 // }
 
     @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
+    @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         return url.openStream();

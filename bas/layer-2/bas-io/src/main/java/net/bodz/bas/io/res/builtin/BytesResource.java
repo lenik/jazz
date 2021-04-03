@@ -45,6 +45,11 @@ public class BytesResource
             return buffer.size();
     }
 
+    @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
     /**
      * @return {@link OutputStream} with {@link OutputStream#close()} filtered out.
      */

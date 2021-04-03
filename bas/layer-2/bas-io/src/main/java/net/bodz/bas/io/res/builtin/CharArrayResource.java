@@ -58,6 +58,11 @@ public class CharArrayResource
     }
 
     @Override
+    public boolean isCharInPreferred() {
+        return true;
+    }
+
+    @Override
     public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, start, end - start);

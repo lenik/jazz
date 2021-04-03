@@ -28,6 +28,11 @@ public class ReaderSource
         this.in = in;
     }
 
+    @Override
+    public boolean isCharInPreferred() {
+        return true;
+    }
+
     /**
      * @return {@link Reader} with {@link Reader#close()} filtered out.
      */

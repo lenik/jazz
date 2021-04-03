@@ -65,6 +65,11 @@ public class ByteArrayResource
     }
 
     @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
+    @Override
     public IByteIn _newByteIn(OpenOption... options)
             throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(array, start, end - start);

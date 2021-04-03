@@ -26,13 +26,18 @@ public class StringSource
     }
 
     @Override
+    public boolean isCharInPreferred() {
+        return true;
+    }
+
+    @Override
     public ICharIn _newCharIn(OpenOption... options)
             throws IOException {
         return new StringCharIn(string);
     }
 
     /**
-     * 
+     *
      */
     // (For get more test results, using the converted byte-in.)
     // @Override
