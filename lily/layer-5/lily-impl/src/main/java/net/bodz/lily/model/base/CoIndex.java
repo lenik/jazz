@@ -224,7 +224,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected JsonWrapper newHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        T obj;
+        T obj = null;
         String idStr = q.getString("templateId");
         if (idStr != null) {
             Object id;
@@ -237,15 +237,19 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             if (template != null) {
                 @SuppressWarnings("unchecked")
                 T copy = (T) template.clone();
+                copy.setId_(null);
+                copy.setVersion(0);
+                copy.touch();
                 obj = copy;
             } else
                 throw new RequestHandlerException("template id isn't existed: " + id);
         }
-        try {
-            obj = create();
-        } catch (ReflectiveOperationException e) {
-            throw new RequestHandlerException("failed to create: " + e.getMessage(), e);
-        }
+        if (obj == null)
+            try {
+                obj = create();
+            } catch (ReflectiveOperationException e) {
+                throw new RequestHandlerException("failed to create: " + e.getMessage(), e);
+            }
         JsonWrapper wrapper = JsonWrapper.wrap(obj, "data").withNull().withFalse();
         wrapper.readObject(q);
         return wrapper;
