@@ -47,7 +47,7 @@ public class ZipEntryFile
 
     /**
      * Initialize for reading.
-     * 
+     *
      * @param entryName
      *            The pathname of a {@link java.io.File}.
      * @throws NullPointerException
@@ -171,6 +171,11 @@ public class ZipEntryFile
         return new AbstractIORandomResource() {
 
             @Override
+            public boolean isCharInPreferred() {
+                return false;
+            }
+
+            @Override
             protected InputStream _newInputStream(OpenOption... options)
                     throws IOException {
                 return zipEntry.getInputSource().newInputStream(options);
@@ -258,7 +263,7 @@ public class ZipEntryFile
 
     /**
      * Generally, a zip entry can only be accessed in streaming like.
-     * 
+     *
      * However, it may implement the random access interface.
      */
     @Override

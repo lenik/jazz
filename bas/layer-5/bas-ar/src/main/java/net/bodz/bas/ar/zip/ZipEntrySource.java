@@ -68,6 +68,11 @@ public class ZipEntrySource
     }
 
     @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
+    @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         IStreamResource src = rawcrop();

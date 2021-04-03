@@ -24,6 +24,11 @@ public class JuzZipEntrySource
     }
 
     @Override
+    public boolean isCharInPreferred() {
+        return false;
+    }
+
+    @Override
     protected InputStream _newInputStream(OpenOption... options)
             throws IOException {
         InputStream in = zipFile.getInputStream(zipEntry);

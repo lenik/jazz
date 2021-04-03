@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.MutableHttpServletRequest;
 import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class HttpModFilter
         extends AbstractHttpFilter {
+
+    static final Logger logger = LoggerFactory.getLogger(HttpModFilter.class);
 
     MutableHttpSession fileSession;
 
@@ -50,7 +54,7 @@ public class HttpModFilter
         if (fileOrigin)
             reqMod.setSession(fileSession);
         else
-            System.out.println(request.getRequestURI());
+            logger.debug("Request-URI: " + request.getRequestURI());
 
         chain.doFilter(reqMod, response);
     }

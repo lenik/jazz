@@ -8,7 +8,8 @@ import net.bodz.bas.io.IByteIn;
 import net.bodz.bas.io.ICharIn;
 
 public interface ISimpleStreamInputSource
-        extends IOpenResourceSource {
+        extends
+            IOpenResourceSource {
 
     Charset getCharset();
 
@@ -29,5 +30,7 @@ public interface ISimpleStreamInputSource
      */
     ICharIn newCharIn(OpenOption... options)
             throws IOException;
+
+    boolean isCharInPreferred();
 
 }
