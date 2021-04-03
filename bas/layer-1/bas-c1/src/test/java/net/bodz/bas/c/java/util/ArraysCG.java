@@ -112,10 +112,12 @@ public class ArraysCG {
                 if ("alg".equals(mode)) {
                     TextPrepByParts prep = TextPrepByParts.match(FNCALL, new IPartProcessor() {
                         @Override
-                        public String process(String part, Matcher matcher) {
+                        public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
+                                throws IOException {
                             String fn = matcher.group(1);
                             String args = matcher.group(2);
                             String argv[] = args.split(", ");
+                            String part;
                             if ("ADD".equals(fn))
                                 part = type.ADD(argv[0], argv[1]);
                             else if ("SUB".equals(fn))
@@ -128,7 +130,11 @@ public class ArraysCG {
                                 part = type.LESS_THAN(argv[0], argv[1]);
                             else if ("GREATER_THAN".equals(fn))
                                 part = type.GREATER_THAN(argv[0], argv[1]);
-                            return part;
+                            else {
+                                out.append(in, start, end);
+                                return;
+                            }
+                            out.append(part);
                         }
                     });
                     s = prep.process(s);
@@ -193,8 +199,7 @@ class TypeDef {
 }
 
 class Number_t
-        extends
-        TypeDef {
+        extends TypeDef {
 
     public Number_t(String type_t) {
         super(type_t);
@@ -236,8 +241,7 @@ class Number_t
 }
 
 class BigDecimal_t
-        extends
-        Number_t {
+        extends Number_t {
 
     public BigDecimal_t() {
         super("BigDecimal", "BigDecimal", "BigDecimal", "BigDecimal.ZERO");
@@ -251,8 +255,7 @@ class BigDecimal_t
 }
 
 class BigInteger_t
-        extends
-        Number_t {
+        extends Number_t {
 
     public BigInteger_t() {
         super("BigInteger", "BigInteger", "BigInteger", "BigInteger.ZERO");

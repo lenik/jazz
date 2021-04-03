@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -12,18 +13,19 @@ public class TextPrepByPartsTest
     public void testAdd() {
         Pattern pattern = Pattern.compile("\\d+");
         TextPrepByParts pp = new TextPrepByParts(pattern) {
-
             @Override
-            protected String matched(String part) {
+            protected void matched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                String part = in.subSequence(start, end).toString();
                 int num = Integer.parseInt(part);
-                return String.valueOf(num + 1);
+                out.append(String.valueOf(num + 1));
             }
 
             @Override
-            protected String unmatched(String part) {
-                return part;
+            protected void unmatched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                out.append(in, start, end);
             }
-
         };
 
         String[] lines = new String[] { "hello 123, 456 world!", "22-12, and oh 666", "nothing!", };

@@ -1,6 +1,7 @@
 package net.bodz.bas.c.string;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,24 +17,32 @@ public class StringUtil {
         Pattern pattern = Pattern.compile("\\\\(.)");
         UNESCAPE = TextPrepByParts.match(pattern, new IPartProcessor() {
             @Override
-            public String process(String part, Matcher matcher) {
-                switch (part.charAt(1)) {
+            public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
+                    throws IOException {
+                switch (in.charAt(1)) {
                 case 'a':
-                    return "&";
+                    out.append("&");
+                    break;
                 case 'l':
-                    return "<";
+                    out.append("<");
+                    break;
                 case 'n':
-                    return "\n";
+                    out.append("\n");
+                    break;
                 case 'g':
-                    return ">";
+                    out.append(">");
+                    break;
                 case 'p':
-                    return "'";
+                    out.append("'");
+                    break;
                 case 'q':
-                    return "\"";
+                    out.append("\"");
+                    break;
                 case 't':
-                    return "\t";
+                    out.append("\t");
+                    break;
                 default:
-                    return part;
+                    out.append(in, start, end);
                 }
             }
         });

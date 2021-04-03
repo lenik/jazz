@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,9 +33,11 @@ public abstract class TextPrepByParts
         return matcher;
     }
 
-    protected abstract String matched(String part);
+    protected abstract void matched(CharSequence in, int start, int end, Appendable out)
+            throws IOException;
 
-    protected abstract String unmatched(String part);
+    protected abstract void unmatched(CharSequence in, int start, int end, Appendable out)
+            throws IOException;
 
     public synchronized String process(String source) {
         this.source = source;
@@ -49,16 +52,20 @@ public abstract class TextPrepByParts
 
             // Head (groups)
             if (start > lastPosition) {
-                String part = source.substring(lastPosition, start);
-                part = unmatched(part);
-                append(part);
+                try {
+                    unmatched(source, lastPosition, start, this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
             }
 
             // Body (groups)
             // if (end > start)
-            String part = source.substring(start, end);
-            part = matched(part);
-            append(part);
+            try {
+                matched(source, start, end, this);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
 
             lastPosition = end;
             matchIndex++;
@@ -67,10 +74,13 @@ public abstract class TextPrepByParts
         }
 
         // Foot (suffix)
-        if (lastPosition < source.length()) {
-            String part = source.substring(lastPosition, source.length());
-            part = unmatched(part);
-            append(part);
+        int n = source.length();
+        if (lastPosition < n) {
+            try {
+                unmatched(source, lastPosition, n, this);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
         }
 
         return super.toString();
@@ -97,8 +107,9 @@ public abstract class TextPrepByParts
         }
 
         @Override
-        protected String unmatched(String part) {
-            return part;
+        protected void unmatched(CharSequence in, int start, int end, Appendable out)
+                throws IOException {
+            out.append(in, start, end);
         }
 
     }
@@ -115,8 +126,9 @@ public abstract class TextPrepByParts
         }
 
         @Override
-        protected String matched(String part) {
-            return part;
+        protected void matched(CharSequence in, int start, int end, Appendable out)
+                throws IOException {
+            out.append(in, start, end);
         }
 
     }
@@ -128,8 +140,9 @@ public abstract class TextPrepByParts
     public static TextPrepByParts match(Pattern pattern, final IPartProcessor proc) {
         return new Matches(pattern) {
             @Override
-            protected String matched(String part) {
-                return proc.process(part, matcher);
+            protected void matched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                proc.process(in, start, end, out, matcher);
             }
         };
     }
@@ -141,8 +154,9 @@ public abstract class TextPrepByParts
     public static TextPrepByParts unmatch(Pattern pattern, final IPartProcessor proc) {
         return new Unmatches(pattern) {
             @Override
-            protected String unmatched(String part) {
-                return proc.process(part, matcher);
+            protected void unmatched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                proc.process(in, start, end, out, matcher);
             }
         };
     }
