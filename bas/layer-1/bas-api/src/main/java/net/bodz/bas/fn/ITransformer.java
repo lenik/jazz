@@ -3,9 +3,12 @@ package net.bodz.bas.fn;
 import net.bodz.bas.err.TransformException;
 
 public interface ITransformer<S, T>
-        extends ITransformerX<S, T, TransformException> {
+        extends
+            ITransformerX<S, T, TransformException> {
 
-    <Y> ITransformer<S, Y> join(ITransformer<? super T, Y> o);
+    default <Y> ITransformer<S, Y> join(ITransformer<? super T, Y> o) {
+        return new ConjunctTransformer<S, Y>(this, o);
+    }
 
     class Nop<T>
             extends AbstractTransformer<T, T> {
