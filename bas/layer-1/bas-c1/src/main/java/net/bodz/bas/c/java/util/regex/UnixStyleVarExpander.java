@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -45,7 +46,8 @@ public class UnixStyleVarExpander
     }
 
     @Override
-    protected String matched(String part) {
+    protected void matched(CharSequence in, int start, int end, Appendable out)
+            throws IOException {
         String name = matcher.group(1);
         if (name == null) {
             name = unescapeBracedName(matcher.group(2));
@@ -53,17 +55,19 @@ public class UnixStyleVarExpander
         assert name != null;
         String expanded = expand(name);
         if (expanded != null)
-            return defined(name, expanded);
+            defined(out, name, expanded);
         else
-            return undefined(name, part);
+            undefined(in, start, end, out, name);
     }
 
-    protected String defined(String name, String expanded) {
-        return expanded;
+    protected void defined(Appendable out, String name, String value)
+            throws IOException {
+        out.append(value);
     }
 
-    protected String undefined(String name, String content) {
-        return content;
+    protected void undefined(CharSequence in, int start, int end, Appendable out, String name)
+            throws IOException {
+        out.append(in, start, end);
     }
 
 }

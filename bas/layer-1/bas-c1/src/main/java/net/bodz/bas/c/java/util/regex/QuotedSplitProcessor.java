@@ -1,5 +1,6 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,18 +26,22 @@ public class QuotedSplitProcessor
     }
 
     @Override
-    protected String matched(String part) {
+    protected void matched(CharSequence in, int start, int end, Appendable out)
+            throws IOException {
+        StringBuilder buf = new StringBuilder();
         if (dequote)
-            part = processQuotedText(part);
-        partBuffer.append(part);
-        return part;
+            processQuotedText(in, start, end, buf);
+        partBuffer.append(buf);
+        out.append(buf);
     }
 
     @Override
-    protected String unmatched(String text) {
+    protected void unmatched(CharSequence in, int start, int end, Appendable out)
+            throws IOException {
+        String text = in.subSequence(start, end).toString();
         String[] v = delimitorPattern.split(text, remainingPartCount);
         if (v.length == 0) // Expected??
-            return "";
+            return;
         for (int i = 0; i < v.length - 1; i++) {
             partBuffer.append(v[i]);
             parts.add(partBuffer.toString());
@@ -44,7 +49,7 @@ public class QuotedSplitProcessor
         }
         remainingPartCount -= v.length - 1;
         partBuffer.append(v[v.length - 1]);
-        return "";
+        return;
     }
 
     public synchronized List<String> splitList(String s) {

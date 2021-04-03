@@ -28,16 +28,17 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
             final String host = request.getHeader("Host");
             String mod = TextPrepByParts.match(imgsrc, new IPartProcessor() {
                 @Override
-                public String process(String part, Matcher matcher) {
+                public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
+                        throws IOException {
                     String href = matcher.group(1);
                     String newHref = null;
                     if (href.startsWith("/")) {
                         newHref = "http://" + host + href;
                     }
                     if (newHref != null)
-                        return "<img src=\"" + newHref + "\"";
+                        out.append("<img src=\"" + newHref + "\"");
                     else
-                        return part;
+                        out.append(in, start, end);
                 }
             }).process(html);
             obj.setText(mod);
@@ -57,7 +58,8 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
     String stripAbsoluteUrls(String html) {
         return TextPrepByParts.match(imgsrc, new IPartProcessor() {
             @Override
-            public String process(String part, Matcher matcher) {
+            public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
+                    throws IOException {
                 String href = matcher.group(1);
                 String newHref = null;
                 if (href.startsWith("http://")) {
@@ -67,9 +69,9 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
                         newHref = s.substring(pos);
                 }
                 if (newHref != null)
-                    return "<img src=\"" + newHref + "\"";
+                    out.append("<img src=\"" + newHref + "\"");
                 else
-                    return part;
+                    out.append(in, start, end);
             }
         }).process(html);
     }

@@ -1,5 +1,7 @@
 package net.bodz.bas.c.java.util.regex;
 
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,14 +13,19 @@ public class QuotedStringProcessorTest
         final QuoteFormat qf = QuoteFormat.Q;
         final QuotedStringProcessor q = new QuotedStringProcessor(qf) {
             @Override
-            protected String matched(String text) {
-                text = processQuotedText(text);
-                return ("<" + text + ">");
+            protected void matched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                out.append("<");
+                processQuotedText(in, start, end, out);
+                out.append(">");
             }
 
             @Override
-            protected String unmatched(String text) {
-                return ("[" + text + "]");
+            protected void unmatched(CharSequence in, int start, int end, Appendable out)
+                    throws IOException {
+                out.append("[");
+                out.append(in, start, end);
+                out.append("]");
             }
         };
         class D {
