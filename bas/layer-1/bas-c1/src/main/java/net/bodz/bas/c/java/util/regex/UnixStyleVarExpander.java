@@ -13,7 +13,7 @@ public class UnixStyleVarExpander
     private static Pattern variableRefPattern;
     static {
         variableRefPattern = Pattern.compile( //
-                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})");
+                "\\$(?:([0-9]+|[a-zA-Z_][a-zA-Z_0-9]*)|\\{((?:\\\\.|.)*?)\\})");
     }
 
     private ITransformer<String, ?> fn;
