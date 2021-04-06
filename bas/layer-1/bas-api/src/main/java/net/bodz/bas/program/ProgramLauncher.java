@@ -42,7 +42,7 @@ public class ProgramLauncher {
             throw new Error(e.getMessage(), e);
         }
 
-        args = Arrays.copyOfRange(args, 0, args.length - 1);
+        args = Arrays.copyOfRange(args, 1, args.length);
         mainMethod.invoke(null, (Object) args);
     }
 
