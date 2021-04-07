@@ -15,6 +15,12 @@ public interface IXmlOutput
 
     FramedMarks getMarks();
 
+    void element(String name, String text)
+            throws XMLStreamException;
+
+    void element(String name, Object text)
+            throws XMLStreamException;
+
     void element(String name, IXmlSerializable child)
             throws XMLStreamException;
 

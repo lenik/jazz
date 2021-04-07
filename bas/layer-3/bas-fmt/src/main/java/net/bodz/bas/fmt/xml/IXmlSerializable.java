@@ -13,7 +13,7 @@ public interface IXmlSerializable {
 
     default void writeObject(IXmlOutput out)
             throws XMLStreamException {
-        XmlFn.defaultDump(this, out);
+        XmlFn.dump(this, out);
     }
 
     default Object readObject(Element element)
@@ -25,6 +25,10 @@ public interface IXmlSerializable {
 
     class xml
             extends XmlFn {
+    }
+
+    class dom
+            extends DomFn {
     }
 
 }

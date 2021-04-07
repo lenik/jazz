@@ -6,7 +6,8 @@ import javax.xml.stream.XMLStreamWriter;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.t.set.FramedMarks;
 
-public abstract class AbstractXmlOutput extends DecoratedXMLStreamWriter
+public abstract class AbstractXmlOutput
+        extends DecoratedXMLStreamWriter
         implements
             IXmlOutput {
 
@@ -22,6 +23,21 @@ public abstract class AbstractXmlOutput extends DecoratedXMLStreamWriter
     @Override
     public FramedMarks getMarks() {
         return marks;
+    }
+
+    @Override
+    public void element(String name, String text)
+            throws XMLStreamException {
+        beginElement(name);
+        writeCharacters(text);
+        endElement();
+    }
+
+    @Override
+    public void element(String name, Object text)
+            throws XMLStreamException {
+        String str = text == null ? null : text.toString();
+        element(name, str);
     }
 
     @Override
@@ -115,7 +131,7 @@ public abstract class AbstractXmlOutput extends DecoratedXMLStreamWriter
     @Override
     public void attribute(String name, String value)
             throws XMLStreamException {
-        _attribute(name, StringQuote.qqJavaString(value));
+        _attribute(name, value);
     }
 
     @Override

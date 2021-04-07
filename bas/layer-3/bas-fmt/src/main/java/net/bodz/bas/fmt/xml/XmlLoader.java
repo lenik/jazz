@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.res.IStreamInputSource;
 
 public class XmlLoader {
@@ -22,8 +21,12 @@ public class XmlLoader {
     static XMLInputFactory inputFactory = XMLInputFactory.newFactory();
     static DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 
-    public static void load(IXmlSerializable obj, InputSource in)
-            throws LoaderException, ParseException {
+    static {
+        docFactory.setNamespaceAware(true);
+    }
+
+    public static <T extends IXmlSerializable> T load(T obj, InputSource in)
+            throws LoaderException {
         try {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(in);
@@ -31,20 +34,18 @@ public class XmlLoader {
             obj.readObject(root);
         } catch (LoaderException e) {
             throw e;
-        } catch (ParseException e) {
-            throw e;
         } catch (Exception e) {
             throw new LoaderException(e.getMessage(), e);
         }
+        return obj;
     }
 
-    public static void load(IXmlSerializable obj, IStreamInputSource resource)
-            throws LoaderException, ParseException {
+    public static <T extends IXmlSerializable> T load(T obj, IStreamInputSource resource)
+            throws LoaderException {
         InputStream in = null;
         // resource.getPath()
         try {
             in = resource.newInputStream();
-            load(obj, new InputSource(in));
         } catch (IOException e) {
             throw new LoaderException(e.getMessage(), e);
         } finally {
@@ -55,12 +56,16 @@ public class XmlLoader {
                     throw new LoaderException(e.getMessage(), e);
                 }
         }
+        return load(obj, in);
     }
 
-    public static void load(IXmlSerializable obj, File file)
-            throws LoaderException, ParseException {
-        if (!file.exists())
-            return;
+    public static <T extends IXmlSerializable> T load(T obj, InputStream in)
+            throws LoaderException {
+        return load(obj, new InputSource(in));
+    }
+
+    public static <T extends IXmlSerializable> T load(T obj, File file)
+            throws LoaderException {
         FileInputStream in = null;
         try {
             in = new FileInputStream(file);
@@ -74,6 +79,7 @@ public class XmlLoader {
                 throw new LoaderException(e.getMessage(), e);
             }
         }
+        return obj;
     }
 
 }

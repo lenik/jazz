@@ -21,7 +21,7 @@ public abstract class AbstractXmlLoader
         int n = attributes.getLength();
         for (int i = 0; i < n; i++) {
             Node attr = attributes.item(i);
-            String name = attr.getNodeName();
+            String name = attr.getLocalName();
             if (name == null)
                 throw new NullPointerException("name");
             String value = attr.getNodeValue();
