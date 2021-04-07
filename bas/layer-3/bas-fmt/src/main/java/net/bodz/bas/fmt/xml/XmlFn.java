@@ -3,12 +3,12 @@ package net.bodz.bas.fmt.xml;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.xml.stream.XMLStreamException;
 
-import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.obj.BeanXmlDumper;
 import net.bodz.bas.fmt.xml.obj.BeanXmlLoader;
 import net.bodz.bas.fmt.xml.obj.ReflectXmlDumper;
@@ -17,9 +17,10 @@ import net.bodz.bas.fmt.xml.obj.XmlSource;
 import net.bodz.bas.meta.source.FnHelper;
 
 @FnHelper
-public class XmlFn {
+public class XmlFn
+        extends XmlLoader {
 
-    public static IObjectXmlLoader getDefaultLoader(IXmlSerializable obj) {
+    public static IObjectXmlLoader getDefaultLoader(Object obj) {
         XmlSource aXmlSource = obj.getClass().getAnnotation(XmlSource.class);
         if (aXmlSource != null)
             if (aXmlSource.bean() == true)
@@ -27,13 +28,48 @@ public class XmlFn {
         return new ReflectXmlLoader(obj);
     }
 
-    public static void defaultDump(IXmlSerializable obj, IXmlOutput out)
+    public static void dump(Object obj, IXmlOutput out)
             throws XMLStreamException {
         XmlSource aXmlSource = obj.getClass().getAnnotation(XmlSource.class);
         if (aXmlSource != null)
             if (aXmlSource.bean() == true)
                 new BeanXmlDumper(out).dump(obj);
         new ReflectXmlDumper(out).dump(obj);
+    }
+
+    public static void dump(Object obj, Writer out)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out));
+    }
+
+    public static void dump(Object obj, Appendable out)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out));
+    }
+
+    public static void dump(Object obj, OutputStream out, String encoding)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out, encoding));
+    }
+
+    public static void dump(IXmlSerializable obj, IXmlOutput out)
+            throws XMLStreamException {
+        obj.writeObject(out);
+    }
+
+    public static void dump(IXmlSerializable obj, Writer out)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out));
+    }
+
+    public static void dump(IXmlSerializable obj, Appendable out)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out));
+    }
+
+    public static void dump(IXmlSerializable obj, OutputStream out, String encoding)
+            throws XMLStreamException {
+        dump(obj, XmlOutputImpl.from(out, encoding));
     }
 
     public static String toString(IXmlSerializable obj)
@@ -53,12 +89,12 @@ public class XmlFn {
         }
     }
 
-    public static void saveToXml(IXmlSerializable obj, File file)
+    public static void save(IXmlSerializable obj, File file)
             throws IOException, XMLStreamException {
-        saveToXml(obj, file, "utf-8");
+        save(obj, file, "utf-8");
     }
 
-    public static void saveToXml(IXmlSerializable obj, File file, String encoding)
+    public static void save(IXmlSerializable obj, File file, String encoding)
             throws IOException, XMLStreamException {
         FileOutputStream fos = new FileOutputStream(file);
         try {
@@ -67,13 +103,6 @@ public class XmlFn {
         } finally {
             fos.close();
         }
-    }
-
-    public static void loadFromXml(IXmlSerializable ctx, File file)
-            throws IOException, LoaderException, ParseException {
-        if (!file.exists())
-            return;
-        XmlLoader.load(ctx, file);
     }
 
 }

@@ -18,6 +18,13 @@ public class XmlOutputImpl
 
     static XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 
+    public static IXmlOutput from(OutputStream outputStream, String encoding)
+            throws XMLStreamException {
+        XMLStreamWriter xsw = outputFactory.createXMLStreamWriter(outputStream, encoding);
+        xsw = indent(xsw);
+        return from(xsw);
+    }
+
     public static IXmlOutput from(Writer writer)
             throws XMLStreamException {
         XMLStreamWriter xsw = outputFactory.createXMLStreamWriter(writer);
@@ -25,11 +32,10 @@ public class XmlOutputImpl
         return from(xsw);
     }
 
-    public static IXmlOutput from(OutputStream outputStream, String encoding)
+    public static IXmlOutput from(Appendable out)
             throws XMLStreamException {
-        XMLStreamWriter xsw = outputFactory.createXMLStreamWriter(outputStream, encoding);
-        xsw = indent(xsw);
-        return from(xsw);
+        AppendableWriter aw = new AppendableWriter(out);
+        return from(aw);
     }
 
     static XMLStreamWriter indent(XMLStreamWriter out) {

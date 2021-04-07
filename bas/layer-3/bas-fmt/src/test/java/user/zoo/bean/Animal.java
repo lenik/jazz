@@ -86,7 +86,7 @@ public class Animal
     @Override
     public void writeObject(IXmlOutput out)
             throws XMLStreamException {
-        XmlFn.defaultDump(this, out);
+        XmlFn.dump(this, out);
     }
 
     @Override
