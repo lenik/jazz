@@ -240,7 +240,7 @@ Dependency Management-->
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
-                <version>3.3.1</version>
+                <version>3.5.6</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
