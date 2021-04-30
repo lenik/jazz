@@ -82,7 +82,7 @@ public class BatchCLITest
             throws Exception {
         // printBaseDoc();
         // runSkel();
-        dumpOptions(new BatchCLITest());
+        dumpOptions(new BatchCLITest().getOptionModel());
     }
 
 }

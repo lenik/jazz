@@ -22,7 +22,7 @@ public class BasicCLITest
         HelloProgram program = new HelloProgram();
         // program.execute("-h");
         HelpPageFormatter pageFormatter = new HelpPageFormatter();
-        String s = pageFormatter.format(program);
+        String s = pageFormatter.format(program.getOptionModel());
         System.out.println(s);
     }
 

@@ -2,19 +2,12 @@ package net.bodz.bas.program.skel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.nio.WildcardsExpander;
-import net.bodz.bas.c.object.SimpleObjectFormatter;
 import net.bodz.bas.c.string.StringQuoted;
-import net.bodz.bas.c.system.System2;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.control.ControlBreak;
-import net.bodz.bas.err.control.ControlContinue;
-import net.bodz.bas.err.control.ControlExit;
 import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -23,15 +16,9 @@ import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.ReleaseDescription;
-import net.bodz.bas.meta.source.OverrideOption;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.potato.invoke.Invocation;
 import net.bodz.bas.program.IPerformanceAware;
-import net.bodz.bas.program.IProgram;
-import net.bodz.bas.program.model.ArtifactObjectWithOptions;
-import net.bodz.bas.program.model.HelpPageFormatter;
-import net.bodz.bas.program.model.IOption;
+import net.bodz.bas.program.model.AbstractProgram;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ParserUtil;
@@ -40,7 +27,6 @@ import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
-import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 
 /**
  * Basic CLI Framework
@@ -52,9 +38,8 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
  */
 @RcsKeywords(id = "$Id$")
 public abstract class BasicCLI
-        extends ArtifactObjectWithOptions
+        extends AbstractProgram
         implements
-            IProgram,
             Runnable,
             II18nCapable,
             IPerformanceAware {
@@ -92,8 +77,6 @@ public abstract class BasicCLI
      * @option hidden
      */
     boolean _logWithDate = false;
-
-    Map<String, Object> variableMap = new LinkedHashMap<String, Object>();
 
     /**
      * Repeat to get more info.
@@ -153,55 +136,6 @@ public abstract class BasicCLI
         return variableMap;
     }
 
-    /**
-     * Show version information
-     *
-     * <p lang="zh-cn">
-     * 显示版本信息。
-     *
-     * @option --version
-     */
-    protected final void showVersion() {
-        showVersion(Stdio.cout);
-        throw new ControlBreak();
-    }
-
-    protected void showVersion(IPrintOut out) {
-        ArtifactDoc artifactDoc = getXjdoc();
-        ReleaseDescription release = artifactDoc.getReleaseDescription();
-        out.printf("[%s] %s\n", artifactDoc.getLabel(), artifactDoc.getText().getHeadPar());
-        out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
-                artifactDoc.getAuthor(), //
-                artifactDoc.getVersion(), //
-                release.getReleaseDateString());
-    }
-
-    /**
-     * Show this help text.
-     *
-     * <p lang="zh-cn">
-     * 显示这个帮助文本。
-     *
-     * @option -h --help weak
-     */
-    protected final void showHelpPage() {
-        showHelpPage(Stdio.cout);
-        throw new ControlBreak();
-    }
-
-    protected void showHelpPage(IPrintOut out) {
-        showVersion(out);
-        out.println();
-
-        HelpPageFormatter formatter = new HelpPageFormatter();
-        formatter.setDescriptionColumn(29);
-
-        String doc = formatter.format(this);
-        out.print(doc);
-
-        out.flush();
-    }
-
     public IType getPotatoType() {
         return Typers.getTyper(getClass(), IType.class);
     }
@@ -222,96 +156,6 @@ public abstract class BasicCLI
             dialogs.alert(e.getMessage(), e);
         }
     }
-
-    /**
-     * Public access: so derivations don't have to declare static main()s.
-     */
-    @Override
-    public synchronized void execute(String... args)
-            throws Exception {
-
-        logger.debug("Receive args from cmdline");
-
-        try {
-            List<String> remaining = receive(args);
-            args = remaining.toArray(new String[0]);
-        } catch (ControlExit c) {
-            System2.setExitStatus(c.getStatus());
-            return;
-        } catch (ControlBreak c) {
-            return;
-        } catch (CLISyntaxException e) {
-            System.err.println("Illegal syntax: " + e.getMessage());
-            System2.setExitStatus(1);
-            return;
-        }
-
-        logger.debug("Reconfigure...");
-        _reconfigure();
-        reconfigure();
-        logger.debug("Reconfigure done.");
-
-        if (logger.isDebugEnabled()) {
-            for (Entry<String, IOption> entry : getLocalOptionMap().entrySet()) {
-                IOption option = entry.getValue();
-                String optionName = option.getName();
-                if (!optionName.equals(entry.getKey()))
-                    continue;
-                Object optionValue = option.property().getValue(this);
-                if (optionValue instanceof Invocation)
-                    continue;
-                logger.debug(optionName, " = ", SimpleObjectFormatter.dispval(optionValue));
-            }
-            for (Entry<String, Object> entry : variableMap.entrySet()) {
-                String name = entry.getKey();
-                Object value = entry.getValue();
-                logger.debug("var ", name, " = ", value);
-            }
-        }
-
-        while (true)
-            try {
-                logger.debug("Program Begin");
-                mainImpl(args);
-                logger.debug("Program End");
-                break;
-            } catch (ControlExit c) {
-                System2.setExitStatus(c.getStatus());
-                return;
-            } catch (ControlContinue c) {
-                continue;
-            }
-
-        System2.setExitStatus(0);
-        return;
-    }
-
-    protected void _reconfigure()
-            throws Exception {
-    }
-
-    protected void reconfigure()
-            throws Exception {
-    }
-
-    /**
-     * @throws ControlExit
-     */
-    protected void _exit()
-            throws Exception {
-        throw new ControlExit();
-    }
-
-    /**
-     * User main method: the start point after all options are parsed.
-     * <p>
-     * <b>Default Implementation:</b> Get default input (usually the stdin) if no file is specified,
-     * or show the help page if default input is disabled. Next step:
-     * {@link #doMainManaged(String[])}
-     */
-    @OverrideOption(group = "basicMain")
-    protected abstract void mainImpl(String... args)
-            throws Exception;
 
     // Helper Methods
 

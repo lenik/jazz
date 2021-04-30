@@ -78,7 +78,7 @@ public class CLITask
         RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
         Hashtable<?, ?> attrs = wrapper.getAttributeMap();
 
-        IOptionGroup opts = program;
+        IOptionGroup opts = program.getOptionModel();
         List<String> rawArgs = null;
         for (Map.Entry<?, ?> ent : attrs.entrySet()) {
             String optnam = (String) ent.getKey();

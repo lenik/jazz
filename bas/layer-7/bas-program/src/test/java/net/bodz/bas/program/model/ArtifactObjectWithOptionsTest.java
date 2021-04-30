@@ -10,7 +10,8 @@ import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
-public class ArtifactObjectWithOptionsTest extends ArtifactObjectWithOptions {
+public class ArtifactObjectWithOptionsTest
+        extends AbstractProgram {
 
     /**
      * My name.
@@ -86,6 +87,11 @@ public class ArtifactObjectWithOptionsTest extends ArtifactObjectWithOptions {
      * @option -c
      */
     boolean feature3;
+
+    @Override
+    protected void mainImpl(String... args)
+            throws Exception {
+    }
 
     @Ignore
     @Test
