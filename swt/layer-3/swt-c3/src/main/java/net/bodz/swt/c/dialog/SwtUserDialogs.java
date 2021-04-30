@@ -121,7 +121,7 @@ public class SwtUserDialogs
     public void setIcon(String alias) {
         String respath = aliases.get(alias);
         if (respath == null)
-            throw new IllegalArgumentException(tr._("invalid icon alias: ") + alias);
+            throw new IllegalArgumentException(nls.tr("invalid icon alias: ") + alias);
         Image image = SWTResources.getImageRes(respath);
         setIcon(image);
     }
@@ -130,7 +130,8 @@ public class SwtUserDialogs
             extends SimpleDialog {
 
         class RC
-                implements IActionGroup {
+                implements
+                    IActionGroup {
             @Override
             public void addAction(final IAction action) {
                 if (action == null)

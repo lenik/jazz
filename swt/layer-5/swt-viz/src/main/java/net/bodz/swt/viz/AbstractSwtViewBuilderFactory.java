@@ -55,7 +55,7 @@ public abstract class AbstractSwtViewBuilderFactory
 
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (!(viewBuilder instanceof ISwtViewBuilder<?>))
-            throw new IllegalArgumentException(tr._("Not an SWT view builder: ") + viewBuilder);
+            throw new IllegalArgumentException(nls.tr("Not an SWT view builder: ") + viewBuilder);
     }
 
 }

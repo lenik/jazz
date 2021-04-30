@@ -20,7 +20,8 @@ import net.bodz.pkg.obfuz.seals.CodeSet;
 import net.bodz.pkg.obfuz.seals.ISequence;
 
 public class ActivationByTargetString
-        implements II18nCapable {
+        implements
+            II18nCapable {
 
     private static final String KEY_HOSTID = "hostId";
     private static final String KEY_ACTIVATE_CODE = "activateCode";
@@ -44,7 +45,7 @@ public class ActivationByTargetString
 
         Activation _activation = clazz.getAnnotation(Activation.class);
         if (_activation == null)
-            throw new IllegalUsageError(tr._("No activation info"));
+            throw new IllegalUsageError(nls.tr("No activation info"));
 
         ArtifactDoc artifactDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz).to(ArtifactDoc.class);
 
@@ -159,12 +160,12 @@ public class ActivationByTargetString
         byte[] hostMac = getHostMac();
         int last = activateCode.lastIndexOf('-');
         if (last == -1)
-            throw new ParseException(tr._("No checksum"));
+            throw new ParseException(nls.tr("No checksum"));
         String code = activateCode.substring(0, last);
 
         String checksum = digest(code);
         if (!checksum.equalsIgnoreCase(activateCode.substring(last + 1)))
-            throw new ParseException(tr._("Error Checksum"));
+            throw new ParseException(nls.tr("Error Checksum"));
 
         String[] segs = code.split("-");
 
@@ -230,14 +231,14 @@ public class ActivationByTargetString
                         break;
             }
             if (k == Integer.MAX_VALUE)
-                throw new UnsupportedOperationException(tr._("Unsupported target string: ") + targetString);
+                throw new UnsupportedOperationException(nls.tr("Unsupported target string: ") + targetString);
             String seg = CodeSet.encode(k);
             if (i != 0)
                 codebuf.append('-');
             codebuf.append(seg);
         }
-        System.out.println(tr._("Search space: ") + count);
-        System.out.printf(tr._("Tries per char: %.3f\n"), (double) count / chars.length);
+        System.out.println(nls.tr("Search space: ") + count);
+        System.out.printf(nls.tr("Tries per char: %.3f\n"), (double) count / chars.length);
         String code = codebuf.toString();
         return code + "-" + digest(code);
     }

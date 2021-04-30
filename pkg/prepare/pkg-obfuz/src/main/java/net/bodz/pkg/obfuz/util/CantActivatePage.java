@@ -31,7 +31,7 @@ public class CantActivatePage
 
     @Override
     public String getPageTitle() {
-        return tr._("Can\'t activate this product");
+        return nls.tr("Can\'t activate this product");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CantActivatePage
         holder.setLayout(new GridLayout());
 
         final Label thankLabel = new Label(holder, SWT.NONE);
-        thankLabel.setText(tr._("Activation canceled."));
+        thankLabel.setText(nls.tr("Activation canceled."));
     }
 
     @Override

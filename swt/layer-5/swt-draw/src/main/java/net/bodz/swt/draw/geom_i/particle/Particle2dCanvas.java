@@ -66,7 +66,7 @@ public class Particle2dCanvas
             @Override
             public void paintControl(PaintEvent e) {
                 if (painting)
-                    throw new IllegalStateException(tr._("paint no reentrant"));
+                    throw new IllegalStateException(nls.tr("paint no reentrant"));
                 painting = true;
                 Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
                 paintImpl(e.gc, viewRect, viewOffset);

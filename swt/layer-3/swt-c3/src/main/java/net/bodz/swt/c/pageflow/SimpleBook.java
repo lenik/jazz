@@ -1,11 +1,11 @@
 package net.bodz.swt.c.pageflow;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
+import static net.bodz.swt.nls.GuiNlstr.INSTANCE;
 
 import java.util.*;
 import java.util.Map.Entry;
 
-import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.pojo.PathEntries;
 
@@ -15,7 +15,7 @@ public class SimpleBook
     private Map<PathEntries, IPage> map;
     private PathEntries first;
     private List<PageMethod> methods;
-    private NLS dict;
+    private INlsTranslator dict;
 
     public SimpleBook() {
         this(null, null);
@@ -33,7 +33,7 @@ public class SimpleBook
         super(title, next);
         map = new HashMap<PathEntries, IPage>();
         methods = new ArrayList<PageMethod>(4);
-        dict = GUINLS;
+        dict = INSTANCE;
     }
 
     @Override
@@ -110,11 +110,11 @@ public class SimpleBook
     }
 
     @Override
-    protected NLS _getDict() {
+    protected INlsTranslator _getDict() {
         return dict;
     }
 
-    public void setDict(NLS dict) {
+    public void setDict(INlsTranslator dict) {
         this.dict = dict;
     }
 

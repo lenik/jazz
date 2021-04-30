@@ -37,7 +37,7 @@ public abstract class WidgetTester
 
     public WidgetTester(boolean junitMode) {
         title = getClass().getSimpleName();
-        // title = tr._("Control Test App");
+        // title = nls.tr("Control Test App");
         if (!junitMode) {
             create();
             boot();
@@ -88,7 +88,7 @@ public abstract class WidgetTester
     }
 
     protected void createTools() {
-        addToolButton(tr._("Auto &Fit"), //
+        addToolButton(nls.tr("Auto &Fit"), //
                 new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {

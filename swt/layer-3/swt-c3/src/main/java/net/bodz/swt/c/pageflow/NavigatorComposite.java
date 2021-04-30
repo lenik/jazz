@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import net.bodz.bas.i18n.nls.II18nCapable;
-import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.repr.req.MutableRequest;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.dialog.IUserDialogs;
@@ -29,7 +29,9 @@ import com.googlecode.openbeans.PropertyChangeListener;
 
 public class NavigatorComposite
         extends Composite
-        implements IPageContext, II18nCapable {
+        implements
+            IPageContext,
+            II18nCapable {
 
     private static final int MAX_HISTORY = 300;
 
@@ -65,13 +67,13 @@ public class NavigatorComposite
 
         @Override
         protected void handleException(Exception e) {
-            userDialogs.alert(tr._("Validate Exception"), e);
+            userDialogs.alert(nls.tr("Validate Exception"), e);
         }
 
     }
 
     private IBook book;
-    private NLS dict;
+    private INlsTranslator dict;
     private History history;
     private AbstractPageFlow pageFlow;
 
@@ -116,7 +118,7 @@ public class NavigatorComposite
         this.pageFlow = new DefaultPageFlow();
         this.userDialogs = new SwtUserDialogs(getShell());
 
-        labelFormat_sc = tr._("%s");
+        labelFormat_sc = nls.tr("%s");
 
         createContents();
     }
@@ -163,7 +165,7 @@ public class NavigatorComposite
         pageIconLabel.setImage(defaultPageIcon);
 
         pageTitleLabel = new Label(titleBar, SWT.WRAP);
-        pageTitleLabel.setText(tr._("Title Of Current Page"));
+        pageTitleLabel.setText(nls.tr("Title Of Current Page"));
         pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label titleHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -192,25 +194,25 @@ public class NavigatorComposite
         if ((flags & SHOW_BEGIN) != 0) {
             goBeginButton = new Button(navBar, SWT.NONE);
             goBeginButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_l_edit.gif"));
-            goBeginButton.setText(tr._("Beg&in"));
+            goBeginButton.setText(nls.tr("Beg&in"));
         }
 
         if ((flags & SHOW_BACK) != 0) {
             goBackButton = new Button(navBar, SWT.NONE);
             goBackButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_backward.gif"));
-            goBackButton.setText(tr._("&Back"));
+            goBackButton.setText(nls.tr("&Back"));
         }
 
         if ((flags & SHOW_FORWARD) != 0) {
             goForwardButton = new Button(navBar, SWT.NONE);
             goForwardButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif"));
-            goForwardButton.setText(tr._("&Next"));
+            goForwardButton.setText(nls.tr("&Next"));
         }
 
         if ((flags & SHOW_END) != 0) {
             goEndButton = new Button(navBar, SWT.NONE);
             goEndButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_r_edit.gif"));
-            goEndButton.setText(tr._("&Finish"));
+            goEndButton.setText(nls.tr("&Finish"));
         }
 
         setupEvents();
@@ -273,7 +275,8 @@ public class NavigatorComposite
     }
 
     class RefreshAdapter
-            implements PropertyChangeListener {
+            implements
+                PropertyChangeListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {

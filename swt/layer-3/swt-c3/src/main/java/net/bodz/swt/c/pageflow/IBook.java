@@ -2,7 +2,7 @@ package net.bodz.swt.c.pageflow;
 
 import java.util.Collection;
 
-import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.t.pojo.PathEntries;
 
 public interface IBook {
@@ -22,6 +22,6 @@ public interface IBook {
 
     Collection<PageMethod> getMethods();
 
-    NLS getDict();
+    INlsTranslator getDict();
 
 }

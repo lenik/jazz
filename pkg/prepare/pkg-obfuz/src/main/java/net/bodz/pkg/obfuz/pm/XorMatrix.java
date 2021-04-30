@@ -5,7 +5,9 @@ import java.util.Arrays;
 import net.bodz.bas.i18n.nls.II18nCapable;
 
 public class XorMatrix
-        implements Cloneable, II18nCapable {
+        implements
+            Cloneable,
+            II18nCapable {
 
     private final int[] m;
     private final int rows;
@@ -51,7 +53,7 @@ public class XorMatrix
 
     void checkMultiplyWith(XorMatrix m) {
         if (cols != m.rows)
-            throw new IllegalArgumentException(tr._("can\'t multiply with ") + m);
+            throw new IllegalArgumentException(nls.tr("can\'t multiply with ") + m);
     }
 
     public void add(XorMatrix b) {

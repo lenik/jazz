@@ -38,7 +38,7 @@ public class SaveImageDialog
     }
 
     public SaveImageDialog(Shell parent, int style, ImageData image) {
-        super(parent, style, tr._("Save image as..."));
+        super(parent, style, nls.tr("Save image as..."));
         this.imageData = image;
     }
 
@@ -86,7 +86,7 @@ public class SaveImageDialog
         composite.setLayout(gridLayout);
 
         final Label typeLabel = new Label(composite, SWT.NONE);
-        typeLabel.setText(tr._("Image &Type:"));
+        typeLabel.setText(nls.tr("Image &Type:"));
 
         imageTypeCombo = new Combo(composite, SWT.READ_ONLY);
         final GridData gd_imageTypeCombo = new GridData();
@@ -100,14 +100,14 @@ public class SaveImageDialog
         paramsStack.setLayoutData(gd_optionsComposite);
 
         final Label pathLabel = new Label(composite, SWT.NONE);
-        pathLabel.setText(tr._("File path: "));
+        pathLabel.setText(nls.tr("File path: "));
 
         pathText = new Text(composite, SWT.BORDER);
         final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         pathText.setLayoutData(gd_pathText);
 
         final Button browseButton = new Button(composite, SWT.NONE);
-        browseButton.setText(tr._("&Browse"));
+        browseButton.setText(nls.tr("&Browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

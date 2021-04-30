@@ -1,6 +1,6 @@
 package net.bodz.swt.program;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
+import static net.bodz.swt.nls.GuiNlstr.INSTANCE;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -246,9 +246,9 @@ public abstract class BasicGUI
             return null;
         final Menu menu = new Menu(shell, SWT.BAR);
 
-        final Menu fileMenu = Menus.newSubMenu(menu, tr._("&File"));
+        final Menu fileMenu = Menus.newSubMenu(menu, nls.tr("&File"));
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
-        fileExit.setText(tr._("E&xit"));
+        fileExit.setText(nls.tr("E&xit"));
 
         return menu;
     }
@@ -351,12 +351,12 @@ public abstract class BasicGUI
                 try {
                     uri = new URI(s);
                 } catch (URISyntaxException ex) {
-                    throw new IllegalUsageError(tr._("Bad banner link URL: ") + s, ex);
+                    throw new IllegalUsageError(nls.tr("Bad banner link URL: ") + s, ex);
                 }
                 try {
                     Desktop.getDesktop().browse(uri);
                 } catch (IOException ex) {
-                    userDialogs.alert(tr._("Can\'t open browser"), ex);
+                    userDialogs.alert(nls.tr("Can\'t open browser"), ex);
                 }
             }
         });
@@ -366,7 +366,7 @@ public abstract class BasicGUI
         updateTime.setAlignment(SWT.RIGHT);
         String dateString = getXjdoc().getReleaseDateString();
         if (dateString != null) {
-            updateTime.setText(tr._("Last updated: ") + dateString);
+            updateTime.setText(nls.tr("Last updated: ") + dateString);
         }
         return bottomBar;
     }
@@ -387,7 +387,7 @@ public abstract class BasicGUI
         URL site = artifactDoc.getSiteLink();
         if (site == null)
             site = WWW_BODZ_NET;
-        String banner = GUINLS.format("BasicGUI.banner", author, site, site);
+        String banner = INSTANCE.format("BasicGUI.banner", author, site, site);
         return banner;
     }
 
@@ -404,7 +404,7 @@ public abstract class BasicGUI
             throws UiException {
         holder.setLayout(new FillLayout());
         Label welcomeLabel = new Label(holder, SWT.NONE);
-        welcomeLabel.setText(tr._("Welcome BasicGUI!"));
+        welcomeLabel.setText(nls.tr("Welcome BasicGUI!"));
     }
 
     protected void createView(Composite holder, Object key)

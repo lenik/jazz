@@ -54,7 +54,7 @@ class LicenseAgreementPage
 
     @Override
     public String getPageTitle() {
-        return tr._("License");
+        return nls.tr("License");
     }
 
     @Override
@@ -75,11 +75,11 @@ class LicenseAgreementPage
         };
 
         agreeButton = new Button(composite, SWT.RADIO);
-        agreeButton.setText(tr._("&Agree"));
+        agreeButton.setText(nls.tr("&Agree"));
         agreeButton.addSelectionListener(refreshMethods);
 
         disagreeButton = new Button(composite, SWT.RADIO);
-        disagreeButton.setText(tr._("&Disagree"));
+        disagreeButton.setText(nls.tr("&Disagree"));
         disagreeButton.addSelectionListener(refreshMethods);
 
         if (SystemProperties.isDevelopMode())

@@ -76,7 +76,7 @@ public class SelectComponentsDialog
     protected void createUserButtons(Composite parent)
             throws CreateException {
         Button selectAll = new Button(parent, SWT.NONE);
-        selectAll.setText(tr._("Select &All"));
+        selectAll.setText(nls.tr("Select &All"));
         selectAll.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -84,7 +84,7 @@ public class SelectComponentsDialog
             }
         });
         Button selectInverse = new Button(parent, SWT.NONE);
-        selectInverse.setText(tr._("&Inverse"));
+        selectInverse.setText(nls.tr("&Inverse"));
         selectInverse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

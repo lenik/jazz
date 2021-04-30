@@ -55,7 +55,7 @@ class WelcomeLogoPage
         ISisProject project = getProject();
         iString name = project.getLabel();
         IVersion version = project.getVersion();
-        return tr._("Welcome to install ") + name + " " + version;
+        return nls.tr("Welcome to install ") + name + " " + version;
     }
 
     @Override

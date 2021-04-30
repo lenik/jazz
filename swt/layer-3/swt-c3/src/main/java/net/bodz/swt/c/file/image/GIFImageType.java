@@ -21,7 +21,7 @@ public class GIFImageType
 
     @Override
     public String getName() {
-        return tr._("GIF");
+        return nls.tr("GIF");
     }
 
     @Override
@@ -47,14 +47,14 @@ public class GIFImageType
             this.params = params;
 
             final Label transparentcyLabel = new Label(this, SWT.NONE);
-            transparentcyLabel.setText(tr._("&Transparency: "));
+            transparentcyLabel.setText(nls.tr("&Transparency: "));
 
             final Canvas colorBlock = new Canvas(this, SWT.NONE);
             final GridData gd_colorBlock = new GridData(16, 16);
             colorBlock.setLayoutData(gd_colorBlock);
 
             final Link selectTransLink = new Link(this, SWT.NONE);
-            selectTransLink.setText(tr._("<a>select</a>"));
+            selectTransLink.setText(nls.tr("<a>select</a>"));
         }
 
         @Override

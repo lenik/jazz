@@ -10,7 +10,10 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.ui.dialog.IUserDialogs;
 
 public abstract class CommitAdapter
-        implements CommitListener, CommitFailListener, II18nCapable {
+        implements
+            CommitListener,
+            CommitFailListener,
+            II18nCapable {
 
     private IUserDialogs dialogs;
 
@@ -29,10 +32,10 @@ public abstract class CommitAdapter
         if (cause == null)
             cause = exception;
         TypedEvent evt = (TypedEvent) event;
-        dialogs.alert(tr._("Commit Error"), cause);
+        dialogs.alert(nls.tr("Commit Error"), cause);
         Widget widget = evt.widget;
-        // System.out.println("  source=" + evt.getSource());
-        // System.out.println("  widget=" + evt.widget);
+        // System.out.println(" source=" + evt.getSource());
+        // System.out.println(" widget=" + evt.widget);
         if (widget instanceof Text) {
             Text text = (Text) widget;
             text.setSelection(0, text.getText().length());

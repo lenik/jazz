@@ -62,9 +62,9 @@ public class CreateFile
 
             String abbr = Strings.ellipsis(String.valueOf(source), 40);
             if (append)
-                logger.infof(tr._("Append to %s: %s"), dest, abbr);
+                logger.infof(nls.tr("Append to %s: %s"), dest, abbr);
             else
-                logger.infof(tr._("Create file %s: %s"), dest, abbr);
+                logger.infof(nls.tr("Create file %s: %s"), dest, abbr);
 
             destFile.to(StreamWriting.class).setOpenOptions(openOptions).write(source);
         } catch (IOException e) {
@@ -79,7 +79,7 @@ public class CreateFile
 
         File location = getProject().getValue(locationName);
         File dest = new File(location, path);
-        logger.info(tr._("Delete file ") + dest);
+        logger.info(nls.tr("Delete file ") + dest);
         dest.delete();
     }
 

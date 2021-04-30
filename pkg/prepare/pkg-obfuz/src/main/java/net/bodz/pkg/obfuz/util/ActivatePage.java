@@ -55,11 +55,12 @@ public class ActivatePage
 
     @Override
     public String getPageTitle() {
-        return tr._("Product Activation");
+        return nls.tr("Product Activation");
     }
 
     class RecalcAdapter
-            implements ModifyListener {
+            implements
+                ModifyListener {
 
         @Override
         public void modifyText(ModifyEvent e) {
@@ -79,7 +80,7 @@ public class ActivatePage
         final Label welcomeLabel = new Label(holder, SWT.NONE);
         final GridData gd_pleaseEnterRegistrationLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
         welcomeLabel.setLayoutData(gd_pleaseEnterRegistrationLabel);
-        welcomeLabel.setText(tr._("Please activate this software: "));
+        welcomeLabel.setText(nls.tr("Please activate this software: "));
 
         final Label companyLabel = new Label(holder, SWT.NONE);
         final GridData gd_companyLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
@@ -104,7 +105,7 @@ public class ActivatePage
         final Label hostIdLabel = new Label(holder, SWT.NONE);
         final GridData gd_hostIdLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         hostIdLabel.setLayoutData(gd_hostIdLabel);
-        hostIdLabel.setText(tr._("Host ID: "));
+        hostIdLabel.setText(nls.tr("Host ID: "));
 
         hostIdText = new Text(holder, SWT.BORDER | SWT.READ_ONLY);
         final GridData gd_hostIdText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -113,7 +114,7 @@ public class ActivatePage
         final Label codeLabel = new Label(holder, SWT.NONE);
         final GridData gd_codeLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         codeLabel.setLayoutData(gd_codeLabel);
-        codeLabel.setText(tr._("Activation Code: "));
+        codeLabel.setText(nls.tr("Activation Code: "));
 
         codeText = new Text(holder, SWT.BORDER);
         final GridData gd_codeText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -139,7 +140,7 @@ public class ActivatePage
         final Label label1 = new Label(holder, SWT.WRAP);
         final GridData gd_label1 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
         label1.setLayoutData(gd_label1);
-        label1.setText(tr._("Have encounter any problem?"));
+        label1.setText(nls.tr("Have encounter any problem?"));
 
         link = new Link(holder, SWT.NONE);
         final GridData gd_label2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
@@ -158,7 +159,8 @@ public class ActivatePage
         }
 
         hostIdText.setText(hostId);
-        link.setText(String.format(tr._("Access our <a href=\"%s\">website</a> to get the activation code."), website));
+        link.setText(String.format(nls.tr("Access our <a href=\"%s\">website</a> to get the activation code."), //
+                website));
         if (website != null)
             link.setToolTipText(website.toString());
     }

@@ -65,9 +65,9 @@ public class FileLink
         try {
             if (dst.exists()) {
                 // IAction.
-                boolean confirm = userDialogs.confirm(tr._("FileLink.fileExist_s", dst));
+                boolean confirm = userDialogs.confirm(nls.tr("FileLink.fileExist_s", dst));
                 if (!confirm) {
-                    logger.info(tr._("FileLink skipped: ") + dst);
+                    logger.info(nls.tr("FileLink skipped: ") + dst);
                     return;
                 }
                 dst.delete();
@@ -78,12 +78,12 @@ public class FileLink
                 parentFile.mkdirs();
             }
             if (symbolic) {
-                logger.infof(tr._("Create symlink %s => %s\n"), src, dst);
+                logger.infof(nls.tr("Create symlink %s => %s\n"), src, dst);
                 try {
                     Files.createSymbolicLink(dstPath, srcPath);
                 } catch (UnsupportedOperationException e) {
                     if (SystemInfo.isWin32()) {
-                        logger.warn(tr._("Symbolic link isn\'t supported, try to create win32 shortcut."), e);
+                        logger.warn(nls.tr("Symbolic link isn\'t supported, try to create win32 shortcut."), e);
                         File _src = FilePath.canoniOf(src);
                         LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
                         lnk.setPath(_src.getPath());
@@ -93,14 +93,14 @@ public class FileLink
                         throw e;
                 }
             } else {
-                logger.infof(tr._("Create link %s => %s\n"), src, dst);
+                logger.infof(nls.tr("Create link %s => %s\n"), src, dst);
                 String errmesg = null;
                 try {
                     Files.createLink(dstPath, srcPath);
                 } catch (UnsupportedOperationException e) {
-                    logger.error(errmesg = tr._("Hard link isn\'t supported, try full copy."), e);
+                    logger.error(errmesg = nls.tr("Hard link isn\'t supported, try full copy."), e);
                 } catch (FileSystemException e) {
-                    logger.error(errmesg = tr._("Can't create hard link."), e);
+                    logger.error(errmesg = nls.tr("Can't create hard link."), e);
                 }
                 if (errmesg != null) {
                     try {
@@ -128,10 +128,10 @@ public class FileLink
         File dst = new File(dstLocation, dstPath);
         try {
             if (dst.exists()) {
-                logger.info(tr._("Remove link ") + dst);
+                logger.info(nls.tr("Remove link ") + dst);
                 dst.delete();
             } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) {
-                logger.info(tr._("Remove shortcut file ") + dst);
+                logger.info(nls.tr("Remove shortcut file ") + dst);
                 dst.delete();
             }
         } catch (Exception e) {

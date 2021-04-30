@@ -56,7 +56,7 @@ public class File_swt
         fileText.setLayoutData(BorderLayout.CENTER);
 
         final Button browseButton = new Button(comp, SWT.NONE);
-        browseButton.setText(tr._("Browse"));
+        browseButton.setText(nls.tr("Browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -77,7 +77,7 @@ public class File_swt
             try {
                 validator = Typers.getTyper(valueType, IValidator.class);
             } catch (QueryException e) {
-                throw new ViewBuilderException(tr._("Can\'t guess parser for number class: ") + valueType);
+                throw new ViewBuilderException(nls.tr("Can\'t guess parser for number class: ") + valueType);
             }
 
             OnFocusCommit.apply(fileText, new CommitAdapter(//

@@ -31,7 +31,7 @@ public class ActivatedPage
 
     @Override
     public String getPageTitle() {
-        return tr._("Successfully activated. ");
+        return nls.tr("Successfully activated. ");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ActivatedPage
         parent.setLayout(new GridLayout());
 
         final Label thankLabel = new Label(parent, SWT.NONE);
-        thankLabel.setText(tr._("Thank you for your registration!"));
+        thankLabel.setText(nls.tr("Thank you for your registration!"));
     }
 
     @Override
