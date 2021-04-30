@@ -5,7 +5,8 @@ import net.bodz.pkg.obfuz.pm.IProtectionModel;
 import net.bodz.pkg.obfuz.pm.ProtectionModels;
 
 public class Serial
-        implements II18nCapable {
+        implements
+            II18nCapable {
 
     /**
      * model product-len product* module - section* </code>
@@ -18,8 +19,7 @@ public class Serial
      * </ul>
      * Examples:
      * <ul>
-     * <li>
-     * <code>A2QT1-Verification-Decryption-TrapDoor-Activation</code>
+     * <li><code>A2QT1-Verification-Decryption-TrapDoor-Activation</code>
      * </ul>
      */
     private String modelName;
@@ -33,21 +33,21 @@ public class Serial
             throw new NullPointerException("text");
         String[] segs = text.split("-");
         if (segs.length < 1)
-            throw new IllegalArgumentException(tr._("No header"));
+            throw new IllegalArgumentException(nls.tr("No header"));
         String head = segs[0];
 
         String modelName = ProtectionModels.floor(head);
         if (modelName == null)
-            throw new IllegalArgumentException(tr._("bad model: ") + head);
+            throw new IllegalArgumentException(nls.tr("bad model: ") + head);
         head = head.substring(modelName.length());
         setModelName(modelName);
 
         if (head.length() == 0)
-            throw new IllegalArgumentException(tr._("no product specified"));
+            throw new IllegalArgumentException(nls.tr("no product specified"));
         int productLen = Integer.parseInt(head.substring(0, 1));
         head = head.substring(1);
         if (head.length() < productLen)
-            throw new IllegalArgumentException(tr._("invalid product length"));
+            throw new IllegalArgumentException(nls.tr("invalid product length"));
 
         product = head.substring(0, productLen);
         head = head.substring(productLen);
@@ -63,7 +63,7 @@ public class Serial
     public void setModelName(String modelName) {
         IProtectionModel model = ProtectionModels.get(modelName);
         if (model == null)
-            throw new IllegalArgumentException(tr._("bad model: ") + modelName);
+            throw new IllegalArgumentException(nls.tr("bad model: ") + modelName);
         this.modelName = modelName;
         this.model = model;
     }

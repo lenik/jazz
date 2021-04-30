@@ -31,7 +31,7 @@ public class BasicPM
             if (id != null)
                 return provider;
         }
-        throw new SystemException(tr._("Can\'t identify this machine."));
+        throw new SystemException(nls.tr("Can\'t identify this machine."));
     }
 
     @Override

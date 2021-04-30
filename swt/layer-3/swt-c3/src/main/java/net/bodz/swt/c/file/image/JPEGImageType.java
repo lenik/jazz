@@ -20,7 +20,7 @@ public class JPEGImageType
 
     @Override
     public String getName() {
-        return tr._("JPEG");
+        return nls.tr("JPEG");
     }
 
     @Override
@@ -49,7 +49,7 @@ public class JPEGImageType
             setLayout(gridLayout);
 
             final Label jpegQualityLabel = new Label(this, SWT.NONE);
-            jpegQualityLabel.setText(tr._("JPEG &Quality:"));
+            jpegQualityLabel.setText(nls.tr("JPEG &Quality:"));
 
             qualityScale = new Scale(this, SWT.NONE);
             qualityScale.setMinimum(10);

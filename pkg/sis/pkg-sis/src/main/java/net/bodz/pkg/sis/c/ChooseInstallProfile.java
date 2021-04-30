@@ -61,7 +61,7 @@ class ChooseInstallProfilePage
 
     @Override
     public String getPageTitle() {
-        return tr._("Choose Install Type: ");
+        return nls.tr("Choose Install Type: ");
     }
 
     @Override
@@ -102,14 +102,14 @@ class ChooseInstallProfilePage
     public void validate()
             throws UiValidationException {
         if (selectedIndex == -1)
-            throw new UiValidationException(tr._("Scheme isn\'t selected"));
+            throw new UiValidationException(nls.tr("Scheme isn\'t selected"));
         ISisInstallProfile profile = profiles.get(selectedIndex);
         getProject().setInstallProfile(profile);
     }
 
     @Override
     public String toString() {
-        return tr._("selected profile ") + selectedIndex;
+        return nls.tr("selected profile ") + selectedIndex;
     }
 
 }

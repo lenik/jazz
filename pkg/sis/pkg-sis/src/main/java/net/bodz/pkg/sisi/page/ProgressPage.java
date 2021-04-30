@@ -80,7 +80,7 @@ class ProgressPage
 
     @Override
     public String getPageTitle() {
-        return tr._("Installing Software");
+        return nls.tr("Installing Software");
     }
 
     @Override
@@ -128,7 +128,7 @@ class ProgressPage
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
                 copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"));
-                copyItem.setToolTipText(tr._("Copy"));
+                copyItem.setToolTipText(nls.tr("Copy"));
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -167,7 +167,7 @@ class ProgressPage
         };
         GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         logDetail.setLayoutData(gd_detail);
-        logDetail.setText(tr._("Install Logs: "));
+        logDetail.setText(nls.tr("Install Logs: "));
         logDetail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override
             public void detailSwitch(DetailSwitchEvent e) {
@@ -196,7 +196,7 @@ class ProgressPage
         timebar.setLayout(gridLayout_2);
 
         final Label _elapsedLabel = new Label(timebar, SWT.NONE);
-        _elapsedLabel.setText(tr._("Elapsed Time: "));
+        _elapsedLabel.setText(nls.tr("Elapsed Time: "));
 
         elapsedLabel = new Label(timebar, SWT.NONE);
         elapsedLabel.setText("-:-:-");
@@ -207,7 +207,7 @@ class ProgressPage
         sep.setLayoutData(gd_sep);
 
         final Label _remainingLabel = new Label(timebar, SWT.NONE);
-        _remainingLabel.setText(tr._("Remaining Time:"));
+        _remainingLabel.setText(nls.tr("Remaining Time:"));
 
         remainingLabel = new Label(timebar, SWT.NONE);
         remainingLabel.setText("-:-:-");
@@ -283,13 +283,13 @@ class ProgressPage
 
         @Override
         public boolean _fatal(int delta, Throwable ex, Object message) {
-            userDialogs.alert(tr._("Failed to install: ") + ex.getMessage(), ex);
+            userDialogs.alert(nls.tr("Failed to install: ") + ex.getMessage(), ex);
             return false;
         }
 
         @Override
         public boolean _error(int delta, Throwable ex, Object message) {
-            int answer = userDialogs.ask(tr._("Error happens: ") + ex.getMessage() + tr._(", continue?"), ex, //
+            int answer = userDialogs.ask(nls.tr("Error happens: ") + ex.getMessage() + nls.tr(", continue?"), ex, //
                     DirectiveCommands.retry, //
                     DirectiveCommands.ignore, //
                     DirectiveCommands.cancel, //

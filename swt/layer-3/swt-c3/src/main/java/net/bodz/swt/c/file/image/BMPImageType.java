@@ -18,7 +18,7 @@ public class BMPImageType
 
     @Override
     public String getName() {
-        return tr._("Bitmap");
+        return nls.tr("Bitmap");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BMPImageType
             setLayout(gridLayout);
 
             rleCompressedButton = new Button(this, SWT.CHECK);
-            rleCompressedButton.setText(tr._("&RLE Compressed"));
+            rleCompressedButton.setText(nls.tr("&RLE Compressed"));
             rleCompressedButton.setSelection(params.compressByRLE);
         }
 

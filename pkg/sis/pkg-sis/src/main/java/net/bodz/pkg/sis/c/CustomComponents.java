@@ -24,8 +24,8 @@ import org.eclipse.swt.widgets.TreeItem;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.t.tree.IQuadState;
 import net.bodz.bas.t.tree.QuadStateTreeItems;
-import net.bodz.bas.ui.err.UiValidationException;
 import net.bodz.bas.ui.err.QuietValidationException;
+import net.bodz.bas.ui.err.UiValidationException;
 import net.bodz.pkg.sis.ISisComponent;
 import net.bodz.pkg.sis.ISisProject;
 import net.bodz.pkg.sis.SisVariable;
@@ -54,7 +54,8 @@ public class CustomComponents
 
 class CustomComponentsPage
         extends ConfigPage
-        implements IQuadState {
+        implements
+            IQuadState {
 
     boolean showRoot = true;
 
@@ -79,7 +80,7 @@ class CustomComponentsPage
 
     @Override
     public String getPageTitle() {
-        return tr._("Custom Components");
+        return nls.tr("Custom Components");
     }
 
     @Override
@@ -118,11 +119,11 @@ class CustomComponentsPage
         };
 
         baseDirsComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        baseDirsComp.setText(tr._("Install Locations:"));
+        baseDirsComp.setText(nls.tr("Install Locations:"));
 
         Label hr2 = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr2.setLayoutData(//
-        new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+                new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
         statusbar = new Composite(holder, SWT.NONE);
         statusbar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -133,7 +134,7 @@ class CustomComponentsPage
         statusbar.setLayout(gridLayout_statusbar);
 
         final Label installSizeLabel = new Label(statusbar, SWT.NONE);
-        installSizeLabel.setText(tr._("Install Size: "));
+        installSizeLabel.setText(nls.tr("Install Size: "));
 
         sizeLabel = new Label(statusbar, SWT.NONE);
     }
@@ -172,7 +173,7 @@ class CustomComponentsPage
 
             File fileValue = (File) var.getValue();
             if (fileValue == null)
-                throw new NullPointerException(tr._("file variable is set to null in session: ") + varName);
+                throw new NullPointerException(nls.tr("file variable is set to null in session: ") + varName);
 
             dirText.setData(varName);
             dirText.setText(fileValue.getPath());
@@ -183,7 +184,7 @@ class CustomComponentsPage
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     DirectoryDialog dialog = new DirectoryDialog(parent.getShell(), SWT.NONE);
-                    dialog.setText(tr._("Select the directory for ") + var.getLabel());
+                    dialog.setText(nls.tr("Select the directory for ") + var.getLabel());
                     String dir = dialog.open();
                     if (dir != null)
                         dirText.setText(dir);
@@ -231,15 +232,15 @@ class CustomComponentsPage
         List<ISisComponent> missingList = project.getMissingDependencies(selection);
         if (!missingList.isEmpty()) {
             SelectComponentsDialog dialog = new SelectComponentsDialog(parent.getShell(), SWT.NONE,
-                    tr._("Check missing components"),
-                    tr._("The following missing components are required due to dependancy:"), missingList);
+                    nls.tr("Check missing components"),
+                    nls.tr("The following missing components are required due to dependancy:"), missingList);
 
             List<ISisComponent> addList = dialog.open();
             if (addList == null)
                 throw new QuietValidationException(tree);
 
             for (ISisComponent c : addList) {
-                TreeItem item = (TreeItem) tree.getTreeItem(c);
+                TreeItem item = tree.getTreeItem(c);
                 c.setSelected(true);
                 QuadStateTreeItems.setState(item, ONE);
             }
@@ -250,14 +251,14 @@ class CustomComponentsPage
             String path = dirText.getText();
             File dirFile = new File(path);
             if (dirFile.isFile())
-                throw new UiValidationException(dirText, tr._("file exists"));
+                throw new UiValidationException(dirText, nls.tr("file exists"));
             else if (!dirFile.exists()) {
-                boolean confirmed = userDialogs.confirm(tr._("Create the directory?"),
-                        tr._("CustomPage.confirmMkdir", dirFile));
+                boolean confirmed = userDialogs.confirm(nls.tr("Create the directory?"),
+                        nls.tr("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
                     throw new QuietValidationException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new UiValidationException(dirText, tr._("Can\'t create ") + dirFile);
+                    throw new UiValidationException(dirText, nls.tr("Can\'t create ") + dirFile);
             }
             project.setValue(varName, dirFile);
         }

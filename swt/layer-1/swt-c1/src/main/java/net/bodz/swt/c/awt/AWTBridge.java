@@ -10,7 +10,8 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.nls.II18nCapable;
 
 public class AWTBridge
-        implements II18nCapable {
+        implements
+            II18nCapable {
 
     /**
      * @see - SWT Snippet 156
@@ -132,10 +133,10 @@ public class AWTBridge
             int[] componentSize = ccm.getComponentSize();
             for (int i = 0; i < componentSize.length; i++)
                 if (componentSize[i] != 8)
-                    throw new NotImplementedException(tr._("color component bits: ") + componentSize[i]);
+                    throw new NotImplementedException(nls.tr("color component bits: ") + componentSize[i]);
             int transferType = ccm.getTransferType();
             if (transferType != DataBuffer.TYPE_BYTE)
-                throw new NotImplementedException(tr._("ccm transferType isn\'t BYTE: ") + transferType);
+                throw new NotImplementedException(nls.tr("ccm transferType isn\'t BYTE: ") + transferType);
             // XXX - ??
             PaletteData palette = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
             ImageData data = new ImageData(width, height, pixelSize, palette);
@@ -150,7 +151,7 @@ public class AWTBridge
             }
             return data;
         } else
-            throw new UnsupportedOperationException(tr._("colorModel: ") + cm.getClass().getName());
+            throw new UnsupportedOperationException(nls.tr("colorModel: ") + cm.getClass().getName());
     }
 
 }

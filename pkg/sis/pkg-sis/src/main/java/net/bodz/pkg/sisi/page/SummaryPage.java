@@ -36,14 +36,14 @@ class SummaryPage
 
     @Override
     public String getPageTitle() {
-        return tr._("Summary");
+        return nls.tr("Summary");
     }
 
     @Override
     protected void createContents(Composite holder) {
         holder.setLayout(new GridLayout());
         final Label sessionConfigurationLabel = new Label(holder, SWT.NONE);
-        sessionConfigurationLabel.setText(tr._("Session Configuration: "));
+        sessionConfigurationLabel.setText(nls.tr("Session Configuration: "));
 
         text = new Text(holder, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

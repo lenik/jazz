@@ -33,7 +33,7 @@ class DonePage
 
     @Override
     public String getPageTitle() {
-        return tr._("Done");
+        return nls.tr("Done");
     }
 
     @Override
@@ -42,11 +42,11 @@ class DonePage
 
         final Label thsInstallationProcessLabel = new Label(holder, SWT.WRAP);
         thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        thsInstallationProcessLabel.setText(tr
-                ._("Ths installation process is completed, you may choose to reboot the computer. "));
+        thsInstallationProcessLabel
+                .setText(nls.tr("Ths installation process is completed, you may choose to reboot the computer. "));
 
         final Button rebootCheck = new Button(holder, SWT.CHECK);
-        rebootCheck.setText(tr._("Reboot the computer"));
+        rebootCheck.setText(nls.tr("Reboot the computer"));
         rebootCheck.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

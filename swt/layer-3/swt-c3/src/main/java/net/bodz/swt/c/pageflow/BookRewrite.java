@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.t.pojo.PathEntries;
 
 public class BookRewrite
-        implements IBook {
+        implements
+            IBook {
 
     private final String title;
     private final List<RewriteRule> rules;
@@ -105,7 +106,7 @@ public class BookRewrite
     }
 
     @Override
-    public NLS getDict() {
+    public INlsTranslator getDict() {
         return next.getDict();
     }
 

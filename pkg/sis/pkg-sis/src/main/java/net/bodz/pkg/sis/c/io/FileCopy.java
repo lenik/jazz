@@ -24,7 +24,7 @@ import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FileRelation;
 import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
+import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.io.IByteIOS;
@@ -127,7 +127,7 @@ public class FileCopy
         int count = localFiles.size();
         totalFileSize = 0;
 
-        logger.infof(tr._("Pack %s files to %s\n"), getId(), attachment);
+        logger.infof(nls.tr("Pack %s files to %s\n"), getId(), attachment);
 
         ZipOutputStream zout;
         try {
@@ -164,7 +164,7 @@ public class FileCopy
             else {
                 // fix: see "path += File.separator" above.
                 if (!path.startsWith(localPrefix)) {
-                    String mesg = tr._("File not within the prefix ") + localPrefix + ": " + path;
+                    String mesg = nls.tr("File not within the prefix ") + localPrefix + ": " + path;
                     if (logger.error(new SisException(mesg), mesg))
                         continue; // next file
                     return;
@@ -183,14 +183,14 @@ public class FileCopy
             try {
                 if (file.isDirectory()) {
                     assert dest.endsWith("/");
-                    logger.log(tr._("Put entry "), dest);
+                    logger.log(nls.tr("Put entry "), dest);
                     JarEntry entry = new JarEntry(dest);
                     zout.putNextEntry(entry);
                     zout.closeEntry();
                     totalFileSize += FileDirs.DIR_FILE_SIZE;
                 } else if (file.isFile()) {
                     long fileSize = file.length();
-                    logger.logf(tr._("Put entry %s (size=%d) "), dest, fileSize);
+                    logger.logf(nls.tr("Put entry %s (size=%d) "), dest, fileSize);
                     JarEntry entry = new JarEntry(dest);
                     // entry.setSize(fileSize);
                     zout.putNextEntry(entry);
@@ -216,7 +216,7 @@ public class FileCopy
                         logger.warnf("Incorrect file size %d, %d more bytes doesn't exist\n", fileSize, remaining);
                     totalFileSize += fileSize;
                 } else {
-                    logger.warn(tr._("Ignored file of unknown type: ") + file);
+                    logger.warn(nls.tr("Ignored file of unknown type: ") + file);
                     continue;
                 }
             } catch (IOException e) {
@@ -246,7 +246,7 @@ public class FileCopy
         if (!preConstruct)
             if (outPath != null)
                 baseDir = new File(baseDir, outPath);
-        logger.infof(tr._("Install %s files to %s\n"), getId(), baseDir);
+        logger.infof(nls.tr("Install %s files to %s\n"), getId(), baseDir);
 
         ZipUnarchiver unzip;
         try {
@@ -272,7 +272,7 @@ public class FileCopy
                 }
 
                 if (entry == null) {
-                    SisException ex = new SisException(tr._("Entry isn\'t existed: ") + name);
+                    SisException ex = new SisException(nls.tr("Entry isn\'t existed: ") + name);
                     if (logger.error(ex, ex.getMessage()))
                         continue;
                     break;
@@ -293,11 +293,11 @@ public class FileCopy
                 if (autoMkdirs) {
                     File destParentDir = destFile.getParentFile();
                     if (!destParentDir.isDirectory()) {
-                        logger.log(tr._("Create  directory "), destParentDir, "/");
+                        logger.log(nls.tr("Create  directory "), destParentDir, "/");
                         destParentDir.mkdirs();
                     }
                 }
-                logger.log(tr._("Extract "), destFile);
+                logger.log(nls.tr("Extract "), destFile);
                 FileOutputStream destOut = null;
                 try {
                     InputStream entryIn = entry.getInputSource().newInputStream();
@@ -309,7 +309,7 @@ public class FileCopy
                         int cb = Math.min(blockSize, (int) remaining);
                         cb = entryIn.read(block, 0, cb);
                         if (cb == -1)
-                            throw new IOException(tr._("Unexpected end of file: ") + name);
+                            throw new IOException(nls.tr("Unexpected end of file: ") + name);
                         destOut.write(block, 0, cb);
                         remaining -= cb;
                     }
@@ -321,7 +321,7 @@ public class FileCopy
                         try {
                             destOut.close();
                         } catch (IOException e) {
-                            logger.warn(tr._("Can\'t close dest file "), destFile);
+                            logger.warn(nls.tr("Can\'t close dest file "), destFile);
                         }
                 }
             }
@@ -351,14 +351,14 @@ public class FileCopy
             if (outPath != null)
                 baseDir = new File(baseDir, outPath);
         }
-        logger.infof(tr._("Remove %s files from %s\n"), getId(), baseDir);
+        logger.infof(nls.tr("Remove %s files from %s\n"), getId(), baseDir);
 
         ZipInputStream zin = null;
         try {
             InputStream in = attachment.newInputStream();
             zin = new ZipInputStream(in);
         } catch (IOException e) {
-            SisException e2 = new SisException(tr._("Failed to read from ") + attachment, e);
+            SisException e2 = new SisException(nls.tr("Failed to read from ") + attachment, e);
             logger.fatal(e2, e2.getMessage());
             return;
         }
@@ -370,7 +370,7 @@ public class FileCopy
                 names.add(entry.getName());
             zin.close();
         } catch (IOException e) {
-            SisException e2 = new SisException(tr._("Failed to list the archive"), e);
+            SisException e2 = new SisException(nls.tr("Failed to list the archive"), e);
             logger.fatal(e2, e2.getMessage());
             return;
         } finally {
@@ -387,19 +387,19 @@ public class FileCopy
                 name = name.substring(0, name.length() - 1);
             File dest = new File(baseDir, name);
             if (!dest.exists()) {
-                logger.log(tr._("File doesn\'t exist: "), dest);
+                logger.log(nls.tr("File doesn\'t exist: "), dest);
                 continue;
             }
             if (isdir) {
-                logger.log(tr._("Delete directory "), dest);
+                logger.log(nls.tr("Delete directory "), dest);
                 dest.delete();
                 continue;
             }
-            logger.log(tr._("Delete file "), dest);
+            logger.log(nls.tr("Delete file "), dest);
             if (dest.delete())
                 FileDirs.removeEmptyParents(dest.getParentFile(), baseDir);
             else {
-                logger.logf(tr._("Can\'t delete file %s, try at exit\n"), dest);
+                logger.logf(nls.tr("Can\'t delete file %s, try at exit\n"), dest);
                 dest.deleteOnExit();
                 getProject().setRebootRequired(true);
             }

@@ -8,8 +8,8 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
+import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.fmt.rst.RstLoader;
@@ -30,7 +30,8 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
  */
 public class AbstractSisProject
         extends AbstractSisComponent
-        implements ISisProject {
+        implements
+            ISisProject {
 
     private static final long serialVersionUID = 1L;
 
@@ -345,7 +346,7 @@ public class AbstractSisProject
     /* _____________________________ */static section.iface __RST__;
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
+    public IRstHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
 
         ISisComponent child = getChild(CHILD_KEY_PREFIX + name);

@@ -23,7 +23,9 @@ import net.bodz.pkg.obfuz.seals.IdSeededSequence;
 import net.bodz.pkg.obfuz.sysid.ISysIdProvider;
 
 public abstract class AbstractProtectionModel
-        implements IProtectionModel, II18nCapable {
+        implements
+            IProtectionModel,
+            II18nCapable {
 
     private final ISysIdProvider sysIdProvider;
     private final int seed;
@@ -43,7 +45,7 @@ public abstract class AbstractProtectionModel
     public VirtualMachine getVM(String type) {
         VirtualMachine vm = machines.get(type);
         if (vm == null)
-            throw new IllegalUsageException(tr._("VM for specified type isn\'t existed: ") + type);
+            throw new IllegalUsageException(nls.tr("VM for specified type isn\'t existed: ") + type);
         return vm;
     }
 
@@ -80,7 +82,7 @@ public abstract class AbstractProtectionModel
             String name = names[i];
             ISection section = getSection(name);
             if (section == null)
-                throw new NullPointerException(tr._("Section isn\'t defined: ") + name);
+                throw new NullPointerException(nls.tr("Section isn\'t defined: ") + name);
             sections[i] = section;
         }
         return sections;

@@ -72,7 +72,7 @@ public class StrictDeviceResources
             return new ImageData(in);
         } catch (SWTException e) {
             if (e.code == SWT.ERROR_IO)
-                throw new IOException(tr._("SWT I/O Exception"), e);
+                throw new IOException(nls.tr("SWT I/O Exception"), e);
             throw e;
         }
     }
@@ -101,11 +101,11 @@ public class StrictDeviceResources
      * Using the caller loader to locate the resource.
      * <p>
      * Example:
-     * 
+     *
      * <pre>
      * getImageDataRes(&quot;/foo/bar/App.jpg&quot;)
      * </pre>
-     * 
+     *
      * @see #getImageDataRes(Class, String)
      */
     public ImageData getImageDataRes(String classResPath)
@@ -121,11 +121,11 @@ public class StrictDeviceResources
 
     /**
      * Example:
-     * 
+     *
      * <pre>
      * getImageDataRes(App.class, &quot;/foo/bar/App.jpg&quot;)
      * </pre>
-     * 
+     *
      * @param classResPath
      *            class-relative resource path, if the referred resource isn't within the package
      *            this <code>clazz</code> belongs to, then the path should precede with '/'.
@@ -135,18 +135,18 @@ public class StrictDeviceResources
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException(tr._("bad resource: ") + classResPath);
+            throw new IOException(nls.tr("bad resource: ") + classResPath);
         }
         return getImageData(url);
     }
 
     /**
      * Example:
-     * 
+     *
      * <pre>
      * getImageDataRes(classLoader, &quot;foo/bar/App.jpg&quot;)
      * </pre>
-     * 
+     *
      * @param loaderResPath
      *            absolute resource path, don't start with '/'.
      */
@@ -155,7 +155,7 @@ public class StrictDeviceResources
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException(tr._("bad resource: ") + loaderResPath);
+            throw new IOException(nls.tr("bad resource: ") + loaderResPath);
         }
         return getImageData(url);
     }
@@ -244,7 +244,7 @@ public class StrictDeviceResources
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException(tr._("bad resource: ") + classResPath);
+            throw new IOException(nls.tr("bad resource: ") + classResPath);
         }
         return getImage(url);
     }
@@ -257,7 +257,7 @@ public class StrictDeviceResources
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException(tr._("bad resource: ") + loaderResPath);
+            throw new IOException(nls.tr("bad resource: ") + loaderResPath);
         }
         return getImage(url);
     }
@@ -321,14 +321,14 @@ public class StrictDeviceResources
 
     static void diagResPath(ClassLoader loader, String path) {
         if (diag) {
-            System.err.println(tr._("bad resource: ") + path);
+            System.err.println(nls.tr("bad resource: ") + path);
             dumpLoader(loader);
         }
     }
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err.printf(tr._("Bad resource path: %s, class=%s\n"), path, clazz);
+            System.err.printf(nls.tr("Bad resource path: %s, class=%s\n"), path, clazz);
             dumpLoader(clazz.getClassLoader());
         }
     }

@@ -55,7 +55,7 @@ public class SisProjectInstaller
             }
         }
         if (project == null)
-            throw new IllegalUsageError(tr._("no config specified"));
+            throw new IllegalUsageError(nls.tr("no config specified"));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SisProjectInstaller
     protected String getTitle() {
         iString label = project.getLabel();
         IVersion version = project.getVersion();
-        return label + tr._(" Installer ") + version;
+        return label + nls.tr(" Installer ") + version;
     }
 
 }

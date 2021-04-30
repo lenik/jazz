@@ -69,9 +69,9 @@ public class PackageTask
     public void execute()
             throws BuildException {
         if (project == null)
-            throw new BuildException(tr._("Project isn\'t specified"));
+            throw new BuildException(nls.tr("Project isn\'t specified"));
         if (output == null)
-            throw new BuildException(tr._("Output isn\'t specified"));
+            throw new BuildException(nls.tr("Output isn\'t specified"));
 
         TaskLogger logger = new TaskLogger(this);
         logger.setLevel(logger.getLevel(), verboseLevel);

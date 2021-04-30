@@ -41,7 +41,7 @@ public class Exception_swt
     static final String expandedIcon = "/icons/full/obj16/remove_correction.gif";
     static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
 
-    public static String mailAddress = tr._("errorbox@bodz.net");
+    public static String mailAddress = nls.tr("errorbox@bodz.net");
 
     static boolean usingColors = false;
     static boolean showTools = true;
@@ -75,9 +75,9 @@ public class Exception_swt
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
             if (mesg == null)
-                mesg = tr._("(n/a)");
+                mesg = nls.tr("(n/a)");
             if (causeLevel++ != 0)
-                mesg = tr._("Caused by: ") + mesg;
+                mesg = nls.tr("Caused by: ") + mesg;
             final Label swithcerIcon = new Label(comp, SWT.NONE);
             swithcerIcon.setImage(SWTResources.getImageRes(collapsedIcon));
 
@@ -155,7 +155,7 @@ public class Exception_swt
 
             /**
              * Copy exception text to clipboard
-             * 
+             *
              * @image /icons/full/etool16/copy_edit.gif
              * @label &Copy
              */
@@ -175,11 +175,11 @@ public class Exception_swt
                 }
             }
 
-            final String mailSubject = tr._("Error Report");
+            final String mailSubject = nls.tr("Error Report");
 
             /**
              * Send error report to the responsib.
-             * 
+             *
              * @image /icons/full/obj16/text_edit.gif
              * @label &Report
              */
@@ -193,7 +193,7 @@ public class Exception_swt
                         DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
                         IUserDialogs dialogs = rc.getUserDialogs(parent);
-                        dialogs.alert(tr._("Can\'t send mail"), e);
+                        dialogs.alert(nls.tr("Can\'t send mail"), e);
                     }
                     return null;
                 }
@@ -207,7 +207,7 @@ public class Exception_swt
         if (showDebug) {
             /**
              * Go into the source where the exception happens.
-             * 
+             *
              * @image /icons/full/eview16/debug_view.gif
              * @label &Debug
              */

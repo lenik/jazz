@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.i18n.nls.CombinedNLS;
-import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.CombinedNlstr;
+import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.t.pojo.PathEntries;
 
 public abstract class AbstractBook
-        implements IBook {
+        implements
+            IBook {
 
     private final String title;
     protected final IBook next;
@@ -74,18 +75,18 @@ public abstract class AbstractBook
     }
 
     @Override
-    public NLS getDict() {
-        NLS d1 = _getDict();
+    public INlsTranslator getDict() {
+        INlsTranslator d1 = _getDict();
         if (next == null)
             return d1;
-        NLS d2 = next.getDict();
+        INlsTranslator d2 = next.getDict();
         if (d1 == null)
             return d2;
         if (d2 == null)
             return d1;
         if (d1 == d2)
             return d1;
-        CombinedNLS all = new CombinedNLS(d1, d2);
+        CombinedNlstr all = new CombinedNlstr(d1, d2);
         all.setName(d1.getName());
         return all;
     }
@@ -105,7 +106,7 @@ public abstract class AbstractBook
         return null;
     }
 
-    protected NLS _getDict() {
+    protected INlsTranslator _getDict() {
         return null;
     }
 

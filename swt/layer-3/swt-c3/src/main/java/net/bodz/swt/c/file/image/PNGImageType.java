@@ -12,7 +12,7 @@ public class PNGImageType
 
     @Override
     public String getName() {
-        return tr._("Portable Network Image");
+        return nls.tr("Portable Network Image");
     }
 
     @Override

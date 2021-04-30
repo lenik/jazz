@@ -40,7 +40,8 @@ import net.bodz.swt.c.resources.SWTResources;
 
 public abstract class SimpleDialog
         extends Dialog
-        implements II18nCapable {
+        implements
+            II18nCapable {
 
     static final int _diagstyle = SWT.NONE; // SWT.BORDER;
     static final Point minSize = new Point(150, 30);
@@ -131,7 +132,7 @@ public abstract class SimpleDialog
         }
         if (canceled)
             if (cancelException)
-                throw new CancelException(tr._("user canceled"));
+                throw new CancelException(nls.tr("user canceled"));
             else
                 return null;
         return result;
@@ -180,7 +181,7 @@ public abstract class SimpleDialog
 
     public void setTitle(String title) {
         if (title == null)
-            title = tr._("(no title)");
+            title = nls.tr("(no title)");
         this.title = title;
         if (shell != null)
             shell.setText(title);
@@ -233,7 +234,7 @@ public abstract class SimpleDialog
         try {
             fireValidation();
         } catch (ValidationException e) {
-            dialogs.alert(tr._("Check Failure"), e);
+            dialogs.alert(nls.tr("Check Failure"), e);
             return;
         }
         if (value == EVALUATE) {
@@ -349,7 +350,7 @@ public abstract class SimpleDialog
     }
 
     void createException(Composite parent, Exception e) {
-        errorLabel.setText(tr._("ERROR: ") + e.toString());
+        errorLabel.setText(nls.tr("ERROR: ") + e.toString());
         errorBar.set(true);
     }
 
@@ -418,25 +419,25 @@ public abstract class SimpleDialog
 
     protected Button addOKButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/translate.gif"), tr._("&OK"),
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/translate.gif"), nls.tr("&OK"),
                 EVALUATE);
     }
 
     protected Button addCancelButton(Composite parent)
             throws SWTException {
         return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"),
-                tr._("&Cancel"), CANCEL);
+                nls.tr("&Cancel"), CANCEL);
     }
 
     protected Button addYesButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/lrun_obj.gif"), tr._("&Yes"),
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/lrun_obj.gif"), nls.tr("&Yes"),
                 true);
     }
 
     protected Button addNoButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"), tr._("&No"),
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"), nls.tr("&No"),
                 false);
     }
 

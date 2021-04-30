@@ -12,7 +12,7 @@ public class TIFFImageType
 
     @Override
     public String getName() {
-        return tr._("TIFF");
+        return nls.tr("TIFF");
     }
 
     @Override

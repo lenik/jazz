@@ -27,7 +27,7 @@ class CanceledPage
 
     @Override
     public String getPageTitle() {
-        return tr._("Canceled");
+        return nls.tr("Canceled");
     }
 
     @Override
@@ -36,7 +36,7 @@ class CanceledPage
         final Label youHaveCanceledLabel = new Label(holder, SWT.WRAP);
         final GridData gd_youHaveCanceledLabel = new GridData(SWT.LEFT, SWT.CENTER, true, false);
         youHaveCanceledLabel.setLayoutData(gd_youHaveCanceledLabel);
-        youHaveCanceledLabel.setText(tr._("You have canceled the installation. "));
+        youHaveCanceledLabel.setText(nls.tr("You have canceled the installation. "));
     }
 
 }

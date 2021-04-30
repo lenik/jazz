@@ -4,7 +4,8 @@ import net.bodz.bas.i18n.nls.II18nCapable;
 
 public class AccumEntropy
         extends _Entropy
-        implements II18nCapable {
+        implements
+            II18nCapable {
 
     private byte[] pool;
     private final int multiplier;
@@ -15,7 +16,7 @@ public class AccumEntropy
 
     public AccumEntropy(int poolSize, int multiplier) {
         if (poolSize < 2)
-            throw new IllegalArgumentException(tr._("The pool is too small"));
+            throw new IllegalArgumentException(nls.tr("The pool is too small"));
         this.pool = new byte[poolSize];
         this.multiplier = multiplier;
     }

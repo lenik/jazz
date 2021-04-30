@@ -1,6 +1,5 @@
 package net.bodz.pkg.sis;
 
-import com.googlecode.openbeans.PropertyChangeSupport;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,9 +10,9 @@ import java.util.Set;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.rst.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IElementHandler;
+import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstElement;
+import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.i18n.dom.iString;
@@ -37,9 +36,14 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.swt.c.pageflow.IPage;
 
+import com.googlecode.openbeans.PropertyChangeSupport;
+
 public abstract class AbstractSisComponent
         extends MapTreeNode<ISisComponent>
-        implements ISisComponent, IElementHandler, II18nCapable {
+        implements
+            ISisComponent,
+            IRstHandler,
+            II18nCapable {
 
     private static final long serialVersionUID = 1L;
 
@@ -271,7 +275,7 @@ public abstract class AbstractSisComponent
     }
 
     @Override
-    public IElementHandler getElementHandler() {
+    public IRstHandler getElementHandler() {
         return this;
     }
 
@@ -282,7 +286,7 @@ public abstract class AbstractSisComponent
     }
 
     @Override
-    public IElementHandler beginChild(String name, String[] args)
+    public IRstHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
         return null;
     }

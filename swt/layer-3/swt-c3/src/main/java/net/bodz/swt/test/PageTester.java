@@ -1,6 +1,6 @@
 package net.bodz.swt.test;
 
-import static net.bodz.swt.nls.GUINLS.GUINLS;
+import static net.bodz.swt.nls.GuiNlstr.INSTANCE;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -67,7 +67,7 @@ public class PageTester
         protected void createContents(Composite holder) {
             holder.setLayout(new GridLayout(1, false));
             prevLabel = new Label(holder, SWT.NONE);
-            prevLabel.setText(tr._("Where do you come from?"));
+            prevLabel.setText(nls.tr("Where do you come from?"));
 
             infoLabel = new Label(holder, SWT.NONE);
 
@@ -81,7 +81,7 @@ public class PageTester
                 throws PageException {
             IBook book = context.getPageContext().getBook();
             PathEntries referrer = context.getReferrerPath();
-            prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer));
+            prevLabel.setText(INSTANCE.format("PageTestApp.youFromA_s", referrer));
 
             // debug request must come from an existing page.
             if (referrer == null)
@@ -89,11 +89,11 @@ public class PageTester
 
             IPage referrerPage = book.getPage(referrer);
             if (referrerPage == null)
-                throw new IllegalUsageException(tr._("bad address: ") + referrer);
+                throw new IllegalUsageException(nls.tr("bad address: ") + referrer);
 
             String type = referrerPage.getClass().getName();
             int hash = System.identityHashCode(referrerPage);
-            infoLabel.setText(tr._("Page(") + type + ") @" + Integer.toHexString(hash) + ": ");
+            infoLabel.setText(nls.tr("Page(") + type + ") @" + Integer.toHexString(hash) + ": ");
 
             String s = referrerPage.toString();
             text.setText(s);
