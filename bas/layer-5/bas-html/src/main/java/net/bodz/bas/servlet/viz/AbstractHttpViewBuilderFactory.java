@@ -8,11 +8,13 @@ public abstract class AbstractHttpViewBuilderFactory
         extends AutoloadViewBuilderFactory
         implements IHttpViewBuilderFactory {
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IHttpViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (IHttpViewBuilder<T>) super.getViewBuilder(type, features);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IHttpViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
         return (IHttpViewBuilder<T>) super.getViewBuilder(ref, features);
