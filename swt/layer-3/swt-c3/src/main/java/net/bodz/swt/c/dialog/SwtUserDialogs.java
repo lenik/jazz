@@ -335,6 +335,7 @@ public class SwtUserDialogs
                 super(parent, style, title);
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public T open() {
                 return (T) super.open(false);
@@ -443,6 +444,7 @@ public class SwtUserDialogs
                 super(parent, style, title);
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public K open() {
                 return (K) super.open(false);
@@ -563,6 +565,7 @@ public class SwtUserDialogs
                 super(parent, style, title);
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public Set<K> open() {
                 return (Set<K>) super.open(false);

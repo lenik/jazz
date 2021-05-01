@@ -8,11 +8,13 @@ public abstract class AbstractPdfViewBuilderFactory
         extends AutoloadViewBuilderFactory
         implements IPdfViewBuilderFactory {
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IPdfViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (IPdfViewBuilder<T>) super.getViewBuilder(type, features);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> IPdfViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
         return (IPdfViewBuilder<T>) super.getViewBuilder(ref, features);
