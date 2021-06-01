@@ -10,6 +10,7 @@ import net.bodz.bas.c.system.System2;
 import net.bodz.bas.err.control.ControlBreak;
 import net.bodz.bas.err.control.ControlContinue;
 import net.bodz.bas.err.control.ControlExit;
+import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
@@ -25,7 +26,8 @@ import net.bodz.mda.xjdoc.model.artifact.ArtifactObject;
 public abstract class AbstractProgram
         extends ArtifactObject
         implements
-            IProgram {
+            IProgram,
+            II18nCapable {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractProgram.class);
 
