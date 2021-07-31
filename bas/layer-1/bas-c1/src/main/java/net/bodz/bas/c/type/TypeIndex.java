@@ -63,7 +63,7 @@ public class TypeIndex {
                 try {
                     extClass = Class.forName(fqcn, true, classLoader);
                 } catch (ClassNotFoundException e) {
-                    logger.severe("(skipped) Undefined implementation name: " + fqcn);
+                    logger.severe("(skipped) Undefined implementation name: " + fqcn + " defined in " + url);
                     continue;
                 }
 
