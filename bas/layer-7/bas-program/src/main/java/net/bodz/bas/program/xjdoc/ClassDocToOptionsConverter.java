@@ -26,7 +26,8 @@ import com.googlecode.openbeans.Introspector;
 import com.googlecode.openbeans.PropertyDescriptor;
 
 public class ClassDocToOptionsConverter
-        implements IMapEntryLoader<Class<?>, IOptionGroup> {
+        implements
+            IMapEntryLoader<Class<?>, IOptionGroup> {
 
     boolean xjdocRequired = true;
 
@@ -164,15 +165,15 @@ public class ClassDocToOptionsConverter
 
         if (includeInterfaces) {
             for (Class<?> iface : clazz.getInterfaces()) {
-                parent = convert(iface, parent);
+                parent = convertTree(iface, parent);
                 parent = compact(parent);
             }
         }
 
         if (includeSuperclass) {
             Class<?> superclass = clazz.getSuperclass();
-            if (superclass != null) {
-                parent = convert(superclass, parent);
+            if (!superclass.getName().startsWith("java.")) {
+                parent = convertTree(superclass, parent);
                 parent = compact(parent);
             }
         }
@@ -291,14 +292,14 @@ public class ClassDocToOptionsConverter
         }
 
         if (includeProperties) {
-            //int flags = Introspector.USE_ALL_BEANINFO;
+            // int flags = Introspector.USE_ALL_BEANINFO;
             Class<?> stopClass = null;
             if (inheritance != OptionGroupInheritance.flatten)
                 stopClass = clazz.getSuperclass();
 
             BeanInfo beanInfo;
             try {
-                beanInfo = Introspector.getBeanInfo(clazz, stopClass/*, flags*/);
+                beanInfo = Introspector.getBeanInfo(clazz, stopClass/* , flags */);
             } catch (IntrospectionException e) {
                 throw new ParseException(e.getMessage(), e);
             }

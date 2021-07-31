@@ -94,7 +94,7 @@ public class HelpPageFormatter {
             }
 
             if (!localOptions.isEmpty()) {
-                String groupDescription = group.getDescription().toString();
+                String groupDescription = Nullables.toString(group.getDescription());
                 if (groupDescription == null)
                     groupDescription = group.getName();
                 String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription);
