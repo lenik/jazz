@@ -23,6 +23,9 @@ import net.bodz.bas.program.skel.CLISyntaxException;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactDoc;
 import net.bodz.mda.xjdoc.model.artifact.ArtifactObject;
 
+/**
+ * Common Programs
+ */
 public abstract class AbstractProgram
         extends ArtifactObject
         implements
@@ -90,7 +93,10 @@ public abstract class AbstractProgram
         HelpPageFormatter formatter = new HelpPageFormatter();
         formatter.setDescriptionColumn(29);
 
-        String doc = formatter.format(getOptionModel());
+        IOptionGroup optionModel = getOptionModel();
+        if (optionModel == null)
+            throw new NullPointerException("optionModel");
+        String doc = formatter.format(optionModel);
         out.print(doc);
 
         out.flush();

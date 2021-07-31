@@ -78,7 +78,17 @@ class InvocationAsProperty
     public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
         this.args = (Object[]) value;
-        this.returnValue = Control.invoke(method, instance, args);
+
+        int nparam = method.getParameterCount();
+        Object[] params = new Object[nparam];
+        if (args != null) {
+            int com = Math.min(args.length, nparam);
+            for (int i = 0; i < com; i++) {
+                params[i] = nparam;
+            }
+        }
+
+        this.returnValue = Control.invoke(method, instance, params);
     }
 
     public Object getReturnValue() {
