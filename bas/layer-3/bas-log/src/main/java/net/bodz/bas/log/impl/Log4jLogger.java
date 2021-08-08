@@ -2,6 +2,7 @@ package net.bodz.bas.log.impl;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
@@ -24,6 +25,34 @@ public class Log4jLogger
         if (log4j == null)
             throw new NullPointerException("log4j");
         this.log4j = log4j;
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        int priority = log4j.getLevel().toInt();
+        // int syslog = log4j.getLevel().getSyslogEquivalent();
+
+        // FATAL 0, ERROR 3, WARN 4, INFO 6, DEBUG 7
+
+        if (priority >= Priority.OFF_INT)
+            return LogLevel.OFF;
+
+        if (priority >= Priority.FATAL_INT)
+            return LogLevel.FATAL;
+
+        if (priority >= Priority.ERROR_INT)
+            return LogLevel.ERROR;
+
+        if (priority >= Priority.WARN_INT)
+            return LogLevel.WARN;
+
+        if (priority >= Priority.INFO_INT)
+            return LogLevel.INFO;
+
+        if (priority >= Priority.DEBUG_INT)
+            return LogLevel.DEBUG;
+
+        return LogLevel.ALL;
     }
 
     @Override

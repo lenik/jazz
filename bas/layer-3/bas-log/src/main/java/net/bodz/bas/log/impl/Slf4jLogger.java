@@ -26,6 +26,21 @@ public class Slf4jLogger
     }
 
     @Override
+    public LogLevel getLevel() {
+        if (slf4j.isErrorEnabled())
+            return LogLevel.ERROR;
+        if (slf4j.isWarnEnabled())
+            return LogLevel.WARN;
+        if (slf4j.isInfoEnabled())
+            return LogLevel.INFO;
+        if (slf4j.isDebugEnabled())
+            return LogLevel.DEBUG;
+        if (slf4j.isTraceEnabled())
+            return LogLevel.TRACE;
+        return LogLevel.OFF;
+    }
+
+    @Override
     public ILogSink get(LogLevel level, int delta) {
         if (level.getGroup() != LogLevel.logGroup)
             return super.get(level, delta);

@@ -18,7 +18,7 @@ public class LogLevelPreorder
 
     @Override
     public LogLevel getPreceding(LogLevel o) {
-        return new LogLevel("", o.getGroup(), o.getPriority() - 1, o.getSyslogEquiv());
+        return new LogLevel("", o.getGroup(), o.getPriority() - 1, o.getSyslogEquiv(), null);
     }
 
     @Override

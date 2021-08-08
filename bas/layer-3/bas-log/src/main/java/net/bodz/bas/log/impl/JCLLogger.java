@@ -26,6 +26,25 @@ public class JCLLogger
     }
 
     @Override
+    public LogLevel getLevel() {
+        if (jclLog.isDebugEnabled())
+            return LogLevel.DEBUG;
+        if (jclLog.isFatalEnabled())
+            return LogLevel.FATAL;
+        if (jclLog.isErrorEnabled())
+            return LogLevel.ERROR;
+        if (jclLog.isWarnEnabled())
+            return LogLevel.WARN;
+        if (jclLog.isInfoEnabled())
+            return LogLevel.INFO;
+        if (jclLog.isDebugEnabled())
+            return LogLevel.DEBUG;
+        if (jclLog.isTraceEnabled())
+            return LogLevel.TRACE;
+        return LogLevel.OFF;
+    }
+
+    @Override
     public ILogSink get(LogLevel level, int delta) {
         if (level.getGroup() != LogLevel.logGroup)
             return super.get(level, delta);
