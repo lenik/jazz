@@ -13,6 +13,7 @@ import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
@@ -78,6 +79,29 @@ public abstract class BasicCLI
      */
     boolean _logWithDate = false;
 
+    protected static String getPackageHeads(String fqcn, int depth) {
+        String[] domains = fqcn.split("\\.");
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < depth; i++) {
+            if (i != 0)
+                buf.append('.');
+            buf.append(domains[i]);
+        }
+        return buf.toString();
+    }
+
+    protected Logger getConfigLogger() {
+        String pkg = getClass().getPackage().getName();
+        // String heads = getPackageHeads(pkg, 2);
+
+        Logger logger = LoggerFactory.findClosestRepoLogger(pkg);
+        if (logger != null)
+            return logger;
+
+        // not working...
+        return LoggerFactory.getLogger(pkg);
+    }
+
     /**
      * Repeat to get more info.
      *
@@ -87,7 +111,10 @@ public abstract class BasicCLI
      * @option -v
      */
     void _verbose() {
-        logger.setDelta(logger.getDelta() + 1);
+        Logger logger = getConfigLogger();
+        LogLevel verbose = logger.getLevel().getVerbose();
+        if (verbose != null)
+            logger.setLevel(verbose);
     }
 
     /**
@@ -99,7 +126,10 @@ public abstract class BasicCLI
      * @option -q
      */
     void _quiet() {
-        logger.setDelta(logger.getDelta() - 1);
+        Logger logger = getConfigLogger();
+        LogLevel quiet = logger.getLevel().getQuiet();
+        if (quiet != null)
+            logger.setLevel(quiet);
     }
 
     /**
