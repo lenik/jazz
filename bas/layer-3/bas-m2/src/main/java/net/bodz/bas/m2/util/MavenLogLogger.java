@@ -25,6 +25,23 @@ public class MavenLogLogger
     }
 
     @Override
+    public LogLevel getLevel() {
+        if (mlog.isErrorEnabled())
+            return LogLevel.ERROR;
+
+        if (mlog.isWarnEnabled())
+            return LogLevel.WARN;
+
+        if (mlog.isInfoEnabled())
+            return LogLevel.INFO;
+
+        if (mlog.isDebugEnabled())
+            return LogLevel.DEBUG;
+
+        return LogLevel.ALL;
+    }
+
+    @Override
     public ILogSink get(LogLevel level, int delta) {
         if (level.getGroup() != LogLevel.logGroup)
             return super.get(level, delta);

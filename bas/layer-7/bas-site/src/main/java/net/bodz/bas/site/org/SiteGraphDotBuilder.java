@@ -3,7 +3,6 @@ package net.bodz.bas.site.org;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.c.string.StringQuote;

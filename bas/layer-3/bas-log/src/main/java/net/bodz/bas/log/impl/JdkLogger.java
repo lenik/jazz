@@ -1,5 +1,7 @@
 package net.bodz.bas.log.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +24,27 @@ public class JdkLogger
         if (jdkLogger == null)
             throw new NullPointerException("jdkLogger");
         this.jdkLogger = jdkLogger;
+    }
+
+    static final Map<Level, LogLevel> map = new HashMap<>();
+    static {
+        map.put(Level.OFF, LogLevel.OFF);
+        map.put(Level.SEVERE, LogLevel.ERROR);
+        map.put(Level.WARNING, LogLevel.WARN);
+        map.put(Level.INFO, LogLevel.INFO);
+        map.put(Level.FINE, LogLevel.LOG);
+        map.put(Level.FINER, LogLevel.DEBUG);
+        map.put(Level.FINEST, LogLevel.TRACE);
+        map.put(Level.ALL, LogLevel.ALL);
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        Level level = jdkLogger.getLevel();
+        LogLevel logLevel = map.get(level);
+        if (logLevel == null)
+            logLevel = LogLevel.ALL;
+        return logLevel;
     }
 
     @Override
