@@ -27,15 +27,24 @@ public class JdkLogger
     }
 
     static final Map<Level, LogLevel> map = new HashMap<>();
+    static final Map<LogLevel, Level> rmap = new HashMap<>();
+
+    static void match(Level a, LogLevel b) {
+        map.put(a, b);
+        rmap.put(b, a);
+    }
+
     static {
-        map.put(Level.OFF, LogLevel.OFF);
-        map.put(Level.SEVERE, LogLevel.ERROR);
-        map.put(Level.WARNING, LogLevel.WARN);
-        map.put(Level.INFO, LogLevel.INFO);
-        map.put(Level.FINE, LogLevel.LOG);
-        map.put(Level.FINER, LogLevel.DEBUG);
-        map.put(Level.FINEST, LogLevel.TRACE);
-        map.put(Level.ALL, LogLevel.ALL);
+        match(Level.OFF, LogLevel.OFF);
+        match(Level.SEVERE, LogLevel.ERROR);
+        match(Level.WARNING, LogLevel.WARN);
+        match(Level.INFO, LogLevel.INFO);
+        match(Level.FINE, LogLevel.LOG);
+        match(Level.FINER, LogLevel.DEBUG);
+        match(Level.FINEST, LogLevel.TRACE);
+        match(Level.ALL, LogLevel.ALL);
+
+        rmap.put(LogLevel.MESG, Level.INFO);
     }
 
     @Override
@@ -45,6 +54,14 @@ public class JdkLogger
         if (logLevel == null)
             logLevel = LogLevel.ALL;
         return logLevel;
+    }
+
+    @Override
+    public void setLevel(LogLevel level) {
+        Level jdkLevel = rmap.get(level);
+        if (jdkLevel == null)
+            jdkLevel = Level.ALL;
+        jdkLogger.setLevel(jdkLevel);
     }
 
     @Override

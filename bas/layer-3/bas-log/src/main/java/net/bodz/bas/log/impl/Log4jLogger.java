@@ -1,5 +1,8 @@
 package net.bodz.bas.log.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -27,8 +30,35 @@ public class Log4jLogger
         this.log4j = log4j;
     }
 
+    static final Map<Level, LogLevel> map = new HashMap<>();
+    static final Map<LogLevel, Level> rmap = new HashMap<>();
+
+    static void match(Level a, LogLevel b) {
+        map.put(a, b);
+        rmap.put(b, a);
+    }
+
+    static {
+        match(Level.OFF, LogLevel.OFF);
+        match(Level.FATAL, LogLevel.FATAL);
+        match(Level.ERROR, LogLevel.ERROR);
+        match(Level.WARN, LogLevel.WARN);
+        match(Level.INFO, LogLevel.INFO);
+        match(Level.DEBUG, LogLevel.DEBUG);
+        match(Level.TRACE, LogLevel.TRACE);
+        match(Level.ALL, LogLevel.ALL);
+
+        rmap.put(LogLevel.MESG, Level.INFO);
+        rmap.put(LogLevel.LOG, Level.INFO);
+    }
+
     @Override
     public LogLevel getLevel() {
+        Level level = log4j.getLevel();
+        LogLevel logLevel = map.get(level);
+        if (logLevel != null)
+            return logLevel;
+
         int priority = log4j.getLevel().toInt();
         // int syslog = log4j.getLevel().getSyslogEquivalent();
 
@@ -53,6 +83,14 @@ public class Log4jLogger
             return LogLevel.DEBUG;
 
         return LogLevel.ALL;
+    }
+
+    @Override
+    public void setLevel(LogLevel logLevel) {
+        Level level = rmap.get(logLevel);
+        if (level == null)
+            level = Level.ALL;
+        log4j.setLevel(level);
     }
 
     @Override
