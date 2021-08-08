@@ -59,6 +59,8 @@ public abstract class BasicCLI
 
     protected IUserDialogs dialogs = ConsoleDialogs.stdout;
 
+    int verboseLevel = 0;
+
     /**
      * Show prefix in the log messages.
      *
@@ -111,10 +113,7 @@ public abstract class BasicCLI
      * @option -v
      */
     void _verbose() {
-        Logger logger = getConfigLogger();
-        LogLevel verbose = logger.getLevel().getVerbose();
-        if (verbose != null)
-            logger.setLevel(verbose);
+        verboseLevel++;
     }
 
     /**
@@ -126,10 +125,7 @@ public abstract class BasicCLI
      * @option -q
      */
     void _quiet() {
-        Logger logger = getConfigLogger();
-        LogLevel quiet = logger.getLevel().getQuiet();
-        if (quiet != null)
-            logger.setLevel(quiet);
+        verboseLevel--;
     }
 
     /**
@@ -168,6 +164,34 @@ public abstract class BasicCLI
 
     public IType getPotatoType() {
         return Typers.getTyper(getClass(), IType.class);
+    }
+
+    @Override
+    protected void _reconfigure()
+            throws Exception {
+        super._reconfigure();
+
+        if (verboseLevel != 0) {
+            Logger logger = getConfigLogger();
+            if (logger != null) {
+                LogLevel level = logger.getLevel();
+                while (verboseLevel < 0) {
+                    LogLevel quiet = level.getQuiet();
+                    if (quiet == null)
+                        break;
+                    level = quiet;
+                    verboseLevel++;
+                }
+                while (verboseLevel > 0) {
+                    LogLevel verbose = level.getVerbose();
+                    if (verbose == null)
+                        break;
+                    level = verbose;
+                    verboseLevel--;
+                }
+                logger.setLevel(level);
+            }
+        }
     }
 
     public void runExtra(String cmdline)
