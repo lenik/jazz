@@ -9,11 +9,14 @@ import net.bodz.bas.t.variant.conv.*;
 
 // @GeneratedBy(cg.VariantMapGenerator.class)
 public abstract class AutoConvVariant
-        implements IVariant {
+        implements
+            IVariant {
 
     @Override
     public byte getByte() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return ByteVarConverter.INSTANCE.from(value);
     }
 
@@ -32,6 +35,8 @@ public abstract class AutoConvVariant
     @Override
     public short getShort() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return ShortVarConverter.INSTANCE.from(value);
     }
 
@@ -50,6 +55,8 @@ public abstract class AutoConvVariant
     @Override
     public int getInt() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return IntegerVarConverter.INSTANCE.from(value);
     }
 
@@ -68,6 +75,8 @@ public abstract class AutoConvVariant
     @Override
     public long getLong() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return LongVarConverter.INSTANCE.from(value);
     }
 
@@ -86,6 +95,8 @@ public abstract class AutoConvVariant
     @Override
     public float getFloat() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return FloatVarConverter.INSTANCE.from(value);
     }
 
@@ -104,6 +115,8 @@ public abstract class AutoConvVariant
     @Override
     public double getDouble() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return DoubleVarConverter.INSTANCE.from(value);
     }
 
@@ -122,6 +135,8 @@ public abstract class AutoConvVariant
     @Override
     public boolean getBoolean() {
         Object value = getScalar();
+        if (value == null)
+            return false;
         return BooleanVarConverter.INSTANCE.from(value);
     }
 
@@ -140,6 +155,8 @@ public abstract class AutoConvVariant
     @Override
     public char getChar() {
         Object value = getScalar();
+        if (value == null)
+            return 0;
         return CharacterVarConverter.INSTANCE.from(value);
     }
 
