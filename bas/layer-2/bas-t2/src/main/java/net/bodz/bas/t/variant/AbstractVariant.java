@@ -68,6 +68,12 @@ public abstract class AbstractVariant
         return value.toString();
     }
 
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> enumType) {
+        return getEnum(enumType, null);
+    }
+
+    @Override
     public <T extends Enum<T>> T getEnum(Class<T> enumType, T defaultValue) {
         String s = getString();
         if (s == null || s.isEmpty())
@@ -78,8 +84,7 @@ public abstract class AbstractVariant
 
     @Override
     public String[] getStringArray() {
-        Object value = get();
-        return _VariantFn.toStringArray(value);
+        return getStringArray(null);
     }
 
     @Override

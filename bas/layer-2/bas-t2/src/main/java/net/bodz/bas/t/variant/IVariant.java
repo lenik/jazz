@@ -14,7 +14,7 @@ public interface IVariant {
 
     /**
      * Get the value as a scalar.
-     * 
+     *
      * @return If the value is non-array, the value is returned. Otherwise, return the first element
      *         in the array. If the array is empty, returns <code>null</code>, too.
      */
@@ -22,10 +22,10 @@ public interface IVariant {
 
     /**
      * Get the value as a scalar.
-     * 
+     *
      * @return If the value is non-array, the value is returned. Otherwise, return the first element
      *         in the array. If the array is empty, returns <code>null</code>, too.
-     * 
+     *
      *         If there is no entry for the key, defaultValue is returned.
      */
     Object getScalar(Object defaultValue);
@@ -104,6 +104,8 @@ public interface IVariant {
 
     Date getDate(Date defaultValue);
 
-    // <T> T cast(Class<T> type);
+    <T extends Enum<T>> T getEnum(Class<T> enumType);
+
+    <T extends Enum<T>> T getEnum(Class<T> enumType, T defaultValue);
 
 }
