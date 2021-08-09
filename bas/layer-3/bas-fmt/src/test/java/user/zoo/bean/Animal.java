@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.w3c.dom.Element;
-
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.rst.AbstractRstObject;
@@ -17,6 +15,7 @@ import net.bodz.bas.fmt.xml.IObjectXmlLoader;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlSerializable;
 import net.bodz.bas.fmt.xml.XmlFn;
+import net.bodz.bas.fmt.xml.xq.IElement;
 
 @RstSource(bean = true)
 public class Animal
@@ -90,11 +89,10 @@ public class Animal
     }
 
     @Override
-    public Animal readObject(Element element)
+    public void readObject(IElement element)
             throws ParseException, LoaderException {
         IObjectXmlLoader loader = XmlFn.getDefaultLoader(this);
         loader.loadXmlToObject(this, element);
-        return this;
     }
 
 }

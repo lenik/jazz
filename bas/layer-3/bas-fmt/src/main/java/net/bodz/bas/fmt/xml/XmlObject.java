@@ -4,11 +4,10 @@ import java.io.StringWriter;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.w3c.dom.Element;
-
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fmt.xml.xq.IElement;
 
 public abstract class XmlObject
         implements
@@ -36,10 +35,9 @@ public abstract class XmlObject
     }
 
     @Override
-    public Object readObject(Element element)
+    public void readObject(IElement element)
             throws ParseException, LoaderException {
         _loader().loadXmlToObject(this, element);
-        return this;
     }
 
     /** ⇱ Implementation Of {@link IXmlOverrides}. */

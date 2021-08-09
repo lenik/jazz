@@ -6,21 +6,28 @@ import org.w3c.dom.Element;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.fmt.xml.xq.QElement;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
 public interface IXmlSerializable {
 
-    default void writeObject(IXmlOutput out)
-            throws XMLStreamException {
-        XmlFn.dump(this, out);
+    default void readObject(Element element)
+            throws ParseException, LoaderException {
+        QElement wrapped = QElement.wrap(element);
+        readObject(wrapped);
     }
 
-    default Object readObject(Element element)
+    default void readObject(IElement element)
             throws ParseException, LoaderException {
         IObjectXmlLoader loader = XmlFn.getDefaultLoader(this);
         loader.loadXmlToObject(this, element);
-        return this;
+    }
+
+    default void writeObject(IXmlOutput out)
+            throws XMLStreamException {
+        XmlFn.dump(this, out);
     }
 
     class xml
