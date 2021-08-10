@@ -101,7 +101,7 @@ public abstract class BasicCLI
             return logger;
 
         // not working...
-        return LoggerFactory.getLogger(pkg);
+        return null;
     }
 
     /**

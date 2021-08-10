@@ -55,11 +55,14 @@ public class Log4jLogger
     @Override
     public LogLevel getLevel() {
         Level level = log4j.getLevel();
+        if (level == null)
+            return null;
+
         LogLevel logLevel = map.get(level);
         if (logLevel != null)
             return logLevel;
 
-        int priority = log4j.getLevel().toInt();
+        int priority = level.toInt();
         // int syslog = log4j.getLevel().getSyslogEquivalent();
 
         // FATAL 0, ERROR 3, WARN 4, INFO 6, DEBUG 7
