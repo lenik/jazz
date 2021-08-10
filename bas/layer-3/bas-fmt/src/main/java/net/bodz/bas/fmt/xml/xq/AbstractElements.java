@@ -19,6 +19,25 @@ public abstract class AbstractElements
     public abstract ICachedIterable<Element> select();
 
     @Override
+    public Iterator<IElement> iterator() {
+        Iterator<Element> iterator = select().iterator();
+        return new Iterator<IElement>() {
+
+            @Override
+            public boolean hasNext() {
+                return iterator.hasNext();
+            }
+
+            @Override
+            public IElement next() {
+                Element element = iterator.next();
+                return QElement.wrap(element);
+            }
+
+        };
+    }
+
+    @Override
     public String getVarSource() {
         StringBuilder sb = null;
         for (Element el : select()) {
