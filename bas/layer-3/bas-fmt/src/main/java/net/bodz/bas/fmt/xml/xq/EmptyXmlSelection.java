@@ -1,5 +1,7 @@
 package net.bodz.bas.fmt.xml.xq;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -66,6 +68,11 @@ public class EmptyXmlSelection
     public IElement first()
             throws NoSuchElementException {
         throw new NoSuchElementException();
+    }
+
+    @Override
+    public Iterator<IElement> iterator() {
+        return Collections.emptyIterator();
     }
 
 }

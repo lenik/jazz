@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 public interface IElements
         extends
+            Iterable<IElement>,
             IXmlSelection {
 
     IElement getFirst();
