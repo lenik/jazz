@@ -5,10 +5,20 @@ import org.w3c.dom.Attr;
 public class QAttrs
         extends AbstractXmlSelection {
 
-    Iterable<Attr> attrs;
+    ICachedIterable<Attr> attrs;
 
     public QAttrs(Iterable<Attr> attrs) {
-        this.attrs = attrs;
+        this.attrs = DefaultCachedIterable.wrap(attrs);
+    }
+
+    @Override
+    public int getNodeCount() {
+        return attrs.size();
+    }
+
+    @Override
+    public int getElementCount() {
+        return 0;
     }
 
     @Override

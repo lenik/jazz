@@ -25,6 +25,16 @@ public class EmptyXmlSelection
     }
 
     @Override
+    public int getNodeCount() {
+        return 0;
+    }
+
+    @Override
+    public int getElementCount() {
+        return 0;
+    }
+
+    @Override
     public IElement get(int index) {
         return null;
     }

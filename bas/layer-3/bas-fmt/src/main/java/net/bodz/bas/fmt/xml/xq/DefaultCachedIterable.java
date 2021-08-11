@@ -12,10 +12,14 @@ public class DefaultCachedIterable<T>
     List<T> list = new ArrayList<>();
     boolean everRun;
 
-    public DefaultCachedIterable(Iterable<T> orig) {
+    DefaultCachedIterable(Iterable<T> orig) {
         if (orig == null)
             throw new NullPointerException("orig");
         this.orig = orig;
+    }
+
+    public static <T> DefaultCachedIterable<T> wrap(Iterable<T> orig) {
+        return new DefaultCachedIterable<T>(orig);
     }
 
     @Override

@@ -10,6 +10,12 @@ public interface IXmlSelection
         extends
             IStringVar {
 
+    default int getNodeCount() {
+        return getElementCount();
+    }
+
+    int getElementCount();
+
     IXmlSelection a(String attributeName);
 
     IElement get(int index);
