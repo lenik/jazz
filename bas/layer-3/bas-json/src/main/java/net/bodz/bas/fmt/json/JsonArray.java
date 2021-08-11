@@ -41,7 +41,12 @@ public class JsonArray {
 
     public Object get(int index)
             throws JSONException {
-        return array.get(index);
+        Object val = array.get(index);
+        if (val instanceof JSONObject) {
+            JSONObject jo = (JSONObject) val;
+            return JsonObject.wrap(jo);
+        }
+        return val;
     }
 
     public boolean getBoolean(int index)

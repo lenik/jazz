@@ -1,8 +1,5 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.IOException;
-
-import net.bodz.bas.err.FormatException;
 import net.bodz.json.JSONException;
 
 public interface IJsonOut {
@@ -143,27 +140,5 @@ public interface IJsonOut {
 //
 // IJsonOut keyAnyNotNull(String key, Object value)
 // throws JSONException;
-
-    class fn {
-
-        public static void dumpTree(IJsonOut out, Object value)
-                throws IOException, FormatException {
-            if (value instanceof IJsonSerializable) {
-                IJsonOptions opts = IJsonOptions.NULL;
-                if (value instanceof IJsonOptions)
-                    opts = (IJsonOptions) value;
-                IJsonSerializable jsVal = (IJsonSerializable) value;
-                if (opts.isSelfContained()) {
-                    jsVal.writeObject(out);
-                } else {
-                    out.object();
-                    jsVal.writeObject(out);
-                    out.endObject();
-                }
-                return;
-            }
-            out.value(value);
-        }
-    }
 
 }

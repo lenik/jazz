@@ -179,6 +179,30 @@ public class JsonFn {
         return context;
     }
 
+    public static void writeObject(IJsonOut out, Object o)
+            throws IOException, FormatException {
+        IJsonOptions opts = null;
+        if (o instanceof IJsonOptions)
+            opts = (IJsonOptions) o;
+        writeObject(out, o, opts);
+    }
+
+    public static void writeObject(IJsonOut out, Object o, IJsonOptions opts)
+            throws IOException, FormatException {
+        if (o instanceof IJsonSerializable) {
+            IJsonSerializable jsVal = (IJsonSerializable) o;
+            if (opts.isSelfContained()) {
+                jsVal.writeObject(out);
+            } else {
+                out.object();
+                jsVal.writeObject(out);
+                out.endObject();
+            }
+            return;
+        }
+        out.value(o);
+    }
+
 }
 
 class JSONArrayIterator<T>

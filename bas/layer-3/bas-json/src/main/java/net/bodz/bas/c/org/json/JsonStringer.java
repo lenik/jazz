@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.json.JSONException;
 import net.bodz.json.JSONStringer;
 
@@ -12,7 +13,8 @@ import net.bodz.json.JSONStringer;
  */
 public class JsonStringer
         extends JSONStringer
-        implements IJsonOut {
+        implements
+            IJsonOut {
 
     public JsonStringer() {
     }
@@ -49,7 +51,7 @@ public class JsonStringer
     public JsonStringer object(Object object)
             throws JSONException {
         try {
-            fn.dumpTree(this, object);
+            JsonFn.writeObject(this, object);
         } catch (Exception e) {
             throw new JSONException(e);
         }
@@ -123,7 +125,7 @@ public class JsonStringer
     public JsonStringer entry(String key, Object value) {
         this.key(key);
         try {
-            fn.dumpTree(this, value);
+            JsonFn.writeObject(this, value);
         } catch (IOException e) {
             throw new JSONException(e);
         } catch (FormatException e) {
