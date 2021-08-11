@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import net.bodz.bas.c.javax.servlet.DecoratedServletContext;
 import net.bodz.bas.c.javax.servlet.IAttributes;
 import net.bodz.bas.c.javax.servlet.http.DecoratedHttpSession;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.res.builtin.FileResource;
 
@@ -28,20 +29,20 @@ public class AppPersistor {
     }
 
     public void save(final ServletContext servletContext)
-            throws IOException {
+            throws IOException, FormatException {
         File contextFile = registry.getContextFile();
         save(contextFile, new DecoratedServletContext(servletContext));
     }
 
     public void save(final HttpSession session)
-            throws IOException {
+            throws IOException, FormatException {
         String id = session.getId();
         File sessionFile = registry.getSessionFile(id);
         save(sessionFile, new DecoratedHttpSession(session));
     }
 
     public void save(File file, IAttributes attributes)
-            throws IOException {
+            throws IOException, FormatException {
         OutputStream out = new FileOutputStream(file);
         try {
             fmt.saveAttributes(out, attributes);

@@ -2,6 +2,7 @@ package net.bodz.bas.c.org.json;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.json.JSONException;
 import net.bodz.json.JSONStringer;
@@ -49,7 +50,7 @@ public class JsonStringer
             throws JSONException {
         try {
             fn.dumpTree(this, object);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new JSONException(e);
         }
         return this;
@@ -125,6 +126,8 @@ public class JsonStringer
             fn.dumpTree(this, value);
         } catch (IOException e) {
             throw new JSONException(e);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
         return this;
     }

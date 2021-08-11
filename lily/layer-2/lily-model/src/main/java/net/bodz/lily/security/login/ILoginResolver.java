@@ -2,6 +2,7 @@ package net.bodz.lily.security.login;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.site.json.AbstractJsonResponse;
@@ -46,7 +47,7 @@ public interface ILoginResolver {
 
         @Override
         public void writeObject(IJsonOut out)
-                throws IOException {
+                throws IOException, FormatException {
             super.writeObject(out);
             out.entry("user", user);
         }

@@ -8,6 +8,7 @@ import java.util.Map;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.data.codec.builtin.Base64Codec;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
@@ -209,7 +210,7 @@ public class JsonPersistor {
     }
 
     public void writeTyped(IJsonOut out, Object obj)
-            throws IOException {
+            throws IOException, FormatException {
         if (obj == null) {
             writeNull(out);
             return;
@@ -225,7 +226,7 @@ public class JsonPersistor {
     }
 
     public void writeNonNullVal(IJsonOut out, Object obj)
-            throws IOException {
+            throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isArray()) {
             int n = Array.getLength(obj);

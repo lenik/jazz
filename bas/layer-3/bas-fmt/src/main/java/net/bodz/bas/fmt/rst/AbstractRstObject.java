@@ -3,6 +3,7 @@ package net.bodz.bas.fmt.rst;
 import java.io.IOException;
 
 import net.bodz.bas.c.object.IEmptyConsts;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
@@ -85,6 +86,8 @@ public abstract class AbstractRstObject
         IRstOutput out = RstOutputImpl.from(buf);
         try {
             writeObject(out);
+        } catch (FormatException e) {
+            throw new UnexpectedException(e.getMessage(), e);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

@@ -4,6 +4,7 @@ import java.io.StringWriter;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
@@ -30,7 +31,7 @@ public abstract class XmlObject
 
     @Override
     public void writeObject(IXmlOutput out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         XmlFn.dump(this, out);
     }
 
@@ -58,6 +59,8 @@ public abstract class XmlObject
         try {
             IXmlOutput out = XmlOutputImpl.from(buf);
             writeObject(out);
+        } catch (FormatException e) {
+            throw new UnexpectedException(e.getMessage(), e);
         } catch (XMLStreamException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOptions;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -319,7 +320,7 @@ public class AbstractJsonResponse<self_t>
 
     @Override
     public void writeObject(IJsonOut out)
-            throws IOException {
+            throws IOException, FormatException {
         out.entry("status", status);
 
         if (status < ERROR)
@@ -384,7 +385,11 @@ public class AbstractJsonResponse<self_t>
 
     @Override
     public String toString() {
-        return JsonFn.toJson(this);
+        try {
+            return JsonFn.toJson(this);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
 }

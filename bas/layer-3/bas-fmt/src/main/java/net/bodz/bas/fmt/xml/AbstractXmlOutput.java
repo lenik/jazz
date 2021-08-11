@@ -4,6 +4,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.t.set.FramedMarks;
 
 public abstract class AbstractXmlOutput
@@ -42,7 +43,7 @@ public abstract class AbstractXmlOutput
 
     @Override
     public void element(String name, IXmlSerializable child)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         if (child == null)
             return;
         beginElement(name);

@@ -4,14 +4,16 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 import net.bodz.bas.c.type.addor.IAddor;
-import net.bodz.bas.err.FormatterException;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.order.IPriority;
 
 public interface IOption
-        extends IElement, IPriority {
+        extends
+            IElement,
+            IPriority {
 
     /**
      * CLI name (or "cn" for short). Like "foo-bar" for "fooBar".
@@ -119,10 +121,11 @@ public interface IOption
      * @param value
      *            to be formatted.
      * @return Non-<code>null</code> formatted parameter array.
-     * @throws FormatterException
+     * @throws FormatException
      *             If can't format the value.
      */
-    String[] formatValue(Object context, Object value);
+    String[] formatValue(Object context, Object value)
+            throws FormatException;
 
     /**
      * Default value is pre-parsed of default-value string.

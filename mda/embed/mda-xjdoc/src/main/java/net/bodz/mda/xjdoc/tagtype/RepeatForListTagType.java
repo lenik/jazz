@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
@@ -38,7 +39,7 @@ public class RepeatForListTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         List<?> list = (List<?>) value;
         for (Object item : list) {
             valueTagType.writeJavadoc(rootTagName, writer, item, options);

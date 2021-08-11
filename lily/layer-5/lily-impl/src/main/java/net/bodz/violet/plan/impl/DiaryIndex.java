@@ -18,8 +18,8 @@ public class DiaryIndex
     public static final String SCHEMA = "diary";
 
     @Override
-    protected void save(IVariantMap<String> q, Diary obj, JsonResponse result) {
-        super.save(q, obj, result);
+    protected void save(IVariantMap<String> q, Diary obj, JsonResponse resp) {
+        super.save(q, obj, resp);
 
         // Update diary parties.
         long diaryId = obj.getId();

@@ -3,6 +3,7 @@ package net.bodz.bas.fmt.xml;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.api.IDataCodec;
 import net.bodz.bas.fmt.api.StdDataCodec;
 import net.bodz.bas.t.set.FramedMarks;
@@ -22,7 +23,7 @@ public interface IXmlOutput
             throws XMLStreamException;
 
     void element(String name, IXmlSerializable child)
-            throws XMLStreamException;
+            throws XMLStreamException, FormatException;
 
     void beginElement(String name)
             throws XMLStreamException;

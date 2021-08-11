@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.source.FnHelper;
@@ -66,7 +67,8 @@ public class JsonFn {
      * @param obj
      *            Non-<code>null</code> json-support object.
      */
-    public static String toJson(IJsonSerializable obj) {
+    public static String toJson(IJsonSerializable obj)
+            throws FormatException {
         return toJson(obj, false);
     }
 
@@ -76,7 +78,8 @@ public class JsonFn {
      * @param compact
      *            Format json in compact single line form.
      */
-    public static String toJson(IJsonSerializable obj, boolean compact) {
+    public static String toJson(IJsonSerializable obj, boolean compact)
+            throws FormatException {
         if (obj == null)
             throw new NullPointerException("obj");
         StringWriter buf = new StringWriter();

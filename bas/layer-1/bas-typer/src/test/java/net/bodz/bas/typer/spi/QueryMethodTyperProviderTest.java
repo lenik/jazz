@@ -74,7 +74,7 @@ public class QueryMethodTyperProviderTest
         IFormatter<StaticFoo> formatter = provider.getTyper(StaticFoo.class, IFormatter.class);
         assertNotNull(formatter);
 
-        String format = formatter.format(new StaticFoo());
+        String format = formatter._format(new StaticFoo());
         assertEquals("static blah", format);
     }
 
@@ -94,8 +94,8 @@ public class QueryMethodTyperProviderTest
         assertNotNull(formatter1);
         assertNotNull(formatter2);
 
-        assertEquals("foo1 blah", formatter1.format(foo1));
-        assertEquals("foo2 blah", formatter2.format(foo2));
+        assertEquals("foo1 blah", formatter1._format(foo1));
+        assertEquals("foo2 blah", formatter2._format(foo2));
     }
 
     @Test

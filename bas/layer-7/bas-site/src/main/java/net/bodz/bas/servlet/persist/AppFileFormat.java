@@ -12,6 +12,7 @@ import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.javax.servlet.AttributesIterable;
 import net.bodz.bas.c.javax.servlet.IAttributes;
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonPersistor;
@@ -31,7 +32,7 @@ public class AppFileFormat {
     }
 
     public void saveAttributes(OutputStream out, IAttributes attributes)
-            throws IOException {
+            throws IOException, FormatException {
         OutputStreamWriter writer = new OutputStreamWriter(out, encoding);
         try {
             saveAttributes(writer, attributes);
@@ -41,13 +42,13 @@ public class AppFileFormat {
     }
 
     public void saveAttributes(Writer writer, IAttributes attributes)
-            throws IOException {
+            throws IOException, FormatException {
         JsonWriter jsOut = new JsonWriter(writer);
         saveAttributes(jsOut, attributes);
     }
 
     public JsonWriter saveAttributes(JsonWriter out, IAttributes attributes)
-            throws IOException {
+            throws IOException, FormatException {
         out.object();
 
         out.key("version");

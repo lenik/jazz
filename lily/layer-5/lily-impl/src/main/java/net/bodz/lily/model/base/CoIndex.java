@@ -267,7 +267,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected JsonResponse saveHandler(IVariantMap<String> q, JsonObject content)
             throws RequestHandlerException {
-        JsonResponse result = new JsonResponse();
+        JsonResponse resp = new JsonResponse();
 
         T obj;
         long id = content.getLong("id", -1);
@@ -293,16 +293,16 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }
 
-        save(contentMap, obj, result);
-        return result;
+        save(contentMap, obj, resp);
+        return resp;
     }
 
     protected JsonResponse deleteHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        JsonResponse result = new JsonResponse();
+        JsonResponse resp = new JsonResponse();
         String ids = q.getString("id");
         if (ids == null) {
-            result.fail("Id isn't specified.");
+            resp.fail("Id isn't specified.");
         } else {
             IMapperTemplate<T, M> mapper = requireMapper();
             StringBuilder fails = new StringBuilder();
@@ -317,10 +317,10 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             }
             if (fails.length() > 0) {
                 fails.setLength(fails.length() - 1);
-                result.fail("Not deleted: " + fails);
+                resp.fail("Not deleted: " + fails);
             }
         }
-        return result;
+        return resp;
     }
 
     @SuppressWarnings("unchecked")
@@ -348,7 +348,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return obj;
     }
 
-    protected void preSave(IVariantMap<String> q, final T obj, JsonResponse result)
+    protected void preSave(IVariantMap<String> q, final T obj, JsonResponse resp)
             throws IOException {
         JsonMap properties = obj.getProperties();
         if (properties instanceof RichProperties) {
@@ -371,11 +371,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected void renameUrlAsFileChange(T obj, File oldName, File newName, String relativePath) {
     }
 
-    protected void save(IVariantMap<String> q, T obj, JsonResponse result) {
+    protected void save(IVariantMap<String> q, T obj, JsonResponse resp) {
         try {
-            preSave(q, obj, result);
+            preSave(q, obj, resp);
         } catch (IOException e) {
-            result.fail(e, "pre-save failed: " + e.getMessage());
+            resp.fail(e, "pre-save failed: " + e.getMessage());
             return;
         }
 
@@ -383,14 +383,14 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
-            result.setHeader("id", obj.getId());
-            result.getLogger().info("Inserted id: " + obj.getId());
+            resp.setHeader("id", obj.getId());
+            resp.getLogger().info("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
-            result.setHeader("count", rows);
-            result.getLogger().info("Rows updated: " + rows);
+            resp.setHeader("count", rows);
+            resp.getLogger().info("Rows updated: " + rows);
         }
-        result.succeed();
+        resp.succeed();
     }
 
     protected class InsertOnRequire

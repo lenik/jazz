@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import net.bodz.bas.c.java.io.DbgInputStream;
 import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.rst.RstOutputImpl;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
@@ -49,7 +50,7 @@ public class ZipUnarchiverTest
     }
 
     public void testLocalZips()
-            throws IOException {
+            throws Exception {
         String dir = "/home/lenik/.local/chrome/";
         for (String name : new File(dir).list())
             if (name.endsWith(".zip")) {
@@ -75,7 +76,7 @@ public class ZipUnarchiverTest
 
     @Test
     public void readLocEntries()
-            throws OutOfMemoryError, IOException {
+            throws OutOfMemoryError, IOException, FormatException {
         ZipEntry entry;
         while ((entry = unarchiver.nextEntry()) != null) {
             out.print("Loc-Entry: " + entry.getName() + ": ");
@@ -106,7 +107,7 @@ public class ZipUnarchiverTest
 
 // @Test
     public void readCenEntries()
-            throws IOException {
+            throws Exception {
         for (ZipEntry entry : unarchiver.entries()) {
             out.print("Entry: " + entry.getName() + ": ");
 
@@ -157,7 +158,7 @@ public class ZipUnarchiverTest
     }
 
     public static void main(String[] args)
-            throws IOException {
+            throws Exception {
         new ZipUnarchiverTest().testLocalZips();
     }
 

@@ -8,9 +8,13 @@ import javax.servlet.ServletContextEvent;
 
 import net.bodz.bas.c.javax.servlet.http.AbstractServletContextListener;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 
 public class ServletContextRegistry
         extends AbstractServletContextListener {
+
+    static final Logger logger = LoggerFactory.getLogger(ServletContextRegistry.class);
 
     public static final String PARAM_PATH = "registry.path";
     public static final String PARAM_VCSCMD = "registry.vcscmd";
@@ -61,8 +65,8 @@ public class ServletContextRegistry
         ServletContext servletContext = event.getServletContext();
         try {
             persistor.save(servletContext);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (Exception e) {
+            logger.error(e, "Failed to save servlet context: " + e.getMessage());
         }
     }
 

@@ -2,6 +2,7 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.api.IDataCodec;
 import net.bodz.bas.fmt.api.StdDataCodec;
 import net.bodz.bas.t.set.FramedMarks;
@@ -13,7 +14,7 @@ public interface IRstOutput {
     FramedMarks getMarks();
 
     void element(String name, IRstSerializable child, String... args)
-            throws IOException;
+            throws IOException, FormatException;
 
     void beginElement(String name, String... args)
             throws IOException;

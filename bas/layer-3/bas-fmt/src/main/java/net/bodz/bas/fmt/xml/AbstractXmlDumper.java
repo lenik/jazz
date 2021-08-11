@@ -12,6 +12,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.api.IStdDumper;
 import net.bodz.bas.fmt.xml.obj.BeanXmlLoader;
 import net.bodz.bas.fmt.xml.obj.ReflectXmlLoader;
@@ -37,7 +38,7 @@ public abstract class AbstractXmlDumper
 
     @Override
     public final void dump(Object obj)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         out.beginElement("object");
         out.attribute("type", obj.getClass().getName());
         formatObject(obj.getClass(), obj);
@@ -45,10 +46,10 @@ public abstract class AbstractXmlDumper
     }
 
     protected abstract void formatObject(Class<?> clazz, Object obj)
-            throws XMLStreamException;
+            throws XMLStreamException, FormatException;
 
     protected void formatCollectionMember(String name, Class<?> type, Type gtype, Object value)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         if (value == null)
             return;
 
@@ -79,7 +80,7 @@ public abstract class AbstractXmlDumper
     }
 
     protected void formatMember(String name, Class<?> type, Object value)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         if (value instanceof IXmlSerializable) {
             IXmlSerializable obj = (IXmlSerializable) value;
             if (!marks.add(obj))

@@ -2,13 +2,15 @@ package net.bodz.bas.typer.std;
 
 import java.io.Writer;
 
-import net.bodz.bas.err.FormatterException;
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.rtx.IOptions;
 
 import com.googlecode.openbeans.ExceptionListener;
 
 public interface IFormatter<T>
-        extends IStdTyper {
+        extends
+            IStdTyper {
 
     int typerIndex = 0x07155834; // IFormatter
 
@@ -16,10 +18,33 @@ public interface IFormatter<T>
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
-     * @throws FormatterException
+     * @throws FormatException
      *             If the object can't be converted to a specific text form.
      */
-    String format(T object);
+    default String format(T object)
+            throws FormatException {
+        return format(object, IOptions.NULL);
+    }
+
+    /**
+     */
+    String DEFAULT_FALLBACK = "error";
+
+    default String _format(T object) {
+        try {
+            return format(object);
+        } catch (FormatException e) {
+            throw new RuntimizedException(e.getMessage(), e);
+        }
+    }
+
+    default String format(T object, String fallback) {
+        try {
+            return format(object, IOptions.NULL);
+        } catch (FormatException e) {
+            return fallback;
+        }
+    }
 
     /**
      * Negotiation:
@@ -30,13 +55,22 @@ public interface IFormatter<T>
      * <li>Optional <code>char[]</code>: code table
      * <li>Optional {@link ExceptionListener}: error handler/recover
      * </ul>
-     * 
+     *
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
-     * @throws FormatterException
+     * @throws FormatException
      *             If the object can't be converted to a specific text form.
      */
-    String format(T object, IOptions options);
+    String format(T object, IOptions options)
+            throws FormatException;
+
+    default String format(T object, IOptions options, String fallback) {
+        try {
+            return format(object, options);
+        } catch (FormatException e) {
+            return fallback;
+        }
+    }
 
 }

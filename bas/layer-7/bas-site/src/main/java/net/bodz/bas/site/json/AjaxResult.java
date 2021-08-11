@@ -3,6 +3,7 @@ package net.bodz.bas.site.json;
 import java.io.IOException;
 import java.util.Map;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
@@ -39,7 +40,7 @@ public class AjaxResult
 
     @Override
     public void writeObject(IJsonOut out)
-            throws IOException {
+            throws IOException, FormatException {
         super.writeObject(out);
 
         if (!htmlUpdates.isEmpty()) {

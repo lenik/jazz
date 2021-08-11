@@ -2,6 +2,7 @@ package net.bodz.bas.site.json;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -29,7 +30,11 @@ public class JsonWrapper_json
         dumper.setIncludeNull(w.includeNull);
         dumper.setIncludeFalse(w.includeFalse);
         dumper.depth(w.maxDepth);
-        dumper.dump(w.obj, true);
+        try {
+            dumper.dump(w.obj, true);
+        } catch (FormatException e) {
+            throw new ViewBuilderException(e.getMessage(), e);
+        }
 
         if (w.key != null) {
             out.endObject();

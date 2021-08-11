@@ -2,6 +2,7 @@ package net.bodz.mda.xjdoc.tagtype;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
@@ -9,7 +10,8 @@ import net.bodz.bas.t.model.AbstractDecorator;
 
 public abstract class DecoratedTagType
         extends AbstractDecorator<ITagType>
-        implements ITagType {
+        implements
+            ITagType {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,7 +27,7 @@ public abstract class DecoratedTagType
 
     @Override
     public void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws IOException {
+            throws IOException, FormatException {
         _orig.writeJavadoc(rootTagName, writer, value, options);
     }
 

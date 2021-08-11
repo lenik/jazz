@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.xml.AbstractXmlDumper;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlOverrides;
@@ -17,7 +18,7 @@ public class ReflectXmlDumper extends AbstractXmlDumper {
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             if (!stopClasses.contains(superclass))

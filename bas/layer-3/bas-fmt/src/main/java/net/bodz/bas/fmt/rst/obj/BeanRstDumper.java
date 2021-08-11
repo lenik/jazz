@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.rst.AbstractRstDumper;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstOverrides;
@@ -24,7 +25,7 @@ public class BeanRstDumper
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws IOException {
+            throws IOException, FormatException {
         marks.add(obj);
 
         IRstOverrides formatOverride = null;

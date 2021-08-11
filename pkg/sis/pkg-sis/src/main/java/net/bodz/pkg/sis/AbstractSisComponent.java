@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstElement;
@@ -266,7 +267,7 @@ public abstract class AbstractSisComponent
     @OverrideOption(order = ChainOrder.TAIL)
     @Override
     public void writeObject(IRstOutput out)
-            throws IOException {
+            throws IOException, FormatException {
         for (ISisComponent child : getChildren()) {
             out.beginElement(CHILD_KEY_PREFIX + child.getName());
             child.writeObject(out);

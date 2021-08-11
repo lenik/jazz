@@ -1,6 +1,5 @@
 package net.bodz.bas.c.org.json;
 
-import java.io.IOException;
 import java.io.Writer;
 
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -9,7 +8,8 @@ import net.bodz.json.JSONWriter;
 
 public class JsonWriter
         extends JSONWriter
-        implements IJsonOut {
+        implements
+            IJsonOut {
 
     char lastMode;
     int verbatimLevel;
@@ -59,7 +59,7 @@ public class JsonWriter
             throws JSONException {
         try {
             fn.dumpTree(this, value);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new JSONException(e);
         }
         return this;
@@ -133,7 +133,7 @@ public class JsonWriter
         this.key(key);
         try {
             fn.dumpTree(this, value);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new JSONException(e);
         }
         return this;

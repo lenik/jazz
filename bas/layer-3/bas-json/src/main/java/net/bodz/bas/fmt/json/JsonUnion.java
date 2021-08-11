@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 
 public class JsonUnion
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     List<IJsonSerializable> list;
 
@@ -30,7 +32,7 @@ public class JsonUnion
 
     @Override
     public void writeObject(IJsonOut out)
-            throws IOException {
+            throws IOException, FormatException {
         for (IJsonSerializable item : list)
             item.writeObject(out);
     }
