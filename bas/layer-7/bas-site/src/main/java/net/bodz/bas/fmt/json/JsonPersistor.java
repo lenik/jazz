@@ -17,9 +17,12 @@ import net.bodz.bas.fmt.rst.IRstSerializable;
 import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.RstInput;
 import net.bodz.bas.fmt.rst.RstLoader;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.json.JSONException;
+import net.bodz.fork.org.json.JSONException;
 
 public class JsonPersistor {
 
@@ -41,7 +44,7 @@ public class JsonPersistor {
     public Object readTyped(String json)
             throws ParseException {
         try {
-            JsonObject in = new JsonObject(json);
+            JsonObject in = JsonObjectBuilder.getInstance().parse(json);
             return readTyped(in);
         } catch (JSONException e) {
             throw new ParseException(String.format(//
@@ -150,7 +153,7 @@ public class JsonPersistor {
 
         switch (form) {
         case FORM_JSON:
-            JsonObject valNode = in.getChild(KEY_VALUE);
+            JsonObject valNode = in.getJsonObject(KEY_VALUE);
             IJsonSerializable jsobj = (IJsonSerializable) obj;
             jsobj.readObject(valNode);
             return jsobj;
@@ -177,9 +180,9 @@ public class JsonPersistor {
         if (obj instanceof Map) {
             @SuppressWarnings("unchecked")
             Map<String, Object> map = (Map<String, Object>) obj;
-            JsonObject mapNode = in.getChild(KEY_VALUE);
+            JsonObject mapNode = in.getJsonObject(KEY_VALUE);
             for (String key : mapNode.keySet()) {
-                JsonObject valueNode = mapNode.getChild(key);
+                JsonObject valueNode = mapNode.getJsonObject(key);
                 Object value = readTyped(valueNode);
                 map.put(key, value);
             }

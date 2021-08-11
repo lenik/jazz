@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 
 public abstract class AbstractUserClickRecord
         extends MixinStruct {

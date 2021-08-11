@@ -6,16 +6,11 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonObject;
 
 public abstract class JsonSupport
         implements
             IJsonSerializable {
-
-    public final void readObject(JSONObject o)
-            throws ParseException {
-        readObject(JsonObject.wrap(o));
-    }
 
     @Override
     public void readObject(JsonObject o)

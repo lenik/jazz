@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.json.JsonObject;
 
 public class JsonVerbatimBuf
         implements IJsonSerializable, IJsonOptions {

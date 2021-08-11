@@ -14,7 +14,7 @@ import org.postgresql.util.PGobject;
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonObject;
 
 /**
  * @see JsonFormTypeHandler
@@ -31,7 +31,7 @@ public class PojoJsonTypeHandler
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType)
             throws SQLException {
-        JSONObject obj = new JSONObject(parameter);
+        JsonObject obj = new JsonObject(parameter);
         String json = obj.toString();
         PGobject pgo = new PGobject();
         pgo.setType("json"); // jsonb .. similar.

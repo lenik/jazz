@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.state;
 
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.source.FnHelper;
 
 @FnHelper

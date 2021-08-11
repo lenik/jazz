@@ -1,26 +1,21 @@
 package net.bodz.bas.site.json;
 
-
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.variant.VariantMapImpl;
-import net.bodz.json.JSONObject;
 
 public class JsonVarMap
         extends VariantMapImpl<String>
-        implements IJSONSupport {
+        implements
+            IJSONSupport {
 
-    JSONObject wrapped;
+    JsonObject wrapped;
 
     public JsonVarMap(JsonObject obj) {
-        this(obj.getWrapped());
-    }
-
-    public JsonVarMap(JSONObject obj) {
         super(new JsonLookupMap(obj));
         this.wrapped = obj;
     }
 
-    public JSONObject getWrapped() {
+    public JsonObject getWrapped() {
         return wrapped;
     }
 

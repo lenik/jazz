@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.source.SerializableForm;
-import net.bodz.json.JSONObject;
 
 @SerializableForm
 public interface IJsonSerializable {
@@ -26,7 +26,7 @@ public interface IJsonSerializable {
 
     default void readObjectBoxed(Object obj)
             throws ParseException {
-        if (obj instanceof JSONObject) {
+        if (obj instanceof JsonObject) {
             JsonObject jo = (JsonObject) obj;
             readObject(jo);
             return;

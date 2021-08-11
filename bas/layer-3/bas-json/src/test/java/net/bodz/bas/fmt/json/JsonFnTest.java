@@ -5,7 +5,8 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 
 public class JsonFnTest
         extends Assert {
@@ -17,7 +18,7 @@ public class JsonFnTest
     public static void main(String[] args) {
         String json = "{ 'person': { 'age': 13, 'name': 'lenik', 'sex': true }, 'features': [ 'hot', 123, 'lazy', 'sexy' ] }";
         json = json.replace('\'', '"');
-        JSONObject obj = new JSONObject(json);
+        JsonObject obj = JsonObjectBuilder.getInstance().parse(json);
         System.out.println(obj.toString(4));
 
         Map<String, Object> map = JsonFn.toMap(obj);

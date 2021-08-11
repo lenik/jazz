@@ -9,12 +9,12 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.json.JSONArray;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
 
 public class ItemFile
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     private File file;
 
@@ -105,12 +105,12 @@ public class ItemFile
         out.entry("label", label);
     }
 
-    public static List<ItemFile> convert(JSONArray array)
+    public static List<ItemFile> convert(JsonArray array)
             throws ParseException {
         List<ItemFile> items = new ArrayList<ItemFile>();
-        for (JSONObject o : JsonFn.<JSONObject> iterate(array)) {
+        for (JsonObject o : JsonFn.<JsonObject> iterate(array)) {
             ItemFile item = new ItemFile();
-            item.readObject(JsonObject.wrap(o));
+            item.readObject(o);
             items.add(item);
         }
         return items;

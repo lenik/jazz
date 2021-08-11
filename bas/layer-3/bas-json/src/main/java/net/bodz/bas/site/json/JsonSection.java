@@ -1,19 +1,18 @@
 package net.bodz.bas.site.json;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.variant.AbstractVariantMap;
-import net.bodz.json.JSONObject;
 
 public class JsonSection
         extends AbstractVariantMap<String>
@@ -27,7 +26,7 @@ public class JsonSection
     }
 
     public JsonSection(Boolean order) {
-        this.map = createMap(order);
+        this.map = Collections.createMap(order);
         this.order = order;
     }
 
@@ -42,16 +41,6 @@ public class JsonSection
             order = true;
         else
             order = null;
-    }
-
-    protected <T> Map<String, T> createMap(Boolean order) {
-        if (order == null) {
-            return new HashMap<String, T>();
-        } else if (order) {
-            return new TreeMap<String, T>();
-        } else {
-            return new LinkedHashMap<String, T>();
-        }
     }
 
     @Override
@@ -86,12 +75,11 @@ public class JsonSection
     public void readObject(JsonObject o)
             throws ParseException {
         for (String key : o.keySet()) {
-            Object value = o.opt(key);
-            if (value instanceof JSONObject) {
-                JSONObject jo = (JSONObject) value;
-                JsonObject js = new JsonObject(jo);
+            Object value = o.get(key);
+            if (value instanceof JsonObject) {
+                JsonObject child = (JsonObject) value;
                 JsonSection section = new JsonSection(order);
-                section.readObject(js);
+                section.readObject(child);
                 value = section;
             }
             map.put(key, value);

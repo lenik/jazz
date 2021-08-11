@@ -14,9 +14,10 @@ import net.bodz.bas.c.javax.servlet.IAttributes;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonPersistor;
-import net.bodz.json.JSONException;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.fork.org.json.JSONException;
 
 public class AppFileFormat {
 
@@ -87,12 +88,12 @@ public class AppFileFormat {
             return;
         JsonObject in;
         try {
-            in = new JsonObject(json);
+            in = JsonObjectBuilder.getInstance().parse(json);
         } catch (JSONException e) {
             throw new ParseException(e);
         }
 
-        JsonObject version = in.getChild("version");
+        JsonObject version = in.getJsonObject("version");
         version.getInt("major");
         version.getInt("minor");
 
@@ -100,9 +101,9 @@ public class AppFileFormat {
         DateTime time = DateTimes.ISO8601.parseDateTime(timestamp);
         assert time != null;
 
-        JsonObject attrs = in.getChild("attributes");
+        JsonObject attrs = in.getJsonObject("attributes");
         for (String name : attrs.keySet()) {
-            JsonObject typedNode = attrs.getChild(name);
+            JsonObject typedNode = attrs.getJsonObject(name);
             Object value = jsonPersistor.readTyped(typedNode);
             attributes.setAttribute(name, value);
         }

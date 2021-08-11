@@ -6,9 +6,9 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.i18n.geo.GeoZones;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;

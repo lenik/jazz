@@ -12,7 +12,7 @@ import net.bodz.bas.servlet.viz.IHttpViewContext;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
-import net.bodz.json.JSONStringer;
+import net.bodz.fork.org.json.JSONStringer;
 
 public class JSONStringer_json
         extends AbstractHttpViewBuilder<JSONStringer> {

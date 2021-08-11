@@ -1,7 +1,7 @@
 package net.bodz.bas.site.json;
 
-import net.bodz.json.JSONArray;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
 
 public interface IJSONSupport {
 
@@ -10,14 +10,14 @@ public interface IJSONSupport {
         public static Object toVar(Object jsonObj) {
             if (jsonObj == null)
                 return null;
-            if (jsonObj == JSONObject.NULL)
+            if (jsonObj == JsonObject.NULL)
                 return null;
-            if (jsonObj instanceof JSONArray) {
-                JSONArray jsv = (JSONArray) jsonObj;
+            if (jsonObj instanceof JsonArray) {
+                JsonArray jsv = (JsonArray) jsonObj;
                 return new JsonArrayList(jsv);
             }
-            if (jsonObj instanceof JSONObject) {
-                JSONObject jso = (JSONObject) jsonObj;
+            if (jsonObj instanceof JsonObject) {
+                JsonObject jso = (JsonObject) jsonObj;
                 return new JsonVarMap(jso);
             }
             return jsonObj;

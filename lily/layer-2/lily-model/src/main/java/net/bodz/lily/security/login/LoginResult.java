@@ -6,7 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.site.json.AbstractJsonResponse;
 
 public class LoginResult
@@ -52,7 +52,7 @@ public class LoginResult
             serverChallenge = o.getString("sc");
             return true;
         case "token":
-            JsonObject tokenNode = o.getChild("token");
+            JsonObject tokenNode = o.getJsonObject("token");
             if (tokenNode != null) {
                 this.token = LoginToken.create();
                 token.readObject(tokenNode);

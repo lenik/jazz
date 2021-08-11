@@ -4,8 +4,8 @@ import java.io.Writer;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.json.JSONException;
-import net.bodz.json.JSONWriter;
+import net.bodz.fork.org.json.JSONException;
+import net.bodz.fork.org.json.JSONWriter;
 
 public class JsonWriter
         extends JSONWriter

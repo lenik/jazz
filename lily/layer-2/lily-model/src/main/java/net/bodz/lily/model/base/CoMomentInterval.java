@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;

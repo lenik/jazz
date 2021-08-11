@@ -1,6 +1,6 @@
 package net.bodz.bas.fmt.json;
 
-import net.bodz.json.JSONException;
+import net.bodz.fork.org.json.JSONException;
 
 public interface IJsonOut {
 

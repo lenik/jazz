@@ -13,16 +13,16 @@ import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.AbstractJsonLoader;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
-import net.bodz.json.JSONArray;
-import net.bodz.json.JSONException;
-import net.bodz.json.JSONObject;
+import net.bodz.fork.org.json.JSONException;
 
 import com.googlecode.openbeans.BeanInfo;
 import com.googlecode.openbeans.IntrospectionException;
@@ -37,7 +37,7 @@ public class BeanJsonLoader
     public void parse(Object obj, String json)
             throws ParseException {
         try {
-            JsonObject node = new JsonObject(json);
+            JsonObject node = JsonObjectBuilder.getInstance().parse(json);
             parse(obj, node);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
@@ -123,9 +123,7 @@ public class BeanJsonLoader
                 }
 
                 JsonObject jsonObj;
-                if (jsonVal instanceof JSONObject)
-                    jsonObj = JsonObject.wrap((JSONObject) jsonVal);
-                else if (jsonVal instanceof JsonObject)
+                if (jsonVal instanceof JsonObject)
                     jsonObj = (JsonObject) jsonVal;
                 else
                     continue;
@@ -208,7 +206,7 @@ public class BeanJsonLoader
 
         if (type.isArray()) {
             Class<?> ctype = type.getComponentType();
-            JSONArray jsonArray = (JSONArray) jsonVal;
+            JsonArray jsonArray = (JsonArray) jsonVal;
             int len = jsonArray.length();
             Object array = Array.newInstance(ctype, len);
             for (int i = 0; i < len; i++) {
@@ -239,7 +237,7 @@ public class BeanJsonLoader
                     coll = new LinkedBlockingDeque<Object>();
             }
             if (coll != null) {
-                JSONArray jsonArray = (JSONArray) jsonVal;
+                JsonArray jsonArray = (JsonArray) jsonVal;
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
                     Object item = convert(ctype, null, jsonArray.get(i));
@@ -265,7 +263,7 @@ public class BeanJsonLoader
                     map = new HashMap<String, Object>();
                 }
                 if (map != null) {
-                    JSONObject jsonMap = (JSONObject) jsonVal;
+                    JsonObject jsonMap = (JsonObject) jsonVal;
                     for (String key : jsonMap.keySet()) {
                         Object jsonItemVal = jsonMap.get(key);
                         Object item = convert(vtype, null, jsonItemVal);

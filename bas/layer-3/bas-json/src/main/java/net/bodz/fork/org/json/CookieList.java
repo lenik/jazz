@@ -1,5 +1,6 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
+import net.bodz.bas.json.JsonObject;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -26,27 +27,27 @@ SOFTWARE.
  */
 
 /**
- * Convert a web browser cookie list string to a JSONObject and back.
+ * Convert a web browser cookie list string to a JsonObject and back.
  * @author JSON.org
  * @version 2015-12-09
  */
 public class CookieList {
 
     /**
-     * Convert a cookie list into a JSONObject. A cookie list is a sequence
+     * Convert a cookie list into a JsonObject. A cookie list is a sequence
      * of name/value pairs. The names are separated from the values by '='.
      * The pairs are separated by ';'. The names and the values
      * will be unescaped, possibly converting '+' and '%' sequences.
      *
      * To add a cookie to a cookie list,
-     * cookielistJSONObject.put(cookieJSONObject.getString("name"),
-     *     cookieJSONObject.getString("value"));
+     * cookielistJsonObject.put(cookieJsonObject.getString("name"),
+     *     cookieJsonObject.getString("value"));
      * @param string  A cookie list string
-     * @return A JSONObject
+     * @return A JsonObject
      * @throws JSONException
      */
-    public static JSONObject toJSONObject(String string) throws JSONException {
-        JSONObject jo = new JSONObject();
+    public static JsonObject toJsonObject(String string) throws JSONException {
+        JsonObject jo = new JsonObject();
         JSONTokener x = new JSONTokener(string);
         while (x.more()) {
             String name = Cookie.unescape(x.nextTo('='));
@@ -58,21 +59,21 @@ public class CookieList {
     }
 
     /**
-     * Convert a JSONObject into a cookie list. A cookie list is a sequence
+     * Convert a JsonObject into a cookie list. A cookie list is a sequence
      * of name/value pairs. The names are separated from the values by '='.
      * The pairs are separated by ';'. The characters '%', '+', '=', and ';'
      * in the names and values are replaced by "%hh".
-     * @param jo A JSONObject
+     * @param jo A JsonObject
      * @return A cookie list string
      * @throws JSONException
      */
-    public static String toString(JSONObject jo) throws JSONException {
+    public static String toString(JsonObject jo) throws JSONException {
         boolean             b = false;
         final StringBuilder sb = new StringBuilder();
         // Don't use the new entrySet API to maintain Android support
         for (final String key : jo.keySet()) {
-            final Object value = jo.opt(key);
-            if (!JSONObject.NULL.equals(value)) {
+            final Object value = jo.get(key);
+            if (!JsonObject.NULL.equals(value)) {
                 if (b) {
                     sb.append(';');
                 }

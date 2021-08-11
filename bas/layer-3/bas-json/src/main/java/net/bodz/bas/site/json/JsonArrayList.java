@@ -2,15 +2,16 @@ package net.bodz.bas.site.json;
 
 import java.util.AbstractList;
 
-import net.bodz.json.JSONArray;
+import net.bodz.bas.json.JsonArray;
 
 public class JsonArrayList
         extends AbstractList<Object>
-        implements IJSONSupport {
+        implements
+            IJSONSupport {
 
-    JSONArray array;
+    JsonArray array;
 
-    public JsonArrayList(JSONArray array) {
+    public JsonArrayList(JsonArray array) {
         if (array == null)
             throw new NullPointerException("array");
         this.array = array;

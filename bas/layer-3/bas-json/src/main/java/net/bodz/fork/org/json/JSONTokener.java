@@ -1,4 +1,4 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+
+import net.bodz.bas.json.JsonArrayBuilder;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -145,7 +149,7 @@ public class JSONTokener {
 
     /**
      * Checks if the end of the input has been reached.
-     *  
+     *
      * @return true if at the end of the file and we didn't step back
      */
     public boolean end() {
@@ -428,10 +432,10 @@ public class JSONTokener {
             return this.nextString(c);
         case '{':
             this.back();
-            return new JSONObject(this);
+            return JsonObjectBuilder.getInstance().parse(this);
         case '[':
             this.back();
-            return new JSONArray(this);
+            return JsonArrayBuilder.getInstance().parse(this);
         }
 
         /*
@@ -456,7 +460,7 @@ public class JSONTokener {
         if ("".equals(string)) {
             throw this.syntaxError("Missing value");
         }
-        return JSONObject.stringToValue(string);
+        return JsonObject.stringToValue(string);
     }
 
 

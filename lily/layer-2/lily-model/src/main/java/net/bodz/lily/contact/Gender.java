@@ -1,7 +1,7 @@
 package net.bodz.lily.contact;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefJsonFn;
 import net.bodz.bas.t.predef.PredefMetadata;

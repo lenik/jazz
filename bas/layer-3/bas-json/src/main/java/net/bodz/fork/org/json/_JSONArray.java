@@ -1,4 +1,4 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
 /*
  Copyright (c) 2002 JSON.org
@@ -27,14 +27,17 @@ package net.bodz.json;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonArrayBuilder;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.bas.t.variant.AbstractVariantList;
 
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a string wrapped in
@@ -73,6 +76,7 @@ import java.util.Map;
  * @version 2016-08/15
  */
 public class _JSONArray
+        extends AbstractVariantList
         implements
             Iterable<Object> {
 
@@ -88,120 +92,13 @@ public class _JSONArray
         this.myArrayList = new ArrayList<Object>();
     }
 
-    /**
-     * Construct a JSONArray from a JSONTokener.
-     *
-     * @param x
-     *            A JSONTokener
-     * @throws JSONException
-     *             If there is a syntax error.
-     */
-    public _JSONArray(JSONTokener x)
-            throws JSONException {
-        this();
-        if (x.nextClean() != '[') {
-            throw x.syntaxError("A JSONArray text must start with '['");
-        }
-
-        char nextChar = x.nextClean();
-        if (nextChar == 0) {
-            // array is unclosed. No ']' found, instead EOF
-            throw x.syntaxError("Expected a ',' or ']'");
-        }
-        if (nextChar != ']') {
-            x.back();
-            for (;;) {
-                if (x.nextClean() == ',') {
-                    x.back();
-                    this.myArrayList.add(_JSONObject.NULL);
-                } else {
-                    x.back();
-                    this.myArrayList.add(x.nextValue());
-                }
-                switch (x.nextClean()) {
-                case 0:
-                    // array is unclosed. No ']' found, instead EOF
-                    throw x.syntaxError("Expected a ',' or ']'");
-                case ',':
-                    nextChar = x.nextClean();
-                    if (nextChar == 0) {
-                        // array is unclosed. No ']' found, instead EOF
-                        throw x.syntaxError("Expected a ',' or ']'");
-                    }
-                    if (nextChar == ']') {
-                        return;
-                    }
-                    x.back();
-                    break;
-                case ']':
-                    return;
-                default:
-                    throw x.syntaxError("Expected a ',' or ']'");
-                }
-            }
-        }
-    }
-
-    /**
-     * Construct a JSONArray from a source JSON text.
-     *
-     * @param source
-     *            A string that begins with <code>[</code>&nbsp;<small>(left bracket)</small> and
-     *            ends with <code>]</code> &nbsp;<small>(right bracket)</small>.
-     * @throws JSONException
-     *             If there is a syntax error.
-     */
-    public _JSONArray(String source)
-            throws JSONException {
-        this(new JSONTokener(source));
-    }
-
-    /**
-     * Construct a JSONArray from a Collection.
-     *
-     * @param collection
-     *            A Collection.
-     */
-    public _JSONArray(Collection<?> collection) {
-        if (collection == null) {
-            this.myArrayList = new ArrayList<Object>();
-        } else {
-            this.myArrayList = new ArrayList<Object>(collection.size());
-            for (Object o : collection) {
-                this.myArrayList.add(_JSONObject.wrap(o));
-            }
-        }
-    }
-
-    /**
-     * Construct a JSONArray from an array.
-     *
-     * @param array
-     *            Array. If the parameter passed is null, or not an array, an exception will be
-     *            thrown.
-     *
-     * @throws JSONException
-     *             If not an array or if an array value is non-finite number.
-     * @throws NullPointerException
-     *             Thrown if the array parameter is null.
-     */
-    public _JSONArray(Object array)
-            throws JSONException {
-        this();
-        if (array.getClass().isArray()) {
-            int length = Array.getLength(array);
-            this.myArrayList.ensureCapacity(length);
-            for (int i = 0; i < length; i += 1) {
-                this.put(_JSONObject.wrap(Array.get(array, i)));
-            }
-        } else {
-            throw new JSONException("JSONArray initial value should be a string or collection or array.");
-        }
+    public _JSONArray(ArrayList<Object> list) {
+        this.myArrayList = list;
     }
 
     @Override
-    public Iterator<Object> iterator() {
-        return this.myArrayList.iterator();
+    public int size() {
+        return myArrayList.size();
     }
 
     /**
@@ -213,266 +110,45 @@ public class _JSONArray
      * @throws JSONException
      *             If there is no value for the index.
      */
+    @Override
     public Object get(int index)
             throws JSONException {
-        Object object = this.opt(index);
+        Object object = myArrayList.get(index);
         if (object == null) {
             throw new JSONException("JSONArray[" + index + "] not found.");
         }
         return object;
     }
 
-    /**
-     * Get the boolean value associated with an index. The string values "true" and "false" are
-     * converted to boolean.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The truth.
-     * @throws JSONException
-     *             If there is no value for the index or if the value is not convertible to boolean.
-     */
-    public boolean getBoolean(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        if (object.equals(Boolean.FALSE) || (object instanceof String && ((String) object).equalsIgnoreCase("false"))) {
-            return false;
-        } else if (object.equals(Boolean.TRUE)
-                || (object instanceof String && ((String) object).equalsIgnoreCase("true"))) {
-            return true;
-        }
-        throw wrongValueFormatException(index, "boolean", null);
+    public JsonObject getJsonObject(int index) {
+        return getJsonObject(index, null);
     }
 
-    /**
-     * Get the double value associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException
-     *             If the key is not found or if the value cannot be converted to a number.
-     */
-    public double getDouble(int index)
-            throws JSONException {
-        final Object object = this.get(index);
-        if (object instanceof Number) {
-            return ((Number) object).doubleValue();
-        }
-        try {
-            return Double.parseDouble(object.toString());
-        } catch (Exception e) {
-            throw wrongValueFormatException(index, "double", e);
-        }
+    public JsonObject getJsonObject(int index, JsonObject defaultValue) {
+        Object value = get(index);
+        if (value == null)
+            return defaultValue;
+        if (value instanceof JsonObject)
+            return (JsonObject) value;
+        throw new IllegalArgumentException("Child isn'ot a json object: " + index);
     }
 
-    /**
-     * Get the float value associated with a key.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The numeric value.
-     * @throws JSONException
-     *             if the key is not found or if the value is not a Number object and cannot be
-     *             converted to a number.
-     */
-    public float getFloat(int index)
-            throws JSONException {
-        final Object object = this.get(index);
-        if (object instanceof Number) {
-            return ((Float) object).floatValue();
-        }
-        try {
-            return Float.parseFloat(object.toString());
-        } catch (Exception e) {
-            throw wrongValueFormatException(index, "float", e);
-        }
+    public JsonArray getJsonArray(int index) {
+        return getJsonArray(index, null);
     }
 
-    /**
-     * Get the Number value associated with a key.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The numeric value.
-     * @throws JSONException
-     *             if the key is not found or if the value is not a Number object and cannot be
-     *             converted to a number.
-     */
-    public Number getNumber(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        try {
-            if (object instanceof Number) {
-                return (Number) object;
-            }
-            return _JSONObject.stringToNumber(object.toString());
-        } catch (Exception e) {
-            throw wrongValueFormatException(index, "number", e);
-        }
+    public JsonArray getJsonArray(int index, JsonArray defaultValue) {
+        Object value = get(index);
+        if (value == null)
+            return defaultValue;
+        if (value instanceof JsonArray)
+            return (JsonArray) value;
+        throw new IllegalArgumentException("Child isn'ot a json array: " + index);
     }
 
-    /**
-     * Get the enum value associated with an index.
-     *
-     * @param <E>
-     *            Enum Type
-     * @param clazz
-     *            The type of enum to retrieve.
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The enum value at the index location
-     * @throws JSONException
-     *             if the key is not found or if the value cannot be converted to an enum.
-     */
-    public <E extends Enum<E>> E getEnum(Class<E> clazz, int index)
-            throws JSONException {
-        E val = optEnum(clazz, index);
-        if (val == null) {
-            // JSONException should really take a throwable argument.
-            // If it did, I would re-implement this with the Enum.valueOf
-            // method and place any thrown exception in the JSONException
-            throw wrongValueFormatException(index, "enum of type " + _JSONObject.quote(clazz.getSimpleName()), null);
-        }
-        return val;
-    }
-
-    /**
-     * Get the BigDecimal value associated with an index. If the value is float or double, the the
-     * {@link BigDecimal#BigDecimal(double)} constructor will be used. See notes on the constructor
-     * for conversion issues that may arise.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException
-     *             If the key is not found or if the value cannot be converted to a BigDecimal.
-     */
-    public BigDecimal getBigDecimal(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        BigDecimal val = _JSONObject.objectToBigDecimal(object, null);
-        if (val == null) {
-            throw wrongValueFormatException(index, "BigDecimal", object, null);
-        }
-        return val;
-    }
-
-    /**
-     * Get the BigInteger value associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException
-     *             If the key is not found or if the value cannot be converted to a BigInteger.
-     */
-    public BigInteger getBigInteger(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        BigInteger val = _JSONObject.objectToBigInteger(object, null);
-        if (val == null) {
-            throw wrongValueFormatException(index, "BigInteger", object, null);
-        }
-        return val;
-    }
-
-    /**
-     * Get the int value associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException
-     *             If the key is not found or if the value is not a number.
-     */
-    public int getInt(int index)
-            throws JSONException {
-        final Object object = this.get(index);
-        if (object instanceof Number) {
-            return ((Number) object).intValue();
-        }
-        try {
-            return Integer.parseInt(object.toString());
-        } catch (Exception e) {
-            throw wrongValueFormatException(index, "int", e);
-        }
-    }
-
-    /**
-     * Get the JSONArray associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return A JSONArray value.
-     * @throws JSONException
-     *             If there is no value for the index. or if the value is not a JSONArray
-     */
-    public _JSONArray getJSONArray(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        if (object instanceof _JSONArray) {
-            return (_JSONArray) object;
-        }
-        throw wrongValueFormatException(index, "JSONArray", null);
-    }
-
-    /**
-     * Get the JSONObject associated with an index.
-     *
-     * @param index
-     *            subscript
-     * @return A JSONObject value.
-     * @throws JSONException
-     *             If there is no value for the index or if the value is not a JSONObject
-     */
-    public _JSONObject getJSONObject(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        if (object instanceof _JSONObject) {
-            return (_JSONObject) object;
-        }
-        throw wrongValueFormatException(index, "JSONObject", null);
-    }
-
-    /**
-     * Get the long value associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     * @throws JSONException
-     *             If the key is not found or if the value cannot be converted to a number.
-     */
-    public long getLong(int index)
-            throws JSONException {
-        final Object object = this.get(index);
-        if (object instanceof Number) {
-            return ((Number) object).longValue();
-        }
-        try {
-            return Long.parseLong(object.toString());
-        } catch (Exception e) {
-            throw wrongValueFormatException(index, "long", e);
-        }
-    }
-
-    /**
-     * Get the string associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return A string value.
-     * @throws JSONException
-     *             If there is no string value for the index.
-     */
-    public String getString(int index)
-            throws JSONException {
-        Object object = this.get(index);
-        if (object instanceof String) {
-            return (String) object;
-        }
-        throw wrongValueFormatException(index, "String", null);
+    @Override
+    public Iterator<Object> iterator() {
+        return this.myArrayList.iterator();
     }
 
     /**
@@ -483,7 +159,7 @@ public class _JSONArray
      * @return true if the value at the index is <code>null</code>, or if there is no value.
      */
     public boolean isNull(int index) {
-        return _JSONObject.NULL.equals(this.opt(index));
+        return _JSONObject.NULL.equals(this.get(index));
     }
 
     /**
@@ -522,360 +198,6 @@ public class _JSONArray
     }
 
     /**
-     * Get the optional object value associated with an index.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1. If not, null is returned.
-     * @return An object value, or null if there is no object at that index.
-     */
-    public Object opt(int index) {
-        return (index < 0 || index >= this.length()) ? null : this.myArrayList.get(index);
-    }
-
-    /**
-     * Get the optional boolean value associated with an index. It returns false if there is no
-     * value at that index, or if the value is not Boolean.TRUE or the String "true".
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The truth.
-     */
-    public boolean optBoolean(int index) {
-        return this.optBoolean(index, false);
-    }
-
-    /**
-     * Get the optional boolean value associated with an index. It returns the defaultValue if there
-     * is no value at that index or if it is not a Boolean or the String "true" or "false" (case
-     * insensitive).
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            A boolean default.
-     * @return The truth.
-     */
-    public boolean optBoolean(int index, boolean defaultValue) {
-        try {
-            return this.getBoolean(index);
-        } catch (Exception e) {
-            return defaultValue;
-        }
-    }
-
-    /**
-     * Get the optional double value associated with an index. NaN is returned if there is no value
-     * for the index, or if the value is not a number and cannot be converted to a number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     */
-    public double optDouble(int index) {
-        return this.optDouble(index, Double.NaN);
-    }
-
-    /**
-     * Get the optional double value associated with an index. The defaultValue is returned if there
-     * is no value for the index, or if the value is not a number and cannot be converted to a
-     * number.
-     *
-     * @param index
-     *            subscript
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public double optDouble(int index, double defaultValue) {
-        final Number val = this.optNumber(index, null);
-        if (val == null) {
-            return defaultValue;
-        }
-        final double doubleValue = val.doubleValue();
-        // if (Double.isNaN(doubleValue) || Double.isInfinite(doubleValue)) {
-        // return defaultValue;
-        // }
-        return doubleValue;
-    }
-
-    /**
-     * Get the optional float value associated with an index. NaN is returned if there is no value
-     * for the index, or if the value is not a number and cannot be converted to a number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     */
-    public float optFloat(int index) {
-        return this.optFloat(index, Float.NaN);
-    }
-
-    /**
-     * Get the optional float value associated with an index. The defaultValue is returned if there
-     * is no value for the index, or if the value is not a number and cannot be converted to a
-     * number.
-     *
-     * @param index
-     *            subscript
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public float optFloat(int index, float defaultValue) {
-        final Number val = this.optNumber(index, null);
-        if (val == null) {
-            return defaultValue;
-        }
-        final float floatValue = val.floatValue();
-        // if (Float.isNaN(floatValue) || Float.isInfinite(floatValue)) {
-        // return floatValue;
-        // }
-        return floatValue;
-    }
-
-    /**
-     * Get the optional int value associated with an index. Zero is returned if there is no value
-     * for the index, or if the value is not a number and cannot be converted to a number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     */
-    public int optInt(int index) {
-        return this.optInt(index, 0);
-    }
-
-    /**
-     * Get the optional int value associated with an index. The defaultValue is returned if there is
-     * no value for the index, or if the value is not a number and cannot be converted to a number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public int optInt(int index, int defaultValue) {
-        final Number val = this.optNumber(index, null);
-        if (val == null) {
-            return defaultValue;
-        }
-        return val.intValue();
-    }
-
-    /**
-     * Get the enum value associated with a key.
-     *
-     * @param <E>
-     *            Enum Type
-     * @param clazz
-     *            The type of enum to retrieve.
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The enum value at the index location or null if not found
-     */
-    public <E extends Enum<E>> E optEnum(Class<E> clazz, int index) {
-        return this.optEnum(clazz, index, null);
-    }
-
-    /**
-     * Get the enum value associated with a key.
-     *
-     * @param <E>
-     *            Enum Type
-     * @param clazz
-     *            The type of enum to retrieve.
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default in case the value is not found
-     * @return The enum value at the index location or defaultValue if the value is not found or
-     *         cannot be assigned to clazz
-     */
-    public <E extends Enum<E>> E optEnum(Class<E> clazz, int index, E defaultValue) {
-        try {
-            Object val = this.opt(index);
-            if (_JSONObject.NULL.equals(val)) {
-                return defaultValue;
-            }
-            if (clazz.isAssignableFrom(val.getClass())) {
-                // we just checked it!
-                @SuppressWarnings("unchecked")
-                E myE = (E) val;
-                return myE;
-            }
-            return Enum.valueOf(clazz, val.toString());
-        } catch (IllegalArgumentException e) {
-            return defaultValue;
-        } catch (NullPointerException e) {
-            return defaultValue;
-        }
-    }
-
-    /**
-     * Get the optional BigInteger value associated with an index. The defaultValue is returned if
-     * there is no value for the index, or if the value is not a number and cannot be converted to a
-     * number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public BigInteger optBigInteger(int index, BigInteger defaultValue) {
-        Object val = this.opt(index);
-        return _JSONObject.objectToBigInteger(val, defaultValue);
-    }
-
-    /**
-     * Get the optional BigDecimal value associated with an index. The defaultValue is returned if
-     * there is no value for the index, or if the value is not a number and cannot be converted to a
-     * number. If the value is float or double, the the {@link BigDecimal#BigDecimal(double)}
-     * constructor will be used. See notes on the constructor for conversion issues that may arise.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public BigDecimal optBigDecimal(int index, BigDecimal defaultValue) {
-        Object val = this.opt(index);
-        return _JSONObject.objectToBigDecimal(val, defaultValue);
-    }
-
-    /**
-     * Get the optional JSONArray associated with an index.
-     *
-     * @param index
-     *            subscript
-     * @return A JSONArray value, or null if the index has no value, or if the value is not a
-     *         JSONArray.
-     */
-    public _JSONArray optJSONArray(int index) {
-        Object o = this.opt(index);
-        return o instanceof _JSONArray ? (_JSONArray) o : null;
-    }
-
-    /**
-     * Get the optional JSONObject associated with an index. Null is returned if the key is not
-     * found, or null if the index has no value, or if the value is not a JSONObject.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return A JSONObject value.
-     */
-    public _JSONObject optJSONObject(int index) {
-        Object o = this.opt(index);
-        return o instanceof _JSONObject ? (_JSONObject) o : null;
-    }
-
-    /**
-     * Get the optional long value associated with an index. Zero is returned if there is no value
-     * for the index, or if the value is not a number and cannot be converted to a number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return The value.
-     */
-    public long optLong(int index) {
-        return this.optLong(index, 0);
-    }
-
-    /**
-     * Get the optional long value associated with an index. The defaultValue is returned if there
-     * is no value for the index, or if the value is not a number and cannot be converted to a
-     * number.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default value.
-     * @return The value.
-     */
-    public long optLong(int index, long defaultValue) {
-        final Number val = this.optNumber(index, null);
-        if (val == null) {
-            return defaultValue;
-        }
-        return val.longValue();
-    }
-
-    /**
-     * Get an optional {@link Number} value associated with a key, or <code>null</code> if there is
-     * no such key or if the value is not a number. If the value is a string, an attempt will be
-     * made to evaluate it as a number ({@link BigDecimal}). This method would be used in cases
-     * where type coercion of the number value is unwanted.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return An object which is the value.
-     */
-    public Number optNumber(int index) {
-        return this.optNumber(index, null);
-    }
-
-    /**
-     * Get an optional {@link Number} value associated with a key, or the default if there is no
-     * such key or if the value is not a number. If the value is a string, an attempt will be made
-     * to evaluate it as a number ({@link BigDecimal}). This method would be used in cases where
-     * type coercion of the number value is unwanted.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default.
-     * @return An object which is the value.
-     */
-    public Number optNumber(int index, Number defaultValue) {
-        Object val = this.opt(index);
-        if (_JSONObject.NULL.equals(val)) {
-            return defaultValue;
-        }
-        if (val instanceof Number) {
-            return (Number) val;
-        }
-
-        if (val instanceof String) {
-            try {
-                return _JSONObject.stringToNumber((String) val);
-            } catch (Exception e) {
-                return defaultValue;
-            }
-        }
-        return defaultValue;
-    }
-
-    /**
-     * Get the optional string value associated with an index. It returns an empty string if there
-     * is no value at that index. If the value is not a string and is not null, then it is converted
-     * to a string.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @return A String value.
-     */
-    public String optString(int index) {
-        return this.optString(index, "");
-    }
-
-    /**
-     * Get the optional string associated with an index. The defaultValue is returned if the key is
-     * not found.
-     *
-     * @param index
-     *            The index must be between 0 and length() - 1.
-     * @param defaultValue
-     *            The default value.
-     * @return A String value.
-     */
-    public String optString(int index, String defaultValue) {
-        Object object = this.opt(index);
-        return _JSONObject.NULL.equals(object) ? defaultValue : object.toString();
-    }
-
-    /**
      * Append a boolean value. This increases the array's length by one.
      *
      * @param value
@@ -897,7 +219,7 @@ public class _JSONArray
      *             If the value is non-finite number.
      */
     public _JSONArray put(Collection<?> value) {
-        return this.put(new _JSONArray(value));
+        return this.put(JsonArrayBuilder.getInstance().convert(value));
     }
 
     /**
@@ -963,7 +285,7 @@ public class _JSONArray
      *             If a key in the map is <code>null</code>
      */
     public _JSONArray put(Map<?, ?> value) {
-        return this.put(new _JSONObject(value));
+        return this.put(JsonObjectBuilder.getInstance().fromMap(value));
     }
 
     /**
@@ -1013,7 +335,7 @@ public class _JSONArray
      */
     public _JSONArray put(int index, Collection<?> value)
             throws JSONException {
-        return this.put(index, new _JSONArray(value));
+        return this.put(index, JsonArrayBuilder.getInstance().convert(value));
     }
 
     /**
@@ -1100,7 +422,7 @@ public class _JSONArray
      */
     public _JSONArray put(int index, Map<?, ?> value)
             throws JSONException {
-        this.put(index, new _JSONObject(value));
+        this.put(index, JsonObjectBuilder.getInstance().fromMap(value));
         return this;
     }
 
@@ -1133,7 +455,9 @@ public class _JSONArray
         }
         // if we are inserting past the length, we want to grow the array all at once
         // instead of incrementally.
+
         this.myArrayList.ensureCapacity(index + 1);
+
         while (index != this.length()) {
             // we don't need to test validity of NULL objects
             this.myArrayList.add(_JSONObject.NULL);
@@ -1287,14 +611,14 @@ public class _JSONArray
      * @throws JSONException
      *             If any of the names are null.
      */
-    public _JSONObject toJSONObject(_JSONArray names)
+    public JsonObject toJsonObject(JsonArray names)
             throws JSONException {
         if (names == null || names.isEmpty() || this.isEmpty()) {
             return null;
         }
-        _JSONObject jo = new _JSONObject(names.length());
+        JsonObject jo = JsonObjectBuilder.getInstance().create(); // (names.length());
         for (int i = 0; i < names.length(); i += 1) {
-            jo.put(names.getString(i), this.opt(i));
+            jo.put(names.getString(i), this.get(i));
         }
         return jo;
     }

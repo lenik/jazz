@@ -3,11 +3,9 @@ package net.bodz.bas.site.json;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -15,8 +13,8 @@ import net.bodz.bas.fmt.json.IJsonOptions;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.log.Logger;
@@ -69,7 +67,7 @@ public class AbstractJsonResponse<self_t>
             this.headers = o.headers;
             this.logbuf = o.logbuf;
         } else {
-            this.headers = createMap(headerOrder);
+            this.headers = Collections.createMap(headerOrder);
             this.headers.putAll(o.headers);
             this.logbuf.getRecords().addAll(o.logbuf.getRecords());
         }
@@ -182,19 +180,9 @@ public class AbstractJsonResponse<self_t>
             return;
         this.headerOrder = headerOrder;
         if (headers != null) {
-            Map<String, Object> newMap = createMap(headerOrder);
+            Map<String, Object> newMap = Collections.createMap(headerOrder);
             newMap.putAll(headers);
             headers = newMap;
-        }
-    }
-
-    protected <T> Map<String, T> createMap(Boolean order) {
-        if (order == null) {
-            return new HashMap<String, T>();
-        } else if (order) {
-            return new TreeMap<String, T>();
-        } else {
-            return new LinkedHashMap<String, T>();
         }
     }
 
@@ -202,7 +190,7 @@ public class AbstractJsonResponse<self_t>
         if (headers == null)
             synchronized (this) {
                 if (headers == null)
-                    headers = createMap(headerOrder);
+                    headers = Collections.createMap(headerOrder);
             }
         return headers;
     }
@@ -276,7 +264,7 @@ public class AbstractJsonResponse<self_t>
         }
 
         if ("exception".equals(key)) {
-            JsonObject ex = o.getChild("exception");
+            JsonObject ex = o.getJsonObject("exception");
             String exClassName = ex.getString("type");
             String message = ex.getString("message");
             try {
@@ -309,7 +297,7 @@ public class AbstractJsonResponse<self_t>
             } catch (ReflectiveOperationException e) {
                 throw new ParseException("Can't instantiate data of " + dataTypeName, e);
             }
-            JsonObject dataNode = o.getChild("data");
+            JsonObject dataNode = o.getJsonObject("data");
             data.readObject(dataNode);
             this.data = data;
             return true;

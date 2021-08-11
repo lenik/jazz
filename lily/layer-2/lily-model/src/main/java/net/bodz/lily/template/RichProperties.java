@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.json.JsonMap;
-import net.bodz.json.JSONArray;
 
 /**
  * A common support for object icon, etc.
@@ -64,7 +64,7 @@ public class RichProperties
         case K_IMAGES:
         case K_VIDEOS:
         case K_PDFS:
-            setAttribute(key, ItemFile.convert((JSONArray) val));
+            setAttribute(key, ItemFile.convert((JsonArray) val));
             return true;
         }
         return super.readFromJson(key, val);

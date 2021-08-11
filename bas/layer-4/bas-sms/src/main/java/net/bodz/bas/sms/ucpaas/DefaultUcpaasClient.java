@@ -6,8 +6,8 @@ import java.util.Collection;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.http.HttpClients;
+import net.bodz.bas.json.JsonObject;
 
 public class DefaultUcpaasClient
         implements IUcpaasClient {
