@@ -31,11 +31,11 @@ public interface IXmlSerializable {
         XmlFn.dump(this, out);
     }
 
-    default void readObjectBoxed(IElement element)
+    default void readObjectBoxed(IElement parent)
             throws ParseException, LoaderException {
         String tagName = getClass().getSimpleName();
-        for (IElement child : element.selectByTag(tagName)) {
-            if (child.getParentNode() == element) {
+        for (IElement child : parent.selectByTag(tagName)) {
+            if (child.getParentNode() == parent) {
                 readObject(child);
                 break;
             }

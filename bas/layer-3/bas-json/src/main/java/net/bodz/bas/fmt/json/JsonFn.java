@@ -181,15 +181,13 @@ public class JsonFn {
 
     public static void writeObject(IJsonOut out, Object o, IJsonOptions opts)
             throws IOException, FormatException {
+        if (o == null) {
+            out.value(null);
+            return;
+        }
         if (o instanceof IJsonSerializable) {
             IJsonSerializable jsVal = (IJsonSerializable) o;
-            if (opts.isSelfContained()) {
-                jsVal.writeObject(out);
-            } else {
-                out.object();
-                jsVal.writeObject(out);
-                out.endObject();
-            }
+            jsVal.writeObjectBoxed(out);
             return;
         }
         out.value(o);
