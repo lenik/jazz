@@ -15,7 +15,7 @@ public class JsonWriter
     char lastMode;
     int verbatimLevel;
 
-    public JsonWriter(Writer w) {
+    public JsonWriter(Appendable w) {
         super(w);
     }
 
