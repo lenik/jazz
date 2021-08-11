@@ -15,8 +15,10 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
@@ -24,12 +26,12 @@ import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.MutableFormDecl;
 import net.bodz.bas.repr.form.PathField;
 import net.bodz.bas.repr.form.PathFieldList;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.site.json.PathMapNode.IVisitor;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.json.JSONObject;
 
-public class TableData
+public class TableOfPathProps
         implements
             IVarMapSerializable,
             IJsonSerializable,
@@ -47,7 +49,9 @@ public class TableData
     Map<String, String> formats = new HashMap<String, String>();
     List<?> list;
 
-    public TableData(Class<?> objectType) {
+    String rowFormat = ROW_ARRAY;
+
+    public TableOfPathProps(Class<?> objectType) {
         this.objectType = objectType;
     }
 
@@ -56,7 +60,7 @@ public class TableData
         return cols;
     }
 
-    public void parseColumnList(List<String> propertyPaths)
+    public void parsePathListAsColumns(List<String> propertyPaths)
             throws ParseException, NoSuchPropertyException {
         pathAccessorMap.clear();
 
@@ -72,20 +76,19 @@ public class TableData
             pathAccessorMap.put(pathField.getPath(), pathField);
     }
 
-    public TableData parseColumnsString(String columns)
+    public TableOfPathProps parsePropertyPathsAsColumns(String paths)
             throws NoSuchPropertyException, ParseException {
-        if (columns == null)
+        if (paths == null)
             throw new NullPointerException("columns");
-        columns = columns.trim();
 
-        List<String> columnList = new ArrayList<String>();
-        for (String col : columns.split(",")) {
+        List<String> pathList = new ArrayList<String>();
+        for (String col : paths.split(",")) {
             col = col.trim();
             if (col.isEmpty())
                 continue;
-            columnList.add(col);
+            pathList.add(col);
         }
-        parseColumnList(columnList);
+        parsePathListAsColumns(pathList);
         return this;
     }
 
@@ -111,8 +114,8 @@ public class TableData
         formats.put(column, format);
     }
 
-    public TableData parseFormats(String json) {
-        JSONObject obj = new JSONObject(json);
+    public TableOfPathProps parseFormats(String json) {
+        JsonObject obj = JsonObjectBuilder.getInstance().parse(json);
         for (String key : obj.keySet()) {
             String format = obj.getString(key);
             formats.put(key, format);
@@ -157,7 +160,7 @@ public class TableData
         if (columns == null)
             throw new IllegalArgumentException("Expected request parameter columns.");
         try {
-            parseColumnsString(columns);
+            parsePropertyPathsAsColumns(columns);
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid columns specified: \"" + columns + "\": " + e.getMessage(), e);
         }
@@ -165,6 +168,8 @@ public class TableData
         String formats = map.getString("formats");
         if (formats != null)
             parseFormats(formats);
+
+        rowFormat = map.getString("row");
     }
 
     @Override
@@ -176,8 +181,6 @@ public class TableData
     public void readObject(JsonObject o)
             throws ParseException {
     }
-
-    boolean rowArray;
 
     @Override
     public void writeObject(IJsonOut out)
@@ -197,7 +200,7 @@ public class TableData
             for (Object item : list) {
                 try {
                     List<?> row = convert(item, columns);
-                    if (rowArray) {
+                    if (rowFormat.equals(ROW_ARRAY)) {
                         writeRowAsArray(out, columns, row);
                     } else {
                         writeRowAsObject(out, columns, row);
@@ -220,7 +223,7 @@ public class TableData
             // String fmt = data.getFormat(column);
             Object cell = row.get(i);
             // out.key(column);
-            dumpObject(out, cell);
+            JsonFn.writeObject(out, cell);
         }
         out.endArray();
     }
@@ -228,7 +231,7 @@ public class TableData
     void writeRowAsObject(IJsonOut out, List<String> columns, List<?> row)
             throws IOException, FormatException {
         int n = columns.size();
-        PathMap<Object> struct = new PathMap<>('.', false);
+        PathMap<Object> struct = new PathMap<>('.', SortOrder.KEEP);
         for (int i = 0; i < n; i++) {
             String column = columns.get(i);
             // String fmt = data.getFormat(column);
@@ -261,7 +264,7 @@ public class TableData
                 public void visitAttribute(String key, Object value)
                         throws IOException, FormatException {
                     out.key(key);
-                    dumpObject(out, value);
+                    JsonFn.writeObject(out, value);
                 }
 
             });
@@ -271,50 +274,6 @@ public class TableData
             throw new FormatException(e.getMessage(), e);
         }
         out.endObject();
-    }
-
-    /**
-     * for null property, dump the object.
-     *
-     * otherwise, dump object in a nested struct representing the property.
-     */
-    void dumpObjectNested(IJsonOut out, String property, Object val)
-            throws IOException, FormatException {
-        if (property != null) {
-            PathMap<Object> map = new PathMap<>('.', false);
-            int dot = property.indexOf('.');
-            String head = property;
-            if (dot == -1)
-                property = null;
-            else
-                property = property.substring(dot + 1);
-            out.object();
-            out.key(head);
-            dumpObjectNested(out, property, val);
-            out.endObject();
-        } else {
-            dumpObject(out, val);
-        }
-    }
-
-    void dumpObject(IJsonOut out, Object val)
-            throws IOException, FormatException {
-        if (val instanceof Collection) {
-            out.array();
-            for (Object item : (Collection<?>) val) {
-                dumpObject(out, item);
-            }
-            out.endArray();
-            return;
-        }
-        if (val instanceof IJsonSerializable) {
-            IJsonSerializable jsVal = (IJsonSerializable) val;
-            out.object();
-            jsVal.writeObject(out);
-            out.endObject();
-            return;
-        }
-        out.value(val);
     }
 
 }
