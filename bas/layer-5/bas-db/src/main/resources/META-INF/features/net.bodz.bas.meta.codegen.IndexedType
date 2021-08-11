@@ -1,8 +1,5 @@
-net.bodz.bas.db.ibatis.AliasedType
 net.bodz.bas.db.ibatis.IIbatisConfigurer
 net.bodz.bas.db.ibatis.IMapper
 net.bodz.bas.db.ibatis.IMapperXmlProvider
-net.bodz.bas.db.ibatis.IncludeMapperXml
-net.bodz.bas.db.ibatis.PatchMapperXml
 net.bodz.bas.db.ibatis.TypeHandler
 net.bodz.bas.dbi.IRepositoryProvider
