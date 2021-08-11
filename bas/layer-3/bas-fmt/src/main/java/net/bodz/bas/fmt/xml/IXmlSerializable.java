@@ -31,6 +31,30 @@ public interface IXmlSerializable {
         XmlFn.dump(this, out);
     }
 
+    default void readObjectBoxed(IElement element)
+            throws ParseException, LoaderException {
+        String tagName = getClass().getSimpleName();
+        for (IElement child : element.selectByTag(tagName)) {
+            if (child.getParentNode() == element) {
+                readObject(child);
+                break;
+            }
+        }
+        throw new UnsupportedOperationException("Can't read from non-object json value.");
+    }
+
+    /**
+     * @param out
+     *            expects a value
+     */
+    default void writeObjectBoxed(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        String tagName = getClass().getSimpleName();
+        out.beginElement(tagName);
+        writeObject(out);
+        out.endElement();
+    }
+
     class xml
             extends XmlFn {
     }

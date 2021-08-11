@@ -3,6 +3,7 @@ package net.bodz.bas.c.org.json;
 import java.io.Writer;
 
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.json.JSONException;
 import net.bodz.json.JSONWriter;
 
@@ -58,7 +59,7 @@ public class JsonWriter
     public JsonWriter object(Object value)
             throws JSONException {
         try {
-            fn.dumpTree(this, value);
+            JsonFn.writeObject(this, value);
         } catch (Exception e) {
             throw new JSONException(e);
         }
@@ -132,7 +133,7 @@ public class JsonWriter
     public JsonWriter entry(String key, Object value) {
         this.key(key);
         try {
-            fn.dumpTree(this, value);
+            JsonFn.writeObject(this, value);
         } catch (Exception e) {
             throw new JSONException(e);
         }
