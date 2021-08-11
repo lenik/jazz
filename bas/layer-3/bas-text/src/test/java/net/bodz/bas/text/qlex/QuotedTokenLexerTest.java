@@ -6,9 +6,6 @@ import org.junit.Assert;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.StringCharIn;
-import net.bodz.bas.text.qlex.ILa1CharIn;
-import net.bodz.bas.text.qlex.La1CharInImpl;
-import net.bodz.bas.text.qlex.QuotableTokenLexer;
 
 public class QuotedTokenLexerTest
         extends Assert {
