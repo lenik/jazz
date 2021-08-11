@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.json.JsonObject;
 
 public class JsonUnion
         implements

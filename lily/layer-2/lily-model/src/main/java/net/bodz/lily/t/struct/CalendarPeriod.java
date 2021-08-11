@@ -9,7 +9,7 @@ import org.joda.time.Period;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 
 public class CalendarPeriod
         extends MixinStruct {

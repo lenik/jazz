@@ -6,10 +6,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.err.LoadException;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.io.res.builtin.ReaderSource;
 import net.bodz.bas.io.res.tools.StreamReading;
-import net.bodz.json.JSONException;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.fork.org.json.JSONException;
 
 public class HttpPayload {
 
@@ -37,7 +38,7 @@ public class HttpPayload {
                     }
                 if (json.isEmpty())
                     throw new IllegalArgumentException("json payload is empty.");
-                jsonObj = new JsonObject(json);
+                jsonObj = JsonObjectBuilder.getInstance().parse(json);
                 req.setAttribute(JSON_ATTRIBUTE_NAME, jsonObj);
                 return jsonObj;
             } catch (JSONException e) {

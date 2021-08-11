@@ -1,4 +1,4 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
 /*
 Copyright (c) 2015 JSON.org
@@ -28,14 +28,17 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Iterator;
 
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonArrayBuilder;
+import net.bodz.bas.json.JsonObject;
+
 /**
- * This provides static methods to convert an XML text into a JSONObject, and to
- * covert a JSONObject into an XML text.
+ * This provides static methods to convert an XML text into a JsonObject, and to covert a JsonObject
+ * into an XML text.
  *
  * @author JSON.org
  * @version 2016-08-10
  */
-@SuppressWarnings("boxing")
 public class XML {
 
     /** The Character '&amp;'. */
@@ -71,12 +74,10 @@ public class XML {
     public static final String NULL_ATTR = "xsi:nil";
 
     /**
-     * Creates an iterator for navigating Code Points in a string instead of
-     * characters. Once Java7 support is dropped, this can be replaced with
-     * <code>
+     * Creates an iterator for navigating Code Points in a string instead of characters. Once Java7
+     * support is dropped, this can be replaced with <code>
      * string.codePoints()
-     * </code>
-     * which is available in Java8 and above.
+     * </code> which is available in Java8 and above.
      *
      * @see <a href=
      *      "http://stackoverflow.com/a/21791059/6030888">http://stackoverflow.com/a/21791059/6030888</a>
@@ -158,11 +159,13 @@ public class XML {
     }
 
     /**
-     * @param cp code point to test
+     * @param cp
+     *            code point to test
      * @return true if the code point is not valid for an XML
      */
     private static boolean mustEscape(int cp) {
-        /* Valid range from https://www.w3.org/TR/REC-xml/#charsets
+        /*
+         * Valid range from https://www.w3.org/TR/REC-xml/#charsets
          *
          * #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
          *
@@ -170,17 +173,9 @@ public class XML {
          */
         // isISOControl is true when (cp >= 0 && cp <= 0x1F) || (cp >= 0x7F && cp <= 0x9F)
         // all ISO control characters are out of range except tabs and new lines
-        return (Character.isISOControl(cp)
-                && cp != 0x9
-                && cp != 0xA
-                && cp != 0xD
-            ) || !(
-                // valid the range of acceptable characters that aren't control
-                (cp >= 0x20 && cp <= 0xD7FF)
-                || (cp >= 0xE000 && cp <= 0xFFFD)
-                || (cp >= 0x10000 && cp <= 0x10FFFF)
-            )
-        ;
+        return (Character.isISOControl(cp) && cp != 0x9 && cp != 0xA && cp != 0xD) || !(
+        // valid the range of acceptable characters that aren't control
+        (cp >= 0x20 && cp <= 0xD7FF) || (cp >= 0xE000 && cp <= 0xFFFD) || (cp >= 0x10000 && cp <= 0x10FFFF));
     }
 
     /**
@@ -215,22 +210,23 @@ public class XML {
     }
 
     /**
-     * Throw an exception if the string contains whitespace. Whitespace is not
-     * allowed in tagNames and attributes.
+     * Throw an exception if the string contains whitespace. Whitespace is not allowed in tagNames
+     * and attributes.
      *
      * @param string
      *            A string.
-     * @throws JSONException Thrown if the string contains whitespace or is empty.
+     * @throws JSONException
+     *             Thrown if the string contains whitespace or is empty.
      */
-    public static void noSpace(String string) throws JSONException {
+    public static void noSpace(String string)
+            throws JSONException {
         int i, length = string.length();
         if (length == 0) {
             throw new JSONException("Empty string.");
         }
         for (i = 0; i < length; i += 1) {
             if (Character.isWhitespace(string.charAt(i))) {
-                throw new JSONException("'" + string
-                        + "' contains a space character.");
+                throw new JSONException("'" + string + "' contains a space character.");
             }
         }
     }
@@ -241,17 +237,17 @@ public class XML {
      * @param x
      *            The XMLTokener containing the source string.
      * @param context
-     *            The JSONObject that will include the new material.
+     *            The JsonObject that will include the new material.
      * @param name
      *            The tag name.
      * @return true if the close tag is processed.
      * @throws JSONException
      */
-    private static boolean parse(XMLTokener x, JSONObject context, String name, XMLParserConfiguration config)
+    private static boolean parse(XMLTokener x, JsonObject context, String name, XMLParserConfiguration config)
             throws JSONException {
         char c;
         int i;
-        JSONObject jsonObject = null;
+        JsonObject jsonObject = null;
         String string;
         String tagName;
         Object token;
@@ -332,7 +328,7 @@ public class XML {
         } else {
             tagName = (String) token;
             token = null;
-            jsonObject = new JSONObject();
+            jsonObject = new JsonObject();
             boolean nilAttributeFound = false;
             for (;;) {
                 if (token == null) {
@@ -348,21 +344,17 @@ public class XML {
                             throw x.syntaxError("Missing value");
                         }
 
-                        if (config.convertNilAttributeToNull
-                                && NULL_ATTR.equals(string)
+                        if (config.convertNilAttributeToNull && NULL_ATTR.equals(string)
                                 && Boolean.parseBoolean((String) token)) {
                             nilAttributeFound = true;
                         } else if (!nilAttributeFound) {
                             jsonObject.accumulate(string,
-                                    config.keepStrings
-                                            ? ((String) token)
-                                            : stringToValue((String) token));
+                                    config.keepStrings ? ((String) token) : stringToValue((String) token));
                         }
                         token = null;
                     } else {
                         jsonObject.accumulate(string, "");
                     }
-
 
                 } else if (token == SLASH) {
                     // Empty tag <.../>
@@ -370,7 +362,7 @@ public class XML {
                         throw x.syntaxError("Misshaped tag");
                     }
                     if (nilAttributeFound) {
-                        context.accumulate(tagName, JSONObject.NULL);
+                        context.accumulate(tagName, JsonObject.NULL);
                     } else if (jsonObject.length() > 0) {
                         context.accumulate(tagName, jsonObject);
                     } else {
@@ -399,9 +391,8 @@ public class XML {
                             if (parse(x, jsonObject, tagName, config)) {
                                 if (jsonObject.length() == 0) {
                                     context.accumulate(tagName, "");
-                                } else if (jsonObject.length() == 1
-                                        && jsonObject.opt(config.cDataTagName) != null) {
-                                    context.accumulate(tagName, jsonObject.opt(config.cDataTagName));
+                                } else if (jsonObject.length() == 1 && jsonObject.get(config.cDataTagName) != null) {
+                                    context.accumulate(tagName, jsonObject.get(config.cDataTagName));
                                 } else {
                                     context.accumulate(tagName, jsonObject);
                                 }
@@ -417,13 +408,14 @@ public class XML {
     }
 
     /**
-     * This method is the same as {@link JSONObject#stringToValue(String)}.
+     * This method is the same as {@link JsonObject#stringToValue(String)}.
      *
-     * @param string String to convert
+     * @param string
+     *            String to convert
      * @return JSON value of this string or the string
      */
     // To maintain compatibility with the Android API, this method is a direct copy of
-    // the one in JSONObject. Changes made here should be reflected there.
+    // the one in JsonObject. Changes made here should be reflected there.
     public static Object stringToValue(String string) {
         if (string.equals("")) {
             return string;
@@ -435,12 +427,12 @@ public class XML {
             return Boolean.FALSE;
         }
         if (string.equalsIgnoreCase("null")) {
-            return JSONObject.NULL;
+            return JsonObject.NULL;
         }
 
         /*
-         * If it might be a number, try converting it. If a number cannot be
-         * produced, then the value will just be a string.
+         * If it might be a number, try converting it. If a number cannot be produced, then the
+         * value will just be a string.
          */
 
         char initial = string.charAt(0);
@@ -448,8 +440,8 @@ public class XML {
             try {
                 // if we want full Big Number support this block can be replaced with:
                 // return stringToNumber(string);
-                if (string.indexOf('.') > -1 || string.indexOf('e') > -1
-                        || string.indexOf('E') > -1 || "-0".equals(string)) {
+                if (string.indexOf('.') > -1 || string.indexOf('e') > -1 || string.indexOf('E') > -1
+                        || "-0".equals(string)) {
                     Double d = Double.valueOf(string);
                     if (!d.isInfinite() && !d.isNaN()) {
                         return d;
@@ -470,96 +462,101 @@ public class XML {
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML string into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML string into a JsonObject. Some
+     * information may be lost in this transformation because JSON is a data format and XML is a
+     * document format. XML uses elements, attributes, and content text, while JSON uses unordered
+     * collections of name/value pairs and arrays of values. JSON does not does not like to
+     * distinguish between elements and attributes. Sequences of similar elements are represented as
+     * JSONArrays. Content text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
      * @param string
      *            The source string.
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(String string) throws JSONException {
+    public static JsonObject toJSONObject(String string)
+            throws JSONException {
         return toJSONObject(string, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML into a JsonObject. Some information may
+     * be lost in this transformation because JSON is a data format and XML is a document format.
+     * XML uses elements, attributes, and content text, while JSON uses unordered collections of
+     * name/value pairs and arrays of values. JSON does not does not like to distinguish between
+     * elements and attributes. Sequences of similar elements are represented as JSONArrays. Content
+     * text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
-     * @param reader The XML source reader.
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @param reader
+     *            The XML source reader.
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(Reader reader) throws JSONException {
+    public static JsonObject toJSONObject(Reader reader)
+            throws JSONException {
         return toJSONObject(reader, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML into a JsonObject. Some information may
+     * be lost in this transformation because JSON is a data format and XML is a document format.
+     * XML uses elements, attributes, and content text, while JSON uses unordered collections of
+     * name/value pairs and arrays of values. JSON does not does not like to distinguish between
+     * elements and attributes. Sequences of similar elements are represented as JSONArrays. Content
+     * text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
-     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
-     * numbers but will instead be the exact value as seen in the XML document.
+     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to numbers but will
+     * instead be the exact value as seen in the XML document.
      *
-     * @param reader The XML source reader.
-     * @param keepStrings If true, then values will not be coerced into boolean
-     *  or numeric values and will instead be left as strings
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @param reader
+     *            The XML source reader.
+     * @param keepStrings
+     *            If true, then values will not be coerced into boolean or numeric values and will
+     *            instead be left as strings
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(Reader reader, boolean keepStrings) throws JSONException {
-        if(keepStrings) {
+    public static JsonObject toJSONObject(Reader reader, boolean keepStrings)
+            throws JSONException {
+        if (keepStrings) {
             return toJSONObject(reader, XMLParserConfiguration.KEEP_STRINGS);
         }
         return toJSONObject(reader, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML into a JsonObject. Some information may
+     * be lost in this transformation because JSON is a data format and XML is a document format.
+     * XML uses elements, attributes, and content text, while JSON uses unordered collections of
+     * name/value pairs and arrays of values. JSON does not does not like to distinguish between
+     * elements and attributes. Sequences of similar elements are represented as JSONArrays. Content
+     * text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
-     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
-     * numbers but will instead be the exact value as seen in the XML document.
+     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to numbers but will
+     * instead be the exact value as seen in the XML document.
      *
-     * @param reader The XML source reader.
-     * @param config Configuration options for the parser
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @param reader
+     *            The XML source reader.
+     * @param config
+     *            Configuration options for the parser
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(Reader reader, XMLParserConfiguration config) throws JSONException {
-        JSONObject jo = new JSONObject();
+    public static JsonObject toJSONObject(Reader reader, XMLParserConfiguration config)
+            throws JSONException {
+        JsonObject jo = new JsonObject();
         XMLTokener x = new XMLTokener(reader);
         while (x.more()) {
             x.skipPast("<");
-            if(x.more()) {
+            if (x.more()) {
                 parse(x, jo, null, config);
             }
         }
@@ -567,100 +564,106 @@ public class XML {
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML string into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML string into a JsonObject. Some
+     * information may be lost in this transformation because JSON is a data format and XML is a
+     * document format. XML uses elements, attributes, and content text, while JSON uses unordered
+     * collections of name/value pairs and arrays of values. JSON does not does not like to
+     * distinguish between elements and attributes. Sequences of similar elements are represented as
+     * JSONArrays. Content text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
-     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
-     * numbers but will instead be the exact value as seen in the XML document.
+     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to numbers but will
+     * instead be the exact value as seen in the XML document.
      *
      * @param string
      *            The source string.
-     * @param keepStrings If true, then values will not be coerced into boolean
-     *  or numeric values and will instead be left as strings
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @param keepStrings
+     *            If true, then values will not be coerced into boolean or numeric values and will
+     *            instead be left as strings
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(String string, boolean keepStrings) throws JSONException {
+    public static JsonObject toJSONObject(String string, boolean keepStrings)
+            throws JSONException {
         return toJSONObject(new StringReader(string), keepStrings);
     }
 
     /**
-     * Convert a well-formed (but not necessarily valid) XML string into a
-     * JSONObject. Some information may be lost in this transformation because
-     * JSON is a data format and XML is a document format. XML uses elements,
-     * attributes, and content text, while JSON uses unordered collections of
-     * name/value pairs and arrays of values. JSON does not does not like to
-     * distinguish between elements and attributes. Sequences of similar
-     * elements are represented as JSONArrays. Content text may be placed in a
-     * "content" member. Comments, prologs, DTDs, and <code>&lt;[ [ ]]></code>
-     * are ignored.
+     * Convert a well-formed (but not necessarily valid) XML string into a JsonObject. Some
+     * information may be lost in this transformation because JSON is a data format and XML is a
+     * document format. XML uses elements, attributes, and content text, while JSON uses unordered
+     * collections of name/value pairs and arrays of values. JSON does not does not like to
+     * distinguish between elements and attributes. Sequences of similar elements are represented as
+     * JSONArrays. Content text may be placed in a "content" member. Comments, prologs, DTDs, and
+     * <code>&lt;[ [ ]]></code> are ignored.
      *
-     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
-     * numbers but will instead be the exact value as seen in the XML document.
+     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to numbers but will
+     * instead be the exact value as seen in the XML document.
      *
      * @param string
      *            The source string.
-     * @param config Configuration options for the parser.
-     * @return A JSONObject containing the structured data from the XML string.
-     * @throws JSONException Thrown if there is an errors while parsing the string
+     * @param config
+     *            Configuration options for the parser.
+     * @return A JsonObject containing the structured data from the XML string.
+     * @throws JSONException
+     *             Thrown if there is an errors while parsing the string
      */
-    public static JSONObject toJSONObject(String string, XMLParserConfiguration config) throws JSONException {
+    public static JsonObject toJSONObject(String string, XMLParserConfiguration config)
+            throws JSONException {
         return toJSONObject(new StringReader(string), config);
     }
 
     /**
-     * Convert a JSONObject into a well-formed, element-normal XML string.
+     * Convert a JsonObject into a well-formed, element-normal XML string.
      *
      * @param object
-     *            A JSONObject.
+     *            A JsonObject.
      * @return A string.
-     * @throws JSONException Thrown if there is an error parsing the string
+     * @throws JSONException
+     *             Thrown if there is an error parsing the string
      */
-    public static String toString(Object object) throws JSONException {
+    public static String toString(Object object)
+            throws JSONException {
         return toString(object, null, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
-     * Convert a JSONObject into a well-formed, element-normal XML string.
+     * Convert a JsonObject into a well-formed, element-normal XML string.
      *
      * @param object
-     *            A JSONObject.
+     *            A JsonObject.
      * @param tagName
      *            The optional name of the enclosing tag.
      * @return A string.
-     * @throws JSONException Thrown if there is an error parsing the string
+     * @throws JSONException
+     *             Thrown if there is an error parsing the string
      */
     public static String toString(final Object object, final String tagName) {
         return toString(object, tagName, XMLParserConfiguration.ORIGINAL);
     }
 
     /**
-     * Convert a JSONObject into a well-formed, element-normal XML string.
+     * Convert a JsonObject into a well-formed, element-normal XML string.
      *
      * @param object
-     *            A JSONObject.
+     *            A JsonObject.
      * @param tagName
      *            The optional name of the enclosing tag.
      * @param config
      *            Configuration that can control output to XML.
      * @return A string.
-     * @throws JSONException Thrown if there is an error parsing the string
+     * @throws JSONException
+     *             Thrown if there is an error parsing the string
      */
     public static String toString(final Object object, final String tagName, final XMLParserConfiguration config)
             throws JSONException {
         StringBuilder sb = new StringBuilder();
-        JSONArray ja;
-        JSONObject jo;
+        JsonArray ja;
+        JsonObject jo;
         String string;
 
-        if (object instanceof JSONObject) {
+        if (object instanceof JsonObject) {
 
             // Emit <tagName>
             if (tagName != null) {
@@ -671,26 +674,26 @@ public class XML {
 
             // Loop thru the keys.
             // don't use the new entrySet accessor to maintain Android Support
-            jo = (JSONObject) object;
+            jo = (JsonObject) object;
             for (final String key : jo.keySet()) {
-                Object value = jo.opt(key);
+                Object value = jo.get(key);
                 if (value == null) {
                     value = "";
                 } else if (value.getClass().isArray()) {
-                    value = new JSONArray(value);
+                    value = JsonArrayBuilder.getInstance().convert(value);
                 }
 
                 // Emit content in body
                 if (key.equals(config.cDataTagName)) {
-                    if (value instanceof JSONArray) {
-                        ja = (JSONArray) value;
+                    if (value instanceof JsonArray) {
+                        ja = (JsonArray) value;
                         int jaLength = ja.length();
                         // don't use the new iterator API to maintain support for Android
-						for (int i = 0; i < jaLength; i++) {
+                        for (int i = 0; i < jaLength; i++) {
                             if (i > 0) {
                                 sb.append('\n');
                             }
-                            Object val = ja.opt(i);
+                            Object val = ja.get(i);
                             sb.append(escape(val.toString()));
                         }
                     } else {
@@ -699,13 +702,13 @@ public class XML {
 
                     // Emit an array of similar keys
 
-                } else if (value instanceof JSONArray) {
-                    ja = (JSONArray) value;
+                } else if (value instanceof JsonArray) {
+                    ja = (JsonArray) value;
                     int jaLength = ja.length();
                     // don't use the new iterator API to maintain support for Android
-					for (int i = 0; i < jaLength; i++) {
-                        Object val = ja.opt(i);
-                        if (val instanceof JSONArray) {
+                    for (int i = 0; i < jaLength; i++) {
+                        Object val = ja.get(i);
+                        if (val instanceof JsonArray) {
                             sb.append('<');
                             sb.append(key);
                             sb.append('>');
@@ -739,16 +742,16 @@ public class XML {
 
         }
 
-        if (object != null && (object instanceof JSONArray ||  object.getClass().isArray())) {
-            if(object.getClass().isArray()) {
-                ja = new JSONArray(object);
+        if (object != null && (object instanceof JsonArray || object.getClass().isArray())) {
+            if (object.getClass().isArray()) {
+                ja = JsonArrayBuilder.getInstance().convert(object);
             } else {
-                ja = (JSONArray) object;
+                ja = (JsonArray) object;
             }
             int jaLength = ja.length();
             // don't use the new iterator API to maintain support for Android
-			for (int i = 0; i < jaLength; i++) {
-                Object val = ja.opt(i);
+            for (int i = 0; i < jaLength; i++) {
+                Object val = ja.get(i);
                 // XML does not have good support for arrays. If an array
                 // appears in a place where XML is lacking, synthesize an
                 // <array> element.
@@ -759,8 +762,7 @@ public class XML {
 
         string = (object == null) ? "null" : escape(object.toString());
         return (tagName == null) ? "\"" + string + "\""
-                : (string.length() == 0) ? "<" + tagName + "/>" : "<" + tagName
-                        + ">" + string + "</" + tagName + ">";
+                : (string.length() == 0) ? "<" + tagName + "/>" : "<" + tagName + ">" + string + "</" + tagName + ">";
 
     }
 }

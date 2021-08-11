@@ -1,5 +1,7 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -27,7 +29,7 @@ SOFTWARE.
 
 /**
  * This provides static methods to convert comma delimited text into a
- * JSONArray, and to convert a JSONArray into comma delimited text. Comma
+ * JsonArray, and to convert a JsonArray into comma delimited text. Comma
  * delimited text is a very popular format for data interchange. It is
  * understood by most database, spreadsheet, and organizer programs.
  * <p>
@@ -38,7 +40,7 @@ SOFTWARE.
  * <p>
  * The first row usually contains the names of the columns.
  * <p>
- * A comma delimited list can be converted into a JSONArray of JSONObjects.
+ * A comma delimited list can be converted into a JsonArray of JSONObjects.
  * The names for the elements in the JSONObjects can be taken from the names
  * in the first row.
  * @author JSON.org
@@ -96,13 +98,13 @@ public class CDL {
     }
 
     /**
-     * Produce a JSONArray of strings from a row of comma delimited values.
+     * Produce a JsonArray of strings from a row of comma delimited values.
      * @param x A JSONTokener of the source text.
-     * @return A JSONArray of strings.
+     * @return A JsonArray of strings.
      * @throws JSONException
      */
-    public static JSONArray rowToJSONArray(JSONTokener x) throws JSONException {
-        JSONArray ja = new JSONArray();
+    public static JsonArray rowToJSONArray(JSONTokener x) throws JSONException {
+        JsonArray ja = new JsonArray();
         for (;;) {
             String value = getValue(x);
             char c = x.next();
@@ -128,35 +130,35 @@ public class CDL {
     }
 
     /**
-     * Produce a JSONObject from a row of comma delimited text, using a
-     * parallel JSONArray of strings to provides the names of the elements.
-     * @param names A JSONArray of names. This is commonly obtained from the
+     * Produce a JsonObject from a row of comma delimited text, using a
+     * parallel JsonArray of strings to provides the names of the elements.
+     * @param names A JsonArray of names. This is commonly obtained from the
      *  first row of a comma delimited text file using the rowToJSONArray
      *  method.
      * @param x A JSONTokener of the source text.
-     * @return A JSONObject combining the names and values.
+     * @return A JsonObject combining the names and values.
      * @throws JSONException
      */
-    public static JSONObject rowToJSONObject(JSONArray names, JSONTokener x)
+    public static JsonObject rowToJSONObject(JsonArray names, JSONTokener x)
             throws JSONException {
-        JSONArray ja = rowToJSONArray(x);
-        return ja != null ? ja.toJSONObject(names) :  null;
+        JsonArray ja = rowToJSONArray(x);
+        return ja != null ? ja.toJsonObject(names) :  null;
     }
 
     /**
-     * Produce a comma delimited text row from a JSONArray. Values containing
+     * Produce a comma delimited text row from a JsonArray. Values containing
      * the comma character will be quoted. Troublesome characters may be
      * removed.
-     * @param ja A JSONArray of strings.
+     * @param ja A JsonArray of strings.
      * @return A string ending in NEWLINE.
      */
-    public static String rowToString(JSONArray ja) {
+    public static String rowToString(_JSONArray ja) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ja.length(); i += 1) {
             if (i > 0) {
                 sb.append(',');
             }
-            Object object = ja.opt(i);
+            Object object = ja.get(i);
             if (object != null) {
                 String string = object.toString();
                 if (string.length() > 0 && (string.indexOf(',') >= 0 ||
@@ -181,56 +183,56 @@ public class CDL {
     }
 
     /**
-     * Produce a JSONArray of JSONObjects from a comma delimited text string,
+     * Produce a JsonArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param string The comma delimited text.
-     * @return A JSONArray of JSONObjects.
+     * @return A JsonArray of JSONObjects.
      * @throws JSONException
      */
-    public static JSONArray toJSONArray(String string) throws JSONException {
+    public static JsonArray toJSONArray(String string) throws JSONException {
         return toJSONArray(new JSONTokener(string));
     }
 
     /**
-     * Produce a JSONArray of JSONObjects from a comma delimited text string,
+     * Produce a JsonArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param x The JSONTokener containing the comma delimited text.
-     * @return A JSONArray of JSONObjects.
+     * @return A JsonArray of JSONObjects.
      * @throws JSONException
      */
-    public static JSONArray toJSONArray(JSONTokener x) throws JSONException {
+    public static JsonArray toJSONArray(JSONTokener x) throws JSONException {
         return toJSONArray(rowToJSONArray(x), x);
     }
 
     /**
-     * Produce a JSONArray of JSONObjects from a comma delimited text string
-     * using a supplied JSONArray as the source of element names.
-     * @param names A JSONArray of strings.
+     * Produce a JsonArray of JSONObjects from a comma delimited text string
+     * using a supplied JsonArray as the source of element names.
+     * @param names A JsonArray of strings.
      * @param string The comma delimited text.
-     * @return A JSONArray of JSONObjects.
+     * @return A JsonArray of JSONObjects.
      * @throws JSONException
      */
-    public static JSONArray toJSONArray(JSONArray names, String string)
+    public static JsonArray toJSONArray(JsonArray names, String string)
             throws JSONException {
         return toJSONArray(names, new JSONTokener(string));
     }
 
     /**
-     * Produce a JSONArray of JSONObjects from a comma delimited text string
-     * using a supplied JSONArray as the source of element names.
-     * @param names A JSONArray of strings.
+     * Produce a JsonArray of JSONObjects from a comma delimited text string
+     * using a supplied JsonArray as the source of element names.
+     * @param names A JsonArray of strings.
      * @param x A JSONTokener of the source text.
-     * @return A JSONArray of JSONObjects.
+     * @return A JsonArray of JSONObjects.
      * @throws JSONException
      */
-    public static JSONArray toJSONArray(JSONArray names, JSONTokener x)
+    public static JsonArray toJSONArray(JsonArray names, JSONTokener x)
             throws JSONException {
         if (names == null || names.length() == 0) {
             return null;
         }
-        JSONArray ja = new JSONArray();
+        JsonArray ja = new JsonArray();
         for (;;) {
-            JSONObject jo = rowToJSONObject(names, x);
+            JsonObject jo = rowToJSONObject(names, x);
             if (jo == null) {
                 break;
             }
@@ -244,17 +246,17 @@ public class CDL {
 
 
     /**
-     * Produce a comma delimited text from a JSONArray of JSONObjects. The
+     * Produce a comma delimited text from a JsonArray of JSONObjects. The
      * first row will be a list of names obtained by inspecting the first
-     * JSONObject.
-     * @param ja A JSONArray of JSONObjects.
+     * JsonObject.
+     * @param ja A JsonArray of JSONObjects.
      * @return A comma delimited text.
      * @throws JSONException
      */
-    public static String toString(JSONArray ja) throws JSONException {
-        JSONObject jo = ja.optJSONObject(0);
+    public static String toString(JsonArray ja) throws JSONException {
+        JsonObject jo = ja.getJsonObject(0);
         if (jo != null) {
-            JSONArray names = jo.names();
+            JsonArray names = jo.names();
             if (names != null) {
                 return rowToString(names) + toString(names, ja);
             }
@@ -263,22 +265,22 @@ public class CDL {
     }
 
     /**
-     * Produce a comma delimited text from a JSONArray of JSONObjects using
+     * Produce a comma delimited text from a JsonArray of JSONObjects using
      * a provided list of names. The list of names is not included in the
      * output.
-     * @param names A JSONArray of strings.
-     * @param ja A JSONArray of JSONObjects.
+     * @param names A JsonArray of strings.
+     * @param ja A JsonArray of JSONObjects.
      * @return A comma delimited text.
      * @throws JSONException
      */
-    public static String toString(JSONArray names, JSONArray ja)
+    public static String toString(JsonArray names, JsonArray ja)
             throws JSONException {
         if (names == null || names.length() == 0) {
             return null;
         }
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ja.length(); i += 1) {
-            JSONObject jo = ja.optJSONObject(i);
+            JsonObject jo = ja.getJsonObject(i);
             if (jo != null) {
                 sb.append(rowToString(jo.toJSONArray(names)));
             }

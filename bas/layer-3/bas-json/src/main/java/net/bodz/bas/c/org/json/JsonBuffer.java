@@ -2,8 +2,9 @@ package net.bodz.bas.c.org.json;
 
 import java.io.StringWriter;
 
-import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.json.JSONException;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.fork.org.json.JSONException;
 
 /**
  * @see JsonStringer
@@ -30,7 +31,7 @@ public class JsonBuffer
     public JsonObject reconstruct() {
         String json = sw.toString();
         try {
-            return new JsonObject(json);
+            return JsonObjectBuilder.getInstance().parse(json);
         } catch (JSONException e) {
             throw new RuntimeException("Failed to re-construct " + json, e);
         }

@@ -23,7 +23,7 @@ import net.bodz.bas.t.set.StackSet;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
-import net.bodz.json.JSONException;
+import net.bodz.fork.org.json.JSONException;
 import net.bodz.lily.entity.IId;
 
 @SuppressWarnings("unchecked")

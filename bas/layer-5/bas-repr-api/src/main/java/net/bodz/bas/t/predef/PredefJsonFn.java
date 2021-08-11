@@ -2,7 +2,7 @@ package net.bodz.bas.t.predef;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;

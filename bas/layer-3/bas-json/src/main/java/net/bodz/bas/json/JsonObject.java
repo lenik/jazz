@@ -1,241 +1,44 @@
-package net.bodz.bas.fmt.json;
+package net.bodz.bas.json;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.joda.time.DateTime;
 
-import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.t.variant.conv.*;
-import net.bodz.json.JSONArray;
-import net.bodz.json.JSONException;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.c.java.util.SortMode;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.t.factory.IFactory;
+import net.bodz.bas.t.variant.conv.IVarConverter;
+import net.bodz.bas.t.variant.conv.VarConverters;
+import net.bodz.fork.org.json.JSONException;
+import net.bodz.fork.org.json._JSONObject;
 
-public abstract class AbstractJsonObject<self_t>
-        extends JSONObjectWrapper<self_t> {
+public class JsonObject
+        extends _JSONObject {
 
-    public AbstractJsonObject(JSONObject orig) {
-        super(orig);
+    public JsonObject() {
+        this(SortMode.UNSET);
     }
 
-    public boolean containsKey(String key) {
-        return wrapped.has(key);
+    public JsonObject(SortMode sortMode) {
+        this(sortMode.newMap());
     }
 
-    public Object strictGet(String key)
-            throws JSONException {
-        return super.get(key);
-    }
-
-    @Override
-    public Object get(String key)
-            throws JSONException {
-        return get(key, null);
+    public JsonObject(Map<String, Object> map) {
+        super(map);
     }
 
     public Object get(String key, Object defaultValue)
             throws JSONException {
-        if (!wrapped.has(key))
+        if (!super.has(key))
             return defaultValue;
-        Object val = wrapped.get(key);
-        if (val == JSONObject.NULL)
+        Object val = super.get(key);
+        if (val == _JSONObject.NULL)
             return null;
         // if (val instanceof JSONObject)
         // return new JsonObject((JSONObject) val);
         return val;
-    }
-
-    @Override
-    public boolean getBoolean(String key) {
-        return getBoolean(key, false);
-    }
-
-    public boolean getBoolean(String key, boolean defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return BooleanVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public Float getFloat(String key)
-            throws JSONException {
-        return getFloat(key, 0.0f);
-    }
-
-    public float getFloat(String key, float defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return FloatVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    @Override
-    public double getDouble(String key)
-            throws JSONException {
-        return getDouble(key, 0.0);
-    }
-
-    public double getDouble(String key, double defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return DoubleVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public byte getByte(String key)
-            throws JSONException {
-        return getByte(key, (byte) 0);
-    }
-
-    public byte getByte(String key, byte defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return ByteVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public short getShort(String key)
-            throws JSONException {
-        return getShort(key, (short) 0);
-    }
-
-    public short getShort(String key, short defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return ShortVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    @Override
-    public int getInt(String key)
-            throws JSONException {
-        return getInt(key, 0);
-    }
-
-    public int getInt(String key, int defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return IntegerVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    @Override
-    public long getLong(String key)
-            throws JSONException {
-        return getLong(key, 0L);
-    }
-
-    public long getLong(String key, long defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return LongVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    public char getChar(String key)
-            throws JSONException {
-        return getChar(key, '\0');
-    }
-
-    public char getChar(String key, char defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        try {
-            return CharacterVarConverter.INSTANCE.from(val);
-        } catch (TypeConvertException e) {
-            return defaultValue;
-        }
-    }
-
-    @Override
-    public String getString(String key)
-            throws JSONException {
-        return getString(key, null);
-    }
-
-    public String getString(String key, String defaultValue)
-            throws JSONException {
-        Object val = get(key);
-        if (val == null)
-            return defaultValue;
-        return StringVarConverter.INSTANCE.from(val);
-    }
-
-    @Override
-    public JSONArray getJSONArray(String key)
-            throws JSONException {
-        return wrapped.getJSONArray(key);
-    }
-
-    public JSONArray getJSONArray(String key, JSONArray defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        return wrapped.getJSONArray(key);
-    }
-
-    @Override
-    public JSONObject getJSONObject(String key)
-            throws JSONException {
-        return wrapped.getJSONObject(key);
-    }
-
-    public JSONObject getJSONObject(String key, JSONObject defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        return wrapped.getJSONObject(key);
-    }
-
-    public final JsonArray getJsonArray(String key)
-            throws JSONException {
-        return getJsonArray(key, null);
-    }
-
-    public JsonArray getJsonArray(String key, JsonArray defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        JSONArray array = getJSONArray(key);
-        return new JsonArray(array);
     }
 
     public byte[] getByteArray(String key, byte[] defaultValue) {
@@ -318,6 +121,7 @@ public abstract class AbstractJsonObject<self_t>
         return v;
     }
 
+    @Override
     public String[] getStringArray(String key, String[] defaultValue) {
         if (!has(key))
             return defaultValue;
@@ -335,7 +139,7 @@ public abstract class AbstractJsonObject<self_t>
         if (array != null) {
             int n = array.length();
             for (int i = 0; i < n; i++)
-                list.add((byte) array.getInt(i));
+                list.add((byte) array.getInt(i, 0));
         }
         return list;
     }
@@ -347,7 +151,7 @@ public abstract class AbstractJsonObject<self_t>
         if (array != null) {
             int n = array.length();
             for (int i = 0; i < n; i++)
-                list.add((short) array.getInt(i));
+                list.add((short) array.getInt(i, 0));
         }
         return list;
     }
@@ -383,7 +187,7 @@ public abstract class AbstractJsonObject<self_t>
         if (array != null) {
             int n = array.length();
             for (int i = 0; i < n; i++)
-                list.add((float) array.getDouble(i));
+                list.add((float) array.getDouble(i, 0));
         }
         return list;
     }
@@ -438,45 +242,6 @@ public abstract class AbstractJsonObject<self_t>
         return list;
     }
 
-    /**
-     * See {@link #getChild(String)}
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public final JsonObject getJsonObject(String key)
-            throws JSONException {
-        return getChild(key);
-    }
-
-    /**
-     * See {@link #getChild(String, JsonObject)}
-     *
-     * @deprecated
-     */
-    @Deprecated
-    public JsonObject getJsonObject(String key, JsonObject defaultValue)
-            throws JSONException {
-        return getChild(key, defaultValue);
-    }
-
-    public JsonObject getChild(String key)
-            throws JSONException {
-        return getChild(key, null);
-    }
-
-    public JsonObject getChild(String key, JsonObject defaultValue)
-            throws JSONException {
-        if (!has(key))
-            return defaultValue;
-        Object _val = get(key);
-        if (_val instanceof JSONObject) {
-            JSONObject val = (JSONObject) _val;
-            return new JsonObject(val);
-        }
-        return null;
-    }
-
     public <T> T getVar(Class<T> type, String key) {
         return getVar(type, key, null);
     }
@@ -498,10 +263,12 @@ public abstract class AbstractJsonObject<self_t>
         return var;
     }
 
+    @Override
     public Date getDate(String key) {
         return getDate(key, null);
     }
 
+    @Override
     public Date getDate(String key, Date defaultValue) {
         return getVar(Date.class, key, defaultValue);
     }
@@ -512,6 +279,84 @@ public abstract class AbstractJsonObject<self_t>
 
     public DateTime getDateTime(String key, DateTime defaultValue) {
         return getVar(DateTime.class, key, defaultValue);
+    }
+
+    public <T extends IJsonSerializable> T readInto(String key, T obj)
+            throws ParseException {
+        return readInto(key, obj, null);
+    }
+
+    public <T extends IJsonSerializable> T readInto(String key, T obj, T newObj)
+            throws ParseException {
+        if (!has(key)) // nothing to change
+            return obj;
+
+        JsonObject node = null;
+        Object _node = get(key);
+        if (_node == null) // force set to null
+            return null;
+        if (_node instanceof JsonObject)
+            node = (JsonObject) _node;
+
+        if (node != null) {
+            if (obj == null) {
+                if (newObj == null) // don't auto-create
+                    return null;
+                obj = newObj;
+            }
+            obj.readObject(node);
+        }
+
+        return obj;
+    }
+
+    public <T extends IJsonSerializable> List<T> readArrayInto(String key, List<T> list, IFactory<T> factory)
+            throws ParseException {
+        return readArrayInto(key, list, factory, ArrayList.class);
+    }
+
+    public <T extends IJsonSerializable> Set<T> readArrayInto(String key, Set<T> list, IFactory<T> factory)
+            throws ParseException {
+        return readArrayInto(key, list, factory, TreeSet.class);
+    }
+
+    public <C extends Collection<T>, T extends IJsonSerializable> C readArrayInto(String key, C set,
+            IFactory<T> factory, Class<?> newSetClass)
+            throws ParseException {
+        if (!has(key)) // nothing to change
+            return set;
+
+        Object _node = get(key);
+        if (_node == null) // force set to null
+            return null;
+
+        if (_node instanceof JsonArray) {
+            JsonArray array = (JsonArray) _node;
+            if (set == null) {
+                if (newSetClass == null) // don't auto-create
+                    return null;
+                try {
+                    @SuppressWarnings("unchecked")
+                    C instance = (C) newSetClass.newInstance();
+                    set = instance;
+                } catch (Exception e) {
+                    throw new UnexpectedException(e.getMessage(), e);
+                }
+            } else {
+                set.clear();
+            }
+
+            // set.readObject(array);
+            int n = array.length();
+            for (int i = 0; i < n; i++) {
+                JsonObject node = array.getJsonObject(i);
+                T obj = factory.create();
+                obj.readObject(node);
+                set.add(obj);
+            }
+        }
+
+        return set;
     }
 
 }

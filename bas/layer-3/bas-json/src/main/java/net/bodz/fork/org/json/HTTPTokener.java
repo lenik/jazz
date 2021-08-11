@@ -1,4 +1,4 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
 
 /*

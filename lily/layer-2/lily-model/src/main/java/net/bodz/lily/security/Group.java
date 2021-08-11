@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.entity.IdType;
 
 /**

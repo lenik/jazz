@@ -1,4 +1,4 @@
-package net.bodz.json;
+package net.bodz.fork.org.json;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -25,6 +25,8 @@ SOFTWARE.
 */
 
 import java.util.Locale;
+
+import net.bodz.bas.json.JsonObject;
 
 /**
  * Convert an HTTP header to a JSONObject and back.
@@ -68,8 +70,8 @@ public class HTTP {
      * of the XML string.
      * @throws JSONException
      */
-    public static JSONObject toJSONObject(String string) throws JSONException {
-        JSONObject     jo = new JSONObject();
+    public static JsonObject toJsonObject(String string) throws JSONException {
+        JsonObject     jo = new JsonObject();
         HTTPTokener    x = new HTTPTokener(string);
         String         token;
 
@@ -124,7 +126,7 @@ public class HTTP {
      * @throws JSONException if the object does not contain enough
      *  information.
      */
-    public static String toString(JSONObject jo) throws JSONException {
+    public static String toString(JsonObject jo) throws JSONException {
         StringBuilder       sb = new StringBuilder();
         if (jo.has("Status-Code") && jo.has("Reason-Phrase")) {
             sb.append(jo.getString("HTTP-Version"));
@@ -146,13 +148,13 @@ public class HTTP {
         sb.append(CRLF);
         // Don't use the new entrySet API to maintain Android support
         for (final String key : jo.keySet()) {
-            String value = jo.optString(key);
+            String value = jo.getString(key);
             if (!"HTTP-Version".equals(key)      && !"Status-Code".equals(key) &&
                     !"Reason-Phrase".equals(key) && !"Method".equals(key) &&
-                    !"Request-URI".equals(key)   && !JSONObject.NULL.equals(value)) {
+                    !"Request-URI".equals(key)   && !JsonObject.NULL.equals(value)) {
                 sb.append(key);
                 sb.append(": ");
-                sb.append(jo.optString(key));
+                sb.append(jo.getString(key));
                 sb.append(CRLF);
             }
         }

@@ -11,8 +11,9 @@ import java.util.Map.Entry;
 import org.apache.ibatis.type.JdbcType;
 
 import net.bodz.bas.db.ibatis.TypeHandler;
-import net.bodz.json.JSONObject;
-import net.bodz.json.JSONWriter;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.fork.org.json.JSONWriter;
 
 public abstract class AbstractMapTypeHandler<map_t extends Map<K, V>, K, V>
         extends TypeHandler<map_t> {
@@ -48,7 +49,7 @@ public abstract class AbstractMapTypeHandler<map_t extends Map<K, V>, K, V>
     protected map_t parse(String json) {
         if (json == null)
             return null;
-        JSONObject obj = new JSONObject(json);
+        JsonObject obj = JsonObjectBuilder.getInstance().parse(json);
         map_t map = createMap();
         for (Object _keyStr : obj.keySet()) {
             String keyStr = (String) _keyStr;

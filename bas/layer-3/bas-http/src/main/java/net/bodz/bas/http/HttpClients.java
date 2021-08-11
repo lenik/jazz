@@ -11,8 +11,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.json.JSONException;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.fork.org.json.JSONException;
 
 public class HttpClients {
 
@@ -66,7 +67,7 @@ public class HttpClients {
 
         String result = EntityUtils.toString(responseEntity, charset);
         try {
-            JsonObject jsonObj = new JsonObject(result);
+            JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(result);
             return jsonObj;
         } catch (JSONException e) {
             throw new ParseException(e);

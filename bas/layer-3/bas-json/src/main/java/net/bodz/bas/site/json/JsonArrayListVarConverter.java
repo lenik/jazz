@@ -2,9 +2,9 @@ package net.bodz.bas.site.json;
 
 
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.variant.conv.AbstractVarConverter;
-import net.bodz.json.JSONArray;
 
 /**
  * TODO not implemented well, yet.
@@ -20,7 +20,7 @@ public class JsonArrayListVarConverter
     @Override
     public JsonArrayList fromNumber(Number in)
             throws TypeConvertException {
-        JSONArray array = new JSONArray();
+        JsonArray array = new JsonArray();
         array.put(in);
         return new JsonArrayList(array);
     }
@@ -28,7 +28,7 @@ public class JsonArrayListVarConverter
     @Override
     public JsonArrayList fromString(String in)
             throws TypeConvertException {
-        JSONArray array = new JSONArray();
+        JsonArray array = new JsonArray();
         array.put(in);
         return new JsonArrayList(array);
     }

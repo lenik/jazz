@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.bas.typer.std.MutableAttributes;
@@ -188,7 +188,7 @@ public class LoginToken
         transaction = o.getLong("txn");
         // timeout = o.getLong("timeout");
 
-        JsonObject _user = o.getChild("user");
+        JsonObject _user = o.getJsonObject("user");
         if (_user != null) {
             User user = new User();
             user.setId(_user.getInt("id"));

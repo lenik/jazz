@@ -12,11 +12,13 @@ import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonArrayBuilder;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.meta.source.FnHelper;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
-import net.bodz.json.JSONArray;
-import net.bodz.json.JSONException;
-import net.bodz.json.JSONObject;
+import net.bodz.fork.org.json.JSONException;
 
 @FnHelper
 public class JsonFn {
@@ -27,24 +29,24 @@ public class JsonFn {
             throw new NullPointerException("json");
         try {
             if (json.startsWith("["))
-                return new JSONArray(json);
+                return JsonArrayBuilder.getInstance().parse(json);
             if (json.startsWith("{"))
-                return new JsonObject(json);
+                return JsonObjectBuilder.getInstance().parse(json);
 
             String v_json = "[" + json + "]";
-            JSONArray jsonArray = new JSONArray(v_json);
+            JsonArray jsonArray = JsonArrayBuilder.getInstance().parse(v_json);
             return jsonArray.get(0);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
     }
 
-    public static JSONArray parseArray(String json)
+    public static JsonArray parseArray(String json)
             throws ParseException {
         if (json == null)
             throw new NullPointerException("json");
         try {
-            return new JSONArray(json);
+            return JsonArrayBuilder.getInstance().parse(json);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
@@ -55,7 +57,7 @@ public class JsonFn {
         if (json == null)
             throw new NullPointerException("json");
         try {
-            return new JsonObject(json);
+            return JsonObjectBuilder.getInstance().parse(json);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
@@ -105,7 +107,7 @@ public class JsonFn {
         return obj;
     }
 
-    public static List<Object> toList(JSONArray json) {
+    public static List<Object> toList(JsonArray json) {
         int n = json.length();
         List<Object> list = new ArrayList<Object>(n);
         for (int i = 0; i < n; i++) {
@@ -117,29 +119,21 @@ public class JsonFn {
     }
 
     public static Map<String, Object> toMap(String json) {
-        JSONObject jsonObj = new JSONObject(json);
+        JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(json);
         return toMap(jsonObj);
     }
 
     public static Map<String, Object> toMap(Map<String, Object> map, String json) {
-        JSONObject jsonObj = new JSONObject(json);
+        JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(json);
         return toMap(map, jsonObj);
     }
 
     public static Map<String, Object> toMap(JsonObject jsonObj) {
-        return toMap(jsonObj.getWrapped());
-    }
-
-    public static Map<String, Object> toMap(JSONObject jsonObj) {
         Map<String, Object> map = new HashMap<String, Object>();
         return toMap(map, jsonObj);
     }
 
     public static Map<String, Object> toMap(Map<String, Object> map, JsonObject jsonObj) {
-        return toMap(map, jsonObj.getWrapped());
-    }
-
-    public static Map<String, Object> toMap(Map<String, Object> map, JSONObject jsonObj) {
         for (Object _key : jsonObj.keySet()) {
             String key = (String) _key;
             Object val = jsonObj.get(key);
@@ -152,18 +146,16 @@ public class JsonFn {
     public static Object unwrap(Object json) {
         if (json instanceof JsonObject)
             json = toMap((JsonObject) json);
-        if (json instanceof JSONObject)
-            json = toMap((JSONObject) json);
-        if (json instanceof JSONArray)
-            json = toList((JSONArray) json);
+        if (json instanceof JsonArray)
+            json = toList((JsonArray) json);
         return json;
     }
 
-    public static <T> Iterable<T> iterate(final JSONArray array) {
+    public static <T> Iterable<T> iterate(final JsonArray array) {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                return new JSONArrayIterator<T>(array);
+                return new JsonArrayIterator<T>(array);
             }
         };
     }
@@ -205,13 +197,13 @@ public class JsonFn {
 
 }
 
-class JSONArrayIterator<T>
+class JsonArrayIterator<T>
         extends PrefetchedIterator<T> {
 
-    JSONArray array;
+    JsonArray array;
     int index = 0;
 
-    public JSONArrayIterator(JSONArray array) {
+    public JsonArrayIterator(JsonArray array) {
         this.array = array;
     }
 

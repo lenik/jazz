@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonArray;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
 
 public class SendSmsBatchResult
         extends AbstractUcpaasResult {

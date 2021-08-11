@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.security.User;
 
 public class UserPinRecord
@@ -25,7 +25,7 @@ public class UserPinRecord
             throws ParseException {
         super.readObject(o);
 
-        JsonObject js_user = o.getChild("user");
+        JsonObject js_user = o.getJsonObject("user");
         if (js_user != null) {
             user = new User();
             int js_userId = js_user.getInt("id", -1);

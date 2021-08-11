@@ -4,8 +4,8 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.json.JsonObject;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 
 public class DefaultJsonForm
         implements
@@ -35,8 +35,8 @@ public class DefaultJsonForm
         if (jsonStr == null) {
             obj.readObject(null);
         } else {
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            obj.readObject(JsonObject.wrap(jsonObj));
+            JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(jsonStr);
+            obj.readObject(jsonObj);
         }
     }
 

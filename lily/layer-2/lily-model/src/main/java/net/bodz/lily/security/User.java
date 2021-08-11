@@ -9,7 +9,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;

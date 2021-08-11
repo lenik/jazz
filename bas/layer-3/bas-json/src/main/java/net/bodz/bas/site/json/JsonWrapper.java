@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.t.variant.IVarMapSerializable;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.json.JSONObject;
 
 /**
  * Add json support to pojo.
@@ -67,7 +68,7 @@ public class JsonWrapper
     public JsonWrapper format(String json) {
         if (json == null)
             return this;
-        JSONObject obj = new JSONObject(json);
+        JsonObject obj = JsonObjectBuilder.getInstance().parse(json);
         for (String key : obj.keySet()) {
             String format = obj.getString(key);
             formats.put(key, format);

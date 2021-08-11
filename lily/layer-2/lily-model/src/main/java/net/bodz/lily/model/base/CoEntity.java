@@ -3,7 +3,7 @@ package net.bodz.lily.model.base;
 import java.io.Serializable;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;

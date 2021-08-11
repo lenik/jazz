@@ -1,21 +1,23 @@
 package net.bodz.bas.c.org.json;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.json.JSONObject;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.json.JsonObjectBuilder;
 
 public class JsonObj
-        implements IJsonForm {
+        implements
+            IJsonForm {
 
-    JSONObject obj;
+    JsonObject obj;
 
     public JsonObj() {
     }
 
-    public JsonObj(JSONObject obj) {
+    public JsonObj(JsonObject obj) {
         this.obj = obj;
     }
 
-    public JSONObject getWrapped() {
+    public JsonObject getWrapped() {
         return obj;
     }
 
@@ -33,7 +35,7 @@ public class JsonObj
         if (jsonStr == null)
             obj = null;
         else
-            obj = new JSONObject(jsonStr);
+            obj = JsonObjectBuilder.getInstance().parse(jsonStr);
     }
 
     @Override

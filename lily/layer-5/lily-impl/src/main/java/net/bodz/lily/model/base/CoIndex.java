@@ -18,11 +18,11 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonObject;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -43,7 +43,7 @@ import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.site.json.JsonWrapper;
-import net.bodz.bas.site.json.TableData;
+import net.bodz.bas.site.json.PathPropertyTable;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -200,9 +200,9 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return label + "/";
     }
 
-    protected TableData listHandler(IVariantMap<String> q)
+    protected PathPropertyTable listHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        TableData tableData = new TableData(objectType);
+        PathPropertyTable tableData = new PathPropertyTable(objectType);
         try {
             tableData.readObject(q);
         } catch (Exception e) {

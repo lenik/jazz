@@ -8,7 +8,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonObject;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdFn;

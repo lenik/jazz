@@ -5,8 +5,8 @@ import java.io.IOException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.json.JSONException;
-import net.bodz.json.JSONStringer;
+import net.bodz.fork.org.json.JSONException;
+import net.bodz.fork.org.json.JSONStringer;
 
 /**
  * @see JsonBuffer
