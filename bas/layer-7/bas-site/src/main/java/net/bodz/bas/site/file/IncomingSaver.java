@@ -17,7 +17,8 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.lily.entity.ILazyId;
 
 public class IncomingSaver
-        implements IIncomingFileHandler {
+        implements
+            IIncomingFileHandler {
 
     static final Logger logger = LoggerFactory.getLogger(IncomingSaver.class);
 
@@ -50,6 +51,8 @@ public class IncomingSaver
 
     protected String getName(ItemFile item) {
         String name = item.getName();
+        if (name == null)
+            return null;
         String ext = FilePath.getExtension(name, true);
         return item.getSha1() + ext;
     }
