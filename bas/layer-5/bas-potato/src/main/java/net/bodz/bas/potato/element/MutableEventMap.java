@@ -4,16 +4,17 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class MutableEventMap
-        implements IEventMap {
+        implements
+            IEventMap {
 
     Map<String, IEvent> map;
 
-    public MutableEventMap(Boolean sorted) {
-        map = Collections.createMap(sorted);
+    public MutableEventMap(SortOrder order) {
+        map = order.newMap();
     }
 
     @Override

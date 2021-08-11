@@ -6,15 +6,16 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.repr.form.SortOrder;
 
 public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>>
         extends AbstractMap<String, Object>
-        implements IRefEntries {
+        implements
+            IRefEntries {
 
     private IRefEntry<?> objRef;
 
@@ -23,8 +24,8 @@ public abstract class AbstractPropertyRefMap<entry_t extends PropertyRefEntry<?>
     private boolean autoImported;
     private int newImportedCount;
 
-    public AbstractPropertyRefMap(IRefEntry<?> objRef, Boolean order) {
-        cache = Collections.<String, entry_t> createMap(order);
+    public AbstractPropertyRefMap(IRefEntry<?> objRef, SortOrder order) {
+        cache = order.newMap();
         if (objRef == null)
             throw new NullPointerException("objRef");
         this.objRef = objRef;

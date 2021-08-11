@@ -1,5 +1,7 @@
 package net.bodz.bas.ctx.util;
 
+import net.bodz.bas.repr.form.SortOrder;
+
 /**
  * Define local variable only if the name isn't defined.
  */
@@ -10,7 +12,7 @@ public class LooseFramedMap<K, V>
         super();
     }
 
-    public LooseFramedMap(Boolean order) {
+    public LooseFramedMap(SortOrder order) {
         super(order);
     }
 

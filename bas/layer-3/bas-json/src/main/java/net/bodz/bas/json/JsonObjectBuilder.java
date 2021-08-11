@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.java.util.SortMode;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.fork.org.json.JSONException;
 import net.bodz.fork.org.json.JSONPropertyIgnore;
 import net.bodz.fork.org.json.JSONPropertyName;
@@ -22,13 +22,13 @@ import java.util.ResourceBundle;
 
 public class JsonObjectBuilder {
 
-    SortMode sortMode = SortMode.UNSET;
+    SortOrder sortMode = SortOrder.NONE;
 
-    public SortMode getSortMode() {
+    public SortOrder getSortMode() {
         return sortMode;
     }
 
-    public void setSortMode(SortMode sortMode) {
+    public void setSortMode(SortOrder sortMode) {
         this.sortMode = sortMode;
     }
 

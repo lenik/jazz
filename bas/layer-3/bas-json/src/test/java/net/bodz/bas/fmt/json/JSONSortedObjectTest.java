@@ -1,7 +1,7 @@
 package net.bodz.bas.fmt.json;
 
-import net.bodz.bas.c.java.util.SortMode;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class JSONSortedObjectTest {
 
@@ -17,7 +17,7 @@ public class JSONSortedObjectTest {
 
     static JsonObject mkTest() {
 //        JsonObject o = new JsonObject();
-        JsonObject o = new JsonObject(SortMode.ASCENDING);
+        JsonObject o = new JsonObject(SortOrder.ASCENDING);
         for (int i = 0; i < 30; i++)
             o.put("a" + i, i);
         return o;

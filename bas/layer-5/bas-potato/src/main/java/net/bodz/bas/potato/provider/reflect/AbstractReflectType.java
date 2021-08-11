@@ -7,6 +7,7 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.mda.xjdoc.model.IClassDoc;
 
 public abstract class AbstractReflectType
@@ -47,8 +48,8 @@ public abstract class AbstractReflectType
         Priority aPriority = clazz.getAnnotation(Priority.class);
         priority = aPriority == null ? 0 : aPriority.value();
 
-        propertyMap = new MutablePropertyMap(false);
-        methodMap = new MutableMethodMap(false);
+        propertyMap = new MutablePropertyMap(SortOrder.KEEP);
+        methodMap = new MutableMethodMap(SortOrder.KEEP);
         constructorMap = new MutableConstructorMap();
         eventMap = NullEventMap.getInstance();
     }

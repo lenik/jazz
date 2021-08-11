@@ -11,6 +11,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.*;
 import net.bodz.bas.potato.provider.reflect.ReflectModifiers;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.mda.xjdoc.IXjdocProvider;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -29,10 +30,10 @@ public class BeanType
     private BeanDescriptor beanDescriptor;
     private Class<?> beanClass;
 
-    private MutablePropertyMap propertyMap = new MutablePropertyMap(false);
-    private MutableMethodMap methodMap = new MutableMethodMap(false);
+    private MutablePropertyMap propertyMap = new MutablePropertyMap(SortOrder.KEEP);
+    private MutableMethodMap methodMap = new MutableMethodMap(SortOrder.KEEP);
     private IConstructorMap constructorMap = NullConstructorMap.getInstance();
-    private MutableEventMap eventMap = new MutableEventMap(false);
+    private MutableEventMap eventMap = new MutableEventMap(SortOrder.KEEP);
 
     private final int modifiers;
     private final int detailLevel;

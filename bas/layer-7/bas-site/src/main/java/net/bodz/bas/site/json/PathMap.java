@@ -2,25 +2,25 @@ package net.bodz.bas.site.json;
 
 import java.util.Map;
 
-import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class PathMap<T> {
 
     // String parentPath;
-    Boolean order;
+    SortOrder order;
     char pathSeparator = '/';
     PathMapNode<T> root;
     boolean purgeEmptyChild;
 
     public PathMap(char pathSeparator) {
-        this('/', Boolean.FALSE);
+        this('/', SortOrder.KEEP);
     }
 
-    public PathMap(char pathSeparator, Boolean order) {
+    public PathMap(char pathSeparator, SortOrder order) {
         this(pathSeparator, order, null);
     }
 
-    public PathMap(char pathSeparator, Boolean order, PathMapNode<T> root) {
+    public PathMap(char pathSeparator, SortOrder order, PathMapNode<T> root) {
         this.order = order;
         this.pathSeparator = pathSeparator;
         if (root != null)
@@ -30,7 +30,7 @@ public class PathMap<T> {
     }
 
     <V> Map<String, V> newMap() {
-        return Collections.createMap(order);
+        return order.newMap();
     }
 
     PathMapNode<T> resolveNode(String path, boolean create) {

@@ -7,6 +7,7 @@ import net.bodz.bas.db.sql.dialect.ISqlFormat;
 import net.bodz.bas.db.sql.dialect.SqlFormats;
 import net.bodz.bas.potato.ref.PropertyRefMap;
 import net.bodz.bas.potato.ref.ValueEntry;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
 
@@ -50,7 +51,7 @@ public class DatabaseType
     }
 
     public String getConnectionUrl(Object obj) {
-        PropertyRefMap refMap = new PropertyRefMap(ValueEntry.wrap(obj), null);
+        PropertyRefMap refMap = new PropertyRefMap(ValueEntry.wrap(obj), SortOrder.NONE);
         return getConnectionUrl(refMap);
     }
 
@@ -70,7 +71,7 @@ public class DatabaseType
     /**
      * HSQL Embedded Database
      */
-    public static final DatabaseType HSQL = new DatabaseType("HSQL",//
+    public static final DatabaseType HSQL = new DatabaseType("HSQL", //
             "org.hibernate.dialect.HSQLDialect", //
             "org.hsql.Driver", //
             "jdbc:hsql://${rootDir}/${database}", //
@@ -88,7 +89,7 @@ public class DatabaseType
     /**
      * Oracle Enterprise Database
      */
-    public static final DatabaseType ORACLE = new DatabaseType("ORACLE",//
+    public static final DatabaseType ORACLE = new DatabaseType("ORACLE", //
             "org.hibernate.dialect.OracleDialect", //
             "oracle.jdbc.driver.OracleDriver", //
             "jdbc:oracle://${server}/${database}", //
@@ -97,7 +98,7 @@ public class DatabaseType
     /**
      * Oracle Enterprise Database
      */
-    public static final DatabaseType ORACLE_THIN = new DatabaseType("ORACLE_THIN",//
+    public static final DatabaseType ORACLE_THIN = new DatabaseType("ORACLE_THIN", //
             "org.hibernate.dialect.OracleDialect", //
             "oracle.jdbc.driver.OracleDriver", //
             "jdbc:oracle:thin:@${server}:${database}", //
@@ -106,7 +107,7 @@ public class DatabaseType
     /**
      * MySQL RDBMS
      */
-    public static final DatabaseType MYSQL = new DatabaseType("MYSQL",//
+    public static final DatabaseType MYSQL = new DatabaseType("MYSQL", //
             "org.hibernate.dialect.MySQLDialect", //
             "org.mysql.Driver", //
             "jdbc:mysql://${server}/${database}", //

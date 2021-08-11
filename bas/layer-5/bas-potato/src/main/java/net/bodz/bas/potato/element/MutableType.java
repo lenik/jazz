@@ -2,6 +2,7 @@ package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
 
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MutableType
@@ -16,10 +17,10 @@ public class MutableType
     public MutableType(Class<?> type, IElementDoc doc) {
         super(type, type.getName(), doc);
         this.type = type;
-        propertyMap = new MutablePropertyMap(false);
-        methodMap = new MutableMethodMap(false);
+        propertyMap = new MutablePropertyMap(SortOrder.KEEP);
+        methodMap = new MutableMethodMap(SortOrder.KEEP);
         constructorMap = new MutableConstructorMap();
-        eventMap = new MutableEventMap(false);
+        eventMap = new MutableEventMap(SortOrder.KEEP);
     }
 
     public void setType(Class<?> type) {

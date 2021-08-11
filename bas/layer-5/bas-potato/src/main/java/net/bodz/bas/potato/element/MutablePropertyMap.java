@@ -4,16 +4,16 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class MutablePropertyMap
         extends AbstractPropertyMap {
 
     Map<String, IProperty> map;
 
-    public MutablePropertyMap(Boolean sorted) {
-        map = Collections.createMap(sorted);
+    public MutablePropertyMap(SortOrder order) {
+        map = order.newMap();
     }
 
     @Override

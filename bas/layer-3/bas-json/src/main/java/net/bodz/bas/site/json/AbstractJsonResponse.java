@@ -5,7 +5,6 @@ import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -19,6 +18,7 @@ import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.ILogger;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.repr.form.SortOrder;
 
 @SuppressWarnings("unchecked")
 public class AbstractJsonResponse<self_t>
@@ -39,7 +39,7 @@ public class AbstractJsonResponse<self_t>
     Throwable exception;
     IJsonSerializable data = null;
 
-    private Boolean headerOrder;
+    private SortOrder headerOrder = SortOrder.NONE;
     private Map<String, Object> headers;
     private BufferedLogger logbuf = new BufferedLogger();
 
@@ -67,7 +67,7 @@ public class AbstractJsonResponse<self_t>
             this.headers = o.headers;
             this.logbuf = o.logbuf;
         } else {
-            this.headers = Collections.createMap(headerOrder);
+            this.headers = headerOrder.newMap();
             this.headers.putAll(o.headers);
             this.logbuf.getRecords().addAll(o.logbuf.getRecords());
         }
@@ -171,16 +171,16 @@ public class AbstractJsonResponse<self_t>
         this.data = data;
     }
 
-    public Boolean getHeaderOrder() {
+    public SortOrder getHeaderOrder() {
         return headerOrder;
     }
 
-    public synchronized void setHeaderOrder(Boolean headerOrder) {
+    public synchronized void setHeaderOrder(SortOrder headerOrder) {
         if (this.headerOrder == headerOrder)
             return;
         this.headerOrder = headerOrder;
         if (headers != null) {
-            Map<String, Object> newMap = Collections.createMap(headerOrder);
+            Map<String, Object> newMap = headerOrder.newMap();
             newMap.putAll(headers);
             headers = newMap;
         }
@@ -190,7 +190,7 @@ public class AbstractJsonResponse<self_t>
         if (headers == null)
             synchronized (this) {
                 if (headers == null)
-                    headers = Collections.createMap(headerOrder);
+                    headers = headerOrder.newMap();
             }
         return headers;
     }

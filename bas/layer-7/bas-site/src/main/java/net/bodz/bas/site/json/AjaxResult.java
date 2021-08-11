@@ -3,7 +3,6 @@ package net.bodz.bas.site.json;
 import java.io.IOException;
 import java.util.Map;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.html.io.BHtmlOut;
@@ -11,6 +10,7 @@ import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class AjaxResult
         extends AbstractJsonResponse<JsonResponse> {
@@ -21,12 +21,12 @@ public class AjaxResult
     HtmlOutputFormat htmlOutputFormat;
 
     public AjaxResult() {
-        this(false);
+        this(SortOrder.KEEP);
     }
 
-    public AjaxResult(Boolean order) {
+    public AjaxResult(SortOrder order) {
         super(0, null, null);
-        htmlUpdates = Collections.createMap(order);
+        htmlUpdates = order.newMap();
         htmlOutputFormat = new HtmlOutputFormat();
     }
 

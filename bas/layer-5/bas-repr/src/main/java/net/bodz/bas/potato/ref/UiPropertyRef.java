@@ -6,6 +6,7 @@ import java.util.Map;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.dom1.IUiRef;
 import net.bodz.bas.ui.dom1.UiValue;
@@ -14,7 +15,9 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class UiPropertyRef<T>
         extends PropertyRefEntry<T>
-        implements IUiRef<T>, IAnnotated {
+        implements
+            IUiRef<T>,
+            IAnnotated {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,7 +62,7 @@ public class UiPropertyRef<T>
         return map(objRef, null);
     }
 
-    public static UiPropertyRefMap map(IRefEntry<?> objRef, Boolean order) {
+    public static UiPropertyRefMap map(IRefEntry<?> objRef, SortOrder order) {
         return new UiPropertyRefMap(objRef, order);
     }
 

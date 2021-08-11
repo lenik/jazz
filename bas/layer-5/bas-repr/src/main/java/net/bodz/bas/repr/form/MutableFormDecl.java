@@ -16,7 +16,7 @@ public class MutableFormDecl
     public MutableFormDecl(Object source, SortOrder sortOrder) {
         this.source = source;
         switch (sortOrder) {
-        case NO_SORT:
+        case KEEP:
             map = new LinkedHashMap<String, IFieldDecl>();
             break;
         case ASCENDING:
