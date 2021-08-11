@@ -1,28 +1,19 @@
 package net.bodz.bas.potato.element;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.DuplicatedKeyException;
-import net.bodz.bas.t.order.DefaultComparator;
 
 public class MutablePropertyMap
         extends AbstractPropertyMap {
 
     Map<String, IProperty> map;
 
-    public MutablePropertyMap(boolean sorted) {
-        map = createMap(sorted);
-    }
-
-    protected Map<String, IProperty> createMap(boolean sorted) {
-        if (sorted)
-            return new TreeMap<String, IProperty>(DefaultComparator.getInstance());
-        else
-            return new LinkedHashMap<String, IProperty>();
+    public MutablePropertyMap(Boolean sorted) {
+        map = Collections.createMap(sorted);
     }
 
     @Override

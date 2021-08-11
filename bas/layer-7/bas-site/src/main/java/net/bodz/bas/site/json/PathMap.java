@@ -1,9 +1,8 @@
 package net.bodz.bas.site.json;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
+import net.bodz.bas.c.java.util.Collections;
 
 public class PathMap<T> {
 
@@ -31,12 +30,7 @@ public class PathMap<T> {
     }
 
     <V> Map<String, V> newMap() {
-        if (order == null)
-            return new HashMap<>();
-        if (order)
-            return new TreeMap<>();
-        else
-            return new LinkedHashMap<>();
+        return Collections.createMap(order);
     }
 
     PathMapNode<T> resolveNode(String path, boolean create) {

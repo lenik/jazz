@@ -3,6 +3,7 @@ package net.bodz.bas.site.json;
 import java.io.IOException;
 import java.util.Map;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.html.io.BHtmlOut;
@@ -25,7 +26,7 @@ public class AjaxResult
 
     public AjaxResult(Boolean order) {
         super(0, null, null);
-        htmlUpdates = createMap(order);
+        htmlUpdates = Collections.createMap(order);
         htmlOutputFormat = new HtmlOutputFormat();
     }
 
