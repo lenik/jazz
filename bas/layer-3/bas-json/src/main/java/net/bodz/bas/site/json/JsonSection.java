@@ -1,32 +1,31 @@
 package net.bodz.bas.site.json;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.AbstractVariantMap;
 
 public class JsonSection
         extends AbstractVariantMap<String>
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     final Map<String, Object> map;
-    final Boolean order;
+    final SortOrder order;
 
     public JsonSection() {
-        this(false);
+        this(SortOrder.KEEP);
     }
 
-    public JsonSection(Boolean order) {
-        this.map = Collections.createMap(order);
+    public JsonSection(SortOrder order) {
+        this.map = order.newMap();
         this.order = order;
     }
 
@@ -34,13 +33,7 @@ public class JsonSection
         if (map == null)
             throw new NullPointerException("map");
         this.map = map;
-
-        if (map instanceof LinkedHashMap<?, ?>)
-            order = false;
-        else if (map instanceof TreeMap<?, ?>)
-            order = true;
-        else
-            order = null;
+        this.order = SortOrder.detect(map);
     }
 
     @Override

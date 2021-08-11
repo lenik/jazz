@@ -4,10 +4,10 @@ import java.util.*;
 
 import org.joda.time.DateTime;
 
-import net.bodz.bas.c.java.util.SortMode;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
@@ -18,10 +18,10 @@ public class JsonObject
         extends _JSONObject {
 
     public JsonObject() {
-        this(SortMode.UNSET);
+        this(SortOrder.NONE);
     }
 
-    public JsonObject(SortMode sortMode) {
+    public JsonObject(SortOrder sortMode) {
         this(sortMode.newMap());
     }
 

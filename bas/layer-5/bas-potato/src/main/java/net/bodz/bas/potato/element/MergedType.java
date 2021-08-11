@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MergedType
@@ -26,12 +27,12 @@ public class MergedType
         this.clazz = clazz;
         this.sourceTypes = types;
 
-        boolean sort = false;
+        SortOrder order = SortOrder.KEEP;
 
-        MutablePropertyMap propertyMap = new MutablePropertyMap(sort);
-        MutableMethodMap methodMap = new MutableMethodMap(sort);
+        MutablePropertyMap propertyMap = new MutablePropertyMap(order);
+        MutableMethodMap methodMap = new MutableMethodMap(order);
         MutableConstructorMap constructorMap = new MutableConstructorMap();
-        MutableEventMap eventMap = new MutableEventMap(sort);
+        MutableEventMap eventMap = new MutableEventMap(order);
 
         for (IType type : types) {
             for (IProperty property : type.getProperties())

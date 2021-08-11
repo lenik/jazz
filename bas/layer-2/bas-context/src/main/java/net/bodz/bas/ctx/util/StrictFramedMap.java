@@ -1,5 +1,7 @@
 package net.bodz.bas.ctx.util;
 
+import net.bodz.bas.repr.form.SortOrder;
+
 /**
  * Always define local variable when the name is defined in parent scope.
  */
@@ -10,7 +12,7 @@ public class StrictFramedMap<K, V>
         super();
     }
 
-    public StrictFramedMap(Boolean order) {
+    public StrictFramedMap(SortOrder order) {
         super(order);
     }
 

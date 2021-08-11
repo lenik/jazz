@@ -2,27 +2,28 @@ package net.bodz.bas.ctx.util;
 
 import java.util.*;
 
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
 import net.bodz.bas.fn.AbstractTransformer;
+import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.pojo.Pair;
 
 public abstract class AbstractFramedMap<K, V>
         extends AbstractMap<K, V>
-        implements IFramedMap<K, V> {
+        implements
+            IFramedMap<K, V> {
 
     private final Map<K, VarNode> initmap;
     private final Stack<VarFrame> stack;
     private boolean removeLocalOnly = false;
 
     public AbstractFramedMap() {
-        this(null);
+        this(SortOrder.NONE);
     }
 
-    public AbstractFramedMap(Boolean order) {
-        initmap = Collections.createMap(order);
+    public AbstractFramedMap(SortOrder order) {
+        initmap = order.newMap();
         stack = new Stack<VarFrame>();
         enter();
     }

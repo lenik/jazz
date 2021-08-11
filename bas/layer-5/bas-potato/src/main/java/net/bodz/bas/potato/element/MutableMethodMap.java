@@ -1,28 +1,20 @@
 package net.bodz.bas.potato.element;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.MethodSignatureComparator;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.repr.form.SortOrder;
 
 public class MutableMethodMap
         extends AbstractMethodMap {
 
     Map<MethodSignature, IMethod> map;
 
-    public MutableMethodMap(boolean sorted) {
-        map = createMap(sorted);
-    }
-
-    protected Map<MethodSignature, IMethod> createMap(boolean sorted) {
-        if (sorted)
-            return new TreeMap<MethodSignature, IMethod>(MethodSignatureComparator.getInstance());
-        else
-            return new LinkedHashMap<MethodSignature, IMethod>();
+    public MutableMethodMap(SortOrder order) {
+        map = order.newMap(MethodSignatureComparator.getInstance());
     }
 
     @Override
