@@ -33,6 +33,11 @@ public class QElements
     }
 
     @Override
+    public int getElementCount() {
+        return elements.size();
+    }
+
+    @Override
     public IElement getFirst() {
         for (Element el : elements)
             return QElement.wrap(el);

@@ -20,6 +20,16 @@ public class QElement
     }
 
     @Override
+    public int getNodeCount() {
+        return 1;
+    }
+
+    @Override
+    public int getElementCount() {
+        return 1;
+    }
+
+    @Override
     public IElement getFirst() {
         return this;
     }

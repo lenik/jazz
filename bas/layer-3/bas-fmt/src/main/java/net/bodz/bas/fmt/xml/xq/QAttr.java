@@ -20,6 +20,16 @@ public class QAttr
     }
 
     @Override
+    public int getNodeCount() {
+        return 1;
+    }
+
+    @Override
+    public int getElementCount() {
+        return 0;
+    }
+
+    @Override
     public IXmlSelection a(String attributeName) {
         return EMPTY;
     }
