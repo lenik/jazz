@@ -1,6 +1,3 @@
 net.bodz.lily.model.base.CoIndex
 net.bodz.lily.model.base.CoObjectIndex
-net.bodz.lily.security.login.ILoginListener
-net.bodz.lily.security.login.ILoginResolver
-net.bodz.lily.security.login.ILoginResolverProvider
 net.bodz.lily.test.TestSamples
