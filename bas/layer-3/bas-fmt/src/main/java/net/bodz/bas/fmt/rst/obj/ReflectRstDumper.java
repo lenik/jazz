@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.rst.AbstractRstDumper;
-import net.bodz.bas.fmt.rst.IRstOverrides;
 import net.bodz.bas.fmt.rst.IRstOutput;
+import net.bodz.bas.fmt.rst.IRstOverrides;
 
 public class ReflectRstDumper
         extends AbstractRstDumper {
@@ -17,7 +18,7 @@ public class ReflectRstDumper
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws IOException {
+            throws IOException, FormatException {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             if (!stopClasses.contains(superclass))

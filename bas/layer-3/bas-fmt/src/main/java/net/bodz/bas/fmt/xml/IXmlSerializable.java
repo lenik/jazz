@@ -4,6 +4,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.w3c.dom.Element;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -26,7 +27,7 @@ public interface IXmlSerializable {
     }
 
     default void writeObject(IXmlOutput out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         XmlFn.dump(this, out);
     }
 

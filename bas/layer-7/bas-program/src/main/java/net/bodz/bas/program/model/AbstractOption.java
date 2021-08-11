@@ -12,6 +12,7 @@ import net.bodz.bas.c.type.addor.ArrayAddor;
 import net.bodz.bas.c.type.addor.CollectionAddor;
 import net.bodz.bas.c.type.addor.IAddor;
 import net.bodz.bas.c.type.addor.MapAddor;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
@@ -25,7 +26,9 @@ import net.bodz.mda.xjdoc.model.javadoc.ExternXjdocElement;
 
 public abstract class AbstractOption
         extends ExternXjdocElement
-        implements IOption, IMutablePriority {
+        implements
+            IOption,
+            IMutablePriority {
 
     String id;
     String longName;
@@ -264,7 +267,8 @@ public abstract class AbstractOption
     }
 
     @Override
-    public String[] formatValue(Object context, Object value) {
+    public String[] formatValue(Object context, Object value)
+            throws FormatException {
         Class<?> valueType = getValueType();
         IFormatter<Object> formatter = Typers.getTyper(valueType, IFormatter.class);
         String param1 = formatter.format(value);

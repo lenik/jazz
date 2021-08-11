@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.rst.AbstractRstObject;
@@ -73,7 +74,7 @@ public class Animal
 
     @Override
     public void writeObject(IRstOutput out)
-            throws IOException {
+            throws IOException, FormatException {
         RstFn.defaultDump(this, out);
     }
 
@@ -84,7 +85,7 @@ public class Animal
 
     @Override
     public void writeObject(IXmlOutput out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         XmlFn.dump(this, out);
     }
 

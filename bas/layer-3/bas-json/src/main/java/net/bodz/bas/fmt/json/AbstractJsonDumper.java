@@ -16,6 +16,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.t.set.StackSet;
@@ -27,7 +28,8 @@ import net.bodz.lily.entity.IId;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractJsonDumper<self_t>
-        implements IJsonDumper {
+        implements
+            IJsonDumper {
 
     protected IJsonOut out;
     protected StackSet<Object> marks;
@@ -88,7 +90,7 @@ public abstract class AbstractJsonDumper<self_t>
 
     @Override
     public void dump(Object obj, boolean enclosed)
-            throws IOException {
+            throws IOException, FormatException {
         _dumpOnce(enclosed, obj, 0, "");
     }
 
@@ -102,7 +104,7 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     protected void _dumpOnce(boolean enclosed, Object obj, int depth, String prefix)
-            throws IOException {
+            throws IOException, FormatException {
         if (obj == null) {
             if (!enclosed)
                 out.key(hintProperty);
@@ -129,7 +131,7 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     protected void _dumpImpl(boolean enclosed, @NotNull Object obj, int depth, String prefix)
-            throws IOException {
+            throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isArray()) {
             if (enclosed)
@@ -264,7 +266,7 @@ public abstract class AbstractJsonDumper<self_t>
             out.value(jodaDateStr);
             return;
 
-            // TODO Scalar
+        // TODO Scalar
         default:
             if (iString.class.isAssignableFrom(type)) {
                 out.value(obj);
@@ -311,7 +313,7 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
-            throws ReflectiveOperationException, IOException;
+            throws IOException, FormatException;
 
     protected void formatException(int depth, Throwable e) {
         out.object();

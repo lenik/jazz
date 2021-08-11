@@ -54,8 +54,8 @@ public class LibUpdater {
             }
         }
 
-        File orders = new File("order.lst");
-        PrintStream out = new PrintStream(orders);
+        File orderListFile = new File("lib/order.lst");
+        PrintStream out = new PrintStream(orderListFile);
 
         try {
             for (File file : URLClassLoaders.getLocalURLs(loader, 1)) {

@@ -2,6 +2,7 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.source.SerializableForm;
 
@@ -16,7 +17,7 @@ public interface IJsonSerializable {
             throws ParseException;
 
     void writeObject(IJsonOut out)
-            throws IOException;
+            throws IOException, FormatException;
 
     class json
             extends JsonFn {

@@ -9,6 +9,7 @@ import java.io.Writer;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.xml.obj.BeanXmlDumper;
 import net.bodz.bas.fmt.xml.obj.BeanXmlLoader;
 import net.bodz.bas.fmt.xml.obj.ReflectXmlDumper;
@@ -29,7 +30,7 @@ public class XmlFn
     }
 
     public static void dump(Object obj, IXmlOutput out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         XmlSource aXmlSource = obj.getClass().getAnnotation(XmlSource.class);
         if (aXmlSource != null)
             if (aXmlSource.bean() == true)
@@ -38,37 +39,37 @@ public class XmlFn
     }
 
     public static void dump(Object obj, Writer out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
     public static void dump(Object obj, Appendable out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
     public static void dump(Object obj, OutputStream out, String encoding)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out, encoding));
     }
 
     public static void dump(IXmlSerializable obj, IXmlOutput out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         obj.writeObject(out);
     }
 
     public static void dump(IXmlSerializable obj, Writer out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
     public static void dump(IXmlSerializable obj, Appendable out)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
     public static void dump(IXmlSerializable obj, OutputStream out, String encoding)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out, encoding));
     }
 
@@ -76,7 +77,11 @@ public class XmlFn
             throws XMLStreamException {
         StringWriter buf = new StringWriter(4096);
         IXmlOutput out = XmlOutputImpl.from(buf);
-        obj.writeObject(out);
+        try {
+            obj.writeObject(out);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         String rst = buf.toString();
         return rst;
     }
@@ -90,12 +95,12 @@ public class XmlFn
     }
 
     public static void save(IXmlSerializable obj, File file)
-            throws IOException, XMLStreamException {
+            throws IOException, XMLStreamException, FormatException {
         save(obj, file, "utf-8");
     }
 
     public static void save(IXmlSerializable obj, File file, String encoding)
-            throws IOException, XMLStreamException {
+            throws IOException, XMLStreamException, FormatException {
         FileOutputStream fos = new FileOutputStream(file);
         try {
             IXmlOutput out = XmlOutputImpl.from(fos, encoding);

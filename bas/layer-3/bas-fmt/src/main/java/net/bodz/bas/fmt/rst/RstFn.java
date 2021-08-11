@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
@@ -33,7 +34,7 @@ public class RstFn {
     }
 
     public static void defaultDump(IRstSerializable obj, IRstOutput out)
-            throws IOException {
+            throws IOException, FormatException {
         RstSource aRstSource = obj.getClass().getAnnotation(RstSource.class);
         if (aRstSource != null)
             if (aRstSource.bean() == true)
@@ -48,6 +49,8 @@ public class RstFn {
             obj.writeObject(out);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
         String rst = buf.toString();
         return rst;
@@ -60,18 +63,20 @@ public class RstFn {
             obj.writeObject(RstOutputImpl.from(buf));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
         return buf.toString();
     }
 
     public static void saveToRst(IRstSerializable obj, File file)
-            throws IOException {
-        FileOutputStream fos = new FileOutputStream(file);
-        OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
-        IPrintOut out = new WriterPrintOut(osw);
-        IRstOutput rstOutput = RstOutputImpl.from(out);
-        obj.writeObject(rstOutput);
-        out.close();
+            throws IOException, FormatException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
+            IPrintOut out = new WriterPrintOut(osw);
+            IRstOutput rstOutput = RstOutputImpl.from(out);
+            obj.writeObject(rstOutput);
+        }
     }
 
     public static void loadFromRst(IRstSerializable ctx, File file)
@@ -81,14 +86,10 @@ public class RstFn {
 
         RstLoader rstLoader = new RstLoader();
 
-        FileInputStream in = new FileInputStream(file);
-        try {
+        try (FileInputStream in = new FileInputStream(file)) {
             InputStreamReader reader = new InputStreamReader(in, "utf-8");
             RstInput rstInput = new RstInput(reader);
-
             rstLoader.load(rstInput, ctx.getElementHandler());
-        } finally {
-            in.close();
         }
     }
 

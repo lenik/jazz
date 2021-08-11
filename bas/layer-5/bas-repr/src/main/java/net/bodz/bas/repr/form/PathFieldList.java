@@ -15,7 +15,7 @@ public class PathFieldList
 
     private static final long serialVersionUID = 1L;
 
-    PathFieldAccessOptons optons;
+    PathFieldAccessOptons options;
 
     public void parseAndAdd(IFormDecl knownStruct, String... paths)
             throws NoSuchPropertyException, ParseException {
@@ -44,30 +44,31 @@ public class PathFieldList
             if (fieldDecl == null)
                 throw new NoSuchPropertyException("Bad head: " + head);
 
+            PathField pathField;
             if (remaining == null)
-                this.add(new PathField(head, Arrays.asList(fieldDecl)));
-            else {
-                Class<?> valueType = fieldDecl.getValueType();
-                IType type = PotatoTypes.getInstance().loadType(valueType);
-                parseAndAdd(path.substring(0, dot + 1), fieldDecl, type, remaining);
-            }
+                pathField = new PathField(head, Arrays.asList(fieldDecl));
+            else
+                pathField = parsePathField(path.substring(0, dot + 1), fieldDecl, remaining);
+            add(pathField);
         }
     }
 
-    void parseAndAdd(String pathPrefix, IFieldDecl fieldDeclPrefix, IType type, String path)
+    public PathField parsePathField(String pathPrefix, IFieldDecl fieldDecl, String pathRemaining)
             throws NoSuchPropertyException, ParseException {
-        List<IProperty> propertyVector = type.getPropertyVector(path);
+        Class<?> valueType = fieldDecl.getValueType();
+        IType fieldValueType = PotatoTypes.getInstance().loadType(valueType);
+
+        List<IProperty> propertyVector = fieldValueType.getPropertyVector(pathRemaining);
 
         List<IFieldDecl> fieldVector = new ArrayList<IFieldDecl>(propertyVector.size());
-        fieldVector.add(fieldDeclPrefix);
+        fieldVector.add(fieldDecl);
         for (IProperty property : propertyVector) {
             IFieldDecl field = new MutableFieldDecl().populate(property);
             fieldVector.add(field);
         }
 
-        String pathFull = pathPrefix + path;
-        PathField pathField = new PathField(pathFull, fieldVector);
-        this.add(pathField);
+        String pathFull = pathPrefix + pathRemaining;
+        return new PathField(pathFull, fieldVector);
     }
 
 }

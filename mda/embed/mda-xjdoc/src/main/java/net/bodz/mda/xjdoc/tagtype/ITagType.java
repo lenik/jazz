@@ -3,7 +3,7 @@ package net.bodz.mda.xjdoc.tagtype;
 import java.io.IOException;
 
 import net.bodz.bas.c.type.AggregationEnum;
-import net.bodz.bas.err.FormatterException;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.rtx.IOptions;
@@ -16,7 +16,7 @@ public interface ITagType {
 
     /**
      * Parse a javadoc tag into value object.
-     * 
+     *
      * @param cont
      *            (Continuation) The previous parsed object for the tag with the same name.
      * @param string
@@ -35,18 +35,18 @@ public interface ITagType {
      * Javadoc tags of the same tag name are grouped here, by returning the array. For example, If
      * you want to format the value to multiple <code>&#64;author</code>s, then you should return an
      * array, each item for a single author text.
-     * 
+     *
      * @param rootTagName
      *            The tag name prefix (without the dot).
      * @param value
      *            The value to be written, never be <code>null</code>.
      * @param writer
      *            The javadoc writer.
-     * @throws FormatterException
+     * @throws FormatException
      *             If the value can't be converted to a specific text form.
      */
     void writeJavadoc(String rootTagName, IJavadocWriter writer, Object value, IOptions options)
-            throws IOException;
+            throws IOException, FormatException;
 
     /**
      * Parse a single Flatf entry.
@@ -56,7 +56,7 @@ public interface ITagType {
 
     /**
      * Write Flatf entries for a value object.
-     * 
+     *
      * @throws FormatterException
      *             If the value can't be converted to a specific text form.
      */

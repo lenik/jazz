@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -638,7 +639,7 @@ public abstract class CoObject
 
     @Override
     public void writeObject(IJsonOut out)
-            throws IOException {
+            throws IOException, FormatException {
         BeanJsonDumper dumper = new BeanJsonDumper(out);
         dumper.dump(this, false);
     }

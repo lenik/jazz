@@ -11,6 +11,7 @@ import java.util.Set;
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.c.type.TypeEnum;
 import net.bodz.bas.c.type.TypeParam;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.api.IStdDumper;
 import net.bodz.bas.fmt.rst.obj.BeanRstHandler;
 import net.bodz.bas.fmt.rst.obj.ReflectRstHandler;
@@ -20,7 +21,8 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 
 public abstract class AbstractRstDumper
-        implements IStdDumper {
+        implements
+            IStdDumper {
 
     protected final IRstOutput out;
     protected final FramedMarks marks;
@@ -34,15 +36,15 @@ public abstract class AbstractRstDumper
 
     @Override
     public final void dump(Object obj)
-            throws IOException {
+            throws IOException, FormatException {
         formatObject(obj.getClass(), obj);
     }
 
     protected abstract void formatObject(Class<?> clazz, Object obj)
-            throws IOException;
+            throws IOException, FormatException;
 
     protected void formatCollectionMember(String name, Class<?> type, Type gtype, Object value)
-            throws IOException {
+            throws IOException, FormatException {
         if (value == null)
             return;
 
@@ -73,7 +75,7 @@ public abstract class AbstractRstDumper
     }
 
     protected void formatMember(String name, Class<?> type, Object value)
-            throws IOException {
+            throws IOException, FormatException {
         if (value instanceof IRstSerializable) {
             IRstSerializable obj = (IRstSerializable) value;
             if (!marks.add(obj))

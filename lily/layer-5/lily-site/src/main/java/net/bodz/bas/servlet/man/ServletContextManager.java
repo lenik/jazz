@@ -1,7 +1,5 @@
 package net.bodz.bas.servlet.man;
 
-import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,11 +42,11 @@ public class ServletContextManager
         // case "attributes":
         // return null;
         case "list":
-            DecoratedServletContext dsc = new DecoratedServletContext(servletContext);
+            DecoratedServletContext contextAttrs = new DecoratedServletContext(servletContext);
             JsonBuffer out = JsonWriter.buffer();
             try {
-                fmt.saveAttributes(out, dsc);
-            } catch (IOException e) {
+                fmt.saveAttributes(out, contextAttrs);
+            } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
             target = out.reconstruct();

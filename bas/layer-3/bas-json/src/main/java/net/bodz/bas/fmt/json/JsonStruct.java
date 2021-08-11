@@ -1,7 +1,10 @@
 package net.bodz.bas.fmt.json;
 
+import net.bodz.bas.err.FormatException;
+
 public abstract class JsonStruct
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     @Override
     public boolean equals(Object obj) {
@@ -14,22 +17,34 @@ public abstract class JsonStruct
     }
 
     public boolean jsonEquals(JsonStruct o) {
-        String js1 = JsonFn.toJson(this);
-        String js2 = JsonFn.toJson(o);
-        if (js1.equals(js2))
-            return false;
-        return true;
+        try {
+            String js1 = JsonFn.toJson(this);
+            String js2 = JsonFn.toJson(o);
+            if (js1.equals(js2))
+                return false;
+            return true;
+        } catch (FormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public int hashCode() {
-        String json = JsonFn.toJson(this);
-        return json.hashCode();
+        try {
+            String json = JsonFn.toJson(this);
+            return json.hashCode();
+        } catch (FormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public String toString() {
-        return JsonFn.toJson(this);
+        try {
+            return JsonFn.toJson(this);
+        } catch (FormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

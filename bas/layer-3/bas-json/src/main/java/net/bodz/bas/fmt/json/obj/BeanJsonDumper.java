@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.AbstractJsonDumper;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -30,7 +31,7 @@ public class BeanJsonDumper
 
     @Override
     protected void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
-            throws IOException {
+            throws IOException, FormatException {
         BeanInfo beanInfo;
         try {
             beanInfo = Introspector.getBeanInfo(type);
@@ -96,6 +97,8 @@ public class BeanJsonDumper
             new BeanJsonDumper(out).dump(obj, true);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
+        } catch (FormatException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
         return buf.toString();
     }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
@@ -33,7 +34,11 @@ public class JsonSerializable_json
         PrintWriter writer = resp.getWriter();
         JsonWriter out = new JsonWriter(writer);
         out.object();
-        obj.writeObject(out);
+        try {
+            obj.writeObject(out);
+        } catch (FormatException e) {
+            throw new ViewBuilderException(e.getMessage(), e);
+        }
         out.endObject();
         return null;
     }

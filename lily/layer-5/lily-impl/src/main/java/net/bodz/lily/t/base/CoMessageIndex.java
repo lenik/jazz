@@ -47,12 +47,12 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
     }
 
     @Override
-    protected void preSave(IVariantMap<String> q, T obj, JsonResponse result)
+    protected void preSave(IVariantMap<String> q, T obj, JsonResponse resp)
             throws IOException {
         String html = obj.getText();
         String mod = stripAbsoluteUrls(html);
         obj.setText(mod);
-        super.preSave(q, obj, result);
+        super.preSave(q, obj, resp);
     }
 
     String stripAbsoluteUrls(String html) {

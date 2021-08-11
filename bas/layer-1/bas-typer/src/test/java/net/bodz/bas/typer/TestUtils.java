@@ -2,14 +2,13 @@ package net.bodz.bas.typer;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
 
 public class TestUtils {
 
     public static <T> void testConvertLoss(IParser<T> parser, IFormatter<T> formatter, T value)
-            throws ParseException {
+            throws Exception {
         String text = formatter.format(value);
         T value1 = parser.parse(text);
         assertEquals("convert-loss-1v", value, value1);

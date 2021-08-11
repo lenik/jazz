@@ -7,6 +7,7 @@ import net.bodz.bas.c.java.util.HashTextMap;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstHandler;
@@ -364,7 +365,7 @@ public class AbstractSisProject
     }
 
     void saveProjectRst()
-            throws IOException {
+            throws IOException, FormatException {
         IRandomResource projectRst = getArchive().getDataResource("project.rst", true);
         ICharOut out = projectRst.newCharOut();
         try {

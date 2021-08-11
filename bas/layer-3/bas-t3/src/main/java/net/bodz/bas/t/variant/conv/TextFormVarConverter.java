@@ -1,6 +1,6 @@
 package net.bodz.bas.t.variant.conv;
 
-import net.bodz.bas.err.FormatterException;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.typer.Typers;
@@ -40,7 +40,7 @@ public class TextFormVarConverter
         String str;
         try {
             str = formatter.format(obj);
-        } catch (FormatterException e) {
+        } catch (FormatException e) {
             throw new TypeConvertException("Failed to format: " + e.getMessage(), e);
         }
         return str;

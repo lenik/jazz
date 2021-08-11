@@ -2,6 +2,7 @@ package net.bodz.bas.html.viz.builtin;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
@@ -42,7 +43,11 @@ public abstract class AbstractTextForm_htm<T>
 
         String str = null;
         if (value != null)
-            str = formatter.format(value/* ,options */);
+            try {
+                str = formatter.format(value/* ,options */);
+            } catch (FormatException e) {
+                throw new ViewBuilderException(e.getMessage(), e);
+            }
 
         IHtmlOut tag = createScreenInput(out, ref, fieldDecl);
         if (tag != null) {

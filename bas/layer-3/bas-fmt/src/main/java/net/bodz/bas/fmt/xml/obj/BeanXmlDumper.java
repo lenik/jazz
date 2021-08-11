@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.xml.AbstractXmlDumper;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlOverrides;
@@ -25,7 +26,7 @@ public class BeanXmlDumper
 
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
-            throws XMLStreamException {
+            throws XMLStreamException, FormatException {
         marks.add(obj);
 
         IXmlOverrides formatOverride = null;

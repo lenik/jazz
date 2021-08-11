@@ -35,7 +35,7 @@ public class JsonPersistorTest
 
     @Test
     public void testMap()
-            throws IOException, ParseException {
+            throws Exception {
         Map<String, Object> obj = new LinkedHashMap<>();
         obj.put("name", "Lucy");
         obj.put("age", 13);
@@ -50,7 +50,7 @@ public class JsonPersistorTest
 
     @Test
     public void testList()
-            throws IOException, ParseException {
+            throws Exception {
         List<Object> obj = new ArrayList<>();
         obj.add("Lucy");
         obj.add(13);
@@ -69,7 +69,7 @@ public class JsonPersistorTest
 
     @Test
     public void testJsonSerializable()
-            throws IOException, ParseException {
+            throws Exception {
         Foo obj = new JsonFoo();
         populate(obj);
         persistor.writeTyped(out, obj);
@@ -81,7 +81,7 @@ public class JsonPersistorTest
 
     @Test
     public void testRstSerializable()
-            throws IOException, ParseException {
+            throws Exception {
         Foo obj = new RstFoo();
         populate(obj);
         persistor.writeTyped(out, obj);
@@ -93,7 +93,7 @@ public class JsonPersistorTest
 
     @Test
     public void testSerializable()
-            throws IOException, ParseException {
+            throws Exception {
         IFoo obj = new SerializableFoo();
         populate(obj);
         persistor.writeTyped(out, obj);
@@ -104,7 +104,7 @@ public class JsonPersistorTest
     }
 
     public void testNonSerializable()
-            throws IOException, ParseException {
+            throws Exception {
         Foo obj = new Foo();
         populate(obj);
         persistor.writeTyped(out, obj);
@@ -134,7 +134,7 @@ public class JsonPersistorTest
 
     @Test
     public void testMixed()
-            throws IOException, ParseException {
+            throws Exception {
         JsonFoo foo = new JsonFoo();
         populate(foo);
 
@@ -174,7 +174,8 @@ interface IFoo {
 }
 
 abstract class BaseFoo
-        implements IFoo {
+        implements
+            IFoo {
 
     @Override
     public int hashCode() {
@@ -210,7 +211,8 @@ abstract class BaseFoo
 
 class Foo
         extends BaseFoo
-        implements IFoo {
+        implements
+            IFoo {
 
     String name;
     int age;
@@ -239,7 +241,9 @@ class Foo
 
 class SerializableFoo
         extends BaseFoo
-        implements IFoo, Serializable {
+        implements
+            IFoo,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -270,7 +274,8 @@ class SerializableFoo
 
 class JsonFoo
         extends Foo
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     @Override
     public void readObject(JsonObject o)
@@ -292,7 +297,8 @@ class JsonFoo
 
 class RstFoo
         extends Foo
-        implements IRstSerializable {
+        implements
+            IRstSerializable {
 
     @Override
     public void writeObject(IRstOutput out)
@@ -328,7 +334,8 @@ class RstFoo
 }
 
 class BarMixed
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     String color;
     JsonFoo foo;

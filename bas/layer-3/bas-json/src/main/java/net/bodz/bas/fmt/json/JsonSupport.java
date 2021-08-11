@@ -2,13 +2,15 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.json.JSONObject;
 
 public abstract class JsonSupport
-        implements IJsonSerializable {
+        implements
+            IJsonSerializable {
 
     public final void readObject(JSONObject o)
             throws ParseException {
@@ -23,7 +25,7 @@ public abstract class JsonSupport
 
     @Override
     public void writeObject(IJsonOut out)
-            throws IOException {
+            throws IOException, FormatException {
         new BeanJsonDumper(out).dump(this, false);
     }
 

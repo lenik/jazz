@@ -3,10 +3,12 @@ package net.bodz.bas.fmt.rst;
 import java.io.IOException;
 
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.t.set.FramedMarks;
 
 public abstract class AbstractRstOutput
-        implements IRstOutput {
+        implements
+            IRstOutput {
 
     private String separator = " ";
     private FramedMarks marks = new FramedMarks();
@@ -18,7 +20,7 @@ public abstract class AbstractRstOutput
 
     @Override
     public void element(String name, IRstSerializable child, String... args)
-            throws IOException {
+            throws IOException, FormatException {
         if (child == null)
             return;
 

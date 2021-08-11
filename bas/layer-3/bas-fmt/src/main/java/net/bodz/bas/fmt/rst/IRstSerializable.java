@@ -2,13 +2,14 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
 public interface IRstSerializable {
 
     default void writeObject(IRstOutput out)
-            throws IOException {
+            throws IOException, FormatException {
         RstFn.defaultDump(this, out);
     }
 
