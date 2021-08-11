@@ -204,6 +204,8 @@ public class FilePath {
     }
 
     public static String getDirName(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
             return ".";
@@ -212,6 +214,8 @@ public class FilePath {
     }
 
     public static String getBaseName(String path) {
+        if (path == null)
+            throw new NullPointerException("path");
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
             return path;
@@ -232,6 +236,8 @@ public class FilePath {
      *             If <code>path</code> is <code>null</code>.
      */
     public static String getExtension(String path, boolean includeDot) {
+        if (path == null)
+            throw new NullPointerException("path");
         int dot = path.lastIndexOf('.');
         if (dot == -1)
             return includeDot ? "." : null;

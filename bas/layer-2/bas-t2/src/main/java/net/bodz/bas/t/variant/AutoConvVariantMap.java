@@ -9,7 +9,8 @@ import net.bodz.bas.t.variant.conv.*;
 
 // @GeneratedBy(cg.VariantMapGenerator.class)
 public abstract class AutoConvVariantMap<K>
-        implements IVariantMap<K> {
+        implements
+            IVariantMap<K> {
 
     @Override
     public Byte getByte(K key) {
@@ -23,7 +24,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public byte getByte(K key, byte defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return ByteVarConverter.INSTANCE.from(value);
@@ -44,7 +45,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public short getShort(K key, short defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return ShortVarConverter.INSTANCE.from(value);
@@ -65,7 +66,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public int getInt(K key, int defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return IntegerVarConverter.INSTANCE.from(value);
@@ -86,7 +87,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public long getLong(K key, long defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return LongVarConverter.INSTANCE.from(value);
@@ -107,7 +108,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public float getFloat(K key, float defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return FloatVarConverter.INSTANCE.from(value);
@@ -128,7 +129,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public double getDouble(K key, double defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return DoubleVarConverter.INSTANCE.from(value);
@@ -149,7 +150,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public boolean getBoolean(K key, boolean defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return BooleanVarConverter.INSTANCE.from(value);
@@ -170,7 +171,7 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public char getChar(K key, char defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
             return defaultValue;
         try {
             return CharacterVarConverter.INSTANCE.from(value);
@@ -191,7 +192,10 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public BigInteger getBigInteger(K key, BigInteger defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
+            // if (containsKey(key))
+            // return null;
+            // else
             return defaultValue;
         try {
             return BigIntegerVarConverter.INSTANCE.from(value);
@@ -212,7 +216,10 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public BigDecimal getBigDecimal(K key, BigDecimal defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
             return defaultValue;
         try {
             return BigDecimalVarConverter.INSTANCE.from(value);
@@ -233,8 +240,11 @@ public abstract class AutoConvVariantMap<K>
     @Override
     public Date getDate(K key, Date defaultValue) {
         Object value = getScalar(key);
-        if (value == null && !containsKey(key))
-            return defaultValue;
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+                return defaultValue;
         try {
             return DateVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {

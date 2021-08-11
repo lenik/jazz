@@ -28,7 +28,7 @@ public abstract class AutoConvVariantList
     @Override
     public byte getByte(int index, byte defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return ByteVarConverter.INSTANCE.from(value);
@@ -49,7 +49,7 @@ public abstract class AutoConvVariantList
     @Override
     public short getShort(int index, short defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return ShortVarConverter.INSTANCE.from(value);
@@ -70,7 +70,7 @@ public abstract class AutoConvVariantList
     @Override
     public int getInt(int index, int defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return IntegerVarConverter.INSTANCE.from(value);
@@ -91,7 +91,7 @@ public abstract class AutoConvVariantList
     @Override
     public long getLong(int index, long defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return LongVarConverter.INSTANCE.from(value);
@@ -112,7 +112,7 @@ public abstract class AutoConvVariantList
     @Override
     public float getFloat(int index, float defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return FloatVarConverter.INSTANCE.from(value);
@@ -133,7 +133,7 @@ public abstract class AutoConvVariantList
     @Override
     public double getDouble(int index, double defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return DoubleVarConverter.INSTANCE.from(value);
@@ -154,7 +154,7 @@ public abstract class AutoConvVariantList
     @Override
     public boolean getBoolean(int index, boolean defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return BooleanVarConverter.INSTANCE.from(value);
@@ -175,7 +175,7 @@ public abstract class AutoConvVariantList
     @Override
     public char getChar(int index, char defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
             return defaultValue;
         try {
             return CharacterVarConverter.INSTANCE.from(value);
@@ -196,7 +196,10 @@ public abstract class AutoConvVariantList
     @Override
     public BigInteger getBigInteger(int index, BigInteger defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
+//          if (checkIndex(index))
+//          return null;
+//      else
             return defaultValue;
         try {
             return BigIntegerVarConverter.INSTANCE.from(value);
@@ -217,7 +220,10 @@ public abstract class AutoConvVariantList
     @Override
     public BigDecimal getBigDecimal(int index, BigDecimal defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
+//          if (checkIndex(index))
+//          return null;
+//      else
             return defaultValue;
         try {
             return BigDecimalVarConverter.INSTANCE.from(value);
@@ -238,7 +244,10 @@ public abstract class AutoConvVariantList
     @Override
     public Date getDate(int index, Date defaultValue) {
         Object value = getScalar(index);
-        if (value == null && !checkIndex(index))
+        if (value == null)
+//            if (checkIndex(index))
+//                return null;
+//            else
             return defaultValue;
         try {
             return DateVarConverter.INSTANCE.from(value);

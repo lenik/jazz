@@ -114,9 +114,19 @@ public class _JSONArray
     public Object get(int index)
             throws JSONException {
         Object object = myArrayList.get(index);
-        if (object == null) {
-            throw new JSONException("JSONArray[" + index + "] not found.");
-        }
+        if (object == JsonObject.NULL)
+            return null;
+        return object;
+    }
+
+    @Override
+    public Object get(int index, Object defaultValue)
+            throws JSONException {
+        Object object = myArrayList.get(index);
+        if (object == JsonObject.NULL)
+            return null;
+        if (object == null)
+            return defaultValue;
         return object;
     }
 
@@ -126,6 +136,8 @@ public class _JSONArray
 
     public JsonObject getJsonObject(int index, JsonObject defaultValue) {
         Object value = get(index);
+        if (value == JsonObject.NULL)
+            return null;
         if (value == null)
             return defaultValue;
         if (value instanceof JsonObject)
@@ -139,6 +151,8 @@ public class _JSONArray
 
     public JsonArray getJsonArray(int index, JsonArray defaultValue) {
         Object value = get(index);
+        if (value == JsonObject.NULL)
+            return null;
         if (value == null)
             return defaultValue;
         if (value instanceof JsonArray)

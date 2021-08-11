@@ -172,7 +172,22 @@ public class _JSONObject
     public Object get(Object key) {
         if (key == null)
             throw new NullPointerException("key");
-        return map.get(key);
+        Object val = map.get(key);
+        if (val == NULL)
+            return null;
+        return val;
+    }
+
+    @Override
+    public Object get(Object key, Object defaultValue) {
+        if (key == null)
+            throw new NullPointerException("key");
+        Object val = map.get(key);
+        if (val == NULL)
+            return null;
+        if (val == null)
+            return defaultValue;
+        return val;
     }
 
     /**
@@ -321,6 +336,8 @@ public class _JSONObject
 
     public JsonObject getJsonObject(String key, JsonObject defaultValue) {
         Object value = get(key);
+        if (value == NULL)
+            return null;
         if (value == null)
             return defaultValue;
         if (value instanceof JsonObject)
@@ -334,6 +351,8 @@ public class _JSONObject
 
     public JsonArray getJsonArray(String key, JsonArray defaultValue) {
         Object value = get(key);
+        if (value == NULL)
+            return null;
         if (value == null)
             return defaultValue;
         if (value instanceof JsonArray)
