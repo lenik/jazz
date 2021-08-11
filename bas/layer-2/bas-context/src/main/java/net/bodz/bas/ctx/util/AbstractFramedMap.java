@@ -2,6 +2,7 @@ package net.bodz.bas.ctx.util;
 
 import java.util.*;
 
+import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
@@ -21,12 +22,7 @@ public abstract class AbstractFramedMap<K, V>
     }
 
     public AbstractFramedMap(Boolean order) {
-        if (order == null)
-            initmap = new LinkedHashMap<K, VarNode>();
-        else if (order)
-            initmap = new TreeMap<K, VarNode>();
-        else
-            initmap = new HashMap<K, VarNode>();
+        initmap = Collections.createMap(order);
         stack = new Stack<VarFrame>();
         enter();
     }

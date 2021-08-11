@@ -22,7 +22,7 @@ public class BeanXmlLoader
         extends AbstractXmlLoader {
 
     private Class<?> type;
-    private Map<String, PropertyDescriptor> properties = new LinkedHashMap<String, PropertyDescriptor>();
+    private Map<String, PropertyDescriptor> properties = new LinkedHashMap<>();
     private Object obj;
 
     public BeanXmlLoader() {
