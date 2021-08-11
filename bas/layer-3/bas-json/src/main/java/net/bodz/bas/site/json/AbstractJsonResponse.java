@@ -1,7 +1,6 @@
 package net.bodz.bas.site.json;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
@@ -211,7 +210,7 @@ public class AbstractJsonResponse<self_t>
      * Begins a new section.
      */
     public JsonWriter begin(String key) {
-        StringWriter buf = new StringWriter();
+        StringBuilder buf = new StringBuilder();
         setHeader(key, new JsonVerbatimBuf(null, buf));
         return new JsonWriter(buf);
     }
@@ -350,13 +349,7 @@ public class AbstractJsonResponse<self_t>
                     }
 
                     out.key(key);
-                    if (opts.isSelfContained()) {
-                        jsable.writeObject(out);
-                    } else {
-                        out.object();
-                        jsable.writeObject(out);
-                        out.endObject();
-                    }
+                    jsable.writeObjectBoxed(out);
                 } else {
                     out.entry(key, value);
                     // out.key(key);
