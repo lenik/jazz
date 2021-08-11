@@ -43,7 +43,7 @@ import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.site.json.JsonWrapper;
-import net.bodz.bas.site.json.PathPropertyTable;
+import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -200,9 +200,9 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return label + "/";
     }
 
-    protected PathPropertyTable listHandler(IVariantMap<String> q)
+    protected TableOfPathProps listHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        PathPropertyTable tableData = new PathPropertyTable(objectType);
+        TableOfPathProps tableData = new TableOfPathProps(objectType);
         try {
             tableData.readObject(q);
         } catch (Exception e) {
