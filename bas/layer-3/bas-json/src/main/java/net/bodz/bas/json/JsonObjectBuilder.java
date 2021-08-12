@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.fork.org.json.JSONException;
@@ -17,8 +18,6 @@ import net.bodz.fork.org.json.JSONPropertyIgnore;
 import net.bodz.fork.org.json.JSONPropertyName;
 import net.bodz.fork.org.json.JSONTokener;
 import net.bodz.fork.org.json._JSONObject;
-
-import java.util.ResourceBundle;
 
 public class JsonObjectBuilder {
 
@@ -315,7 +314,7 @@ public class JsonObjectBuilder {
     public JsonObject fromBean(Object bean) {
         Map<String, Object> map = createMap();
         populateMap(map, bean);
-        return new JsonObject();
+        return new JsonObject(map);
     }
 
     /**
