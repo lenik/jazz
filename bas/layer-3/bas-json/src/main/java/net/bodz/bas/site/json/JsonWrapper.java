@@ -1,9 +1,15 @@
 package net.bodz.bas.site.json;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.t.variant.IVarMapSerializable;
@@ -16,7 +22,8 @@ import net.bodz.bas.t.variant.IVariantMap;
  */
 public class JsonWrapper
         implements
-            IVarMapSerializable {
+            IVarMapSerializable,
+            IJsonSerializable {
 
     String key;
     Object obj;
@@ -98,6 +105,41 @@ public class JsonWrapper
 
     public static JsonWrapper wrap(Object obj, String key) {
         return new JsonWrapper(key, obj);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException, FormatException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void writeObjectBoxed(IJsonOut out)
+            throws IOException, FormatException {
+        if (key != null) {
+            out.object();
+            out.key(key);
+        }
+
+        if (obj instanceof IJsonSerializable) {
+            IJsonSerializable jso = (IJsonSerializable) obj;
+            jso.writeObjectBoxed(out);
+        } else {
+            BeanJsonDumper dumper = new BeanJsonDumper(out);
+            dumper.setIncludeNull(includeNull);
+            dumper.setIncludeFalse(includeFalse);
+            dumper.depth(maxDepth);
+            dumper.dump(obj, true);
+        }
+
+        if (key != null)
+            out.endObject();
     }
 
 }

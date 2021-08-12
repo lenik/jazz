@@ -6,8 +6,9 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
@@ -30,16 +31,15 @@ public class JsonSerializable_json
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IJsonSerializable> ref)
             throws ViewBuilderException, IOException {
-        IJsonSerializable obj = ref.get();
-        PrintWriter writer = resp.getWriter();
-        JsonWriter out = new JsonWriter(writer);
-        out.object();
+        IJsonSerializable jso = ref.get();
+        String json;
         try {
-            obj.writeObject(out);
+            json = JsonFn.toJson(jso);
         } catch (FormatException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }
-        out.endObject();
+        PrintWriter writer = resp.getWriter();
+        writer.print(json);
         return null;
     }
 
