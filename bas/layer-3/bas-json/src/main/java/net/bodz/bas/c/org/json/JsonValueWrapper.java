@@ -1,46 +1,45 @@
 package net.bodz.bas.c.org.json;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
 
-public class JsonObj
+public class JsonValueWrapper
         implements
             IJsonForm {
 
-    JsonObject obj;
+    Object j_val;
 
-    public JsonObj() {
+    public JsonValueWrapper() {
     }
 
-    public JsonObj(JsonObject obj) {
-        this.obj = obj;
+    public JsonValueWrapper(Object j_val) {
+        this.j_val = j_val;
     }
 
-    public JsonObject getWrapped() {
-        return obj;
+    public Object getWrapped() {
+        return j_val;
     }
 
     @Override
     public String toJsonStr() {
-        if (obj == null)
+        if (j_val == null)
             return null;
-        else
-            return obj.toString();
+        return JsonObject.valueToString(j_val);
     }
 
     @Override
     public void fromJsonStr(String jsonStr)
             throws ParseException {
         if (jsonStr == null)
-            obj = null;
+            j_val = null;
         else
-            obj = JsonObjectBuilder.getInstance().parse(jsonStr);
+            j_val = JsonBuilder.getInstance().parse(jsonStr);
     }
 
     @Override
     public String toString() {
-        if (obj == null)
+        if (j_val == null)
             return null;
         else
             return toJsonStr();
