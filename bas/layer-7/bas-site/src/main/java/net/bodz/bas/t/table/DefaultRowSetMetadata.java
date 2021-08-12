@@ -1,5 +1,7 @@
 package net.bodz.bas.t.table;
 
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +87,32 @@ public class DefaultRowSetMetadata
             columns.add(column);
         }
         this.columns = columns;
+    }
+
+    public void readObject(ResultSetMetaData jdbcMetadata)
+            throws SQLException {
+        int cc = jdbcMetadata.getColumnCount();
+        for (int i = 1; i <= cc; i++) {
+            DefaultColumnMetadata column = new DefaultColumnMetadata();
+            column.readObject(jdbcMetadata, i);
+            addColumn(column);
+        }
+    }
+
+    public String getColumnNames() {
+        StringBuilder sb = new StringBuilder(columns.size() * 16);
+        for (int i = 0; i < columns.size(); i++) {
+            if (i != 0)
+                sb.append(", ");
+            IColumnMetadata column = columns.get(i);
+            sb.append(column.getName());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getColumnNames();
     }
 
 }

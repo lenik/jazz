@@ -16,6 +16,9 @@ public interface IRowSet
             IJsonSerializable,
             IXmlSerializable {
 
+    String K_METADATA = "metadata";
+    String K_ROWS = "rows";
+
     IRowSetMetadata getMetadata();
 
     int getRowCount();
@@ -24,9 +27,9 @@ public interface IRowSet
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
         IRowSetMetadata metadata = getMetadata();
-        out.key("metadata");
+        out.key(K_METADATA);
         metadata.writeObjectBoxed(out);
-        out.key("rows");
+        out.key(K_ROWS);
         out.array();
         for (IRow row : this)
             row.writeObjectBoxed(out);
@@ -37,11 +40,11 @@ public interface IRowSet
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         IRowSetMetadata metadata = getMetadata();
-        out.beginElement("metadata");
+        out.beginElement(K_METADATA);
         metadata.writeObject(out);
         out.endElement();
 
-        out.beginElement("rows");
+        out.beginElement(K_ROWS);
         for (IRow row : this)
             row.writeObjectBoxed(out);
         out.endElement();
