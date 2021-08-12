@@ -88,11 +88,13 @@ public abstract class AbstractElements
             protected Element fetch() {
                 while (true) {
                     while (sub != null) {
-                        Element el = sub.next();
-                        if (el != null)
-                            return el;
-                        else
-                            sub = null;
+                        while (sub.hasNext()) {
+                            Element el = sub.next();
+                            // just exclude null items.
+                            if (el != null)
+                                return el;
+                        }
+                        sub = null;
                     }
 
                     if (!iterator.hasNext())
@@ -117,11 +119,12 @@ public abstract class AbstractElements
             protected Element fetch() {
                 while (true) {
                     while (sub != null) {
-                        Element el = sub.next();
-                        if (el != null)
-                            return el;
-                        else
-                            sub = null;
+                        while (sub.hasNext()) {
+                            Element el = sub.next();
+                            if (el != null)
+                                return el;
+                        }
+                        sub = null;
                     }
 
                     if (!iterator.hasNext())
