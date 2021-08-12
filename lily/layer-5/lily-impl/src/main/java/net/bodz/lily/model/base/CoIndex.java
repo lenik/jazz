@@ -54,7 +54,6 @@ import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
-import net.bodz.lily.template.RichProperties;
 
 @AccessControl
 @IndexedType(includeAbstract = true)
@@ -350,22 +349,31 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected void preSave(IVariantMap<String> q, final T obj, JsonResponse resp)
             throws IOException {
-        JsonMap properties = obj.getProperties();
-        if (properties instanceof RichProperties) {
-            RichProperties props = (RichProperties) properties;
-            List<ItemFile> images = props.getImages();
-
-            String schema = getObjectType().getSimpleName();
-            IncomingSaver handler = new IncomingSaver(schema, obj, new InsertOnRequire());
-            handler.fileName(new IFileNameListener() {
-                @Override
-                public void onFileNameChange(File oldName, File newName) {
-                    String relativePath = FilePath.getRelativePath(newName, oldName);
-                    renameUrlAsFileChange(obj, oldName, newName, relativePath);
-                }
-            });
-            handler.accept(images);
+        if (obj instanceof IExternalFileUsage) {
+            IExternalFileUsage u = (IExternalFileUsage) obj;
+            List<ItemFile> files = u.getExternalFiles();
+            uploadItems(obj, files);
         }
+
+        JsonMap properties = obj.getProperties();
+        if (properties instanceof IExternalFileUsage) {
+            IExternalFileUsage u = (IExternalFileUsage) properties;
+            List<ItemFile> files = u.getExternalFiles();
+            uploadItems(obj, files);
+        }
+    }
+
+    void uploadItems(T obj, List<ItemFile> files) {
+        String schema = getObjectType().getSimpleName();
+        IncomingSaver handler = new IncomingSaver(schema, obj, new InsertOnRequire());
+        handler.fileName(new IFileNameListener() {
+            @Override
+            public void onFileNameChange(File oldName, File newName) {
+                String relativePath = FilePath.getRelativePath(newName, oldName);
+                renameUrlAsFileChange(obj, oldName, newName, relativePath);
+            }
+        });
+        handler.accept(files);
     }
 
     protected void renameUrlAsFileChange(T obj, File oldName, File newName, String relativePath) {

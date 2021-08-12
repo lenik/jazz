@@ -9,12 +9,15 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.site.json.JsonMap;
+import net.bodz.lily.model.base.IExternalFileUsage;
 
 /**
  * A common support for object icon, etc.
  */
 public class RichProperties
-        extends JsonMap {
+        extends JsonMap
+        implements
+            IExternalFileUsage {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +60,18 @@ public class RichProperties
         setAttribute(K_VIDEOS, videos);
     }
 
+    /**
+     * PDF
+     */
+    @OfGroup(StdGroup.Visual.class)
+    public final List<ItemFile> getPdfs() {
+        return getListAttribute(K_PDFS);
+    }
+
+    public final void setPdfs(List<ItemFile> pdfs) {
+        setAttribute(K_PDFS, pdfs);
+    }
+
     @Override
     protected boolean readFromJson(String key, Object val)
             throws ParseException {
@@ -68,6 +83,11 @@ public class RichProperties
             return true;
         }
         return super.readFromJson(key, val);
+    }
+
+    @Override
+    public List<ItemFile> getExternalFiles() {
+        return fn.join(getImages(), getVideos(), getPdfs());
     }
 
 }
