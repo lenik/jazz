@@ -7,13 +7,14 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.c.org.json.JsonObj;
+import net.bodz.bas.c.org.json.JsonValueWrapper;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonSerializable;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.rtx.IAttributed;
 
@@ -23,7 +24,10 @@ import section.obj;
  * @see net.bodz.bas.c.org.json.JsonFormTypeHandler
  */
 public class JsonMap
-        implements Serializable, IJsonSerializable, IAttributed {
+        implements
+            Serializable,
+            IJsonSerializable,
+            IAttributed {
 
     private static final long serialVersionUID = 1L;
 
@@ -92,14 +96,29 @@ public class JsonMap
         map.put(name, value);
     }
 
-    public JsonObj getJsonForm() {
-        JsonObject obj = JsonObjectBuilder.getInstance().fromMap(map);
-        return new JsonObj(obj);
+    public String getJson()
+            throws FormatException {
+        String json = JsonFn.toJson(this);
+        return json;
     }
 
-    public synchronized void setJsonForm(JsonObj form) {
-        map.clear();
-        JsonFn.toMap(map, form.getWrapped());
+    public void setJson(String json)
+            throws ParseException {
+        Object j_val = JsonBuilder.getInstance().parse(json);
+        readObjectBoxed(j_val);
+    }
+
+    public JsonValueWrapper getJsonForm()
+            throws FormatException {
+        String json = JsonFn.toJson(this);
+        Object j_val = JsonBuilder.getInstance().parse(json);
+        return new JsonValueWrapper(j_val);
+    }
+
+    public synchronized void setJsonForm(JsonValueWrapper form)
+            throws ParseException {
+        Object j_val = form.getWrapped();
+        readObjectBoxed(j_val);
     }
 
     @Override

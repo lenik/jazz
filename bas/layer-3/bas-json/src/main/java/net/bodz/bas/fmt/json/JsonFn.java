@@ -87,9 +87,7 @@ public class JsonFn {
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            out.object();
-            obj.writeObject(out);
-            out.endObject();
+            obj.writeObjectBoxed(out);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -98,7 +96,7 @@ public class JsonFn {
 
     public static <T extends IJsonSerializable> T fromJson(T obj, String json)
             throws ParseException {
-        if (json == null)
+        if (json == null) // XXX null ?
             obj.readObject(null);
         else {
             JsonObject jsonObj = parseObject(json);
