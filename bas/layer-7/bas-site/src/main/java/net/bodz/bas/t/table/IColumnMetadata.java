@@ -20,6 +20,8 @@ public interface IColumnMetadata
 
     String getName();
 
+    String getLabel();
+
     String getDescription();
 
     Class<?> getType();
@@ -40,6 +42,7 @@ public interface IColumnMetadata
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
         out.entry("name", getName());
+        out.entry("label", getLabel());
         out.entry("description", getDescription());
         out.entry("type", getType().getName());
     }
@@ -48,6 +51,7 @@ public interface IColumnMetadata
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         out.attribute("name", getName());
+        out.attribute("label", getLabel());
         out.attribute("description", getDescription());
         out.attribute("type", getType().getName());
     }

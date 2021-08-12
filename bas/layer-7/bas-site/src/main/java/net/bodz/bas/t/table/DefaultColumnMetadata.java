@@ -1,6 +1,8 @@
 package net.bodz.bas.t.table;
 
 import java.io.IOException;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -22,7 +24,8 @@ public class DefaultColumnMetadata
             IColumnMetadata {
 
     String name;
-    String description;
+    String label;
+    String description; // comment..
 
     Class<?> type;
     boolean jsonType;
@@ -35,6 +38,15 @@ public class DefaultColumnMetadata
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
@@ -66,26 +78,6 @@ public class DefaultColumnMetadata
             throw new ParseException(e.getMessage(), e);
         }
         setType(clazz);
-    }
-
-    @Override
-    public void readObject(JsonObject o)
-            throws ParseException {
-        name = o.getString("name");
-        description = o.getString("description");
-
-        String typeName = o.getString("type");
-        setTypeByName(typeName);
-    }
-
-    @Override
-    public void readObject(IElement o)
-            throws ParseException, LoaderException {
-        name = o.a("name").getString();
-        description = o.a("description").getString();
-
-        String typeName = o.a("type").getString();
-        setTypeByName(typeName);
     }
 
     @Override
@@ -182,6 +174,58 @@ public class DefaultColumnMetadata
         String text = String.valueOf(value);
         out.writeCharacters(text);
         out.endElement();
+    }
+
+    public void readObject(ResultSetMetaData jdbcMetadata, int i)
+            throws SQLException {
+        String name = jdbcMetadata.getColumnName(i);
+        String label = jdbcMetadata.getColumnLabel(i);
+
+        String typeName = jdbcMetadata.getColumnClassName(i);
+        // int width = o.getColumnDisplaySize(i);
+        // int sqlType = o.getColumnType(i);
+
+        this.setName(name);
+        this.setLabel(label);
+        // metadata.setDescription(description);
+        try {
+            this.setTypeByName(typeName);
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /* _____________________________ */static section.iface __JSON__;
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        name = o.getString("name");
+        label = o.getString("label");
+        description = o.getString("description");
+
+        String typeName = o.getString("type");
+        setTypeByName(typeName);
+    }
+
+    /** ⇱ Implementation Of {@link IXmlSerializable}. */
+    /* _____________________________ */static section.iface __XML__;
+
+    @Override
+    public void readObject(IElement o)
+            throws ParseException, LoaderException {
+        name = o.a("name").getString();
+        label = o.a("label").getString();
+        description = o.a("description").getString();
+
+        String typeName = o.a("type").getString();
+        setTypeByName(typeName);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

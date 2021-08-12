@@ -1,6 +1,8 @@
 package net.bodz.bas.t.table;
 
 import java.nio.BufferOverflowException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,10 +23,11 @@ public class MutableRow
     int rowIndex;
     List<Object> list;
 
-    public MutableRow(IRowSetMetadata metadata, int index) {
+    public MutableRow(IRowSetMetadata metadata, int rowIndex) {
         if (metadata == null)
             throw new NullPointerException("metadata");
         this.metadata = metadata;
+        this.rowIndex = rowIndex;
 
         int n = metadata.getColumnCount();
         this.list = new ArrayList<Object>(n);
@@ -169,6 +172,15 @@ public class MutableRow
         IElements x_row_v = x_rows.selectByTag("row");
         IElement x_row = x_row_v.get(rowIndex);
         readObject(x_row);
+    }
+
+    public void readObject(ResultSet rs)
+            throws SQLException {
+        int cc = metadata.getColumnCount();
+        for (int i = 0; i < cc; i++) {
+            Object cell = rs.getObject(i + 1);
+            set(i, cell);
+        }
     }
 
 }
