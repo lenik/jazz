@@ -1,5 +1,5 @@
 net.bodz.bas.c.org.json.JsonFormTypeHandler
-net.bodz.bas.c.org.json.JsonObjTypeHandler
+net.bodz.bas.c.org.json.JsonValueTypeHandler
 net.bodz.bas.c.org.json.PojoJsonTypeHandler
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler
 net.bodz.bas.db.ibatis.type.BooleanArrayTypeHandler

@@ -14,17 +14,17 @@ import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.err.ParseException;
 
-@Alias("JsonObj")
+@Alias("JsonValue")
 @AliasedType
-@MappedTypes(JsonObj.class)
-public class JsonObjTypeHandler
-        extends TypeHandler<JsonObj> {
+@MappedTypes(JsonValueWrapper.class)
+public class JsonValueTypeHandler
+        extends TypeHandler<JsonValueWrapper> {
 
-    public JsonObjTypeHandler() {
+    public JsonValueTypeHandler() {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, JsonObj parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, JsonValueWrapper parameter, JdbcType jdbcType)
             throws SQLException {
         String json = parameter.toJsonStr();
         PGobject pgo = new PGobject();
@@ -34,10 +34,10 @@ public class JsonObjTypeHandler
     }
 
     @Override
-    public JsonObj getNullableResult(ResultSet rs, String columnName)
+    public JsonValueWrapper getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         String json = rs.getString(columnName);
-        JsonObj val = new JsonObj();
+        JsonValueWrapper val = new JsonValueWrapper();
         try {
             val.fromJsonStr(json);
         } catch (ParseException e) {
@@ -47,10 +47,10 @@ public class JsonObjTypeHandler
     }
 
     @Override
-    public JsonObj getNullableResult(ResultSet rs, int columnIndex)
+    public JsonValueWrapper getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         String jsonData = rs.getString(columnIndex);
-        JsonObj val = new JsonObj();
+        JsonValueWrapper val = new JsonValueWrapper();
         try {
             val.fromJsonStr(jsonData);
         } catch (ParseException e) {
@@ -60,10 +60,10 @@ public class JsonObjTypeHandler
     }
 
     @Override
-    public JsonObj getNullableResult(CallableStatement cs, int columnIndex)
+    public JsonValueWrapper getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         String json = cs.getString(columnIndex);
-        JsonObj val = new JsonObj();
+        JsonValueWrapper val = new JsonValueWrapper();
         try {
             val.fromJsonStr(json);
         } catch (ParseException e) {
