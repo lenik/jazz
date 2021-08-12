@@ -60,6 +60,7 @@ class CachedIterator<T>
 
     public CachedIterator(Iterator<T> orig, DefaultCachedIterable<T> cache) {
         this.orig = orig;
+        this.cache = cache;
     }
 
     @Override
