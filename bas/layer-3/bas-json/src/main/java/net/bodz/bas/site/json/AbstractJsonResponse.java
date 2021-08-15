@@ -36,7 +36,7 @@ public class AbstractJsonResponse<self_t>
     int status = OK;
     String message;
     Throwable exception;
-    IJsonSerializable data = null;
+    Object data = null;
 
     private SortOrder headerOrder = SortOrder.NONE;
     private Map<String, Object> headers;
@@ -45,7 +45,7 @@ public class AbstractJsonResponse<self_t>
     public AbstractJsonResponse() {
     }
 
-    public AbstractJsonResponse(int status, String message, IJsonSerializable data) {
+    public AbstractJsonResponse(int status, String message, Object data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -162,12 +162,12 @@ public class AbstractJsonResponse<self_t>
         this.exception = exception;
     }
 
-    public IJsonSerializable getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(IJsonSerializable data) {
-        this.data = data;
+    public void setData(Object js_val) {
+        this.data = js_val;
     }
 
     public SortOrder getHeaderOrder() {
