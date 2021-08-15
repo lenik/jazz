@@ -833,6 +833,7 @@ public class _JSONArray
      *            optional cause of the coercion failure
      * @return JSONException that can be thrown.
      */
+    @SuppressWarnings("unused")
     private static JSONException wrongValueFormatException(int idx, String valueType, Throwable cause) {
         return new JSONException("JSONArray[" + idx + "] is not a " + valueType + ".", cause);
     }
@@ -848,6 +849,7 @@ public class _JSONArray
      *            optional cause of the coercion failure
      * @return JSONException that can be thrown.
      */
+    @SuppressWarnings("unused")
     private static JSONException wrongValueFormatException(int idx, String valueType, Object value, Throwable cause) {
         return new JSONException("JSONArray[" + idx + "] is not a " + valueType + " (" + value + ").", cause);
     }

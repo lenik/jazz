@@ -76,7 +76,7 @@ public class XYPosition
 
     @Override
     public int hashCode() {
-        int hash = new Long(offset).hashCode();
+        int hash = Long.valueOf(offset).hashCode();
         hash += 0x31816254 * y;
         hash += 0x88ba2abd * x;
         return hash;

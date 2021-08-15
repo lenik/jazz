@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.fmt.json.IJsonSerializable;
-import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.viz.IHttpViewContext;

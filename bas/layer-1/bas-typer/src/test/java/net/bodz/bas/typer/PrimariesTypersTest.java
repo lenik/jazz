@@ -13,7 +13,7 @@ public class PrimariesTypersTest
     public void parseInt()
             throws ParseException {
         Integer value = ParserUtil.parse(int.class, "123");
-        assertEquals(new Integer(123), value);
+        assertEquals(Integer.valueOf(123), value);
     }
 
 }

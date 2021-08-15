@@ -29,7 +29,7 @@ import net.bodz.bas.text.diff.gnudiff.GNUDiff;
 
 /**
  * Test Diff behavior.
- * 
+ *
  * @author Stuart D. Gathman Copyright (C) 2002 Business Management Systems, Inc.
  */
 public class DiffTest
@@ -49,7 +49,7 @@ public class DiffTest
     private Integer[] loadArray(int[] a) {
         Integer[] b = new Integer[a.length];
         for (int i = 0; i < a.length; ++i)
-            b[i] = new Integer(a[i]);
+            b[i] = Integer.valueOf(a[i]);
         return b;
     }
 

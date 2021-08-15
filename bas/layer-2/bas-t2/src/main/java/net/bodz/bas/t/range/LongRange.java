@@ -40,7 +40,7 @@ public class LongRange
     public Long parseValue(String s)
             throws ParseException {
         try {
-            return new Long(s);
+            return Long.valueOf(s);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }

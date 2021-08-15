@@ -1,8 +1,5 @@
 package net.bodz.bas.jvm.stack;
 
-import sun.reflect.Reflection;
-
-@SuppressWarnings("restriction")
 public class Caller {
 
     public static StackTraceElement stackTrace(int caller) {
@@ -12,27 +9,38 @@ public class Caller {
 
     public static Class<?> getCallerImplementationClass(int caller) {
         StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-        return stackTrace[caller + 1].getClass();
+        return getClass(stackTrace[caller + 1]);
     }
 
     /**
      * In the following, `<code>caller-method</code>' is the method which calls
      * {@link #getCallerClass(int)}, and `<code>self-method</code>' is the
      * {@link #getCallerClass(int)} method itself.
-     * 
+     *
      * @param caller
      *            Specify to 1 to get the <code>caller-method</code>, and 0 to get the
      *            <code>self-method</code>.
      */
     public static Class<?> getCallerClass(int caller) {
-        return Reflection.getCallerClass(caller + 2);
+        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        return getClass(stackTrace[caller + 1]);
+    }
+
+    public static Class<?> getClass(StackTraceElement element) {
+        String className = element.getClassName();
+        try {
+            Class<?> c = Class.forName(className);
+            return c;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     /**
      * In the following, `<code>caller-method</code>' is the method which calls
      * {@link #getCallerClassLoader(int)}, and `<code>self-method</code>' is the
      * {@link #getCallerClassLoader(int)} method itself.
-     * 
+     *
      * @param caller
      *            Specify to 1 to get the <code>caller-method</code>, and 0 to get the
      *            <code>self-method</code>.

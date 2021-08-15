@@ -41,7 +41,7 @@ public class ShortRange
     public Short parseValue(String s)
             throws ParseException {
         try {
-            return new Short(s);
+            return Short.valueOf(s);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
