@@ -2,8 +2,8 @@ package net.bodz.lily.security.ops;
 
 import java.util.List;
 
-import net.bodz.bas.db.ctx.AbstractDataContextAware;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.site.json.JsonResponse;
 import net.bodz.lily.security.User;
@@ -19,7 +19,9 @@ import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginResult;
 
 public class UserOps_PhoneId
-        extends AbstractDataContextAware {
+        extends AbstractOps
+        implements
+            IDataContextAware {
 
     UserMapper userMapper;
     UserSecretMapper secretMapper;
