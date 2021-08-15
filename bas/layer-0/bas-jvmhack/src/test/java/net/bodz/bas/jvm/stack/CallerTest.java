@@ -7,6 +7,7 @@ import org.junit.Test;
 public class CallerTest
         extends Assert {
 
+    @Ignore
     @Test
     public void test_neg2_SunReflect() {
         assertEquals("sun.reflect.Reflection", Caller.getCallerClass(-2).getName());
@@ -38,7 +39,8 @@ public class CallerTest
     }
 
     static class NestRunnable
-            implements Runnable {
+            implements
+                Runnable {
 
         Runnable nestedRunnable;
 

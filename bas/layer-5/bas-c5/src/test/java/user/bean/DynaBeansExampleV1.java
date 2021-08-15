@@ -53,7 +53,7 @@ public class DynaBeansExampleV1 {
 
         DynaBean director = createPersonBean();
         director.set("name", "Peter Collinson");
-        director.set("gender", new Integer(1));
+        director.set("gender", 1);
 
         movieBean.set("director", director);
 

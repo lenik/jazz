@@ -5,10 +5,12 @@ import java.net.URL;
 
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import net.bodz.bas.c.java.beans.Jdk7XMLEncoder;
 import net.bodz.bas.err.DecodeException;
@@ -50,7 +52,21 @@ public class XMLs {
     public static void parse(InputSource source, Object... handlers)
             throws SAXException, IOException {
         assert source != null : "null source";
-        XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+        SAXParser saxParser;
+        try {
+            saxParser = factory.newSAXParser();
+        } catch (ParserConfigurationException e) {
+            throw new SAXException(e.getMessage(), e);
+        }
+
+        XMLReader xmlReader = saxParser.getXMLReader();
+        try {
+            xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+        } catch (SAXException | ParserConfigurationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         for (Object handler : handlers) {
             if (handler == null)
                 throw new NullPointerException("null handler");

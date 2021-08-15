@@ -41,7 +41,7 @@ public class FloatRange
     public Float parseValue(String s)
             throws ParseException {
         try {
-            return new Float(s);
+            return Float.valueOf(s);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }

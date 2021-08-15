@@ -23,4 +23,37 @@
         </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: C5</name>
+    <profiles>
+        <profile>
+            <activation>
+                <jdk>16</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>--add-exports</arg>
+                                <arg>java.base/sun.security.pkcs=ALL-UNNAMED</arg>
+                                
+                                <arg>--add-exports</arg>
+                                <arg>java.base/sun.security.x509=ALL-UNNAMED</arg>
+                                
+                                <arg>--add-modules</arg>
+                                <arg>jdk.crypto.cryptoki</arg>
+                                
+                                <arg>--add-exports</arg>
+                                <arg>jdk.crypto.cryptoki/sun.security.pkcs11=ALL-UNNAMED</arg>
+                                
+                                <arg>--add-exports</arg>
+                                <arg>jdk.crypto.cryptoki/sun.security.pkcs11.wrapper=ALL-UNNAMED</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

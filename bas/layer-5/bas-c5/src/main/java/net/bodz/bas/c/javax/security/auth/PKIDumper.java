@@ -71,7 +71,8 @@ public class PKIDumper {
 
     public void dumpProvider(String prefix, Provider provider, String password, int detail) {
         out.print(prefix);
-        out.printf("Provider %s (%.2f): %s\n", provider.getName(), provider.getVersion(), provider.getInfo());
+        out.printf("Provider %s (ver %.2f): %s\n", provider.getName(), //
+                provider.getVersion(), provider.getInfo());
         if (detail >= 1)
             dumpProperties(prefix + "  ", provider.getName(), provider);
 

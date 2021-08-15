@@ -41,7 +41,7 @@ public class IntegerRange
     public Integer parseValue(String s)
             throws ParseException {
         try {
-            return new Integer(s);
+            return Integer.valueOf(s);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }

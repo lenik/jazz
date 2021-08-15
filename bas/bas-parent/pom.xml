@@ -294,7 +294,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.3.2</version>
+                    <version>3.8.1</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                     </configuration>
@@ -302,7 +302,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.7</version>
+                    <version>3.3.0</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                         <docencoding>${encoding}</docencoding>
@@ -310,8 +310,13 @@ Build Settings-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.6.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.4.3</version>
+                    <version>3.2.0</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                     </configuration>
@@ -319,7 +324,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.1.2</version>
+                    <version>3.2.1</version>
                     <executions>
                         <execution>
                             <goals>
@@ -332,7 +337,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.3.1</version>
+                    <version>3.2.0</version>
                     <executions>
                         <execution>
                             <goals>
@@ -344,7 +349,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.2.4</version>
                     <executions>
                         <execution>
                             <phase>package</phase>

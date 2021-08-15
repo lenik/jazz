@@ -50,14 +50,6 @@ public class SecurityManagerProxy
     }
 
     @Override
-    public void checkAwtEventQueueAccess() {
-        if (_orig == null)
-            return;
-        else
-            _orig.checkAwtEventQueueAccess();
-    }
-
-    @Override
     public void checkConnect(String host, int port, Object context) {
         if (_orig == null)
             return;
@@ -119,14 +111,6 @@ public class SecurityManagerProxy
             return;
         else
             _orig.checkListen(port);
-    }
-
-    @Override
-    public void checkMemberAccess(Class<?> clazz, int which) {
-        if (_orig == null)
-            return;
-        else
-            _orig.checkMemberAccess(clazz, which);
     }
 
     @Deprecated
@@ -243,22 +227,6 @@ public class SecurityManagerProxy
     }
 
     @Override
-    public void checkSystemClipboardAccess() {
-        if (_orig == null)
-            return;
-        else
-            _orig.checkSystemClipboardAccess();
-    }
-
-    @Override
-    public boolean checkTopLevelWindow(Object window) {
-        if (_orig == null)
-            return true;
-        else
-            return _orig.checkTopLevelWindow(window);
-    }
-
-    @Override
     public void checkWrite(FileDescriptor fd) {
         if (_orig == null)
             return;
@@ -272,15 +240,6 @@ public class SecurityManagerProxy
             return;
         else
             _orig.checkWrite(file);
-    }
-
-    @Deprecated
-    @Override
-    public boolean getInCheck() {
-        if (_orig == null)
-            return false;
-        else
-            return _orig.getInCheck();
     }
 
     @Override

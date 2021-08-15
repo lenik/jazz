@@ -41,7 +41,7 @@ public class DoubleRange
     public Double parseValue(String s)
             throws ParseException {
         try {
-            return new Double(s);
+            return Double.valueOf(s);
         } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
