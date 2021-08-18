@@ -45,6 +45,17 @@ public class DefaultTableMetadata
     }
 
     @Override
+    public IColumnMetadata[] getPrimaryKeyColumns() {
+        String[] pk = getPrimaryKey();
+        IColumnMetadata[] columns = new IColumnMetadata[pk.length];
+        for (int i = 0; i < pk.length; i++) {
+            int column = indexOfColumn(pk[i]);
+            columns[i] = getColumn(column);
+        }
+        return columns;
+    }
+
+    @Override
     public void readObject(JsonObject o)
             throws ParseException {
         super.readObject(o);

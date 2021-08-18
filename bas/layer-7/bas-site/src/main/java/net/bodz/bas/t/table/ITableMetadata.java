@@ -20,15 +20,20 @@ public interface ITableMetadata
 
     String[] getPrimaryKey();
 
+    IColumnMetadata[] getPrimaryKeyColumns();
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
         out.entry(K_NAME, getName());
-        out.key(K_PRIMARY_KEY);
-        out.array();
-        for (String field : getPrimaryKey())
-            out.value(field);
-        out.endArray();
+        String[] pk = getPrimaryKey();
+        if (pk != null) {
+            out.key(K_PRIMARY_KEY);
+            out.array();
+            for (String field : getPrimaryKey())
+                out.value(field);
+            out.endArray();
+        }
         IRowSetMetadata.super.writeObject(out);
     }
 

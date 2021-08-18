@@ -26,6 +26,8 @@ public interface IRow
 
     Object get(int index);
 
+    boolean isSet(int index);
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {

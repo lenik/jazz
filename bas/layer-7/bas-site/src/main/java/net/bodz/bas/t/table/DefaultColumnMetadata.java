@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -23,13 +24,24 @@ public class DefaultColumnMetadata
         implements
             IColumnMetadata {
 
+    int index;
     String name;
     String label;
     String description; // comment..
 
     Class<?> type;
+    int sqlType;
     boolean jsonType;
     boolean xmlType;
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @Override
     public String getName() {
@@ -67,6 +79,15 @@ public class DefaultColumnMetadata
         this.type = type;
         jsonType = IJsonSerializable.class.isAssignableFrom(type);
         xmlType = IXmlSerializable.class.isAssignableFrom(type);
+    }
+
+    @Override
+    public int getSqlType() {
+        return sqlType;
+    }
+
+    public void setSqlType(int sqlType) {
+        this.sqlType = sqlType;
     }
 
     public void setTypeByName(String typeName)
@@ -182,17 +203,20 @@ public class DefaultColumnMetadata
         String label = jdbcMetadata.getColumnLabel(i);
 
         String typeName = jdbcMetadata.getColumnClassName(i);
-        // int width = o.getColumnDisplaySize(i);
-        // int sqlType = o.getColumnType(i);
+        // int width = jdbcMetadata.getColumnDisplaySize(i);
+        int sqlType = jdbcMetadata.getColumnType(i);
 
+        this.setIndex(i - 1);
         this.setName(name);
-        this.setLabel(label);
-        // metadata.setDescription(description);
+        if (!Nullables.equals(name, label))
+            this.setLabel(label);
+
         try {
             this.setTypeByName(typeName);
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+        this.setSqlType(sqlType);
     }
 
     /** ⇱ Implementation Of {@link IJsonSerializable}. */
@@ -201,12 +225,15 @@ public class DefaultColumnMetadata
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
+        index = o.getInt("index", -1);
         name = o.getString("name");
         label = o.getString("label");
         description = o.getString("description");
 
         String typeName = o.getString("type");
         setTypeByName(typeName);
+
+        sqlType = o.getInt("sqlType", 0);
     }
 
     /** ⇱ Implementation Of {@link IXmlSerializable}. */
@@ -215,12 +242,14 @@ public class DefaultColumnMetadata
     @Override
     public void readObject(IElement o)
             throws ParseException, LoaderException {
+        index = o.a("index").getInt(-1);
         name = o.a("name").getString();
         label = o.a("label").getString();
         description = o.a("description").getString();
 
         String typeName = o.a("type").getString();
         setTypeByName(typeName);
+        sqlType = o.a("sqlType").getInt(0);
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.bodz.bas.t.table;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.err.LoaderException;
@@ -19,6 +20,11 @@ public class DefaultRowSetMetadata
     static final int MAX_SPARSE_COLUMNS = 1000;
 
     List<IColumnMetadata> columns = new ArrayList<>();
+
+    @Override
+    public Iterator<IColumnMetadata> iterator() {
+        return columns.iterator();
+    }
 
     @Override
     public boolean isSparse() {

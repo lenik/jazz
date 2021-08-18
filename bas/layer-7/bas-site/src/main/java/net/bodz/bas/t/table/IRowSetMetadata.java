@@ -12,6 +12,7 @@ import net.bodz.bas.fmt.xml.IXmlSerializable;
 
 public interface IRowSetMetadata
         extends
+            Iterable<IColumnMetadata>,
             IJsonSerializable,
             IXmlSerializable {
 
