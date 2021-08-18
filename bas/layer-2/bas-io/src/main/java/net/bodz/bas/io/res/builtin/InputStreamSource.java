@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 
 import net.bodz.bas.io.IByteIn;
@@ -19,6 +20,20 @@ public class InputStreamSource
     private final InputStream in;
 
     public InputStreamSource(InputStream in) {
+        if (in == null)
+            throw new NullPointerException("in");
+        this.in = in;
+    }
+
+    public InputStreamSource(InputStream in, String charsetName) {
+        super(charsetName);
+        if (in == null)
+            throw new NullPointerException("in");
+        this.in = in;
+    }
+
+    public InputStreamSource(InputStream in, Charset charset) {
+        super(charset);
         if (in == null)
             throw new NullPointerException("in");
         this.in = in;

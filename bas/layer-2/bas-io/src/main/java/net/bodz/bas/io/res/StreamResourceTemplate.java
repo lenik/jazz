@@ -21,6 +21,8 @@ import net.bodz.bas.io.data.DataOutImplLE;
 import net.bodz.bas.io.impl.LAReader;
 import net.bodz.bas.io.impl.PrintOutImpl;
 import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.io.res.tools.StreamReading;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.sugar.Tooling;
 
 public abstract class StreamResourceTemplate {
@@ -34,8 +36,27 @@ public abstract class StreamResourceTemplate {
             throw new NullPointerException("preferredCharset");
     }
 
+    public StreamResourceTemplate(String charsetName) {
+        this(Charset.forName(charsetName));
+    }
+
+    public StreamResourceTemplate(Charset charset) {
+        if (charset == null)
+            this.charset = getPreferredCharset();
+        else
+            this.charset = charset;
+    }
+
     public <T> T to(Class<T> anotherType) {
         return new Tooling(this).to(anotherType);
+    }
+
+    public StreamReading read() {
+        return to(StreamReading.class);
+    }
+
+    public StreamWriting write() {
+        return to(StreamWriting.class);
     }
 
     /**
