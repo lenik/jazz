@@ -22,6 +22,7 @@ public class MutableRow
     IRowSetMetadata metadata;
     int rowIndex;
     List<Object> list;
+    List<Boolean> sets;
 
     public MutableRow(IRowSetMetadata metadata, int rowIndex) {
         if (metadata == null)
@@ -31,6 +32,7 @@ public class MutableRow
 
         int n = metadata.getColumnCount();
         this.list = new ArrayList<Object>(n);
+        this.sets = new ArrayList<Boolean>(n);
     }
 
     @Override
@@ -61,12 +63,16 @@ public class MutableRow
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        if (index >= list.size()) {
+        if (index >= getRowSetMetadata().getColumnCount()) {
             if (metadata.isSparse())
                 return null;
             else
                 throw new IndexOutOfBoundsException("Invalid column index: " + index);
         }
+
+        if (index >= list.size())
+            return null;
+
         return list.get(index);
     }
 
@@ -83,10 +89,31 @@ public class MutableRow
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
         int lack = index - (list.size() - 1);
-        for (int i = 0; i < lack; i++)
+        for (int i = 0; i < lack; i++) {
             list.add(null);
+            sets.add(false);
+        }
 
         list.set(index, o);
+        sets.set(index, true);
+    }
+
+    @Override
+    public boolean isSet(int index) {
+        if (index < 0)
+            throw new IndexOutOfBoundsException("Invalid column index: " + index);
+
+        if (index >= getRowSetMetadata().getColumnCount()) {
+            if (metadata.isSparse())
+                return false;
+            else
+                throw new IndexOutOfBoundsException("Invalid column index: " + index);
+        }
+
+        if (index >= sets.size())
+            return false;
+
+        return sets.get(index);
     }
 
     @Override
@@ -99,6 +126,7 @@ public class MutableRow
             throw new BufferOverflowException();
 
         list.add(o);
+        sets.add(true);
     }
 
     @Override

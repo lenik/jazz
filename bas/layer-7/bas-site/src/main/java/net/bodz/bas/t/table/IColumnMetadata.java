@@ -18,6 +18,8 @@ public interface IColumnMetadata
             IJsonSerializable,
             IXmlSerializable {
 
+    int getIndex();
+
     String getName();
 
     String getLabel();
@@ -25,6 +27,8 @@ public interface IColumnMetadata
     String getDescription();
 
     Class<?> getType();
+
+    int getSqlType();
 
     Object readJson(Object jsonValue)
             throws ParseException;
@@ -41,18 +45,34 @@ public interface IColumnMetadata
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
+        out.entry("index", getIndex());
         out.entry("name", getName());
-        out.entry("label", getLabel());
-        out.entry("description", getDescription());
+
+        String label = getLabel();
+        if (label != null)
+            out.entry("label", label);
+
+        String description = getDescription();
+        if (description != null)
+            out.entry("description", getDescription());
+
         out.entry("type", getType().getName());
     }
 
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
+        out.attribute("index", getIndex());
         out.attribute("name", getName());
-        out.attribute("label", getLabel());
-        out.attribute("description", getDescription());
+
+        String label = getLabel();
+        if (label != null)
+            out.attribute("label", getLabel());
+
+        String description = getDescription();
+        if (description != null)
+            out.attribute("description", getDescription());
+
         out.attribute("type", getType().getName());
     }
 
