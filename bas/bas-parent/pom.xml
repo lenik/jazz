@@ -453,6 +453,8 @@ Build Settings-->
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <excludes>
+                    <exclude>**/.template/</exclude>
+                    <exclude>**/node_modules/.bin/</exclude>
                     <exclude>**/*.properties</exclude>
                     <exclude>**/*.xml</exclude>
                 </excludes>
