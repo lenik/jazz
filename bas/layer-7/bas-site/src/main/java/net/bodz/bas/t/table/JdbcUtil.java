@@ -24,13 +24,13 @@ public class JdbcUtil {
             throws SQLException {
         Statement statement = connection.createStatement();
 
-        DefaultTableMetadata metadata;
+        DefaultTableMetadata table;
         ResultSet rs = statement.executeQuery(//
                 "select * from " + escape(tableName) + " where 1=2");
 
-        metadata = new DefaultTableMetadata();
-        metadata.setName(tableName);
-        metadata.readObject(rs.getMetaData());
+        table = new DefaultTableMetadata();
+        table.setName(tableName);
+        table.readObject(rs.getMetaData());
         rs.close();
 
         String schema = null;
@@ -41,15 +41,18 @@ public class JdbcUtil {
             tab = tableName.substring(dot + 1);
         }
         rs = connection.getMetaData().getPrimaryKeys(null, schema, tab);
-        List<String> cols = new ArrayList<>();
+        List<String> pkColumnNames = new ArrayList<>();
         while (rs.next()) {
             String pkColumnName = rs.getString("COLUMN_NAME");
-            cols.add(pkColumnName);
-        }
-        String[] primaryKey = cols.toArray(new String[0]);
-        metadata.setPrimaryKey(primaryKey);
+            pkColumnNames.add(pkColumnName);
 
-        return metadata;
+            DefaultColumnMetadata column = (DefaultColumnMetadata) table.getColumn(pkColumnName);
+            column.setPrimaryKey(true);
+        }
+
+        String[] primaryKey = pkColumnNames.toArray(new String[0]);
+        table.setPrimaryKey(primaryKey);
+        return table;
     }
 
 }

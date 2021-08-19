@@ -49,8 +49,7 @@ public class DefaultTableMetadata
         String[] pk = getPrimaryKey();
         IColumnMetadata[] columns = new IColumnMetadata[pk.length];
         for (int i = 0; i < pk.length; i++) {
-            int column = indexOfColumn(pk[i]);
-            columns[i] = getColumn(column);
+            columns[i] = getColumn(pk[i]);
         }
         return columns;
     }

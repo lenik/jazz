@@ -34,6 +34,8 @@ public class DefaultColumnMetadata
     boolean jsonType;
     boolean xmlType;
 
+    boolean primaryKey;
+
     @Override
     public int getIndex() {
         return index;
@@ -99,6 +101,22 @@ public class DefaultColumnMetadata
             throw new ParseException(e.getMessage(), e);
         }
         setType(clazz);
+    }
+
+    @Override
+    public boolean isPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(boolean primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    @Override
+    public Object parse(String s)
+            throws ParseException {
+        IParser<?> parser = Typers.getTyper(type, IParser.class);
+        return parser.parse(s);
     }
 
     @Override
