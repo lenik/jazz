@@ -30,6 +30,11 @@ public interface IColumnMetadata
 
     int getSqlType();
 
+    boolean isPrimaryKey();
+
+    Object parse(String s)
+            throws ParseException;
+
     Object readJson(Object jsonValue)
             throws ParseException;
 
