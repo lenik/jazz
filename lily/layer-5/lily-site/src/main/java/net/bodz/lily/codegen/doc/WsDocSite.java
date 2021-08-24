@@ -6,7 +6,8 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.site.json.IJsonResponse;
+import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
 
@@ -19,8 +20,8 @@ public class WsDocSite
         indexer = ModuleIndexer.getInstance();
     }
 
-    public JsonResponse getModules() {
-        JsonResponse result = new JsonResponse();
+    public IJsonResponse getModules() {
+        JsonResult result = new JsonResult();
         JsonWriter out = result.begin("modules");
         out.object();
         for (ModuleInfo modinfo : indexer.getModules()) {

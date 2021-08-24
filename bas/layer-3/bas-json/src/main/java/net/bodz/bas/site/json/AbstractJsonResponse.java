@@ -20,16 +20,11 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.SortOrder;
 
 @SuppressWarnings("unchecked")
-public class AbstractJsonResponse<self_t>
+public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         implements
-            IJsonSerializable {
+            IMutableJsonResponse {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractJsonResponse.class);
-
-    public static final int OK = 0;
-    public static final int WARN = 300;
-    public static final int ERROR = 400;
-    public static final int FATAL_ERROR = 500;
 
     public static final String sectionsRoot = "root";
 

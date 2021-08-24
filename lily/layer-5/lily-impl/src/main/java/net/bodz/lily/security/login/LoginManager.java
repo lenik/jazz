@@ -11,7 +11,8 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.site.json.IJsonResponse;
+import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.sms.IShortMessageService;
 import net.bodz.bas.sms.SmsCommitLog;
 import net.bodz.bas.sms.SmsProviders;
@@ -117,8 +118,8 @@ public class LoginManager
     }
 
     @Override
-    public JsonResponse logout() {
-        JsonResponse r = new JsonResponse();
+    public IJsonResponse logout() {
+        JsonResult r = new JsonResult();
         LoginToken token = LoginToken.fromSession();
         if (token != null) {
             User user = token.getUser();
@@ -139,8 +140,8 @@ public class LoginManager
      * @see ILoginManager#VERIFY
      */
     @Override
-    public JsonResponse verifyPhone(String phone, String usage) {
-        JsonResponse resp = new JsonResponse();
+    public IJsonResponse verifyPhone(String phone, String usage) {
+        JsonResult resp = new JsonResult();
         String shortCode = crypto.shortVerificationCode(phone).snapshot();
         if (debug)
             resp.setHeader("e_cr", shortCode);
@@ -162,8 +163,8 @@ public class LoginManager
     }
 
     @Override
-    public JsonResponse verifyEmail(String address, String usage) {
-        JsonResponse resp = new JsonResponse();
+    public IJsonResponse verifyEmail(String address, String usage) {
+        JsonResult resp = new JsonResult();
         String sign = crypto.sign(address).snapshot();
         resp.setHeader("sign", sign);
         throw new NotImplementedException("mail service isn't supported.");

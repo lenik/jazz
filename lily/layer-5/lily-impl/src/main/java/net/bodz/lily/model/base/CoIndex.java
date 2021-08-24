@@ -38,12 +38,7 @@ import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.file.IFileNameListener;
 import net.bodz.bas.site.file.IncomingSaver;
 import net.bodz.bas.site.file.ItemFile;
-import net.bodz.bas.site.json.HttpPayload;
-import net.bodz.bas.site.json.JsonMap;
-import net.bodz.bas.site.json.JsonResponse;
-import net.bodz.bas.site.json.JsonVarMap;
-import net.bodz.bas.site.json.JsonWrapper;
-import net.bodz.bas.site.json.TableOfPathProps;
+import net.bodz.bas.site.json.*;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -137,21 +132,21 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 try {
                     target = listHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new JsonResponse().fail(e, "Failed to handle list request: " + e.getMessage());
+                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
                 }
                 break;
             case "delete":
                 try {
                     target = deleteHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new JsonResponse().fail(e, "Failed to handle delete request: " + e.getMessage());
+                    target = new JsonResult().fail(e, "Failed to handle delete request: " + e.getMessage());
                 }
                 break;
             case "new":
                 try {
                     target = newHandler(q);
                 } catch (RequestHandlerException e) {
-                    target = new JsonResponse().fail(e, "Failed to handle new-form request: " + e.getMessage());
+                    target = new JsonResult().fail(e, "Failed to handle new-form request: " + e.getMessage());
                 }
                 break;
             case "save":
@@ -159,7 +154,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 try {
                     target = saveHandler(q, json);
                 } catch (RequestHandlerException e) {
-                    target = new JsonResponse().fail(e, "Failed to handle save request: " + e.getMessage());
+                    target = new JsonResult().fail(e, "Failed to handle save request: " + e.getMessage());
                 }
                 break;
             default:
@@ -264,9 +259,9 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected JsonResponse saveHandler(IVariantMap<String> q, JsonObject content)
+    protected JsonResult saveHandler(IVariantMap<String> q, JsonObject content)
             throws RequestHandlerException {
-        JsonResponse resp = new JsonResponse();
+        JsonResult resp = new JsonResult();
 
         T obj;
         long id = content.getLong("id", -1);
@@ -296,9 +291,9 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return resp;
     }
 
-    protected JsonResponse deleteHandler(IVariantMap<String> q)
+    protected JsonResult deleteHandler(IVariantMap<String> q)
             throws RequestHandlerException {
-        JsonResponse resp = new JsonResponse();
+        JsonResult resp = new JsonResult();
         String ids = q.getString("id");
         if (ids == null) {
             resp.fail("Id isn't specified.");
@@ -347,7 +342,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return obj;
     }
 
-    protected void preSave(IVariantMap<String> q, final T obj, JsonResponse resp)
+    protected void preSave(IVariantMap<String> q, final T obj, IMutableJsonResponse resp)
             throws IOException {
         if (obj instanceof IExternalFileUsage) {
             IExternalFileUsage u = (IExternalFileUsage) obj;
@@ -379,7 +374,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
     protected void renameUrlAsFileChange(T obj, File oldName, File newName, String relativePath) {
     }
 
-    protected void save(IVariantMap<String> q, T obj, JsonResponse resp) {
+    protected void save(IVariantMap<String> q, T obj, IMutableJsonResponse resp) {
         try {
             preSave(q, obj, resp);
         } catch (IOException e) {

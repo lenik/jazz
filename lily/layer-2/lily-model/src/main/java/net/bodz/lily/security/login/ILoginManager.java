@@ -1,6 +1,6 @@
 package net.bodz.lily.security.login;
 
-import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.site.json.IJsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public interface ILoginManager {
@@ -21,11 +21,11 @@ public interface ILoginManager {
 
     LoginResult loginByEmail(String email, String code);
 
-    JsonResponse logout();
+    IJsonResponse logout();
 
-    JsonResponse verifyPhone(String number, String usage);
+    IJsonResponse verifyPhone(String number, String usage);
 
-    JsonResponse verifyEmail(String address, String usage);
+    IJsonResponse verifyEmail(String address, String usage);
 
     LoginResult registerByPhone(String phone, String ecr, String password);
 
