@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.invoke.IInvocation;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -22,6 +24,8 @@ import net.bodz.bas.ui.dom1.IUiRef;
 
 public class Invocation_txt
         extends AbstractHttpViewBuilder<IInvocation> {
+
+    static final Logger logger = LoggerFactory.getLogger(Invocation_txt.class);
 
     public Invocation_txt() {
         super(IInvocation.class);
@@ -52,15 +56,33 @@ public class Invocation_txt
         if (args.length > max)
             throw new IllegalArgumentException("Too many arguments.");
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
+        int n = invocation.getParameterCount();
+        int missing = 0;
 
+        next_arg: //
+        for (int i = 0; i < n; i++) {
             Class<?> parameterType = invocation.getParameterType(i);
             Object parameter;
 
-            if (parameterType == String.class || parameterType == Object.class)
-                parameter = arg;
-            else {
+            do {
+                Object injection = ctx.query(parameterType);
+                if (injection != null) {
+                    parameter = injection;
+                    break;
+                }
+
+                if (i >= args.length) {
+                    missing++;
+                    continue next_arg;
+                }
+
+                // assert i < args.length;
+                String arg = args[i];
+                if (parameterType == String.class || parameterType == Object.class) {
+                    parameter = arg;
+                    break;
+                }
+
                 IParser<?> parser = Typers.getTyper(parameterType, IParser.class);
                 if (parser == null)
                     throw new ViewBuilderException("No parser for " + parameterType);
@@ -69,9 +91,14 @@ public class Invocation_txt
                 } catch (ParseException e) {
                     throw new ViewBuilderException(e.getMessage(), e);
                 }
-            }
+            } while (false);
 
             invocation.setParameter(i, parameter);
+        }
+
+        if (missing > 0) {
+            logger.warn("not all parameters are determined.");
+            // return 404;
         }
 
         try {
