@@ -101,6 +101,7 @@ public class PathDispatchServlet
             return;
 
         HttpServletReqEx req = HttpServletReqEx.of(_req);
+        req.setAttribute(HttpServletReqEx.ATTRIBUTE_KEY, req);
         req.setAttribute(HttpSnapManager.ATTRIBUTE_KEY, snapManager);
 
         if (!IHttpRequestProcessor.fn.applyAll(req, resp))
@@ -111,6 +112,8 @@ public class PathDispatchServlet
             pathInfo = pathInfo.substring(1);
         TokenQueue tokenQueue = new TokenQueue(pathInfo);
         IVariantMap<String> q = VariantMaps.fromRequest(req);
+        req.setAttribute(ITokenQueue.ATTRIBUTE_KEY, tokenQueue);
+        req.setAttribute(IVariantMap.class, q);
 
         Object start = rootObject;
         IPathArrival arrival;
@@ -124,7 +127,6 @@ public class PathDispatchServlet
         if (arrival == null)
             throw new ServletException("Dispatch failed: " + tokenQueue);
 
-        req.setAttribute(ITokenQueue.class, tokenQueue);
         req.setAttribute(IPathArrival.ATTRIBUTE_KEY, arrival);
 
         Object target = arrival.getTarget();

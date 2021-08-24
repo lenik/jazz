@@ -12,7 +12,10 @@ import net.bodz.bas.t.model.IWrapper;
 
 public class HttpServletReqEx
         extends HttpServletRequestWrapper
-        implements IWrapper<HttpServletRequest> {
+        implements
+            IWrapper<HttpServletRequest> {
+
+    public static final String ATTRIBUTE_KEY = HttpServletReqEx.class.getName();
 
     private HttpServletRequest wrapped;
 
