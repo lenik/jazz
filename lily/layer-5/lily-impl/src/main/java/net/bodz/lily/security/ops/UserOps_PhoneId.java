@@ -5,7 +5,9 @@ import java.util.List;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.site.json.JsonResponse;
+import net.bodz.bas.site.json.IJsonResponse;
+import net.bodz.bas.site.json.IMutableJsonResponse;
+import net.bodz.bas.site.json.JsonResult;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdTypes;
@@ -99,8 +101,8 @@ public class UserOps_PhoneId
         return resp.succeed();
     }
 
-    public JsonResponse bind(int uid, String phone) {
-        JsonResponse resp = new JsonResponse();
+    public IJsonResponse bind(int uid, String phone) {
+        JsonResult resp = new JsonResult();
 
         User user = checkUserId(resp, uid);
         if (user == null)
@@ -121,8 +123,8 @@ public class UserOps_PhoneId
         return resp.succeed();
     }
 
-    public JsonResponse unbind(int uid, String phone) {
-        JsonResponse resp = new JsonResponse();
+    public IJsonResponse unbind(int uid, String phone) {
+        JsonResult resp = new JsonResult();
         // 1. check uid
         User user = checkUserId(resp, uid);
         if (user == null)
@@ -137,7 +139,7 @@ public class UserOps_PhoneId
         return resp.succeed();
     }
 
-    User checkUserId(JsonResponse resp, int uid) {
+    User checkUserId(IMutableJsonResponse resp, int uid) {
         // 1. check uid
         User user = userMapper.select(uid);
         if (user == null)
@@ -145,7 +147,7 @@ public class UserOps_PhoneId
         return user;
     }
 
-    boolean checkInUse(JsonResponse resp, String phone) {
+    boolean checkInUse(IMutableJsonResponse resp, String phone) {
         // 2. check if the phone is in use.
         List<UserOtherId> oids = oidMapper.filter(//
                 new UserOtherIdMask().otherId(phone), SelectOptions.ALL);

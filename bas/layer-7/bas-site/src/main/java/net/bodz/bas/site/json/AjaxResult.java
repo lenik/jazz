@@ -13,9 +13,9 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.SortOrder;
 
 public class AjaxResult
-        extends AbstractJsonResponse<JsonResponse> {
+        extends AbstractJsonResponse<AjaxResult> {
 
-    static final Logger logger = LoggerFactory.getLogger(JsonResponse.class);
+    static final Logger logger = LoggerFactory.getLogger(AjaxResult.class);
 
     Map<String, IHtmlOut> htmlUpdates;
     HtmlOutputFormat htmlOutputFormat;
