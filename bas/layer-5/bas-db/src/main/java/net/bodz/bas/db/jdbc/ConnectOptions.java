@@ -9,7 +9,9 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.meta.bean.Transient;
 
 public class ConnectOptions
-        implements Serializable, Cloneable {
+        implements
+            Serializable,
+            Cloneable {
 
     private static final long serialVersionUID = 1L;
 
