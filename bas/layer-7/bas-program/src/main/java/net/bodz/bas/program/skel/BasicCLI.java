@@ -175,21 +175,25 @@ public abstract class BasicCLI
             Logger logger = getConfigLogger();
             if (logger != null) {
                 LogLevel level = logger.getLevel();
-                while (verboseLevel < 0) {
-                    LogLevel quiet = level.getQuiet();
-                    if (quiet == null)
-                        break;
-                    level = quiet;
-                    verboseLevel++;
+                if (level == null) {
+                    logger.error("null logger.level. have you checked conflicts log4j.properties files?");
+                } else {
+                    while (verboseLevel < 0) {
+                        LogLevel quiet = level.getQuiet();
+                        if (quiet == null)
+                            break;
+                        level = quiet;
+                        verboseLevel++;
+                    }
+                    while (verboseLevel > 0) {
+                        LogLevel verbose = level.getVerbose();
+                        if (verbose == null)
+                            break;
+                        level = verbose;
+                        verboseLevel--;
+                    }
+                    logger.setLevel(level);
                 }
-                while (verboseLevel > 0) {
-                    LogLevel verbose = level.getVerbose();
-                    if (verbose == null)
-                        break;
-                    level = verbose;
-                    verboseLevel--;
-                }
-                logger.setLevel(level);
             }
         }
     }
