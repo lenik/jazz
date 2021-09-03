@@ -41,6 +41,26 @@ public class RowList
             this.rows = rows;
     }
 
+    public RowList(ResultSet resultSet, int maxRows)
+            throws SQLException {
+        DefaultRowSetMetadata metadata = createMetadata();
+        metadata.readObject(resultSet.getMetaData());
+        this.metadata = metadata;
+        this.rows = new ArrayList<>();
+
+        for (int rowIndex = 0; rowIndex < maxRows; rowIndex++) {
+            if (!resultSet.next())
+                break;
+            MutableRow row = new MutableRow(metadata, rowIndex);
+            row.readObject(resultSet);
+            this.rows.add(row);
+        }
+    }
+
+    protected DefaultRowSetMetadata createMetadata() {
+        return new DefaultRowSetMetadata();
+    }
+
     public static RowList wrap(IRowSetMetadata metadata, List<IRow> rows) {
         return new RowList(metadata, rows, false);
     }
@@ -53,6 +73,30 @@ public class RowList
     @Override
     public int getRowCount() {
         return rows.size();
+    }
+
+    @Override
+    public IRow getRow(int index) {
+        return rows.get(index);
+    }
+
+    public IRow getRow(int index, IRow fallback) {
+        if (0 <= index && index < rows.size())
+            return rows.get(index);
+        else
+            return fallback;
+    }
+
+    public void addRow(IRow row) {
+        if (row == null)
+            throw new NullPointerException("row");
+        IRowSetMetadata other = row.getRowSetMetadata();
+        if (other != null) {
+            IRowSetMetadata mine = getMetadata();
+            if (other != mine)
+                throw new IllegalArgumentException("Conflict metadata");
+        }
+        rows.add(row);
     }
 
     @Override

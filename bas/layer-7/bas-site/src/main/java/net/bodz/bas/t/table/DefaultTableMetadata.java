@@ -1,5 +1,8 @@
 package net.bodz.bas.t.table;
 
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -73,6 +76,13 @@ public class DefaultTableMetadata
         name = x_table.getAttribute("name");
         String s = x_table.getString(K_PRIMARY_KEY);
         setPrimaryKey(s);
+    }
+
+    @Override
+    public void readObject(ResultSetMetaData jdbcMetadata)
+            throws SQLException {
+        super.readObject(jdbcMetadata);
+        // TODO
     }
 
     @Override

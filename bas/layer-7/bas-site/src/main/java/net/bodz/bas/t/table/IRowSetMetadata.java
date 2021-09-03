@@ -1,6 +1,7 @@
 package net.bodz.bas.t.table;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -20,6 +21,8 @@ public interface IRowSetMetadata
     String K_COLUMN = "column";
 
     boolean isSparse();
+
+    List<IColumnMetadata> getColumns();
 
     int getColumnCount();
 

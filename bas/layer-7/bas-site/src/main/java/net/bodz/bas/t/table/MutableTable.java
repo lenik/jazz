@@ -1,5 +1,7 @@
 package net.bodz.bas.t.table;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MutableTable
@@ -11,6 +13,16 @@ public class MutableTable
 
     public MutableTable(ITableMetadata metadata, List<IRow> rows) {
         super(metadata, rows);
+    }
+
+    public MutableTable(ResultSet resultSet, int maxRows)
+            throws SQLException {
+        super(resultSet, maxRows);
+    }
+
+    @Override
+    protected DefaultRowSetMetadata createMetadata() {
+        return new DefaultTableMetadata();
     }
 
     @Override
