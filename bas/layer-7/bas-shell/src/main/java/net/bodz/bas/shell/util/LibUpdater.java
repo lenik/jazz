@@ -65,9 +65,27 @@ public class LibUpdater {
                     if (unpacks.contains(file.getName())) {
                         // How to know the source dir of a dependency jar?
                     }
-                    System.out.println("Copy-Jar: " + file);
+
                     File dst = new File(libdir, file.getName());
-                    Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    boolean isLatest = false;
+
+                    do {
+                        if (!dst.exists())
+                            break;
+
+                        long srcVer = file.lastModified();
+                        long dstVer = dst.lastModified();
+                        if (srcVer >= dstVer)
+                            break;
+
+                        isLatest = true;
+                    } while (false);
+
+                    if (!isLatest) {
+                        System.out.println("Copy-Jar: " + file);
+                        Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    }
+
                     out.println("lib/" + file.getName());
                     continue;
                 }
