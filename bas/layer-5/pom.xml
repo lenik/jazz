@@ -22,6 +22,7 @@
         <module>bas-potato</module>
         <module>bas-repr-api</module>
         <module>bas-repr</module>
+        <module>bas-script</module>
         <module>bas-search</module>
         <module>bas-servlet</module>
         <module>bas-ui</module>
