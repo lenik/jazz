@@ -7,17 +7,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class MutableRow
         implements
             IAppendableRow {
+
+    static final Logger logger = LoggerFactory.getLogger(MutableRow.class);
 
     IRowSetMetadata metadata;
     int rowIndex;
@@ -47,6 +53,19 @@ public class MutableRow
     @Override
     public IColumnMetadata getMetadata(int index) {
         return metadata.getColumn(index);
+    }
+
+    @Override
+    public IColumnMetadata getMetadata(String name) {
+        IRowSetMetadata metadata = getRowSetMetadata();
+        if (metadata == null)
+            throw new IllegalUsageException("No metadata bound.");
+
+        IColumnMetadata column = metadata.getColumn(name);
+        if (column == null)
+            throw new NoSuchKeyException(name);
+
+        return column;
     }
 
     @Override

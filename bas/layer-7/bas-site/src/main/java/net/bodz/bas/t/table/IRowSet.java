@@ -23,6 +23,8 @@ public interface IRowSet
 
     int getRowCount();
 
+    IRow getRow(int index);
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {

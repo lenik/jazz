@@ -32,6 +32,11 @@ public class DefaultRowSetMetadata
     }
 
     @Override
+    public List<IColumnMetadata> getColumns() {
+        return columns;
+    }
+
+    @Override
     public int getColumnCount() {
         return columns.size();
     }

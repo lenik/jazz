@@ -6,4 +6,8 @@ public interface IMutableRow
 
     void set(int index, Object o);
 
+    default void set(String name, Object o) {
+        set(getMetadata(name).getIndex(), o);
+    }
+
 }
