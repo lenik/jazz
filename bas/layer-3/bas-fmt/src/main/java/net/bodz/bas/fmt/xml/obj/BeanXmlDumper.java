@@ -27,7 +27,7 @@ public class BeanXmlDumper
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
             throws XMLStreamException, FormatException {
-        marks.add(obj);
+        marks.addMark(obj);
 
         IXmlOverrides formatOverride = null;
         if (obj instanceof IXmlOverrides)

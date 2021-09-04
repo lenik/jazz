@@ -5,17 +5,22 @@ import java.util.Stack;
 import net.bodz.bas.err.IllegalUsageException;
 
 public class FramedMarks
-        implements IMarks {
+        implements
+            IMarkset {
 
-    Stack<Marks> stack;
+    Stack<IMarkset> stack;
 
     public FramedMarks() {
-        stack = new Stack<Marks>();
+        stack = new Stack<>();
         enter();
     }
 
+    protected IMarkset createMarkset() {
+        return new Marks();
+    }
+
     public void enter() {
-        stack.push(new Marks());
+        stack.push(createMarkset());
     }
 
     public void leave() {
@@ -25,38 +30,38 @@ public class FramedMarks
     }
 
     @Override
-    public boolean contains(Object o) {
-        for (Marks marks : stack)
-            if (marks.contains(o))
+    public boolean containsMark(Object o) {
+        for (IMarkset marks : stack)
+            if (marks.containsMark(o))
                 return true;
         return false;
     }
 
     @Override
-    public boolean add(Object o) {
-        if (contains(o))
+    public boolean addMark(Object o) {
+        if (containsMark(o))
             return false;
-        Marks top = stack.peek();
-        top.add(o);
+        IMarkset top = stack.peek();
+        top.addMark(o);
         return true;
     }
 
     @Override
-    public boolean remove(Object o) {
-        Marks top = stack.peek();
-        return top.remove(o);
+    public boolean removeMark(Object o) {
+        IMarkset top = stack.peek();
+        return top.removeMark(o);
     }
 
     @Override
-    public void clear() {
-        Marks top = stack.peek();
-        top.clear();
+    public void clearMarks() {
+        IMarkset top = stack.peek();
+        top.clearMarks();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(stack.size() * 100);
-        for (Marks marks : stack) {
+        for (IMarkset marks : stack) {
             sb.append(marks);
             sb.append("\n");
         }

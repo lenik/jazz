@@ -83,7 +83,7 @@ public abstract class AbstractXmlDumper
             throws XMLStreamException, FormatException {
         if (value instanceof IXmlSerializable) {
             IXmlSerializable obj = (IXmlSerializable) value;
-            if (!marks.add(obj))
+            if (!marks.addMark(obj))
                 return;
 
             out.beginElement(name);

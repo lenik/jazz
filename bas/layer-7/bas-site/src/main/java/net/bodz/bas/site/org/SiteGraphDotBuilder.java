@@ -10,7 +10,7 @@ import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.fmt.textmap.TextMapParser;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.res.builtin.URLResource;
-import net.bodz.bas.t.set.IMarks;
+import net.bodz.bas.t.set.IMarkset;
 import net.bodz.bas.t.set.Marks;
 
 public class SiteGraphDotBuilder
@@ -41,15 +41,15 @@ public class SiteGraphDotBuilder
         buildNodes(markSet, root);
 
         out.println();
-        markSet.clear();
+        markSet.clearMarks();
         buildEdges(markSet, root);
 
         out.leave();
         out.println("}");
     }
 
-    void buildNodes(IMarks marks, SiteGraphNode node) {
-        if (!marks.add(node))
+    void buildNodes(IMarkset marks, SiteGraphNode node) {
+        if (!marks.addMark(node))
             return;
 
         StringBuilder sb = new StringBuilder();
@@ -79,8 +79,8 @@ public class SiteGraphDotBuilder
             buildNodes(marks, relation.getDst());
     }
 
-    void buildEdges(IMarks marks, SiteGraphNode node) {
-        if (!marks.add(node))
+    void buildEdges(IMarkset marks, SiteGraphNode node) {
+        if (!marks.addMark(node))
             return;
 
         String srcId = node.getId();
