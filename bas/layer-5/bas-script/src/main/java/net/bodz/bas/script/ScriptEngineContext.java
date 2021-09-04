@@ -41,6 +41,12 @@ public class ScriptEngineContext
     }
 
     @Override
+    public Object include(String filename)
+            throws EvalException, IOException {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public Object eval(String code, String fileName)
             throws EvalException, IOException {
         put(ScriptEngine.FILENAME, fileName);
@@ -58,8 +64,7 @@ public class ScriptEngineContext
     }
 
     @Override
-    public Object include(String filename)
-            throws EvalException, IOException {
+    public Object loadModuleCode(String moduleCode) {
         throw new NotImplementedException();
     }
 
