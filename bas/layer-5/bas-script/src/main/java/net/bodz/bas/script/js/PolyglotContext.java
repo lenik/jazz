@@ -61,17 +61,12 @@ public class PolyglotContext
         return ValueFn.convert(result);
     }
 
+    static final String NO_FILE = "<script>";
+
     @Override
     public Object eval(String code)
             throws EvalException, IOException {
-        Source source = Source.newBuilder("js", code, "<script>") //
-                .mimeType("application/javascript+module").build();
-        try {
-            Value result = context.eval(source);
-            return ValueFn.convert(result);
-        } catch (PolyglotException e) {
-            throw new EvalException("error eval " + code + ": " + e.getMessage(), e);
-        }
+        return eval(code, NO_FILE);
     }
 
     @Override
@@ -87,6 +82,19 @@ public class PolyglotContext
             return ValueFn.convert(result);
         } catch (PolyglotException e) {
             throw new EvalException("error eval " + code + ": " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Object loadModuleCode(String moduleCode)
+            throws EvalException, IOException {
+        Source source = Source.newBuilder("js", moduleCode, NO_FILE) //
+                .mimeType("application/javascript+module").build();
+        try {
+            Value promise = context.eval(source);
+            return promise;
+        } catch (PolyglotException e) {
+            throw new EvalException("error eval " + moduleCode + ": " + e.getMessage(), e);
         }
     }
 

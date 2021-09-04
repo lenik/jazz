@@ -25,4 +25,8 @@ public interface IScriptContext
     Object eval(String code, String fileName)
             throws EvalException, IOException;
 
+    // Promise.
+    Object loadModuleCode(String moduleCode)
+            throws EvalException, IOException;
+
 }
