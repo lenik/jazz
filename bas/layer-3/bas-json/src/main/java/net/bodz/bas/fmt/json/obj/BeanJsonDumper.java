@@ -30,7 +30,7 @@ public class BeanJsonDumper
     }
 
     @Override
-    protected void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
+    protected void formatObjectMembers(Class<?> type, Object obj, int depth)
             throws IOException, FormatException {
         BeanInfo beanInfo;
         try {
@@ -60,9 +60,8 @@ public class BeanJsonDumper
                 continue;
 
             String propertyName = propertyDescriptor.getName();
-            String qname = prefix == null ? null : //
-                    (prefix.isEmpty() ? propertyName : (prefix + "." + propertyName));
-            if (!isIncluded(qname))
+            String path = markset.path(propertyName);
+            if (!isIncluded(path))
                 continue;
 
             Object propertyValue;
@@ -82,10 +81,15 @@ public class BeanJsonDumper
                 }
             }
 
-            else if (marks.push(propertyValue)) {
+            else {
                 out.key(propertyName);
-                _dumpImpl(true, propertyValue, depth + 1, qname);
-                marks.pop();
+                if (markset.canEnter(propertyName, propertyValue)) {
+                    _dumpImpl(true, propertyValue, depth + 1, path);
+                    markset.leave();
+                } else {
+                    String oldPath = markset.lookup(propertyValue);
+                    out.value("\\ref(" + oldPath + ")");
+                }
             }
         }
     }

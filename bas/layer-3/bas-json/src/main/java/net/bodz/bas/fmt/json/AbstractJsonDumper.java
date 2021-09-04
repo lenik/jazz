@@ -19,7 +19,8 @@ import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.repr.form.meta.NotNull;
-import net.bodz.bas.t.set.StackSet;
+import net.bodz.bas.t.map.IMarksetWithPath;
+import net.bodz.bas.t.map.MarksetWithPath;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
@@ -32,7 +33,7 @@ public abstract class AbstractJsonDumper<self_t>
             IJsonDumper {
 
     protected IJsonOut out;
-    protected StackSet<Object> marks;
+    protected IMarksetWithPath markset;
 
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
@@ -46,7 +47,7 @@ public abstract class AbstractJsonDumper<self_t>
 
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
-        this.marks = new StackSet<Object>();
+        this.markset = new MarksetWithPath();
     }
 
     public boolean isIncludeNull() {
@@ -100,6 +101,13 @@ public abstract class AbstractJsonDumper<self_t>
         _dumpOnce(true, obj, 0, "");
     }
 
+    public void dumpBoxedWithName(String name, Object obj)
+            throws IOException, FormatException {
+        markset.enter(name);
+        dumpBoxed(obj);
+        markset.leave();
+    }
+
     protected boolean isIncluded(String name) {
         if (includes.contains(name))
             return true;
@@ -109,7 +117,7 @@ public abstract class AbstractJsonDumper<self_t>
         return includes.isEmpty();
     }
 
-    protected void _dumpOnce(boolean enclosed, Object obj, int depth, String prefix)
+    protected void _dumpOnce(boolean enclosed, Object obj, int depth, String name)
             throws IOException, FormatException {
         if (obj == null) {
             if (!enclosed)
@@ -118,25 +126,27 @@ public abstract class AbstractJsonDumper<self_t>
             return;
         }
 
-        if (!isIncluded(prefix)) {
+        String path = markset.path(name);
+        if (!isIncluded(path)) {
             if (!enclosed)
                 out.key(hintProperty);
             // out.value("<excluded>");
             return;
         }
 
-        if (marks.push(obj)) {
-            _dumpImpl(enclosed, obj, depth, prefix);
-            marks.pop();
+        String oldPath = markset.addMark(obj, null);
+        if (oldPath == null) {
+            _dumpImpl(enclosed, obj, depth, name);
+            // markset.pop();
         } else {
             if (!enclosed)
                 out.key(hintProperty);
             // TODO use StackMap to print dup ref info.
-            out.value("<dup>");
+            out.value("\\ref(" + oldPath + ")");
         }
     }
 
-    protected void _dumpImpl(boolean enclosed, @NotNull Object obj, int depth, String prefix)
+    protected void _dumpImpl(boolean enclosed, @NotNull Object obj, int depth, String _name)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isArray()) {
@@ -144,8 +154,10 @@ public abstract class AbstractJsonDumper<self_t>
                 out.array();
             int length = Array.getLength(obj);
             for (int i = 0; i < length; i++) {
-                _dumpOnce(true, Array.get(obj, i), depth + 1, //
-                        prefix == null ? null : (prefix + "[" + i + "]"));
+                String name = "[" + i + "]";
+                markset.enter(name);
+                _dumpOnce(true, Array.get(obj, i), depth + 1, name);
+                markset.leave();
             }
             if (enclosed)
                 out.endArray();
@@ -157,8 +169,10 @@ public abstract class AbstractJsonDumper<self_t>
                 out.array();
             int i = 0;
             for (Object item : (Collection<?>) obj) {
-                _dumpOnce(true, item, depth + 1, //
-                        prefix == null ? null : (prefix + "[" + i + "]"));
+                String name = "[" + i + "]";
+                markset.enter(name);
+                _dumpOnce(true, item, depth + 1, name);
+                markset.leave();
                 i++;
             }
             if (enclosed)
@@ -179,11 +193,14 @@ public abstract class AbstractJsonDumper<self_t>
                     if (!includeNull)
                         continue;
 
-                String qname = prefix == null ? null : (prefix + "{" + key + "}");
+                String name = "['" + key + "']";
+                markset.enter(name);
+                String qname = markset.path(name);
                 if (isIncluded(qname)) {
                     out.key(key.toString());
-                    _dumpOnce(true, value, depth + 1, qname);
+                    _dumpOnce(true, value, depth + 1, name);
                 }
+                markset.leave();
             }
             if (enclosed)
                 out.endObject();
@@ -206,7 +223,7 @@ public abstract class AbstractJsonDumper<self_t>
                     // jser.writeObject(out);
                     // BeanJsonDumper dumper = new BeanJsonDumper(out);
                     // this.dump(jser, false);
-                    this._dumpImpl(false, jser, 0, prefix); // reset the depth to dump in obj.
+                    this._dumpImpl(false, jser, 0, null); // reset the depth to dump in obj.
                 } else {
                     jser.writeObject(out);
                 }
@@ -307,7 +324,7 @@ public abstract class AbstractJsonDumper<self_t>
             out.object();
 
         try {
-            formatObjectMembers(type, obj, depth, prefix);
+            formatObjectMembers(type, obj, depth);
 
             if (enclosed)
                 out.endObject();
@@ -318,7 +335,7 @@ public abstract class AbstractJsonDumper<self_t>
         }
     }
 
-    protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth, String prefix)
+    protected abstract void formatObjectMembers(Class<?> type, Object obj, int depth)
             throws IOException, FormatException;
 
     protected void formatException(int depth, Throwable e) {
