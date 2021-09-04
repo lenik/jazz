@@ -78,7 +78,7 @@ public abstract class AbstractRstDumper
             throws IOException, FormatException {
         if (value instanceof IRstSerializable) {
             IRstSerializable obj = (IRstSerializable) value;
-            if (!marks.add(obj))
+            if (!marks.addMark(obj))
                 return;
 
             String args[] = {};

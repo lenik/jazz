@@ -1,33 +1,40 @@
 package net.bodz.bas.t.set;
 
+import java.util.Set;
+
 import net.bodz.bas.c.object.IdentityHashSet;
 
 public class Marks
-        implements IMarks {
+        implements
+            IMarkset {
 
-    IdentityHashSet<Object> idSet;
+    Set<Object> idSet;
 
     public Marks() {
-        idSet = new IdentityHashSet<Object>();
+        this(new IdentityHashSet<Object>());
+    }
+
+    public Marks(Set<Object> idSet) {
+        this.idSet = idSet;
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean containsMark(Object o) {
         return idSet.contains(o);
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean addMark(Object o) {
         return idSet.add(o);
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean removeMark(Object o) {
         return idSet.remove(o);
     }
 
     @Override
-    public void clear() {
+    public void clearMarks() {
         idSet.clear();
     }
 

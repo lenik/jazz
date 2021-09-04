@@ -26,7 +26,7 @@ public class BeanRstDumper
     @Override
     protected void formatObject(Class<?> clazz, Object obj)
             throws IOException, FormatException {
-        marks.add(obj);
+        marks.addMark(obj);
 
         IRstOverrides formatOverride = null;
         if (obj instanceof IRstOverrides)
