@@ -89,9 +89,15 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     @Override
-    public void dump(Object obj, boolean enclosed)
+    public void dump(Object obj)
             throws IOException, FormatException {
-        _dumpOnce(enclosed, obj, 0, "");
+        _dumpOnce(false, obj, 0, "");
+    }
+
+    @Override
+    public void dumpBoxed(Object obj)
+            throws IOException, FormatException {
+        _dumpOnce(true, obj, 0, "");
     }
 
     protected boolean isIncluded(String name) {

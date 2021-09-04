@@ -6,7 +6,10 @@ import net.bodz.bas.err.FormatException;
 
 public interface IJsonDumper {
 
-    void dump(Object obj, boolean enclosed)
+    void dump(Object obj)
+            throws IOException, FormatException;
+
+    void dumpBoxed(Object obj)
             throws IOException, FormatException;
 
 }

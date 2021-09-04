@@ -135,7 +135,7 @@ public class JsonWrapper
             dumper.setIncludeNull(includeNull);
             dumper.setIncludeFalse(includeFalse);
             dumper.depth(maxDepth);
-            dumper.dump(obj, true);
+            dumper.dumpBoxed(obj);
         }
 
         if (key != null)
