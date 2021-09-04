@@ -641,7 +641,7 @@ public abstract class CoObject
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
         BeanJsonDumper dumper = new BeanJsonDumper(out);
-        dumper.dump(this, false);
+        dumper.dump(this);
     }
 
     public IWebSupport getWebSupport() {

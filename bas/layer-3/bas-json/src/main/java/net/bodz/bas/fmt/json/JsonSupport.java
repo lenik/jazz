@@ -21,7 +21,7 @@ public abstract class JsonSupport
     @Override
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        new BeanJsonDumper(out).dump(this, false);
+        new BeanJsonDumper(out).dump(this);
     }
 
 }

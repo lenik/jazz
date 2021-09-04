@@ -94,7 +94,7 @@ public class BeanJsonDumper
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            new BeanJsonDumper(out).dump(obj, true);
+            new BeanJsonDumper(out).dumpBoxed(obj);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         } catch (FormatException e) {
