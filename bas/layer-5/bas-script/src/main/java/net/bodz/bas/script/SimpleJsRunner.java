@@ -9,9 +9,8 @@ import java.io.InputStreamReader;
 
 import javax.script.ScriptEngine;
 
-import org.graalvm.polyglot.Value;
-
 import net.bodz.bas.c.java.io.capture.Processes;
+import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.log.Logger;
@@ -20,7 +19,7 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.script.io.ResourceResolver;
 import net.bodz.bas.script.js.PolyglotContext;
-import net.bodz.bas.script.js.ValueFn;
+import net.bodz.bas.script.js.ValueDumper;
 
 /**
  * Simple Javascript Runner
@@ -47,12 +46,23 @@ public class SimpleJsRunner
      */
     boolean extensions = false;
 
-    protected final ResourceResolver resourceResolver;
-    protected final IScriptContext scriptContext;
-
     public SimpleJsRunner() {
-        resourceResolver = createResourceResolver();
-        scriptContext = createScriptContext();
+    }
+
+    protected IScriptContext createScriptContext() {
+        IScriptContext scriptContext;
+        if (scripting) {
+            ScriptEngine scriptEngine = ScriptEngineUtils.getEngine();
+            scriptContext = new ScriptEngineContext(scriptEngine);
+        } else {
+            ResourceResolver resourceResolver = createResourceResolver();
+            if (extensions)
+                scriptContext = PolyglotContext.createContextVerbose(resourceResolver);
+            else
+                scriptContext = PolyglotContext.createContext(resourceResolver);
+        }
+        initScriptContext(scriptContext);
+        return scriptContext;
     }
 
     protected ResourceResolver createResourceResolver() {
@@ -62,38 +72,31 @@ public class SimpleJsRunner
         return resourceResolver;
     }
 
-    protected IScriptContext createScriptContext() {
-        if (scripting) {
-            ScriptEngine scriptEngine = ScriptEngineUtils.getEngine();
-            return new ScriptEngineContext(scriptEngine);
-        } else {
-            if (extensions)
-                return PolyglotContext.createContextVerbose(resourceResolver);
-            else
-                return PolyglotContext.createContext(resourceResolver);
-        }
-    }
-
-    protected void initScriptVars() {
+    protected void initScriptContext(IScriptContext scriptContext) {
         scriptContext.put("app", this);
 
         Object global = scriptContext.getGlobalObject();
         scriptContext.put("global", global);
     }
 
-    String evalPretty(String code, String file)
+    String evalPretty(IScriptContext scriptContext, String code, String file)
             throws EvalException, IOException, FormatException {
 
-        Value result = (Value) scriptContext.eval(code, file);
+        Object result = scriptContext.eval(code, file);
 
-        String json = ValueFn.dumpBoxed(result);
+        JsonBuffer buf = new JsonBuffer();
+        ValueDumper dumper = new ValueDumper(buf);
+        dumper.dumpBoxed(result);
+        String json = buf.toString();
         json = format(json);
         return json;
     }
 
     @Override
     protected void mainImpl(String... args)
-            throws IOException {
+            throws Exception {
+        IScriptContext scriptContext = createScriptContext();
+
         if (args.length > 0)
             for (int i = 0; i < args.length; i++) {
                 String arg = args[i];
@@ -101,7 +104,7 @@ public class SimpleJsRunner
 
                 String result;
                 try {
-                    result = evalPretty(arg, "arg-" + i);
+                    result = evalPretty(scriptContext, arg, "arg-" + i);
                 } catch (Throwable e) {
                     System.err.println("error: " + e.getMessage());
                     logger.error(e, "error: " + e.getMessage());
@@ -124,10 +127,11 @@ public class SimpleJsRunner
 
                 String result;
                 try {
-                    result = evalPretty(line, "line-" + lineNo);
+                    result = evalPretty(scriptContext, line, "line-" + lineNo);
                 } catch (Throwable e) {
                     System.err.println("error: " + e.getMessage());
                     logger.error(e, "error: " + e.getMessage());
+//                    throw e;
                     continue;
                 }
                 System.out.print(result);
