@@ -1,1 +1,1 @@
-net.bodz.bas.log.log4j.Log4jMdcConfigurer
+net.bodz.bas.log.log4j.PragmaticLog4jLoader
