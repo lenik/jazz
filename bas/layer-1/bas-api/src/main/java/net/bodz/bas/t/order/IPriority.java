@@ -2,6 +2,8 @@ package net.bodz.bas.t.order;
 
 public interface IPriority {
 
-    int getPriority();
+    default int getPriority() {
+        return 0;
+    }
 
 }

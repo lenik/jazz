@@ -1,2 +1,3 @@
 net.bodz.bas.log.ILoggingSystemConfigurer
 net.bodz.bas.log.diag.IContextsCdcConfigurer
+net.bodz.bas.log.log4j.ILog4jConfigurer
