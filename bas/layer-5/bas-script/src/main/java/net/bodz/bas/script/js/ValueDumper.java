@@ -20,12 +20,10 @@ public class ValueDumper
     }
 
     @Override
-    protected void formatObjectMembers(Class<?> type, Object obj, int depth)
+    protected boolean dumpMembers(Class<?> type, Object obj, int depth)
             throws IOException, FormatException {
-        if (type != Value.class) {
-            super.formatObjectMembers(type, obj, depth);
-            return;
-        }
+        if (type != Value.class)
+            return super.dumpMembers(type, obj, depth);
 
         Value value = (Value) obj;
 
@@ -155,6 +153,7 @@ public class ValueDumper
             out.entry("chars", sourceLocation.getCharacters());
             out.endObject();
         }
+        return true;
     }
 
 }
