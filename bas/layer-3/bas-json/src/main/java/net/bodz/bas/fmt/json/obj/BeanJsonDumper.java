@@ -30,16 +30,29 @@ public class BeanJsonDumper
     }
 
     @Override
-    protected void formatObjectMembers(Class<?> type, Object obj, int depth)
+    protected boolean dumpGenericObject(boolean boxed, Class<?> type, Object obj, int depth)
             throws IOException, FormatException {
+        if (boxed)
+            out.object();
+        try {
+            return dumpMembers(type, obj, depth);
+        } finally {
+            if (boxed)
+                out.endObject();
+        }
+    }
+
+    protected boolean dumpMembers(Class<?> type, Object obj, int depth)
+            throws IOException, FormatException {
+
         BeanInfo beanInfo;
         try {
             beanInfo = Introspector.getBeanInfo(type);
         } catch (IntrospectionException e) {
             logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
-            formatException(depth + 1, e);
-            return;
+            formatException(true, depth + 1, e);
+            return true;
         }
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
@@ -70,7 +83,7 @@ public class BeanJsonDumper
             } catch (ReflectiveOperationException e) {
                 logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 out.key(propertyName);
-                formatException(depth + 1, e);
+                formatException(true, depth + 1, e);
                 continue;
             }
 
@@ -83,15 +96,10 @@ public class BeanJsonDumper
 
             else {
                 out.key(propertyName);
-                if (markset.canEnter(propertyName, propertyValue)) {
-                    _dumpImpl(true, propertyValue, depth + 1, path);
-                    markset.leave();
-                } else {
-                    String oldPath = markset.lookup(propertyValue);
-                    out.value("\\ref(" + oldPath + ")");
-                }
+                _dumpOnce(true, propertyValue, depth + 1, propertyName);
             }
         }
+        return true;
     }
 
     public static String toString(Object obj) {

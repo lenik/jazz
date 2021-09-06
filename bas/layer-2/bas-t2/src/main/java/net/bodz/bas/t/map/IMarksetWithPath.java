@@ -24,10 +24,6 @@ public interface IMarksetWithPath
 
     String addMark(Object o, String name);
 
-    default boolean canEnter(String name, Object o) {
-        return enter(name, o) == null;
-    }
-
     default String enter(String name, Object o) {
         enter(name);
         String oldPath = addMark(o, null);
