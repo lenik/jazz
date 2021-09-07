@@ -1,5 +1,6 @@
 package net.bodz.bas.t.variant;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -9,7 +10,8 @@ import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedVariantMap<K>
         extends AbstractDecorator<IVariantMap<K>>
-        implements IVariantMap<K> {
+        implements
+            IVariantMap<K> {
 
     private static final long serialVersionUID = 1L;
 
@@ -230,6 +232,16 @@ public class DecoratedVariantMap<K>
     @Override
     public Date getDate(K key, Date defaultValue) {
         return getWrapped().getDate(key, defaultValue);
+    }
+
+    @Override
+    public File getFile(K key) {
+        return getWrapped().getFile(key);
+    }
+
+    @Override
+    public File getFile(K key, File defaultValue) {
+        return getWrapped().getFile(key, defaultValue);
     }
 
 }

@@ -1,11 +1,13 @@
 package net.bodz.bas.t.variant;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 public interface IVariantMap<K>
-        extends ILookupMap<K, Object> {
+        extends
+            ILookupMap<K, Object> {
 
     String format(K formatKey, Object... args);
 
@@ -13,7 +15,7 @@ public interface IVariantMap<K>
 
     /**
      * Get the value as a scalar.
-     * 
+     *
      * @return If the value is non-array, the value is returned. Otherwise, return the first element
      *         in the array. If the array is empty, returns <code>null</code>, too.
      */
@@ -21,10 +23,10 @@ public interface IVariantMap<K>
 
     /**
      * Get the value as a scalar.
-     * 
+     *
      * @return If the value is non-array, the value is returned. Otherwise, return the first element
      *         in the array. If the array is empty, returns <code>null</code>, too.
-     * 
+     *
      *         If there is no entry for the key, defaultValue is returned.
      */
     Object getScalar(K key, Object defaultValue);
@@ -102,5 +104,9 @@ public interface IVariantMap<K>
     Date getDate(K key);
 
     Date getDate(K key, Date defaultValue);
+
+    File getFile(K key);
+
+    File getFile(K key, File defaultValue);
 
 }

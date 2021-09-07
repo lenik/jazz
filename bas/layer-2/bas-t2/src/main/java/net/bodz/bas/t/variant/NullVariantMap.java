@@ -1,12 +1,14 @@
 package net.bodz.bas.t.variant;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 public class NullVariantMap<K>
         extends NullLookupMap<K, Object>
-        implements IVariantMap<K> {
+        implements
+            IVariantMap<K> {
 
     @Override
     public String format(K formatKey, Object... args) {
@@ -198,6 +200,16 @@ public class NullVariantMap<K>
 
     @Override
     public Date getDate(K key, Date defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public File getFile(K key) {
+        return null;
+    }
+
+    @Override
+    public File getFile(K key, File defaultValue) {
         return defaultValue;
     }
 
