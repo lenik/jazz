@@ -94,7 +94,11 @@ public interface IRow
         out.endElement();
     }
 
-    default Map<String, Object> export(//
+    default Map<String, Object> toMap() {
+        return toMap(null, null);
+    }
+
+    default Map<String, Object> toMap(//
             Function<String, String> rename, //
             Function<Integer, String> renameIndexes) {
         Map<String, Object> map = new HashMap<>();
