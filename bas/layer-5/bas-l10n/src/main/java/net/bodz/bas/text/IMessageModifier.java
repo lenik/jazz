@@ -1,10 +1,12 @@
 package net.bodz.bas.text;
 
-import net.bodz.bas.fn.ITransformer;
+import java.util.function.Function;
+
 import net.bodz.bas.meta.codegen.IndexedType;
 
 @IndexedType
 public interface IMessageModifier
-        extends ITransformer<String, String> {
+        extends
+            Function<String, String> {
 
 }

@@ -1,24 +1,24 @@
 package net.bodz.bas.fn;
 
-import net.bodz.bas.err.TransformException;
+import java.util.function.Function;
 
 public class ConjunctTransformer<S, T>
-        extends AbstractTransformer<S, T> {
+        implements
+            Function<S, T> {
 
-    ITransformer<S, ?> first;
-    ITransformer<Object, T> second;
+    Function<S, ?> first;
+    Function<Object, T> second;
 
     @SuppressWarnings("unchecked")
-    public <X> ConjunctTransformer(ITransformer<S, ? extends X> first, ITransformer<? super X, T> second) {
+    public <X> ConjunctTransformer(Function<S, ? extends X> first, Function<? super X, T> second) {
         this.first = first;
-        this.second = (ITransformer<Object, T>) second;
+        this.second = (Function<Object, T>) second;
     }
 
     @Override
-    public T transform(S input)
-            throws TransformException {
-        Object tmp = first.transform(input);
-        T output = second.transform(tmp);
+    public T apply(S input) {
+        Object tmp = first.apply(input);
+        T output = second.apply(tmp);
         return output;
     }
 

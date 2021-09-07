@@ -10,7 +10,6 @@ import org.apache.commons.vfs.*;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.c.java.nio.DeleteOptions;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.t.iterator.Iterables;
@@ -147,7 +146,8 @@ public class ApacheFile
     }
 
     class VfsNameSelector
-            implements FileSelector {
+            implements
+                FileSelector {
 
         private final IFilenameFilter vfsFilter;
         private final IFile parentDir;
@@ -176,7 +176,8 @@ public class ApacheFile
     }
 
     class VfsFileSelector
-            implements FileSelector {
+            implements
+                FileSelector {
 
         private final IFilter<IFile> vfsFilter;
 
@@ -227,12 +228,8 @@ public class ApacheFile
     }
 
     Iterable<ApacheFile> convertFiles(Iterable<FileObject> fileObjects) {
-        return Iterables.transform(fileObjects, new AbstractTransformer<FileObject, ApacheFile>() {
-            @Override
-            public ApacheFile transform(FileObject input) {
-                return new ApacheFile(getDevice(), input);
-            }
-        });
+        return Iterables.transform(fileObjects, //
+                (FileObject input) -> new ApacheFile(getDevice(), input));
     }
 
     /** ⇱ Implementation Of {@link IFileAttributes}. */

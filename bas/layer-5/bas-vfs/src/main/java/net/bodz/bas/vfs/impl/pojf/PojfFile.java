@@ -11,11 +11,11 @@ import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
+import java.util.function.Function;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -169,18 +169,18 @@ public class PojfFile
     }
 
     Iterable<? extends IFile> convertNames(Iterable<String> names) {
-        return Iterables.transform(names, new AbstractTransformer<String, PojfFile>() {
+        return Iterables.transform(names, new Function<String, PojfFile>() {
             @Override
-            public PojfFile transform(String input) {
+            public PojfFile apply(String input) {
                 return PojfFile.this.getChild(input);
             }
         });
     }
 
     Iterable<? extends IFile> convertFiles(Iterable<File> files) {
-        return Iterables.transform(files, new AbstractTransformer<File, PojfFile>() {
+        return Iterables.transform(files, new Function<File, PojfFile>() {
             @Override
-            public PojfFile transform(File input) {
+            public PojfFile apply(File input) {
                 return new PojfFile(input);
             }
         });

@@ -1,9 +1,11 @@
 package net.bodz.bas.fn;
 
-public interface IBidiTransformerX<S, T, X extends Exception>
-        extends ITransformerX<S, T, X> {
+public interface IBidiTransformerX<S, T, X extends Throwable> {
 
-    S untransform(T output)
+    T apply(S t)
+            throws X;
+
+    S unapply(T output)
             throws X;
 
 }

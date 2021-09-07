@@ -1,7 +1,8 @@
 package net.bodz.bas.crypto.trans;
 
+import java.util.function.Function;
+
 import net.bodz.bas.crypto.trans.fn.ICodeBin;
-import net.bodz.bas.fn.ITransformer;
 
 public interface IFlyingTransient {
 
@@ -28,10 +29,10 @@ public interface IFlyingTransient {
 
     IFlyingTransient getCore();
 
-    IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin> transformer);
+    IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin> transformer);
 
     @SuppressWarnings("unchecked")
-    IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers);
+    IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin>... transformers);
 
     void diag(String search, int distance, int allowAhead);
 

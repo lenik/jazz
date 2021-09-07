@@ -8,19 +8,17 @@ import java.util.Random;
 
 import net.bodz.bas.c.java.net.URLData;
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.text.IMessageModifier;
 import net.bodz.bas.text.trie.CharTrie;
 
 public class AntiCensorshipMessageModifier
-        extends AbstractTransformer<String, String>
-        implements IMessageModifier {
+        implements
+            IMessageModifier {
 
     private Random random = new Random();
 
     @Override
-    public String transform(String input)
-            throws RuntimeException {
+    public String apply(String input) {
         StringBuilder sb = new StringBuilder(input.length() * 2);
         int[] heads = trie.scanTries(input);
         int pos = 0;

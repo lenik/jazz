@@ -9,20 +9,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.joda.time.DateTime;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.fn.AbstractTransformer;
-import net.bodz.bas.fn.ITransformer;
 
 public abstract class AbstractVarConverter<T>
-        implements IVarConverter<T> {
+        implements
+            IVarConverter<T> {
 
     protected final Class<T> type;
-    final Map<Class<?>, ITransformer<Object, T>> frommap = new HashMap<Class<?>, ITransformer<Object, T>>();
-    final Map<Class<?>, ITransformer<T, ?>> tomap = new HashMap<Class<?>, ITransformer<T, ?>>();
+    final Map<Class<?>, Function<Object, T>> frommap = new HashMap<Class<?>, Function<Object, T>>();
+    final Map<Class<?>, Function<T, ?>> tomap = new HashMap<Class<?>, Function<T, ?>>();
     final Set<IVarConverterExtension<T>> extensions;
 
     public AbstractVarConverter(Class<T> type) {
@@ -39,7 +39,7 @@ public abstract class AbstractVarConverter<T>
         tomap.put(Integer.class, new ToIntTr());
         tomap.put(Long.class, new ToLongTr());
 
-        tomap.put(type, AbstractTransformer.Nop.<T> getInstance());
+        tomap.put(type, Function.identity());
         tomap.put(Float.class, new ToFloatTr());
         tomap.put(Double.class, new ToDoubleTr());
         tomap.put(Boolean.class, new ToBooleanTr());
@@ -57,12 +57,12 @@ public abstract class AbstractVarConverter<T>
         while (it.hasNext()) {
             IVarConverterExtension<T> ext = it.next();
 
-            Map<Class<?>, ITransformer<Object, T>> fm = ext.getFromMap();
+            Map<Class<?>, Function<Object, T>> fm = ext.getFromMap();
             for (Class<?> t : fm.keySet())
                 if (!frommap.containsKey(t))
                     frommap.put(t, fm.get(t));
 
-            Map<Class<?>, ITransformer<T, Object>> tm = ext.getToMap();
+            Map<Class<?>, Function<T, Object>> tm = ext.getToMap();
             for (Class<?> t : tm.keySet())
                 if (!tomap.containsKey(t))
                     tomap.put(t, tm.get(t));
@@ -126,9 +126,9 @@ public abstract class AbstractVarConverter<T>
 
         Class<?> sup = type;
         while (sup != null) {
-            ITransformer<Object, T> fn = frommap.get(sup);
+            Function<Object, T> fn = frommap.get(sup);
             if (fn != null)
-                return fn.transform(obj);
+                return fn.apply(obj);
             sup = sup.getSuperclass();
         }
 
@@ -154,9 +154,9 @@ public abstract class AbstractVarConverter<T>
             return type.cast(value);
 
         Class<?> boxedType = Primitives.box(type);
-        ITransformer<T, ?> fn = tomap.get(boxedType);
+        Function<T, ?> fn = tomap.get(boxedType);
         if (fn != null)
-            return (U) fn.transform(value);
+            return (U) fn.apply(value);
 
         for (IVarConverterExtension<T> ext : extensions)
             if (ext.canConvertTo(type))
@@ -269,161 +269,181 @@ public abstract class AbstractVarConverter<T>
     }
 
     class CastTr
-            extends AbstractTransformer<Object, T> {
+            implements
+                Function<Object, T> {
         @Override
-        public T transform(Object input) {
+        public T apply(Object input) {
             return AbstractVarConverter.this.type.cast(input);
         }
     }
 
     class FromStringTr
-            extends AbstractTransformer<Object, T> {
+            implements
+                Function<Object, T> {
         @Override
-        public T transform(Object input) {
+        public T apply(Object input) {
             return fromString((String) input);
         };
     }
 
     class FromNumberTr
-            extends AbstractTransformer<Object, T> {
+            implements
+                Function<Object, T> {
         @Override
-        public T transform(Object input) {
+        public T apply(Object input) {
             return fromNumber((Number) input);
         };
     }
 
     class FromByteArrayTr
-            extends AbstractTransformer<Object, T> {
+            implements
+                Function<Object, T> {
         @Override
-        public T transform(Object input) {
+        public T apply(Object input) {
             return fromByteArray((byte[]) input);
         };
     }
 
     class FromStringArrayTr
-            extends AbstractTransformer<Object, T> {
+            implements
+                Function<Object, T> {
         @Override
-        public T transform(Object input) {
+        public T apply(Object input) {
             return fromStringArray((String[]) input);
         };
     }
 
     class ToByteTr
-            extends AbstractTransformer<T, Byte> {
+            implements
+                Function<T, Byte> {
         @Override
-        public Byte transform(T input) {
+        public Byte apply(T input) {
             return toByte(input);
         }
     }
 
     class ToShortTr
-            extends AbstractTransformer<T, Short> {
+            implements
+                Function<T, Short> {
         @Override
-        public Short transform(T input) {
+        public Short apply(T input) {
             return toShort(input);
         }
     }
 
     class ToIntTr
-            extends AbstractTransformer<T, Integer> {
+            implements
+                Function<T, Integer> {
         @Override
-        public Integer transform(T input) {
+        public Integer apply(T input) {
             return toInt(input);
         }
     }
 
     class ToLongTr
-            extends AbstractTransformer<T, Long> {
+            implements
+                Function<T, Long> {
         @Override
-        public Long transform(T input) {
+        public Long apply(T input) {
             return toLong(input);
         }
     }
 
     class ToFloatTr
-            extends AbstractTransformer<T, Float> {
+            implements
+                Function<T, Float> {
         @Override
-        public Float transform(T input) {
+        public Float apply(T input) {
             return toFloat(input);
         }
     }
 
     class ToDoubleTr
-            extends AbstractTransformer<T, Double> {
+            implements
+                Function<T, Double> {
         @Override
-        public Double transform(T input) {
+        public Double apply(T input) {
             return toDouble(input);
         }
     }
 
     class ToBooleanTr
-            extends AbstractTransformer<T, Boolean> {
+            implements
+                Function<T, Boolean> {
         @Override
-        public Boolean transform(T input) {
+        public Boolean apply(T input) {
             return toBoolean(input);
         }
     }
 
     class ToCharTr
-            extends AbstractTransformer<T, Character> {
+            implements
+                Function<T, Character> {
         @Override
-        public Character transform(T input) {
+        public Character apply(T input) {
             return toChar(input);
         }
     }
 
     class ToStringTr
-            extends AbstractTransformer<T, String> {
+            implements
+                Function<T, String> {
         @Override
-        public String transform(T input) {
+        public String apply(T input) {
             return AbstractVarConverter.this.toString(input);
         }
     }
 
     class ToBigIntegerTr
-            extends AbstractTransformer<T, BigInteger> {
+            implements
+                Function<T, BigInteger> {
         @Override
-        public BigInteger transform(T input) {
+        public BigInteger apply(T input) {
             return toBigInteger(input);
         }
     }
 
     class ToBigDecimalTr
-            extends AbstractTransformer<T, BigDecimal> {
+            implements
+                Function<T, BigDecimal> {
         @Override
-        public BigDecimal transform(T input) {
+        public BigDecimal apply(T input) {
             return toBigDecimal(input);
         }
     }
 
     class ToCalendarTr
-            extends AbstractTransformer<T, Calendar> {
+            implements
+                Function<T, Calendar> {
         @Override
-        public Calendar transform(T input) {
+        public Calendar apply(T input) {
             return toCalendar(input);
         }
     }
 
     class ToDateTr
-            extends AbstractTransformer<T, Date> {
+            implements
+                Function<T, Date> {
         @Override
-        public Date transform(T input) {
+        public Date apply(T input) {
             return toDate(input);
         }
     }
 
     class ToDateTimeTr
-            extends AbstractTransformer<T, DateTime> {
+            implements
+                Function<T, DateTime> {
         @Override
-        public DateTime transform(T input) {
+        public DateTime apply(T input) {
             return toDateTime(input);
         }
     }
 
     class ToSqlDateTr
-            extends AbstractTransformer<T, java.sql.Date> {
+            implements
+                Function<T, java.sql.Date> {
         @Override
-        public java.sql.Date transform(T input) {
+        public java.sql.Date apply(T input) {
             return toSqlDate(input);
         }
     }

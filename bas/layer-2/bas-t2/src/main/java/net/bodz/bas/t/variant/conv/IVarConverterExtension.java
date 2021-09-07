@@ -1,9 +1,9 @@
 package net.bodz.bas.t.variant.conv;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import net.bodz.bas.err.TypeConvertException;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.t.order.IPriority;
 
@@ -13,9 +13,9 @@ public interface IVarConverterExtension<T>
 
     Class<?> getType();
 
-    Map<Class<?>, ITransformer<Object, T>> getFromMap();
+    Map<Class<?>, Function<Object, T>> getFromMap();
 
-    Map<Class<?>, ITransformer<T, Object>> getToMap();
+    Map<Class<?>, Function<T, Object>> getToMap();
 
     boolean canConvertFrom(Class<?> type);
 

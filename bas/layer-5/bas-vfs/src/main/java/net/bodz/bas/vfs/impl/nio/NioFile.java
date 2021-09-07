@@ -10,10 +10,10 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.Collections;
+import java.util.function.Function;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -174,10 +174,11 @@ public class NioFile
     }
 
     static class Path2NioFile
-            extends AbstractTransformer<Path, NioFile> {
+            implements
+                Function<Path, NioFile> {
 
         @Override
-        public NioFile transform(Path input)
+        public NioFile apply(Path input)
                 throws RuntimeException {
             return new NioFile(input);
         }

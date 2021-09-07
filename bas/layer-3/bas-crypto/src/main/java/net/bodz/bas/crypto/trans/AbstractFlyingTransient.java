@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.crypto.trans.fn.ICodeBin;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.fn.TransformerArray;
 
 public abstract class AbstractFlyingTransient
@@ -86,16 +86,16 @@ public abstract class AbstractFlyingTransient
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin> transformer) {
+    public IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin> transformer) {
         return new TransformedFlyingTransient(this, transformer);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public IFlyingTransient transform(ITransformer<? extends ICodeBin, ? extends ICodeBin>... transformers) {
-        List<ITransformer<ICodeBin, ICodeBin>> list = new ArrayList<ITransformer<ICodeBin, ICodeBin>>();
-        for (ITransformer<? extends ICodeBin, ? extends ICodeBin> item : transformers) {
-            ITransformer<ICodeBin, ICodeBin> cast = (ITransformer<ICodeBin, ICodeBin>) item;
+    public IFlyingTransient transform(Function<? extends ICodeBin, ? extends ICodeBin>... transformers) {
+        List<Function<ICodeBin, ICodeBin>> list = new ArrayList<Function<ICodeBin, ICodeBin>>();
+        for (Function<? extends ICodeBin, ? extends ICodeBin> item : transformers) {
+            Function<ICodeBin, ICodeBin> cast = (Function<ICodeBin, ICodeBin>) item;
             list.add(cast);
         }
         TransformerArray<ICodeBin> array = new TransformerArray<ICodeBin>(list);

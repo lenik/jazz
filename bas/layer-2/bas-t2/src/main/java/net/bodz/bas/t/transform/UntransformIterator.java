@@ -25,7 +25,7 @@ public final class UntransformIterator<S, T>
     @Override
     public S next() {
         T transformed = transformedIterator.next();
-        S source = transformer.untransform(transformed);
+        S source = transformer.unapply(transformed);
         return source;
     }
 

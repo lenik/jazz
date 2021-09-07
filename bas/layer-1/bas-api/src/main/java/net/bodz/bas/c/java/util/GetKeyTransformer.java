@@ -1,14 +1,13 @@
 package net.bodz.bas.c.java.util;
 
 import java.util.Map.Entry;
-
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class GetKeyTransformer<K>
-        extends AbstractTransformer<Entry<K, ?>, K> {
+implements Function<Entry<K, ?>, K> {
 
     @Override
-    public K transform(Entry<K, ?> input)
+    public K apply(Entry<K, ?> input)
             throws RuntimeException {
         if (input == null)
             return null;

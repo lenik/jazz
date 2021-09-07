@@ -2,17 +2,18 @@ package net.bodz.bas.c.java.util.zip;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import net.bodz.bas.ar.IArchiveEntry;
 import net.bodz.bas.ar.IUnarchiver;
 import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.t.iterator.Iterators;
 
 public class JuzZipFileUnarchiver
-        implements IUnarchiver {
+        implements
+            IUnarchiver {
 
     private ZipFile zipFile;
     private boolean closed;
@@ -62,10 +63,11 @@ public class JuzZipFileUnarchiver
     }
 
     class EntryTransformer
-            extends AbstractTransformer<ZipEntry, JuzZipEntry> {
+            implements
+                Function<ZipEntry, JuzZipEntry> {
 
         @Override
-        public JuzZipEntry transform(ZipEntry input)
+        public JuzZipEntry apply(ZipEntry input)
                 throws TransformException {
             return new JuzZipEntry(zipFile, input);
         }

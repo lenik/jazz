@@ -6,10 +6,10 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.t.factory.Instantiator;
 
@@ -94,7 +94,7 @@ public class Iterables {
         return new FilteredIterable<T>(iterable, filter);
     }
 
-    public static <S, T> Iterable<T> transform(Iterable<S> iterable, ITransformer<S, T> transformer) {
+    public static <S, T> Iterable<T> transform(Iterable<S> iterable, Function<S, T> transformer) {
         return new TransformedIterable<S, T>(iterable, transformer);
     }
 
@@ -189,9 +189,9 @@ class TransformedIterable<S, T>
         implements Iterable<T> {
 
     final Iterable<? extends S> orig;
-    final ITransformer<S, T> transformer;
+    final Function<S, T> transformer;
 
-    public TransformedIterable(Iterable<? extends S> orig, ITransformer<S, T> transformer) {
+    public TransformedIterable(Iterable<? extends S> orig, Function<S, T> transformer) {
         this.orig = orig;
         this.transformer = transformer;
     }

@@ -1,9 +1,9 @@
 package net.bodz.bas.t.iterator;
 
 import java.util.*;
+import java.util.function.Function;
 
 import net.bodz.bas.fn.IFilter;
-import net.bodz.bas.fn.ITransformer;
 
 public class Iterators {
 
@@ -137,18 +137,19 @@ public class Iterators {
         return new FilteredIterator<T>(iterator, filter);
     }
 
-    public static <S, T> Iterator<T> transform(Iterator<S> iterable, ITransformer<S, T> transformer) {
+    public static <S, T> Iterator<T> transform(Iterator<S> iterable, Function<S, T> transformer) {
         return new TransformedIterator<S, T>(iterable, transformer);
     }
 
-    public static <S, T> Iterator<T> transform(Enumeration<? extends S> enm, ITransformer<S, T> transformer) {
+    public static <S, T> Iterator<T> transform(Enumeration<? extends S> enm, Function<S, T> transformer) {
         return new TransformedEnmIterator<S, T>(enm, transformer);
     }
 
 }
 
 class EmptyIterator<T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     @Override
     public boolean hasNext() {
@@ -173,7 +174,8 @@ class EmptyIterator<T>
  * Repeat object self to iterator.
  */
 class RepeatIterator<T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     private final T object;
     private final int count;
@@ -207,7 +209,8 @@ class RepeatIterator<T>
 }
 
 class ArrayIterator<T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     private final T[] array;
     private int next;
@@ -243,7 +246,8 @@ class ArrayIterator<T>
  * Interface adapter to convert an existing {@link Enumeration} to {@link Iterator}.
  */
 class EnumIterator<T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     private final Enumeration<? extends T> enumration;
 
@@ -298,12 +302,13 @@ class FilteredIterator<T>
 }
 
 class TransformedIterator<S, T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     final Iterator<? extends S> orig;
-    final ITransformer<S, T> transformer;
+    final Function<S, T> transformer;
 
-    public TransformedIterator(Iterator<? extends S> orig, ITransformer<S, T> transformer) {
+    public TransformedIterator(Iterator<? extends S> orig, Function<S, T> transformer) {
         this.orig = orig;
         this.transformer = transformer;
     }
@@ -316,7 +321,7 @@ class TransformedIterator<S, T>
     @Override
     public T next() {
         S src = orig.next();
-        T dst = transformer.transform(src);
+        T dst = transformer.apply(src);
         return dst;
     }
 
@@ -328,12 +333,13 @@ class TransformedIterator<S, T>
 }
 
 class TransformedEnmIterator<S, T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
     final Enumeration<? extends S> orig;
-    final ITransformer<S, T> transformer;
+    final Function<S, T> transformer;
 
-    public TransformedEnmIterator(Enumeration<? extends S> orig, ITransformer<S, T> transformer) {
+    public TransformedEnmIterator(Enumeration<? extends S> orig, Function<S, T> transformer) {
         this.orig = orig;
         this.transformer = transformer;
     }
@@ -346,7 +352,7 @@ class TransformedEnmIterator<S, T>
     @Override
     public T next() {
         S src = orig.nextElement();
-        T dst = transformer.transform(src);
+        T dst = transformer.apply(src);
         return dst;
     }
 

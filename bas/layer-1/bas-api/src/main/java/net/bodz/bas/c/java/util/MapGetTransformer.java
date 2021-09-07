@@ -1,12 +1,11 @@
 package net.bodz.bas.c.java.util;
 
 import java.util.Map;
-
-import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class MapGetTransformer<K, V>
-        extends AbstractTransformer<K, V> {
+        implements
+            Function<K, V> {
 
     private final Map<?, ? extends V> map;
 
@@ -17,8 +16,7 @@ public class MapGetTransformer<K, V>
     }
 
     @Override
-    public V transform(K input)
-            throws TransformException {
+    public V apply(K input) {
         V value = map.get(input);
         return value;
     }
