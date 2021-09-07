@@ -12,6 +12,7 @@ public class UnixStyleVarExpander
 
     private static Pattern variableRefPattern;
     static {
+        // RegExp: \$ (?:([0-9]+|[a-zA-Z_][a-zA-Z_0-9]*) | \{((?:\\.|.)*?)\})
         variableRefPattern = Pattern.compile( //
                 "\\$(?:([0-9]+|[a-zA-Z_][a-zA-Z_0-9]*)|\\{((?:\\\\.|.)*?)\\})");
     }
