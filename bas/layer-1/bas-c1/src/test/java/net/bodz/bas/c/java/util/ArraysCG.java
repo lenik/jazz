@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
 import net.bodz.bas.c.java.util.regex.TextPrepByParts;
+import net.bodz.bas.c.java.util.regex.TextPreps;
 
 public class ArraysCG {
 
@@ -110,7 +111,7 @@ public class ArraysCG {
                 s = s.replace("ZERO", type.ZERO);
 
                 if ("alg".equals(mode)) {
-                    TextPrepByParts prep = TextPrepByParts.match(FNCALL, new IPartProcessor() {
+                    TextPrepByParts prep = TextPreps.match(FNCALL, new IPartProcessor() {
                         @Override
                         public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
                                 throws IOException {
