@@ -74,9 +74,6 @@ public class SimpleJsRunner
 
     protected void initScriptContext(IScriptContext scriptContext) {
         scriptContext.put("app", this);
-
-        Object global = scriptContext.getGlobalObject();
-        scriptContext.put("global", global);
     }
 
     String evalPretty(IScriptContext scriptContext, String code, String file)
