@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
-import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class PartialMd5Transformer
-        extends AbstractTransformer<ICodeBin, PartialMd5OfTextBin> {
+        implements
+            Function<ICodeBin, PartialMd5OfTextBin> {
 
     int length;
     int radix;
@@ -15,8 +15,7 @@ public class PartialMd5Transformer
     }
 
     @Override
-    public PartialMd5OfTextBin transform(ICodeBin input)
-            throws TransformException {
+    public PartialMd5OfTextBin apply(ICodeBin input) {
         String str = input.getStringForm();
         return new PartialMd5OfTextBin(str, length, radix);
     }

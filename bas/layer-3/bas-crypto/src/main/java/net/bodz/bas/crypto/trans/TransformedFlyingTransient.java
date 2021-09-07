@@ -1,15 +1,16 @@
 package net.bodz.bas.crypto.trans;
 
+import java.util.function.Function;
+
 import net.bodz.bas.crypto.trans.fn.ICodeBin;
-import net.bodz.bas.fn.ITransformer;
 
 public class TransformedFlyingTransient<S extends ICodeBin, T extends ICodeBin>
         extends AbstractFlyingTransient {
 
     IFlyingTransient core;
-    ITransformer<S, T> transformer;
+    Function<S, T> transformer;
 
-    public TransformedFlyingTransient(IFlyingTransient core, ITransformer<S, T> transformer) {
+    public TransformedFlyingTransient(IFlyingTransient core, Function<S, T> transformer) {
         super(core.getWindow());
         this.core = core;
         this.transformer = transformer;
@@ -24,7 +25,7 @@ public class TransformedFlyingTransient<S extends ICodeBin, T extends ICodeBin>
     public T getCode(long index) {
         @SuppressWarnings("unchecked")
         S orig = (S) core.getCode(index);
-        T dst = transformer.transform(orig);
+        T dst = transformer.apply(orig);
         return dst;
     }
 

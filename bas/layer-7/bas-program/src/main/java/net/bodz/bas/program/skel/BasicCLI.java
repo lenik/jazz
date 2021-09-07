@@ -4,12 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import net.bodz.bas.c.java.nio.WildcardsExpander;
 import net.bodz.bas.c.string.StringQuoted;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fn.AbstractTransformer;
-import net.bodz.bas.fn.ITransformer;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
@@ -25,7 +24,6 @@ import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ParserUtil;
 import net.bodz.bas.ui.dialog.ConsoleDialogs;
 import net.bodz.bas.ui.dialog.IUserDialogs;
-import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFS;
 
@@ -225,23 +223,11 @@ public abstract class BasicCLI
         return Iterables.transform(expandWildcards(pathnames), vfsFileResolver);
     }
 
-    private static final ITransformer<String, File> pojfFileResolver = new AbstractTransformer<String, File>() {
-        /** @throws FileResolveException */
-        @Override
-        public File transform(String pathname) {
-            File file = new File(pathname);
-            return file;
-        }
-    };
+    private static final Function<String, File> pojfFileResolver = //
+            (String pathname) -> new File(pathname);
 
-    private static final ITransformer<String, IFile> vfsFileResolver = new AbstractTransformer<String, IFile>() {
-        /** @throws FileResolveException */
-        @Override
-        public IFile transform(String pathname) {
-            IFile file = VFS.resolve(pathname);
-            return file;
-        }
-    };
+    private static final Function<String, IFile> vfsFileResolver = //
+            (String pathname) -> VFS.resolve(pathname);
 
     protected Iterable<String> expandWildcards(final String... pathnames) {
         List<Iterable<String>> iterableList = new ArrayList<Iterable<String>>(pathnames.length);

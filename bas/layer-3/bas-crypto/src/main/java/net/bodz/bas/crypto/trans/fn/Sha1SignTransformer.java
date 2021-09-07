@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
-import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class Sha1SignTransformer
-        extends AbstractTransformer<ICodeBin, Sha1OfTextBin> {
+        implements
+            Function<ICodeBin, Sha1OfTextBin> {
 
     String key;
 
@@ -15,8 +15,7 @@ public class Sha1SignTransformer
     }
 
     @Override
-    public Sha1OfTextBin transform(ICodeBin input)
-            throws TransformException {
+    public Sha1OfTextBin apply(ICodeBin input) {
         String guard = input.getStringForm();
         return new Sha1OfTextBin(guard + key + guard);
     }

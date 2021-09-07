@@ -40,7 +40,7 @@ public class UntransformCollection<S, T>
     }
 
     public boolean add(S source) {
-        T transformed = transformer.transform(source);
+        T transformed = transformer.apply(source);
         return transformedCollection.add(transformed);
     }
 
@@ -50,7 +50,7 @@ public class UntransformCollection<S, T>
         // S source = S_TYPE.cast(o);
         @SuppressWarnings("unchecked")
         S source = (S) o;
-        T transformed = transformer.transform(source);
+        T transformed = transformer.apply(source);
         return transformedCollection.contains(transformed);
     }
 
@@ -60,14 +60,14 @@ public class UntransformCollection<S, T>
         // S source = S_TYPE.cast(o);
         @SuppressWarnings("unchecked")
         S source = (S) o;
-        T transformed = transformer.transform(source);
+        T transformed = transformer.apply(source);
         return transformedCollection.remove(transformed);
     }
 
     public boolean addAll(Collection<? extends S> c) {
         boolean changed = false;
         for (S source : c) {
-            T transformed = transformer.transform(source);
+            T transformed = transformer.apply(source);
             changed |= transformedCollection.add(transformed);
         }
         return changed;
@@ -80,7 +80,7 @@ public class UntransformCollection<S, T>
             // S source = S_TYPE.cast(e);
             @SuppressWarnings("unchecked")
             S source = (S) o;
-            T transformed = transformer.transform(source);
+            T transformed = transformer.apply(source);
             if (!transformedCollection.contains(transformed))
                 return false;
         }
@@ -95,7 +95,7 @@ public class UntransformCollection<S, T>
             // S source = S_TYPE.cast(o);
             @SuppressWarnings("unchecked")
             S source = (S) o;
-            T transformed = transformer.transform(source);
+            T transformed = transformer.apply(source);
             changed |= transformedCollection.remove(transformed);
         }
         return changed;
@@ -104,7 +104,7 @@ public class UntransformCollection<S, T>
     public boolean retainAll(Collection<?> c) {
         List<Object> removeList = new ArrayList<>(transformedCollection.size());
         for (T transformed : transformedCollection) {
-            S source = transformer.untransform(transformed);
+            S source = transformer.unapply(transformed);
             if (!c.contains(source))
                 removeList.add(transformed);
         }
@@ -123,7 +123,7 @@ public class UntransformCollection<S, T>
         for (int i = 0; i < transformedArray.length; i++) {
             @SuppressWarnings("unchecked")
             T transformed = (T) transformedArray[i];
-            S source = transformer.untransform(transformed);
+            S source = transformer.unapply(transformed);
             sourceArray[i] = source;
         }
         return sourceArray;
@@ -155,7 +155,7 @@ public class UntransformCollection<S, T>
         for (int i = 0; i < size; i++) {
             // T transformed = T_TYPE.cast(transformedArray[i]);
             T transformed = (T) transformedArray[i];
-            S source = transformer.untransform(transformed);
+            S source = transformer.unapply(transformed);
             // Array.set(sourceArray, i, source);
             sourceArray[i] = (_S) source;
         }

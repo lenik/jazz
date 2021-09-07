@@ -23,7 +23,7 @@ public class LoginCrypto
     }
 
     public IFlyingTransient shortVerificationCode(String key) {
-        return core.transform(tr.md5Sign(key).join(SHORT_TEXT));
+        return core.transform(tr.md5Sign(key).andThen(SHORT_TEXT));
     }
 
     public FlyingIndex checkShortVerificationCode(String key, String verificationCode, AbstractJsonResponse<?> resp) {

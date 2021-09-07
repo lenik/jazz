@@ -1,11 +1,11 @@
 package net.bodz.bas.ctx.util;
 
 import java.util.*;
+import java.util.function.Function;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.StackUnderflowException;
-import net.bodz.bas.fn.AbstractTransformer;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.pojo.Pair;
 
@@ -294,22 +294,24 @@ class VarNode {
     }
 
     public static class GetData<T>
-            extends AbstractTransformer<VarNode, T> {
+            implements
+                Function<VarNode, T> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public T transform(VarNode input) {
+        public T apply(VarNode input) {
             return (T) input.data;
         }
 
     }
 
     public static class GetEntryOfData<K, T>
-            extends AbstractTransformer<Map.Entry<K, VarNode>, Map.Entry<K, T>> {
+            implements
+                Function<Map.Entry<K, VarNode>, Map.Entry<K, T>> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public Map.Entry<K, T> transform(Map.Entry<K, VarNode> input) {
+        public Map.Entry<K, T> apply(Map.Entry<K, VarNode> input) {
             Pair<K, T> pair = new Pair<K, T>(input.getKey(), (T) input.getValue().data);
             return pair;
         }

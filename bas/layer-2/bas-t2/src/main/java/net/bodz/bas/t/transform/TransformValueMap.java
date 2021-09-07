@@ -8,10 +8,12 @@ import java.util.Set;
 import net.bodz.bas.c.java.util.CollectionToString;
 
 public class TransformValueMap<K, V, _V>
-        implements Map<K, V> {
+        implements
+            Map<K, V> {
 
     class EntryTransformer
-            implements ElTransformer<Entry<K, V>, Entry<K, _V>> {
+            implements
+                ElTransformer<Entry<K, V>, Entry<K, _V>> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -26,19 +28,19 @@ public class TransformValueMap<K, V, _V>
         }
 
         @Override
-        public Entry<K, _V> transform(Entry<K, V> source) {
+        public Entry<K, _V> apply(Entry<K, V> source) {
             K key = source.getKey();
             V sourceValue = source.getValue();
-            _V transformedValue = transformer.transform(sourceValue);
+            _V transformedValue = transformer.apply(sourceValue);
             Entry<K, _V> transformedEntry = new SimpleEntry<K, _V>(key, transformedValue);
             return transformedEntry;
         }
 
         @Override
-        public Entry<K, V> untransform(Entry<K, _V> transformed) {
+        public Entry<K, V> unapply(Entry<K, _V> transformed) {
             K key = transformed.getKey();
             _V transformedValue = transformed.getValue();
-            V sourceValue = transformer.untransform(transformedValue);
+            V sourceValue = transformer.unapply(transformedValue);
             Entry<K, V> sourceEntry = new SimpleEntry<K, V>(key, sourceValue);
             return sourceEntry;
         }
@@ -90,28 +92,28 @@ public class TransformValueMap<K, V, _V>
         // V source = S_TYPE.cast(value);
         @SuppressWarnings("unchecked")
         V source = (V) value;
-        _V transformed = transformer.transform(source);
+        _V transformed = transformer.apply(source);
         return map.containsValue(transformed);
     }
 
     @Override
     public V get(Object key) {
         _V transformed = map.get(key);
-        return transformer.untransform(transformed);
+        return transformer.unapply(transformed);
     }
 
     @Override
     public V put(K key, V value) {
-        _V transformed = transformer.transform(value);
+        _V transformed = transformer.apply(value);
         _V previousTransformed = map.put(key, transformed);
-        V previousValue = transformer.untransform(previousTransformed);
+        V previousValue = transformer.unapply(previousTransformed);
         return previousValue;
     }
 
     @Override
     public V remove(Object key) {
         _V previousTransformed = map.remove(key);
-        V previousValue = transformer.untransform(previousTransformed);
+        V previousValue = transformer.unapply(previousTransformed);
         return previousValue;
     }
 
@@ -120,7 +122,7 @@ public class TransformValueMap<K, V, _V>
         for (Entry<? extends K, ? extends V> e : m.entrySet()) {
             K key = e.getKey();
             V value = e.getValue();
-            _V transformed = transformer.transform(value);
+            _V transformed = transformer.apply(value);
             map.put(key, transformed);
         }
     }
@@ -137,12 +139,14 @@ public class TransformValueMap<K, V, _V>
         return new UntransformSet<Entry<K, V>, Entry<K, _V>>(entryTransformer, _entrySet);
     }
 
+    @Override
     public int hashCode() {
         int hash = 0xc0bebf65;
         hash += map.hashCode();
         return hash;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o instanceof TransformValueMap<?, ?, ?>)
             return ((TransformValueMap<?, ?, ?>) o).map.equals(map);

@@ -1,10 +1,10 @@
 package net.bodz.bas.crypto.trans.fn;
 
-import net.bodz.bas.err.TransformException;
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class Md5SignTransformer
-        extends AbstractTransformer<ICodeBin, Md5OfTextBin> {
+        implements
+            Function<ICodeBin, Md5OfTextBin> {
 
     String key;
 
@@ -13,8 +13,7 @@ public class Md5SignTransformer
     }
 
     @Override
-    public Md5OfTextBin transform(ICodeBin input)
-            throws TransformException {
+    public Md5OfTextBin apply(ICodeBin input) {
         String str = input.getStringForm();
         return new Md5OfTextBin(key + str + key);
     }

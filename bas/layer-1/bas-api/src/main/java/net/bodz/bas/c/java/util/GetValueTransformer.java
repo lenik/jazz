@@ -1,14 +1,14 @@
 package net.bodz.bas.c.java.util;
 
 import java.util.Map.Entry;
-
-import net.bodz.bas.fn.AbstractTransformer;
+import java.util.function.Function;
 
 public class GetValueTransformer<V>
-        extends AbstractTransformer<Entry<?, V>, V> {
+        implements
+            Function<Entry<?, V>, V> {
 
     @Override
-    public V transform(Entry<?, V> input)
+    public V apply(Entry<?, V> input)
             throws RuntimeException {
         if (input == null)
             return null;
