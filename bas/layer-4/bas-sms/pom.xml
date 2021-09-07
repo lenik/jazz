@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas</artifactId>
+        <artifactId>layer-4</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bas-sms</artifactId>

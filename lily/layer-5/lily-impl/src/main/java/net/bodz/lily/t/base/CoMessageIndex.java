@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
-import net.bodz.bas.c.java.util.regex.TextPrepByParts;
+import net.bodz.bas.c.java.util.regex.TextPreps;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.IMutableJsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -26,7 +26,7 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
         if (request != null && "file://".equals(request.getHeader("Origin"))) {
             String html = obj.getText();
             final String host = request.getHeader("Host");
-            String mod = TextPrepByParts.match(imgsrc, new IPartProcessor() {
+            String mod = TextPreps.match(imgsrc, new IPartProcessor() {
                 @Override
                 public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
                         throws IOException {
@@ -56,7 +56,7 @@ public abstract class CoMessageIndex<T extends CoMessage<?>, M extends CoMessage
     }
 
     String stripAbsoluteUrls(String html) {
-        return TextPrepByParts.match(imgsrc, new IPartProcessor() {
+        return TextPreps.match(imgsrc, new IPartProcessor() {
             @Override
             public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
                     throws IOException {

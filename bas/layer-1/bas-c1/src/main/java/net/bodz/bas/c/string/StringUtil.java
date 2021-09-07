@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
 import net.bodz.bas.c.java.util.regex.TextPrepByParts;
+import net.bodz.bas.c.java.util.regex.TextPreps;
 import net.bodz.bas.io.IPrintOut;
 
 public class StringUtil {
@@ -15,7 +16,7 @@ public class StringUtil {
     private static TextPrepByParts UNESCAPE;
     static {
         Pattern pattern = Pattern.compile("\\\\(.)");
-        UNESCAPE = TextPrepByParts.match(pattern, new IPartProcessor() {
+        UNESCAPE = TextPreps.match(pattern, new IPartProcessor() {
             @Override
             public void process(CharSequence in, int start, int end, Appendable out, Matcher matcher)
                     throws IOException {
