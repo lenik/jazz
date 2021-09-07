@@ -1,14 +1,19 @@
 package net.bodz.bas.json;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Supplier;
 
 import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fn.FunctionX;
 import net.bodz.bas.repr.form.SortOrder;
-import net.bodz.bas.t.factory.IFactory;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.fork.org.json.JSONException;
@@ -310,21 +315,46 @@ public class JsonObject
         return obj;
     }
 
-    public <T extends IJsonSerializable> List<T> readArrayInto(String key, List<T> list, IFactory<T> factory)
-            throws ParseException {
-        return readArrayInto(key, list, factory, ArrayList.class);
+    public <T> Set<T> //
+            getArraySet(String key, Set<T> set, SortOrder order, FunctionX<Object, T, ParseException> conv)
+                    throws ParseException {
+        return readArrayInto(key, set, conv, () -> order.newSet());
     }
 
-    public <T extends IJsonSerializable> Set<T> readArrayInto(String key, Set<T> list, IFactory<T> factory)
-            throws ParseException {
-        return readArrayInto(key, list, factory, TreeSet.class);
+    public <T> List<T> //
+            getArrayList(String key, List<T> list, FunctionX<Object, T, ParseException> conv)
+                    throws ParseException {
+        return readArrayInto(key, list, conv, () -> new ArrayList<>());
     }
 
-    public <C extends Collection<T>, T extends IJsonSerializable> C readArrayInto(String key, C set,
-            IFactory<T> factory, Class<?> newSetClass)
-            throws ParseException {
+    public <T extends IJsonSerializable> Set<T> //
+            readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
+                    throws ParseException {
+        return readArrayInto(key, set, (Object jsObj) -> {
+            JsonObject o = (JsonObject) jsObj;
+            T val = vals.get();
+            val.readObject(o);
+            return val;
+        }, () -> order.newSet());
+    }
+
+    public <T extends IJsonSerializable> List<T> //
+            readArrayIntoList(String key, List<T> list, Supplier<T> vals)
+                    throws ParseException {
+        return readArrayInto(key, list, (Object jsObj) -> {
+            JsonObject o = (JsonObject) jsObj;
+            T val = vals.get();
+            val.readObject(o);
+            return val;
+        }, () -> new ArrayList<>());
+    }
+
+    public <C extends Collection<T>, T> C //
+            readArrayInto(String key, C collection, FunctionX<Object, T, ParseException> conv,
+                    Supplier<C> collectionSupplier)
+                    throws ParseException {
         if (!has(key)) // nothing to change
-            return set;
+            return collection;
 
         Object _node = get(key);
         if (_node == null) // force set to null
@@ -332,31 +362,72 @@ public class JsonObject
 
         if (_node instanceof JsonArray) {
             JsonArray array = (JsonArray) _node;
-            if (set == null) {
-                if (newSetClass == null) // don't auto-create
+            if (collection == null) {
+                if (collectionSupplier == null) // don't auto-create
                     return null;
-                try {
-                    @SuppressWarnings("unchecked")
-                    C instance = (C) newSetClass.newInstance();
-                    set = instance;
-                } catch (Exception e) {
-                    throw new UnexpectedException(e.getMessage(), e);
-                }
+                collection = collectionSupplier.get();
             } else {
-                set.clear();
+                collection.clear();
             }
 
             // set.readObject(array);
             int n = array.length();
             for (int i = 0; i < n; i++) {
-                JsonObject node = array.getJsonObject(i);
-                T obj = factory.create();
-                obj.readObject(node);
-                set.add(obj);
+                Object node = array.get(i);
+                T obj = conv.apply(node);
+                collection.add(obj);
             }
         }
 
-        return set;
+        return collection;
+    }
+
+    public <T> Map<String, T> //
+            getMap(String key, Map<String, T> map, SortOrder order, FunctionX<Object, T, ParseException> conv)
+                    throws ParseException {
+        return readIntoMap(key, map, conv, () -> order.newMap());
+    }
+
+    public <T extends IJsonSerializable> Map<String, T> //
+            readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
+                    throws ParseException {
+        return readIntoMap(key, map, (Object jsObj) -> {
+            JsonObject o = (JsonObject) jsObj;
+            T val = vals.get();
+            val.readObject(o);
+            return val;
+        }, () -> order.newMap());
+    }
+
+    public <M extends Map<String, T>, T> M //
+            readIntoMap(String key, M map, FunctionX<Object, T, ParseException> conv, Supplier<M> mapSupplier)
+                    throws ParseException {
+        if (!has(key)) // nothing to change
+            return map;
+
+        Object _node = get(key);
+        if (_node == null) // force set to null
+            return null;
+
+        if (_node instanceof JsonObject) {
+            JsonObject o = (JsonObject) _node;
+            if (map == null) {
+                if (mapSupplier == null) // don't auto-create
+                    return null;
+                map = mapSupplier.get();
+            } else {
+                map.clear();
+            }
+
+            for (Object _k : o.keySet()) {
+                String k = (String) _k;
+                Object jsObj = o.get(k);
+                T obj = conv.apply(jsObj);
+                map.put(k, obj);
+            }
+        }
+
+        return map;
     }
 
 }
