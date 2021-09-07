@@ -1,17 +1,24 @@
 package net.bodz.bas.db.jdbc;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Properties;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 
 public class ConnectOptions
         implements
             Serializable,
-            Cloneable {
+            Cloneable,
+            IJsonSerializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -188,6 +195,34 @@ public class ConnectOptions
 
     public DataContext newDataContext() {
         return new DataContext(this);
+    }
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        type = o.getVar(DatabaseType.class, "type");
+        url = o.getString("url", url);
+        hostName = o.getString("hostName", hostName);
+        port = o.getInt("port", port);
+        rootDir = o.getFile("rootDir", rootDir);
+        database = o.getString("database", database);
+        userName = o.getString("userName", userName);
+        password = o.getString("password", password);
+        // out.entry("info", info);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException, FormatException {
+        out.entry("type", type);
+        out.entry("url", url);
+        out.entry("hostName", hostName);
+        out.entry("port", port);
+        out.entry("rootDir", rootDir);
+        out.entry("database", database);
+        out.entry("userName", userName);
+        out.entry("password", password);
+        // out.entry("info", info);
     }
 
 }
