@@ -1,5 +1,6 @@
 package net.bodz.bas.t.variant;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -244,9 +245,33 @@ public abstract class AutoConvVariantMap<K>
 //            if (containsKey(key))
 //                return null;
 //            else
-                return defaultValue;
+            return defaultValue;
         try {
             return DateVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public File getFile(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return FileConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public File getFile(K key, File defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+        try {
+            return FileConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
