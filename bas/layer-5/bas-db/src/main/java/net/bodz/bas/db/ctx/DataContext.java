@@ -25,13 +25,22 @@ import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
 import net.bodz.bas.db.jdbc.util.ISqlExecutor;
 import net.bodz.bas.db.jdbc.util.SharedSqlExecutor;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
 
 public class DataContext
         extends AbstractQueryable
-        implements Closeable, IAttributed, SqlSessionFactory {
+        implements
+            Closeable,
+            IAttributed,
+            IJsonSerializable,
+            SqlSessionFactory {
 
     public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
@@ -159,6 +168,26 @@ public class DataContext
     @Override
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
+    }
+
+    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /* _____________________________ */static section.iface __JSON__;
+
+    @Override
+    public void readObject(JsonObject o)
+            throws ParseException {
+        JsonObject _options = o.getJsonObject("options");
+        if (_options != null)
+            options.readObject(_options);
+        o.getMap("attributes", attributes, null, (Object jso) -> jso);
+    }
+
+    @Override
+    public void writeObject(IJsonOut out)
+            throws IOException, FormatException {
+        out.key("options");
+        options.writeObjectBoxed(out);
+        out.entry("attributes", attributes);
     }
 
     /** ⇱ Implementation Of {@link SqlSessionFactory}. */
