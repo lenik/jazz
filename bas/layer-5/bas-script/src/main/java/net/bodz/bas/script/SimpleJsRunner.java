@@ -12,6 +12,7 @@ import javax.script.ScriptEngine;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.fmt.json.IJsonDumper;
 import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -82,8 +83,12 @@ public class SimpleJsRunner
         Object result = scriptContext.eval(code, file);
 
         JsonBuffer buf = new JsonBuffer();
-        ValueDumper dumper = new ValueDumper(buf);
+
+        IJsonDumper dumper;
+        dumper = new ValueDumper(buf);
+        // dumper = new BeanJsonDumper(buf);
         dumper.dumpBoxed(result);
+
         String json = buf.toString();
         json = format(json);
         return json;
@@ -120,6 +125,8 @@ public class SimpleJsRunner
                 System.out.print(++lineNo + "> ");
                 line = in.readLine();
                 if (line == null)
+                    break;
+                if (line.equals("quit") || line.equals("q"))
                     break;
 
                 String result;
