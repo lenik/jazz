@@ -81,7 +81,8 @@ public class PolyglotContext
             Value result = context.eval(source);
             return ValueFn.convert(result);
         } catch (PolyglotException e) {
-            throw new EvalException("error eval " + code + ": " + e.getMessage(), e);
+            String stackTrace = PolyglotUtils.getGuestStackDump(e);
+            throw new EvalException(e.getMessage() + ", guest stack trace: " + stackTrace, e);
         }
     }
 
@@ -94,7 +95,8 @@ public class PolyglotContext
             Value promise = context.eval(source);
             return promise;
         } catch (PolyglotException e) {
-            throw new EvalException("error eval " + moduleCode + ": " + e.getMessage(), e);
+            String stackTrace = PolyglotUtils.getGuestStackDump(e);
+            throw new EvalException(e.getMessage() + ", guest stack trace: " + stackTrace, e);
         }
     }
 
