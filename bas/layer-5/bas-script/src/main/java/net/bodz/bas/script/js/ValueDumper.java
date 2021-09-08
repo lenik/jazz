@@ -1,6 +1,10 @@
 package net.bodz.bas.script.js;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +40,27 @@ public class ValueDumper
         if (value.isBoolean())
             out.entry("a-boolean", value.asBoolean());
 
-        if (value.isDate())
-            out.entry("a-date", value.asDate());
+        if (value.isDate()) {
+            String s;
+            try {
+                LocalDate localDate = value.asDate();
+                s = localDate.toString();
+            } catch (Exception e) {
+                s = "error: " + e.getMessage();
+            }
+            out.entry("a-date", s);
+        }
 
-        if (value.isDuration())
-            out.entry("a-duration", value.asDuration());
+        if (value.isDuration()) {
+            String s;
+            try {
+                Duration duration = value.asDuration();
+                s = duration.toString();
+            } catch (Exception e) {
+                s = "error: " + e.getMessage();
+            }
+            out.entry("a-duration", s);
+        }
 
         if (value.isException()) {
             try {
@@ -50,15 +70,27 @@ public class ValueDumper
             }
         }
 
-        if (value.isInstant())
-            out.entry("a-instant", value.asInstant());
+        if (value.isInstant()) {
+            String s;
+            try {
+                Instant instant = value.asInstant();
+                s = instant.toString();
+            } catch (Exception e) {
+                s = "error: " + e.getMessage();
+            }
+            out.entry("a-instant", s);
+        }
 
         if (value.isMetaObject()) {
             out.entry("metaQualifiedName", value.getMetaQualifiedName());
             out.entry("metaSimpleName", value.getMetaSimpleName());
-            // out.key("metaObject");
-            // Value metaObject = value.getMetaObject();
-            // dumper.dumpBoxed(metaObject);
+            try {
+                Value metaObject = value.getMetaObject();
+                out.key("metaObject");
+                dumpBoxed(metaObject);
+            } catch (Exception e) {
+                out.entry("metaObject", "error: " + e.getMessage());
+            }
         }
 
         if (value.isNativePointer())
@@ -83,11 +115,20 @@ public class ValueDumper
         if (value.isString())
             out.entry("a-string", value.asString());
 
-        if (value.isTime())
-            out.entry("a-time", value.asTime());
+        if (value.isTime()) {
+            String s;
+            try {
+                LocalTime time = value.asTime();
+                s = time.toString();
+            } catch (Exception e) {
+                s = "error: " + e.getMessage();
+            }
+            out.entry("a-time", s);
+        }
 
-        if (value.isTimeZone())
+        if (value.isTimeZone()) {
             out.entry("a-timeZone", value.asTimeZone());
+        }
 
         List<String> fits = new ArrayList<>();
         {
