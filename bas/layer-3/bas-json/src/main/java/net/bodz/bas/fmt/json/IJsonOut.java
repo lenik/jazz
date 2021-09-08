@@ -1,5 +1,9 @@
 package net.bodz.bas.fmt.json;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
+
 import net.bodz.fork.org.json.JSONException;
 
 public interface IJsonOut {
@@ -67,9 +71,6 @@ public interface IJsonOut {
     IJsonOut object()
             throws JSONException;
 
-    IJsonOut object(Object object)
-            throws JSONException;
-
     /**
      * Append either the value <code>true</code> or the value <code>false</code>.
      *
@@ -132,6 +133,16 @@ public interface IJsonOut {
     IJsonOut entryNotNull(String key, Object value)
             throws JSONException;
 
+    default IJsonOut object(Object object)
+            throws JSONException {
+        try {
+            JsonFn.writeObject(this, object);
+        } catch (Exception e) {
+            throw new JSONException(e);
+        }
+        return this;
+    }
+
 // IJsonOut any(Object value)
 // throws JSONException;
 //
@@ -140,5 +151,71 @@ public interface IJsonOut {
 //
 // IJsonOut keyAnyNotNull(String key, Object value)
 // throws JSONException;
+
+    default IJsonOut array(String key, Object array) {
+        key(key);
+        return array(array);
+    }
+
+    default IJsonOut array(Object array)
+            throws JSONException {
+        this.array();
+        int n = Array.getLength(array);
+        for (int i = 0; i < n; i++) {
+            Object item = Array.get(array, i);
+            try {
+                JsonFn.writeObject(this, item);
+            } catch (Exception e) {
+                throw new JSONException(String.format(//
+                        "error write array[%d]: %s", i, item), e);
+            }
+        }
+        this.endArray();
+        return this;
+    }
+
+    default IJsonOut array(String key, Collection<?> collection) {
+        this.key(key);
+        return array(collection);
+    }
+
+    default IJsonOut array(Collection<?> collection)
+            throws JSONException {
+        this.array();
+        int i = 0;
+        for (Object item : collection) {
+            try {
+                JsonFn.writeObject(this, item);
+            } catch (Exception e) {
+                throw new JSONException(String.format(//
+                        "error write collection[%d]: %s", i, item), e);
+            }
+            i++;
+        }
+        this.endArray();
+        return this;
+    }
+
+    default IJsonOut map(String key, Map<String, ?> map) {
+        this.key(key);
+        return map(map);
+    }
+
+    default IJsonOut map(Map<String, ?> map)
+            throws JSONException {
+        this.object();
+        for (String key : map.keySet()) {
+            this.key(key);
+            Object item = map.get(key);
+            try {
+                JsonFn.writeObject(this, item);
+            } catch (Exception e) {
+                throw new JSONException(String.format(//
+                        "error write map[%s]: %s", key, item), e);
+            }
+        }
+        this.endObject();
+        return this;
+    }
 
 }
