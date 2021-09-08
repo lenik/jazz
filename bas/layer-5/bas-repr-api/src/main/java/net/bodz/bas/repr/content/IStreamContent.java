@@ -7,9 +7,12 @@ import java.io.Reader;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public interface IStreamContent
-        extends IContent {
+        extends
+            IContent {
 
     ContentType getContentType();
+
+    Long getContentLength();
 
     String getEncoding();
 

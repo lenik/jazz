@@ -26,7 +26,8 @@ public abstract class AbstractFormInput_htm<T>
             throws ViewBuilderException, IOException {
 
         if (!(ref instanceof UiPropertyRef))
-            throw new ViewBuilderException("Unsupported ref type: " + ref.getClass());
+            throw new ViewBuilderException(String.format(//
+                    "Unsupported ref type %s used in %s renderer. ", ref.getClass(), getValueType()));
 
         UiPropertyRef<T> propertyRef = (UiPropertyRef<T>) ref;
         IFieldDecl fieldDecl = null;

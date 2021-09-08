@@ -1,14 +1,18 @@
 package net.bodz.bas.repr.content;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
-import net.bodz.bas.std.rfc.mime.ContentTypes;
 
 public abstract class MutableStreamContent
         extends MutableContent
-        implements IStreamContent {
+        implements
+            IStreamContent {
 
-    ContentType contentType = ContentTypes.text_html;
+    ContentType contentType;
     String encoding = "utf-8";
+
+    public MutableStreamContent(ContentType contentType) {
+        this.contentType = contentType;
+    }
 
     @Override
     public ContentType getContentType() {
@@ -17,6 +21,11 @@ public abstract class MutableStreamContent
 
     public void setContentType(ContentType contentType) {
         this.contentType = contentType;
+    }
+
+    @Override
+    public Long getContentLength() {
+        return null;
     }
 
     @Override
