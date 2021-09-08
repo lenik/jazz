@@ -48,17 +48,6 @@ public class JsonStringer
     }
 
     @Override
-    public JsonStringer object(Object object)
-            throws JSONException {
-        try {
-            JsonFn.writeObject(this, object);
-        } catch (Exception e) {
-            throw new JSONException(e);
-        }
-        return this;
-    }
-
-    @Override
     public JsonStringer endObject()
             throws JSONException {
         super.endObject();

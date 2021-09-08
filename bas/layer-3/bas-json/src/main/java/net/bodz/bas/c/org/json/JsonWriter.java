@@ -56,17 +56,6 @@ public class JsonWriter
     }
 
     @Override
-    public JsonWriter object(Object value)
-            throws JSONException {
-        try {
-            JsonFn.writeObject(this, value);
-        } catch (Exception e) {
-            throw new JSONException(e);
-        }
-        return this;
-    }
-
-    @Override
     public JsonWriter endObject()
             throws JSONException {
         super.endObject();
