@@ -5,8 +5,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public abstract class InputStreamContent
+import net.bodz.bas.std.rfc.mime.ContentType;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
+
+public abstract class AbstractBinaryContent
         extends MutableStreamContent {
+
+    public AbstractBinaryContent() {
+        super(ContentTypes.application_octet_stream);
+    }
+
+    public AbstractBinaryContent(ContentType contentType) {
+        super(contentType);
+    }
 
     @Override
     public Reader newReader()

@@ -7,14 +7,10 @@ import java.io.Reader;
 
 public abstract class AbstractStreamContent
         extends AbstractContent
-        implements IStreamContent {
+        implements
+            IStreamContent {
 
     private static final long serialVersionUID = 1L;
-
-    @Override
-    public String getEncoding() {
-        return "utf-8";
-    }
 
     @Override
     public Reader newReader()
