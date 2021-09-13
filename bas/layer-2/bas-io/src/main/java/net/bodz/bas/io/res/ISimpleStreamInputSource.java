@@ -31,6 +31,6 @@ public interface ISimpleStreamInputSource
     ICharIn newCharIn(OpenOption... options)
             throws IOException;
 
-    boolean isCharInPreferred();
+    boolean isCharPreferred();
 
 }

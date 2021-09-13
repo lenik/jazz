@@ -68,7 +68,7 @@ public class ZipEntrySource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

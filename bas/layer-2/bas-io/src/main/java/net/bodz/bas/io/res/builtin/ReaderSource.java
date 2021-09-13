@@ -29,7 +29,7 @@ public class ReaderSource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return true;
     }
 

@@ -24,7 +24,7 @@ public class JuzZipEntrySource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

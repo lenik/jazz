@@ -120,7 +120,7 @@ public class StreamReading
     @Override
     public char[] readChars()
             throws IOException {
-        if (source.isCharInPreferred())
+        if (source.isCharPreferred())
             return readCharsByChars();
         else
             return readCharsByBytes();
@@ -172,7 +172,7 @@ public class StreamReading
     @Override
     public String readString()
             throws IOException {
-        if (source.isCharInPreferred())
+        if (source.isCharPreferred())
             return readStringByChars();
         else
             return readStringByBytes();
