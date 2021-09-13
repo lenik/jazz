@@ -171,7 +171,7 @@ public class ZipEntryFile
         return new AbstractIORandomResource() {
 
             @Override
-            public boolean isCharInPreferred() {
+            public boolean isCharPreferred() {
                 return false;
             }
 

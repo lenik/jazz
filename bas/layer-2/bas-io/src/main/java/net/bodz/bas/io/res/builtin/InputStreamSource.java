@@ -40,7 +40,7 @@ public class InputStreamSource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

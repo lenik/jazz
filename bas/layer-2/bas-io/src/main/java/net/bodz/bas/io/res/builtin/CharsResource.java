@@ -46,7 +46,7 @@ public class CharsResource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return true;
     }
 

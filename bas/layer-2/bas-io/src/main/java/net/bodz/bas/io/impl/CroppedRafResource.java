@@ -32,7 +32,7 @@ public class CroppedRafResource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

@@ -72,7 +72,7 @@ public class FileResource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

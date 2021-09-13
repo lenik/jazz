@@ -65,7 +65,7 @@ public class ByteArrayResource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 

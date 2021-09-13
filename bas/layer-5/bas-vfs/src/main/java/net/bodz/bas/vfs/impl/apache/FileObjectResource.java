@@ -25,7 +25,7 @@ public class FileObjectResource
     }
 
     @Override
-    public boolean isCharInPreferred() {
+    public boolean isCharPreferred() {
         return false;
     }
 
