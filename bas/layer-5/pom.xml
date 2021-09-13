@@ -13,6 +13,7 @@
     <modules>
         <module>bas-ar</module>
         <module>bas-c5</module>
+        <module>bas-code</module>
         <module>bas-db</module>
         <module>bas-draw</module>
         <module>bas-flow</module>
