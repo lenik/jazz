@@ -24,7 +24,7 @@ public interface IBasicTyperFamily<T>
      * 
      * @return <code>null</code> If the type form is not available.
      */
-    ITextForm<T> getTextForm();
+    ITextFormat<T> getTextForm();
 
     /**
      * Get the type classifier..

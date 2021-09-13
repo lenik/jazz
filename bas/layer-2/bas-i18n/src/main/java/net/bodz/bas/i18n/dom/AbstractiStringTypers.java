@@ -5,7 +5,7 @@ import net.bodz.bas.meta.decl.ParameterType;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IFormatter;
 import net.bodz.bas.typer.std.IParser;
-import net.bodz.bas.typer.std.ITextForm;
+import net.bodz.bas.typer.std.ITextFormat;
 
 public abstract class AbstractiStringTypers
         extends AbstractCommonTypers<iString> {
@@ -23,7 +23,7 @@ public abstract class AbstractiStringTypers
         switch (typerIndex) {
         case IParser.typerIndex:
         case IFormatter.typerIndex:
-        case ITextForm.typerIndex:
+        case ITextFormat.typerIndex:
             return this;
         }
         return null;

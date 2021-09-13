@@ -9,7 +9,7 @@ import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.servlet.viz.IHttpViewContext;
-import net.bodz.bas.tex.dom.TexCompiler;
+import net.bodz.bas.tex.dom.TeXCompiler;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class TexPdfViewBuilder<T>
@@ -26,7 +26,7 @@ public abstract class TexPdfViewBuilder<T>
         buildTex(ctx, texBuf, ref);
         String tex = texBuf.toString();
 
-        TexCompiler compiler = new TexCompiler("tex2pdf");
+        TeXCompiler compiler = new TeXCompiler("tex2pdf");
         try {
             byte[] pdfData = compiler.compile(tex);
             ServletOutputStream out = resp.getOutputStream();

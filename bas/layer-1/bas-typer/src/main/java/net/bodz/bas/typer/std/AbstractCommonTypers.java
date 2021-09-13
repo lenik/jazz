@@ -15,7 +15,7 @@ import net.bodz.bas.rtx.QueryException;
 @ThreadUnsafe
 public abstract class AbstractCommonTypers<T>
         extends AbstractQueryable
-        implements IBasicTyperFamily<T>, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
+        implements IBasicTyperFamily<T>, ITextFormat<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
         ISampleGenerator<T>, IInstanceStore<T> {
 
     protected final Class<T> type;
@@ -44,7 +44,7 @@ public abstract class AbstractCommonTypers<T>
         commonTyperIndex.put(IParser.class.getName(), IParser.typerIndex);
         commonTyperIndex.put(ISampleGenerator.class.getName(), ISampleGenerator.typerIndex);
         commonTyperIndex.put(ISearcher.class.getName(), ISearcher.typerIndex);
-        commonTyperIndex.put(ITextForm.class.getName(), ITextForm.typerIndex);
+        commonTyperIndex.put(ITextFormat.class.getName(), ITextFormat.typerIndex);
         commonTyperIndex.put(IValidator.class.getName(), IValidator.typerIndex);
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractCommonTypers<T>
         case IBasicTyperFamily.typerIndex:
             return this;
 
-        case ITextForm.typerIndex:
+        case ITextFormat.typerIndex:
             Object parser = queryInt(IParser.typerIndex);
             Object formatter = queryInt(IFormatter.typerIndex);
             if (parser == formatter && parser != null)
@@ -126,7 +126,7 @@ public abstract class AbstractCommonTypers<T>
     }
 
     @Override
-    public ITextForm<T> getTextForm() {
+    public ITextFormat<T> getTextForm() {
         return this;
     }
 
