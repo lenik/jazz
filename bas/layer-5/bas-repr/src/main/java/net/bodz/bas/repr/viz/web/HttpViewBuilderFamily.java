@@ -1,4 +1,4 @@
-package net.bodz.bas.servlet.viz;
+package net.bodz.bas.repr.viz.web;
 
 public enum HttpViewBuilderFamily {
 

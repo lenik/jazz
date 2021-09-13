@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.servlet.viz.IHttpViewContext;
+import net.bodz.bas.servlet.IHttpViewContext;
 import net.bodz.bas.tex.dom.TeXCompiler;
 import net.bodz.bas.ui.dom1.IUiRef;
 

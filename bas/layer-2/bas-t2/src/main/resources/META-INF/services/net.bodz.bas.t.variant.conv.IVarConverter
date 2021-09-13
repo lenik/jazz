@@ -13,6 +13,7 @@ net.bodz.bas.t.variant.conv.CharacterVarConverter
 net.bodz.bas.t.variant.conv.DateTimeVarConverter
 net.bodz.bas.t.variant.conv.DateVarConverter
 net.bodz.bas.t.variant.conv.DoubleVarConverter
+net.bodz.bas.t.variant.conv.FileConverter
 net.bodz.bas.t.variant.conv.FloatVarConverter
 net.bodz.bas.t.variant.conv.IntegerVarConverter
 net.bodz.bas.t.variant.conv.LongVarConverter

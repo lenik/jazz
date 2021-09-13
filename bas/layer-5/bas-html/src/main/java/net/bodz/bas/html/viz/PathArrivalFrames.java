@@ -7,7 +7,7 @@ import net.bodz.bas.ctx.util.IFramedMap;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
-import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.repr.viz.web.IHttpViewBuilderFactory;
 
 public class PathArrivalFrames
         extends ArrayList<PathArrivalFrame> {

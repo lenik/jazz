@@ -16,7 +16,7 @@ public class CalcPreferredId {
             IParser.class, //
             ISampleGenerator.class, //
             ISearcher.class, //
-            ITextForm.class, //
+            ITextFormat.class, //
             IValidator.class, //
     };
 
