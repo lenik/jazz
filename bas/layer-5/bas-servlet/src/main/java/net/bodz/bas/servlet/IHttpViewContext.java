@@ -1,4 +1,4 @@
-package net.bodz.bas.servlet.viz;
+package net.bodz.bas.servlet;
 
 import java.util.Map;
 
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.ctx.util.IFramedMap;
 import net.bodz.bas.rtx.IQueryable;
-import net.bodz.bas.servlet.model.IHttpHeadData;
 
 public interface IHttpViewContext
         extends IQueryable {

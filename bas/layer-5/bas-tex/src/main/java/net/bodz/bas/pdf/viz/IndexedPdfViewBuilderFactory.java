@@ -4,7 +4,7 @@ import java.util.ServiceLoader;
 
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.repr.viz.IViewBuilder;
-import net.bodz.bas.servlet.viz.AbstractHttpViewBuilderFactory;
+import net.bodz.bas.repr.viz.web.AbstractHttpViewBuilderFactory;
 
 /**
  * @see IPdfViewBuilder The indexed type.

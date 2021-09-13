@@ -1,4 +1,4 @@
-package net.bodz.bas.servlet.model;
+package net.bodz.bas.servlet;
 
 import java.util.Map;
 

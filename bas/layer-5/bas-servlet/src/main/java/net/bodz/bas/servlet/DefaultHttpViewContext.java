@@ -1,4 +1,4 @@
-package net.bodz.bas.servlet.viz;
+package net.bodz.bas.servlet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.ctx.util.IFramedMap;
 import net.bodz.bas.ctx.util.StrictFramedMap;
-import net.bodz.bas.servlet.model.IHttpHeadData;
 
 public class DefaultHttpViewContext
         extends AbstractHttpViewContext

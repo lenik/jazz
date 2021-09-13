@@ -13,7 +13,7 @@ import net.bodz.bas.potato.ref.UiPropertyRef;
 import net.bodz.bas.repr.form.FieldCategory;
 import net.bodz.bas.repr.form.IFieldDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.repr.viz.web.IHttpViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class DefaultForm_htm<T>

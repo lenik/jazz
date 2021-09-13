@@ -1,4 +1,4 @@
-package net.bodz.bas.servlet.viz;
+package net.bodz.bas.servlet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

@@ -8,7 +8,7 @@ import net.bodz.bas.html.dom.tag.MutableHead;
 import net.bodz.bas.html.dom.tag.MutableLink;
 import net.bodz.bas.html.dom.tag.MutableScript;
 import net.bodz.bas.html.dom.tag.MutableStyle;
-import net.bodz.bas.servlet.model.IHttpHeadData;
+import net.bodz.bas.servlet.IHttpHeadData;
 
 public interface IHtmlHeadData
         extends IHttpHeadData, IMutableArtifactDependent {

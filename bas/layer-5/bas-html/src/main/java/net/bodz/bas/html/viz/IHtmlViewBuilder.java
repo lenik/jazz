@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.repr.viz.ViewBuilderException;
-import net.bodz.bas.servlet.viz.IHttpViewBuilder;
+import net.bodz.bas.repr.viz.web.IHttpViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public interface IHtmlViewBuilder<T>

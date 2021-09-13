@@ -1,8 +1,9 @@
-package net.bodz.bas.servlet.viz;
+package net.bodz.bas.html.servlet;
 
 import net.bodz.bas.html.viz.IHtmlViewBuilder;
 import net.bodz.bas.pdf.viz.IPdfViewBuilder;
 import net.bodz.bas.repr.viz.ViewBuilderSet;
+import net.bodz.bas.repr.viz.web.IHttpViewBuilder;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 

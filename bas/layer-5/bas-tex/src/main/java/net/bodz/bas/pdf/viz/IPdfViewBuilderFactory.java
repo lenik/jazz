@@ -1,7 +1,7 @@
 package net.bodz.bas.pdf.viz;
 
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.servlet.viz.IHttpViewBuilderFactory;
+import net.bodz.bas.repr.viz.web.IHttpViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 @IndexedType
