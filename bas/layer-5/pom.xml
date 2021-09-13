@@ -25,6 +25,7 @@
         <module>bas-script</module>
         <module>bas-search</module>
         <module>bas-servlet</module>
+        <module>bas-tex</module>
         <module>bas-ui</module>
         <module>bas-vfs</module>
     </modules>

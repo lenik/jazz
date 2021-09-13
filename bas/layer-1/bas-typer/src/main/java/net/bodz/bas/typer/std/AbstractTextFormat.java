@@ -4,9 +4,9 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.rtx.IOptions;
 
-public abstract class AbstractTextForm<T>
+public abstract class AbstractTextFormat<T>
         implements
-            ITextForm<T> {
+            ITextFormat<T> {
 
     @Override
     public final String format(T object)

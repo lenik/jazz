@@ -16,15 +16,15 @@ import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
-public class TexCompiler {
+public class TeXCompiler {
 
-    static final Logger logger = LoggerFactory.getLogger(TexCompiler.class);
+    static final Logger logger = LoggerFactory.getLogger(TeXCompiler.class);
 
     String jobname;
     File workdir;
     boolean autoClean = true;
 
-    public TexCompiler(String jobname) {
+    public TeXCompiler(String jobname) {
         if (jobname == null)
             throw new NullPointerException("jobname");
         this.jobname = jobname;

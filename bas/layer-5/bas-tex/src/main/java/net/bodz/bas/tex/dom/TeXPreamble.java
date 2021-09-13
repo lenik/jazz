@@ -1,13 +1,15 @@
 package net.bodz.bas.tex.dom;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.c.string.AbstractTextBlock;
+import net.bodz.bas.c.string.IIndentedForm;
 import net.bodz.bas.io.ITreeOut;
 
-public class TexPreamble
-        extends AbstractTextBlock {
+public class TeXPreamble
+        implements
+            IIndentedForm {
 
     DocumentClass documentClass;
     Map<String, UsePackage> usePackages;
@@ -28,7 +30,8 @@ public class TexPreamble
     }
 
     @Override
-    public void format(ITreeOut out) {
+    public void writeObject(ITreeOut out)
+            throws IOException {
         out.println(documentClass);
         out.println();
         for (UsePackage usePackage : usePackages.values())
