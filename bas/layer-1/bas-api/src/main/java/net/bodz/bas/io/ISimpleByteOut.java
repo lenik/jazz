@@ -2,6 +2,7 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
+@FunctionalInterface
 public interface ISimpleByteOut {
 
     /**

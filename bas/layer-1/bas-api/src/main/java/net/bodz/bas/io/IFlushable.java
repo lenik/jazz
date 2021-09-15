@@ -4,7 +4,8 @@ import java.io.Flushable;
 import java.io.IOException;
 
 public interface IFlushable
-        extends Flushable {
+        extends
+            Flushable {
 
     /**
      * @param sync
@@ -18,7 +19,9 @@ public interface IFlushable
      * The same to {@link #flush(boolean)} with <code>sync</code> set to <code>true</code>.
      */
     @Override
-    void flush()
-            throws IOException;
+    default void flush()
+            throws IOException {
+        flush(true);
+    }
 
 }
