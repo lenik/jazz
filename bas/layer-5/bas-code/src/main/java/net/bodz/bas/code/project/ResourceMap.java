@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 
-import net.bodz.bas.io.res.IStreamResource;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class ResourceMap
-        extends HashMap<String, IStreamResource>
+        extends HashMap<String, IStreamInputSource>
         implements
             ICodeModule {
 
@@ -20,9 +20,9 @@ public class ResourceMap
     @Override
     public void prepareFiles(File projectDir)
             throws IOException {
-        for (Entry<String, IStreamResource> entry : this.entrySet()) {
+        for (Entry<String, IStreamInputSource> entry : this.entrySet()) {
             String name = entry.getKey();
-            IStreamResource resource = entry.getValue();
+            IStreamInputSource source = entry.getValue();
 
             File file = new File(projectDir, name).getAbsoluteFile();
             File dir = file.getParentFile();
@@ -31,11 +31,11 @@ public class ResourceMap
                 if (!dir.mkdirs())
                     throw new IOException("can't mkdir " + dir);
 
-            if (resource.isCharPreferred()) {
-                String content = resource.to(StreamReading.class).readString();
+            if (source.isCharPreferred()) {
+                String content = source.to(StreamReading.class).readString();
                 new FileResource(file).write().writeString(content);
             } else {
-                byte[] content = resource.to(StreamReading.class).read();
+                byte[] content = source.to(StreamReading.class).read();
                 new FileResource(file).write().write(content);
             }
         }
