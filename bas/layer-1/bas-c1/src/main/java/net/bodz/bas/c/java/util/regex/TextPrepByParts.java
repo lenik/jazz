@@ -40,6 +40,9 @@ public abstract class TextPrepByParts
             throws IOException;
 
     public synchronized String process(String source) {
+        if (source == null)
+            return null;
+
         this.source = source;
         matcher = pattern.matcher(source);
         matchIndex = 0;
