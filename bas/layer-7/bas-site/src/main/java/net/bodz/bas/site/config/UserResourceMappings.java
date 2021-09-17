@@ -11,14 +11,19 @@ import net.bodz.bas.site.IBasicSiteAnchors;
 
 public class UserResourceMappings
         extends AbstractResourceMappings
-        implements IBasicSiteAnchors {
+        implements
+            IBasicSiteAnchors {
 
-    public static final IAnchor filesAnchor = _webApp_.join("files/");
+    public static final String FILES = "files";
+    public static final String FILES_PATHNAME = FILES;
+    public static final String FILES_DIRNAME = FILES;
+
+    public static final IAnchor filesAnchor = _webApp_.join(FILES_PATHNAME);
 
     ServletContextConfig config;
 
     File homeDir = SysProps.userHome;
-    File filesDir = new File(homeDir, "files");
+    File filesDir = new File(homeDir, FILES_DIRNAME);
 
     ServletDescriptor homeLink;
     ServletDescriptor filesLink;
