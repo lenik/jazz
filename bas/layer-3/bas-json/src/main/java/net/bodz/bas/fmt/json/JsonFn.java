@@ -2,6 +2,8 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -186,6 +188,10 @@ public class JsonFn {
         if (o instanceof IJsonSerializable) {
             IJsonSerializable jsVal = (IJsonSerializable) o;
             jsVal.writeObjectBoxed(out);
+            return;
+        }
+        if (o instanceof BigDecimal || o instanceof BigInteger) {
+            out.value(o.toString());
             return;
         }
         out.value(o);
