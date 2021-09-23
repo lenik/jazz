@@ -231,7 +231,7 @@ public class FilePath {
      * @param includeDot
      *            Whether dot(.) is included in the return value.
      * @return If file has no extension, returns <code>null</code> if includeDot is
-     *         <code>false</code>, or "." if includeDot is <code>true</code>.
+     *         <code>false</code>, or "" if includeDot is <code>true</code>.
      * @throws NullPointerException
      *             If <code>path</code> is <code>null</code>.
      */
@@ -240,7 +240,7 @@ public class FilePath {
             throw new NullPointerException("path");
         int dot = path.lastIndexOf('.');
         if (dot == -1)
-            return includeDot ? "." : null;
+            return includeDot ? "" : null;
         else
             return path.substring(includeDot ? dot : dot + 1);
     }
