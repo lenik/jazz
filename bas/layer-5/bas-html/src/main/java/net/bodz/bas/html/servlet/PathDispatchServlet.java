@@ -150,12 +150,16 @@ public class PathDispatchServlet
         if (viewBuilder == null)
             throw new IllegalUsageError("No suitable view builder for " + target.getClass());
 
-        contentType = viewBuilder.getContentType(req, target);
-        resp.setContentType(contentType.getName());
-
         String encoding = viewBuilder.getEncoding(target);
-        if (encoding != null)
+        // if (contentType == ContentType.DEFAULT)
+        contentType = viewBuilder.getContentType(req, target);
+
+        String contentTypeSpec = contentType.getName();
+        if (encoding != null) {
             resp.setCharacterEncoding(encoding);
+            contentTypeSpec += "; encoding=" + encoding;
+        }
+        resp.setContentType(contentTypeSpec);
 
         if (target instanceof ICacheControl) {
             HttpCacheControl.apply(resp, (ICacheControl) target);
