@@ -30,7 +30,8 @@ public abstract class AbstractXmlOutput
     public void element(String name, String text)
             throws XMLStreamException {
         beginElement(name);
-        writeCharacters(text);
+        if (text != null)
+            writeCharacters(text);
         endElement();
     }
 
