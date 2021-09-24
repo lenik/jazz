@@ -1,6 +1,8 @@
 package net.bodz.bas.typer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.primitive.Primitives;
@@ -8,6 +10,8 @@ import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.spi.ITyperProvider;
 
 public class Typers {
+
+    static Map<Class<?>, Map<Class<?>, Object>> cache = new HashMap<>();
 
     /**
      * Query for specific typers about the user object type.
@@ -35,6 +39,28 @@ public class Typers {
 
         objType = Primitives.box(objType);
 
+        Map<Class<?>, Object> cachedTypers = cache.get(objType);
+        if (cachedTypers != null) {
+            @SuppressWarnings("unchecked")
+            T typer = (T) cachedTypers.get(typerClass);
+            if (typer != null)
+                return typer;
+        }
+
+        T typer = findTyper(objType, typerClass);
+
+        if (typer != null) {
+            if (cachedTypers == null) {
+                cachedTypers = new HashMap<>();
+                cache.put(objType, cachedTypers);
+            }
+            cachedTypers.put(typerClass, typer);
+        }
+        return typer;
+    }
+
+    public static <T> T findTyper(Class<?> objType, Class<T> typerClass)
+            throws QueryException {
         TreeSet<ITyperProvider> providers = TyperProviders.sorted();
         for (ITyperProvider provider : providers) {
             T typer = provider.getTyper(objType, typerClass);
