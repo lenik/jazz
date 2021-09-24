@@ -1,7 +1,9 @@
 package net.bodz.bas.t.table;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -20,7 +22,11 @@ public interface IRow
             IJsonSerializable,
             IXmlSerializable {
 
-    IRowSetMetadata getRowSetMetadata();
+    IRowSet getRowSet();
+
+    default ITable getTable() {
+        return (ITable) getRowSet();
+    }
 
     int getRowIndex();
 
@@ -53,10 +59,21 @@ public interface IRow
         return isSet(getMetadata(name).getIndex());
     }
 
+    default List<Object> getPrimaryKeyValues() {
+        IColumnMetadata[] keyColumns = getTable().getMetadata().getPrimaryKeyColumns();
+        List<Object> values = new ArrayList<>(keyColumns.length);
+        for (IColumnMetadata keyColumn : keyColumns) {
+            int iColumn = keyColumn.getIndex();
+            Object value = get(iColumn);
+            values.add(value);
+        }
+        return values;
+    }
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        IRowSetMetadata metadata = getRowSetMetadata();
+        IRowSetMetadata metadata = getRowSet().getMetadata();
         int cc = metadata.getColumnCount();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getMetadata(i);
@@ -76,7 +93,7 @@ public interface IRow
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        IRowSetMetadata metadata = getRowSetMetadata();
+        IRowSetMetadata metadata = getRowSet().getMetadata();
         int cc = metadata.getColumnCount();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getMetadata(i);
@@ -109,7 +126,7 @@ public interface IRow
     default void exportTo(Map<String, Object> map, //
             Function<String, String> rename, //
             Function<Integer, String> renameIndexes) {
-        for (IColumnMetadata column : getRowSetMetadata().getColumns()) {
+        for (IColumnMetadata column : getRowSet().getMetadata().getColumns()) {
             int index = column.getIndex();
             Object val = get(index);
 

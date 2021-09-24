@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MutableTable
-        extends RowList {
+        extends RowList
+        implements
+            ITable {
 
     public MutableTable(ITableMetadata metadata) {
         super(metadata);
@@ -53,6 +55,10 @@ public class MutableTable
         return ddl.toString();
     }
 
+    public String getPreparedInsert() {
+        return getPreparedInsert(null);
+    }
+
     public String getPreparedInsert(IRow row) {
         StringBuilder ddl = new StringBuilder();
         ddl.append("insert into ");
@@ -65,8 +71,9 @@ public class MutableTable
         int cc = getMetadata().getColumnCount();
         int paramIndex = 0;
         for (int columnIndex = 0; columnIndex < cc; columnIndex++) {
-            if (!row.isSet(columnIndex))
-                continue;
+            if (row != null)
+                if (!row.isSet(columnIndex))
+                    continue;
             IColumnMetadata column = getMetadata().getColumn(columnIndex);
             if (paramIndex != 0) {
                 ddl.append(", ");

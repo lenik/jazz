@@ -50,6 +50,10 @@ public class SqlRowBuilder
         return this;
     }
 
+    public void clear() {
+        pairs.clear();
+    }
+
     @Override
     public void putEntry(String name, Object value) {
         SqlValue o;
@@ -119,6 +123,33 @@ public class SqlRowBuilder
         for (Entry<String, SqlValue> pair : pairs.entrySet()) {
             if (i++ != 0) {
                 head.append(", ");
+            }
+            String name = pair.getKey();
+            head.append(format.qName(name));
+            head.append("=");
+
+            SqlValue val = pair.getValue();
+            if (prepared)
+                if (named)
+                    head.append(":" + name);
+                else
+                    head.append("?");
+            else
+                head.append(val.toSqlCode(format));
+        }
+        head.append(term);
+        return head.toString();
+    }
+
+    public String deleteFrom(String tableName) {
+        StringBuilder head = new StringBuilder();
+
+        String qTableName = qDomain(tableName);
+        head.append("delete from " + qTableName + " where ");
+        int i = 0;
+        for (Entry<String, SqlValue> pair : pairs.entrySet()) {
+            if (i++ != 0) {
+                head.append(" and ");
             }
             String name = pair.getKey();
             head.append(format.qName(name));

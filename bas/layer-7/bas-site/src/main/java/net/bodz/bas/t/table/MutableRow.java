@@ -25,15 +25,18 @@ public class MutableRow
 
     static final Logger logger = LoggerFactory.getLogger(MutableRow.class);
 
-    IRowSetMetadata metadata;
+    final IRowSet rowSet;
+    final IRowSetMetadata metadata;
+
     int rowIndex;
     List<Object> list;
     List<Boolean> sets;
 
-    public MutableRow(IRowSetMetadata metadata, int rowIndex) {
-        if (metadata == null)
-            throw new NullPointerException("metadata");
-        this.metadata = metadata;
+    public MutableRow(IRowSet rowSet, int rowIndex) {
+        if (rowSet == null)
+            throw new NullPointerException("rowSet");
+        this.rowSet = rowSet;
+        this.metadata = rowSet.getMetadata();
         this.rowIndex = rowIndex;
 
         int n = metadata.getColumnCount();
@@ -41,11 +44,16 @@ public class MutableRow
         this.sets = new ArrayList<Boolean>(n);
     }
 
-    @Override
     public IRowSetMetadata getRowSetMetadata() {
         return metadata;
     }
 
+    @Override
+    public IRowSet getRowSet() {
+        return rowSet;
+    }
+
+    @Override
     public int getRowIndex() {
         return rowIndex;
     }
