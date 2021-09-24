@@ -51,7 +51,7 @@ public class RowList
         for (int rowIndex = 0; rowIndex < maxRows; rowIndex++) {
             if (!resultSet.next())
                 break;
-            MutableRow row = new MutableRow(metadata, rowIndex);
+            MutableRow row = new MutableRow(this, rowIndex);
             row.readObject(resultSet);
             this.rows.add(row);
         }
@@ -90,7 +90,7 @@ public class RowList
     public void addRow(IRow row) {
         if (row == null)
             throw new NullPointerException("row");
-        IRowSetMetadata other = row.getRowSetMetadata();
+        IRowSetMetadata other = row.getRowSet().getMetadata();
         if (other != null) {
             IRowSetMetadata mine = getMetadata();
             if (other != mine)
@@ -123,7 +123,7 @@ public class RowList
         List<IRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < n; rowIndex++) {
             JsonArray j_row = j_rows.getJsonArray(rowIndex);
-            MutableRow row = new MutableRow(metadata, rowIndex);
+            MutableRow row = new MutableRow(this, rowIndex);
             row.readObjectBoxed(j_row);
             rows.add(row);
         }
@@ -146,7 +146,7 @@ public class RowList
         List<IRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             IElement x_row = x_row_v.get(rowIndex);
-            MutableRow row = new MutableRow(metadata, rowIndex);
+            MutableRow row = new MutableRow(this, rowIndex);
             row.readObject(x_row);
             rows.add(row);
         }
@@ -161,7 +161,7 @@ public class RowList
             throws SQLException {
         int rowIndex = getRowCount();
         while (rs.next()) {
-            MutableRow row = new MutableRow(metadata, rowIndex++);
+            MutableRow row = new MutableRow(this, rowIndex++);
             row.readObject(rs);
             this.rows.add(row);
         }
