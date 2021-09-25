@@ -21,13 +21,14 @@ import net.bodz.mda.xjdoc.model.javadoc.SemiMutableXjdocElement;
  */
 public abstract class AbstractOptionGroup
         extends SemiMutableXjdocElement
-        implements IOptionGroup {
+        implements
+            IOptionGroup {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Get the explicitly declared local option.
-     * 
+     *
      * @param optionKey
      *            Explicitly declared local option key.
      * @return <code>null</code> if the local option isn't existed.
@@ -127,14 +128,17 @@ public abstract class AbstractOptionGroup
         if (addor == null)
             throw new NullPointerException("addor");
 
-        Object prev;
-        try {
-            prev = property.getValue(obj);
-        } catch (ReflectiveOperationException e1) {
-            throw new RuntimeException(e1.getMessage(), e1);
-        }
+        Object result = value;
 
-        Object result = addor.add(prev, value);
+        Object prev;
+        if (property.isReadable()) {
+            try {
+                prev = property.getValue(obj);
+            } catch (ReflectiveOperationException e1) {
+                throw new RuntimeException(e1.getMessage(), e1);
+            }
+            result = addor.add(prev, value);
+        }
 
         try {
             property.setValue(obj, result);
@@ -263,9 +267,9 @@ public abstract class AbstractOptionGroup
                     int available = args.length - argIndex;
 
                     if (available < shiftCount) {
-                        throw new CLISyntaxException(String.format(
-                                "Option %s expects %d parameters, but only %d given.", //
-                                option.getName(), parameterCount, optArgs.size() + available));
+                        throw new CLISyntaxException(
+                                String.format("Option %s expects %d parameters, but only %d given.", //
+                                        option.getName(), parameterCount, optArgs.size() + available));
                     }
 
                     for (int i = 0; i < shiftCount; i++)

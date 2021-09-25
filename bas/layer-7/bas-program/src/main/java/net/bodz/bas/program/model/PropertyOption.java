@@ -20,7 +20,17 @@ public class PropertyOption
         super("property:" + propertyDescriptor.getName(), //
                 propertyDescriptor.getName(), //
                 findPropertyGenericType(propertyDescriptor), doc);
-        this.beanClass = propertyDescriptor.getReadMethod().getDeclaringClass();
+
+        Method[] accessors = { //
+                propertyDescriptor.getReadMethod(), //
+                propertyDescriptor.getWriteMethod() };
+
+        for (Method accessor : accessors)
+            if (accessor != null) {
+                this.beanClass = accessor.getDeclaringClass();
+                break;
+            }
+
         this.propertyDescriptor = propertyDescriptor;
     }
 
