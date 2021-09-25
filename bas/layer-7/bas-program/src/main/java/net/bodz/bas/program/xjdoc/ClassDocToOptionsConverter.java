@@ -4,8 +4,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.err.LazyLoadException;
@@ -249,6 +253,45 @@ public class ClassDocToOptionsConverter
                 group.addUsage(usage);
             }
 
+        Set<Method> usedMethods = new HashSet<>();
+
+        if (includeProperties) {
+            // int flags = Introspector.USE_ALL_BEANINFO;
+            Class<?> stopClass = null;
+            if (inheritance != OptionGroupInheritance.flatten)
+                stopClass = clazz.getSuperclass();
+
+            BeanInfo beanInfo;
+            try {
+                beanInfo = Introspector.getBeanInfo(clazz, stopClass/* , flags */);
+            } catch (IntrospectionException e) {
+                throw new ParseException(e.getMessage(), e);
+            }
+            for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
+                Method getter = property.getReadMethod();
+                Method setter = property.getWriteMethod();
+                List<Method> accessors = new ArrayList<>();
+                if (getter != null)
+                    accessors.add(getter);
+                if (setter != null)
+                    accessors.add(setter);
+
+                for (Method accessor : accessors) {
+                    MethodId id = new MethodId(accessor);
+                    MethodDoc doc = classDoc.getMethodDoc(id);
+
+                    String descriptor = getOptionDescriptor(doc);
+                    if (descriptor != null) {
+                        PropertyOption option = new PropertyOption(property, doc);
+                        OptionDescriptor.apply(option, descriptor);
+                        group.addOption(option);
+                        usedMethods.add(accessor);
+                        break;
+                    }
+                }
+            }
+        }
+
         if (includeFields) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
@@ -274,6 +317,8 @@ public class ClassDocToOptionsConverter
             for (Method method : methods) {
                 if (!isIncluded(method))
                     continue;
+                if (usedMethods.contains(method))
+                    continue;
 
                 if (includeNonPublic)
                     method.setAccessible(true);
@@ -291,32 +336,6 @@ public class ClassDocToOptionsConverter
             }
         }
 
-        if (includeProperties) {
-            // int flags = Introspector.USE_ALL_BEANINFO;
-            Class<?> stopClass = null;
-            if (inheritance != OptionGroupInheritance.flatten)
-                stopClass = clazz.getSuperclass();
-
-            BeanInfo beanInfo;
-            try {
-                beanInfo = Introspector.getBeanInfo(clazz, stopClass/* , flags */);
-            } catch (IntrospectionException e) {
-                throw new ParseException(e.getMessage(), e);
-            }
-            for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
-                Method getter = property.getReadMethod();
-
-                MethodId getterId = new MethodId(getter);
-                MethodDoc getterDoc = classDoc.getMethodDoc(getterId);
-                String descriptor = getOptionDescriptor(getterDoc);
-                if (descriptor == null)
-                    continue;
-
-                PropertyOption option = new PropertyOption(property, getterDoc);
-                OptionDescriptor.apply(option, descriptor);
-                group.addOption(option);
-            }
-        }
         return group;
     }
 
