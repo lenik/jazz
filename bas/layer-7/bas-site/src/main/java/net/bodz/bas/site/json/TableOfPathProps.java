@@ -169,7 +169,7 @@ public class TableOfPathProps
         if (formats != null)
             parseFormats(formats);
 
-        rowFormat = map.getString("row");
+        rowFormat = map.getString("row", rowFormat);
     }
 
     @Override
