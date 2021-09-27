@@ -19,7 +19,8 @@ import net.bodz.bas.log.LoggerFactory;
 
 public class CurrentHttpService
         extends AbstractHttpFilter
-        implements IServletRequestListener {
+        implements
+            IServletRequestListener {
 
     static final Logger logger = LoggerFactory.getLogger(CurrentHttpService.class);
 
@@ -67,13 +68,20 @@ public class CurrentHttpService
     @Override
     public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        Thread thread = Thread.currentThread();
+        String oldName = thread.getName();
+
         requestRef.set(request);
         responseRef.set(response);
         try {
+            String uri = request.getRequestURI();
+            thread.setName(uri);
+
             chain.doFilter(request, response);
         } finally {
             responseRef.set(null);
             requestRef.set(null);
+            thread.setName(oldName);
         }
     }
 

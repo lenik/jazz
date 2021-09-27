@@ -15,10 +15,15 @@ import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
-public class HttpModFilter
+/**
+ * Add session support for requests originated from local files.
+ *
+ * By default, browsing from file://... can't have a session.
+ */
+public class FileSessionSupportFilter
         extends AbstractHttpFilter {
 
-    static final Logger logger = LoggerFactory.getLogger(HttpModFilter.class);
+    static final Logger logger = LoggerFactory.getLogger(FileSessionSupportFilter.class);
 
     MutableHttpSession fileSession;
 
