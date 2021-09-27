@@ -1,5 +1,7 @@
 package net.bodz.bas.db.jdbc;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.sql.DataSource;
 
 import net.bodz.bas.rtx.IQueryable;
@@ -30,6 +32,10 @@ public class BoneCPDataSourceProvider
         // dataSource.setIdleMaxAge(2, TimeUnit.HOURS); // 1 hr
         // dataSource.setMaxConnectionsPerPartition(60); // 10
         // dataSource.setMinConnectionsPerPartition(20); // 0
+        dataSource.setConnectionTimeout(1, TimeUnit.MINUTES);
+        dataSource.setCloseConnectionWatch(true);
+        dataSource.setCloseConnectionWatchTimeout(1, TimeUnit.HOURS);
+
         // dataSource.setPartitionCount(3); // 1
         // dataSource.setAcquireIncrement(10); // 2
         // dataSource.setStatementsCacheSize(50); // 0
