@@ -149,18 +149,22 @@ public abstract class AbstractProgram
             }
         }
 
-        while (true)
-            try {
-                logger.debug("Program Begin");
-                mainImpl(args);
-                logger.debug("Program End");
-                break;
-            } catch (ControlExit c) {
-                System2.setExitStatus(c.getStatus());
-                return;
-            } catch (ControlContinue c) {
-                continue;
-            }
+        try {
+            while (true)
+                try {
+                    logger.debug("Program Begin");
+                    mainImpl(args);
+                    logger.debug("Program End");
+                    break;
+                } catch (ControlExit c) {
+                    System2.setExitStatus(c.getStatus());
+                    return;
+                } catch (ControlContinue c) {
+                    continue;
+                }
+        } finally {
+            shutDown();
+        }
 
         System2.setExitStatus(0);
         return;
@@ -171,6 +175,10 @@ public abstract class AbstractProgram
     }
 
     protected void reconfigure()
+            throws Exception {
+    }
+
+    protected void shutDown()
             throws Exception {
     }
 
