@@ -386,13 +386,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         boolean create = obj.getId() == null;
         if (create) {
             mapper.insert(obj);
-            resp.setHeader("id", obj.getId());
             resp.getLogger().info("Inserted id: " + obj.getId());
         } else {
             long rows = mapper.update(obj);
             resp.setHeader("count", rows);
             resp.getLogger().info("Rows updated: " + rows);
         }
+        resp.setHeader("id", obj.getId());
         resp.succeed();
     }
 
