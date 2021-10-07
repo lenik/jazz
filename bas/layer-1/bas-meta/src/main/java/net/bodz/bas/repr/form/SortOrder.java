@@ -16,6 +16,12 @@ public enum SortOrder {
 
     ;
 
+    static final SortOrder values[] = values();
+
+    public static SortOrder valueOf(int ordinal) {
+        return values[ordinal];
+    }
+
     public <K, V> Map<K, V> newMap() {
         return newMap(0, null);
     }
