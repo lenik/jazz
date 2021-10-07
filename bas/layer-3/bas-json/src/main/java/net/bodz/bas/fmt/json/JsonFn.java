@@ -25,19 +25,24 @@ import net.bodz.fork.org.json.JSONException;
 @FnHelper
 public class JsonFn {
 
-    public static Object parseAny(String json)
+    public static JsonVar parseAny(String json)
             throws ParseException {
         if (json == null)
             throw new NullPointerException("json");
         try {
-            if (json.startsWith("["))
-                return JsonArrayBuilder.getInstance().parse(json);
-            if (json.startsWith("{"))
-                return JsonObjectBuilder.getInstance().parse(json);
+            if (json.startsWith("[")) {
+                JsonArray a = JsonArrayBuilder.getInstance().parse(json);
+                return new JsonVar(JsonVarType.ARRAY, a);
+            }
+            if (json.startsWith("{")) {
+                JsonObject o = JsonObjectBuilder.getInstance().parse(json);
+                return new JsonVar(JsonVarType.OBJECT, o);
+            }
 
             String v_json = "[" + json + "]";
             JsonArray jsonArray = JsonArrayBuilder.getInstance().parse(v_json);
-            return jsonArray.get(0);
+            Object val = jsonArray.get(0);
+            return new JsonVar(JsonVarType.SCALAR, val);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
