@@ -208,7 +208,16 @@ public class ConnectOptions
         database = o.getString("database", database);
         userName = o.getString("userName", userName);
         password = o.getString("password", password);
-        // out.entry("info", info);
+
+        JsonObject oInfo = o.getJsonObject("info");
+        if (oInfo != null) {
+            if (info == null)
+                info = new Properties();
+            for (String k : oInfo.keySet()) {
+                String v = oInfo.getString(k);
+                info.setProperty(k, v);
+            }
+        }
     }
 
     @Override
@@ -222,7 +231,15 @@ public class ConnectOptions
         out.entry("database", database);
         out.entry("userName", userName);
         out.entry("password", password);
-        // out.entry("info", info);
+        if (info != null) {
+            out.key("info");
+            out.object();
+            for (String name : info.stringPropertyNames()) {
+                String val = info.getProperty(name);
+                out.entry(name, val);
+            }
+            out.endObject();
+        }
     }
 
 }
