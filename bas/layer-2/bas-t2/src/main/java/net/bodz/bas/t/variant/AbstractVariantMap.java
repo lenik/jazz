@@ -2,6 +2,9 @@ package net.bodz.bas.t.variant;
 
 import java.lang.reflect.Array;
 
+import net.bodz.bas.c.object.Enums;
+import net.bodz.bas.c.string.StringPred;
+
 public abstract class AbstractVariantMap<K>
         extends AutoConvVariantMap<K> {
 
@@ -68,12 +71,18 @@ public abstract class AbstractVariantMap<K>
         return value.toString();
     }
 
+    @Override
     public <T extends Enum<T>> T getEnum(Class<T> enumType, K key, T defaultValue) {
         String s = getString(key);
         if (s == null || s.isEmpty())
             return defaultValue;
-        T value = Enum.valueOf(enumType, s);
-        return value;
+        if (StringPred.isDecimal(s)) {
+            int ordinal = Integer.parseInt(s);
+            return Enums.valueOf(enumType, ordinal, defaultValue);
+        } else {
+            T value = Enum.valueOf(enumType, s);
+            return value;
+        }
     }
 
     @Override

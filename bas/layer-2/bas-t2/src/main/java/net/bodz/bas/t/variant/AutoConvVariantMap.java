@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.*;
 
@@ -275,6 +276,54 @@ public abstract class AutoConvVariantMap<K>
         } catch (TypeConvertException e) {
             return defaultValue;
         }
+    }
+
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key) {
+        return getEnum(type, key, null);
+    }
+
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+        Object enumKey = get(key);
+        if (enumKey == null)
+            return null;
+
+        T enumVal = Enums.valueOf(type, enumKey, defaultValue);
+        return enumVal;
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key) {
+        return getAny(type, key, null);
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key, T defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+        Object val = get(key);
+        IVarConverter<Object> converter = VarConverters.getConverter(type);
+        if (converter == null)
+            throw new UnsupportedOperationException(String.format(//
+                    "No converter for class %s.", type.getName()));
+        // try {
+        Object converted = converter.from(val);
+        // } catch (TypeConvertException e) {
+        // throw new JSONException(e);
+        // }
+        T var = type.cast(converted);
+        return var;
     }
 
 }
