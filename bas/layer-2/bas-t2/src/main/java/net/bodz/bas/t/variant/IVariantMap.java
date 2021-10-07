@@ -109,4 +109,12 @@ public interface IVariantMap<K>
 
     File getFile(K key, File defaultValue);
 
+    <T extends Enum<T>> T getEnum(Class<T> type, K key);
+
+    <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue);
+
+    <T> T getAny(Class<T> type, K key);
+
+    <T> T getAny(Class<T> type, K key, T defaultValue);
+
 }

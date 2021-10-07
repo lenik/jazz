@@ -244,4 +244,24 @@ public class DecoratedVariantMap<K>
         return getWrapped().getFile(key, defaultValue);
     }
 
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key) {
+        return getWrapped().getEnum(type, key);
+    }
+
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue) {
+        return getWrapped().getEnum(type, key, defaultValue);
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key) {
+        return getWrapped().getAny(type, key);
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key, T defaultValue) {
+        return getWrapped().getAny(type, key, defaultValue);
+    }
+
 }

@@ -213,4 +213,24 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key) {
+        return null;
+    }
+
+    @Override
+    public <T extends Enum<T>> T getEnum(Class<T> type, K key, T defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key) {
+        return null;
+    }
+
+    @Override
+    public <T> T getAny(Class<T> type, K key, T defaultValue) {
+        return defaultValue;
+    }
+
 }
