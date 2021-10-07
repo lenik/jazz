@@ -72,6 +72,11 @@
             <artifactId>postgresql</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.8.3</version>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: Database</name>
 </project>
