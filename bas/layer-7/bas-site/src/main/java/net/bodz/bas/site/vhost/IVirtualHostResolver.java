@@ -7,9 +7,12 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IVirtualHostResolver
-        extends IPriority {
+        extends
+            IPriority {
 
     IVirtualHost get(String id);
+
+    IVirtualHost get(HttpServletRequest request);
 
     IVirtualHost resolve(HttpServletRequest request);
 

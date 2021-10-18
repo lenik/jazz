@@ -26,17 +26,21 @@ import net.bodz.bas.site.org.SitemapGenerator;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.typer.std.MutableAttributes;
 
 public abstract class BasicSite
         extends AbstractXjdocContent
         implements
             IQueryable,
             IPathDispatchable,
-            ICrawlable {
+            ICrawlable,
+            ISiteRoot {
 
     public static final String PATH_UPLOAD = "upload";
 
     private IQueryable queryContext;
+    private MutableAttributes attributes = new MutableAttributes();
+
     private Map<String, IJazzModule> modules = new TreeMap<String, IJazzModule>();
     protected final ServiceMap serviceMap;
 
@@ -55,6 +59,16 @@ public abstract class BasicSite
 
     public void setQueryContext(IQueryable queryContext) {
         this.queryContext = queryContext;
+    }
+
+    @Override
+    public <T> T getAttribute(String name, T defaultValue) {
+        return attributes.getAttribute(name, defaultValue);
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
+        attributes.setAttribute(name, value);
     }
 
     public Map<String, IJazzModule> getModules() {

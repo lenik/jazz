@@ -148,4 +148,23 @@ public abstract class CoMessageMask
         this.noPhase = noPhase;
     }
 
+    public DateTimeRange dateRange;
+    public DateTimeRange timeRange;
+
+    public DateTimeRange getDateRange() {
+        return dateRange;
+    }
+
+    public void setDateRange(DateTimeRange dateRange) {
+        this.dateRange = dateRange;
+    }
+
+    public DateTimeRange getTimeRange() {
+        return timeRange;
+    }
+
+    public void setTimeRange(DateTimeRange timeRange) {
+        this.timeRange = timeRange;
+    }
+
 }

@@ -5,6 +5,8 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 public interface ILoginManager {
 
+    String ATTRIBUTE_NAME = ILoginManager.class.getName();
+
     String VERIFY = "verify";
     String LOGIN = "login";
     String REGISTER = "register";

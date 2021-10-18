@@ -28,7 +28,9 @@ import net.bodz.lily.security.ops.UserOps_PhoneId;
 
 public class LoginManager
         extends LoginTokenManager
-        implements ILoginManager, IFlyingSupport {
+        implements
+            ILoginManager,
+            IFlyingSupport {
 
     // long timeout = 3600_000;
     DataContext dataContext;

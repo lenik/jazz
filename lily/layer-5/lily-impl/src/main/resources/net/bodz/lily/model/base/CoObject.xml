@@ -131,7 +131,9 @@
     </sql>
 
     <sql id="filter-ui">
+        <!-- 
         <if test="m.codeName != null">and a.code = #{m.codeName}</if>
+         -->
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.description != null">and a.description like '%#{m.description}%'</if>
         <if test="m.queryText != null">and (

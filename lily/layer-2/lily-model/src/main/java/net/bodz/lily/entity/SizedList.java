@@ -29,4 +29,8 @@ public class SizedList<T>
         this.size = size;
     }
 
+    public boolean isUnknown() {
+        return size == -1;
+    }
+
 }

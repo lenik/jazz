@@ -5,7 +5,6 @@ import java.util.Map;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.MethodSignatureComparator;
-import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.repr.form.SortOrder;
 
 public class MutableMethodMap
@@ -46,8 +45,11 @@ public class MutableMethodMap
         MethodSignature signature = method.getSignature();
 
         IMethod existing = map.get(signature);
-        if (existing != null)
-            throw new DuplicatedKeyException(signature.toString());
+        if (existing != null) {
+            // existing is the Overrided one.
+            return;
+            // throw new DuplicatedKeyException(signature.toString());
+        }
 
         map.put(signature, method);
     }

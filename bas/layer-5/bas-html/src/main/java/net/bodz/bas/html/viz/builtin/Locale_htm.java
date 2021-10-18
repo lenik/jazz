@@ -33,10 +33,10 @@ public class Locale_htm
             boolean selected = locale.equals(value);
             HtmlOption option = select.option();
             option.value(locale.getLanguage());
-            option.text(locale.getDisplayName());
             option.label(locale.getLanguage());
             if (selected)
                 option.selected("selected");
+            option.text(locale.getDisplayName());
         }
 
         String str = value.getLanguage() + " - " + value.getDisplayName();

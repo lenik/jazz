@@ -7,7 +7,8 @@ import net.bodz.bas.site.IBasicSiteAnchors;
 
 public class LibJsArtifacts
         extends StaticArtifactProvider
-        implements IBasicSiteAnchors {
+        implements
+            IBasicSiteAnchors {
 
     static final ArtifactBuilder fn = new ArtifactBuilder();
 
@@ -27,22 +28,22 @@ public class LibJsArtifacts
             .dependsOn(jQuery);
 
     public static Group jQueryUiWidget = fn.group("jquery-ui.widget", _js_.join("jquery-ui/"), //
-            "ui/jquery.ui.widget.min.js")//
+            "ui/widget.min.js")//
             .dependsOn(jQueryUi);
 
     public static Group bigvideo_js = fn.group("jquery-bigvideo", _js_.join("jquery-bigvideo/"), //
             "css/bigvideo.css", "lib/bigvideo.js")//
             .dependsOn(jQuery);
 
-    public static Group chosen = fn.group("jquery-chosen", _js_.join("jquery-chosen/"), //
+    public static Group chosen = fn.group("jquery-chosen", _npm_.join("jquery-chosen/"), //
             "chosen.css", "chosen.jquery.min.js")//
             .dependsOn(jQuery);
 
-    public static Group cropper = fn.group("jquery-cropper", _js_.join("jquery-cropper/dist/"),//
+    public static Group cropper = fn.group("jquery-cropper", _js_.join("jquery-cropper/dist/"), //
             "cropper.min.css", "cropper.min.js")//
             .dependsOn(jQuery);
 
-    public static Group datatables = fn.group("datatables", _js_.join("datatables/media/"),//
+    public static Group datatables = fn.group("datatables", _js_.join("datatables/media/"), //
             "css/jquery.dataTables.min.css", "js/jquery.dataTables.min.js")//
             .dependsOn(jQuery);
 
@@ -52,24 +53,25 @@ public class LibJsArtifacts
             .dependsOn(datatables)//
             .dependsOn(bootstrap3_js);
 
-    public static Group datatablesColVis = fn.group("datatables.colVis", _js_.join("datatables/extensions/ColVis/"),
-            "css/dataTables.colVis.css", "js/dataTables.colVis.js")//
+    public static Group datatablesColVis = fn
+            .group("datatables.colVis", _js_.join("datatables/extensions/ColVis/"), "css/dataTables.colVis.css",
+                    "js/dataTables.colVis.js")//
             .dependsOn(datatablesBootstrap);
 
-    public static Group datatablesResponsive = fn.group("datatables.responsive",
-            _js_.join("datatables/extensions/Responsive/"), "css/dataTables.responsive.css",
-            "js/dataTables.responsive.js")//
+    public static Group datatablesResponsive = fn
+            .group("datatables.responsive", _js_.join("datatables/extensions/Responsive/"),
+                    "css/dataTables.responsive.css", "js/dataTables.responsive.js")//
             .dependsOn(datatablesBootstrap);
 
-    public static Group datatablesTableTools = fn.group("datatables.tableTools",
-            _js_.join("datatables/extensions/TableTools/"), "css/dataTables.tableTools.css",
-            "js/dataTables.tableTools.js")//
+    public static Group datatablesTableTools = fn
+            .group("datatables.tableTools", _js_.join("datatables/extensions/TableTools/"),
+                    "css/dataTables.tableTools.css", "js/dataTables.tableTools.js")//
             .dependsOn(datatablesBootstrap);
 
     public static Group fileUpload = fn.group("jquery-file-upload", _js_.join("jquery-file-upload/"), //
             "css/jquery.fileupload.css", //
-            "js/jquery.fileupload.js", //
-            "js/jquery.iframe-transport.js", //
+            "jquery.fileupload.js", //
+            "jquery.iframe-transport.js", //
             // "js/jquery.fileupload-process.js", //
             "#")//
             .dependsOn(jQuery)//
@@ -102,7 +104,7 @@ public class LibJsArtifacts
             "magnific-popup.css", "jquery.magnific-popup.min.js")//
             .dependsOn(jQuery);
 
-    public static Group parsley = fn.group("jquery-parsley", _js_.join("jquery-parsley/"),//
+    public static Group parsley = fn.group("jquery-parsley", _js_.join("jquery-parsley/"), //
             "src/parsley.css", "dist/parsley.min.js")//
             .dependsOn(jQuery);
 
@@ -130,10 +132,10 @@ public class LibJsArtifacts
             "jquery.fs.wallpaper.min.js", "jquery.fs.wallpaper.css")//
             .dependsOn(jQuery);
 
-    public static Group wysiwygEditor = fn.group("jquery-wysiwyg-editor", _js_.join("jquery-wysiwyg-editor/"), //
-            "css/froala_editor.min.css", //
+    public static Group wysiwygEditor = fn.group("jquery-wysiwyg-editor", _npm_.join("froala-editor/"), //
+            "css/froala_editor.pkgd.min.css", //
             "css/froala_style.min.css", //
-            "js/froala_editor.min.js", //
+            "js/froala_editor.pkgd.min.js", //
             "#")//
             .dependsOn(jQuery)//
     // .dependsOn(LibFontsArtifacts.fontAwesome)

@@ -24,7 +24,8 @@ import net.bodz.lily.security.login.LoginToken;
  * @see net.bodz.lily.model.base.CoObject
  */
 public class CoObjectMask
-        implements IVarMapSerializable {
+        implements
+            IVarMapSerializable {
 
     LongRange idRange;
 
@@ -234,11 +235,10 @@ public class CoObjectMask
             new NameConventionTypeMapper(null, 1, "db.", "Mask", false), //
     };
 
-    @SuppressWarnings("unchecked")
-    public static Class<? extends CoObjectMask> findMaskClass(Class<?> objClass) {
-        Class<? extends CoObjectMask> maskClass;
+    public static <M extends CoObjectMask> Class<M> findMaskClass(Class<?> objClass) {
         for (NameConventionTypeMapper tmap : maskTmaps) {
-            maskClass = (Class<? extends CoObjectMask>) tmap.map(objClass);
+            @SuppressWarnings("unchecked")
+            Class<M> maskClass = (Class<M>) tmap.map(objClass);
             if (maskClass != null)
                 return maskClass;
         }

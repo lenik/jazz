@@ -14,7 +14,8 @@ import net.bodz.bas.io.data.DataOutImplBE;
 import net.bodz.bas.io.data.DataOutImplLE;
 
 public interface IDataStruct
-        extends Serializable {
+        extends
+            Serializable {
 
     int size();
 
@@ -31,7 +32,6 @@ public interface IDataStruct
 
     class fn {
 
-        @SuppressWarnings("resource")
         public static IDataIn transfer(IDataStruct struct, int format) {
             int size = struct.size();
             BByteOut bo = new BByteOut(size);

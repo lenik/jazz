@@ -34,8 +34,8 @@ public class TimeZone_htm
             boolean selected = timeZone.equals(value);
             HtmlOption option = select.option();
             option.value(timeZone.getID());
-            option.text(timeZone.getDisplayName() + " +" + timeZone.getRawOffset() / 60000);
             option.label(timeZone.getID());
+            option.text(timeZone.getDisplayName() + " +" + timeZone.getRawOffset() / 60000);
             if (selected)
                 option.selected("selected");
         }

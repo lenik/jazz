@@ -19,7 +19,8 @@ import net.bodz.bas.site.vhost.VirtualHostManager;
  * @see VhostResourceMappings#siteFilesAlias
  */
 public class DefaultSiteDirs
-        implements IBasicSiteAnchors {
+        implements
+            IBasicSiteAnchors {
 
     File clusterDataDir;
     Set<String> schemas = new HashSet<String>();
@@ -52,6 +53,13 @@ public class DefaultSiteDirs
      */
     public File getDataDir(String instanceName) {
         return new File(clusterDataDir, instanceName);
+    }
+
+    public File getDataDir(HttpServletRequest request) {
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
+        if (vhost == null)
+            throw new IllegalUsageException("No corresponding vhost.");
+        return new File(clusterDataDir, vhost.getName());
     }
 
     /**
@@ -98,6 +106,15 @@ public class DefaultSiteDirs
         String schema = request.getParameter("schema");
         if (schema == null)
             throw new IllegalArgumentException("Missing schema parameter");
+
+        File dir = getUploadDir(vhost.getName(), schema);
+        return dir;
+    }
+
+    public File getUploadDir(HttpServletRequest request, String schema) {
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
+        if (vhost == null)
+            throw new IllegalUsageException("No corresponding vhost.");
 
         File dir = getUploadDir(vhost.getName(), schema);
         return dir;

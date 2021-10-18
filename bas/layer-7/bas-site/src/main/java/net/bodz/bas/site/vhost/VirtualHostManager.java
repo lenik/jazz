@@ -12,7 +12,8 @@ import net.bodz.bas.t.order.PriorityComparator;
 @IndexedTypeLoader(IVirtualHostResolver.class)
 public class VirtualHostManager
         extends ArrayList<IVirtualHostResolver>
-        implements IVirtualHostResolver {
+        implements
+            IVirtualHostResolver {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,6 +41,16 @@ public class VirtualHostManager
     public IVirtualHost get(String id) {
         for (IVirtualHostResolver resolver : this) {
             IVirtualHost vhost = resolver.get(id);
+            if (vhost != null)
+                return vhost;
+        }
+        return null;
+    }
+
+    @Override
+    public IVirtualHost get(HttpServletRequest request) {
+        for (IVirtualHostResolver resolver : this) {
+            IVirtualHost vhost = resolver.get(request);
             if (vhost != null)
                 return vhost;
         }

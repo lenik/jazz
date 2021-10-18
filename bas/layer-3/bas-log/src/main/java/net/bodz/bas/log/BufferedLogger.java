@@ -106,7 +106,6 @@ public class BufferedLogger
                 listener.onCleared();
     }
 
-    @SuppressWarnings("resource")
     public void dump(PrintStream info, PrintStream err) {
         PrintStreamPrintOut infoOut = new PrintStreamPrintOut(info);
         PrintStreamPrintOut errOut;
