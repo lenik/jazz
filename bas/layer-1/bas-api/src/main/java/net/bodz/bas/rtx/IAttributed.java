@@ -2,7 +2,9 @@ package net.bodz.bas.rtx;
 
 public interface IAttributed {
 
-    <T> T getAttribute(String name);
+    default <T> T getAttribute(String name) {
+        return getAttribute(name, null);
+    }
 
     <T> T getAttribute(String name, T defaultValue);
 
