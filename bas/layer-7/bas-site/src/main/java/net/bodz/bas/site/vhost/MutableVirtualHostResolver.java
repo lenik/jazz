@@ -54,7 +54,7 @@ public class MutableVirtualHostResolver
     }
 
     @Override
-    public synchronized IVirtualHost resolve(HttpServletRequest request) {
+    public synchronized IVirtualHost get(HttpServletRequest request) {
         IVirtualHost exact = null;
         IVirtualHost nearest = default_;
         Node<HostBinding> node = trie.getRoot();
@@ -84,6 +84,11 @@ public class MutableVirtualHostResolver
                 nearest = _fallback;
         }
         return exact != null ? exact : nearest;
+    }
+
+    @Override
+    public IVirtualHost resolve(HttpServletRequest request) {
+        return get(request);
     }
 
     public synchronized void add(IVirtualHost vhost) {

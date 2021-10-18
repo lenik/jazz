@@ -12,6 +12,7 @@ import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.codegen.doc.WsDocSite;
+import net.bodz.lily.security.login.ILoginManager;
 import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginManagerWs;
 
@@ -23,6 +24,7 @@ public abstract class LilyStartSite
     public static final String PATH_SYSMAN = "sysmgr";
 
     protected final DataContext dataContext;
+    LoginManager loginManager;
 
     public LilyStartSite(DataContext dataContext) {
         this.dataContext = dataContext;
@@ -57,13 +59,19 @@ public abstract class LilyStartSite
     }
 
     void setupServices() {
+        loginManager = new LoginManager(dataContext);
+        serviceMap.install("session", new LoginManagerWs(loginManager));
+        serviceMap.install("ws-doc", new WsDocSite());
+
+        setAttribute(ILoginManager.ATTRIBUTE_NAME, loginManager);
+
+        setupDataIndex();
+    }
+
+    protected void setupDataIndex() {
         CoIndexServiceGroup group = new CoIndexServiceGroup(dataContext);
         serviceMap.install("data", group);
         serviceMap.install(group.getNameMap());
-
-        LoginManager loginManager = new LoginManager(dataContext);
-        serviceMap.install("session", new LoginManagerWs(loginManager));
-        serviceMap.install("ws-doc", new WsDocSite());
     }
 
 }

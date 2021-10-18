@@ -18,6 +18,7 @@ net.bodz.bas.html.viz.builtin.PredefSelect_htm
 net.bodz.bas.html.viz.builtin.Set_htm
 net.bodz.bas.html.viz.builtin.Short_htm
 net.bodz.bas.html.viz.builtin.SqlDate_htm
+net.bodz.bas.html.viz.builtin.State_htm
 net.bodz.bas.html.viz.builtin.String_htm
 net.bodz.bas.html.viz.builtin.Throwable_htm
 net.bodz.bas.html.viz.builtin.TimeZone_htm

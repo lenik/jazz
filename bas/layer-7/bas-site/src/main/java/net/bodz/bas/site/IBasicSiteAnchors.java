@@ -24,6 +24,8 @@ public interface IBasicSiteAnchors {
     IAnchor _jQueryUI_ = _webApp_.join("libjs-alt/jquery-ui/");
     IAnchor _jQueryUIThemes_ = _webApp_.join("libjs-alt/jquery-ui-themes/");
 
+    IAnchor _npm_ = _webApp_.join("node_modules/");
+
     /** @see EmbeddedResourceMappings#webjarsDir */
     IAnchor _webjars_ = _webApp_.join("webjars/");
 

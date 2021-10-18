@@ -20,6 +20,7 @@ import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
@@ -120,6 +121,7 @@ public abstract class CoObject
         fn.fillLoginData(this);
     }
 
+    @DetailLevel(DetailLevel.HIDDEN)
     public abstract Object getId();
 
     public abstract void setId_(Serializable id);
@@ -436,6 +438,7 @@ public abstract class CoObject
         this.version = version;
     }
 
+    @Internal
     @Derived
     public boolean isNew() {
         return getId() == null;
@@ -644,6 +647,8 @@ public abstract class CoObject
         dumper.dump(this);
     }
 
+    @Internal
+    @DetailLevel(DetailLevel.HIDDEN)
     public IWebSupport getWebSupport() {
         return new DefaultWebSupport(this);
     }

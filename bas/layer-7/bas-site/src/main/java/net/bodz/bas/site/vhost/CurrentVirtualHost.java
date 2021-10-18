@@ -29,7 +29,7 @@ public class CurrentVirtualHost
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request == null)
             return null;
-        return VirtualHostManager.getInstance().resolve(request);
+        return VirtualHostManager.getInstance().get(request);
     }
 
     public static IVirtualHost getVirtualHost() {
