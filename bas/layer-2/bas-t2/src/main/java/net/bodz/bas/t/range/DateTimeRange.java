@@ -122,6 +122,12 @@ public class DateTimeRange
         return succ;
     }
 
+    public DateTimeRange minMax(java.util.Date min, java.util.Date max) {
+        DateTime a = min == null ? null : new DateTime(min);
+        DateTime b = max == null ? null : new DateTime(max);
+        return minMax(a, b);
+    }
+
     public DateTimeRange minMax(DateTime min, DateTime max) {
         this.start = min;
         this.end = max;
