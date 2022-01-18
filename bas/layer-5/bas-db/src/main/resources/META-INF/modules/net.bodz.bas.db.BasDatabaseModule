@@ -1,4 +1,4 @@
-net.bodz.bas.c.org.json.JsonFormTypeHandler
+net.bodz.bas.c.org.json.JsonStrFormTypeHandler
 net.bodz.bas.c.org.json.JsonObjTypeHandler
 net.bodz.bas.c.org.json.PojoJsonTypeHandler
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler

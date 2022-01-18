@@ -7,13 +7,13 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
 
-public class DefaultJsonForm
+public class DefaultJsonStrForm
         implements
-            IJsonForm {
+            IJsonStrForm {
 
     IJsonSerializable obj;
 
-    public DefaultJsonForm(IJsonSerializable obj) {
+    public DefaultJsonStrForm(IJsonSerializable obj) {
         this.obj = obj;
     }
 
