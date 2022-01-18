@@ -10,7 +10,7 @@ import net.bodz.bas.json.JsonObject;
 
 public abstract class JsonSupport
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     @Override
     public void readObject(JsonObject o)

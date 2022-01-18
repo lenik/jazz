@@ -4,7 +4,7 @@ import net.bodz.bas.err.FormatException;
 
 public abstract class JsonStruct
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     @Override
     public boolean equals(Object obj) {

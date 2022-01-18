@@ -11,7 +11,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlSerializable;
@@ -79,7 +79,7 @@ public class DefaultColumnMetadata
 
     public void setType(Class<?> type) {
         this.type = type;
-        jsonType = IJsonSerializable.class.isAssignableFrom(type);
+        jsonType = IJsonForm.class.isAssignableFrom(type);
         xmlType = IXmlSerializable.class.isAssignableFrom(type);
     }
 
@@ -123,9 +123,9 @@ public class DefaultColumnMetadata
     public Object readJson(Object jsonBox)
             throws ParseException {
         if (jsonType) {
-            IJsonSerializable obj;
+            IJsonForm obj;
             try {
-                obj = (IJsonSerializable) type.newInstance();
+                obj = (IJsonForm) type.newInstance();
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + type, e);
             }
@@ -156,7 +156,7 @@ public class DefaultColumnMetadata
             throw new IllegalArgumentException("Not an instance of " + type);
 
         if (jsonType) {
-            IJsonSerializable obj = (IJsonSerializable) value;
+            IJsonForm obj = (IJsonForm) value;
             obj.writeObjectBoxed(out);
             return;
         }
@@ -237,7 +237,7 @@ public class DefaultColumnMetadata
         this.setSqlType(sqlType);
     }
 
-    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /** ⇱ Implementation Of {@link IJsonForm}. */
     /* _____________________________ */static section.iface __JSON__;
 
     @Override

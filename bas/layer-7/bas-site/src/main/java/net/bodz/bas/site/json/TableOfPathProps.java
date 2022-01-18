@@ -14,7 +14,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.xml.IXmlSerializable;
 import net.bodz.bas.json.JsonObject;
@@ -34,7 +34,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 public class TableOfPathProps
         implements
             IVarMapSerializable,
-            IJsonSerializable,
+            IJsonForm,
             IXmlSerializable {
 
     /**

@@ -8,7 +8,7 @@ import net.bodz.bas.json.JsonObject;
 
 public class JsonVerbatimBuf
         implements
-            IJsonSerializable,
+            IJsonForm,
             IJsonOptions {
 
     String key;

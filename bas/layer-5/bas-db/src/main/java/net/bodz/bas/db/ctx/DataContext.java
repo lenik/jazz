@@ -29,7 +29,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
@@ -39,7 +39,7 @@ public class DataContext
         implements
             Closeable,
             IAttributed,
-            IJsonSerializable,
+            IJsonForm,
             SqlSessionFactory {
 
     public static final String ATTRIBUTE_KEY = DataContext.class.getName();
@@ -170,7 +170,7 @@ public class DataContext
         attributes.put(name, value);
     }
 
-    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /** ⇱ Implementation Of {@link IJsonForm}. */
     /* _____________________________ */static section.iface __JSON__;
 
     @Override

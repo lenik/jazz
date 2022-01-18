@@ -76,7 +76,7 @@ public class JsonFn {
      * @param obj
      *            Non-<code>null</code> json-support object.
      */
-    public static String toJson(IJsonSerializable obj)
+    public static String toJson(IJsonForm obj)
             throws FormatException {
         return toJson(obj, false);
     }
@@ -87,7 +87,7 @@ public class JsonFn {
      * @param compact
      *            Format json in compact single line form.
      */
-    public static String toJson(IJsonSerializable obj, boolean compact)
+    public static String toJson(IJsonForm obj, boolean compact)
             throws FormatException {
         if (obj == null)
             throw new NullPointerException("obj");
@@ -101,7 +101,7 @@ public class JsonFn {
         return buf.toString();
     }
 
-    public static <T extends IJsonSerializable> T fromJson(T obj, String json)
+    public static <T extends IJsonForm> T fromJson(T obj, String json)
             throws ParseException {
         if (json == null) // XXX null ?
             obj.readObject(null);
@@ -165,11 +165,11 @@ public class JsonFn {
         };
     }
 
-    public static JsonUnion union(IJsonSerializable... array) {
+    public static JsonUnion union(IJsonForm... array) {
         return new JsonUnion(array);
     }
 
-    public static <T extends IJsonSerializable> T readObject(T context, JsonObject node)
+    public static <T extends IJsonForm> T readObject(T context, JsonObject node)
             throws ParseException {
         if (node != null)
             context.readObject(node);
@@ -190,8 +190,8 @@ public class JsonFn {
             out.value(null);
             return;
         }
-        if (o instanceof IJsonSerializable) {
-            IJsonSerializable jsVal = (IJsonSerializable) o;
+        if (o instanceof IJsonForm) {
+            IJsonForm jsVal = (IJsonForm) o;
             jsVal.writeObjectBoxed(out);
             return;
         }

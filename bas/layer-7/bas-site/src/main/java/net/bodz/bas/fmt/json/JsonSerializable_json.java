@@ -15,21 +15,21 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class JsonSerializable_json
-        extends AbstractHttpViewBuilder<IJsonSerializable> {
+        extends AbstractHttpViewBuilder<IJsonForm> {
 
     public JsonSerializable_json() {
-        super(IJsonSerializable.class);
+        super(IJsonForm.class);
     }
 
     @Override
-    public ContentType getContentType(HttpServletRequest request, IJsonSerializable value) {
+    public ContentType getContentType(HttpServletRequest request, IJsonForm value) {
         return ContentTypes.application_json;
     }
 
     @Override
-    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IJsonSerializable> ref)
+    public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IJsonForm> ref)
             throws ViewBuilderException, IOException {
-        IJsonSerializable jso = ref.get();
+        IJsonForm jso = ref.get();
         String json;
         try {
             json = JsonFn.toJson(jso);

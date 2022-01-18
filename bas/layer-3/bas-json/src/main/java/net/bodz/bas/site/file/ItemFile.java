@@ -7,14 +7,14 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
 public class ItemFile
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     private File file;
 

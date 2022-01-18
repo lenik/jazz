@@ -10,7 +10,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 
@@ -18,7 +18,7 @@ public class ConnectOptions
         implements
             Serializable,
             Cloneable,
-            IJsonSerializable {
+            IJsonForm {
 
     private static final long serialVersionUID = 1L;
 

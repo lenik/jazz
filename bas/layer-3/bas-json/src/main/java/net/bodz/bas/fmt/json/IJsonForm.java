@@ -8,7 +8,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
-public interface IJsonSerializable {
+public interface IJsonForm {
 
     /**
      * @param json

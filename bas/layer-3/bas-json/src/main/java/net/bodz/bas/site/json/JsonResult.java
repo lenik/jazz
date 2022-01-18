@@ -1,6 +1,6 @@
 package net.bodz.bas.site.json;
 
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 
 public class JsonResult
         extends AbstractJsonResponse<JsonResult> {
@@ -9,7 +9,7 @@ public class JsonResult
         super();
     }
 
-    public JsonResult(int status, String message, IJsonSerializable data) {
+    public JsonResult(int status, String message, IJsonForm data) {
         super(status, message, data);
     }
 

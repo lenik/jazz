@@ -154,7 +154,7 @@ public class JsonPersistor {
         switch (form) {
         case FORM_JSON:
             JsonObject valNode = in.getJsonObject(KEY_VALUE);
-            IJsonSerializable jsobj = (IJsonSerializable) obj;
+            IJsonForm jsobj = (IJsonForm) obj;
             jsobj.readObject(valNode);
             return jsobj;
 
@@ -297,8 +297,8 @@ public class JsonPersistor {
             return;
         }
 
-        if (obj instanceof IJsonSerializable) {
-            IJsonSerializable jsobj = (IJsonSerializable) obj;
+        if (obj instanceof IJsonForm) {
+            IJsonForm jsobj = (IJsonForm) obj;
             out.entry(KEY_FORM, FORM_JSON);
             out.key(KEY_VALUE);
             jsobj.writeObject(out);

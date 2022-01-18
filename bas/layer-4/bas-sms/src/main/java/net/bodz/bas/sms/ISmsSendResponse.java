@@ -1,9 +1,9 @@
 package net.bodz.bas.sms;
 
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 
 public interface ISmsSendResponse
-        extends IJsonSerializable {
+        extends IJsonForm {
 
     SmsSendState getSendState();
 

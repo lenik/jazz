@@ -2,12 +2,12 @@ package net.bodz.bas.site.json;
 
 import java.util.Map;
 
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.repr.form.SortOrder;
 
 public interface IJsonResponse
         extends
-            IJsonSerializable {
+            IJsonForm {
 
     int OK = 0;
     int WARN = 300;
