@@ -12,7 +12,7 @@ import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {
 
-    public void load(IStreamInputSource inputSource, IFlatfSerializable target, IOptions options)
+    public void load(IStreamInputSource inputSource, IFlatfForm target, IOptions options)
             throws IOException, ParseException {
         Reader reader = inputSource.newReader();
         try {
@@ -23,7 +23,7 @@ public class FlatfLoader {
         }
     }
 
-    public void load(IFlatfInput in, IFlatfSerializable target, IOptions options)
+    public void load(IFlatfInput in, IFlatfForm target, IOptions options)
             throws ParseException, IOException {
         int token;
         String currentSection = in.getSectionName();

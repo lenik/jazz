@@ -117,7 +117,7 @@ public class ClassDoc
         return methodDocs.remove(methodId);
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     /**
