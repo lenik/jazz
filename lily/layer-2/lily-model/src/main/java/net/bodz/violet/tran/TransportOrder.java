@@ -14,7 +14,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.contact.Contact;
 import net.bodz.lily.contact.OrgUnit;
@@ -36,7 +36,7 @@ import net.bodz.violet.store.StoreOrder;
 @Table(name = "tranodr")
 public class TransportOrder
         extends CoMessage<Integer>
-        implements IVarMapSerializable {
+        implements IVarMapForm {
 
     private static final long serialVersionUID = 1L;
 

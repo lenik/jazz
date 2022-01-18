@@ -7,7 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
-public interface IVarMapSerializable {
+public interface IVarMapForm {
 
     /**
      * @return Reference to <code>this</code>.

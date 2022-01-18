@@ -6,14 +6,14 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.RangeVarsFn;
 import net.bodz.bas.t.range.ShortRange;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 /**
  * @see CalendarDate
  */
 public class CalendarDateMask
-        implements IVarMapSerializable {
+        implements IVarMapForm {
 
     ShortRange yearRange = new ShortRange();
     ShortRange monthRange = new ShortRange();

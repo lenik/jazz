@@ -15,7 +15,7 @@ import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.range.RangeVarsFn;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.security.login.LoginToken;
@@ -25,7 +25,7 @@ import net.bodz.lily.security.login.LoginToken;
  */
 public class CoObjectMask
         implements
-            IVarMapSerializable {
+            IVarMapForm {
 
     LongRange idRange;
 

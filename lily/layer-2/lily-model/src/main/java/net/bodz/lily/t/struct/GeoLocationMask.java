@@ -4,14 +4,14 @@ import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.t.range.DoubleRange;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 /**
  * @see GeoLocation
  */
 public class GeoLocationMask
-        implements IVarMapSerializable {
+        implements IVarMapForm {
 
     GeoLocation refPoint;
     Double distance;
@@ -60,7 +60,7 @@ public class GeoLocationMask
         this.regionId = regionId;
     }
 
-    /** ⇱ Implementation Of {@link IVarMapSerializable}. */
+    /** ⇱ Implementation Of {@link IVarMapForm}. */
     /* _____________________________ */static section.iface __VarMap__;
 
     @Override

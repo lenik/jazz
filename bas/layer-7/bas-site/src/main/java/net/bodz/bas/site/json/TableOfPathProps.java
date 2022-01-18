@@ -28,12 +28,12 @@ import net.bodz.bas.repr.form.PathField;
 import net.bodz.bas.repr.form.PathFieldList;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.site.json.PathMapNode.IVisitor;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class TableOfPathProps
         implements
-            IVarMapSerializable,
+            IVarMapForm,
             IJsonForm,
             IXmlSerializable {
 

@@ -12,7 +12,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 /**
@@ -22,7 +22,7 @@ import net.bodz.bas.t.variant.IVariantMap;
  */
 public class JsonWrapper
         implements
-            IVarMapSerializable,
+            IVarMapForm,
             IJsonForm {
 
     String key;
