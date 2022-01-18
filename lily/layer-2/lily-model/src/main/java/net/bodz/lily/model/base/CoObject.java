@@ -41,7 +41,7 @@ import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.entity.IReinitializable;
@@ -63,7 +63,7 @@ public abstract class CoObject
             IReinitializable,
             IStated, //
             Serializable,
-            IVarMapSerializable,
+            IVarMapForm,
             IJsonForm,
             Cloneable {
 
@@ -564,7 +564,7 @@ public abstract class CoObject
         }
     }
 
-    /** ⇱ Implementation Of {@link IVarMapSerializable}. */
+    /** ⇱ Implementation Of {@link IVarMapForm}. */
     /* _____________________________ */static section.iface __VAR_MAP__;
 
     @Override

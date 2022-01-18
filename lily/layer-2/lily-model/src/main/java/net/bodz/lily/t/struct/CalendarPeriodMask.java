@@ -6,11 +6,11 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.RangeVarsFn;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class CalendarPeriodMask
-        implements IVarMapSerializable {
+        implements IVarMapForm {
 
     IntegerRange yearsRange;
     IntegerRange monthsRange;

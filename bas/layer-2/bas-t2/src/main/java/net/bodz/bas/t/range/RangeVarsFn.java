@@ -2,11 +2,11 @@ package net.bodz.bas.t.range;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.source.FnHelper;
-import net.bodz.bas.t.variant.IVarMapSerializable;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 /**
- * @see IVarMapSerializable
+ * @see IVarMapForm
  */
 @FnHelper
 public class RangeVarsFn {
