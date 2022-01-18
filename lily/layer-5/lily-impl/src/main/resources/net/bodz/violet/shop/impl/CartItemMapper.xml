@@ -13,7 +13,7 @@
             <association property="artifact" javaType="net.bodz.violet.art.Artifact">
                 <id property="id" column="art" />
                 <result property="label" column="art_label" />
-                <result property="properties.jsonForm" column="art_props" />
+                <result property="properties.jsonStr" column="art_props" />
             </association>
         </association>
     </resultMap>

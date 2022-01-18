@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestPaperItemMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.edu.TestPaperItem" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="score" column="score" />
         <association property="paper" javaType="net.bodz.violet.edu.TestPaper">
             <id property="id" column="paper" />
@@ -69,7 +69,7 @@
             paper, q, score
         ) values(
             #{priority}, #{flags}, #{state},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{paper.id}, #{question.id}, #{score}
         ) returning id; --
     ]]></insert>
@@ -78,7 +78,7 @@
         update testpaperl
         <set>
             <include refid="co.setVS" />
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             paper = #{paper.id},
             q = #{question.id},
             score = #{score},

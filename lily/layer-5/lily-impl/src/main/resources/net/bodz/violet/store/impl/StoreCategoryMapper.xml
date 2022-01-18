@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.store.impl.StoreCategoryMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.store.StoreCategory" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -58,7 +58,7 @@
             props
         ) values (
             #{codeName},#{label},#{description},
-            #{properties.jsonForm}::jsonb
+            #{properties.jsonStr}::jsonb
         ) returning id; --
     ]]></insert>
 
@@ -66,7 +66,7 @@
         update storecat
         <set>
             <include refid="co.setU" />
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
         </set>
         <where>
             <if test="id != null">id=#{id}</if>

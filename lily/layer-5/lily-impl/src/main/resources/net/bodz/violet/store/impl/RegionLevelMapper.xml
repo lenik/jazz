@@ -5,7 +5,7 @@
 <mapper namespace = "net.bodz.violet.store.impl.RegionLevelMapper">
 
     <resultMap id = "objlist_map" type = "net.bodz.violet.store.RegionLevel" extends = "co.MAP_UV">
-        <result property = "properties.jsonForm" column = "props" />
+        <result property = "properties.jsonStr" column = "props" />
     </resultMap>
 
     <sql id = "objlist_sql"><![CDATA[
@@ -50,7 +50,7 @@
             props
         ) values(
             #{label},#{description},
-            #{properties.jsonForm}::jsonb
+            #{properties.jsonStr}::jsonb
         ) returning id; --
     ]]></insert>
 
@@ -58,7 +58,7 @@
         update regionlevel
         <set>
             <include refid = "co.setU" />
-            <if test = "properties !=  null">props  =  #{properties.jsonForm}::jsonb,</if>
+            <if test = "properties !=  null">props  =  #{properties.jsonStr}::jsonb,</if>
         </set>
         <where>
             id = #{id}

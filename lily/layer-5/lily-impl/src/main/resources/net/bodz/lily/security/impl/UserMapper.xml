@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.security.impl.UserMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.User" extends="co.MAP_ALL">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="name" column="name" />
         <association property="category" javaType="net.bodz.lily.security.UserCategory">
             <id property="id" column="cat" />
@@ -199,7 +199,7 @@
             ) values(
                 #{name}, #{label}, #{description},
                 #{priority}, #{flags}, #{state},
-                #{properties.jsonForm},
+                #{properties.jsonStr},
                 #{primaryGroup.id}
             ) returning id
         ) insert into usersec(
@@ -209,7 +209,7 @@
             )
             select
                 u.id, #{secret.password},
-                #{secret.properties.jsonForm},
+                #{secret.properties.jsonStr},
                 #{secret.question}, #{secret.answer}
             from u
             returning "user" "id"; --
@@ -220,7 +220,7 @@
         <set>
             <include refid="co.setUS" />
             name = #{name},
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             gid0 = #{primaryGroup.id},
         </set>
         <where>
@@ -232,7 +232,7 @@
         <set>
             "user" = #{id},
             passwd = #{secret.password},
-            props = #{secret.properties.jsonForm},
+            props = #{secret.properties.jsonStr},
             question =
             #{secret.question},
             answer = #{secret.answer},

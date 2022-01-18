@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.geo.impl.ZoneMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.geo.Zone" extends="node.objlist_map">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <association property="category" javaType="net.bodz.lily.geo.ZoneCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -84,7 +84,7 @@
             #{codeName},#{label},#{description}, #{parent.id},]]>
             <if test="category == null">default,</if>
             <if test="category != null">#{category.id},</if><![CDATA[
-            #{properties.jsonForm}::jsonb
+            #{properties.jsonStr}::jsonb
         ) returning id; --
     ]]></insert>
 
@@ -94,7 +94,7 @@
             <include refid="co.setUS" />
             <if test="parent != null">parent = #{parent.id}, </if>
             <if test="category != null">cat = #{category.id}, </if>
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
         </set>
         <where>
             id = #{id}

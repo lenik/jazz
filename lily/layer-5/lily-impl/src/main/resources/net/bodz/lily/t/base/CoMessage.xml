@@ -5,7 +5,7 @@
 <mapper namespace="message">
 
     <resultMap id="MAP_ALL" type="net.bodz.lily.t.base.CoMessage" extends="co.MAP_ALL">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
 
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />

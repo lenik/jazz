@@ -68,7 +68,7 @@
         ) values(
             #{codeName},#{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{parent.id}, #{depth}
         ) returning id; --
     ]]></insert>
@@ -77,7 +77,7 @@
         update usercat
         <set>
             <include refid="co.setUSA" />
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
             <if test="parent != null">parent = #{parent.id},</if>
             depth = #{depth},
         </set>

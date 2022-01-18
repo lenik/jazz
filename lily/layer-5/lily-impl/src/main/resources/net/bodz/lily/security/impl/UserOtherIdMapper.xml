@@ -5,9 +5,9 @@
 <mapper namespace="net.bodz.lily.security.impl.UserOtherIdMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.UserOtherId" extends="mi.objlist_map">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="otherId" column="oid" />
-        <result property="auth.jsonForm" column="auth" />
+        <result property="auth.jsonStr" column="auth" />
         <association property="user" resultMap="user" />
         <association property="type" javaType="net.bodz.lily.security.UserOtherIdType">
             <id property="id" column="type" />
@@ -95,10 +95,10 @@
         ) values(
             #{label}, #{description},
             #{priority}, #{flags}, #{state},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{user.id}, #{type.id},
             #{otherId},
-            #{auth.jsonForm}
+            #{auth.jsonStr}
         ); --
     ]]></insert>
 
@@ -106,12 +106,12 @@
         update useroid
         <set>
             <include refid="co.setUS" />
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             "user" = #{user.id},
             type = #{type.id},
             oid = #{otherId},
             auth =
-            #{auth.jsonForm},
+            #{auth.jsonStr},
         </set>
         <where>
             id = #{id}

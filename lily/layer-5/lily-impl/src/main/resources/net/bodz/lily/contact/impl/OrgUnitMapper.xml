@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.contact.impl.OrgUnitMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.contact.OrgUnit" extends="co.MAP_ALL">
-        <!-- result property="properties.jsonForm" column="props" /-->
+        <!-- result property="properties.jsonStr" column="props" /-->
         <association property="org" javaType="net.bodz.lily.contact.Organization">
             <id property="id" column="org" />
             <result property="label" column="org_label" />

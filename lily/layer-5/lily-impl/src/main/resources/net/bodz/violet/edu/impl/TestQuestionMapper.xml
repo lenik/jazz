@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestQuestionMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.edu.TestQuestion" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="insertPos" column="pos" />
         <result property="answer" column="answer" />
         <association property="course" javaType="net.bodz.violet.edu.Course">
@@ -75,7 +75,7 @@
             #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{priority}, #{flags}, #{state}, 
             #{op.id}, #{subject}, #{text}, 
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{course.id},
             #{insertPos}, #{answer}
         ) returning id; --
@@ -86,7 +86,7 @@
         <set>
             <include refid="co.setVSA" />
             <include refid="message.setUM" />
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             course = #{course.id},
             pos = #{insertPos},
             answer = #{answer},

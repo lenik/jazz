@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.contact.impl.OrganizationMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.contact.Organization" extends="co.MAP_ALL">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
 
         <result property="birthday" column="birthday" />
         <result property="langTag" column="locale" />
@@ -88,7 +88,7 @@
         ) values(
             #{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{category.id},
             #{birthday}, #{langTag}, #{timeZoneId},
             #{supplier}, #{customer}, #{subject},
@@ -101,7 +101,7 @@
         update org
         <set>
             <include refid="co.setUVSA" />
-            props = #{properties.jsonForm}::jsonb,
+            props = #{properties.jsonStr}::jsonb,
             cat = #{category.id},
             birthday = #{birthday},
             locale = #{langTag},

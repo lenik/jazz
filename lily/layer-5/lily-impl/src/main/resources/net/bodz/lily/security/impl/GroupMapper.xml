@@ -6,7 +6,7 @@
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.Group" extends="co.MAP_ALL">
         <result property="name" column="name" />
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <association property="admin" javaType="net.bodz.lily.security.User">
             <id property="id" column="admin" />
             <result property="name" column="admin_name" />
@@ -20,7 +20,7 @@
             <result property="name" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
-            <result property="properties.jsonForm" column="y_props" />
+            <result property="properties.jsonStr" column="y_props" />
         </collection>
     </resultMap>
     
@@ -76,7 +76,7 @@
             admin
         ) values(
             #{name}, #{label}, #{description},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{admin.id}
         ) returning id; --
     ]]></insert>
@@ -85,7 +85,7 @@
         update "group"
         <set>
             <include refid="co.setU" />
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             admin = #{admin.id},
         </set>
         where id = #{id}
