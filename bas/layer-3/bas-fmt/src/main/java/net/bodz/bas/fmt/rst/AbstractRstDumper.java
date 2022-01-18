@@ -76,8 +76,8 @@ public abstract class AbstractRstDumper
 
     protected void formatMember(String name, Class<?> type, Object value)
             throws IOException, FormatException {
-        if (value instanceof IRstSerializable) {
-            IRstSerializable obj = (IRstSerializable) value;
+        if (value instanceof IRstForm) {
+            IRstForm obj = (IRstForm) value;
             if (!marks.addMark(obj))
                 return;
 

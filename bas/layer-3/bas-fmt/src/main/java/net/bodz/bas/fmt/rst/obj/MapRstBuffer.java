@@ -7,7 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.AbstractRstHandler;
 import net.bodz.bas.fmt.rst.IRstHandler;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -32,7 +32,7 @@ public class MapRstBuffer<K, V>
 
         valueParser = Typers.getTyper(valueType, IParser.class);
 
-        boolean rstValue = IRstSerializable.class.isAssignableFrom(valueType);
+        boolean rstValue = IRstForm.class.isAssignableFrom(valueType);
         if (!rstValue)
             throw new NotImplementedException("Non-rst value isn't supported yet: " + valueType);
     }
@@ -55,7 +55,7 @@ public class MapRstBuffer<K, V>
             value = create(key, args);
             map.put(key, value);
         }
-        IRstSerializable rstValue = (IRstSerializable) value;
+        IRstForm rstValue = (IRstForm) value;
         return rstValue.getElementHandler();
     }
 

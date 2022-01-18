@@ -12,7 +12,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.RstLoader;
 import net.bodz.bas.fmt.rst.RstOutputImpl;
 import net.bodz.bas.io.ICharOut;
@@ -343,7 +343,7 @@ public class AbstractSisProject
         archive.close();
     }
 
-    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST__;
 
     @Override

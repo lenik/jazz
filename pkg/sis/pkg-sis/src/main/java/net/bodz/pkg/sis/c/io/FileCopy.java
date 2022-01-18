@@ -26,7 +26,7 @@ import net.bodz.bas.c.java.io.IOConfig;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.io.IByteIOS;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.IStreamResource;
@@ -406,7 +406,7 @@ public class FileCopy
         }
     }
 
-    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST__;
 
     @Override

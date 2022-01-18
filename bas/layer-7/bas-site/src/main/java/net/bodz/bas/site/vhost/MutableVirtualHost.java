@@ -14,7 +14,7 @@ import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.AbstractRstHandler;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
@@ -22,7 +22,7 @@ import net.bodz.bas.typer.std.ITyperFamily;
 
 public class MutableVirtualHost
         extends MutableElement
-        implements IVirtualHost, IRstSerializable {
+        implements IVirtualHost, IRstForm {
 
     private static final long serialVersionUID = 1L;
 
@@ -126,7 +126,7 @@ public class MutableVirtualHost
         return null;
     }
 
-    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST__;
 
     @Override
