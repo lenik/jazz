@@ -43,7 +43,7 @@ public abstract class AbstractXmlOutput
     }
 
     @Override
-    public void element(String name, IXmlSerializable child)
+    public void element(String name, IXmlForm child)
             throws XMLStreamException, FormatException {
         if (child == null)
             return;

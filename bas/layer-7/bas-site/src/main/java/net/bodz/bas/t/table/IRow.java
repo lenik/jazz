@@ -14,13 +14,13 @@ import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 
 public interface IRow
         extends
             Iterable<Object>,
             IJsonForm,
-            IXmlSerializable {
+            IXmlForm {
 
     IRowSet getRowSet();
 

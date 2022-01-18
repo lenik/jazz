@@ -81,8 +81,8 @@ public abstract class AbstractXmlDumper
 
     protected void formatMember(String name, Class<?> type, Object value)
             throws XMLStreamException, FormatException {
-        if (value instanceof IXmlSerializable) {
-            IXmlSerializable obj = (IXmlSerializable) value;
+        if (value instanceof IXmlForm) {
+            IXmlForm obj = (IXmlForm) value;
             if (!marks.addMark(obj))
                 return;
 

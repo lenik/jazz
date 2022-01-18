@@ -7,7 +7,7 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.rtx.IOptions;
 
-public interface IXMLForm<T> {
+public interface IXMLFormat<T> {
 
     int typerIndex = 260403962; // IXMLForm
 

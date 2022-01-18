@@ -53,27 +53,27 @@ public class XmlFn
         dump(obj, XmlOutputImpl.from(out, encoding));
     }
 
-    public static void dump(IXmlSerializable obj, IXmlOutput out)
+    public static void dump(IXmlForm obj, IXmlOutput out)
             throws XMLStreamException, FormatException {
         obj.writeObject(out);
     }
 
-    public static void dump(IXmlSerializable obj, Writer out)
+    public static void dump(IXmlForm obj, Writer out)
             throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
-    public static void dump(IXmlSerializable obj, Appendable out)
+    public static void dump(IXmlForm obj, Appendable out)
             throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out));
     }
 
-    public static void dump(IXmlSerializable obj, OutputStream out, String encoding)
+    public static void dump(IXmlForm obj, OutputStream out, String encoding)
             throws XMLStreamException, FormatException {
         dump(obj, XmlOutputImpl.from(out, encoding));
     }
 
-    public static String toString(IXmlSerializable obj)
+    public static String toString(IXmlForm obj)
             throws XMLStreamException {
         StringWriter buf = new StringWriter(4096);
         IXmlOutput out = XmlOutputImpl.from(buf);
@@ -86,7 +86,7 @@ public class XmlFn
         return rst;
     }
 
-    public static String toString(IXmlSerializable obj, String fallbackFormat) {
+    public static String toString(IXmlForm obj, String fallbackFormat) {
         try {
             return toString(obj);
         } catch (XMLStreamException e) {
@@ -94,12 +94,12 @@ public class XmlFn
         }
     }
 
-    public static void save(IXmlSerializable obj, File file)
+    public static void save(IXmlForm obj, File file)
             throws IOException, XMLStreamException, FormatException {
         save(obj, file, "utf-8");
     }
 
-    public static void save(IXmlSerializable obj, File file, String encoding)
+    public static void save(IXmlForm obj, File file, String encoding)
             throws IOException, XMLStreamException, FormatException {
         FileOutputStream fos = new FileOutputStream(file);
         try {
