@@ -13,7 +13,7 @@ public interface IRstOutput {
 
     FramedMarks getMarks();
 
-    void element(String name, IRstSerializable child, String... args)
+    void element(String name, IRstForm child, String... args)
             throws IOException, FormatException;
 
     void beginElement(String name, String... args)

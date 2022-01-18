@@ -13,7 +13,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.RstInput;
 import net.bodz.bas.fmt.rst.RstLoader;
@@ -162,9 +162,9 @@ public class JsonPersistor {
             String rst = in.getString(KEY_VALUE);
             RstLoader rstLoader = new RstLoader();
             RstInput rstInput = new RstInput(new StringReader(rst));
-            IRstSerializable rstobj;
+            IRstForm rstobj;
             try {
-                rstobj = (IRstSerializable) obj;
+                rstobj = (IRstForm) obj;
                 rstLoader.load(rstInput, rstobj.getElementHandler());
             } catch (ElementHandlerException e) {
                 throw new ParseException(String.format(//
@@ -305,8 +305,8 @@ public class JsonPersistor {
             return;
         }
 
-        if (obj instanceof IRstSerializable) {
-            IRstSerializable rstObj = (IRstSerializable) obj;
+        if (obj instanceof IRstForm) {
+            IRstForm rstObj = (IRstForm) obj;
             String rst = RstFn.toString(rstObj);
             out.entry(KEY_FORM, FORM_RST);
             out.key(KEY_VALUE);

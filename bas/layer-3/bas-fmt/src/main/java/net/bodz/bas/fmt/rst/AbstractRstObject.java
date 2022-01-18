@@ -12,7 +12,7 @@ import net.bodz.bas.meta.bean.Transient;
 
 public abstract class AbstractRstObject
         implements
-            IRstSerializable,
+            IRstForm,
             IRstHandler,
             IRstOverrides {
 
@@ -27,7 +27,7 @@ public abstract class AbstractRstObject
         return _handler;
     }
 
-    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST_SERIALIZABLE__;
 
     @Override

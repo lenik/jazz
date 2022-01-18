@@ -15,7 +15,7 @@ import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstElement;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -261,7 +261,7 @@ public abstract class AbstractSisComponent
     public void removePropertyChangeListener(String propertyName, IPropertyChangeListener listener) {
     }
 
-    /** ⇱ Implementation Of {@link IRstSerializable}. */
+    /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST__;
 
     @OverrideOption(order = ChainOrder.TAIL)

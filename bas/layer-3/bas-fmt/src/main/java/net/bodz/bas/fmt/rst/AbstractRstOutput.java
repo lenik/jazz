@@ -19,7 +19,7 @@ public abstract class AbstractRstOutput
     }
 
     @Override
-    public void element(String name, IRstSerializable child, String... args)
+    public void element(String name, IRstForm child, String... args)
             throws IOException, FormatException {
         if (child == null)
             return;

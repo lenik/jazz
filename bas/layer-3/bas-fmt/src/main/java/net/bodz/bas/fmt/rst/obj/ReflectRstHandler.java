@@ -8,7 +8,7 @@ import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.api.StdValueParser;
 import net.bodz.bas.fmt.rst.AbstractRstHandler;
 import net.bodz.bas.fmt.rst.IRstHandler;
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.meta.decl.Final;
 
 public class ReflectRstHandler
@@ -108,19 +108,19 @@ public class ReflectRstHandler
                 || field.isAnnotationPresent(Final.class);
 
         Class<?> type = field.getType();
-        if (!IRstSerializable.class.isAssignableFrom(type))
+        if (!IRstForm.class.isAssignableFrom(type))
             throw new ElementHandlerException("field isn't structf-serializable: " + name);
 
-        IRstSerializable value = null;
+        IRstForm value = null;
         if (isFinalField) {
             try {
-                value = (IRstSerializable) field.get(obj);
+                value = (IRstForm) field.get(obj);
             } catch (ReflectiveOperationException e) {
                 throw new ElementHandlerException("failed to read field " + name, e);
             }
         } else {
             try {
-                value = (IRstSerializable) type.newInstance(); // args ...
+                value = (IRstForm) type.newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
                 throw new ElementHandlerException("failed to instantiate " + type, e);
             }

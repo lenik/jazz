@@ -1,6 +1,6 @@
 package net.bodz.pkg.sis;
 
-import net.bodz.bas.fmt.rst.IRstSerializable;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.t.IDependencyAware;
 import net.bodz.bas.t.event.IPropertyChangeSource;
@@ -17,7 +17,7 @@ public interface ISisComponent
         IMutableTreeNode<ISisComponent>, //
         IDependencyAware<ISisComponent>, //
         IPropertyChangeSource, //
-        IRstSerializable {
+        IRstForm {
 
     ISisProject getProject();
 

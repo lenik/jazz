@@ -25,7 +25,7 @@ import net.bodz.bas.meta.source.FnHelper;
 @FnHelper
 public class RstFn {
 
-    public static IRstHandler getDefaultHandler(IRstSerializable obj) {
+    public static IRstHandler getDefaultHandler(IRstForm obj) {
         RstSource aRstSource = obj.getClass().getAnnotation(RstSource.class);
         if (aRstSource != null)
             if (aRstSource.bean() == true)
@@ -33,7 +33,7 @@ public class RstFn {
         return new ReflectRstHandler(obj);
     }
 
-    public static void defaultDump(IRstSerializable obj, IRstOutput out)
+    public static void defaultDump(IRstForm obj, IRstOutput out)
             throws IOException, FormatException {
         RstSource aRstSource = obj.getClass().getAnnotation(RstSource.class);
         if (aRstSource != null)
@@ -42,7 +42,7 @@ public class RstFn {
         new ReflectRstDumper(out).dump(obj);
     }
 
-    public static String toString(IRstSerializable obj) {
+    public static String toString(IRstForm obj) {
         BCharOut buf = new BCharOut(1024);
         IRstOutput out = RstOutputImpl.from(buf);
         try {
@@ -56,7 +56,7 @@ public class RstFn {
         return rst;
     }
 
-    public static String toString(IRstSerializable obj, String indent) {
+    public static String toString(IRstForm obj, String indent) {
         BTreeOut buf = new BTreeOut();
         buf.getTextIndention().setCurrentLinePrefix(indent);
         try {
@@ -69,7 +69,7 @@ public class RstFn {
         return buf.toString();
     }
 
-    public static void saveToRst(IRstSerializable obj, File file)
+    public static void saveToRst(IRstForm obj, File file)
             throws IOException, FormatException {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
@@ -79,7 +79,7 @@ public class RstFn {
         }
     }
 
-    public static void loadFromRst(IRstSerializable ctx, File file)
+    public static void loadFromRst(IRstForm ctx, File file)
             throws IOException, ElementHandlerException, ParseException {
         if (!file.exists())
             return;

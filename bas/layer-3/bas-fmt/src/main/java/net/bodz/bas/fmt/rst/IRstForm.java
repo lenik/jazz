@@ -6,7 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
-public interface IRstSerializable {
+public interface IRstForm {
 
     default void writeObject(IRstOutput out)
             throws IOException, FormatException {
