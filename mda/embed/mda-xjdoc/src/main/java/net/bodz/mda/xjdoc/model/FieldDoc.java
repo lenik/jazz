@@ -33,7 +33,7 @@ public class FieldDoc
         return classDoc;
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     @Override

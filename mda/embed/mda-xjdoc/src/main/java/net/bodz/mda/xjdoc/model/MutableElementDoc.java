@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
-import net.bodz.bas.fmt.flatf.IFlatfSerializable;
+import net.bodz.bas.fmt.flatf.IFlatfForm;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
@@ -19,7 +19,7 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class MutableElementDoc
-        implements IElementDoc, IFlatfSerializable {
+        implements IElementDoc, IFlatfForm {
 
     ITagLibrary tagLibrary;
     iString text = iString.NULL;
@@ -150,7 +150,7 @@ public class MutableElementDoc
         return getTag(tagName, iString.class);
     }
 
-    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfSerializable}. */
+    /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */
     /* _____________________________ */static section.iface __FLATF__;
 
     @Override
