@@ -2,7 +2,7 @@ package net.bodz.bas.c.org.json;
 
 import net.bodz.bas.err.ParseException;
 
-public interface IJsonForm {
+public interface IJsonStrForm {
 
     String toJsonStr();
 

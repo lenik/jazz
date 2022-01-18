@@ -13,17 +13,17 @@ import org.postgresql.util.PGobject;
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 
-@Alias("JsonForm")
+@Alias("JsonStrForm")
 @AliasedType
-@MappedTypes(IJsonForm.class)
-public class JsonFormTypeHandler
-        extends TypeHandler<IJsonForm> {
+@MappedTypes(IJsonStrForm.class)
+public class JsonStrFormTypeHandler
+        extends TypeHandler<IJsonStrForm> {
 
-    public JsonFormTypeHandler() {
+    public JsonStrFormTypeHandler() {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, IJsonForm parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, IJsonStrForm parameter, JdbcType jdbcType)
             throws SQLException {
         String json = parameter.toJsonStr();
         PGobject pgo = new PGobject();
@@ -33,7 +33,7 @@ public class JsonFormTypeHandler
     }
 
     @Override
-    public IJsonForm getNullableResult(ResultSet rs, String columnName)
+    public IJsonStrForm getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         String json = rs.getString(columnName);
         JsonStr val = new JsonStr();
@@ -42,7 +42,7 @@ public class JsonFormTypeHandler
     }
 
     @Override
-    public IJsonForm getNullableResult(ResultSet rs, int columnIndex)
+    public IJsonStrForm getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         String json = rs.getString(columnIndex);
         JsonStr val = new JsonStr();
@@ -51,7 +51,7 @@ public class JsonFormTypeHandler
     }
 
     @Override
-    public IJsonForm getNullableResult(CallableStatement cs, int columnIndex)
+    public IJsonStrForm getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         String json = cs.getString(columnIndex);
         JsonStr val = new JsonStr();

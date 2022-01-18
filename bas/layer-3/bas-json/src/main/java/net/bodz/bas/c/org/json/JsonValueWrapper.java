@@ -6,7 +6,7 @@ import net.bodz.bas.json.JsonObject;
 
 public class JsonValueWrapper
         implements
-            IJsonForm {
+            IJsonStrForm {
 
     Object j_val;
 

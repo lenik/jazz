@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 
 public class JsonStr
         implements
-            IJsonForm {
+            IJsonStrForm {
 
     String json;
 

@@ -17,7 +17,7 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonObject;
 
 /**
- * @see JsonFormTypeHandler
+ * @see JsonStrFormTypeHandler
  */
 @Alias("PojoJson")
 @AliasedType
