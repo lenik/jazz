@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fn.FunctionX;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.conv.IVarConverter;
@@ -286,12 +286,12 @@ public class JsonObject
         return getVar(DateTime.class, key, defaultValue);
     }
 
-    public <T extends IJsonSerializable> T readInto(String key, T obj)
+    public <T extends IJsonForm> T readInto(String key, T obj)
             throws ParseException {
         return readInto(key, obj, null);
     }
 
-    public <T extends IJsonSerializable> T readInto(String key, T obj, T newObj)
+    public <T extends IJsonForm> T readInto(String key, T obj, T newObj)
             throws ParseException {
         if (!has(key)) // nothing to change
             return obj;
@@ -327,7 +327,7 @@ public class JsonObject
         return readArrayInto(key, list, conv, () -> new ArrayList<>());
     }
 
-    public <T extends IJsonSerializable> Set<T> //
+    public <T extends IJsonForm> Set<T> //
             readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
                     throws ParseException {
         return readArrayInto(key, set, (Object jsObj) -> {
@@ -338,7 +338,7 @@ public class JsonObject
         }, () -> order.newSet());
     }
 
-    public <T extends IJsonSerializable> List<T> //
+    public <T extends IJsonForm> List<T> //
             readArrayIntoList(String key, List<T> list, Supplier<T> vals)
                     throws ParseException {
         return readArrayInto(key, list, (Object jsObj) -> {
@@ -388,7 +388,7 @@ public class JsonObject
         return readIntoMap(key, map, conv, () -> order.newMap());
     }
 
-    public <T extends IJsonSerializable> Map<String, T> //
+    public <T extends IJsonForm> Map<String, T> //
             readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
                     throws ParseException {
         return readIntoMap(key, map, (Object jsObj) -> {

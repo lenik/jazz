@@ -15,7 +15,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
@@ -64,7 +64,7 @@ public abstract class CoObject
             IStated, //
             Serializable,
             IVarMapSerializable,
-            IJsonSerializable,
+            IJsonForm,
             Cloneable {
 
     private static final long serialVersionUID = 1L;
@@ -586,7 +586,7 @@ public abstract class CoObject
         throw new NotImplementedException();
     }
 
-    /** ⇱ Implementation Of {@link IJsonSerializable}. */
+    /** ⇱ Implementation Of {@link IJsonForm}. */
     /* _____________________________ */static section.iface __JSON__;
 
     protected Boolean overrided_readObject = false;

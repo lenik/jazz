@@ -9,7 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.t.preorder.PrefixMap;
@@ -19,7 +19,7 @@ import net.bodz.lily.security.UserSecret;
 
 public class LoginToken
         extends MutableAttributes
-        implements IJsonSerializable {
+        implements IJsonForm {
 
     public static final String ATTRIBUTE_NAME = LoginToken.class.getName();
 

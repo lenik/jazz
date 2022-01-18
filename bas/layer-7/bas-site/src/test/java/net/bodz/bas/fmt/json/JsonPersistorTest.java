@@ -276,7 +276,7 @@ class SerializableFoo
 class JsonFoo
         extends Foo
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     @Override
     public void readObject(JsonObject o)
@@ -336,7 +336,7 @@ class RstFoo
 
 class BarMixed
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     String color;
     JsonFoo foo;

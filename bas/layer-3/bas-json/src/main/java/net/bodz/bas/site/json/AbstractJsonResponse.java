@@ -9,7 +9,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOptions;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf;
 import net.bodz.bas.json.JsonObject;
@@ -281,11 +281,11 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
 
         if ("dataType".equals(key)) {
             String dataTypeName = o.getString("dataType");
-            IJsonSerializable data;
+            IJsonForm data;
             try {
                 Class<?> dataType = Class.forName(dataTypeName);
-                if (IJsonSerializable.class.isAssignableFrom(dataType))
-                    data = (IJsonSerializable) dataType.newInstance();
+                if (IJsonForm.class.isAssignableFrom(dataType))
+                    data = (IJsonForm) dataType.newInstance();
                 else
                     throw new ParseException("Unsupported data type: " + dataTypeName);
             } catch (ReflectiveOperationException e) {
@@ -332,8 +332,8 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
                 if (value == null)
                     continue;
 
-                if (value instanceof IJsonSerializable) {
-                    IJsonSerializable jsable = (IJsonSerializable) value;
+                if (value instanceof IJsonForm) {
+                    IJsonForm jsable = (IJsonForm) value;
                     IJsonOptions opts = IJsonOptions.NULL;
                     if (value instanceof IJsonOptions)
                         opts = (IJsonOptions) value;

@@ -8,7 +8,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
@@ -23,7 +23,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 public class JsonWrapper
         implements
             IVarMapSerializable,
-            IJsonSerializable {
+            IJsonForm {
 
     String key;
     Object obj;
@@ -127,8 +127,8 @@ public class JsonWrapper
             out.key(key);
         }
 
-        if (obj instanceof IJsonSerializable) {
-            IJsonSerializable jso = (IJsonSerializable) obj;
+        if (obj instanceof IJsonForm) {
+            IJsonForm jso = (IJsonForm) obj;
             jso.writeObjectBoxed(out);
         } else {
             BeanJsonDumper dumper = new BeanJsonDumper(out);

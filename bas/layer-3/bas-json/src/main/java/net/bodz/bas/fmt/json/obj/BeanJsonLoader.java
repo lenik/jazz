@@ -12,7 +12,7 @@ import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.AbstractJsonLoader;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
@@ -64,8 +64,8 @@ public class BeanJsonLoader
     public void load(Object ctx, JsonObject node, boolean overridable)
             throws Exception {
         if (overridable) {
-            if (ctx instanceof IJsonSerializable) {
-                IJsonSerializable js = (IJsonSerializable) ctx;
+            if (ctx instanceof IJsonForm) {
+                IJsonForm js = (IJsonForm) ctx;
                 js.readObject(node);
                 return;
             }

@@ -2,7 +2,7 @@ package net.bodz.bas.c.org.json;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
@@ -11,9 +11,9 @@ public class DefaultJsonStrForm
         implements
             IJsonStrForm {
 
-    IJsonSerializable obj;
+    IJsonForm obj;
 
-    public DefaultJsonStrForm(IJsonSerializable obj) {
+    public DefaultJsonStrForm(IJsonForm obj) {
         this.obj = obj;
     }
 

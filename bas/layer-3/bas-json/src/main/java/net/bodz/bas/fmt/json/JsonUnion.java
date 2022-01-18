@@ -10,31 +10,31 @@ import net.bodz.bas.json.JsonObject;
 
 public class JsonUnion
         implements
-            IJsonSerializable {
+            IJsonForm {
 
-    List<IJsonSerializable> list;
+    List<IJsonForm> list;
 
-    public JsonUnion(List<IJsonSerializable> list) {
+    public JsonUnion(List<IJsonForm> list) {
         if (list == null)
             throw new NullPointerException("list");
         this.list = list;
     }
 
-    public JsonUnion(IJsonSerializable... array) {
+    public JsonUnion(IJsonForm... array) {
         this(Arrays.asList(array));
     }
 
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        for (IJsonSerializable item : list)
+        for (IJsonForm item : list)
             item.readObject(o);
     }
 
     @Override
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        for (IJsonSerializable item : list)
+        for (IJsonForm item : list)
             item.writeObject(out);
     }
 

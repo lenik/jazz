@@ -195,9 +195,9 @@ public abstract class AbstractJsonDumper<self_t>
             return dumpMap(boxed, (Map<?, ?>) obj, depth);
         }
 
-        if (obj instanceof IJsonSerializable) {
+        if (obj instanceof IJsonForm) {
             markset.addMark(obj);
-            if (dumpJsonSerializable(boxed, (IJsonSerializable) obj, depth))
+            if (dumpJsonSerializable(boxed, (IJsonForm) obj, depth))
                 return true;
         }
 
@@ -309,7 +309,7 @@ public abstract class AbstractJsonDumper<self_t>
         return true;
     }
 
-    protected boolean dumpJsonSerializable(boolean boxed, IJsonSerializable jser, int depth)
+    protected boolean dumpJsonSerializable(boolean boxed, IJsonForm jser, int depth)
             throws IOException, FormatException {
         if (depth <= 0)
             return false;

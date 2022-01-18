@@ -11,7 +11,7 @@ import net.bodz.bas.c.org.json.JsonValueWrapper;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
@@ -26,7 +26,7 @@ import section.obj;
 public class JsonMap
         implements
             Serializable,
-            IJsonSerializable,
+            IJsonForm,
             IAttributed {
 
     private static final long serialVersionUID = 1L;

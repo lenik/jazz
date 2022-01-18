@@ -7,14 +7,14 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class CsvRow
         extends ArrayList<String>
-        implements IJsonSerializable {
+        implements IJsonForm {
 
     private static final long serialVersionUID = 1L;
 

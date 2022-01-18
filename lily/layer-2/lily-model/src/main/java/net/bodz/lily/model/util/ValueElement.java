@@ -3,14 +3,14 @@ package net.bodz.lily.model.util;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.json.JsonObject;
 
 public class ValueElement
         extends MutableElement
-        implements IJsonSerializable {
+        implements IJsonForm {
 
     private static final long serialVersionUID = 1L;
 

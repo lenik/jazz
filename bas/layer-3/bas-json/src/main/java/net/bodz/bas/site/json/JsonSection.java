@@ -7,7 +7,7 @@ import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.AbstractVariantMap;
@@ -15,7 +15,7 @@ import net.bodz.bas.t.variant.AbstractVariantMap;
 public class JsonSection
         extends AbstractVariantMap<String>
         implements
-            IJsonSerializable {
+            IJsonForm {
 
     final Map<String, Object> map;
     final SortOrder order;

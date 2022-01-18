@@ -7,14 +7,14 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlSerializable;
 
 public interface IRowSetMetadata
         extends
             Iterable<IColumnMetadata>,
-            IJsonSerializable,
+            IJsonForm,
             IXmlSerializable {
 
     String K_COLUMNS = "columns";

@@ -3,7 +3,7 @@ package net.bodz.bas.json;
 import java.util.ArrayList;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonSerializable;
+import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.fork.org.json._JSONArray;
 
 public class JsonArray
@@ -17,12 +17,12 @@ public class JsonArray
         super(list);
     }
 
-    public <T extends IJsonSerializable> T readInto(int index, T obj)
+    public <T extends IJsonForm> T readInto(int index, T obj)
             throws ParseException {
         return readInto(index, obj, null);
     }
 
-    public <T extends IJsonSerializable> T readInto(int index, T obj, T newObj)
+    public <T extends IJsonForm> T readInto(int index, T obj, T newObj)
             throws ParseException {
         if (index >= length())
             return obj;
