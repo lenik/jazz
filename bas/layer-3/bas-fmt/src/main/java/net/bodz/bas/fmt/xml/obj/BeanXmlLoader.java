@@ -9,7 +9,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.api.StdValueParser;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Final;
 
@@ -105,7 +105,7 @@ public class BeanXmlLoader
     }
 
     @Override
-    protected IXmlSerializable getChild(String name)
+    protected IXmlForm getChild(String name)
             throws LoaderException {
         PropertyDescriptor property = _getProperty(name);
         if (property == null)
@@ -118,19 +118,19 @@ public class BeanXmlLoader
                 || getter.isAnnotationPresent(Final.class);
 
         Class<?> type = property.getPropertyType();
-        if (!IXmlSerializable.class.isAssignableFrom(type))
+        if (!IXmlForm.class.isAssignableFrom(type))
             throw new LoaderException("field isn't xml-serializable: " + name);
 
-        IXmlSerializable value = null;
+        IXmlForm value = null;
         if (isFinalField) {
             try {
-                value = (IXmlSerializable) getter.invoke(obj);
+                value = (IXmlForm) getter.invoke(obj);
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("failed to read field " + name, e);
             }
         } else {
             try {
-                value = (IXmlSerializable) type.newInstance(); // args ...
+                value = (IXmlForm) type.newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("failed to instantiate " + type, e);
             }

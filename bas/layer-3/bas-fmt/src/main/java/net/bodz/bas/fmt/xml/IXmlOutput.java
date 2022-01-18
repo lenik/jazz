@@ -22,7 +22,7 @@ public interface IXmlOutput
     void element(String name, Object text)
             throws XMLStreamException;
 
-    void element(String name, IXmlSerializable child)
+    void element(String name, IXmlForm child)
             throws XMLStreamException, FormatException;
 
     void beginElement(String name)

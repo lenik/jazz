@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.StdValueParser;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.meta.decl.Final;
 
 public class ReflectXmlLoader
@@ -96,7 +96,7 @@ public class ReflectXmlLoader
     }
 
     @Override
-    protected IXmlSerializable getChild(String name)
+    protected IXmlForm getChild(String name)
             throws LoaderException {
         Field field = _getField(name);
         if (field == null)
@@ -106,19 +106,19 @@ public class ReflectXmlLoader
                 || field.isAnnotationPresent(Final.class);
 
         Class<?> type = field.getType();
-        if (!IXmlSerializable.class.isAssignableFrom(type))
+        if (!IXmlForm.class.isAssignableFrom(type))
             throw new LoaderException("field isn't xml-serializable: " + name);
 
-        IXmlSerializable value = null;
+        IXmlForm value = null;
         if (isFinalField) {
             try {
-                value = (IXmlSerializable) field.get(obj);
+                value = (IXmlForm) field.get(obj);
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("failed to read field " + name, e);
             }
         } else {
             try {
-                value = (IXmlSerializable) type.newInstance(); // args ...
+                value = (IXmlForm) type.newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("failed to instantiate " + type, e);
             }

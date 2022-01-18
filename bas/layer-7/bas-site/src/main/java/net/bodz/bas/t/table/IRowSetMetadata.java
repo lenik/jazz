@@ -9,13 +9,13 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 
 public interface IRowSetMetadata
         extends
             Iterable<IColumnMetadata>,
             IJsonForm,
-            IXmlSerializable {
+            IXmlForm {
 
     String K_COLUMNS = "columns";
     String K_COLUMN = "column";

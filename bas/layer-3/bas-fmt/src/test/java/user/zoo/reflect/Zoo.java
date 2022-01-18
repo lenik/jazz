@@ -7,12 +7,12 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.AbstractRstObject;
 import net.bodz.bas.fmt.rst.IRstHandler;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 
 public class Zoo
         extends AbstractRstObject
         implements
-            IXmlSerializable {
+            IXmlForm {
 
     public String owner;
     public int createdYear;

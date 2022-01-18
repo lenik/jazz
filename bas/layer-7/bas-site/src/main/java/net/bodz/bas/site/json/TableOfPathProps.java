@@ -16,7 +16,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.potato.PotatoTypes;
@@ -35,7 +35,7 @@ public class TableOfPathProps
         implements
             IVarMapForm,
             IJsonForm,
-            IXmlSerializable {
+            IXmlForm {
 
     /**
      * Specify the row format

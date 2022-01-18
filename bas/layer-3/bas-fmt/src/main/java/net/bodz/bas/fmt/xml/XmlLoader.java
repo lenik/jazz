@@ -25,7 +25,7 @@ public class XmlLoader {
         docFactory.setNamespaceAware(true);
     }
 
-    public static <T extends IXmlSerializable> T load(T obj, InputSource in)
+    public static <T extends IXmlForm> T load(T obj, InputSource in)
             throws LoaderException {
         try {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -40,7 +40,7 @@ public class XmlLoader {
         return obj;
     }
 
-    public static <T extends IXmlSerializable> T load(T obj, IStreamInputSource resource)
+    public static <T extends IXmlForm> T load(T obj, IStreamInputSource resource)
             throws LoaderException {
         InputStream in = null;
         // resource.getPath()
@@ -59,12 +59,12 @@ public class XmlLoader {
         return load(obj, in);
     }
 
-    public static <T extends IXmlSerializable> T load(T obj, InputStream in)
+    public static <T extends IXmlForm> T load(T obj, InputStream in)
             throws LoaderException {
         return load(obj, new InputSource(in));
     }
 
-    public static <T extends IXmlSerializable> T load(T obj, File file)
+    public static <T extends IXmlForm> T load(T obj, File file)
             throws LoaderException {
         FileInputStream in = null;
         try {

@@ -12,7 +12,7 @@ import net.bodz.bas.fmt.xml.xq.QElement;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
-public interface IXmlSerializable {
+public interface IXmlForm {
 
     default void readObject(Element element)
             throws ParseException, LoaderException {

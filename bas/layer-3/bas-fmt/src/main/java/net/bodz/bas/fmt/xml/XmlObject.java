@@ -12,7 +12,7 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 
 public abstract class XmlObject
         implements
-            IXmlSerializable,
+            IXmlForm,
             IXmlOverrides {
 
     private transient IObjectXmlLoader _loader;
@@ -26,7 +26,7 @@ public abstract class XmlObject
         return _loader;
     }
 
-    /** ⇱ Implementation Of {@link IXmlSerializable}. */
+    /** ⇱ Implementation Of {@link IXmlForm}. */
     /* _____________________________ */static section.iface __RST_SERIALIZABLE__;
 
     @Override

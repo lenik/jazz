@@ -6,8 +6,8 @@ import net.bodz.bas.typer.Typers;
 public class XMLForms {
 
     public static Object parse(Class<?> type, IStreamInputSource source) {
-        IXMLForm<?> xmlForm = Typers.getTyper(type, IXMLForm.class);
-        if (xmlForm == null)
+        IXMLFormat<?> xmlFormat = Typers.getTyper(type, IXMLFormat.class);
+        if (xmlFormat == null)
             return null;
         return null;
     }

@@ -1,12 +1,12 @@
 package user.zoo.reflect;
 
 import net.bodz.bas.fmt.rst.AbstractRstObject;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 
 public class Animal
         extends AbstractRstObject
         implements
-            IXmlSerializable {
+            IXmlForm {
 
     public String name;
     public boolean male;

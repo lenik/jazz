@@ -8,7 +8,7 @@ import org.w3c.dom.NodeList;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.IObjectXmlLoader;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 
 public abstract class AbstractXmlLoader
         implements
@@ -34,7 +34,7 @@ public abstract class AbstractXmlLoader
             Node childNode = children.item(i);
             if (childNode.getNodeType() == Node.ELEMENT_NODE) {
                 String name = childNode.getNodeName();
-                IXmlSerializable childObj = getChild(name);
+                IXmlForm childObj = getChild(name);
                 if (childObj == null)
                     continue;
                 Element childElement = (Element) childNode;
@@ -46,7 +46,7 @@ public abstract class AbstractXmlLoader
     protected abstract boolean attribute(String attributeName, String attributeData)
             throws ParseException, LoaderException;
 
-    protected abstract IXmlSerializable getChild(String name)
+    protected abstract IXmlForm getChild(String name)
             throws LoaderException;
 
 }

@@ -14,7 +14,7 @@ import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.obj.RstSource;
 import net.bodz.bas.fmt.xml.IObjectXmlLoader;
 import net.bodz.bas.fmt.xml.IXmlOutput;
-import net.bodz.bas.fmt.xml.IXmlSerializable;
+import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.fmt.xml.xq.IElement;
 
@@ -22,7 +22,7 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 public class Animal
         extends AbstractRstObject
         implements
-            IXmlSerializable {
+            IXmlForm {
 
     private String name;
     private boolean male;
