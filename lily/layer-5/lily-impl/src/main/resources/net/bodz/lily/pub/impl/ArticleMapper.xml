@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.pub.impl.ArticleMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.pub.Article" extends="message.MAP_ALL">
-        <result property="plugins.jsonForm" column="plugins" />
+        <result property="plugins.jsonStr" column="plugins" />
         <association property="category" javaType="net.bodz.lily.pub.ArticleCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
@@ -92,8 +92,8 @@
             #{beginTime}, #{endTime},
             #{op.id}, #{subject}, #{text}, 
             #{category.id},
-            #{properties.jsonForm},
-            #{plugins.jsonForm}
+            #{properties.jsonStr},
+            #{plugins.jsonStr}
         ) returning id; --
     ]]></insert>
 
@@ -104,8 +104,8 @@
             <include refid="mi.setT" />
             <include refid="message.setUM" />
             cat = #{category.id},
-            props = #{properties.jsonForm},
-            plugins = #{plugins.jsonForm},
+            props = #{properties.jsonStr},
+            plugins = #{plugins.jsonStr},
         </set>
         <where>
             id = #{id}

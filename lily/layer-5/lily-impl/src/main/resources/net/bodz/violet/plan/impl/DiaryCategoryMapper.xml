@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.plan.impl.DiaryCategoryMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.plan.DiaryCategory" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="depth" column="depth" />
         <association property="parent" javaType="net.bodz.violet.plan.DiaryCategory">
             <id property="id" column="parent" />
@@ -73,7 +73,7 @@
         ) values(
             #{codeName},#{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{parent.id}, #{depth} 
         ) returning id; --
     ]]></insert>
@@ -84,7 +84,7 @@
             <include refid="co.setUSA" />
             <if test="parent != null">parent=#{parent.id},</if>
             depth=#{depth},
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
         </set>
         <where>
             id = #{id}

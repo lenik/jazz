@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.geo.impl.ZoneCategoryMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.geo.ZoneCategory" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[

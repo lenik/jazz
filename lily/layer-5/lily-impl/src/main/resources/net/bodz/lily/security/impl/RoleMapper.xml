@@ -7,13 +7,13 @@
     <resultMap id="objlist_map" type="net.bodz.lily.security.Role" extends="co.MAP_ALL">
         <result property="name" column="name" />
         <result property="rank" column="rank" />
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <collection property="users" javaType="ArrayList" ofType="net.bodz.lily.security.User">
             <id property="id" column="y_id" />
             <result property="name" column="y_name" />
             <result property="label" column="y_label" />
             <result property="description" column="y_description" />
-            <result property="properties.jsonForm" column="y_props" />
+            <result property="properties.jsonStr" column="y_props" />
         </collection>
     </resultMap>
 
@@ -58,7 +58,7 @@
         ) values(
             #{name}, #{label}, #{description},
             #{priority}, #{flags}, #{state},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{rank}
         ) returning id; --
     ]]></insert>

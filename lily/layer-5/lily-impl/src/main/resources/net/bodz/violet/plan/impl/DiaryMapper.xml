@@ -5,12 +5,12 @@
 <mapper namespace="net.bodz.violet.plan.impl.DiaryMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.plan.Diary" extends="message.MAP_ALL">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="value" column="val" />
         <association property="category" javaType="net.bodz.violet.plan.DiaryCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />
-            <result property="properties.jsonForm" column="cat_props" />
+            <result property="properties.jsonStr" column="cat_props" />
         </association>
         <association property="phase" javaType="net.bodz.violet.plan.DiaryPhase">
             <id property="id" column="phase" />
@@ -26,17 +26,17 @@
             <association property="user" javaType="net.bodz.lily.security.User">
                 <id property="id" column="user" />
                 <result property="label" column="user_label" />
-                <result property="properties.jsonForm" column="user_props" />
+                <result property="properties.jsonStr" column="user_props" />
             </association>
             <association property="person" javaType="net.bodz.lily.contact.Person">
                 <id property="id" column="person" />
                 <result property="label" column="person_label" />
-                <result property="properties.jsonForm" column="person_props" />
+                <result property="properties.jsonStr" column="person_props" />
             </association>
             <association property="org" javaType="net.bodz.lily.contact.Organization">
                 <id property="id" column="org" />
                 <result property="label" column="org_label" />
-                <result property="properties.jsonForm" column="org_props" />
+                <result property="properties.jsonStr" column="org_props" />
             </association>
         </collection>
     </resultMap>
@@ -132,7 +132,7 @@
             #{beginDate}, #{endDate},
             #{op.id}, #{subject}, #{text}, 
             #{category.id}, #{phase.id},
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{value}
         ) returning id; --
     ]]></insert>
@@ -143,7 +143,7 @@
             <include refid="co.setUSA" />
             <include refid="mi.setT" />
             <include refid="message.setUM" />
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
             value = #{value},
         </set>
         <where>

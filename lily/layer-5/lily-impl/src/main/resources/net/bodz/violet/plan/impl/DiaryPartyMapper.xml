@@ -9,7 +9,7 @@
         <association property="diary" javaType="net.bodz.violet.plan.Diary">
             <id property="id" column="diary" />
             <result property="subject" column="diary_subject" />
-            <result property="properties.jsonForm" column="diary_props" />
+            <result property="properties.jsonStr" column="diary_props" />
         </association>
         <association property="user" javaType="net.bodz.lily.security.User">
             <id property="id" column="user" />

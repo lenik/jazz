@@ -7,7 +7,7 @@
     <resultMap id="objlist_map" type="net.bodz.violet.shop.ShopItem" extends="co.MAP_UVX">
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="quantity" column="qty" />
         <result property="price" column="price" />
         <association property="shop" javaType="net.bodz.violet.shop.Shop">
@@ -21,7 +21,7 @@
         <association property="artifact" javaType="net.bodz.violet.art.Artifact">
             <id property="id" column="art" />
             <result property="label" column="art_label" />
-            <result property="properties.jsonForm" column="art_props" />
+            <result property="properties.jsonStr" column="art_props" />
             <association property="category" javaType="net.bodz.violet.art.ArtifactCategory">
                 <id property="id" column="art_cat" />
                 <result property="label" column="art_cat_label" />
@@ -100,7 +100,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state},
             #{beginTime}, #{endTime},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{shop.id}, #{category.id}, #{artifact.id}, #{price}, #{quantity}
         ) returning id; --
     ]]></insert>
@@ -111,7 +111,7 @@
             <include refid="co.setUS" />
             t0 = #{beginTime},
             t1 = #{endTime},
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             shop = #{shop.id},
             cat = #{category.id},
             art = #{artifact.id},

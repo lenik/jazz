@@ -21,7 +21,7 @@ import net.bodz.bas.rtx.IAttributed;
 import section.obj;
 
 /**
- * @see net.bodz.bas.c.org.json.JsonFormTypeHandler
+ * @see net.bodz.bas.c.org.json.JsonStrFormTypeHandler
  */
 public class JsonMap
         implements
@@ -108,14 +108,14 @@ public class JsonMap
         readObjectBoxed(j_val);
     }
 
-    public JsonValueWrapper getJsonForm()
+    public JsonValueWrapper getJsonStr()
             throws FormatException {
         String json = JsonFn.toJson(this);
         Object j_val = JsonBuilder.getInstance().parse(json);
         return new JsonValueWrapper(j_val);
     }
 
-    public synchronized void setJsonForm(JsonValueWrapper form)
+    public synchronized void setJsonStr(JsonValueWrapper form)
             throws ParseException {
         Object j_val = form.getWrapped();
         readObjectBoxed(j_val);

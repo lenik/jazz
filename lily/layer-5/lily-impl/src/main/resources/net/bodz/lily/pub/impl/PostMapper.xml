@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.pub.impl.PostMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.pub.Post" extends="message.MAP_ALL">
-        <!-- result property="properties.jsonForm" column="props" / -->
+        <!-- result property="properties.jsonStr" column="props" / -->
         <association property="category" javaType="net.bodz.lily.pub.PostCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />

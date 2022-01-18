@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.store.impl.RegionMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.store.Region" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="fullPath" column="path" />
         <association property="level" javaType="net.bodz.violet.store.RegionLevel">
             <id property="id" column="level" />
@@ -94,7 +94,7 @@
             #{levelId}, ]]>
             <if test="category == null">default,</if>
             <if test="category != null">#{category.id},</if><![CDATA[
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{fullPath}
         ) returning id; --
     ]]></insert>
@@ -106,7 +106,7 @@
             <if test="parent != null">parent = #{parent.id}, </if>
             <if test="level != null">level = #{level.id}, </if>
             <if test="category != null">cat = #{category.id}, </if>
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
             path = #{fullPath},
         </set>
         <where>

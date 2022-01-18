@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.violet.edu.impl.TestAnswerMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.edu.TestAnswer" extends="co.MAP_UV">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="valid" column="valid" />
         <association property="question" javaType="net.bodz.violet.edu.TestQuestion">
             <id property="id" column="q" />
@@ -63,7 +63,7 @@
         ) values(
             #{label}, #{description},
             #{priority}, #{flags}, #{state},
-            #{properties.jsonForm},
+            #{properties.jsonStr},
             #{question.id}, #{valid}
         ) returning id; --
     ]]></insert>
@@ -72,7 +72,7 @@
         update testans
         <set>
             <include refid="co.setUS" />
-            props = #{properties.jsonForm},
+            props = #{properties.jsonStr},
             q = #{question.id},
             valid = #{valid},
         </set>

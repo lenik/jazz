@@ -5,9 +5,9 @@
 <mapper namespace="net.bodz.violet.edu.impl.CourseMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.edu.Course" extends="co.MAP_UVX">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         <result property="credit" column="credit" />
-        <result property="plugins.jsonForm" column="plugins" />
+        <result property="plugins.jsonStr" column="plugins" />
         <association property="category" javaType="net.bodz.violet.edu.CourseCategory">
             <id property="id" column="cat" />
             <result property="label" column="cat_label" />

@@ -5,7 +5,7 @@
 <mapper namespace="net.bodz.lily.contact.impl.PersonMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.contact.Person" extends="co.MAP_ALL">
-        <result property="properties.jsonForm" column="props" />
+        <result property="properties.jsonStr" column="props" />
         
         <result property="birthday" column="birthday" />
         <result property="langTag" column="locale" />
@@ -94,7 +94,7 @@
         ) values(
             #{label},#{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
-            #{properties.jsonForm}::jsonb,
+            #{properties.jsonStr}::jsonb,
             #{category.id},
             #{birthday}, #{langTag}, #{timeZoneId},
             #{supplier}, #{customer}, #{subject},
@@ -109,7 +109,7 @@
         update person
         <set>
             <include refid="co.setUSA" />
-            <if test="properties != null">props = #{properties.jsonForm}::jsonb,</if>
+            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
             <if test="category != null">cat = #{category.id},</if>
             birthday = #{birthday},
             locale = #{langTag},
