@@ -8,6 +8,11 @@
     <artifactId>bas-c5</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c3</artifactId>
             <version>${project.version}</version>
