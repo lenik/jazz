@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public interface ITable<T> {
+public interface ITable_2<T> {
 
     int rows();
 
