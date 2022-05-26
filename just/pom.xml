@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>bas-parent</artifactId>
+        <version>0.5-SNAPSHOT</version>
+        <relativePath></relativePath>
+    </parent>
+    <groupId>net.bodz.just</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>just-file</module>
+        <module>just-factory</module>
+        <module>just-world</module>
+    </modules>
+    <properties>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.bodz.mda</groupId>
+                <artifactId>mda-xjdoc-maven-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>main-ff</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                            <outputDirectory>${basedir}/${ffdir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-ff</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <testClasses>true</testClasses>
+                            <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
+                            <outputDirectory>${basedir}/${ffdir.test}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <name>Just :: Parent</name>
+</project>

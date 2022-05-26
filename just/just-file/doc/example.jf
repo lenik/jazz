@@ -1,0 +1,8 @@
+justfile.jf
+    
+    #!/bin/jf-dump ...
+    %import library
+    -ID: value
+        value: int long float string array struct-val ..
+        uuid a-b-c-d
+
