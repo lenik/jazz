@@ -1,19 +1,24 @@
 package net.bodz.bas.shell.util;
 
 import java.io.File;
-import java.io.PrintStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.m2.ArtifactId;
+import net.bodz.bas.c.m2.LocalRepoDir;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenPomXml;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
@@ -28,10 +33,14 @@ public class LibUpdater {
 
     Set<String> unpacks = new HashSet<String>();
 
-    public LibUpdater() {
+    public LibUpdater()
+            throws IOException {
         project = MavenPomDir.closest(SysProps.userWorkDir);
         if (project == null)
             throw new IllegalUsageException("not run inside a maven project.");
+
+        String mapFile = SysProps.userHome + "/.m2/map";
+        parseMapFile(mapFile);
 
         File dir = new File(project.getBaseDir(), "classes");
         if (dir.exists())
@@ -42,9 +51,47 @@ public class LibUpdater {
                 }
     }
 
+    Map<String, String> qNameWsMap = new HashMap<>();
+    Map<String, String> artifactIdWsMap = new HashMap<>();
+
+    void parseMapFile(String fileName)
+            throws IOException {
+        logger.info("parse map file " + fileName);
+        FileResource mapFile = new FileResource(fileName);
+        if (!mapFile.getFile().exists())
+            return;
+
+        for (String line : mapFile.read().readLines()) {
+            line = line.trim();
+            if (line.startsWith("#"))
+                continue;
+            if (line.isEmpty())
+                continue;
+            int pos = line.indexOf(' ');
+            if (pos == -1) {
+                pos = line.indexOf('\t');
+                if (pos == -1)
+                    continue; // invalid line
+            }
+            String qName = line.substring(0, pos).trim();
+            String path = line.substring(pos + 1).trim();
+            qNameWsMap.put(qName, path);
+
+            int colon = qName.indexOf(':');
+            if (colon == -1)
+                continue; // not a qualified name.
+
+            // String groupId = qName.substring(0, colon);
+            String artifactId = qName.substring(colon + 1);
+            artifactIdWsMap.put(artifactId, path);
+        }
+    }
+
     protected void execute(String... args)
             throws Exception {
-        File libdir = new File("lib").getCanonicalFile();
+        File libdir = new File(project.getBaseDir(), "lib").getCanonicalFile();
+        String hrefRef = project.getBaseDir().getPath() + "/";
+
         System.out.println("libdir: " + libdir);
         if (!libdir.exists()) {
             logger.debug("Create non-existing libdir: " + libdir);
@@ -54,8 +101,7 @@ public class LibUpdater {
             }
         }
 
-        File orderListFile = new File("lib/order.lst");
-        PrintStream out = new PrintStream(orderListFile);
+        OrderListing orderListing = new OrderListing();
 
         try {
             for (File file : URLClassLoaders.getLocalURLs(loader, 1)) {
@@ -64,6 +110,22 @@ public class LibUpdater {
                 if (file.isFile()) {
                     if (unpacks.contains(file.getName())) {
                         // How to know the source dir of a dependency jar?
+                    }
+
+                    String wsDir = null;
+                    LocalRepoDir repoDir = LocalRepoDir.closest(file);
+                    if (repoDir != null) {
+                        ArtifactId id = repoDir.getQualifiedName(file);
+                        String qName = id.groupId + ":" + id.artifactId;
+                        wsDir = qNameWsMap.get(qName);
+                        if (wsDir == null)
+                            wsDir = artifactIdWsMap.get(id.artifactId);
+                        if (wsDir != null) {
+                            // there's workspace corresponding
+                            wsDir = new File(wsDir).getCanonicalPath();
+                            String href = FilePath.getRelativePath(wsDir, hrefRef);
+                            orderListing.addDebug(href + "/target/classes");
+                        }
                     }
 
                     File dst = new File(libdir, file.getName());
@@ -86,7 +148,11 @@ public class LibUpdater {
                         Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
 
-                    out.println("lib/" + file.getName());
+                    if (wsDir != null)
+                        orderListing.addRelease("lib/" + file.getName());
+                    else
+                        orderListing.add("lib/" + file.getName());
+
                     continue;
                 }
 
@@ -104,7 +170,7 @@ public class LibUpdater {
                     if (unpacks.contains(artifact.artifactId)) {
                         System.out.println("Copy-Unpacked: " + file);
                         Processes.exec("cp", "-aT", path, project.getBaseDir() + "/classes/" + artifact.artifactId);
-                        out.println("classes/" + artifact.artifactId);
+                        orderListing.add("classes/" + artifact.artifactId);
                         continue;
                     }
 
@@ -116,13 +182,13 @@ public class LibUpdater {
                         System.out.println("Copy-Packed: " + file);
                         File dst = new File(libdir, file.getName());
                         Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        out.println("lib/" + file.getName());
+                        orderListing.add("lib/" + file.getName());
                         continue;
                     }
                 }
             }
         } finally {
-            out.close();
+            orderListing.close();
         }
     }
 
