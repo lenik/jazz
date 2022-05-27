@@ -6,6 +6,7 @@ public class ArtifactId {
     public String artifactId;
     public String packaging;
     public String version;
+    public String scope;
 
     public ArtifactId() {
     }
@@ -19,7 +20,19 @@ public class ArtifactId {
 
     @Override
     public String toString() {
-        return groupId + ":" + artifactId + ":" + version;
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(groupId);
+        sb.append(":");
+        sb.append(artifactId);
+        if (version != null) {
+            sb.append(":");
+            sb.append(version);
+        }
+        if (scope != null) {
+            sb.append(":");
+            sb.append(scope);
+        }
+        return sb.toString();
     }
 
 }
