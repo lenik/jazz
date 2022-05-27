@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 import net.bodz.bas.t.pojo.Pair;
 
@@ -156,6 +157,22 @@ public class StringArray {
         if (buf == null)
             return "";
         return buf.toString();
+    }
+
+    public static List<String> splitTokens(String string, String delims) {
+        return splitTokens(string, delims, -1);
+    }
+
+    public static List<String> splitTokens(String string, String delims, int limit) {
+        StringTokenizer tokens = new StringTokenizer(string, delims);
+        List<String> list = new ArrayList<>();
+        while (tokens.hasMoreTokens()) {
+            if (limit != -1 && list.size() >= limit)
+                break;
+            String token = tokens.nextToken();
+            list.add(token);
+        }
+        return list;
     }
 
     public static String[] splitRaw(String string, char separator) {
