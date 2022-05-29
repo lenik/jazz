@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.just</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>just</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>just-file</artifactId>
