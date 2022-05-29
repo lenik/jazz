@@ -10,7 +10,7 @@
         <relativePath></relativePath>
     </parent>
     <groupId>net.bodz.just</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>just</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
