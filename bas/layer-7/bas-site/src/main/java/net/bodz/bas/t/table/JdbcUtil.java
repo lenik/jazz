@@ -22,6 +22,8 @@ public class JdbcUtil {
 
     public DefaultTableMetadata getTableMetadata(String tableName)
             throws SQLException {
+        tableName = tableName.toLowerCase();
+
         Statement statement = connection.createStatement();
 
         DefaultTableMetadata table;
