@@ -34,6 +34,7 @@
             <artifactId>elasticsearch</artifactId>
             <version>5.0.0-alpha2</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.elasticsearch.plugin</groupId>
             <artifactId>shield</artifactId>
@@ -49,6 +50,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        -->
     </dependencies>
     <name>BAS :: Layer 5 :: Search</name>
 </project>
