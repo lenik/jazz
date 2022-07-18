@@ -6,7 +6,8 @@ import net.bodz.bas.io.*;
 
 public class TreeOutImpl
         extends AbstractPrintOut
-        implements ITreeOut {
+        implements
+            ITreeOut {
 
     private IPrintOut printOut;
     private final ITextIndention textIndention;
@@ -18,7 +19,7 @@ public class TreeOutImpl
 
     /**
      * Print out.
-     * 
+     *
      * @throws NullPointerException
      *             If any argument is <code>null</code>.
      */
@@ -39,7 +40,7 @@ public class TreeOutImpl
         if (printOut instanceof ITreeOut)
             return (ITreeOut) printOut;
         else
-            return new TreeOutImpl((IPrintOut) printOut);
+            return new TreeOutImpl(printOut);
     }
 
     public static ITreeOut from(ICharOut charOut) {
@@ -85,24 +86,33 @@ public class TreeOutImpl
     public void print(String s) {
         flushPrefix();
         printOut.print(s);
+        if (s.endsWith("\n"))
+            linePrefixPrinted = false;
     }
 
     @Override
     public void print(char c) {
         flushPrefix();
         printOut.print(c);
+        if (c == '\n')
+            linePrefixPrinted = false;
     }
 
     @Override
     public void print(char[] s) {
         flushPrefix();
-        printOut.print(s);
+        if (s.length > 0) {
+            printOut.print(s);
+            if (s[s.length - 1] == '\n')
+                linePrefixPrinted = false;
+        }
     }
 
     @Override
     public void print(Object... args) {
         flushPrefix();
-        printOut.print(args);
+        for (Object arg : args)
+            print(arg);
     }
 
     @Override
