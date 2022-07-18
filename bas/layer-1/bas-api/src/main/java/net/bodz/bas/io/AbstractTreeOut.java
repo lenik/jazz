@@ -4,7 +4,8 @@ import java.io.IOException;
 
 public abstract class AbstractTreeOut
         extends AbstractPrintOut
-        implements ITreeOut {
+        implements
+            ITreeOut {
 
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
@@ -38,18 +39,26 @@ public abstract class AbstractTreeOut
     public void print(String s) {
         flushPrefix();
         super.print(s);
+        if (s.endsWith("\n"))
+            linePrefixPrinted = false;
     }
 
     @Override
     public void print(char c) {
         flushPrefix();
         super.print(c);
+        if (c == '\n')
+            linePrefixPrinted = false;
     }
 
     @Override
     public void print(char[] s) {
         flushPrefix();
-        super.print(s);
+        if (s.length > 0) {
+            super.print(s);
+            if (s[s.length - 1] == '\n')
+                linePrefixPrinted = false;
+        }
     }
 
     @Override
