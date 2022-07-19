@@ -25,7 +25,7 @@ import net.bodz.bas.vfs.util.find.IFileFoundListener;
 
 /**
  * Batch File Scanner
- * 
+ *
  * @syntax $programName [OPTIONS] [--] FILES...
  */
 public abstract class BatchCLI
@@ -33,91 +33,91 @@ public abstract class BatchCLI
 
     /**
      * Ddefault encoding of input files
-     * 
+     *
      * @option -e =ENCODING weak
      */
     Charset inputEncoding = Charset.defaultCharset();
 
     /**
      * Prefer to do case-insensitive comparation.
-     * 
+     *
      * @option -i
      */
     boolean ignoreCase;
 
     /**
      * Always continue when error occurred.
-     * 
+     *
      * @option
      */
     boolean errorContinue;
 
     /**
      * Max depth of directories recurse into.
-     * 
+     *
      * @option -r =DEPTH default=65536
      */
     int recursive;
 
     /**
      * Process children files before the parent directory.
-     * 
+     *
      * @option
      */
     boolean rootLast;
 
     /**
      * Include specified type of files, default non-hidden files
-     * 
+     *
      * @option =FILEMASK
      */
     FileMaskedModifiers includeMask = new FileMaskedModifiers("f/fH");
 
     /**
      * Exclude specified type of files.
-     * 
+     *
      * @option -IM =FILEMASK
      */
     FileMaskedModifiers excludeMask;
 
     /**
      * Include these filenames.
-     * 
+     *
      * @option =WILDCARDS
      */
     GlobPattern includeName;
 
     /**
      * exclude these filenames
-     * 
+     *
      * @option =WILDCARDS
      */
     GlobPattern excludeName;
 
     /**
      * Include these pathnames.
-     * 
+     *
      * @option =REGEXP
      */
     Pattern includePath;
 
     /**
      * Exclude these pathnames
-     * 
+     *
      * @option =REGEXP
      */
     Pattern excludePath;
 
     /**
      * Don't recurse into excluded directories.
-     * 
+     *
      * @option
      */
     boolean prune;
 
     /**
      * Using custom file filter, this will override other --include/exclude* options.
-     * 
+     *
      * @option =CLASS(FileFilter)
      */
     // @ParseBy(GetInstanceParser.class)
@@ -125,7 +125,7 @@ public abstract class BatchCLI
 
     /**
      * Sort files in each directory
-     * 
+     *
      * @option =CLASS(Comparator)
      */
     // @ParseBy(GetInstanceParser.class)
@@ -137,7 +137,8 @@ public abstract class BatchCLI
     private StatNode _statRoot = new StatNode();
 
     class DefaultFileFilter
-            implements IFilter<IFile> {
+            implements
+                IFilter<IFile> {
 
         @Override
         public boolean accept(IFile file) {
@@ -221,7 +222,7 @@ public abstract class BatchCLI
         return _contextPath;
     }
 
-    void setContextFile(IFile contextFile) {
+    protected void setContextFile(IFile contextFile) {
         if (contextFile == null) {
             this._contextFile = null;
             this._contextPath = null;
@@ -270,7 +271,7 @@ public abstract class BatchCLI
 
     /**
      * The I/O stream rewrite implementation.
-     * 
+     *
      * @return Whether modification to input is made. If any byte written to the output is different
      *         to the input, this method should returns <code>true</code>. If modification is
      *         unknown, returns <code>null</code>.
