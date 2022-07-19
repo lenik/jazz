@@ -53,11 +53,18 @@ public class StringId {
 
     /**
      * helloWorld => hello-world
+     *
+     * @return <code>null</code> for <code>null</code>.
      */
     public String breakCamel(String id) {
         return breakCamel(id, delimStr);
     }
 
+    /**
+     * helloWorld => hello-world
+     *
+     * @return <code>null</code> for <code>null</code>.
+     */
     public String breakCamel(String id, String tokenSep) {
         switch (trimDelim) {
         case LTRIM:
@@ -91,8 +98,12 @@ public class StringId {
 
     /**
      * hello-world => helloWorld
+     *
+     * @return <code>null</code> for <code>null</code>.
      */
     public String toCamel(String hstr) {
+        if (hstr == null)
+            return null;
         StringBuilder buf = new StringBuilder();
         StringTokenizer tokens = new StringTokenizer(hstr, delimPattern);
         int i = 0;
@@ -108,6 +119,60 @@ public class StringId {
             i++;
         }
         return buf.toString();
+    }
+
+    /**
+     * fooBar.helloWorld => foo-bar.hello-world
+     *
+     * @return <code>null</code> for <code>null</code>.
+     */
+    public String breakQCamel(String qCamel) {
+        return breakQCamel(qCamel, delimStr, ".");
+    }
+
+    /**
+     * helloWorld => hello-world
+     *
+     * @return <code>null</code> for <code>null</code>.
+     */
+    public String breakQCamel(String qCamel, String tokenSep, String qDelim) {
+        if (qCamel == null)
+            return null;
+        StringTokenizer tokens = new StringTokenizer(qCamel, qDelim);
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        while (tokens.hasMoreTokens()) {
+            String token = tokens.nextToken();
+            String camel = breakCamel(token, tokenSep);
+            if (count++ != 0)
+                sb.append(camel);
+            sb.append(qDelim);
+        }
+        return sb.toString();
+    }
+
+    public String toQCamel(String qhstr) {
+        return toQCamel(qhstr, true, ".");
+    }
+
+    public String toQCamel(String qhstr, boolean ucTerm, String qDelim) {
+        if (qhstr == null)
+            return null;
+        StringTokenizer tokens = new StringTokenizer(qhstr, qDelim);
+        StringBuilder sb = new StringBuilder();
+        int current = 0;
+        int count = tokens.countTokens();
+        while (tokens.hasMoreTokens()) {
+            String token = tokens.nextToken();
+            String camel = toCamel(token);
+            if (current != 0)
+                sb.append(qDelim);
+            if (current == count - 1)
+                camel = Strings.ucfirst(camel);
+            sb.append(camel);
+            current++;
+        }
+        return sb.toString();
     }
 
     /** hyphen-id */
