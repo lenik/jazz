@@ -1,6 +1,7 @@
 package net.bodz.bas.t.table;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
@@ -384,6 +385,36 @@ public class DefaultColumnMetadata
         precision = jdbcMetadata.getPrecision(i);
         scale = jdbcMetadata.getScale(i);
         columnDisplaySize = jdbcMetadata.getColumnDisplaySize(i);
+    }
+
+    // @SuppressWarnings("unused")
+    public void readObject(ResultSet rs)
+            throws SQLException {
+        name = rs.getString("COLUMN_NAME");
+        label = name;
+        sqlType = rs.getInt("DATA_TYPE");
+
+        // String typeName = rs.getString("TYPE_NAME");
+        precision = rs.getInt("COLUMN_SIZE");
+        // int bufferLength = rs.getInt("BUFFER_LENGTH");
+        scale = rs.getInt("DECIMAL_DIGITS");
+        // int numPrecRadix = rs.getInt("NUM_PREC_RADIX");
+        nullable = rs.getInt("NULLABLE");
+        // String isNullable = rs.getString("IS_NULLABLE"); // YES NO
+        description = rs.getString("REMARKS");
+        // String columnDef = rs.getString("COLUMN_DEF");
+        // int sqlDataType = rs.getInt("SQL_DATA_TYPE");
+        // Integer sqlDatetimeSub = (Integer) rs.getObject("SQL_DATETIME_SUB");
+        // int charOctetLength = rs.getInt("CHAR_OCTET_LENGTH");
+        // int ordinalPosition = rs.getInt("ORDINAL_POSITION");
+        // String scopeCatalog = rs.getString("SCOPE_CATLOG");
+        // String scopeSchema = rs.getString("SCOPE_SCHEMA");
+        // String scopeTable = rs.getString("SCOPE_TABLE");
+        // Object sourceDataType = rs.getObject("SOURCE_DATA_TYPE");
+        String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
+        this.autoIncrement = "YES".equals(isAutoIncrement);
+
+        type = SqlTypes.toJavaType(sqlType, isNullable());
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */

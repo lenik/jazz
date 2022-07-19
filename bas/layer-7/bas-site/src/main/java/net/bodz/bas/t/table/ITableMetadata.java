@@ -16,7 +16,15 @@ public interface ITableMetadata
     String K_NAME = "name";
     String K_PRIMARY_KEY = "primary-key";
 
+    String getCatalogName();
+
+    String getSchemaName();
+
     String getName();
+
+    String getQualifiedName();
+
+    String getNecessaryQualifiedName();
 
     String[] getPrimaryKey();
 

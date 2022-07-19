@@ -1,7 +1,12 @@
 package net.bodz.bas.t.table;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.LoaderException;
@@ -14,18 +19,81 @@ public class DefaultTableMetadata
         implements
             ITableMetadata {
 
-    String name;
+    private static final long serialVersionUID = 1L;
+
+    boolean defaultCatalog;
+    boolean defaultSchema;
+
     String label;
     String description;
     String[] primaryKey;
 
+    public DefaultTableMetadata() {
+    }
+
+    public DefaultTableMetadata(String catalogName, String schemaName, String tableName) {
+        this.catalogName = catalogName;
+        this.schemaName = schemaName;
+        this.tableName = tableName;
+    }
+
+    public DefaultTableMetadata(String qualifiedName) {
+        setQualifiedName(qualifiedName);
+    }
+
+    public static DefaultTableMetadata fromMetaData(Connection connection, String catalogName, String schemaName,
+            String tableName)
+            throws SQLException {
+        DefaultTableMetadata table = new DefaultTableMetadata(catalogName, schemaName, tableName);
+        table.readObject(connection);
+        return table;
+    }
+
+    public static DefaultTableMetadata fromMetaData(Connection connection, String qualifiedName)
+            throws SQLException {
+        DefaultTableMetadata table = new DefaultTableMetadata(qualifiedName);
+        table.readObject(connection);
+        return table;
+    }
+
+    public boolean isDefaultCatalog() {
+        return defaultCatalog;
+    }
+
+    public void setDefaultCatalog(boolean defaultCatalog) {
+        this.defaultCatalog = defaultCatalog;
+    }
+
+    public boolean isDefaultSchema() {
+        return defaultSchema;
+    }
+
+    public void setDefaultSchema(boolean defaultSchema) {
+        this.defaultSchema = defaultSchema;
+    }
+
     @Override
     public String getName() {
-        return name;
+        return tableName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.tableName = name;
+    }
+
+    @Override
+    public String getNecessaryQualifiedName() {
+        StringBuilder sb = new StringBuilder();
+        if (catalogName != null && !defaultCatalog) {
+            sb.append(catalogName);
+            sb.append('.');
+        }
+        if (schemaName != null && !defaultSchema) {
+            sb.append(schemaName);
+            sb.append('.');
+        }
+        sb.append(tableName);
+        return sb.toString();
     }
 
     @Override
@@ -62,7 +130,7 @@ public class DefaultTableMetadata
             throws ParseException {
         super.readObject(o);
 
-        name = o.getString(K_NAME);
+        tableName = o.getString(K_NAME);
 
         String s = o.getString(K_PRIMARY_KEY);
         setPrimaryKey(s);
@@ -73,7 +141,7 @@ public class DefaultTableMetadata
             throws ParseException, LoaderException {
         super.readObject(x_table);
 
-        name = x_table.getAttribute("name");
+        tableName = x_table.getAttribute("name");
         String s = x_table.getString(K_PRIMARY_KEY);
         setPrimaryKey(s);
     }
@@ -85,9 +153,43 @@ public class DefaultTableMetadata
         // TODO
     }
 
+    public void readObject(Connection connection)
+            throws SQLException {
+        DatabaseMetaData metaData = connection.getMetaData();
+
+        // Parse from meta columns
+        ResultSet rs = metaData.getColumns(catalogName, schemaName, tableName, null);
+        while (rs.next()) {
+            DefaultColumnMetadata column = new DefaultColumnMetadata();
+            column.readObject(rs);
+            addColumn(column);
+        }
+        rs.close();
+
+        // Parse from empty-query.
+        // Statement statement = connection.createStatement();
+        // rs = statement.executeQuery(//
+        // "select * from " + escape(tableQName) + " where 1=2");
+        // table.readObject(rs.getMetaData());
+        // rs.close();
+
+        // Find out primary key
+        rs = metaData.getPrimaryKeys(catalogName, schemaName, tableName);
+        List<String> pkColumnNames = new ArrayList<>();
+        while (rs.next()) {
+            String pkColumnName = rs.getString("COLUMN_NAME");
+            pkColumnNames.add(pkColumnName);
+
+            DefaultColumnMetadata column = (DefaultColumnMetadata) getColumn(pkColumnName);
+            column.setPrimaryKey(true);
+        }
+        String[] primaryKey = pkColumnNames.toArray(new String[0]);
+        setPrimaryKey(primaryKey);
+    }
+
     @Override
     public String toString() {
-        return name + "(" + getColumnNames() + ")";
+        return tableName + "(" + getColumnNames() + ")";
     }
 
 }
