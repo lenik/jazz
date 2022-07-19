@@ -19,6 +19,8 @@ import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.t.map.IMarksetWithPath;
 import net.bodz.bas.t.map.MarksetWithPath;
@@ -31,6 +33,8 @@ import net.bodz.fork.org.json.JSONException;
 public abstract class AbstractJsonDumper<self_t>
         implements
             IJsonDumper {
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractJsonDumper.class);
 
     protected IJsonOut out;
     protected IMarksetWithPath markset;
@@ -180,6 +184,11 @@ public abstract class AbstractJsonDumper<self_t>
     protected boolean _dumpImpl(boolean boxed, @NotNull Object obj, int depth, String _name)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
+        if (type.isEnum()) {
+            out.value(obj);
+            return true;
+        }
+
         if (type.isArray()) {
             markset.addMark(obj);
             return dumpArray(boxed, obj, depth);
@@ -369,9 +378,13 @@ public abstract class AbstractJsonDumper<self_t>
 
         case TypeId.DATE:
             Date date = (Date) obj;
+
+            // XXX to be reviewed.
             Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            String dateStr = Dates.ISO8601.format(cal);
+            int offset = cal.getTimeZone().getOffset(date.getTime());
+            long localTime = date.getTime() + offset;
+
+            String dateStr = Dates.ISO8601.format(localTime);
             return dateStr;
 
         case TypeId.JODA_DATETIME:
