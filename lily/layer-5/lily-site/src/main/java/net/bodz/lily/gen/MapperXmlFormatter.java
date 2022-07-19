@@ -7,11 +7,11 @@ import net.bodz.lily.gen.model.java.EntityClassModel;
 import net.bodz.lily.gen.model.java.EntityFieldModel;
 import net.bodz.lily.gen.model.java.MaskFieldModel;
 
-public class SqlMapperFormatter {
+public class MapperXmlFormatter {
 
     ITreeOut out;
 
-    public SqlMapperFormatter(ITreeOut out) {
+    public MapperXmlFormatter(ITreeOut out) {
         if (out == null)
             throw new NullPointerException("out");
         this.out = out;
