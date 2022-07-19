@@ -1,0 +1,178 @@
+package net.bodz.lily.gen.cli;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.c.m2.MavenPomDir;
+import net.bodz.bas.c.string.StringId;
+import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.adapter.WriterPrintOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.t.table.DefaultTableMetadata;
+import net.bodz.bas.t.table.IColumnMetadata;
+import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.lily.gen.EntityClassBuilder;
+import net.bodz.lily.gen.EntityMaskBuilder;
+import net.bodz.lily.gen.EntityPKBuilder;
+
+public class JavaModelGenerator
+        extends BasicCLI {
+
+    static final Logger logger = LoggerFactory.getLogger(JavaModelGenerator.class);
+
+    /**
+     * Parent package name of generated java models.
+     *
+     * @option -p =QNAME
+     */
+    String parentPackage;
+
+    /**
+     * Output directory.
+     *
+     * @option -O =PATH
+     */
+    File outDir;
+
+    Class<?> appClass = getClass();
+    DataContext dataContext;
+    Connection connection;
+
+    public JavaModelGenerator(DataContext dataContext) {
+        this.dataContext = dataContext;
+    }
+
+    void makeCatalog(String catalogName)
+            throws SQLException, IOException {
+        List<String> names = new ArrayList<>();
+        ResultSet rs = connection.getMetaData().getSchemas(catalogName, null);
+        while (rs.next()) {
+            String name = rs.getString("SCHEMA_NAME");
+            names.add(name);
+        }
+        rs.close();
+        for (String schemaName : names)
+            makeSchema(catalogName, schemaName);
+    }
+
+    void makeSchema(String catalogName, String schemaName)
+            throws SQLException, IOException {
+        List<String> names = new ArrayList<>();
+        ResultSet rs = connection.getMetaData().getTables(catalogName, schemaName, null, //
+                new String[] { "TABLE" });
+        while (rs.next()) {
+            String name = rs.getString("TABLE_NAME");
+            // String type = rs.getString("TABLE_TYPE");
+            // String remarks = rs.getString("REMARKS");
+            names.add(name);
+        }
+        rs.close();
+        for (String tableName : names)
+            makeEntity(catalogName, schemaName, tableName);
+    }
+
+    void makeEntity(String qName)
+            throws SQLException, IOException {
+        DefaultTableMetadata table = DefaultTableMetadata.fromMetaData(connection, qName);
+        makeEntity(table);
+    }
+
+    void makeEntity(String catalogName, String schemaName, String tableName)
+            throws SQLException, IOException {
+        DefaultTableMetadata table = DefaultTableMetadata.fromMetaData(connection, //
+                catalogName, schemaName, tableName);
+        makeEntity(table);
+    }
+
+    void makeEntity(ITableMetadata table)
+            throws SQLException, IOException {
+        String q_name = table.getNecessaryQualifiedName();
+        String qName = StringId.UL.toQCamel(q_name);
+
+        int lastDot = qName.lastIndexOf('.');
+        String qPackage = null;
+        String SimpleName = qName;
+        String pkgDir = "";
+        if (lastDot != -1) {
+            qPackage = qName.substring(0, lastDot);
+            SimpleName = qName.substring(lastDot + 1);
+            pkgDir = qPackage.replace('.', '/') + "/";
+        }
+        String pkg = parentPackage + "." + qPackage;
+
+        String parentPkgDir = parentPackage.replace('.', '/') + "/";
+
+        String pkgPath = "src/main/java/" + parentPkgDir + pkgDir;
+        File parent = new File(outDir, pkgPath);
+
+        ITreeOut out = open(parent, SimpleName + ".java");
+        new EntityClassBuilder(pkg).build(out, table);
+        out.close();
+
+        IColumnMetadata[] pkv = table.getPrimaryKeyColumns();
+        if (pkv.length > 1) {
+            out = open(parent, SimpleName + "_PK.java");
+            new EntityPKBuilder(pkg).build(out, table);
+            out.close();
+        }
+
+        out = open(parent, "impl/" + SimpleName + "Mask.java");
+        new EntityMaskBuilder(pkg + ".impl").build(out, table);
+        out.close();
+    }
+
+    ITreeOut open(File parent, String name)
+            throws FileNotFoundException {
+        File file = new File(parent, name);
+        file.getParentFile().mkdirs();
+        return open(file);
+    }
+
+    ITreeOut open(File file)
+            throws FileNotFoundException {
+        String href = FilePath.getRelativePath(file, outDir);
+        logger.info("Generate: " + href);
+        FileOutputStream fileOut = new FileOutputStream(file);
+        OutputStreamWriter osw = new OutputStreamWriter(fileOut, Charsets.UTF8);
+        WriterPrintOut wpo = new WriterPrintOut(osw);
+        return TreeOutImpl.from(wpo);
+    }
+
+    @Override
+    protected void mainImpl(String... args)
+            throws Exception {
+        if (parentPackage == null)
+            throw new IllegalArgumentException("parent-package isn't specified.");
+
+        outDir = MavenPomDir.fromClass(appClass).getBaseDir();
+
+        connection = dataContext.getConnection();
+
+        for (String arg : args) {
+            if (arg.endsWith(".*.*"))
+                makeCatalog(StringPart.before(arg, ".*.*"));
+            else if (arg.endsWith(".*"))
+                makeSchema(null, StringPart.before(arg, ".*"));
+            else
+                makeEntity(arg);
+        }
+
+        connection.close();
+    }
+
+}
