@@ -119,51 +119,6 @@ public class Strings {
         return buf.toString();
     }
 
-    /**
-     * helloWorld => hello-world
-     */
-    public static String hyphenatize(String words) {
-        while (words.startsWith("_"))
-            words = words.substring(1);
-        StringBuilder buf = new StringBuilder(words.length() * 3 / 2);
-        boolean breakNext = false;
-        for (int wordStart = 0; wordStart < words.length();) {
-            int wordEnd;
-            wordEnd = StringSearch.indexOf(words, Character.UPPERCASE_LETTER, wordStart + 1);
-            if (wordEnd == -1)
-                wordEnd = words.length();
-            String word = words.substring(wordStart, wordEnd);
-            if (breakNext)
-                buf.append('-');
-            buf.append(word);
-            breakNext = word.length() > 1;
-            wordStart = wordEnd;
-        }
-        String s = buf.toString();
-        if (s.startsWith("-"))
-            s = s.substring(1);
-        return s.toLowerCase();
-    }
-
-    /**
-     * hello-world => helloWorld
-     */
-    public static String dehyphenatize(String hstr) {
-        String[] parts = hstr.split("-");
-        StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (part.isEmpty())
-                buf.append('_');
-            else {
-                if (i != 0)
-                    part = Strings.ucfirst(part);
-                buf.append(part);
-            }
-        }
-        return buf.toString();
-    }
-
     public static String ellipsisNull = null;
 
     /**
@@ -183,7 +138,7 @@ public class Strings {
 
     /**
      * Returns <code>"head..."</code> if given <code>s</code> is too long.
-     * 
+     *
      * @return {@link #ellipsisNull} if <code>s</code> is <code>null</code>.
      */
     public static String ellipsis(String s, int len) {

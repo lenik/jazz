@@ -3,7 +3,7 @@ package net.bodz.bas.potato.provider.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -89,7 +89,8 @@ public class BeanType
                     propertyDoc = docLoader.getMethodDoc(beanClass, classDoc, getter, setter);
                     if (propertyDoc == null) {
                         propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter != null ? getter : setter));
-                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.val(Strings.hyphenatize(name)));
+                        String hname = StringId.HYPHEN.breakCamel(name);
+                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.val(hname));
                     }
                 }
 

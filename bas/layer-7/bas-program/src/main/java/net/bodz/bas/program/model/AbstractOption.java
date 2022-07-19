@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 import net.bodz.bas.c.object.TrueValues;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.c.type.addor.ArrayAddor;
@@ -59,7 +59,7 @@ public abstract class AbstractOption
         super(doc);
 
         this.id = id;
-        this.longName = Strings.hyphenatize(longName);
+        this.longName = StringId.HYPHEN.breakCamel(longName);
 
         if (_type == null)
             throw new NullPointerException("type");

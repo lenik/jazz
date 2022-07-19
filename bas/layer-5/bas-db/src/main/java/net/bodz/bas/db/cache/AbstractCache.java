@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -33,7 +33,7 @@ public abstract class AbstractCache<K, T> {
         this.objectClass = objectClass;
 
         String simpleName = objectClass.getSimpleName();
-        friendlyName = Strings.hyphenatize(simpleName);
+        friendlyName = StringId.UL.breakCamel(simpleName);
         friendlyNamePl = English.pluralOf(friendlyName);
 
         purge();

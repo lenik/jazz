@@ -1,5 +1,7 @@
 package net.bodz.bas.c.string;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class StringSearch {
@@ -66,6 +68,30 @@ public class StringSearch {
 
     public static int lastIndexOf(String s, int charType) {
         return lastIndexOf(s, charType, s.length() - 1);
+    }
+
+    public static int indexOfNoncontinuous(String s, int charType, int start) {
+        int lastEnd = -1;
+        do {
+            int end = StringSearch.indexOf(s, charType, start);
+            if (end == -1)
+                return lastEnd;
+            if (end != start)
+                return lastEnd != -1 ? lastEnd : end;
+            lastEnd = end;
+            start++;
+        } while (true);
+    }
+
+    public static String[] splitByNoncontinuous(String s, int charType) {
+        List<String> list = new ArrayList<>();
+        int start = 0, next;
+        while ((next = indexOfNoncontinuous(s, charType, start + 1)) != -1) {
+            list.add(s.substring(start, next));
+            start = next;
+        }
+        list.add(s.substring(start));
+        return list.toArray(new String[0]);
     }
 
     public static int indexOfIgnoreCase(String s, String needle, Locale locale) {
