@@ -161,7 +161,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                 String fileName = FilePath.stripExtension(token);
                 if (StringPred.isDecimal(fileName)) {
                     String id = fileName;
-                    target = loadHandler(id, q);
+                    try {
+                        target = loadHandler(id, q);
+                    } catch (Exception e) {
+                        throw new PathDispatchException("Failed to load handler: " + e.getMessage(), e);
+                    }
                 }
             }
         } catch (LoadException e) {
@@ -249,8 +253,14 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return wrapper;
     }
 
-    protected JsonWrapper loadHandler(String _id, IVariantMap<String> q) {
-        Long id = Long.parseLong(_id);
+    protected JsonWrapper loadHandler(String idStr, IVariantMap<String> q) {
+        Object id;
+        try {
+            id = IdFn.parseId(idType, idStr);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("invalid id specifier(" + idStr + "): " + e.getMessage(), e);
+        }
+
         IMapperTemplate<T, M> mapper = requireMapper();
         T obj = mapper.select(id);
         obj = postLoad(obj);
