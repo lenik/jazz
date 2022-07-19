@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
 
@@ -51,7 +52,7 @@ public class EntityClassModel {
             EntityFieldModel item = new EntityFieldModel();
             String name = field.getName();
             item.fieldName = name;
-            item.columnName = name;
+            item.columnName = StringId.UL.breakCamel(name);
             item.fieldType = field.getType();
 
             boolean hasSqlCast = type.getProperty(name + "_sql") != null;
