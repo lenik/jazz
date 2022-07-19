@@ -24,7 +24,7 @@ import sun.security.x509.X509Key;
 import net.bodz.bas.c.java.security.Cryptos;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.iterator.Iterables;
@@ -563,7 +563,7 @@ public class PKIDumper {
         String errType = t.getClass().getSimpleName();
         if (errType.endsWith("Exception"))
             errType = errType.substring(0, errType.length() - 9);
-        String mesg = Strings.hyphenatize(errType);
+        String mesg = StringId.HYPHEN.breakCamel(errType);
         dumpError(prefix, mesg, t, detail);
     }
 

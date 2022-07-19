@@ -1,9 +1,14 @@
 package net.bodz.bas.program.model;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
@@ -27,7 +32,7 @@ public class MutableOptionGroup
 
     public MutableOptionGroup(IMutableOptionGroup parent, Class<?> declaringClass) {
         this.declaringClass = declaringClass;
-        this.name = Strings.hyphenatize(declaringClass.getSimpleName());
+        this.name = StringId.HYPHEN.breakCamel(declaringClass.getSimpleName());
         this.parent = parent;
     }
 
@@ -129,9 +134,9 @@ public class MutableOptionGroup
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * (Not fully implemented)
-     * 
+     *
      * @deprecated This method won't refresh/restore the old options whose option key is overrided
      *             by the given option.
      */

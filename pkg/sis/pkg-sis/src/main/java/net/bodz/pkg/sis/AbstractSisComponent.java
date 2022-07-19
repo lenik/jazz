@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.c.java.util.TextMap;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.IRstElement;
+import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.nls.II18nCapable;
@@ -66,7 +66,7 @@ public abstract class AbstractSisComponent
 
     public AbstractSisComponent(ISisComponent parent, String namePrefix) {
         if (namePrefix == null)
-            namePrefix = Strings.hyphenatize(getClass().getSimpleName());
+            namePrefix = StringId.HYPHEN.breakCamel(getClass().getSimpleName());
 
         if (parent == null) {
             name = namePrefix;

@@ -46,7 +46,7 @@ public class StringsTest
     public void testHyphen() {
         class D {
             void o(String input, String expected) {
-                String actual = Strings.hyphenatize(input);
+                String actual = StringId.HYPHEN.breakCamel(input);
                 assertEquals(expected, actual);
             }
         }

@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.repr.path.PathToken;
 
 public class PathConventions {
@@ -36,7 +36,7 @@ public class PathConventions {
             String tableName = aTable.name();
             tokens.add(tableName);
         }
-        tokens.add(Strings.hyphenatize(clazz.getSimpleName()));
+        tokens.add(StringId.HYPHEN.breakCamel(clazz.getSimpleName()));
 
         return tokens;
     }

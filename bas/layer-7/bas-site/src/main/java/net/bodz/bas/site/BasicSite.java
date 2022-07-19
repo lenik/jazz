@@ -8,7 +8,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.JazzBasProject;
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.LocaleVars;
 import net.bodz.bas.repr.content.AbstractXjdocContent;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -47,7 +47,7 @@ public abstract class BasicSite
     public BasicSite() {
         for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
             String name = module.getName();
-            name = Strings.hyphenatize(name);
+            name = StringId.HYPHEN.breakCamel(name);
             modules.put(name, module);
         }
         serviceMap = new ServiceMap();

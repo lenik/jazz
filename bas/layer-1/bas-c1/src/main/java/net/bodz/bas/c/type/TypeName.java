@@ -2,7 +2,7 @@ package net.bodz.bas.c.type;
 
 import java.lang.reflect.Modifier;
 
-import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.string.StringId;
 
 public class TypeName {
 
@@ -24,7 +24,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type. <code>type</code>.
      * @return Hyphenatized simple name.
@@ -36,7 +36,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type. <code>type</code>.
      * @param findShortest
@@ -65,7 +65,7 @@ public class TypeName {
     /**
      * Get a user-friendly simple name of a type. The name suffix (like "List" in "ArrayList") is
      * auto removed, to make the result name shorter.
-     * 
+     *
      * @param type
      *            Get friendly name from this type.
      * @param baseType
@@ -102,7 +102,7 @@ public class TypeName {
         }
 
         // name = Strings.lcfirst(name);
-        return Strings.hyphenatize(name);
+        return StringId.HYPHEN.breakCamel(name);
     }
 
     /**

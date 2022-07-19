@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.LocaleVars;
 import net.bodz.bas.t.variant.AbstractVariantMap;
@@ -38,7 +39,7 @@ public abstract class AbstractNlstr
         String simpleName = getClass().getSimpleName();
         if (simpleName.endsWith("NLS"))
             simpleName = simpleName.substring(0, simpleName.length() - 3);
-        name = Strings.hyphenatize(simpleName);
+        name = StringId.HYPHEN.breakCamel(simpleName);
     }
 
     @Override
