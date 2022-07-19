@@ -14,6 +14,7 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
 public class DefaultRowSetMetadata
+        extends QualifiedTableName
         implements
             IRowSetMetadata {
 
