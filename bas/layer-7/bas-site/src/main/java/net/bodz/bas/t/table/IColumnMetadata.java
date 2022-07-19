@@ -1,16 +1,17 @@
 package net.bodz.bas.t.table;
 
 import java.io.IOException;
+import java.sql.ResultSetMetaData;
 
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.xml.IXmlForm;
+import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 
 public interface IColumnMetadata
@@ -31,6 +32,39 @@ public interface IColumnMetadata
     int getSqlType();
 
     boolean isPrimaryKey();
+
+    boolean isAutoIncrement();
+
+    boolean isCaseSensitive();
+
+    boolean isSearchable();
+
+    boolean isCurrency();
+
+    /**
+     * @see ResultSetMetaData#columnNoNulls
+     * @see ResultSetMetaData#columnNullable
+     * @see ResultSetMetaData#columnNullableUnknown
+     */
+    int getNullableStatus();
+
+    boolean isNullable();
+
+    boolean isNullable(boolean fallback);
+
+    boolean isSigned();
+
+    boolean isReadOnly();
+
+    boolean isWritable();
+
+    boolean isDefinitelyWritable();
+
+    int getScale();
+
+    int getPrecision();
+
+    int getColumnDisplaySize();
 
     Object parse(String s)
             throws ParseException;

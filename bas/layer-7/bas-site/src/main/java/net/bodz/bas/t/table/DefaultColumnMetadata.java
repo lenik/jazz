@@ -10,11 +10,11 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.IXmlForm;
+import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.typer.Typers;
@@ -35,6 +35,20 @@ public class DefaultColumnMetadata
     boolean xmlType;
 
     boolean primaryKey;
+
+    boolean autoIncrement;
+    boolean caseSensitive;
+    boolean searchable;
+    boolean currency;
+    int nullable;
+    boolean signed;
+    boolean readOnly;
+    boolean writable;
+    boolean definitelyWritable;
+
+    int precision;
+    int scale;
+    int columnDisplaySize;
 
     @Override
     public int getIndex() {
@@ -110,6 +124,127 @@ public class DefaultColumnMetadata
 
     public void setPrimaryKey(boolean primaryKey) {
         this.primaryKey = primaryKey;
+    }
+
+    @Override
+    public boolean isAutoIncrement() {
+        return autoIncrement;
+    }
+
+    public void setAutoIncrement(boolean autoIncrement) {
+        this.autoIncrement = autoIncrement;
+    }
+
+    @Override
+    public boolean isCaseSensitive() {
+        return caseSensitive;
+    }
+
+    public void setCaseSensitive(boolean caseSensitive) {
+        this.caseSensitive = caseSensitive;
+    }
+
+    @Override
+    public boolean isSearchable() {
+        return searchable;
+    }
+
+    public void setSearchable(boolean searchable) {
+        this.searchable = searchable;
+    }
+
+    @Override
+    public boolean isCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(boolean currency) {
+        this.currency = currency;
+    }
+
+    @Override
+    public int getNullableStatus() {
+        return nullable;
+    }
+
+    public void setNullableStatus(int nullable) {
+        this.nullable = nullable;
+    }
+
+    @Override
+    public boolean isNullable() {
+        return nullable == ResultSetMetaData.columnNullable;
+    }
+
+    @Override
+    public boolean isNullable(boolean fallback) {
+        if (nullable == ResultSetMetaData.columnNullableUnknown)
+            return fallback;
+        else
+            return nullable == ResultSetMetaData.columnNullable;
+    }
+
+    @Override
+    public boolean isSigned() {
+        return signed;
+    }
+
+    public void setSigned(boolean signed) {
+        this.signed = signed;
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    @Override
+    public boolean isWritable() {
+        return writable;
+    }
+
+    public void setWritable(boolean writable) {
+        this.writable = writable;
+    }
+
+    @Override
+    public boolean isDefinitelyWritable() {
+        return definitelyWritable;
+    }
+
+    public void setDefinitelyWritable(boolean definitelyWritable) {
+        this.definitelyWritable = definitelyWritable;
+    }
+
+    @Override
+    public int getPrecision() {
+        return precision;
+    }
+
+    public void setPrecision(int precision) {
+        this.precision = precision;
+    }
+
+    @Override
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    @Override
+    public int getColumnDisplaySize() {
+        return columnDisplaySize;
+    }
+
+    public void setColumnDisplaySize(int columnDisplaySize) {
+        this.columnDisplaySize = columnDisplaySize;
     }
 
     @Override
@@ -235,6 +370,20 @@ public class DefaultColumnMetadata
             throw new RuntimeException(e.getMessage(), e);
         }
         this.setSqlType(sqlType);
+
+        autoIncrement = jdbcMetadata.isAutoIncrement(i);
+        caseSensitive = jdbcMetadata.isCaseSensitive(i);
+        searchable = jdbcMetadata.isSearchable(i);
+        currency = jdbcMetadata.isCurrency(i);
+        nullable = jdbcMetadata.isNullable(i);
+        signed = jdbcMetadata.isSigned(i);
+        readOnly = jdbcMetadata.isReadOnly(i);
+        writable = jdbcMetadata.isWritable(i);
+        definitelyWritable = jdbcMetadata.isDefinitelyWritable(i);
+
+        precision = jdbcMetadata.getPrecision(i);
+        scale = jdbcMetadata.getScale(i);
+        columnDisplaySize = jdbcMetadata.getColumnDisplaySize(i);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */
@@ -252,6 +401,20 @@ public class DefaultColumnMetadata
         setTypeByName(typeName);
 
         sqlType = o.getInt("sqlType", 0);
+
+        autoIncrement = o.getBoolean("autoIncrement", autoIncrement);
+        caseSensitive = o.getBoolean("caseSensitive", caseSensitive);
+        searchable = o.getBoolean("searchable", searchable);
+        currency = o.getBoolean("currency", currency);
+        nullable = o.getInt("nullable", nullable);
+        signed = o.getBoolean("signed", signed);
+        readOnly = o.getBoolean("readOnly", readOnly);
+        writable = o.getBoolean("writable", writable);
+        definitelyWritable = o.getBoolean("definitelyWritable", definitelyWritable);
+
+        precision = o.getInt("precision", precision);
+        scale = o.getInt("scale", scale);
+        columnDisplaySize = o.getInt("columnDisplaySize", columnDisplaySize);
     }
 
     /** ⇱ Implementation Of {@link IXmlForm}. */
@@ -268,6 +431,20 @@ public class DefaultColumnMetadata
         String typeName = o.a("type").getString();
         setTypeByName(typeName);
         sqlType = o.a("sqlType").getInt(0);
+
+        autoIncrement = o.a("autoIncrement").getBoolean(autoIncrement);
+        caseSensitive = o.a("caseSensitive").getBoolean(caseSensitive);
+        searchable = o.a("searchable").getBoolean(searchable);
+        currency = o.a("currency").getBoolean(currency);
+        nullable = o.a("nullable").getInt(nullable);
+        signed = o.a("signed").getBoolean(signed);
+        readOnly = o.a("readOnly").getBoolean(readOnly);
+        writable = o.a("writable").getBoolean(writable);
+        definitelyWritable = o.a("definitelyWritable").getBoolean(definitelyWritable);
+
+        precision = o.a("precision").getInt(precision);
+        scale = o.a("scale").getInt(scale);
+        columnDisplaySize = o.a("columnDisplaySize").getInt(columnDisplaySize);
     }
 
     @Override
