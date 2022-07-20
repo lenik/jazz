@@ -18,10 +18,10 @@ import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.model.base.CoObjectMask;
 
-public class EntityMaskBuilder
-        extends EntityClassBuilder {
+public class EntityMaskStuffBuilder
+        extends EntityStuffBuilder {
 
-    public EntityMaskBuilder(String mainQName, String fragmentQName) {
+    public EntityMaskStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 

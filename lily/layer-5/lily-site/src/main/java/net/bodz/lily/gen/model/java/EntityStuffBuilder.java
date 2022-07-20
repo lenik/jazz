@@ -20,22 +20,17 @@ import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 
-public class EntityClassBuilder
+public class EntityStuffBuilder
         extends FragmentSourceBuilder<ITableMetadata> {
 
     IColumnMetadata[] primaryKeyCols;
 
-    public EntityClassBuilder(String fqcn) {
-        super(fqcn, fqcn);
-    }
-
-    public EntityClassBuilder(String mainQName, String fragmentQName) {
+    public EntityStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
     protected void buildClassBody(ITableMetadata table) {
-
         String idType = null;
         primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
@@ -45,7 +40,7 @@ public class EntityClassBuilder
             idType = imports.simple(primaryKeyCols[0].getType());
             break;
         default:
-            idType = fragmentName + EntityIdBuilder.ID_SUFFIX;
+            idType = Naming.id(mainName);
         }
         // if (idType == null)
         // throw new NullPointerException("idType");
@@ -66,7 +61,7 @@ public class EntityClassBuilder
             out.printf("%s(%s.class)\n", //
                     imports.a(IdType.class), //
                     idType);
-        out.printf("public class %s\n", fragmentName);
+        out.printf("public abstract class %s\n", fragmentName);
         out.printf("        extends %s%s {\n", //
                 imports.simple(idType == null ? Object.class : CoEntity.class), //
                 idType == null ? "" : "<" + idType + ">");

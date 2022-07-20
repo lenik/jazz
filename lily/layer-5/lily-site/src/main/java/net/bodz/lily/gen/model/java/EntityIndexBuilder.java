@@ -5,7 +5,7 @@ import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.model.base.CoIndex;
 
 public class EntityIndexBuilder
-        extends EntityClassBuilder {
+        extends EntityStuffBuilder {
 
     public EntityIndexBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
