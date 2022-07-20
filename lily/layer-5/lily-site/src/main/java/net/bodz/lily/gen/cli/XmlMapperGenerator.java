@@ -14,10 +14,15 @@ import net.bodz.bas.io.adapter.WriterPrintOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.lily.gen.MapperXmlFormatter;
 import net.bodz.lily.gen.model.java.EntityClassModel;
 
+/**
+ * Generate mybatis mapper xml from java reflection.
+ */
+@ProgramName("class2xml")
 public class XmlMapperGenerator
         extends BasicCLI {
 
@@ -105,6 +110,11 @@ public class XmlMapperGenerator
             else
                 makeClass(arg);
         }
+    }
+
+    public static void main(String[] args)
+            throws Exception {
+        new XmlMapperGenerator().execute(args);
     }
 
 }

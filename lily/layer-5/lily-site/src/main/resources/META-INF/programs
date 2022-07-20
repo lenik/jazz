@@ -1,0 +1,2 @@
+class2xml = main net.bodz.lily.gen.cli.XmlMapperGenerator
+codegen = main net.bodz.lily.gen.cli.ToCodegen
