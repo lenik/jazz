@@ -81,6 +81,8 @@ public class PojfFile
         }
 
         PojfPath path = new PojfPath(device.getProtocol(), driveName, localPath);
+        if (_file.isDirectory())
+            path = (PojfPath) path.enter();
         return path;
     }
 

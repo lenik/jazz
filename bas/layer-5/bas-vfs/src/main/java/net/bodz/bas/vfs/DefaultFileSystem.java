@@ -93,11 +93,13 @@ public class DefaultFileSystem
         int colon = path.indexOf(':');
         String protocol = colon == -1 ? null : path.substring(0, colon);
 
-        IVfsDriver explicitDriver = driverMap.get(protocol);
-        if (explicitDriver != null) {
-            // assert explicitDriver.accepts(protocol);
-            // String protocolSpecificPath = path.substring(colon + 1);
-            return explicitDriver.parse(path);
+        if (protocol != null) {
+            IVfsDriver explicitDriver = driverMap.get(protocol);
+            if (explicitDriver != null) {
+                // assert explicitDriver.accepts(protocol);
+                // String protocolSpecificPath = path.substring(colon + 1);
+                return explicitDriver.parse(path);
+            }
         }
 
         for (VfsDriverKey key : fallbacks) {
