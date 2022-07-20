@@ -41,19 +41,29 @@ public class RowList
             this.rows = rows;
     }
 
-    public RowList(ResultSet resultSet, int maxRows)
+    public RowList(ResultSet resultSet)
+            throws SQLException {
+        this(resultSet, null);
+    }
+
+    public RowList(ResultSet resultSet, Long maxRows)
             throws SQLException {
         DefaultRowSetMetadata metadata = createMetadata();
         metadata.readObject(resultSet.getMetaData());
         this.metadata = metadata;
         this.rows = new ArrayList<>();
 
-        for (int rowIndex = 0; rowIndex < maxRows; rowIndex++) {
+        boolean unlimit = maxRows == null;
+        long max = unlimit ? -1L : maxRows.longValue();
+        int count = 0;
+        while (unlimit || count < max) {
             if (!resultSet.next())
                 break;
-            MutableRow row = new MutableRow(this, rowIndex);
+            MutableRow row = new MutableRow(this, count);
             row.readObject(resultSet);
             this.rows.add(row);
+            if (!unlimit)
+                count++;
         }
     }
 

@@ -17,7 +17,12 @@ public class MutableTable
         super(metadata, rows);
     }
 
-    public MutableTable(ResultSet resultSet, int maxRows)
+    public MutableTable(ResultSet resultSet)
+            throws SQLException {
+        super(resultSet);
+    }
+
+    public MutableTable(ResultSet resultSet, Long maxRows)
             throws SQLException {
         super(resultSet, maxRows);
     }
