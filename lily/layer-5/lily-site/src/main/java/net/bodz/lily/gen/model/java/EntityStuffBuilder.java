@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
@@ -41,20 +40,6 @@ public class EntityStuffBuilder
             break;
         default:
             idType = Naming.id(mainName);
-        }
-        // if (idType == null)
-        // throw new NullPointerException("idType");
-
-        out.print(imports.a(Table.class) + "(");
-        {
-            String catalog_name = table.getCatalogName();
-            if (catalog_name != null)
-                out.print("catalog=\"" + catalog_name + "\", ");
-            String schema_name = table.getSchemaName();
-            if (schema_name != null)
-                out.print("schema=\"" + schema_name + "\", ");
-            out.print("name=\"" + table.getName() + "\"");
-            out.println(")");
         }
 
         if (idType != null)
