@@ -156,9 +156,22 @@ public class DefaultTableMetadata
     public void readObject(Connection connection)
             throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet rs;
 
-        // Parse from meta columns
-        ResultSet rs = metaData.getColumns(catalogName, schemaName, tableName, null);
+        // Parse from table's metadata
+        rs = metaData.getTables(catalogName, schemaName, tableName, null);
+        while (rs.next()) {
+            catalogName = rs.getString("table_cat");
+            schemaName = rs.getString("table_schem");
+            tableName = rs.getString("table_name");
+            // String table_type = rs.getString("table_type");
+            description = rs.getString("remarks");
+            break;
+        }
+        rs.close();
+
+        // Parse from columns' metadata
+        rs = metaData.getColumns(catalogName, schemaName, tableName, null);
         while (rs.next()) {
             DefaultColumnMetadata column = new DefaultColumnMetadata();
             column.readObject(rs);
