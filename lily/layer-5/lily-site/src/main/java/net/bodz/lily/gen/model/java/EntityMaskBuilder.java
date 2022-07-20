@@ -1,4 +1,4 @@
-package net.bodz.lily.gen;
+package net.bodz.lily.gen.model.java;
 
 import java.sql.Timestamp;
 import java.util.Date;

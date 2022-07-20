@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import javax.persistence.Table;
+
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -17,7 +19,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.lily.gen.MapperXmlFormatter;
-import net.bodz.lily.gen.model.java.EntityClassModel;
+import net.bodz.lily.gen.model.java.reflect.EntityClassModel;
 
 /**
  * Generate mybatis mapper xml from java reflection.
@@ -27,6 +29,9 @@ public class XmlMapperGenerator
         extends BasicCLI {
 
     static final Logger logger = LoggerFactory.getLogger(XmlMapperGenerator.class);
+
+    String genDir="src/main/resources/";
+    // String genDir = "generated-sources/main/resources/";
 
     /**
      * Parent package name of generated java models.
@@ -53,7 +58,10 @@ public class XmlMapperGenerator
             if (file.isDirectory())
                 continue;
             String simpleName = FilePath.stripExtension(file.getName());
-            makeClass(pkg + "." + simpleName);
+            String fqcn = pkg + "." + simpleName;
+            Class<?> clazz = Class.forName(fqcn);
+            if (clazz.isAnnotationPresent(Table.class))
+                makeClass(fqcn);
         }
     }
 
@@ -68,15 +76,17 @@ public class XmlMapperGenerator
         String SimpleName = clazz.getSimpleName();
 
         String qPackage = clazz.getPackage().getName() + ".impl";
+        String qName = qPackage + "." + SimpleName + "Mapper";
+
         String pkgDir = qPackage.replace('.', '/') + "/";
-        String pkgPath = "src/main/resources/" + pkgDir;
+        String pkgPath = genDir + pkgDir;
         File parent = new File(outDir, pkgPath);
         parent.mkdirs();
 
         ITreeOut out = open(parent, SimpleName + "Mapper.xml");
         MapperXmlFormatter formatter = new MapperXmlFormatter(out);
         EntityClassModel entity = new EntityClassModel(clazz);
-        formatter.mapperXml(entity);
+        formatter.mapperXml(qName, entity);
         out.close();
     }
 

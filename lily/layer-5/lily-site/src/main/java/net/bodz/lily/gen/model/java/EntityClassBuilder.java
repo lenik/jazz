@@ -1,4 +1,4 @@
-package net.bodz.lily.gen;
+package net.bodz.lily.gen.model.java;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import net.bodz.bas.c.string.StringId;
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
@@ -17,24 +19,18 @@ import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.gen.JavaSourceBuilder;
 import net.bodz.lily.model.base.CoEntity;
 
 public class EntityClassBuilder
         extends JavaSourceBuilder<ITableMetadata> {
 
     IColumnMetadata[] primaryKeyCols;
+    String fqcn;
 
-    public EntityClassBuilder(String packageName) {
-        super(packageName);
-    }
-
-    boolean isPrimaryKey(IColumnMetadata column) {
-        if (primaryKeyCols == null)
-            throw new NullPointerException("primaryKeyCols");
-        for (int i = 0; i < primaryKeyCols.length; i++)
-            if (primaryKeyCols[i].getName().equals(column.getName()))
-                return true;
-        return false;
+    public EntityClassBuilder(String fqcn) {
+        super(StringPart.beforeLast(fqcn, '.'));
+        this.fqcn = fqcn;
     }
 
     @Override
@@ -52,7 +48,7 @@ public class EntityClassBuilder
             idType = imports.simple(primaryKeyCols[0].getType());
             break;
         default:
-            idType = CamelName + "_PK";
+            idType = CamelName + EntityIdBuilder.ID_SUFFIX;
         }
         // if (idType == null)
         // throw new NullPointerException("idType");
@@ -82,16 +78,9 @@ public class EntityClassBuilder
             out.println();
             out.println("private static final long serialVersionUID = 1L;");
 
-            N_consts(table, false);
-
-            if (primaryKeyCols.length > 1) {
-                out.println();
-                out.printf("%s id = new %s();\n", idType, idType);
-            }
+            N_consts(table, null);
 
             for (IColumnMetadata column : table.getColumns()) {
-                if (isPrimaryKey(column))
-                    continue;
                 out.println();
                 columnField(column);
             }
@@ -100,18 +89,22 @@ public class EntityClassBuilder
                 out.println();
                 out.println("@Override");
                 out.printf("public %s getId() {\n", idType);
-                out.printf("    return id;\n");
+                // out.printf(" return id;\n");
+                out.printf("    return new %s(this);\n", idType);
                 out.printf("}\n");
                 out.println();
                 out.println("@Override");
                 out.printf("public void setId(%s id) {\n", idType);
-                out.printf("    this.id = id;\n");
+                // out.printf(" this.id = id;\n");
+                for (IColumnMetadata k : primaryKeyCols) {
+                    String col_name = k.getName();
+                    String colName = StringId.UL.toCamel(col_name);
+                    out.printf("    this.%s = id.%s;\n", colName, colName);
+                }
                 out.printf("}\n");
             }
 
             for (IColumnMetadata column : table.getColumns()) {
-                if (isPrimaryKey(column))
-                    continue;
                 out.println();
                 columnAccessors(column);
             }
@@ -134,9 +127,12 @@ public class EntityClassBuilder
         if (description != null && !description.isEmpty())
             out.println("/** " + description + " */");
 
-        // boolean notNull = !column.isNullable();
-        // if (notNull)
-        // out.println(imports.a(NotNull.class));
+        if (column.isPrimaryKey())
+            out.println(imports.a(Id.class));
+
+        boolean notNull = !column.isNullable();
+        if (notNull)
+            out.println(imports.a(NotNull.class));
 
         out.print(imports.simple(type) + " " + colName);
         out.println(";");
@@ -151,6 +147,9 @@ public class EntityClassBuilder
         if (description != null && !description.isEmpty()) {
             out.println("/** " + description + " */");
         }
+
+        if (column.isPrimaryKey())
+            out.println(imports.a(Id.class));
 
         boolean notNull = !column.isNullable();
         if (notNull)
@@ -207,11 +206,12 @@ public class EntityClassBuilder
         initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis()");
     }
 
-    void N_consts(ITableMetadata table, boolean wantPrimaryKey) {
+    void N_consts(ITableMetadata table, Boolean wantPrimaryKey) {
         List<String> defs = new ArrayList<>();
         for (IColumnMetadata column : table.getColumns()) {
-            if (isPrimaryKey(column) != wantPrimaryKey)
-                continue;
+            if (wantPrimaryKey != null)
+                if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
+                    continue;
 
             Class<?> type = column.getType();
             String col_name = column.getName();
@@ -234,7 +234,7 @@ public class EntityClassBuilder
         out.println("public void initNotNulls() {");
         out.enter();
         for (IColumnMetadata column : table.getColumns()) {
-            if (isPrimaryKey(column))
+            if (column.isPrimaryKey())
                 continue;
 
             if (column.isNullable())

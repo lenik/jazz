@@ -9,7 +9,7 @@ public abstract class JavaSourceBuilder<model_t> {
     protected String packageName;
     // String fileName;
 
-    protected ImportedTypes imports;
+    protected ImportedTypenames imports;
     protected ITreeOut out;
 
     public JavaSourceBuilder(String packageName) {
@@ -21,7 +21,7 @@ public abstract class JavaSourceBuilder<model_t> {
         root.println("package " + packageName + ";");
         root.println();
 
-        imports = new ImportedTypes();
+        imports = new ImportedTypenames();
 
         BCharOut body = new BCharOut();
         out = TreeOutImpl.from(body);
