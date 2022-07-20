@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 
 public class EntityIdBuilder
-        extends EntityClassBuilder {
-
-    public static final String ID_SUFFIX = "_Id";
+        extends EntityStuffBuilder {
 
     public EntityIdBuilder(String mainQName) {
-        super(mainQName, mainQName + ID_SUFFIX);
+        super(mainQName, Naming.id(mainQName));
     }
 
     @Override
@@ -64,19 +61,15 @@ public class EntityIdBuilder
     }
 
     void ctors(ITableMetadata table) {
-        String table_name = table.getName();
-        String camelName = StringId.UL.toCamel(table_name);
-        String CamelName = Strings.ucfirst(camelName);
-        String idType = CamelName + ID_SUFFIX;
         IColumnMetadata[] kv = table.getPrimaryKeyColumns();
 
         // default constructor
-        out.println("public " + idType + "() {");
+        out.println("public " + fragmentName + "() {");
         out.println("}");
         out.println();
 
         // simple arguments listing constructor
-        out.print("public " + idType + "(");
+        out.print("public " + fragmentName + "(");
         for (int i = 0; i < kv.length; i++) {
             String col_name = kv[i].getName();
             String colName = StringId.UL.toCamel(col_name);
@@ -98,7 +91,7 @@ public class EntityIdBuilder
         out.println();
 
         // clone constructor
-        out.printf("public %s(%s o) {\n", idType, idType);
+        out.printf("public %s(%s o) {\n", fragmentName, fragmentName);
         out.enter();
         {
             for (IColumnMetadata k : kv) {
@@ -112,7 +105,7 @@ public class EntityIdBuilder
         out.println();
 
         // from entity constructor
-        out.printf("public %s(%s o) {\n", idType, CamelName);
+        out.printf("public %s(%s o) {\n", fragmentName, Naming.stuff(mainName));
         out.enter();
         {
             for (IColumnMetadata k : kv) {
@@ -127,10 +120,10 @@ public class EntityIdBuilder
 
         // clone()
         out.println("@Override");
-        out.println("public " + idType + " clone() {");
+        out.println("public " + fragmentName + " clone() {");
         out.enter();
         {
-            out.println("return new " + idType + "(this);");
+            out.println("return new " + fragmentName + "(this);");
             out.leave();
         }
         out.println("}");

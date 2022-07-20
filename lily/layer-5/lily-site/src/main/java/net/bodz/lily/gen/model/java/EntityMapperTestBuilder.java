@@ -3,7 +3,7 @@ package net.bodz.lily.gen.model.java;
 import net.bodz.bas.t.table.ITableMetadata;
 
 public class EntityMapperTestBuilder
-        extends EntityClassBuilder {
+        extends EntityStuffBuilder {
 
     public EntityMapperTestBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

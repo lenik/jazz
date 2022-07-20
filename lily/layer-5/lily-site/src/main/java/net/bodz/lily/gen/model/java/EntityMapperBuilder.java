@@ -4,7 +4,7 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.t.table.ITableMetadata;
 
 public class EntityMapperBuilder
-        extends EntityClassBuilder {
+        extends EntityStuffBuilder {
 
     public EntityMapperBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

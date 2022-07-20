@@ -15,12 +15,12 @@ import net.bodz.bas.typer.std.ISampleGenerator;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.test.TestSamples;
 
-public class EntitySamplesBuilder
-        extends EntityClassBuilder {
+public class EntitySamplesStuffBuilder
+        extends EntityStuffBuilder {
 
     Random random = new Random();
 
-    public EntitySamplesBuilder(String mainQName, String fragmentQName) {
+    public EntitySamplesStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 

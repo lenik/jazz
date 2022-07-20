@@ -33,8 +33,9 @@ public class JavaModelGenerator
 
     static final Logger logger = LoggerFactory.getLogger(JavaModelGenerator.class);
 
-    // String genDir= "src/main/java/" ;
-    String genDir = "src/main/generated/";
+    String skelDirname = "src/main/java/";
+    String generatedDirname = "src/main/generated/";
+
     /**
      * Parent package name of generated java models.
      *
@@ -101,66 +102,75 @@ public class JavaModelGenerator
 
     void makeEntity(ITableMetadata table)
             throws SQLException, IOException {
-        String q_name = table.getNecessaryQualifiedName();
-        String qName = StringId.UL.toQCamel(q_name);
+        String q_table_name = table.getNecessaryQualifiedName();
+        String qTableName = StringId.UL.toQCamel(q_table_name);
 
-        int lastDot = qName.lastIndexOf('.');
-        String qPackage = null;
-        String SimpleName = qName;
-        String pkgDir = "";
+        String qSchema = null;
+        String name = qTableName;
+        String pkg = parentPackage;
+        int lastDot = qTableName.lastIndexOf('.');
         if (lastDot != -1) {
-            qPackage = qName.substring(0, lastDot);
-            SimpleName = qName.substring(lastDot + 1);
-            pkgDir = qPackage.replace('.', '/') + "/";
+            qSchema = qTableName.substring(0, lastDot);
+            name = qTableName.substring(lastDot + 1);
+            pkg += "." + qSchema;
         }
-        String pkg = parentPackage + "." + qPackage;
-        String fqcn = pkg + "." + SimpleName;
-        String impl = pkg + ".impl";
+        String qName = pkg + "." + name;
+        String pkgDir = pkg.replace('.', '/') + "/";
 
-        String parentPkgDir = parentPackage.replace('.', '/') + "/";
+        File gen_ = new File(outDir, generatedDirname + pkgDir);
+        File skel_ = new File(outDir, skelDirname + pkgDir);
 
-        String pkgPath = genDir + parentPkgDir + pkgDir;
-        File parent = new File(outDir, pkgPath);
+        String implPkg = pkg + ".impl";
 
-        ITreeOut out = open(parent, SimpleName + ".java");
-        new EntityClassBuilder(fqcn).build(out, table);
+        ITreeOut out = open(gen_, Naming.stuff(name) + ".java", true);
+        new EntityStuffBuilder(qName, pkg + "." + Naming.stuff(name)).build(out, table);
         out.close();
 
         IColumnMetadata[] pkv = table.getPrimaryKeyColumns();
         if (pkv.length > 1) {
-            String idType = SimpleName + EntityIdBuilder.ID_SUFFIX;
-            out = open(parent, idType + ".java");
-            new EntityIdBuilder(fqcn).build(out, table);
+            out = open(gen_, Naming.id(name) + ".java", true);
+            new EntityIdBuilder(qName).build(out, table);
             out.close();
         }
 
-        out = open(parent, "impl/" + SimpleName + "Mask.java");
-        new EntityMaskBuilder(fqcn, impl + "." + SimpleName + "Mask").build(out, table);
+        if ((out = open(skel_, name + ".java", false)) != null)
+            new EntitySkelBuilder(qName, qName).build(out, table);
 
-        out = open(parent, "impl/" + SimpleName + "Index.java");
-        new EntityIndexBuilder(fqcn, impl + "." + SimpleName + "Index").build(out, table);
+        out = open(gen_, "impl/" + Naming.maskStuff(name) + ".java", true);
+        new EntityMaskStuffBuilder(qName, implPkg + "." + Naming.maskStuff(name)).build(out, table);
 
-        out = open(parent, "impl/" + SimpleName + "Mapper.java");
-        new EntityMapperBuilder(fqcn, impl + "." + SimpleName + "Mapper").build(out, table);
+        if ((out = open(skel_, "impl/" + Naming.mask(name) + ".java", false)) != null)
+            new EntityMaskSkelBuilder(qName, implPkg + "." + Naming.mask(name)).build(out, table);
 
-        out = open(parent, "impl/" + SimpleName + "MapperTest.java");
-        new EntityMapperTestBuilder(fqcn, impl + "." + SimpleName + "MapperTest").build(out, table);
+        out = open(gen_, "impl/" + Naming.index(name) + ".java", true);
+        new EntityIndexBuilder(qName, implPkg + "." + Naming.index(name)).build(out, table);
 
-        out = open(parent, "impl/" + SimpleName + "Samples.java");
-        new EntitySamplesBuilder(fqcn, impl + "." + SimpleName + "Samples").build(out, table);
+        if ((out = open(skel_, "impl/" + Naming.mapper(name) + ".java", false)) != null)
+            new EntityMapperBuilder(qName, implPkg + "." + Naming.mapper(name)).build(out, table);
+
+        out = open(gen_, "impl/" + Naming.mapperTest(name) + ".java", true);
+        new EntityMapperTestBuilder(qName, implPkg + "." + Naming.mapperTest(name)).build(out, table);
+
+        out = open(gen_, "impl/" + Naming.samples(name) + ".java", true);
+        new EntitySamplesStuffBuilder(qName, implPkg + "." + Naming.samples(name)).build(out, table);
 
         out.close();
     }
 
-    ITreeOut open(File parent, String name)
+    ITreeOut open(File parent, String name, boolean overwrite)
             throws FileNotFoundException {
         File file = new File(parent, name);
-        file.getParentFile().mkdirs();
-        return open(file);
+        File dir = file.getParentFile();
+        if (!dir.exists())
+            dir.mkdirs();
+        return open(file, overwrite);
     }
 
-    ITreeOut open(File file)
+    ITreeOut open(File file, boolean overwrite)
             throws FileNotFoundException {
+        if (file.exists())
+            if (!overwrite)
+                return null;
         String href = FilePath.getRelativePath(file, outDir);
         logger.info("Generate: " + href);
         FileOutputStream fileOut = new FileOutputStream(file);
