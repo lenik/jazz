@@ -21,19 +21,13 @@ import net.bodz.lily.model.base.CoObjectMask;
 public class EntityMaskBuilder
         extends EntityClassBuilder {
 
-    IColumnMetadata[] primaryKeyCols;
-
-    public EntityMaskBuilder(String packageName) {
-        super(packageName);
+    public EntityMaskBuilder(String mainQName, String fragmentQName) {
+        super(mainQName, fragmentQName);
     }
 
     @Override
     protected void buildClassBody(ITableMetadata table) {
-        String table_name = table.getName();
-        String camelName = StringId.UL.toCamel(table_name);
-        String CamelName = Strings.ucfirst(camelName);
-
-        out.printf("public class %sMask\n", CamelName);
+        out.printf("public class %s\n", fragmentName);
         out.printf("        extends %s {\n", //
                 imports.simple(CoObjectMask.class));
         out.enter();

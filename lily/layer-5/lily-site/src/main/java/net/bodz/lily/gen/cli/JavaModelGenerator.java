@@ -115,6 +115,7 @@ public class JavaModelGenerator
         }
         String pkg = parentPackage + "." + qPackage;
         String fqcn = pkg + "." + SimpleName;
+        String impl = pkg + ".impl";
 
         String parentPkgDir = parentPackage.replace('.', '/') + "/";
 
@@ -122,31 +123,31 @@ public class JavaModelGenerator
         File parent = new File(outDir, pkgPath);
 
         ITreeOut out = open(parent, SimpleName + ".java");
-        new EntityClassBuilder(pkg).build(out, table);
+        new EntityClassBuilder(fqcn).build(out, table);
         out.close();
 
         IColumnMetadata[] pkv = table.getPrimaryKeyColumns();
         if (pkv.length > 1) {
             String idType = SimpleName + EntityIdBuilder.ID_SUFFIX;
             out = open(parent, idType + ".java");
-            new EntityIdBuilder(pkg).build(out, table);
+            new EntityIdBuilder(fqcn).build(out, table);
             out.close();
         }
 
         out = open(parent, "impl/" + SimpleName + "Mask.java");
-        new EntityMaskBuilder(pkg + ".impl").build(out, table);
+        new EntityMaskBuilder(fqcn, impl + "." + SimpleName + "Mask").build(out, table);
 
         out = open(parent, "impl/" + SimpleName + "Index.java");
-        new EntityIndexBuilder(fqcn).build(out, table);
+        new EntityIndexBuilder(fqcn, impl + "." + SimpleName + "Index").build(out, table);
 
         out = open(parent, "impl/" + SimpleName + "Mapper.java");
-        new EntityMapperBuilder(fqcn).build(out, table);
+        new EntityMapperBuilder(fqcn, impl + "." + SimpleName + "Mapper").build(out, table);
 
         out = open(parent, "impl/" + SimpleName + "MapperTest.java");
-        new EntityMapperTestBuilder(fqcn).build(out, table);
+        new EntityMapperTestBuilder(fqcn, impl + "." + SimpleName + "MapperTest").build(out, table);
 
         out = open(parent, "impl/" + SimpleName + "Samples.java");
-        new EntitySamplesBuilder(fqcn).build(out, table);
+        new EntitySamplesBuilder(fqcn, impl + "." + SimpleName + "Samples").build(out, table);
 
         out.close();
     }
