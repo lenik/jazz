@@ -3,22 +3,24 @@ package net.bodz.lily.test;
 import java.lang.reflect.Type;
 import java.util.Random;
 
-import junit.framework.Assert;
-
 import org.junit.Assume;
 import org.junit.Test;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.test.DaoTestConfig;
+import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.util.mapper.TableProfiles;
+
+import junit.framework.Assert;
 
 public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
         extends Assert {
 
-    protected DataContext context = getContext();
+    protected DataContext context = findPreferredDataContext();
     protected TableProfiles tables = new TableProfiles(context);
 
     protected final Class<T> entityClass;
@@ -34,9 +36,19 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         mapperClass = TypeParam.bound1(typeArgs[2]);
     }
 
-    protected abstract DataContext getContext();
+    protected DataContext getContext() {
+        return context;
+    }
 
-    public abstract T buildSample();
+    protected DataContext findPreferredDataContext() {
+        DataHub dataContexts = DataHub.getPreferredHub();
+        if (dataContexts == null)
+            throw new IllegalConfigException("No data contexts installed.");
+        return dataContexts.getMain();
+    }
+
+    public abstract T buildSample()
+            throws Exception;
 
     public DaoTestConfig getConfig() {
         return DaoTestConfig.global;
@@ -50,7 +62,8 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
     }
 
     @Test
-    public void testInsertDelete() {
+    public void testInsertDelete()
+            throws Exception {
         Assume.assumeTrue(getConfig().testInsert);
         T a = buildSample();
 
@@ -67,7 +80,8 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdate()
+            throws Exception {
         Assume.assumeTrue(getConfig().testUpdate);
         T a = buildSample();
 

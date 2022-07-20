@@ -1,11 +1,11 @@
 package net.bodz.violet;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ctx.DataContexts;
+import net.bodz.bas.db.ctx.TestDataHub;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 
 public class VioletTests
-        extends DataContexts {
+        extends TestDataHub {
 
     static final ConnectOptions LOCAL = declare("local test");
     static {
@@ -19,6 +19,11 @@ public class VioletTests
 
     public static DataContext getDefaultContext() {
         return defaultContext;
+    }
+
+    @Override
+    public DataContext getMain() {
+        return getDefaultContext();
     }
 
 }
