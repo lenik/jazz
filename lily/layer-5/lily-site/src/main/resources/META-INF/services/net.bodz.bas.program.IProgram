@@ -1,0 +1,3 @@
+net.bodz.lily.gen.cli.JavaModelGenerator
+net.bodz.lily.gen.cli.ToCodegen
+net.bodz.lily.gen.cli.XmlMapperGenerator
