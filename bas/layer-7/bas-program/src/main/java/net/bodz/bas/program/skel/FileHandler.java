@@ -19,6 +19,8 @@ import net.bodz.bas.err.ExceptionLog;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedEnumException;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.BytesResource;
@@ -37,7 +39,8 @@ import net.bodz.bas.vfs.facade.IVfsFacade;
 import net.bodz.bas.vfs.util.TempFile;
 
 public class FileHandler
-        implements Closeable {
+        implements
+            Closeable {
 
     private String pathSpec;
     private IFile sourceFile;
@@ -55,6 +58,7 @@ public class FileHandler
     private IStreamOutputTarget outputTarget;
     private OutputOpenMode outputOpenMode;
     private IPrintOut printOut;
+    private ITreeOut treeOut;
     private OutputStream outputStream;
     private PrintStream printStream;
 
@@ -174,7 +178,7 @@ public class FileHandler
 
     /**
      * Set the output buffer mode. Once the mode is set, it can' t be changed in future.
-     * 
+     *
      * @param bufferMode
      *            The new output buffer mode to set.
      * @throws IllegalStateException
@@ -443,6 +447,15 @@ public class FileHandler
             printOut = getOutputTarget().newPrintOut(outputOpenOptions);
         }
         return printOut;
+    }
+
+    public synchronized ITreeOut openTreeOut()
+            throws IOException {
+        if (treeOut == null) {
+            IPrintOut printOut = openPrintOut();
+            treeOut = TreeOutImpl.from(printOut);
+        }
+        return treeOut;
     }
 
     public synchronized OutputStream openOutputStream()
