@@ -26,15 +26,15 @@ import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.table.DefaultTableMetadata;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
-import net.bodz.lily.gen.EntityClassBuilder;
-import net.bodz.lily.gen.EntityMaskBuilder;
-import net.bodz.lily.gen.EntityPKBuilder;
+import net.bodz.lily.gen.model.java.*;
 
 public class JavaModelGenerator
         extends BasicCLI {
 
     static final Logger logger = LoggerFactory.getLogger(JavaModelGenerator.class);
 
+    // String genDir= "src/main/java/" ;
+    String genDir = "src/main/generated/";
     /**
      * Parent package name of generated java models.
      *
@@ -114,10 +114,11 @@ public class JavaModelGenerator
             pkgDir = qPackage.replace('.', '/') + "/";
         }
         String pkg = parentPackage + "." + qPackage;
+        String fqcn = pkg + "." + SimpleName;
 
         String parentPkgDir = parentPackage.replace('.', '/') + "/";
 
-        String pkgPath = "src/main/java/" + parentPkgDir + pkgDir;
+        String pkgPath = genDir + parentPkgDir + pkgDir;
         File parent = new File(outDir, pkgPath);
 
         ITreeOut out = open(parent, SimpleName + ".java");
@@ -126,13 +127,27 @@ public class JavaModelGenerator
 
         IColumnMetadata[] pkv = table.getPrimaryKeyColumns();
         if (pkv.length > 1) {
-            out = open(parent, SimpleName + "_PK.java");
-            new EntityPKBuilder(pkg).build(out, table);
+            String idType = SimpleName + EntityIdBuilder.ID_SUFFIX;
+            out = open(parent, idType + ".java");
+            new EntityIdBuilder(pkg).build(out, table);
             out.close();
         }
 
         out = open(parent, "impl/" + SimpleName + "Mask.java");
         new EntityMaskBuilder(pkg + ".impl").build(out, table);
+
+        out = open(parent, "impl/" + SimpleName + "Index.java");
+        new EntityIndexBuilder(fqcn).build(out, table);
+
+        out = open(parent, "impl/" + SimpleName + "Mapper.java");
+        new EntityMapperBuilder(fqcn).build(out, table);
+
+        out = open(parent, "impl/" + SimpleName + "MapperTest.java");
+        new EntityMapperTestBuilder(fqcn).build(out, table);
+
+        out = open(parent, "impl/" + SimpleName + "Samples.java");
+        new EntitySamplesBuilder(fqcn).build(out, table);
+
         out.close();
     }
 

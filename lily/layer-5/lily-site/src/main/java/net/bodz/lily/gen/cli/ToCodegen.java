@@ -2,6 +2,8 @@ package net.bodz.lily.gen.cli;
 
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BatchCLI;
 import net.bodz.bas.program.skel.FileHandler;
@@ -25,7 +27,7 @@ public class ToCodegen
      *
      * @option -T
      */
-    boolean indented = true;
+    boolean indented;
 
     /**
      * Use printf instead of println.
@@ -34,21 +36,37 @@ public class ToCodegen
      */
     boolean format = false;
 
+    /**
+     * Insert braces ({ ,}) to the enter/leave codes, to keep code indentation after IDE code
+     * format.
+     *
+     * @option -b
+     */
+    boolean braces;
+
     @Override
     public void processFile(FileHandler handler)
             throws Exception {
-        ITreeOut out = handler.openTreeOut();
+
+        String ENTER = braces ? "out.enter(); {" : "out.enter();";
+        String LEAVE = braces ? "out.leave(); }" : "out.leave();";
+
+        // ITreeOut out = handler.openTreeOut();
+        ITreeOut out = TreeOutImpl.from(Stdio.cout);
         int lastLevel = 0;
         for (String line : handler.read().lines(true)) {
             Indentation indentation = getIndentation(line);
             int level = indentation.level;
 
-            if (level != lastLevel && indented) {
-                for (int i = lastLevel; i < level; i++)
-                    out.println("out.enter();");
-                for (int i = lastLevel; i >= level; i--)
-                    out.println("out.leave();");
+            if (indented) {
                 line = line.substring(indentation.textOffset);
+                if (!line.isEmpty()) {
+                    for (int i = lastLevel; i < level; i++)
+                        out.enterln(ENTER);
+                    for (int i = lastLevel; i > level; i--)
+                        out.leaveln(LEAVE);
+                    lastLevel = level;
+                }
             }
 
             String literal = escape(line);
@@ -58,7 +76,10 @@ public class ToCodegen
                     literal = literal.replace("%", "%%");
                     out.println("out.printf(\"" + literal + "\\n\");");
                 } else {
-                    out.println("out.println(\"" + literal + "\");");
+                    if (literal.isEmpty())
+                        out.println("out.println();");
+                    else
+                        out.println("out.println(\"" + literal + "\");");
                 }
             } else {
                 if (format) {

@@ -1,4 +1,4 @@
-package net.bodz.lily.gen.model.java;
+package net.bodz.lily.gen.model.java.reflect;
 
 public class MaskFieldModel {
 

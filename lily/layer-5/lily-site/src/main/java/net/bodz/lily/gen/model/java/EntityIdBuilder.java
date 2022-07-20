@@ -1,4 +1,4 @@
-package net.bodz.lily.gen;
+package net.bodz.lily.gen.model.java;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,12 +8,14 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 
-public class EntityPKBuilder
+public class EntityIdBuilder
         extends EntityClassBuilder {
+
+    public static final String ID_SUFFIX = "_Id";
 
     String idType;
 
-    public EntityPKBuilder(String packageName) {
+    public EntityIdBuilder(String packageName) {
         super(packageName);
     }
 
@@ -28,7 +30,7 @@ public class EntityPKBuilder
         case 0:
             throw new IllegalArgumentException("no primary key column.");
         default:
-            idType = CamelName + "_PK";
+            idType = CamelName + ID_SUFFIX;
         }
 
         out.printf("public class %s\n", idType);
@@ -45,6 +47,8 @@ public class EntityPKBuilder
                 out.println();
                 columnField(column);
             }
+
+            ctors(table);
 
             for (IColumnMetadata column : primaryKeyCols) {
                 out.println();
@@ -63,6 +67,79 @@ public class EntityPKBuilder
             out.leave();
         }
         out.println();
+        out.println("}");
+    }
+
+    void ctors(ITableMetadata table) {
+        String table_name = table.getName();
+        String camelName = StringId.UL.toCamel(table_name);
+        String CamelName = Strings.ucfirst(camelName);
+        String idType = CamelName + ID_SUFFIX;
+        IColumnMetadata[] kv = table.getPrimaryKeyColumns();
+
+        // default constructor
+        out.println("public " + idType + "() {");
+        out.println("}");
+        out.println();
+
+        // simple arguments listing constructor
+        out.print("public " + idType + "(");
+        for (int i = 0; i < kv.length; i++) {
+            String col_name = kv[i].getName();
+            String colName = StringId.UL.toCamel(col_name);
+            if (i != 0)
+                out.print(", ");
+            out.printf("%s %s", imports.simple(kv[i].getType()), colName);
+        }
+        out.println(") {");
+        out.enter();
+        {
+            for (IColumnMetadata k : kv) {
+                String col_name = k.getName();
+                String colName = StringId.UL.toCamel(col_name);
+                out.printf("this.%s = %s;\n", colName, colName);
+            }
+            out.leave();
+        }
+        out.println("}");
+        out.println();
+
+        // clone constructor
+        out.printf("public %s(%s o) {\n", idType, idType);
+        out.enter();
+        {
+            for (IColumnMetadata k : kv) {
+                String col_name = k.getName();
+                String colName = StringId.UL.toCamel(col_name);
+                out.printf("this.%s = o.%s;\n", colName, colName);
+            }
+            out.leave();
+        }
+        out.println("}");
+        out.println();
+
+        // from entity constructor
+        out.printf("public %s(%s o) {\n", idType, CamelName);
+        out.enter();
+        {
+            for (IColumnMetadata k : kv) {
+                String col_name = k.getName();
+                String colName = StringId.UL.toCamel(col_name);
+                out.printf("this.%s = o.%s;\n", colName, colName);
+            }
+            out.leave();
+        }
+        out.println("}");
+        out.println();
+
+        // clone()
+        out.println("@Override");
+        out.println("public " + idType + " clone() {");
+        out.enter();
+        {
+            out.println("return new " + idType + "(this);");
+            out.leave();
+        }
         out.println("}");
     }
 
@@ -122,8 +199,9 @@ public class EntityPKBuilder
             String col_name = column.getName();
             String colName = StringId.UL.toCamel(col_name);
             if (i != 0)
-                out.println("sb.append(\", \"); ");
-            out.println("sb.append(\"" + colName + " \" + " + colName + ");");
+                out.println("sb.append(\", " + colName + " \" + " + colName + ");");
+            else
+                out.println("sb.append(\"" + colName + " \" + " + colName + ");");
             i++;
         }
         out.println("return sb.toString();");

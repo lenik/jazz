@@ -1,4 +1,4 @@
-package net.bodz.lily.gen.model.java;
+package net.bodz.lily.gen.model.java.reflect;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -9,14 +9,18 @@ import java.util.Map;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.t.table.QualifiedTableName;
 
-public class EntityClassModel {
+public class EntityClassModel
+        extends QualifiedTableName {
+
+    private static final long serialVersionUID = 1L;
 
     public Class<?> declaringClass;
-    public String tableName;
 
     Map<String, EntityFieldModel> fields = new LinkedHashMap<>();
 
@@ -40,6 +44,8 @@ public class EntityClassModel {
         }
 
         Table aTable = clazz.getAnnotation(Table.class);
+        catalogName = Nullables.trimToNull(aTable.catalog());
+        schemaName = Nullables.trimToNull(aTable.schema());
         tableName = aTable.name();
 
         for (Field field : clazz.getDeclaredFields()) {
