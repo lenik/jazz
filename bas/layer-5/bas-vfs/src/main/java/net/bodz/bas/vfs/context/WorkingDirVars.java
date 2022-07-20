@@ -23,7 +23,8 @@ public class WorkingDirVars
     @Override
     public IFile getDefaultValue() {
         File systemWorkDir = UserDirVars.getInstance().get();
-        return new PojfFile(systemWorkDir);
+        PojfFile dir = new PojfFile(systemWorkDir);
+        return dir;
     }
 
     public static boolean isAbsolutePath(String path) {
@@ -73,7 +74,7 @@ public class WorkingDirVars
 
     /**
      * Change current workdir to the special path.
-     * 
+     *
      * @param spec
      *            Followed from current cwd, if <code>spec</code> is relative.
      * @throws IllegalArgumentException
