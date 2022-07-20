@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
@@ -19,25 +18,23 @@ import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.gen.JavaSourceBuilder;
 import net.bodz.lily.model.base.CoEntity;
 
 public class EntityClassBuilder
-        extends JavaSourceBuilder<ITableMetadata> {
+        extends FragmentSourceBuilder<ITableMetadata> {
 
     IColumnMetadata[] primaryKeyCols;
-    String fqcn;
 
     public EntityClassBuilder(String fqcn) {
-        super(StringPart.beforeLast(fqcn, '.'));
-        this.fqcn = fqcn;
+        super(fqcn, fqcn);
+    }
+
+    public EntityClassBuilder(String mainQName, String fragmentQName) {
+        super(mainQName, fragmentQName);
     }
 
     @Override
     protected void buildClassBody(ITableMetadata table) {
-        String table_name = table.getName();
-        String camelName = StringId.UL.toCamel(table_name);
-        String CamelName = Strings.ucfirst(camelName);
 
         String idType = null;
         primaryKeyCols = table.getPrimaryKeyColumns();
@@ -48,7 +45,7 @@ public class EntityClassBuilder
             idType = imports.simple(primaryKeyCols[0].getType());
             break;
         default:
-            idType = CamelName + EntityIdBuilder.ID_SUFFIX;
+            idType = fragmentName + EntityIdBuilder.ID_SUFFIX;
         }
         // if (idType == null)
         // throw new NullPointerException("idType");
@@ -61,7 +58,7 @@ public class EntityClassBuilder
             String schema_name = table.getSchemaName();
             if (schema_name != null)
                 out.print("schema=\"" + schema_name + "\", ");
-            out.print("name=\"" + table_name + "\"");
+            out.print("name=\"" + table.getName() + "\"");
             out.println(")");
         }
 
@@ -69,7 +66,7 @@ public class EntityClassBuilder
             out.printf("%s(%s.class)\n", //
                     imports.a(IdType.class), //
                     idType);
-        out.printf("public class %s\n", CamelName);
+        out.printf("public class %s\n", fragmentName);
         out.printf("        extends %s%s {\n", //
                 imports.simple(idType == null ? Object.class : CoEntity.class), //
                 idType == null ? "" : "<" + idType + ">");

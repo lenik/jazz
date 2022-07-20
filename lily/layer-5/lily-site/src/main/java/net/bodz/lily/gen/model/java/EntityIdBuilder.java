@@ -13,27 +13,19 @@ public class EntityIdBuilder
 
     public static final String ID_SUFFIX = "_Id";
 
-    String idType;
-
-    public EntityIdBuilder(String packageName) {
-        super(packageName);
+    public EntityIdBuilder(String mainQName) {
+        super(mainQName, mainQName + ID_SUFFIX);
     }
 
     @Override
     protected void buildClassBody(ITableMetadata table) {
-        String table_name = table.getName();
-        String camelName = StringId.UL.toCamel(table_name);
-        String CamelName = Strings.ucfirst(camelName);
-
         primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
         case 0:
             throw new IllegalArgumentException("no primary key column.");
-        default:
-            idType = CamelName + ID_SUFFIX;
         }
 
-        out.printf("public class %s\n", idType);
+        out.printf("public class %s\n", fragmentName);
         out.printf("        implements %s {\n", //
                 imports.simple(Serializable.class));
         out.enter();
@@ -48,6 +40,7 @@ public class EntityIdBuilder
                 columnField(column);
             }
 
+            out.println();
             ctors(table);
 
             for (IColumnMetadata column : primaryKeyCols) {
@@ -175,7 +168,7 @@ public class EntityIdBuilder
         out.println("    return false;");
         out.println("if (getClass() != obj.getClass())");
         out.println("    return false;");
-        out.println(idType + " o = (" + idType + ") obj;");
+        out.println(fragmentName + " o = (" + fragmentName + ") obj;");
 
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
             String col_name = column.getName();
