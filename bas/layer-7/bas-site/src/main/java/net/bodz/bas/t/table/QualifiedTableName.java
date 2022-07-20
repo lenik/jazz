@@ -9,9 +9,9 @@ public class QualifiedTableName
 
     private static final long serialVersionUID = 1L;
 
-    String catalogName;
-    String schemaName;
-    String tableName;
+    protected String catalogName;
+    protected String schemaName;
+    protected String tableName;
 
     public QualifiedTableName() {
     }
