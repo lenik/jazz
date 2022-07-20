@@ -8,12 +8,16 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
+import net.bodz.bas.err.ExceptionLog;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.builtin.OutputStreamTarget;
+import net.bodz.bas.log.LogRecord;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.util.stat.StatNode;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
@@ -30,6 +34,8 @@ import net.bodz.bas.vfs.util.find.IFileFoundListener;
  */
 public abstract class BatchCLI
         extends BasicCLI {
+
+    static final Logger logger = LoggerFactory.getLogger(BatchCLI.class);
 
     /**
      * Ddefault encoding of input files
@@ -189,6 +195,14 @@ public abstract class BatchCLI
                     handler.getExceptionLog().log(exception);
                 }
                 endFile(handler);
+
+                if (handler.isErrored()) {
+                    ExceptionLog log = handler.getExceptionLog();
+                    for (LogRecord entry : log)
+                        logger.getLogSink().log(entry);
+                    if (!errorContinue)
+                        break;
+                }
             }
         }
     }
