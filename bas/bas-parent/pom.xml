@@ -439,11 +439,31 @@ Build Settings-->
                     <forceCreation>true</forceCreation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/generated</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <!-- filtering: perform variable replacement on resouces -->
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
@@ -453,6 +473,26 @@ Build Settings-->
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <excludes>
+                    <exclude>**/.template/</exclude>
+                    <exclude>**/node_modules/.bin/</exclude>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/generated</directory>
+                <filtering>true</filtering>
+                <!-- filtering: perform variable replacement on resouces -->
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/generated</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.java</exclude>
                     <exclude>**/.template/</exclude>
                     <exclude>**/node_modules/.bin/</exclude>
                     <exclude>**/*.properties</exclude>
