@@ -41,6 +41,8 @@ public interface IColumnMetadata
 
     boolean isCurrency();
 
+    boolean isUnique();
+
     /**
      * @see ResultSetMetaData#columnNoNulls
      * @see ResultSetMetaData#columnNullable
@@ -60,11 +62,11 @@ public interface IColumnMetadata
 
     boolean isDefinitelyWritable();
 
-    int getScale();
+    int getColumnDisplaySize();
 
     int getPrecision();
 
-    int getColumnDisplaySize();
+    int getScale();
 
     Object parse(String s)
             throws ParseException;

@@ -1,5 +1,7 @@
 package net.bodz.lily.gen.model.java;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,12 +10,7 @@ import java.util.Map;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.t.range.DateTimeRange;
-import net.bodz.bas.t.range.DoubleRange;
-import net.bodz.bas.t.range.FloatRange;
-import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.bas.t.range.LongRange;
-import net.bodz.bas.t.range.ShortRange;
+import net.bodz.bas.t.range.*;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.model.base.CoObjectMask;
@@ -59,6 +56,10 @@ public class EntityMaskStuffBuilder
         rangeMapping.put(Long.class, LongRange.class);
         rangeMapping.put(Float.class, FloatRange.class);
         rangeMapping.put(Double.class, DoubleRange.class);
+
+        rangeMapping.put(BigInteger.class, BigIntegerRange.class);
+        rangeMapping.put(BigDecimal.class, BigDecimalRange.class);
+
         rangeMapping.put(Date.class, DateTimeRange.class);
         rangeMapping.put(java.sql.Date.class, DateTimeRange.class);
         rangeMapping.put(Timestamp.class, DateTimeRange.class);

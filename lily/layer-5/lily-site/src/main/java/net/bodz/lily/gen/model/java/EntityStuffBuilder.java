@@ -1,14 +1,17 @@
 package net.bodz.lily.gen.model.java;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -37,7 +40,9 @@ public class EntityStuffBuilder
         case 0:
             break;
         case 1:
-            idType = imports.simple(primaryKeyCols[0].getType());
+            Class<?> kType = primaryKeyCols[0].getType();
+            Class<?> kBoxed = Primitives.box(kType);
+            idType = imports.simple(kBoxed);
             break;
         default:
             idType = Naming.id(mainName);
@@ -128,12 +133,16 @@ public class EntityStuffBuilder
 
         if (column.isPrimaryKey())
             out.println(imports.a(Id.class));
+        boolean unique = column.isUnique();
 
         boolean notNull = !column.isNullable();
-        if (notNull)
+        if (notNull && !type.isPrimitive())
             out.println(imports.a(NotNull.class));
 
+        // int columnDisplaySize = column.getColumnDisplaySize();
         int precision = column.getPrecision();
+        int scale = column.getScale();
+
         out.print(imports.a(Precision.class) + "(");
         {
             if (type == String.class) {
@@ -142,19 +151,41 @@ public class EntityStuffBuilder
             } else {
                 out.print("value = " + precision);
             }
-            int scale = column.getScale();
             if (scale != 0)
                 out.print(", scale = " + scale);
             out.println(")");
         }
 
-        if (type == String.class)
-
-        {
+        String N_COL_NAME = "N_" + col_name.toUpperCase();
+        if (type == String.class) {
             if (precision > 0) {
-                String N_COL_NAME = "N_" + col_name.toUpperCase();
                 out.println(imports.a(TextInput.class) + "(maxLength = " + N_COL_NAME + ")");
             }
+        }
+
+        out.print(imports.a(Column.class));
+        {
+            out.print("(name = \"" + col_name + "\"");
+            if (unique)
+                out.print(", unique = true");
+            if (notNull)
+                out.print(", nullable = false");
+
+            boolean insertable = true;
+            boolean updatable = true;
+            if (!insertable)
+                out.print(", insertable = false");
+            if (!updatable)
+                out.print(", updatable = false");
+
+            if (type == String.class)
+                out.print(", length = " + N_COL_NAME);
+            else {
+                out.print(", precision = " + precision);
+                if (scale != 0)
+                    out.print(", scale = " + scale);
+            }
+            out.println(")");
         }
 
         String GET = Boolean.class == type ? "is" : "get";
@@ -172,7 +203,7 @@ public class EntityStuffBuilder
         }
 
         out.printf("public void set%s(%s%s value) {\n", ColName, //
-                notNull ? imports.a(NotNull.class) + " " : "", imports.simple(type));
+                (notNull && !type.isPrimitive()) ? imports.a(NotNull.class) + " " : "", imports.simple(type));
         out.printf("    this.%s = value;\n", colName);
         out.println("}");
     }
@@ -181,6 +212,7 @@ public class EntityStuffBuilder
     static {
         initVals.put(String.class, "\"\"");
         initVals.put(BigDecimal.class, "BigDecimal.ZERO");
+        initVals.put(BigInteger.class, "BigInteger.ZERO");
         initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis()");
     }
 
