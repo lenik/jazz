@@ -151,8 +151,9 @@ public class JavaModelGenerator
         out = open(gen_, "impl/" + Naming.mapperTest(name) + ".java", true);
         new EntityMapperTestBuilder(qName, implPkg + "." + Naming.mapperTest(name)).build(out, table);
 
-        out = open(gen_, "impl/" + Naming.samples(name) + ".java", true);
-        new EntitySamplesStuffBuilder(qName, implPkg + "." + Naming.samples(name)).build(out, table);
+        // samples content can be changed, modify it will cause unnecessary VCS commits.
+        if ((out = open(gen_, "impl/" + Naming.samples(name) + ".java", false)) != null)
+            new EntitySamplesStuffBuilder(qName, implPkg + "." + Naming.samples(name)).build(out, table);
 
         out.close();
     }
