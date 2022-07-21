@@ -17,10 +17,11 @@ import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.gen.JavaFragmentBuilder;
 import net.bodz.lily.model.base.CoEntity;
 
 public class EntityStuffBuilder
-        extends FragmentSourceBuilder<ITableMetadata> {
+        extends JavaFragmentBuilder<ITableMetadata> {
 
     IColumnMetadata[] primaryKeyCols;
 

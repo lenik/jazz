@@ -17,9 +17,16 @@ public abstract class JavaSourceBuilder<model_t> {
         // this.fileName = fileName;
     }
 
-    public void build(ITreeOut root, model_t model) {
-        root.println("package " + packageName + ";");
-        root.println();
+    public String build(model_t model) {
+        BCharOut buf = new BCharOut();
+        ITreeOut root = TreeOutImpl.from(buf);
+        build(root, model);
+        return buf.toString();
+    }
+
+    public synchronized void build(ITreeOut rootOut, model_t model) {
+        rootOut.println("package " + packageName + ";");
+        rootOut.println();
 
         imports = new ImportedTypenames();
 
@@ -27,18 +34,11 @@ public abstract class JavaSourceBuilder<model_t> {
         out = TreeOutImpl.from(body);
         buildClassBody(model);
 
-        imports.dump(root);
-        root.println();
+        imports.dump(rootOut);
+        rootOut.println();
 
-        root.print(body);
-        root.flush();
-    }
-
-    public String build(model_t model) {
-        BCharOut buf = new BCharOut();
-        ITreeOut root = TreeOutImpl.from(buf);
-        build(root, model);
-        return buf.toString();
+        rootOut.print(body);
+        rootOut.flush();
     }
 
     protected abstract void buildClassBody(model_t model);
