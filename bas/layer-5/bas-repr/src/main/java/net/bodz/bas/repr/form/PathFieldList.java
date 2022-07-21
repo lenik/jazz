@@ -3,6 +3,7 @@ package net.bodz.bas.repr.form;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.err.ParseException;
@@ -30,12 +31,20 @@ public class PathFieldList
                 remaining = path.substring(dot + 1);
             }
 
-            // TODO pattern matching...
-            if ("*".equals(head)) {
+            if (head.contains("*")) {
+                Pattern pattern = null;
+                if (!"*".equals(head)) {
+                    String regex = head.replace("*", ".*");
+                    regex = regex.replace("?", ".");
+                    pattern = Pattern.compile("^" + regex + "$");
+                }
+
                 for (IFieldDecl f : knownStruct.getFieldDecls()) {
                     if (!f.getProperty().isReadable())
                         continue;
-                    this.add(new PathField(f.getName(), Arrays.asList(f)));
+                    String name = f.getName();
+                    if (pattern == null || pattern.matcher(name).matches())
+                        this.add(new PathField(name, Arrays.asList(f)));
                 }
                 continue;
             }
