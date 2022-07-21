@@ -40,7 +40,12 @@ public class ShortTypers
     public Short newSample(IOptions options)
             throws CreateException {
         Random prng = options.get(Random.class, random);
-        return (short) prng.nextInt();
+        boolean signed = options.getBoolean(OptionNames.signed, true);
+        short sample;
+        do {
+            sample = (short) (prng.nextInt() & 0xFFFF);
+        } while (!signed && sample < 0);
+        return sample;
     }
 
 }

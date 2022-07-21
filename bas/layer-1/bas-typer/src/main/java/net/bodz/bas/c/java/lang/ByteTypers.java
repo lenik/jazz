@@ -40,7 +40,12 @@ public class ByteTypers
     public Byte newSample(IOptions options)
             throws CreateException {
         Random prng = options.get(Random.class, random);
-        return (byte) prng.nextInt();
+        boolean signed = options.getBoolean(OptionNames.signed, true);
+        byte sample;
+        do {
+            sample = (byte) (prng.nextInt() & 0xFF);
+        } while (!signed && sample < 0);
+        return sample;
     }
 
 }

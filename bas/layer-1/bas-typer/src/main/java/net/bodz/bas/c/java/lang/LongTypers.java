@@ -40,7 +40,12 @@ public class LongTypers
     public Long newSample(IOptions options)
             throws CreateException {
         Random prng = options.get(Random.class, random);
-        return prng.nextLong();
+        boolean signed = options.getBoolean(OptionNames.signed, true);
+        long sample;
+        do {
+            sample = prng.nextLong();
+        } while (!signed && sample < 0);
+        return sample;
     }
 
     public static final LongTypers INSTANCE = new LongTypers();

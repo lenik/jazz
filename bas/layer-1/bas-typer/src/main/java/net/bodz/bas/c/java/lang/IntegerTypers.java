@@ -40,7 +40,12 @@ public class IntegerTypers
     public Integer newSample(IOptions options)
             throws CreateException {
         Random prng = options.get(Random.class, random);
-        return prng.nextInt();
+        boolean signed = options.getBoolean(OptionNames.signed, true);
+        int sample;
+        do {
+            sample = prng.nextInt();
+        } while (!signed && sample < 0);
+        return sample;
     }
 
 }
