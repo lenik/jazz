@@ -18,7 +18,9 @@ public class EntityIndexBuilder
         out.println("/**");
         out.println("* @label " + mainName);
         out.println("*/");
-        out.printf("@%s(%s.class)\n", imports.simple(ObjectType.class), imports.simple(fragmentQName));
+        out.printf("@%s(%s.class)\n", //
+                imports.simple(ObjectType.class), //
+                imports.simple(mainQName));
         out.println("public class " + fragmentName);
         out.enter();
         {

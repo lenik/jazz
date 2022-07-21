@@ -36,6 +36,7 @@ public class DefaultColumnMetadata
     boolean xmlType;
 
     boolean primaryKey;
+    boolean unique;
 
     boolean autoIncrement;
     boolean caseSensitive;
@@ -47,9 +48,9 @@ public class DefaultColumnMetadata
     boolean writable;
     boolean definitelyWritable;
 
+    int columnDisplaySize;
     int precision;
     int scale;
-    int columnDisplaySize;
 
     @Override
     public int getIndex() {
@@ -164,6 +165,15 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public boolean isUnique() {
+        return unique;
+    }
+
+    public void setUnique(boolean unique) {
+        this.unique = unique;
+    }
+
+    @Override
     public int getNullableStatus() {
         return nullable;
     }
@@ -222,6 +232,15 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public int getColumnDisplaySize() {
+        return columnDisplaySize;
+    }
+
+    public void setColumnDisplaySize(int columnDisplaySize) {
+        this.columnDisplaySize = columnDisplaySize;
+    }
+
+    @Override
     public int getPrecision() {
         return precision;
     }
@@ -237,15 +256,6 @@ public class DefaultColumnMetadata
 
     public void setScale(int scale) {
         this.scale = scale;
-    }
-
-    @Override
-    public int getColumnDisplaySize() {
-        return columnDisplaySize;
-    }
-
-    public void setColumnDisplaySize(int columnDisplaySize) {
-        this.columnDisplaySize = columnDisplaySize;
     }
 
     @Override
@@ -414,7 +424,7 @@ public class DefaultColumnMetadata
         String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
-        type = SqlTypes.toJavaType(sqlType, isNullable());
+        type = SqlTypes.toJavaType(this);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */

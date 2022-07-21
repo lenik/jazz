@@ -1,13 +1,18 @@
 package net.bodz.lily.gen.model.java;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Random;
 
+import net.bodz.bas.c.java.lang.OptionNames;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.type.TypeId;
+import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.table.IColumnMetadata;
 import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.bas.typer.Typers;
@@ -49,6 +54,8 @@ public class EntitySamplesStuffBuilder
                     String colName = StringId.UL.toCamel(col_name);
                     String ColName = Strings.ucfirst(colName);
 
+                    if (colName.equals("djxh"))
+                        System.out.println();
                     Class<?> type = column.getType();
                     // FK..
                     if (CoObject.class.isAssignableFrom(type))
@@ -79,19 +86,52 @@ public class EntitySamplesStuffBuilder
                         }
                         imports.ref(BigDecimal.class);
                         quoted = "new BigDecimal(\"" + sb + "\")";
+                    } else if (type == BigInteger.class) {
+                        int maxLen = column.getPrecision();
+                        int len = random.nextInt(maxLen) + 1;
+                        StringBuilder sb = new StringBuilder(len);
+                        for (int i = 0; i < len; i++) {
+                            int digit;
+                            do {
+                                digit = random.nextInt(10);
+                            } while (digit == 0 && i == 0);
+                            sb.append('0' + digit);
+                        }
+                        imports.ref(BigInteger.class);
+                        quoted = "new BigInteger(\"" + sb + "\")";
                     } else {
                         ISampleGenerator<?> generator = Typers.getTyper(type, ISampleGenerator.class);
                         // IToJavaCode toJavaCode= Typers.getTyper(type, IToJavaCode.class);
                         if (generator != null) {
-                            Object sample = generator.newSample();
+                            Options options = new Options();
+                            options.addOption(OptionNames.signed, false);
+                            Object sample = generator.newSample(options);
+
                             if (sample instanceof Date) {
                                 String iso = Dates.ISO8601Z.format(sample);
                                 String isoQuoted = StringQuote.qqJavaString(iso);
                                 imports.ref(Dates.class);
                                 String timeQuoted = "Dates.ISO8601Z.parse(" + isoQuoted + ").getTime()";
                                 quoted = "new " + imports.simple(type) + "(" + timeQuoted + ")";
+
                             } else {
                                 quoted = sample.toString();
+                                switch (TypeKind.getTypeId(type)) {
+                                case TypeId._byte:
+                                case TypeId.BYTE:
+                                    quoted = "(byte)" + quoted;
+                                    break;
+
+                                case TypeId._short:
+                                case TypeId.SHORT:
+                                    quoted = "(short)" + quoted;
+                                    break;
+
+                                case TypeId._long:
+                                case TypeId.LONG:
+                                    quoted = quoted + "L";
+                                    break;
+                                }
                             }
                         }
                     }

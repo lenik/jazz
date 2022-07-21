@@ -1,6 +1,7 @@
 package net.bodz.bas.t.table;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.*;
 
 import net.bodz.bas.log.Logger;
@@ -10,7 +11,23 @@ public class SqlTypes {
 
     static final Logger logger = LoggerFactory.getLogger(SqlTypes.class);
 
-    public static Class<?> toJavaType(int sqlType, boolean nullable) {
+    static boolean aggressive = true;
+
+    // 4 294 967 296
+    static final int MAXLEN_FOR_INT = aggressive ? 10 : 9;
+
+    // 18 446 744 073 709 551 616
+    static final int MAXLEN_FOR_LONG = aggressive ? 20 : 19;
+
+    public static Class<?> toJavaType(IColumnMetadata column) {
+        int sqlType = column.getSqlType();
+        boolean nullable = column.isNullable();
+        int precision = column.getPrecision();
+        int scale = column.getScale();
+        return toJavaType(sqlType, precision, scale, nullable);
+    }
+
+    public static Class<?> toJavaType(int sqlType, int precision, int scale, boolean nullable) {
         switch (sqlType) {
         case Types.CHAR:
         case Types.VARCHAR:
@@ -22,7 +39,17 @@ public class SqlTypes {
 
         case Types.NUMERIC:
         case Types.DECIMAL:
-            return BigDecimal.class;
+            if (scale == 0) {
+                if (precision < 5) // 65 536
+                    return nullable ? Short.class : short.class;
+                if (precision <= MAXLEN_FOR_INT)
+                    return nullable ? Integer.class : int.class;
+                if (precision <= MAXLEN_FOR_LONG)
+                    return nullable ? Long.class : long.class;
+                return BigInteger.class;
+            } else {
+                return BigDecimal.class;
+            }
 
         case Types.BIT:
             return nullable ? Boolean.class : boolean.class;
