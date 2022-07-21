@@ -6,7 +6,7 @@ import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.impl.ArtifactCategoryMapper;
@@ -20,7 +20,7 @@ public class RegionMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

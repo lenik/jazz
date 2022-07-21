@@ -4,14 +4,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.pub.PostTag;
 import net.bodz.lily.pub.PostTagSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class PostTagMapperTest
         extends AbstractMapperTest<PostTag, PostTagMask, PostTagMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

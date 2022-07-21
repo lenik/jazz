@@ -2,7 +2,7 @@ package net.bodz.violet.issue.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.issue.IssueVote;
 import net.bodz.violet.issue.IssueVoteSamples;
 
@@ -11,7 +11,7 @@ public class IssueVoteMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

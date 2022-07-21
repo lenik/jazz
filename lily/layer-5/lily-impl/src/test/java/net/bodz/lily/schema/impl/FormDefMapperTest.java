@@ -5,14 +5,14 @@ import net.bodz.lily.schema.FormDef;
 import net.bodz.lily.schema.FormDefSamples;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class FormDefMapperTest
         extends AbstractMapperTest<FormDef, FormDefMask, FormDefMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

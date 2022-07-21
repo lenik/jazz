@@ -5,14 +5,14 @@ import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.schema.TagGroupDef;
 import net.bodz.lily.schema.TagGroupDefSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class TagGroupDefMapperTest
         extends AbstractMapperTest<TagGroupDef, TagGroupDefMask, TagGroupDefMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

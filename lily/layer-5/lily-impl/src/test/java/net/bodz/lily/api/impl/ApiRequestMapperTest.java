@@ -6,14 +6,14 @@ import net.bodz.lily.api.ApiRequest;
 import net.bodz.lily.api.ApiRequestSamples;
 import net.bodz.lily.api.AppApply;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ApiRequestMapperTest
         extends AbstractMapperTest<ApiRequest, ApiRequestMask, ApiRequestMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

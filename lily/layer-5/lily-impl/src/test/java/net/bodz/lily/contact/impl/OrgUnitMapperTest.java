@@ -5,14 +5,14 @@ import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.OrgUnitSamples;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class OrgUnitMapperTest
         extends AbstractMapperTest<OrgUnit, OrgUnitMask, OrgUnitMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

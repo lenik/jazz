@@ -10,7 +10,7 @@ import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.shop.SalesOrder;
 import net.bodz.violet.shop.impl.SalesOrderMapper;
 import net.bodz.violet.store.StoreOrder;
@@ -25,7 +25,7 @@ public class TransportOrderMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

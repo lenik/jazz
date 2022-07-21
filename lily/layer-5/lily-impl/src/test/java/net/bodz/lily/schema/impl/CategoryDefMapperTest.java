@@ -5,14 +5,14 @@ import net.bodz.lily.schema.CategoryDef;
 import net.bodz.lily.schema.CategoryDefSamples;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class CategoryDefMapperTest
         extends AbstractMapperTest<CategoryDef, CategoryDefMask, CategoryDefMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

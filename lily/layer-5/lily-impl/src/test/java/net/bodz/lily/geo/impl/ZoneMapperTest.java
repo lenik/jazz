@@ -5,14 +5,14 @@ import net.bodz.lily.geo.Zone;
 import net.bodz.lily.geo.ZoneCategory;
 import net.bodz.lily.geo.ZoneSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ZoneMapperTest
         extends AbstractMapperTest<Zone, ZoneMask, ZoneMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

@@ -6,14 +6,14 @@ import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdSamples;
 import net.bodz.lily.security.UserOtherIdType;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class UserOtherIdMapperTest
         extends AbstractMapperTest<UserOtherId, UserOtherIdMask, UserOtherIdMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

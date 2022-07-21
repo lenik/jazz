@@ -8,7 +8,7 @@ import net.bodz.lily.schema.PriorityDef;
 import net.bodz.lily.schema.PriorityDefSamples;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 @ToDo
 @Ignore
@@ -17,7 +17,7 @@ public class PriorityDefMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

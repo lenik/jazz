@@ -6,14 +6,14 @@ import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppLog;
 import net.bodz.lily.api.AppLogSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class AppLogMapperTest
         extends AbstractMapperTest<AppLog, AppLogMask, AppLogMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

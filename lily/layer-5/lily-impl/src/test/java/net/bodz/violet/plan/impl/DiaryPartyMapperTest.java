@@ -8,7 +8,7 @@ import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryParty;
 import net.bodz.violet.plan.DiaryPartySamples;
@@ -18,7 +18,7 @@ public class DiaryPartyMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

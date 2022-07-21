@@ -4,14 +4,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.geo.ZoneCategory;
 import net.bodz.lily.geo.ZoneCategorySamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ZoneCategoryMapperTest
         extends AbstractMapperTest<ZoneCategory, ZoneCategoryMask, ZoneCategoryMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

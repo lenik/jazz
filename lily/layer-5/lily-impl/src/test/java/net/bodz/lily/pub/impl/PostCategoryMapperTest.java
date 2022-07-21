@@ -4,14 +4,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.pub.PostCategory;
 import net.bodz.lily.pub.PostCategorySamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class PostCategoryMapperTest
         extends AbstractMapperTest<PostCategory, PostCategoryMask, PostCategoryMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

@@ -14,7 +14,7 @@ public abstract class VioletMapperTest<T extends CoObject, M, mapper_t extends I
 
     @Override
     protected DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
 }

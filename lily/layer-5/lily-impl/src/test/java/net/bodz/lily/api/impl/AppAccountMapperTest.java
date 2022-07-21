@@ -7,14 +7,14 @@ import net.bodz.lily.api.AppAccount;
 import net.bodz.lily.api.AppAccountSamples;
 import net.bodz.lily.api.AppAccountType;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class AppAccountMapperTest
         extends AbstractMapperTest<AppAccount, AppAccountMask, AppAccountMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

@@ -3,8 +3,10 @@ package net.bodz.violet;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.TestDataHub;
 import net.bodz.bas.db.jdbc.ConnectOptions;
+import net.bodz.bas.meta.decl.Priority;
 
-public class VioletTests
+@Priority(Priority.DEFAULT - 1)
+public class TestData
         extends TestDataHub {
 
     static final ConnectOptions LOCAL = declare("local test");
