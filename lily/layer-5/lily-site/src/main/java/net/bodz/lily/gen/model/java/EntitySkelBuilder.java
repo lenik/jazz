@@ -3,9 +3,10 @@ package net.bodz.lily.gen.model.java;
 import javax.persistence.Table;
 
 import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.lily.gen.JavaFragmentBuilder;
 
 public class EntitySkelBuilder
-        extends FragmentSourceBuilder<ITableMetadata> {
+        extends JavaFragmentBuilder<ITableMetadata> {
 
     public EntitySkelBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

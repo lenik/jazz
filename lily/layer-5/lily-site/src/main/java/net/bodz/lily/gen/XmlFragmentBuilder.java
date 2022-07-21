@@ -1,10 +1,9 @@
-package net.bodz.lily.gen.model.java;
+package net.bodz.lily.gen;
 
 import net.bodz.bas.c.string.StringPart;
-import net.bodz.lily.gen.JavaSourceBuilder;
 
-public abstract class FragmentSourceBuilder<model_t>
-        extends JavaSourceBuilder<model_t> {
+public abstract class XmlFragmentBuilder<model_t>
+        extends XmlSourceBuilder<model_t> {
 
     protected final String mainQName;
     protected final String fragmentQName;
@@ -14,8 +13,9 @@ public abstract class FragmentSourceBuilder<model_t>
     protected final String fragmentPackage;
     protected final String fragmentName;
 
-    public FragmentSourceBuilder(String mainQName, String fragmentQName) {
-        super(StringPart.beforeLast(fragmentQName, '.'));
+    public XmlFragmentBuilder(String mainQName, String fragmentQName) {
+        // super(StringPart.beforeLast(fragmentQName, '.'));
+
         this.mainQName = mainQName;
         this.fragmentQName = fragmentQName;
 

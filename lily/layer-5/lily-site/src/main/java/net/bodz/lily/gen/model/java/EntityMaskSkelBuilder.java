@@ -1,9 +1,10 @@
 package net.bodz.lily.gen.model.java;
 
 import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.lily.gen.JavaFragmentBuilder;
 
 public class EntityMaskSkelBuilder
-        extends FragmentSourceBuilder<ITableMetadata> {
+        extends JavaFragmentBuilder<ITableMetadata> {
 
     public EntityMaskSkelBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

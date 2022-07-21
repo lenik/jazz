@@ -34,6 +34,7 @@ public class JavaModelGenerator
     static final Logger logger = LoggerFactory.getLogger(JavaModelGenerator.class);
 
     String skelDirname = "src/main/java/";
+    String skelResDirname = "src/main/resources/";
     String generatedDirname = "src/main/generated/";
 
     /**
@@ -119,6 +120,7 @@ public class JavaModelGenerator
 
         File gen_ = new File(outDir, generatedDirname + pkgDir);
         File skel_ = new File(outDir, skelDirname + pkgDir);
+        File res_ = new File(outDir, skelResDirname + pkgDir);
 
         String implPkg = pkg + ".impl";
 
@@ -145,6 +147,9 @@ public class JavaModelGenerator
         out = open(gen_, "impl/" + Naming.index(name) + ".java", true);
         new EntityIndexBuilder(qName, implPkg + "." + Naming.index(name)).build(out, table);
 
+        if ((out = open(res_, "impl/" + Naming.mapper(name) + ".xml", false)) != null)
+            new MapperXmlBuilder(qName, implPkg + "." + Naming.mapper(name)).build(out, table);
+
         if ((out = open(skel_, "impl/" + Naming.mapper(name) + ".java", false)) != null)
             new EntityMapperBuilder(qName, implPkg + "." + Naming.mapper(name)).build(out, table);
 
@@ -154,8 +159,6 @@ public class JavaModelGenerator
         // samples content can be changed, modify it will cause unnecessary VCS commits.
         if ((out = open(gen_, "impl/" + Naming.samples(name) + ".java", false)) != null)
             new EntitySamplesStuffBuilder(qName, implPkg + "." + Naming.samples(name)).build(out, table);
-
-        out.close();
     }
 
     ITreeOut open(File parent, String name, boolean overwrite)
