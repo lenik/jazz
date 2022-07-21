@@ -6,14 +6,14 @@ import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppCredit;
 import net.bodz.lily.api.AppCreditSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class AppCreditMapperTest
         extends AbstractMapperTest<AppCredit, AppCreditMask, AppCreditMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

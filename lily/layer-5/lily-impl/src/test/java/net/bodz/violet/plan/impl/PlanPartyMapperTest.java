@@ -6,7 +6,7 @@ import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.PlanParty;
 import net.bodz.violet.plan.PlanPartySamples;
@@ -16,7 +16,7 @@ public class PlanPartyMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

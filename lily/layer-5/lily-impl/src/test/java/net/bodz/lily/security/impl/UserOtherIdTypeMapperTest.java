@@ -6,7 +6,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.security.UserOtherIdType;
 import net.bodz.lily.security.UserOtherIdTypeSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 @Ignore
 public class UserOtherIdTypeMapperTest
@@ -14,7 +14,7 @@ public class UserOtherIdTypeMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

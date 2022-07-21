@@ -6,14 +6,14 @@ import net.bodz.lily.security.Policy;
 import net.bodz.lily.security.PolicySamples;
 import net.bodz.lily.security.User;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class PolicyMapperTest
         extends AbstractMapperTest<Policy, PolicyMask, PolicyMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

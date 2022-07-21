@@ -5,14 +5,14 @@ import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppApply;
 import net.bodz.lily.api.AppSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class AppMapperTest
         extends AbstractMapperTest<App, AppMask, AppMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

@@ -4,7 +4,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.PlanVote;
 import net.bodz.violet.plan.PlanVoteSamples;
@@ -14,7 +14,7 @@ public class PlanVoteMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

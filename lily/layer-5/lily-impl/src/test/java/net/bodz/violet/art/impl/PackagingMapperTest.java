@@ -4,7 +4,7 @@ import org.junit.Ignore;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.art.Packaging;
 import net.bodz.violet.art.PackagingSamples;
 
@@ -14,7 +14,7 @@ public class PackagingMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

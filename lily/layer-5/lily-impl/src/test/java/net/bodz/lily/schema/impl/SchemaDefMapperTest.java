@@ -4,14 +4,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.schema.SchemaDefSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class SchemaDefMapperTest
         extends AbstractMapperTest<SchemaDef, SchemaDefMask, SchemaDefMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

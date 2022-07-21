@@ -5,14 +5,14 @@ import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class UserMapperTest
         extends AbstractMapperTest<User, UserMask, UserMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

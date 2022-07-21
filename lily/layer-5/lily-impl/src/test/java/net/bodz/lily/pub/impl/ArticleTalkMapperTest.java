@@ -7,14 +7,14 @@ import net.bodz.lily.pub.ArticleTalkSamples;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ArticleTalkMapperTest
         extends AbstractMapperTest<ArticleTalk, ArticleTalkMask, ArticleTalkMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

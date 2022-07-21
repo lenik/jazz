@@ -2,7 +2,7 @@ package net.bodz.violet.art.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.art.ArtifactPhase;
 import net.bodz.violet.art.ArtifactPhaseSamples;
 
@@ -11,7 +11,7 @@ public class ArtifactPhaseMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

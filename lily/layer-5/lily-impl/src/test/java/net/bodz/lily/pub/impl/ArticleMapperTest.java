@@ -5,14 +5,14 @@ import net.bodz.lily.pub.Article;
 import net.bodz.lily.pub.ArticleCategory;
 import net.bodz.lily.pub.ArticleSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ArticleMapperTest
         extends AbstractMapperTest<Article, ArticleMask, ArticleMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

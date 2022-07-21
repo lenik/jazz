@@ -2,7 +2,7 @@ package net.bodz.violet.tran.impl;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
 import net.bodz.violet.shop.SalesOrderItem;
@@ -16,7 +16,7 @@ public class TransportOrderItemMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

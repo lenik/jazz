@@ -7,7 +7,7 @@ import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.UserSecretSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 @Ignore
 public class UserSecretMapperTest
@@ -15,7 +15,7 @@ public class UserSecretMapperTest
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

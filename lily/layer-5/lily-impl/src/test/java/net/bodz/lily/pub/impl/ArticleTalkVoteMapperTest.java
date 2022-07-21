@@ -4,14 +4,14 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.pub.ArticleTalkVote;
 import net.bodz.lily.pub.ArticleTalkVoteSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ArticleTalkVoteMapperTest
         extends AbstractMapperTest<ArticleTalkVote, ArticleTalkVoteMask, ArticleTalkVoteMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override

@@ -6,14 +6,14 @@ import net.bodz.lily.api.ApiGranted;
 import net.bodz.lily.api.ApiGrantedSamples;
 import net.bodz.lily.api.App;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.VioletTests;
+import net.bodz.violet.TestData;
 
 public class ApiGrantedMapperTest
         extends AbstractMapperTest<ApiGranted, ApiGrantedMask, ApiGrantedMapper> {
 
     @Override
     public DataContext getContext() {
-        return VioletTests.getDefaultContext();
+        return TestData.getDefaultContext();
     }
 
     @Override
