@@ -12,7 +12,9 @@ public interface IVirtualHostResolver
 
     IVirtualHost get(String id);
 
-    IVirtualHost get(HttpServletRequest request);
+    default IVirtualHost get(HttpServletRequest request) {
+        return resolve(request);
+    }
 
     IVirtualHost resolve(HttpServletRequest request);
 
