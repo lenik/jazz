@@ -101,6 +101,35 @@ public class JsonFn {
         return buf.toString();
     }
 
+    /**
+     * Without compact.
+     *
+     * @param obj
+     *            Non-<code>null</code> json-support object.
+     */
+    public static String toJson(IJsonForm obj, String fallback) {
+        return toJson(obj, fallback, false);
+    }
+
+    /**
+     * @param obj
+     *            Non-<code>null</code> json-support object.
+     * @param compact
+     *            Format json in compact single line form.
+     */
+    public static String toJson(IJsonForm obj, String fallback, boolean compact) {
+        if (obj == null)
+            throw new NullPointerException("obj");
+        StringWriter buf = new StringWriter();
+        JsonWriter out = new JsonWriter(buf);
+        try {
+            obj.writeObjectBoxed(out);
+        } catch (Exception e) {
+            return fallback;
+        }
+        return buf.toString();
+    }
+
     public static <T extends IJsonForm> T fromJson(T obj, String json)
             throws ParseException {
         if (json == null) // XXX null ?
