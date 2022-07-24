@@ -17,6 +17,14 @@
         <ffdir.test>src/test/resources</ffdir.test>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
     <name>Jazz Parent</name>
 
     <profiles>
