@@ -24,7 +24,7 @@ public abstract class LilyStartSite
     public static final String PATH_SYSMAN = "sysmgr";
 
     protected final DataContext dataContext;
-    LoginManager loginManager;
+    protected LoginManager loginManager;
 
     public LilyStartSite(DataContext dataContext) {
         this.dataContext = dataContext;
