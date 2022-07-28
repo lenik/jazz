@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -79,13 +81,22 @@ public class ResourceScanner {
         }
     }
 
+    Set<String> excludeDirs = new HashSet<>();
+    {
+        excludeDirs.add("node_modules");
+        excludeDirs.add("libjs");
+    }
+
     void scanLocalDir(File dir, String resourceName, IFileOrEntryProcessor processor) {
         logger.debug("Scan-LocalDir: ", dir);
         if (!resourceName.isEmpty() && !resourceName.endsWith("/"))
             resourceName += "/";
         for (File childFile : dir.listFiles(filter)) {
-            String childResourceName = resourceName + childFile.getName();
+            String name = childFile.getName();
+            String childResourceName = resourceName + name;
             if (childFile.isDirectory()) {
+                if (excludeDirs.contains(name))
+                    continue;
                 scanLocalDir(childFile, childResourceName, processor);
             } else {
                 processor.process(childFile, childResourceName);
