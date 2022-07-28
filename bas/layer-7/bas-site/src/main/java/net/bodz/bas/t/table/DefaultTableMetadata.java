@@ -21,8 +21,8 @@ public class DefaultTableMetadata
 
     private static final long serialVersionUID = 1L;
 
-    boolean defaultCatalog;
-    boolean defaultSchema;
+    String defaultCatalog;
+    String defaultSchema = "public";
 
     String label;
     String description;
@@ -56,20 +56,38 @@ public class DefaultTableMetadata
         return table;
     }
 
-    public boolean isDefaultCatalog() {
+    public String getDefaultCatalog() {
         return defaultCatalog;
     }
 
-    public void setDefaultCatalog(boolean defaultCatalog) {
+    public void setDefaultCatalog(String defaultCatalog) {
         this.defaultCatalog = defaultCatalog;
     }
 
-    public boolean isDefaultSchema() {
+    public String getDefaultSchema() {
         return defaultSchema;
     }
 
-    public void setDefaultSchema(boolean defaultSchema) {
+    public void setDefaultSchema(String defaultSchema) {
         this.defaultSchema = defaultSchema;
+    }
+
+    public boolean isCatalogSpecified() {
+        if (catalogName == null)
+            return false;
+        if (defaultCatalog != null)
+            if (catalogName.equals(defaultCatalog))
+                return false;
+        return true;
+    }
+
+    public boolean isSchemaSpecified() {
+        if (schemaName == null)
+            return false;
+        if (defaultSchema != null)
+            if (schemaName.equals(defaultSchema))
+                return false;
+        return true;
     }
 
     @Override
@@ -84,11 +102,11 @@ public class DefaultTableMetadata
     @Override
     public String getNecessaryQualifiedName() {
         StringBuilder sb = new StringBuilder();
-        if (catalogName != null && !defaultCatalog) {
+        if (isCatalogSpecified()) {
             sb.append(catalogName);
             sb.append('.');
         }
-        if (schemaName != null && !defaultSchema) {
+        if (isSchemaSpecified()) {
             sb.append(schemaName);
             sb.append('.');
         }
