@@ -11,7 +11,7 @@ public class SqlTypes {
 
     static final Logger logger = LoggerFactory.getLogger(SqlTypes.class);
 
-    static boolean aggressive = true;
+    static boolean aggressive = false;
 
     // 4 294 967 296
     static final int MAXLEN_FOR_INT = aggressive ? 10 : 9;

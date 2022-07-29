@@ -238,4 +238,9 @@ public class MutableRow
         }
     }
 
+    @Override
+    public String toString() {
+        return list.toString();
+    }
+
 }
