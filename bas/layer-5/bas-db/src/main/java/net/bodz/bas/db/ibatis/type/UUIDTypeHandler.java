@@ -19,31 +19,57 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 public class UUIDTypeHandler
         extends TypeHandler<UUID> {
 
+    public static final int UUID_SINCE = 9;
+
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, UUID parameter, JdbcType jdbcType)
             throws SQLException {
-        ps.setObject(i, parameter);
+        int major = ps.getConnection().getMetaData().getDatabaseMajorVersion();
+        if (major >= UUID_SINCE) {
+            ps.setObject(i, parameter);
+        } else {
+            String uuidStr = parameter.toString();
+            ps.setString(i, uuidStr);
+        }
     }
 
     @Override
     public UUID getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        Object val = rs.getObject(columnName);
-        return (UUID) val;
+        int major = rs.getStatement().getConnection().getMetaData().getDatabaseMajorVersion();
+        if (major >= UUID_SINCE) {
+            Object val = rs.getObject(columnName);
+            return (UUID) val;
+        } else {
+            String str = rs.getString(columnName);
+            return UUID.fromString(str);
+        }
     }
 
     @Override
     public UUID getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        Object val = rs.getObject(columnIndex);
-        return (UUID) val;
+        int major = rs.getStatement().getConnection().getMetaData().getDatabaseMajorVersion();
+        if (major >= UUID_SINCE) {
+            Object val = rs.getObject(columnIndex);
+            return (UUID) val;
+        } else {
+            String str = rs.getString(columnIndex);
+            return UUID.fromString(str);
+        }
     }
 
     @Override
     public UUID getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        Object val = cs.getObject(columnIndex);
-        return (UUID) val;
+        int major = cs.getConnection().getMetaData().getDatabaseMajorVersion();
+        if (major >= UUID_SINCE) {
+            Object val = cs.getObject(columnIndex);
+            return (UUID) val;
+        } else {
+            String str = cs.getString(columnIndex);
+            return UUID.fromString(str);
+        }
     }
 
 }
