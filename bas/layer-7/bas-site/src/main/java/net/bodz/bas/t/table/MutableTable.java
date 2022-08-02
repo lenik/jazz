@@ -81,6 +81,10 @@ public class MutableTable
         return null;
     }
 
+    public void setQName(QualifiedTableName qName) {
+        this.qName = qName;
+    }
+
     @Override
     public void readObject(JsonObject o)
             throws ParseException {

@@ -20,7 +20,7 @@ import net.bodz.bas.json.JsonObject;
 
 public class DefaultSchemaMetadata
         implements
-            ISchemaMetadata {
+            IMutableSchemaMetadata {
 
     QualifiedSchemaName qName;
     QualifiedSchemaName defaultName = new QualifiedSchemaName();
@@ -28,9 +28,18 @@ public class DefaultSchemaMetadata
     String label;
     String description;
 
+    ICatalogMetadata parent;
+
     Map<String, ITableMetadata> tables = new LinkedHashMap<>();
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
+
+    public DefaultSchemaMetadata() {
+    }
+
+    public DefaultSchemaMetadata(ICatalogMetadata parent) {
+        this.parent = parent;
+    }
 
     @Override
     public QualifiedSchemaName getQName() {
@@ -50,6 +59,16 @@ public class DefaultSchemaMetadata
         if (defaultName == null)
             throw new NullPointerException("defaultName");
         this.defaultName = defaultName;
+    }
+
+    @Override
+    public ICatalogMetadata getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(ICatalogMetadata parent) {
+        this.parent = parent;
     }
 
     public Boolean getConvertToUpperCase() {
@@ -95,10 +114,7 @@ public class DefaultSchemaMetadata
         return tables.size();
     }
 
-    /**
-     * @throws DuplicatedKeyException
-     *             When table with same name was existed.
-     */
+    @Override
     public void addTable(ITableMetadata table) {
         if (table == null)
             throw new NullPointerException("table");
@@ -109,10 +125,12 @@ public class DefaultSchemaMetadata
         tables.put(name, table);
     }
 
+    @Override
     public boolean removeTable(ITableMetadata table) {
         return removeTable(table.getName());
     }
 
+    @Override
     public boolean removeTable(String tableName) {
         ITableMetadata table = tables.remove(tableName);
         return table != null;
@@ -168,7 +186,7 @@ public class DefaultSchemaMetadata
         this.tables = tables;
     }
 
-    public void loadFromDatabase(Connection connection)
+    public void loadFromJDBC(Connection connection)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
         ResultSet rs;

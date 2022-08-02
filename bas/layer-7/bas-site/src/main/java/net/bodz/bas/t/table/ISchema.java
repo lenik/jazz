@@ -23,8 +23,23 @@ public interface ISchema
 
     ISchemaMetadata getMetadata();
 
-    default String getCanonicalName(String name) {
-        return getMetadata().getCanonicalName(name);
+    ICatalog getParent();
+
+    QualifiedSchemaName getQName();
+
+    default String getName() {
+        return getQName().getSchemaName();
+    }
+
+    default boolean isAttached() {
+        if (getParent() == null)
+            return false;
+        ISchemaMetadata metadata = getMetadata();
+        if (metadata == null)
+            return false;
+        if (metadata.getParent() == null)
+            return false;
+        return true;
     }
 
     Map<String, ITable> getTables();
@@ -41,6 +56,10 @@ public interface ISchema
         if (ignoreCase)
             name = getCanonicalName(name);
         return getTable(name);
+    }
+
+    default String getCanonicalName(String name) {
+        return getMetadata().getCanonicalName(name);
     }
 
     @Override
