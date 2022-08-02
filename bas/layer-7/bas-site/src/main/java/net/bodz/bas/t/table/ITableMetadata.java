@@ -65,4 +65,16 @@ public interface ITableMetadata
         out.attribute(K_PRIMARY_KEY, StringArray.join(", ", getPrimaryKey()));
     }
 
+    default void accept(IVisitor visitor) {
+        visitor.beginTable(this);
+
+        visitor.beginRowSet(this);
+        int n = getColumnCount();
+        for (int i = 0; i < n; i++)
+            getColumn(i).accept(visitor);
+        visitor.endRowSet(this);
+
+        visitor.endTable(this);
+    }
+
 }
