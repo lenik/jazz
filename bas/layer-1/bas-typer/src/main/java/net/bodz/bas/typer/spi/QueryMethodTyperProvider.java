@@ -2,25 +2,28 @@ package net.bodz.bas.typer.spi;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.logging.Logger;
 
 import net.bodz.bas.rtx.QueryException;
 
 /**
  * This provider allow user to define typers by declare a {@link #getTyper(Class, Object, Class)}
  * method as:
- * 
+ *
  * <pre>
  * public static &lt;T&gt; T query(Class&lt;T&gt; typerClass) {
  *     // ...
  * }
  * </pre>
- * 
+ *
  * Here, both <code>public</code> and <code>static</code> is optional.
  */
 public class QueryMethodTyperProvider
         extends AbstractTyperProvider {
 
     public static String queryMethodName = "query";
+
+    static final Logger logger = Logger.getLogger(QueryMethodTyperProvider.class.getName());
 
     @Override
     public int getPriority() {
@@ -71,6 +74,9 @@ public class QueryMethodTyperProvider
         Method method;
         try {
             method = objType.getMethod(queryMethodName, Class.class);
+        } catch (NoClassDefFoundError e) {
+            logger.severe("No class def found: " + e.getMessage());
+            return null;
         } catch (NoSuchMethodException e) {
             try {
                 method = objType.getDeclaredMethod(queryMethodName, Class.class);

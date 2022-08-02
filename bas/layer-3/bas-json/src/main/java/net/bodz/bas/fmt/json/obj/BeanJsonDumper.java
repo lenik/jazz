@@ -36,6 +36,8 @@ public class BeanJsonDumper
             out.object();
         try {
             return dumpMembers(type, obj, depth);
+//        } catch (Exception e) {
+//            out.entry("FAILED", e);
         } finally {
             if (boxed)
                 out.endObject();
@@ -44,12 +46,19 @@ public class BeanJsonDumper
 
     protected boolean dumpMembers(Class<?> type, Object obj, int depth)
             throws IOException, FormatException {
+        if (obj == null)
+            throw new NullPointerException("obj");
 
         BeanInfo beanInfo;
         try {
             beanInfo = Introspector.getBeanInfo(type);
+        } catch (NoClassDefFoundError e) {
+            // logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
+            out.key("error");
+            formatException(true, depth + 1, e);
+            return true;
         } catch (IntrospectionException e) {
-            logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
+            // logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
             formatException(true, depth + 1, e);
             return true;
@@ -80,8 +89,13 @@ public class BeanJsonDumper
             Object propertyValue;
             try {
                 propertyValue = getter.invoke(obj);
+            } catch (NoClassDefFoundError e) {
+                // logger.error(e, "Failed to invoke getter: " + e.getMessage());
+                out.key(propertyName);
+                formatException(true, depth + 1, e);
+                continue;
             } catch (ReflectiveOperationException e) {
-                logger.error(e, "Failed to invoke getter: " + e.getMessage());
+                // logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 out.key(propertyName);
                 formatException(true, depth + 1, e);
                 continue;

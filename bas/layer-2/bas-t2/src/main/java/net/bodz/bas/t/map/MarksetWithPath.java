@@ -88,4 +88,9 @@ public class MarksetWithPath
         return map.get(o);
     }
 
+    @Override
+    public String toString() {
+        return context + " :: " + map;
+    }
+
 }
