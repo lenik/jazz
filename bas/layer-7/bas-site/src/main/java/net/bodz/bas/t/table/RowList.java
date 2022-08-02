@@ -48,7 +48,7 @@ public class RowList
             throws SQLException {
         DefaultRowSetMetadata metadata = createMetadata();
         Connection cn = resultSet.getStatement().getConnection();
-        metadata.readObject(cn, resultSet.getMetaData());
+        metadata.loadFromRSMD(cn, resultSet.getMetaData());
         this.metadata = metadata;
         this.rows = new ArrayList<>();
 

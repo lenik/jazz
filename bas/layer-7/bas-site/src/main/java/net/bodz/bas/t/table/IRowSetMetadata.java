@@ -20,7 +20,7 @@ public interface IRowSetMetadata
     String K_COLUMNS = "columns";
     String K_COLUMN = "column";
 
-    ITableMapMetadata getParent();
+    ISchemaMetadata getParent();
 
     boolean isSparse();
 

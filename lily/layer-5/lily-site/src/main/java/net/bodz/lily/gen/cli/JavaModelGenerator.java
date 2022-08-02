@@ -84,20 +84,19 @@ public class JavaModelGenerator
             names.add(name);
         }
         rs.close();
-        for (String tableName : names)
-            makeEntity(catalogName, schemaName, tableName);
+        for (String tableName : names) {
+            DefaultTableMetadata table = new DefaultTableMetadata();
+            table.getQName().assign(catalogName, schemaName, tableName);
+            table.loadFromJDBC(connection);
+            makeEntity(table);
+        }
     }
 
-    void makeEntity(String qName)
+    void makeEntity(String fullName)
             throws SQLException, IOException {
-        DefaultTableMetadata table = DefaultTableMetadata.fromMetaData(connection, qName);
-        makeEntity(table);
-    }
-
-    void makeEntity(String catalogName, String schemaName, String tableName)
-            throws SQLException, IOException {
-        DefaultTableMetadata table = DefaultTableMetadata.fromMetaData(connection, //
-                catalogName, schemaName, tableName);
+        DefaultTableMetadata table = new DefaultTableMetadata();
+        table.getQName().parseFullName(fullName);
+        table.loadFromJDBC(connection);
         makeEntity(table);
     }
 
