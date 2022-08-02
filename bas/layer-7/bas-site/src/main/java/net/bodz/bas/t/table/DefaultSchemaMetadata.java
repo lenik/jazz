@@ -123,11 +123,9 @@ public class DefaultSchemaMetadata
         }
         rs.close();
 
-        for (String name : tableNames) {
+        for (String tableName : tableNames) {
             DefaultTableMetadata table = new DefaultTableMetadata();
-            table.setCatalogName(catalogName);
-            table.setSchemaName(schemaName);
-            table.setName(name);
+            table.getQName().assign(catalogName, schemaName, tableName);
             table.readObject(connection);
             addTable(table);
         }

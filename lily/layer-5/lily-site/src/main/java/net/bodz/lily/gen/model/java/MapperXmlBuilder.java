@@ -77,7 +77,7 @@ public class MapperXmlBuilder
                 out.println("a.*");
                 out.leave();
             }
-            out.println("from " + table.getNecessaryQualifiedName() + " a");
+            out.println("from " + table.getCompactName() + " a");
             out.println("]]>");
             out.leave();
         }
@@ -94,7 +94,7 @@ public class MapperXmlBuilder
                 out.println("a.*");
                 out.leave();
             }
-            out.println("from " + table.getNecessaryQualifiedName() + " a");
+            out.println("from " + table.getCompactName() + " a");
             // out.enter();
             // out.println("left join zj_qfx_dm_mx m on a.mx_dm=m.mx_dm");
             // out.leave();
@@ -174,7 +174,7 @@ public class MapperXmlBuilder
         out.printf("<insert id=\"insert\" useGeneratedKeys=\"true\" keyProperty=\"id\"><![CDATA[\n");
         out.enter();
         {
-            out.printf("insert into %s(\n", table.getNecessaryQualifiedName());
+            out.printf("insert into %s(\n", table.getCompactName());
             {
                 out.enter();
                 boolean first = true;
@@ -222,7 +222,7 @@ public class MapperXmlBuilder
         out.println("<update id=\"update\">");
         {
             out.enter();
-            out.printf("update %s\n", table.getNecessaryQualifiedName());
+            out.printf("update %s\n", table.getCompactName());
             out.println("<set>");
             out.enter();
             {
@@ -256,7 +256,7 @@ public class MapperXmlBuilder
         out.println("<delete id=\"delete\">");
         out.enter();
         {
-            out.println("delete from " + table.getQualifiedName() + " where id = #{id}");
+            out.println("delete from " + table.getCompactName() + " where id = #{id}");
             out.leave();
         }
         out.println("</delete>");
@@ -266,7 +266,7 @@ public class MapperXmlBuilder
         out.println("<select id=\"count\" resultType=\"hashmap\">");
         out.enter();
         {
-            out.println("select count(*) \"rows\" from " + table.getQualifiedName());
+            out.println("select count(*) \"rows\" from " + table.getCompactName());
             out.println("<where>");
             out.enter();
             {

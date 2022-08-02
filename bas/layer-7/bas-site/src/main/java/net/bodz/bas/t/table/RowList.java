@@ -1,23 +1,17 @@
 package net.bodz.bas.t.table;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.xml.xq.IElement;
-import net.bodz.bas.fmt.xml.xq.IElements;
-import net.bodz.bas.json.JsonArray;
-import net.bodz.bas.json.JsonObject;
-
 public class RowList
         implements
-            IRowSet {
+            IRowSet,
+            IResultSetConsumer {
 
-    ITableMap parent;
     IRowSetMetadata metadata;
     List<IRow> rows;
 
@@ -53,7 +47,8 @@ public class RowList
     public RowList(ResultSet resultSet, Long maxRows)
             throws SQLException {
         DefaultRowSetMetadata metadata = createMetadata();
-        metadata.readObject(resultSet.getMetaData());
+        Connection cn = resultSet.getStatement().getConnection();
+        metadata.readObject(cn, resultSet.getMetaData());
         this.metadata = metadata;
         this.rows = new ArrayList<>();
 
@@ -71,26 +66,6 @@ public class RowList
         }
     }
 
-    public static RowList fromTableElement(IElement x_table)
-            throws ParseException, LoaderException {
-        RowList o = new RowList();
-        o.readObject(x_table);
-        return o;
-    }
-
-    @Override
-    public ITableMap getParent() {
-        return parent;
-    }
-
-    public void setParent(ITableMap parent) {
-        this.parent = parent;
-    }
-
-    protected DefaultRowSetMetadata createMetadata() {
-        return new DefaultRowSetMetadata();
-    }
-
     public static RowList wrap(IRowSetMetadata metadata, List<IRow> rows) {
         return new RowList(metadata, rows, false);
     }
@@ -98,6 +73,14 @@ public class RowList
     @Override
     public IRowSetMetadata getMetadata() {
         return metadata;
+    }
+
+    protected DefaultRowSetMetadata createMetadata() {
+        return new DefaultRowSetMetadata();
+    }
+
+    public List<IRow> getList() {
+        return rows;
     }
 
     @Override
@@ -134,88 +117,20 @@ public class RowList
         return rows.iterator();
     }
 
-    boolean shouldMergeMetadata() {
-        IRowSetMetadata metadata = getMetadata();
-        if (metadata == null)
-            return false;
-        ITableMapMetadata parentMetadata = metadata.getParent();
-        if (parentMetadata == null)
-            return false;
-        ITableMap parent = getParent();
-        if (parent == null)
-            return false;
-        if (parent.getMetadata() != parentMetadata)
-            return false;
-        return true;
-    }
-
     @Override
-    public void readObject(JsonObject o)
-            throws ParseException {
-        IRowSetMetadata metadata = getMetadata();
-        boolean mergeMetadata = shouldMergeMetadata();
-
-        if (!mergeMetadata) {
-            JsonObject j_md = o.getJsonObject(K_METADATA);
-            if (j_md != null) {
-                metadata = createMetadata();
-                metadata.readObject(j_md);
-                this.metadata = metadata;
-            }
-        }
-
-        JsonArray j_rows = o.getJsonArray(K_ROWS);
-        int n = j_rows.length();
-        List<IRow> rows = new ArrayList<>();
-        for (int rowIndex = 0; rowIndex < n; rowIndex++) {
-            JsonArray j_row = j_rows.getJsonArray(rowIndex);
-            MutableRow row = new MutableRow(this, rowIndex);
-            row.readObjectBoxed(j_row);
-            rows.add(row);
-        }
-        this.rows = rows;
-    }
-
-    @Override
-    public void readObject(IElement x_table)
-            throws ParseException, LoaderException {
-        IRowSetMetadata metadata = getMetadata();
-        boolean mergeMetadata = shouldMergeMetadata();
-
-        if (!mergeMetadata) {
-            IElement x_md = x_table.selectByTag(K_METADATA).getFirst();
-            if (x_md != null && x_md.getParentNode() == x_table) {
-                metadata = createMetadata();
-                metadata.readObject(x_md);
-                this.metadata = metadata;
-            }
-        }
-
-        IElement x_rows = x_table.selectByTag(K_ROWS).getFirst();
-        IElements x_row_v = x_rows.children(); // <row>
-        int rowCount = x_rows.getElementCount();
-        List<IRow> rows = new ArrayList<>();
-        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-            IElement x_row = x_row_v.get(rowIndex);
-            MutableRow row = new MutableRow(this, rowIndex);
-            row.readObject(x_row);
-            rows.add(row);
-        }
-        this.rows = rows;
-    }
-
-    public List<IRow> getList() {
-        return rows;
-    }
-
-    public synchronized void addAll(ResultSet rs)
+    public synchronized long consume(ResultSet rs, Long limit)
             throws SQLException {
         int rowIndex = getRowCount();
+        long n = 0;
         while (rs.next()) {
             MutableRow row = new MutableRow(this, rowIndex++);
             row.readObject(rs);
             this.rows.add(row);
+            n++;
+            if (limit != null && n >= limit)
+                break;
         }
+        return n;
     }
 
 }

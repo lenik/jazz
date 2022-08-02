@@ -13,18 +13,23 @@ public interface ITableMetadata
         extends
             IRowSetMetadata {
 
-    String K_NAME = "name";
     String K_PRIMARY_KEY = "primary-key";
 
-    String getCatalogName();
+    QualifiedTableName getQName();
 
-    String getSchemaName();
+    QualifiedTableName getDefaultName();
 
-    String getName();
+    default String getName() {
+        return getQName().getTableName();
+    }
 
-    String getQualifiedName();
+    default String getCompactName() {
+        return getCompactName(false);
+    }
 
-    String getNecessaryQualifiedName();
+    default String getCompactName(boolean ignoreCase) {
+        return getQName().getCompactName(getDefaultName());
+    }
 
     @Override
     ISchemaMetadata getParent();
@@ -36,7 +41,10 @@ public interface ITableMetadata
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        out.entry(K_NAME, getName());
+        getQName().writeObject(out);
+
+        IRowSetMetadata.super.writeObject(out);
+
         String[] pk = getPrimaryKey();
         if (pk != null) {
             out.key(K_PRIMARY_KEY);
@@ -45,15 +53,16 @@ public interface ITableMetadata
                 out.value(field);
             out.endArray();
         }
-        IRowSetMetadata.super.writeObject(out);
     }
 
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        out.attribute(K_NAME, getName());
-        out.attribute(K_PRIMARY_KEY, StringArray.join(", ", getPrimaryKey()));
+        getQName().writeObject(out);
+
         IRowSetMetadata.super.writeObject(out);
+
+        out.attribute(K_PRIMARY_KEY, StringArray.join(", ", getPrimaryKey()));
     }
 
 }

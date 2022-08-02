@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -73,11 +74,27 @@ public class DefaultTableMapMetadata
         return tables.size();
     }
 
-    public synchronized void addTable(ITableMetadata table) {
+    /**
+     * @throws DuplicatedKeyException
+     *             When table with same name was existed.
+     */
+    public void addTable(ITableMetadata table) {
         if (table == null)
             throw new NullPointerException("table");
         String name = table.getName();
+        ITableMetadata existing = tables.get(name);
+        if (existing != null)
+            throw new DuplicatedKeyException("Table already existed: " + name);
         tables.put(name, table);
+    }
+
+    public boolean removeTable(ITableMetadata table) {
+        return removeTable(table.getName());
+    }
+
+    public boolean removeTable(String tableName) {
+        ITableMetadata table = tables.remove(tableName);
+        return table != null;
     }
 
     @Override
@@ -114,10 +131,10 @@ public class DefaultTableMapMetadata
 
     public String getTableNames() {
         StringBuilder sb = new StringBuilder(tables.size() * 16);
-        for (int i = 0; i < tables.size(); i++) {
-            if (i != 0)
+        for (String key : tables.keySet()) {
+            if (sb.length() != 0)
                 sb.append(", ");
-            ITableMetadata table = tables.get(i);
+            ITableMetadata table = tables.get(key);
             sb.append(table.getName());
         }
         return sb.toString();

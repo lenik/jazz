@@ -1,5 +1,6 @@
 package net.bodz.bas.t.table;
 
+import java.sql.Connection;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,11 +15,8 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
 public class DefaultRowSetMetadata
-        extends QualifiedTableName
         implements
             IRowSetMetadata {
-
-    private static final long serialVersionUID = 1L;
 
     static final int MAX_SPARSE_COLUMNS = 1000;
 
@@ -120,12 +118,12 @@ public class DefaultRowSetMetadata
         this.columns = columns;
     }
 
-    public void readObject(ResultSetMetaData jdbcMetadata)
+    public void readObject(Connection cn, ResultSetMetaData rsmd)
             throws SQLException {
-        int cc = jdbcMetadata.getColumnCount();
+        int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {
             DefaultColumnMetadata column = new DefaultColumnMetadata();
-            column.readObject(jdbcMetadata, i);
+            column.readObject(rsmd, i);
             addColumn(column);
         }
     }
