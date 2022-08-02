@@ -1,7 +1,7 @@
 package net.bodz.lily.gen.model.java;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.model.base.CoIndex;
 
 public class EntityIndexBuilder

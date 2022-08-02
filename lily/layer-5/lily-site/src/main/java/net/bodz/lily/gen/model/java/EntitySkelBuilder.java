@@ -2,8 +2,8 @@ package net.bodz.lily.gen.model.java;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.t.table.ITableMetadata;
-import net.bodz.bas.t.table.QualifiedTableName;
+import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.QualifiedTableName;
 import net.bodz.lily.gen.JavaFragmentBuilder;
 
 public class EntitySkelBuilder

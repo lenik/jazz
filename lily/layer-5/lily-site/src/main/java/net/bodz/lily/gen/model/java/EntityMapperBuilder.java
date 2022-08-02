@@ -1,7 +1,7 @@
 package net.bodz.lily.gen.model.java;
 
 import net.bodz.bas.db.ibatis.IMapperTemplate;
-import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class EntityMapperBuilder
         extends EntityStuffBuilder {
