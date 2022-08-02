@@ -3,7 +3,7 @@ package net.bodz.bas.t.table;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class QualifiedTableName
+public class QualifiedSchemaName
         implements
             Serializable {
 
@@ -11,15 +11,13 @@ public class QualifiedTableName
 
     protected String catalogName;
     protected String schemaName;
-    protected String tableName;
 
-    public QualifiedTableName() {
+    public QualifiedSchemaName() {
     }
 
-    public QualifiedTableName(String catalogName, String schemaName, String tableName) {
+    public QualifiedSchemaName(String catalogName, String schemaName) {
         this.catalogName = catalogName;
         this.schemaName = schemaName;
-        this.tableName = tableName;
     }
 
     public String getCatalogName() {
@@ -38,34 +36,14 @@ public class QualifiedTableName
         this.schemaName = schemaName;
     }
 
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public void setName(String catalogName, String schemaName, String tableName) {
-        this.catalogName = catalogName;
-        this.schemaName = schemaName;
-        this.tableName = tableName;
-    }
-
     public void setQualifiedName(String name) {
         int dot = name.lastIndexOf('.');
         if (dot != -1) {
-            String schema = name.substring(0, dot);
+            String catalog = name.substring(0, dot);
             name = name.substring(dot + 1);
-            dot = schema.lastIndexOf('.');
-            if (dot != -1) {
-                String catalog = schema.substring(0, dot);
-                schema = schema.substring(dot + 1);
-                this.catalogName = catalog;
-            }
-            this.schemaName = schema;
+            this.catalogName = catalog;
         }
-        this.tableName = name;
+        this.schemaName = name;
     }
 
     public String getQualifiedName() {
@@ -74,17 +52,13 @@ public class QualifiedTableName
             sb.append(catalogName);
             sb.append('.');
         }
-        if (schemaName != null) {
-            sb.append(schemaName);
-            sb.append('.');
-        }
-        sb.append(tableName);
+        sb.append(schemaName);
         return sb.toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(catalogName, schemaName, tableName);
+        return Objects.hash(catalogName, schemaName);
     }
 
     @Override
@@ -95,10 +69,9 @@ public class QualifiedTableName
             return false;
         if (getClass() != obj.getClass())
             return false;
-        QualifiedTableName other = (QualifiedTableName) obj;
+        QualifiedSchemaName other = (QualifiedSchemaName) obj;
         return Objects.equals(catalogName, other.catalogName) //
-                && Objects.equals(schemaName, other.schemaName) //
-                && Objects.equals(tableName, other.tableName);
+                && Objects.equals(schemaName, other.schemaName);
     }
 
     @Override

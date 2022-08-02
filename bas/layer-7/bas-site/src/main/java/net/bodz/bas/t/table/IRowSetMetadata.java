@@ -6,10 +6,10 @@ import java.util.List;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.xml.IXmlForm;
+import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface IRowSetMetadata
         extends
@@ -19,6 +19,8 @@ public interface IRowSetMetadata
 
     String K_COLUMNS = "columns";
     String K_COLUMN = "column";
+
+    ITableMapMetadata getParent();
 
     boolean isSparse();
 

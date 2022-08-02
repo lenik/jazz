@@ -17,8 +17,12 @@ public class RowList
         implements
             IRowSet {
 
+    ITableMap parent;
     IRowSetMetadata metadata;
     List<IRow> rows;
+
+    protected RowList() {
+    }
 
     public RowList(IRowSetMetadata metadata) {
         this(metadata, new ArrayList<>(), false);
@@ -65,6 +69,22 @@ public class RowList
             if (!unlimit)
                 count++;
         }
+    }
+
+    public static RowList fromTableElement(IElement x_table)
+            throws ParseException, LoaderException {
+        RowList o = new RowList();
+        o.readObject(x_table);
+        return o;
+    }
+
+    @Override
+    public ITableMap getParent() {
+        return parent;
+    }
+
+    public void setParent(ITableMap parent) {
+        this.parent = parent;
     }
 
     protected DefaultRowSetMetadata createMetadata() {
@@ -114,18 +134,34 @@ public class RowList
         return rows.iterator();
     }
 
-    protected IRowSetMetadata newMetadata() {
-        return new DefaultRowSetMetadata();
+    boolean shouldMergeMetadata() {
+        IRowSetMetadata metadata = getMetadata();
+        if (metadata == null)
+            return false;
+        ITableMapMetadata parentMetadata = metadata.getParent();
+        if (parentMetadata == null)
+            return false;
+        ITableMap parent = getParent();
+        if (parent == null)
+            return false;
+        if (parent.getMetadata() != parentMetadata)
+            return false;
+        return true;
     }
 
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        JsonObject j_md = o.getJsonObject(K_METADATA);
-        if (j_md != null) {
-            IRowSetMetadata metadata = newMetadata();
-            metadata.readObject(j_md);
-            this.metadata = metadata;
+        IRowSetMetadata metadata = getMetadata();
+        boolean mergeMetadata = shouldMergeMetadata();
+
+        if (!mergeMetadata) {
+            JsonObject j_md = o.getJsonObject(K_METADATA);
+            if (j_md != null) {
+                metadata = createMetadata();
+                metadata.readObject(j_md);
+                this.metadata = metadata;
+            }
         }
 
         JsonArray j_rows = o.getJsonArray(K_ROWS);
@@ -143,11 +179,16 @@ public class RowList
     @Override
     public void readObject(IElement x_table)
             throws ParseException, LoaderException {
-        IElement x_md = x_table.selectByTag(K_METADATA).getFirst();
-        if (x_md != null && x_md.getParentNode() == x_table) {
-            IRowSetMetadata metadata = new DefaultRowSetMetadata();
-            metadata.readObject(x_md);
-            this.metadata = metadata;
+        IRowSetMetadata metadata = getMetadata();
+        boolean mergeMetadata = shouldMergeMetadata();
+
+        if (!mergeMetadata) {
+            IElement x_md = x_table.selectByTag(K_METADATA).getFirst();
+            if (x_md != null && x_md.getParentNode() == x_table) {
+                metadata = createMetadata();
+                metadata.readObject(x_md);
+                this.metadata = metadata;
+            }
         }
 
         IElement x_rows = x_table.selectByTag(K_ROWS).getFirst();
