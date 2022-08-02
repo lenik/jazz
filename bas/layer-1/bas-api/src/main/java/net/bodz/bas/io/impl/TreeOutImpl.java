@@ -86,7 +86,7 @@ public class TreeOutImpl
     public void print(String s) {
         flushPrefix();
         printOut.print(s);
-        if (s.endsWith("\n"))
+        if (s != null && s.endsWith("\n"))
             linePrefixPrinted = false;
     }
 
