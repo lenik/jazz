@@ -93,4 +93,11 @@ public interface ISchemaMetadata
         out.endElement();
     }
 
+    default void accept(IVisitor visitor) {
+        visitor.beginSchema(this);
+        for (ITableMetadata table : this)
+            table.accept(visitor);
+        visitor.endSchema(this);
+    }
+
 }

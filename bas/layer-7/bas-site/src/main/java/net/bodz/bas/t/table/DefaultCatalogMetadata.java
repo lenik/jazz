@@ -149,7 +149,7 @@ public class DefaultCatalogMetadata
         this.schemas = schemas;
     }
 
-    public void loadFromJDBC(Connection connection)
+    public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
         ResultSet rs;
@@ -165,7 +165,7 @@ public class DefaultCatalogMetadata
         for (String schemaName : schemaNames) {
             DefaultSchemaMetadata schema = new DefaultSchemaMetadata();
             schema.getQName().assign(name, schemaName);
-            schema.loadFromJDBC(connection);
+            schema.loadFromJDBC(connection, types);
             addSchema(schema);
         }
         rs.close();

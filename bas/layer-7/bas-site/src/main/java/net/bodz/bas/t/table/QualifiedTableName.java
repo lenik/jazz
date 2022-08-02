@@ -41,7 +41,7 @@ public class QualifiedTableName
         this.tableName = tableName;
     }
 
-    public static QualifiedTableName parse(String fullName) {
+    public static QualifiedTableName fromFullName(String fullName) {
         QualifiedTableName o = new QualifiedTableName();
         o.parseFullName(fullName);
         return o;

@@ -22,7 +22,7 @@ public class DefaultSchemaMetadata
         implements
             IMutableSchemaMetadata {
 
-    QualifiedSchemaName qName;
+    QualifiedSchemaName qName = new QualifiedSchemaName();
     QualifiedSchemaName defaultName = new QualifiedSchemaName();
 
     String label;
@@ -149,7 +149,7 @@ public class DefaultSchemaMetadata
 
     @Override
     public String toString() {
-        return getCompactName() + "(" + getTableNames() + ")";
+        return "schema " + getCompactName() + "(" + getTableNames() + ")";
     }
 
     @Override
@@ -186,7 +186,7 @@ public class DefaultSchemaMetadata
         this.tables = tables;
     }
 
-    public void loadFromJDBC(Connection connection)
+    public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
         ResultSet rs;
@@ -195,14 +195,14 @@ public class DefaultSchemaMetadata
         // Parse from schema's metadata
         rs = dmd.getSchemas(qName.catalogName, qName.schemaName);
         while (rs.next()) {
-            String catalogName = rs.getString("schema_cat");
-            String schemaName = rs.getString("schema_name");
+            String catalogName = rs.getString("TABLE_CATALOG");
+            String schemaName = rs.getString("TABLE_SCHEM");
             qName.assign(catalogName, schemaName); // correct char case.
             break;
         }
         rs.close();
 
-        rs = dmd.getTables(qName.catalogName, qName.schemaName, null, null);
+        rs = dmd.getTables(qName.catalogName, qName.schemaName, null, types);
         List<String> tableNames = new ArrayList<>();
         while (rs.next()) {
             String name = rs.getString("table_name");

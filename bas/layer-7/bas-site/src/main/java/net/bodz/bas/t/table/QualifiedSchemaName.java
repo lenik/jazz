@@ -38,7 +38,7 @@ public class QualifiedSchemaName
         this.schemaName = schemaName;
     }
 
-    public static QualifiedSchemaName parse(String fullName) {
+    public static QualifiedSchemaName fromFullName(String fullName) {
         QualifiedSchemaName o = new QualifiedSchemaName();
         o.parseFullName(fullName);
         return o;
