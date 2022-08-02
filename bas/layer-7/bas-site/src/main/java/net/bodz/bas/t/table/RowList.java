@@ -1,6 +1,5 @@
 package net.bodz.bas.t.table;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,33 +36,6 @@ public class RowList
             this.rows = new ArrayList<>(rows);
         else
             this.rows = rows;
-    }
-
-    public RowList(ResultSet resultSet)
-            throws SQLException {
-        this(resultSet, null);
-    }
-
-    public RowList(ResultSet resultSet, Long maxRows)
-            throws SQLException {
-        DefaultRowSetMetadata metadata = createMetadata();
-        Connection cn = resultSet.getStatement().getConnection();
-        metadata.loadFromRSMD(cn, resultSet.getMetaData());
-        this.metadata = metadata;
-        this.rows = new ArrayList<>();
-
-        boolean unlimit = maxRows == null;
-        long max = unlimit ? -1L : maxRows.longValue();
-        int count = 0;
-        while (unlimit || count < max) {
-            if (!resultSet.next())
-                break;
-            MutableRow row = new MutableRow(this, count);
-            row.readObject(resultSet);
-            this.rows.add(row);
-            if (!unlimit)
-                count++;
-        }
     }
 
     public static RowList wrap(IRowSetMetadata metadata, List<IRow> rows) {
@@ -118,16 +90,18 @@ public class RowList
     }
 
     @Override
-    public synchronized long consume(ResultSet rs, Long limit)
+    public synchronized long consume(ResultSet resultSet, Long limit)
             throws SQLException {
+        boolean limited = limit != null;
+        long nLimit = limited ? limit.longValue() : -1L;
         int rowIndex = getRowCount();
         long n = 0;
-        while (rs.next()) {
+        while (resultSet.next()) {
             MutableRow row = new MutableRow(this, rowIndex++);
-            row.readObject(rs);
+            row.readObject(resultSet);
             this.rows.add(row);
             n++;
-            if (limit != null && n >= limit)
+            if (limited && n >= nLimit)
                 break;
         }
         return n;

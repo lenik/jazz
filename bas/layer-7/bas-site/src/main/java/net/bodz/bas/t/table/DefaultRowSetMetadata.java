@@ -1,6 +1,5 @@
 package net.bodz.bas.t.table;
 
-import java.sql.Connection;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -118,7 +117,7 @@ public class DefaultRowSetMetadata
         this.columns = columns;
     }
 
-    public void loadFromRSMD(Connection cn, ResultSetMetaData rsmd)
+    public void loadFromRSMD(ResultSetMetaData rsmd)
             throws SQLException {
         int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {

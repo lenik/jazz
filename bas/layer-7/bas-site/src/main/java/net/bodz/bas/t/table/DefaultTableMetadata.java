@@ -132,9 +132,9 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public void loadFromRSMD(Connection cn, ResultSetMetaData rsmd)
+    public void loadFromRSMD(ResultSetMetaData rsmd)
             throws SQLException {
-        super.loadFromRSMD(cn, rsmd);
+        super.loadFromRSMD(rsmd);
 
         int columnOfThisTable = 1;
         qName.catalogName = rsmd.getCatalogName(columnOfThisTable);
