@@ -26,6 +26,9 @@ public interface ITableMetadata
 
     String getNecessaryQualifiedName();
 
+    @Override
+    ISchemaMetadata getParent();
+
     String[] getPrimaryKey();
 
     IColumnMetadata[] getPrimaryKeyColumns();

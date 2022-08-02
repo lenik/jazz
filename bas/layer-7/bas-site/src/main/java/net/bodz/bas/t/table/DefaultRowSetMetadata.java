@@ -18,9 +18,28 @@ public class DefaultRowSetMetadata
         implements
             IRowSetMetadata {
 
+    private static final long serialVersionUID = 1L;
+
     static final int MAX_SPARSE_COLUMNS = 1000;
 
+    ITableMapMetadata parent;
     List<IColumnMetadata> columns = new ArrayList<>();
+
+    public DefaultRowSetMetadata() {
+    }
+
+    public DefaultRowSetMetadata(ITableMapMetadata parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public ITableMapMetadata getParent() {
+        return parent;
+    }
+
+    public void setParent(ITableMapMetadata parent) {
+        this.parent = parent;
+    }
 
     @Override
     public Iterator<IColumnMetadata> iterator() {

@@ -31,6 +31,10 @@ public class DefaultTableMetadata
     public DefaultTableMetadata() {
     }
 
+    public DefaultTableMetadata(ISchemaMetadata parent) {
+        super(parent);
+    }
+
     public DefaultTableMetadata(String catalogName, String schemaName, String tableName) {
         this.catalogName = catalogName;
         this.schemaName = schemaName;
@@ -112,6 +116,17 @@ public class DefaultTableMetadata
         }
         sb.append(tableName);
         return sb.toString();
+    }
+
+    @Override
+    public ISchemaMetadata getParent() {
+        return (ISchemaMetadata) super.getParent();
+    }
+
+    @Override
+    public void setParent(ITableMapMetadata parent) {
+        ISchemaMetadata schema = (ISchemaMetadata) parent;
+        super.setParent(schema);
     }
 
     @Override

@@ -4,10 +4,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.json.JsonObject;
+
 public class MutableTable
         extends RowList
         implements
             ITable {
+
+    protected MutableTable() {
+    }
 
     public MutableTable(ITableMetadata metadata) {
         super(metadata);
@@ -27,8 +35,26 @@ public class MutableTable
         super(resultSet, maxRows);
     }
 
+    public static MutableTable fromTableElement(IElement x_table)
+            throws ParseException, LoaderException {
+        MutableTable o = new MutableTable();
+        o.readObject(x_table);
+        return o;
+    }
+
     @Override
-    protected DefaultRowSetMetadata createMetadata() {
+    public ISchema getParent() {
+        return (ISchema) super.getParent();
+    }
+
+    @Override
+    public void setParent(ITableMap parent) {
+        ISchema parentSchema = (ISchema) parent;
+        super.setParent(parentSchema);
+    }
+
+    @Override
+    protected DefaultTableMetadata createMetadata() {
         return new DefaultTableMetadata();
     }
 
@@ -38,8 +64,34 @@ public class MutableTable
     }
 
     @Override
-    protected ITableMetadata newMetadata() {
-        return new DefaultTableMetadata();
+    public void readObject(JsonObject o)
+            throws ParseException {
+        boolean mergeMetadata = shouldMergeMetadata();
+
+        if (mergeMetadata) {
+            DefaultTableMetadata tmp = new DefaultTableMetadata();
+            tmp.catalogName = o.getString(K_CATALOG_NAME);
+            tmp.schemaName = o.getString(K_SCHEMA_NAME);
+            tmp.tableName = o.getString(K_TABLE_NAME);
+            this.metadata = tmp;
+        }
+
+        super.readObject(o);
+    }
+
+    @Override
+    public void readObject(IElement x_table)
+            throws ParseException, LoaderException {
+        boolean mergeMetadata = shouldMergeMetadata();
+
+        if (mergeMetadata) {
+            DefaultTableMetadata tmp = new DefaultTableMetadata();
+            tmp.catalogName = x_table.getAttribute(K_CATALOG_NAME);
+            tmp.schemaName = x_table.getAttribute(K_SCHEMA_NAME);
+            tmp.tableName = x_table.getAttribute(K_TABLE_NAME);
+            this.metadata = tmp;
+        }
+        super.readObject(x_table);
     }
 
     public String getPreparedPkDelete() {
@@ -65,21 +117,26 @@ public class MutableTable
     }
 
     public String getPreparedInsert(IRow row) {
+        ITableMetadata metadata = getMetadata();
         StringBuilder ddl = new StringBuilder();
         ddl.append("insert into ");
-        ddl.append(getMetadata().getName());
+        ddl.append(metadata.getName());
         ddl.append("(");
 
         StringBuilder vals = new StringBuilder();
         vals.append(") values(");
 
-        int cc = getMetadata().getColumnCount();
+        int cc = metadata.getColumnCount();
         int paramIndex = 0;
         for (int columnIndex = 0; columnIndex < cc; columnIndex++) {
-            if (row != null)
+            if (row != null) {
                 if (!row.isSet(columnIndex))
                     continue;
-            IColumnMetadata column = getMetadata().getColumn(columnIndex);
+                Object val = row.get(columnIndex);
+                if (val == null)
+                    continue;
+            }
+            IColumnMetadata column = metadata.getColumn(columnIndex);
             if (paramIndex != 0) {
                 ddl.append(", ");
                 vals.append(", ");
