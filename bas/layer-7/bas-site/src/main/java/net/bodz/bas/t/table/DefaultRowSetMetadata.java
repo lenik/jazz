@@ -20,22 +20,22 @@ public class DefaultRowSetMetadata
 
     static final int MAX_SPARSE_COLUMNS = 1000;
 
-    ITableMapMetadata parent;
+    ISchemaMetadata parent;
     List<IColumnMetadata> columns = new ArrayList<>();
 
     public DefaultRowSetMetadata() {
     }
 
-    public DefaultRowSetMetadata(ITableMapMetadata parent) {
+    public DefaultRowSetMetadata(ISchemaMetadata parent) {
         this.parent = parent;
     }
 
     @Override
-    public ITableMapMetadata getParent() {
+    public ISchemaMetadata getParent() {
         return parent;
     }
 
-    public void setParent(ITableMapMetadata parent) {
+    public void setParent(ISchemaMetadata parent) {
         this.parent = parent;
     }
 
@@ -118,7 +118,7 @@ public class DefaultRowSetMetadata
         this.columns = columns;
     }
 
-    public void readObject(Connection cn, ResultSetMetaData rsmd)
+    public void loadFromRSMD(Connection cn, ResultSetMetaData rsmd)
             throws SQLException {
         int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {

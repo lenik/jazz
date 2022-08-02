@@ -19,7 +19,7 @@ public class DefaultTableMetadata
         implements
             ITableMetadata {
 
-    QualifiedTableName qName;
+    QualifiedTableName qName = new QualifiedTableName();
     QualifiedTableName defaultName = new QualifiedTableName();
 
     String label;
@@ -31,23 +31,6 @@ public class DefaultTableMetadata
 
     public DefaultTableMetadata(ISchemaMetadata parent) {
         super(parent);
-    }
-
-    public static DefaultTableMetadata fromMetaData(Connection connection, String catalogName, String schemaName,
-            String tableName)
-            throws SQLException {
-        DefaultTableMetadata table = new DefaultTableMetadata();
-        table.getQName().assign(catalogName, schemaName, tableName);
-        table.readObject(connection);
-        return table;
-    }
-
-    public static DefaultTableMetadata fromMetaData(Connection connection, String qualifiedName)
-            throws SQLException {
-        DefaultTableMetadata table = new DefaultTableMetadata();
-        table.getQName().parseFullName(qualifiedName);
-        table.readObject(connection);
-        return table;
     }
 
     @Override
@@ -67,17 +50,19 @@ public class DefaultTableMetadata
     }
 
     public void setDefaultName(QualifiedTableName defaultName) {
+        if (defaultName == null)
+            throw new NullPointerException("defaultName");
         this.defaultName = defaultName;
     }
 
     @Override
     public ISchemaMetadata getParent() {
-        return (ISchemaMetadata) super.getParent();
+        return super.getParent();
     }
 
     @Override
-    public void setParent(ITableMapMetadata parent) {
-        ISchemaMetadata schema = (ISchemaMetadata) parent;
+    public void setParent(ISchemaMetadata parent) {
+        ISchemaMetadata schema = parent;
         super.setParent(schema);
     }
 
@@ -147,9 +132,9 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public void readObject(Connection cn, ResultSetMetaData rsmd)
+    public void loadFromRSMD(Connection cn, ResultSetMetaData rsmd)
             throws SQLException {
-        super.readObject(cn, rsmd);
+        super.loadFromRSMD(cn, rsmd);
 
         int columnOfThisTable = 1;
         qName.catalogName = rsmd.getCatalogName(columnOfThisTable);
@@ -163,7 +148,7 @@ public class DefaultTableMetadata
 //                foreign.catalogName, foreign.schemaName, foreign.tableName);
     }
 
-    public void readObject(Connection connection)
+    public void loadFromJDBC(Connection connection)
             throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet rs;
