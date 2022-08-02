@@ -103,7 +103,7 @@ public class JavaModelGenerator
 
     void makeEntity(ITableMetadata table)
             throws SQLException, IOException {
-        String q_table_name = table.getNecessaryQualifiedName();
+        String q_table_name = table.getCompactName();
         String qTableName = StringId.UL.toQCamel(q_table_name);
 
         String qSchema = null;

@@ -14,12 +14,16 @@ public class TableMap
         implements
             ITableMap {
 
-    ITableMapMetadata metadata;
+    DefaultTableMapMetadata metadata;
     Map<String, ITable> tables = createMap();
 
-    public TableMap(ITableMapMetadata metadata) {
+    public TableMap() {
+        this(null);
+    }
+
+    public TableMap(DefaultTableMapMetadata metadata) {
         if (metadata == null)
-            throw new NullPointerException("metadata");
+            metadata = createMetadata();
         this.metadata = metadata;
     }
 
@@ -27,15 +31,13 @@ public class TableMap
         return new LinkedHashMap<>();
     }
 
-    public static TableMap wrap(ITableMapMetadata metadata, Map<String, ITable> tables) {
-        TableMap a = new TableMap(metadata);
-        a.tables = tables;
-        return a;
-    }
-
     @Override
     public ITableMapMetadata getMetadata() {
         return metadata;
+    }
+
+    protected DefaultTableMapMetadata createMetadata() {
+        return new DefaultTableMapMetadata();
     }
 
     @Override
@@ -43,9 +45,12 @@ public class TableMap
         return tables;
     }
 
-    public void addTable(MutableTable o) {
+    public synchronized void addTable(MutableTable o) {
         if (o == null)
             throw new NullPointerException("table");
+
+        if (o.getMetadata() == null)
+            throw new IllegalArgumentException("Table without metadata");
 
         if (o.getParent() != null)
             throw new IllegalStateException("Already attached to another parent");
@@ -54,9 +59,23 @@ public class TableMap
         if (oMetadataParent != getMetadata())
             throw new IllegalArgumentException("Conflict metadata");
 
-        o.setParent(this);
         String oName = o.getMetadata().getName();
+        // attach(o);
+        metadata.addTable(o.getMetadata());
         tables.put(oName, o);
+    }
+
+    public boolean removeTable(String tableName) {
+        ITable o = tables.remove(tableName);
+        if (o == null)
+            return false;
+        metadata.removeTable(o.getMetadata());
+        return true;
+    }
+
+    public boolean removeTable(ITable table) {
+        String name = table.getMetadata().getName();
+        return removeTable(name);
     }
 
     @Override
@@ -64,16 +83,12 @@ public class TableMap
         return tables.values().iterator();
     }
 
-    protected ITableMapMetadata newMetadata() {
-        return new DefaultTableMapMetadata();
-    }
-
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
         JsonObject j_md = o.getJsonObject(K_METADATA);
         if (j_md != null) {
-            ITableMapMetadata metadata = newMetadata();
+            DefaultTableMapMetadata metadata = createMetadata();
             metadata.readObject(j_md);
             this.metadata = metadata;
         }
@@ -99,7 +114,7 @@ public class TableMap
             throws ParseException, LoaderException {
         IElement x_md = x_schema.selectByTag(K_METADATA).getFirst();
         if (x_md != null && x_md.getParentNode() == x_schema) {
-            ITableMapMetadata metadata = newMetadata();
+            DefaultTableMapMetadata metadata = createMetadata();
             metadata.readObject(x_md);
             this.metadata = metadata;
         }
@@ -119,9 +134,6 @@ public class TableMap
 
             map.put(key, table);
         }
-
-        // DefaultTableMapMetadata
-
         this.tables = map;
     }
 

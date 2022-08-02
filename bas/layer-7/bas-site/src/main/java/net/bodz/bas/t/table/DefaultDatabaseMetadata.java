@@ -10,13 +10,15 @@ public class DefaultDatabaseMetadata {
     // QName => data
     Map<String, ITableMetadata> tables = new HashMap<>();
 
-    public ITableMetadata resolveTable(Connection cn, String qName)
+    public ITableMetadata resolveTable(Connection cn, String fullName)
             throws SQLException {
-        ITableMetadata cached = tables.get(qName);
+        ITableMetadata cached = tables.get(fullName);
         if (cached == null) {
-            DefaultTableMetadata metadata = new DefaultTableMetadata(qName);
+            DefaultTableMetadata metadata = new DefaultTableMetadata();
+            QualifiedTableName qName = QualifiedTableName.parse(fullName);
+            metadata.setQName(qName);
             metadata.readObject(cn);
-            tables.put(qName, metadata);
+            tables.put(fullName, metadata);
             cached = metadata;
         }
         return cached;
@@ -24,7 +26,7 @@ public class DefaultDatabaseMetadata {
 
     public ITableMetadata resolveTable(Connection cn, String catalogName, String schemaName, String tableName)
             throws SQLException {
-        String qName = new QualifiedTableName(catalogName, schemaName, tableName).getQualifiedName();
+        String qName = new QualifiedTableName(catalogName, schemaName, tableName).getFullName();
         return resolveTable(cn, qName);
     }
 
