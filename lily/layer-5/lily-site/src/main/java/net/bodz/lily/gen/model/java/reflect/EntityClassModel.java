@@ -13,7 +13,7 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.t.table.QualifiedTableName;
+import net.bodz.bas.t.catalog.QualifiedTableName;
 
 public class EntityClassModel
         extends QualifiedTableName {

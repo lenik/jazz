@@ -1,6 +1,6 @@
 package net.bodz.lily.gen.model.java;
 
-import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class EntityMapperTestBuilder
         extends EntityStuffBuilder {

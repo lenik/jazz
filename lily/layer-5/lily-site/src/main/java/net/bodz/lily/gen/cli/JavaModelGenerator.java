@@ -23,9 +23,9 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
-import net.bodz.bas.t.table.DefaultTableMetadata;
-import net.bodz.bas.t.table.IColumnMetadata;
-import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.bas.t.catalog.DefaultTableMetadata;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.gen.model.java.*;
 
 public class JavaModelGenerator

@@ -10,9 +10,9 @@ import java.util.Map;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.range.*;
-import net.bodz.bas.t.table.IColumnMetadata;
-import net.bodz.bas.t.table.ITableMetadata;
 import net.bodz.lily.model.base.CoObjectMask;
 
 public class EntityMaskStuffBuilder

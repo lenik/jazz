@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.t.table.IColumnMetadata;
-import net.bodz.bas.t.table.ITableMetadata;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class EntityIdBuilder
         extends EntityStuffBuilder {
