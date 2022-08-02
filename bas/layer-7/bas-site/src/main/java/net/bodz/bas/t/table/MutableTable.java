@@ -31,21 +31,25 @@ public class MutableTable
         super(metadata, rows);
     }
 
-    public MutableTable(ResultSet resultSet)
-            throws SQLException {
-        super(resultSet);
-    }
-
-    public MutableTable(ResultSet resultSet, Long maxRows)
-            throws SQLException {
-        super(resultSet, maxRows);
-    }
-
     public static MutableTable fromTableElement(IElement x_table)
             throws ParseException, LoaderException {
         MutableTable o = new MutableTable();
         o.readObject(x_table);
         return o;
+    }
+
+    public static MutableTable fromResultSet(ResultSet resultSet)
+            throws SQLException {
+        return fromResultSet(resultSet, null);
+    }
+
+    public static MutableTable fromResultSet(ResultSet resultSet, Long limit)
+            throws SQLException {
+        DefaultTableMetadata metadata = new DefaultTableMetadata();
+        metadata.loadFromRSMD(resultSet.getMetaData());
+        MutableTable table = new MutableTable(metadata);
+        table.consume(resultSet, limit);
+        return table;
     }
 
     @Override
