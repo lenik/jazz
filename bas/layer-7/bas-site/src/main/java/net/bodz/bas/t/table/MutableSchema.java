@@ -14,14 +14,17 @@ public class MutableSchema
         implements
             ISchema {
 
-    DefaultSchemaMetadata metadata;
+    ICatalog parent;
+    QualifiedSchemaName qName;
+
+    ISchemaMetadata metadata;
     Map<String, ITable> tables = createMap();
 
     public MutableSchema() {
         this(null);
     }
 
-    public MutableSchema(DefaultSchemaMetadata metadata) {
+    public MutableSchema(ISchemaMetadata metadata) {
         if (metadata == null)
             metadata = createMetadata();
         this.metadata = metadata;
@@ -48,6 +51,29 @@ public class MutableSchema
     }
 
     @Override
+    public ICatalog getParent() {
+        return parent;
+    }
+
+    public void setParent(ICatalog parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public QualifiedSchemaName getQName() {
+        if (qName != null)
+            return qName;
+        ISchemaMetadata metadata = getMetadata();
+        if (metadata != null)
+            return metadata.getQName();
+        return null;
+    }
+
+    public void setQName(QualifiedSchemaName qName) {
+        this.qName = qName;
+    }
+
+    @Override
     public Map<String, ITable> getTables() {
         return tables;
     }
@@ -67,8 +93,18 @@ public class MutableSchema
             throw new IllegalArgumentException("Conflict metadata");
 
         String oName = o.getMetadata().getName();
-        // attach(o);
-        metadata.addTable(o.getMetadata());
+
+        // metadata.addTable(o.getMetadata())
+        if (metadata instanceof IMutableSchemaMetadata) {
+            IMutableSchemaMetadata _metadata = (IMutableSchemaMetadata) metadata;
+            ITableMetadata om = o.getMetadata();
+            _metadata.addTable(om);
+
+            if (om instanceof DefaultTableMetadata) {
+                DefaultTableMetadata _om = (DefaultTableMetadata) om;
+                _om.setParent(_metadata);
+            }
+        }
         tables.put(oName, o);
     }
 
@@ -76,7 +112,19 @@ public class MutableSchema
         ITable o = tables.remove(tableName);
         if (o == null)
             return false;
-        metadata.removeTable(o.getMetadata());
+
+        // metadata.removeTable(o.getMetadata());
+        if (metadata instanceof IMutableSchemaMetadata) {
+            IMutableSchemaMetadata _metadata = (IMutableSchemaMetadata) metadata;
+            ITableMetadata om = o.getMetadata();
+            _metadata.removeTable(om);
+
+            if (om instanceof DefaultTableMetadata) {
+                DefaultTableMetadata _om = (DefaultTableMetadata) om;
+                _om.setParent(null);
+            }
+        }
+
         return true;
     }
 

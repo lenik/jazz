@@ -24,6 +24,10 @@ public interface ISchemaMetadata
 
     QualifiedSchemaName getDefaultName();
 
+    default String getName() {
+        return getQName().getSchemaName();
+    }
+
     default String getCompactName() {
         return getCompactName(false);
     }
@@ -32,7 +36,7 @@ public interface ISchemaMetadata
         return getQName().getCompactName(getDefaultName(), ignoreCase);
     }
 
-    String getCanonicalName(String name);
+    ICatalogMetadata getParent();
 
     /**
      * key: canonical name
@@ -43,11 +47,13 @@ public interface ISchemaMetadata
 
     ITableMetadata getTable(String name);
 
-    default ITableMetadata getTable(String name, boolean ignoreCase) {
+    default ITableMetadata findTable(String name, boolean ignoreCase) {
         if (ignoreCase)
             name = getCanonicalName(name);
         return getTable(name);
     }
+
+    String getCanonicalName(String name);
 
     @Override
     default void writeObject(IJsonOut out)
