@@ -47,7 +47,10 @@ public class MutableSchema
     }
 
     protected DefaultSchemaMetadata createMetadata() {
-        return new DefaultSchemaMetadata();
+        DefaultSchemaMetadata dsm = new DefaultSchemaMetadata();
+        if (qName != null)
+            dsm.getQName().assign(qName.catalogName, qName.schemaName);
+        return dsm;
     }
 
     @Override

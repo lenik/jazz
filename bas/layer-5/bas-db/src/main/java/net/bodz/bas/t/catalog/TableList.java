@@ -1,57 +1,25 @@
 package net.bodz.bas.t.catalog;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class TableList
-        implements
-            Iterable<ITableMetadata> {
+        extends ArrayList<ITableMetadata> {
 
-    List<ITableMetadata> list;
+    private static final long serialVersionUID = 1L;
 
     public TableList() {
-        this.list = new ArrayList<>();
+        super();
     }
 
-    public TableList(List<ITableMetadata> list) {
-        this.list = list;
-    }
-
-    @Override
-    public Iterator<ITableMetadata> iterator() {
-        return list.iterator();
-    }
-
-    public int size() {
-        return list.size();
-    }
-
-    public boolean isEmpty() {
-        return list.isEmpty();
-    }
-
-    public ITableMetadata get(int index) {
-        return list.get(index);
-    }
-
-    public boolean add(ITableMetadata table) {
-        if (table == null)
-            throw new NullPointerException("table");
-        return list.add(table);
-    }
-
-    public boolean remove(ITableMetadata table) {
-        return list.remove(table);
-    }
-
-    public void clear() {
-        list.clear();
+    public TableList(Collection<? extends ITableMetadata> c) {
+        super(c);
     }
 
     public List<QualifiedTableName> getQNames() {
-        List<QualifiedTableName> qNames = new ArrayList<>(list.size());
+        List<QualifiedTableName> qNames = new ArrayList<>(size());
         for (ITableMetadata table : this)
             qNames.add(table.getQName());
         return qNames;
@@ -65,11 +33,13 @@ public class TableList
     }
 
     public TableList sortInDeletionOrder(ITableDirectory directory) {
-        TableList list = sortInCreationOrder(directory);
-        Collections.reverse(list.list);
-        return list;
+        TableList sorted = sortInCreationOrder(directory);
+        Collections.reverse(sorted);
+        return sorted;
     }
 
-    public static final TableList EMPTY = new TableList(Collections.emptyList());
+    public static final TableList empty() {
+        return new TableList();
+    }
 
 }

@@ -147,8 +147,8 @@ public class DefaultSchemaMetadata
     @Override
     public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!pattern.getSchemaQName().contains(this.getQName()))
-                return TableList.EMPTY;
+            if (!pattern.getSchemaQName().contains(this.getQName(), ignoreCase))
+                return TableList.empty();
         }
         TableList list = new TableList();
         for (ITableMetadata table : getTables().values()) {
