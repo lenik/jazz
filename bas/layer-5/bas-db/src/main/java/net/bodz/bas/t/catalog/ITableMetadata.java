@@ -111,11 +111,16 @@ public interface ITableMetadata
     default void accept(ICatalogVisitor visitor) {
         visitor.beginTable(this);
 
-        visitor.beginRowSet(this);
+        visitor.beginColumns(this);
         int n = getColumnCount();
         for (int i = 0; i < n; i++)
             getColumn(i).accept(visitor);
-        visitor.endRowSet(this);
+        visitor.endColumns(this);
+
+        visitor.primaryKey(this, getPrimaryKey());
+
+        for (CrossReference crossRef : getForeignKeys().values())
+            visitor.foreignKey(this, crossRef);
 
         visitor.endTable(this);
     }

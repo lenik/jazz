@@ -32,7 +32,7 @@ public interface ICatalogVisitor {
     default void primaryKey(ITableMetadata table, TableKey key) {
     }
 
-    default void foreignKey(ITableMetadata table, CrossReference reference) {
+    default void foreignKey(ITableMetadata table, CrossReference crossRef) {
     }
 
     default void beginRowSet(IRowSetMetadata rowSet) {

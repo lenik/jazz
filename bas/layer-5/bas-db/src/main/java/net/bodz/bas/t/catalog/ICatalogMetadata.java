@@ -1,10 +1,14 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -13,6 +17,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ICatalogMetadata
         extends
+            Iterable<ISchemaMetadata>,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {
@@ -38,6 +43,30 @@ public interface ICatalogMetadata
         if (ignoreCase)
             name = getCanonicalName(name);
         return getSchema(name);
+    }
+
+    default List<ITableMetadata> findTables(QualifiedTableName qName) {
+        if (!NamePattern.matches(getName(), qName.getCatalogName()))
+            return Collections.emptyList();
+        List<ITableMetadata> list = new ArrayList<>();
+        for (ISchemaMetadata schema : this) {
+            if (schema.getQName().contains(qName)) {
+                ITableMetadata table = schema.findTable(qName.tableName, false);
+                if (table != null)
+                    list.add(table);
+            }
+        }
+        return list;
+    }
+
+    default ITableMetadata getTable(QualifiedTableName qName) {
+        List<ITableMetadata> list = findTables(qName);
+        if (list.size() > 1)
+            throw new DuplicatedKeyException("More than single table matched: " + qName);
+        if (list.isEmpty())
+            return null;
+        else
+            return list.get(0);
     }
 
     @Override

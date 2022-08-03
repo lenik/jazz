@@ -21,6 +21,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
 import net.bodz.bas.t.map.JKMap;
 
 public class CrossReference
@@ -104,77 +105,9 @@ public class CrossReference
         this.deferrability = deferrability;
     }
 
-    public static CrossReferenceMap convertToParentMap(ResultSet rs)
-            throws SQLException {
-        return convertFromJDBC(rs, true);
-    }
-
-    public static CrossReferenceMap convertToForeignMap(ResultSet rs)
-            throws SQLException {
-        return convertFromJDBC(rs, false);
-    }
-
-    public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
-            throws SQLException {
-        JKMap<QualifiedTableName, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
-                groupByParent);
-        CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
-        for (QualifiedTableName k1 : rawMap.keySet()) {
-            for (String k2 : rawMap.get(k1).keySet()) {
-                List<CrossReferenceRow> rows = rawMap.get2(k1, k2);
-                CrossReference ref = new CrossReference();
-                ref.readObject(rows);
-                refMap.add2(k1, ref);
-            }
-        }
-        return refMap;
-    }
-
-    public void readObject(List<CrossReferenceRow> rows) {
-        if (rows.isEmpty())
-            throw new IllegalArgumentException("No cross reference result.");
-        Iterator<CrossReferenceRow> iterator = rows.iterator();
-
-        CrossReferenceRow row = iterator.next();
-        constraintName = row.FK_NAME;
-        primaryKeyName = row.PK_NAME;
-        updateRule = row.UPDATE_RULE;
-        deleteRule = row.DELETE_RULE;
-        deferrability = row.DEFERRABILITY;
-
-        QualifiedTableName pkTable = new QualifiedTableName();
-        pkTable.catalogName = row.PKTABLE_CAT;
-        pkTable.schemaName = row.PKTABLE_SCHEM;
-        pkTable.tableName = row.PKTABLE_NAME;
-
-        QualifiedTableName fkTable = new QualifiedTableName();
-        fkTable.catalogName = row.FKTABLE_CAT;
-        fkTable.schemaName = row.FKTABLE_SCHEM;
-        fkTable.tableName = row.FKTABLE_NAME;
-
-        List<ColumnPair> pairs = new ArrayList<>();
-        while (true) {
-            ColumnPair pair = new ColumnPair();
-            pair.fkName = row.FKCOLUMN_NAME;
-            pair.pkName = row.PKCOLUMN_NAME;
-            pair.seq = row.KEY_SEQ;
-            pairs.add(pair);
-            if (!iterator.hasNext())
-                break;
-            iterator.next();
-        }
-        Collections.sort(pairs);
-
-        int nkv = pairs.size();
-        String[] pkv = new String[nkv];
-        String[] fkv = new String[nkv];
-        for (int i = 0; i < nkv; i++) {
-            pkv[i] = pairs.get(i).pkName;
-            fkv[i] = pairs.get(i).fkName;
-        }
-
-        foreignKey = new TableKey(fkTable, fkv);
-        parentKey = new TableKey(pkTable, pkv);
+    @Override
+    public String toString() {
+        return foreignKey + " => " + parentKey;
     }
 
     @Override
@@ -259,19 +192,74 @@ public class CrossReference
         out.endElement();
     }
 
-}
+    public void readObject(List<CrossReferenceRow> rows) {
+        if (rows.isEmpty())
+            throw new IllegalArgumentException("No cross reference result.");
+        Iterator<CrossReferenceRow> iterator = rows.iterator();
 
-class ColumnPair
-        implements
-            Comparable<ColumnPair> {
+        CrossReferenceRow row = iterator.next();
+        constraintName = row.FK_NAME;
+        primaryKeyName = row.PK_NAME;
+        updateRule = row.UPDATE_RULE;
+        deleteRule = row.DELETE_RULE;
+        deferrability = row.DEFERRABILITY;
 
-    short seq;
-    String pkName;
-    String fkName;
+        QualifiedTableName pkTable = new QualifiedTableName();
+        pkTable.catalogName = row.PKTABLE_CAT;
+        pkTable.schemaName = row.PKTABLE_SCHEM;
+        pkTable.tableName = row.PKTABLE_NAME;
 
-    @Override
-    public int compareTo(ColumnPair o) {
-        return seq - o.seq;
+        QualifiedTableName fkTable = new QualifiedTableName();
+        fkTable.catalogName = row.FKTABLE_CAT;
+        fkTable.schemaName = row.FKTABLE_SCHEM;
+        fkTable.tableName = row.FKTABLE_NAME;
+
+        List<ColumnEntry> pairs = new ArrayList<>();
+        while (true) {
+            ColumnEntry pair = new ColumnEntry(row);
+            pairs.add(pair);
+            if (!iterator.hasNext())
+                break;
+            iterator.next();
+        }
+        Collections.sort(pairs);
+
+        int nkv = pairs.size();
+        String[] pkv = new String[nkv];
+        String[] fkv = new String[nkv];
+        for (int i = 0; i < nkv; i++) {
+            pkv[i] = pairs.get(i).PKCOLUMN_NAME;
+            fkv[i] = pairs.get(i).FKCOLUMN_NAME;
+        }
+
+        foreignKey = new TableKey(fkTable, fkv);
+        parentKey = new TableKey(pkTable, pkv);
+    }
+
+    public static CrossReferenceMap convertToParentMap(ResultSet rs)
+            throws SQLException {
+        return convertFromJDBC(rs, true);
+    }
+
+    public static CrossReferenceMap convertToForeignMap(ResultSet rs)
+            throws SQLException {
+        return convertFromJDBC(rs, false);
+    }
+
+    public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
+            throws SQLException {
+        JKMap<QualifiedTableName, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
+                groupByParent);
+        CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
+        for (QualifiedTableName k1 : rawMap.keySet()) {
+            for (String k2 : rawMap.get(k1).keySet()) {
+                List<CrossReferenceRow> rows = rawMap.get2(k1, k2);
+                CrossReference ref = new CrossReference();
+                ref.readObject(rows);
+                refMap.add2(k1, ref);
+            }
+        }
+        return refMap;
     }
 
 }
