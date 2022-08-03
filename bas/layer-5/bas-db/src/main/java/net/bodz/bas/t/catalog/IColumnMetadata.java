@@ -117,7 +117,7 @@ public interface IColumnMetadata
         out.attribute("type", getType().getName());
     }
 
-    default void accept(IVisitor visitor) {
+    default void accept(ICatalogVisitor visitor) {
         visitor.column(this);
     }
 

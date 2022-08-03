@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
-import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.xml.IXmlOutput;
@@ -13,7 +12,8 @@ public interface ITableMetadata
         extends
             IRowSetMetadata {
 
-    String K_PRIMARY_KEY = "primary-key";
+    String K_PRIMARY_KEY = "primaryKey";
+    String K_DEFAULT_NAME = "defaultName";
 
     QualifiedTableName getQName();
 
@@ -34,9 +34,11 @@ public interface ITableMetadata
     @Override
     ISchemaMetadata getParent();
 
-    String[] getPrimaryKey();
+    TableKey getPrimaryKey();
 
-    IColumnMetadata[] getPrimaryKeyColumns();
+    default IColumnMetadata[] getPrimaryKeyColumns() {
+        return getPrimaryKey().resolve(this);
+    }
 
     @Override
     default void writeObject(IJsonOut out)
@@ -45,13 +47,10 @@ public interface ITableMetadata
 
         IRowSetMetadata.super.writeObject(out);
 
-        String[] pk = getPrimaryKey();
-        if (pk != null) {
+        TableKey primaryKey = getPrimaryKey();
+        if (primaryKey != null) {
             out.key(K_PRIMARY_KEY);
-            out.array();
-            for (String field : getPrimaryKey())
-                out.value(field);
-            out.endArray();
+            primaryKey.writeObject(out);
         }
     }
 
@@ -62,10 +61,15 @@ public interface ITableMetadata
 
         IRowSetMetadata.super.writeObject(out);
 
-        out.attribute(K_PRIMARY_KEY, StringArray.join(", ", getPrimaryKey()));
+        TableKey primaryKey = getPrimaryKey();
+        if (primaryKey != null) {
+            out.beginElement(K_PRIMARY_KEY);
+            primaryKey.writeObject(out);
+            out.endElement();
+        }
     }
 
-    default void accept(IVisitor visitor) {
+    default void accept(ICatalogVisitor visitor) {
         visitor.beginTable(this);
 
         visitor.beginRowSet(this);

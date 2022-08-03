@@ -77,7 +77,7 @@ public interface ICatalogMetadata
         out.endElement();
     }
 
-    default void accept(IVisitor visitor) {
+    default void accept(ICatalogVisitor visitor) {
         visitor.beginCatalog(this);
         for (ISchemaMetadata schema : getSchemas().values())
             schema.accept(visitor);

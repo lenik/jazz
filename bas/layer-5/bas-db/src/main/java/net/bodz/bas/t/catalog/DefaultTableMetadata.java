@@ -24,7 +24,7 @@ public class DefaultTableMetadata
 
     String label;
     String description;
-    String[] primaryKey;
+    TableKey primaryKey;
 
     public DefaultTableMetadata() {
     }
@@ -67,35 +67,25 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public String[] getPrimaryKey() {
+    public TableKey getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(String[] primaryKey) {
+    public void setPrimaryKey(TableKey primaryKey) {
         this.primaryKey = primaryKey;
     }
 
     public void parsePrimaryKey(String keyStr) {
+        String[] cols;
         if (Nullables.isEmpty(keyStr))
-            primaryKey = new String[0];
+            cols = new String[0];
         else {
-            primaryKey = keyStr.split(",");
-            for (int i = 0; i < primaryKey.length; i++)
-                primaryKey[i] = primaryKey[i].trim();
+            cols = keyStr.split(",");
+            for (int i = 0; i < cols.length; i++)
+                cols[i] = cols[i].trim();
         }
+        primaryKey = new TableKey(getQName(), cols);
     }
-
-    @Override
-    public IColumnMetadata[] getPrimaryKeyColumns() {
-        String[] pk = getPrimaryKey();
-        IColumnMetadata[] columns = new IColumnMetadata[pk.length];
-        for (int i = 0; i < pk.length; i++) {
-            columns[i] = getColumn(pk[i]);
-        }
-        return columns;
-    }
-
-    static final String K_DEFAULT_NAME = "defaultName";
 
     @Override
     public void readObject(JsonObject o)
@@ -183,15 +173,16 @@ public class DefaultTableMetadata
 
         // Find out primary key
         rs = metaData.getPrimaryKeys(qName.catalogName, qName.schemaName, qName.tableName);
-        List<String> pkColumnNames = new ArrayList<>();
+        List<String> columnList = new ArrayList<>();
         while (rs.next()) {
             String pkColumnName = rs.getString("COLUMN_NAME");
-            pkColumnNames.add(pkColumnName);
+            columnList.add(pkColumnName);
 
             DefaultColumnMetadata column = (DefaultColumnMetadata) getColumn(pkColumnName);
             column.setPrimaryKey(true);
         }
-        String[] primaryKey = pkColumnNames.toArray(new String[0]);
+        String[] columnNames = columnList.toArray(new String[0]);
+        TableKey primaryKey = new TableKey(getQName(), columnNames);
         setPrimaryKey(primaryKey);
     }
 
