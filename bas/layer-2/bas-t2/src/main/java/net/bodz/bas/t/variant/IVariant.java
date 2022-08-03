@@ -108,4 +108,6 @@ public interface IVariant {
 
     <T extends Enum<T>> T getEnum(Class<T> enumType, T defaultValue);
 
+    IVariant NULL = new NullVariant();
+
 }
