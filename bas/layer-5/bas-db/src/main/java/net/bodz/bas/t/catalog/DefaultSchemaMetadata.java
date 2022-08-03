@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -14,13 +13,18 @@ import java.util.Map;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.xml.xq.IElement;
-import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.t.map.ListMap;
 
 public class DefaultSchemaMetadata
         implements
             IMutableSchemaMetadata {
+
+    static final Logger logger = LoggerFactory.getLogger(DefaultSchemaMetadata.class);
 
     QualifiedSchemaName qName = new QualifiedSchemaName();
     QualifiedSchemaName defaultName = new QualifiedSchemaName();
@@ -99,6 +103,10 @@ public class DefaultSchemaMetadata
         return tables;
     }
 
+    public ITableMetadata getTable(QualifiedTableName qName) {
+        return tables.get(qName.getTableName());
+    }
+
     @Override
     public ITableMetadata getTable(String name) {
         return tables.get(name);
@@ -172,11 +180,8 @@ public class DefaultSchemaMetadata
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
         IElement x_tables = x_metadata.selectByTag(K_TABLES).first();
-        IElements x_table_v = x_tables.children();
-        int n = x_table_v.getElementCount();
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) {
-            IElement x_table = x_table_v.get(i);
+        for (IElement x_table : x_tables.children()) {
             assert x_table.getTagName().equals(K_TABLE);
             DefaultTableMetadata table = new DefaultTableMetadata();
             table.readObject(x_table);
@@ -186,35 +191,99 @@ public class DefaultSchemaMetadata
         this.tables = tables;
     }
 
+    class MetaDataHandler
+            implements
+                IJDBCMetaDataHandler {
+
+        @Override
+        public void schema(ResultSet rs)
+                throws SQLException {
+            String catalogName = rs.getString("TABLE_CATALOG");
+            String schemaName = rs.getString("TABLE_SCHEM");
+            qName.assign(catalogName, schemaName); // correct char case.
+        }
+
+        @Override
+        public void table(ResultSet rs)
+                throws SQLException {
+            DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
+            table.getJDBCMetaDataHandler().table(rs);
+            addTable(table);
+        }
+
+        @Override
+        public void column(ResultSet rs)
+                throws SQLException {
+            QualifiedTableName qName = new QualifiedTableName();
+            qName.readFromJDBC(rs);
+            ITableMetadata table = getTable(qName.getTableName());
+            if (table == null)
+                throw new UnexpectedException("Detected new table when scanning: " + qName);
+            table.getJDBCMetaDataHandler().column(rs);
+        }
+
+        @Override
+        public void primaryKey(ITableMetadata table, TableKey primaryKey)
+                throws SQLException {
+            table.getJDBCMetaDataHandler().primaryKey(table, primaryKey);
+        }
+
+        @Override
+        public void crossReference(ITableMetadata table, CrossReference crossRef)
+                throws SQLException {
+        }
+
+    }
+
+    @Override
+    public MetaDataHandler getJDBCMetaDataHandler() {
+        return new MetaDataHandler();
+    }
+
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
+        MetaDataHandler handler = new MetaDataHandler();
         ResultSet rs;
         QualifiedSchemaName qName = getQName();
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(qName.catalogName, qName.schemaName);
         while (rs.next()) {
-            String catalogName = rs.getString("TABLE_CATALOG");
-            String schemaName = rs.getString("TABLE_SCHEM");
-            qName.assign(catalogName, schemaName); // correct char case.
+            handler.schema(rs);
             break;
         }
         rs.close();
 
         rs = dmd.getTables(qName.catalogName, qName.schemaName, null, types);
-        List<String> tableNames = new ArrayList<>();
-        while (rs.next()) {
-            String name = rs.getString("table_name");
-            tableNames.add(name);
+        while (rs.next())
+            handler.table(rs);
+        rs.close();
+
+        rs = dmd.getColumns(qName.catalogName, qName.schemaName, null, null);
+        while (rs.next())
+            handler.column(rs);
+        rs.close();
+
+        rs = dmd.getPrimaryKeys(qName.catalogName, qName.schemaName, null);
+        Map<QualifiedTableName, TableKey> pkmap = TableKey.convertFromJDBC(rs);
+        for (QualifiedTableName tableQName : pkmap.keySet()) {
+            ITableMetadata table = getTable(tableQName);
+            TableKey primaryKey = pkmap.get(tableQName);
+            handler.primaryKey(table, primaryKey);
         }
         rs.close();
 
-        for (String tableName : tableNames) {
-            DefaultTableMetadata table = new DefaultTableMetadata();
-            table.getQName().assign(qName.catalogName, qName.schemaName, tableName);
-            table.loadFromJDBC(connection);
-            addTable(table);
+        rs = dmd.getCrossReference(qName.catalogName, qName.schemaName, null, //
+                qName.catalogName, qName.schemaName, null);
+        ListMap<QualifiedTableName, CrossReference> fMap = CrossReference.convertToForeignMap(rs);
+        for (QualifiedTableName foreignName : fMap.keySet()) {
+            ITableMetadata foreignTable = getTable(foreignName.getTableName());
+
+            List<CrossReference> crossRefs = fMap.get(foreignName);
+            for (CrossReference crossRef : crossRefs) {
+                handler.crossReference(foreignTable, crossRef);
+            }
         }
         rs.close();
     }

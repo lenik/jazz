@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
@@ -20,6 +21,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.map.JKMap;
 
 public class CrossReference
         implements
@@ -102,35 +104,65 @@ public class CrossReference
         this.deferrability = deferrability;
     }
 
-    public void readFromJDBC(ResultSet rs)
+    public static CrossReferenceMap convertToParentMap(ResultSet rs)
             throws SQLException {
-        if (!rs.next())
-            throw new IllegalArgumentException("No cross reference result.");
+        return convertFromJDBC(rs, true);
+    }
 
-        constraintName = rs.getString("FK_NAME");
-        primaryKeyName = rs.getString("PK_NAME");
-        updateRule = rs.getShort("UPDATE_RULE");
-        deleteRule = rs.getShort("DELETE_RULE");
-        deferrability = rs.getShort("DEFERRABILITY");
+    public static CrossReferenceMap convertToForeignMap(ResultSet rs)
+            throws SQLException {
+        return convertFromJDBC(rs, false);
+    }
+
+    public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
+            throws SQLException {
+        JKMap<QualifiedTableName, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
+                groupByParent);
+        CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
+        for (QualifiedTableName k1 : rawMap.keySet()) {
+            for (String k2 : rawMap.get(k1).keySet()) {
+                List<CrossReferenceRow> rows = rawMap.get2(k1, k2);
+                CrossReference ref = new CrossReference();
+                ref.readObject(rows);
+                refMap.add2(k1, ref);
+            }
+        }
+        return refMap;
+    }
+
+    public void readObject(List<CrossReferenceRow> rows) {
+        if (rows.isEmpty())
+            throw new IllegalArgumentException("No cross reference result.");
+        Iterator<CrossReferenceRow> iterator = rows.iterator();
+
+        CrossReferenceRow row = iterator.next();
+        constraintName = row.FK_NAME;
+        primaryKeyName = row.PK_NAME;
+        updateRule = row.UPDATE_RULE;
+        deleteRule = row.DELETE_RULE;
+        deferrability = row.DEFERRABILITY;
 
         QualifiedTableName pkTable = new QualifiedTableName();
-        pkTable.catalogName = rs.getString("PKTABLE_CAT");
-        pkTable.schemaName = rs.getString("PKTABLE_SCHEM");
-        pkTable.tableName = rs.getString("PKTABLE_NAME");
+        pkTable.catalogName = row.PKTABLE_CAT;
+        pkTable.schemaName = row.PKTABLE_SCHEM;
+        pkTable.tableName = row.PKTABLE_NAME;
 
         QualifiedTableName fkTable = new QualifiedTableName();
-        fkTable.catalogName = rs.getString("FKTABLE_CAT");
-        fkTable.schemaName = rs.getString("FKTABLE_SCHEM");
-        fkTable.tableName = rs.getString("FKTABLE_NAME");
+        fkTable.catalogName = row.FKTABLE_CAT;
+        fkTable.schemaName = row.FKTABLE_SCHEM;
+        fkTable.tableName = row.FKTABLE_NAME;
 
         List<ColumnPair> pairs = new ArrayList<>();
-        do {
+        while (true) {
             ColumnPair pair = new ColumnPair();
-            pair.fkName = rs.getString("FKCOLUMN_NAME");
-            pair.pkName = rs.getString("PKCOLUMN_NAME");
-            pair.seq = rs.getShort("KEY_SEQ");
+            pair.fkName = row.FKCOLUMN_NAME;
+            pair.pkName = row.PKCOLUMN_NAME;
+            pair.seq = row.KEY_SEQ;
             pairs.add(pair);
-        } while (rs.next());
+            if (!iterator.hasNext())
+                break;
+            iterator.next();
+        }
         Collections.sort(pairs);
 
         int nkv = pairs.size();
@@ -164,6 +196,11 @@ public class CrossReference
     @Override
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
+        if (foreignKey == null)
+            throw new NullPointerException("foreignKey");
+        if (parentKey == null)
+            throw new NullPointerException("parentKey");
+
         out.key(K_FOREIGN_KEY);
         foreignKey.writeObjectBoxed(out);
 
@@ -198,6 +235,11 @@ public class CrossReference
     @Override
     public void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
+        if (foreignKey == null)
+            throw new NullPointerException("foreignKey");
+        if (parentKey == null)
+            throw new NullPointerException("parentKey");
+
         out.attribute(K_CONSTRAINT_NAME, constraintName);
         out.attribute(K_PRIMARY_KEY_NAME, primaryKeyName);
 
@@ -209,11 +251,11 @@ public class CrossReference
             out.attribute(K_DEFERRABILITY, deferrability);
 
         out.beginElement(K_FOREIGN_KEY);
-        foreignKey.writeObjectBoxed(out);
+        foreignKey.writeObject(out);
         out.endElement();
 
         out.beginElement(K_PARENT_KEY);
-        parentKey.writeObjectBoxed(out);
+        parentKey.writeObject(out);
         out.endElement();
     }
 

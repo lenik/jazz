@@ -4,17 +4,14 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
-import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
 
 public class DefaultCatalogMetadata
@@ -135,11 +132,8 @@ public class DefaultCatalogMetadata
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
         IElement x_schemas = x_metadata.selectByTag(K_SCHEMAS).first();
-        IElements x_schema_v = x_schemas.children();
-        int n = x_schema_v.getElementCount();
         Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) {
-            IElement x_schema = x_schema_v.get(i);
+        for (IElement x_schema : x_schemas.children()) {
             assert x_schema.getTagName().equals(K_SCHEMA);
             DefaultSchemaMetadata schema = new DefaultSchemaMetadata();
             schema.readObject(x_schema);
@@ -149,25 +143,55 @@ public class DefaultCatalogMetadata
         this.schemas = schemas;
     }
 
+    class MetaDataHandler
+            implements
+                IJDBCMetaDataHandler {
+
+        @Override
+        public void schema(ResultSet rs)
+                throws SQLException {
+            String schemaName = rs.getString("TABLE_SCHEM");
+            DefaultSchemaMetadata schema = new DefaultSchemaMetadata();
+            schema.getQName().assign(name, schemaName);
+            addSchema(schema);
+        }
+
+        @Override
+        public void table(ResultSet rs)
+                throws SQLException {
+        }
+
+        @Override
+        public void column(ResultSet rs)
+                throws SQLException {
+        }
+
+        @Override
+        public void primaryKey(ITableMetadata table, TableKey primaryKey)
+                throws SQLException {
+        }
+
+        @Override
+        public void crossReference(ITableMetadata table, CrossReference crossRef)
+                throws SQLException {
+        }
+
+    }
+
+    @Override
+    public MetaDataHandler getJDBCMetaDataHandler() {
+        return new MetaDataHandler();
+    }
+
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
+        MetaDataHandler handler = getJDBCMetaDataHandler();
         ResultSet rs;
 
         rs = dmd.getSchemas(name, null);
-        List<String> schemaNames = new ArrayList<>();
-        while (rs.next()) {
-            String name = rs.getString("TABLE_SCHEM");
-            schemaNames.add(name);
-        }
-        rs.close();
-
-        for (String schemaName : schemaNames) {
-            DefaultSchemaMetadata schema = new DefaultSchemaMetadata();
-            schema.getQName().assign(name, schemaName);
-            schema.loadFromJDBC(connection, types);
-            addSchema(schema);
-        }
+        while (rs.next())
+            handler.schema(rs);
         rs.close();
     }
 

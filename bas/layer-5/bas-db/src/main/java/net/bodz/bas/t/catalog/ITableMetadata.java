@@ -1,6 +1,9 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -10,10 +13,13 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ITableMetadata
         extends
-            IRowSetMetadata {
+            IRowSetMetadata,
+            IJDBCMetaDataSupport {
 
-    String K_PRIMARY_KEY = "primaryKey";
     String K_DEFAULT_NAME = "defaultName";
+    String K_PRIMARY_KEY = "primaryKey";
+    String K_FOREIGN_KEYS = "foreignKeys";
+    String K_FOREIGN_KEY = "foreignKey";
 
     QualifiedTableName getQName();
 
@@ -40,6 +46,19 @@ public interface ITableMetadata
         return getPrimaryKey().resolve(this);
     }
 
+    Map<String, CrossReference> getForeignKeys();
+
+    CrossReference getForeignKey(String constraintName);
+
+    default Set<QualifiedTableName> getParentTableNames() {
+        Set<QualifiedTableName> parents = new LinkedHashSet<>();
+        for (CrossReference ref : getForeignKeys().values()) {
+            QualifiedTableName parent = ref.getParentKey().getQName();
+            parents.add(parent);
+        }
+        return parents;
+    }
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
@@ -51,6 +70,15 @@ public interface ITableMetadata
         if (primaryKey != null) {
             out.key(K_PRIMARY_KEY);
             primaryKey.writeObject(out);
+        }
+
+        Map<String, CrossReference> foreignKeys = getForeignKeys();
+        if (!foreignKeys.isEmpty()) {
+            out.key(K_FOREIGN_KEYS);
+            out.array();
+            for (CrossReference ref : foreignKeys.values())
+                ref.writeObjectBoxed(out);
+            out.endArray();
         }
     }
 
@@ -65,6 +93,17 @@ public interface ITableMetadata
         if (primaryKey != null) {
             out.beginElement(K_PRIMARY_KEY);
             primaryKey.writeObject(out);
+            out.endElement();
+        }
+
+        Map<String, CrossReference> foreignKeys = getForeignKeys();
+        if (!foreignKeys.isEmpty()) {
+            out.beginElement(K_FOREIGN_KEYS);
+            for (CrossReference ref : foreignKeys.values()) {
+                out.beginElement(K_FOREIGN_KEY);
+                ref.writeObject(out);
+                out.endElement();
+            }
             out.endElement();
         }
     }

@@ -59,12 +59,12 @@ public class MutableRow
     }
 
     @Override
-    public IColumnMetadata getMetadata(int index) {
+    public IColumnMetadata getColumn(int index) {
         return metadata.getColumn(index);
     }
 
     @Override
-    public IColumnMetadata getMetadata(String name) {
+    public IColumnMetadata getColumn(String name) {
         IRowSetMetadata metadata = getRowSetMetadata();
         if (metadata == null)
             throw new IllegalUsageException("No metadata bound.");
@@ -77,8 +77,17 @@ public class MutableRow
     }
 
     @Override
-    public Class<?> getType(int index) {
-        IColumnMetadata column = metadata.getColumn(index);
+    public Class<?> getColumnType(int columnIndex) {
+        IColumnMetadata column = metadata.getColumn(columnIndex);
+        if (column == null)
+            return null;
+        else
+            return column.getType();
+    }
+
+    @Override
+    public Class<?> getColumnType(String columnName) {
+        IColumnMetadata column = metadata.getColumn(columnName);
         if (column == null)
             return null;
         else
@@ -207,7 +216,7 @@ public class MutableRow
         int cc = metadata.getColumnCount();
         List<Object> list = new ArrayList<>();
         for (int i = 0; i < cc; i++) {
-            IColumnMetadata column = getMetadata(i);
+            IColumnMetadata column = getColumn(i);
             String tagName = column.getName();
             IElement x_cell = x_row.selectByTag(tagName).getFirst();
             if (x_cell != null) {
