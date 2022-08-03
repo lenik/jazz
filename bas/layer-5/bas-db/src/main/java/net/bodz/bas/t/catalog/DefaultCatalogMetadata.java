@@ -102,6 +102,26 @@ public class DefaultCatalogMetadata
         return schema != null;
     }
 
+    @Override
+    public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
+        QualifiedSchemaName schemaPattern = null;
+        if (pattern != null) {
+            if (!NamePattern.matches(getName(), pattern.getCatalogName(), ignoreCase))
+                return TableList.EMPTY;
+            schemaPattern = pattern.getSchemaQName();
+        }
+
+        TableList tableList = new TableList();
+        for (ISchemaMetadata schema : this) {
+            if (pattern != null)
+                if (!schemaPattern.contains(schema.getQName(), ignoreCase))
+                    continue;
+            TableList sub = schema.findTables(pattern, ignoreCase);
+            tableList.list.addAll(sub.list);
+        }
+        return tableList;
+    }
+
     String getSchemaNames() {
         StringBuilder sb = new StringBuilder(schemas.size() * 16);
         for (String key : schemas.keySet()) {

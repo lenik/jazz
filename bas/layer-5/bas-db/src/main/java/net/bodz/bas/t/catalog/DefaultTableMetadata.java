@@ -289,18 +289,20 @@ public class DefaultTableMetadata
         // Find out primary key
         if (loadKeys) {
             rs = dmd.getPrimaryKeys(qName.catalogName, qName.schemaName, qName.tableName);
-            Map<QualifiedTableName, TableKey> pkmap = TableKey.convertFromJDBC(rs);
-            for (TableKey pk : pkmap.values())
+            Map<QualifiedTableName, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
+            for (TableKey pk : primaryKeyMap.values())
                 handler.primaryKey(this, pk);
             rs.close();
 
             rs = dmd.getCrossReference(null, null, null, //
                     qName.catalogName, qName.schemaName, qName.tableName);
-            ListMap<QualifiedTableName, CrossReference> fkMap = CrossReference.convertToParentMap(rs);
-            assert fkMap.size() == 1;
-            List<CrossReference> parent0 = fkMap.values().iterator().next();
-            for (CrossReference fk : parent0)
-                handler.crossReference(this, fk);
+            ListMap<QualifiedTableName, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+            assert foreignMap.size() <= 1;
+            if (!foreignMap.isEmpty()) {
+                List<CrossReference> parentList = foreignMap.values().iterator().next();
+                for (CrossReference crossRef : parentList)
+                    handler.crossReference(this, crossRef);
+            }
             rs.close();
         }
     }

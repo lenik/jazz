@@ -144,23 +144,20 @@ public class DefaultSchemaMetadata
         return table != null;
     }
 
-    List<ITableMetadata> listInOrder(boolean reversed) {
-        TableOrderRun run = new TableOrderRun(getParent());
-        for (ITableMetadata table : getTables().values())
-            run.traverse(table);
-        if (reversed)
-            run.reverse();
-        return run.orderedList;
-    }
-
     @Override
-    public List<ITableMetadata> listInCreationOrder() {
-        return listInOrder(true);
-    }
-
-    @Override
-    public List<ITableMetadata> listInDeletionOrder() {
-        return listInOrder(false);
+    public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
+        if (pattern != null) {
+            if (!pattern.getSchemaQName().contains(this.getQName()))
+                return TableList.EMPTY;
+        }
+        TableList list = new TableList();
+        for (ITableMetadata table : getTables().values()) {
+            if (pattern != null)
+                if (!pattern.contains(table.getQName(), ignoreCase))
+                    continue;
+            list.add(table);
+        }
+        return list;
     }
 
     String getTableNames() {
@@ -294,13 +291,13 @@ public class DefaultSchemaMetadata
         }
         rs.close();
 
-        rs = dmd.getCrossReference(qName.catalogName, qName.schemaName, null, //
+        rs = dmd.getCrossReference(null, null, null, //
                 qName.catalogName, qName.schemaName, null);
-        ListMap<QualifiedTableName, CrossReference> fMap = CrossReference.convertToForeignMap(rs);
-        for (QualifiedTableName foreignName : fMap.keySet()) {
+        ListMap<QualifiedTableName, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+        for (QualifiedTableName foreignName : foreignMap.keySet()) {
             ITableMetadata foreignTable = getTable(foreignName.getTableName());
 
-            List<CrossReference> crossRefs = fMap.get(foreignName);
+            List<CrossReference> crossRefs = foreignMap.get(foreignName);
             for (CrossReference crossRef : crossRefs) {
                 handler.crossReference(foreignTable, crossRef);
             }

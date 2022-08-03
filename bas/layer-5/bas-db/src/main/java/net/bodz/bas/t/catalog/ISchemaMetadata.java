@@ -1,7 +1,6 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
@@ -15,6 +14,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 public interface ISchemaMetadata
         extends
             Iterable<ITableMetadata>,
+            ITableDirectory,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {
@@ -48,16 +48,6 @@ public interface ISchemaMetadata
     int getTableCount();
 
     ITableMetadata getTable(String name);
-
-    default ITableMetadata findTable(String name, boolean ignoreCase) {
-        if (ignoreCase)
-            name = getCanonicalName(name);
-        return getTable(name);
-    }
-
-    List<ITableMetadata> listInCreationOrder();
-
-    List<ITableMetadata> listInDeletionOrder();
 
     String getCanonicalName(String name);
 

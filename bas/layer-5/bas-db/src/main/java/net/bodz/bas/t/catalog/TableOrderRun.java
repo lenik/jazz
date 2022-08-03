@@ -9,12 +9,12 @@ import net.bodz.bas.c.object.IdentityHashSet;
 
 public class TableOrderRun {
 
-    ICatalogMetadata catalog;
+    ITableDirectory directory;
     Set<ITableMetadata> markSet = new IdentityHashSet<>();
     List<ITableMetadata> orderedList = new ArrayList<>();
 
-    public TableOrderRun(ICatalogMetadata catalog) {
-        this.catalog = catalog;
+    public TableOrderRun(ITableDirectory directory) {
+        this.directory = directory;
     }
 
     public List<ITableMetadata> getOrderedList() {
@@ -27,7 +27,7 @@ public class TableOrderRun {
     }
 
     public TableOrderRun traverse(QualifiedTableName tableName) {
-        ITableMetadata table = catalog.getTable(tableName);
+        ITableMetadata table = directory.getTable(tableName);
         deepFirst(table);
         return this;
     }
@@ -40,7 +40,7 @@ public class TableOrderRun {
         if (!markSet.add(table))
             return;
         for (QualifiedTableName parentName : table.getParentTableNames()) {
-            ITableMetadata parent = catalog.getTable(parentName);
+            ITableMetadata parent = directory.getTable(parentName);
             deepFirst(parent);
         }
         orderedList.add(table);
