@@ -2,6 +2,9 @@ package net.bodz.bas.fmt.xml.xq;
 
 import org.w3c.dom.*;
 
+import net.bodz.bas.t.variant.IVariant;
+import net.bodz.bas.t.variant.MutableVariant;
+
 public class QElement
         extends AbstractElements
         implements
@@ -49,6 +52,18 @@ public class QElement
     public static QElement wrap(Element element) {
         return new QElement(element);
     }
+
+    @Override
+    public IVariant getAttributeVar(String name) {
+        String attribute = getAttribute(name);
+        if (attribute == null)
+            return IVariant.NULL;
+        else
+            return new MutableVariant(attribute);
+    }
+
+    /** ⇱ Implementation Of {@link Element}. */
+    /* _____________________________ */static section.iface __ELEMENT__;
 
     @Override
     public String getTagName() {
