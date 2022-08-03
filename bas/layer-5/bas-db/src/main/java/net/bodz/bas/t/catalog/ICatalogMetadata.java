@@ -14,6 +14,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 public interface ICatalogMetadata
         extends
             Iterable<ISchemaMetadata>,
+            ISchemaDirectory,
             ITableDirectory,
             IJsonForm,
             IXmlForm,
