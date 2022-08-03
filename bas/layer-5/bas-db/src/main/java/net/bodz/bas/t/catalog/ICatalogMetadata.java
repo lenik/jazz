@@ -14,7 +14,8 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 public interface ICatalogMetadata
         extends
             IJsonForm,
-            IXmlForm {
+            IXmlForm,
+            IJDBCMetaDataSupport {
 
     String K_NAME = "name";
     String K_SCHEMAS = "schemas";

@@ -25,7 +25,8 @@ public class DefaultColumnMetadata
         implements
             IColumnMetadata {
 
-    int index;
+    IRowSetMetadata parent;
+
     String name;
     String label;
     String description; // comment..
@@ -52,13 +53,21 @@ public class DefaultColumnMetadata
     int precision;
     int scale;
 
-    @Override
-    public int getIndex() {
-        return index;
+    public DefaultColumnMetadata(IRowSetMetadata parent) {
+        if (parent == null)
+            throw new NullPointerException("parent");
+        this.parent = parent;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    @Override
+    public IRowSetMetadata getParent() {
+        return parent;
+    }
+
+    public void setParent(IRowSetMetadata parent) {
+        if (parent == null)
+            throw new NullPointerException("parent");
+        this.parent = parent;
     }
 
     @Override
@@ -361,16 +370,16 @@ public class DefaultColumnMetadata
         out.endElement();
     }
 
-    public void readObject(ResultSetMetaData jdbcMetadata, int i)
+    public void readObject(ResultSetMetaData jdbcMetadata, int columnIndex)
             throws SQLException {
-        String name = jdbcMetadata.getColumnName(i);
-        String label = jdbcMetadata.getColumnLabel(i);
+        String name = jdbcMetadata.getColumnName(columnIndex);
+        String label = jdbcMetadata.getColumnLabel(columnIndex);
 
-        String typeName = jdbcMetadata.getColumnClassName(i);
+        String typeName = jdbcMetadata.getColumnClassName(columnIndex);
         // int width = jdbcMetadata.getColumnDisplaySize(i);
-        int sqlType = jdbcMetadata.getColumnType(i);
+        int sqlType = jdbcMetadata.getColumnType(columnIndex);
 
-        this.setIndex(i - 1);
+        // this.setIndex(columnIndex - 1);
         this.setName(name);
         if (!Nullables.equals(name, label))
             this.setLabel(label);
@@ -382,19 +391,19 @@ public class DefaultColumnMetadata
         }
         this.setSqlType(sqlType);
 
-        autoIncrement = jdbcMetadata.isAutoIncrement(i);
-        caseSensitive = jdbcMetadata.isCaseSensitive(i);
-        searchable = jdbcMetadata.isSearchable(i);
-        currency = jdbcMetadata.isCurrency(i);
-        nullable = jdbcMetadata.isNullable(i);
-        signed = jdbcMetadata.isSigned(i);
-        readOnly = jdbcMetadata.isReadOnly(i);
-        writable = jdbcMetadata.isWritable(i);
-        definitelyWritable = jdbcMetadata.isDefinitelyWritable(i);
+        autoIncrement = jdbcMetadata.isAutoIncrement(columnIndex);
+        caseSensitive = jdbcMetadata.isCaseSensitive(columnIndex);
+        searchable = jdbcMetadata.isSearchable(columnIndex);
+        currency = jdbcMetadata.isCurrency(columnIndex);
+        nullable = jdbcMetadata.isNullable(columnIndex);
+        signed = jdbcMetadata.isSigned(columnIndex);
+        readOnly = jdbcMetadata.isReadOnly(columnIndex);
+        writable = jdbcMetadata.isWritable(columnIndex);
+        definitelyWritable = jdbcMetadata.isDefinitelyWritable(columnIndex);
 
-        precision = jdbcMetadata.getPrecision(i);
-        scale = jdbcMetadata.getScale(i);
-        columnDisplaySize = jdbcMetadata.getColumnDisplaySize(i);
+        precision = jdbcMetadata.getPrecision(columnIndex);
+        scale = jdbcMetadata.getScale(columnIndex);
+        columnDisplaySize = jdbcMetadata.getColumnDisplaySize(columnIndex);
     }
 
     // @SuppressWarnings("unused")
@@ -433,7 +442,7 @@ public class DefaultColumnMetadata
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        index = o.getInt("index", -1);
+//        index = o.getInt("index", -1);
         name = o.getString("name");
         label = o.getString("label");
         description = o.getString("description");
@@ -464,7 +473,7 @@ public class DefaultColumnMetadata
     @Override
     public void readObject(IElement o)
             throws ParseException, LoaderException {
-        index = o.a("index").getInt(-1);
+//        index = o.a("index").getInt(-1);
         name = o.a("name").getString();
         label = o.a("label").getString();
         description = o.a("description").getString();

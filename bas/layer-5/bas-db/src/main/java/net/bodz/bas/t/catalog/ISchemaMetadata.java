@@ -15,7 +15,8 @@ public interface ISchemaMetadata
         extends
             Iterable<ITableMetadata>,
             IJsonForm,
-            IXmlForm {
+            IXmlForm,
+            IJDBCMetaDataSupport {
 
     String K_TABLES = "tables";
     String K_TABLE = "table";

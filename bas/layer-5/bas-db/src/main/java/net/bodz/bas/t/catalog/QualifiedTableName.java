@@ -2,6 +2,8 @@ package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import javax.xml.stream.XMLStreamException;
@@ -229,6 +231,13 @@ public class QualifiedTableName
             out.attribute(K_SCHEMA_NAME, schemaName);
         if (tableName != null)
             out.attribute(K_TABLE_NAME, tableName);
+    }
+
+    public void readFromJDBC(ResultSet rs)
+            throws SQLException {
+        catalogName = rs.getString("TABLE_CAT");
+        schemaName = rs.getString("TABLE_SCHEM");
+        tableName = rs.getString("TABLE_NAME");
     }
 
 }

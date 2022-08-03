@@ -17,7 +17,7 @@ public class DefaultDatabaseMetadata {
             DefaultTableMetadata metadata = new DefaultTableMetadata();
             QualifiedTableName qName = QualifiedTableName.fromFullName(fullName);
             metadata.setQName(qName);
-            metadata.loadFromJDBC(cn);
+            metadata.loadFromJDBC(cn, true);
             tables.put(fullName, metadata);
             cached = metadata;
         }

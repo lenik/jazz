@@ -6,16 +6,16 @@ public class TableKeyComparator
         extends AbstractNonNullComparator<TableKey> {
 
     int sign;
-    QualifiedTableNameComparator tableCmp;
+    QualifiedTableNameComparator qNameCmp;
 
-    public TableKeyComparator(int sign, QualifiedTableNameComparator tableCmp) {
+    public TableKeyComparator(int sign, QualifiedTableNameComparator qNameCmp) {
         this.sign = sign;
-        this.tableCmp = tableCmp;
+        this.qNameCmp = qNameCmp;
     }
 
     @Override
     public int compareNonNull(TableKey o1, TableKey o2) {
-        int cmp = tableCmp.compare(o1.tableName, o2.tableName);
+        int cmp = qNameCmp.compare(o1.qName, o2.qName);
         if (cmp != 0)
             return cmp * sign;
 

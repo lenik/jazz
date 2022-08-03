@@ -7,6 +7,7 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -19,7 +20,21 @@ public interface IColumnMetadata
             IJsonForm,
             IXmlForm {
 
-    int getIndex();
+    IRowSetMetadata getParent();
+
+    default int position() {
+        int pos = getPositionOpt();
+        if (pos == -1)
+            throw new NoSuchKeyException(getName());
+        return pos;
+    }
+
+    default int getPositionOpt() {
+        IRowSetMetadata parent = getParent();
+        if (parent == null)
+            throw new IllegalStateException("Parent wasn't set.");
+        return parent.indexOfColumn(getName());
+    }
 
     String getName();
 
@@ -86,7 +101,7 @@ public interface IColumnMetadata
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        out.entry("index", getIndex());
+//        out.entry("index", getIndex());
         out.entry("name", getName());
 
         String label = getLabel();
@@ -103,7 +118,7 @@ public interface IColumnMetadata
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        out.attribute("index", getIndex());
+//        out.attribute("index", getIndex());
         out.attribute("name", getName());
 
         String label = getLabel();

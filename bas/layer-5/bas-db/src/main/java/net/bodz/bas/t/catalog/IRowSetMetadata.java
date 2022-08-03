@@ -32,13 +32,7 @@ public interface IRowSetMetadata
         return getColumn(name, false);
     }
 
-    default IColumnMetadata getColumn(String name, boolean ignoreCase) {
-        int pos = indexOfColumn(name, ignoreCase);
-        if (pos == -1)
-            return null;
-        else
-            return getColumn(pos);
-    }
+    IColumnMetadata getColumn(String name, boolean ignoreCase);
 
     default int indexOfColumn(String name, boolean ignoreCase) {
         if (name == null)
