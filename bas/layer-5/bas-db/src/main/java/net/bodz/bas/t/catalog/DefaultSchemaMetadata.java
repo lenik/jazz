@@ -144,6 +144,25 @@ public class DefaultSchemaMetadata
         return table != null;
     }
 
+    List<ITableMetadata> listInOrder(boolean reversed) {
+        TableOrderRun run = new TableOrderRun(getParent());
+        for (ITableMetadata table : getTables().values())
+            run.traverse(table);
+        if (reversed)
+            run.reverse();
+        return run.orderedList;
+    }
+
+    @Override
+    public List<ITableMetadata> listInCreationOrder() {
+        return listInOrder(true);
+    }
+
+    @Override
+    public List<ITableMetadata> listInDeletionOrder() {
+        return listInOrder(false);
+    }
+
     String getTableNames() {
         StringBuilder sb = new StringBuilder(tables.size() * 16);
         for (String key : tables.keySet()) {
@@ -231,6 +250,7 @@ public class DefaultSchemaMetadata
         @Override
         public void crossReference(ITableMetadata table, CrossReference crossRef)
                 throws SQLException {
+            table.getJDBCMetaDataHandler().crossReference(table, crossRef);
         }
 
     }

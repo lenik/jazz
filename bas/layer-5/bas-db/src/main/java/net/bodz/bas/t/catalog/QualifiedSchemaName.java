@@ -124,6 +124,22 @@ public class QualifiedSchemaName
         return sb.toString();
     }
 
+    public boolean contains(QualifiedSchemaName o) {
+        if (!NamePattern.matches(catalogName, o.catalogName))
+            return false;
+        if (!NamePattern.matches(schemaName, o.schemaName))
+            return false;
+        return true;
+    }
+
+    public boolean contains(QualifiedTableName o) {
+        if (!NamePattern.matches(catalogName, o.catalogName))
+            return false;
+        if (!NamePattern.matches(schemaName, o.schemaName))
+            return false;
+        return true;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(catalogName, schemaName);

@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
@@ -53,6 +54,10 @@ public interface ISchemaMetadata
             name = getCanonicalName(name);
         return getTable(name);
     }
+
+    List<ITableMetadata> listInCreationOrder();
+
+    List<ITableMetadata> listInDeletionOrder();
 
     String getCanonicalName(String name);
 

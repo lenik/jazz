@@ -171,6 +171,16 @@ public class QualifiedTableName
         return sb.toString();
     }
 
+    public boolean contains(QualifiedTableName o) {
+        if (!NamePattern.matches(catalogName, o.catalogName))
+            return false;
+        if (!NamePattern.matches(schemaName, o.schemaName))
+            return false;
+        if (!NamePattern.matches(tableName, o.tableName))
+            return false;
+        return true;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(catalogName, schemaName, tableName);

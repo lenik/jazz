@@ -83,4 +83,29 @@ class CrossReferenceRow {
         return map;
     }
 
+    static class ColumnEntry
+            implements
+                Comparable<ColumnEntry> {
+
+        String PKCOLUMN_NAME;
+        String FKCOLUMN_NAME;
+        short KEY_SEQ;
+
+        public ColumnEntry(CrossReferenceRow row) {
+            FKCOLUMN_NAME = row.FKCOLUMN_NAME;
+            PKCOLUMN_NAME = row.PKCOLUMN_NAME;
+            KEY_SEQ = row.KEY_SEQ;
+        }
+
+        @Override
+        public int compareTo(ColumnEntry o) {
+            int cmp = KEY_SEQ - o.KEY_SEQ;
+            if (cmp != 0)
+                return cmp;
+            assert this == o;
+            return 0;
+        }
+
+    }
+
 }
