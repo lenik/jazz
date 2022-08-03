@@ -93,7 +93,7 @@ public interface ISchemaMetadata
         out.endElement();
     }
 
-    default void accept(IVisitor visitor) {
+    default void accept(ICatalogVisitor visitor) {
         visitor.beginSchema(this);
         for (ITableMetadata table : this)
             table.accept(visitor);
