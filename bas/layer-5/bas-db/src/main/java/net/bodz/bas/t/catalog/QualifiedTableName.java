@@ -49,6 +49,10 @@ public class QualifiedTableName
         return o;
     }
 
+    public QualifiedSchemaName getSchemaQName() {
+        return new QualifiedSchemaName(catalogName, schemaName);
+    }
+
     public String getCatalogName() {
         return catalogName;
     }
@@ -171,12 +175,29 @@ public class QualifiedTableName
         return sb.toString();
     }
 
+    public boolean contains(QualifiedTableName o, boolean ignoreCase) {
+        if (ignoreCase)
+            return containsIgnoreCase(o);
+        else
+            return contains(o);
+    }
+
     public boolean contains(QualifiedTableName o) {
         if (!NamePattern.matches(catalogName, o.catalogName))
             return false;
         if (!NamePattern.matches(schemaName, o.schemaName))
             return false;
         if (!NamePattern.matches(tableName, o.tableName))
+            return false;
+        return true;
+    }
+
+    public boolean containsIgnoreCase(QualifiedTableName o) {
+        if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
+            return false;
+        if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
+            return false;
+        if (!NamePattern.matchesIgnoreCase(tableName, o.tableName))
             return false;
         return true;
     }
