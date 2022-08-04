@@ -13,6 +13,8 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.json.JsonObject;
 
 public class DefaultCatalogMetadata
@@ -292,7 +294,7 @@ public class DefaultCatalogMetadata
         this.schemas = schemas;
     }
 
-    class MetaDataHandler
+    class CatalogHandler
             implements
                 IJDBCMetaDataHandler {
 
@@ -301,46 +303,53 @@ public class DefaultCatalogMetadata
                 throws SQLException {
             String schemaName = rs.getString("TABLE_SCHEM");
             DefaultSchemaMetadata schema = newSchema(schemaName);
-            addSchema(schema);
-        }
-
-        @Override
-        public void table(ResultSet rs)
-                throws SQLException {
-        }
-
-        @Override
-        public void column(ResultSet rs)
-                throws SQLException {
-        }
-
-        @Override
-        public void primaryKey(ITableMetadata table, TableKey primaryKey)
-                throws SQLException {
-        }
-
-        @Override
-        public void crossReference(ITableMetadata table, CrossReference crossRef)
-                throws SQLException {
+            if (loadSelector.selectSchema(schema.id))
+                addSchema(schema);
         }
 
     }
 
+    IJDBCMetaDataHandler metaDataHandler = createJDBCMetaDataHandler();
+    IJDBCLoadSelector loadSelector = IJDBCLoadSelector.ALL;
+
+    protected CatalogHandler createJDBCMetaDataHandler() {
+        return new CatalogHandler();
+    }
+
     @Override
-    public MetaDataHandler getJDBCMetaDataHandler() {
-        return new MetaDataHandler();
+    public IJDBCMetaDataHandler getJDBCMetaDataHandler() {
+        return metaDataHandler;
+    }
+
+    public void setJDBCMetaDataHandler(IJDBCMetaDataHandler handler) {
+        metaDataHandler = handler;
+    }
+
+    public IJDBCLoadSelector getJDBCLoadSelector() {
+        return loadSelector;
+    }
+
+    public void setJDBCLoadSelector(IJDBCLoadSelector loadSelector) {
+        this.loadSelector = loadSelector;
     }
 
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
-        MetaDataHandler handler = getJDBCMetaDataHandler();
         ResultSet rs;
 
         rs = dmd.getSchemas(name, null);
         while (rs.next())
-            handler.schema(rs);
+            metaDataHandler.schema(rs);
         rs.close();
+    }
+
+    public void dump() {
+        dump(Stdio.cout.indented());
+    }
+
+    public void dump(ITreeOut out) {
+        accept(new CatalogDumper(out).indented());
     }
 
     static DefaultCatalogMetadata defaultInstance = new DefaultCatalogMetadata();

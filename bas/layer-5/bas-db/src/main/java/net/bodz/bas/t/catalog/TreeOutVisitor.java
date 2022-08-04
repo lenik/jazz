@@ -15,9 +15,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginCatalog(ICatalogMetadata catalog) {
-        impl.beginCatalog(catalog);
-        out.enter();
+    public boolean beginCatalog(ICatalogMetadata catalog) {
+        if (impl.beginCatalog(catalog)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -27,9 +30,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginSchema(ISchemaMetadata schema) {
-        impl.beginSchema(schema);
-        out.enter();
+    public boolean beginSchema(ISchemaMetadata schema) {
+        if (impl.beginSchema(schema)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -39,9 +45,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginTables(ISchemaMetadata schema) {
-        impl.beginTables(schema);
-        out.enter();
+    public boolean beginTables(ISchemaMetadata schema) {
+        if (impl.beginTables(schema)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -51,9 +60,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginViews(ISchemaMetadata schema) {
-        impl.beginViews(schema);
-        out.enter();
+    public boolean beginViews(ISchemaMetadata schema) {
+        if (impl.beginViews(schema)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -63,9 +75,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginTableView(ITableViewMetadata table) {
-        impl.beginTableView(table);
-        out.enter();
+    public boolean beginTableView(ITableViewMetadata table) {
+        if (impl.beginTableView(table)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -75,9 +90,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginColumns(ITableViewMetadata table) {
-        impl.beginColumns(table);
-        out.enter();
+    public boolean beginColumns(ITableViewMetadata table) {
+        if (impl.beginColumns(table)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -87,9 +105,12 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void beginRowSet(IRowSetMetadata rowSet) {
-        impl.beginRowSet(rowSet);
-        out.enter();
+    public boolean beginRowSet(IRowSetMetadata rowSet) {
+        if (impl.beginRowSet(rowSet)) {
+            out.enter();
+            return true;
+        }
+        return false;
     }
 
     @Override

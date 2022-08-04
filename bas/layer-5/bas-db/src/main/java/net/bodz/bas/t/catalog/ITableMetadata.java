@@ -22,7 +22,10 @@ public interface ITableMetadata
     TableKey getPrimaryKey();
 
     default IColumnMetadata[] getPrimaryKeyColumns() {
-        return getPrimaryKey().resolve(this);
+        TableKey key = getPrimaryKey();
+        if (key == null)
+            return new IColumnMetadata[0];
+        return key.resolve(this);
     }
 
     Map<String, CrossReference> getForeignKeys();

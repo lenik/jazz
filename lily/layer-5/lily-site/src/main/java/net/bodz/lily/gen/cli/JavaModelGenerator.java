@@ -23,8 +23,11 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.t.catalog.DefaultCatalogMetadata;
 import net.bodz.bas.t.catalog.DefaultTableMetadata;
 import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.IJDBCMetaDataHandler;
+import net.bodz.bas.t.catalog.ISchemaMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.gen.model.java.*;
 
@@ -55,12 +58,36 @@ public class JavaModelGenerator
     DataContext dataContext;
     Connection connection;
 
+    DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
+
     public JavaModelGenerator(DataContext dataContext) {
         this.dataContext = dataContext;
     }
 
+    final IJDBCMetaDataHandler handler = catalog.getJDBCMetaDataHandler();
+
+    class Filter
+            implements
+                IJDBCMetaDataHandler {
+
+        IJDBCMetaDataHandler next;
+
+        public Filter(IJDBCMetaDataHandler next) {
+            this.next = next;
+        }
+
+        @Override
+        public ISchemaMetadata schema(ResultSet rs)
+                throws SQLException {
+            return IJDBCMetaDataHandler.super.schema(rs);
+        }
+
+    }
+
     void makeCatalog(String catalogName)
             throws SQLException, IOException {
+
+        catalog.loadFromJDBC(connection, "TABLE", "VIEW");
         List<String> names = new ArrayList<>();
         ResultSet rs = connection.getMetaData().getSchemas(catalogName, null);
         while (rs.next()) {
@@ -74,17 +101,17 @@ public class JavaModelGenerator
 
     void makeSchema(String catalogName, String schemaName)
             throws SQLException, IOException {
-        List<String> names = new ArrayList<>();
+        List<String> tableNames = new ArrayList<>();
         ResultSet rs = connection.getMetaData().getTables(catalogName, schemaName, null, //
                 new String[] { "TABLE" });
         while (rs.next()) {
             String name = rs.getString("TABLE_NAME");
             // String type = rs.getString("TABLE_TYPE");
             // String remarks = rs.getString("REMARKS");
-            names.add(name);
+            tableNames.add(name);
         }
         rs.close();
-        for (String tableName : names) {
+        for (String tableName : tableNames) {
             DefaultTableMetadata table = new DefaultTableMetadata();
             table.getId().assign(catalogName, schemaName, tableName);
             table.loadFromJDBC(connection, true);
@@ -197,8 +224,12 @@ public class JavaModelGenerator
                 makeCatalog(StringPart.before(arg, ".*.*"));
             else if (arg.endsWith(".*"))
                 makeSchema(null, StringPart.before(arg, ".*"));
-            else
-                makeEntity(arg);
+            else {
+                DefaultTableMetadata table = new DefaultTableMetadata();
+                table.getId().setFullName(arg);
+                table.loadFromJDBC(connection, false);
+
+            }
         }
 
         connection.close();

@@ -137,8 +137,8 @@ public class DefaultTableMetadata
         }
     }
 
-    class MetaDataHandler
-            extends DefaultTableViewMetadata.MetaDataHandler {
+    class TableHandler
+            extends TableViewHandler {
 
         @Override
         public void primaryKey(ITableMetadata table, TableKey primaryKey)
@@ -155,8 +155,8 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public MetaDataHandler getJDBCMetaDataHandler() {
-        return new MetaDataHandler();
+    protected TableHandler createJDBCMetaDataHandler() {
+        return new TableHandler();
     }
 
     public void loadFromJDBC(Connection connection, boolean loadKeys)
@@ -164,7 +164,6 @@ public class DefaultTableMetadata
         super.loadFromJDBC(connection);
 
         DatabaseMetaData dmd = connection.getMetaData();
-        MetaDataHandler handler = getJDBCMetaDataHandler();
         ResultSet rs;
 
         // Find out primary key
@@ -172,7 +171,7 @@ public class DefaultTableMetadata
             rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, id.tableName);
             Map<TableId, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
             for (TableKey pk : primaryKeyMap.values())
-                handler.primaryKey(this, pk);
+                metaDataHandler.primaryKey(this, pk);
             rs.close();
 
             rs = dmd.getCrossReference(null, null, null, //
@@ -182,7 +181,7 @@ public class DefaultTableMetadata
             if (!foreignMap.isEmpty()) {
                 List<CrossReference> parentList = foreignMap.values().iterator().next();
                 for (CrossReference crossRef : parentList)
-                    handler.crossReference(this, crossRef);
+                    metaDataHandler.crossReference(this, crossRef);
             }
             rs.close();
         }

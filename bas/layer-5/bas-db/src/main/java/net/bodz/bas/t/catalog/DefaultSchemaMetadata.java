@@ -14,7 +14,6 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
@@ -273,7 +272,8 @@ public class DefaultSchemaMetadata
             throw new NullPointerException("name");
         DefaultTableViewMetadata view = (DefaultTableViewMetadata) viewMap.get(name);
         if (view == null) {
-            view = new DefaultTableViewMetadata();
+            // view = new DefaultTableViewMetadata(this);
+            view = new DefaultTableMetadata(this);
             view.getId().assign(id.catalogName, id.schemaName, name);
             view.setParent(this);
             viewMap.put(name, view);
@@ -287,7 +287,8 @@ public class DefaultSchemaMetadata
     }
 
     public DefaultTableViewMetadata newView(String viewName) {
-        DefaultTableViewMetadata view = new DefaultTableViewMetadata(this);
+        // DefaultTableViewMetadata view = new DefaultTableViewMetadata(this);
+        DefaultTableViewMetadata view = new DefaultTableMetadata(this);
         view.getId().assign(id.catalogName, id.schemaName, viewName);
         return view;
     }
@@ -374,7 +375,7 @@ public class DefaultSchemaMetadata
         this.tableMap = tables;
     }
 
-    class MetaDataHandler
+    class SchemaHandler
             implements
                 IJDBCMetaDataHandler {
 
@@ -391,6 +392,9 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
             table.getJDBCMetaDataHandler().table(rs);
+
+            if (!loadSelector.selectTable(table.getId()))
+                return;
 
             switch (table.getTableType()) {
             case TABLE:
@@ -410,6 +414,8 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             TableId id = new TableId();
             id.readFromJDBC(rs);
+            if (!loadSelector.selectTable(id))
+                return;
 
             ITableMetadata table = getTable(id.getTableName());
             if (table != null) {
@@ -422,9 +428,6 @@ public class DefaultSchemaMetadata
                 view.getJDBCMetaDataHandler().column(rs);
                 return;
             }
-
-            // the table isn't included, so just ignore the column.
-            throw new UnexpectedException("Detected new table when scanning: " + id);
         }
 
         @Override
@@ -441,44 +444,59 @@ public class DefaultSchemaMetadata
 
     }
 
+    IJDBCMetaDataHandler metaDataHandler = new SchemaHandler();
+    IJDBCLoadSelector loadSelector = IJDBCLoadSelector.ALL;
+
     @Override
-    public MetaDataHandler getJDBCMetaDataHandler() {
-        return new MetaDataHandler();
+    public IJDBCMetaDataHandler getJDBCMetaDataHandler() {
+        return metaDataHandler;
+    }
+
+    public void setJDBCMetaDataHandler(IJDBCMetaDataHandler handler) {
+        metaDataHandler = handler;
+    }
+
+    public IJDBCLoadSelector getJDBCLoadSelector() {
+        return loadSelector;
+    }
+
+    public void setJDBCLoadSelector(IJDBCLoadSelector loadSelector) {
+        this.loadSelector = loadSelector;
     }
 
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
-        MetaDataHandler handler = new MetaDataHandler();
         ResultSet rs;
         SchemaId id = getId();
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(id.catalogName, id.schemaName);
         while (rs.next()) {
-            handler.schema(rs);
+            metaDataHandler.schema(rs);
             break;
         }
         rs.close();
 
         rs = dmd.getTables(id.catalogName, id.schemaName, null, types);
         while (rs.next())
-            handler.table(rs);
+            metaDataHandler.table(rs);
         rs.close();
 
         // Set<String> typeSet = new HashSet<>(Arrays.asList(types));
         rs = dmd.getColumns(id.catalogName, id.schemaName, null, null);
-        while (rs.next()) {
-            handler.column(rs);
-        }
+        while (rs.next())
+            metaDataHandler.column(rs);
         rs.close();
 
         rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, null);
         Map<TableId, TableKey> pkmap = TableKey.convertFromJDBC(rs);
         for (TableId tableId : pkmap.keySet()) {
             ITableMetadata table = getTable(tableId);
+            if (table == null)
+                continue;
             TableKey primaryKey = pkmap.get(tableId);
-            handler.primaryKey(table, primaryKey);
+            metaDataHandler.primaryKey(table, primaryKey);
         }
         rs.close();
 
@@ -487,10 +505,11 @@ public class DefaultSchemaMetadata
         ListMap<TableId, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
         for (TableId foreignName : foreignMap.keySet()) {
             ITableMetadata foreignTable = getTable(foreignName.getTableName());
-
+            if (foreignTable == null)
+                continue;
             List<CrossReference> crossRefs = foreignMap.get(foreignName);
             for (CrossReference crossRef : crossRefs) {
-                handler.crossReference(foreignTable, crossRef);
+                metaDataHandler.crossReference(foreignTable, crossRef);
             }
         }
         rs.close();

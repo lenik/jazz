@@ -97,7 +97,7 @@ public class DefaultTableViewMetadata
         id.tableName = rsmd.getTableName(columnOfThisTable);
     }
 
-    class MetaDataHandler
+    class TableViewHandler
             implements
                 IJDBCMetaDataHandler {
 
@@ -121,15 +121,24 @@ public class DefaultTableViewMetadata
 
     }
 
+    IJDBCMetaDataHandler metaDataHandler = createJDBCMetaDataHandler();
+
+    protected IJDBCMetaDataHandler createJDBCMetaDataHandler() {
+        return new TableViewHandler();
+    }
+
     @Override
-    public MetaDataHandler getJDBCMetaDataHandler() {
-        return new MetaDataHandler();
+    public IJDBCMetaDataHandler getJDBCMetaDataHandler() {
+        return metaDataHandler;
+    }
+
+    public void setJDBCMetaDataHandler(IJDBCMetaDataHandler handler) {
+        metaDataHandler = handler;
     }
 
     public void loadFromJDBC(Connection connection)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
-        MetaDataHandler handler = getJDBCMetaDataHandler();
         ResultSet rs;
 
         // Parse from table's metadata
@@ -137,7 +146,7 @@ public class DefaultTableViewMetadata
         int count = 0;
         while (rs.next()) {
             if (count == 0)
-                handler.table(rs);
+                metaDataHandler.table(rs);
             count++;
         }
         rs.close();
@@ -147,7 +156,7 @@ public class DefaultTableViewMetadata
         // Parse from columns' metadata
         rs = dmd.getColumns(id.catalogName, id.schemaName, id.tableName, null);
         while (rs.next())
-            handler.column(rs);
+            metaDataHandler.column(rs);
         rs.close();
     }
 
