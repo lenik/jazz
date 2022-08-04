@@ -26,7 +26,7 @@ public class TableOrderRun {
         return this;
     }
 
-    public TableOrderRun traverse(QualifiedTableName tableName) {
+    public TableOrderRun traverse(TableId tableName) {
         ITableMetadata table = directory.getTable(tableName);
         deepFirst(table);
         return this;
@@ -39,7 +39,7 @@ public class TableOrderRun {
     void deepFirst(ITableMetadata table) {
         if (!markSet.add(table))
             return;
-        for (QualifiedTableName parentName : table.getParentTableNames()) {
+        for (TableId parentName : table.getParentTableNames()) {
             ITableMetadata parent = directory.getTable(parentName);
             deepFirst(parent);
         }

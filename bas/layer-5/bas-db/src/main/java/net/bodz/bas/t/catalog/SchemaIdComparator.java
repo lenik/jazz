@@ -2,24 +2,21 @@ package net.bodz.bas.t.catalog;
 
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
-public class QualifiedTableNameComparator
-        extends AbstractNonNullComparator<QualifiedTableName> {
+public class SchemaIdComparator
+        extends AbstractNonNullComparator<SchemaId> {
 
     int sign;
 
-    public QualifiedTableNameComparator(int sign) {
+    public SchemaIdComparator(int sign) {
         this.sign = sign;
     }
 
     @Override
-    public int compareNonNull(QualifiedTableName o1, QualifiedTableName o2) {
+    public int compareNonNull(SchemaId o1, SchemaId o2) {
         int cmp = compareString(o1.catalogName, o2.catalogName);
         if (cmp != 0)
             return cmp * sign;
         cmp = compareString(o1.schemaName, o2.schemaName);
-        if (cmp != 0)
-            return cmp * sign;
-        cmp = compareString(o1.tableName, o2.tableName);
         return cmp * sign;
     }
 
@@ -37,11 +34,11 @@ public class QualifiedTableNameComparator
         return a.compareTo(b);
     }
 
-    public static final QualifiedTableNameComparator ASC = new QualifiedTableNameComparator(1);
-    public static final QualifiedTableNameComparator DESC = new QualifiedTableNameComparator(-1);
+    public static final SchemaIdComparator ASC = new SchemaIdComparator(1);
+    public static final SchemaIdComparator DESC = new SchemaIdComparator(-1);
 
     public static class CaseInsensitive
-            extends QualifiedTableNameComparator {
+            extends SchemaIdComparator {
 
         public CaseInsensitive(int sign) {
             super(sign);
@@ -52,8 +49,8 @@ public class QualifiedTableNameComparator
             return a.compareToIgnoreCase(b);
         }
 
-        public static final QualifiedTableNameComparator ASC = new CaseInsensitive(1);
-        public static final QualifiedTableNameComparator DESC = new CaseInsensitive(-1);
+        public static final SchemaIdComparator ASC = new CaseInsensitive(1);
+        public static final SchemaIdComparator DESC = new CaseInsensitive(-1);
 
     }
 

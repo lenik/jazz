@@ -18,11 +18,11 @@ public class TableList
         super(c);
     }
 
-    public List<QualifiedTableName> getQNames() {
-        List<QualifiedTableName> qNames = new ArrayList<>(size());
+    public List<TableId> id() {
+        List<TableId> ids = new ArrayList<>(size());
         for (ITableMetadata table : this)
-            qNames.add(table.getQName());
-        return qNames;
+            ids.add(table.getId());
+        return ids;
     }
 
     public TableList sortInCreationOrder(ITableDirectory directory) {

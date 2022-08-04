@@ -15,7 +15,7 @@ public class MutableSchema
             ISchema {
 
     ICatalog parent;
-    QualifiedSchemaName qName;
+    SchemaId id;
 
     ISchemaMetadata metadata;
     Map<String, ITable> tables = createMap();
@@ -48,8 +48,8 @@ public class MutableSchema
 
     protected DefaultSchemaMetadata createMetadata() {
         DefaultSchemaMetadata dsm = new DefaultSchemaMetadata();
-        if (qName != null)
-            dsm.getQName().assign(qName.catalogName, qName.schemaName);
+        if (id != null)
+            dsm.getId().assign(id.catalogName, id.schemaName);
         return dsm;
     }
 
@@ -63,17 +63,17 @@ public class MutableSchema
     }
 
     @Override
-    public QualifiedSchemaName getQName() {
-        if (qName != null)
-            return qName;
+    public SchemaId getId() {
+        if (id != null)
+            return id;
         ISchemaMetadata metadata = getMetadata();
         if (metadata != null)
-            return metadata.getQName();
+            return metadata.getId();
         return null;
     }
 
-    public void setQName(QualifiedSchemaName qName) {
-        this.qName = qName;
+    public void setId(SchemaId id) {
+        this.id = id;
     }
 
     @Override

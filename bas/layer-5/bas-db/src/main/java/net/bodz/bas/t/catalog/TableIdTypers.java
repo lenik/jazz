@@ -5,11 +5,11 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
-public class QualifiedSchemaNameTypers
-        extends AbstractCommonTypers<QualifiedSchemaName> {
+public class TableIdTypers
+        extends AbstractCommonTypers<TableId> {
 
-    public QualifiedSchemaNameTypers() {
-        super(QualifiedSchemaName.class);
+    public TableIdTypers() {
+        super(TableId.class);
     }
 
     @Override
@@ -22,11 +22,11 @@ public class QualifiedSchemaNameTypers
     }
 
     @Override
-    public QualifiedSchemaName parse(String text, IOptions options)
+    public TableId parse(String text, IOptions options)
             throws ParseException {
         if (text == null)
             return null;
-        return QualifiedSchemaName.fromFullName(text);
+        return TableId.parse(text);
     }
 
 }

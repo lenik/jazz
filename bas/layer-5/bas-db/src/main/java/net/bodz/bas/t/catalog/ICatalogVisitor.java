@@ -14,16 +14,16 @@ public interface ICatalogVisitor {
     default void endSchema(ISchemaMetadata schema) {
     }
 
-    default void beginTable(ITableMetadata table) {
+    default void beginTableView(ITableViewMetadata table) {
     }
 
-    default void endTable(ITableMetadata table) {
+    default void endTableView(ITableViewMetadata table) {
     }
 
-    default void beginColumns(ITableMetadata table) {
+    default void beginColumns(ITableViewMetadata table) {
     }
 
-    default void endColumns(ITableMetadata table) {
+    default void endColumns(ITableViewMetadata table) {
     }
 
     default void column(IColumnMetadata column) {

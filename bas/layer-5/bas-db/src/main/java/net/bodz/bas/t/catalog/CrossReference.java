@@ -204,12 +204,12 @@ public class CrossReference
         deleteRule = row.DELETE_RULE;
         deferrability = row.DEFERRABILITY;
 
-        QualifiedTableName pkTable = new QualifiedTableName();
+        TableId pkTable = new TableId();
         pkTable.catalogName = row.PKTABLE_CAT;
         pkTable.schemaName = row.PKTABLE_SCHEM;
         pkTable.tableName = row.PKTABLE_NAME;
 
-        QualifiedTableName fkTable = new QualifiedTableName();
+        TableId fkTable = new TableId();
         fkTable.catalogName = row.FKTABLE_CAT;
         fkTable.schemaName = row.FKTABLE_SCHEM;
         fkTable.tableName = row.FKTABLE_NAME;
@@ -248,10 +248,10 @@ public class CrossReference
 
     public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
             throws SQLException {
-        JKMap<QualifiedTableName, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
+        JKMap<TableId, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
                 groupByParent);
         CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
-        for (QualifiedTableName k1 : rawMap.keySet()) {
+        for (TableId k1 : rawMap.keySet()) {
             for (String k2 : rawMap.get(k1).keySet()) {
                 List<CrossReferenceRow> rows = rawMap.get2(k1, k2);
                 CrossReference ref = new CrossReference();

@@ -22,12 +22,12 @@ public interface ISchemaMetadata
     String K_TABLES = "tables";
     String K_TABLE = "table";
 
-    QualifiedSchemaName getQName();
+    SchemaId getId();
 
-    QualifiedSchemaName getDefaultName();
+    SchemaId getDefaultName();
 
     default String getName() {
-        return getQName().getSchemaName();
+        return getId().getSchemaName();
     }
 
     default String getCompactName() {
@@ -35,7 +35,7 @@ public interface ISchemaMetadata
     }
 
     default String getCompactName(boolean ignoreCase) {
-        return getQName().getCompactName(getDefaultName(), ignoreCase);
+        return getId().getCompactName(getDefaultName(), ignoreCase);
     }
 
     ICatalogMetadata getParent();
@@ -54,7 +54,7 @@ public interface ISchemaMetadata
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        getQName().writeObject(out);
+        getId().writeObject(out);
 
         out.key(K_TABLES);
         out.object();
@@ -75,7 +75,7 @@ public interface ISchemaMetadata
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        getQName().writeObject(out);
+        getId().writeObject(out);
 
         out.beginElement(K_TABLES);
         for (String key : getTables().keySet()) {

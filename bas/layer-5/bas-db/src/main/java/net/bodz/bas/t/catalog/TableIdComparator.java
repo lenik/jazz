@@ -2,21 +2,24 @@ package net.bodz.bas.t.catalog;
 
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
-public class QualifiedSchemaNameComparator
-        extends AbstractNonNullComparator<QualifiedSchemaName> {
+public class TableIdComparator
+        extends AbstractNonNullComparator<TableId> {
 
     int sign;
 
-    public QualifiedSchemaNameComparator(int sign) {
+    public TableIdComparator(int sign) {
         this.sign = sign;
     }
 
     @Override
-    public int compareNonNull(QualifiedSchemaName o1, QualifiedSchemaName o2) {
+    public int compareNonNull(TableId o1, TableId o2) {
         int cmp = compareString(o1.catalogName, o2.catalogName);
         if (cmp != 0)
             return cmp * sign;
         cmp = compareString(o1.schemaName, o2.schemaName);
+        if (cmp != 0)
+            return cmp * sign;
+        cmp = compareString(o1.tableName, o2.tableName);
         return cmp * sign;
     }
 
@@ -34,11 +37,11 @@ public class QualifiedSchemaNameComparator
         return a.compareTo(b);
     }
 
-    public static final QualifiedSchemaNameComparator ASC = new QualifiedSchemaNameComparator(1);
-    public static final QualifiedSchemaNameComparator DESC = new QualifiedSchemaNameComparator(-1);
+    public static final TableIdComparator ASC = new TableIdComparator(1);
+    public static final TableIdComparator DESC = new TableIdComparator(-1);
 
     public static class CaseInsensitive
-            extends QualifiedSchemaNameComparator {
+            extends TableIdComparator {
 
         public CaseInsensitive(int sign) {
             super(sign);
@@ -49,8 +52,8 @@ public class QualifiedSchemaNameComparator
             return a.compareToIgnoreCase(b);
         }
 
-        public static final QualifiedSchemaNameComparator ASC = new CaseInsensitive(1);
-        public static final QualifiedSchemaNameComparator DESC = new CaseInsensitive(-1);
+        public static final TableIdComparator ASC = new CaseInsensitive(1);
+        public static final TableIdComparator DESC = new CaseInsensitive(-1);
 
     }
 

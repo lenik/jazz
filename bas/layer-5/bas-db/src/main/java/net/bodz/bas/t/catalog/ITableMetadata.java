@@ -13,32 +13,11 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ITableMetadata
         extends
-            IRowSetMetadata,
-            IJDBCMetaDataSupport {
+            ITableViewMetadata {
 
-    String K_DEFAULT_NAME = "defaultName";
     String K_PRIMARY_KEY = "primaryKey";
     String K_FOREIGN_KEYS = "foreignKeys";
     String K_FOREIGN_KEY = "foreignKey";
-
-    QualifiedTableName getQName();
-
-    QualifiedTableName getDefaultName();
-
-    default String getName() {
-        return getQName().getTableName();
-    }
-
-    default String getCompactName() {
-        return getCompactName(false);
-    }
-
-    default String getCompactName(boolean ignoreCase) {
-        return getQName().getCompactName(getDefaultName());
-    }
-
-    @Override
-    ISchemaMetadata getParent();
 
     TableKey getPrimaryKey();
 
@@ -50,10 +29,10 @@ public interface ITableMetadata
 
     CrossReference getForeignKey(String constraintName);
 
-    default Set<QualifiedTableName> getParentTableNames() {
-        Set<QualifiedTableName> parents = new LinkedHashSet<>();
+    default Set<TableId> getParentTableNames() {
+        Set<TableId> parents = new LinkedHashSet<>();
         for (CrossReference ref : getForeignKeys().values()) {
-            QualifiedTableName parent = ref.getParentKey().getQName();
+            TableId parent = ref.getParentKey().getId();
             parents.add(parent);
         }
         return parents;
@@ -62,9 +41,7 @@ public interface ITableMetadata
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        getQName().writeObject(out);
-
-        IRowSetMetadata.super.writeObject(out);
+        ITableViewMetadata.super.writeObject(out);
 
         TableKey primaryKey = getPrimaryKey();
         if (primaryKey != null) {
@@ -85,9 +62,7 @@ public interface ITableMetadata
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        getQName().writeObject(out);
-
-        IRowSetMetadata.super.writeObject(out);
+        ITableViewMetadata.super.writeObject(out);
 
         TableKey primaryKey = getPrimaryKey();
         if (primaryKey != null) {
@@ -106,23 +81,6 @@ public interface ITableMetadata
             }
             out.endElement();
         }
-    }
-
-    default void accept(ICatalogVisitor visitor) {
-        visitor.beginTable(this);
-
-        visitor.beginColumns(this);
-        int n = getColumnCount();
-        for (int i = 0; i < n; i++)
-            getColumn(i).accept(visitor);
-        visitor.endColumns(this);
-
-        visitor.primaryKey(this, getPrimaryKey());
-
-        for (CrossReference crossRef : getForeignKeys().values())
-            visitor.foreignKey(this, crossRef);
-
-        visitor.endTable(this);
     }
 
 }

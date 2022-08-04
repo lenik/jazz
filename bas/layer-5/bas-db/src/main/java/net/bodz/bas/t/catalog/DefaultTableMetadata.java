@@ -3,9 +3,7 @@ package net.bodz.bas.t.catalog;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,15 +18,10 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.map.ListMap;
 
 public class DefaultTableMetadata
-        extends DefaultRowSetMetadata
+        extends DefaultTableViewMetadata
         implements
             ITableMetadata {
 
-    QualifiedTableName qName = new QualifiedTableName();
-    QualifiedTableName defaultName = new QualifiedTableName();
-
-    String label;
-    String description;
     TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
 
@@ -37,39 +30,6 @@ public class DefaultTableMetadata
 
     public DefaultTableMetadata(ISchemaMetadata parent) {
         super(parent);
-    }
-
-    @Override
-    public QualifiedTableName getQName() {
-        return qName;
-    }
-
-    public void setQName(QualifiedTableName qName) {
-        if (qName == null)
-            throw new NullPointerException("qName");
-        this.qName = qName;
-    }
-
-    @Override
-    public QualifiedTableName getDefaultName() {
-        return defaultName;
-    }
-
-    public void setDefaultName(QualifiedTableName defaultName) {
-        if (defaultName == null)
-            throw new NullPointerException("defaultName");
-        this.defaultName = defaultName;
-    }
-
-    @Override
-    public ISchemaMetadata getParent() {
-        return super.getParent();
-    }
-
-    @Override
-    public void setParent(ISchemaMetadata parent) {
-        ISchemaMetadata schema = parent;
-        super.setParent(schema);
     }
 
     @Override
@@ -100,7 +60,7 @@ public class DefaultTableMetadata
             for (int i = 0; i < cols.length; i++)
                 cols[i] = cols[i].trim();
         }
-        primaryKey = new TableKey(getQName(), cols);
+        primaryKey = new TableKey(getId(), cols);
     }
 
     public void updatePrimaryKey() {
@@ -110,7 +70,7 @@ public class DefaultTableMetadata
                 cols.add(column.getName());
         }
         String[] cv = cols.toArray(new String[0]);
-        primaryKey = new TableKey(getQName(), cv);
+        primaryKey = new TableKey(getId(), cv);
     }
 
     @Override
@@ -130,14 +90,6 @@ public class DefaultTableMetadata
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        qName.readObject(o);
-
-        JsonObject dn = o.getJsonObject(K_DEFAULT_NAME);
-        if (dn != null)
-            defaultName.readObject(dn);
-        else
-            defaultName.clear();
-
         super.readObject(o);
 
         JsonObject pk = o.getJsonObject(K_PRIMARY_KEY);
@@ -164,14 +116,6 @@ public class DefaultTableMetadata
     @Override
     public void readObject(IElement x_table)
             throws ParseException, LoaderException {
-        qName.readObject(x_table);
-
-        IElement x_defaultName = x_table.selectByTag(K_DEFAULT_NAME).getFirst();
-        if (x_defaultName != null)
-            defaultName.readObject(x_defaultName);
-        else
-            defaultName.clear();
-
         super.readObject(x_table);
 
         IElement x_pk = x_table.selectByTag(K_PRIMARY_KEY).getFirst();
@@ -193,59 +137,8 @@ public class DefaultTableMetadata
         }
     }
 
-    public void loadFromRSMD(Connection connection)
-            throws SQLException {
-        // Parse from empty-query.
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(//
-                "select * from " + getCompactName() + " where 1=2");
-        loadFromRSMD(rs.getMetaData());
-        rs.close();
-    }
-
-    @Override
-    public void loadFromRSMD(ResultSetMetaData rsmd)
-            throws SQLException {
-        super.loadFromRSMD(rsmd);
-
-        int columnOfThisTable = 1;
-        qName.catalogName = rsmd.getCatalogName(columnOfThisTable);
-        qName.schemaName = rsmd.getSchemaName(columnOfThisTable);
-        qName.tableName = rsmd.getTableName(columnOfThisTable);
-
-//        QualifiedTableName parent = qName;
-//        QualifiedTableName foreign = parent;
-//        cn.getMetaData().getCrossReference(//
-//                parent.catalogName, parent.schemaName, parent.tableName, //
-//                foreign.catalogName, foreign.schemaName, foreign.tableName);
-    }
-
     class MetaDataHandler
-            implements
-                IJDBCMetaDataHandler {
-
-        @Override
-        public void schema(ResultSet rs)
-                throws SQLException {
-        }
-
-        @Override
-        public void table(ResultSet rs)
-                throws SQLException {
-            qName.catalogName = rs.getString("table_cat");
-            qName.schemaName = rs.getString("table_schem");
-            qName.tableName = rs.getString("table_name");
-            // String table_type = rs.getString("table_type");
-            description = rs.getString("remarks");
-        }
-
-        @Override
-        public void column(ResultSet rs)
-                throws SQLException {
-            DefaultColumnMetadata column = new DefaultColumnMetadata(DefaultTableMetadata.this);
-            column.readObject(rs);
-            addColumn(column);
-        }
+            extends DefaultTableViewMetadata.MetaDataHandler {
 
         @Override
         public void primaryKey(ITableMetadata table, TableKey primaryKey)
@@ -268,35 +161,23 @@ public class DefaultTableMetadata
 
     public void loadFromJDBC(Connection connection, boolean loadKeys)
             throws SQLException {
+        super.loadFromJDBC(connection);
+
         DatabaseMetaData dmd = connection.getMetaData();
-        MetaDataHandler handler = new MetaDataHandler();
+        MetaDataHandler handler = getJDBCMetaDataHandler();
         ResultSet rs;
-
-        // Parse from table's metadata
-        rs = dmd.getTables(qName.catalogName, qName.schemaName, qName.tableName, null);
-        while (rs.next()) {
-            handler.table(rs);
-            break;
-        }
-        rs.close();
-
-        // Parse from columns' metadata
-        rs = dmd.getColumns(qName.catalogName, qName.schemaName, qName.tableName, null);
-        while (rs.next())
-            handler.column(rs);
-        rs.close();
 
         // Find out primary key
         if (loadKeys) {
-            rs = dmd.getPrimaryKeys(qName.catalogName, qName.schemaName, qName.tableName);
-            Map<QualifiedTableName, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
+            rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, id.tableName);
+            Map<TableId, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
             for (TableKey pk : primaryKeyMap.values())
                 handler.primaryKey(this, pk);
             rs.close();
 
             rs = dmd.getCrossReference(null, null, null, //
-                    qName.catalogName, qName.schemaName, qName.tableName);
-            ListMap<QualifiedTableName, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+                    id.catalogName, id.schemaName, id.tableName);
+            ListMap<TableId, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
             assert foreignMap.size() <= 1;
             if (!foreignMap.isEmpty()) {
                 List<CrossReference> parentList = foreignMap.values().iterator().next();
@@ -305,11 +186,6 @@ public class DefaultTableMetadata
             }
             rs.close();
         }
-    }
-
-    @Override
-    public String toString() {
-        return "table " + qName.getCompactName(defaultName) + "(" + getColumnNames() + ")";
     }
 
 }
