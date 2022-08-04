@@ -2,37 +2,43 @@ package net.bodz.bas.t.catalog;
 
 public interface ICatalogVisitor {
 
-    default void beginCatalog(ICatalogMetadata catalog) {
+    default boolean beginCatalog(ICatalogMetadata catalog) {
+        return true;
     }
 
     default void endCatalog(ICatalogMetadata catalog) {
     }
 
-    default void beginSchema(ISchemaMetadata schema) {
+    default boolean beginSchema(ISchemaMetadata schema) {
+        return true;
     }
 
     default void endSchema(ISchemaMetadata schema) {
     }
 
-    default void beginTables(ISchemaMetadata schema) {
+    default boolean beginTables(ISchemaMetadata schema) {
+        return true;
     }
 
     default void endTables(ISchemaMetadata schema) {
     }
 
-    default void beginViews(ISchemaMetadata schema) {
+    default boolean beginViews(ISchemaMetadata schema) {
+        return true;
     }
 
     default void endViews(ISchemaMetadata schema) {
     }
 
-    default void beginTableView(ITableViewMetadata table) {
+    default boolean beginTableView(ITableViewMetadata table) {
+        return true;
     }
 
     default void endTableView(ITableViewMetadata table) {
     }
 
-    default void beginColumns(ITableViewMetadata table) {
+    default boolean beginColumns(ITableViewMetadata table) {
+        return true;
     }
 
     default void endColumns(ITableViewMetadata table) {
@@ -47,7 +53,8 @@ public interface ICatalogVisitor {
     default void foreignKey(ITableMetadata table, CrossReference crossRef) {
     }
 
-    default void beginRowSet(IRowSetMetadata rowSet) {
+    default boolean beginRowSet(IRowSetMetadata rowSet) {
+        return true;
     }
 
     default void endRowSet(IRowSetMetadata rowSet) {
