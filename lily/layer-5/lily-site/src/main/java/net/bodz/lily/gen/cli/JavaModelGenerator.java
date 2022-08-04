@@ -86,7 +86,7 @@ public class JavaModelGenerator
         rs.close();
         for (String tableName : names) {
             DefaultTableMetadata table = new DefaultTableMetadata();
-            table.getQName().assign(catalogName, schemaName, tableName);
+            table.getId().assign(catalogName, schemaName, tableName);
             table.loadFromJDBC(connection, true);
             makeEntity(table);
         }
@@ -95,7 +95,7 @@ public class JavaModelGenerator
     void makeEntity(String fullName)
             throws SQLException, IOException {
         DefaultTableMetadata table = new DefaultTableMetadata();
-        table.getQName().parseFullName(fullName);
+        table.getId().setFullName(fullName);
         table.loadFromJDBC(connection, true);
         makeEntity(table);
     }

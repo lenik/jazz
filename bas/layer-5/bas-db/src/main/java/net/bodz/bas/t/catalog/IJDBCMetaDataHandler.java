@@ -5,19 +5,24 @@ import java.sql.SQLException;
 
 public interface IJDBCMetaDataHandler {
 
-    void schema(ResultSet rs)
-            throws SQLException;
+    default void schema(ResultSet rs)
+            throws SQLException {
+    }
 
-    void table(ResultSet rs)
-            throws SQLException;
+    default void table(ResultSet rs)
+            throws SQLException {
+    }
 
-    void column(ResultSet rs)
-            throws SQLException;
+    default void column(ResultSet rs)
+            throws SQLException {
+    }
 
-    void primaryKey(ITableMetadata table, TableKey primaryKey)
-            throws SQLException;
+    default void primaryKey(ITableMetadata table, TableKey primaryKey)
+            throws SQLException {
+    }
 
-    void crossReference(ITableMetadata table, CrossReference crossRef)
-            throws SQLException;
+    default void crossReference(ITableMetadata table, CrossReference crossRef)
+            throws SQLException {
+    }
 
 }

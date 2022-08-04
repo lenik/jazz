@@ -13,10 +13,10 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.t.catalog.QualifiedTableName;
+import net.bodz.bas.t.catalog.TableId;
 
 public class EntityClassModel
-        extends QualifiedTableName {
+        extends TableId {
 
     private static final long serialVersionUID = 1L;
 

@@ -18,7 +18,7 @@ public class MutableTable
             ITable {
 
     ISchema parent;
-    QualifiedTableName qName;
+    TableId id;
 
     protected MutableTable() {
     }
@@ -72,17 +72,17 @@ public class MutableTable
     }
 
     @Override
-    public QualifiedTableName getQName() {
-        if (qName != null)
-            return qName;
+    public TableId getId() {
+        if (id != null)
+            return id;
         ITableMetadata metadata = getMetadata();
         if (metadata != null)
-            return metadata.getQName();
+            return metadata.getId();
         return null;
     }
 
-    public void setQName(QualifiedTableName qName) {
-        this.qName = qName;
+    public void setId(TableId id) {
+        this.id = id;
     }
 
     @Override
@@ -90,8 +90,8 @@ public class MutableTable
             throws ParseException {
         IRowSetMetadata metadata = getMetadata();
         if (isAttached()) {
-            this.qName = new QualifiedTableName();
-            this.qName.readObject(o);
+            this.id = new TableId();
+            this.id.readObject(o);
         } else {
             JsonObject j_md = o.getJsonObject(K_METADATA);
             if (j_md != null) {
@@ -118,8 +118,8 @@ public class MutableTable
             throws ParseException, LoaderException {
         IRowSetMetadata metadata = getMetadata();
         if (isAttached()) {
-            this.qName = new QualifiedTableName();
-            this.qName.readObject(x_table);
+            this.id = new TableId();
+            this.id.readObject(x_table);
         } else {
             IElement x_md = x_table.selectByTag(K_METADATA).getFirst();
             if (x_md != null && x_md.getParentNode() == x_table) {

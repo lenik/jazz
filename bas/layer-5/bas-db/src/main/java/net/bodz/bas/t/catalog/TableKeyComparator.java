@@ -6,16 +6,16 @@ public class TableKeyComparator
         extends AbstractNonNullComparator<TableKey> {
 
     int sign;
-    QualifiedTableNameComparator qNameCmp;
+    TableIdComparator idCmp;
 
-    public TableKeyComparator(int sign, QualifiedTableNameComparator qNameCmp) {
+    public TableKeyComparator(int sign, TableIdComparator idCmp) {
         this.sign = sign;
-        this.qNameCmp = qNameCmp;
+        this.idCmp = idCmp;
     }
 
     @Override
     public int compareNonNull(TableKey o1, TableKey o2) {
-        int cmp = qNameCmp.compare(o1.qName, o2.qName);
+        int cmp = idCmp.compare(o1.id, o2.id);
         if (cmp != 0)
             return cmp * sign;
 
@@ -51,13 +51,13 @@ public class TableKeyComparator
         return a.compareTo(b);
     }
 
-    public static final TableKeyComparator ASC = new TableKeyComparator(1, QualifiedTableNameComparator.ASC);
-    public static final TableKeyComparator DESC = new TableKeyComparator(-1, QualifiedTableNameComparator.DESC);
+    public static final TableKeyComparator ASC = new TableKeyComparator(1, TableIdComparator.ASC);
+    public static final TableKeyComparator DESC = new TableKeyComparator(-1, TableIdComparator.DESC);
 
     public static class CaseInsensitive
             extends TableKeyComparator {
 
-        public CaseInsensitive(int sign, QualifiedTableNameComparator tableCmp) {
+        public CaseInsensitive(int sign, TableIdComparator tableCmp) {
             super(sign, tableCmp);
         }
 
@@ -66,10 +66,8 @@ public class TableKeyComparator
             return a.compareToIgnoreCase(b);
         }
 
-        public static final TableKeyComparator ASC = new CaseInsensitive(1,
-                QualifiedTableNameComparator.CaseInsensitive.ASC);
-        public static final TableKeyComparator DESC = new CaseInsensitive(-1,
-                QualifiedTableNameComparator.CaseInsensitive.DESC);
+        public static final TableKeyComparator ASC = new CaseInsensitive(1, TableIdComparator.CaseInsensitive.ASC);
+        public static final TableKeyComparator DESC = new CaseInsensitive(-1, TableIdComparator.CaseInsensitive.DESC);
 
     }
 

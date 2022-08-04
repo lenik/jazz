@@ -21,10 +21,10 @@ public interface ITable
 
     ISchema getParent();
 
-    QualifiedTableName getQName();
+    TableId getId();
 
     default String getName() {
-        return getQName().getTableName();
+        return getId().getTableName();
     }
 
     default boolean isAttached() {
@@ -43,7 +43,7 @@ public interface ITable
             throws IOException, FormatException {
         ITableMetadata metadata = getMetadata();
         if (isAttached()) {
-            getQName().writeObject(out);
+            getId().writeObject(out);
         } else {
             out.key(K_METADATA);
             metadata.writeObjectBoxed(out);
@@ -60,7 +60,7 @@ public interface ITable
             throws XMLStreamException, FormatException {
         ITableMetadata metadata = getMetadata();
         if (isAttached()) {
-            getQName().writeObject(out);
+            getId().writeObject(out);
         } else {
             out.beginElement(K_METADATA);
             metadata.writeObject(out);

@@ -27,8 +27,8 @@ public class DefaultSchemaMetadata
 
     static final Logger logger = LoggerFactory.getLogger(DefaultSchemaMetadata.class);
 
-    QualifiedSchemaName qName = new QualifiedSchemaName();
-    QualifiedSchemaName defaultName = new QualifiedSchemaName();
+    SchemaId id = new SchemaId();
+    SchemaId defaultName = new SchemaId();
 
     String label;
     String description;
@@ -47,37 +47,37 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public QualifiedSchemaName getQName() {
-        return qName;
+    public SchemaId getId() {
+        return id;
     }
 
-    public void setQName(QualifiedSchemaName qName) {
-        this.qName = qName;
+    public void setId(SchemaId id) {
+        this.id = id;
     }
 
     @Override
-    public QualifiedSchemaName getDefaultName() {
+    public SchemaId getDefaultName() {
         return defaultName;
     }
 
-    public void setDefaultName(QualifiedSchemaName defaultName) {
+    public void setDefaultName(SchemaId defaultName) {
         if (defaultName == null)
             throw new NullPointerException("defaultName");
         this.defaultName = defaultName;
     }
 
     @Override
-    public boolean isValidName(QualifiedTableName tableName) {
+    public boolean isValidTableId(TableId tableName) {
         if (tableName == null)
             throw new NullPointerException("tableName");
-        if (this.qName == null)
+        if (this.id == null)
             return true;
-        return this.qName.contains(tableName);
+        return this.id.contains(tableName);
     }
 
     @Override
-    public boolean isValidNameOf(String catalogName) {
-        if (NamePattern.matches(catalogName, this.qName.catalogName))
+    public boolean isValidIdOf(String catalogName) {
+        if (NamePattern.matches(catalogName, this.id.catalogName))
             return true;
         return false;
     }
@@ -120,9 +120,9 @@ public class DefaultSchemaMetadata
         return tables;
     }
 
-    public DefaultTableMetadata getOrCreateTable(QualifiedTableName qName) {
-        checkValidName(qName);
-        return getOrCreateTable(qName.tableName);
+    public DefaultTableMetadata getOrCreateTable(TableId id) {
+        checkTableId(id);
+        return getOrCreateTable(id.tableName);
     }
 
     public DefaultTableMetadata autoloadTableFromJDBC(String name, Connection cn) {
@@ -150,7 +150,7 @@ public class DefaultSchemaMetadata
         DefaultTableMetadata table = (DefaultTableMetadata) tables.get(name);
         if (table == null) {
             table = new DefaultTableMetadata();
-            table.getQName().assign(qName.catalogName, qName.schemaName, name);
+            table.getId().assign(id.catalogName, id.schemaName, name);
             table.setParent(this);
             tables.put(name, table);
         }
@@ -174,7 +174,7 @@ public class DefaultSchemaMetadata
 
     public DefaultTableMetadata newTable(String tableName) {
         DefaultTableMetadata table = new DefaultTableMetadata(this);
-        table.getQName().assign(qName.catalogName, qName.schemaName, tableName);
+        table.getId().assign(id.catalogName, id.schemaName, tableName);
         return table;
     }
 
@@ -201,15 +201,15 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
+    public TableList findTables(TableId pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!pattern.getParent().contains(this.getQName(), ignoreCase))
+            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return TableList.empty();
         }
         TableList list = new TableList();
         for (ITableMetadata table : this) {
             if (pattern != null)
-                if (!pattern.contains(table.getQName(), ignoreCase))
+                if (!pattern.contains(table.getId(), ignoreCase))
                     continue;
             list.add(table);
         }
@@ -235,7 +235,7 @@ public class DefaultSchemaMetadata
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        getQName().readObject(o);
+        getId().readObject(o);
 
         JsonObject jm = o.getJsonObject(K_TABLES);
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
@@ -272,7 +272,7 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             String catalogName = rs.getString("TABLE_CATALOG");
             String schemaName = rs.getString("TABLE_SCHEM");
-            qName.assign(catalogName, schemaName); // correct char case.
+            id.assign(catalogName, schemaName); // correct char case.
         }
 
         @Override
@@ -286,11 +286,11 @@ public class DefaultSchemaMetadata
         @Override
         public void column(ResultSet rs)
                 throws SQLException {
-            QualifiedTableName qName = new QualifiedTableName();
-            qName.readFromJDBC(rs);
-            ITableMetadata table = getTable(qName.getTableName());
+            TableId id = new TableId();
+            id.readFromJDBC(rs);
+            ITableMetadata table = getTable(id.getTableName());
             if (table == null)
-                throw new UnexpectedException("Detected new table when scanning: " + qName);
+                throw new UnexpectedException("Detected new table when scanning: " + id);
             table.getJDBCMetaDataHandler().column(rs);
         }
 
@@ -318,39 +318,39 @@ public class DefaultSchemaMetadata
         DatabaseMetaData dmd = connection.getMetaData();
         MetaDataHandler handler = new MetaDataHandler();
         ResultSet rs;
-        QualifiedSchemaName qName = getQName();
+        SchemaId id = getId();
 
         // Parse from schema's metadata
-        rs = dmd.getSchemas(qName.catalogName, qName.schemaName);
+        rs = dmd.getSchemas(id.catalogName, id.schemaName);
         while (rs.next()) {
             handler.schema(rs);
             break;
         }
         rs.close();
 
-        rs = dmd.getTables(qName.catalogName, qName.schemaName, null, types);
+        rs = dmd.getTables(id.catalogName, id.schemaName, null, types);
         while (rs.next())
             handler.table(rs);
         rs.close();
 
-        rs = dmd.getColumns(qName.catalogName, qName.schemaName, null, null);
+        rs = dmd.getColumns(id.catalogName, id.schemaName, null, null);
         while (rs.next())
             handler.column(rs);
         rs.close();
 
-        rs = dmd.getPrimaryKeys(qName.catalogName, qName.schemaName, null);
-        Map<QualifiedTableName, TableKey> pkmap = TableKey.convertFromJDBC(rs);
-        for (QualifiedTableName tableQName : pkmap.keySet()) {
-            ITableMetadata table = getTable(tableQName);
-            TableKey primaryKey = pkmap.get(tableQName);
+        rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, null);
+        Map<TableId, TableKey> pkmap = TableKey.convertFromJDBC(rs);
+        for (TableId tableId : pkmap.keySet()) {
+            ITableMetadata table = getTable(tableId);
+            TableKey primaryKey = pkmap.get(tableId);
             handler.primaryKey(table, primaryKey);
         }
         rs.close();
 
         rs = dmd.getCrossReference(null, null, null, //
-                qName.catalogName, qName.schemaName, null);
-        ListMap<QualifiedTableName, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
-        for (QualifiedTableName foreignName : foreignMap.keySet()) {
+                id.catalogName, id.schemaName, null);
+        ListMap<TableId, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+        for (TableId foreignName : foreignMap.keySet()) {
             ITableMetadata foreignTable = getTable(foreignName.getTableName());
 
             List<CrossReference> crossRefs = foreignMap.get(foreignName);

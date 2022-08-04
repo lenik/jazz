@@ -25,10 +25,10 @@ public interface ISchema
 
     ICatalog getParent();
 
-    QualifiedSchemaName getQName();
+    SchemaId getId();
 
     default String getName() {
-        return getQName().getSchemaName();
+        return getId().getSchemaName();
     }
 
     default boolean isAttached() {

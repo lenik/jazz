@@ -17,11 +17,11 @@ public class SchemaList
         super(c);
     }
 
-    public List<QualifiedSchemaName> getQNames() {
-        List<QualifiedSchemaName> qNames = new ArrayList<>(size());
+    public List<SchemaId> id() {
+        List<SchemaId> ids = new ArrayList<>(size());
         for (ISchemaMetadata schema : this)
-            qNames.add(schema.getQName());
-        return qNames;
+            ids.add(schema.getId());
+        return ids;
     }
 
     public static final SchemaList empty() {

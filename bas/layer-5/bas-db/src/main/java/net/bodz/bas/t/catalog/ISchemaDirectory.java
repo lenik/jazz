@@ -9,24 +9,24 @@ public interface ISchemaDirectory {
      *
      * @return <code>false</code> if the name is outside of this directory.
      */
-    boolean isValidName(QualifiedSchemaName schemaName);
+    boolean isValidSchemaId(SchemaId id);
 
-    default void checkValidName(QualifiedSchemaName schemaName) {
-        if (!isValidName(schemaName))
-            throw new IllegalArgumentException("Invalid name: " + schemaName);
+    default void checkSchemaId(SchemaId id) {
+        if (!isValidSchemaId(id))
+            throw new IllegalArgumentException("Invalid schema id: " + id);
     }
 
-    default SchemaList findSchemas(QualifiedSchemaName pattern) {
+    default SchemaList findSchemas(SchemaId pattern) {
         return findSchemas(pattern, false);
     }
 
-    SchemaList findSchemas(QualifiedSchemaName pattern, boolean ignoreCase);
+    SchemaList findSchemas(SchemaId pattern, boolean ignoreCase);
 
-    default ISchemaMetadata getSchema(QualifiedSchemaName pattern) {
+    default ISchemaMetadata getSchema(SchemaId pattern) {
         return getSchema(pattern, false);
     }
 
-    default ISchemaMetadata getSchema(QualifiedSchemaName pattern, boolean ignoreCase) {
+    default ISchemaMetadata getSchema(SchemaId pattern, boolean ignoreCase) {
         SchemaList schemaList = findSchemas(pattern, ignoreCase);
         if (schemaList.size() > 1)
             throw new DuplicatedKeyException("More than single schema matched: " + pattern);
