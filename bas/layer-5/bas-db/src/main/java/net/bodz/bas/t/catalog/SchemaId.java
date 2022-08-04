@@ -20,6 +20,11 @@ public class SchemaId
         return o;
     }
 
+    @Override
+    public void assign(String catalogName, String schemaName) {
+        super.assign(catalogName, schemaName);
+    }
+
     public String getCompactName(SchemaId orig) {
         return getCompactName(orig, false);
     }

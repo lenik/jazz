@@ -188,4 +188,12 @@ public class DefaultTableMetadata
         }
     }
 
+    @Override
+    protected void _acceptMore(ICatalogVisitor visitor) {
+        visitor.primaryKey(this, getPrimaryKey());
+
+        for (CrossReference crossRef : getForeignKeys().values())
+            visitor.foreignKey(this, crossRef);
+    }
+
 }

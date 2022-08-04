@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,9 @@ public class DefaultSchemaMetadata
 
     ICatalogMetadata parent;
 
-    Map<String, ITableMetadata> tables = new LinkedHashMap<>();
+    Map<String, ITableMetadata> tableMap = new LinkedHashMap<>();
+    Map<String, ITableViewMetadata> viewMap = new LinkedHashMap<>();
+
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
 
@@ -116,8 +118,18 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public Map<String, ITableMetadata> getTables() {
-        return tables;
+    public Map<String, ITableMetadata> getTableMap() {
+        return tableMap;
+    }
+
+    @Override
+    public Collection<ITableMetadata> getTables() {
+        return tableMap.values();
+    }
+
+    @Override
+    public int getTableCount() {
+        return tableMap.size();
     }
 
     public DefaultTableMetadata getOrCreateTable(TableId id) {
@@ -135,7 +147,7 @@ public class DefaultSchemaMetadata
 
     public synchronized DefaultTableMetadata loadTableFromJDBC(String name, Connection cn)
             throws SQLException {
-        DefaultTableMetadata table = (DefaultTableMetadata) tables.get(name);
+        DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(name);
         if (table == null) {
             table = newTable(name);
             table.loadFromJDBC(cn, true);
@@ -147,29 +159,19 @@ public class DefaultSchemaMetadata
     public synchronized DefaultTableMetadata getOrCreateTable(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        DefaultTableMetadata table = (DefaultTableMetadata) tables.get(name);
+        DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(name);
         if (table == null) {
             table = new DefaultTableMetadata();
             table.getId().assign(id.catalogName, id.schemaName, name);
             table.setParent(this);
-            tables.put(name, table);
+            tableMap.put(name, table);
         }
         return table;
     }
 
     @Override
     public ITableMetadata getTable(String name) {
-        return tables.get(name);
-    }
-
-    @Override
-    public Iterator<ITableMetadata> iterator() {
-        return tables.values().iterator();
-    }
-
-    @Override
-    public int getTableCount() {
-        return tables.size();
+        return tableMap.get(name);
     }
 
     public DefaultTableMetadata newTable(String tableName) {
@@ -183,10 +185,10 @@ public class DefaultSchemaMetadata
         if (table == null)
             throw new NullPointerException("table");
         String name = table.getName();
-        ITableMetadata existing = tables.get(name);
+        ITableMetadata existing = tableMap.get(name);
         if (existing != null)
-            throw new DuplicatedKeyException("Table already existed: " + name);
-        tables.put(name, table);
+            throw new DuplicatedKeyException("Table is already existed: " + name);
+        tableMap.put(name, table);
     }
 
     @Override
@@ -196,7 +198,7 @@ public class DefaultSchemaMetadata
 
     @Override
     public boolean removeTable(String tableName) {
-        ITableMetadata table = tables.remove(tableName);
+        ITableMetadata table = tableMap.remove(tableName);
         return table != null;
     }
 
@@ -207,7 +209,7 @@ public class DefaultSchemaMetadata
                 return TableList.empty();
         }
         TableList list = new TableList();
-        for (ITableMetadata table : this) {
+        for (ITableMetadata table : getTables()) {
             if (pattern != null)
                 if (!pattern.contains(table.getId(), ignoreCase))
                     continue;
@@ -216,13 +218,122 @@ public class DefaultSchemaMetadata
         return list;
     }
 
-    String getTableNames() {
-        StringBuilder sb = new StringBuilder(tables.size() * 16);
-        for (String key : tables.keySet()) {
+    public String getTableNames() {
+        StringBuilder sb = new StringBuilder(tableMap.size() * 16);
+        for (String key : tableMap.keySet()) {
             if (sb.length() != 0)
                 sb.append(", ");
-            ITableMetadata table = tables.get(key);
+            ITableMetadata table = tableMap.get(key);
             sb.append(table.getName());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public Map<String, ITableViewMetadata> getViewMap() {
+        return viewMap;
+    }
+
+    @Override
+    public Collection<ITableViewMetadata> getViews() {
+        return viewMap.values();
+    }
+
+    @Override
+    public int getViewCount() {
+        return viewMap.size();
+    }
+
+    public DefaultTableViewMetadata getOrCreateView(TableId id) {
+        checkTableId(id);
+        return getOrCreateView(id.tableName);
+    }
+
+    public DefaultTableViewMetadata autoloadViewFromJDBC(String name, Connection cn) {
+        try {
+            return loadViewFromJDBC(name, cn);
+        } catch (SQLException e) {
+            throw new LoadException("Failed to load view " + name + ": " + e.getMessage(), e);
+        }
+    }
+
+    public synchronized DefaultTableViewMetadata loadViewFromJDBC(String name, Connection cn)
+            throws SQLException {
+        DefaultTableViewMetadata view = (DefaultTableViewMetadata) viewMap.get(name);
+        if (view == null) {
+            view = newView(name);
+            view.loadFromJDBC(cn);
+            addView(view);
+        }
+        return view;
+    }
+
+    public synchronized DefaultTableViewMetadata getOrCreateView(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        DefaultTableViewMetadata view = (DefaultTableViewMetadata) viewMap.get(name);
+        if (view == null) {
+            view = new DefaultTableViewMetadata();
+            view.getId().assign(id.catalogName, id.schemaName, name);
+            view.setParent(this);
+            viewMap.put(name, view);
+        }
+        return view;
+    }
+
+    @Override
+    public ITableViewMetadata getView(String name) {
+        return viewMap.get(name);
+    }
+
+    public DefaultTableViewMetadata newView(String viewName) {
+        DefaultTableViewMetadata view = new DefaultTableViewMetadata(this);
+        view.getId().assign(id.catalogName, id.schemaName, viewName);
+        return view;
+    }
+
+    public void addView(ITableViewMetadata view) {
+        if (view == null)
+            throw new NullPointerException("view");
+        String name = view.getName();
+        ITableViewMetadata existing = viewMap.get(name);
+        if (existing != null)
+            throw new DuplicatedKeyException("View is already existed: " + name);
+        viewMap.put(name, view);
+    }
+
+    public boolean removeView(ITableViewMetadata view) {
+        return removeView(view.getName());
+    }
+
+    public boolean removeView(String name) {
+        ITableViewMetadata view = viewMap.remove(name);
+        return view != null;
+    }
+
+    @Override
+    public TableViewList findViews(TableId pattern, boolean ignoreCase) {
+        if (pattern != null) {
+            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
+                return TableViewList.empty();
+        }
+        TableViewList list = new TableViewList();
+        for (ITableViewMetadata view : viewMap.values()) {
+            if (pattern != null)
+                if (!pattern.contains(view.getId(), ignoreCase))
+                    continue;
+            list.add(view);
+        }
+        return list;
+    }
+
+    public String getViewNames() {
+        StringBuilder sb = new StringBuilder(viewMap.size() * 16);
+        for (String key : viewMap.keySet()) {
+            if (sb.length() != 0)
+                sb.append(", ");
+            ITableViewMetadata view = viewMap.get(key);
+            sb.append(view.getName());
         }
         return sb.toString();
     }
@@ -245,7 +356,7 @@ public class DefaultSchemaMetadata
             table.readObject(item);
             tables.put(key, table);
         }
-        this.tables = tables;
+        this.tableMap = tables;
     }
 
     @Override
@@ -260,7 +371,7 @@ public class DefaultSchemaMetadata
             String key = table.getName();
             tables.put(key, table);
         }
-        this.tables = tables;
+        this.tableMap = tables;
     }
 
     class MetaDataHandler
@@ -280,7 +391,18 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
             table.getJDBCMetaDataHandler().table(rs);
-            addTable(table);
+
+            switch (table.getTableType()) {
+            case TABLE:
+                addTable(table);
+                break;
+
+            case VIEW:
+                addView(table);
+                break;
+
+            default:
+            }
         }
 
         @Override
@@ -288,10 +410,21 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             TableId id = new TableId();
             id.readFromJDBC(rs);
+
             ITableMetadata table = getTable(id.getTableName());
-            if (table == null)
-                throw new UnexpectedException("Detected new table when scanning: " + id);
-            table.getJDBCMetaDataHandler().column(rs);
+            if (table != null) {
+                table.getJDBCMetaDataHandler().column(rs);
+                return;
+            }
+
+            ITableViewMetadata view = getView(id.getTableName());
+            if (view != null) {
+                view.getJDBCMetaDataHandler().column(rs);
+                return;
+            }
+
+            // the table isn't included, so just ignore the column.
+            throw new UnexpectedException("Detected new table when scanning: " + id);
         }
 
         @Override
@@ -333,9 +466,11 @@ public class DefaultSchemaMetadata
             handler.table(rs);
         rs.close();
 
+        // Set<String> typeSet = new HashSet<>(Arrays.asList(types));
         rs = dmd.getColumns(id.catalogName, id.schemaName, null, null);
-        while (rs.next())
+        while (rs.next()) {
             handler.column(rs);
+        }
         rs.close();
 
         rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, null);

@@ -64,7 +64,7 @@ abstract class CSNamePair
         this.schemaName = null;
     }
 
-    public void assign(String catalogName, String schemaName) {
+    protected void assign(String catalogName, String schemaName) {
         this.catalogName = catalogName;
         this.schemaName = schemaName;
     }
