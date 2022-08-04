@@ -14,6 +14,18 @@ public interface ICatalogVisitor {
     default void endSchema(ISchemaMetadata schema) {
     }
 
+    default void beginTables(ISchemaMetadata schema) {
+    }
+
+    default void endTables(ISchemaMetadata schema) {
+    }
+
+    default void beginViews(ISchemaMetadata schema) {
+    }
+
+    default void endViews(ISchemaMetadata schema) {
+    }
+
     default void beginTableView(ITableViewMetadata table) {
     }
 

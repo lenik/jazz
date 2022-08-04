@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
@@ -13,8 +14,8 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ISchemaMetadata
         extends
-            Iterable<ITableMetadata>,
             ITableDirectory,
+            ITableViewDirectory,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {
@@ -40,16 +41,23 @@ public interface ISchemaMetadata
 
     ICatalogMetadata getParent();
 
-    /**
-     * key: canonical name
-     */
-    Map<String, ITableMetadata> getTables();
+    String getCanonicalName(String name);
+
+    Map<String, ITableMetadata> getTableMap();
+
+    Collection<ITableMetadata> getTables();
 
     int getTableCount();
 
     ITableMetadata getTable(String name);
 
-    String getCanonicalName(String name);
+    Map<String, ITableViewMetadata> getViewMap();
+
+    Collection<ITableViewMetadata> getViews();
+
+    int getViewCount();
+
+    ITableViewMetadata getView(String name);
 
     @Override
     default void writeObject(IJsonOut out)
@@ -58,7 +66,7 @@ public interface ISchemaMetadata
 
         out.key(K_TABLES);
         out.object();
-        for (String key : getTables().keySet()) {
+        for (String key : getTableMap().keySet()) {
             out.key(key);
             ITableMetadata table = getTable(key);
             if (table == null) {
@@ -78,7 +86,7 @@ public interface ISchemaMetadata
         getId().writeObject(out);
 
         out.beginElement(K_TABLES);
-        for (String key : getTables().keySet()) {
+        for (String key : getTableMap().keySet()) {
             ITableMetadata table = getTable(key);
             if (table == null)
                 continue;
@@ -91,8 +99,17 @@ public interface ISchemaMetadata
 
     default void accept(ICatalogVisitor visitor) {
         visitor.beginSchema(this);
-        for (ITableMetadata table : this)
+
+        visitor.beginTables(this);
+        for (ITableMetadata table : getTables())
             table.accept(visitor);
+        visitor.endTables(this);
+
+        visitor.beginViews(this);
+        for (ITableViewMetadata view : getViews())
+            view.accept(visitor);
+        visitor.endViews(this);
+
         visitor.endSchema(this);
     }
 
