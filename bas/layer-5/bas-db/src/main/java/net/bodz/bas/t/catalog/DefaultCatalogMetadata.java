@@ -20,7 +20,7 @@ public class DefaultCatalogMetadata
             IMutableCatalogMetadata {
 
     String name;
-    QualifiedSchemaName defaultSchemaName = new QualifiedSchemaName(null, "public");
+    String defaultSchemaName = "public";
 
     String label;
     String description;
@@ -38,12 +38,37 @@ public class DefaultCatalogMetadata
         this.name = name;
     }
 
-    public QualifiedSchemaName getDefaultSchemaName() {
+    public String getDefaultSchemaName() {
         return defaultSchemaName;
     }
 
-    public void setDefaultSchemaName(QualifiedSchemaName defaultSchemaName) {
+    public void setDefaultSchemaName(String defaultSchemaName) {
         this.defaultSchemaName = defaultSchemaName;
+    }
+
+    @Override
+    public boolean isValidName(QualifiedSchemaName schemaName) {
+        if (schemaName == null)
+            throw new NullPointerException("schemaName");
+        if (NamePattern.matches(name, schemaName.catalogName))
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean isValidName(QualifiedTableName tableName) {
+        if (tableName == null)
+            throw new NullPointerException("tableName");
+        if (NamePattern.matches(name, tableName.catalogName))
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean isValidNameOf(String catalogName) {
+        if (NamePattern.matches(catalogName, this.name))
+            return true;
+        return false;
     }
 
     public Boolean getConvertToUpperCase() {
@@ -86,18 +111,19 @@ public class DefaultCatalogMetadata
 
     @Override
     public ISchemaMetadata getSchema(String name) {
+        if (name == null)
+            name = defaultSchemaName;
         return schemas.get(name);
     }
 
-    synchronized ISchemaMetadata getOrCreateSchema(QualifiedSchemaName qName) {
-        if (!NamePattern.matches(name, qName.catalogName))
-            return null;
+    public DefaultSchemaMetadata getOrCreateSchema(QualifiedSchemaName qName) {
+        checkValidName(qName);
         return getOrCreateSchema(qName.schemaName);
     }
 
-    synchronized DefaultSchemaMetadata getOrCreateSchema(String schemaName) {
+    public synchronized DefaultSchemaMetadata getOrCreateSchema(String schemaName) {
         if (schemaName == null)
-            throw new NullPointerException("schemaName");
+            schemaName = defaultSchemaName;
         DefaultSchemaMetadata schema = (DefaultSchemaMetadata) schemas.get(schemaName);
         if (schema == null) {
             DefaultSchemaMetadata dsm = newSchema(schemaName);
@@ -106,10 +132,19 @@ public class DefaultCatalogMetadata
         return schema;
     }
 
+    public DefaultSchemaMetadata getOrCreateDefaultSchema() {
+        return getOrCreateSchema((String) null);
+    }
+
     protected DefaultSchemaMetadata newSchema(String schemaName) {
+        if (schemaName == null)
+            schemaName = defaultSchemaName;
         DefaultSchemaMetadata dsm = new DefaultSchemaMetadata(this);
         dsm.getQName().assign(name, schemaName);
-        dsm.setDefaultName(defaultSchemaName);
+
+        QualifiedSchemaName defaultName = new QualifiedSchemaName();
+        defaultName.assign(null, defaultSchemaName);
+        dsm.setDefaultName(defaultName);
         return dsm;
     }
 
@@ -117,36 +152,63 @@ public class DefaultCatalogMetadata
     public void addSchema(ISchemaMetadata schema) {
         if (schema == null)
             throw new NullPointerException("schema");
-        String name = schema.getName();
-        ISchemaMetadata existing = schemas.get(name);
+        String schemaName = schema.getName();
+        if (schemaName == null)
+            schemaName = defaultSchemaName;
+
+        ISchemaMetadata existing = schemas.get(schemaName);
         if (existing != null)
-            throw new DuplicatedKeyException("Schema already existed: " + name);
-        schemas.put(name, schema);
+            throw new DuplicatedKeyException("Schema already existed: " + schemaName);
+        schemas.put(schemaName, schema);
     }
 
     @Override
     public boolean removeSchema(ISchemaMetadata schema) {
-        return removeSchema(schema.getName());
+        String schemaName = schema.getName();
+        if (schemaName == null)
+            schemaName = defaultSchemaName;
+        return removeSchema(schemaName);
     }
 
     @Override
     public boolean removeSchema(String schemaName) {
+        if (schemaName == null)
+            schemaName = defaultSchemaName;
         ISchemaMetadata schema = schemas.remove(schemaName);
         return schema != null;
+    }
+
+    public DefaultTableMetadata newTable(QualifiedTableName qName) {
+        if (qName == null)
+            throw new NullPointerException("qName");
+        return getOrCreateSchema(qName.schemaName).newTable(qName.tableName);
     }
 
     public void addTable(ITableMetadata table) {
         if (table == null)
             throw new NullPointerException("table");
-        QualifiedSchemaName schemaQName = table.getQName().getSchemaQName();
-        DefaultSchemaMetadata schema = getOrCreateSchema(schemaQName.getSchemaName());
-        schema.addTable(table);
+        getOrCreateSchema(table.getQName().getParent()).addTable(table);
+    }
+
+    public DefaultTableMetadata getOrCreateTable(QualifiedTableName qName) {
+        if (qName == null)
+            throw new NullPointerException("qName");
+        return getOrCreateSchema(qName.getParent()).getOrCreateTable(qName);
+    }
+
+    public DefaultTableMetadata loadTableFromJDBC(QualifiedTableName qName, Connection connection)
+            throws SQLException {
+        if (qName == null)
+            throw new NullPointerException("qName");
+        if (connection == null)
+            throw new NullPointerException("connection");
+        return getOrCreateSchema(qName.getParent()).loadTableFromJDBC(qName.tableName, connection);
     }
 
     @Override
     public SchemaList findSchemas(QualifiedSchemaName pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!NamePattern.matches(getName(), pattern.getCatalogName(), ignoreCase))
+            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return SchemaList.empty();
         }
         SchemaList schemaList = new SchemaList();
@@ -163,9 +225,9 @@ public class DefaultCatalogMetadata
     public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
         QualifiedSchemaName schemaPattern = null;
         if (pattern != null) {
-            if (!NamePattern.matches(getName(), pattern.getCatalogName(), ignoreCase))
+            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return TableList.empty();
-            schemaPattern = pattern.getSchemaQName();
+            schemaPattern = pattern.getParent();
         }
 
         TableList tableList = new TableList();
@@ -185,7 +247,11 @@ public class DefaultCatalogMetadata
             if (sb.length() != 0)
                 sb.append(", ");
             ISchemaMetadata schema = schemas.get(key);
-            sb.append(schema.getName());
+            String schemaName = schema.getName();
+            assert schemaName != null;
+            if (schemaName == null)
+                schemaName = defaultSchemaName;
+            sb.append(schemaName);
         }
         return sb.toString();
     }
@@ -275,6 +341,12 @@ public class DefaultCatalogMetadata
         while (rs.next())
             handler.schema(rs);
         rs.close();
+    }
+
+    static DefaultCatalogMetadata defaultInstance = new DefaultCatalogMetadata();
+
+    public static DefaultCatalogMetadata getDefaultInstance() {
+        return defaultInstance;
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
@@ -66,6 +67,22 @@ public class DefaultSchemaMetadata
     }
 
     @Override
+    public boolean isValidName(QualifiedTableName tableName) {
+        if (tableName == null)
+            throw new NullPointerException("tableName");
+        if (this.qName == null)
+            return true;
+        return this.qName.contains(tableName);
+    }
+
+    @Override
+    public boolean isValidNameOf(String catalogName) {
+        if (NamePattern.matches(catalogName, this.qName.catalogName))
+            return true;
+        return false;
+    }
+
+    @Override
     public ICatalogMetadata getParent() {
         return parent;
     }
@@ -103,8 +120,41 @@ public class DefaultSchemaMetadata
         return tables;
     }
 
-    public ITableMetadata getTable(QualifiedTableName qName) {
-        return tables.get(qName.getTableName());
+    public DefaultTableMetadata getOrCreateTable(QualifiedTableName qName) {
+        checkValidName(qName);
+        return getOrCreateTable(qName.tableName);
+    }
+
+    public DefaultTableMetadata autoloadTableFromJDBC(String name, Connection cn) {
+        try {
+            return loadTableFromJDBC(name, cn);
+        } catch (SQLException e) {
+            throw new LoadException("Failed to load table " + name + ": " + e.getMessage(), e);
+        }
+    }
+
+    public synchronized DefaultTableMetadata loadTableFromJDBC(String name, Connection cn)
+            throws SQLException {
+        DefaultTableMetadata table = (DefaultTableMetadata) tables.get(name);
+        if (table == null) {
+            table = newTable(name);
+            table.loadFromJDBC(cn, true);
+            addTable(table);
+        }
+        return table;
+    }
+
+    public synchronized DefaultTableMetadata getOrCreateTable(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        DefaultTableMetadata table = (DefaultTableMetadata) tables.get(name);
+        if (table == null) {
+            table = new DefaultTableMetadata();
+            table.getQName().assign(qName.catalogName, qName.schemaName, name);
+            table.setParent(this);
+            tables.put(name, table);
+        }
+        return table;
     }
 
     @Override
@@ -120,6 +170,12 @@ public class DefaultSchemaMetadata
     @Override
     public int getTableCount() {
         return tables.size();
+    }
+
+    public DefaultTableMetadata newTable(String tableName) {
+        DefaultTableMetadata table = new DefaultTableMetadata(this);
+        table.getQName().assign(qName.catalogName, qName.schemaName, tableName);
+        return table;
     }
 
     @Override
@@ -147,11 +203,11 @@ public class DefaultSchemaMetadata
     @Override
     public TableList findTables(QualifiedTableName pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!pattern.getSchemaQName().contains(this.getQName(), ignoreCase))
+            if (!pattern.getParent().contains(this.getQName(), ignoreCase))
                 return TableList.empty();
         }
         TableList list = new TableList();
-        for (ITableMetadata table : getTables().values()) {
+        for (ITableMetadata table : this) {
             if (pattern != null)
                 if (!pattern.contains(table.getQName(), ignoreCase))
                     continue;

@@ -49,7 +49,7 @@ public class QualifiedTableName
         return o;
     }
 
-    public QualifiedSchemaName getSchemaQName() {
+    public QualifiedSchemaName getParent() {
         return new QualifiedSchemaName(catalogName, schemaName);
     }
 
