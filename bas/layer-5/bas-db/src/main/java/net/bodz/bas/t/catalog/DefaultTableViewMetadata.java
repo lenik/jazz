@@ -102,21 +102,23 @@ public class DefaultTableViewMetadata
                 IJDBCMetaDataHandler {
 
         @Override
-        public void table(ResultSet rs)
+        public ITableViewMetadata table(ResultSet rs)
                 throws SQLException {
             id.catalogName = rs.getString("table_cat");
             id.schemaName = rs.getString("table_schem");
             id.tableName = rs.getString("table_name");
             tableType = TableType.parseJDBC(rs.getString("table_type"), getDefaultTableType());
             description = rs.getString("remarks");
+            return DefaultTableViewMetadata.this;
         }
 
         @Override
-        public void column(ResultSet rs)
+        public IColumnMetadata column(ResultSet rs)
                 throws SQLException {
             DefaultColumnMetadata column = new DefaultColumnMetadata(DefaultTableViewMetadata.this);
             column.readObject(rs);
             addColumn(column);
+            return column;
         }
 
     }

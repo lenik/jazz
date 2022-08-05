@@ -380,54 +380,55 @@ public class DefaultSchemaMetadata
                 IJDBCMetaDataHandler {
 
         @Override
-        public void schema(ResultSet rs)
+        public ISchemaMetadata schema(ResultSet rs)
                 throws SQLException {
             String catalogName = rs.getString("TABLE_CATALOG");
             String schemaName = rs.getString("TABLE_SCHEM");
             id.assign(catalogName, schemaName); // correct char case.
+            return DefaultSchemaMetadata.this;
         }
 
         @Override
-        public void table(ResultSet rs)
+        public ITableViewMetadata table(ResultSet rs)
                 throws SQLException {
             DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
             table.getJDBCMetaDataHandler().table(rs);
 
-            if (!loadSelector.selectTable(table.getId()))
-                return;
+            if (!loadSelector.selectTable(table))
+                return null;
 
             switch (table.getTableType()) {
             case TABLE:
                 addTable(table);
-                break;
+                return table;
 
             case VIEW:
                 addView(table);
-                break;
+                return table;
 
             default:
+                return null;
             }
         }
 
         @Override
-        public void column(ResultSet rs)
+        public IColumnMetadata column(ResultSet rs)
                 throws SQLException {
             TableId id = new TableId();
             id.readFromJDBC(rs);
-            if (!loadSelector.selectTable(id))
-                return;
+            // if (!loadSelector.selectTable(id)) return null;
 
             ITableMetadata table = getTable(id.getTableName());
             if (table != null) {
-                table.getJDBCMetaDataHandler().column(rs);
-                return;
+                return table.getJDBCMetaDataHandler().column(rs);
             }
 
             ITableViewMetadata view = getView(id.getTableName());
             if (view != null) {
-                view.getJDBCMetaDataHandler().column(rs);
-                return;
+                return view.getJDBCMetaDataHandler().column(rs);
             }
+
+            return null;
         }
 
         @Override
@@ -444,16 +445,11 @@ public class DefaultSchemaMetadata
 
     }
 
-    IJDBCMetaDataHandler metaDataHandler = new SchemaHandler();
     IJDBCLoadSelector loadSelector = IJDBCLoadSelector.ALL;
 
     @Override
     public IJDBCMetaDataHandler getJDBCMetaDataHandler() {
-        return metaDataHandler;
-    }
-
-    public void setJDBCMetaDataHandler(IJDBCMetaDataHandler handler) {
-        metaDataHandler = handler;
+        return new SchemaHandler();
     }
 
     public IJDBCLoadSelector getJDBCLoadSelector() {
@@ -466,9 +462,12 @@ public class DefaultSchemaMetadata
 
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
+        if (types != null && types.length == 0)
+            types = null;
+
         DatabaseMetaData dmd = connection.getMetaData();
+        IJDBCMetaDataHandler metaDataHandler = getJDBCMetaDataHandler();
         ResultSet rs;
-        SchemaId id = getId();
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(id.catalogName, id.schemaName);

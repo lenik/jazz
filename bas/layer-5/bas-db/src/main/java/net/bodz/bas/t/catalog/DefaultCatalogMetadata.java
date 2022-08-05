@@ -299,30 +299,24 @@ public class DefaultCatalogMetadata
                 IJDBCMetaDataHandler {
 
         @Override
-        public void schema(ResultSet rs)
+        public ISchemaMetadata schema(ResultSet rs)
                 throws SQLException {
             String schemaName = rs.getString("TABLE_SCHEM");
             DefaultSchemaMetadata schema = newSchema(schemaName);
-            if (loadSelector.selectSchema(schema.id))
+            if (loadSelector.selectSchema(schema.id)) {
+                schema.setJDBCLoadSelector(loadSelector);
                 addSchema(schema);
+            }
+            return schema;
         }
 
     }
 
-    IJDBCMetaDataHandler metaDataHandler = createJDBCMetaDataHandler();
     IJDBCLoadSelector loadSelector = IJDBCLoadSelector.ALL;
-
-    protected CatalogHandler createJDBCMetaDataHandler() {
-        return new CatalogHandler();
-    }
 
     @Override
     public IJDBCMetaDataHandler getJDBCMetaDataHandler() {
-        return metaDataHandler;
-    }
-
-    public void setJDBCMetaDataHandler(IJDBCMetaDataHandler handler) {
-        metaDataHandler = handler;
+        return new CatalogHandler();
     }
 
     public IJDBCLoadSelector getJDBCLoadSelector() {
@@ -336,12 +330,18 @@ public class DefaultCatalogMetadata
     public void loadFromJDBC(Connection connection, String... types)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
+        IJDBCMetaDataHandler metaDataHandler = getJDBCMetaDataHandler();
         ResultSet rs;
 
         rs = dmd.getSchemas(name, null);
         while (rs.next())
             metaDataHandler.schema(rs);
         rs.close();
+
+        for (ISchemaMetadata schema : this) {
+            DefaultSchemaMetadata dsm = (DefaultSchemaMetadata) schema;
+            dsm.loadFromJDBC(connection);
+        }
     }
 
     public void dump() {
