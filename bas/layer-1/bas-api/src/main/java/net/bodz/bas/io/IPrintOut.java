@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import net.bodz.bas.io.impl.NullPrintOut;
+import net.bodz.bas.io.impl.TreeOutImpl;
 
 public interface IPrintOut
         extends
@@ -91,6 +92,10 @@ public interface IPrintOut
 
     @Override
     void close();
+
+    default ITreeOut indented() {
+        return TreeOutImpl.from(this);
+    }
 
     PrintWriter toPrintWriter();
 
