@@ -6,10 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.nio.Charsets;
@@ -23,12 +20,7 @@ import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
-import net.bodz.bas.t.catalog.DefaultCatalogMetadata;
-import net.bodz.bas.t.catalog.DefaultTableMetadata;
-import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.IJDBCMetaDataHandler;
-import net.bodz.bas.t.catalog.ISchemaMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.*;
 import net.bodz.lily.gen.model.java.*;
 
 public class JavaModelGenerator
@@ -58,76 +50,46 @@ public class JavaModelGenerator
     DataContext dataContext;
     Connection connection;
 
-    DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
+    CatalogSubset catalogSubset = new CatalogSubset(null);
 
     public JavaModelGenerator(DataContext dataContext) {
         this.dataContext = dataContext;
     }
 
-    final IJDBCMetaDataHandler handler = catalog.getJDBCMetaDataHandler();
+    boolean processTableView(ITableViewMetadata tableView) {
+        switch (tableView.getTableType()) {
+        case TABLE:
+        case SYSTEM_TABLE:
+        case TEMP:
+        case GLOBAL_TEMP:
+            ITableMetadata table = (ITableMetadata) tableView;
+            try {
+                makeTable(table);
+            } catch (Exception e) {
+                logger.error("Error make table: " + e.getMessage(), e);
+                return false;
+            }
+            return true;
 
-    class Filter
-            implements
-                IJDBCMetaDataHandler {
+        case VIEW:
+            try {
+                makeView(tableView);
+            } catch (Exception e) {
+                logger.error("Error make table: " + e.getMessage(), e);
+                return false;
+            }
+            return true;
 
-        IJDBCMetaDataHandler next;
-
-        public Filter(IJDBCMetaDataHandler next) {
-            this.next = next;
-        }
-
-        @Override
-        public ISchemaMetadata schema(ResultSet rs)
-                throws SQLException {
-            return IJDBCMetaDataHandler.super.schema(rs);
-        }
-
-    }
-
-    void makeCatalog(String catalogName)
-            throws SQLException, IOException {
-
-        catalog.loadFromJDBC(connection, "TABLE", "VIEW");
-        List<String> names = new ArrayList<>();
-        ResultSet rs = connection.getMetaData().getSchemas(catalogName, null);
-        while (rs.next()) {
-            String name = rs.getString("SCHEMA_NAME");
-            names.add(name);
-        }
-        rs.close();
-        for (String schemaName : names)
-            makeSchema(catalogName, schemaName);
-    }
-
-    void makeSchema(String catalogName, String schemaName)
-            throws SQLException, IOException {
-        List<String> tableNames = new ArrayList<>();
-        ResultSet rs = connection.getMetaData().getTables(catalogName, schemaName, null, //
-                new String[] { "TABLE" });
-        while (rs.next()) {
-            String name = rs.getString("TABLE_NAME");
-            // String type = rs.getString("TABLE_TYPE");
-            // String remarks = rs.getString("REMARKS");
-            tableNames.add(name);
-        }
-        rs.close();
-        for (String tableName : tableNames) {
-            DefaultTableMetadata table = new DefaultTableMetadata();
-            table.getId().assign(catalogName, schemaName, tableName);
-            table.loadFromJDBC(connection, true);
-            makeEntity(table);
+        default:
+            return false;
         }
     }
 
-    void makeEntity(String fullName)
-            throws SQLException, IOException {
-        DefaultTableMetadata table = new DefaultTableMetadata();
-        table.getId().setFullName(fullName);
-        table.loadFromJDBC(connection, true);
-        makeEntity(table);
+    void makeView(ITableViewMetadata view) {
+
     }
 
-    void makeEntity(ITableMetadata table)
+    void makeTable(ITableMetadata table)
             throws SQLException, IOException {
         String q_table_name = table.getCompactName();
         String qTableName = StringId.UL.toQCamel(q_table_name);
@@ -220,17 +182,44 @@ public class JavaModelGenerator
         connection = dataContext.getConnection();
 
         for (String arg : args) {
-            if (arg.endsWith(".*.*"))
-                makeCatalog(StringPart.before(arg, ".*.*"));
-            else if (arg.endsWith(".*"))
-                makeSchema(null, StringPart.before(arg, ".*"));
-            else {
-                DefaultTableMetadata table = new DefaultTableMetadata();
-                table.getId().setFullName(arg);
-                table.loadFromJDBC(connection, false);
-
+            if (arg.endsWith(".*.*")) {
+                catalogSubset.addAllSchemas();
+            } else if (arg.endsWith(".*")) {
+                String schemaName = StringPart.before(arg, ".*");
+                // schemaName = schemaName.toLowerCase();
+                catalogSubset.addFullSchema(schemaName);
+            } else {
+                TableId id = new TableId();
+                id.setFullName(arg);
+                catalogSubset.addTable(id);
             }
         }
+
+        DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
+        catalog.setJDBCLoadSelector(new IJDBCLoadSelector() {
+            @Override
+            public boolean selectSchema(SchemaId id) {
+                ContainingType type = catalogSubset.contains(id.getSchemaName());
+                System.out.println("SCHEMA " + id + ": " + type);
+                return type != ContainingType.NONE;
+            }
+
+            @Override
+            public boolean selectTable(TableId id) {
+                boolean contains = catalogSubset.contains(id);
+                System.out.println("TABLE " + id + ": " + contains);
+                return contains;
+            }
+        });
+        catalog.loadFromJDBC(connection, "TABLE", "VIEW");
+        catalog.dump();
+
+        catalog.accept(new ICatalogVisitor() {
+            @Override
+            public boolean beginTableView(ITableViewMetadata table) {
+                return processTableView(table);
+            }
+        });
 
         connection.close();
     }
