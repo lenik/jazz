@@ -109,8 +109,7 @@ public abstract class AbstractProgram
     public synchronized void execute(String... args)
             throws Exception {
 
-        logger.debug("Receive args from cmdline");
-
+        logger.debug("Parse cmdline arguments...");
         try {
             List<String> remaining = receive(args);
             args = remaining.toArray(new String[0]);
@@ -125,10 +124,8 @@ public abstract class AbstractProgram
             return;
         }
 
-        logger.debug("Reconfigure...");
         _reconfigure();
         reconfigure();
-        logger.debug("Reconfigure done.");
 
         IOptionGroup options = getOptionModel();
         if (logger.isDebugEnabled()) {
