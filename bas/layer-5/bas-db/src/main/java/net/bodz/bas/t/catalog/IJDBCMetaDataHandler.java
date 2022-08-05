@@ -5,16 +5,19 @@ import java.sql.SQLException;
 
 public interface IJDBCMetaDataHandler {
 
-    default void schema(ResultSet rs)
+    default ISchemaMetadata schema(ResultSet rs)
             throws SQLException {
+        return null;
     }
 
-    default void table(ResultSet rs)
+    default ITableViewMetadata table(ResultSet rs)
             throws SQLException {
+        return null;
     }
 
-    default void column(ResultSet rs)
+    default IColumnMetadata column(ResultSet rs)
             throws SQLException {
+        return null;
     }
 
     default void primaryKey(ITableMetadata table, TableKey primaryKey)

@@ -10,6 +10,10 @@ public interface IJDBCLoadSelector {
         return true;
     }
 
+    default boolean selectTable(ITableMetadata table) {
+        return selectTable(table.getId());
+    }
+
     IJDBCLoadSelector ALL = new IJDBCLoadSelector() {
     };
 

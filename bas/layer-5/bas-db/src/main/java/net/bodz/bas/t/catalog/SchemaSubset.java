@@ -10,6 +10,8 @@ public class SchemaSubset {
     public Map<String, Boolean> tableNames = new HashMap<>();
     static final Map<String, Boolean> ALL_TABLES = null;
 
+    // boolean allowWildcards = true;
+
     public SchemaSubset(String schemaName) {
         this.schemaName = schemaName;
     }
