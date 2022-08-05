@@ -1,18 +1,18 @@
 package net.bodz.lily.gen.model.java;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.model.base.CoIndex;
 
-public class EntityIndexBuilder
-        extends EntityStuffBuilder {
+public class ViewIndexBuilder
+        extends ViewStuffBuilder {
 
-    public EntityIndexBuilder(String mainQName, String fragmentQName) {
+    public ViewIndexBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         String maskName = mainName + "Mask";
 
         out.println("/**");

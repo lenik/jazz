@@ -6,16 +6,19 @@ import java.util.Objects;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 
-public class EntityIdBuilder
-        extends EntityStuffBuilder {
+public class TableIdBuilder
+        extends TableStuffBuilder {
 
-    public EntityIdBuilder(String mainQName) {
+    public TableIdBuilder(String mainQName) {
         super(mainQName, Naming.id(mainQName));
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata tableView) {
+        ITableMetadata table = (ITableMetadata) tableView;
+
         primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
         case 0:

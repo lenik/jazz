@@ -1,17 +1,17 @@
 package net.bodz.lily.gen.model.java;
 
 import net.bodz.bas.db.ibatis.IMapperTemplate;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 
-public class EntityMapperBuilder
-        extends EntityStuffBuilder {
+public class ViewMapperBuilder
+        extends ViewStuffBuilder {
 
-    public EntityMapperBuilder(String mainQName, String fragmentQName) {
+    public ViewMapperBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         String maskName = mainName + "Mask";
 
         out.println("public interface " + fragmentName);

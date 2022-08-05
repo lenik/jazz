@@ -11,51 +11,49 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
-import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
-import net.bodz.lily.entity.IdType;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.gen.JavaFragmentBuilder;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.StructRow;
 
-public class EntityStuffBuilder
-        extends JavaFragmentBuilder<ITableMetadata> {
+public class ViewStuffBuilder
+        extends JavaFragmentBuilder<ITableViewMetadata> {
 
-    IColumnMetadata[] primaryKeyCols;
-
-    public EntityStuffBuilder(String mainQName, String fragmentQName) {
+    public ViewStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
-    @Override
-    protected void buildClassBody(ITableMetadata table) {
-        String idType = null;
-        primaryKeyCols = table.getPrimaryKeyColumns();
-        switch (primaryKeyCols.length) {
-        case 0:
-            break;
-        case 1:
-            Class<?> kType = primaryKeyCols[0].getType();
-            Class<?> kBoxed = Primitives.box(kType);
-            idType = imports.simple(kBoxed);
-            break;
-        default:
-            idType = Naming.id(mainName);
+    public static interface ClassBodyDetail {
+        default void body_classAnnotations() {
         }
 
-        if (idType != null)
-            out.printf("%s(%s.class)\n", //
-                    imports.a(IdType.class), //
-                    idType);
+        String body_parent();
+
+        default void body_idAccessors() {
+        }
+
+    }
+
+    @Override
+    protected void buildClassBody(ITableViewMetadata table) {
+        buildClassBody(table, new ClassBodyDetail() {
+            @Override
+            public String body_parent() {
+                return imports.simple(StructRow.class);
+            }
+        });
+    }
+
+    protected void buildClassBody(ITableViewMetadata table, ClassBodyDetail detail) {
+        detail.body_classAnnotations();
         out.printf("public abstract class %s\n", fragmentName);
-        out.printf("        extends %s%s {\n", //
-                imports.simple(idType == null ? Object.class : CoEntity.class), //
-                idType == null ? "" : "<" + idType + ">");
+        out.printf("        extends %s {\n", //
+                detail.body_parent());
         out.enter();
         {
             out.println();
@@ -68,24 +66,7 @@ public class EntityStuffBuilder
                 columnField(column);
             }
 
-            if (primaryKeyCols.length > 1) {
-                out.println();
-                out.println("@Override");
-                out.printf("public %s getId() {\n", idType);
-                // out.printf(" return id;\n");
-                out.printf("    return new %s(this);\n", idType);
-                out.printf("}\n");
-                out.println();
-                out.println("@Override");
-                out.printf("public void setId(%s id) {\n", idType);
-                // out.printf(" this.id = id;\n");
-                for (IColumnMetadata k : primaryKeyCols) {
-                    String col_name = k.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-                    out.printf("    this.%s = id.%s;\n", colName, colName);
-                }
-                out.printf("}\n");
-            }
+            detail.body_idAccessors();
 
             for (IColumnMetadata column : table.getColumns()) {
                 out.println();
@@ -101,7 +82,7 @@ public class EntityStuffBuilder
         out.println("}");
     }
 
-    void columnField(IColumnMetadata column) {
+    protected void columnField(IColumnMetadata column) {
         String col_name = column.getName();
         String colName = StringId.UL.toCamel(col_name);
         Class<?> type = column.getType();
@@ -121,7 +102,7 @@ public class EntityStuffBuilder
         out.println(";");
     }
 
-    void columnAccessors(IColumnMetadata column) {
+    protected void columnAccessors(IColumnMetadata column) {
         String col_name = column.getName();
         String colName = StringId.UL.toCamel(col_name);
         Class<?> type = column.getType();
@@ -216,7 +197,7 @@ public class EntityStuffBuilder
         initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis()");
     }
 
-    void N_consts(ITableMetadata table, Boolean wantPrimaryKey) {
+    protected void N_consts(ITableViewMetadata table, Boolean wantPrimaryKey) {
         List<String> defs = new ArrayList<>();
         for (IColumnMetadata column : table.getColumns()) {
             if (wantPrimaryKey != null)
@@ -240,7 +221,7 @@ public class EntityStuffBuilder
         }
     }
 
-    private void initNotNulls(ITableMetadata table) {
+    private void initNotNulls(ITableViewMetadata table) {
         out.println("public void initNotNulls() {");
         out.enter();
         for (IColumnMetadata column : table.getColumns()) {

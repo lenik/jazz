@@ -11,19 +11,19 @@ import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.range.*;
 import net.bodz.lily.model.base.CoObjectMask;
 
-public class EntityMaskStuffBuilder
-        extends EntityStuffBuilder {
+public class ViewMaskStuffBuilder
+        extends ViewStuffBuilder {
 
-    public EntityMaskStuffBuilder(String mainQName, String fragmentQName) {
+    public ViewMaskStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         out.printf("public class %s\n", fragmentName);
         out.printf("        extends %s {\n", //
                 imports.simple(CoObjectMask.class));
@@ -89,7 +89,7 @@ public class EntityMaskStuffBuilder
     }
 
     @Override
-    void columnAccessors(IColumnMetadata column) {
+    protected void columnAccessors(IColumnMetadata column) {
         String col_name = column.getName();
         String colName = StringId.UL.toCamel(col_name);
         Class<?> type = Primitives.box(column.getType());
