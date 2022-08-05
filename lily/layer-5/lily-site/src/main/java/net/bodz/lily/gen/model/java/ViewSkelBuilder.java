@@ -2,19 +2,19 @@ package net.bodz.lily.gen.model.java;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.TableId;
 import net.bodz.lily.gen.JavaFragmentBuilder;
 
-public class EntitySkelBuilder
-        extends JavaFragmentBuilder<ITableMetadata> {
+public class ViewSkelBuilder
+        extends JavaFragmentBuilder<ITableViewMetadata> {
 
-    public EntitySkelBuilder(String mainQName, String fragmentQName) {
+    public ViewSkelBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         String stuffName = Naming.stuff(mainName);
         TableId qName = table.getId();
 

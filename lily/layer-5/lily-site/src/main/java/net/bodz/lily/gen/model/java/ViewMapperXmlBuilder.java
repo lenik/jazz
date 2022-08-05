@@ -4,18 +4,18 @@ import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.gen.XmlFragmentBuilder;
 
-public class MapperXmlBuilder
-        extends XmlFragmentBuilder<ITableMetadata> {
+public class ViewMapperXmlBuilder
+        extends XmlFragmentBuilder<ITableViewMetadata> {
 
-    public MapperXmlBuilder(String mainQName, String fragmentQName) {
+    public ViewMapperXmlBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildBody(ITableMetadata model) {
+    protected void buildBody(ITableViewMetadata table) {
         out.println("<!DOCTYPE mapper");
         out.println("PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"");
         out.println("\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
@@ -24,34 +24,28 @@ public class MapperXmlBuilder
         out.enter();
         {
             out.println();
-            resultMap_objlist_map(model);
+            resultMap_objlist_map(table);
             out.println();
-            sql_objlist_sql(model);
+            sql_objlist_sql(table);
             out.println();
-            sql_objedit_sql(model);
+            sql_objedit_sql(table);
             out.println();
-            sql_filtconds(model);
+            sql_filtconds(table);
             out.println();
-            select_all(model);
+            select_all(table);
             out.println();
-            select_filter(model);
+            select_filter(table);
             out.println();
-            select(model);
+            select(table);
             out.println();
-            insert(model);
-            out.println();
-            update(model);
-            out.println();
-            delete(model);
-            out.println();
-            select_count(model);
+            select_count(table);
             out.println();
             out.leave();
         }
         out.println("</mapper>");
     }
 
-    void resultMap_objlist_map(ITableMetadata table) {
+    void resultMap_objlist_map(ITableViewMetadata table) {
         out.printf("<resultMap id=\"objlist_map\" type=\"%s\">\n", mainQName);
         out.enter();
         {
@@ -67,7 +61,7 @@ public class MapperXmlBuilder
         out.println("</resultMap>");
     }
 
-    void sql_objlist_sql(ITableMetadata table) {
+    void sql_objlist_sql(ITableViewMetadata table) {
         out.println("<sql id=\"objlist_sql\"><![CDATA[");
         out.enter();
         {
@@ -84,7 +78,7 @@ public class MapperXmlBuilder
         out.println("</sql>");
     }
 
-    void sql_objedit_sql(ITableMetadata table) {
+    void sql_objedit_sql(ITableViewMetadata table) {
         out.println("<sql id=\"objedit_sql\"><![CDATA[");
         out.enter();
         {
@@ -104,7 +98,7 @@ public class MapperXmlBuilder
         out.println("</sql>");
     }
 
-    void sql_filtconds(ITableMetadata table) {
+    void sql_filtconds(ITableViewMetadata table) {
         out.println("<sql id=\"filtconds\">");
         out.enter();
         {
@@ -126,7 +120,7 @@ public class MapperXmlBuilder
         out.println("</sql>");
     }
 
-    void select_all(ITableMetadata table) {
+    void select_all(ITableViewMetadata table) {
         out.println("<select id=\"all\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -136,7 +130,7 @@ public class MapperXmlBuilder
         out.println("</select>");
     }
 
-    void select_filter(ITableMetadata table) {
+    void select_filter(ITableViewMetadata table) {
         out.println("<select id=\"filter\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -153,7 +147,7 @@ public class MapperXmlBuilder
         out.println("</select>");
     }
 
-    void select(ITableMetadata table) {
+    void select(ITableViewMetadata table) {
         out.println("<select id=\"select\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -170,99 +164,7 @@ public class MapperXmlBuilder
         out.println("</select>");
     }
 
-    void insert(ITableMetadata table) {
-        out.printf("<insert id=\"insert\" useGeneratedKeys=\"true\" keyProperty=\"id\"><![CDATA[\n");
-        out.enter();
-        {
-            out.printf("insert into %s(\n", table.getCompactName());
-            {
-                out.enter();
-                boolean first = true;
-
-                for (IColumnMetadata column : table.getColumns()) {
-                    if (!first)
-                        out.print(",\n");
-
-                    // insertKey
-                    out.print(column.getName());
-
-                    first = false;
-                }
-                out.leave();
-                out.println();
-            }
-
-            out.println(") values(");
-            {
-                out.enter();
-                boolean first = true;
-                for (IColumnMetadata column : table.getColumns()) {
-                    String col_name = column.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-
-                    if (!first)
-                        out.print(",\n");
-
-                    // insertVal
-                    out.print("#{" + colName + "}");
-
-                    first = false;
-                }
-                out.leave();
-                out.println();
-            }
-
-            out.println(") returning id; --");
-            out.leave();
-        }
-        out.println("]]></insert>");
-    }
-
-    void update(ITableMetadata table) {
-        out.println("<update id=\"update\">");
-        {
-            out.enter();
-            out.printf("update %s\n", table.getCompactName());
-            out.println("<set>");
-            out.enter();
-            {
-                boolean co = false;
-                if (co)
-                    out.println("<include refid=\"co.setUS\" />");
-                for (IColumnMetadata column : table.getColumns()) {
-                    String col_name = column.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-
-                    out.printf("%s = #{%s}", col_name, colName);
-                    out.println(",");
-                }
-                out.leave();
-            }
-            out.println("</set>");
-
-            out.println("<where>");
-            out.enter();
-            {
-                out.println("    id = #{id}");
-                out.leave();
-            }
-            out.println("</where>");
-        }
-        out.leave();
-        out.println("</update>");
-    }
-
-    void delete(ITableMetadata table) {
-        out.println("<delete id=\"delete\">");
-        out.enter();
-        {
-            out.println("delete from " + table.getCompactName() + " where id = #{id}");
-            out.leave();
-        }
-        out.println("</delete>");
-    }
-
-    void select_count(ITableMetadata table) {
+    void select_count(ITableViewMetadata table) {
         out.println("<select id=\"count\" resultType=\"hashmap\">");
         out.enter();
         {

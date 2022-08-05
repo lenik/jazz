@@ -14,23 +14,23 @@ import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ISampleGenerator;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.test.TestSamples;
 
-public class EntitySamplesStuffBuilder
-        extends EntityStuffBuilder {
+public class TableSamplesStuffBuilder
+        extends TableStuffBuilder {
 
     Random random = new Random();
 
-    public EntitySamplesStuffBuilder(String mainQName, String fragmentQName) {
+    public TableSamplesStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         out.println("public class " + fragmentName);
         out.enter();
         {

@@ -1,16 +1,16 @@
 package net.bodz.lily.gen.model.java;
 
-import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.ITableViewMetadata;
 
-public class EntityMapperTestBuilder
-        extends EntityStuffBuilder {
+public class ViewMapperTestBuilder
+        extends ViewStuffBuilder {
 
-    public EntityMapperTestBuilder(String mainQName, String fragmentQName) {
+    public ViewMapperTestBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
     }
 
     @Override
-    protected void buildClassBody(ITableMetadata table) {
+    protected void buildClassBody(ITableViewMetadata table) {
         String mapperName = mainName + "Mapper";
         String maskName = mainName + "Mask";
         String samplesName = mainName + "Samples";
