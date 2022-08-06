@@ -20,6 +20,28 @@ public interface IColumnMetadata
             IJsonForm,
             IXmlForm {
 
+    public static final String K_POSITION = "position";
+    public static final String K_NAME = "name";
+    public static final String K_LABEL = "label";
+    public static final String K_DESCRIPTION = "description";
+    public static final String K_TYPE = "type";
+    public static final String K_SQL_TYPE = "SQLType";
+    public static final String K_PRIMARY_KEY = "primaryKey";
+    public static final String K_AUTO_INCREMENT = "autoIncrement";
+    public static final String K_CASE_SENSITIVE = "caseSensitive";
+    public static final String K_SEARCHABLE = "searchable";
+    public static final String K_CURRENCY = "currency";
+    public static final String K_UNIQUE = "unique";
+    public static final String K_NULLABLE_STATUS = "nullableStatus";
+    public static final String K_NULLABLE = "nullable";
+    public static final String K_SIGNED = "signed";
+    public static final String K_READ_ONLY = "readOnly";
+    public static final String K_WRITABLE = "writable";
+    public static final String K_DEFINITELY_WRITABLE = "definitelyWritable";
+    public static final String K_COLUMN_DISPLAY_SIZE = "columnDisplaySize";
+    public static final String K_PRECISION = "precision";
+    public static final String K_SCALE = "scale";
+
     IRowSetMetadata getParent();
 
     default int position() {
@@ -83,53 +105,88 @@ public interface IColumnMetadata
 
     int getScale();
 
-    Object parse(String s)
+    Object parseColumnValue(String s)
             throws ParseException;
 
-    Object readJson(Object jsonValue)
+    Object readColumnJsonValue(Object jsonValue)
             throws ParseException;
 
-    void writeJson(IJsonOut out, Object value)
+    void writeColumnInJson(IJsonOut out, Object value)
             throws IOException, FormatException;
 
-    Object readXml(IElement enclosing)
+    Object readColumnXmlValue(IElement enclosing)
             throws ParseException, LoaderException;
 
-    void writeXml(IXmlOutput out, Object value)
+    void writeColumnInXml(IXmlOutput out, Object value)
             throws XMLStreamException, FormatException;
 
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
-//        out.entry("index", getIndex());
-        out.entry("name", getName());
+        if (getParent() != null)
+            out.entry(K_POSITION, getPositionOpt());
+        out.entry(K_NAME, getName());
 
         String label = getLabel();
         if (label != null)
-            out.entry("label", label);
+            out.entry(K_LABEL, label);
 
         String description = getDescription();
         if (description != null)
-            out.entry("description", getDescription());
+            out.entry(K_DESCRIPTION, getDescription());
 
-        out.entry("type", getType().getName());
+        out.entry(K_TYPE, getType().getName());
+        out.entry(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
+        out.entry(K_PRIMARY_KEY, isPrimaryKey());
+        out.entry(K_AUTO_INCREMENT, isAutoIncrement());
+        out.entry(K_CASE_SENSITIVE, isCaseSensitive());
+        out.entry(K_SEARCHABLE, isSearchable());
+        out.entry(K_CURRENCY, isCurrency());
+        out.entry(K_UNIQUE, isUnique());
+        out.entry(K_NULLABLE_STATUS, getNullableStatus());
+        out.entry(K_NULLABLE, isNullable());
+        out.entry(K_SIGNED, isSigned());
+        out.entry(K_READ_ONLY, isReadOnly());
+        out.entry(K_WRITABLE, isWritable());
+        out.entry(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
+        out.entry(K_COLUMN_DISPLAY_SIZE, getColumnDisplaySize());
+        out.entry(K_PRECISION, getPrecision());
+        out.entry(K_SCALE, getScale());
     }
 
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-//        out.attribute("index", getIndex());
-        out.attribute("name", getName());
+        if (getParent() != null)
+            out.attribute(K_POSITION, getPositionOpt());
+
+        out.attribute(K_NAME, getName());
 
         String label = getLabel();
         if (label != null)
-            out.attribute("label", getLabel());
+            out.attribute(K_LABEL, getLabel());
 
         String description = getDescription();
         if (description != null)
-            out.attribute("description", getDescription());
+            out.attribute(K_DESCRIPTION, getDescription());
 
-        out.attribute("type", getType().getName());
+        out.attribute(K_TYPE, getType().getName());
+        out.attribute(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
+        out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
+        out.attributeIf(K_AUTO_INCREMENT, isAutoIncrement());
+        out.attributeIf(K_CASE_SENSITIVE, isCaseSensitive());
+        out.attributeIf(K_SEARCHABLE, isSearchable());
+        out.attributeIf(K_CURRENCY, isCurrency());
+        out.attributeIf(K_UNIQUE, isUnique());
+        out.attribute(K_NULLABLE_STATUS, getNullableStatus());
+        out.attributeIf(K_NULLABLE, isNullable());
+        out.attributeIf(K_SIGNED, isSigned());
+        out.attributeIf(K_READ_ONLY, isReadOnly());
+        out.attributeIf(K_WRITABLE, isWritable());
+        out.attributeIf(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
+        out.attribute(K_COLUMN_DISPLAY_SIZE, getColumnDisplaySize());
+        out.attribute(K_PRECISION, getPrecision());
+        out.attribute(K_SCALE, getScale());
     }
 
     default void accept(ICatalogVisitor visitor) {

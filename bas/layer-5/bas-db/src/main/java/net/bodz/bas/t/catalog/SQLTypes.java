@@ -1,15 +1,20 @@
 package net.bodz.bas.t.catalog;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
-public class SqlTypes {
+public class SQLTypes {
 
-    static final Logger logger = LoggerFactory.getLogger(SqlTypes.class);
+    static final Logger logger = LoggerFactory.getLogger(SQLTypes.class);
 
     static boolean aggressive = false;
 
@@ -109,6 +114,47 @@ public class SqlTypes {
         default:
             return Object.class;
         }
+    }
+
+    static Map<Integer, String> intToNameMap = new HashMap<>();
+    static Map<String, Integer> nameToIntMap = new HashMap<>();
+
+    static {
+        try {
+            for (Field field : Types.class.getDeclaredFields()) {
+                // if (!field.isAccessible()) continue;
+                int modifiers = field.getModifiers();
+                if (!Modifier.isPublic(modifiers))
+                    continue;
+                if (!Modifier.isStatic(modifiers))
+                    continue;
+                if (field.getType() != int.class)
+                    continue;
+                String name = field.getName();
+                Integer value = (Integer) field.get(null);
+                intToNameMap.put(value, name);
+                nameToIntMap.put(name, value);
+            }
+        } catch (Exception e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
+    public static String getTypeName(int type) {
+        String name = intToNameMap.get(type);
+        return name;
+    }
+
+    public static Integer getTypeInt(String name) {
+        return nameToIntMap.get(name);
+    }
+
+    public static int getTypeInt(String name, int defaultValue) {
+        Integer val = nameToIntMap.get(name);
+        if (val != null)
+            return val.intValue();
+        else
+            return defaultValue;
     }
 
 }
