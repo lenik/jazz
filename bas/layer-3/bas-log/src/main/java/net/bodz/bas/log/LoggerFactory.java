@@ -2,8 +2,9 @@ package net.bodz.bas.log;
 
 import java.util.ServiceLoader;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.spi.LoggerRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.spi.LoggerContext;
+import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.slf4j.spi.LocationAwareLogger;
 
 import net.bodz.bas.log.impl.Log4jLogger;
@@ -12,9 +13,17 @@ import net.bodz.bas.log.impl.Slf4jSimpleLogger;
 
 public class LoggerFactory {
 
+    static boolean inited;
     static {
+        init();
+    }
+
+    public static void init() {
+        if (inited)
+            return;
         for (ILoggingSystemConfigurer listener : ServiceLoader.load(ILoggingSystemConfigurer.class))
             listener.initLoggingSystem();
+        inited = true;
     }
 
     public static Logger getRootLogger() {
@@ -35,16 +44,18 @@ public class LoggerFactory {
      * for log4j
      */
     public static Logger findClosestRepoLogger(String name) {
-        LoggerRepository repo;
+        LoggerContext context;
+        LoggerRegistry<?> registry;
         try {
-            repo = LogManager.getLoggerRepository();
+            context = LogManager.getContext();
+            registry = context.getLoggerRegistry();
         } catch (NoClassDefFoundError se) {
             return null;
         }
 
-        org.apache.log4j.Logger log4j = null;
+        org.apache.logging.log4j.Logger log4j = null;
         while (name != null) {
-            log4j = repo.getLogger(name);
+            log4j = registry.getLogger(name);
             if (log4j.getLevel() != null)
                 break;
             int lastDot = name.lastIndexOf('.');
@@ -55,7 +66,7 @@ public class LoggerFactory {
         }
 
         if (log4j == null)
-            log4j = repo.getRootLogger();
+            log4j = null; // TODO registry.getRootLogger();
         return new Log4jLogger(log4j);
     }
 

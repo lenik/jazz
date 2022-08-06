@@ -1,18 +1,13 @@
 package net.bodz.bas.log.impl;
 
-import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
+@Deprecated
 public class Log4jMergedFactory {
 
     static {
-        try {
-            Log4jMerger.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        Log4jMerger.load();
     }
 
     public static Logger getLogger(String name) {

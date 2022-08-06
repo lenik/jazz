@@ -3,9 +3,10 @@ package net.bodz.bas.log.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.spi.StandardLevel;
 
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
@@ -62,27 +63,27 @@ public class Log4jLogger
         if (logLevel != null)
             return logLevel;
 
-        int priority = level.toInt();
+        int priority = level.intLevel();
         // int syslog = log4j.getLevel().getSyslogEquivalent();
 
         // FATAL 0, ERROR 3, WARN 4, INFO 6, DEBUG 7
 
-        if (priority >= Priority.OFF_INT)
+        if (priority >= StandardLevel.OFF.intLevel())
             return LogLevel.OFF;
 
-        if (priority >= Priority.FATAL_INT)
+        if (priority >= StandardLevel.FATAL.intLevel())
             return LogLevel.FATAL;
 
-        if (priority >= Priority.ERROR_INT)
+        if (priority >= StandardLevel.ERROR.intLevel())
             return LogLevel.ERROR;
 
-        if (priority >= Priority.WARN_INT)
+        if (priority >= StandardLevel.WARN.intLevel())
             return LogLevel.WARN;
 
-        if (priority >= Priority.INFO_INT)
+        if (priority >= StandardLevel.INFO.intLevel())
             return LogLevel.INFO;
 
-        if (priority >= Priority.DEBUG_INT)
+        if (priority >= StandardLevel.DEBUG.intLevel())
             return LogLevel.DEBUG;
 
         return LogLevel.ALL;
@@ -93,7 +94,7 @@ public class Log4jLogger
         Level level = rmap.get(logLevel);
         if (level == null)
             level = Level.ALL;
-        log4j.setLevel(level);
+        // log4j.setLevel(level);
     }
 
     @Override
@@ -104,11 +105,11 @@ public class Log4jLogger
         int priority = level.getPriority() + delta;
         switch (priority) {
         case -2:
-            if (log4j.isEnabledFor(Level.FATAL))
+            if (log4j.isFatalEnabled())
                 return new ErrorSink(log4j);
             break;
         case -1:
-            if (log4j.isEnabledFor(Level.WARN))
+            if (log4j.isWarnEnabled())
                 return new WarnSink(log4j);
             break;
         case 0:
@@ -123,7 +124,7 @@ public class Log4jLogger
             break;
         default:
             if (priority <= -3) {
-                if (log4j.isEnabledFor(Level.FATAL))
+                if (log4j.isFatalEnabled())
                     return new FatalSink(log4j);
             } else {
                 if (log4j.isTraceEnabled())
@@ -149,34 +150,34 @@ public class Log4jLogger
 
     @Override
     public boolean _fatal(int delta, Throwable t, Object message) {
-        if (log4j.isEnabledFor(Level.FATAL))
-            log4j.log(getCallerFQCN(), Level.FATAL, message, t);
+        if (log4j.isFatalEnabled())
+            log4j.log(Level.FATAL, message, t);
         return false;
     }
 
     @Override
     public boolean _error(int delta, Throwable t, Object message) {
-        if (log4j.isEnabledFor(Level.ERROR))
-            log4j.log(getCallerFQCN(), Level.ERROR, message, t);
+        if (log4j.isErrorEnabled())
+            log4j.log(Level.ERROR, message, t);
         return false;
     }
 
     @Override
     public void _warn(int delta, Throwable t, Object message) {
-        if (log4j.isEnabledFor(Level.WARN))
-            log4j.log(getCallerFQCN(), Level.WARN, message, t);
+        if (log4j.isWarnEnabled())
+            log4j.log(Level.WARN, message, t);
     }
 
     @Override
     public void _info(int delta, Throwable t, Object message) {
-        if (log4j.isEnabledFor(Level.INFO))
-            log4j.log(getCallerFQCN(), Level.INFO, message, t);
+        if (log4j.isInfoEnabled())
+            log4j.log(Level.INFO, message, t);
     }
 
     @Override
     public void _debug(int delta, Throwable t, Object message) {
         if (log4j.isDebugEnabled())
-            log4j.log(getCallerFQCN(), Level.DEBUG, message, t);
+            log4j.log(Level.DEBUG, message, t);
     }
 
     public static Log4jLogger getInstance(Class<?> clazz) {
@@ -185,7 +186,8 @@ public class Log4jLogger
     }
 
     public static Log4jLogger getInstance(String name) {
-        Logger log4j = Log4jMergedFactory.getLogger(name);
+        // Logger log4j = Log4jMergedFactory.getLogger(name);
+        Logger log4j = LogManager.getLogger(name);
         return new Log4jLogger(log4j);
     }
 

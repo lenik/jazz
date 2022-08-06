@@ -1,9 +1,7 @@
 package net.bodz.mda.xjdoc.model.javadoc;
 
 import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
@@ -14,7 +12,8 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 public class XjdocObject
         extends AbstractXjdocElement {
 
-    private static final Logger _logger = LoggerFactory.getLogger(XjdocObject.class);
+    // private static final Logger _logger = LoggerFactory.getLogger(XjdocObject.class);
+    private static final Logger _logger = Logger.getLogger(XjdocObject.class.getName());
 
     @Override
     protected IElementDoc loadXjdoc()
@@ -23,7 +22,7 @@ public class XjdocObject
         ClassDoc classDoc = Xjdocs.getDefaultProvider().getClassDoc(clazz);
 
         if (classDoc == null) {
-            _logger.warn("No class doc available for " + clazz);
+            _logger.warning("No class doc available for " + clazz);
             classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), clazz.getName());
         }
 
