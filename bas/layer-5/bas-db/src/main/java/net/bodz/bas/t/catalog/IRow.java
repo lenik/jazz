@@ -83,7 +83,7 @@ public interface IRow
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
             Object cell = i < cc ? get(i) : null;
-            column.writeJson(out, cell);
+            column.writeColumnInJson(out, cell);
         }
     }
 
@@ -103,7 +103,7 @@ public interface IRow
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
             Object cell = get(i);
-            column.writeXml(out, cell);
+            column.writeColumnInXml(out, cell);
         }
     }
 

@@ -17,7 +17,7 @@ public interface ITableMetadata
 
     String K_PRIMARY_KEY = "primaryKey";
     String K_FOREIGN_KEYS = "foreignKeys";
-    String K_FOREIGN_KEY = "foreignKey";
+    String K_CROSS_REF = "reference";
 
     TableKey getPrimaryKey();
 
@@ -78,7 +78,7 @@ public interface ITableMetadata
         if (!foreignKeys.isEmpty()) {
             out.beginElement(K_FOREIGN_KEYS);
             for (CrossReference ref : foreignKeys.values()) {
-                out.beginElement(K_FOREIGN_KEY);
+                out.beginElement(K_CROSS_REF);
                 ref.writeObject(out);
                 out.endElement();
             }

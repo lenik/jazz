@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -31,8 +32,8 @@ public class DefaultColumnMetadata
     String label;
     String description; // comment..
 
-    Class<?> type;
-    int sqlType;
+    Class<?> type = Integer.class;
+    int sqlType = Types.INTEGER;
     boolean jsonType;
     boolean xmlType;
 
@@ -43,7 +44,7 @@ public class DefaultColumnMetadata
     boolean caseSensitive;
     boolean searchable;
     boolean currency;
-    int nullable;
+    int nullable = ResultSetMetaData.columnNullableUnknown;
     boolean signed;
     boolean readOnly;
     boolean writable;
@@ -268,14 +269,14 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public Object parse(String s)
+    public Object parseColumnValue(String s)
             throws ParseException {
         IParser<?> parser = Typers.getTyper(type, IParser.class);
         return parser.parse(s);
     }
 
     @Override
-    public Object readJson(Object jsonBox)
+    public Object readColumnJsonValue(Object jsonBox)
             throws ParseException {
         if (jsonType) {
             IJsonForm obj;
@@ -300,7 +301,7 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public void writeJson(IJsonOut out, Object value)
+    public void writeColumnInJson(IJsonOut out, Object value)
             throws IOException, FormatException {
         if (value == null) {
             out.value(null);
@@ -325,7 +326,7 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public Object readXml(IElement enclosing)
+    public Object readColumnXmlValue(IElement enclosing)
             throws ParseException, LoaderException {
         if (xmlType) {
             IXmlForm obj;
@@ -350,7 +351,7 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public void writeXml(IXmlOutput out, Object value)
+    public void writeColumnInXml(IXmlOutput out, Object value)
             throws XMLStreamException, FormatException {
         if (value != null) {
             if (!type.isInstance(value))
@@ -433,7 +434,7 @@ public class DefaultColumnMetadata
         String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
-        type = SqlTypes.toJavaType(this);
+        type = SQLTypes.toJavaType(this);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */
@@ -443,28 +444,28 @@ public class DefaultColumnMetadata
     public void readObject(JsonObject o)
             throws ParseException {
 //        index = o.getInt("index", -1);
-        name = o.getString("name");
-        label = o.getString("label");
-        description = o.getString("description");
+        name = o.getString(K_NAME);
+        label = o.getString(K_LABEL);
+        description = o.getString(K_DESCRIPTION);
 
-        String typeName = o.getString("type");
+        String typeName = o.getString(K_TYPE);
         setTypeByName(typeName);
 
-        sqlType = o.getInt("sqlType", 0);
+        sqlType = SQLTypes.getTypeInt(o.getString(K_SQL_TYPE), Types.INTEGER);
 
-        autoIncrement = o.getBoolean("autoIncrement", autoIncrement);
-        caseSensitive = o.getBoolean("caseSensitive", caseSensitive);
-        searchable = o.getBoolean("searchable", searchable);
-        currency = o.getBoolean("currency", currency);
-        nullable = o.getInt("nullable", nullable);
-        signed = o.getBoolean("signed", signed);
-        readOnly = o.getBoolean("readOnly", readOnly);
-        writable = o.getBoolean("writable", writable);
-        definitelyWritable = o.getBoolean("definitelyWritable", definitelyWritable);
+        autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
+        caseSensitive = o.getBoolean(K_CASE_SENSITIVE, false);
+        searchable = o.getBoolean(K_SEARCHABLE, false);
+        currency = o.getBoolean(K_CURRENCY, false);
+        nullable = o.getInt(K_NULLABLE, ResultSetMetaData.columnNullableUnknown);
+        signed = o.getBoolean(K_SIGNED, false);
+        readOnly = o.getBoolean(K_READ_ONLY, false);
+        writable = o.getBoolean(K_WRITABLE, false);
+        definitelyWritable = o.getBoolean(K_DEFINITELY_WRITABLE, false);
 
-        precision = o.getInt("precision", precision);
-        scale = o.getInt("scale", scale);
-        columnDisplaySize = o.getInt("columnDisplaySize", columnDisplaySize);
+        precision = o.getInt(K_PRECISION, 0);
+        scale = o.getInt(K_SCALE, 0);
+        columnDisplaySize = o.getInt(K_COLUMN_DISPLAY_SIZE, 0);
     }
 
     /** ⇱ Implementation Of {@link IXmlForm}. */
@@ -474,27 +475,27 @@ public class DefaultColumnMetadata
     public void readObject(IElement o)
             throws ParseException, LoaderException {
 //        index = o.a("index").getInt(-1);
-        name = o.a("name").getString();
-        label = o.a("label").getString();
-        description = o.a("description").getString();
+        name = o.a(K_NAME).getString();
+        label = o.a(K_LABEL).getString();
+        description = o.a(K_DESCRIPTION).getString();
 
-        String typeName = o.a("type").getString();
+        String typeName = o.a(K_TYPE).getString();
         setTypeByName(typeName);
-        sqlType = o.a("sqlType").getInt(0);
+        sqlType = SQLTypes.getTypeInt(o.a(K_SQL_TYPE).getString(), Types.INTEGER);
 
-        autoIncrement = o.a("autoIncrement").getBoolean(autoIncrement);
-        caseSensitive = o.a("caseSensitive").getBoolean(caseSensitive);
-        searchable = o.a("searchable").getBoolean(searchable);
-        currency = o.a("currency").getBoolean(currency);
-        nullable = o.a("nullable").getInt(nullable);
-        signed = o.a("signed").getBoolean(signed);
-        readOnly = o.a("readOnly").getBoolean(readOnly);
-        writable = o.a("writable").getBoolean(writable);
-        definitelyWritable = o.a("definitelyWritable").getBoolean(definitelyWritable);
+        autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);
+        caseSensitive = o.a(K_CASE_SENSITIVE).getBoolean(false);
+        searchable = o.a(K_SEARCHABLE).getBoolean(false);
+        currency = o.a(K_CURRENCY).getBoolean(false);
+        nullable = o.a(K_NULLABLE).getInt(ResultSetMetaData.columnNullableUnknown);
+        signed = o.a(K_SIGNED).getBoolean(false);
+        readOnly = o.a(K_READ_ONLY).getBoolean(false);
+        writable = o.a(K_WRITABLE).getBoolean(false);
+        definitelyWritable = o.a(K_DEFINITELY_WRITABLE).getBoolean(false);
 
-        precision = o.a("precision").getInt(precision);
-        scale = o.a("scale").getInt(scale);
-        columnDisplaySize = o.a("columnDisplaySize").getInt(columnDisplaySize);
+        precision = o.a(K_PRECISION).getInt(0);
+        scale = o.a(K_SCALE).getInt(0);
+        columnDisplaySize = o.a(K_COLUMN_DISPLAY_SIZE).getInt(0);
     }
 
     @Override

@@ -204,7 +204,7 @@ public class MutableRow
         for (int i = 0; i < cc && i < jn; i++) {
             Object j_cell_box = jv.get(i);
             IColumnMetadata column = metadata.getColumn(i);
-            Object cell = column.readJson(j_cell_box);
+            Object cell = column.readColumnJsonValue(j_cell_box);
             list.add(cell);
         }
         this.list = list;
@@ -220,7 +220,7 @@ public class MutableRow
             String tagName = column.getName();
             IElement x_cell = x_row.selectByTag(tagName).getFirst();
             if (x_cell != null) {
-                Object cell = column.readXml(x_cell);
+                Object cell = column.readColumnXmlValue(x_cell);
                 list.add(cell);
             } else {
                 list.add(null);
