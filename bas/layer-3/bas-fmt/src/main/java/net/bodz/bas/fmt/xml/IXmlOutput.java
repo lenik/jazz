@@ -55,6 +55,9 @@ public interface IXmlOutput
     void attribute(String name, boolean value)
             throws XMLStreamException;
 
+    void attributeIf(String name, boolean value)
+            throws XMLStreamException;
+
     void attribute(String name, float value)
             throws XMLStreamException;
 

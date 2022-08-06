@@ -14,8 +14,17 @@ public abstract class AbstractXmlOutput
 
     private static final long serialVersionUID = 1L;
 
+    public static final String DEFAULT_NULL_TEXT = "\\null";
+    public static final String DEFAULT_NULL_ATTRIBUTE = "\\null";
+    public static final String DEFAULT_TRUE_ATTRIBUTE = "true";
+    public static final String NO_TEXT = null;
+    public static final String NO_ATTRIBUTE = null;
+
     private String separator = " ";
     private FramedMarks marks = new FramedMarks();
+
+    String nullText = NO_TEXT;
+    String nullAttribute = NO_ATTRIBUTE;
 
     public AbstractXmlOutput(XMLStreamWriter _orig) {
         super(_orig);
@@ -32,6 +41,8 @@ public abstract class AbstractXmlOutput
         beginElement(name);
         if (text != null)
             writeCharacters(text);
+        else if (nullText != NO_TEXT)
+            writeCharacters(nullText);
         endElement();
     }
 
@@ -55,6 +66,11 @@ public abstract class AbstractXmlOutput
     @Override
     public void _attribute(String name, String data)
             throws XMLStreamException {
+        if (data == null)
+            if (nullAttribute == NO_ATTRIBUTE)
+                return;
+            else
+                data = nullAttribute;
         writeAttribute(name, data);
     }
 
@@ -119,6 +135,13 @@ public abstract class AbstractXmlOutput
     }
 
     @Override
+    public final void attributeIf(String name, boolean value)
+            throws XMLStreamException {
+        if (value)
+            _attribute(name, DEFAULT_TRUE_ATTRIBUTE);
+    }
+
+    @Override
     public final void attribute(String name, char value)
             throws XMLStreamException {
         _attribute(name, StringQuote.qqJavaString(Character.toString(value)));
@@ -127,7 +150,8 @@ public abstract class AbstractXmlOutput
     @Override
     public void attribute(String name, Enum<?> value)
             throws XMLStreamException {
-        _attribute(name, value.name());
+        String s = value != null ? value.name() : null;
+        _attribute(name, s);
     }
 
     @Override
@@ -139,12 +163,19 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, byte[] buf)
             throws XMLStreamException {
-        attribute(name, buf, 0, buf.length);
+        if (buf == null)
+            _attribute(name, null);
+        else
+            attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, byte[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 4);
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -157,12 +188,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, short[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, short[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 7); // -32768
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -175,12 +214,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, int[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, int[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 12); // -2147483648
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -193,12 +240,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, long[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, long[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 20); // -9223372036854775808
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -211,12 +266,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, float[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, float[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 16);
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -229,12 +292,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, double[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, double[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 30);
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -247,12 +318,20 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, boolean[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, boolean[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         StringBuilder sb = new StringBuilder(len * 6);
         for (int i = 0; i < len; i++) {
             if (i != 0)
@@ -265,24 +344,40 @@ public abstract class AbstractXmlOutput
     @Override
     public final void attribute(String name, char[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, new String(buf));
     }
 
     @Override
     public final void attribute(String name, char[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, new String(buf, off, len));
     }
 
     @Override
     public final void attribute(String name, String[] buf)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         attribute(name, buf, 0, buf.length);
     }
 
     @Override
     public final void attribute(String name, String[] buf, int off, int len)
             throws XMLStreamException {
+        if (buf == null) {
+            _attribute(name, null);
+            return;
+        }
         int totalLength = 0;
         for (int i = 0; i < len; i++)
             totalLength += (buf[i] == null ? 4 : buf[i].length()) + 1;

@@ -36,6 +36,7 @@ public class XmlFn
             if (aXmlSource.bean() == true)
                 new BeanXmlDumper(out).dump(obj);
         new ReflectXmlDumper(out).dump(obj);
+        out.flush();
     }
 
     public static void dump(Object obj, Writer out)
@@ -56,6 +57,7 @@ public class XmlFn
     public static void dump(IXmlForm obj, IXmlOutput out)
             throws XMLStreamException, FormatException {
         obj.writeObject(out);
+        out.flush();
     }
 
     public static void dump(IXmlForm obj, Writer out)
@@ -78,10 +80,11 @@ public class XmlFn
         StringWriter buf = new StringWriter(4096);
         IXmlOutput out = XmlOutputImpl.from(buf);
         try {
-            obj.writeObject(out);
+            obj.writeObjectBoxed(out);
         } catch (FormatException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+        out.flush();
         String rst = buf.toString();
         return rst;
     }
@@ -104,7 +107,8 @@ public class XmlFn
         FileOutputStream fos = new FileOutputStream(file);
         try {
             IXmlOutput out = XmlOutputImpl.from(fos, encoding);
-            obj.writeObject(out);
+            obj.writeObjectBoxed(out);
+            out.flush();
         } finally {
             fos.close();
         }
