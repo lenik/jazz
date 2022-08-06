@@ -1,26 +1,27 @@
 package net.bodz.bas.search.elasticsearch;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ISettingsConsts;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHitField;
-import org.elasticsearch.search.highlight.HighlightBuilder;
-import org.elasticsearch.search.highlight.HighlightField;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch._types.SearchType;
+import co.elastic.clients.elasticsearch.core.DeleteResponse;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.json.JsonData;
 
 public class EsPlayer
-        implements ISettingsConsts {
+        implements
+            ISettingsConsts {
 
     static String index = "p160323";
-    Client client;
+    ElasticsearchClient client;
 
     public EsPlayer() {
         client = EsClientRegistry.getInstance().getAnyConfig().buildClient();
@@ -28,84 +29,61 @@ public class EsPlayer
 
     public void execute(String... args)
             throws Exception {
-        search2(args[0]);
+        search1(args[0]);
     }
 
-    private void close() {
-        client.close();
+    private void shutdown() {
+        client.shutdown();
     }
 
-    void index1() {
+    void index1()
+            throws ElasticsearchException, IOException {
         Map<String, Object> json = new HashMap<String, Object>();
         json.put("q", "kimchy");
 
-        IndexResponse resp = client.prepareIndex(index, "clog") //
-                .setSource(json) //
-                .get();
-        resp.getIndex();
-        resp.getType();
-        resp.getId();
-        resp.getVersion();
-        resp.isCreated();
+        SearchResponse<Object> resp = client.search(s -> s.index("clog"), Object.class);
+        resp.hits();
     }
 
-    void delete1() {
-        client.prepareDelete(index, "clog", "1") //
-                .get();
+    void delete1()
+            throws ElasticsearchException, IOException {
+        DeleteResponse resp;
+        resp = client.delete(s -> s.index(index).index("clog"));
     }
 
-    void update1() {
-        client.prepareUpdate(index, "clog", "1") //
-                .get();
+    void update1()
+            throws ElasticsearchException, IOException {
+        client.update(s -> s, Object.class);
     }
 
-    void get1() {
-        GetRequestBuilder reqb = client.prepareGet(index, "clog", "1") //
-                .setOperationThreaded(false);
-        GetResponse got = reqb.get();
-        got.isExists();
-        got.getFields();
+    void get1()
+            throws ElasticsearchException, IOException {
+        GetResponse<Object> resp = client.get(s -> s, Object.class);
+        // .setOperationThreaded(false);
+        resp.id();
     }
 
-    void search1(String q) {
-        SearchResponse results = client.prepareSearch(index) //
-                .setTypes("clog") //
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH) //
-                .setQuery(QueryBuilders.termQuery("multi", q)) //
-                .setPostFilter(QueryBuilders.rangeQuery("age").from(12).to(18)) //
-                .setFrom(0).setSize(100) //
-                .setExplain(true) //
-                .execute() //
-                .actionGet();
-    }
+    void search1(String q)
+            throws ElasticsearchException, IOException {
+        SearchResponse<Object> resp = client.search(s -> s//
+                .index("clog") //
+                .searchType(SearchType.DfsQueryThenFetch) //
+                .q(q) //
+                // .postFilter(f -> f.range()) //
+                .from(0).size(100) //
+                .explain(true) //
+                , Object.class);
 
-    void search2(String q) {
-        System.out.println("Searching " + q);
-        SearchResponse results = client.prepareSearch("mytext") //
-                .setTypes("doc") //
-                // .setSearchType(SearchType.DFS_QUERY_AND_FETCH) //
-                .addField("file.name")//
-                .setQuery(QueryBuilders.matchQuery("file.content", q))//
-                .highlighter(new HighlightBuilder()//
-                        .field("file.content"))//
-                // .setPostFilter(QueryBuilders.rangeQuery("age").from(12).to(18)) //
-                .setFrom(0).setSize(100) //
-                // .setExplain(true) //
-                .execute() //
-                .actionGet();
-
-        System.out.println("Took: " + results.getTook() + ", Found " + results.getHits().getTotalHits());
-
-        for (SearchHit hit : results.getHits()) {
-            float score = hit.getScore();
-            Map<String, SearchHitField> fields = hit.getFields();
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            SearchHitField fileNameField = fields.get("file.name");
-            Object fileName = fileNameField.getValue();
-            HighlightField fileContentField = highlightFields.get("file.content");
+        for (Hit<?> hit : resp.hits().hits()) {
+            double score = hit.score();
+            Map<String, JsonData> fields = hit.fields();
+            Map<String, List<String>> highlightFields = hit.highlight();
+            JsonData fileNameField = fields.get("file.name");
+            // Object fileName = fileNameField.deserialize(null);
+            List<String> fileContentField = highlightFields.get("file.content");
             String fileContent = fileContentField.toString();
-// System.out.println("" + score + fileName);
-// System.out.println(fileContent);
+            // System.out.println("" + score + fileName);
+            // System.out.println(fileContent);
         }
     }
 
@@ -117,7 +95,7 @@ public class EsPlayer
             player.execute("却将金香玉塞进了胸前衣服里");
             player.execute("夸讲着这里是商州最能出美女的地方");
         }
-        player.close();
+        player.shutdown();
     }
 
 }

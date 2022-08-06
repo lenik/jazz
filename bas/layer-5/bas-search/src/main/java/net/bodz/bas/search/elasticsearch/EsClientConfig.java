@@ -1,48 +1,38 @@
 package net.bodz.bas.search.elasticsearch;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.common.settings.ISettingsConsts;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.plugins.Plugin;
 
 import net.bodz.bas.ee.distrib.IEndpointConfig;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.pojo.Pair;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 @ExcludedFromIndex
 @IndexedType
 public class EsClientConfig
-        implements IEndpointConfig, ISettingsConsts {
+        implements
+            IEndpointConfig,
+            ISettingsConsts {
 
     public static final String ATTRIBUTE_KEY = EsClientConfig.class.getName();
 
-    private Settings.Builder settingsBuilder;
-    private List<Class<? extends Plugin>> plugins;
-    private List<TransportAddress> addresses;
+    private List<Pair<String, Integer>> addresses;
 
     public EsClientConfig() {
-        settingsBuilder = Settings.builder();
-        plugins = new ArrayList<Class<? extends Plugin>>();
-        addresses = new ArrayList<TransportAddress>();
+        addresses = new ArrayList<>();
     }
 
-    public Settings.Builder getSettingsBuilder() {
-        return settingsBuilder;
-    }
-
-    public List<Class<? extends Plugin>> getPlugins() {
-        return plugins;
-    }
-
-    public List<TransportAddress> getAddresses() {
+    public List<Pair<String, Integer>> getAddresses() {
         return addresses;
     }
 
@@ -53,25 +43,23 @@ public class EsClientConfig
 
     public void addAddress(String hostname, int port)
             throws UnknownHostException {
-        InetAddress address = InetAddress.getByName(hostname);
-        addresses.add(new InetSocketTransportAddress(address, port));
+        addresses.add(Pair.of(hostname, port));
     }
 
-    public Client buildClient() {
-        // settingsBuilder.put("shield.user", "elastic:_Elastic");
+    public ElasticsearchClient buildClient() {
+        int n = addresses.size();
+        HttpHost[] hosts = new HttpHost[n];
+        for (int i = 0; i < n; i++) {
+            Pair<String, Integer> addr = addresses.get(i);
+            HttpHost host = new HttpHost(addr.first, addr.second);
+            hosts[i] = host;
+        }
 
-        Settings settings = settingsBuilder.build();
+        RestClient restClient = RestClient.builder(hosts).build();
 
-        TransportClient.Builder clientBuilder = TransportClient.builder().settings(settings);
-        for (Class<? extends Plugin> plugin : plugins)
-            clientBuilder.addPlugin(plugin);
+        RestClientTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
 
-        // clientBuilder.addPlugin(ShieldPlugin.class);
-
-        TransportClient client = clientBuilder.build();
-        for (TransportAddress address : addresses)
-            client.addTransportAddress(address);
-
+        ElasticsearchClient client = new ElasticsearchClient(transport);
         return client;
     }
 
