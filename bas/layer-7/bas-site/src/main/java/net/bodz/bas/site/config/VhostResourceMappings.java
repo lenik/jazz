@@ -34,7 +34,7 @@ public class VhostResourceMappings
         if ((sitesDir.isDirectory())) {
             // if (!filesDir.mkdirs())
             // throw new LazyLoadException("Failed to mkdirs: " + filesDir);
-            siteHomeAlias = fn.vdirAlias(config, "", sitesDir.getPath(), 30);
+            // siteHomeAlias = fn.vdirAlias(config, "", sitesDir.getPath(), 30);
             siteFilesAlias = fn.vdirAlias(config, "/files", sitesDir.getPath(), 30);
         }
     }

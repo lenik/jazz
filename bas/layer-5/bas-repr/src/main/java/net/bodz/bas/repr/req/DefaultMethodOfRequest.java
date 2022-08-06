@@ -26,8 +26,10 @@ import net.bodz.bas.t.variant.MutableVariantMap;
  * </ol>
  */
 public class DefaultMethodOfRequest
-        extends AbstractHttpRequestProcessor
-        implements IMethodOfRequest, Serializable {
+        implements
+            IHttpRequestProcessor,
+            IMethodOfRequest,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 

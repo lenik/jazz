@@ -48,6 +48,11 @@ public class DecoratedServletRequest
     }
 
     @Override
+    public long getContentLengthLong() {
+        return getWrapped().getContentLengthLong();
+    }
+
+    @Override
     public String getContentType() {
         return getWrapped().getContentType();
     }

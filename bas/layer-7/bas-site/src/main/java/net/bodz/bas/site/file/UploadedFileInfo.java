@@ -2,7 +2,7 @@ package net.bodz.bas.site.file;
 
 import java.io.IOException;
 
-import org.apache.commons.fileupload.FileItem;
+import javax.servlet.http.Part;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -20,10 +20,10 @@ public class UploadedFileInfo
     public UploadedFileInfo() {
     }
 
-    public UploadedFileInfo(FileItem item) {
-        setName(item.getName());
-        setLabel(item.getName());
-        setSize(item.getSize());
+    public UploadedFileInfo(Part part) {
+        setName(part.getName());
+        setLabel(part.getName());
+        setSize(part.getSize());
     }
 
     public String getPath() {

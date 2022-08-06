@@ -13,8 +13,10 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
 
 public class DefaultViewOfRequest
-        extends AbstractHttpRequestProcessor
-        implements IViewOfRequest, Serializable {
+        implements
+            IHttpRequestProcessor,
+            IViewOfRequest,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 

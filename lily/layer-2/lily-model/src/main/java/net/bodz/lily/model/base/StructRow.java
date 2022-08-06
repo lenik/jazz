@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
-import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
@@ -29,16 +28,10 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
-import net.bodz.lily.entity.IReinitializable;
 
-/**
- * Co/Con: Concrete, also Content, Controlled
- */
-@IncludeMapperXml
 public abstract class StructRow
         implements
             IContent,
-            IReinitializable,
             Serializable,
             IVarMapForm,
             IJsonForm,

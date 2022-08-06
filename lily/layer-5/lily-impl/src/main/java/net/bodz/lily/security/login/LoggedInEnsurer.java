@@ -8,13 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
+import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 
 /**
  * Redirect to login page for access controled pages.
  */
 public class LoggedInEnsurer
-        extends AbstractHttpFilter {
+        implements
+            IHttpFilter {
 
     @Override
     public int getPriority() {

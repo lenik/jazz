@@ -2,6 +2,7 @@ package net.bodz.bas.c.javax.servlet.http;
 
 import java.io.IOException;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,24 +11,28 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public abstract class AbstractHttpFilter
-        implements IHttpFilter {
+public interface HttpFilter
+        extends
+            Filter {
 
     @Override
-    public void init(FilterConfig filterConfig)
+    default void init(FilterConfig filterConfig)
             throws ServletException {
     }
 
     @Override
-    public void destroy() {
+    default void destroy() {
     }
 
     @Override
-    public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    default void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         doFilter(req, resp, chain);
     }
+
+    void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException;
 
 }
