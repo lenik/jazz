@@ -11,7 +11,7 @@ import net.bodz.uni.echo.server.EchoServer;
 
 /**
  * Bas embedded http server
- * 
+ *
  * <p lang="zh-cn">
  * BAS 嵌入式 HTTP 服务器
  */
@@ -20,20 +20,20 @@ public abstract class BasHttpd
 
     /**
      * Specify the host name.
-     * 
+     *
      * <p lang="zh-cn">
      * 指定主机名。
-     * 
+     *
      * @option -h --hostname =NAME
      */
     String hostName;
 
     /**
      * Specify the TCP port to listen.
-     * 
+     *
      * <p lang="zh-cn">
      * 指定监听的TCP端口号。
-     * 
+     *
      * @option -p --port =PORT
      */
     int port;

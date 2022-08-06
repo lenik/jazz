@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.bodz.bas.err.ParseException;
 
 public class HttpSnapRequestProcessor
-        extends AbstractHttpRequestProcessor {
+        implements
+            IHttpRequestProcessor {
 
     @Override
     public boolean apply(HttpServletRequest request, HttpServletResponse response)

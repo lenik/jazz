@@ -3,6 +3,7 @@ package net.bodz.lily.test;
 import java.lang.reflect.Type;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
@@ -14,8 +15,6 @@ import net.bodz.bas.db.test.DaoTestConfig;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.util.mapper.TableProfiles;
-
-import junit.framework.Assert;
 
 public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
         extends Assert {

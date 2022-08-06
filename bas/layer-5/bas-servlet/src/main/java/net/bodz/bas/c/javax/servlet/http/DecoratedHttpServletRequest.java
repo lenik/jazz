@@ -10,13 +10,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
 import net.bodz.bas.c.javax.servlet.DecoratedServletRequest;
 
 public class DecoratedHttpServletRequest
         extends DecoratedServletRequest
-        implements HttpServletRequest {
+        implements
+            HttpServletRequest {
 
     private static final long serialVersionUID = 1L;
 
@@ -183,6 +185,17 @@ public class DecoratedHttpServletRequest
     public Part getPart(String name)
             throws IOException, ServletException {
         return getWrapped().getPart(name);
+    }
+
+    @Override
+    public String changeSessionId() {
+        return getWrapped().changeSessionId();
+    }
+
+    @Override
+    public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass)
+            throws IOException, ServletException {
+        return getWrapped().upgrade(handlerClass);
     }
 
 }

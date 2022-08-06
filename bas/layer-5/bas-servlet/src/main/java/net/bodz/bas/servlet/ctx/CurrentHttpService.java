@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.IServletRequestListener;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class CurrentHttpService
-        extends AbstractHttpFilter
         implements
+            IHttpFilter,
             IServletRequestListener {
 
     static final Logger logger = LoggerFactory.getLogger(CurrentHttpService.class);

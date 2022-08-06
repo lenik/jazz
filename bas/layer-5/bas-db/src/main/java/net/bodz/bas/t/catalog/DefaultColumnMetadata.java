@@ -280,7 +280,7 @@ public class DefaultColumnMetadata
         if (jsonType) {
             IJsonForm obj;
             try {
-                obj = (IJsonForm) type.newInstance();
+                obj = (IJsonForm) type.getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + type, e);
             }

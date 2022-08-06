@@ -8,16 +8,16 @@
     </parent>
     <artifactId>bas-servlet</artifactId>
     <dependencies>
-        <!-- <dependency> -->
-        <!-- <groupId>javax.servlet</groupId> -->
-        <!-- <artifactId>servlet-api</artifactId> -->
-        <!-- <version>3.0-alpha-1</version> -->
-        <!-- </dependency> -->
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0.20100224</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
+        <!--dependency>
+            <groupId>org.eclipse.jetty.toolchain</groupId>
+            <artifactId>jetty-jakarta-servlet-api</artifactId>
+            <version>5.0.2</version>
+        </dependency-->
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-std</artifactId>

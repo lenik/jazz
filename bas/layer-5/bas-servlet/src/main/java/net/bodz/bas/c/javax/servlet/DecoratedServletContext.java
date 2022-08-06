@@ -9,14 +9,15 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.*;
-import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.descriptor.JspConfigDescriptor;
 
 import net.bodz.bas.t.model.AbstractDecorator;
 
 public class DecoratedServletContext
         extends AbstractDecorator<ServletContext>
-        implements ServletContext, IAttributes {
+        implements
+            ServletContext,
+            IAttributes {
 
     private static final long serialVersionUID = 1L;
 
@@ -171,17 +172,17 @@ public class DecoratedServletContext
     }
 
     @Override
-    public Dynamic addServlet(String servletName, String className) {
+    public ServletRegistration.Dynamic addServlet(String servletName, String className) {
         return getWrapped().addServlet(servletName, className);
     }
 
     @Override
-    public Dynamic addServlet(String servletName, Servlet servlet) {
+    public ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet) {
         return getWrapped().addServlet(servletName, servlet);
     }
 
     @Override
-    public Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
+    public ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
         return getWrapped().addServlet(servletName, servletClass);
     }
 
@@ -202,17 +203,17 @@ public class DecoratedServletContext
     }
 
     @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, String className) {
+    public FilterRegistration.Dynamic addFilter(String filterName, String className) {
         return getWrapped().addFilter(filterName, className);
     }
 
     @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
+    public FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
         return getWrapped().addFilter(filterName, filter);
     }
 
     @Override
-    public javax.servlet.FilterRegistration.Dynamic addFilter(String filterName, Class<? extends Filter> filterClass) {
+    public FilterRegistration.Dynamic addFilter(String filterName, Class<? extends Filter> filterClass) {
         return getWrapped().addFilter(filterName, filterClass);
     }
 
@@ -286,6 +287,11 @@ public class DecoratedServletContext
     @Override
     public void declareRoles(String... roleNames) {
         getWrapped().declareRoles(roleNames);
+    }
+
+    @Override
+    public String getVirtualServerName() {
+        return getWrapped().getVirtualServerName();
     }
 
 }

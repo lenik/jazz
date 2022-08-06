@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.c.javax.servlet.http.AbstractHttpFilter;
+import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 import net.bodz.bas.c.javax.servlet.http.MutableHttpServletRequest;
 import net.bodz.bas.c.javax.servlet.http.MutableHttpSession;
 import net.bodz.bas.log.Logger;
@@ -21,7 +21,8 @@ import net.bodz.bas.log.LoggerFactory;
  * By default, browsing from file://... can't have a session.
  */
 public class FileSessionSupportFilter
-        extends AbstractHttpFilter {
+        implements
+            IHttpFilter {
 
     static final Logger logger = LoggerFactory.getLogger(FileSessionSupportFilter.class);
 

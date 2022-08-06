@@ -37,6 +37,7 @@ import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.entity.IReinitializable;
 import net.bodz.lily.model.base.impl.DefaultWebSupport;
 import net.bodz.lily.model.base.impl.IWebSupport;
 import net.bodz.lily.security.Group;
@@ -51,6 +52,7 @@ import net.bodz.lily.security.login.LoginToken;
 public abstract class CoObject
         extends StructRow
         implements
+            IReinitializable,
             IAccessControlled,
             IStated {
 
@@ -456,7 +458,6 @@ public abstract class CoObject
             flags = o.getInt("flags", flags);
             priority = o.getInt("priority", priority);
             state = StateJsonFn.getFrom(o, "state", state);
-
 
             ownerUser = o.readInto("ownerUser", ownerUser, new User());
             ownerGroup = o.readInto("ownerGroup", ownerGroup, new Group());

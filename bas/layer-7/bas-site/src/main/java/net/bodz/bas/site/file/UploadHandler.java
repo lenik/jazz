@@ -1,19 +1,20 @@
 package net.bodz.bas.site.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import javax.servlet.http.Part;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
@@ -28,7 +29,8 @@ import net.bodz.bas.site.IBasicSiteAnchors;
  *            upload</a>
  */
 public class UploadHandler
-        implements IBasicSiteAnchors {
+        implements
+            IBasicSiteAnchors {
 
     File localDir;
     IAnchor anchor;
@@ -56,49 +58,37 @@ public class UploadHandler
     }
 
     public UploadResult handlePostRequest(HttpServletRequest request)
-            throws IOException {
-        if (!ServletFileUpload.isMultipartContent(request))
-            throw new IllegalArgumentException("Request is not multipart.");
-
-        ServletFileUpload uploader = new ServletFileUpload(new DiskFileItemFactory());
-        uploader.setHeaderEncoding("utf-8");
-
+            throws IOException, ServletException {
         UploadResult result = new UploadResult();
-        try {
-            List<FileItem> items = uploader.parseRequest(request);
-            for (FileItem item : items) {
-                if (item.isFormField())
-                    continue;
+        for (Part part : request.getParts()) {
+            String fileName = part.getName();
+            if (fileName.isEmpty())
+                throw new IllegalArgumentException("empty filename.");
 
-                if (item.getName().isEmpty())
-                    throw new IllegalArgumentException("empty filename.");
-                String itemPath = getItemPath(item.getName());
-                File localFile = new File(localDir, itemPath);
-                item.write(localFile);
-                RenameResult renameResult = renameToSha1(localFile);
+            File localFile = new File(localDir, fileName);
 
-                UploadedFileInfo fileInfo = new UploadedFileInfo(item);
-                fileInfo.setFile(localFile);
-                fileInfo.setSha1(renameResult.sha1);
-
-                fileInfo.url = anchor.join(renameResult.newFile.getName()).absoluteHref();
-                fileInfo.deleteUrl = fileInfo.url;
-
-                // TODO image auto-scale...?
-                fileInfo.thumbnail = fileInfo.url;
-
-                result.add(fileInfo);
+            try (FileOutputStream out = new FileOutputStream(localFile)) {
+                InputStream in = part.getInputStream();
+                for (byte[] block : new InputStreamSource(in).read().blocks()) {
+                    out.write(block);
+                }
             }
-            return result;
-        } catch (IOException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
 
-    public String getItemPath(String itemName) {
-        return itemName;
+            RenameResult renameResult = renameToSha1(localFile);
+
+            UploadedFileInfo fileInfo = new UploadedFileInfo(part);
+            fileInfo.setFile(localFile);
+            fileInfo.setSha1(renameResult.sha1);
+
+            fileInfo.url = anchor.join(renameResult.newFile.getName()).absoluteHref();
+            fileInfo.deleteUrl = fileInfo.url;
+
+            // TODO image auto-scale...?
+            fileInfo.thumbnail = fileInfo.url;
+
+            result.add(fileInfo);
+        }
+        return result;
     }
 
     static final HexCodec hexCodec = new HexCodec("");

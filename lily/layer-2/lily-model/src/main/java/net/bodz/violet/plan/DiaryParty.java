@@ -6,8 +6,8 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;

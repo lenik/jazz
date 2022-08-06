@@ -5,9 +5,10 @@ import java.io.PrintWriter;
 import java.util.Random;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.servlet.HttpServlet;
 
 public class SnailServlet
         extends HttpServlet {

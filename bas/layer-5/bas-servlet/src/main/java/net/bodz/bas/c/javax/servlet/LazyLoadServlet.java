@@ -6,9 +6,9 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServlet;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.servlet.HttpServlet;
 
 public class LazyLoadServlet
         extends HttpServlet {
