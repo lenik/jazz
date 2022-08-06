@@ -9,11 +9,11 @@ public interface IMapperProvider {
     /**
      * @see SqlSession#getMapper(Class)
      */
-    <M extends IMapper> M getMapper(Class<M> mapperClass);
+    default <M> M getMapper(Class<M> mapperClass) {
+        return getMapper(mapperClass, true);
+    }
 
-    <M extends IMapper> M getMapper(Class<M> mapperClass, boolean batch);
-
-    <M extends IMapper> M getMapper(Class<M> mapperClass, SqlSession session);
+    <M> M getMapper(Class<M> mapperClass, boolean batch);
 
     class fn {
 

@@ -16,7 +16,8 @@ import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class IncludeMapperXmlConfigurer
-        extends AbstractIbatisConfigurer {
+        implements
+            IIbatisConfigurer {
 
     @Override
     public void configure(Configuration config) {

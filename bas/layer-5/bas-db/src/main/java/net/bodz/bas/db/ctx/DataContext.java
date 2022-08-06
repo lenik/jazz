@@ -20,7 +20,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IbatisMapperProvider;
-import net.bodz.bas.db.jdbc.BoneCPDataSourceProvider;
+import net.bodz.bas.db.jdbc.HikariDataSourceProvider;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
 import net.bodz.bas.db.jdbc.util.ISqlExecutor;
@@ -28,8 +28,8 @@ import net.bodz.bas.db.jdbc.util.SharedSqlExecutor;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
@@ -55,7 +55,7 @@ public class DataContext
             throw new NullPointerException("opts");
         this.options = opts;
 
-        dataSourceProvider = new BoneCPDataSourceProvider(opts);
+        dataSourceProvider = new HikariDataSourceProvider(opts);
 
         dataSource = dataSourceProvider.getDataSource();
         if (dataSource == null)
@@ -109,30 +109,32 @@ public class DataContext
         return mapperProvider;
     }
 
-    public final <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass) {
+    public final <mapper_t> mapper_t getMapper(Class<mapper_t> mapperClass) {
         return getMapper(mapperClass, false);
     }
 
-    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, boolean batch) {
+    public <mapper_t> mapper_t getMapper(Class<mapper_t> mapperClass, boolean batch) {
         return getMapperProvider().getMapper(mapperClass, batch);
     }
 
-    public <mapper_t extends IMapper> mapper_t getMapper(Class<mapper_t> mapperClass, SqlSession session) {
-        return getMapperProvider().getMapper(mapperClass, session);
+    public <mapper_t> mapper_t getMapper(Class<mapper_t> mapperClass, SqlSession session) {
+        IMapperProvider provider = getMapperProvider();
+        IbatisMapperProvider batis = (IbatisMapperProvider) provider;
+        return batis.getMapper(mapperClass, session);
     }
 
-    public final <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass) {
+    public final <mapper_t> mapper_t requireMapper(Class<mapper_t> mapperClass) {
         return requireMapper(mapperClass, false);
     }
 
-    public <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass, boolean batch) {
+    public <mapper_t> mapper_t requireMapper(Class<mapper_t> mapperClass, boolean batch) {
         mapper_t mapper = getMapper(mapperClass, batch);
         if (mapper == null)
             throw new IllegalUsageException("No mapper for " + mapperClass);
         return mapper;
     }
 
-    public <mapper_t extends IMapper> mapper_t requireMapper(Class<mapper_t> mapperClass, SqlSession session) {
+    public <mapper_t> mapper_t requireMapper(Class<mapper_t> mapperClass, SqlSession session) {
         mapper_t mapper = getMapper(mapperClass, session);
         if (mapper == null)
             throw new IllegalUsageException("No mapper for " + mapperClass);

@@ -34,7 +34,8 @@ import net.bodz.bas.text.trie.BinaryReplacer;
 
 @IndexedTypeLoader
 public class IbatisMapperProvider
-        extends AbstractMapperProvider {
+        implements
+            IMapperProvider {
 
     static final Logger logger = LoggerFactory.getLogger(IbatisMapperProvider.class);
 
@@ -104,9 +105,9 @@ public class IbatisMapperProvider
         }
 
         Set<Class<?>> woMappers = MapperClassXmls.getLastInstance().getClassesWithoutXmls();
-        logger.infof("Add %d mappers without xml.", woMappers.size());
+        logger.warn("Add %d mappers without xml.", woMappers.size());
         for (Class<?> mapper : woMappers) {
-            logger.debug("    Mapper-Class: ", mapper.getName());
+            logger.warn("    Mapper-Class: ", mapper.getName());
             config.addMapper(mapper);
         }
 
@@ -147,13 +148,13 @@ public class IbatisMapperProvider
     /** ⇱ Implementation Of {@link IMapperProvider}. */
     /* _____________________________ */static section.iface __PROVIDER__;
 
-    public <M extends IMapper> boolean hasMapper(Class<M> mapperClass) {
+    public boolean hasMapper(Class<?> mapperClass) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
         return sqlSessionFactory.getConfiguration().hasMapper(mapperClass);
     }
 
     @Override
-    public <M extends IMapper> M getMapper(Class<M> mapperClass, boolean batch) {
+    public <M> M getMapper(Class<M> mapperClass, boolean batch) {
         if (!hasMapper(mapperClass))
             return null;
         SqlSession session = null;
@@ -162,8 +163,7 @@ public class IbatisMapperProvider
         return getMapper(mapperClass, session);
     }
 
-    @Override
-    public <T extends IMapper> T getMapper(Class<T> mapperClass, SqlSession session) {
+    public <T> T getMapper(Class<T> mapperClass, SqlSession session) {
         try {
             if (!hasMapper(mapperClass))
                 return null;
@@ -174,7 +174,7 @@ public class IbatisMapperProvider
         return instantiateMapper(mapperClass, session);
     }
 
-    <T extends IMapper> T instantiateMapper(Class<T> mapperClass, SqlSession session) {
+    <T> T instantiateMapper(Class<T> mapperClass, SqlSession session) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
         if (!sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
             return null;
