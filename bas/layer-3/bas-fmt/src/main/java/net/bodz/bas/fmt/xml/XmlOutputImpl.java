@@ -21,15 +21,17 @@ public class XmlOutputImpl
     public static IXmlOutput from(OutputStream outputStream, String encoding)
             throws XMLStreamException {
         XMLStreamWriter xsw = outputFactory.createXMLStreamWriter(outputStream, encoding);
-        xsw = indent(xsw);
-        return from(xsw);
+        IndentingXMLStreamWriter indented = indent(xsw);
+        IXmlOutput out = from(indented);
+        return out;
     }
 
     public static IXmlOutput from(Writer writer)
             throws XMLStreamException {
         XMLStreamWriter xsw = outputFactory.createXMLStreamWriter(writer);
-        xsw = indent(xsw);
-        return from(xsw);
+        IndentingXMLStreamWriter indented = indent(xsw);
+        IXmlOutput out = from(indented);
+        return out;
     }
 
     public static IXmlOutput from(Appendable out)
@@ -38,7 +40,7 @@ public class XmlOutputImpl
         return from(aw);
     }
 
-    static XMLStreamWriter indent(XMLStreamWriter out) {
+    static IndentingXMLStreamWriter indent(XMLStreamWriter out) {
         return new IndentingXMLStreamWriter(out);
     }
 
@@ -64,6 +66,11 @@ public class XmlOutputImpl
     @Override
     public void _attribute(String name, String data)
             throws XMLStreamException {
+        if (data == null)
+            if (nullAttribute == NO_ATTRIBUTE)
+                return;
+            else
+                data = nullAttribute;
         _orig.writeAttribute(name, data);
     }
 
