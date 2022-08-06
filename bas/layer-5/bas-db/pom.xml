@@ -8,9 +8,9 @@
     <artifactId>bas-db</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp</artifactId>
-            <optional>false</optional>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>

@@ -11,25 +11,24 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
 @ExcludedFromIndex
 public interface IMapperTemplate<T, M>
-        extends IMapper {
+        extends
+            IMapper {
 
-    @Deprecated
-    List<T> all();
+    default List<T> all() {
+        return all(SelectOptions.ALL);
+    }
 
     List<T> all(@Param("opt") SelectOptions opt);
 
-    @Deprecated
-    List<T> filter(@Param("m") M mask);
+    default List<T> filter(@Param("m") M mask) {
+        return filter(mask, SelectOptions.ALL);
+    }
 
     List<T> filter(@Param("m") M mask, @Param("opt") SelectOptions opt);
 
     T select(@Param("id") Object id);
 
     T selectByCodeName(@Param("code") String codeName);
-
-    T selectPrev(Object id);
-
-    T selectNext(Object id);
 
     /**
      * @return Number of records.

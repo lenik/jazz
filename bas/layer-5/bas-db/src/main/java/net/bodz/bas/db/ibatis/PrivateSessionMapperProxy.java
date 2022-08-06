@@ -11,7 +11,8 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class PrivateSessionMapperProxy
-        implements InvocationHandler {
+        implements
+            InvocationHandler {
 
     static final Logger logger = LoggerFactory.getLogger(PrivateSessionMapperProxy.class);
 
