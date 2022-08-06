@@ -39,7 +39,7 @@ public class UUIDTypeHandler
         int major = rs.getStatement().getConnection().getMetaData().getDatabaseMajorVersion();
         if (major >= UUID_SINCE) {
             Object val = rs.getObject(columnName);
-            return (UUID) val;
+            return convertToUUID(val);
         } else {
             String str = rs.getString(columnName);
             return UUID.fromString(str);
@@ -52,7 +52,7 @@ public class UUIDTypeHandler
         int major = rs.getStatement().getConnection().getMetaData().getDatabaseMajorVersion();
         if (major >= UUID_SINCE) {
             Object val = rs.getObject(columnIndex);
-            return (UUID) val;
+            return convertToUUID(val);
         } else {
             String str = rs.getString(columnIndex);
             return UUID.fromString(str);
@@ -65,11 +65,20 @@ public class UUIDTypeHandler
         int major = cs.getConnection().getMetaData().getDatabaseMajorVersion();
         if (major >= UUID_SINCE) {
             Object val = cs.getObject(columnIndex);
-            return (UUID) val;
+            return convertToUUID(val);
         } else {
             String str = cs.getString(columnIndex);
             return UUID.fromString(str);
         }
+    }
+
+    static UUID convertToUUID(Object uuid) {
+        if (uuid == null)
+            return null;
+        if (uuid.getClass() == String.class)
+            return UUID.fromString(uuid.toString());
+        else
+            return (UUID) uuid;
     }
 
 }
