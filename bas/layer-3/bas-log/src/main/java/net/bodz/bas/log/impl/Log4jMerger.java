@@ -2,43 +2,48 @@ package net.bodz.bas.log.impl;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
 
-public class Log4jMerger {
+import net.bodz.bas.log.log4j.ILog4jConfigurer;
+
+@Deprecated
+public class Log4jMerger
+        implements
+            ILog4jConfigurer {
 
     static String fragmentFileName = "META-INF/log4j.properties";
 
-    static boolean loaded;
+    @Override
+    public void initLog4j(Configuration config) {
+        load();
+    }
 
-    static synchronized void load()
-            throws IOException {
+    static boolean loaded;
+    static List<URL> resources;
+
+    static synchronized void load() {
         if (loaded)
             return;
 
         Set<URL> set = new LinkedHashSet<URL>();
         ClassLoader scl = ClassLoader.getSystemClassLoader();
         ClassLoader ccl = Thread.currentThread().getContextClassLoader();
-        collectFragmentResources(set, Log4jMerger.class.getClassLoader());
-        collectFragmentResources(set, scl);
-        collectFragmentResources(set, ccl);
+
+        try {
+            collectFragmentResources(set, Log4jMerger.class.getClassLoader());
+            collectFragmentResources(set, scl);
+            collectFragmentResources(set, ccl);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        resources = new ArrayList<URL>(set);
 
         // Reverse the resources, so the later jar will override the first ones.
-        int n = set.size();
-        List<URL> reverseList = new ArrayList<URL>(n);
-        for (URL url : set)
-            reverseList.add(url);
-
-        for (int i = n - 1; i >= 0; i--) {
-            URL resource = reverseList.get(i);
-            PropertyConfigurator.configure(resource);
-        }
+        Collections.reverse(resources);
         loaded = true;
     }
 
@@ -48,6 +53,17 @@ public class Log4jMerger {
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             collection.add(resource);
+        }
+    }
+
+    @Override
+    public void setupBuilder(ConfigurationBuilder<? extends Configuration> builder) {
+        for (URL resource : resources) {
+//          new PropertiesConfigurationBuilder()//
+//                  .setConfigurationSource(source)//
+//                  .setRootProperties(properties)//
+//                  .setLoggerContext(loggerContext)//
+//                  .build();
         }
     }
 

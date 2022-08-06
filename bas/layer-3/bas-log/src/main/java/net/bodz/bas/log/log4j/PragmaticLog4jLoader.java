@@ -5,8 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.spi.LoggerRepository;
+import org.apache.logging.log4j.core.config.ConfigurationFactory;
 
 import net.bodz.bas.log.ILoggingSystemConfigurer;
 import net.bodz.bas.t.order.PriorityComparator;
@@ -17,9 +16,17 @@ public class PragmaticLog4jLoader
 
     final boolean enabled;
 
+    static List<ILog4jConfigurer> configurers = new ArrayList<>();
+    static {
+        for (ILog4jConfigurer c : ServiceLoader.load(ILog4jConfigurer.class)) {
+            configurers.add(c);
+        }
+        Collections.sort(configurers, PriorityComparator.INSTANCE);
+    }
+
     public PragmaticLog4jLoader() {
         try {
-            Class.forName("org.apache.log4j.Logger");
+            Class.forName("org.apache.logging.log4j.Logger");
         } catch (ClassNotFoundException e) {
             enabled = false;
             return;
@@ -31,17 +38,7 @@ public class PragmaticLog4jLoader
     public void initLoggingSystem() {
         if (!enabled)
             return;
-
-        List<ILog4jConfigurer> configurers = new ArrayList<>();
-        for (ILog4jConfigurer c : ServiceLoader.load(ILog4jConfigurer.class)) {
-            configurers.add(c);
-        }
-        Collections.sort(configurers, PriorityComparator.INSTANCE);
-
-        LoggerRepository hierarchy = LogManager.getLoggerRepository();
-        for (ILog4jConfigurer c : configurers) {
-            c.initLog4j(hierarchy);
-        }
+        ConfigurationFactory.setConfigurationFactory(new PragmaticLog4jConfigurationFactory());
     }
 
 }

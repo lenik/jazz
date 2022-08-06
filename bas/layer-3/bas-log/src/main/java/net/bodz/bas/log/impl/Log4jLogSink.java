@@ -1,7 +1,7 @@
 package net.bodz.bas.log.impl;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 import net.bodz.bas.log.AbstractLogSink;
 
@@ -39,12 +39,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_FATAL, Level.FATAL, obj, null);
+            log4j.log(Level.FATAL, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_FATAL, Level.FATAL, obj, t);
+            log4j.log(Level.FATAL, obj, t);
         }
 
     }
@@ -58,12 +58,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_ERROR, Level.ERROR, obj, null);
+            log4j.log(Level.ERROR, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_ERROR, Level.ERROR, obj, t);
+            log4j.log(Level.ERROR, obj, t);
         }
 
     }
@@ -77,12 +77,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_WARN, Level.WARN, obj, null);
+            log4j.log(Level.WARN, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_WARN, Level.WARN, obj, t);
+            log4j.log(Level.WARN, obj, t);
         }
 
     }
@@ -96,12 +96,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_INFO, Level.INFO, obj, null);
+            log4j.log(Level.INFO, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_INFO, Level.INFO, obj, t);
+            log4j.log(Level.INFO, obj, t);
         }
 
     }
@@ -115,12 +115,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_DEBUG, Level.DEBUG, obj, null);
+            log4j.log(Level.DEBUG, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_DEBUG, Level.DEBUG, obj, t);
+            log4j.log(Level.DEBUG, obj, t);
         }
 
     }
@@ -134,12 +134,12 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.log(FQCN_TRACE, Level.TRACE, obj, null);
+            log4j.log(Level.TRACE, obj, null);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.log(FQCN_TRACE, Level.TRACE, obj, t);
+            log4j.log(Level.TRACE, obj, t);
         }
 
     }

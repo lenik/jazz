@@ -1,9 +1,7 @@
 package net.bodz.bas.log.log4j;
 
-import org.apache.log4j.MDC;
-import org.apache.log4j.spi.LoggerRepository;
-
-import net.bodz.bas.log.diag.CompositeDiagContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
 
 public class Log4jMdcConfigurer
         implements
@@ -22,9 +20,9 @@ public class Log4jMdcConfigurer
     }
 
     @Override
-    public void initLog4j(LoggerRepository hierachy) {
+    public void setupBuilder(ConfigurationBuilder<? extends Configuration> builder) {
         if (enabled)
-            MDC.put("contexts", CompositeDiagContext.CONTEXTS);
+            ; // TODO MDC.put("contexts", CompositeDiagContext.CONTEXTS);
     }
 
 }
