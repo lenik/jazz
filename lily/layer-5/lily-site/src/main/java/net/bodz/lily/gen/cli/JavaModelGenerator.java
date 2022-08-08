@@ -7,6 +7,7 @@ import java.sql.Connection;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
@@ -125,7 +126,7 @@ public class JavaModelGenerator
             }
         });
         catalog.loadFromJDBC(connection, "TABLE", "VIEW");
-        catalog.dump();
+        XmlFn.save(catalog, new File("/xxx/a.xml"));
 
         catalog.accept(new ICatalogVisitor() {
             @Override

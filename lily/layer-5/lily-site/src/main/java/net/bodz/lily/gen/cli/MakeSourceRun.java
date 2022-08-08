@@ -17,6 +17,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.IViewMetadata;
 import net.bodz.lily.gen.model.java.*;
 
 public class MakeSourceRun {
@@ -105,32 +106,40 @@ public class MakeSourceRun {
 
     public void makeView()
             throws IOException {
+        IViewMetadata view = (IViewMetadata) tableView;
+
         ITreeOut out = open(stuffDir, Naming.stuff(simpleName) + ".java", true);
         new ViewStuffBuilder(className, packageName + "." + Naming.stuff(simpleName)).build(out, tableView);
         out.close();
 
+        IColumnMetadata[] pkv = view.getPrimaryKeyColumns();
+        if (pkv.length > 1) {
+            out = open(stuffDir, Naming.id(simpleName) + ".java", true);
+            new TableIdBuilder(className).build(out, view);
+            out.close();
+        }
+
         if ((out = open(skelJavaDir, simpleName + ".java", false)) != null)
-            new ViewSkelBuilder(className, className).build(out, tableView);
+            new ViewSkelBuilder(className, className).build(out, view);
 
         out = open(stuffDir, "impl/" + Naming.maskStuff(simpleName) + ".java", true);
-        new ViewMaskStuffBuilder(className, implPackageName + "." + Naming.maskStuff(simpleName)).build(out, tableView);
+        new ViewMaskStuffBuilder(className, implPackageName + "." + Naming.maskStuff(simpleName)).build(out, view);
 
         if ((out = open(skelJavaDir, "impl/" + Naming.mask(simpleName) + ".java", false)) != null)
-            new ViewMaskSkelBuilder(className, implPackageName + "." + Naming.mask(simpleName)).build(out, tableView);
+            new ViewMaskSkelBuilder(className, implPackageName + "." + Naming.mask(simpleName)).build(out, view);
 
         out = open(stuffDir, "impl/" + Naming.index(simpleName) + ".java", true);
-        new ViewIndexBuilder(className, implPackageName + "." + Naming.index(simpleName)).build(out, tableView);
+        new ViewIndexBuilder(className, implPackageName + "." + Naming.index(simpleName)).build(out, view);
 
         if ((out = open(skelResourcesDir, "impl/" + Naming.mapper(simpleName) + ".xml", false)) != null)
-            new ViewMapperXmlBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out,
-                    tableView);
+            new ViewMapperXmlBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, view);
 
         if ((out = open(skelJavaDir, "impl/" + Naming.mapper(simpleName) + ".java", false)) != null)
-            new ViewMapperBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, tableView);
+            new ViewMapperBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, view);
 
-        out = open(stuffDir, "impl/" + Naming.mapperTest(simpleName) + ".java", true);
-        new ViewMapperTestBuilder(className, implPackageName + "." + Naming.mapperTest(simpleName)).build(out,
-                tableView);
+//        out = open(stuffDir, "impl/" + Naming.mapperTest(simpleName) + ".java", true);
+//        new ViewMapperTestBuilder(className, implPackageName + "." + Naming.mapperTest(simpleName)).build(out,
+//                view);
     }
 
     ITreeOut open(File parent, String name, boolean overwrite)

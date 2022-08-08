@@ -16,7 +16,7 @@ import net.bodz.bas.t.range.*;
 import net.bodz.lily.model.base.CoObjectMask;
 
 public class ViewMaskStuffBuilder
-        extends ViewStuffBuilder {
+        extends _TableViewStuffBuilder {
 
     public ViewMaskStuffBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

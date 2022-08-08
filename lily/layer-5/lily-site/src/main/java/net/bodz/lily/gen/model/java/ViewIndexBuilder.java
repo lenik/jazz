@@ -5,7 +5,7 @@ import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.model.base.CoIndex;
 
 public class ViewIndexBuilder
-        extends ViewStuffBuilder {
+        extends _TableViewStuffBuilder {
 
     public ViewIndexBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

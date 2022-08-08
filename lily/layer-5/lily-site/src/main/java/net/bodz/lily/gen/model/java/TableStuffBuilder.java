@@ -6,12 +6,12 @@ import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.gen.model.java.ViewStuffBuilder.ClassBodyDetail;
+import net.bodz.lily.gen.model.java._TableViewStuffBuilder.ClassBodyDetail;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.StructRow;
 
 public class TableStuffBuilder
-        extends ViewStuffBuilder
+        extends _TableViewStuffBuilder
         implements
             ClassBodyDetail {
 
