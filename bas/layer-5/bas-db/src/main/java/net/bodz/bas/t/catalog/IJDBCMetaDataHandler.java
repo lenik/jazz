@@ -10,7 +10,7 @@ public interface IJDBCMetaDataHandler {
         return null;
     }
 
-    default ITableViewMetadata table(ResultSet rs)
+    default ITableViewMetadata tableView(ResultSet rs)
             throws SQLException {
         return null;
     }
@@ -25,6 +25,10 @@ public interface IJDBCMetaDataHandler {
     }
 
     default void crossReference(ITableMetadata table, CrossReference crossRef)
+            throws SQLException {
+    }
+
+    default void viewColumnUsage(ResultSet rs)
             throws SQLException {
     }
 

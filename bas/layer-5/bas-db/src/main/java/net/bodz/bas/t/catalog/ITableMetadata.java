@@ -19,15 +19,6 @@ public interface ITableMetadata
     String K_FOREIGN_KEYS = "foreignKeys";
     String K_CROSS_REF = "reference";
 
-    TableKey getPrimaryKey();
-
-    default IColumnMetadata[] getPrimaryKeyColumns() {
-        TableKey key = getPrimaryKey();
-        if (key == null)
-            return new IColumnMetadata[0];
-        return key.resolve(this);
-    }
-
     Map<String, CrossReference> getForeignKeys();
 
     CrossReference getForeignKey(String constraintName);

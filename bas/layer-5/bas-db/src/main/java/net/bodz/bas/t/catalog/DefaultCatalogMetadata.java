@@ -340,7 +340,7 @@ public class DefaultCatalogMetadata
 
         for (ISchemaMetadata schema : this) {
             DefaultSchemaMetadata dsm = (DefaultSchemaMetadata) schema;
-            dsm.loadFromJDBC(connection);
+            dsm.loadFromJDBC(connection, types);
         }
     }
 

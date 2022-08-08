@@ -15,7 +15,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 
-public class DefaultTableViewMetadata
+public abstract class DefaultTableViewMetadata
         extends DefaultRowSetMetadata
         implements
             ITableViewMetadata {
@@ -102,12 +102,12 @@ public class DefaultTableViewMetadata
                 IJDBCMetaDataHandler {
 
         @Override
-        public ITableViewMetadata table(ResultSet rs)
+        public ITableViewMetadata tableView(ResultSet rs)
                 throws SQLException {
             id.catalogName = rs.getString("table_cat");
             id.schemaName = rs.getString("table_schem");
             id.tableName = rs.getString("table_name");
-            tableType = TableType.parseJDBC(rs.getString("table_type"), getDefaultTableType());
+            tableType = TableType.parseJDBC(rs, getDefaultTableType());
             description = rs.getString("remarks");
             return DefaultTableViewMetadata.this;
         }
@@ -148,7 +148,7 @@ public class DefaultTableViewMetadata
         int count = 0;
         while (rs.next()) {
             if (count == 0)
-                metaDataHandler.table(rs);
+                metaDataHandler.tableView(rs);
             count++;
         }
         rs.close();

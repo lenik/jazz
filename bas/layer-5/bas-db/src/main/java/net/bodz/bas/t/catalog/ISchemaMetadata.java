@@ -22,6 +22,8 @@ public interface ISchemaMetadata
 
     String K_TABLES = "tables";
     String K_TABLE = "table";
+    String K_VIEWS = "views";
+    String K_VIEW = "view";
 
     SchemaId getId();
 
@@ -51,13 +53,13 @@ public interface ISchemaMetadata
 
     ITableMetadata getTable(String name);
 
-    Map<String, ITableViewMetadata> getViewMap();
+    Map<String, IViewMetadata> getViewMap();
 
-    Collection<ITableViewMetadata> getViews();
+    Collection<IViewMetadata> getViews();
 
     int getViewCount();
 
-    ITableViewMetadata getView(String name);
+    IViewMetadata getView(String name);
 
     @Override
     default void writeObject(IJsonOut out)
@@ -78,6 +80,21 @@ public interface ISchemaMetadata
             out.endObject();
         }
         out.endObject();
+
+        out.key(K_VIEWS);
+        out.object();
+        for (String key : getViewMap().keySet()) {
+            out.key(key);
+            IViewMetadata view = getView(key);
+            if (view == null) {
+                out.value(null);
+                continue;
+            }
+            out.object();
+            view.writeObject(out);
+            out.endObject();
+        }
+        out.endObject();
     }
 
     @Override
@@ -95,6 +112,17 @@ public interface ISchemaMetadata
             out.endElement();
         }
         out.endElement();
+
+        out.beginElement(K_VIEWS);
+        for (String key : getViewMap().keySet()) {
+            IViewMetadata view = getView(key);
+            if (view == null)
+                continue;
+            out.beginElement(K_VIEW);
+            view.writeObject(out);
+            out.endElement();
+        }
+        out.endElement();
     }
 
     default void accept(ICatalogVisitor visitor) {
@@ -106,7 +134,7 @@ public interface ISchemaMetadata
         visitor.endTables(this);
 
         visitor.beginViews(this);
-        for (ITableViewMetadata view : getViews())
+        for (IViewMetadata view : getViews())
             view.accept(visitor);
         visitor.endViews(this);
 
