@@ -2,6 +2,7 @@ package net.bodz.bas.t.catalog;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class DefaultSchemaMetadata
     ICatalogMetadata parent;
 
     Map<String, ITableMetadata> tableMap = new LinkedHashMap<>();
-    Map<String, ITableViewMetadata> viewMap = new LinkedHashMap<>();
+    Map<String, IViewMetadata> viewMap = new LinkedHashMap<>();
 
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
@@ -229,12 +230,12 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public Map<String, ITableViewMetadata> getViewMap() {
+    public Map<String, IViewMetadata> getViewMap() {
         return viewMap;
     }
 
     @Override
-    public Collection<ITableViewMetadata> getViews() {
+    public Collection<IViewMetadata> getViews() {
         return viewMap.values();
     }
 
@@ -256,9 +257,9 @@ public class DefaultSchemaMetadata
         }
     }
 
-    public synchronized DefaultTableViewMetadata loadViewFromJDBC(String name, Connection cn)
+    public synchronized DefaultViewMetadata loadViewFromJDBC(String name, Connection cn)
             throws SQLException {
-        DefaultTableViewMetadata view = (DefaultTableViewMetadata) viewMap.get(name);
+        DefaultViewMetadata view = (DefaultViewMetadata) viewMap.get(name);
         if (view == null) {
             view = newView(name);
             view.loadFromJDBC(cn);
@@ -267,13 +268,13 @@ public class DefaultSchemaMetadata
         return view;
     }
 
-    public synchronized DefaultTableViewMetadata getOrCreateView(String name) {
+    public synchronized DefaultViewMetadata getOrCreateView(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        DefaultTableViewMetadata view = (DefaultTableViewMetadata) viewMap.get(name);
+        DefaultViewMetadata view = (DefaultViewMetadata) viewMap.get(name);
         if (view == null) {
             // view = new DefaultTableViewMetadata(this);
-            view = new DefaultTableMetadata(this);
+            view = new DefaultViewMetadata(this);
             view.getId().assign(id.catalogName, id.schemaName, name);
             view.setParent(this);
             viewMap.put(name, view);
@@ -282,33 +283,33 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public ITableViewMetadata getView(String name) {
+    public IViewMetadata getView(String name) {
         return viewMap.get(name);
     }
 
-    public DefaultTableViewMetadata newView(String viewName) {
+    public DefaultViewMetadata newView(String viewName) {
         // DefaultTableViewMetadata view = new DefaultTableViewMetadata(this);
-        DefaultTableViewMetadata view = new DefaultTableMetadata(this);
+        DefaultViewMetadata view = new DefaultViewMetadata(this);
         view.getId().assign(id.catalogName, id.schemaName, viewName);
         return view;
     }
 
-    public void addView(ITableViewMetadata view) {
+    public void addView(IViewMetadata view) {
         if (view == null)
             throw new NullPointerException("view");
         String name = view.getName();
-        ITableViewMetadata existing = viewMap.get(name);
+        IViewMetadata existing = viewMap.get(name);
         if (existing != null)
             throw new DuplicatedKeyException("View is already existed: " + name);
         viewMap.put(name, view);
     }
 
-    public boolean removeView(ITableViewMetadata view) {
+    public boolean removeView(IViewMetadata view) {
         return removeView(view.getName());
     }
 
     public boolean removeView(String name) {
-        ITableViewMetadata view = viewMap.remove(name);
+        IViewMetadata view = viewMap.remove(name);
         return view != null;
     }
 
@@ -319,7 +320,7 @@ public class DefaultSchemaMetadata
                 return TableViewList.empty();
         }
         TableViewList list = new TableViewList();
-        for (ITableViewMetadata view : viewMap.values()) {
+        for (IViewMetadata view : viewMap.values()) {
             if (pattern != null)
                 if (!pattern.contains(view.getId(), ignoreCase))
                     continue;
@@ -358,6 +359,16 @@ public class DefaultSchemaMetadata
             tables.put(key, table);
         }
         this.tableMap = tables;
+
+        jm = o.getJsonObject(K_VIEWS);
+        Map<String, IViewMetadata> views = new LinkedHashMap<>();
+        for (String key : jm.keySet()) {
+            JsonObject item = jm.getJsonObject(key);
+            DefaultViewMetadata table = new DefaultViewMetadata();
+            table.readObject(item);
+            views.put(key, table);
+        }
+        this.viewMap = views;
     }
 
     @Override
@@ -373,6 +384,17 @@ public class DefaultSchemaMetadata
             tables.put(key, table);
         }
         this.tableMap = tables;
+
+        IElement x_views = x_metadata.selectByTag(K_VIEWS).first();
+        Map<String, IViewMetadata> views = new LinkedHashMap<>();
+        for (IElement x_view : x_views.children()) {
+            assert x_view.getTagName().equals(K_VIEW);
+            DefaultViewMetadata view = new DefaultViewMetadata();
+            view.readObject(x_view);
+            String key = view.getName();
+            views.put(key, view);
+        }
+        this.viewMap = views;
     }
 
     class SchemaHandler
@@ -389,22 +411,27 @@ public class DefaultSchemaMetadata
         }
 
         @Override
-        public ITableViewMetadata table(ResultSet rs)
+        public ITableViewMetadata tableView(ResultSet rs)
                 throws SQLException {
-            DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
-            table.getJDBCMetaDataHandler().table(rs);
+            TableId id = new TableId();
+            id.readFromJDBC(rs);
 
-            if (!loadSelector.selectTable(table))
+            if (!loadSelector.selectTable(id))
                 return null;
 
-            switch (table.getTableType()) {
+            TableType type = TableType.parseJDBC(rs);
+            switch (type) {
             case TABLE:
+                DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
+                table.getJDBCMetaDataHandler().tableView(rs);
                 addTable(table);
                 return table;
 
             case VIEW:
-                addView(table);
-                return table;
+                DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
+                view.getJDBCMetaDataHandler().tableView(rs);
+                addView(view);
+                return view;
 
             default:
                 return null;
@@ -423,12 +450,29 @@ public class DefaultSchemaMetadata
                 return table.getJDBCMetaDataHandler().column(rs);
             }
 
-            ITableViewMetadata view = getView(id.getTableName());
+            IViewMetadata view = getView(id.getTableName());
             if (view != null) {
                 return view.getJDBCMetaDataHandler().column(rs);
             }
 
             return null;
+        }
+
+        @Override
+        public void viewColumnUsage(ResultSet rs)
+                throws SQLException {
+            TableId viewId = new TableId();
+            viewId.catalogName = rs.getString("view_catalog");
+            viewId.schemaName = rs.getString("view_schema");
+            viewId.tableName = rs.getString("view_name");
+            if (!loadSelector.selectTable(viewId))
+                return;
+
+            IViewMetadata view = getView(viewId.getTableName());
+            if (view == null)
+                return;
+
+            view.getJDBCMetaDataHandler().viewColumnUsage(rs);
         }
 
         @Override
@@ -479,7 +523,7 @@ public class DefaultSchemaMetadata
 
         rs = dmd.getTables(id.catalogName, id.schemaName, null, types);
         while (rs.next())
-            metaDataHandler.table(rs);
+            metaDataHandler.tableView(rs);
         rs.close();
 
         // Set<String> typeSet = new HashSet<>(Arrays.asList(types));
@@ -512,6 +556,29 @@ public class DefaultSchemaMetadata
             }
         }
         rs.close();
+
+        String sql = "select * from information_schema.view_column_usage where 1=1";
+        {
+            if (id.catalogName != null)
+                sql += "and view_catalog = ?";
+            if (id.schemaName != null)
+                sql += " and view_schema = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            int psIndex = 0;
+            if (id.catalogName != null)
+                ps.setString(++psIndex, id.catalogName);
+            if (id.schemaName != null)
+                ps.setString(++psIndex, id.schemaName);
+            rs = ps.executeQuery();
+        }
+        while (rs.next())
+            metaDataHandler.viewColumnUsage(rs);
+        rs.close();
+
+        for (ITableMetadata table : getTables())
+            table.wireUp();
+        for (IViewMetadata view : getViews())
+            view.wireUp();
     }
 
 }

@@ -1,5 +1,8 @@
 package net.bodz.bas.t.catalog;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public enum TableType {
 
     UNKNOWN,
@@ -18,6 +21,17 @@ public enum TableType {
     SEQ,
 
     ;
+
+    public static TableType parseJDBC(ResultSet rs)
+            throws SQLException {
+        return parseJDBC(rs, UNKNOWN);
+    }
+
+    public static TableType parseJDBC(ResultSet rs, TableType defaultType)
+            throws SQLException {
+        String jdbcVal = rs.getString("table_type");
+        return parseJDBC(jdbcVal, defaultType);
+    }
 
     public static TableType parseJDBC(String val) {
         return parseJDBC(val, UNKNOWN);

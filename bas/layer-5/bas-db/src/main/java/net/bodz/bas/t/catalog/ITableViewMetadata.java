@@ -35,6 +35,18 @@ public interface ITableViewMetadata
             return getId().getCompactName(schema.getId());
     }
 
+    TableKey getPrimaryKey();
+
+    default IColumnMetadata[] getPrimaryKeyColumns() {
+        TableKey key = getPrimaryKey();
+        if (key == null)
+            return new IColumnMetadata[0];
+        return key.resolve(this);
+    }
+
+    default void wireUp() {
+    }
+
     @Override
     default void writeObject(IJsonOut out)
             throws IOException, FormatException {
