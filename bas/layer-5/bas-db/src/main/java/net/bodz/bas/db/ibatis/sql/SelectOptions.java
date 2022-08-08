@@ -58,13 +58,21 @@ public class SelectOptions
 
     @Override
     public void readObject(IVariantMap<String> map) {
-        Long _page = map.getLong("page.index");
-        if (_page != null) {
+        Long _pageIndex = map.getLong("page.index");
+        Long _pageNumber = map.getLong("page.number");
+        Integer _pageSize = map.getInt("page.size");
+
+        if (_pageIndex != null || _pageNumber != null || _pageSize != null) {
             page = new Pagination();
-            page.setPage(_page);
-            Integer _pageSize = map.getInt("page.size");
-            if (_pageSize != null)
-                page.setLimit(_pageSize);
+
+            int pageSize = _pageSize == null ? 100 : _pageSize.intValue();
+            page.setLimit(pageSize);
+
+            if (_pageIndex != null)
+                page.setPageIndex(_pageIndex.longValue());
+
+            if (_pageNumber != null)
+                page.setPageNumber(_pageNumber.longValue());
         } else {
             page = null;
         }
