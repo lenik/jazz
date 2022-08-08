@@ -44,9 +44,10 @@ public interface ITableDirectory {
     }
 
     default ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection) {
-        return autoLoadTableFromJDBC(id, false, autoLoadConnection);
+        LoadFromJDBCOptions options = new LoadFromJDBCOptions();
+        return autoLoadTableFromJDBC(id, autoLoadConnection, options);
     }
 
-    ITableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection);
+    ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection, LoadFromJDBCOptions options);
 
 }

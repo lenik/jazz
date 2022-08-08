@@ -138,24 +138,31 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public DefaultTableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection) {
-        return autoLoadTableFromJDBC(id.getTableName(), ignoreCase, autoLoadConnection);
+    public DefaultTableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection,
+            LoadFromJDBCOptions options) {
+        return autoLoadTableFromJDBC(id.getTableName(), autoLoadConnection, options);
     }
 
-    public DefaultTableMetadata autoLoadTableFromJDBC(String name, boolean ignoreCase, Connection cn) {
+    public DefaultTableMetadata autoLoadTableFromJDBC(String name, Connection cn, LoadFromJDBCOptions options) {
         try {
-            return loadTableFromJDBC(name, cn);
+            return loadTableFromJDBC(name, cn, options);
         } catch (SQLException e) {
             throw new LoadException("Failed to load table " + name + ": " + e.getMessage(), e);
         }
     }
 
-    public synchronized DefaultTableMetadata loadTableFromJDBC(String name, Connection cn)
+    public synchronized DefaultTableMetadata loadTableFromJDBC(String name, Connection cn, LoadFromJDBCOptions options)
             throws SQLException {
         DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(name);
         if (table == null) {
             table = newTable(name);
-            table.loadFromJDBC(cn, true);
+            options.enterNew();
+            try {
+                options.setLoadKeys(true);
+                table.loadFromJDBC(cn, options);
+            } finally {
+                options.leave();
+            }
             addTable(table);
         }
         return table;
@@ -254,20 +261,20 @@ public class DefaultSchemaMetadata
         return getOrCreateView(id.tableName);
     }
 
-    public DefaultViewMetadata autoLoadViewFromJDBC(String name, Connection cn) {
+    public DefaultViewMetadata autoLoadViewFromJDBC(String name, Connection cn, LoadFromJDBCOptions options) {
         try {
-            return loadViewFromJDBC(name, cn);
+            return loadViewFromJDBC(name, cn, options);
         } catch (SQLException e) {
             throw new LoadException("Failed to load view " + name + ": " + e.getMessage(), e);
         }
     }
 
-    public synchronized DefaultViewMetadata loadViewFromJDBC(String name, Connection cn)
+    public synchronized DefaultViewMetadata loadViewFromJDBC(String name, Connection cn, LoadFromJDBCOptions options)
             throws SQLException {
         DefaultViewMetadata view = (DefaultViewMetadata) viewMap.get(name);
         if (view == null) {
             view = newView(name);
-            view.loadFromJDBC(cn);
+            view.loadFromJDBC(cn, options);
             addView(view);
         }
         return view;

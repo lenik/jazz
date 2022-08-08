@@ -163,16 +163,18 @@ public class DefaultTableMetadata
         return new TableHandler();
     }
 
-    public void loadFromJDBC(Connection connection, boolean loadKeys)
+    @Override
+    public boolean loadFromJDBC(Connection connection, LoadFromJDBCOptions options)
             throws SQLException {
         logger.debug("Load table from JDBC: " + getId());
-        super.loadFromJDBC(connection);
+        if (!super.loadFromJDBC(connection, options))
+            return false;
 
         DatabaseMetaData dmd = connection.getMetaData();
         ResultSet rs;
 
         // Find out primary key
-        if (loadKeys) {
+        if (options.isLoadKeys()) {
             rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, id.tableName);
             Map<TableId, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
             for (TableKey pk : primaryKeyMap.values())
@@ -190,6 +192,7 @@ public class DefaultTableMetadata
             }
             rs.close();
         }
+        return true;
     }
 
     @Override

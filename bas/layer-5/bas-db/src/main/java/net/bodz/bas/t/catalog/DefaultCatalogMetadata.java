@@ -199,21 +199,22 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public ITableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection) {
+    public ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection,
+            LoadFromJDBCOptions options) {
         if (id == null)
             throw new NullPointerException("id");
         DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
-        return dsm.autoLoadTableFromJDBC(id, ignoreCase, autoLoadConnection);
+        return dsm.autoLoadTableFromJDBC(id, autoLoadConnection, options);
     }
 
-    public DefaultTableMetadata loadTableFromJDBC(TableId id, Connection connection)
+    public DefaultTableMetadata loadTableFromJDBC(TableId id, Connection connection, LoadFromJDBCOptions options)
             throws SQLException {
         if (id == null)
             throw new NullPointerException("id");
         if (connection == null)
             throw new NullPointerException("connection");
         DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
-        return dsm.loadTableFromJDBC(id.tableName, connection);
+        return dsm.loadTableFromJDBC(id.tableName, connection, options);
     }
 
     @Override

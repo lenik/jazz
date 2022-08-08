@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
@@ -138,7 +137,10 @@ public abstract class DefaultTableViewMetadata
         metaDataHandler = handler;
     }
 
-    public void loadFromJDBC(Connection connection)
+    /**
+     * @return <code>false</code> if table isn't found.
+     */
+    public boolean loadFromJDBC(Connection connection, LoadFromJDBCOptions options)
             throws SQLException {
         DatabaseMetaData dmd = connection.getMetaData();
         ResultSet rs;
@@ -153,13 +155,15 @@ public abstract class DefaultTableViewMetadata
         }
         rs.close();
         if (count == 0)
-            throw new NoSuchKeyException("undefined view " + id);
+            return false;
 
         // Parse from columns' metadata
         rs = dmd.getColumns(id.catalogName, id.schemaName, id.tableName, null);
         while (rs.next())
             metaDataHandler.column(rs);
         rs.close();
+
+        return true;
     }
 
     @Override
