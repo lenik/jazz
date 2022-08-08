@@ -50,7 +50,7 @@ public class TableProfiles {
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        m.getIdRange().setEnd(any + 1);
+//        TODO m.getIdRange().setEnd(any + 1);
 
         SelectOptions opts = new SelectOptions();
         opts.order("id", false);

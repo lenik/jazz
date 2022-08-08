@@ -4,7 +4,7 @@ import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 
 public class ViewMapperBuilder
-        extends ViewStuffBuilder {
+        extends _TableViewStuffBuilder {
 
     public ViewMapperBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);

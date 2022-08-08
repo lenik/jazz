@@ -3,7 +3,7 @@ package net.bodz.lily.gen.model.java;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 
 public class ViewMapperTestBuilder
-        extends ViewStuffBuilder {
+        extends _TableViewStuffBuilder {
 
     public ViewMapperTestBuilder(String mainQName, String fragmentQName) {
         super(mainQName, fragmentQName);
