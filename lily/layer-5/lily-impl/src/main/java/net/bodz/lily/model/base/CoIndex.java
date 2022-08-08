@@ -135,6 +135,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
                     target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
                 }
                 break;
+            case "__count__":
+                try {
+                    target = countHandler(q);
+                } catch (RequestHandlerException e) {
+                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
+                }
+                break;
             case "delete":
                 try {
                     target = deleteHandler(q);
@@ -218,6 +225,22 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             throw new RequestHandlerException("Error decode mask of " + maskType, e);
         }
         return tableData;
+    }
+
+    protected JsonWrapper countHandler(IVariantMap<String> q)
+            throws RequestHandlerException {
+        try {
+            M mask = maskType.newInstance();
+            mask.readObject(q);
+
+            long n = requireMapper().count(mask);
+            return JsonWrapper.wrap(n, "data");
+
+        } catch (ReflectiveOperationException e) {
+            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
+        } catch (LoaderException | ParseException e) {
+            throw new RequestHandlerException("Error decode mask of " + maskType, e);
+        }
     }
 
     protected JsonWrapper newHandler(IVariantMap<String> q)
