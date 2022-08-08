@@ -430,6 +430,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
     protected List<T> buildDataList(IVariantMap<String> q, M mask) {
         SelectOptions opts = new SelectOptions();
+        opts.readObject(q);
         List<T> list = requireMapper().filter(mask, opts);
         return list;
     }
