@@ -1,7 +1,6 @@
 package net.bodz.bas.db.ibatis;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Flush;
 import org.apache.ibatis.annotations.Param;
@@ -46,7 +45,7 @@ public interface IMapperTemplate<T, M>
 
     int deleteFor(@Param("m") M mask);
 
-    Map<String, Number> count(@Param("m") M mask);
+    long count(@Param("m") M mask);
 
     @Commit
     @Flush
