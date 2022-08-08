@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.capture.Processes;
@@ -101,6 +103,8 @@ public class LibUpdater {
             }
         }
 
+        Set<String> unusedLibItems = new TreeSet<>(Arrays.asList(libdir.list()));
+
         OrderListing orderListing = new OrderListing();
 
         try {
@@ -127,6 +131,8 @@ public class LibUpdater {
                             orderListing.addDebug(href + "/target/classes");
                         }
                     }
+
+                    unusedLibItems.remove(file.getName());
 
                     File dst = new File(libdir, file.getName());
                     boolean isLatest = false;
@@ -189,6 +195,14 @@ public class LibUpdater {
             }
         } finally {
             orderListing.close();
+        }
+
+        for (String item : unusedLibItems) {
+            if (item.endsWith(".jar")) {
+                File file = new File(libdir, item);
+                System.out.println("Delete unused jar: " + file);
+                file.delete();
+            }
         }
     }
 
