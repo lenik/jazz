@@ -7,9 +7,9 @@ import java.util.Map;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.t.variant.IVarMapForm;
@@ -116,7 +116,6 @@ public class JsonWrapper
     @Override
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        throw new NotImplementedException();
     }
 
     @Override
@@ -127,16 +126,7 @@ public class JsonWrapper
             out.key(key);
         }
 
-        if (obj instanceof IJsonForm) {
-            IJsonForm jso = (IJsonForm) obj;
-            jso.writeObjectBoxed(out);
-        } else {
-            BeanJsonDumper dumper = new BeanJsonDumper(out);
-            dumper.setIncludeNull(includeNull);
-            dumper.setIncludeFalse(includeFalse);
-            dumper.depth(maxDepth);
-            dumper.dumpBoxed(obj);
-        }
+        JsonFn.writeObject(out, obj);
 
         if (key != null)
             out.endObject();
