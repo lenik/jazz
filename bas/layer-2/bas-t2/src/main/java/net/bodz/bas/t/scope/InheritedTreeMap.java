@@ -2,12 +2,12 @@ package net.bodz.bas.t.scope;
 
 import java.util.TreeMap;
 
-public class DerTreeMap<K, V>
-        extends DerSortedMap<K, V> {
+public class InheritedTreeMap<K, V>
+        extends InheritedSortedMap<K, V> {
 
     private static final long serialVersionUID = 437251376108591491L;
 
-    public DerTreeMap(TreeMap<K, V> pMap) {
+    public InheritedTreeMap(TreeMap<K, V> pMap) {
         super(pMap);
     }
 

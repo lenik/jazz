@@ -9,8 +9,8 @@ import java.util.TreeMap;
 import net.bodz.bas.t.iterator.WeaveIterator;
 import net.bodz.bas.t.order.EntryKeyComparator;
 
-public abstract class DerSortedMap<K, V>
-        extends DerMap<K, V>
+public abstract class InheritedSortedMap<K, V>
+        extends InheritedMap<K, V>
         implements SortedMap<K, V> {
 
     private static final long serialVersionUID = -4142737182766452892L;
@@ -18,7 +18,7 @@ public abstract class DerSortedMap<K, V>
     private SortedMap<K, V> psm;
     private SortedMap<K, V> qsm;
 
-    public DerSortedMap(SortedMap<K, V> pMap) {
+    public InheritedSortedMap(SortedMap<K, V> pMap) {
         super(pMap);
         this.qsm = (SortedMap<K, V>) qMap;
     }
