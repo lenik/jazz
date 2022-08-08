@@ -14,7 +14,7 @@ import net.bodz.bas.t.iterator.PrefetchedIterator;
 /**
  * @test DerMapTest
  */
-public abstract class DerMap<K, V>
+public abstract class InheritedMap<K, V>
         extends AbstractMap<K, V>
         implements Derivation<Map<K, V>>, Serializable {
 
@@ -31,13 +31,13 @@ public abstract class DerMap<K, V>
      */
     protected Set<Object> pDels;
 
-    public DerMap(Map<K, V> pMap) {
+    public InheritedMap(Map<K, V> pMap) {
         this.pMap = pMap;
         this.qMap = createMap();
         this.pDels = null;
     }
 
-    public DerMap(DerMap<K, V> pDerMap, boolean reduce) {
+    public InheritedMap(InheritedMap<K, V> pDerMap, boolean reduce) {
         this(reduce ? pDerMap.reduce() : pDerMap);
     }
 
@@ -170,12 +170,12 @@ public abstract class DerMap<K, V>
 
         @Override
         public int size() {
-            return DerMap.this.size();
+            return InheritedMap.this.size();
         }
 
         @Override
         public boolean add(Entry<K, V> e) {
-            DerMap.this.put(e.getKey(), e.getValue());
+            InheritedMap.this.put(e.getKey(), e.getValue());
             return super.add(e);
         }
 
@@ -185,8 +185,8 @@ public abstract class DerMap<K, V>
                 return false;
             Entry<?, ?> e = (Entry<?, ?>) o;
             Object key = e.getKey();
-            if (DerMap.this.containsKey(key)) {
-                DerMap.this.remove(key);
+            if (InheritedMap.this.containsKey(key)) {
+                InheritedMap.this.remove(key);
                 return true;
             }
             return false;
@@ -194,7 +194,7 @@ public abstract class DerMap<K, V>
 
         @Override
         public void clear() {
-            DerMap.this.clear();
+            InheritedMap.this.clear();
         }
 
         @Override

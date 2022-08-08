@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DerMapTest
+public class InheritedMapTest
         extends Assert {
 
     String scan(Map<String, ?> map) {
@@ -43,7 +43,7 @@ public class DerMapTest
         orig.put("size", "big");
         assertEquals("[age=13, color=black, name=lenik, size=big]", scan(orig));
 
-        DerMap<String, String> m1 = new DerHashMap<String, String>(orig);
+        InheritedMap<String, String> m1 = new InheritedHashMap<String, String>(orig);
         Iterator<Entry<String, String>> m1eit = m1.entrySet().iterator();
         assertTrue(m1eit.hasNext());
 
@@ -69,7 +69,7 @@ public class DerMapTest
         m1.put("age", null);
         assertEquals("[age=null, color=red, name=lenik, size=big]", scan(m1));
 
-        DerMap<String, String> m2 = new DerHashMap<String, String>(m1);
+        InheritedMap<String, String> m2 = new InheritedHashMap<String, String>(m1);
         assertEquals("[age=null, color=red, name=lenik, size=big]", scan(m2));
         m2.put("age", "30");
         assertEquals("[age=30, color=red, name=lenik, size=big]", scan(m2));
