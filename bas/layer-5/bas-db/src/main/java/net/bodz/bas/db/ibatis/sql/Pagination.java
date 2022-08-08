@@ -13,6 +13,17 @@ public class Pagination {
         this.offset = offset;
     }
 
+    public long getPage() {
+        if (limit == 0)
+            return 0;
+        else
+            return offset / limit;
+    }
+
+    public void setPage(long page) {
+        offset = page * offset;
+    }
+
     public long getLimit() {
         return limit;
     }

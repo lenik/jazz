@@ -1,5 +1,6 @@
 package net.bodz.bas.t.catalog;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,15 +26,15 @@ public class TableList
         return ids;
     }
 
-    public TableList sortInCreationOrder(ITableDirectory directory) {
-        TableOrderRun run = new TableOrderRun(directory);
+    public TableList sortInCreationOrder(ITableDirectory directory, Connection autoLoadConnection) {
+        TableOrderProc run = new TableOrderProc(directory, autoLoadConnection);
         for (ITableMetadata table : this)
             run.deepFirst(table);
         return new TableList(run.orderedList);
     }
 
-    public TableList sortInDeletionOrder(ITableDirectory directory) {
-        TableList sorted = sortInCreationOrder(directory);
+    public TableList sortInDeletionOrder(ITableDirectory directory, Connection autoLoadConnection) {
+        TableList sorted = sortInCreationOrder(directory, autoLoadConnection);
         Collections.reverse(sorted);
         return sorted;
     }

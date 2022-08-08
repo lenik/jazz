@@ -1,6 +1,14 @@
 package net.bodz.bas.db.ibatis.sql;
 
-public class SelectOptions {
+import java.util.Map;
+
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.t.variant.IVarMapForm;
+import net.bodz.bas.t.variant.IVariantMap;
+
+public class SelectOptions
+        implements
+            IVarMapForm {
 
     private Pagination page;
     private Orders orders;
@@ -46,6 +54,25 @@ public class SelectOptions {
         Order order = new Order(column, ascending);
         orders.add(order);
         return this;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map) {
+        Long _page = map.getLong("page.index");
+        if (_page != null) {
+            page = new Pagination();
+            page.setPage(_page);
+            Integer _pageSize = map.getInt("page.size");
+            if (_pageSize != null)
+                page.setLimit(_pageSize);
+        } else {
+            page = null;
+        }
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
+        throw new NotImplementedException();
     }
 
     public static final SelectOptions FIRST = new SelectOptions(new Pagination(1, 0));

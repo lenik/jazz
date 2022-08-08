@@ -15,12 +15,16 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.map.ListMap;
 
 public class DefaultTableMetadata
         extends DefaultTableViewMetadata
         implements
             ITableMetadata {
+
+    static final Logger logger = LoggerFactory.getLogger(DefaultTableMetadata.class);
 
     TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
@@ -161,6 +165,7 @@ public class DefaultTableMetadata
 
     public void loadFromJDBC(Connection connection, boolean loadKeys)
             throws SQLException {
+        logger.debug("Load table from JDBC: " + getId());
         super.loadFromJDBC(connection);
 
         DatabaseMetaData dmd = connection.getMetaData();
