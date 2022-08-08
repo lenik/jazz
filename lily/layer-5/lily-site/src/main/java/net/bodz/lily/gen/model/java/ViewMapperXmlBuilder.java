@@ -125,6 +125,7 @@ public class ViewMapperXmlBuilder
         out.enter();
         {
             out.println("<include refid=\"objlist_sql\" />");
+            out.println("<include refid=\"co.opts\" />");
             out.leave();
         }
         out.println("</select>");
@@ -142,6 +143,7 @@ public class ViewMapperXmlBuilder
                 out.leave();
             }
             out.println("</where>");
+            out.println("<include refid=\"co.opts\" />");
             out.leave();
         }
         out.println("</select>");
