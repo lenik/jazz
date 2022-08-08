@@ -1,5 +1,8 @@
 package net.bodz.bas.t.variant.conv;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import net.bodz.bas.err.TypeConvertException;
 
 public class StringVarConverter
@@ -24,6 +27,16 @@ public class StringVarConverter
     public String fromString(String in)
             throws TypeConvertException {
         return in;
+    }
+
+    @Override
+    public BigInteger toBigInteger(String value) {
+        return new BigInteger(value);
+    }
+
+    @Override
+    public BigDecimal toBigDecimal(String value) {
+        return new BigDecimal(value);
     }
 
     @Override
