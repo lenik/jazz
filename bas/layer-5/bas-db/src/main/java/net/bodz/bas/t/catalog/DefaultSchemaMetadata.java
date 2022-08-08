@@ -137,7 +137,12 @@ public class DefaultSchemaMetadata
         return getOrCreateTable(id.tableName);
     }
 
-    public DefaultTableMetadata autoloadTableFromJDBC(String name, Connection cn) {
+    @Override
+    public DefaultTableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection) {
+        return autoLoadTableFromJDBC(id.getTableName(), ignoreCase, autoLoadConnection);
+    }
+
+    public DefaultTableMetadata autoLoadTableFromJDBC(String name, boolean ignoreCase, Connection cn) {
         try {
             return loadTableFromJDBC(name, cn);
         } catch (SQLException e) {
@@ -249,7 +254,7 @@ public class DefaultSchemaMetadata
         return getOrCreateView(id.tableName);
     }
 
-    public DefaultTableViewMetadata autoloadViewFromJDBC(String name, Connection cn) {
+    public DefaultViewMetadata autoLoadViewFromJDBC(String name, Connection cn) {
         try {
             return loadViewFromJDBC(name, cn);
         } catch (SQLException e) {
@@ -575,8 +580,10 @@ public class DefaultSchemaMetadata
             metaDataHandler.viewColumnUsage(rs);
         rs.close();
 
+        // creation-order
         for (ITableMetadata table : getTables())
             table.wireUp();
+
         for (IViewMetadata view : getViews())
             view.wireUp();
     }

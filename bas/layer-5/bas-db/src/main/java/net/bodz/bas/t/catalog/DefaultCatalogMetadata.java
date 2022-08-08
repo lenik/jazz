@@ -198,13 +198,22 @@ public class DefaultCatalogMetadata
         return getOrCreateSchema(id.toSchemaId()).getOrCreateTable(id);
     }
 
+    @Override
+    public ITableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection) {
+        if (id == null)
+            throw new NullPointerException("id");
+        DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
+        return dsm.autoLoadTableFromJDBC(id, ignoreCase, autoLoadConnection);
+    }
+
     public DefaultTableMetadata loadTableFromJDBC(TableId id, Connection connection)
             throws SQLException {
         if (id == null)
             throw new NullPointerException("id");
         if (connection == null)
             throw new NullPointerException("connection");
-        return getOrCreateSchema(id.toSchemaId()).loadTableFromJDBC(id.tableName, connection);
+        DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
+        return dsm.loadTableFromJDBC(id.tableName, connection);
     }
 
     @Override

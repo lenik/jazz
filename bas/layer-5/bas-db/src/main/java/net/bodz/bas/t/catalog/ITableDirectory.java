@@ -1,5 +1,7 @@
 package net.bodz.bas.t.catalog;
 
+import java.sql.Connection;
+
 import net.bodz.bas.err.DuplicatedKeyException;
 
 public interface ITableDirectory {
@@ -40,5 +42,11 @@ public interface ITableDirectory {
         else
             return tableList.get(0);
     }
+
+    default ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection) {
+        return autoLoadTableFromJDBC(id, false, autoLoadConnection);
+    }
+
+    ITableMetadata autoLoadTableFromJDBC(TableId id, boolean ignoreCase, Connection autoLoadConnection);
 
 }

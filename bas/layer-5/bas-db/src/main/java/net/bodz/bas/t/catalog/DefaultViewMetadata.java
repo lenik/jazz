@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
@@ -54,11 +53,15 @@ public class DefaultViewMetadata
 
         TableKey primaryKey = null;
         for (ITableUsage usage : tableUsages.values()) {
-            ITableMetadata usedTable = catalog.getTable(usage.getTableId());
-            if (usedTable == null)
-                throw new NoSuchKeyException("No table: " + usage.getTableId());
+            ITableViewMetadata source = catalog.getTable(usage.getTableId());
+            if (source == null) {
+                // source = catalog.getView(usage.getTableId());
+                // throw new NoSuchKeyException("No table: " + usage.getTableId());
+                // TODO checkout views
+                continue;
+            }
 
-            IColumnMetadata[] pkv = usedTable.getPrimaryKeyColumns();
+            IColumnMetadata[] pkv = source.getPrimaryKeyColumns();
             int n = pkv.length;
 
             // ignore empty usage
@@ -70,7 +73,7 @@ public class DefaultViewMetadata
                 String pkColName = pkColumn.getName();
                 IColumnMetadata viewColumn = getColumn(pkColName);
                 if (viewColumn == null) {
-                    viewColumn = getColumn(usedTable.getId().getTableName() + "__" + pkColName);
+                    viewColumn = getColumn(source.getId().getTableName() + "__" + pkColName);
                     if (viewColumn == null)
                         continue;
                 }
