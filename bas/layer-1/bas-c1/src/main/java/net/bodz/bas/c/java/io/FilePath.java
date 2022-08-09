@@ -296,6 +296,34 @@ public class FilePath {
         return new NameExtension(path.substring(0, dot), path.substring(dot + 1));
     }
 
+    public static File alterDirectory(File file, File newDir) {
+        String name = file.getName();
+        if (newDir == null)
+            return new File(name);
+        else
+            return new File(newDir, name);
+    }
+
+    public static File alterName(File file, String newName) {
+        File dir = file.getParentFile();
+        if (dir == null)
+            return new File(newName);
+        else
+            return new File(dir, newName);
+    }
+
+    /**
+     * @param newExtension
+     *            should contain the dot(.).
+     */
+    public static File alterExtension(File file, String newExtension) {
+        File dir = file.getParentFile();
+        String name = file.getName();
+        String nameWoExt = FilePath.stripExtension(name);
+        String newName = nameWoExt + newExtension;
+        return dir == null ? new File(newName) : new File(dir, newName);
+    }
+
     public static String toUnixStyle(String path) {
         if (path == null)
             return null;
