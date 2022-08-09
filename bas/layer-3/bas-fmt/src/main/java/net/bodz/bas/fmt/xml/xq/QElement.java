@@ -62,6 +62,38 @@ public class QElement
             return new MutableVariant(attribute);
     }
 
+    @Override
+    public IElement getChild(String tagName) {
+        NodeList nodeList = getChildNodes();
+        int n = nodeList.getLength();
+        for (int i = 0; i < n; i++) {
+            Node item = nodeList.item(i);
+            if (item.getNodeType() == Node.ELEMENT_NODE) {
+                Element child = (Element) item;
+                if (child.getTagName().equals(tagName))
+                    return new QElement(child);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public IElementMap getChildrenMap() {
+        QElementMap map = new QElementMap();
+        NodeList nodeList = getChildNodes();
+        int n = nodeList.getLength();
+        for (int i = 0; i < n; i++) {
+            Node item = nodeList.item(i);
+            if (item.getNodeType() == Node.ELEMENT_NODE) {
+                Element child = (Element) item;
+                String tagName = child.getTagName();
+                if (!map.containsKey(tagName))
+                    map.put(tagName, new QElement(child));
+            }
+        }
+        return map;
+    }
+
     /** ⇱ Implementation Of {@link Element}. */
     /* _____________________________ */static section.iface __ELEMENT__;
 
