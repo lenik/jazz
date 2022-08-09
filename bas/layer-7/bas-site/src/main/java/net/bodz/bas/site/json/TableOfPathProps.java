@@ -158,7 +158,8 @@ public class TableOfPathProps
             throws LoaderException {
         String columns = map.getString("columns");
         if (columns == null)
-            throw new IllegalArgumentException("Expected request parameter columns.");
+            // throw new IllegalArgumentException("Expected request parameter columns.");
+            columns="*";
         try {
             parsePropertyPathsAsColumns(columns);
         } catch (Exception e) {
