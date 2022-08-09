@@ -167,7 +167,7 @@ public class ViewMapperXmlBuilder
     }
 
     void select_count(ITableViewMetadata table) {
-        out.println("<select id=\"count\" resultType=\"hashmap\">");
+        out.println("<select id=\"count\" resultType=\"long\">");
         out.enter();
         {
             out.println("select count(*) \"rows\" from " + table.getCompactName());
