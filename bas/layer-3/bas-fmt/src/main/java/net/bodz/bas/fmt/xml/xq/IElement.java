@@ -11,4 +11,8 @@ public interface IElement
 
     IVariant getAttributeVar(String name);
 
+    IElement getChild(String tagName);
+
+    IElementMap getChildrenMap();
+
 }
