@@ -70,6 +70,8 @@ public class BeanProperty
 
     @Override
     public Class<?> getPropertyType() {
+        // XXX Generic not supported.
+        // propertyDescriptor.getReadMethod();
         return propertyDescriptor.getPropertyType();
     }
 
