@@ -1,19 +1,12 @@
 package net.bodz.lily.geo.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.geo.Zone;
 import net.bodz.lily.geo.ZoneCategory;
 import net.bodz.lily.geo.ZoneSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 
 public class ZoneMapperTest
         extends AbstractMapperTest<Zone, ZoneMask, ZoneMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public Zone buildSample() {

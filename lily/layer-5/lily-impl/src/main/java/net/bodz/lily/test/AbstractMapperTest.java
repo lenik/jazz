@@ -43,7 +43,7 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         DataHub dataContexts = DataHub.getPreferredHub();
         if (dataContexts == null)
             throw new IllegalConfigException("No data contexts installed.");
-        return dataContexts.getMain();
+        return dataContexts.getTest();
     }
 
     public abstract T buildSample()

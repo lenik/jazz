@@ -1,8 +1,6 @@
 package net.bodz.violet.edu.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.edu.TestApply;
 import net.bodz.violet.edu.TestApplyItem;
 import net.bodz.violet.edu.TestApplyItemSamples;
@@ -10,11 +8,6 @@ import net.bodz.violet.edu.TestQuestion;
 
 public class TestApplyItemMapperTest
         extends AbstractMapperTest<TestApplyItem, TestApplyItemMask, TestApplyItemMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public TestApplyItem buildSample() {

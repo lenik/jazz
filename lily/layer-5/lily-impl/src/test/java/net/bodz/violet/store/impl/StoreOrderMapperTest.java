@@ -1,6 +1,5 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
@@ -10,7 +9,6 @@ import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.impl.PlanMapper;
 import net.bodz.violet.store.StoreCategory;
@@ -20,11 +18,6 @@ import net.bodz.violet.store.StorePhase;
 
 public class StoreOrderMapperTest
         extends AbstractMapperTest<StoreOrder, StoreOrderMask, StoreOrderMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public StoreOrder buildSample() {
