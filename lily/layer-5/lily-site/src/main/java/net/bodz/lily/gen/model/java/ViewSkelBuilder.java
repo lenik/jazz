@@ -15,7 +15,7 @@ public class ViewSkelBuilder
 
     @Override
     protected void buildClassBody(ITableViewMetadata table) {
-        String stuffName = Naming.stuff(mainName);
+        String stuffName = NamingUtil.stuff(mainName);
         TableId qName = table.getId();
 
         out.print(imports.a(Table.class) + "(");

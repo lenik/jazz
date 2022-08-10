@@ -12,7 +12,7 @@ public class ViewMaskSkelBuilder
 
     @Override
     protected void buildClassBody(ITableViewMetadata table) {
-        String maskStuffName = Naming.maskStuff(mainName);
+        String maskStuffName = NamingUtil.maskStuff(mainName);
         out.printf("public class %s\n", fragmentName);
         out.printf("        extends %s {\n", //
                 maskStuffName);

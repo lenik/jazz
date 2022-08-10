@@ -12,7 +12,7 @@ public class TableIdBuilder
         extends TableStuffBuilder {
 
     public TableIdBuilder(String mainQName) {
-        super(mainQName, Naming.id(mainQName));
+        super(mainQName, NamingUtil.id(mainQName));
     }
 
     @Override
@@ -108,7 +108,7 @@ public class TableIdBuilder
         out.println();
 
         // from entity constructor
-        out.printf("public %s(%s o) {\n", fragmentName, Naming.stuff(mainName));
+        out.printf("public %s(%s o) {\n", fragmentName, NamingUtil.stuff(mainName));
         out.enter();
         {
             for (IColumnMetadata k : kv) {
