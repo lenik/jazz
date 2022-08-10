@@ -8,7 +8,6 @@ import java.util.ServiceLoader;
 import java.util.TreeMap;
 
 import net.bodz.bas.db.jdbc.ConnectOptions;
-import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.decl.Namespace;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.t.order.IPriority;
@@ -19,7 +18,6 @@ import net.bodz.bas.t.order.PriorityComparator;
  */
 @Priority
 @Namespace
-@IndexedType(includeAbstract = false)
 public abstract class DataHub
         implements
             IDataHub,

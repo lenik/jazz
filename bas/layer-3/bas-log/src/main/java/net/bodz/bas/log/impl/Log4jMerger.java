@@ -58,7 +58,8 @@ public class Log4jMerger
 
     @Override
     public void setupBuilder(ConfigurationBuilder<? extends Configuration> builder) {
-        for (URL resource : resources) {
+//        for (URL resource : resources)
+        {
 //          new PropertiesConfigurationBuilder()//
 //                  .setConfigurationSource(source)//
 //                  .setRootProperties(properties)//
