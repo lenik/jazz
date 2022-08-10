@@ -5,12 +5,18 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Properties;
 
+import javax.xml.stream.XMLStreamException;
+
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.xml.IXmlForm;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 
@@ -18,7 +24,8 @@ public class ConnectOptions
         implements
             Serializable,
             Cloneable,
-            IJsonForm {
+            IJsonForm,
+            IXmlForm {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,10 +39,10 @@ public class ConnectOptions
     private String database;
     private String userName;
     private String password;
-    private Properties info;
+    private Properties properties;
 
     public ConnectOptions() {
-        info = new Properties();
+        properties = new Properties();
     }
 
     @Override
@@ -169,7 +176,7 @@ public class ConnectOptions
         int result = 1;
         result = prime * result + ((database == null) ? 0 : database.hashCode());
         result = prime * result + ((hostName == null) ? 0 : hostName.hashCode());
-        result = prime * result + ((info == null) ? 0 : info.hashCode());
+        result = prime * result + ((properties == null) ? 0 : properties.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + port;
         result = prime * result + ((rootDir == null) ? 0 : rootDir.hashCode());
@@ -197,25 +204,35 @@ public class ConnectOptions
         return new DataContext(this);
     }
 
+    public static final String K_TYPE = "type";
+    public static final String K_URL = "url";
+    public static final String K_HOSTNAME = "hostName";
+    public static final String K_PORT = "port";
+    public static final String K_ROOTDIR = "rootDir";
+    public static final String K_DATABASE = "database";
+    public static final String K_USERNAME = "userName";
+    public static final String K_PASSWORD = "password";
+    public static final String K_INFO = "properties";
+
     @Override
     public void readObject(JsonObject o)
             throws ParseException {
-        type = o.getVar(DatabaseType.class, "type");
-        url = o.getString("url", url);
-        hostName = o.getString("hostName", hostName);
-        port = o.getInt("port", port);
-        rootDir = o.getFile("rootDir", rootDir);
-        database = o.getString("database", database);
-        userName = o.getString("userName", userName);
-        password = o.getString("password", password);
+        type = o.getVar(DatabaseType.class, K_TYPE);
+        url = o.getString(K_URL, url);
+        hostName = o.getString(K_HOSTNAME, hostName);
+        port = o.getInt(K_PORT, port);
+        rootDir = o.getFile(K_ROOTDIR, rootDir);
+        database = o.getString(K_DATABASE, database);
+        userName = o.getString(K_USERNAME, userName);
+        password = o.getString(K_PASSWORD, password);
 
-        JsonObject oInfo = o.getJsonObject("info");
+        JsonObject oInfo = o.getJsonObject(K_INFO);
         if (oInfo != null) {
-            if (info == null)
-                info = new Properties();
+            if (properties == null)
+                properties = new Properties();
             for (String k : oInfo.keySet()) {
                 String v = oInfo.getString(k);
-                info.setProperty(k, v);
+                properties.setProperty(k, v);
             }
         }
     }
@@ -223,22 +240,69 @@ public class ConnectOptions
     @Override
     public void writeObject(IJsonOut out)
             throws IOException, FormatException {
-        out.entry("type", type);
-        out.entry("url", url);
-        out.entry("hostName", hostName);
-        out.entry("port", port);
-        out.entry("rootDir", rootDir);
-        out.entry("database", database);
-        out.entry("userName", userName);
-        out.entry("password", password);
-        if (info != null) {
-            out.key("info");
+        out.entry(K_TYPE, type);
+        out.entry(K_URL, url);
+        out.entry(K_HOSTNAME, hostName);
+        out.entry(K_PORT, port);
+        out.entry(K_ROOTDIR, rootDir);
+        out.entry(K_DATABASE, database);
+        out.entry(K_USERNAME, userName);
+        out.entry(K_PASSWORD, password);
+        if (properties != null && !properties.isEmpty()) {
+            out.key(K_INFO);
             out.object();
-            for (String name : info.stringPropertyNames()) {
-                String val = info.getProperty(name);
+            for (String name : properties.stringPropertyNames()) {
+                String val = properties.getProperty(name);
                 out.entry(name, val);
             }
             out.endObject();
+        }
+    }
+
+    @Override
+    public void readObject(IElement element)
+            throws ParseException, LoaderException {
+        String typeName = element.getAttribute(K_TYPE);
+        type = typeName == null ? null : DatabaseType.meta.ofName(typeName);
+        url = element.getAttribute(K_URL);
+        hostName = element.getAttribute(K_HOSTNAME);
+        port = element.a(K_PORT).getInt(0);
+        String rootDirPath = element.getString(K_ROOTDIR);
+        rootDir = new File(rootDirPath);
+        database = element.getAttribute(K_DATABASE);
+        userName = element.getAttribute(K_USERNAME);
+        password = element.getAttribute(K_PASSWORD);
+
+        IElement x_info = element.getChild(K_INFO);
+        if (x_info != null) {
+            if (properties == null)
+                properties = new Properties();
+            for (IElement x_prop : x_info.children()) {
+                String k = x_prop.getTagName();
+                String v = x_prop.getTextContent();
+                properties.setProperty(k, v);
+            }
+        }
+    }
+
+    @Override
+    public void writeObject(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        out.element(K_TYPE, type);
+        out.element(K_URL, url);
+        out.element(K_HOSTNAME, hostName);
+        out.element(K_PORT, port);
+        out.element(K_ROOTDIR, rootDir);
+        out.element(K_DATABASE, database);
+        out.element(K_USERNAME, userName);
+        out.element(K_PASSWORD, password);
+        if (properties != null && !properties.isEmpty()) {
+            out.beginElement(K_INFO);
+            for (String name : properties.stringPropertyNames()) {
+                String val = properties.getProperty(name);
+                out.element(name, val);
+            }
+            out.endElement();
         }
     }
 
