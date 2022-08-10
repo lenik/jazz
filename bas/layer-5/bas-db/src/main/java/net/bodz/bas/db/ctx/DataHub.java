@@ -22,6 +22,7 @@ import net.bodz.bas.t.order.PriorityComparator;
 @IndexedType(includeAbstract = false)
 public abstract class DataHub
         implements
+            IDataHub,
             IPriority {
 
     int priority = Priority.DEFAULT;
@@ -36,8 +37,6 @@ public abstract class DataHub
     public int getPriority() {
         return priority;
     }
-
-    public abstract DataContext getMain();
 
     protected static final Map<String, ConnectOptions> nameMap = new TreeMap<>();
 
