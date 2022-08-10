@@ -1,2 +1,2 @@
-net.bodz.bas.servlet.HttpModFilter
+net.bodz.bas.servlet.FileSessionSupportFilter
 net.bodz.bas.servlet.ctx.CurrentHttpService
