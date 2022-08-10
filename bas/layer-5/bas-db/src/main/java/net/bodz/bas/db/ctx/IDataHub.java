@@ -2,12 +2,14 @@ package net.bodz.bas.db.ctx;
 
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.err.NoSuchKeyException;
+import net.bodz.bas.meta.codegen.IndexedType;
 
+@IndexedType(includeAbstract = false)
 public interface IDataHub {
 
-    String K_MAIN = "main";
-    String K_TEST = "test";
-    String K_TEMPLATE = "template";
+    String ALIAS_MAIN = "main";
+    String ALIAS_TEST = "test";
+    String ALIAS_TEMPLATE = "template";
 
     /**
      * @return <code>null</code> if not defined.
@@ -29,16 +31,33 @@ public interface IDataHub {
      */
     DataContext requireDataContext(String key);
 
+    /**
+     * @return <code>null</code> if alias isn't defined.
+     */
+    default String getKey(String alias) {
+        return alias;
+    }
+
+    /**
+     * @throws NoSuchKeyException
+     */
+    default String requireKey(String alias) {
+        return alias;
+    }
+
     default DataContext getMain() {
-        return requireDataContext(K_MAIN);
+        String mainKey = requireKey(ALIAS_MAIN);
+        return requireDataContext(mainKey);
     }
 
     default DataContext getTest() {
-        return requireDataContext(K_TEST);
+        String testKey = requireKey(ALIAS_TEST);
+        return requireDataContext(testKey);
     }
 
     default ConnectOptions getTemplate() {
-        return requireConnectOptions(K_TEMPLATE);
+        String templateKey = requireKey(ALIAS_TEMPLATE);
+        return requireConnectOptions(templateKey);
     }
 
 }
