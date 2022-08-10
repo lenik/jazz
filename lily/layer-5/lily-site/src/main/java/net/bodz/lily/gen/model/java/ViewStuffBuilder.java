@@ -73,7 +73,7 @@ public class ViewStuffBuilder
             idType = imports.simple(kBoxed);
             break;
         default:
-            idType = Naming.id(mainName);
+            idType = NamingUtil.id(mainName);
         }
 
         super.buildClassBody(tableView, this);

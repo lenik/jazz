@@ -1,12 +1,17 @@
 package net.bodz.lily.gen.model.java;
 
-public class Naming {
+public class NamingUtil {
 
     public static final String ID_SUFFIX = "_Id";
+    public static final String ID_ACC_SUFFIX = "_Id";
 
     /** _Foo_stuff */
     public static String stuff(String name) {
         return "_" + name + "_stuff";
+    }
+
+    public static String id_iface(String name) {
+        return "I" + name + ID_SUFFIX;
     }
 
     public static String id(String name) {

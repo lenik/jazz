@@ -66,55 +66,91 @@ public class MakeSourceRun {
             throws IOException {
         ITableMetadata table = (ITableMetadata) tableView;
 
-        ITreeOut out = open(stuffDir, Naming.stuff(simpleName) + ".java", true);
-        new TableStuffBuilder(className, packageName + "." + Naming.stuff(simpleName)).build(out, table);
+        // _Person_stuff.java
+        FragmentConfig fc = new FragmentConfig();
+        fc.dir = stuffDir;
+        fc.baseName = NamingUtil.stuff(simpleName) + ".java";
+        fc.fragmentName = packageName + "." + NamingUtil.stuff(simpleName);
+        ITreeOut out = fc.open(true);
+        new TableStuffBuilder(className, fc.fragmentName).build(out, table);
         out.close();
 
+        // Person_Id.java
         IColumnMetadata[] pkv = table.getPrimaryKeyColumns();
         if (pkv.length > 1) {
-            out = open(stuffDir, Naming.id(simpleName) + ".java", true);
+            fc.dir = stuffDir;
+            fc.baseName = NamingUtil.id_iface(simpleName) + ".java";
+            out = fc.open(true);
+            new TableIdBuilder(className).build(out, table);
+            out.close();
+
+            fc.dir = stuffDir;
+            fc.baseName = NamingUtil.id(simpleName) + ".java";
+            out = fc.open(true);
             new TableIdBuilder(className).build(out, table);
             out.close();
         }
 
-        if ((out = open(skelJavaDir, simpleName + ".java", false)) != null)
+        fc.dir = skelJavaDir;
+        fc.baseName = simpleName + ".java";
+        if ((out = fc.open(false)) != null)
             new TableSkelBuilder(className, className).build(out, table);
 
-        out = open(stuffDir, "impl/" + Naming.maskStuff(simpleName) + ".java", true);
-        new TableMaskStuffBuilder(className, implPackageName + "." + Naming.maskStuff(simpleName)).build(out, table);
+        fc.dir = stuffDir;
+        fc.baseName = "impl/" + NamingUtil.maskStuff(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.maskStuff(simpleName);
+        out = fc.open(true);
+        new TableMaskStuffBuilder(className, fc.fragmentName).build(out, table);
 
-        if ((out = open(skelJavaDir, "impl/" + Naming.mask(simpleName) + ".java", false)) != null)
-            new TableMaskSkelBuilder(className, implPackageName + "." + Naming.mask(simpleName)).build(out, table);
+        fc.dir = skelJavaDir;
+        fc.baseName = "impl/" + NamingUtil.mask(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.mask(simpleName);
+        if ((out = fc.open(false)) != null)
+            new TableMaskSkelBuilder(className, fc.fragmentName).build(out, table);
 
-        out = open(stuffDir, "impl/" + Naming.index(simpleName) + ".java", true);
-        new TableIndexBuilder(className, implPackageName + "." + Naming.index(simpleName)).build(out, table);
+        fc.dir = stuffDir;
+        fc.baseName = "impl/" + NamingUtil.index(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.index(simpleName);
+        out = fc.open(true);
+        new TableIndexBuilder(className, fc.fragmentName).build(out, table);
 
-        if ((out = open(skelResourcesDir, "impl/" + Naming.mapper(simpleName) + ".xml", false)) != null)
-            new TableMapperXmlBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, table);
+        fc.dir = skelResourcesDir;
+        fc.baseName = "impl/" + NamingUtil.mapper(simpleName) + ".xml";
+        fc.fragmentName = implPackageName + "." + NamingUtil.mapper(simpleName);
+        if ((out = fc.open(false)) != null)
+            new TableMapperXmlBuilder(className, fc.fragmentName).build(out, table);
 
-        if ((out = open(skelJavaDir, "impl/" + Naming.mapper(simpleName) + ".java", false)) != null)
-            new TableMapperBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, table);
+        fc.dir = skelJavaDir;
+        fc.baseName = "impl/" + NamingUtil.mapper(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.mapper(simpleName);
+        if ((out = fc.open(false)) != null)
+            new TableMapperBuilder(className, fc.fragmentName).build(out, table);
 
-        out = open(stuffDir, "impl/" + Naming.mapperTest(simpleName) + ".java", true);
-        new TableMapperTestBuilder(className, implPackageName + "." + Naming.mapperTest(simpleName)).build(out, table);
+        fc.dir = stuffDir;
+        fc.baseName = "impl/" + NamingUtil.mapperTest(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.mapperTest(simpleName);
+        out = fc.open(true);
+        new TableMapperTestBuilder(className, fc.fragmentName).build(out, table);
 
         // samples content can be changed, modify it will cause unnecessary VCS commits.
-        if ((out = open(stuffDir, "impl/" + Naming.samples(simpleName) + ".java", false)) != null)
-            new TableSamplesStuffBuilder(className, implPackageName + "." + Naming.samples(simpleName)).build(out,
-                    table);
+        fc.dir = stuffDir;
+        fc.baseName = "impl/" + NamingUtil.samples(simpleName) + ".java";
+        fc.fragmentName = implPackageName + "." + NamingUtil.samples(simpleName);
+        if ((out = fc.open(false)) != null)
+            new TableSamplesStuffBuilder(className, fc.fragmentName).build(out, table);
     }
 
     public void makeView()
             throws IOException {
         IViewMetadata view = (IViewMetadata) tableView;
 
-        ITreeOut out = open(stuffDir, Naming.stuff(simpleName) + ".java", true);
-        new ViewStuffBuilder(className, packageName + "." + Naming.stuff(simpleName)).build(out, tableView);
+        ITreeOut out = open(stuffDir, NamingUtil.stuff(simpleName) + ".java", true);
+        new ViewStuffBuilder(className, packageName + "." + NamingUtil.stuff(simpleName)).build(out, tableView);
         out.close();
 
         IColumnMetadata[] pkv = view.getPrimaryKeyColumns();
         if (pkv.length > 1) {
-            out = open(stuffDir, Naming.id(simpleName) + ".java", true);
+            out = open(stuffDir, NamingUtil.id(simpleName) + ".java", true);
             new TableIdBuilder(className).build(out, view);
             out.close();
         }
@@ -122,20 +158,20 @@ public class MakeSourceRun {
         if ((out = open(skelJavaDir, simpleName + ".java", false)) != null)
             new ViewSkelBuilder(className, className).build(out, view);
 
-        out = open(stuffDir, "impl/" + Naming.maskStuff(simpleName) + ".java", true);
-        new ViewMaskStuffBuilder(className, implPackageName + "." + Naming.maskStuff(simpleName)).build(out, view);
+        out = open(stuffDir, "impl/" + NamingUtil.maskStuff(simpleName) + ".java", true);
+        new ViewMaskStuffBuilder(className, implPackageName + "." + NamingUtil.maskStuff(simpleName)).build(out, view);
 
-        if ((out = open(skelJavaDir, "impl/" + Naming.mask(simpleName) + ".java", false)) != null)
-            new ViewMaskSkelBuilder(className, implPackageName + "." + Naming.mask(simpleName)).build(out, view);
+        if ((out = open(skelJavaDir, "impl/" + NamingUtil.mask(simpleName) + ".java", false)) != null)
+            new ViewMaskSkelBuilder(className, implPackageName + "." + NamingUtil.mask(simpleName)).build(out, view);
 
-        out = open(stuffDir, "impl/" + Naming.index(simpleName) + ".java", true);
-        new ViewIndexBuilder(className, implPackageName + "." + Naming.index(simpleName)).build(out, view);
+        out = open(stuffDir, "impl/" + NamingUtil.index(simpleName) + ".java", true);
+        new ViewIndexBuilder(className, implPackageName + "." + NamingUtil.index(simpleName)).build(out, view);
 
-        if ((out = open(skelResourcesDir, "impl/" + Naming.mapper(simpleName) + ".xml", false)) != null)
-            new ViewMapperXmlBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, view);
+        if ((out = open(skelResourcesDir, "impl/" + NamingUtil.mapper(simpleName) + ".xml", false)) != null)
+            new ViewMapperXmlBuilder(className, implPackageName + "." + NamingUtil.mapper(simpleName)).build(out, view);
 
-        if ((out = open(skelJavaDir, "impl/" + Naming.mapper(simpleName) + ".java", false)) != null)
-            new ViewMapperBuilder(className, implPackageName + "." + Naming.mapper(simpleName)).build(out, view);
+        if ((out = open(skelJavaDir, "impl/" + NamingUtil.mapper(simpleName) + ".java", false)) != null)
+            new ViewMapperBuilder(className, implPackageName + "." + NamingUtil.mapper(simpleName)).build(out, view);
 
 //        out = open(stuffDir, "impl/" + Naming.mapperTest(simpleName) + ".java", true);
 //        new ViewMapperTestBuilder(className, implPackageName + "." + Naming.mapperTest(simpleName)).build(out,

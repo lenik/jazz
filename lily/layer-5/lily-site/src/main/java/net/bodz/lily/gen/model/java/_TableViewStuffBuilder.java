@@ -1,12 +1,7 @@
 package net.bodz.lily.gen.model.java;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -74,7 +69,7 @@ public class _TableViewStuffBuilder
             }
 
             out.println();
-            initNotNulls(table);
+            Commons.initNotNulls(out, table);
 
             out.leave();
         }
@@ -172,29 +167,17 @@ public class _TableViewStuffBuilder
         String GET = Boolean.class == type ? "is" : "get";
         String ColName = Strings.ucfirst(colName);
 
-        out.printf("public %s %s%s() {\n", //
+        out.printf("public %s %s%s();\n", //
                 imports.simple(type), //
                 GET, ColName);
-        out.printf("    return %s;\n", colName);
-        out.println("}");
         out.println();
 
         if (description != null && !description.isEmpty()) {
             out.println("/** " + description + " */");
         }
 
-        out.printf("public void set%s(%s%s value) {\n", ColName, //
+        out.printf("public void set%s(%s%s value);\n", ColName, //
                 (notNull && !type.isPrimitive()) ? imports.a(NotNull.class) + " " : "", imports.simple(type));
-        out.printf("    this.%s = value;\n", colName);
-        out.println("}");
-    }
-
-    static Map<Class<?>, String> initVals = new HashMap<>();
-    static {
-        initVals.put(String.class, "\"\"");
-        initVals.put(BigDecimal.class, "BigDecimal.ZERO");
-        initVals.put(BigInteger.class, "BigInteger.ZERO");
-        initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis()");
     }
 
     protected void N_consts(ITableViewMetadata table, Boolean wantPrimaryKey) {
@@ -219,29 +202,6 @@ public class _TableViewStuffBuilder
             for (String def : defs)
                 out.println(def);
         }
-    }
-
-    private void initNotNulls(ITableViewMetadata table) {
-        out.println("public void initNotNulls() {");
-        out.enter();
-        for (IColumnMetadata column : table.getColumns()) {
-            if (column.isPrimaryKey())
-                continue;
-
-            if (column.isNullable())
-                continue;
-
-            Class<?> type = column.getType();
-            String initVal = initVals.get(type);
-            if (initVal == null)
-                continue;
-
-            String col_name = column.getName();
-            String colName = StringId.UL.toCamel(col_name);
-            out.println("this." + colName + " = " + initVal + ";");
-        }
-        out.leave();
-        out.println("}");
     }
 
 }
