@@ -1,19 +1,12 @@
 package net.bodz.lily.schema.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.PhaseDef;
 import net.bodz.lily.schema.PhaseDefSamples;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 
 public class PhaseDefMapperTest
         extends AbstractMapperTest<PhaseDef, PhaseDefMask, PhaseDefMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public PhaseDef buildSample() {

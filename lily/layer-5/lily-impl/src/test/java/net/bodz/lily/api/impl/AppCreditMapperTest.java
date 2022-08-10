@@ -1,20 +1,13 @@
 package net.bodz.lily.api.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.api.Api;
 import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppCredit;
 import net.bodz.lily.api.AppCreditSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 
 public class AppCreditMapperTest
         extends AbstractMapperTest<AppCredit, AppCreditMask, AppCreditMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public AppCredit buildSample() {

@@ -1,12 +1,10 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.impl.ArtifactCategoryMapper;
@@ -17,11 +15,6 @@ import net.bodz.violet.store.RegionSamples;
 
 public class RegionMapperTest
         extends AbstractMapperTest<Region, RegionMask, RegionMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public Region buildSample() {

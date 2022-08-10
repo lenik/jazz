@@ -1,10 +1,8 @@
 package net.bodz.violet.plan.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryCategory;
 import net.bodz.violet.plan.DiaryPhase;
@@ -12,11 +10,6 @@ import net.bodz.violet.plan.DiarySamples;
 
 public class DiaryMapperTest
         extends AbstractMapperTest<Diary, DiaryMask, DiaryMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public Diary buildSample() {

@@ -1,19 +1,12 @@
 package net.bodz.violet.issue.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.issue.Issue;
 import net.bodz.violet.issue.IssueLog;
 import net.bodz.violet.issue.IssueLogSamples;
 
 public class IssueLogMapperTest
         extends AbstractMapperTest<IssueLog, IssueLogMask, IssueLogMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public IssueLog buildSample() {

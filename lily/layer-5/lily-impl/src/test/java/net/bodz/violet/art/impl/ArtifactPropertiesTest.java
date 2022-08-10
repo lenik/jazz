@@ -2,19 +2,12 @@ package net.bodz.violet.art.impl;
 
 import java.util.Arrays;
 
-import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactProperties;
 
 public class ArtifactPropertiesTest
         extends DatabaseTester {
-
-    @Override
-    protected void config(ConnectOptions connOpts) {
-        super.config(connOpts);
-        connOpts.setDatabase("farm");
-    }
 
     @Override
     public void main()

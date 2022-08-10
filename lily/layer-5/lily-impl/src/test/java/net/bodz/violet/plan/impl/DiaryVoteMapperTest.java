@@ -1,21 +1,14 @@
 package net.bodz.violet.plan.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryVote;
 import net.bodz.violet.plan.DiaryVoteSamples;
 
 public class DiaryVoteMapperTest
         extends AbstractMapperTest<DiaryVote, DiaryVoteMask, DiaryVoteMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public DiaryVote buildSample() {

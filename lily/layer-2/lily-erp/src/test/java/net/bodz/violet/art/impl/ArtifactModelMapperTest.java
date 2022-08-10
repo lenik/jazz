@@ -1,19 +1,12 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactModel;
 import net.bodz.violet.art.ArtifactModelSamples;
 
 public class ArtifactModelMapperTest
         extends AbstractMapperTest<ArtifactModel, ArtifactModelMask, ArtifactModelMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public ArtifactModel buildSample() {

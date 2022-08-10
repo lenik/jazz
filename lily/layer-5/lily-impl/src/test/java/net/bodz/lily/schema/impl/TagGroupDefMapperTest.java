@@ -1,19 +1,12 @@
 package net.bodz.lily.schema.impl;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.schema.TagGroupDef;
 import net.bodz.lily.schema.TagGroupDefSamples;
 import net.bodz.lily.test.AbstractMapperTest;
-import net.bodz.violet.TestData;
 
 public class TagGroupDefMapperTest
         extends AbstractMapperTest<TagGroupDef, TagGroupDefMask, TagGroupDefMapper> {
-
-    @Override
-    public DataContext getContext() {
-        return TestData.getDefaultContext();
-    }
 
     @Override
     public TagGroupDef buildSample() {

@@ -1,6 +1,7 @@
 package net.bodz.violet;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.test.AbstractMapperTest;
@@ -14,7 +15,7 @@ public abstract class VioletMapperTest<T extends CoObject, M, mapper_t extends I
 
     @Override
     protected DataContext getContext() {
-        return TestData.getDefaultContext();
+        return DataHub.getPreferredHub().getTest();
     }
 
 }
