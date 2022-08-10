@@ -1,9 +1,9 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -229,6 +229,61 @@ public class JsonFn {
             return;
         }
         out.value(o);
+    }
+
+    public static <T extends IJsonForm> T load(T obj, String fileName)
+            throws IOException, ParseException {
+        File file = new File(fileName);
+        return load(obj, file);
+    }
+
+    public static <T extends IJsonForm> T load(T obj, File file)
+            throws IOException, ParseException {
+        try (FileInputStream in = new FileInputStream(file)) {
+            load(obj, in, "utf-8");
+        }
+        return obj;
+    }
+
+    public static <T extends IJsonForm> T load(T obj, InputStream in, String encoding)
+            throws IOException, ParseException {
+        Charset charset = Charset.forName(encoding);
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        byte[] block = new byte[4096];
+        int cb;
+        while ((cb = in.read(block)) != -1) {
+            buf.write(block, 0, cb);
+        }
+        byte[] byteArray = buf.toByteArray();
+        String json = new String(byteArray, charset);
+        JsonObject root = JsonFn.parseObject(json);
+        JsonFn.readObject(obj, root);
+        return obj;
+    }
+
+    public static void save(IJsonForm obj, String file)
+            throws IOException, FormatException {
+        save(obj, file, "utf-8");
+    }
+
+    public static void save(IJsonForm obj, File file)
+            throws IOException, FormatException {
+        save(obj, file, "utf-8");
+    }
+
+    public static void save(IJsonForm obj, String file, String encoding)
+            throws IOException, FormatException {
+        save(obj, new File(file), encoding);
+    }
+
+    public static void save(IJsonForm obj, File file, String encoding)
+            throws IOException, FormatException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            Writer writer = new OutputStreamWriter(fos, encoding);
+            IJsonOut out = new JsonWriter(writer);
+            obj.writeObjectBoxed(out);
+            writer.flush();
+        }
     }
 
 }
