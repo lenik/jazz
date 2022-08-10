@@ -25,6 +25,8 @@ import net.bodz.bas.site.org.Sitemap;
 import net.bodz.bas.site.org.SitemapGenerator;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.project.IJazzModule;
+import net.bodz.bas.t.project.IJazzProject;
+import net.bodz.bas.t.project.JazzProjects;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
 
@@ -45,7 +47,8 @@ public abstract class BasicSite
     protected final ServiceMap serviceMap;
 
     public BasicSite() {
-        for (IJazzModule module : JazzBasProject.getInstance().getModules()) {
+        IJazzProject basProject = JazzProjects.INSTANCE.getProject(JazzBasProject.class);
+        for (IJazzModule module : basProject.getModules()) {
             String name = module.getName();
             name = StringId.HYPHEN.breakCamel(name);
             modules.put(name, module);

@@ -1,2 +1,3 @@
+net.bodz.bas.log.impl.Log4jMerger
 net.bodz.bas.log.log4j.DefaultLog4jConfigurer
 net.bodz.bas.log.log4j.Log4jMdcConfigurer

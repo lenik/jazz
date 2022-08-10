@@ -7,10 +7,4 @@ import net.bodz.bas.t.project.AbstractJazzProject;
 public class JazzMdaProject
         extends AbstractJazzProject {
 
-    private static JazzMdaProject instance = new JazzMdaProject();
-
-    public static JazzMdaProject getInstance() {
-        return instance;
-    }
-
 }
