@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -19,6 +20,11 @@ public abstract class PostgresBackedVhostResolver
 
     private DataContext master;
     private ConnectOptions connectOptionsTemplate;
+
+    public PostgresBackedVhostResolver() {
+        this(DataHub.getPreferredHub().getMain(), //
+                DataHub.getPreferredHub().getTemplate());
+    }
 
     public PostgresBackedVhostResolver(DataContext master, ConnectOptions connectOptionsTemplate) {
         if (master == null)
