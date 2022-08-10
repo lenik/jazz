@@ -97,9 +97,19 @@ public class XmlFn
         }
     }
 
+    public static void save(IXmlForm obj, String file)
+            throws IOException, XMLStreamException, FormatException {
+        save(obj, file, "utf-8");
+    }
+
     public static void save(IXmlForm obj, File file)
             throws IOException, XMLStreamException, FormatException {
         save(obj, file, "utf-8");
+    }
+
+    public static void save(IXmlForm obj, String file, String encoding)
+            throws IOException, XMLStreamException, FormatException {
+        save(obj, new File(file), encoding);
     }
 
     public static void save(IXmlForm obj, File file, String encoding)
