@@ -12,7 +12,6 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.fs.IFilesForm;
 import net.bodz.bas.fmt.json.JsonFn;
@@ -20,9 +19,9 @@ import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
 @ExcludedFromIndex
-public class LocalDataHub
-        extends DataHub
+public class LocalDataContextProvider
         implements
+            IDataContextProvider,
             IFilesForm {
 
     File folder;
@@ -31,7 +30,7 @@ public class LocalDataHub
     Map<String, ConnectOptions> connectOptionsMap = new HashMap<>();
     Map<String, DataContext> contextCacheMap = new HashMap<>(); // new WeakHashMap<>();
 
-    public LocalDataHub(File folder) {
+    public LocalDataContextProvider(File folder) {
         if (folder == null)
             throw new NullPointerException("folder");
         this.folder = folder;
@@ -71,21 +70,11 @@ public class LocalDataHub
         return connectOptionsMap.get(key);
     }
 
-    @Override
-    public ConnectOptions requireConnectOptions(String key) {
-        auoLoad();
-        ConnectOptions options = connectOptionsMap.get(key);
-        if (options == null)
-            throw new NoSuchKeyException(key);
-        return options;
-    }
-
     /**
      * @throws DuplicatedKeyException
      *             if <code>key</code> exists.
      */
     public synchronized void addConnectOptions(String key, ConnectOptions options) {
-        auoLoad();
         ConnectOptions val = connectOptionsMap.get(key);
         if (val != null)
             throw new DuplicatedKeyException("already existed: " + key);
@@ -97,19 +86,6 @@ public class LocalDataHub
         DataContext dataContext = contextCacheMap.get(key);
         if (dataContext == null) {
             ConnectOptions options = getConnectOptions(key);
-            if (options == null)
-                return null;
-            dataContext = new DataContext(options);
-            contextCacheMap.put(key, dataContext);
-        }
-        return dataContext;
-    }
-
-    @Override
-    public synchronized DataContext requireDataContext(String key) {
-        DataContext dataContext = contextCacheMap.get(key);
-        if (dataContext == null) {
-            ConnectOptions options = requireConnectOptions(key);
             if (options == null)
                 return null;
             dataContext = new DataContext(options);
