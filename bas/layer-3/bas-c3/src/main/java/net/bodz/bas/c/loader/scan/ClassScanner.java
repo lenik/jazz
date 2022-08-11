@@ -207,7 +207,8 @@ public class ClassScanner
     }
 
     class ResolveTypeAdapter
-            implements ITypeNameCallback {
+            implements
+                ITypeNameCallback {
 
         final ITypeCallback typeCallback;
 
@@ -219,19 +220,25 @@ public class ClassScanner
 
         @Override
         public boolean typeName(String fqcn) {
+            if (failedNames.contains(fqcn))
+                return false;
             Class<?> clazz;
             try {
                 clazz = Class.forName(fqcn, false, getClassLoader());
             } catch (ClassNotFoundException e) {
                 logger.error("Failed to resolve class: " + fqcn);
+                failedNames.add(fqcn);
                 return false;
             } catch (NoClassDefFoundError e) {
                 logger.error("Failed to resolve class: " + fqcn);
+                failedNames.add(fqcn);
                 return false;
             }
             return typeCallback.type(clazz);
         }
     }
+
+    static Set<String> failedNames = new HashSet<>();
 
     public void scanTypes(String packageName, final ITypeCallback typeCallback)
             throws IOException {
