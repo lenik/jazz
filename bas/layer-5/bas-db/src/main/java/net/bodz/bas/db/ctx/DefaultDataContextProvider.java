@@ -7,24 +7,17 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
 
-public class DefaultLocalDataHub
-        extends LocalDataHub {
+@Priority(Priority.LOW)
+public class DefaultDataContextProvider
+        extends LocalDataContextProvider {
 
-    static final Logger logger = LoggerFactory.getLogger(DefaultLocalDataHub.class);
+    static final Logger logger = LoggerFactory.getLogger(DefaultDataContextProvider.class);
 
-    public DefaultLocalDataHub() {
+    public DefaultDataContextProvider() {
         super(getDefaultFolder());
     }
 
-    @Override
-    public int getPriority() {
-        return Priority.LOW;
-    }
-
     public static File getDefaultFolder() {
-        StackTraceElement ste=null;
-        ste.getClassName();
-
         File dataDir = SysProps.dataDir;
         File optionsDir = new File(dataDir, "bas-db/connectOptions");
         if (!optionsDir.exists()) {

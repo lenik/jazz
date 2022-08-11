@@ -17,6 +17,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.fmt.xml.xq.QElementMap;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 
@@ -262,16 +263,17 @@ public class ConnectOptions
     @Override
     public void readObject(IElement element)
             throws ParseException, LoaderException {
-        String typeName = element.getAttribute(K_TYPE);
+        QElementMap map = (QElementMap) element.getChildrenMap();
+        String typeName = map.getString(K_TYPE);
         type = typeName == null ? null : DatabaseType.meta.ofName(typeName);
-        url = element.getAttribute(K_URL);
-        hostName = element.getAttribute(K_HOSTNAME);
-        port = element.a(K_PORT).getInt(0);
-        String rootDirPath = element.getString(K_ROOTDIR);
-        rootDir = new File(rootDirPath);
-        database = element.getAttribute(K_DATABASE);
-        userName = element.getAttribute(K_USERNAME);
-        password = element.getAttribute(K_PASSWORD);
+        url = map.getString(K_URL);
+        hostName = map.getString(K_HOSTNAME);
+        port = map.getInt(K_PORT, 0);
+        String rootDirPath = map.getString(K_ROOTDIR);
+        rootDir = rootDirPath == null ? null : new File(rootDirPath);
+        database = map.getString(K_DATABASE);
+        userName = map.getString(K_USERNAME);
+        password = map.getString(K_PASSWORD);
 
         IElement x_info = element.getChild(K_INFO);
         if (x_info != null) {

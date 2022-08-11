@@ -3,64 +3,87 @@ package net.bodz.bas.db.ctx;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.TreeMap;
 
+import net.bodz.bas.c.autowire.ProjectList;
 import net.bodz.bas.db.jdbc.ConnectOptions;
-import net.bodz.bas.meta.decl.Namespace;
-import net.bodz.bas.meta.decl.Priority;
-import net.bodz.bas.t.order.IPriority;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.order.PriorityComparator;
 
-/**
- * Marker class.
- */
-@Priority
-@Namespace
-public abstract class DataHub
+@ExcludedFromIndex
+public class DataHub
         implements
-            IDataHub,
-            IPriority {
+            IDataContextProvider {
 
-    int priority = Priority.DEFAULT;
+    private List<IDataContextProvider> providers;
 
     public DataHub() {
-        Priority aPriority = getClass().getAnnotation(Priority.class);
-        if (aPriority != null)
-            priority = aPriority.value();
+        loadProviders();
     }
 
-    @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    protected static final Map<String, ConnectOptions> nameMap = new TreeMap<>();
-
-    protected static ConnectOptions declare(String name) {
-        ConnectOptions o = new ConnectOptions();
-        nameMap.put(name, o);
-        return o;
-    }
-
-    private static List<DataHub> hubs;
-
-    synchronized static void loadHubs() {
-        if (hubs == null) {
-            hubs = new ArrayList<>();
-            for (DataHub hub : ServiceLoader.load(DataHub.class))
-                hubs.add(hub);
-            Collections.sort(hubs, PriorityComparator.INSTANCE);
+    synchronized void loadProviders() {
+        if (providers == null) {
+            providers = new ArrayList<>();
+            for (IDataContextProvider provider : ServiceLoader.load(IDataContextProvider.class))
+                providers.add(provider);
+            Collections.sort(providers, PriorityComparator.INSTANCE);
         }
     }
 
+    @Override
+    public ConnectOptions getConnectOptions(String key) {
+        for (IDataContextProvider provider : providers) {
+            ConnectOptions options = provider.getConnectOptions(key);
+            if (options != null)
+                return options;
+        }
+        return null;
+    }
+
+    @Override
+    public DataContext getDataContext(String key) {
+        for (IDataContextProvider provider : providers) {
+            DataContext dataContext = provider.getDataContext(key);
+            if (dataContext != null)
+                return dataContext;
+        }
+        return null;
+    }
+
+    String projectName = ProjectList.INSTANCE.topLevelName();
+
+    public DataContext getMain() {
+        String projectMain = K_MAIN + "." + projectName;
+
+        DataContext dataContext = getDataContext(projectMain);
+        if (dataContext != null)
+            return dataContext;
+
+        ConnectOptions options = requireConnectOptions(K_MAIN).clone();
+        options.setDatabase(projectName);
+        return new DataContext(options);
+    }
+
+    public DataContext getTest() {
+        String projectMain = K_MAIN + "." + projectName;
+
+        DataContext dataContext = getDataContext(projectMain, K_TEST);
+        if (dataContext != null)
+            return dataContext;
+
+        return getMain();
+    }
+
+    public ConnectOptions getTemplate() {
+        return requireConnectOptions(//
+                K_TEMPLATE + "." + projectName, //
+                K_TEMPLATE);
+    }
+
+    static DataHub instance = new DataHub();
+
     public static DataHub getPreferredHub() {
-        loadHubs();
-        if (hubs.isEmpty())
-            return null;
-        else
-            return hubs.get(0);
+        return instance;
     }
 
 }

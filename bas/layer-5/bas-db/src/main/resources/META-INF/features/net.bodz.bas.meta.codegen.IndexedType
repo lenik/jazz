@@ -1,4 +1,4 @@
-net.bodz.bas.db.ctx.IDataHub
+net.bodz.bas.db.ctx.IDataContextProvider
 net.bodz.bas.db.ibatis.IIbatisConfigurer
 net.bodz.bas.db.ibatis.IMapper
 net.bodz.bas.db.ibatis.IMapperXmlProvider
