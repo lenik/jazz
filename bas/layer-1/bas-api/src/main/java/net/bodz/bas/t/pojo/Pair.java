@@ -6,7 +6,10 @@ import java.util.Map.Entry;
 import net.bodz.bas.c.object.Nullables;
 
 public class Pair<K, V>
-        implements Entry<K, V>, Serializable {
+        implements
+            IPair<K, V>,
+            Entry<K, V>,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,18 +28,22 @@ public class Pair<K, V>
         this.second = second;
     }
 
+    @Override
     public K getFirst() {
         return first;
     }
 
+    @Override
     public void setFirst(K first) {
         this.first = first;
     }
 
+    @Override
     public V getSecond() {
         return second;
     }
 
+    @Override
     public void setSecond(V second) {
         this.second = second;
     }
@@ -77,6 +84,7 @@ public class Pair<K, V>
 
     // Map.Entry
 
+    @Override
     public K getKey() {
         return first;
     }
@@ -87,10 +95,12 @@ public class Pair<K, V>
         return old;
     }
 
+    @Override
     public V getValue() {
         return second;
     }
 
+    @Override
     public V setValue(V value) {
         V old = second;
         second = value;
