@@ -10,7 +10,6 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.meta.autowire.ProjectDependencies;
 import net.bodz.bas.meta.autowire.ProjectName;
-import net.bodz.bas.meta.build.ProgramName;
 
 public class ProjectList {
 
@@ -85,9 +84,9 @@ public class ProjectList {
     void load() {
         Iterable<Class<? extends ProjectName>> classes = IndexedTypes.list(ProjectName.class, true);
         for (Class<?> clazz : classes) {
-            ProgramName aProgramName = clazz.getAnnotation(ProgramName.class);
-            if (aProgramName != null) {
-                String name = aProgramName.value();
+            ProjectName aProjectName = clazz.getAnnotation(ProjectName.class);
+            if (aProjectName != null) {
+                String name = aProjectName.value();
                 Class<?> existing = nameMap.get(name);
                 if (existing != null)
                     throw new DuplicatedKeyException(name);
