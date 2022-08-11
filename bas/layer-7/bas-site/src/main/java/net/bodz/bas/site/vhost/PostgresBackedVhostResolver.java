@@ -12,8 +12,10 @@ import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
-public abstract class PostgresBackedVhostResolver
+@ExcludedFromIndex
+public class PostgresBackedVhostResolver
         extends MutableVirtualHostResolver {
 
     static final Logger logger = LoggerFactory.getLogger(PostgresBackedVhostResolver.class);
@@ -121,6 +123,14 @@ public abstract class PostgresBackedVhostResolver
             } catch (Exception e) {
                 logger.error(e, "Can't close " + closeable);
             }
+    }
+
+    static PostgresBackedVhostResolver DEFAULT;
+
+    public static synchronized PostgresBackedVhostResolver getProjectDefault() {
+        if (DEFAULT == null)
+            DEFAULT = new PostgresBackedVhostResolver();
+        return DEFAULT;
     }
 
 }
