@@ -7,10 +7,10 @@ import net.bodz.bas.repr.form.SortOrder;
 public class PathMap<T> {
 
     // String parentPath;
-    SortOrder order;
-    char pathSeparator = '/';
-    PathMapNode<T> root;
-    boolean purgeEmptyChild;
+    final SortOrder order;
+    final char pathSeparator;
+
+    final PathMapNode<T> root;
 
     public PathMap(char pathSeparator) {
         this('/', SortOrder.KEEP);
@@ -34,7 +34,7 @@ public class PathMap<T> {
     }
 
     PathMapNode<T> resolveNode(String path, boolean create) {
-        PathMapNode<T> start = root;
+        PathMapNode<T> node = root;
         while (path != null && !path.isEmpty()) {
             int pos = path.indexOf(pathSeparator);
             String head = path;
@@ -45,14 +45,14 @@ public class PathMap<T> {
                 path = path.substring(pos + 1);
             }
             if (create)
-                start = start.getOrCreateChild(head);
+                node = node.getOrCreateChild(head);
             else {
-                start = start.getChild(head);
-                if (start == null)
+                node = node.getChild(head);
+                if (node == null)
                     break;
             }
         }
-        return start;
+        return node;
     }
 
     public T getAttribute(String path) {
@@ -81,7 +81,7 @@ public class PathMap<T> {
         return node.attributes.put(path, newValue);
     }
 
-    public synchronized T removeAttribute(String path) {
+    public synchronized T removeAttribute(String path, boolean purgeEmptyChild) {
         PathMapNode<T> node = root;
         int pos = path.lastIndexOf(pathSeparator);
         String dir = null;
@@ -127,7 +127,6 @@ public class PathMap<T> {
         if (node == root)
             return this;
         PathMap<T> subMap = new PathMap<>(pathSeparator, order, node);
-        subMap.purgeEmptyChild = this.purgeEmptyChild;
         return subMap;
     }
 
