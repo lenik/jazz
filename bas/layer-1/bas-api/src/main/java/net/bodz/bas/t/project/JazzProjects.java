@@ -1,5 +1,6 @@
 package net.bodz.bas.t.project;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -8,14 +9,16 @@ import net.bodz.bas.meta.autowire.ProjectName;
 
 public class JazzProjects {
 
-    Map<String, IJazzProject> nameMap;
-    Map<Class<?>, IJazzProject> instanceMap;
+    Map<String, IJazzProject> nameMap = new HashMap<>();
+    Map<Class<?>, IJazzProject> instanceMap = new HashMap<>();
 
     public IJazzProject getProject(String name) {
+        autoLoad();
         return nameMap.get(name);
     }
 
     public IJazzProject getProject(Class<?> type) {
+        autoLoad();
         return instanceMap.get(type);
     }
 
