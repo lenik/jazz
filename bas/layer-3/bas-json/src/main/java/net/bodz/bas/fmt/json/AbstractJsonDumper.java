@@ -36,6 +36,8 @@ public abstract class AbstractJsonDumper<self_t>
 
     static final Logger logger = LoggerFactory.getLogger(AbstractJsonDumper.class);
 
+    static final String METHOD_WRITE = "jsonOut";
+
     protected IJsonOut out;
     JsonFormOptions opts;
 
@@ -401,9 +403,9 @@ public abstract class AbstractJsonDumper<self_t>
             return false;
 
         try {
-            Method writeObject = jser.getClass().getMethod("writeObject", IJsonOut.class);
-            DefaultDump defaultDump = writeObject.getDeclaredAnnotation(DefaultDump.class);
-            if (defaultDump != null)
+            Method writeObject = jser.getClass().getMethod(METHOD_WRITE, IJsonOut.class, JsonFormOptions.class);
+            DefaultDump aDefaultDump = writeObject.getDeclaredAnnotation(DefaultDump.class);
+            if (aDefaultDump != null)
                 return false;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e.getMessage(), e);
