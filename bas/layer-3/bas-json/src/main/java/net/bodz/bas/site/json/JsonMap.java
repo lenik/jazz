@@ -120,7 +120,7 @@ public class JsonMap
         return new JsonValueWrapper(j_val);
     }
 
-    public synchronized void setJsonStr(JsonValueWrapper form, JsonFormOptions opts)
+    public synchronized void setJsonStr(JsonValueWrapper form)
             throws ParseException {
         Object j_val = form.getWrapped();
         readObjectBoxed(j_val, opts);
