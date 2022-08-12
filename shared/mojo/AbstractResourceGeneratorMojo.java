@@ -7,14 +7,14 @@ public abstract class AbstractResourceGeneratorMojo
 
     /**
      * The directory to find source files, like JavaCC grammar files, or .java sources.
-     * 
-     * @parameter property="sourceDirectory" default-value="${basedir}/src/main/java"
+     *
+     * @parameter property="sourceDirectory" default-value="${basedir}/src/main/generated"
      */
     private File sourceDirectory;
 
     /**
      * The directory to save generated files.
-     * 
+     *
      * @parameter property="outputDirectory"
      *            default-value="${project.build.directory}/generated-resources"
      */
@@ -22,14 +22,14 @@ public abstract class AbstractResourceGeneratorMojo
 
     /**
      * A set of Ant-like inclusion patterns used to select files from the source directory.
-     * 
+     *
      * @parameter
      */
     private String[] includes;
 
     /**
      * A set of Ant-like exclusion patterns used to prevent certain files from being processed.
-     * 
+     *
      * @parameter
      */
     private String[] excludes;

@@ -10,6 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>parent</module>
         <module>bas</module>
         <module>mda</module>
         <module>swt</module>
