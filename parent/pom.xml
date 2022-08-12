@@ -13,8 +13,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <ffdir>src/main/resources</ffdir>
-        <ffdir.test>src/test/resources</ffdir.test>
+        <ffdir>src/main/generated</ffdir>
+        <ffdir.test>src/test/generated</ffdir.test>
     </properties>
 
     <dependencies>
