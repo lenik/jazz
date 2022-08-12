@@ -6,6 +6,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.site.json.AbstractJsonResponse;
 
@@ -45,7 +46,7 @@ public class LoginResult
     }
 
     @Override
-    protected boolean readRootEntry(JsonObject o, String key)
+    protected boolean readRootEntry(JsonObject o, String key, JsonFormOptions opts)
             throws ParseException {
         switch (key) {
         case "sc":
@@ -55,17 +56,17 @@ public class LoginResult
             JsonObject tokenNode = o.getJsonObject("token");
             if (tokenNode != null) {
                 this.token = LoginToken.create();
-                token.readObject(tokenNode);
+                token.jsonIn(tokenNode, opts);
             }
             return true;
         }
-        return super.readRootEntry(o, key);
+        return super.readRootEntry(o, key, opts);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        super.writeObject(out);
+        super.jsonOut(out, opts);
         out.entry("sc", serverChallenge);
         if (token != null)
             out.entry("token", token);

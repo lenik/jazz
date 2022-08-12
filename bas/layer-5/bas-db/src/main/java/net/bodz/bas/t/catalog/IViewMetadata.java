@@ -7,6 +7,7 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface IViewMetadata
@@ -19,9 +20,9 @@ public interface IViewMetadata
     Collection<? extends ITableUsage> getTableUsages();
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        ITableViewMetadata.super.writeObject(out);
+        ITableViewMetadata.super.jsonOut(out, opts);
 
         Collection<? extends ITableUsage> usages = getTableUsages();
         if (usages != null) {
@@ -29,7 +30,7 @@ public interface IViewMetadata
             out.array();
             for (ITableUsage usage : usages) {
                 out.object();
-                usage.writeObject(out);
+                usage.jsonOut(out, opts);
                 out.endObject();
             }
             out.endArray();

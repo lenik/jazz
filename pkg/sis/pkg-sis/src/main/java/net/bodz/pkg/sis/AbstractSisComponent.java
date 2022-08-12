@@ -101,6 +101,7 @@ public abstract class AbstractSisComponent
         return xjdoc;
     }
 
+    @Override
     public void setXjdoc(IElementDoc xjdoc) {
         if (xjdoc == null)
             throw new NullPointerException("xjdoc");

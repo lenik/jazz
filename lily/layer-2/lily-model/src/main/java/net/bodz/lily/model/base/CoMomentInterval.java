@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -101,9 +102,9 @@ public abstract class CoMomentInterval<Id>
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         beginTime = o.getDateTime("beginTime", beginTime);
         endTime = o.getDateTime("endTime", endTime);

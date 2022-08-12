@@ -1,6 +1,7 @@
 package net.bodz.bas.c.org.json;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
 
@@ -22,14 +23,14 @@ public class JsonValueWrapper
     }
 
     @Override
-    public String toJsonStr() {
+    public String toJsonStr(JsonFormOptions opts) {
         if (j_val == null)
             return null;
         return JsonObject.valueToString(j_val);
     }
 
     @Override
-    public void fromJsonStr(String jsonStr)
+    public void fromJsonStr(String jsonStr, JsonFormOptions opts)
             throws ParseException {
         if (jsonStr == null)
             j_val = null;
@@ -42,7 +43,7 @@ public class JsonValueWrapper
         if (j_val == null)
             return null;
         else
-            return toJsonStr();
+            return toJsonStr(JsonFormOptions.DEFAULT);
     }
 
 }

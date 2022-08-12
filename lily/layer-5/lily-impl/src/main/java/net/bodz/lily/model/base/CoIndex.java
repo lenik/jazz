@@ -18,6 +18,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
@@ -315,7 +316,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
         JsonVarMap contentMap = new JsonVarMap(content);
         try {
-            obj.readObject(content);
+            // JsonFormOptions opts = new JsonFormOptions(q);
+            obj.jsonIn(content, JsonFormOptions.WEB);
         } catch (ParseException e) {
             throw new RequestHandlerException("Failed to apply json: " + e.getMessage(), e);
         }

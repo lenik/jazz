@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
@@ -86,7 +87,7 @@ public class ItemFile
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         dir = o.getString("dir", dir);
         name = o.getString("name", name);
@@ -96,7 +97,7 @@ public class ItemFile
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("dir", dir);
         out.entry("name", name);
@@ -110,7 +111,7 @@ public class ItemFile
         List<ItemFile> items = new ArrayList<ItemFile>();
         for (JsonObject o : JsonFn.<JsonObject> iterate(array)) {
             ItemFile item = new ItemFile();
-            item.readObject(o);
+            item.jsonIn(o, JsonFormOptions.DEFAULT);
             items.add(item);
         }
         return items;

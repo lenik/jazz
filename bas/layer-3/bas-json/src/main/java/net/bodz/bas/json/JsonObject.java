@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fn.FunctionX;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.conv.IVarConverter;
@@ -309,7 +310,7 @@ public class JsonObject
                     return null;
                 obj = newObj;
             }
-            obj.readObject(node);
+            obj.jsonIn(node, JsonFormOptions.XXX);
         }
 
         return obj;
@@ -333,7 +334,7 @@ public class JsonObject
         return readArrayInto(key, set, (Object jsObj) -> {
             JsonObject o = (JsonObject) jsObj;
             T val = vals.get();
-            val.readObject(o);
+            val.jsonIn(o, JsonFormOptions.XXX);
             return val;
         }, () -> order.newSet());
     }
@@ -344,7 +345,7 @@ public class JsonObject
         return readArrayInto(key, list, (Object jsObj) -> {
             JsonObject o = (JsonObject) jsObj;
             T val = vals.get();
-            val.readObject(o);
+            val.jsonIn(o, JsonFormOptions.XXX);
             return val;
         }, () -> new ArrayList<>());
     }
@@ -394,7 +395,7 @@ public class JsonObject
         return readIntoMap(key, map, (Object jsObj) -> {
             JsonObject o = (JsonObject) jsObj;
             T val = vals.get();
-            val.readObject(o);
+            val.jsonIn(o, JsonFormOptions.XXX);
             return val;
         }, () -> order.newMap());
     }

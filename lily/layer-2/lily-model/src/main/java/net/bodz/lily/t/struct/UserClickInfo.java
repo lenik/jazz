@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
@@ -146,7 +147,7 @@ public class UserClickInfo
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         voteUps = o.getInt("voteUps", voteUps);
         voteDowns = o.getInt("voteDowns", voteDowns);
@@ -163,7 +164,7 @@ public class UserClickInfo
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("voteUps", voteUps);
         out.entry("voteDowns", voteDowns);

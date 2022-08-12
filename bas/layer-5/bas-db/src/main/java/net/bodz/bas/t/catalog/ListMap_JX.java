@@ -8,6 +8,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.SortOrder;
@@ -44,7 +45,7 @@ public class ListMap_JX<K, V extends IJsonForm>
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String key : o.keySet()) {
             K k1 = parseKey(key);
@@ -54,21 +55,21 @@ public class ListMap_JX<K, V extends IJsonForm>
             for (int i = 0; i < n; i++) {
                 JsonObject o2 = array.getJsonObject(i);
                 V item = factory.get();
-                item.readObject(o2);
+                item.jsonIn(o2, opts);
                 list.add(item);
             }
         }
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         for (K k1 : keySet()) {
             out.key(k1.toString());
             List<V> list = get(k1);
             out.array();
             for (V item : list) {
-                item.writeObjectBoxed(out);
+                item.jsonOut(out, opts, true);
             }
             out.endArray();
         }

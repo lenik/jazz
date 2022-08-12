@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
@@ -62,7 +63,7 @@ public interface IRowSetMetadata
     IColumnMetadata getColumn(int index);
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.key(K_COLUMNS);
         out.array();
@@ -70,7 +71,7 @@ public interface IRowSetMetadata
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
             out.object();
-            column.writeObject(out);
+            column.jsonOut(out, opts);
             out.endObject();
         }
         out.endArray();

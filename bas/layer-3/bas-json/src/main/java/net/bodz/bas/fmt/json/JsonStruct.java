@@ -16,10 +16,13 @@ public abstract class JsonStruct
         return jsonEquals(o);
     }
 
+    static JsonFormOptions JSON_CANONICAL = new JsonFormOptions();
+    static JsonFormOptions JSON_PRETTY = new JsonFormOptions();
+
     public boolean jsonEquals(JsonStruct o) {
         try {
-            String js1 = JsonFn.toJson(this);
-            String js2 = JsonFn.toJson(o);
+            String js1 = JsonFn.toJson(this, JSON_CANONICAL);
+            String js2 = JsonFn.toJson(o, JSON_CANONICAL);
             if (js1.equals(js2))
                 return false;
             return true;
@@ -31,7 +34,7 @@ public abstract class JsonStruct
     @Override
     public int hashCode() {
         try {
-            String json = JsonFn.toJson(this);
+            String json = JsonFn.toJson(this, JSON_CANONICAL);
             return json.hashCode();
         } catch (FormatException e) {
             throw new RuntimeException(e);
@@ -41,7 +44,7 @@ public abstract class JsonStruct
     @Override
     public String toString() {
         try {
-            return JsonFn.toJson(this);
+            return JsonFn.toJson(this, JSON_PRETTY);
         } catch (FormatException e) {
             throw new RuntimeException(e);
         }

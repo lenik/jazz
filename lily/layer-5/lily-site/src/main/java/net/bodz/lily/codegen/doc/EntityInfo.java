@@ -22,8 +22,9 @@ import net.bodz.lily.model.base.CoObject;
  * @see ModuleInfo
  */
 public class EntityInfo
-        extends AbstractTypeInfo<EntityInfo>
-        implements IPathDispatchable {
+        extends AbstractTypeInfo
+        implements
+            IPathDispatchable {
 
     ModuleIndexer indexer;
 

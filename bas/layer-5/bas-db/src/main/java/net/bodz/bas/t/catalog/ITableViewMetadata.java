@@ -6,6 +6,7 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ITableViewMetadata
@@ -48,11 +49,11 @@ public interface ITableViewMetadata
     }
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        getId().writeObject(out);
+        getId().jsonOut(out, opts);
         out.entry(K_TABLE_TYPE, getTableType());
-        IRowSetMetadata.super.writeObject(out);
+        IRowSetMetadata.super.jsonOut(out, opts);
     }
 
     @Override

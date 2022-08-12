@@ -6,12 +6,12 @@ import java.security.Provider;
 import java.security.ProviderException;
 import java.security.Security;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.Stdio;
+
+import junit.framework.TestCase;
 
 public class ProvidersTest
         extends TestCase {

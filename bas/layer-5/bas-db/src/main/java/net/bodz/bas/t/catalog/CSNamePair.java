@@ -12,6 +12,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -138,14 +139,14 @@ abstract class CSNamePair
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         catalogName = o.getString(K_CATALOG_NAME);
         schemaName = o.getString(K_SCHEMA_NAME);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         if (catalogName != null)
             out.entry(K_CATALOG_NAME, catalogName);

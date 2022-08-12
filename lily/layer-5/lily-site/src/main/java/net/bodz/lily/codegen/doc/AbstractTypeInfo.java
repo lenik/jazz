@@ -20,10 +20,10 @@ import net.bodz.bas.site.json.JsonResult;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<self_t>> {
+public abstract class AbstractTypeInfo {
 
     ModuleInfo module;
-    self_t parent;
+    AbstractTypeInfo parent;
 
     Class<?> declaredClass;
     ClassDoc doc;
@@ -103,9 +103,7 @@ public abstract class AbstractTypeInfo<self_t extends AbstractTypeInfo<self_t>> 
         JsonWriter out = result.begin("propertyGroups").array();
         PropertyExporter exporter = new PropertyExporter(ModuleIndexer.getInstance());
 
-        @SuppressWarnings("unchecked")
-        self_t start = (self_t) this;
-        exporter.export(out, start);
+        exporter.export(out, this);
 
         out.endArray();
         return result.succeed();

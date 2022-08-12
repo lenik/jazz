@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -42,10 +43,10 @@ public class MutableTableUsage
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         tableId = new TableId();
-        tableId.readObject(o);
+        tableId.jsonIn(o, opts);
 
         JsonArray o_columns = o.getJsonArray(K_COLUMNS);
         int n = o_columns.length();

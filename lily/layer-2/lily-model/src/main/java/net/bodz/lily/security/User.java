@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
@@ -197,9 +198,9 @@ public class User
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         category = o.readInto("category", category, new UserCategory());
         primaryGroup = o.readInto("primaryGroup", primaryGroup, new Group());
         // TODO

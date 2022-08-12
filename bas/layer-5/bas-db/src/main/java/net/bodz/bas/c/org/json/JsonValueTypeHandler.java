@@ -13,6 +13,7 @@ import org.postgresql.util.PGobject;
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 
 @Alias("JsonValue")
 @AliasedType
@@ -26,7 +27,7 @@ public class JsonValueTypeHandler
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, JsonValueWrapper parameter, JdbcType jdbcType)
             throws SQLException {
-        String json = parameter.toJsonStr();
+        String json = parameter.toJsonStr(JsonFormOptions.SQL);
         PGobject pgo = new PGobject();
         pgo.setType("json"); // jsonb .. similar.
         pgo.setValue(json);
@@ -39,7 +40,7 @@ public class JsonValueTypeHandler
         String json = rs.getString(columnName);
         JsonValueWrapper val = new JsonValueWrapper();
         try {
-            val.fromJsonStr(json);
+            val.fromJsonStr(json, JsonFormOptions.SQL);
         } catch (ParseException e) {
             throw new SQLException("Failed to parse: " + json, e);
         }
@@ -52,7 +53,7 @@ public class JsonValueTypeHandler
         String jsonData = rs.getString(columnIndex);
         JsonValueWrapper val = new JsonValueWrapper();
         try {
-            val.fromJsonStr(jsonData);
+            val.fromJsonStr(jsonData, JsonFormOptions.SQL);
         } catch (ParseException e) {
             throw new SQLException("Failed to parse: " + jsonData, e);
         }
@@ -65,7 +66,7 @@ public class JsonValueTypeHandler
         String json = cs.getString(columnIndex);
         JsonValueWrapper val = new JsonValueWrapper();
         try {
-            val.fromJsonStr(json);
+            val.fromJsonStr(json, JsonFormOptions.SQL);
         } catch (ParseException e) {
             throw new SQLException("Failed to parse: " + json, e);
         }

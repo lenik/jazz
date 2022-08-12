@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -127,9 +128,9 @@ public class DefaultViewMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         JsonArray o_usages = o.getJsonArray(K_TABLE_UAGES);
         if (o_usages != null) {
@@ -137,7 +138,7 @@ public class DefaultViewMetadata
             for (int i = 0; i < n; i++) {
                 JsonObject o_usage = o_usages.getJsonObject(i);
                 MutableTableUsage usage = new MutableTableUsage();
-                usage.readObject(o_usage);
+                usage.jsonIn(o_usage, opts);
                 tableUsages.put(usage.getTableId(), usage);
             }
         }

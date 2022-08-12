@@ -13,6 +13,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
@@ -424,7 +425,7 @@ public abstract class CoObject
         if (propsMap != null) {
             JsonMap properties = this.getProperties();
             if (properties != null) // null if not supported.
-                properties.readObject(propsMap.getWrapped());
+                properties.jsonIn(propsMap.getWrapped(), JsonFormOptions.DEFAULT);
         }
     }
 
@@ -437,9 +438,9 @@ public abstract class CoObject
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         if (o == null)
             throw new NullPointerException("o");
         if (checkAutoMode()) {
@@ -469,7 +470,7 @@ public abstract class CoObject
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         BeanJsonDumper dumper = new BeanJsonDumper(out);
         dumper.dump(this);

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.i18n.geo.GeoZones;
 import net.bodz.bas.json.JsonObject;
@@ -66,7 +67,7 @@ public class GeoLocation
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         longitude = o.getDouble("lng");
         latitude = o.getDouble("lat");
@@ -76,7 +77,7 @@ public class GeoLocation
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("lng", longitude);
         out.entry("lat", latitude);

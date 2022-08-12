@@ -12,6 +12,7 @@ import java.util.Map;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
@@ -274,7 +275,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString(K_NAME);
 
@@ -283,7 +284,7 @@ public class DefaultCatalogMetadata
         for (String key : jm.keySet()) {
             JsonObject item = jm.getJsonObject(key);
             DefaultSchemaMetadata schema = newSchema(null);
-            schema.readObject(item);
+            schema.jsonIn(item, opts);
             schemas.put(key, schema);
         }
         this.schemas = schemas;

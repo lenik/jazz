@@ -7,11 +7,11 @@ import java.util.Map;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOptions;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.fmt.json.JsonVerbatimBuf;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVerbatimBuf_Scalar;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.BufferedLogger;
 import net.bodz.bas.log.ILogger;
@@ -67,65 +67,80 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         }
     }
 
+    @Override
     public boolean isSuccess() {
         return status < ERROR;
     }
 
+    @Override
     public boolean isError() {
         return status >= ERROR;
     }
 
+    @Override
     public self_t succeed() {
         this.status = OK;
         return (self_t) this;
     }
 
+    @Override
     public self_t fail() {
         return fail(ERROR, null);
     }
 
+    @Override
     public self_t fail(int status) {
         return fail(status, null);
     }
 
+    @Override
     public self_t fail(String messageFormat, Object... args) {
         return fail(String.format(messageFormat, args));
     }
 
+    @Override
     public self_t fail(String message) {
         return fail(ERROR, message);
     }
 
+    @Override
     public self_t fail(int status, String messageFormat, Object... args) {
         return fail(status, String.format(messageFormat, args));
     }
 
+    @Override
     public self_t fail(int status, String message) {
         this.status = status;
         this.message = message;
         return (self_t) this;
     }
 
+    @Override
     public self_t fail(Throwable e) {
         return fail(e, e.getMessage());
     }
 
+    @Override
     public self_t fail(Throwable e, int status) {
         return fail(e, e.getMessage(), status);
     }
 
+    @Override
     public self_t fail(Throwable e, String messageFormat, Object... args) {
         return fail(e, String.format(messageFormat, args));
     }
 
+    @Override
     public self_t fail(Throwable e, String message) {
         return fail(e, ERROR, message);
     }
 
+    @Override
     public self_t fail(Throwable e, int status, String messageFormat, Object... args) {
         return fail(e, status, String.format(messageFormat, args));
     }
 
+    @Override
     public self_t fail(Throwable e, int status, String message) {
         logger.error(e, "A json failure detected: " + message);
         logbuf.warn(e, "ajax failed with: " + message);
@@ -133,42 +148,52 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         return fail(message);
     }
 
+    @Override
     public int getStatus() {
         return status;
     }
 
+    @Override
     public void setStatus(int status) {
         this.status = status;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
 
+    @Override
     public void setMessage(String message) {
         this.message = message;
     }
 
+    @Override
     public Throwable getException() {
         return exception;
     }
 
+    @Override
     public void setException(Throwable exception) {
         this.exception = exception;
     }
 
+    @Override
     public Object getData() {
         return data;
     }
 
+    @Override
     public void setData(Object js_val) {
         this.data = js_val;
     }
 
+    @Override
     public SortOrder getHeaderOrder() {
         return headerOrder;
     }
 
+    @Override
     public synchronized void setHeaderOrder(SortOrder headerOrder) {
         if (this.headerOrder == headerOrder)
             return;
@@ -180,6 +205,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         }
     }
 
+    @Override
     public Map<String, Object> getHeaders() {
         if (headers == null)
             synchronized (this) {
@@ -189,6 +215,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         return headers;
     }
 
+    @Override
     public Object getHeader(String header) {
         if (headers == null)
             return null;
@@ -196,6 +223,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
             return headers.get(header);
     }
 
+    @Override
     public self_t setHeader(String header, Object content) {
         getHeaders().put(header, content);
         return (self_t) this;
@@ -204,12 +232,14 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
     /**
      * Begins a new section.
      */
+    @Override
     public JsonWriter begin(String key) {
         StringBuilder buf = new StringBuilder();
-        setHeader(key, new JsonVerbatimBuf(null, buf));
+        setHeader(key, new JsonVerbatimBuf_Scalar(buf));
         return new JsonWriter(buf);
     }
 
+    @Override
     public synchronized JsonSection getRoot() {
         JsonSection root = (JsonSection) getHeader(sectionsRoot);
         if (root == null) {
@@ -219,22 +249,23 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         return root;
     }
 
+    @Override
     public ILogger getLogger() {
         return logbuf;
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String key : o.keySet()) {
-            boolean handled = readRootEntry(o, key);
+            boolean handled = readRootEntry(o, key, opts);
             if (handled)
                 continue;
             Object val = o.get(key);
             if (val instanceof JsonObject) {
                 JsonObject node = (JsonObject) val;
                 JsonSection section = new JsonSection();
-                section.readObject(node);
+                section.jsonIn(node, opts);
                 setHeader(key, section);
             } else {
                 setHeader(key, val);
@@ -242,7 +273,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
         }
     }
 
-    protected boolean readRootEntry(JsonObject o, String key)
+    protected boolean readRootEntry(JsonObject o, String key, JsonFormOptions opts)
             throws ParseException {
         if ("success".equals(key) || "warn".equals(key) || "failed".equals(key))
             return true;
@@ -292,7 +323,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
                 throw new ParseException("Can't instantiate data of " + dataTypeName, e);
             }
             JsonObject dataNode = o.getJsonObject("data");
-            data.readObject(dataNode);
+            data.jsonIn(dataNode, opts);
             this.data = data;
             return true;
         }
@@ -301,7 +332,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.entry("status", status);
 
@@ -333,18 +364,9 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
                     continue;
 
                 if (value instanceof IJsonForm) {
-                    IJsonForm jsable = (IJsonForm) value;
-                    IJsonOptions opts = IJsonOptions.NULL;
-                    if (value instanceof IJsonOptions)
-                        opts = (IJsonOptions) value;
-
-                    if (opts.isMixedIn()) {
-                        jsable.writeObject(out);
-                        continue;
-                    }
-
+                    IJsonForm jsonForm = (IJsonForm) value;
                     out.key(key);
-                    jsable.writeObjectBoxed(out);
+                    jsonForm.jsonOut(out, opts, true);
                 } else {
                     out.entry(key, value);
                     // out.key(key);
@@ -362,7 +384,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
     @Override
     public String toString() {
         try {
-            return JsonFn.toJson(this);
+            return JsonFn.toJson(this, JsonFormOptions.PRETTY);
         } catch (FormatException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

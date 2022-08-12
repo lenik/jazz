@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public abstract class AbstractUserClickRecord
@@ -26,13 +27,13 @@ public abstract class AbstractUserClickRecord
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         time = o.getDateTime("time", time);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("time", time);
     }

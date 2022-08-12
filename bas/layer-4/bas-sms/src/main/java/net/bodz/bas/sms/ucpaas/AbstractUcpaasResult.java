@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonStruct;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.cache.Derived;
@@ -33,7 +34,7 @@ public class AbstractUcpaasResult
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         String _code = o.getString("code");
         if (_code != null)
@@ -44,7 +45,7 @@ public class AbstractUcpaasResult
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("code", code);
         out.entry("msg", msg);
@@ -57,7 +58,7 @@ public class AbstractUcpaasResult
         JsonBuffer js = new JsonBuffer();
         js.object();
         try {
-            writeObject(js);
+            jsonOut(js, JsonFormOptions.DEFAULT);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

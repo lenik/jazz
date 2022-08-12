@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
@@ -49,11 +50,11 @@ public interface ICatalog
     }
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         ICatalogMetadata metadata = getMetadata();
         out.key(K_METADATA);
-        metadata.writeObjectBoxed(out);
+        metadata.jsonOut(out, opts, true);
 
         out.key(K_SCHEMAS);
         out.object();
@@ -65,7 +66,7 @@ public interface ICatalog
                 continue;
             }
             out.object();
-            schema.writeObject(out);
+            schema.jsonOut(out, opts);
             out.endObject();
         }
         out.endObject();

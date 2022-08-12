@@ -15,6 +15,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.fs.IFilesForm;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
@@ -117,7 +118,7 @@ public class LocalDataContextProvider
                 File jsonFile = new File(folder, fileName);
                 ConnectOptions options = new ConnectOptions();
 
-                JsonFn.load(options, jsonFile);
+                JsonFn.load(options, jsonFile, JsonFormOptions.PRETTY);
 
                 String name = fileName.substring(0, fileName.length() - 4);
                 addConnectOptions(name, options);

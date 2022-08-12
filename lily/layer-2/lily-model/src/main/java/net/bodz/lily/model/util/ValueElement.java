@@ -4,6 +4,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.json.JsonObject;
@@ -33,7 +34,7 @@ public class ValueElement
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         switch (jsonFormat) {
         case FLOT:
@@ -57,7 +58,7 @@ public class ValueElement
     }
 
     @Override
-    public void writeObject(IJsonOut out) {
+    public void jsonOut(IJsonOut out, JsonFormOptions opts) {
         switch (jsonFormat) {
         case FLOT:
             {

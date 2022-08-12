@@ -12,6 +12,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
@@ -221,7 +222,7 @@ public abstract class StructRow
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         if (o == null)
             throw new NullPointerException("o");
@@ -239,7 +240,7 @@ public abstract class StructRow
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         BeanJsonDumper dumper = new BeanJsonDumper(out);
         dumper.dump(this);

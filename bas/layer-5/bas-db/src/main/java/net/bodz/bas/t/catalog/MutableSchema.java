@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
@@ -148,12 +149,12 @@ public class MutableSchema
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonObject j_md = o.getJsonObject(K_METADATA);
         if (j_md != null) {
             DefaultSchemaMetadata metadata = createMetadata();
-            metadata.readObject(j_md);
+            metadata.jsonIn(j_md, opts);
             this.metadata = metadata;
         }
 
@@ -167,7 +168,7 @@ public class MutableSchema
 
             JsonObject j_table = j_tables.getJsonObject(key);
             MutableTable table = new MutableTable(tableMetadata);
-            table.readObjectBoxed(j_table);
+            table.jsonIn(j_table, opts);
             map.put(key, table);
         }
         this.tables = map;

@@ -1,6 +1,7 @@
 package net.bodz.bas.sms.ucpaas;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public class GetTemplateResult
@@ -82,9 +83,9 @@ public class GetTemplateResult
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         templateId = o.getString("templateid");
         type = o.getString("type");
         autograph = o.getString("autograph");

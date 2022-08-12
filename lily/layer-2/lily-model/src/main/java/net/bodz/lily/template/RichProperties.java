@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -73,7 +74,7 @@ public class RichProperties
     }
 
     @Override
-    protected boolean readFromJson(String key, Object val)
+    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
             throws ParseException {
         switch (key) {
         case K_IMAGES:
@@ -82,7 +83,7 @@ public class RichProperties
             setAttribute(key, ItemFile.convert((JsonArray) val));
             return true;
         }
-        return super.readFromJson(key, val);
+        return super.parseJsonEntry(key, val, opts);
     }
 
     @Override

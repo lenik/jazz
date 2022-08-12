@@ -11,6 +11,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
@@ -188,12 +189,12 @@ public class MutableRow
     }
 
     @Override
-    public void readObject(JsonObject j_row)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
     }
 
     @Override
-    public void readObjectBoxed(Object j_row)
+    public void readObjectBoxed(Object j_row, JsonFormOptions opts)
             throws ParseException {
         JsonArray jv = (JsonArray) j_row;
         int jn = jv.length();

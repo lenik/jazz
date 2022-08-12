@@ -20,8 +20,8 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
 import net.bodz.bas.db.ibatis.IbatisMapperProvider;
-import net.bodz.bas.db.jdbc.HikariDataSourceProvider;
 import net.bodz.bas.db.jdbc.ConnectOptions;
+import net.bodz.bas.db.jdbc.HikariDataSourceProvider;
 import net.bodz.bas.db.jdbc.IDataSourceProvider;
 import net.bodz.bas.db.jdbc.util.ISqlExecutor;
 import net.bodz.bas.db.jdbc.util.SharedSqlExecutor;
@@ -30,6 +30,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
@@ -176,19 +177,19 @@ public class DataContext
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonObject _options = o.getJsonObject("options");
         if (_options != null)
-            options.readObject(_options);
+            options.jsonIn(_options, opts);
         o.getMap("attributes", attributes, null, (Object jso) -> jso);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.key("options");
-        options.writeObjectBoxed(out);
+        options.jsonOut(out, opts, true);
         out.entry("attributes", attributes);
     }
 

@@ -23,14 +23,12 @@ public class PropertyExporter {
         this.indexer = indexer;
     }
 
-    public <node_t extends AbstractTypeInfo<node_t>> //
-    void export(JsonWriter out, node_t start) {
+    public void export(JsonWriter out, AbstractTypeInfo start) {
         export(out, start, null, "");
     }
 
-    public <node_t extends AbstractTypeInfo<node_t>> //
-    void export(JsonWriter out, node_t start, Set<String> includes, String pathPrefix) {
-        node_t node = start;
+    public void export(JsonWriter out, AbstractTypeInfo start, Set<String> includes, String pathPrefix) {
+        AbstractTypeInfo node = start;
         while (node != null) {
             List<IProperty> properties = new ArrayList<>();
             for (IProperty property : node.getPropertyMap().values()) {

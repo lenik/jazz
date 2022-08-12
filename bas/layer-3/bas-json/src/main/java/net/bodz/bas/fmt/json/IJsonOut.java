@@ -6,7 +6,11 @@ import java.util.Map;
 
 import net.bodz.fork.org.json.JSONException;
 
-public interface IJsonOut {
+public interface IJsonOut
+        extends
+            IJsonFormOptionsAwareStacked {
+
+    // Iterable<Object> path();
 
     IJsonOut verbatim(String code)
             throws JSONException;
@@ -136,7 +140,7 @@ public interface IJsonOut {
     default IJsonOut object(Object object)
             throws JSONException {
         try {
-            JsonFn.writeObject(this, object);
+            JsonFn.writeObject(this, object, getJsonFormOptions());
         } catch (Exception e) {
             throw new JSONException(e);
         }
@@ -164,7 +168,7 @@ public interface IJsonOut {
         for (int i = 0; i < n; i++) {
             Object item = Array.get(array, i);
             try {
-                JsonFn.writeObject(this, item);
+                JsonFn.writeObject(this, item, getJsonFormOptions());
             } catch (Exception e) {
                 throw new JSONException(String.format(//
                         "error write array[%d]: %s", i, item), e);
@@ -185,7 +189,7 @@ public interface IJsonOut {
         int i = 0;
         for (Object item : collection) {
             try {
-                JsonFn.writeObject(this, item);
+                JsonFn.writeObject(this, item, getJsonFormOptions());
             } catch (Exception e) {
                 throw new JSONException(String.format(//
                         "error write collection[%d]: %s", i, item), e);
@@ -208,7 +212,7 @@ public interface IJsonOut {
             this.key(key);
             Object item = map.get(key);
             try {
-                JsonFn.writeObject(this, item);
+                JsonFn.writeObject(this, item, getJsonFormOptions());
             } catch (Exception e) {
                 throw new JSONException(String.format(//
                         "error write map[%s]: %s", key, item), e);

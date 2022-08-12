@@ -40,6 +40,7 @@ public class JsonPersistor {
 
     ClassLoader classLoader;
     Object valueForClassNotFound;
+    JsonFormOptions opts = JsonFormOptions.XXX;
 
     public Object readTyped(String json)
             throws ParseException {
@@ -155,7 +156,7 @@ public class JsonPersistor {
         case FORM_JSON:
             JsonObject valNode = in.getJsonObject(KEY_VALUE);
             IJsonForm jsobj = (IJsonForm) obj;
-            jsobj.readObject(valNode);
+            jsobj.jsonIn(valNode, opts);
             return jsobj;
 
         case FORM_RST:
@@ -224,11 +225,11 @@ public class JsonPersistor {
         out.entry(KEY_TYPE, type.getName());
         if (type.isArray())
             out.entry(KEY_CTYPE, type.getComponentType().getName());
-        writeNonNullVal(out, obj);
+        writeNonNullVal(out, obj, opts);
         out.endObject();
     }
 
-    public void writeNonNullVal(IJsonOut out, Object obj)
+    public void writeNonNullVal(IJsonOut out, Object obj, JsonFormOptions opts)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isArray()) {
@@ -301,7 +302,7 @@ public class JsonPersistor {
             IJsonForm jsobj = (IJsonForm) obj;
             out.entry(KEY_FORM, FORM_JSON);
             out.key(KEY_VALUE);
-            jsobj.writeObject(out);
+            jsobj.jsonOut(out, opts);
             return;
         }
 

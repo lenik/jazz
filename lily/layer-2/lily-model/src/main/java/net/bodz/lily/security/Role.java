@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.entity.IdType;
 
@@ -57,9 +58,9 @@ public class Role
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         rank = o.getInt("rank", rank);
     }
 

@@ -8,7 +8,7 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
 public class MaskInfo
-        extends AbstractTypeInfo<MaskInfo> {
+        extends AbstractTypeInfo {
 
     public MaskInfo(Class<?> clazz) {
         super(clazz);

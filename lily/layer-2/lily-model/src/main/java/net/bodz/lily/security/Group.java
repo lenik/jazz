@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.entity.IdType;
 
@@ -79,9 +80,9 @@ public class Group
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         admin = o.readInto("admin", admin, new User());
         // users
     }

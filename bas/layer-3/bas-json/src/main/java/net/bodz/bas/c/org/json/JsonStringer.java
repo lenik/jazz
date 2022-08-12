@@ -5,6 +5,9 @@ import java.io.IOException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.t.list.ArrayStack;
+import net.bodz.bas.t.list.Stack;
 import net.bodz.fork.org.json.JSONException;
 import net.bodz.fork.org.json.JSONStringer;
 
@@ -16,7 +19,14 @@ public class JsonStringer
         implements
             IJsonOut {
 
+    Stack<JsonFormOptions> optionsStack = new ArrayStack<>();
+
     public JsonStringer() {
+    }
+
+    @Override
+    public Stack<JsonFormOptions> getJsonFormOptionsStack() {
+        return optionsStack;
     }
 
     @Override
@@ -114,7 +124,7 @@ public class JsonStringer
     public JsonStringer entry(String key, Object value) {
         this.key(key);
         try {
-            JsonFn.writeObject(this, value);
+            JsonFn.writeObject(this, value, getJsonFormOptions());
         } catch (IOException e) {
             throw new JSONException(e);
         } catch (FormatException e) {

@@ -10,6 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.t.preorder.PrefixMap;
@@ -182,7 +183,7 @@ public class LoginToken
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         id = o.getInt("id");
         transaction = o.getLong("txn");
@@ -199,7 +200,7 @@ public class LoginToken
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("id", id);
         out.entry("txn", transaction);

@@ -14,6 +14,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -216,7 +217,7 @@ public class ConnectOptions
     public static final String K_INFO = "properties";
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         type = o.getVar(DatabaseType.class, K_TYPE);
         url = o.getString(K_URL, url);
@@ -239,7 +240,7 @@ public class ConnectOptions
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.entry(K_TYPE, type);
         out.entry(K_URL, url);
