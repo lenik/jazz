@@ -10,6 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.t.variant.IVarMapForm;
@@ -108,25 +109,25 @@ public class JsonWrapper
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         throw new NotImplementedException();
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
     }
 
     @Override
-    public void writeObjectBoxed(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
             throws IOException, FormatException {
         if (key != null) {
             out.object();
             out.key(key);
         }
 
-        JsonFn.writeObject(out, obj);
+        JsonFn.writeObject(out, obj, opts);
 
         if (key != null)
             out.endObject();

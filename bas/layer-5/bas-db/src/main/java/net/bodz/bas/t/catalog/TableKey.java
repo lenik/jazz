@@ -14,6 +14,7 @@ import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -160,16 +161,16 @@ public final class TableKey
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        id.readObject(o);
+        id.jsonIn(o, opts);
         columnNames = o.getStringArray(K_COLUMNS);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        id.writeObject(out);
+        id.jsonOut(out, opts);
         out.key(K_COLUMNS);
         out.array();
         for (String column : columnNames)

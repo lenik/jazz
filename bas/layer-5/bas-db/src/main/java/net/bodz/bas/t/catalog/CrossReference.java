@@ -17,6 +17,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -111,13 +112,13 @@ public class CrossReference
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         foreignKey = new TableKey();
-        foreignKey.readObject(o.getJsonObject(K_FOREIGN_KEY));
+        foreignKey.jsonIn(o.getJsonObject(K_FOREIGN_KEY), opts);
 
         parentKey = new TableKey();
-        parentKey.readObject(o.getJsonObject(K_PARENT_KEY));
+        parentKey.jsonIn(o.getJsonObject(K_PARENT_KEY), opts);
 
         constraintName = o.getString(K_CONSTRAINT_NAME);
         primaryKeyName = o.getString(K_PRIMARY_KEY_NAME);
@@ -127,7 +128,7 @@ public class CrossReference
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         if (foreignKey == null)
             throw new NullPointerException("foreignKey");
@@ -135,10 +136,10 @@ public class CrossReference
             throw new NullPointerException("parentKey");
 
         out.key(K_FOREIGN_KEY);
-        foreignKey.writeObjectBoxed(out);
+        foreignKey.jsonOut(out, opts, true);
 
         out.key(K_PARENT_KEY);
-        parentKey.writeObjectBoxed(out);
+        parentKey.jsonOut(out, opts, true);
 
         out.entry(K_CONSTRAINT_NAME, constraintName);
         out.entry(K_PRIMARY_KEY_NAME, primaryKeyName);
@@ -248,8 +249,7 @@ public class CrossReference
 
     public static CrossReferenceMap convertFromJDBC(ResultSet rs, boolean groupByParent)
             throws SQLException {
-        JKMap<TableId, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs,
-                groupByParent);
+        JKMap<TableId, String, List<CrossReferenceRow>> rawMap = CrossReferenceRow.convert(rs, groupByParent);
         CrossReferenceMap refMap = new CrossReferenceMap(rawMap.getOrder());
         for (TableId k1 : rawMap.keySet()) {
             for (String k2 : rawMap.get(k1).keySet()) {

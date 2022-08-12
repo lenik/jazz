@@ -37,6 +37,8 @@ public abstract class AbstractJsonDumper<self_t>
     static final Logger logger = LoggerFactory.getLogger(AbstractJsonDumper.class);
 
     protected IJsonOut out;
+    JsonFormOptions opts;
+
     protected boolean keyed;
     protected IMarksetWithPath markset;
 
@@ -156,20 +158,20 @@ public abstract class AbstractJsonDumper<self_t>
         }
     }
 
-    protected void _dumpOnce(boolean boxed, Object obj, int depth, String name)
+    protected void _dumpOnce(boolean scalar, Object obj, int depth, String name)
             throws IOException, FormatException {
         if (obj == null) {
-            beginBox(boxed, depth, name);
+            beginBox(scalar, depth, name);
             out.value(null);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return;
         }
 
         String path = markset.path(name);
         if (!isIncluded(path)) {
-            beginBox(boxed, depth, name);
+            beginBox(scalar, depth, name);
             out.value("<excluded>");
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return;
         }
 
@@ -178,19 +180,19 @@ public abstract class AbstractJsonDumper<self_t>
         try {
             String oldPath = markset.lookup(obj);
             if (oldPath != null) {
-                beginBox(boxed, depth, name);
+                beginBox(scalar, depth, name);
                 out.value("<ref:" + oldPath + ">");
-                endBox(boxed, depth);
+                endBox(scalar, depth);
                 return;
             }
-            _dumpImpl(boxed, obj, depth, name);
+            _dumpImpl(scalar, obj, depth, name);
         } finally {
             if (name != null)
                 markset.leave();
         }
     }
 
-    protected boolean _dumpImpl(boolean boxed, @NotNull Object obj, int depth, String _name)
+    protected boolean _dumpImpl(boolean scalar, @NotNull Object obj, int depth, String _name)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isEnum()) {
@@ -200,65 +202,65 @@ public abstract class AbstractJsonDumper<self_t>
 
         if (type.isArray()) {
             markset.addMark(obj);
-            return dumpArray(boxed, obj, depth);
+            return dumpArray(scalar, obj, depth);
         }
 
         if (obj instanceof Collection<?>) {
             markset.addMark(obj);
-            return dumpCollection(boxed, (Collection<?>) obj, depth);
+            return dumpCollection(scalar, (Collection<?>) obj, depth);
         }
 
         if (obj instanceof Map<?, ?>) {
             markset.addMark(obj);
-            return dumpMap(boxed, (Map<?, ?>) obj, depth);
+            return dumpMap(scalar, (Map<?, ?>) obj, depth);
         }
 
         if (obj instanceof IJsonForm) {
             markset.addMark(obj);
-            if (dumpJsonSerializable(boxed, (IJsonForm) obj, depth))
+            if (dumpJsonSerializable(scalar, (IJsonForm) obj, depth))
                 return true;
         }
 
         if (ReflectOptions.copyTypes.contains(obj.getClass())) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(obj);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         Object simpleVal = dumpSimpleTypes(type, obj, depth);
         if (simpleVal != null) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(simpleVal);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         Object scalarVal = dumpScalar(type, obj, depth);
         if (scalarVal != null) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(scalarVal);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         int modifiers = type.getModifiers();
         if ((modifiers & Modifier.PUBLIC) == 0) {
             // don't try to dump members from non-public types.
-            formatException(boxed, depth + 1, new IllegalAccessException());
+            formatException(scalar, depth + 1, new IllegalAccessException());
             return true;
         }
 
         if (maxDepth > 0 && depth >= maxDepth) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(obj);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         try {
             markset.addMark(obj);
-            return dumpGenericObject(boxed, type, obj, depth);
+            return dumpGenericObject(scalar, type, obj, depth);
         } catch (JSONException e) {
             throw e;
         } catch (Exception e) {
@@ -267,7 +269,7 @@ public abstract class AbstractJsonDumper<self_t>
     }
 
     // TODO Not used..
-    protected boolean _dumpImplTerm(boolean boxed, @NotNull Object obj, int depth, String _name)
+    protected boolean _dumpImplTerm(boolean scalar, @NotNull Object obj, int depth, String _name)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isEnum()) {
@@ -292,43 +294,43 @@ public abstract class AbstractJsonDumper<self_t>
 
         if (obj instanceof IJsonForm) {
             markset.addMark(obj);
-            if (dumpJsonSerializable(boxed, (IJsonForm) obj, depth))
+            if (dumpJsonSerializable(scalar, (IJsonForm) obj, depth))
                 return true;
         }
 
         if (ReflectOptions.copyTypes.contains(obj.getClass())) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(obj);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         Object simpleVal = dumpSimpleTypes(type, obj, depth);
         if (simpleVal != null) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(simpleVal);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         Object scalarVal = dumpScalar(type, obj, depth);
         if (scalarVal != null) {
-            beginBox(boxed, depth, _name);
+            beginBox(scalar, depth, _name);
             out.value(scalarVal);
-            endBox(boxed, depth);
+            endBox(scalar, depth);
             return true;
         }
 
         int modifiers = type.getModifiers();
         if ((modifiers & Modifier.PUBLIC) == 0) {
             // don't try to dump members from non-public types.
-            formatException(boxed, depth + 1, new IllegalAccessException());
+            formatException(scalar, depth + 1, new IllegalAccessException());
             return true;
         }
 
-        beginBox(boxed, depth, _name);
+        beginBox(scalar, depth, _name);
         out.value(obj);
-        endBox(boxed, depth);
+        endBox(scalar, depth);
         return true;
     }
 
@@ -393,7 +395,7 @@ public abstract class AbstractJsonDumper<self_t>
         return true;
     }
 
-    protected boolean dumpJsonSerializable(boolean boxed, IJsonForm jser, int depth)
+    protected boolean dumpJsonSerializable(boolean scalar, IJsonForm jser, int depth)
             throws IOException, FormatException {
         if (depth <= 0)
             return false;
@@ -407,10 +409,7 @@ public abstract class AbstractJsonDumper<self_t>
             throw new RuntimeException(e.getMessage(), e);
         }
 
-        if (boxed)
-            jser.writeObjectBoxed(out);
-        else
-            jser.writeObject(out);
+        jser.jsonOut(out, opts, scalar);
         return true;
     }
 

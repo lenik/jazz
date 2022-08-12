@@ -7,8 +7,9 @@ import java.util.Locale;
 
 import net.bodz.bas.c.java.util.TimeZones;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public class FlyingIndex
@@ -101,7 +102,7 @@ public class FlyingIndex
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         window = o.getLong("window", window);
         time = o.getLong("time", time);
@@ -109,7 +110,7 @@ public class FlyingIndex
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("window", window);
         out.entry("time", time);

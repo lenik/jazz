@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -123,7 +124,7 @@ public class CsvRow
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         if (fieldNames == null) {
             int index = 0;
@@ -150,7 +151,7 @@ public class CsvRow
     }
 
     @Override
-    public void writeObject(IJsonOut out) {
+    public void jsonOut(IJsonOut out, JsonFormOptions opts) {
         if (fieldNames == null) {
             out.array();
             int n = size();

@@ -13,6 +13,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
@@ -76,7 +77,7 @@ public interface IRow
     }
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         IRowSetMetadata metadata = getRowSet().getMetadata();
         int cc = metadata.getColumnCount();
@@ -88,10 +89,10 @@ public interface IRow
     }
 
     @Override
-    default void writeObjectBoxed(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
             throws IOException, FormatException {
         out.array();
-        writeObject(out);
+        jsonOut(out, opts);
         out.endArray();
     }
 

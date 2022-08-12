@@ -56,6 +56,32 @@ public class AutofixJsonOut
         return states.pop();
     }
 
+    @Override
+    public Stack<JsonFormOptions> getJsonFormOptionsStack() {
+        return out.getJsonFormOptionsStack();
+    }
+
+    @Override
+    public JsonFormOptions getDefaultJsonFormOptions() {
+        return out.getDefaultJsonFormOptions();
+    }
+
+    @Override
+    public JsonFormOptions getJsonFormOptions() {
+        return out.getJsonFormOptions();
+    }
+
+    @Override
+    public void pushOptions(JsonFormOptions options) {
+        out.pushOptions(options);
+    }
+
+    @Override
+    public JsonFormOptions popOptions() {
+        return out.popOptions();
+    }
+
+    @Override
     public IJsonOut verbatim(String code)
             throws JSONException {
         out.verbatim(code);

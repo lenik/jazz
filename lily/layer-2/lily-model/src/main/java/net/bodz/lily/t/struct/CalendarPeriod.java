@@ -9,6 +9,7 @@ import org.joda.time.Period;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public class CalendarPeriod
@@ -30,7 +31,7 @@ public class CalendarPeriod
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         String spec = o.getString("asString");
         if (spec != null) {
@@ -48,7 +49,7 @@ public class CalendarPeriod
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("asString", getAsString());
         out.entry("years", years);

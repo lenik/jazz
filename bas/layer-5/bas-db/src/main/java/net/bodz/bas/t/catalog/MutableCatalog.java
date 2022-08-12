@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
@@ -119,12 +120,12 @@ public class MutableCatalog
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonObject j_md = o.getJsonObject(K_METADATA);
         if (j_md != null) {
             DefaultCatalogMetadata metadata = createMetadata();
-            metadata.readObject(j_md);
+            metadata.jsonIn(j_md, opts);
             this.metadata = metadata;
         }
 
@@ -138,7 +139,7 @@ public class MutableCatalog
 
             JsonObject j_schema = j_schemas.getJsonObject(key);
             MutableSchema schema = new MutableSchema(schemaMetadata);
-            schema.readObjectBoxed(j_schema);
+            schema.jsonIn(j_schema, opts);
             map.put(key, schema);
         }
         this.schemas = map;

@@ -9,6 +9,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
@@ -62,9 +63,9 @@ public interface ISchemaMetadata
     IViewMetadata getView(String name);
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        getId().writeObject(out);
+        getId().jsonOut(out, opts);
 
         out.key(K_TABLES);
         out.object();
@@ -76,7 +77,7 @@ public interface ISchemaMetadata
                 continue;
             }
             out.object();
-            table.writeObject(out);
+            table.jsonOut(out, opts);
             out.endObject();
         }
         out.endObject();
@@ -91,7 +92,7 @@ public interface ISchemaMetadata
                 continue;
             }
             out.object();
-            view.writeObject(out);
+            view.jsonOut(out, opts);
             out.endObject();
         }
         out.endObject();

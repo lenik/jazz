@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.html.io.BHtmlOut;
 import net.bodz.bas.html.io.HtmlOutputFormat;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -40,9 +41,9 @@ public class AjaxResult
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        super.writeObject(out);
+        super.jsonOut(out, opts);
 
         if (!htmlUpdates.isEmpty()) {
             for (IHtmlOut html : htmlUpdates.values())

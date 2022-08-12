@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
@@ -86,17 +87,17 @@ public class MutableTable
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         IRowSetMetadata metadata = getMetadata();
         if (isAttached()) {
             this.id = new TableId();
-            this.id.readObject(o);
+            this.id.jsonIn(o, opts);
         } else {
             JsonObject j_md = o.getJsonObject(K_METADATA);
             if (j_md != null) {
                 metadata = createMetadata();
-                metadata.readObject(j_md);
+                metadata.jsonIn(j_md, opts);
                 this.metadata = metadata;
             }
         }
@@ -107,7 +108,7 @@ public class MutableTable
         for (int rowIndex = 0; rowIndex < n; rowIndex++) {
             JsonArray j_row = j_rows.getJsonArray(rowIndex);
             MutableRow row = new MutableRow(this, rowIndex);
-            row.readObjectBoxed(j_row);
+            row.readObjectBoxed(j_row, opts);
             rows.add(row);
         }
         this.rows = rows;

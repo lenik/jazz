@@ -1,9 +1,5 @@
 package net.bodz.bas.comm;
 
-import gnu.io.CommPort;
-import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -11,6 +7,10 @@ import java.util.List;
 import net.bodz.bas.c.system.LibraryPath;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
 
 public class SerialPorts {
 

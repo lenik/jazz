@@ -15,6 +15,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -285,7 +286,7 @@ public class DefaultColumnMetadata
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + type, e);
             }
-            obj.readObjectBoxed(jsonBox);
+            obj.readObjectBoxed(jsonBox, Convention.JSON_STYLE);
             return obj;
         }
 
@@ -313,7 +314,7 @@ public class DefaultColumnMetadata
 
         if (jsonType) {
             IJsonForm obj = (IJsonForm) value;
-            obj.writeObjectBoxed(out);
+            obj.jsonOut(out, Convention.JSON_STYLE, true);
             return;
         }
 
@@ -441,7 +442,7 @@ public class DefaultColumnMetadata
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
 //        index = o.getInt("index", -1);
         name = o.getString(K_NAME);

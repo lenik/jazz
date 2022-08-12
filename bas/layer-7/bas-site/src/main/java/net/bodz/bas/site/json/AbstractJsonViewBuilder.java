@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.web.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.IHttpViewContext;
@@ -51,13 +52,17 @@ public abstract class AbstractJsonViewBuilder<T>
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<T> ref)
             throws ViewBuilderException, IOException {
+//        IVariantMap<String> q = VariantMaps.fromRequest(ctx.getRequest());
+//        JsonFormOptions opts = new JsonFormOptions(q);
+
         PrintWriter writer = resp.getWriter();
         JsonWriter out = new JsonWriter(writer);
-        buildJsonView(ctx, out, ref);
+
+        buildJsonView(ctx, out, ref, JsonFormOptions.WEB);
         return null;
     }
 
-    protected abstract void buildJsonView(IHttpViewContext ctx, IJsonOut out, IUiRef<T> ref)
+    protected abstract void buildJsonView(IHttpViewContext ctx, IJsonOut out, IUiRef<T> ref, JsonFormOptions opts)
             throws ViewBuilderException, IOException;
 
 }

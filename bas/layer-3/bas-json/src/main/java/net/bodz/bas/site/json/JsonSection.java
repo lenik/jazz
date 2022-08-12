@@ -6,8 +6,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.AbstractVariantMap;
@@ -65,14 +66,14 @@ public class JsonSection
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (String key : o.keySet()) {
             Object value = o.get(key);
             if (value instanceof JsonObject) {
                 JsonObject child = (JsonObject) value;
                 JsonSection section = new JsonSection(order);
-                section.readObject(child);
+                section.jsonIn(child, opts);
                 value = section;
             }
             map.put(key, value);
@@ -80,7 +81,7 @@ public class JsonSection
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         for (Entry<String, Object> entry : map.entrySet()) {
             String key = entry.getKey();
@@ -89,7 +90,7 @@ public class JsonSection
             if (value instanceof JsonSection) {
                 JsonSection js = (JsonSection) value;
                 out.object();
-                js.writeObject(out);
+                js.jsonOut(out, opts);
                 out.endObject();
             } else {
                 out.value(value);

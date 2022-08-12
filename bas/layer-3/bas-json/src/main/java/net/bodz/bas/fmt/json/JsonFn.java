@@ -71,30 +71,17 @@ public class JsonFn {
     }
 
     /**
-     * Without compact.
-     *
      * @param obj
      *            Non-<code>null</code> json-support object.
      */
-    public static String toJson(IJsonForm obj)
-            throws FormatException {
-        return toJson(obj, false);
-    }
-
-    /**
-     * @param obj
-     *            Non-<code>null</code> json-support object.
-     * @param compact
-     *            Format json in compact single line form.
-     */
-    public static String toJson(IJsonForm obj, boolean compact)
+    public static String toJson(IJsonForm obj, JsonFormOptions opts)
             throws FormatException {
         if (obj == null)
             throw new NullPointerException("obj");
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            obj.writeObjectBoxed(out);
+            obj.jsonOut(out, opts, true);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -102,41 +89,31 @@ public class JsonFn {
     }
 
     /**
-     * Without compact.
-     *
-     * @param obj
-     *            Non-<code>null</code> json-support object.
-     */
-    public static String toJson(IJsonForm obj, String fallback) {
-        return toJson(obj, fallback, false);
-    }
-
-    /**
      * @param obj
      *            Non-<code>null</code> json-support object.
      * @param compact
      *            Format json in compact single line form.
      */
-    public static String toJson(IJsonForm obj, String fallback, boolean compact) {
+    public static String toJson(IJsonForm obj, String fallback, JsonFormOptions opts) {
         if (obj == null)
             throw new NullPointerException("obj");
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            obj.writeObjectBoxed(out);
+            obj.jsonOut(out, opts, true);
         } catch (Exception e) {
             return fallback;
         }
         return buf.toString();
     }
 
-    public static <T extends IJsonForm> T fromJson(T obj, String json)
+    public static <T extends IJsonForm> T fromJson(T obj, String json, JsonFormOptions opts)
             throws ParseException {
         if (json == null) // XXX null ?
-            obj.readObject(null);
+            obj.jsonIn(null, opts);
         else {
             JsonObject jsonObj = parseObject(json);
-            obj.readObject(jsonObj);
+            obj.jsonIn(jsonObj, opts);
         }
         return obj;
     }
@@ -198,22 +175,14 @@ public class JsonFn {
         return new JsonUnion(array);
     }
 
-    public static <T extends IJsonForm> T readObject(T context, JsonObject node)
+    public static <T extends IJsonForm> T readObject(T context, JsonObject node, JsonFormOptions opts)
             throws ParseException {
         if (node != null)
-            context.readObject(node);
+            context.jsonIn(node, opts);
         return context;
     }
 
-    public static void writeObject(IJsonOut out, Object o)
-            throws IOException, FormatException {
-        IJsonOptions opts = null;
-        if (o instanceof IJsonOptions)
-            opts = (IJsonOptions) o;
-        writeObject(out, o, opts);
-    }
-
-    public static void writeObject(IJsonOut out, Object o, IJsonOptions opts)
+    public static void writeObject(IJsonOut out, Object o, JsonFormOptions opts)
             throws IOException, FormatException {
         if (o == null) {
             out.value(null);
@@ -221,7 +190,7 @@ public class JsonFn {
         }
         if (o instanceof IJsonForm) {
             IJsonForm jsVal = (IJsonForm) o;
-            jsVal.writeObjectBoxed(out);
+            jsVal.jsonOut(out, opts, true);
             return;
         }
         if (o instanceof BigDecimal || o instanceof BigInteger) {
@@ -231,21 +200,21 @@ public class JsonFn {
         out.value(o);
     }
 
-    public static <T extends IJsonForm> T load(T obj, String fileName)
+    public static <T extends IJsonForm> T load(T obj, String fileName, JsonFormOptions opts)
             throws IOException, ParseException {
         File file = new File(fileName);
-        return load(obj, file);
+        return load(obj, file, opts);
     }
 
-    public static <T extends IJsonForm> T load(T obj, File file)
+    public static <T extends IJsonForm> T load(T obj, File file, JsonFormOptions opts)
             throws IOException, ParseException {
         try (FileInputStream in = new FileInputStream(file)) {
-            load(obj, in, "utf-8");
+            load(obj, in, "utf-8", opts);
         }
         return obj;
     }
 
-    public static <T extends IJsonForm> T load(T obj, InputStream in, String encoding)
+    public static <T extends IJsonForm> T load(T obj, InputStream in, String encoding, JsonFormOptions opts)
             throws IOException, ParseException {
         Charset charset = Charset.forName(encoding);
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -257,31 +226,31 @@ public class JsonFn {
         byte[] byteArray = buf.toByteArray();
         String json = new String(byteArray, charset);
         JsonObject root = JsonFn.parseObject(json);
-        JsonFn.readObject(obj, root);
+        JsonFn.readObject(obj, root, opts);
         return obj;
     }
 
-    public static void save(IJsonForm obj, String file)
+    public static void save(IJsonForm obj, String file, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, file, "utf-8");
+        save(obj, file, "utf-8", opts);
     }
 
-    public static void save(IJsonForm obj, File file)
+    public static void save(IJsonForm obj, File file, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, file, "utf-8");
+        save(obj, file, "utf-8", opts);
     }
 
-    public static void save(IJsonForm obj, String file, String encoding)
+    public static void save(IJsonForm obj, String file, String encoding, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, new File(file), encoding);
+        save(obj, new File(file), encoding, opts);
     }
 
-    public static void save(IJsonForm obj, File file, String encoding)
+    public static void save(IJsonForm obj, File file, String encoding, JsonFormOptions opts)
             throws IOException, FormatException {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             Writer writer = new OutputStreamWriter(fos, encoding);
             IJsonOut out = new JsonWriter(writer);
-            obj.writeObjectBoxed(out);
+            obj.jsonOut(out, opts, true);
             writer.flush();
         }
     }

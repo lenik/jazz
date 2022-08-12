@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonStruct;
 import net.bodz.bas.json.JsonObject;
 
@@ -33,7 +34,7 @@ public class SmsRecord
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         recipient = o.getString("recipient", recipient);
         templateName = o.getString("templateName", templateName);
@@ -46,7 +47,7 @@ public class SmsRecord
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("recipient", recipient);
         out.entry("templateName", templateName);

@@ -13,13 +13,13 @@ public abstract class JsonSupport
             IJsonForm {
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         new BeanJsonLoader().parse(this, o);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         new BeanJsonDumper(out).dump(this);
     }

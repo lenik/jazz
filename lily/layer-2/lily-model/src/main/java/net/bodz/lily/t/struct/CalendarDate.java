@@ -13,6 +13,7 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -204,7 +205,7 @@ public final class CalendarDate
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         String spec = o.getString("asString");
         if (spec != null) {
@@ -222,7 +223,7 @@ public final class CalendarDate
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("asString", getAsString());
         out.entry("year", year);

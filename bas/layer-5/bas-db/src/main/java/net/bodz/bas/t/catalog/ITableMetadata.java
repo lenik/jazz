@@ -9,6 +9,7 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ITableMetadata
@@ -33,14 +34,14 @@ public interface ITableMetadata
     }
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        ITableViewMetadata.super.writeObject(out);
+        ITableViewMetadata.super.jsonOut(out, opts);
 
         TableKey primaryKey = getPrimaryKey();
         if (primaryKey != null) {
             out.key(K_PRIMARY_KEY);
-            primaryKey.writeObject(out);
+            primaryKey.jsonOut(out, opts);
         }
 
         Map<String, CrossReference> foreignKeys = getForeignKeys();
@@ -48,7 +49,7 @@ public interface ITableMetadata
             out.key(K_FOREIGN_KEYS);
             out.array();
             for (CrossReference ref : foreignKeys.values())
-                ref.writeObjectBoxed(out);
+                ref.jsonOut(out, opts, true);
             out.endArray();
         }
     }

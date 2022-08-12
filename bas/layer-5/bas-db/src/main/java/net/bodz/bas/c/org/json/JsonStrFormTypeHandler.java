@@ -12,6 +12,7 @@ import org.postgresql.util.PGobject;
 
 import net.bodz.bas.db.ibatis.AliasedType;
 import net.bodz.bas.db.ibatis.TypeHandler;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 
 @Alias("JsonStrForm")
 @AliasedType
@@ -19,13 +20,15 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 public class JsonStrFormTypeHandler
         extends TypeHandler<IJsonStrForm> {
 
+    JsonFormOptions JSON_SQL = JsonFormOptions.SQL;
+
     public JsonStrFormTypeHandler() {
     }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, IJsonStrForm parameter, JdbcType jdbcType)
             throws SQLException {
-        String json = parameter.toJsonStr();
+        String json = parameter.toJsonStr(JSON_SQL);
         PGobject pgo = new PGobject();
         pgo.setType("json"); // jsonb .. similar.
         pgo.setValue(json);
@@ -37,7 +40,7 @@ public class JsonStrFormTypeHandler
             throws SQLException {
         String json = rs.getString(columnName);
         JsonStr val = new JsonStr();
-        val.fromJsonStr_sql(json);
+        val.fromJsonStr_sql(json, JSON_SQL);
         return val;
     }
 
@@ -46,7 +49,7 @@ public class JsonStrFormTypeHandler
             throws SQLException {
         String json = rs.getString(columnIndex);
         JsonStr val = new JsonStr();
-        val.fromJsonStr_sql(json);
+        val.fromJsonStr_sql(json, JSON_SQL);
         return val;
     }
 
@@ -55,7 +58,7 @@ public class JsonStrFormTypeHandler
             throws SQLException {
         String json = cs.getString(columnIndex);
         JsonStr val = new JsonStr();
-        val.fromJsonStr_sql(json);
+        val.fromJsonStr_sql(json, JSON_SQL);
         return val;
     }
 

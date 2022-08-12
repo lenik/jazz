@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.web.AbstractHttpViewBuilder;
 import net.bodz.bas.servlet.IHttpViewContext;
@@ -34,7 +35,7 @@ public class UploadResult_json
         UploadResult result = ref.get();
 
         jout.object();
-        result.writeObject(jout);
+        result.jsonOut(jout, JsonFormOptions.WEB);
         jout.endObject();
 
         return ctx.stop();

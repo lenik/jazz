@@ -16,6 +16,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.json.JsonObjectBuilder;
@@ -159,7 +160,7 @@ public class TableOfPathProps
         String columns = map.getString("columns");
         if (columns == null)
             // throw new IllegalArgumentException("Expected request parameter columns.");
-            columns="*";
+            columns = "*";
         try {
             parsePropertyPathsAsColumns(columns);
         } catch (Exception e) {
@@ -179,12 +180,12 @@ public class TableOfPathProps
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         List<String> columns = getColumnList();
         out.key("columns");
@@ -202,9 +203,9 @@ public class TableOfPathProps
                 try {
                     List<?> row = convert(item, columns);
                     if (rowFormat.equals(ROW_ARRAY)) {
-                        writeRowAsArray(out, columns, row);
+                        writeRowAsArray(out, columns, row, opts);
                     } else {
-                        writeRowAsObject(out, columns, row);
+                        writeRowAsObject(out, columns, row, opts);
                     }
                 } catch (ReflectiveOperationException e) {
                     throw new RuntimeException("Error convert to json: " + item, e);
@@ -215,7 +216,7 @@ public class TableOfPathProps
 
     }
 
-    void writeRowAsArray(IJsonOut out, List<String> columns, List<?> row)
+    void writeRowAsArray(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
             throws IOException, FormatException {
         int n = columns.size();
         out.array();
@@ -224,12 +225,12 @@ public class TableOfPathProps
             // String fmt = data.getFormat(column);
             Object cell = row.get(i);
             // out.key(column);
-            JsonFn.writeObject(out, cell);
+            JsonFn.writeObject(out, cell, opts);
         }
         out.endArray();
     }
 
-    void writeRowAsObject(IJsonOut out, List<String> columns, List<?> row)
+    void writeRowAsObject(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
             throws IOException, FormatException {
         int n = columns.size();
         PathMap<Object> struct = new PathMap<>('.', SortOrder.KEEP);
@@ -265,7 +266,7 @@ public class TableOfPathProps
                 public void visitAttribute(String key, Object value)
                         throws IOException, FormatException {
                     out.key(key);
-                    JsonFn.writeObject(out, value);
+                    JsonFn.writeObject(out, value, opts);
                 }
 
             });

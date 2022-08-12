@@ -10,9 +10,10 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.org.json.JsonValueWrapper;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
@@ -32,6 +33,7 @@ public class JsonMap
     private static final long serialVersionUID = 1L;
 
     Map<String, Object> map;
+    JsonFormOptions opts = JsonFormOptions.DEFAULT;
 
     public JsonMap() {
         this(new TreeMap<String, Object>());
@@ -47,23 +49,26 @@ public class JsonMap
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         map.clear();
         for (String key : o.keySet()) {
             Object val = o.get(key);
-            if (!readFromJson(key, val))
+            if (!parseJsonEntry(key, val, opts))
                 map.put(key, JsonFn.unwrap(val));
         }
     }
 
-    protected boolean readFromJson(String key, Object val)
+    /**
+     * @return <code>true</code> if the key is handled.
+     */
+    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
             throws ParseException {
         return false;
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         for (Entry<String, ?> entry : map.entrySet()) {
             String key = entry.getKey();
@@ -98,27 +103,27 @@ public class JsonMap
 
     public String getJson()
             throws FormatException {
-        String json = JsonFn.toJson(this);
+        String json = JsonFn.toJson(this, opts);
         return json;
     }
 
     public void setJson(String json)
             throws ParseException {
         Object j_val = JsonBuilder.getInstance().parse(json);
-        readObjectBoxed(j_val);
+        readObjectBoxed(j_val, opts);
     }
 
     public JsonValueWrapper getJsonStr()
             throws FormatException {
-        String json = JsonFn.toJson(this);
+        String json = JsonFn.toJson(this, opts);
         Object j_val = JsonBuilder.getInstance().parse(json);
         return new JsonValueWrapper(j_val);
     }
 
-    public synchronized void setJsonStr(JsonValueWrapper form)
+    public synchronized void setJsonStr(JsonValueWrapper form, JsonFormOptions opts)
             throws ParseException {
         Object j_val = form.getWrapped();
-        readObjectBoxed(j_val);
+        readObjectBoxed(j_val, opts);
     }
 
     @Override

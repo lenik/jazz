@@ -25,17 +25,17 @@ public class JsonUnion
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         for (IJsonForm item : list)
-            item.readObject(o);
+            item.jsonIn(o, opts);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         for (IJsonForm item : list)
-            item.writeObject(out);
+            item.jsonOut(out, opts);
     }
 
 }

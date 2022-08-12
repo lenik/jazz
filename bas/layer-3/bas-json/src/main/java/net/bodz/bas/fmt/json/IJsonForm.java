@@ -14,21 +14,21 @@ public interface IJsonForm {
      * @param json
      *            <code>null</code> for the null object.
      */
-    void readObject(JsonObject o)
+    void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException;
 
     /**
      * @param out
      *            expects a key
      */
-    void writeObject(IJsonOut out)
+    void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException;
 
-    default void readObjectBoxed(Object obj)
+    default void readObjectBoxed(Object obj, JsonFormOptions opts)
             throws ParseException {
         if (obj instanceof JsonObject) {
             JsonObject jo = (JsonObject) obj;
-            readObject(jo);
+            jsonIn(jo, opts);
             return;
         }
         throw new UnsupportedOperationException("Can't read from non-object json value.");
@@ -38,11 +38,15 @@ public interface IJsonForm {
      * @param out
      *            expects a value
      */
-    default void writeObjectBoxed(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
             throws IOException, FormatException {
-        out.object();
-        writeObject(out);
-        out.endObject();
+        if (scalar) {
+            out.object();
+            jsonOut(out, opts);
+            out.endObject();
+        } else {
+            jsonOut(out, opts);
+        }
     }
 
     class json

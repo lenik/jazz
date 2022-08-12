@@ -11,6 +11,7 @@ import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -121,7 +122,7 @@ public interface IColumnMetadata
             throws XMLStreamException, FormatException;
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         if (getParent() != null)
             out.entry(K_POSITION, getPositionOpt());

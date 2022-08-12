@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 
 public class ValidControl
@@ -40,7 +41,7 @@ public class ValidControl
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         valid = o.getBoolean("valid", valid);
         since = o.getDateTime("since", since);
@@ -49,7 +50,7 @@ public class ValidControl
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.entry("valid", valid);
         out.entry("since", since);

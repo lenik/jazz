@@ -11,6 +11,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
@@ -145,25 +146,25 @@ public class TableId
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
         tableName = o.getString(K_TABLE_NAME);
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        super.writeObject(out);
+        super.jsonOut(out, opts);
         if (tableName != null)
             out.entry(K_TABLE_NAME, tableName);
     }
 
     @Override
-    public void readObject(IElement o)
+    public void readObject(IElement element)
             throws ParseException, LoaderException {
-        super.readObject(o);
-        tableName = o.getAttribute(K_TABLE_NAME);
+        super.readObject(element);
+        tableName = element.getAttribute(K_TABLE_NAME);
     }
 
     @Override

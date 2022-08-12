@@ -11,6 +11,7 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.json.JsonObject;
@@ -466,9 +467,9 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     @SuppressWarnings("unchecked")
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         refCount = o.getInt("refCount", refCount);
 

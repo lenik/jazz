@@ -12,6 +12,7 @@ import java.util.Map;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -140,7 +141,7 @@ public class DefaultRowSetMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         JsonArray jv = o.getJsonArray(K_COLUMNS);
         int n = jv.length();
@@ -148,7 +149,7 @@ public class DefaultRowSetMetadata
         for (int i = 0; i < n; i++) {
             JsonObject item = jv.getJsonObject(i);
             DefaultColumnMetadata column = new DefaultColumnMetadata(this);
-            column.readObject(item);
+            column.jsonIn(item, opts);
             addColumn(column);
         }
     }

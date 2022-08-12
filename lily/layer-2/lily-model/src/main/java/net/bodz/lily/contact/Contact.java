@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.i18n.geo.GeoZones;
 import net.bodz.bas.json.JsonObject;
@@ -411,9 +412,9 @@ public class Contact
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         org = o.readInto("org", org, new Organization());
         orgUnit = o.readInto("orgUnit", orgUnit, new OrgUnit());

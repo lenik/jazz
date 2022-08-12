@@ -4,6 +4,9 @@ import java.io.Writer;
 
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.t.list.ArrayStack;
+import net.bodz.bas.t.list.Stack;
 import net.bodz.fork.org.json.JSONException;
 import net.bodz.fork.org.json.JSONWriter;
 
@@ -12,11 +15,18 @@ public class JsonWriter
         implements
             IJsonOut {
 
+    Stack<JsonFormOptions> optionsStack = new ArrayStack<>();
+
     char lastMode;
     int verbatimLevel;
 
     public JsonWriter(Appendable w) {
         super(w);
+    }
+
+    @Override
+    public Stack<JsonFormOptions> getJsonFormOptionsStack() {
+        return optionsStack;
     }
 
     public static JsonBuffer buffer() {
@@ -122,7 +132,7 @@ public class JsonWriter
     public JsonWriter entry(String key, Object value) {
         this.key(key);
         try {
-            JsonFn.writeObject(this, value);
+            JsonFn.writeObject(this, value, getJsonFormOptions());
         } catch (Exception e) {
             throw new JSONException(e);
         }

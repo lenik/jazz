@@ -9,7 +9,7 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
 public class IndexInfo
-        extends AbstractTypeInfo<IndexInfo> {
+        extends AbstractTypeInfo {
 
     Map<String, IMethod> methods = new HashMap<>();
 

@@ -12,6 +12,7 @@ import java.util.Map;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -92,14 +93,14 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         JsonObject pk = o.getJsonObject(K_PRIMARY_KEY);
         if (pk != null) {
             primaryKey = new TableKey();
-            primaryKey.readObject(pk);
+            primaryKey.jsonIn(pk, opts);
         } else {
             // HINT: primary key can also be calculated from columns.
             updatePrimaryKey();
@@ -111,7 +112,7 @@ public class DefaultTableMetadata
             for (int i = 0; i < nfk; i++) {
                 JsonObject fk = fkv.getJsonObject(i);
                 CrossReference ref = new CrossReference();
-                ref.readObject(fk);
+                ref.jsonIn(fk, opts);
                 foreignKeys.put(ref.getConstraintName(), ref);
             }
         }

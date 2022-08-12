@@ -14,10 +14,10 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
 
-public class JsonSerializable_json
+public class JsonForm_json
         extends AbstractHttpViewBuilder<IJsonForm> {
 
-    public JsonSerializable_json() {
+    public JsonForm_json() {
         super(IJsonForm.class);
     }
 
@@ -29,10 +29,12 @@ public class JsonSerializable_json
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IJsonForm> ref)
             throws ViewBuilderException, IOException {
+
         IJsonForm jso = ref.get();
         String json;
         try {
-            json = JsonFn.toJson(jso);
+            JsonFormOptions opts = JsonFormOptions.WEB;
+            json = JsonFn.toJson(jso, opts);
         } catch (FormatException e) {
             throw new ViewBuilderException(e.getMessage(), e);
         }

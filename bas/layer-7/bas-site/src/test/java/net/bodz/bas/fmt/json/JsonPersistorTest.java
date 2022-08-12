@@ -279,14 +279,14 @@ class JsonFoo
             IJsonForm {
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         name = o.getString("name");
         age = o.getInt("age");
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.object();
         out.entry("name", name);
@@ -342,19 +342,19 @@ class BarMixed
     JsonFoo foo;
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         color = o.getString("color");
         foo = o.readInto("foo", new JsonFoo());
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         out.object();
         out.entry("color", color);
         out.key("foo");
-        foo.writeObject(out);
+        foo.jsonOut(out, opts);
         out.endObject();
     }
 

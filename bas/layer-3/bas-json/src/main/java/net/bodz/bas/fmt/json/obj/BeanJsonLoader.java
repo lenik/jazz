@@ -65,8 +65,8 @@ public class BeanJsonLoader
             throws Exception {
         if (overridable) {
             if (ctx instanceof IJsonForm) {
-                IJsonForm js = (IJsonForm) ctx;
-                js.readObject(node);
+                IJsonForm jsonForm = (IJsonForm) ctx;
+                jsonForm.jsonIn(node, getOptions());
                 return;
             }
         }

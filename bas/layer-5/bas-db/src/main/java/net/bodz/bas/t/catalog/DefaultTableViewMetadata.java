@@ -11,6 +11,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 
@@ -59,11 +60,11 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        id.readObject(o);
+        id.jsonIn(o, opts);
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
-        super.readObject(o);
+        super.jsonIn(o, opts);
     }
 
     @Override

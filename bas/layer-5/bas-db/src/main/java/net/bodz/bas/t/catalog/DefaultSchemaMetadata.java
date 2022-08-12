@@ -15,6 +15,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
@@ -358,16 +359,16 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        getId().readObject(o);
+        getId().jsonIn(o, opts);
 
         JsonObject jm = o.getJsonObject(K_TABLES);
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
         for (String key : jm.keySet()) {
             JsonObject item = jm.getJsonObject(key);
             DefaultTableMetadata table = new DefaultTableMetadata();
-            table.readObject(item);
+            table.jsonIn(item, opts);
             tables.put(key, table);
         }
         this.tableMap = tables;
@@ -377,7 +378,7 @@ public class DefaultSchemaMetadata
         for (String key : jm.keySet()) {
             JsonObject item = jm.getJsonObject(key);
             DefaultViewMetadata table = new DefaultViewMetadata();
-            table.readObject(item);
+            table.jsonIn(item, opts);
             views.put(key, table);
         }
         this.viewMap = views;

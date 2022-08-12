@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 
@@ -24,11 +25,11 @@ public interface ITableUsage
     List<String> getColumns();
 
     @Override
-    default void writeObject(IJsonOut out)
+    default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         TableId id = getTableId();
         if (id != null)
-            id.writeObject(out);
+            id.jsonOut(out, opts);
 
         List<String> columns = getColumns();
         if (columns != null) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.sms.ISmsSendResponse;
 import net.bodz.bas.sms.SmsSendState;
@@ -43,9 +44,9 @@ public class SendSmsResult
     }
 
     @Override
-    public void readObject(JsonObject o)
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        super.readObject(o);
+        super.jsonIn(o, opts);
 
         String _count = o.getString("count");
         count = Integer.parseInt(_count);
@@ -57,9 +58,9 @@ public class SendSmsResult
     }
 
     @Override
-    public void writeObject(IJsonOut out)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
-        super.writeObject(out);
+        super.jsonOut(out, opts);
         out.entry("count", count);
         out.entry("smsid", smsid);
         out.entry("mobile", mobile);
