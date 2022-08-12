@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -59,6 +60,13 @@ public class UploadHandler
 
     public UploadResult handlePostRequest(HttpServletRequest request)
             throws IOException, ServletException {
+
+        String contentType = request.getContentType();
+        if (contentType != null && contentType.startsWith("multipart/")) {
+            MultipartConfigElement mce = new MultipartConfigElement("/xxx");
+            request.setAttribute("org.eclipse.jetty.multipartConfig", mce);
+        }
+
         UploadResult result = new UploadResult();
         for (Part part : request.getParts()) {
             String fileName = part.getName();
