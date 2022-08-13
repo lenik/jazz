@@ -13,6 +13,8 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
+import net.bodz.bas.t.range.LongRange;
+import net.bodz.bas.t.range.Range;
 import net.bodz.bas.t.range.RangeVarsFn;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -25,6 +27,8 @@ import net.bodz.lily.security.login.LoginToken;
 public class CoObjectMask
         implements
             IVarMapForm {
+
+    Range idRange = new LongRange();
 
     String codeName;
     String label;
@@ -42,6 +46,14 @@ public class CoObjectMask
     IntegerRange ownerIdRange;
     IntegerRange ownerGroupIdRange;
     Set<Integer> acls;
+
+    public Range getIdRange() {
+        return idRange;
+    }
+
+    public void setIdRange(Range idRange) {
+        this.idRange = idRange;
+    }
 
     public String getCodeName() {
         return codeName;
