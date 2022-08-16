@@ -6,7 +6,7 @@ public interface IJDBCLoadSelector {
         return true;
     }
 
-    default boolean selectTable(TableId id) {
+    default boolean selectTable(TableId id, TableType type) {
         return true;
     }
 
@@ -24,9 +24,10 @@ public interface IJDBCLoadSelector {
         }
 
         @Override
-        public boolean selectTable(TableId id) {
+        public boolean selectTable(TableId id, TableType type) {
             return false;
         }
+
     };
 
 }

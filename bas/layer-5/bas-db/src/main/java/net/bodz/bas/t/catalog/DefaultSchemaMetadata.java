@@ -429,10 +429,10 @@ public class DefaultSchemaMetadata
             TableId id = new TableId();
             id.readFromJDBC(rs);
 
-            if (!loadSelector.selectTable(id))
+            TableType type = TableType.parseJDBC(rs);
+            if (!loadSelector.selectTable(id, type))
                 return null;
 
-            TableType type = TableType.parseJDBC(rs);
             switch (type) {
             case TABLE:
                 DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
@@ -478,7 +478,7 @@ public class DefaultSchemaMetadata
             viewId.catalogName = rs.getString("view_catalog");
             viewId.schemaName = rs.getString("view_schema");
             viewId.tableName = rs.getString("view_name");
-            if (!loadSelector.selectTable(viewId))
+            if (!loadSelector.selectTable(viewId, TableType.VIEW))
                 return;
 
             IViewMetadata view = getView(viewId.getTableName());

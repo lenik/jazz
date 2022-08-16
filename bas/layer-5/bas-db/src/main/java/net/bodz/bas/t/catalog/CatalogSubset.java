@@ -93,7 +93,7 @@ public class CatalogSubset {
     public boolean addTable(TableId id) {
         String schemaName = id.getSchemaName();
         SchemaSubset subset = (schemaName == null) ? anySchema : addSchema(schemaName);
-        return subset.addTable(id.getTableName());
+        return subset.addTableWildcards(id.getTableName());
     }
 
     @Override

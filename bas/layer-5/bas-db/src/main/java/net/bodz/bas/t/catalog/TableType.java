@@ -22,6 +22,28 @@ public enum TableType {
 
     ;
 
+    public boolean isTable() {
+        switch (this) {
+        case TABLE:
+        case SYSTEM_TABLE:
+            return true;
+        case TEMP:
+        case GLOBAL_TEMP:
+            return true;
+        default:
+            return false;
+        }
+    }
+
+    public boolean isView() {
+        switch (this) {
+        case VIEW:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     public static TableType parseJDBC(ResultSet rs)
             throws SQLException {
         return parseJDBC(rs, UNKNOWN);
