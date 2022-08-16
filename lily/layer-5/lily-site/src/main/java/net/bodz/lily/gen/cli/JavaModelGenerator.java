@@ -122,7 +122,7 @@ public class JavaModelGenerator
                 // schemaName = schemaName.toLowerCase();
                 catalogSubset.addFullSchema(schemaName);
             } else {
-                TableId id = TableId.parse(arg);
+                TableOid id = TableOid.parse(arg);
                 catalogSubset.addTable(id);
             }
         }
@@ -130,13 +130,13 @@ public class JavaModelGenerator
         DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
         catalog.setJDBCLoadSelector(new IJDBCLoadSelector() {
             @Override
-            public boolean selectSchema(SchemaId id) {
+            public boolean selectSchema(SchemaOid id) {
                 ContainingType type = catalogSubset.contains(id.getSchemaName());
                 return type != ContainingType.NONE;
             }
 
             @Override
-            public boolean selectTable(TableId id, TableType type) {
+            public boolean selectTable(TableOid oid, TableType type) {
                 if (type.isTable())
                     if (includeTables != Boolean.TRUE)
                         return false;
@@ -144,7 +144,7 @@ public class JavaModelGenerator
                     if (includeViews != Boolean.TRUE)
                         return false;
 
-                boolean contains = catalogSubset.contains(id);
+                boolean contains = catalogSubset.contains(oid);
                 return contains;
             }
 

@@ -19,8 +19,8 @@ public class TableList
         super(c);
     }
 
-    public List<TableId> id() {
-        List<TableId> ids = new ArrayList<>(size());
+    public List<TableOid> id() {
+        List<TableOid> ids = new ArrayList<>(size());
         for (ITableMetadata table : this)
             ids.add(table.getId());
         return ids;

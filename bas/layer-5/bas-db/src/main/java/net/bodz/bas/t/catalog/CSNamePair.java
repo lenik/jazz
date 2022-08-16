@@ -40,8 +40,8 @@ abstract class CSNamePair
         this.schemaName = schemaName;
     }
 
-    public SchemaId toSchemaId() {
-        return new SchemaId(catalogName, schemaName);
+    public SchemaOid toSchemaId() {
+        return new SchemaOid(catalogName, schemaName);
     }
 
     public String getCatalogName() {

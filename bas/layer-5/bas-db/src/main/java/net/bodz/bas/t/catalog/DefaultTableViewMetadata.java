@@ -20,7 +20,7 @@ public abstract class DefaultTableViewMetadata
         implements
             ITableViewMetadata {
 
-    TableId id = new TableId();
+    TableOid oid = new TableOid();
     TableType tableType = getDefaultTableType();
 
     String label;
@@ -36,14 +36,14 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
-    public TableId getId() {
-        return id;
+    public TableOid getId() {
+        return oid;
     }
 
-    public void setId(TableId id) {
-        if (id == null)
+    public void setId(TableOid oid) {
+        if (oid == null)
             throw new NullPointerException("id");
-        this.id = id;
+        this.oid = oid;
     }
 
     @Override
@@ -62,7 +62,7 @@ public abstract class DefaultTableViewMetadata
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        id.jsonIn(o, opts);
+        oid.jsonIn(o, opts);
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
         super.jsonIn(o, opts);
     }
@@ -70,7 +70,7 @@ public abstract class DefaultTableViewMetadata
     @Override
     public void readObject(IElement x_table)
             throws ParseException, LoaderException {
-        id.readObject(x_table);
+        oid.readObject(x_table);
         tableType = x_table.getAttributeVar(K_TABLE_TYPE)//
                 .getEnum(TableType.class, TableType.VIEW);
         super.readObject(x_table);
@@ -92,9 +92,9 @@ public abstract class DefaultTableViewMetadata
         super.loadFromRSMD(rsmd);
 
         int columnOfThisTable = 1;
-        id.catalogName = rsmd.getCatalogName(columnOfThisTable);
-        id.schemaName = rsmd.getSchemaName(columnOfThisTable);
-        id.tableName = rsmd.getTableName(columnOfThisTable);
+        oid.catalogName = rsmd.getCatalogName(columnOfThisTable);
+        oid.schemaName = rsmd.getSchemaName(columnOfThisTable);
+        oid.tableName = rsmd.getTableName(columnOfThisTable);
     }
 
     class TableViewHandler
@@ -104,9 +104,9 @@ public abstract class DefaultTableViewMetadata
         @Override
         public ITableViewMetadata tableView(ResultSet rs)
                 throws SQLException {
-            id.catalogName = rs.getString("table_cat");
-            id.schemaName = rs.getString("table_schem");
-            id.tableName = rs.getString("table_name");
+            oid.catalogName = rs.getString("table_cat");
+            oid.schemaName = rs.getString("table_schem");
+            oid.tableName = rs.getString("table_name");
             tableType = TableType.parseJDBC(rs, getDefaultTableType());
             description = rs.getString("remarks");
             return DefaultTableViewMetadata.this;
@@ -147,7 +147,7 @@ public abstract class DefaultTableViewMetadata
         ResultSet rs;
 
         // Parse from table's metadata
-        rs = dmd.getTables(id.catalogName, id.schemaName, id.tableName, null);
+        rs = dmd.getTables(oid.catalogName, oid.schemaName, oid.tableName, null);
         int count = 0;
         while (rs.next()) {
             if (count == 0)
@@ -159,7 +159,7 @@ public abstract class DefaultTableViewMetadata
             return false;
 
         // Parse from columns' metadata
-        rs = dmd.getColumns(id.catalogName, id.schemaName, id.tableName, null);
+        rs = dmd.getColumns(oid.catalogName, oid.schemaName, oid.tableName, null);
         while (rs.next())
             metaDataHandler.column(rs);
         rs.close();
@@ -187,8 +187,8 @@ public abstract class DefaultTableViewMetadata
 
     @Override
     public String toString() {
-        SchemaId ns = getParent().getId();
-        return tableType + " " + id.getCompactName(ns) + "(" + getColumnNames() + ")";
+        SchemaOid ns = getParent().getId();
+        return tableType + " " + oid.getCompactName(ns) + "(" + getColumnNames() + ")";
     }
 
 }

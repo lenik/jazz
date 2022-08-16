@@ -5,11 +5,11 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
-public class TableIdTypers
-        extends AbstractCommonTypers<TableId> {
+public class TableOidTypers
+        extends AbstractCommonTypers<TableOid> {
 
-    public TableIdTypers() {
-        super(TableId.class);
+    public TableOidTypers() {
+        super(TableOid.class);
     }
 
     @Override
@@ -22,11 +22,11 @@ public class TableIdTypers
     }
 
     @Override
-    public TableId parse(String text, IOptions options)
+    public TableOid parse(String text, IOptions options)
             throws ParseException {
         if (text == null)
             return null;
-        return TableId.parse(text);
+        return TableOid.parse(text);
     }
 
 }

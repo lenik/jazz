@@ -17,8 +17,8 @@ public class SchemaList
         super(c);
     }
 
-    public List<SchemaId> id() {
-        List<SchemaId> ids = new ArrayList<>(size());
+    public List<SchemaOid> id() {
+        List<SchemaOid> ids = new ArrayList<>(size());
         for (ISchemaMetadata schema : this)
             ids.add(schema.getId());
         return ids;

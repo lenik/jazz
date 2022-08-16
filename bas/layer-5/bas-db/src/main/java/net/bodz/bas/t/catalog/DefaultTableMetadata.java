@@ -176,15 +176,15 @@ public class DefaultTableMetadata
 
         // Find out primary key
         if (options.isLoadKeys()) {
-            rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, id.tableName);
-            Map<TableId, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
+            rs = dmd.getPrimaryKeys(oid.catalogName, oid.schemaName, oid.tableName);
+            Map<TableOid, TableKey> primaryKeyMap = TableKey.convertFromJDBC(rs);
             for (TableKey pk : primaryKeyMap.values())
                 metaDataHandler.primaryKey(this, pk);
             rs.close();
 
             rs = dmd.getCrossReference(null, null, null, //
-                    id.catalogName, id.schemaName, id.tableName);
-            ListMap<TableId, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+                    oid.catalogName, oid.schemaName, oid.tableName);
+            ListMap<TableOid, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
             assert foreignMap.size() <= 1;
             if (!foreignMap.isEmpty()) {
                 List<CrossReference> parentList = foreignMap.values().iterator().next();

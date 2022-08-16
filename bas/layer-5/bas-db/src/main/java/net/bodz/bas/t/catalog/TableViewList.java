@@ -17,8 +17,8 @@ public class TableViewList
         super(c);
     }
 
-    public List<TableId> id() {
-        List<TableId> ids = new ArrayList<>(size());
+    public List<TableOid> id() {
+        List<TableOid> ids = new ArrayList<>(size());
         for (ITableViewMetadata view : this)
             ids.add(view.getId());
         return ids;

@@ -3,7 +3,7 @@ package net.bodz.lily.gen.model.java;
 import javax.persistence.Table;
 
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.bas.t.catalog.TableId;
+import net.bodz.bas.t.catalog.TableOid;
 import net.bodz.lily.gen.JavaFragmentBuilder;
 
 public class ViewSkelBuilder
@@ -16,7 +16,7 @@ public class ViewSkelBuilder
     @Override
     protected void buildClassBody(ITableViewMetadata table) {
         String stuffName = NamingUtil.stuff(mainName);
-        TableId qName = table.getId();
+        TableOid qName = table.getId();
 
         out.print(imports.a(Table.class) + "(");
         {

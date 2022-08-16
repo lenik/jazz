@@ -28,8 +28,8 @@ public class DefaultSchemaMetadata
 
     static final Logger logger = LoggerFactory.getLogger(DefaultSchemaMetadata.class);
 
-    SchemaId id = new SchemaId();
-    SchemaId defaultName = new SchemaId();
+    SchemaOid schemaId = new SchemaOid();
+    SchemaOid defaultName = new SchemaOid();
 
     String label;
     String description;
@@ -50,37 +50,37 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public SchemaId getId() {
-        return id;
+    public SchemaOid getId() {
+        return schemaId;
     }
 
-    public void setId(SchemaId id) {
-        this.id = id;
+    public void setId(SchemaOid id) {
+        this.schemaId = id;
     }
 
     @Override
-    public SchemaId getDefaultName() {
+    public SchemaOid getDefaultName() {
         return defaultName;
     }
 
-    public void setDefaultName(SchemaId defaultName) {
+    public void setDefaultName(SchemaOid defaultName) {
         if (defaultName == null)
             throw new NullPointerException("defaultName");
         this.defaultName = defaultName;
     }
 
     @Override
-    public boolean isValidTableId(TableId tableName) {
+    public boolean isValidTableId(TableOid tableName) {
         if (tableName == null)
             throw new NullPointerException("tableName");
-        if (this.id == null)
+        if (this.schemaId == null)
             return true;
-        return this.id.contains(tableName);
+        return this.schemaId.contains(tableName);
     }
 
     @Override
     public boolean isValidIdOf(String catalogName) {
-        if (NamePattern.matches(catalogName, this.id.catalogName))
+        if (NamePattern.matches(catalogName, this.schemaId.catalogName))
             return true;
         return false;
     }
@@ -133,15 +133,15 @@ public class DefaultSchemaMetadata
         return tableMap.size();
     }
 
-    public DefaultTableMetadata getOrCreateTable(TableId id) {
-        checkTableId(id);
-        return getOrCreateTable(id.tableName);
+    public DefaultTableMetadata getOrCreateTable(TableOid oid) {
+        checkTableId(oid);
+        return getOrCreateTable(oid.tableName);
     }
 
     @Override
-    public DefaultTableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection,
+    public DefaultTableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection,
             LoadFromJDBCOptions options) {
-        return autoLoadTableFromJDBC(id.getTableName(), autoLoadConnection, options);
+        return autoLoadTableFromJDBC(oid.getTableName(), autoLoadConnection, options);
     }
 
     public DefaultTableMetadata autoLoadTableFromJDBC(String name, Connection cn, LoadFromJDBCOptions options) {
@@ -175,7 +175,7 @@ public class DefaultSchemaMetadata
         DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(name);
         if (table == null) {
             table = new DefaultTableMetadata();
-            table.getId().assign(id.catalogName, id.schemaName, name);
+            table.getId().assign(schemaId.catalogName, schemaId.schemaName, name);
             table.setParent(this);
             tableMap.put(name, table);
         }
@@ -189,7 +189,7 @@ public class DefaultSchemaMetadata
 
     public DefaultTableMetadata newTable(String tableName) {
         DefaultTableMetadata table = new DefaultTableMetadata(this);
-        table.getId().assign(id.catalogName, id.schemaName, tableName);
+        table.getId().assign(schemaId.catalogName, schemaId.schemaName, tableName);
         return table;
     }
 
@@ -216,7 +216,7 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public TableList findTables(TableId pattern, boolean ignoreCase) {
+    public TableList findTables(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
             if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return TableList.empty();
@@ -257,9 +257,9 @@ public class DefaultSchemaMetadata
         return viewMap.size();
     }
 
-    public DefaultTableViewMetadata getOrCreateView(TableId id) {
-        checkTableId(id);
-        return getOrCreateView(id.tableName);
+    public DefaultTableViewMetadata getOrCreateView(TableOid oid) {
+        checkTableId(oid);
+        return getOrCreateView(oid.tableName);
     }
 
     public DefaultViewMetadata autoLoadViewFromJDBC(String name, Connection cn, LoadFromJDBCOptions options) {
@@ -288,7 +288,7 @@ public class DefaultSchemaMetadata
         if (view == null) {
             // view = new DefaultTableViewMetadata(this);
             view = new DefaultViewMetadata(this);
-            view.getId().assign(id.catalogName, id.schemaName, name);
+            view.getId().assign(schemaId.catalogName, schemaId.schemaName, name);
             view.setParent(this);
             viewMap.put(name, view);
         }
@@ -303,7 +303,7 @@ public class DefaultSchemaMetadata
     public DefaultViewMetadata newView(String viewName) {
         // DefaultTableViewMetadata view = new DefaultTableViewMetadata(this);
         DefaultViewMetadata view = new DefaultViewMetadata(this);
-        view.getId().assign(id.catalogName, id.schemaName, viewName);
+        view.getId().assign(schemaId.catalogName, schemaId.schemaName, viewName);
         return view;
     }
 
@@ -327,7 +327,7 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public TableViewList findViews(TableId pattern, boolean ignoreCase) {
+    public TableViewList findViews(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
             if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return TableViewList.empty();
@@ -419,18 +419,18 @@ public class DefaultSchemaMetadata
                 throws SQLException {
             String catalogName = rs.getString("TABLE_CATALOG");
             String schemaName = rs.getString("TABLE_SCHEM");
-            id.assign(catalogName, schemaName); // correct char case.
+            schemaId.assign(catalogName, schemaName); // correct char case.
             return DefaultSchemaMetadata.this;
         }
 
         @Override
         public ITableViewMetadata tableView(ResultSet rs)
                 throws SQLException {
-            TableId id = new TableId();
-            id.readFromJDBC(rs);
+            TableOid oid = new TableOid();
+            oid.readFromJDBC(rs);
 
             TableType type = TableType.parseJDBC(rs);
-            if (!loadSelector.selectTable(id, type))
+            if (!loadSelector.selectTable(oid, type))
                 return null;
 
             switch (type) {
@@ -454,16 +454,16 @@ public class DefaultSchemaMetadata
         @Override
         public IColumnMetadata column(ResultSet rs)
                 throws SQLException {
-            TableId id = new TableId();
-            id.readFromJDBC(rs);
+            TableOid oid = new TableOid();
+            oid.readFromJDBC(rs);
             // if (!loadSelector.selectTable(id)) return null;
 
-            ITableMetadata table = getTable(id.getTableName());
+            ITableMetadata table = getTable(oid.getTableName());
             if (table != null) {
                 return table.getJDBCMetaDataHandler().column(rs);
             }
 
-            IViewMetadata view = getView(id.getTableName());
+            IViewMetadata view = getView(oid.getTableName());
             if (view != null) {
                 return view.getJDBCMetaDataHandler().column(rs);
             }
@@ -474,7 +474,7 @@ public class DefaultSchemaMetadata
         @Override
         public void viewColumnUsage(ResultSet rs)
                 throws SQLException {
-            TableId viewId = new TableId();
+            TableOid viewId = new TableOid();
             viewId.catalogName = rs.getString("view_catalog");
             viewId.schemaName = rs.getString("view_schema");
             viewId.tableName = rs.getString("view_name");
@@ -527,27 +527,27 @@ public class DefaultSchemaMetadata
         ResultSet rs;
 
         // Parse from schema's metadata
-        rs = dmd.getSchemas(id.catalogName, id.schemaName);
+        rs = dmd.getSchemas(schemaId.catalogName, schemaId.schemaName);
         while (rs.next()) {
             metaDataHandler.schema(rs);
             break;
         }
         rs.close();
 
-        rs = dmd.getTables(id.catalogName, id.schemaName, null, types);
+        rs = dmd.getTables(schemaId.catalogName, schemaId.schemaName, null, types);
         while (rs.next())
             metaDataHandler.tableView(rs);
         rs.close();
 
         // Set<String> typeSet = new HashSet<>(Arrays.asList(types));
-        rs = dmd.getColumns(id.catalogName, id.schemaName, null, null);
+        rs = dmd.getColumns(schemaId.catalogName, schemaId.schemaName, null, null);
         while (rs.next())
             metaDataHandler.column(rs);
         rs.close();
 
-        rs = dmd.getPrimaryKeys(id.catalogName, id.schemaName, null);
-        Map<TableId, TableKey> pkmap = TableKey.convertFromJDBC(rs);
-        for (TableId tableId : pkmap.keySet()) {
+        rs = dmd.getPrimaryKeys(schemaId.catalogName, schemaId.schemaName, null);
+        Map<TableOid, TableKey> pkmap = TableKey.convertFromJDBC(rs);
+        for (TableOid tableId : pkmap.keySet()) {
             ITableMetadata table = getTable(tableId);
             if (table == null)
                 continue;
@@ -557,9 +557,9 @@ public class DefaultSchemaMetadata
         rs.close();
 
         rs = dmd.getCrossReference(null, null, null, //
-                id.catalogName, id.schemaName, null);
-        ListMap<TableId, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
-        for (TableId foreignName : foreignMap.keySet()) {
+                schemaId.catalogName, schemaId.schemaName, null);
+        ListMap<TableOid, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+        for (TableOid foreignName : foreignMap.keySet()) {
             ITableMetadata foreignTable = getTable(foreignName.getTableName());
             if (foreignTable == null)
                 continue;
@@ -572,16 +572,16 @@ public class DefaultSchemaMetadata
 
         String sql = "select * from information_schema.view_column_usage where 1=1";
         {
-            if (id.catalogName != null)
+            if (schemaId.catalogName != null)
                 sql += "and view_catalog = ?";
-            if (id.schemaName != null)
+            if (schemaId.schemaName != null)
                 sql += " and view_schema = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             int psIndex = 0;
-            if (id.catalogName != null)
-                ps.setString(++psIndex, id.catalogName);
-            if (id.schemaName != null)
-                ps.setString(++psIndex, id.schemaName);
+            if (schemaId.catalogName != null)
+                ps.setString(++psIndex, schemaId.catalogName);
+            if (schemaId.schemaName != null)
+                ps.setString(++psIndex, schemaId.schemaName);
             rs = ps.executeQuery();
         }
         while (rs.next())

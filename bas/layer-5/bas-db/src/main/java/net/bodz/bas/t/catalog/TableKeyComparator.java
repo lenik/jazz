@@ -6,16 +6,16 @@ public class TableKeyComparator
         extends AbstractNonNullComparator<TableKey> {
 
     int sign;
-    TableIdComparator idCmp;
+    TableOidComparator idCmp;
 
-    public TableKeyComparator(int sign, TableIdComparator idCmp) {
+    public TableKeyComparator(int sign, TableOidComparator idCmp) {
         this.sign = sign;
         this.idCmp = idCmp;
     }
 
     @Override
     public int compareNonNull(TableKey o1, TableKey o2) {
-        int cmp = idCmp.compare(o1.id, o2.id);
+        int cmp = idCmp.compare(o1.oid, o2.oid);
         if (cmp != 0)
             return cmp * sign;
 
@@ -51,13 +51,13 @@ public class TableKeyComparator
         return a.compareTo(b);
     }
 
-    public static final TableKeyComparator ASC = new TableKeyComparator(1, TableIdComparator.ASC);
-    public static final TableKeyComparator DESC = new TableKeyComparator(-1, TableIdComparator.DESC);
+    public static final TableKeyComparator ASC = new TableKeyComparator(1, TableOidComparator.ASC);
+    public static final TableKeyComparator DESC = new TableKeyComparator(-1, TableOidComparator.DESC);
 
     public static class CaseInsensitive
             extends TableKeyComparator {
 
-        public CaseInsensitive(int sign, TableIdComparator tableCmp) {
+        public CaseInsensitive(int sign, TableOidComparator tableCmp) {
             super(sign, tableCmp);
         }
 
@@ -66,8 +66,8 @@ public class TableKeyComparator
             return a.compareToIgnoreCase(b);
         }
 
-        public static final TableKeyComparator ASC = new CaseInsensitive(1, TableIdComparator.CaseInsensitive.ASC);
-        public static final TableKeyComparator DESC = new CaseInsensitive(-1, TableIdComparator.CaseInsensitive.DESC);
+        public static final TableKeyComparator ASC = new CaseInsensitive(1, TableOidComparator.CaseInsensitive.ASC);
+        public static final TableKeyComparator DESC = new CaseInsensitive(-1, TableOidComparator.CaseInsensitive.DESC);
 
     }
 

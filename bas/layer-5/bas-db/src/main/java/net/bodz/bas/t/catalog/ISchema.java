@@ -26,7 +26,7 @@ public interface ISchema
 
     ICatalog getParent();
 
-    SchemaId getId();
+    SchemaOid getId();
 
     default String getName() {
         return getId().getSchemaName();

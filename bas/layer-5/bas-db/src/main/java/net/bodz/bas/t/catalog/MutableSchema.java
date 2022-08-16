@@ -16,7 +16,7 @@ public class MutableSchema
             ISchema {
 
     ICatalog parent;
-    SchemaId id;
+    SchemaOid id;
 
     ISchemaMetadata metadata;
     Map<String, ITable> tables = createMap();
@@ -64,7 +64,7 @@ public class MutableSchema
     }
 
     @Override
-    public SchemaId getId() {
+    public SchemaOid getId() {
         if (id != null)
             return id;
         ISchemaMetadata metadata = getMetadata();
@@ -73,7 +73,7 @@ public class MutableSchema
         return null;
     }
 
-    public void setId(SchemaId id) {
+    public void setId(SchemaOid id) {
         this.id = id;
     }
 

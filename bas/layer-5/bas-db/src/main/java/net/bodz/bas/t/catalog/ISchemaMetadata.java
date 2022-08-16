@@ -26,9 +26,9 @@ public interface ISchemaMetadata
     String K_VIEWS = "views";
     String K_VIEW = "view";
 
-    SchemaId getId();
+    SchemaOid getId();
 
-    SchemaId getDefaultName();
+    SchemaOid getDefaultName();
 
     default String getName() {
         return getId().getSchemaName();

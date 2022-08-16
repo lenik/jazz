@@ -16,7 +16,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 
-public class TableId
+public class TableOid
         extends CSNamePair {
 
     private static final long serialVersionUID = 1L;
@@ -25,16 +25,16 @@ public class TableId
 
     protected String tableName;
 
-    public TableId() {
+    public TableOid() {
     }
 
-    public TableId(String catalogName, String schemaName, String tableName) {
+    public TableOid(String catalogName, String schemaName, String tableName) {
         super(catalogName, schemaName);
         this.tableName = tableName;
     }
 
-    public static TableId parse(String fullName) {
-        TableId o = new TableId();
+    public static TableOid parse(String fullName) {
+        TableOid o = new TableOid();
         o.setFullName(fullName);
         return o;
     }
@@ -79,11 +79,11 @@ public class TableId
         tableName = s;
     }
 
-    public String getCompactName(SchemaId schema) {
+    public String getCompactName(SchemaOid schema) {
         return getCompactName(schema, false);
     }
 
-    public String getCompactName(SchemaId schema, boolean ignoreCase) {
+    public String getCompactName(SchemaOid schema, boolean ignoreCase) {
         if (schema == null)
             return getFullName();
         StringBuilder sb = new StringBuilder();
@@ -99,14 +99,14 @@ public class TableId
         return sb.toString();
     }
 
-    public boolean contains(TableId o, boolean ignoreCase) {
+    public boolean contains(TableOid o, boolean ignoreCase) {
         if (ignoreCase)
             return containsIgnoreCase(o);
         else
             return contains(o);
     }
 
-    public boolean contains(TableId o) {
+    public boolean contains(TableOid o) {
         if (!NamePattern.matches(catalogName, o.catalogName))
             return false;
         if (!NamePattern.matches(schemaName, o.schemaName))
@@ -116,7 +116,7 @@ public class TableId
         return true;
     }
 
-    public boolean containsIgnoreCase(TableId o) {
+    public boolean containsIgnoreCase(TableOid o) {
         if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
             return false;
         if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
@@ -139,7 +139,7 @@ public class TableId
             return false;
         if (getClass() != obj.getClass())
             return false;
-        TableId other = (TableId) obj;
+        TableOid other = (TableOid) obj;
         return Objects.equals(catalogName, other.catalogName) //
                 && Objects.equals(schemaName, other.schemaName) //
                 && Objects.equals(tableName, other.tableName);

@@ -33,30 +33,30 @@ public final class TableKey
     public static final String K_COLUMNS = "columns";
     public static final String K_COLUMN = "column";
 
-    TableId id;
+    TableOid oid;
     String[] columnNames;
 
     TableKey() {
     }
 
-    public TableKey(TableId table) {
-        this.id = table;
+    public TableKey(TableOid oid) {
+        this.oid = oid;
     }
 
-    public TableKey(TableId table, String... columns) {
-        this.id = table;
+    public TableKey(TableOid table, String... columns) {
+        this.oid = table;
         this.columnNames = columns;
     }
 
-    public TableKey(TableId table, IColumnMetadata... columns) {
-        this.id = table;
+    public TableKey(TableOid table, IColumnMetadata... columns) {
+        this.oid = table;
         this.columnNames = new String[columns.length];
         for (int i = 0; i < columns.length; i++)
             this.columnNames[i] = columns[i].getName();
     }
 
-    public TableId getId() {
-        return id;
+    public TableOid getId() {
+        return oid;
     }
 
     public String[] getColumnNames() {
@@ -138,7 +138,7 @@ public final class TableKey
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + Objects.hash(id);
+        result = prime * result + Objects.hash(oid);
         result = prime * result + Arrays.hashCode(columnNames);
         return result;
     }
@@ -152,25 +152,25 @@ public final class TableKey
         if (getClass() != obj.getClass())
             return false;
         TableKey other = (TableKey) obj;
-        return Arrays.equals(columnNames, other.columnNames) && Objects.equals(id, other.id);
+        return Arrays.equals(columnNames, other.columnNames) && Objects.equals(oid, other.oid);
     }
 
     @Override
     public String toString() {
-        return id.getFullName() + "(" + getColumnNameList() + ")";
+        return oid.getFullName() + "(" + getColumnNameList() + ")";
     }
 
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        id.jsonIn(o, opts);
+        oid.jsonIn(o, opts);
         columnNames = o.getStringArray(K_COLUMNS);
     }
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        id.jsonOut(out, opts);
+        oid.jsonOut(out, opts);
         out.key(K_COLUMNS);
         out.array();
         for (String column : columnNames)
@@ -181,7 +181,7 @@ public final class TableKey
     @Override
     public void readObject(IElement x_key)
             throws ParseException, LoaderException {
-        id.readObject(x_key);
+        oid.readObject(x_key);
         IElements x_column_v = x_key.children();
         int n = x_column_v.getElementCount();
         List<String> list = new ArrayList<>();
@@ -197,16 +197,16 @@ public final class TableKey
     @Override
     public void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        id.writeObject(out);
+        oid.writeObject(out);
         for (String column : columnNames)
             out.element(K_COLUMN, column);
     }
 
-    public static Map<TableId, TableKey> convertFromJDBC(ResultSet rs)
+    public static Map<TableOid, TableKey> convertFromJDBC(ResultSet rs)
             throws SQLException {
-        ListMap<TableId, String> map = new ListMap<>(); // SortOrder.KEEP
+        ListMap<TableOid, String> map = new ListMap<>(); // SortOrder.KEEP
         while (rs.next()) {
-            TableId tableName = new TableId();
+            TableOid tableName = new TableOid();
             tableName.readFromJDBC(rs);
 
             String column = rs.getString("COLUMN_NAME");
@@ -214,8 +214,8 @@ public final class TableKey
             list.add(column);
         }
 
-        Map<TableId, TableKey> conv = new HashMap<>();
-        for (TableId tableName : map.keySet()) {
+        Map<TableOid, TableKey> conv = new HashMap<>();
+        for (TableOid tableName : map.keySet()) {
             List<String> list = map.get(tableName);
             String[] columns = list.toArray(new String[0]);
             TableKey primaryKey = new TableKey(tableName, columns);
