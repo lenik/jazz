@@ -37,6 +37,8 @@ public class MakeSourceRun {
 
     ITableViewMetadata tableView;
 
+    boolean overwriteMapperXml = true;
+
     public MakeSourceRun(JavaModelGenerator app, ITableViewMetadata tableView) {
         this.app = app;
         this.tableView = tableView;
@@ -117,7 +119,7 @@ public class MakeSourceRun {
         fc.dir = skelResourcesDir;
         fc.baseName = "impl/" + NamingUtil.mapper(simpleName) + ".xml";
         fc.fragmentName = implPackageName + "." + NamingUtil.mapper(simpleName);
-        if ((out = fc.open(false)) != null)
+        if ((out = fc.open(overwriteMapperXml)) != null)
             new TableMapperXmlBuilder(className, fc.fragmentName).build(out, table);
 
         fc.dir = skelJavaDir;
@@ -167,7 +169,7 @@ public class MakeSourceRun {
         out = open(stuffDir, "impl/" + NamingUtil.index(simpleName) + ".java", true);
         new ViewIndexBuilder(className, implPackageName + "." + NamingUtil.index(simpleName)).build(out, view);
 
-        if ((out = open(skelResourcesDir, "impl/" + NamingUtil.mapper(simpleName) + ".xml", false)) != null)
+        if ((out = open(skelResourcesDir, "impl/" + NamingUtil.mapper(simpleName) + ".xml", overwriteMapperXml)) != null)
             new ViewMapperXmlBuilder(className, implPackageName + "." + NamingUtil.mapper(simpleName)).build(out, view);
 
         if ((out = open(skelJavaDir, "impl/" + NamingUtil.mapper(simpleName) + ".java", false)) != null)
