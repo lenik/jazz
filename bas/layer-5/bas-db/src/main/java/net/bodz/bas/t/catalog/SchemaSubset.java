@@ -1,14 +1,17 @@
 package net.bodz.bas.t.catalog;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 public class SchemaSubset {
 
     public String schemaName;
 
-    public Map<String, Boolean> tableNames = new HashMap<>();
-    static final Map<String, Boolean> ALL_TABLES = null;
+    boolean all;
+    public final Set<String> names = new HashSet<>();
+    public final Set<Pattern> patterns = new HashSet<>();
+    public boolean ignoreCase;
 
     // boolean allowWildcards = true;
 
@@ -17,45 +20,101 @@ public class SchemaSubset {
     }
 
     public boolean isAll() {
-        return tableNames == ALL_TABLES;
+        return all;
     }
 
     public boolean isEmpty() {
-        if (tableNames == ALL_TABLES)
+        if (all)
             return false;
-        return tableNames.isEmpty();
+        if (!names.isEmpty())
+            return false;
+        if (!patterns.isEmpty())
+            return false;
+        return true;
     }
 
     public boolean contains(String tableName) {
         if (tableName == null)
             throw new NullPointerException("tableName");
-        if (tableNames == ALL_TABLES)
+        if (all)
             return true;
-        Boolean any = tableNames.get(tableName);
-        if (tableNames != null && any != null)
+        if (isEmpty())
+            return false;
+        if (ignoreCase)
+            tableName = tableName.toLowerCase();
+        if (names.contains(tableName))
             return true;
+        for (Pattern pattern : patterns)
+            if (pattern.matcher(tableName).matches())
+                return true;
         return false;
     }
 
     public void addAllTables() {
-        tableNames = ALL_TABLES;
+        all = true;
+        names.clear();
+        patterns.clear();
     }
 
-    public boolean addTable(String tableName) {
+    public boolean addTableWildcards(String s) {
+        if (s.contains("?") || s.contains("*")) {
+            String regex = convertWildcardsToRegex(s);
+            return addTablePattern(regex);
+        } else {
+            return addTableName(s);
+        }
+    }
+
+    static String convertWildcardsToRegex(String s) {
+        StringBuilder sb = new StringBuilder(s.length() + 10);
+        sb.append("\\Q");
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char ch = s.charAt(i);
+            switch (ch) {
+            case '?':
+                sb.append("\\E.\\Q");
+                break;
+            case '*':
+                sb.append("\\E.*\\Q");
+                break;
+            default:
+                sb.append(ch);
+            }
+        }
+        sb.append("\\E");
+        return sb.toString();
+    }
+
+    public boolean addTableName(String tableName) {
         if (tableName == null)
             throw new NullPointerException("tableName");
-        if (tableNames == ALL_TABLES)
+        if (all)
             return false;
-        Boolean old = tableNames.put(tableName, Boolean.TRUE);
-        return old == null;
+        if (ignoreCase)
+            tableName = tableName.toLowerCase();
+        return names.add(tableName);
+    }
+
+    public boolean addTablePattern(String regex) {
+        if (regex == null)
+            throw new NullPointerException("regex");
+        if (all)
+            return false;
+        if (ignoreCase)
+            regex = regex.toLowerCase();
+        Pattern pattern = Pattern.compile(regex);
+        return patterns.add(pattern);
     }
 
     @Override
     public String toString() {
-        if (tableNames == ALL_TABLES)
+        if (all)
             return "\\ALL";
+        if (ignoreCase)
+            return "i-names: " + names + "\ni-patterns: " + patterns;
         else
-            return tableNames.keySet().toString();
+            return "names: " + names + "\npatterns: " + patterns;
     }
 
 }

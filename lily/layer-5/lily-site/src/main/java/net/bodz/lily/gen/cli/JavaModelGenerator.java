@@ -36,6 +36,20 @@ public class JavaModelGenerator
      */
     File outDir;
 
+    /**
+     * Generate models for views.
+     *
+     * @option -V
+     */
+    Boolean includeViews;
+
+    /**
+     * Generate models for tables.
+     *
+     * @option -T
+     */
+    Boolean includeTables;
+
     Class<?> appClass = getClass();
     DataContext dataContext;
     Connection connection;
@@ -95,6 +109,9 @@ public class JavaModelGenerator
 
         outDir = MavenPomDir.fromClass(appClass).getBaseDir();
 
+        if (includeTables == null && includeViews == null)
+            includeTables = includeViews = true;
+
         connection = dataContext.getConnection();
 
         for (String arg : args) {
@@ -105,8 +122,7 @@ public class JavaModelGenerator
                 // schemaName = schemaName.toLowerCase();
                 catalogSubset.addFullSchema(schemaName);
             } else {
-                TableId id = new TableId();
-                id.setFullName(arg);
+                TableId id = TableId.parse(arg);
                 catalogSubset.addTable(id);
             }
         }
@@ -120,10 +136,18 @@ public class JavaModelGenerator
             }
 
             @Override
-            public boolean selectTable(TableId id) {
+            public boolean selectTable(TableId id, TableType type) {
+                if (type.isTable())
+                    if (includeTables != Boolean.TRUE)
+                        return false;
+                if (type.isView())
+                    if (includeViews != Boolean.TRUE)
+                        return false;
+
                 boolean contains = catalogSubset.contains(id);
                 return contains;
             }
+
         });
         catalog.loadFromJDBC(connection, "TABLE", "VIEW");
         XmlFn.save(catalog, new File("/xxx/a.xml"));
