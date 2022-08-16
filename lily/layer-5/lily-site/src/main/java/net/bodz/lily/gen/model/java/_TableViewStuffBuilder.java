@@ -167,17 +167,21 @@ public class _TableViewStuffBuilder
         String GET = Boolean.class == type ? "is" : "get";
         String ColName = Strings.ucfirst(colName);
 
-        out.printf("public %s %s%s();\n", //
+        out.printf("public %s %s%s() {\n", //
                 imports.simple(type), //
                 GET, ColName);
+        out.printf("    return %s;\n", colName);
+        out.println("}");
         out.println();
 
         if (description != null && !description.isEmpty()) {
             out.println("/** " + description + " */");
         }
 
-        out.printf("public void set%s(%s%s value);\n", ColName, //
+        out.printf("public void set%s(%s%s value) {\n", ColName, //
                 (notNull && !type.isPrimitive()) ? imports.a(NotNull.class) + " " : "", imports.simple(type));
+        out.printf("    this.%s = value;\n", colName);
+        out.println("}");
     }
 
     protected void N_consts(ITableViewMetadata table, Boolean wantPrimaryKey) {
