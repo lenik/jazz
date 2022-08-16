@@ -50,7 +50,7 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public boolean isValidSchemaId(SchemaId id) {
+    public boolean isValidSchemaId(SchemaOid id) {
         if (id == null)
             throw new NullPointerException("id");
         if (NamePattern.matches(name, id.catalogName))
@@ -59,10 +59,10 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public boolean isValidTableId(TableId id) {
-        if (id == null)
+    public boolean isValidTableId(TableOid oid) {
+        if (oid == null)
             throw new NullPointerException("id");
-        if (NamePattern.matches(name, id.catalogName))
+        if (NamePattern.matches(name, oid.catalogName))
             return true;
         return false;
     }
@@ -119,7 +119,7 @@ public class DefaultCatalogMetadata
         return schemas.get(name);
     }
 
-    public DefaultSchemaMetadata getOrCreateSchema(SchemaId id) {
+    public DefaultSchemaMetadata getOrCreateSchema(SchemaOid id) {
         checkSchemaId(id);
         return getOrCreateSchema(id.schemaName);
     }
@@ -145,7 +145,7 @@ public class DefaultCatalogMetadata
         DefaultSchemaMetadata dsm = new DefaultSchemaMetadata(this);
         dsm.getId().assign(name, schemaName);
 
-        SchemaId defaultName = new SchemaId();
+        SchemaOid defaultName = new SchemaOid();
         defaultName.assign(null, defaultSchemaName);
         dsm.setDefaultName(defaultName);
         return dsm;
@@ -181,10 +181,10 @@ public class DefaultCatalogMetadata
         return schema != null;
     }
 
-    public DefaultTableMetadata newTable(TableId id) {
-        if (id == null)
+    public DefaultTableMetadata newTable(TableOid oid) {
+        if (oid == null)
             throw new NullPointerException("id");
-        return getOrCreateSchema(id.schemaName).newTable(id.tableName);
+        return getOrCreateSchema(oid.schemaName).newTable(oid.tableName);
     }
 
     public void addTable(ITableMetadata table) {
@@ -193,33 +193,33 @@ public class DefaultCatalogMetadata
         getOrCreateSchema(table.getId().toSchemaId()).addTable(table);
     }
 
-    public DefaultTableMetadata getOrCreateTable(TableId id) {
-        if (id == null)
+    public DefaultTableMetadata getOrCreateTable(TableOid oid) {
+        if (oid == null)
             throw new NullPointerException("id");
-        return getOrCreateSchema(id.toSchemaId()).getOrCreateTable(id);
+        return getOrCreateSchema(oid.toSchemaId()).getOrCreateTable(oid);
     }
 
     @Override
-    public ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection,
+    public ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection,
             LoadFromJDBCOptions options) {
-        if (id == null)
+        if (oid == null)
             throw new NullPointerException("id");
-        DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
-        return dsm.autoLoadTableFromJDBC(id, autoLoadConnection, options);
+        DefaultSchemaMetadata dsm = getOrCreateSchema(oid.toSchemaId());
+        return dsm.autoLoadTableFromJDBC(oid, autoLoadConnection, options);
     }
 
-    public DefaultTableMetadata loadTableFromJDBC(TableId id, Connection connection, LoadFromJDBCOptions options)
+    public DefaultTableMetadata loadTableFromJDBC(TableOid oid, Connection connection, LoadFromJDBCOptions options)
             throws SQLException {
-        if (id == null)
+        if (oid == null)
             throw new NullPointerException("id");
         if (connection == null)
             throw new NullPointerException("connection");
-        DefaultSchemaMetadata dsm = getOrCreateSchema(id.toSchemaId());
-        return dsm.loadTableFromJDBC(id.tableName, connection, options);
+        DefaultSchemaMetadata dsm = getOrCreateSchema(oid.toSchemaId());
+        return dsm.loadTableFromJDBC(oid.tableName, connection, options);
     }
 
     @Override
-    public SchemaList findSchemas(SchemaId pattern, boolean ignoreCase) {
+    public SchemaList findSchemas(SchemaOid pattern, boolean ignoreCase) {
         if (pattern != null) {
             if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return SchemaList.empty();
@@ -235,8 +235,8 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public TableList findTables(TableId pattern, boolean ignoreCase) {
-        SchemaId schemaPattern = null;
+    public TableList findTables(TableOid pattern, boolean ignoreCase) {
+        SchemaOid schemaPattern = null;
         if (pattern != null) {
             if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return TableList.empty();
@@ -314,7 +314,7 @@ public class DefaultCatalogMetadata
                 throws SQLException {
             String schemaName = rs.getString("TABLE_SCHEM");
             DefaultSchemaMetadata schema = newSchema(schemaName);
-            if (loadSelector.selectSchema(schema.id)) {
+            if (loadSelector.selectSchema(schema.schemaId)) {
                 schema.setJDBCLoadSelector(loadSelector);
                 addSchema(schema);
             }

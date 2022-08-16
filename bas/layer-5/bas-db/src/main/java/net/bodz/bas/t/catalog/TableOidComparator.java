@@ -2,21 +2,24 @@ package net.bodz.bas.t.catalog;
 
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
-public class SchemaIdComparator
-        extends AbstractNonNullComparator<SchemaId> {
+public class TableOidComparator
+        extends AbstractNonNullComparator<TableOid> {
 
     int sign;
 
-    public SchemaIdComparator(int sign) {
+    public TableOidComparator(int sign) {
         this.sign = sign;
     }
 
     @Override
-    public int compareNonNull(SchemaId o1, SchemaId o2) {
+    public int compareNonNull(TableOid o1, TableOid o2) {
         int cmp = compareString(o1.catalogName, o2.catalogName);
         if (cmp != 0)
             return cmp * sign;
         cmp = compareString(o1.schemaName, o2.schemaName);
+        if (cmp != 0)
+            return cmp * sign;
+        cmp = compareString(o1.tableName, o2.tableName);
         return cmp * sign;
     }
 
@@ -34,11 +37,11 @@ public class SchemaIdComparator
         return a.compareTo(b);
     }
 
-    public static final SchemaIdComparator ASC = new SchemaIdComparator(1);
-    public static final SchemaIdComparator DESC = new SchemaIdComparator(-1);
+    public static final TableOidComparator ASC = new TableOidComparator(1);
+    public static final TableOidComparator DESC = new TableOidComparator(-1);
 
     public static class CaseInsensitive
-            extends SchemaIdComparator {
+            extends TableOidComparator {
 
         public CaseInsensitive(int sign) {
             super(sign);
@@ -49,8 +52,8 @@ public class SchemaIdComparator
             return a.compareToIgnoreCase(b);
         }
 
-        public static final SchemaIdComparator ASC = new CaseInsensitive(1);
-        public static final SchemaIdComparator DESC = new CaseInsensitive(-1);
+        public static final TableOidComparator ASC = new CaseInsensitive(1);
+        public static final TableOidComparator DESC = new CaseInsensitive(-1);
 
     }
 

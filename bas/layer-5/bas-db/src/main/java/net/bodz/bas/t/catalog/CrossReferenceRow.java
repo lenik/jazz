@@ -27,12 +27,12 @@ class CrossReferenceRow {
     String PKCOLUMN_NAME;
     short KEY_SEQ;
 
-    public TableId getParentName() {
-        return new TableId(PKTABLE_CAT, PKTABLE_SCHEM, PKTABLE_NAME);
+    public TableOid getParentName() {
+        return new TableOid(PKTABLE_CAT, PKTABLE_SCHEM, PKTABLE_NAME);
     }
 
-    public TableId getForeignName() {
-        return new TableId(FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME);
+    public TableOid getForeignName() {
+        return new TableOid(FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME);
     }
 
     public void readObject(ResultSet rs)
@@ -56,14 +56,14 @@ class CrossReferenceRow {
         KEY_SEQ = rs.getShort("KEY_SEQ");
     }
 
-    static JKMap<TableId, String, List<CrossReferenceRow>> convert(ResultSet rs, boolean groupByParent)
+    static JKMap<TableOid, String, List<CrossReferenceRow>> convert(ResultSet rs, boolean groupByParent)
             throws SQLException {
-        JKMap<TableId, String, List<CrossReferenceRow>> map = new JKMap<>();
+        JKMap<TableOid, String, List<CrossReferenceRow>> map = new JKMap<>();
         while (rs.next()) {
             CrossReferenceRow row = new CrossReferenceRow();
             row.readObject(rs);
 
-            TableId k1;
+            TableOid k1;
             String k2;
             if (groupByParent) {
                 k1 = row.getParentName();

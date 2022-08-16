@@ -11,29 +11,29 @@ public interface ITableDirectory {
      *
      * @return <code>false</code> if the name is outside of this directory.
      */
-    boolean isValidTableId(TableId id);
+    boolean isValidTableId(TableOid oid);
 
     /**
      * Check if all table names in this directory are inside the given schema namespace.
      */
     boolean isValidIdOf(String catalogName);
 
-    default void checkTableId(TableId id) {
-        if (!isValidTableId(id))
-            throw new IllegalArgumentException("Invalid table id: " + id);
+    default void checkTableId(TableOid oid) {
+        if (!isValidTableId(oid))
+            throw new IllegalArgumentException("Invalid table id: " + oid);
     }
 
-    default TableList findTables(TableId pattern) {
+    default TableList findTables(TableOid pattern) {
         return findTables(pattern, false);
     }
 
-    TableList findTables(TableId pattern, boolean ignoreCase);
+    TableList findTables(TableOid pattern, boolean ignoreCase);
 
-    default ITableMetadata getTable(TableId pattern) {
+    default ITableMetadata getTable(TableOid pattern) {
         return getTable(pattern, false);
     }
 
-    default ITableMetadata getTable(TableId pattern, boolean ignoreCase) {
+    default ITableMetadata getTable(TableOid pattern, boolean ignoreCase) {
         TableList tableList = findTables(pattern, ignoreCase);
         if (tableList.size() > 1)
             throw new DuplicatedKeyException("More than single table matched: " + pattern);
@@ -43,11 +43,11 @@ public interface ITableDirectory {
             return tableList.get(0);
     }
 
-    default ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection) {
+    default ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection) {
         LoadFromJDBCOptions options = new LoadFromJDBCOptions();
-        return autoLoadTableFromJDBC(id, autoLoadConnection, options);
+        return autoLoadTableFromJDBC(oid, autoLoadConnection, options);
     }
 
-    ITableMetadata autoLoadTableFromJDBC(TableId id, Connection autoLoadConnection, LoadFromJDBCOptions options);
+    ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection, LoadFromJDBCOptions options);
 
 }

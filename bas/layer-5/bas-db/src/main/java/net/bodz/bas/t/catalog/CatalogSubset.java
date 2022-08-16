@@ -29,16 +29,16 @@ public class CatalogSubset {
         return true;
     }
 
-    public boolean contains(TableId id) {
+    public boolean contains(TableOid oid) {
         if (schemas == ALL_SCHEMAS)
             return true;
 
-        if (anySchema.contains(id.getTableName()))
+        if (anySchema.contains(oid.getTableName()))
             return true;
 
-        SchemaSubset schema = schemas.get(id.getSchemaName());
+        SchemaSubset schema = schemas.get(oid.getSchemaName());
         if (schema != null)
-            if (schema.contains(id.getTableName()))
+            if (schema.contains(oid.getTableName()))
                 return true;
 
         return false;
@@ -90,10 +90,10 @@ public class CatalogSubset {
             subset.addAllTables();
     }
 
-    public boolean addTable(TableId id) {
-        String schemaName = id.getSchemaName();
+    public boolean addTable(TableOid oid) {
+        String schemaName = oid.getSchemaName();
         SchemaSubset subset = (schemaName == null) ? anySchema : addSchema(schemaName);
-        return subset.addTableWildcards(id.getTableName());
+        return subset.addTableWildcards(oid.getTableName());
     }
 
     @Override

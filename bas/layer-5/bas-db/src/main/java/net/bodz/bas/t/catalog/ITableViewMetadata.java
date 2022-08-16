@@ -16,7 +16,7 @@ public interface ITableViewMetadata
 
     String K_TABLE_TYPE = "tableType";
 
-    TableId getId();
+    TableOid getId();
 
     TableType getTableType();
 

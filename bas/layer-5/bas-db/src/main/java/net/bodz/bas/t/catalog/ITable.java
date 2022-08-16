@@ -22,7 +22,7 @@ public interface ITable
 
     ISchema getParent();
 
-    TableId getId();
+    TableOid getId();
 
     default String getName() {
         return getId().getTableName();

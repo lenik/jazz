@@ -19,7 +19,7 @@ public class DefaultViewMetadata
             IViewMetadata {
 
     TableKey primaryKey;
-    Map<TableId, MutableTableUsage> tableUsages = new LinkedHashMap<>();
+    Map<TableOid, MutableTableUsage> tableUsages = new LinkedHashMap<>();
 
     public DefaultViewMetadata() {
         super();
@@ -110,11 +110,11 @@ public class DefaultViewMetadata
             String catalog = rs.getString("table_catalog");
             String schema = rs.getString("table_schema");
             String name = rs.getString("table_name");
-            TableId id = new TableId(catalog, schema, name);
-            MutableTableUsage usage = tableUsages.get(id);
+            TableOid oid = new TableOid(catalog, schema, name);
+            MutableTableUsage usage = tableUsages.get(oid);
             if (usage == null) {
-                usage = new MutableTableUsage(id);
-                tableUsages.put(id, usage);
+                usage = new MutableTableUsage(oid);
+                tableUsages.put(oid, usage);
             }
             String column = rs.getString("column_name");
             usage.columns.add(column);

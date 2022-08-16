@@ -2,11 +2,11 @@ package net.bodz.bas.t.catalog;
 
 public interface IJDBCLoadSelector {
 
-    default boolean selectSchema(SchemaId id) {
+    default boolean selectSchema(SchemaOid id) {
         return true;
     }
 
-    default boolean selectTable(TableId id, TableType type) {
+    default boolean selectTable(TableOid oid, TableType type) {
         return true;
     }
 
@@ -19,12 +19,12 @@ public interface IJDBCLoadSelector {
 
     IJDBCLoadSelector NONE = new IJDBCLoadSelector() {
         @Override
-        public boolean selectSchema(SchemaId id) {
+        public boolean selectSchema(SchemaOid id) {
             return false;
         }
 
         @Override
-        public boolean selectTable(TableId id, TableType type) {
+        public boolean selectTable(TableOid oid, TableType type) {
             return false;
         }
 

@@ -20,16 +20,16 @@ public interface ITableUsage
     String K_COLUMNS = "columns";
     String K_COLUMN = "columns";
 
-    TableId getTableId();
+    TableOid getTableId();
 
     List<String> getColumns();
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        TableId id = getTableId();
-        if (id != null)
-            id.jsonOut(out, opts);
+        TableOid oid = getTableId();
+        if (oid != null)
+            oid.jsonOut(out, opts);
 
         List<String> columns = getColumns();
         if (columns != null) {
@@ -44,9 +44,9 @@ public interface ITableUsage
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        TableId id = getTableId();
-        if (id != null)
-            id.writeObject(out);
+        TableOid oid = getTableId();
+        if (oid != null)
+            oid.writeObject(out);
 
         List<String> columns = getColumns();
         if (columns != null) {

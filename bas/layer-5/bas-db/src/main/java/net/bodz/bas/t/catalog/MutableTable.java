@@ -19,7 +19,7 @@ public class MutableTable
             ITable {
 
     ISchema parent;
-    TableId id;
+    TableOid oid;
 
     protected MutableTable() {
     }
@@ -73,17 +73,17 @@ public class MutableTable
     }
 
     @Override
-    public TableId getId() {
-        if (id != null)
-            return id;
+    public TableOid getId() {
+        if (oid != null)
+            return oid;
         ITableMetadata metadata = getMetadata();
         if (metadata != null)
             return metadata.getId();
         return null;
     }
 
-    public void setId(TableId id) {
-        this.id = id;
+    public void setId(TableOid oid) {
+        this.oid = oid;
     }
 
     @Override
@@ -91,8 +91,8 @@ public class MutableTable
             throws ParseException {
         IRowSetMetadata metadata = getMetadata();
         if (isAttached()) {
-            this.id = new TableId();
-            this.id.jsonIn(o, opts);
+            this.oid = new TableOid();
+            this.oid.jsonIn(o, opts);
         } else {
             JsonObject j_md = o.getJsonObject(K_METADATA);
             if (j_md != null) {
@@ -119,8 +119,8 @@ public class MutableTable
             throws ParseException, LoaderException {
         IRowSetMetadata metadata = getMetadata();
         if (isAttached()) {
-            this.id = new TableId();
-            this.id.readObject(x_table);
+            this.oid = new TableOid();
+            this.oid.readObject(x_table);
         } else {
             IElement x_md = x_table.selectByTag(K_METADATA).getFirst();
             if (x_md != null && x_md.getParentNode() == x_table) {

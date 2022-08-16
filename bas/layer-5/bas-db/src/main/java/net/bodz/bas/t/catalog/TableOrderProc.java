@@ -36,7 +36,7 @@ public class TableOrderProc {
         return this;
     }
 
-    public TableOrderProc traverse(TableId tableName) {
+    public TableOrderProc traverse(TableOid tableName) {
         ITableMetadata table = directory.getTable(tableName);
         deepFirst(table);
         return this;
@@ -51,7 +51,7 @@ public class TableOrderProc {
             throw new NullPointerException("table");
         if (!markSet.add(table))
             return;
-        for (TableId parentName : table.getParentTableNames()) {
+        for (TableOid parentName : table.getParentTableNames()) {
             ITableMetadata parent;
             if (autoLoadConnection == null) {
                 parent = directory.getTable(parentName);

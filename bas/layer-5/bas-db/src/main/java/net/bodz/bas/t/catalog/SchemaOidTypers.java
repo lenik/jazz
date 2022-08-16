@@ -5,11 +5,11 @@ import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.typer.std.AbstractCommonTypers;
 import net.bodz.bas.typer.std.IParser;
 
-public class SchemaIdTypers
-        extends AbstractCommonTypers<SchemaId> {
+public class SchemaOidTypers
+        extends AbstractCommonTypers<SchemaOid> {
 
-    public SchemaIdTypers() {
-        super(SchemaId.class);
+    public SchemaOidTypers() {
+        super(SchemaOid.class);
     }
 
     @Override
@@ -22,11 +22,11 @@ public class SchemaIdTypers
     }
 
     @Override
-    public SchemaId parse(String text, IOptions options)
+    public SchemaOid parse(String text, IOptions options)
             throws ParseException {
         if (text == null)
             return null;
-        return SchemaId.parse(text);
+        return SchemaOid.parse(text);
     }
 
 }

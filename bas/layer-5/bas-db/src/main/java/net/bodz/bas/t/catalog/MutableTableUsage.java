@@ -14,22 +14,22 @@ public class MutableTableUsage
         implements
             ITableUsage {
 
-    TableId tableId;
+    TableOid tableId;
     List<String> columns = new ArrayList<>();
 
     public MutableTableUsage() {
     }
 
-    public MutableTableUsage(TableId id) {
-        this.tableId = id;
+    public MutableTableUsage(TableOid oid) {
+        this.tableId = oid;
     }
 
     @Override
-    public TableId getTableId() {
+    public TableOid getTableId() {
         return tableId;
     }
 
-    public void setTableId(TableId tableId) {
+    public void setTableId(TableOid tableId) {
         this.tableId = tableId;
     }
 
@@ -45,7 +45,7 @@ public class MutableTableUsage
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        tableId = new TableId();
+        tableId = new TableOid();
         tableId.jsonIn(o, opts);
 
         JsonArray o_columns = o.getJsonArray(K_COLUMNS);
@@ -59,7 +59,7 @@ public class MutableTableUsage
     @Override
     public void readObject(IElement element)
             throws ParseException, LoaderException {
-        tableId = new TableId();
+        tableId = new TableOid();
         tableId.readObject(element);
 
         IElement x_columns = element.selectByTag(K_COLUMNS).first();

@@ -24,10 +24,10 @@ public interface ITableMetadata
 
     CrossReference getForeignKey(String constraintName);
 
-    default Set<TableId> getParentTableNames() {
-        Set<TableId> parents = new LinkedHashSet<>();
+    default Set<TableOid> getParentTableNames() {
+        Set<TableOid> parents = new LinkedHashSet<>();
         for (CrossReference ref : getForeignKeys().values()) {
-            TableId parent = ref.getParentKey().getId();
+            TableOid parent = ref.getParentKey().getId();
             parents.add(parent);
         }
         return parents;
