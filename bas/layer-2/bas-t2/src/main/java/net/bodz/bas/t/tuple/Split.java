@@ -327,7 +327,7 @@ public class Split
         return pop(s, '.');
     }
 
-    public static Split subDomain(String s) {
+    public static Split headDomain(String s) {
         return shift(s, '.');
     }
 
