@@ -13,7 +13,8 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 @ThreadUnsafe
 public abstract class AbstractLogSink
         extends AbstractTreeOut
-        implements ILogSink {
+        implements
+            ILogSink {
 
     // private Object source;
 
@@ -137,7 +138,8 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    protected void _flush(boolean strict) {
+    public void _flushX()
+            throws IOException {
         _done();
     }
 

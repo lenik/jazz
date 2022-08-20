@@ -22,7 +22,7 @@ public interface IXmlOut
      * Write the begin part of the tag pair, for example, <code>&lt;tag attr='val' ...&gt;</code>.
      * <p>
      * A tag name stack is used to remember names from previous calls.
-     * 
+     *
      * @param name
      *            The tag name, non-<code>null</code>.
      * @return Child out node.
@@ -61,9 +61,6 @@ public interface IXmlOut
     void verbatim(String str);
 
     void indent(int level);
-
-    @Override
-    void flush(boolean sync);
 
     @Override
     void flush();

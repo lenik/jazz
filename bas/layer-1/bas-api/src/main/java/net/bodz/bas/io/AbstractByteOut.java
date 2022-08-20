@@ -24,24 +24,10 @@ public abstract class AbstractByteOut
         fn.write(this, buf);
     }
 
-    /**
-     * Do nothing in default implementation.
-     */
-    @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
-    @Override
-    public void flush()
-            throws IOException {
-        flush(false);
-    }
-
     @Override
     public void close()
             throws IOException {
-        flush(true);
+        flush();
         closed = true;
     }
 

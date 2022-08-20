@@ -3,18 +3,18 @@ package net.bodz.bas.io.adapter;
 import java.io.IOException;
 import java.io.Writer;
 
-import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.io.ICharOut_raw;
 
 public class CharOutWriter
         extends Writer {
 
-    private final ICharOut charOut;
+    private final ICharOut_raw charOut;
 
     /**
      * @throws NullPointerException
      *             If <code>charOut</code> is <code>null</code>.
      */
-    public CharOutWriter(ICharOut charOut) {
+    public CharOutWriter(ICharOut_raw charOut) {
         if (charOut == null)
             throw new NullPointerException("charOut");
         this.charOut = charOut;
@@ -41,7 +41,7 @@ public class CharOutWriter
     @Override
     public void flush()
             throws IOException {
-        charOut.flush(true);
+        charOut.flush();
     }
 
     @Override

@@ -74,11 +74,6 @@ public class CroppedRafOut
             throws IOException {
     }
 
-    @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
     /** ⇱ Implementation Of {@link ISeekable}. */
     /* _____________________________ */static section.iface __SEEK__;
 

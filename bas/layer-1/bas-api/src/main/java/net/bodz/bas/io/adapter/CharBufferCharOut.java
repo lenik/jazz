@@ -50,6 +50,11 @@ public class CharBufferCharOut
     }
 
     @Override
+    public void flush()
+            throws IOException {
+    }
+
+    @Override
     public int hashCode() {
         return 0x56ec273b + buf.hashCode();
     }

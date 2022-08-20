@@ -61,7 +61,7 @@ public class MovableCharBufferPrintOut
     }
 
     @Override
-    protected void _close()
+    public void _closeX()
             throws IOException {
         closed = true;
     }

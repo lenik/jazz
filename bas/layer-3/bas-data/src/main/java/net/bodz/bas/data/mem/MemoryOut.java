@@ -74,11 +74,6 @@ public class MemoryOut
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
-    @Override
     public boolean isClosed() {
         return false;
     }

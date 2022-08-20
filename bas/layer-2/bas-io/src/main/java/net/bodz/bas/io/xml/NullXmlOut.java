@@ -104,10 +104,6 @@ public class NullXmlOut
     }
 
     @Override
-    public void flush(boolean sync) {
-    }
-
-    @Override
     public void flush() {
     }
 

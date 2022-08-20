@@ -69,7 +69,7 @@ public class EncodedCharOut
     }
 
     @Override
-    public void flush(boolean strict)
+    public void flush()
             throws IOException {
         conv(true);
     }

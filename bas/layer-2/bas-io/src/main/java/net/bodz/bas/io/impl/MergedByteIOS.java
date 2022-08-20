@@ -106,12 +106,6 @@ public class MergedByteIOS
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        out.flush(strict);
-    }
-
-    @Override
     public void flush()
             throws IOException {
         out.flush();

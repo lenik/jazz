@@ -1,25 +1,18 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
-import java.io.Writer;
-import java.nio.CharBuffer;
 
 import net.bodz.bas.io.impl.NullCharOut;
 
 public interface ICharOut
-        extends ISimpleCharOut, IFlushable, ICloseable {
+        extends
+            ICharOut_raw {
 
     /**
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
-    void write(char[] chars)
-            throws IOException;
-
-    /**
-     * @throws NullPointerException
-     *             If <code>chars</code> is <code>null</code>.
-     */
+    @Override
     void write(char[] chars, int off, int len)
             throws IOException;
 
@@ -27,67 +20,49 @@ public interface ICharOut
      * @throws NullPointerException
      *             If <code>s</code> is <code>null</code>.
      */
-    void write(String s)
-            throws IOException;
+    @Override
+    default void write(String s)
+            throws IOException {
+        write(s.toCharArray());
+    }
 
     /**
      * @throws NullPointerException
      *             If <code>s</code> is <code>null</code>.
      */
-    void write(String s, int off, int len)
-            throws IOException;
+    @Override
+    default void write(String s, int off, int len)
+            throws IOException {
+        char[] buf = new char[len];
+        s.getChars(off, off + len, buf, 0);
+        write(buf, 0, len);
+    }
 
     /**
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
-    void write(CharSequence chars)
-            throws IOException;
+    @Override
+    default void write(CharSequence chars)
+            throws IOException {
+        write(chars, 0, chars.length());
+    }
 
     /**
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
-    void write(CharSequence chars, int start, int end)
-            throws IOException;
-
-    /**
-     * @throws NullPointerException
-     *             If <code>charBuffer</code> is <code>null</code>.
-     */
-    void write(CharBuffer charBuffer)
-            throws IOException;
-
-    Writer toWriter();
+    @Override
+    default void write(CharSequence chars, int start, int end)
+            throws IOException {
+        if (chars == null)
+            throw new NullPointerException("chars");
+        for (int i = start; i < end; i++) {
+            char ch = chars.charAt(i);
+            write(ch);
+        }
+    }
 
     ICharOut NULL = new NullCharOut();
-
-    class fn {
-
-        public static void write(ICharOut out, CharBuffer buf)
-                throws IOException {
-            if (buf == null)
-                throw new NullPointerException("buf");
-            int offset = buf.arrayOffset();
-            int pos = buf.position();
-            int len = buf.remaining();
-            out.write(buf.array(), offset + pos, len);
-            buf.position(buf.limit());
-        }
-
-        public static void dump(ICharOut out, ICharIn charIn)
-                throws IOException {
-            if (charIn == null)
-                throw new NullPointerException("charIn");
-            char[] buf = new char[4096];
-            while (true) {
-                int cc = charIn.read(buf);
-                if (cc == -1)
-                    return;
-                out.write(buf, 0, cc);
-            }
-        }
-
-    }
 
 }

@@ -33,12 +33,6 @@ public class OutputStreamByteOut
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        out.flush();
-    }
-
-    @Override
     public void close()
             throws IOException {
         out.close();

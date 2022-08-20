@@ -44,12 +44,6 @@ public class DataOutImplBE
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        baseImpl.flush(strict);
-    }
-
-    @Override
     public void close()
             throws IOException {
         baseImpl.close();

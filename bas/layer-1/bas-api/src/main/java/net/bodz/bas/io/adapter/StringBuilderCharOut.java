@@ -31,4 +31,9 @@ public class StringBuilderCharOut
         sb.append(chars, start, end - start);
     }
 
+    @Override
+    public void flush()
+            throws IOException {
+    }
+
 }

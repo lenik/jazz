@@ -74,11 +74,6 @@ public abstract class AbstractCharIOS
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
-    @Override
     public void flush()
             throws IOException {
     }

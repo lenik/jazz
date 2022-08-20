@@ -51,7 +51,7 @@ public class WriterCharOut
     }
 
     @Override
-    public void flush(boolean strict)
+    public void flush()
             throws IOException {
         writer.flush();
     }

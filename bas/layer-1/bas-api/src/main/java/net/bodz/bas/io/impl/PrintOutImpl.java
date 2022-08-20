@@ -14,7 +14,7 @@ public class PrintOutImpl
 
     /**
      * IPrintOut completion from ICharOut implementation.
-     * 
+     *
      * @param baseImpl
      *            The {@link ICharOut} implementation, not-<code>null</code>.
      */
@@ -70,13 +70,7 @@ public class PrintOutImpl
     }
 
     @Override
-    protected void _flush(boolean strict)
-            throws IOException {
-        baseImpl.flush(strict);
-    }
-
-    @Override
-    protected void _close()
+    public void _closeX()
             throws IOException {
         baseImpl.close();
     }
