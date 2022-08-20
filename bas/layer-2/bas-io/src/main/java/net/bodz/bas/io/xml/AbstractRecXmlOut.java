@@ -298,12 +298,6 @@ public abstract class AbstractRecXmlOut<node_t extends AbstractRecXmlOut<node_t,
     }
 
     @Override
-    public void flush(boolean sync) {
-        text();
-        treeOut.flush(sync);
-    }
-
-    @Override
     public void flush() {
         text();
         treeOut.flush();

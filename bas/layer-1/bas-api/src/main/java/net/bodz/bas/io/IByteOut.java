@@ -42,11 +42,6 @@ public interface IByteOut
     }
 
     @Override
-    default void flush(boolean sync)
-            throws IOException {
-    }
-
-    @Override
     default void close()
             throws IOException {
     }

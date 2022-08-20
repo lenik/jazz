@@ -165,15 +165,9 @@ public class TreeOutImpl
     }
 
     @Override
-    protected void _flush(boolean strict)
+    public void _closeX()
             throws IOException {
-        printOut.flush(strict);
-    }
-
-    @Override
-    protected void _close()
-            throws IOException {
-        printOut.close();
+        printOut._closeX();
     }
 
     @Override

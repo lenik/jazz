@@ -50,13 +50,13 @@ public class PrintStreamPrintOut
     }
 
     @Override
-    protected void _flush(boolean strict)
+    public void _flushX()
             throws IOException {
         ps.flush();
     }
 
     @Override
-    protected void _close()
+    public void _closeX()
             throws IOException {
         ps.close();
     }

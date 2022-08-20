@@ -112,10 +112,6 @@ public class NullPrintOut
     }
 
     @Override
-    public void flush(boolean strict) {
-    }
-
-    @Override
     public void flush() {
     }
 

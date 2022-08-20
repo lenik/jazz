@@ -47,12 +47,6 @@ public abstract class DynamicWriterCharOut
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        getWriter().flush();
-    }
-
-    @Override
     public void close()
             throws IOException {
         getWriter().close();

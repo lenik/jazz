@@ -43,13 +43,13 @@ public abstract class DynamicPrintStreamPrintOut
     }
 
     @Override
-    protected void _flush(boolean strict)
+    public void _flushX()
             throws IOException {
         getPrintStream().flush();
     }
 
     @Override
-    protected void _close()
+    public void _closeX()
             throws IOException {
         getPrintStream().close();
     }

@@ -65,12 +65,6 @@ public abstract class DecoratedCharOut
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        getWrapped().flush(strict);
-    }
-
-    @Override
     public void flush()
             throws IOException {
         getWrapped().flush();

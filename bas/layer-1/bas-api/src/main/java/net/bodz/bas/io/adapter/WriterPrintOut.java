@@ -56,14 +56,14 @@ public class WriterPrintOut
     }
 
     @Override
-    protected void _flush(boolean strict)
+    public void _flushX()
             throws IOException {
         // if (strict)
         writer.flush();
     }
 
     @Override
-    protected void _close()
+    public void _closeX()
             throws IOException {
         writer.close();
     }

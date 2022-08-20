@@ -35,12 +35,6 @@ public abstract class DynamicOutputStreamByteOut
     }
 
     @Override
-    public void flush(boolean strict)
-            throws IOException {
-        getOutputStream().flush();
-    }
-
-    @Override
     public void close()
             throws IOException {
         getOutputStream().close();
