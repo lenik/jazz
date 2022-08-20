@@ -11,10 +11,10 @@ import net.bodz.bas.servlet.man.SysManager;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.codegen.doc.WsDocSite;
 import net.bodz.lily.security.login.ILoginManager;
 import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginManagerWs;
+import net.bodz.lily.tool.wsdoc.WsDocSite;
 
 public abstract class LilyStartSite
         extends BasicSite {
