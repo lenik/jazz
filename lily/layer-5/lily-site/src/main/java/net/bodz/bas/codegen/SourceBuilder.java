@@ -17,18 +17,18 @@ public abstract class SourceBuilder<model_t> {
 
     static final Logger logger = LoggerFactory.getLogger(SourceBuilder.class);
 
-    protected boolean isDefaultOverwrite() {
-        return false;
-    }
-
     protected abstract IFileInfo getFileInfo(model_t model);
+
+    protected Boolean shouldOverwrite(model_t model) {
+        return null;
+    }
 
     public final boolean buildFile(model_t model)
             throws IOException {
-        return buildFile(model, isDefaultOverwrite());
+        return buildFile(model, false);
     }
 
-    public final boolean buildFile(model_t model, boolean overwrite)
+    public final boolean buildFile(model_t model, boolean defaultOverwrite)
             throws IOException {
         IFileInfo fileInfo = getFileInfo(model);
         File file = fileInfo.toFile();
@@ -36,13 +36,16 @@ public abstract class SourceBuilder<model_t> {
         if (!dir.exists())
             dir.mkdirs();
 
-        if (file.exists())
+        if (file.exists()) {
+            Boolean shouldOverwrite = shouldOverwrite(model);
+            boolean overwrite = shouldOverwrite != null ? shouldOverwrite.booleanValue() : defaultOverwrite;
             if (overwrite)
                 logger.info("overwrite " + file);
             else
                 return false;
+        }
 
-        String href = FilePath.getRelativePath(file, fileInfo.getBaseDir());
+        String href = FilePath.getRelativePath(file.getPath(), fileInfo.getBaseDir().getPath() + "/");
         logger.info("build " + href);
         try (FileOutputStream fileOut = new FileOutputStream(file)) {
             OutputStreamWriter osw = new OutputStreamWriter(fileOut, Charsets.UTF8);

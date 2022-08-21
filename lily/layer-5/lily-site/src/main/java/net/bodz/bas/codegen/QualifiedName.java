@@ -58,19 +58,23 @@ public class QualifiedName {
             return name + "." + extension;
     }
 
-    public String getPath(String extension) {
-        return getDirName() + FS + getBaseName(extension);
+    public String getLocalPath(String extension) {
+        String baseName = getBaseName(extension);
+        if (packageName == null)
+            return baseName;
+        else
+            return packageName.replace(".", FS) + FS + baseName;
     }
 
-    public File toDir(File parent) {
-        if (parent == null)
+    public File toDir(File baseDir) {
+        if (baseDir == null)
             return new File(getDirName());
         else
-            return new File(parent, getDirName());
+            return new File(baseDir, getDirName());
     }
 
-    public File toFile(File parent, String extension) {
-        return new File(toDir(parent), getBaseName(extension));
+    public File toFile(File baseDir, String extension) {
+        return new File(toDir(baseDir), getBaseName(extension));
     }
 
     @Override

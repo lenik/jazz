@@ -12,6 +12,7 @@ public class JavaGenProject {
 
     File baseDir;
     String daoPackage = "dao";
+    boolean forceMode;
 
     public final ClassPathInfo Foo;
     public final ClassPathInfo _Foo_stuff;
@@ -62,6 +63,14 @@ public class JavaGenProject {
         FooSamples = FooTest.join(Foo.name + "Samples", generated);
         FooMapperTest = FooTest.join(dao_ + Foo.name + "MapperTest");
         FooIndexTest = FooTest.join(dao_ + Foo.name + "IndexTest");
+    }
+
+    public boolean isForceMode() {
+        return forceMode;
+    }
+
+    public void setForceMode(boolean forceMode) {
+        this.forceMode = forceMode;
     }
 
 }
