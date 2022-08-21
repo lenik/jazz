@@ -2,7 +2,8 @@ package net.bodz.bas.io;
 
 public class DecoratedTreeOut
         extends DecoratedPrintOut
-        implements ITreeOut {
+        implements
+            ITreeOut {
 
     private static final long serialVersionUID = 1L;
 

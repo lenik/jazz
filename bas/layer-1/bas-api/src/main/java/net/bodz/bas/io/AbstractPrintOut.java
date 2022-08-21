@@ -1,5 +1,7 @@
 package net.bodz.bas.io;
 
+import java.io.IOException;
+
 public abstract class AbstractPrintOut
         extends AbstractCharOut
         implements
@@ -7,12 +9,20 @@ public abstract class AbstractPrintOut
 
     @Override
     public void flush() {
-        IPrintOut.super.flush();
+        try {
+            _flushX();
+        } catch (IOException e) {
+            throw new PrintException(e);
+        }
     }
 
     @Override
     public void close() {
-        IPrintOut.super.close();
+        try {
+            _closeX();
+        } catch (IOException e) {
+            throw new PrintException(e);
+        }
     }
 
 }

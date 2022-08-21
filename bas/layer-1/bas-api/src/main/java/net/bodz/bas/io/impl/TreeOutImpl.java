@@ -165,6 +165,12 @@ public class TreeOutImpl
     }
 
     @Override
+    public void _flushX()
+            throws IOException {
+        printOut._flushX();
+    }
+
+    @Override
     public void _closeX()
             throws IOException {
         printOut._closeX();
