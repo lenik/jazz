@@ -2,6 +2,8 @@ package net.bodz.bas.c.java.util.regex;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.UnexpectedException;
+
 public class QuotedStringProcessor
         extends TextPrepByParts {
 
@@ -37,12 +39,17 @@ public class QuotedStringProcessor
         out.append(in, start, end);
     }
 
-    protected String processQuotedText(CharSequence in, int start, int end, Appendable out) {
+    protected void processQuotedText(CharSequence in, int start, int end, Appendable out) {
         // String quotedText = in.substring(start, end);
         int bodyStart = start + quoteFormat.quoteOpenLen;
         int bodyEnd = end - quoteFormat.quoteCloseLen;
         String body = in.subSequence(bodyStart, bodyEnd).toString();
-        return Unescape.unescape(body);
+        String unescaped = Unescape.unescape(body);
+        try {
+            out.append(unescaped);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
 }
