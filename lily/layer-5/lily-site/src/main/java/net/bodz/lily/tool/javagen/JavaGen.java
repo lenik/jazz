@@ -48,6 +48,13 @@ public class JavaGen
      */
     Boolean includeTables;
 
+    /**
+     * Overwrite all existing files.
+     *
+     * @option -f
+     */
+    boolean forceMode;
+
     Class<?> appClass = getClass();
     DataContext dataContext;
     Connection connection;
@@ -102,19 +109,21 @@ public class JavaGen
 
         ClassPathInfo pathInfo = new ClassPathInfo(packageName, simpleName, //
                 outDir, "src/main/java", "src/main/resources");
-        return new JavaGenProject(outDir, pathInfo);
+        JavaGenProject project = new JavaGenProject(outDir, pathInfo);
+        project.setForceMode(forceMode);
+        return project;
     }
 
     public void makeTable(ITableMetadata table)
             throws IOException {
         JavaGenProject project = createProject(table);
 
-        new Foo_stuff__java(project).buildFile(table);
+        new Foo_stuff__java(project).buildFile(table, true);
         if (table.getPrimaryKeyColumns().length > 1)
-            new Foo_Id__java(project).buildFile(table);
+            new Foo_Id__java(project).buildFile(table, true);
 
         new Foo__java(project).buildFile(table);
-        new FooMask_stuff__java(project).buildFile(table);
+        new FooMask_stuff__java(project).buildFile(table, true);
         new FooMask__java(project).buildFile(table);
         new FooIndex__java(project).buildFile(table);
         new FooMapper__xml(project).buildFile(table);
@@ -127,12 +136,12 @@ public class JavaGen
             throws IOException {
         JavaGenProject project = createProject(view);
 
-        new VFoo_stuff__java(project).buildFile(view);
+        new VFoo_stuff__java(project).buildFile(view, true);
         if (view.getPrimaryKeyColumns().length > 1)
-            new Foo_Id__java(project).buildFile(view);
+            new Foo_Id__java(project).buildFile(view, true);
 
         new VFoo__java(project).buildFile(view);
-        new FooMask_stuff__java(project).buildFile(view);
+        new FooMask_stuff__java(project).buildFile(view, true);
         new FooMask__java(project).buildFile(view);
         new FooIndex__java(project).buildFile(view);
         new VFooMapper__xml(project).buildFile(view);

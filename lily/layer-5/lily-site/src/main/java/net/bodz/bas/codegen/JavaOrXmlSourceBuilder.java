@@ -21,7 +21,7 @@ public abstract class JavaOrXmlSourceBuilder<model_t>
         buffer.im.dump(out);
         out.println();
 
-        out.print(body);
+        out.print(body.toString());
         out.flush();
     }
 

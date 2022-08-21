@@ -1,5 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
+import java.io.File;
+
 import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.IFileInfo;
 import net.bodz.bas.codegen.JavaOrXmlSourceBuilder;
@@ -27,12 +29,26 @@ public abstract class JavaGenFileType
         this.pathInfo = pathInfo;
     }
 
+    @Override
+    protected Boolean shouldOverwrite(ITableViewMetadata model) {
+        if (project.isForceMode())
+            return true;
+        else
+            return null;
+    }
+
     protected abstract String getExtension();
 
     @Override
     protected IFileInfo getFileInfo(ITableViewMetadata model) {
-        String localPath = pathInfo.getPath(getExtension());
-        return new MutableFileInfo(pathInfo.getBaseDir(), localPath);
+        String extension = getExtension();
+        File baseDir = pathInfo.getBaseDir();
+        if (JAVA.equals(extension))
+            baseDir = new File(baseDir, pathInfo.getJavaDir());
+        else
+            baseDir = new File(baseDir, pathInfo.getResourceDir());
+        String localPath = pathInfo.getLocalPath(extension);
+        return new MutableFileInfo(baseDir, localPath);
     }
 
     @Override
