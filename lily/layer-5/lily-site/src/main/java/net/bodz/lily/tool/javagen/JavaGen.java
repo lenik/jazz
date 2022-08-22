@@ -2,6 +2,7 @@ package net.bodz.lily.tool.javagen;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -9,7 +10,9 @@ import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.fmt.xml.XmlFn;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
@@ -163,15 +166,27 @@ public class JavaGen
         connection = dataContext.getConnection();
 
         for (String arg : args) {
-            if (arg.endsWith(".*.*")) {
+            if (arg.startsWith("@")) {
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                String path = arg.substring(1);
+                URL resource = classLoader.getResource(path);
+                for (String line : new URLResource(resource).read().lines()) {
+                    String name = line.trim();
+                    if (name.isEmpty() || name.startsWith("#"))
+                        continue;
+                    TableOid oid = TableOid.parse(name);
+                    catalogSubset.addTable(oid);
+                }
+
+            } else if (arg.endsWith(".*.*")) {
                 catalogSubset.addAllSchemas();
             } else if (arg.endsWith(".*")) {
                 String schemaName = StringPart.before(arg, ".*");
                 // schemaName = schemaName.toLowerCase();
                 catalogSubset.addFullSchema(schemaName);
             } else {
-                TableOid id = TableOid.parse(arg);
-                catalogSubset.addTable(id);
+                TableOid oid = TableOid.parse(arg);
+                catalogSubset.addTable(oid);
             }
         }
 
@@ -208,6 +223,12 @@ public class JavaGen
         });
 
         connection.close();
+    }
+
+    public static void main(String[] args)
+            throws Exception {
+        JavaGen app = new JavaGen(DataHub.getPreferredHub().getMain());
+        app.execute(args);
     }
 
 }
