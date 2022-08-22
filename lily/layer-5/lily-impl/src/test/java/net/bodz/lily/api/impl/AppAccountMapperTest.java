@@ -5,10 +5,10 @@ import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppAccount;
 import net.bodz.lily.api.AppAccountSamples;
 import net.bodz.lily.api.AppAccountType;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class AppAccountMapperTest
-        extends AbstractMapperTest<AppAccount, AppAccountMask, AppAccountMapper> {
+        extends AbstractTableTest<AppAccount, AppAccountMask, AppAccountMapper> {
 
     @Override
     public AppAccount buildSample() {

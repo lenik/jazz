@@ -3,10 +3,10 @@ package net.bodz.lily.schema.impl;
 import net.bodz.lily.schema.FormDef;
 import net.bodz.lily.schema.FormDefSamples;
 import net.bodz.lily.schema.SchemaDef;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class FormDefMapperTest
-        extends AbstractMapperTest<FormDef, FormDefMask, FormDefMapper> {
+        extends AbstractTableTest<FormDef, FormDefMask, FormDefMapper> {
 
     @Override
     public FormDef buildSample() {

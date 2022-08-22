@@ -2,13 +2,13 @@ package net.bodz.violet.edu.impl;
 
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.impl.PersonMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.edu.TestApply;
 import net.bodz.violet.edu.TestApplySamples;
 import net.bodz.violet.edu.TestPaper;
 
 public class TestApplyMapperTest
-        extends AbstractMapperTest<TestApply, TestApplyMask, TestApplyMapper> {
+        extends AbstractTableTest<TestApply, TestApplyMask, TestApplyMapper> {
 
     @Override
     public TestApply buildSample() {

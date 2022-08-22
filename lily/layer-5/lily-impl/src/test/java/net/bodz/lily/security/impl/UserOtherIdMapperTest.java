@@ -4,10 +4,10 @@ import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdSamples;
 import net.bodz.lily.security.UserOtherIdType;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class UserOtherIdMapperTest
-        extends AbstractMapperTest<UserOtherId, UserOtherIdMask, UserOtherIdMapper> {
+        extends AbstractTableTest<UserOtherId, UserOtherIdMask, UserOtherIdMapper> {
 
     @Override
     public UserOtherId buildSample() {

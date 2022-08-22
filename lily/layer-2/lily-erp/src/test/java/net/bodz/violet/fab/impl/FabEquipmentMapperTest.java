@@ -1,11 +1,11 @@
 package net.bodz.violet.fab.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.fab.FabEquipment;
 import net.bodz.violet.fab.FabEquipmentSamples;
 
 public class FabEquipmentMapperTest
-        extends AbstractMapperTest<FabEquipment, FabEquipmentMask, FabEquipmentMapper> {
+        extends AbstractTableTest<FabEquipment, FabEquipmentMask, FabEquipmentMapper> {
 
     @Override
     public FabEquipment buildSample() {

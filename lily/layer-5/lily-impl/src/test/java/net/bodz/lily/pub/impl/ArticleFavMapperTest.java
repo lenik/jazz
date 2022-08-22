@@ -2,10 +2,10 @@ package net.bodz.lily.pub.impl;
 
 import net.bodz.lily.pub.ArticleFav;
 import net.bodz.lily.pub.ArticleFavSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleFavMapperTest
-        extends AbstractMapperTest<ArticleFav, ArticleFavMask, ArticleFavMapper> {
+        extends AbstractTableTest<ArticleFav, ArticleFavMask, ArticleFavMapper> {
 
     @Override
     public ArticleFav buildSample() {

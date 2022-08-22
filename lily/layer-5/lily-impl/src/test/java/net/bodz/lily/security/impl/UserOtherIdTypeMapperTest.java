@@ -4,11 +4,11 @@ import org.junit.Ignore;
 
 import net.bodz.lily.security.UserOtherIdType;
 import net.bodz.lily.security.UserOtherIdTypeSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 @Ignore
 public class UserOtherIdTypeMapperTest
-        extends AbstractMapperTest<UserOtherIdType, UserOtherIdTypeMask, UserOtherIdTypeMapper> {
+        extends AbstractTableTest<UserOtherIdType, UserOtherIdTypeMask, UserOtherIdTypeMapper> {
 
     @Override
     public UserOtherIdType buildSample() {

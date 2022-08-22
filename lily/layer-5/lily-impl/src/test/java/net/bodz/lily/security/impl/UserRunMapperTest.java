@@ -4,11 +4,11 @@ import org.junit.Ignore;
 
 import net.bodz.lily.security.UserRun;
 import net.bodz.lily.security.UserRunSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 @Ignore
 public class UserRunMapperTest
-        extends AbstractMapperTest<UserRun, UserRunMask, UserRunMapper> {
+        extends AbstractTableTest<UserRun, UserRunMask, UserRunMapper> {
 
     @Override
     public UserRun buildSample() {

@@ -3,10 +3,10 @@ package net.bodz.lily.contact.impl;
 import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.OrgUnitSamples;
 import net.bodz.lily.contact.Organization;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class OrgUnitMapperTest
-        extends AbstractMapperTest<OrgUnit, OrgUnitMask, OrgUnitMapper> {
+        extends AbstractTableTest<OrgUnit, OrgUnitMask, OrgUnitMapper> {
 
     @Override
     public OrgUnit buildSample() {

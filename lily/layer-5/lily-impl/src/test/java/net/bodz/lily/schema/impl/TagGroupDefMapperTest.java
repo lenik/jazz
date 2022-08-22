@@ -3,10 +3,10 @@ package net.bodz.lily.schema.impl;
 import net.bodz.lily.schema.SchemaDef;
 import net.bodz.lily.schema.TagGroupDef;
 import net.bodz.lily.schema.TagGroupDefSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class TagGroupDefMapperTest
-        extends AbstractMapperTest<TagGroupDef, TagGroupDefMask, TagGroupDefMapper> {
+        extends AbstractTableTest<TagGroupDef, TagGroupDefMask, TagGroupDefMapper> {
 
     @Override
     public TagGroupDef buildSample() {

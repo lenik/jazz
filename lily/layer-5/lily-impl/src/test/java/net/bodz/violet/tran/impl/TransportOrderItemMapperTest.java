@@ -1,6 +1,6 @@
 package net.bodz.violet.tran.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
 import net.bodz.violet.shop.SalesOrderItem;
@@ -10,7 +10,7 @@ import net.bodz.violet.tran.TransportOrderItem;
 import net.bodz.violet.tran.TransportOrderItemSamples;
 
 public class TransportOrderItemMapperTest
-        extends AbstractMapperTest<TransportOrderItem, TransportOrderItemMask, TransportOrderItemMapper> {
+        extends AbstractTableTest<TransportOrderItem, TransportOrderItemMask, TransportOrderItemMapper> {
 
     @Override
     public TransportOrderItem buildSample() {

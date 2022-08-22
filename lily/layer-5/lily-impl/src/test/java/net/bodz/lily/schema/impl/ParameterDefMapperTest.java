@@ -3,10 +3,10 @@ package net.bodz.lily.schema.impl;
 import net.bodz.lily.schema.ParameterDef;
 import net.bodz.lily.schema.ParameterDefSamples;
 import net.bodz.lily.schema.SchemaDef;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class ParameterDefMapperTest
-        extends AbstractMapperTest<ParameterDef, ParameterDefMask, ParameterDefMapper> {
+        extends AbstractTableTest<ParameterDef, ParameterDefMask, ParameterDefMapper> {
 
     @Override
     public ParameterDef buildSample() {

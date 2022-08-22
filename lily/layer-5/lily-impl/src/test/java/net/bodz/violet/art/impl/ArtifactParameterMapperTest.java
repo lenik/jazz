@@ -1,11 +1,11 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.ArtifactParameter;
 import net.bodz.violet.art.ArtifactParameterSamples;
 
 public class ArtifactParameterMapperTest
-        extends AbstractMapperTest<ArtifactParameter, ArtifactParameterMask, ArtifactParameterMapper> {
+        extends AbstractTableTest<ArtifactParameter, ArtifactParameterMask, ArtifactParameterMapper> {
 
     @Override
     public ArtifactParameter buildSample() {

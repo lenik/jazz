@@ -4,10 +4,10 @@ import net.bodz.lily.api.Api;
 import net.bodz.lily.api.App;
 import net.bodz.lily.api.AppLog;
 import net.bodz.lily.api.AppLogSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class AppLogMapperTest
-        extends AbstractMapperTest<AppLog, AppLogMask, AppLogMapper> {
+        extends AbstractTableTest<AppLog, AppLogMask, AppLogMapper> {
 
     @Override
     public AppLog buildSample() {

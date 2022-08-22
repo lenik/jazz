@@ -6,12 +6,12 @@ import net.bodz.bas.meta.source.ToDo;
 import net.bodz.lily.schema.PriorityDef;
 import net.bodz.lily.schema.PriorityDefSamples;
 import net.bodz.lily.schema.SchemaDef;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 @ToDo
 @Ignore
 public class PriorityDefMapperTest
-        extends AbstractMapperTest<PriorityDef, PriorityDefMask, PriorityDefMapper> {
+        extends AbstractTableTest<PriorityDef, PriorityDefMask, PriorityDefMapper> {
 
     @Override
     public PriorityDef buildSample() {

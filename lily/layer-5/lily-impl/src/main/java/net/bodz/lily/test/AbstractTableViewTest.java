@@ -4,8 +4,6 @@ import java.lang.reflect.Type;
 import java.util.Random;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
@@ -16,7 +14,7 @@ import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.util.mapper.TableProfiles;
 
-public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
+public abstract class AbstractTableViewTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
         extends Assert {
 
     protected DataContext context = findPreferredDataContext();
@@ -28,8 +26,8 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
 
     protected final Random random = new Random();
 
-    public AbstractMapperTest() {
-        Type[] typeArgs = TypeParam.getTypeArgs(getClass(), AbstractMapperTest.class);
+    public AbstractTableViewTest() {
+        Type[] typeArgs = TypeParam.getTypeArgs(getClass(), AbstractTableViewTest.class);
         entityClass = TypeParam.bound1(typeArgs[0]);
         maskClass = TypeParam.bound1(typeArgs[1]);
         mapperClass = TypeParam.bound1(typeArgs[2]);
@@ -46,9 +44,6 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         return dataContexts.getTest();
     }
 
-    public abstract T buildSample()
-            throws Exception;
-
     public DaoTestConfig getConfig() {
         return DaoTestConfig.global;
     }
@@ -58,45 +53,6 @@ public abstract class AbstractMapperTest<T extends CoObject, M, mapper_t extends
         if (mapper == null)
             throw new NullPointerException("No mapper for " + mapperClass);
         return mapper;
-    }
-
-    @Test
-    public void testInsertDelete()
-            throws Exception {
-        Assume.assumeTrue(getConfig().testInsert);
-        T a = buildSample();
-
-        mapper_t mapper = getMapper();
-        long num = mapper.insert(a);
-        assertTrue(num > 0);
-        Object newId = a.getId();
-        assertNotNull(newId);
-
-        if (getConfig().purge) {
-            boolean result = mapper.delete(newId);
-            assertTrue(result);
-        }
-    }
-
-    @Test
-    public void testUpdate()
-            throws Exception {
-        Assume.assumeTrue(getConfig().testUpdate);
-        T a = buildSample();
-
-        mapper_t mapper = getMapper();
-        long num = mapper.insert(a);
-        assertTrue(num > 0);
-        Object newId = a.getId();
-        assertNotNull(newId);
-
-        num = mapper.update(a);
-        assertTrue(num > 0);
-
-        if (getConfig().purge) {
-            boolean result = mapper.delete(newId);
-            assertTrue(result);
-        }
     }
 
 }
