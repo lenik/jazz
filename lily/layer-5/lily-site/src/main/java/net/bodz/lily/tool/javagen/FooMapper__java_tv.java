@@ -4,10 +4,10 @@ import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 
-public class VFooMapper__java
+public class FooMapper__java_tv
         extends JavaGen__java {
 
-    public VFooMapper__java(JavaGenProject project) {
+    public FooMapper__java_tv(JavaGenProject project) {
         super(project, project.FooMapper);
     }
 
@@ -18,10 +18,13 @@ public class VFooMapper__java
         {
             out.enter();
             {
-                out.printf("extends %s<%s, %s> {\n", //
+                out.enterln("extends");
+                out.printf("%s<%s, %s> {\n", //
                         out.im.name(IMapperTemplate.class), //
                         out.im.name(project.Foo), //
                         out.im.name(project.FooMask));
+                out.leave();
+
                 out.println();
                 out.leave();
             }
