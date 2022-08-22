@@ -8,10 +8,11 @@ public class JavaSourceWriter
 
     private static final long serialVersionUID = 1L;
 
-    public final ImportSet im = new ImportSet();
+    public final ImportSet im;
 
-    public JavaSourceWriter(ITreeOut _orig) {
+    public JavaSourceWriter(String packageName, ITreeOut _orig) {
         super(_orig);
+        im = new ImportSet(packageName);
     }
 
 }
