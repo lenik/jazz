@@ -11,10 +11,10 @@ import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.StructRow;
 
-public class VFoo_stuff__java
+public class Foo_stuff__java_v
         extends JavaGen__java {
 
-    public VFoo_stuff__java(JavaGenProject project) {
+    public Foo_stuff__java_v(JavaGenProject project) {
         super(project, project._Foo_stuff);
 
     }
@@ -24,9 +24,11 @@ public class VFoo_stuff__java
         IViewMetadata view = (IViewMetadata) tableView;
         QualifiedName idType = templates.getIdType(view);
 
-        String parent = out.im.name(StructRow.class);
+        String parent;
         if (idType != null)
             parent = out.im.name(CoEntity.class) + "<" + out.im.name(idType) + ">";
+        else
+            parent = out.im.name(StructRow.class);
 
         if (idType != null)
             out.printf("@%s(%s.class)\n", //

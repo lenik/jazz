@@ -6,10 +6,10 @@ import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.TableOid;
 
-public class VFoo__java
+public class Foo__java_tv
         extends JavaGen__java {
 
-    public VFoo__java(JavaGenProject project) {
+    public Foo__java_tv(JavaGenProject project) {
         super(project, project.Foo);
     }
 

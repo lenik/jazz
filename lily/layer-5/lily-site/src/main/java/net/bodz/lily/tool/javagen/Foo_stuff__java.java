@@ -23,9 +23,11 @@ public class Foo_stuff__java
         ITableMetadata table = (ITableMetadata) tableView;
         QualifiedName idType = templates.getIdType(table);
 
-        String parent = out.im.name(StructRow.class);
+        String parent;
         if (idType != null)
             parent = out.im.name(CoEntity.class) + "<" + out.im.name(idType) + ">";
+        else
+            parent = out.im.name(StructRow.class);
 
         if (idType != null)
             out.printf("@%s(%s.class)\n", //

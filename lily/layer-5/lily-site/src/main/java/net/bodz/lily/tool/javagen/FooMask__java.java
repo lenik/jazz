@@ -13,7 +13,7 @@ public class FooMask__java
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
         out.printf("public class %s\n", project.FooMask.name);
-        out.printf("        extends %s {\n", project._FooMask_stuff);
+        out.printf("        extends %s {\n", out.im.name(project._FooMask_stuff));
         out.enter();
         {
 //            out.println();

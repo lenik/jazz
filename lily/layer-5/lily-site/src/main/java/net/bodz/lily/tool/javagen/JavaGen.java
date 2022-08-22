@@ -8,10 +8,14 @@ import java.sql.Connection;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringPart;
+import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.fmt.xml.XmlFn;
+import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -58,7 +62,13 @@ public class JavaGen
      */
     boolean forceMode;
 
-    Class<?> appClass = getClass();
+    /**
+     * Save the catalog metadata to file.
+     *
+     * @option --save-catalog =FILE
+     */
+    File saveCatalogAs;
+
     DataContext dataContext;
     Connection connection;
 
@@ -139,17 +149,17 @@ public class JavaGen
             throws IOException {
         JavaGenProject project = createProject(view);
 
-        new VFoo_stuff__java(project).buildFile(view, true);
+        new Foo_stuff__java_v(project).buildFile(view, true);
         if (view.getPrimaryKeyColumns().length > 1)
             new Foo_Id__java(project).buildFile(view, true);
 
-        new VFoo__java(project).buildFile(view);
+        new Foo__java_tv(project).buildFile(view);
         new FooMask_stuff__java(project).buildFile(view, true);
         new FooMask__java(project).buildFile(view);
         new FooIndex__java(project).buildFile(view);
         new VFooMapper__xml(project).buildFile(view);
-        new VFooMapper__java(project).buildFile(view);
-        new VFooMapperTest__java(project).buildFile(view);
+        new FooMapper__java_tv(project).buildFile(view);
+        new FooMapperTest__java_v(project).buildFile(view);
     }
 
     @Override
@@ -158,7 +168,19 @@ public class JavaGen
         if (parentPackage == null)
             throw new IllegalArgumentException("parent-package isn't specified.");
 
-        outDir = MavenPomDir.fromClass(appClass).getBaseDir();
+        if (outDir == null) {
+            Class<?> appClass = getClass();
+            MavenPomDir pomDir = MavenPomDir.closest(SysProps.userWorkDir);
+            if (pomDir == null) {
+                if (appClass != JavaGen.class) {
+                    pomDir = MavenPomDir.fromClass(appClass);
+                    if (pomDir == null)
+                        throw new IllegalUsageException("Not belongs to a maven project: " + appClass);
+                } else
+                    throw new IllegalUsageException("Not with-in a maven project.");
+            }
+            outDir = pomDir.getBaseDir();
+        }
 
         if (includeTables == null && includeViews == null)
             includeTables = includeViews = true;
@@ -167,10 +189,20 @@ public class JavaGen
 
         for (String arg : args) {
             if (arg.startsWith("@")) {
-                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 String path = arg.substring(1);
-                URL resource = classLoader.getResource(path);
-                for (String line : new URLResource(resource).read().lines()) {
+                AbstractStreamResource resource;
+
+                if (new File(path).exists()) {
+                    resource = new FileResource(new File(path));
+                } else {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    URL classRes = classLoader.getResource(path);
+                    if (classRes == null)
+                        throw new IllegalArgumentException("Bad resource path: " + path);
+                    resource = new URLResource(classRes);
+                }
+
+                for (String line : resource.read().lines()) {
                     String name = line.trim();
                     if (name.isEmpty() || name.startsWith("#"))
                         continue;
@@ -212,8 +244,11 @@ public class JavaGen
             }
 
         });
+
         catalog.loadFromJDBC(connection, "TABLE", "VIEW");
-        XmlFn.save(catalog, new File("/xxx/a.xml"));
+
+        if (saveCatalogAs != null)
+            XmlFn.save(catalog, saveCatalogAs);
 
         catalog.accept(new ICatalogVisitor() {
             @Override

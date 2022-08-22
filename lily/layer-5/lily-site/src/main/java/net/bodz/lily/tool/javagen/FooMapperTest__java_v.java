@@ -2,12 +2,12 @@ package net.bodz.lily.tool.javagen;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractViewTest;
 
-public class VFooMapperTest__java
+public class FooMapperTest__java_v
         extends JavaGen__java {
 
-    public VFooMapperTest__java(JavaGenProject project) {
+    public FooMapperTest__java_v(JavaGenProject project) {
         super(project, project.FooMapperTest);
     }
 
@@ -19,26 +19,22 @@ public class VFooMapperTest__java
             out.enter();
             {
                 out.printf("extends %s<%s, %s, %s> {\n", //
-                        out.im.name(AbstractMapperTest.class), //
+                        out.im.name(AbstractViewTest.class), //
                         out.im.name(project.Foo), //
                         out.im.name(project.FooMask), //
                         project.FooMapper.name);
                 out.leave();
             }
-            out.println();
-            out.println("@Override");
-            out.printf("public %s buildSample() throws Exception {\n", //
-                    out.im.name(project.Foo));
-            out.enter();
-            {
-                out.println("return " + out.im.name(project.FooSamples) + ".build();");
-                out.leave();
-            }
-            out.println("}");
+
+            buildMapperMethods(out, model);
+
             out.println();
             out.leave();
         }
         out.println("}");
+    }
+
+    protected void buildMapperMethods(JavaSourceWriter out, ITableViewMetadata model) {
     }
 
 }
