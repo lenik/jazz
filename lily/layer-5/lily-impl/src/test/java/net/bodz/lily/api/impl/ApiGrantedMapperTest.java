@@ -4,10 +4,10 @@ import net.bodz.lily.api.Api;
 import net.bodz.lily.api.ApiGranted;
 import net.bodz.lily.api.ApiGrantedSamples;
 import net.bodz.lily.api.App;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class ApiGrantedMapperTest
-        extends AbstractMapperTest<ApiGranted, ApiGrantedMask, ApiGrantedMapper> {
+        extends AbstractTableTest<ApiGranted, ApiGrantedMask, ApiGrantedMapper> {
 
     @Override
     public ApiGranted buildSample() {

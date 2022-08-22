@@ -2,7 +2,7 @@ package net.bodz.violet.asset.impl;
 
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
 import net.bodz.violet.asset.UserAsset;
@@ -11,7 +11,7 @@ import net.bodz.violet.store.Region;
 import net.bodz.violet.store.impl.RegionMapper;
 
 public class UserAssetMapperTest
-        extends AbstractMapperTest<UserAsset, AssetMask, UserAssetMapper> {
+        extends AbstractTableTest<UserAsset, AssetMask, UserAssetMapper> {
 
     @Override
     public UserAsset buildSample() {

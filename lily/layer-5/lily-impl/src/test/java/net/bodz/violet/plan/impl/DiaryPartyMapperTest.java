@@ -6,13 +6,13 @@ import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryParty;
 import net.bodz.violet.plan.DiaryPartySamples;
 
 public class DiaryPartyMapperTest
-        extends AbstractMapperTest<DiaryParty, DiaryPartyMask, DiaryPartyMapper> {
+        extends AbstractTableTest<DiaryParty, DiaryPartyMask, DiaryPartyMapper> {
 
     @Override
     public DiaryParty buildSample() {

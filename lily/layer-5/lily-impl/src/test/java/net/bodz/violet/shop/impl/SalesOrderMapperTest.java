@@ -6,7 +6,7 @@ import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.impl.PlanMapper;
 import net.bodz.violet.shop.SalesCategory;
@@ -15,7 +15,7 @@ import net.bodz.violet.shop.SalesOrderSamples;
 import net.bodz.violet.shop.SalesPhase;
 
 public class SalesOrderMapperTest
-        extends AbstractMapperTest<SalesOrder, SalesOrderMask, SalesOrderMapper> {
+        extends AbstractTableTest<SalesOrder, SalesOrderMask, SalesOrderMapper> {
 
     @Override
     public SalesOrder buildSample() {

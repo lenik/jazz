@@ -1,11 +1,11 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.ArtifactTag;
 import net.bodz.violet.art.ArtifactTagSamples;
 
 public class ArtifactTagMapperTest
-        extends AbstractMapperTest<ArtifactTag, ArtifactTagMask, ArtifactTagMapper> {
+        extends AbstractTableTest<ArtifactTag, ArtifactTagMask, ArtifactTagMapper> {
 
     @Override
     public ArtifactTag buildSample() {

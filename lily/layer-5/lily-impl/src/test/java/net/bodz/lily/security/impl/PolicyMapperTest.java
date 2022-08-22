@@ -4,10 +4,10 @@ import net.bodz.lily.security.Group;
 import net.bodz.lily.security.Policy;
 import net.bodz.lily.security.PolicySamples;
 import net.bodz.lily.security.User;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class PolicyMapperTest
-        extends AbstractMapperTest<Policy, PolicyMask, PolicyMapper> {
+        extends AbstractTableTest<Policy, PolicyMask, PolicyMapper> {
 
     @Override
     public Policy buildSample() {

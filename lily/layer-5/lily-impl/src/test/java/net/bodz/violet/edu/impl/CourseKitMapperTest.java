@@ -1,13 +1,13 @@
 package net.bodz.violet.edu.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.edu.Course;
 import net.bodz.violet.edu.CourseKit;
 import net.bodz.violet.edu.CourseKitCategory;
 import net.bodz.violet.edu.CourseKitSamples;
 
 public class CourseKitMapperTest
-        extends AbstractMapperTest<CourseKit, CourseKitMask, CourseKitMapper> {
+        extends AbstractTableTest<CourseKit, CourseKitMask, CourseKitMapper> {
 
     @Override
     public CourseKit buildSample() {

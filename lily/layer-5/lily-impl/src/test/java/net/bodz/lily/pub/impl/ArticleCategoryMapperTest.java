@@ -2,10 +2,10 @@ package net.bodz.lily.pub.impl;
 
 import net.bodz.lily.pub.ArticleCategory;
 import net.bodz.lily.pub.ArticleCategorySamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleCategoryMapperTest
-        extends AbstractMapperTest<ArticleCategory, ArticleCategoryMask, ArticleCategoryMapper> {
+        extends AbstractTableTest<ArticleCategory, ArticleCategoryMask, ArticleCategoryMapper> {
 
     @Override
     public ArticleCategory buildSample() {

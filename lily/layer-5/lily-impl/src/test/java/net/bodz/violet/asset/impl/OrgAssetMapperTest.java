@@ -2,7 +2,7 @@ package net.bodz.violet.asset.impl;
 
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.impl.OrganizationMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
 import net.bodz.violet.asset.OrgAsset;
@@ -11,7 +11,7 @@ import net.bodz.violet.store.Region;
 import net.bodz.violet.store.impl.RegionMapper;
 
 public class OrgAssetMapperTest
-        extends AbstractMapperTest<OrgAsset, AssetMask, OrgAssetMapper> {
+        extends AbstractTableTest<OrgAsset, AssetMask, OrgAssetMapper> {
 
     @Override
     public OrgAsset buildSample() {

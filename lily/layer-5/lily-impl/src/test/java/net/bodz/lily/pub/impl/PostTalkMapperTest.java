@@ -5,10 +5,10 @@ import net.bodz.lily.pub.PostTalk;
 import net.bodz.lily.pub.PostTalkSamples;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTalkMapperTest
-        extends AbstractMapperTest<PostTalk, PostTalkMask, PostTalkMapper> {
+        extends AbstractTableTest<PostTalk, PostTalkMask, PostTalkMapper> {
 
     @Override
     public PostTalk buildSample() {

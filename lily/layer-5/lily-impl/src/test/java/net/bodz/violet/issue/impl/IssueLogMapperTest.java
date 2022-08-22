@@ -1,12 +1,12 @@
 package net.bodz.violet.issue.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.issue.Issue;
 import net.bodz.violet.issue.IssueLog;
 import net.bodz.violet.issue.IssueLogSamples;
 
 public class IssueLogMapperTest
-        extends AbstractMapperTest<IssueLog, IssueLogMask, IssueLogMapper> {
+        extends AbstractTableTest<IssueLog, IssueLogMask, IssueLogMapper> {
 
     @Override
     public IssueLog buildSample() {

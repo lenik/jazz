@@ -3,10 +3,10 @@ package net.bodz.lily.security.impl;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.GroupSamples;
 import net.bodz.lily.security.User;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class GroupMapperTest
-        extends AbstractMapperTest<Group, GroupMask, GroupMapper> {
+        extends AbstractTableTest<Group, GroupMask, GroupMapper> {
 
     @Override
     public Group buildSample() {

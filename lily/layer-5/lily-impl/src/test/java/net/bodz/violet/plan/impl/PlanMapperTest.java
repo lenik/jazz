@@ -2,14 +2,14 @@ package net.bodz.violet.plan.impl;
 
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.PlanCategory;
 import net.bodz.violet.plan.PlanPhase;
 import net.bodz.violet.plan.PlanSamples;
 
 public class PlanMapperTest
-        extends AbstractMapperTest<Plan, PlanMask, PlanMapper> {
+        extends AbstractTableTest<Plan, PlanMask, PlanMapper> {
 
     @Override
     public Plan buildSample() {

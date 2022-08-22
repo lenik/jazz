@@ -2,10 +2,10 @@ package net.bodz.lily.pub.impl;
 
 import net.bodz.lily.pub.PostBackref;
 import net.bodz.lily.pub.PostBackrefSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class PostBackrefMapperTest
-        extends AbstractMapperTest<PostBackref, PostBackrefMask, PostBackrefMapper> {
+        extends AbstractTableTest<PostBackref, PostBackrefMask, PostBackrefMapper> {
 
     @Override
     public PostBackref buildSample() {

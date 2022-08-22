@@ -2,13 +2,13 @@ package net.bodz.violet.plan.impl;
 
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryVote;
 import net.bodz.violet.plan.DiaryVoteSamples;
 
 public class DiaryVoteMapperTest
-        extends AbstractMapperTest<DiaryVote, DiaryVoteMask, DiaryVoteMapper> {
+        extends AbstractTableTest<DiaryVote, DiaryVoteMask, DiaryVoteMapper> {
 
     @Override
     public DiaryVote buildSample() {

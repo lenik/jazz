@@ -1,11 +1,11 @@
 package net.bodz.violet.issue.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.issue.IssuePhase;
 import net.bodz.violet.issue.IssuePhaseSamples;
 
 public class IssuePhaseMapperTest
-        extends AbstractMapperTest<IssuePhase, IssuePhaseMask, IssuePhaseMapper> {
+        extends AbstractTableTest<IssuePhase, IssuePhaseMask, IssuePhaseMapper> {
 
     @Override
     public IssuePhase buildSample() {

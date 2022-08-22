@@ -1,12 +1,12 @@
 package net.bodz.violet.art.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactModel;
 import net.bodz.violet.art.ArtifactModelSamples;
 
 public class ArtifactModelMapperTest
-        extends AbstractMapperTest<ArtifactModel, ArtifactModelMask, ArtifactModelMapper> {
+        extends AbstractTableTest<ArtifactModel, ArtifactModelMask, ArtifactModelMapper> {
 
     @Override
     public ArtifactModel buildSample() {

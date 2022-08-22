@@ -4,7 +4,7 @@ import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.impl.OrganizationMapper;
 import net.bodz.lily.contact.impl.PersonMapper;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.impl.ArtifactCategoryMapper;
@@ -14,7 +14,7 @@ import net.bodz.violet.store.RegionCategory;
 import net.bodz.violet.store.RegionSamples;
 
 public class RegionMapperTest
-        extends AbstractMapperTest<Region, RegionMask, RegionMapper> {
+        extends AbstractTableTest<Region, RegionMask, RegionMapper> {
 
     @Override
     public Region buildSample() {

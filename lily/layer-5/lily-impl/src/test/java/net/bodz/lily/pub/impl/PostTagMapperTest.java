@@ -2,10 +2,10 @@ package net.bodz.lily.pub.impl;
 
 import net.bodz.lily.pub.PostTag;
 import net.bodz.lily.pub.PostTagSamples;
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTagMapperTest
-        extends AbstractMapperTest<PostTag, PostTagMask, PostTagMapper> {
+        extends AbstractTableTest<PostTag, PostTagMask, PostTagMapper> {
 
     @Override
     public PostTag buildSample() {

@@ -1,11 +1,11 @@
 package net.bodz.violet.shop.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.shop.ShopFav;
 import net.bodz.violet.shop.ShopFavSamples;
 
 public class ShopFavMapperTest
-        extends AbstractMapperTest<ShopFav, ShopFavMask, ShopFavMapper> {
+        extends AbstractTableTest<ShopFav, ShopFavMask, ShopFavMapper> {
 
     @Override
     public ShopFav buildSample() {

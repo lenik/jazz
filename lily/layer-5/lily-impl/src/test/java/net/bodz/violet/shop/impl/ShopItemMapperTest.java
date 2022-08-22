@@ -1,6 +1,6 @@
 package net.bodz.violet.shop.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.impl.ArtifactMapper;
 import net.bodz.violet.shop.Shop;
@@ -9,7 +9,7 @@ import net.bodz.violet.shop.ShopItemCategory;
 import net.bodz.violet.shop.ShopItemSamples;
 
 public class ShopItemMapperTest
-        extends AbstractMapperTest<ShopItem, ShopItemMask, ShopItemMapper> {
+        extends AbstractTableTest<ShopItem, ShopItemMask, ShopItemMapper> {
 
     @Override
     public ShopItem buildSample() {

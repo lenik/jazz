@@ -1,11 +1,11 @@
 package net.bodz.violet.fab.impl;
 
-import net.bodz.lily.test.AbstractMapperTest;
+import net.bodz.lily.test.AbstractTableTest;
 import net.bodz.violet.fab.FabStdTestCategory;
 import net.bodz.violet.fab.FabStdTestCategorySamples;
 
 public class FabStdTestCategoryMapperTest
-        extends AbstractMapperTest<FabStdTestCategory, FabStdTestCategoryMask, FabStdTestCategoryMapper> {
+        extends AbstractTableTest<FabStdTestCategory, FabStdTestCategoryMask, FabStdTestCategoryMapper> {
 
     @Override
     public FabStdTestCategory buildSample() {
