@@ -15,7 +15,7 @@ public abstract class JavaOrXmlSourceBuilder<model_t>
         out.println();
 
         BCharOut body = new BCharOut();
-        JavaSourceWriter buffer = new JavaSourceWriter(TreeOutImpl.from(body));
+        JavaSourceWriter buffer = new JavaSourceWriter(name.packageName, TreeOutImpl.from(body));
         buildClassBody(buffer, model);
 
         buffer.im.dump(out);

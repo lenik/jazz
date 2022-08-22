@@ -1,7 +1,9 @@
 package net.bodz.bas.codegen;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.string.StringPart;
@@ -14,18 +16,31 @@ public class ImportSet
     private static final long serialVersionUID = 1L;
 
     final QNameOrder order;
+    Set<String> excludePackages = new HashSet<>();
+    Set<String> excludeClassNames = new HashSet<>();
 
-    public ImportSet() {
-        this(QNameOrder.INSTANCE);
+    public ImportSet(String packageName) {
+        this(packageName, QNameOrder.INSTANCE);
     }
 
-    public ImportSet(List<String> order) {
-        this(new QNameOrder(new PackageNameOrder(order)));
+    public ImportSet(String packageName, List<String> order) {
+        this(packageName, new QNameOrder(new PackageNameOrder(order)));
     }
 
-    public ImportSet(QNameOrder order) {
+    public ImportSet(String packageName, QNameOrder order) {
         super(order);
         this.order = order;
+
+        excludePackages.add("java.lang");
+        excludePackages.add(packageName);
+    }
+
+    public void excludePackage(String packageName) {
+        excludePackages.add(packageName);
+    }
+
+    public void excludeClass(String className) {
+        excludeClassNames.add(className);
     }
 
     public Class<?> ref(Class<?> clazz) {
@@ -80,25 +95,50 @@ public class ImportSet
         return ref(type).name;
     }
 
-    public void dump(IPrintOut out) {
+    public void accept(ImportSetVisitor visitor) {
         PackageOrderList orderList = order.getPackageOrder().getOrderList();
 
         int lastSector = -1;
-        for (String c : this) {
-            String pkg = StringPart.beforeLast(c, ".");
-            if (pkg == null)
+        for (String className : this) {
+            if (excludeClassNames.contains(className)) {
+                visitor.item(className, true);
                 continue;
-            if ("java.lang".equals(pkg))
-                continue;
+            }
 
-            int sector = orderList.find(pkg);
+            String packageName = StringPart.beforeLast(className, ".");
+            if (packageName == null)
+                continue;
+            if (excludePackages.contains(packageName)) {
+                visitor.item(className, true);
+                continue;
+            }
+
+            int sector = orderList.find(packageName);
 
             if (lastSector != -1 && lastSector != sector)
-                out.println();
+                visitor.separator();
 
-            out.println("import " + c + ";");
+            visitor.item(className, false);
             lastSector = sector;
         }
+    }
+
+    public void dump(IPrintOut out) {
+        accept(new ImportSetVisitor() {
+            @Override
+            public void item(String name, boolean excluded) {
+                if (excluded) {
+                    out.println("// import " + name + ";");
+                    return;
+                }
+                out.println("import " + name + ";");
+            }
+
+            @Override
+            public void separator() {
+                out.println();
+            }
+        });
     }
 
 }
