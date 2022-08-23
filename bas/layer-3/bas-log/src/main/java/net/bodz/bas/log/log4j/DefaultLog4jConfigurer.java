@@ -38,16 +38,26 @@ public class DefaultLog4jConfigurer
         public String toString() {
             String s = "";
             if (verbose >= 0)
-                s = "\u001b[" + dateTime + "m%d\u001b[0m" //
-                        + " \u001b[" + channel + "m[%t/%level]\u001b[0m";
+                s = esc(dateTime) + "%sd" + esc(0) //
+                        + " " + esc(channel) + "[%t/%level]" + esc(0);
             if (verbose >= 1)
-                s += "\u001b[" + location + "m %l\u001b[0m";
+                s += esc(location) + " %sl{1.} " + esc(0);
             if (verbose >= 2)
                 s += "\n       ";
             if (verbose >= 0)
-                s += " \u001b[" + text + "m%msg%n%throwable\u001b[0m";
+                s += " " + esc(text) + "%msg%n%throwable" + esc(0);
             return s;
         }
+
+    }
+
+    static boolean ansiFx = true;
+
+    static String esc(Object cmd) {
+        if (ansiFx)
+            return "\u001b[" + cmd + "m";
+        else
+            return "";
     }
 
     Fx LIGHT = new Fx(1, "37", "47;35", "37", "33");
