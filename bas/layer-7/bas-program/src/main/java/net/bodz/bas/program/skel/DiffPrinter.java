@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileDiff;
-import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.text.diff.DiffEntry;
 import net.bodz.bas.text.diff.IDiffComparator;
@@ -16,11 +14,11 @@ public class DiffPrinter {
 
     IDiffComparator comparator;
     IDiffFormat format = IDiffFormat.SIMPLE;
-    IPrintOut out = Stdio.cout;
+    final Appendable out;
 
     int printCount;
 
-    public DiffPrinter(IDiffComparator comparator, IDiffFormat format, IPrintOut out) {
+    public DiffPrinter(IDiffComparator comparator, IDiffFormat format, Appendable out) {
         this.comparator = comparator;
         this.format = format;
         this.out = out;
@@ -36,7 +34,7 @@ public class DiffPrinter {
 
     /**
      * Print differences between two files.
-     * 
+     *
      * @return <code>true</code> if the two files are different, <code>false</code> if they are
      *         same.
      */
@@ -50,10 +48,10 @@ public class DiffPrinter {
             throws IOException {
 
         if (file1.exists() && !file2.exists()) {
-            out.println("Deleted: " + name);
+            out.append("Deleted: " + name + "\n");
             return true;
         } else if (!file1.exists() && file2.exists()) {
-            out.println("Created: ", name);
+            out.append("Created: " + name + "\n");
             return true;
         }
 
@@ -62,7 +60,7 @@ public class DiffPrinter {
             if (equals)
                 ;
             else
-                out.println("Modified: ", file1);
+                out.append("Modified: " + file1 + "\n");
             return !equals;
         }
 
@@ -74,7 +72,7 @@ public class DiffPrinter {
         if (diffs.isEmpty())
             return false;
 
-        out.println("Modified: ", file1);
+        out.append("Modified: " + file1 + "\n");
         format.printDiffs(out, lines1, lines2, diffs);
         return true;
     }

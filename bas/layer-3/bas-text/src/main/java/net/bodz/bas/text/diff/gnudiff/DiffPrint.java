@@ -1,17 +1,16 @@
 package net.bodz.bas.text.diff.gnudiff;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.fn.legacy.Pred1;
-import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.Stdio;
 import net.bodz.bas.text.diff.DiffEntry;
 
 /**
  * A simple framework for printing change lists produced by <code>Diff</code>.
- * 
+ *
  * @see GNUDiff.util.GNUDiffComparator
  * @author Stuart D. Gathman Copyright (C) 2000 Business Management Systems, Inc.
  *         <p>
@@ -34,11 +33,12 @@ public class DiffPrint {
      * provided as well.
      */
     public static abstract class Base {
-        protected IPrintOut outfile = Stdio.cout;
+        protected final Appendable out;
 
-        protected Base(List<?> a, List<?> b, IPrintOut outfile) {
+        protected Base(List<?> a, List<?> b, Appendable out) {
             file0 = a;
             file1 = b;
+            this.out = out;
         }
 
         /**
@@ -55,15 +55,17 @@ public class DiffPrint {
         /**
          * Divide SCRIPT into pieces by calling HUNKFUN and print each piece with PRINTFUN. Both
          * functions take one arg, an edit script.
-         * 
+         *
          * PRINTFUN takes a subscript which belongs together (with a null link at the end) and
          * prints it.
          */
-        public void print_script(List<DiffEntry> script) {
+        public void print_script(List<DiffEntry> script)
+                throws IOException {
             int i = 0;
             while (i < script.size()) {
                 int end = hunkfun(script, i);
                 print_hunk(script, i, end);
+                i = end;
             }
         }
 
@@ -83,9 +85,9 @@ public class DiffPrint {
          * to. HUNK is the start of the hunk, which is a chain of `struct change'. The first and
          * last line numbers of file 0 are stored in *FIRST0 and *LAST0, and likewise for file 1 in
          * *FIRST1 and *LAST1. Note that these are internal line numbers that count from 0.
-         * 
+         *
          * If no lines from file 0 are deleted, then FIRST0 is LAST0+1.
-         * 
+         *
          * Also set *DELETES nonzero if any lines of file 0 are deleted and set *INSERTS nonzero if
          * any lines of file 1 are inserted. If only ignorable lines are inserted or deleted, both
          * are set to 0.
@@ -134,31 +136,36 @@ public class DiffPrint {
         }
 
         /** Print the script header which identifies the files compared. */
-        protected void print_header(String filea, String fileb) {
+        protected void print_header(String filea, String fileb)
+                throws IOException {
         }
 
-        protected abstract void print_hunk(List<DiffEntry> list, int start, int end);
+        protected abstract void print_hunk(List<DiffEntry> list, int start, int end)
+                throws IOException;
 
-        protected void print_1_line(String pre, Object linbuf) {
-            outfile.println(pre + linbuf.toString());
+        protected void print_1_line(String pre, Object linbuf)
+                throws IOException {
+            out.append(pre + linbuf.toString());
+            out.append('\n');
         }
 
         /**
          * Print a pair of line numbers with SEPCHAR, translated for file FILE. If the two numbers
          * are identical, print just one number.
-         * 
+         *
          * Args A and B are internal line numbers. We print the translated (real) line numbers.
          */
 
-        protected void print_number_range(char sepchar, int a, int b) {
+        protected void print_number_range(char sepchar, int a, int b)
+                throws IOException {
             /*
              * Note: we can have B < A in the case of a range of no lines. In this case, we should
              * print the line number before the range, which is B.
              */
             if (++b > ++a)
-                outfile.print("" + a + sepchar + b);
+                out.append("" + a + sepchar + b);
             else
-                outfile.print(b);
+                out.append((char) b);
         }
 
         public static char change_letter(int inserts, int deletes) {
@@ -177,7 +184,7 @@ public class DiffPrint {
     public static class NormalPrint
             extends Base {
 
-        public NormalPrint(List<?> a, List<?> b, IPrintOut out) {
+        public NormalPrint(List<?> a, List<?> b, Appendable out) {
             super(a, b, out);
         }
 
@@ -185,9 +192,9 @@ public class DiffPrint {
          * Print a hunk of a normal diff. This is a contiguous portion of a complete edit script,
          * describing changes in consecutive lines.
          */
-
         @Override
-        protected void print_hunk(List<DiffEntry> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end)
+                throws IOException {
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
             if (deletes == 0 && inserts == 0)
@@ -195,9 +202,9 @@ public class DiffPrint {
 
             /* Print out the line number header for this hunk */
             print_number_range(',', first0, last0);
-            outfile.print(change_letter(inserts, deletes));
+            out.append(change_letter(inserts, deletes));
             print_number_range(',', first1, last1);
-            outfile.println();
+            out.append('\n');
 
             /* Print the lines that the first file has. */
             if (deletes != 0)
@@ -205,7 +212,7 @@ public class DiffPrint {
                     print_1_line("< ", file0.get(i));
 
             if (inserts != 0 && deletes != 0)
-                outfile.println("---");
+                out.append("---\n");
 
             /* Print the lines that the second file has. */
             if (inserts != 0)
@@ -221,13 +228,14 @@ public class DiffPrint {
     public static class EdPrint
             extends Base {
 
-        public EdPrint(List<?> a, List<?> b, IPrintOut out) {
+        public EdPrint(List<?> a, List<?> b, Appendable out) {
             super(a, b, out);
         }
 
         /** Print a hunk of an ed diff */
         @Override
-        protected void print_hunk(List<DiffEntry> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end)
+                throws IOException {
 
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
@@ -236,7 +244,7 @@ public class DiffPrint {
 
             /* Print out the line number header for this hunk */
             print_number_range(',', first0, last0);
-            outfile.println(change_letter(inserts, deletes));
+            out.append(change_letter(inserts, deletes) + "\n");
 
             /* Print new/changed lines from second file, if needed */
             if (inserts != 0) {
@@ -244,7 +252,7 @@ public class DiffPrint {
                 for (int i = first1; i <= last1; i++) {
                     /* Resume the insert, if we stopped. */
                     if (!inserting)
-                        outfile.println(i - first1 + first0 + "a");
+                        out.append(i - first1 + first0 + "a\n");
                     inserting = true;
 
                     /*
@@ -254,10 +262,10 @@ public class DiffPrint {
                      */
 
                     if (".".equals(file1.get(i))) {
-                        outfile.println("..");
-                        outfile.println(".");
+                        out.append("..\n");
+                        out.append(".\n");
                         /* Now change that double dot to the desired single dot. */
-                        outfile.println(i - first1 + first0 + 1 + "s/^\\.\\././");
+                        out.append(i - first1 + first0 + 1 + "s/^\\.\\././" + "\n");
                         inserting = false;
                     } else
                         /* Line is not `.', so output it unmodified. */
@@ -266,7 +274,7 @@ public class DiffPrint {
 
                 /* End insert mode, if we are still in it. */
                 if (inserting)
-                    outfile.println(".");
+                    out.append(".\n");
             }
         }
     }
@@ -280,22 +288,24 @@ public class DiffPrint {
 
         protected int context = 3;
 
-        public ContextPrint(List<?> a, List<?> b, IPrintOut out) {
+        public ContextPrint(List<?> a, List<?> b, Appendable out) {
             super(a, b, out);
         }
 
-        protected void print_context_label(String mark, File inf, String label) {
+        protected void print_context_label(String mark, File inf, String label)
+                throws IOException {
             if (label != null)
-                outfile.println(mark + ' ' + label);
+                out.append(mark + ' ' + label + "\n");
             else if (inf.lastModified() > 0)
-                outfile.println(mark + ' ' + inf.getPath() + '\t' + Dates.SYS_DATETIME.format(inf.lastModified()));
+                out.append(mark + ' ' + inf.getPath() + '\t' + Dates.SYS_DATETIME.format(inf.lastModified()) + "\n");
             else
                 /* Don't pretend that standard input is ancient. */
-                outfile.println(mark + ' ' + inf.getPath());
+                out.append(mark + ' ' + inf.getPath() + "\n");
         }
 
         @Override
-        public void print_header(String filea, String fileb) {
+        public void print_header(String filea, String fileb)
+                throws IOException {
             print_context_label("***", new File(filea), filea);
             print_context_label("---", new File(fileb), fileb);
         }
@@ -305,16 +315,18 @@ public class DiffPrint {
             return null;
         }
 
-        protected void print_function(List<?> file, int start) {
+        protected void print_function(List<?> file, int start)
+                throws IOException {
             String function = find_function(file0, first0);
             if (function != null) {
-                outfile.print(" ");
-                outfile.print((function.length() < 40) ? function : function.substring(0, 40));
+                out.append(" ");
+                out.append((function.length() < 40) ? function : function.substring(0, 40));
             }
         }
 
         @Override
-        protected void print_hunk(List<DiffEntry> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end)
+                throws IOException {
 
             /* Determine range of line numbers involved in each file. */
 
@@ -330,7 +342,7 @@ public class DiffPrint {
             last0 = Math.min(last0 + context, file0.size() - 1);
             last1 = Math.min(last1 + context, file1.size() - 1);
 
-            outfile.print("***************");
+            out.append("***************");
 
             /*
              * If we looked for and found a function this is part of, include its name in the header
@@ -338,10 +350,10 @@ public class DiffPrint {
              */
             print_function(file0, first0);
 
-            outfile.println();
-            outfile.print("*** ");
+            out.append('\n');
+            out.append("*** ");
             print_number_range(',', first0, last0);
-            outfile.println(" ****");
+            out.append(" ****\n");
 
             if (deletes != 0) {
                 int off = start;
@@ -369,9 +381,9 @@ public class DiffPrint {
                 }
             }
 
-            outfile.print("--- ");
+            out.append("--- ");
             print_number_range(',', first1, last1);
-            outfile.println(" ----");
+            out.append(" ----\n");
 
             if (inserts != 0) {
                 int off = start;
@@ -408,17 +420,19 @@ public class DiffPrint {
     public static class UnifiedPrint
             extends ContextPrint {
 
-        public UnifiedPrint(List<?> a, List<?> b, IPrintOut out) {
+        public UnifiedPrint(List<?> a, List<?> b, Appendable out) {
             super(a, b, out);
         }
 
         @Override
-        public void print_header(String filea, String fileb) {
+        public void print_header(String filea, String fileb)
+                throws IOException {
             print_context_label("---", new File(filea), filea);
             print_context_label("+++", new File(fileb), fileb);
         }
 
-        private void print_number_range(int a, int b) {
+        private void print_number_range(int a, int b)
+                throws IOException {
             // translate_range (file, a, b, &trans_a, &trans_b);
 
             /*
@@ -426,13 +440,14 @@ public class DiffPrint {
              * print the line number before the range, which is B.
              */
             if (b < a)
-                outfile.print(b + ",0");
+                out.append(b + ",0");
             else
                 super.print_number_range(',', a, b);
         }
 
         @Override
-        protected void print_hunk(List<DiffEntry> list, int start, int end) {
+        protected void print_hunk(List<DiffEntry> list, int start, int end)
+                throws IOException {
             /* Determine range of line numbers involved in each file. */
             analyze_hunk(list, start, end);
 
@@ -446,11 +461,11 @@ public class DiffPrint {
             last0 = Math.min(last0 + context, file0.size() - 1);
             last1 = Math.min(last1 + context, file1.size() - 1);
 
-            outfile.print("@@ -");
+            out.append("@@ -");
             print_number_range(first0, last0);
-            outfile.print(" +");
+            out.append(" +");
             print_number_range(first1, last1);
-            outfile.print(" @@");
+            out.append(" @@");
 
             /*
              * If we looked for and found a function this is part of, include its name in the header
@@ -458,7 +473,7 @@ public class DiffPrint {
              */
             print_function(file0, first0);
 
-            outfile.println();
+            out.append('\n');
 
             int i = first0;
             int j = first1;
@@ -471,7 +486,7 @@ public class DiffPrint {
 
                 if (start >= end || i < list.get(start).index0) {
                     if (i < file0.size()) {
-                        outfile.print(' ');
+                        out.append(' ');
                         print_1_line("", file0.get(i++));
                     }
                     j++;
@@ -481,7 +496,7 @@ public class DiffPrint {
                     DiffEntry next = list.get(start++);
                     int k = next.deleted;
                     while (k-- > 0) {
-                        outfile.print('-');
+                        out.append('-');
                         print_1_line("", file0.get(i++));
                     }
 
@@ -489,7 +504,7 @@ public class DiffPrint {
 
                     k = next.inserted;
                     while (k-- > 0) {
-                        outfile.print('+');
+                        out.append('+');
                         print_1_line("", file1.get(j++));
                     }
 
