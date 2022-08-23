@@ -17,7 +17,8 @@ import net.bodz.bas.io.res.builtin.ReaderSource;
 import net.bodz.bas.meta.codegen.CopyAndPaste;
 
 public class StreamWriting
-        implements IStreamWriting {
+        implements
+            IStreamWriting {
 
     private final IStreamOutputTarget target;
 
@@ -246,6 +247,18 @@ public class StreamWriting
         ICharOut out = target.newCharOut(openOptions);
         try {
             out.write(string);
+        } finally {
+            out.close();
+        }
+    }
+
+    @Override
+    public void writeString(Iterable<String> strings)
+            throws IOException {
+        ICharOut out = target.newCharOut(openOptions);
+        try {
+            for (String s : strings)
+                out.write(s);
         } finally {
             out.close();
         }

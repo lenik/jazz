@@ -9,7 +9,8 @@ import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.object.IContextUtility;
 
 public interface IStreamWriting
-        extends IContextUtility {
+        extends
+            IContextUtility {
 
     @Override
     IStreamWriting clone();
@@ -53,6 +54,9 @@ public interface IStreamWriting
             throws IOException;
 
     void writeString(String string)
+            throws IOException;
+
+    void writeString(Iterable<String> strings)
             throws IOException;
 
 }
