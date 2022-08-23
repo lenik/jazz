@@ -1,18 +1,19 @@
 package net.bodz.bas.text.diff;
 
+import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.io.IPrintOut;
-
 public abstract class AbstractDiffFormat
-        implements IDiffFormat {
+        implements
+            IDiffFormat {
 
     protected List<?> al;
     protected List<?> bl;
-    protected IPrintOut out;
+    protected Appendable out;
 
     @Override
-    public synchronized void printDiffs(IPrintOut out, List<?> al, List<?> bl, List<DiffEntry> diffs) {
+    public synchronized void printDiffs(Appendable out, List<?> al, List<?> bl, List<DiffEntry> diffs)
+            throws IOException {
         assert al != null;
         assert bl != null;
         assert diffs != null;
@@ -31,7 +32,8 @@ public abstract class AbstractDiffFormat
         this.out = null;
     }
 
-    protected void formatHunk(List<DiffEntry> diffs, int off, int len) {
+    protected void formatHunk(List<DiffEntry> diffs, int off, int len)
+            throws IOException {
         while (len-- > 0) {
             DiffEntry diff = diffs.get(off++);
             for (int d = 0; d < diff.deleted; d++)
@@ -41,11 +43,14 @@ public abstract class AbstractDiffFormat
         }
     }
 
-    protected void hunkSeparator() {
+    protected void hunkSeparator()
+            throws IOException {
     }
 
-    protected abstract void edit0(char op, int index);
+    protected abstract void edit0(char op, int index)
+            throws IOException;
 
-    protected abstract void edit1(char op, int index);
+    protected abstract void edit1(char op, int index)
+            throws IOException;
 
 }

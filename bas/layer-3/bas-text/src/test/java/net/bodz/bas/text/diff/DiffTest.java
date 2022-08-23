@@ -16,6 +16,7 @@
  */
 package net.bodz.bas.text.diff;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -84,8 +85,9 @@ public class DiffTest
      * Test context based output. Changes past the end of old file were causing an array out of
      * bounds exception. Submitted by Cristian-Augustin Saita and Adam Rabung.
      */
-    // @Test
-    public void testContext() {
+    @Test
+    public void testContext()
+            throws IOException {
         GNUDiff diff = new GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffEntry> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
@@ -93,6 +95,7 @@ public class DiffTest
                 new WriterPrintOut(wtr));
         // p.print_header("test1","test2");
         p.print_script(script);
+        // System.out.println(wtr.toString());
         /*
          * FIXME: when DiffPrint is updated to diff-2.7, testfor expected output in wtr.toString().
          * diff-1.15 does not combine adjacent changes when they are close together.
