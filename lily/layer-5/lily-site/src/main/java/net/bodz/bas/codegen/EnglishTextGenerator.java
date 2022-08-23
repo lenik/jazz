@@ -10,9 +10,21 @@ public class EnglishTextGenerator {
     static char[] breakTab = "               ,,,,,;;..-_\'@#&*?!".toCharArray();
     static char[] symTab = "......;?!".toCharArray();
 
-    static Random random = new Random();
+    final Random random;
 
-    public static String makeText(int maxLen, int maxWordLen) {
+    public EnglishTextGenerator(Object seed) {
+        this(seed.hashCode());
+    }
+
+    public EnglishTextGenerator(long seed) {
+        this(new Random(seed));
+    }
+
+    public EnglishTextGenerator(Random random) {
+        this.random = random;
+    }
+
+    public String makeText(int maxLen, int maxWordLen) {
         boolean endWithSym = random.nextBoolean();
         int len = random.nextInt(maxLen + 1);
         if (len <= 1)
@@ -81,9 +93,10 @@ public class EnglishTextGenerator {
     }
 
     public static void main(String[] args) {
+        EnglishTextGenerator gen = new EnglishTextGenerator(EnglishTextGenerator.class);
         int max = 80;
         for (int i = 0; i < 10000; i++) {
-            String s = EnglishTextGenerator.makeText(max, 12);
+            String s = gen.makeText(max, 12);
             if (s.length() > max)
                 throw new UnexpectedException();
             System.out.println(s);

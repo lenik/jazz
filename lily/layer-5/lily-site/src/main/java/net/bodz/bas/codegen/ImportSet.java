@@ -95,13 +95,14 @@ public class ImportSet
         return ref(type).name;
     }
 
-    public void accept(ImportSetVisitor visitor) {
+    public int accept(ImportSetVisitor visitor) {
         PackageOrderList orderList = order.getPackageOrder().getOrderList();
 
         int lastSector = -1;
+        int count = 0;
         for (String className : this) {
             if (excludeClassNames.contains(className)) {
-                visitor.item(className, true);
+                count += visitor.item(className, true);
                 continue;
             }
 
@@ -109,34 +110,37 @@ public class ImportSet
             if (packageName == null)
                 continue;
             if (excludePackages.contains(packageName)) {
-                visitor.item(className, true);
+                count += visitor.item(className, true);
                 continue;
             }
 
             int sector = orderList.find(packageName);
 
             if (lastSector != -1 && lastSector != sector)
-                visitor.separator();
+                count += visitor.separator();
 
-            visitor.item(className, false);
+            count += visitor.item(className, false);
             lastSector = sector;
         }
+        return count;
     }
 
-    public void dump(IPrintOut out) {
-        accept(new ImportSetVisitor() {
+    public int dump(IPrintOut out) {
+        return accept(new ImportSetVisitor() {
             @Override
-            public void item(String name, boolean excluded) {
+            public int item(String name, boolean excluded) {
                 if (excluded) {
                     // out.println("// import " + name + ";");
-                    return;
+                    return 0;
                 }
                 out.println("import " + name + ";");
+                return 1;
             }
 
             @Override
-            public void separator() {
+            public int separator() {
                 out.println();
+                return 1;
             }
         });
     }

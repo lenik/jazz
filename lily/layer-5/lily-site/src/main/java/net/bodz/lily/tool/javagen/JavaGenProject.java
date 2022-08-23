@@ -1,8 +1,10 @@
 package net.bodz.lily.tool.javagen;
 
 import java.io.File;
+import java.util.Random;
 
 import net.bodz.bas.codegen.ClassPathInfo;
+import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -12,7 +14,9 @@ public class JavaGenProject {
 
     File baseDir;
     String daoPackage = "dao";
-    boolean forceMode;
+    UpdateMethod updateMethod;
+
+    Random random;
 
     public final ClassPathInfo Foo;
     public final ClassPathInfo _Foo_stuff;
@@ -36,9 +40,10 @@ public class JavaGenProject {
     public final ClassPathInfo FooMapperTest; // test
     public final ClassPathInfo FooIndexTest; // test
 
-    public JavaGenProject(File baseDir, ClassPathInfo Foo) {
+    public JavaGenProject(File baseDir, ClassPathInfo Foo, Random random) {
         this.baseDir = baseDir;
         this.Foo = Foo;
+        this.random = random;
 
         String dao_ = daoPackage + ".";
         String generated = "src/main/generated";
@@ -65,12 +70,14 @@ public class JavaGenProject {
         FooIndexTest = FooTest.join(dao_ + Foo.name + "IndexTest");
     }
 
-    public boolean isForceMode() {
-        return forceMode;
+    public UpdateMethod getPreferredUpdateMethod() {
+        return updateMethod;
     }
 
-    public void setForceMode(boolean forceMode) {
-        this.forceMode = forceMode;
+    public void setPreferredUpdateMethod(UpdateMethod updateMethod) {
+        if (updateMethod == null)
+            throw new NullPointerException("updateMethod");
+        this.updateMethod = updateMethod;
     }
 
 }
