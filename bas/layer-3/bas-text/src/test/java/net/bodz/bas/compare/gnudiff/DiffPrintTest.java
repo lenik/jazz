@@ -1,4 +1,4 @@
-package net.bodz.bas.text.diff.gnudiff;
+package net.bodz.bas.compare.gnudiff;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -7,13 +7,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.compare.gnudiff.DiffEntry;
+import net.bodz.bas.compare.gnudiff.GNUDiff;
+import net.bodz.bas.compare.gnudiff.DiffPrint.Base;
+import net.bodz.bas.compare.gnudiff.DiffPrint.ContextPrint;
+import net.bodz.bas.compare.gnudiff.DiffPrint.EdPrint;
+import net.bodz.bas.compare.gnudiff.DiffPrint.NormalPrint;
+import net.bodz.bas.compare.gnudiff.DiffPrint.UnifiedPrint;
 import net.bodz.bas.io.Stdio;
-import net.bodz.bas.text.diff.DiffEntry;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint.Base;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint.ContextPrint;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint.EdPrint;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint.NormalPrint;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint.UnifiedPrint;
 
 public class DiffPrintTest {
 
@@ -61,7 +62,7 @@ public class DiffPrintTest {
         }
         boolean reverse = style == 'e';
         d.heuristic = true;
-        List<DiffEntry> script = d.diff_2(reverse);
+        List<DiffEntry<Object>> script = d.diff_2(reverse);
         if (script == null)
             System.err.println("No differences");
         else {

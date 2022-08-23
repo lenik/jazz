@@ -15,6 +15,8 @@ import java.util.TreeSet;
 
 import net.bodz.bas.c.java.io.FileDiff;
 import net.bodz.bas.c.java.nio.DeleteOption;
+import net.bodz.bas.compare.IListComparator;
+import net.bodz.bas.compare.IListCompareResult;
 import net.bodz.bas.err.ExceptionLog;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedEnumException;
@@ -31,8 +33,6 @@ import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.t.buffer.MovableByteBuffer;
 import net.bodz.bas.t.buffer.MovableCharBuffer;
-import net.bodz.bas.text.diff.DiffEntry;
-import net.bodz.bas.text.diff.IDiffComparator;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.facade.DefaultVfsFacade;
 import net.bodz.bas.vfs.facade.IVfsFacade;
@@ -64,8 +64,8 @@ public class FileHandler
 
     private FileHandleMethod method = FileHandleMethod.NONE;
     private boolean modified = false;
-    private IDiffComparator diffComparator;
-    private List<DiffEntry> diffs;
+    private IListComparator<String, String> diffComparator;
+    private IListCompareResult<String, String> diffs;
     private final ExceptionLog exceptions = new ExceptionLog();
 
     private final Set<String> tags = new TreeSet<String>();
@@ -284,11 +284,11 @@ public class FileHandler
         return exceptions != null && !exceptions.isEmpty();
     }
 
-    public IDiffComparator getDiffComparator() {
+    public IListComparator<String, String> getDiffComparator() {
         return diffComparator;
     }
 
-    public void setDiffComparator(IDiffComparator diffComparator) {
+    public void setDiffComparator(IListComparator<String, String> diffComparator) {
         this.diffComparator = diffComparator;
     }
 
@@ -580,13 +580,16 @@ public class FileHandler
         if (diffComparator == null)
             return !FileDiff.equals(source, target);
         else {
-            if (diffs == null)
-                diffs = FileDiff.compareDiff(source, target, diffComparator);
-            return !diffs.isEmpty();
+            if (diffs == null) {
+                List<String> v0 = source.read().readLines();
+                List<String> v1 = target.read().readLines();
+                diffs = diffComparator.compare(v0, v1);
+            }
+            return diffs.isDifferent();
         }
     }
 
-    public synchronized List<DiffEntry> diffOnce()
+    public synchronized IListCompareResult<String, String> diffOnce()
             throws IOException {
         if (diffs == null) {
             if (diffComparator == null)
@@ -616,7 +619,9 @@ public class FileHandler
             default:
                 throw new UnexpectedEnumException();
             }
-            diffs = FileDiff.compareDiff(source1, source2, diffComparator);
+            List<String> v0 = source1.read().readLines();
+            List<String> v1 = source2.read().readLines();
+            diffs = diffComparator.compare(v0, v1);
         }
         return diffs;
     }
