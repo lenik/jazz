@@ -25,10 +25,13 @@ import net.bodz.lily.test.TestSamples;
 public class FooSamples__java
         extends JavaGen__java {
 
-    Random random = new Random();
+    Random random;
+    EnglishTextGenerator enGen;
 
     public FooSamples__java(JavaGenProject project) {
         super(project, project.FooSamples);
+        this.random = project.random;
+        this.enGen = new EnglishTextGenerator(project.random);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class FooSamples__java
                     if (type == String.class) {
                         int maxLen = column.getPrecision();
                         int wordMaxLen = 10;
-                        String sample = EnglishTextGenerator.makeText(maxLen, wordMaxLen);
+                        String sample = enGen.makeText(maxLen, wordMaxLen);
                         quoted = StringQuote.qqJavaString(sample.toString());
                     } else if (type == BigDecimal.class) {
                         int precision = column.getPrecision();
@@ -105,6 +108,8 @@ public class FooSamples__java
                         if (generator != null) {
                             Options options = new Options();
                             options.addOption(OptionNames.signed, false);
+                            options.addOption(Random.class, random);
+
                             Object sample = generator.newSample(options);
 
                             if (sample instanceof Date) {

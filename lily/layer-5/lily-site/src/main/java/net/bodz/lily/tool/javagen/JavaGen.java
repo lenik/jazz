@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.Random;
 
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.codegen.ClassPathInfo;
+import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.err.IllegalUsageException;
@@ -54,6 +56,27 @@ public class JavaGen
      * @option -T
      */
     Boolean includeTables;
+
+    /**
+     * Compute a digest as the random seed from the given string. "magic" by default.
+     *
+     * @option -S
+     */
+    String seedMagic = "magic";
+
+    /**
+     * Use a random seed value. Typically a value from timestamp.
+     *
+     * @option -R
+     */
+    boolean seedRandom;
+
+    /**
+     * Use diff-merge.
+     *
+     * @option -d
+     */
+    boolean diffMerge;
 
     /**
      * Overwrite all existing files.
@@ -120,10 +143,23 @@ public class JavaGen
             packageName += "." + fullSchemaName;
         }
 
+        long seed;
+        if (seedRandom)
+            seed = System.currentTimeMillis();
+        else
+            seed = seedMagic.hashCode();
+
         ClassPathInfo pathInfo = new ClassPathInfo(packageName, simpleName, //
                 outDir, "src/main/java", "src/main/resources");
-        JavaGenProject project = new JavaGenProject(outDir, pathInfo);
-        project.setForceMode(forceMode);
+        JavaGenProject project = new JavaGenProject(outDir, pathInfo, new Random(seed));
+
+        UpdateMethod updateMethod;
+        if (forceMode)
+            updateMethod = diffMerge ? UpdateMethod.DIFF_MERGE : UpdateMethod.OVERWRITE;
+        else
+            updateMethod = diffMerge ? UpdateMethod.DIFF_MERGE : UpdateMethod.NO_UPDATE;
+        project.setPreferredUpdateMethod(updateMethod);
+
         return project;
     }
 
@@ -131,12 +167,12 @@ public class JavaGen
             throws IOException {
         JavaGenProject project = createProject(table);
 
-        new Foo_stuff__java(project).buildFile(table, true);
+        new Foo_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         if (table.getPrimaryKeyColumns().length > 1)
-            new Foo_Id__java(project).buildFile(table, true);
+            new Foo_Id__java(project).buildFile(table, UpdateMethod.OVERWRITE);
 
         new Foo__java(project).buildFile(table);
-        new FooMask_stuff__java(project).buildFile(table, true);
+        new FooMask_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         new FooMask__java(project).buildFile(table);
         new FooIndex__java(project).buildFile(table);
         new FooMapper__xml(project).buildFile(table);
@@ -149,12 +185,12 @@ public class JavaGen
             throws IOException {
         JavaGenProject project = createProject(view);
 
-        new Foo_stuff__java_v(project).buildFile(view, true);
+        new Foo_stuff__java_v(project).buildFile(view, UpdateMethod.OVERWRITE);
         if (view.getPrimaryKeyColumns().length > 1)
-            new Foo_Id__java(project).buildFile(view, true);
+            new Foo_Id__java(project).buildFile(view, UpdateMethod.OVERWRITE);
 
         new Foo__java_tv(project).buildFile(view);
-        new FooMask_stuff__java(project).buildFile(view, true);
+        new FooMask_stuff__java(project).buildFile(view, UpdateMethod.OVERWRITE);
         new FooMask__java(project).buildFile(view);
         new FooIndex__java(project).buildFile(view);
         new VFooMapper__xml(project).buildFile(view);

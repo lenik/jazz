@@ -7,6 +7,7 @@ import net.bodz.bas.codegen.IFileInfo;
 import net.bodz.bas.codegen.JavaOrXmlSourceBuilder;
 import net.bodz.bas.codegen.MutableFileInfo;
 import net.bodz.bas.codegen.QualifiedName;
+import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
@@ -30,11 +31,8 @@ public abstract class JavaGenFileType
     }
 
     @Override
-    protected Boolean shouldOverwrite(ITableViewMetadata model) {
-        if (project.isForceMode())
-            return true;
-        else
-            return null;
+    protected UpdateMethod getPreferredUpdateMethod(ITableViewMetadata model) {
+        return project.getPreferredUpdateMethod();
     }
 
     protected abstract String getExtension();
