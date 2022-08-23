@@ -54,7 +54,7 @@ public class DateTypers
             throws CreateException {
         Random prng = options.get(Random.class, random);
         int before = prng.nextInt();
-        long sample = System.currentTimeMillis() - before;
+        long sample = Dates.currentYearLocal().getTime() - before;
         return new Date(sample);
     }
 
