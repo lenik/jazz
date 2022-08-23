@@ -6,7 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Dates
-        implements IDateFormatConsts {
+        implements
+            IDateFormatConsts {
 
     public static DateFormat format(String dateFormatString) {
         return new SimpleDateFormat(dateFormatString);
@@ -32,6 +33,14 @@ public class Dates
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public static Date currentYearLocal() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        calendar.clear();
+        calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
     }
 
 }
