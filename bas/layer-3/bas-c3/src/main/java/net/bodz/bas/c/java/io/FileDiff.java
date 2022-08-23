@@ -6,12 +6,12 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.compare.IListComparator;
+import net.bodz.bas.compare.IListCompareResult;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamReading;
-import net.bodz.bas.text.diff.DiffEntry;
-import net.bodz.bas.text.diff.IDiffComparator;
 
 public class FileDiff {
 
@@ -100,31 +100,32 @@ public class FileDiff {
         return equals(new FileResource(file1), new FileResource(file2));
     }
 
-    public static List<DiffEntry> compareDiff(IStreamInputSource src1, IStreamInputSource src2,
-            IDiffComparator diffComparator)
+    public static IListCompareResult<String, String> compareDiff(IStreamInputSource src1, IStreamInputSource src2,
+            IListComparator<String, String> comparator)
             throws IOException {
         if (src1 == null)
             throw new NullPointerException("src1");
         if (src2 == null)
             throw new NullPointerException("src2");
-        if (diffComparator == null)
+        if (comparator == null)
             throw new NullPointerException("diffComparator");
 
         List<String> lines1 = src1.to(StreamReading.class).readLines();
         List<String> lines2 = src2.to(StreamReading.class).readLines();
-        List<DiffEntry> diffs = diffComparator.compareDiff(lines1, lines2);
-        return diffs;
+        IListCompareResult<String, String> result = comparator.compare(lines1, lines2);
+        return result;
     }
 
-    public static List<DiffEntry> compareDiff(IStreamInputSourceWrapper src1, IStreamInputSourceWrapper src2,
-            IDiffComparator diffComparator)
+    public static IListCompareResult<String, String> compareDiff(IStreamInputSourceWrapper src1,
+            IStreamInputSourceWrapper src2, IListComparator<String, String> comparator)
             throws IOException {
-        return compareDiff(src1.getInputSource(), src2.getInputSource(), diffComparator);
+        return compareDiff(src1.getInputSource(), src2.getInputSource(), comparator);
     }
 
-    public static List<DiffEntry> compareDiff(File file1, File file2, IDiffComparator diffComparator)
+    public static IListCompareResult<String, String> compareDiff(File file1, File file2,
+            IListComparator<String, String> comparator)
             throws IOException {
-        return compareDiff(new FileResource(file1), new FileResource(file2), diffComparator);
+        return compareDiff(new FileResource(file1), new FileResource(file2), comparator);
     }
 
 }

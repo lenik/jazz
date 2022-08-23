@@ -5,16 +5,16 @@ import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.GlobPattern;
+import net.bodz.bas.compare.IListComparator;
+import net.bodz.bas.compare.IListCompareResultFormatter;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.text.diff.IDiffComparator;
-import net.bodz.bas.text.diff.IDiffFormat;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 
 /**
  * Why put getter/setter here?
- * 
+ *
  * It's just because there are too many properties/methods in the BasicCLI+ types.
  */
 public class CLIAccessor {
@@ -175,19 +175,19 @@ public class CLIAccessor {
         instance.force = force;
     }
 
-    public static IDiffComparator getDiffAlgorithm(BatchEditCLI instance) {
+    public static IListComparator<String, String> getDiffAlgorithm(BatchEditCLI instance) {
         return instance.diffAlgorithm;
     }
 
-    public static void setDiffAlgorithm(BatchEditCLI instance, IDiffComparator diffAlgorithm) {
+    public static void setDiffAlgorithm(BatchEditCLI instance, IListComparator<String, String> diffAlgorithm) {
         instance.diffAlgorithm = diffAlgorithm;
     }
 
-    public static IDiffFormat getDiffFormat(BatchEditCLI instance) {
+    public static IListCompareResultFormatter<String, String> getDiffFormat(BatchEditCLI instance) {
         return instance.diffFormat;
     }
 
-    public static void setDiffFormat(BatchEditCLI instance, IDiffFormat diffFormat) {
+    public static void setDiffFormat(BatchEditCLI instance, IListCompareResultFormatter<String, String> diffFormat) {
         instance.diffFormat = diffFormat;
     }
 

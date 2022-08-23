@@ -1,11 +1,9 @@
-package net.bodz.bas.text.diff.gnudiff;
+package net.bodz.bas.compare.gnudiff;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.bodz.bas.text.diff.DiffEntry;
 
 /**
  * A class to compare vectors of objects. The result of comparison is a list of <code>change</code>
@@ -13,13 +11,14 @@ import net.bodz.bas.text.diff.DiffEntry;
  * files. Comparison options such as "ignore whitespace" are implemented by modifying the
  * <code>equals</code> and <code>hashcode</code> methods for the objects compared.
  * <p>
- * The basic algorithm is described in: </br> "An O(ND) Difference Algorithm and its Variations",
- * Eugene Myers, Algorithmica Vol. 1 No. 2, 1986, p 251.
+ * The basic algorithm is described in: </br>
+ * "An O(ND) Difference Algorithm and its Variations", Eugene Myers, Algorithmica Vol. 1 No. 2,
+ * 1986, p 251.
  * <p>
  * This class outputs different results from GNU diff 1.15 on some inputs. Our results are actually
  * better (smaller change list, smaller total size of changes), but it would be nice to know why.
  * Perhaps there is a memory overwrite bug in GNU diff 1.15.
- * 
+ *
  * @author Stuart D. Gathman, translated from GNU diff 1.15 Copyright (C) 2000 Business Management
  *         Systems, Inc.
  *         <p>
@@ -85,25 +84,25 @@ public class GNUDiff {
     private int[] bdiag;
 
     private int fdiagoff, bdiagoff;
-    private final file_data[] filevec = new file_data[2];
+    final file_data[] filevec = new file_data[2];
     private int cost;
 
     /**
      * Find the midpoint of the shortest edit script for a specified portion of the two files.
-     * 
+     *
      * We scan from the beginnings of the files, and simultaneously from the ends, doing a
      * breadth-first search through the space of edit-sequence. When the two searches meet, we have
      * found the midpoint of the shortest edit sequence.
-     * 
+     *
      * The value returned is the number of the diagonal on which the midpoint lies. The diagonal
      * number equals the number of inserted lines minus the number of deleted lines (counting only
      * lines before the midpoint). The edit cost is stored into COST; this is the total number of
      * lines inserted or deleted (counting only lines before the midpoint).
-     * 
+     *
      * This function assumes that the first lines of the specified portions of the two files do not
      * match, and likewise that the last lines do not match. The caller must trim matching lines
      * from the beginning and end of the portions it is going to specify.
-     * 
+     *
      * Note that if we return the "wrong" diagonal value, or if the value of bdiag at that diagonal
      * is "wrong", the worst this can do is cause suboptimal diff output. It cannot cause incorrect
      * diff output.
@@ -198,7 +197,7 @@ public class GNUDiff {
              * Heuristic: check occasionally for a diagonal that has made lots of progress compared
              * with the edit distance. If we have any such, find the one that has made the most
              * progress and return it as if it had succeeded.
-             * 
+             *
              * With this heuristic, for files with a constant small density of changes, the
              * algorithm is linear in the file size.
              */
@@ -269,12 +268,12 @@ public class GNUDiff {
     /**
      * Compare in detail contiguous subsequences of the two files which are known, as a whole, to
      * match each other.
-     * 
+     *
      * The results are recorded in the vectors filevec[N].changed_flag, by storing a 1 in the
      * element for each line that is an insertion or deletion.
-     * 
+     *
      * The subsequence of file 0 is [XOFF, XLIM) and likewise for file 1.
-     * 
+     *
      * Note that XLIM, YLIM are exclusive bounds. All line numbers are origin-0 and discarded lines
      * are not counted.
      */
@@ -350,7 +349,7 @@ public class GNUDiff {
     public interface ScriptBuilder {
         /**
          * Scan the tables of which lines are inserted and deleted, producing an edit script.
-         * 
+         *
          * @param changed0
          *            true for lines in first file which do not match 2nd
          * @param len0
@@ -361,7 +360,7 @@ public class GNUDiff {
          *            number of lines in 2nd file
          * @return a linked list of changes - or null
          */
-        public List<DiffEntry> build_script(boolean[] changed0, int len0, boolean[] changed1, int len1);
+        public List<DiffEntry<Object>> build_script(boolean[] changed0, int len0, boolean[] changed1, int len1);
     }
 
     /**
@@ -369,10 +368,13 @@ public class GNUDiff {
      * order.
      */
 
-    static class ReverseScript
-            implements ScriptBuilder {
-        public List<DiffEntry> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
-            List<DiffEntry> script = new ArrayList<DiffEntry>();
+    class ReverseScript
+            implements
+                ScriptBuilder {
+        @Override
+        public List<DiffEntry<Object>> build_script(final boolean[] changed0, int len0, final boolean[] changed1,
+                int len1) {
+            List<DiffEntry<Object>> script = new ArrayList<>();
             int i0 = 0, i1 = 0;
             while (i0 < len0 || i1 < len1) {
                 if (changed0[1 + i0] || changed1[1 + i1]) {
@@ -385,7 +387,8 @@ public class GNUDiff {
                         ++i1;
 
                     /* Record this change. */
-                    script.add(new DiffEntry(line0, line1, i0 - line0, i1 - line1));
+                    script.add(new DiffEntry<Object>(filevec[0].data, filevec[1].data, line0, line1, i0 - line0,
+                            i1 - line1));
                 }
 
                 /* We have reached lines in the two files that match each other. */
@@ -397,14 +400,17 @@ public class GNUDiff {
         }
     }
 
-    static class ForwardScript
-            implements ScriptBuilder {
+    class ForwardScript
+            implements
+                ScriptBuilder {
         /**
          * Scan the tables of which lines are inserted and deleted, producing an edit script in
          * forward order.
          */
-        public List<DiffEntry> build_script(final boolean[] changed0, int len0, final boolean[] changed1, int len1) {
-            List<DiffEntry> script = new ArrayList<DiffEntry>();
+        @Override
+        public List<DiffEntry<Object>> build_script(final boolean[] changed0, int len0, final boolean[] changed1,
+                int len1) {
+            List<DiffEntry<Object>> script = new ArrayList<>();
             int i0 = len0, i1 = len1;
 
             while (i0 >= 0 || i1 >= 0) {
@@ -418,7 +424,7 @@ public class GNUDiff {
                         --i1;
 
                     /* Record this change. */
-                    script.add(new DiffEntry(i0, i1, line0 - i0, line1 - i1));
+                    script.add(new DiffEntry<Object>(filevec[0].data, filevec[1].data, i0, i1, line0 - i0, line1 - i1));
                 }
 
                 /* We have reached lines in the two files that match each other. */
@@ -431,12 +437,12 @@ public class GNUDiff {
     }
 
     /** Standard ScriptBuilders. */
-    public final static ScriptBuilder forwardScript = new ForwardScript(), reverseScript = new ReverseScript();
+    public final ScriptBuilder forwardScript = new ForwardScript(), reverseScript = new ReverseScript();
 
     /*
      * Report the differences of two files. DEPTH is the current directory depth.
      */
-    public final List<DiffEntry> diff_2(final boolean reverse) {
+    public final List<DiffEntry<Object>> diff_2(final boolean reverse) {
         return diff(reverse ? forwardScript : reverseScript);
     }
 
@@ -445,12 +451,12 @@ public class GNUDiff {
      * changes. The standard ScriptBuilder implementations provide for forward and reverse edit
      * scripts. Alternate implementations could, for instance, list common elements instead of
      * differences.
-     * 
+     *
      * @param bld
      *            an object to build the script from change flags
      * @return the head of a list of changes
      */
-    public List<DiffEntry> diff(final ScriptBuilder bld) {
+    public List<DiffEntry<Object>> diff(final ScriptBuilder bld) {
 
         /*
          * Some lines are obviously insertions or deletions because they don't match anything.
@@ -510,7 +516,7 @@ public class GNUDiff {
         /**
          * Return equiv_count[I] as the number of lines in this file that fall in equivalence class
          * I.
-         * 
+         *
          * @return the array of equivalence class counts.
          */
         int[] equivCount() {
@@ -522,7 +528,7 @@ public class GNUDiff {
 
         /**
          * Discard lines that have no matches in another file.
-         * 
+         *
          * A line which is discarded will not be considered by the actual comparison algorithm; it
          * will be as if that line were not in the file. The file's `realindexes' table maps virtual
          * line numbers (which don't count the discarded lines) into real line numbers; this is how
@@ -531,7 +537,7 @@ public class GNUDiff {
          * <p>
          * When we discard a line, we also mark it as a deletion or insertion so that it will be
          * printed in the output.
-         * 
+         *
          * @param f
          *            the other file
          */
@@ -553,7 +559,7 @@ public class GNUDiff {
         /**
          * Mark to be discarded each line that matches no line of another file. If a line matches
          * many lines, mark it as provisionally discardable.
-         * 
+         *
          * @see equivCount()
          * @param counts
          *            The count of each equivalence number for the other file.
@@ -705,7 +711,7 @@ public class GNUDiff {
 
         /**
          * Actually discard the lines.
-         * 
+         *
          * @param discards
          *            flags lines to be discarded
          */
@@ -722,6 +728,7 @@ public class GNUDiff {
         }
 
         file_data(List<?> data, Map<Object, Integer> h) {
+            this.data = data;
             int len = data.size();
             buffered_lines = len;
 
@@ -730,23 +737,23 @@ public class GNUDiff {
             realindexes = new int[buffered_lines];
 
             for (int i = 0; i < len; ++i) {
-                Integer ir = (Integer) h.get(data.get(i));
-                if (ir == null)
+                Integer strid = h.get(data.get(i));
+                if (strid == null)
                     h.put(data.get(i), equivs[i] = equiv_max++);
                 else
-                    equivs[i] = ir.intValue();
+                    equivs[i] = strid.intValue();
             }
         }
 
         /**
          * Adjust inserts/deletes of blank lines to join changes as much as possible.
-         * 
+         *
          * We do something when a run of changed lines include a blank line at one end and have an
          * excluded blank line at the other. We are free to choose which blank line is included.
          * `compareseq' always chooses the one at the beginning, but usually it is cleaner to
          * consider the following blank line to be the "change". The only exception is if the
          * preceding blank line would join this change to other changes.
-         * 
+         *
          * @param f
          *            the file being compared against
          */
@@ -803,11 +810,9 @@ public class GNUDiff {
                      * the previous run was shifted here.
                      */
 
-                    if (end != i_end
-                            && equivs[start] == equivs[end]
-                            && !other_changed[1 + j]
-                            && end != i_end
-                            && !((preceding >= 0 && start == preceding) || (other_preceding >= 0 && other_start == other_preceding))) {
+                    if (end != i_end && equivs[start] == equivs[end] && !other_changed[1 + j] && end != i_end
+                            && !((preceding >= 0 && start == preceding)
+                                    || (other_preceding >= 0 && other_start == other_preceding))) {
                         changed[1 + end++] = true;
                         changed[1 + start++] = false;
                         ++i;
@@ -855,5 +860,6 @@ public class GNUDiff {
          */
         boolean[] changed_flag;
 
+        List<?> data;
     }
 }

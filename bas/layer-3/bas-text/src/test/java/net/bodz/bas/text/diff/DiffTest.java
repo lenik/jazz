@@ -24,9 +24,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.compare.gnudiff.DiffEntry;
+import net.bodz.bas.compare.gnudiff.DiffPrint;
+import net.bodz.bas.compare.gnudiff.GNUDiff;
 import net.bodz.bas.io.adapter.WriterPrintOut;
-import net.bodz.bas.text.diff.gnudiff.DiffPrint;
-import net.bodz.bas.text.diff.gnudiff.GNUDiff;
 
 /**
  * Test Diff behavior.
@@ -42,7 +43,7 @@ public class DiffTest
     @Test
     public void testReverse() {
         GNUDiff diff = new GNUDiff(Arrays.asList(f1), Arrays.asList(f2));
-        List<DiffEntry> script = diff.diff_2(true);
+        List<DiffEntry<Object>> script = diff.diff_2(true);
         assertTrue(script != null);
     }
 
@@ -61,11 +62,11 @@ public class DiffTest
         final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58, 76 });
         final Integer[] l2 = loadArray(new int[] { 1, 2, 4, 76, 9, 35, 56, 58, 7 });
         GNUDiff diff = new GNUDiff(Arrays.asList(l1), Arrays.asList(l2));
-        List<DiffEntry> script = diff.diff_2(false);
+        List<DiffEntry<Object>> script = diff.diff_2(false);
         // script should have two changes
         assertTrue(script != null);
-        DiffEntry ch0 = script.get(0);
-        DiffEntry ch1 = script.get(1);
+        DiffEntry<Object> ch0 = script.get(0);
+        DiffEntry<Object> ch1 = script.get(1);
         assertEquals(1, ch0.inserted);
         assertEquals(1, ch0.deleted);
         assertEquals(3, ch0.index0);
@@ -89,7 +90,7 @@ public class DiffTest
     public void testContext()
             throws IOException {
         GNUDiff diff = new GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
-        List<DiffEntry> script = diff.diff_2(false);
+        List<DiffEntry<Object>> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
         DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), //
                 new WriterPrintOut(wtr));
