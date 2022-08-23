@@ -2,7 +2,9 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
-public interface ISimpleCharOut {
+public interface ISimpleCharOut
+        extends
+            Appendable {
 
     /**
      * @param ch
@@ -11,5 +13,26 @@ public interface ISimpleCharOut {
      */
     void write(int ch)
             throws IOException;
+
+    @Override
+    default Appendable append(CharSequence csq)
+            throws IOException {
+        return append(csq, 0, csq.length());
+    }
+
+    @Override
+    default Appendable append(CharSequence csq, int start, int end)
+            throws IOException {
+        for (int i = start; i < end; i++)
+            write(csq.charAt(i));
+        return this;
+    }
+
+    @Override
+    default Appendable append(char c)
+            throws IOException {
+        write(c);
+        return this;
+    }
 
 }
