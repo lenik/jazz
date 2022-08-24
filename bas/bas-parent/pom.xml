@@ -11,6 +11,7 @@ The Basics-->
         <encoding>utf-8</encoding>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     </properties>
     <!--
 
