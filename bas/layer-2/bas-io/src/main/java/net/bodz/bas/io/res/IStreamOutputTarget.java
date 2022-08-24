@@ -13,10 +13,14 @@ import net.bodz.bas.c.java.io.IDataOutput;
 import net.bodz.bas.c.java.io.IObjectOutput;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.res.tools.IStreamWriting;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.sugar.IToChain;
 
 public interface IStreamOutputTarget
-        extends ISimpleStreamOutputTarget, IToChain {
+        extends
+            ISimpleStreamOutputTarget,
+            IToChain {
 
     @Override
     void setCharset(Charset charset);
@@ -80,5 +84,9 @@ public interface IStreamOutputTarget
      */
     BufferedWriter newBufferedWriter(OpenOption... options)
             throws IOException;
+
+    default IStreamWriting write() {
+        return new StreamWriting(this);
+    }
 
 }

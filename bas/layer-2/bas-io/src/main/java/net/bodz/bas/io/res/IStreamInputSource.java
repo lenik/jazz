@@ -12,6 +12,8 @@ import net.bodz.bas.c.java.io.IDataInput;
 import net.bodz.bas.c.java.io.IObjectInput;
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.io.impl.LAReader;
+import net.bodz.bas.io.res.tools.IStreamReading;
+import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.sugar.IToChain;
 
 public interface IStreamInputSource
@@ -79,5 +81,9 @@ public interface IStreamInputSource
      */
     LAReader newLAReader(OpenOption... options)
             throws IOException;
+
+    default IStreamReading read() {
+        return new StreamReading(this);
+    }
 
 }
