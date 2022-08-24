@@ -4,12 +4,19 @@ import java.io.IOException;
 import java.nio.file.NotLinkException;
 
 import net.bodz.bas.fn.IFilter;
+import net.bodz.bas.io.res.tools.IStreamReading;
+import net.bodz.bas.io.res.tools.IStreamWriting;
+import net.bodz.bas.io.res.tools.StreamReading;
+import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.sugar.IToChain;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.path.BadPathException;
 
 public interface IFile
-        extends IFsBlob, IFsDir, IToChain {
+        extends
+            IFsBlob,
+            IFsDir,
+            IToChain {
 
     @Override
     IFile getParentFile();
@@ -26,6 +33,7 @@ public interface IFile
      *             If not iterable.
      * @see #isTraversible()
      */
+    @Override
     Iterable<? extends IFile> children()
             throws VFSException;
 
@@ -34,6 +42,7 @@ public interface IFile
      *             If not iterable.
      * @see #isTraversible()
      */
+    @Override
     Iterable<? extends IFile> children(IFilenameFilter nameFilter)
             throws VFSException;
 
@@ -61,7 +70,7 @@ public interface IFile
 
     /**
      * Create a (symbolic) link to the target.
-     * 
+     *
      * @param targetPath
      *            Relative path string to the target.
      * @param symbolic
@@ -77,7 +86,7 @@ public interface IFile
 
     /**
      * Read the target spec of the symbolic link.
-     * 
+     *
      * @throws UnsupportedOperationException
      *             If the underlying device doesn't support symbolic link.
      * @throws NotLinkException
@@ -85,6 +94,14 @@ public interface IFile
      */
     String readSymbolicLink()
             throws IOException;
+
+    default IStreamReading read() {
+        return new StreamReading(getInputSource());
+    }
+
+    default IStreamWriting write() {
+        return new StreamWriting(getOutputTarget());
+    }
 
     class fn {
 
