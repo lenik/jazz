@@ -34,9 +34,9 @@
             <version>4.12</version>
         </dependency>
         <dependency>
-            <groupId>name.fraser.neil.plaintext</groupId>
-            <artifactId>diff_match_patch</artifactId>
-            <version>1.0.0</version>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-diff-patch</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.javers</groupId>
