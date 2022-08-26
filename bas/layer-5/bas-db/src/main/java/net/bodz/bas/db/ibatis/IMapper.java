@@ -12,6 +12,7 @@ public interface IMapper {
         static ITypeMapper[] mapperTmaps = {
                 // TODO cache-enable?
                 new NameConventionTypeMapper(null, "Mapper", false), //
+                new NameConventionTypeMapper("dao.", "Mapper", false), //
                 new NameConventionTypeMapper("impl.", "Mapper", false), //
                 new NameConventionTypeMapper(null, 1, "db.", "Mapper", false), //
         };
