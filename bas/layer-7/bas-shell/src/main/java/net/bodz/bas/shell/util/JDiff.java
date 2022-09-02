@@ -1,13 +1,9 @@
 package net.bodz.bas.shell.util;
 
-import java.util.List;
-
-import net.bodz.bas.compare.IListComparator;
-import net.bodz.bas.compare.IListCompareResult;
-import net.bodz.bas.compare.IListCompareResultFormatter;
-import net.bodz.bas.compare.IListPatch;
-import net.bodz.bas.compare.java_diff_utils.EdFormat;
-import net.bodz.bas.compare.java_diff_utils.JduComparator;
+import net.bodz.bas.compare.dmp.CharsComparator;
+import net.bodz.bas.compare.dmp.DMPConfig;
+import net.bodz.bas.compare.dmp.EditList;
+import net.bodz.bas.compare.dmp.PatchList;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -15,6 +11,8 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.text.row.IRow;
+import net.bodz.bas.text.row.StringView;
 
 /**
  * Diff and patch apply.
@@ -32,8 +30,8 @@ public class JDiff
      */
     boolean testOnly;
 
-    IListComparator<String, String> comparator = new JduComparator<>();
-    IListCompareResultFormatter<Object, Object> fmt = new EdFormat();
+    DMPConfig config = new DMPConfig();
+    CharsComparator comparator = new CharsComparator(config);
 
     @Override
     protected void mainImpl(String... args)
@@ -45,28 +43,29 @@ public class JDiff
 
         FileResource f0 = new FileResource(args[0]);
         FileResource f1 = new FileResource(args[1]);
-        List<String> v0 = f0.read().readLines();
-        List<String> v1 = f1.read().readLines();
+        String text0 = f0.read().readString();
+        String text1 = f1.read().readString();
 
-        IListCompareResult<String, String> result = comparator.compare(v0, v1);
+        StringView row0 = new StringView(text0);
+        StringView row1 = new StringView(text1);
+        EditList<Character> diffs = comparator.compare(row0, row1);
+        PatchList<Character> patch = diffs.createPatch(row0);
         System.out.println("DIFF:");
-        fmt.format(out, result);
-        System.out.println();
+        System.out.println(diffs.toDelta());
 
-        IListPatch<String> patch = result.patch();
-        List<String> v0patch = patch.apply(v0);
-        System.out.println("v0patch := v0+patch: equals v1?  " + v1.equals(v0patch));
-        for (String l : v0patch)
-            System.out.print(l);
+        IRow<Character> v0patch = patch.apply(row0).row;
+        System.out.println("v0patch := v0+patch: equals v1?  " + row1.equals(v0patch));
+        System.out.print(v0patch);
+        System.out.println();
 
         if (args.length >= 3) {
             FileResource f2 = new FileResource(args[2]);
-            List<String> v2 = f2.read().readLines();
+            String text2 = f2.read().readString();
+            StringView row2 = new StringView(text2);
 
-            List<String> v2patch = patch.apply(v2);
-            System.out.println("v2patch := v2+patch: equals v1?  " + v1.equals(v2patch));
-            for (String l : v2patch)
-                System.out.print(l);
+            IRow<Character> v2patch = patch.apply(row2).row;
+            System.out.println("v2patch := v2+patch: equals v1?  " + row1.equals(v2patch));
+            System.out.print(v2patch);
         }
     }
 
