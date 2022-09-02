@@ -36,7 +36,7 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-diff-patch</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.javers</groupId>
