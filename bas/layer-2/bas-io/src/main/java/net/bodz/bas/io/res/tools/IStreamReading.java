@@ -11,7 +11,8 @@ import net.bodz.bas.t.iterator.immed.Mitorx;
 import net.bodz.bas.t.object.IContextUtility;
 
 public interface IStreamReading
-        extends IContextUtility {
+        extends
+            IContextUtility {
 
     @Override
     IStreamReading clone();
@@ -22,7 +23,7 @@ public interface IStreamReading
 
     /**
      * Read all bytes.
-     * 
+     *
      * @exception FileNotFoundException
      *                If file doesn't exist.
      * @throws OutOfMemoryError
@@ -57,10 +58,10 @@ public interface IStreamReading
 
     /**
      * Read the entire contents.
-     * 
+     *
      * @exception FileNotFoundException
      *                If file doesn't exist.
-     * 
+     *
      * @throws OutOfMemoryError
      *             If the contents is too large to read.
      */
@@ -117,7 +118,7 @@ public interface IStreamReading
 
     /**
      * Iterate each line without chopping.
-     * 
+     *
      * @see #lines(boolean)
      */
     Iterable<String> lines();
@@ -132,6 +133,13 @@ public interface IStreamReading
      *                If file doesn't exist.
      */
     List<String> readLines()
+            throws IOException;
+
+    /**
+     * @exception FileNotFoundException
+     *                If file doesn't exist.
+     */
+    List<String> readLines(boolean chopped)
             throws IOException;
 
     /**
