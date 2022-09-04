@@ -1,4 +1,4 @@
-net.bodz.bas.shell.util.JDiff
+net.bodz.bas.shell.util.DiffMergePatch
 net.bodz.bas.shell.util.TypeCollectorApp
 net.bodz.bas.shell.util.Xjdoc2TextMap
 net.bodz.bas.shell.util.XjdocDumper
