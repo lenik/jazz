@@ -442,6 +442,12 @@ public class StreamReading
     }
 
     @Override
+    public List<String> readLines(boolean chopped)
+            throws IOException {
+        return Mitors.toList(_lines(chopped));
+    }
+
+    @Override
     public List<String> readLines(boolean chopped, int maxLines)
             throws IOException {
         return Mitors.toListLimited(_lines(chopped), maxLines);
