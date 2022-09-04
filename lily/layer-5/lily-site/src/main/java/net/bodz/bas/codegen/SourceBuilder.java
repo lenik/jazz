@@ -2,18 +2,23 @@ package net.bodz.bas.codegen;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.compare.dmp.Patch;
+import net.bodz.bas.compare.dmp.PatchApplyResult;
+import net.bodz.bas.compare.dmp.PatchList;
+import net.bodz.bas.compare.dmp.RowEdit;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-
-import com.github.difflib.patch.PatchFailedException;
+import net.bodz.bas.text.LinesText;
+import net.bodz.bas.text.row.IRow;
+import net.bodz.bas.text.row.StringRow;
 
 public abstract class SourceBuilder<model_t> {
 
@@ -47,7 +52,7 @@ public abstract class SourceBuilder<model_t> {
         if (!dir.exists())
             dir.mkdirs();
 
-        FileDiffResult result = null;
+        PatchList<String> patchList = null;
         boolean saveOrig = updateMethod == UpdateMethod.DIFF_MERGE;
         if (file.exists()) {
             switch (updateMethod) {
@@ -64,7 +69,9 @@ public abstract class SourceBuilder<model_t> {
                     // logger.warn("can't do diff/merge: not able to read " + origCopy);
                     updateMethod = UpdateMethod.OVERWRITE;
                 } else {
-                    result = FileDiff.diff(origCopy, file);
+                    IRow<String> row1 = readLines(origCopy);
+                    IRow<String> row2 = readLines(file);
+                    patchList = FileDiff.createPatchByLines(row1, row2);
                 }
                 break;
             }
@@ -76,37 +83,41 @@ public abstract class SourceBuilder<model_t> {
         ITreeOut out = TreeOutImpl.from(buf);
         build(out, model);
         out.flush();
-        String _0b = buf.toString();
-        List<String> v0b = new StringSource(_0b).read().readLines();
-        List<String> v1b = v0b;
+        String text = buf.toString();
 
-        if (result != null && result.isDifferent()) {
+        IRow<String> textRow = new StringRow(new StringSource(text).read().readLines());
+        IRow<String> patchedRow = textRow;
+
+        if (patchList != null && patchList.isDifferent()) {
             logger.debug("    patch on " + displayPath);
-            try {
-                v1b = result.patch.applyTo(v0b);
-            } catch (PatchFailedException e) {
-                logger.error("Patch failed: " + e.getMessage(), e);
+            PatchApplyResult<String> par = patchList.apply(textRow);
+            if (par.isFailed()) {
+                logger.error("Patch failed. ");
+                printResult(Stdio.cout.indented(), "Patch failed:", patchList, par, null);
                 return false;
             }
+            patchedRow = par.row;
         }
 
         if (saveOrig) {
             File origCopy = getOrigCopy(fileInfo);
-            if (FileDiff.diff(v0b, origCopy).isDifferent()) {
+            IRow<String> origRow = readLines(origCopy);
+            if (!FileDiff.compareByLines(textRow, origRow).isEmpty()) {
                 logger.debug("    save original backup at " + origCopy);
 
                 File origDir = origCopy.getParentFile();
                 origDir.mkdirs();
 
-                new FileResource(origCopy).write().writeString(v0b);
+                new FileResource(origCopy).write().writeString(textRow);
             }
         }
 
-        if (FileDiff.diff(v1b, file).isSame())
+        StringRow fileRow = readLines(file);
+        if (FileDiff.compareByLines(patchedRow, fileRow).isSame())
             return false;
 
         logger.info("    save " + displayPath);
-        new FileResource(file).write().writeString(v1b);
+        new FileResource(file).write().writeString(patchedRow);
         return true;
     }
 
@@ -119,5 +130,65 @@ public abstract class SourceBuilder<model_t> {
     }
 
     public abstract void build(ITreeOut out, model_t model);
+
+    private static StringRow readLines(File file) {
+        StringRow row = new StringRow();
+        if (file.exists()) {
+            for (String line : new FileResource(file).read().lines())
+                row.append(line);
+        }
+        return row;
+    }
+
+    private boolean byChars = false;
+
+    private boolean chopMode = false;
+
+    private <T> void printResult(ITreeOut out, String message, PatchList<T> patchList, PatchApplyResult<T> par,
+            IRow<T> expected) {
+        out.enterln(message);
+        if (expected != null) {
+            if (par.row.equals(expected))
+                out.println("same as expected.");
+            else
+                out.println("not as expected. ");
+        }
+
+        if (par.isFailed()) {
+            out.enterln("failed hunks: ");
+            int i = 0;
+            for (Boolean status : par.results) {
+                Patch<T> patch = patchList.get(i);
+                if (status == Boolean.FALSE) {
+                    out.enterln("#" + i + "\t" + patch.diffs.toDelta());
+                    for (RowEdit<T> diff : patch.diffs) {
+                        out.println(diff.toString());
+                    }
+                    out.leave();
+                }
+                i++;
+            }
+            out.leave();
+        }
+
+        out.enterln("content:");
+        {
+            if (byChars) {
+                String s = par.row.toString();
+                for (String line : new LinesText.Builder().text(s).removeEOL().trim().build())
+                    out.println(line);
+            } else {
+                @SuppressWarnings("unchecked")
+                IRow<String> row = (IRow<String>) par.row;
+                for (String line : row)
+                    if (chopMode)
+                        out.println("| " + line);
+                    else
+                        out.print("> " + line);
+            }
+            out.leave();
+        }
+        out.leave();
+    }
 
 }

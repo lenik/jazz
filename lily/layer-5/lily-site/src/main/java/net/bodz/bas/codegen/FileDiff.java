@@ -1,37 +1,53 @@
 package net.bodz.bas.codegen;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.io.res.builtin.FileResource;
-
-import com.github.difflib.DiffUtils;
-import com.github.difflib.patch.Patch;
+import net.bodz.bas.compare.dmp.*;
+import net.bodz.bas.text.row.IRow;
+import net.bodz.bas.text.row.IntegerRow;
+import net.bodz.bas.text.row.StringRow;
 
 public class FileDiff {
 
-    public static FileDiffResult diff(List<String> v0, File file1)
-            throws IOException {
-        List<String> v1;
-        if (file1.exists())
-            v1 = new FileResource(file1).read().readLines();
-        else
-            v1 = Collections.emptyList();
+    static DMPConfig config = new DMPConfig();
 
-        Patch<String> patch = DiffUtils.diff(v0, v1);
-        return new FileDiffResult(v0, v1, patch);
+    static CharsComparator charsComparator = new CharsComparator(config);
+    static CsIntsComparator atomsComparator = new CsIntsComparator(config);
+    static LinesComparator linesComparator = new LinesComparator(config);
+    static TrimmedLinesComparator trimmedLinesComparator = new TrimmedLinesComparator(config);
+
+    public static EditList<String> compareByLines(IRow<String> row1, IRow<String> row2)
+            throws IOException {
+        PackedRows<String> packedRows = new PackBuilder<String>(row1, row2).build();
+        IntegerRow indexRow1 = packedRows.getIndexRow1();
+        IntegerRow indexRow2 = packedRows.getIndexRow2();
+        EditList<Integer> diffs = atomsComparator.compare(indexRow1, indexRow2);
+        return packedRows.unpack(linesComparator, diffs);
     }
 
-    public static FileDiffResult diff(File file0, File file1)
+    public static EditList<String> compareByLines(List<String> lines1, List<String> lines2)
             throws IOException {
-        List<String> v0;
-        if (file0.exists())
-            v0 = new FileResource(file0).read().readLines();
-        else
-            v0 = Collections.emptyList();
-        return diff(v0, file1);
+        StringRow row1 = new StringRow(lines1);
+        StringRow row2 = new StringRow(lines2);
+        return compareByLines(row1, row2);
+    }
+
+    public static PatchList<String> createPatchByLines(List<String> lines1, List<String> lines2)
+            throws IOException {
+        StringRow row1 = new StringRow(lines1);
+        StringRow row2 = new StringRow(lines2);
+        return createPatchByLines(row1, row2);
+    }
+
+    public static PatchList<String> createPatchByLines(IRow<String> row1, IRow<String> row2)
+            throws IOException {
+        PackedRows<String> packedRows = new PackBuilder<String>(row1, row2).build();
+        IntegerRow indexRow1 = packedRows.getIndexRow1();
+        IntegerRow indexRow2 = packedRows.getIndexRow2();
+        EditList<Integer> diffs = atomsComparator.compare(indexRow1, indexRow2);
+        PatchList<Integer> patchList = diffs.createPatch(indexRow1);
+        return packedRows.unpack(linesComparator, patchList);
     }
 
 }
