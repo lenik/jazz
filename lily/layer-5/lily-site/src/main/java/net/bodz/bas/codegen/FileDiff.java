@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.compare.dmp.*;
 import net.bodz.bas.text.row.IRow;
-import net.bodz.bas.text.row.IntegerRow;
+import net.bodz.bas.text.row.MutableRow;
 import net.bodz.bas.text.row.StringRow;
 
 public class FileDiff {
@@ -19,11 +19,11 @@ public class FileDiff {
 
     public static EditList<String> compareByLines(IRow<String> row1, IRow<String> row2)
             throws IOException {
-        PackedRows<String> packedRows = new PackBuilder<String>(row1, row2).build();
-        IntegerRow indexRow1 = packedRows.getIndexRow1();
-        IntegerRow indexRow2 = packedRows.getIndexRow2();
-        EditList<Integer> diffs = atomsComparator.compare(indexRow1, indexRow2);
-        return packedRows.unpack(linesComparator, diffs);
+        AtomMap<String> map = new AtomMap<String>();
+        MutableRow<Integer> aRow1 = map.atomize(row1);
+        MutableRow<Integer> aRow2 = map.atomize(row2);
+        EditList<Integer> aDiffs = atomsComparator.compare(aRow1, aRow2);
+        return map.restore(linesComparator, aDiffs);
     }
 
     public static EditList<String> compareByLines(List<String> lines1, List<String> lines2)
@@ -42,12 +42,12 @@ public class FileDiff {
 
     public static PatchList<String> createPatchByLines(IRow<String> row1, IRow<String> row2)
             throws IOException {
-        PackedRows<String> packedRows = new PackBuilder<String>(row1, row2).build();
-        IntegerRow indexRow1 = packedRows.getIndexRow1();
-        IntegerRow indexRow2 = packedRows.getIndexRow2();
-        EditList<Integer> diffs = atomsComparator.compare(indexRow1, indexRow2);
-        PatchList<Integer> patchList = diffs.createPatch(indexRow1);
-        return packedRows.unpack(linesComparator, patchList);
+        AtomMap<String> map = new AtomMap<String>();
+        MutableRow<Integer> aRow1 = map.atomize(row1);
+        MutableRow<Integer> aRow2 = map.atomize(row2);
+        EditList<Integer> aDiffs = atomsComparator.compare(aRow1, aRow2);
+        PatchList<Integer> aPatchList = aDiffs.createPatch(aRow1);
+        return map.restore(linesComparator, aPatchList);
     }
 
 }

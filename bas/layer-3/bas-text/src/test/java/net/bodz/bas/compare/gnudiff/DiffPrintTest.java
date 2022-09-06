@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.compare.gnudiff.DiffEntry;
-import net.bodz.bas.compare.gnudiff.GNUDiff;
 import net.bodz.bas.compare.gnudiff.DiffPrint.Base;
 import net.bodz.bas.compare.gnudiff.DiffPrint.ContextPrint;
 import net.bodz.bas.compare.gnudiff.DiffPrint.EdPrint;
