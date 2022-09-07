@@ -4,7 +4,7 @@
 --\import violet.plan.plan
 
     create sequence fabodr_seq start with 1000;
-    create table fabodr(                  -- sales/subscription doc
+    create table fabodr(
         id          bigint primary key default nextval('fabodr_seq'),
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.ExVer

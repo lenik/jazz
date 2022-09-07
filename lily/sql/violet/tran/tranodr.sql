@@ -6,8 +6,9 @@
 --\mixin lily.template.a-cat tran
 --\mixin lily.template.a-phase tran
 
+    -- transport order
     create sequence tranodr_seq start with 1000;
-    create table tranodr(             -- sales/subscription doc
+    create table tranodr(
         id          int primary key default nextval('tranodr_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
