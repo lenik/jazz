@@ -1,7 +1,7 @@
 --\import lily
 
--------- Violet :: Pub --------
---\import lily.pub
+set search_path = ${1=violet}, lily, public;
+create schema if not exists "${1=violet}";
 
 -------- Violet :: Plan --------
 --\import violet.plan
@@ -30,3 +30,4 @@
 -------- Violet :: Edu --------
 --\import violet.edu
 
+set search_path = public;

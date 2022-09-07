@@ -1,5 +1,10 @@
+set search_path = public;
+
 -------- libsql-great-pg --------
 --\import great.pg
+
+set search_path = ${1=lily}, public;
+create schema if not exists "${1=lily}";
 
 -------- Lily :: Base --------
 --\import lily.base
@@ -30,3 +35,5 @@
 
 -------- Lily :: Public --
 --\import lily.pub
+
+set search_path = public;

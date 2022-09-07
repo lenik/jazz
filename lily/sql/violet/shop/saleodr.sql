@@ -6,8 +6,9 @@
 --\mixin lily.template.a-cat sale
 --\mixin lily.template.a-phase sale
 
+    -- sales/subscription doc
     create sequence saleodr_seq start with 1000;
-    create table saleodr(                  -- sales/subscription doc
+    create table saleodr(
         id          bigint primary key default nextval('saleodr_seq'),
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex

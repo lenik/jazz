@@ -1,6 +1,9 @@
-all.sql:
-	#catme violet.sql >$@
-	catme violet.sql \
-	    | sed -e "s/,\s*--\s*\(.*\)\$$/ comment '\1',/" \
-	    | tee $@ | xsel -b
+include coolmake/catsql.mf
+
+all: \
+        out/lily.sql \
+        out/lily.lst \
+        out/violet.sql \
+        out/violet.lst
+	cat out/violet.sql | xsel -b
 
