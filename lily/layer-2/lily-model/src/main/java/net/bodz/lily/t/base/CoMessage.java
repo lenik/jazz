@@ -34,7 +34,9 @@ import net.bodz.lily.template.RichProperties;
 @UploadHint
 public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>
-        implements IPriority, IId<Id> {
+        implements
+            IPriority,
+            IId<Id> {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +61,14 @@ public abstract class CoMessage<Id>
     public void reinit() {
         super.reinit();
         op = getOwnerUser();
+    }
+
+    public Id getId() {
+        return id();
+    }
+
+    public void setId(Id id) {
+        id(id);
     }
 
     /**
