@@ -1,6 +1,7 @@
 package net.bodz.lily.site;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -25,6 +26,10 @@ public abstract class LilyStartSite
 
     protected final DataContext dataContext;
     protected LoginManager loginManager;
+
+    public LilyStartSite() {
+        this(DataHub.getPreferredHub().getMain());
+    }
 
     public LilyStartSite(DataContext dataContext) {
         this.dataContext = dataContext;

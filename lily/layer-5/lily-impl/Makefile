@@ -27,8 +27,9 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-lily:
+lily1:
 	main JavaGen \
+            -c cg-lily.rst \
             -p net.bodz.lily.schema \
-            @sql/out/lily.lst
+            _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
 
