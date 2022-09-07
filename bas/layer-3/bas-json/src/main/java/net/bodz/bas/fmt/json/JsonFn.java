@@ -25,6 +25,8 @@ import net.bodz.fork.org.json.JSONException;
 @FnHelper
 public class JsonFn {
 
+    public static String DEFAULT_ENCODING = "utf-8";
+
     public static JsonVar parseAny(String json)
             throws ParseException {
         if (json == null)
@@ -209,7 +211,7 @@ public class JsonFn {
     public static <T extends IJsonForm> T load(T obj, File file, JsonFormOptions opts)
             throws IOException, ParseException {
         try (FileInputStream in = new FileInputStream(file)) {
-            load(obj, in, "utf-8", opts);
+            load(obj, in, DEFAULT_ENCODING, opts);
         }
         return obj;
     }
@@ -232,12 +234,12 @@ public class JsonFn {
 
     public static void save(IJsonForm obj, String file, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, file, "utf-8", opts);
+        save(obj, file, DEFAULT_ENCODING, opts);
     }
 
     public static void save(IJsonForm obj, File file, JsonFormOptions opts)
             throws IOException, FormatException {
-        save(obj, file, "utf-8", opts);
+        save(obj, file, DEFAULT_ENCODING, opts);
     }
 
     public static void save(IJsonForm obj, String file, String encoding, JsonFormOptions opts)
