@@ -11,6 +11,8 @@ public class DefaultLog4jConfigurer
         implements
             ILog4jConfigurer {
 
+    public static boolean showHeader = true;
+
     public DefaultLog4jConfigurer() {
     }
 
@@ -37,15 +39,17 @@ public class DefaultLog4jConfigurer
         @Override
         public String toString() {
             String s = "";
-            if (verbose >= 0)
-                s = esc(dateTime) + "%sd" + esc(0) //
-                        + " " + esc(channel) + "[%t/%level]" + esc(0);
-            if (verbose >= 1)
-                s += esc(location) + " %sl{1.} " + esc(0);
-            if (verbose >= 2)
-                s += "\n       ";
-            if (verbose >= 0)
-                s += " " + esc(text) + "%msg%n%throwable" + esc(0);
+            if (showHeader) {
+                if (verbose >= 0)
+                    s = esc(dateTime) + "%sd" + esc(0) //
+                            + " " + esc(channel) + "[%t/%level]" + esc(0);
+                if (verbose >= 1)
+                    s += esc(location) + " %sl{1.} " + esc(0);
+                if (verbose >= 2)
+                    s += "\n       ";
+                if (verbose >= 0)
+                    s += " " + esc(text) + "%msg%n%throwable" + esc(0);
+            }
             return s;
         }
 

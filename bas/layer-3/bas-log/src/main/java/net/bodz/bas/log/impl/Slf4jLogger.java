@@ -82,36 +82,35 @@ public class Slf4jLogger
         return String.valueOf(message);
     }
 
+    void _log(int level, Object message, Throwable t) {
+        slf4j.log(null, FQCN, level, format(message), null, t);
+    }
+
     @Override
     public boolean _fatal(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                format(message), null, t);
+        _log(LocationAwareLogger.ERROR_INT, message, t);
         return false;
     }
 
     @Override
     public boolean _error(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.ERROR_INT, //
-                format(message), null, t);
+        _log(LocationAwareLogger.ERROR_INT, message, t);
         return false;
     }
 
     @Override
     public void _warn(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.WARN_INT, //
-                format(message), null, t);
+        _log(LocationAwareLogger.WARN_INT, message, t);
     }
 
     @Override
     public void _info(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.INFO_INT, //
-                format(message), null, t);
+        _log(LocationAwareLogger.INFO_INT, message, t);
     }
 
     @Override
     public void _debug(int delta, Throwable t, Object message) {
-        slf4j.log(null, FQCN, LocationAwareLogger.DEBUG_INT, //
-                format(message), null, t);
+        _log(LocationAwareLogger.DEBUG_INT, message, t);
     }
 
 }
