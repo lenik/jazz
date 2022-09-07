@@ -113,7 +113,7 @@ public class ProjectList {
                 }
                 String depName = aDepName.value();
                 if (!nameMap.containsKey(depName)) {
-                    String f = "Project class %s: invalid dependency: %s";
+                    String f = "Project class %s: unknown dependency: %s";
                     throw new IllegalArgumentException(String.format(f, //
                             clazz.getName(), depClass.getName()));
                 }
