@@ -33,7 +33,7 @@ public class UserPlayer
         user.setLabel("Test1");
         user.getSecret().setPassword("hello");
         userMapper.insert(user);
-        int id = user.getId();
+        int id = user.id();
 
         user.setLabel("Changed");
         userMapper.update(user);
@@ -45,14 +45,14 @@ public class UserPlayer
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
 
         Group g0 = user.getPrimaryGroup();
-        out.println(user.getId() + ": " + user.getCodeName() + ": " + user.getLabel());
+        out.println(user.id() + ": " + user.getCodeName() + ": " + user.getLabel());
 
         out.enter();
         if (g0 != null)
-            out.println("Primary group: " + g0.getId() + " - " + g0.getLabel());
+            out.println("Primary group: " + g0.id() + " - " + g0.getLabel());
 
         for (Group g : user.getGroups())
-            out.println("Group: " + g.getId() + "-" + g.getLabel());
+            out.println("Group: " + g.id() + "-" + g.getLabel());
 
         out.leave();
     }

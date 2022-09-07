@@ -31,7 +31,7 @@ public class OrgUnit
     }
 
     public void setOrgId(int orgId) {
-        (this.org = new Organization()).setId(orgId);
+        (this.org = new Organization()).id(orgId);
     }
 
     public Contact getContact() {

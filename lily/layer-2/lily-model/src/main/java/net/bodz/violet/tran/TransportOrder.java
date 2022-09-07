@@ -312,7 +312,7 @@ public class TransportOrder
                 item.setOrder(this);
                 item.setSalesOrder(getSalesOrder());
                 SalesOrderItem siRef = new SalesOrderItem();
-                siRef.setId(sid);
+                siRef.id(sid);
                 item.setSalesOrderItem(siRef);
                 item.setQuantity(qty);
                 item.setPrice(price);

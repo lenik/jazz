@@ -9,7 +9,7 @@ public class AppAccountTypes {
 
     static AppAccountType def(int id, String label) {
         AppAccountType type = new AppAccountType();
-        type.setId(id);
+        type.id(id);
         type.setLabel(label);
         idMap.put(id, type);
         return type;

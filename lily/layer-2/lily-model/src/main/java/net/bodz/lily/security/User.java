@@ -58,7 +58,7 @@ public class User
     }
 
     public User(int id, String name, String fullName) {
-        setId(id);
+        id(id);
         setName(name);
         setFullName(fullName);
     }
@@ -102,10 +102,10 @@ public class User
     public Set<Integer> getGroupIds() {
         Set<Integer> gids = new HashSet<>();
         if (primaryGroup != null)
-            gids.add(primaryGroup.getId());
+            gids.add(primaryGroup.id());
         if (groups != null)
             for (Group g : groups)
-                gids.add(g.getId());
+                gids.add(g.id());
         return gids;
     }
 
@@ -159,19 +159,19 @@ public class User
 
     @Redundant
     public boolean isSuperUser() {
-        Integer id = getId();
+        Integer id = id();
         if (id == null)
             return false;
         if (id == 0)
             return true;
 
         if (primaryGroup != null)
-            if (primaryGroup.getId() == 0)
+            if (primaryGroup.id() == 0)
                 return true;
 
         if (groups != null)
             for (Group g : groups)
-                if (g.getId() == 0)
+                if (g.id() == 0)
                     return true;
 
         return false;

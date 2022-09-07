@@ -35,7 +35,7 @@ public class UseForm
     public int getDefId(int fallback) {
         if (def == null)
             return fallback;
-        Integer id = def.getId();
+        Integer id = def.id();
         return id == null ? fallback : id;
     }
 
@@ -43,7 +43,7 @@ public class UseForm
         if (def == null)
             return null;
         else
-            return def.getId();
+            return def.id();
     }
 
     /**

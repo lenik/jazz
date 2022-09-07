@@ -31,7 +31,7 @@ public class PersonRole
     }
 
     public void setPersonId(int personId) {
-        (this.person = new Person()).setId(personId);
+        (this.person = new Person()).id(personId);
     }
 
     public OrgUnit getOrgUnit() {
@@ -43,7 +43,7 @@ public class PersonRole
     }
 
     public void setOrgUnitId(int ouId) {
-        (this.orgUnit = new OrgUnit()).setId(ouId);
+        (this.orgUnit = new OrgUnit()).id(ouId);
     }
 
     @NotNull
@@ -56,7 +56,7 @@ public class PersonRole
     }
 
     public void setOrgId(int orgId) {
-        (this.org = new Organization()).setId(orgId);
+        (this.org = new Organization()).id(orgId);
     }
 
     public String getRole() {

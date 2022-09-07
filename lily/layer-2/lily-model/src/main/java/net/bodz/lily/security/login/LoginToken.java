@@ -192,7 +192,7 @@ public class LoginToken
         JsonObject _user = o.getJsonObject("user");
         if (_user != null) {
             User user = new User();
-            user.setId(_user.getInt("id"));
+            user.id(_user.getInt("id"));
             user.setName(_user.getString("name"));
             user.setFullName(_user.getString("fullName"));
             this.user = user;
@@ -209,7 +209,7 @@ public class LoginToken
         out.key("user");
         out.object();
         {
-            out.entry("id", user.getId());
+            out.entry("id", user.id());
             out.entry("name", user.getCodeName());
             out.entry("fullName", user.getFullName());
             out.endObject();
@@ -219,7 +219,7 @@ public class LoginToken
     @Override
     public String toString() {
         String s = String.format("token_%d<user(%d: %s), txn %d>", //
-                id, user.getId(), user.getName(), transaction);
+                id, user.id(), user.getName(), transaction);
         return s;
     }
 

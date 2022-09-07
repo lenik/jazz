@@ -116,7 +116,7 @@ public class DiaryParty
             throws IOException {
         out.object();
 
-        out.entryNotNull("id", getId());
+        out.entryNotNull("id", id());
         out.entryNotNull("label", getLabel());
         out.entryNotNull("description", getDescription());
 
@@ -125,14 +125,14 @@ public class DiaryParty
         if (diary != null) {
             out.key("diary");
             out.object();
-            out.entry("id", diary.getId());
+            out.entry("id", diary.id());
             out.endObject();
         }
 
         if (user != null) {
             out.key("user");
             out.object();
-            out.entry("id", user.getId());
+            out.entry("id", user.id());
             out.entryNotNull("label", user.getLabel());
             out.entryNotNull("properties", user.getProperties());
             out.endObject();
@@ -140,7 +140,7 @@ public class DiaryParty
         if (person != null) {
             out.key("person");
             out.object();
-            out.entry("id", person.getId());
+            out.entry("id", person.id());
             out.entryNotNull("label", person.getLabel());
             out.entryNotNull("properties", person.getProperties());
             out.endObject();
@@ -148,7 +148,7 @@ public class DiaryParty
         if (org != null) {
             out.key("org");
             out.object();
-            out.entry("id", org.getId());
+            out.entry("id", org.id());
             out.entryNotNull("label", org.getLabel());
             out.entryNotNull("properties", org.getProperties());
             out.endObject();

@@ -29,7 +29,7 @@ public class GroupPlayer
         group.setCodeName("Test" + random.nextInt());
         group.setLabel("Test1");
         groupMapper.insert(group);
-        int id = group.getId();
+        int id = group.id();
 
         group.setLabel("Changed");
         groupMapper.update(group);
@@ -39,11 +39,11 @@ public class GroupPlayer
 
     static void dump(Group group) {
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
-        out.println(group.getId() + ": " + group.getCodeName() + ": " + group.getLabel());
+        out.println(group.id() + ": " + group.getCodeName() + ": " + group.getLabel());
 
         out.enter();
         for (User u : group.getUsers())
-            out.println("Member User: " + u.getId() + "-" + u.getLabel());
+            out.println("Member User: " + u.id() + "-" + u.getLabel());
 
         out.leave();
     }

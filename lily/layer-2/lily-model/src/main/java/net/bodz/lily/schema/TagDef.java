@@ -28,7 +28,7 @@ public class TagDef
     }
 
     public void setTagGroupId(int tagGroupId) {
-        (this.tagGroup = new TagGroupDef()).setId(tagGroupId);
+        (this.tagGroup = new TagGroupDef()).id(tagGroupId);
     }
 
 }

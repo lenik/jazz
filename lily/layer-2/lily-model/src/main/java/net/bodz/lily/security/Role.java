@@ -29,11 +29,11 @@ public class Role
     }
 
     public Role(int id) {
-        setId(id);
+        id(id);
     }
 
     public Role(int id, String name, String fullName) {
-        setId(id);
+        id(id);
         setName(name);
         setFullName(fullName);
     }

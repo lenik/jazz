@@ -22,7 +22,7 @@ public class DiaryIndex
         super.save(q, obj, resp);
 
         // Update diary parties.
-        long diaryId = obj.getId();
+        long diaryId = obj.id();
         List<DiaryParty> parties = obj.getParties();
         if (parties != null) {
             DiaryPartyMapper partyMapper = getDataContext().requireMapper(DiaryPartyMapper.class);
@@ -32,19 +32,19 @@ public class DiaryIndex
             // partyMapper.deleteFor(forThisDiary);
             Map<Long, DiaryParty> olds = new HashMap<>();
             for (DiaryParty old : partyMapper.filter(forThisDiary, null))
-                olds.put(old.getId(), old);
+                olds.put(old.id(), old);
 
             for (DiaryParty party : obj.getParties()) {
-                if (party.getId() == null) {
+                if (party.id() == null) {
                     partyMapper.insert(party);
                 } else {
-                    DiaryParty old = olds.remove(party.getId());
+                    DiaryParty old = olds.remove(party.id());
                     if (!party.partialEquals(old))
                         partyMapper.update(party);
                 }
             }
             for (DiaryParty miss : olds.values())
-                partyMapper.delete(miss.getId());
+                partyMapper.delete(miss.id());
         }
 
     }

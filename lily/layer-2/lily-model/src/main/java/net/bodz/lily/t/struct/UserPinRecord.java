@@ -31,7 +31,7 @@ public class UserPinRecord
             user = new User();
             int js_userId = js_user.getInt("id", -1);
             if (js_userId != -1)
-                user.setId(js_userId);
+                user.id(js_userId);
         }
     }
 
