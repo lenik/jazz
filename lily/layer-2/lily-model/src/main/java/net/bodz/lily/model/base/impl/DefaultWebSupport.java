@@ -34,7 +34,7 @@ public class DefaultWebSupport
         String methodName = ctx.query(IMethodOfRequest.class).getMethodName();
 
         boolean creation = false;
-        if (object.getId() == null)
+        if (object.id() == null)
             creation = true;
         else if (methodName != null)
             switch (methodName) {
@@ -51,7 +51,7 @@ public class DefaultWebSupport
         } else {
             mapper.update(object);
         }
-        return object.getId();
+        return object.id();
     }
 
 }

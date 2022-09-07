@@ -44,7 +44,7 @@ public abstract class AbstractCoNodeCache<node_t extends CoNode<node_t, K>, K>
     @Override
     protected void _wire(node_t obj) {
         node_t parent = obj.getParent();
-        K parentId = parent == null ? null : parent.getId();
+        K parentId = parent == null ? null : parent.id();
         node_t cachedParent = parentId == null ? null : getCached(parentId);
         if (parent != cachedParent) {
             obj.attach(cachedParent);
@@ -54,11 +54,11 @@ public abstract class AbstractCoNodeCache<node_t extends CoNode<node_t, K>, K>
     @Override
     protected void _unwire(node_t obj) {
         node_t parent = obj.getParent();
-        K parentId = parent == null ? null : parent.getId();
+        K parentId = parent == null ? null : parent.id();
         node_t cachedParent = parentId == null ? null : getCached(parentId);
         if (parent == cachedParent) {
             node_t parentHolder = create();
-            parentHolder.setId(parentId);
+            parentHolder.id(parentId);
             obj.setParent(parentHolder);
         }
     }

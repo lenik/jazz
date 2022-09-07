@@ -217,7 +217,7 @@ public abstract class CoMessage<Id>
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(80);
-        sb.append(getId());
+        sb.append(id());
         sb.append(" - ");
         sb.append(subject);
         if (op != null) {

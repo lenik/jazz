@@ -53,13 +53,13 @@ public class Foo_stuff__java_v
             if (primaryKeyCols.length > 1) {
                 out.println();
                 out.println("@Override");
-                out.printf("public %s getId() {\n", out.im.name(idType));
+                out.printf("public %s id() {\n", out.im.name(idType));
                 // out.printf(" return id;\n");
                 out.printf("    return new %s(this);\n", out.im.name(project.Foo_Id));
                 out.printf("}\n");
                 out.println();
                 out.println("@Override");
-                out.printf("public void setId(%s id) {\n", out.im.name(idType));
+                out.printf("public void id(%s id) {\n", out.im.name(idType));
                 // out.printf(" this.id = id;\n");
                 for (IColumnMetadata k : primaryKeyCols) {
                     String col_name = k.getName();
@@ -68,6 +68,22 @@ public class Foo_stuff__java_v
                     out.printf("    this.%s = id.get%s();\n", colName, ColName);
                 }
                 out.printf("}\n");
+            } else {
+                for (IColumnMetadata k : primaryKeyCols) {
+                    String col_name = k.getName();
+                    String colName = StringId.UL.toCamel(col_name);
+                    String ColName = Strings.ucfirst(colName);
+                    out.println();
+                    out.println("@Override");
+                    out.printf("public %s id() {\n", out.im.name(idType));
+                    out.printf("    return get%s();\n", ColName);
+                    out.printf("}\n");
+                    out.println();
+                    out.println("@Override");
+                    out.printf("public void id(%s id) {\n", out.im.name(idType));
+                    out.printf("    this.set%s(id);\n", ColName);
+                    out.printf("}\n");
+                }
             }
 
             for (IColumnMetadata column : view.getColumns()) {

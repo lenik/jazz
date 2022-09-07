@@ -107,9 +107,9 @@ public abstract class CoObject
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
-    public abstract Object getId();
+    public abstract Object id();
 
-    public abstract void setId_(Serializable id);
+    public abstract void id_(Serializable id);
 
     /**
      * <p lang="en">
@@ -214,7 +214,7 @@ public abstract class CoObject
 
     @Override
     public String toString() {
-        Object id = getId();
+        Object id = id();
         if (id == null)
             return "new";
         String codeName = getCodeName();
@@ -299,7 +299,7 @@ public abstract class CoObject
     @Internal
     @Derived
     public boolean isNew() {
-        return getId() == null;
+        return id() == null;
     }
 
     /** ⇱ Implementation Of {@link IAccessControlled}. */
@@ -342,7 +342,7 @@ public abstract class CoObject
     @OfGroup(StdGroup.Security.class)
     @Override
     public int getUserId() {
-        return ownerUser == null ? 0 : ownerUser.getId();
+        return ownerUser == null ? 0 : ownerUser.id();
     }
 
     @Derived
@@ -350,7 +350,7 @@ public abstract class CoObject
     @OfGroup(StdGroup.Security.class)
     @Override
     public int getGroupId() {
-        return ownerGroup == null ? 0 : ownerGroup.getId();
+        return ownerGroup == null ? 0 : ownerGroup.id();
     }
 
     /**

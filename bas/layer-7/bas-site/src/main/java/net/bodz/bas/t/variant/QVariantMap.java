@@ -117,7 +117,7 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s != null && !s.isEmpty()) {
             Integer id = getInt(key);
-            skel.setId(id);
+            skel.id(id);
         }
         return skel;
     }
@@ -126,7 +126,7 @@ public class QVariantMap<K>
         String s = getString(key);
         if (s != null && !s.isEmpty()) {
             Long id = getLong(key);
-            skel.setId(id);
+            skel.id(id);
         }
         return skel;
     }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.compare.dmp.Patch;
 import net.bodz.bas.compare.dmp.PatchApplyResult;
+import net.bodz.bas.compare.dmp.PatchApplyStatus;
 import net.bodz.bas.compare.dmp.PatchList;
 import net.bodz.bas.compare.dmp.RowEdit;
 import net.bodz.bas.io.BCharOut;
@@ -60,7 +61,7 @@ public abstract class SourceBuilder<model_t> {
                 return false;
 
             case OVERWRITE:
-                logger.info("    overwrite " + displayPath);
+                logger.debug("    overwrite " + displayPath);
                 break;
 
             case DIFF_MERGE:
@@ -77,7 +78,7 @@ public abstract class SourceBuilder<model_t> {
             }
         }
 
-        logger.info("Build " + displayPath);
+        logger.info("    " + fileInfo.getLocalPath());
 
         BCharOut buf = new BCharOut(4096);
         ITreeOut out = TreeOutImpl.from(buf);
@@ -90,20 +91,20 @@ public abstract class SourceBuilder<model_t> {
 
         if (patchList != null && patchList.isDifferent()) {
             logger.debug("    patch on " + displayPath);
-            PatchApplyResult<String> par = patchList.apply(textRow);
-            if (par.isFailed()) {
+            PatchApplyResult<String> result = patchList.apply(textRow);
+            if (result.isError()) {
                 logger.error("Patch failed. ");
-                printResult(Stdio.cout.indented(), "Patch failed:", patchList, par, null);
+                printResult(Stdio.cout.indented(), "Patch failed:", result, null);
                 return false;
             }
-            patchedRow = par.row;
+            patchedRow = result.getPatchedRow();
         }
 
         if (saveOrig) {
             File origCopy = getOrigCopy(fileInfo);
             IRow<String> origRow = readLines(origCopy);
-            if (!FileDiff.compareByLines(textRow, origRow).isEmpty()) {
-                logger.debug("    save original backup at " + origCopy);
+            if (FileDiff.compareByLines(textRow, origRow).isDifferent()) {
+                logger.info("    save original backup at " + origCopy);
 
                 File origDir = origCopy.getParentFile();
                 origDir.mkdirs();
@@ -144,22 +145,21 @@ public abstract class SourceBuilder<model_t> {
 
     private boolean chopMode = false;
 
-    private <T> void printResult(ITreeOut out, String message, PatchList<T> patchList, PatchApplyResult<T> par,
-            IRow<T> expected) {
+    private <T> void printResult(ITreeOut out, String message, PatchApplyResult<T> par, IRow<T> expected) {
         out.enterln(message);
         if (expected != null) {
-            if (par.row.equals(expected))
+            if (par.getPatchedRow().equals(expected))
                 out.println("same as expected.");
             else
                 out.println("not as expected. ");
         }
 
-        if (par.isFailed()) {
+        if (par.isError()) {
             out.enterln("failed hunks: ");
             int i = 0;
-            for (Boolean status : par.results) {
-                Patch<T> patch = patchList.get(i);
-                if (status == Boolean.FALSE) {
+            for (PatchApplyStatus<T> item : par) {
+                Patch<T> patch = item.patch;
+                if (item.isError()) {
                     out.enterln("#" + i + "\t" + patch.diffs.toDelta());
                     for (RowEdit<T> diff : patch.diffs) {
                         out.println(diff.toString());
@@ -174,12 +174,12 @@ public abstract class SourceBuilder<model_t> {
         out.enterln("content:");
         {
             if (byChars) {
-                String s = par.row.toString();
+                String s = par.getPatchedRow().toString();
                 for (String line : new LinesText.Builder().text(s).removeEOL().trim().build())
                     out.println(line);
             } else {
                 @SuppressWarnings("unchecked")
-                IRow<String> row = (IRow<String>) par.row;
+                IRow<String> row = (IRow<String>) par.getPatchedRow();
                 for (String line : row)
                     if (chopMode)
                         out.println("| " + line);

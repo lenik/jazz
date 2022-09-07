@@ -259,7 +259,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             if (template != null) {
                 @SuppressWarnings("unchecked")
                 T copy = (T) template.clone();
-                copy.setId_(null);
+                copy.id_(null);
                 copy.setVersion(0);
                 copy.touch();
                 obj = copy;
@@ -418,16 +418,16 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         }
 
         IMapperTemplate<T, M> mapper = requireMapper();
-        boolean create = obj.getId() == null;
+        boolean create = obj.id() == null;
         if (create) {
             mapper.insert(obj);
-            resp.getLogger().info("Inserted id: " + obj.getId());
+            resp.getLogger().info("Inserted id: " + obj.id());
         } else {
             long rows = mapper.update(obj);
             resp.setHeader("count", rows);
             resp.getLogger().info("Rows updated: " + rows);
         }
-        resp.setHeader("id", obj.getId());
+        resp.setHeader("id", obj.id());
         resp.succeed();
     }
 
@@ -442,11 +442,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         public Object require(Object context) {
             @SuppressWarnings("unchecked")
             T obj = (T) context;
-            Object id = obj.getId();
+            Object id = obj.id();
             if (id == null) {
                 IMapperTemplate<T, M> mapper = requireMapper();
                 mapper.insert(obj);
-                id = obj.getId();
+                id = obj.id();
             }
             return id;
         }

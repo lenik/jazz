@@ -4,8 +4,8 @@ public interface IId<Id> {
 
     Class<Id> idType();
 
-    Id getId();
+    Id id();
 
-    void setId(Id id);
+    void id(Id id);
 
 }
