@@ -16,6 +16,7 @@ public class JavaGenProject {
     String daoPackage = "dao";
     UpdateMethod updateMethod;
 
+    CodegenConfig config;
     Random random;
 
     public final ClassPathInfo Foo;

@@ -6,6 +6,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.Random;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringPart;
@@ -17,12 +18,13 @@ import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.rst.RstFn;
+import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.io.res.AbstractStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.log.log4j.DefaultLog4jConfigurer;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 
@@ -88,11 +90,26 @@ public class JavaGen
     boolean forceMode;
 
     /**
-     * Save the catalog metadata to file.
+     * Use specified codegen config.
+     *
+     * @option -c =FILE
+     */
+    File configFile;
+    CodegenConfig config = new CodegenConfig();
+
+    /**
+     * Save the catalog metadata to file, and quit.
      *
      * @option --save-catalog =FILE
      */
-    File catalogFile;
+    File saveCatalogFile;
+
+    /**
+     * Load the catalog metadata from file and merge with database.
+     *
+     * @option --load-catalog =FILE
+     */
+    File loadCatalogFile;
 
     DataContext dataContext;
     Connection connection;
@@ -172,6 +189,7 @@ public class JavaGen
     public void makeTable(ITableMetadata table)
             throws IOException {
         JavaGenProject project = createProject(table);
+        project.config = config;
 
         new Foo_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         if (table.getPrimaryKeyColumns().length > 1)
@@ -207,7 +225,9 @@ public class JavaGen
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        DefaultLog4jConfigurer.showHeader = false;
+        if (configFile != null) {
+            RstFn.loadFromRst(config, configFile);
+        }
 
         if (parentPackage == null)
             throw new IllegalArgumentException("parent-package isn't specified.");
@@ -288,12 +308,23 @@ public class JavaGen
         });
 
         try {
+            if (loadCatalogFile != null) {
+                String extension = FilePath.getExtension(loadCatalogFile);
+                if ("xml".equals(extension))
+                    XmlFn.load(catalog, loadCatalogFile);
+                else
+                    JsonFn.load(catalog, loadCatalogFile, JsonFormOptions.DEFAULT);
+            }
+
             connection = dataContext.getConnection();
             catalog.loadFromJDBC(connection, "TABLE", "VIEW");
 
-            if (catalogFile != null) {
-//            XmlFn.save(catalog, catalogFile);
-                JsonFn.save(catalog, catalogFile, JsonFormOptions.PRETTY);
+            if (saveCatalogFile != null) {
+                String extension = FilePath.getExtension(saveCatalogFile);
+                if ("xml".equals(extension))
+                    XmlFn.save(catalog, saveCatalogFile);
+                else
+                    JsonFn.save(catalog, saveCatalogFile, JsonFormOptions.PRETTY);
                 return;
             }
 
