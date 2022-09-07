@@ -14,7 +14,7 @@ public class UserOtherIdMask
     String otherId;
 
     public UserOtherIdMask user(User user) {
-        this.userId = user.getId();
+        this.userId = user.id();
         return this;
     }
 

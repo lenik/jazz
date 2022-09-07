@@ -67,7 +67,7 @@ public class Region
     public int getLevelId() {
         if (level == null)
             return LEVEL_Default;
-        Integer levelId = level.getId();
+        Integer levelId = level.id();
         return levelId == null ? LEVEL_Default : levelId.intValue();
     }
 

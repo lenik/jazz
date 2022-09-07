@@ -48,11 +48,11 @@ public class Group
     }
 
     public Group(int id) {
-        setId(id);
+        id(id);
     }
 
     public Group(int id, String name, String fullName) {
-        setId(id);
+        id(id);
         setName(name);
         setFullName(fullName);
     }

@@ -40,7 +40,7 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
         if (code != null)
             return code;
 
-        return getId().toString();
+        return id().toString();
     }
 
 }

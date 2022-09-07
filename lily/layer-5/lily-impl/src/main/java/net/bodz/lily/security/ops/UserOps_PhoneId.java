@@ -63,7 +63,7 @@ public class UserOps_PhoneId
         secret.setPassword(password);
 
         userMapper.insert(user);
-        assert user.getId() != null;
+        assert user.id() != null;
 
         // 3. bind user with phone (other-id)
         UserOtherId oid = new UserOtherId();
@@ -88,7 +88,7 @@ public class UserOps_PhoneId
             return resp.fail("Phone number is used by multiple users.");
         UserOtherId oid = oids.get(0);
 
-        int userId = oid.getUser().getId();
+        int userId = oid.getUser().id();
         User user = userMapper.select(userId);
 
         // 2. update password

@@ -21,7 +21,7 @@ public abstract class AbstractTableTest<T extends CoObject, M, mapper_t extends 
         mapper_t mapper = getMapper();
         long num = mapper.insert(a);
         assertTrue(num > 0);
-        Object newId = a.getId();
+        Object newId = a.id();
         assertNotNull(newId);
 
         if (getConfig().purge) {
@@ -39,7 +39,7 @@ public abstract class AbstractTableTest<T extends CoObject, M, mapper_t extends 
         mapper_t mapper = getMapper();
         long num = mapper.insert(a);
         assertTrue(num > 0);
-        Object newId = a.getId();
+        Object newId = a.id();
         assertNotNull(newId);
 
         num = mapper.update(a);

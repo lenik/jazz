@@ -26,7 +26,7 @@ public class UOM
     }
 
     public UOM(UOM o) {
-        setId(o.getId());
+        id(o.id());
         setCode(o.getCode());
         setLabel(o.getLabel());
         setDescription(o.getDescription());
@@ -62,7 +62,7 @@ public class UOM
             throw new NullPointerException("label");
         if (property == null)
             throw new NullPointerException("property");
-        setId(id);
+        id(id);
         setCode(code);
         setLabel(label);
         setParent(stdRef);
@@ -72,7 +72,7 @@ public class UOM
 
     public void setParentId(int parentId) {
         UOM parent = new UOM();
-        parent.setId(parentId);
+        parent.id(parentId);
         setParent(parent);
     }
 

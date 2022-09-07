@@ -50,7 +50,7 @@ public class StoreOrder
         setAccessMode(M_SHARED);
 
         StoreCategory TK_I = new StoreCategory();
-        TK_I.setId(1202);
+        TK_I.id(1202);
         TK_I.setLabel("采购入库");
         setCategory(TK_I);
     }

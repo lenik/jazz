@@ -9,7 +9,7 @@ public class UserOtherIdTypes {
 
     static UserOtherIdType def(int id, String label) {
         UserOtherIdType type = new UserOtherIdType();
-        type.setId(id);
+        type.id(id);
         type.setLabel(label);
         idMap.put(id, type);
         return type;
