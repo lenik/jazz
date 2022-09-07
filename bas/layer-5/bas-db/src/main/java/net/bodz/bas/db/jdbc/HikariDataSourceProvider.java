@@ -25,6 +25,7 @@ public class HikariDataSourceProvider
         HikariDataSource dataSource = new HikariDataSource();
         // dataSource.setDriverClass(args.getType().getDriverClassName());
         dataSource.setJdbcUrl(args.getConnectionUrl());
+        dataSource.setDataSourceProperties(args.getProperties());
         dataSource.setUsername(args.getUserName());
         dataSource.setPassword(args.getPassword());
         dataSource.setConnectionTimeout(60 * 1000L); // 1 min

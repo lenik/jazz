@@ -33,6 +33,7 @@ public class ConnectOptions
 
     public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
+    private String uri;
     private DatabaseType type = DatabaseType.POSTGRESQL;
     private String url;
     private String hostName = "localhost";
@@ -47,9 +48,18 @@ public class ConnectOptions
         properties = new Properties();
     }
 
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
     @Override
     public ConnectOptions clone() {
         ConnectOptions o = new ConnectOptions();
+        o.uri = uri;
         o.type = type;
         o.hostName = hostName;
         o.port = port;
@@ -57,6 +67,8 @@ public class ConnectOptions
         o.database = database;
         o.userName = userName;
         o.password = password;
+        if (properties != null)
+            o.properties.putAll(properties);
         return o;
     }
 
@@ -170,6 +182,10 @@ public class ConnectOptions
         if (url == null)
             url = type.getConnectionUrl(this);
         return url;
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     @Override
