@@ -2,7 +2,7 @@ package net.bodz.lily.schema;
 
 import javax.persistence.Table;
 
-@Table(name = "form")
+@Table(name = "_form")
 public class FormDef
         extends AbstractDefinition<FormDef> {
 

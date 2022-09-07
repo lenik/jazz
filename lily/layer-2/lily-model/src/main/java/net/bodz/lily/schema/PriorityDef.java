@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Priority
  * @label.zh.cn 优先级
  */
-@Table(name = "priority")
+@Table(name = "_priority")
 public class PriorityDef
         extends AbstractDefinition<PriorityDef> {
 

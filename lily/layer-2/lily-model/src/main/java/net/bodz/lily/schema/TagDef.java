@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Tag
  * @label.zh.cn 标签
  */
-@Table(name = "tag")
+@Table(name = "_tag")
 public class TagDef
         extends AbstractDefinition<TagDef> {
 

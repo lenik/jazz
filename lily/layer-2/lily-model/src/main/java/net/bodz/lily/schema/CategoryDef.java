@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Category
  * @label.zh.cn 类別
  */
-@Table(name = "cat")
+@Table(name = "_cat")
 public class CategoryDef
         extends AbstractDefinition<CategoryDef> {
 
