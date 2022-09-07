@@ -9,6 +9,9 @@ public interface IElement
             IXmlSelection,
             Element {
 
+    @Override
+    String getAttribute(String name);
+
     IVariant getAttributeVar(String name);
 
     IElement getChild(String tagName);

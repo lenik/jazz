@@ -88,8 +88,9 @@ public class DomFn {
 
         public static float getFloat(Element element, String name, Float fallback) {
             String s = element.getAttribute(name);
-            if (s == null) {
+            if (s == null || s.isEmpty()) {
                 if (fallback == null)
+                    // if (element.hasAttribute(name))
                     throw new NoSuchKeyException(name);
                 return fallback.floatValue();
             }
