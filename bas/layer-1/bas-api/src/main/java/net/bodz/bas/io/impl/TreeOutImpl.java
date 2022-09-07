@@ -10,7 +10,7 @@ public class TreeOutImpl
             ITreeOut {
 
     private IPrintOut printOut;
-    private final ITextIndention textIndention;
+    private ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
     protected TreeOutImpl(IPrintOut printOut) {
@@ -67,6 +67,10 @@ public class TreeOutImpl
     @Override
     public ITextIndention getTextIndention() {
         return textIndention;
+    }
+
+    public void setTextIndention(ITextIndention textIndention) {
+        this.textIndention = textIndention;
     }
 
     @Override

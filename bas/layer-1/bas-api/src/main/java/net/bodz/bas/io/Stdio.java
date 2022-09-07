@@ -11,8 +11,12 @@ import net.bodz.bas.io.adapter.DynamicInputStreamByteIn;
 import net.bodz.bas.io.adapter.DynamicOutputStreamByteOut;
 import net.bodz.bas.io.adapter.DynamicPrintStreamPrintOut;
 import net.bodz.bas.io.adapter.ReaderCharIn;
+import net.bodz.bas.io.impl.TreeOutImpl;
 
-public class Stdio {
+public class Stdio
+        extends SyncStdio {
+
+    private static final long serialVersionUID = 1L;
 
     public static final ReaderCharIn cin = new ReaderCharIn(new InputStreamReader(System.in));
 
@@ -25,6 +29,12 @@ public class Stdio {
         return new ReaderCharIn(new InputStreamReader(System.in, charsetName));
     }
 
+    public static final DynamicInputStreamByteIn bin = new DynamicInputStreamByteIn() {
+        @Override
+        public InputStream getInputStream() {
+            return System.in;
+        }
+    };
     public static final DynamicPrintStreamPrintOut cout = new DynamicPrintStreamPrintOut() {
         @Override
         public PrintStream getPrintStream() {
@@ -35,13 +45,6 @@ public class Stdio {
         @Override
         public PrintStream getPrintStream() {
             return System.err;
-        }
-    };
-
-    public static final DynamicInputStreamByteIn bin = new DynamicInputStreamByteIn() {
-        @Override
-        public InputStream getInputStream() {
-            return System.in;
         }
     };
 
@@ -58,5 +61,13 @@ public class Stdio {
             return System.err;
         }
     };
+
+    public static final ITreeOut out = cout.indented();
+    public static final ITreeOut err = cerr.indented();
+
+    static {
+        TreeOutImpl errImpl = (TreeOutImpl) err;
+        errImpl.setTextIndention(out.getTextIndention());
+    }
 
 }
