@@ -123,6 +123,8 @@ public class JsonMap
     public synchronized void setJsonStr(JsonValueWrapper form)
             throws ParseException {
         Object j_val = form.getWrapped();
+        if (j_val == null)
+            return;
         readObjectBoxed(j_val, opts);
     }
 
