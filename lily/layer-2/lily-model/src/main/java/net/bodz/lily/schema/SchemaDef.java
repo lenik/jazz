@@ -8,7 +8,7 @@ import javax.persistence.Table;
  * @label Schema
  * @label.zh.cn 方案
  */
-@Table(name = "schema")
+@Table(name = "_schema")
 public class SchemaDef
         extends AbstractDefinition<SchemaDef> {
 

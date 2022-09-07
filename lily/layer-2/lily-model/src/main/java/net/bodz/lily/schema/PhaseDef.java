@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Phase
  * @label.zh.cn 阶段
  */
-@Table(name = "phase")
+@Table(name = "_phase")
 public class PhaseDef
         extends AbstractDefinition<PhaseDef> {
 

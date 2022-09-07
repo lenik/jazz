@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Parameter
  * @label.zh.cn 参数
  */
-@Table(name = "parm")
+@Table(name = "_parm")
 public class ParameterDef
         extends AbstractDefinition<ParameterDef> {
 
