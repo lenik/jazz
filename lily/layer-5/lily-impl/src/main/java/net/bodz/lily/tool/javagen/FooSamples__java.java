@@ -28,6 +28,8 @@ public class FooSamples__java
     Random random;
     EnglishTextGenerator enGen;
 
+    int maxStringLen = 1000;
+
     public FooSamples__java(JavaGenProject project) {
         super(project, project.FooSamples);
         this.random = project.random;
@@ -68,6 +70,10 @@ public class FooSamples__java
 
                     if (type == String.class) {
                         int maxLen = column.getPrecision();
+                        if (maxLen <= 0)
+                            throw new IllegalArgumentException("invalid varchar length: " + maxLen);
+                        if (maxLen > maxStringLen)
+                            maxLen = maxStringLen;
                         int wordMaxLen = 10;
                         String sample = enGen.makeText(maxLen, wordMaxLen);
                         quoted = StringQuote.qqJavaString(sample.toString());
