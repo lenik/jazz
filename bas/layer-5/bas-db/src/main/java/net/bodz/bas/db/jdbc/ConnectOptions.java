@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
@@ -230,7 +231,9 @@ public class ConnectOptions
     public static final String K_DATABASE = "database";
     public static final String K_USERNAME = "userName";
     public static final String K_PASSWORD = "password";
-    public static final String K_INFO = "properties";
+    public static final String K_PROPERTIES = "properties";
+    public static final String K_PROPERTY = "property";
+    public static final String K_PROPERTY_NAME = "name";
 
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
@@ -244,12 +247,12 @@ public class ConnectOptions
         userName = o.getString(K_USERNAME, userName);
         password = o.getString(K_PASSWORD, password);
 
-        JsonObject oInfo = o.getJsonObject(K_INFO);
-        if (oInfo != null) {
+        JsonObject oProps = o.getJsonObject(K_PROPERTIES);
+        if (oProps != null) {
             if (properties == null)
                 properties = new Properties();
-            for (String k : oInfo.keySet()) {
-                String v = oInfo.getString(k);
+            for (String k : oProps.keySet()) {
+                String v = oProps.getString(k);
                 properties.setProperty(k, v);
             }
         }
@@ -267,7 +270,7 @@ public class ConnectOptions
         out.entry(K_USERNAME, userName);
         out.entry(K_PASSWORD, password);
         if (properties != null && !properties.isEmpty()) {
-            out.key(K_INFO);
+            out.key(K_PROPERTIES);
             out.object();
             for (String name : properties.stringPropertyNames()) {
                 String val = properties.getProperty(name);
@@ -292,12 +295,15 @@ public class ConnectOptions
         userName = map.getString(K_USERNAME);
         password = map.getString(K_PASSWORD);
 
-        IElement x_info = element.getChild(K_INFO);
-        if (x_info != null) {
+        IElement x_props = element.getChild(K_PROPERTIES);
+        if (x_props != null) {
             if (properties == null)
                 properties = new Properties();
-            for (IElement x_prop : x_info.children()) {
+            for (IElement x_prop : x_props.children()) {
                 String k = x_prop.getTagName();
+                String rename = x_prop.getAttribute(K_PROPERTY_NAME);
+                if (rename != null)
+                    k = rename;
                 String v = x_prop.getTextContent();
                 properties.setProperty(k, v);
             }
@@ -316,10 +322,17 @@ public class ConnectOptions
         out.element(K_USERNAME, userName);
         out.element(K_PASSWORD, password);
         if (properties != null && !properties.isEmpty()) {
-            out.beginElement(K_INFO);
+            out.beginElement(K_PROPERTIES);
             for (String name : properties.stringPropertyNames()) {
                 String val = properties.getProperty(name);
-                out.element(name, val);
+                if (StringId.isXmlTagName(name))
+                    out.element(name, val);
+                else {
+                    out.beginElement(K_PROPERTY);
+                    out.attribute(K_PROPERTY_NAME, name);
+                    out.writeCharacters(val);
+                    out.endElement();
+                }
             }
             out.endElement();
         }
