@@ -3,7 +3,6 @@ package net.bodz.lily.tool.javagen;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.lily.model.base.CoIndex;
 
 public class FooIndex__java
         extends JavaGen__java {
@@ -26,7 +25,7 @@ public class FooIndex__java
             out.enter();
             {
                 out.printf("extends %s<%s, %s> {\n", //
-                        out.im.name(CoIndex.class), //
+                        out.im.name("net.bodz.lily.model.base.CoIndex"), //
                         out.im.name(project.Foo), //
                         out.im.name(project.FooMask));
                 out.leave();

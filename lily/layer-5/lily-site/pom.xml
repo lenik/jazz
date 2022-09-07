@@ -8,16 +8,6 @@
     <artifactId>lily-site</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-shell</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-text</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.lily</groupId>
             <artifactId>lily-model</artifactId>
             <version>${project.version}</version>
