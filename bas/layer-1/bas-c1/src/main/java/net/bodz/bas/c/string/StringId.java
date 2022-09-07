@@ -1,6 +1,7 @@
 package net.bodz.bas.c.string;
 
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class StringId {
 
@@ -173,6 +174,15 @@ public class StringId {
             current++;
         }
         return sb.toString();
+    }
+
+    private static Pattern XML_TAG_NAME = Pattern.compile(//
+            "^\\p{IsAlphabetic}((\\p{IsAlphabetic}|\\d|-)*(\\p{IsAlphabetic}|\\d))?$");
+
+    public static boolean isXmlTagName(String s) {
+        if (s == null)
+            return false;
+        return XML_TAG_NAME.matcher(s).matches();
     }
 
     /** hyphen-id */
