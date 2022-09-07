@@ -46,6 +46,8 @@ public class ImportSet
     public Class<?> ref(Class<?> clazz) {
         if (clazz == null)
             throw new NullPointerException("clazz");
+        if (clazz.isPrimitive())
+            return clazz;
         add(clazz.getName());
         return clazz;
     }
@@ -164,12 +166,14 @@ class QNameOrder
     public int compareNonNull(String o1, String o2) {
         String p1 = StringPart.beforeLast(o1, ".");
         String p2 = StringPart.beforeLast(o2, ".");
+        if (p1 == null || p2 == null)
+            System.out.println();
         int cmp = PackageNameOrder.INSTANCE.compare(p1, p2);
         if (cmp != 0)
             return cmp;
 
-        String n1 = StringPart.afterLast(o1, ".");
-        String n2 = StringPart.afterLast(o2, ".");
+        String n1 = StringPart.afterLast(o1, ".", o1);
+        String n2 = StringPart.afterLast(o2, ".", o1);
         cmp = n1.compareTo(n2);
         return cmp;
     }
