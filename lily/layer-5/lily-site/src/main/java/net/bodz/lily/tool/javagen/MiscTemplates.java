@@ -131,8 +131,10 @@ public class MiscTemplates {
             out.println("/** " + description + " */");
         }
 
-        if (column.isPrimaryKey())
+        if (column.isPrimaryKey()) {
             out.println("@" + out.im.name(Id.class));
+        }
+
         boolean unique = column.isUnique();
 
         boolean notNull = !column.isNullable();

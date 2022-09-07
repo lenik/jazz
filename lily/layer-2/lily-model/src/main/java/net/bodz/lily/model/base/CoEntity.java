@@ -30,19 +30,19 @@ public class CoEntity<Id>
 
     @FormInput(readOnly = true)
     @Override
-    public Id getId() {
+    public Id id() {
         return id;
     }
 
     @Override
-    public void setId(Id id) {
+    public void id(Id id) {
         this.id = id;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void setId_(Serializable id) {
-        setId((Id) id);
+    public void id_(Serializable id) {
+        id((Id) id);
     }
 
     @Override

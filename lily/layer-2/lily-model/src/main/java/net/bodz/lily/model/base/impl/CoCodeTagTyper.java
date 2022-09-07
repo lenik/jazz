@@ -8,7 +8,7 @@ public class CoCodeTagTyper
 
     @Override
     public String getTagValue(CoCode<?> obj) {
-        Integer id = obj.getId();
+        Integer id = obj.id();
         if (id != null)
             return id.toString();
         return "new";
@@ -27,7 +27,7 @@ public class CoCodeTagTyper
         if (code != null)
             return code;
 
-        Integer id = obj.getId();
+        Integer id = obj.id();
         if (id != null)
             return id.toString();
 

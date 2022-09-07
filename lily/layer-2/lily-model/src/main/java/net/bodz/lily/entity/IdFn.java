@@ -16,8 +16,8 @@ public class IdFn {
             return true;
         if (a == null || b == null)
             return false;
-        Object id1 = a.getId();
-        Object id2 = b.getId();
+        Object id1 = a.id();
+        Object id2 = b.id();
         return Nullables.equals(id1, id2);
     }
 
@@ -25,7 +25,7 @@ public class IdFn {
      * Example: <code>fooRef = altId(new Foo(), fooId)</code>
      */
     public static <T extends IId<K>, K> T altId(T skel, K id) {
-        skel.setId(id);
+        skel.id(id);
         return skel;
     }
 
@@ -41,7 +41,7 @@ public class IdFn {
     public static <T extends IId<K>, K> T altId(T skel, T fallback, K... ids) {
         for (int i = 0; i < ids.length; i++)
             if (ids[i] != null) {
-                skel.setId(ids[i]);
+                skel.id(ids[i]);
                 return skel;
             }
         return fallback;
@@ -55,7 +55,7 @@ public class IdFn {
             throw new NullPointerException("type");
         try {
             T instance = objectType.newInstance();
-            instance.setId(id);
+            instance.id(id);
             return instance;
         } catch (ReflectiveOperationException e) {
             throw new CreateException(e.getMessage(), e);

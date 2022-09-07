@@ -101,13 +101,13 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         if (obj == null) {
             obj = getMapper().selectByCodeName(codeName);
             if (obj != null)
-                _add(obj.getId(), obj);
+                _add(obj.id(), obj);
         }
         return obj;
     }
 
     public T save(T obj) {
-        K key = obj.getId();
+        K key = obj.id();
         Entry<K, T> other = save(key, obj);
         return other.getValue();
     }
@@ -121,7 +121,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
                 logger.debug(String.format("Loading %d-%d of %s...", n - batch + 1, n, friendlyNamePl));
             }
             n++;
-            _add(obj.getId(), obj);
+            _add(obj.id(), obj);
         }
     }
 

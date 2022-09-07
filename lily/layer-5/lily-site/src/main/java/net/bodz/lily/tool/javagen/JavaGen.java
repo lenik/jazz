@@ -15,19 +15,21 @@ import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.fmt.xml.XmlFn;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.res.AbstractStreamResource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.log.log4j.DefaultLog4jConfigurer;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 
 public class JavaGen
         extends BasicCLI {
 
-    static final Logger logger = LoggerFactory.getLogger(JavaGen.class);
+    static Logger logger = LoggerFactory.getLogger(JavaGen.class);
 
     /**
      * Parent package name of generated java models.
@@ -90,7 +92,7 @@ public class JavaGen
      *
      * @option --save-catalog =FILE
      */
-    File saveCatalogAs;
+    File catalogFile;
 
     DataContext dataContext;
     Connection connection;
@@ -107,20 +109,24 @@ public class JavaGen
         case SYSTEM_TABLE:
         case TEMP:
         case GLOBAL_TEMP:
+            logger.info("make table " + tableView.getId());
             try {
                 makeTable((ITableMetadata) tableView);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
+            } finally {
             }
             return true;
 
         case VIEW:
+            logger.info("make view " + tableView.getId());
             try {
                 makeView((IViewMetadata) tableView);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
+            } finally {
             }
             return true;
 
@@ -201,6 +207,8 @@ public class JavaGen
     @Override
     protected void mainImpl(String... args)
             throws Exception {
+        DefaultLog4jConfigurer.showHeader = false;
+
         if (parentPackage == null)
             throw new IllegalArgumentException("parent-package isn't specified.");
 
@@ -220,8 +228,6 @@ public class JavaGen
 
         if (includeTables == null && includeViews == null)
             includeTables = includeViews = true;
-
-        connection = dataContext.getConnection();
 
         for (String arg : args) {
             if (arg.startsWith("@")) {
@@ -281,19 +287,26 @@ public class JavaGen
 
         });
 
-        catalog.loadFromJDBC(connection, "TABLE", "VIEW");
+        try {
+            connection = dataContext.getConnection();
+            catalog.loadFromJDBC(connection, "TABLE", "VIEW");
 
-        if (saveCatalogAs != null)
-            XmlFn.save(catalog, saveCatalogAs);
-
-        catalog.accept(new ICatalogVisitor() {
-            @Override
-            public boolean beginTableView(ITableViewMetadata table) {
-                return processTableView(table);
+            if (catalogFile != null) {
+//            XmlFn.save(catalog, catalogFile);
+                JsonFn.save(catalog, catalogFile, JsonFormOptions.PRETTY);
+                return;
             }
-        });
 
-        connection.close();
+            catalog.accept(new ICatalogVisitor() {
+                @Override
+                public boolean beginTableView(ITableViewMetadata table) {
+                    return processTableView(table);
+                }
+            });
+        } finally {
+            if (connection != null)
+                connection.close();
+        }
     }
 
     public static void main(String[] args)
