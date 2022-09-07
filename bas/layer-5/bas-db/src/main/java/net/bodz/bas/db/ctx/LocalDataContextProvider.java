@@ -104,6 +104,7 @@ public class LocalDataContextProvider
             if (fileName.endsWith(".xml")) {
                 File xmlFile = new File(folder, fileName);
                 ConnectOptions options = new ConnectOptions();
+                options.setUri(xmlFile.toURI().toString());
                 try {
                     XmlFn.load(options, xmlFile);
                 } catch (LoaderException e) {
@@ -117,6 +118,7 @@ public class LocalDataContextProvider
             if (fileName.endsWith(".json")) {
                 File jsonFile = new File(folder, fileName);
                 ConnectOptions options = new ConnectOptions();
+                options.setUri(jsonFile.toURI().toString());
 
                 JsonFn.load(options, jsonFile, JsonFormOptions.PRETTY);
 
