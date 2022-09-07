@@ -42,6 +42,14 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
             parent.addChild(self());
     }
 
+    public Id getId() {
+        return id();
+    }
+
+    public void setId(Id id) {
+        id(id);
+    }
+
     /**
      * Reference Count
      *
@@ -378,13 +386,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         if (child) {
             Class<?> parentType = getClass();
             if (!parentType.isInstance(node))
-                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child="
-                        + node.getClass());
+                throw new IllegalArgumentException(
+                        "Inconsistent node type: parent=" + parentType + ", child=" + node.getClass());
         } else {
             Class<?> parentType = node.getClass();
             if (!parentType.isInstance(this))
-                throw new IllegalArgumentException("Inconsistent node type: parent=" + parentType + ", child="
-                        + getClass());
+                throw new IllegalArgumentException(
+                        "Inconsistent node type: parent=" + parentType + ", child=" + getClass());
         }
     }
 
