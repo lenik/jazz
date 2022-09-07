@@ -35,10 +35,14 @@ public interface IRstHandler {
      *         <code>false</code> if this (child-) element should be included in the enclosing
      *         element to be processed in the future.
      */
-    boolean endChild(IRstElement element)
-            throws ElementHandlerException;
+    default boolean endChild(IRstElement element)
+            throws ElementHandlerException {
+        return true;
+    }
 
-    void complete(IRstElement element)
-            throws ElementHandlerException;
+    default void complete(IRstElement element)
+            throws ElementHandlerException {
+        return;
+    }
 
 }
