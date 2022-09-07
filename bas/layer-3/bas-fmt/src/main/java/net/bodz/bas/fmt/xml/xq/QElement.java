@@ -104,7 +104,11 @@ public class QElement
 
     @Override
     public String getAttribute(String name) {
-        return getWrapped().getAttribute(name);
+        String val = getWrapped().getAttribute(name);
+        if (val != null && val.isEmpty())
+            if (!getWrapped().hasAttribute(name))
+                return null;
+        return val;
     }
 
     @Override
