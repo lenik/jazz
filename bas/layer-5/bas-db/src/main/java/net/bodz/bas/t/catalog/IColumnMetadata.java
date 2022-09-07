@@ -18,11 +18,13 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 
 public interface IColumnMetadata
         extends
+            IJavaName,
             IJsonForm,
             IXmlForm {
 
     public static final String K_POSITION = "position";
     public static final String K_NAME = "name";
+    public static final String K_JAVA_NAME = "javaName";
     public static final String K_LABEL = "label";
     public static final String K_DESCRIPTION = "description";
     public static final String K_TYPE = "type";
@@ -128,6 +130,10 @@ public interface IColumnMetadata
             out.entry(K_POSITION, getPositionOpt());
         out.entry(K_NAME, getName());
 
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.entry(K_JAVA_NAME, javaName);
+
         String label = getLabel();
         if (label != null)
             out.entry(K_LABEL, label);
@@ -162,6 +168,10 @@ public interface IColumnMetadata
             out.attribute(K_POSITION, getPositionOpt());
 
         out.attribute(K_NAME, getName());
+
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.attribute(K_JAVA_NAME, javaName);
 
         String label = getLabel();
         if (label != null)

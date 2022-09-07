@@ -15,12 +15,14 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface ISchemaMetadata
         extends
+            IJavaName,
             ITableDirectory,
             ITableViewDirectory,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {
 
+    String K_JAVA_NAME = "javaName";
     String K_TABLES = "tables";
     String K_TABLE = "table";
     String K_VIEWS = "views";
@@ -67,6 +69,10 @@ public interface ISchemaMetadata
             throws IOException, FormatException {
         getId().jsonOut(out, opts);
 
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.entry(K_JAVA_NAME, javaName);
+
         out.key(K_TABLES);
         out.object();
         for (String key : getTableMap().keySet()) {
@@ -102,6 +108,10 @@ public interface ISchemaMetadata
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         getId().writeObject(out);
+
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.attribute(K_JAVA_NAME, javaName);
 
         out.beginElement(K_TABLES);
         for (String key : getTableMap().keySet()) {

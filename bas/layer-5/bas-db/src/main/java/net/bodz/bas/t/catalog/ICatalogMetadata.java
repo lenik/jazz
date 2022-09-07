@@ -15,6 +15,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 public interface ICatalogMetadata
         extends
             Iterable<ISchemaMetadata>,
+            IJavaName,
             ISchemaDirectory,
             ITableDirectory,
             IJsonForm,
@@ -22,6 +23,7 @@ public interface ICatalogMetadata
             IJDBCMetaDataSupport {
 
     String K_NAME = "name";
+    String K_JAVA_NAME = "javaName";
     String K_SCHEMAS = "schemas";
     String K_SCHEMA = "schema";
 
@@ -49,6 +51,10 @@ public interface ICatalogMetadata
             throws IOException, FormatException {
         out.entry(K_NAME, getName());
 
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.entry(K_JAVA_NAME, javaName);
+
         out.key(K_SCHEMAS);
         out.object();
         for (String key : getSchemas().keySet()) {
@@ -69,6 +75,10 @@ public interface ICatalogMetadata
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         out.attribute(K_NAME, getName());
+
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.attribute(K_JAVA_NAME, javaName);
 
         out.beginElement(K_SCHEMAS);
         for (String key : getSchemas().keySet()) {

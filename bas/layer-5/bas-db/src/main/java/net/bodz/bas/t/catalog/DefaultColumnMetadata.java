@@ -25,11 +25,14 @@ import net.bodz.bas.typer.std.IParser;
 
 public class DefaultColumnMetadata
         implements
-            IColumnMetadata {
+            IColumnMetadata,
+            IMutableJavaName {
 
     IRowSetMetadata parent;
 
     String name;
+    String javaName;
+
     String label;
     String description; // comment..
 
@@ -79,6 +82,16 @@ public class DefaultColumnMetadata
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getJavaName() {
+        return javaName;
+    }
+
+    @Override
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
     }
 
     @Override
@@ -413,6 +426,7 @@ public class DefaultColumnMetadata
             throws SQLException {
         name = rs.getString("COLUMN_NAME");
         label = name;
+
         sqlType = rs.getInt("DATA_TYPE");
 
         // String typeName = rs.getString("TYPE_NAME");
@@ -446,6 +460,8 @@ public class DefaultColumnMetadata
             throws ParseException {
 //        index = o.getInt("index", -1);
         name = o.getString(K_NAME);
+        javaName = o.getString(K_JAVA_NAME);
+
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);
 
@@ -477,6 +493,7 @@ public class DefaultColumnMetadata
             throws ParseException, LoaderException {
 //        index = o.a("index").getInt(-1);
         name = o.a(K_NAME).getString();
+        javaName = o.a(K_JAVA_NAME).getString();
         label = o.a(K_LABEL).getString();
         description = o.a(K_DESCRIPTION).getString();
 

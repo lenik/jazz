@@ -18,9 +18,12 @@ import net.bodz.bas.json.JsonObject;
 public abstract class DefaultTableViewMetadata
         extends DefaultRowSetMetadata
         implements
-            ITableViewMetadata {
+            ITableViewMetadata,
+            IMutableJavaName {
 
     TableOid oid = new TableOid();
+    String javaName;
+
     TableType tableType = getDefaultTableType();
 
     String label;
@@ -47,6 +50,16 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
+    public String getJavaName() {
+        return javaName;
+    }
+
+    @Override
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
+    }
+
+    @Override
     public TableType getTableType() {
         return tableType;
     }
@@ -63,6 +76,9 @@ public abstract class DefaultTableViewMetadata
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         oid.jsonIn(o, opts);
+
+        javaName = o.getString(K_JAVA_NAME);
+
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
         super.jsonIn(o, opts);
     }
@@ -71,7 +87,10 @@ public abstract class DefaultTableViewMetadata
     public void readObject(IElement x_table)
             throws ParseException, LoaderException {
         oid.readObject(x_table);
-        tableType = x_table.getAttributeVar(K_TABLE_TYPE)//
+
+        javaName = x_table.a(K_JAVA_NAME).getString();
+
+        tableType = x_table.a(K_TABLE_TYPE)//
                 .getEnum(TableType.class, TableType.VIEW);
         super.readObject(x_table);
     }
