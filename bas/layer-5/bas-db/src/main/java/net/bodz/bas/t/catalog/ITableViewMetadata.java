@@ -12,8 +12,10 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 public interface ITableViewMetadata
         extends
             IRowSetMetadata,
+            IJavaName,
             IJDBCMetaDataSupport {
 
+    String K_JAVA_NAME = "javaName";
     String K_TABLE_TYPE = "tableType";
 
     TableOid getId();
@@ -52,6 +54,11 @@ public interface ITableViewMetadata
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         getId().jsonOut(out, opts);
+
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.entry(K_JAVA_NAME, javaName);
+
         out.entry(K_TABLE_TYPE, getTableType());
         IRowSetMetadata.super.jsonOut(out, opts);
     }
@@ -60,6 +67,11 @@ public interface ITableViewMetadata
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         getId().writeObject(out);
+
+        String javaName = getJavaName();
+        if (javaName != null)
+            out.attribute(K_JAVA_NAME, javaName);
+
         out.attribute(K_TABLE_TYPE, getTableType());
         IRowSetMetadata.super.writeObject(out);
     }

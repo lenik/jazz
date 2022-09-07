@@ -30,6 +30,7 @@ public class DefaultSchemaMetadata
 
     SchemaOid schemaId = new SchemaOid();
     SchemaOid defaultName = new SchemaOid();
+    String javaName;
 
     String label;
     String description;
@@ -67,6 +68,16 @@ public class DefaultSchemaMetadata
         if (defaultName == null)
             throw new NullPointerException("defaultName");
         this.defaultName = defaultName;
+    }
+
+    @Override
+    public String getJavaName() {
+        return javaName;
+    }
+
+    @Override
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
     }
 
     @Override
@@ -363,6 +374,8 @@ public class DefaultSchemaMetadata
             throws ParseException {
         getId().jsonIn(o, opts);
 
+        javaName = o.getString(K_JAVA_NAME);
+
         JsonObject jm = o.getJsonObject(K_TABLES);
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
         for (String key : jm.keySet()) {
@@ -387,6 +400,8 @@ public class DefaultSchemaMetadata
     @Override
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
+        javaName = x_metadata.a(K_JAVA_NAME).getString();
+
         IElement x_tables = x_metadata.selectByTag(K_TABLES).first();
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
         for (IElement x_table : x_tables.children()) {

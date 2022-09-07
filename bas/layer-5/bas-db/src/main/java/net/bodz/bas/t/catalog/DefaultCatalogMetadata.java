@@ -23,6 +23,8 @@ public class DefaultCatalogMetadata
             IMutableCatalogMetadata {
 
     String name;
+    String javaName;
+
     String defaultSchemaName = "public";
 
     String label;
@@ -39,6 +41,16 @@ public class DefaultCatalogMetadata
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getJavaName() {
+        return javaName;
+    }
+
+    @Override
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
     }
 
     public String getDefaultSchemaName() {
@@ -279,6 +291,8 @@ public class DefaultCatalogMetadata
             throws ParseException {
         name = o.getString(K_NAME);
 
+        javaName = o.getString(K_JAVA_NAME);
+
         JsonObject jm = o.getJsonObject(K_SCHEMAS);
         Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
         for (String key : jm.keySet()) {
@@ -293,6 +307,9 @@ public class DefaultCatalogMetadata
     @Override
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
+        name = x_metadata.a(K_NAME).getString();
+        javaName = x_metadata.a(K_JAVA_NAME).getString();
+
         IElement x_schemas = x_metadata.selectByTag(K_SCHEMAS).first();
         Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
         for (IElement x_schema : x_schemas.children()) {
