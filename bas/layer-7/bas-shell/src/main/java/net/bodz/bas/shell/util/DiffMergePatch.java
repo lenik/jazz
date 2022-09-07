@@ -153,22 +153,18 @@ public class DiffMergePatch
     <T> void check(String name, PatchList<T> patchList, PatchApplyResult<T> par, IRow<T> expected) {
         out.enterln(name);
         if (expected != null) {
-            if (par.row.equals(expected))
+            if (par.getPatchedRow().equals(expected))
                 out.println("same as expected.");
             else
                 out.println("not as expected. ");
         }
 
-        boolean anyFail = false;
-        for (Boolean status : par.results)
-            if (!status)
-                anyFail = true;
-        if (anyFail) {
+        if (par.isError()) {
             out.enterln("failed hunks: ");
             int i = 0;
-            for (Boolean status : par.results) {
+            for (PatchApplyStatus<T> item : par) {
                 Patch<T> patch = patchList.get(i);
-                if (status == Boolean.FALSE) {
+                if (item.isError()) {
                     out.enterln("#" + i + "\t" + patch.diffs.toDelta());
                     for (RowEdit<T> diff : patch.diffs) {
                         out.println(diff.toString());
@@ -183,12 +179,12 @@ public class DiffMergePatch
         out.enterln("content:");
         {
             if (byChars) {
-                String s = par.row.toString();
+                String s = par.getPatchedRow().toString();
                 for (String line : new LinesText.Builder().text(s).removeEOL().trim().build())
                     out.println(line);
             } else {
                 @SuppressWarnings("unchecked")
-                IRow<String> row = (IRow<String>) par.row;
+                IRow<String> row = (IRow<String>) par.getPatchedRow();
                 for (String line : row)
                     if (chopMode)
                         out.println("| " + line);
