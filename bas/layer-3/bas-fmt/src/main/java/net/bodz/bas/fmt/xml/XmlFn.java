@@ -21,6 +21,8 @@ import net.bodz.bas.meta.source.FnHelper;
 public class XmlFn
         extends XmlLoader {
 
+    public static String DEFAULT_ENCODING = "utf-8";
+
     public static IObjectXmlLoader getDefaultLoader(Object obj) {
         XmlSource aXmlSource = obj.getClass().getAnnotation(XmlSource.class);
         if (aXmlSource != null)
@@ -99,12 +101,12 @@ public class XmlFn
 
     public static void save(IXmlForm obj, String file)
             throws IOException, XMLStreamException, FormatException {
-        save(obj, file, "utf-8");
+        save(obj, file, DEFAULT_ENCODING);
     }
 
     public static void save(IXmlForm obj, File file)
             throws IOException, XMLStreamException, FormatException {
-        save(obj, file, "utf-8");
+        save(obj, file, DEFAULT_ENCODING);
     }
 
     public static void save(IXmlForm obj, String file, String encoding)
