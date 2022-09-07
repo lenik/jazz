@@ -1,11 +1,13 @@
 package net.bodz.bas.site.org;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,18 +60,24 @@ public class SiteGraph_svg
 
         InputStream svgIn;
         try {
-            OutputStream out = resp.getOutputStream();
-
             Process proc = Processes.exec("/usr/bin/dot", "-Tsvg", tempDotFile.getPath());
             svgIn = proc.getInputStream();
 
+            ByteArrayOutputStream buf = new ByteArrayOutputStream(10000);
             byte[] block = new byte[4096];
             int cb;
             while ((cb = svgIn.read(block)) != -1)
-                out.write(block, 0, cb);
-
+                buf.write(block, 0, cb);
             svgIn.close();
-            out.close();
+
+            try {
+                ServletOutputStream out = resp.getOutputStream();
+                out.write(buf.toByteArray());
+            } catch (IllegalStateException ise) {
+                PrintWriter out = resp.getWriter();
+                String text = new String(buf.toByteArray());
+                out.write(text);
+            }
         } catch (Exception e) {
             throw new ViewBuilderException(e.getMessage(), e);
         } finally {
