@@ -50,11 +50,12 @@ public class VFooMapper__xml
         out.enter();
         {
             for (IColumnMetadata column : table.getColumns()) {
+                String tag = column.isPrimaryKey() ? "id" : "result";
                 String col_name = column.getName();
                 String colName = StringId.UL.toCamel(col_name);
                 // Class<?> type = column.getType();
-                out.printf("<result property=\"%s\" column=\"%s\" />\n", //
-                        colName, col_name);
+                out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
+                        tag, colName, col_name);
             }
             out.leave();
         }
