@@ -26,6 +26,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     private static final long serialVersionUID = 1L;
 
+    private Id id;
+
     private int refCount;
     private self_t parent;
     private List<self_t> children = new ArrayList<self_t>();
@@ -42,12 +44,22 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
             parent.addChild(self());
     }
 
+    @Override
+    public final Id id() {
+        return getId();
+    }
+
+    @Override
+    public final void id(Id id) {
+        setId(id);
+    }
+
     public Id getId() {
-        return id();
+        return id;
     }
 
     public void setId(Id id) {
-        id(id);
+        this.id = id;
     }
 
     /**
