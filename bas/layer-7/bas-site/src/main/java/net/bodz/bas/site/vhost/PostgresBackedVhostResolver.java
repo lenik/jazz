@@ -87,13 +87,19 @@ public class PostgresBackedVhostResolver
     protected boolean checkDatabaseExists(String databaseName) {
         if (databaseName == null)
             throw new NullPointerException("databaseName");
+
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             connection = master.getDataSource().getConnection();
+        } catch (SQLException e) {
+            logger.error("Failed to connect to master database at " + master.getOptions().getConnectionUrl(), e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
+        try {
             String sql = "select * from pg_database where datname=?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, databaseName);
@@ -108,6 +114,7 @@ public class PostgresBackedVhostResolver
 
             return true;
         } catch (SQLException e) {
+            logger.error("Failed to query master database: " + e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         } finally {
             close(rs);
