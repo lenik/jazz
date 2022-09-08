@@ -114,6 +114,20 @@ abstract class CSNamePair
         return true;
     }
 
+    public boolean isCatalogDifferent(String contextCatalogName, boolean ignoreCase) {
+        if (catalogName == null)
+            return false;
+        if (contextCatalogName != null)
+            if (ignoreCase) {
+                if (catalogName.equalsIgnoreCase(contextCatalogName))
+                    return false;
+            } else {
+                if (catalogName.equals(contextCatalogName))
+                    return false;
+            }
+        return true;
+    }
+
     public boolean isSchemaSpecified(CSNamePair orig) {
         return isSchemaSpecified(orig, false);
     }

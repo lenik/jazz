@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.err.DuplicatedKeyException;
@@ -22,15 +24,18 @@ public class DefaultCatalogMetadata
         implements
             IMutableCatalogMetadata {
 
+    static final String ANY_SCHEMA_NAME = "?";
+
     String name;
     String javaName;
-
-    String defaultSchemaName = "public";
 
     String label;
     String description;
 
+    List<String> searchPath = new ArrayList<>();
+    ISchemaMetadata anySchema;
     Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
+
     Boolean convertToUpperCase;
     Map<String, String> canonicalNames = new HashMap<>();
 
@@ -51,14 +56,6 @@ public class DefaultCatalogMetadata
     @Override
     public void setJavaName(String javaName) {
         this.javaName = javaName;
-    }
-
-    public String getDefaultSchemaName() {
-        return defaultSchemaName;
-    }
-
-    public void setDefaultSchemaName(String defaultSchemaName) {
-        this.defaultSchemaName = defaultSchemaName;
     }
 
     @Override
@@ -124,11 +121,16 @@ public class DefaultCatalogMetadata
         return schemas.size();
     }
 
+    public List<String> getSearchPath() {
+        return searchPath;
+    }
+
     @Override
     public ISchemaMetadata getSchema(String name) {
         if (name == null)
-            name = defaultSchemaName;
-        return schemas.get(name);
+            return anySchema;
+        else
+            return schemas.get(name);
     }
 
     public DefaultSchemaMetadata getOrCreateSchema(SchemaOid id) {
@@ -137,9 +139,12 @@ public class DefaultCatalogMetadata
     }
 
     public synchronized DefaultSchemaMetadata getOrCreateSchema(String schemaName) {
+        DefaultSchemaMetadata schema;
         if (schemaName == null)
-            schemaName = defaultSchemaName;
-        DefaultSchemaMetadata schema = (DefaultSchemaMetadata) schemas.get(schemaName);
+            schema = (DefaultSchemaMetadata) anySchema;
+        else
+            schema = (DefaultSchemaMetadata) schemas.get(schemaName);
+
         if (schema == null) {
             DefaultSchemaMetadata dsm = newSchema(schemaName);
             addSchema(schema = dsm);
@@ -152,14 +157,9 @@ public class DefaultCatalogMetadata
     }
 
     protected DefaultSchemaMetadata newSchema(String schemaName) {
-        if (schemaName == null)
-            schemaName = defaultSchemaName;
         DefaultSchemaMetadata dsm = new DefaultSchemaMetadata(this);
         dsm.getId().assign(name, schemaName);
-
-        SchemaOid defaultName = new SchemaOid();
-        defaultName.assign(null, defaultSchemaName);
-        dsm.setDefaultName(defaultName);
+        dsm.setContextCatalogName(name);
         return dsm;
     }
 
@@ -168,29 +168,39 @@ public class DefaultCatalogMetadata
         if (schema == null)
             throw new NullPointerException("schema");
         String schemaName = schema.getName();
-        if (schemaName == null)
-            schemaName = defaultSchemaName;
 
-        ISchemaMetadata existing = schemas.get(schemaName);
+        ISchemaMetadata existing;
+        if (schemaName == null)
+            existing = anySchema;
+        else
+            existing = schemas.get(schemaName);
+
         if (existing != null)
             throw new DuplicatedKeyException("Schema already existed: " + schemaName);
-        schemas.put(schemaName, schema);
+
+        if (schemaName == null) {
+            anySchema = schema;
+        } else {
+            schemas.put(schemaName, schema);
+        }
     }
 
     @Override
     public boolean removeSchema(ISchemaMetadata schema) {
         String schemaName = schema.getName();
-        if (schemaName == null)
-            schemaName = defaultSchemaName;
         return removeSchema(schemaName);
     }
 
     @Override
     public boolean removeSchema(String schemaName) {
-        if (schemaName == null)
-            schemaName = defaultSchemaName;
-        ISchemaMetadata schema = schemas.remove(schemaName);
-        return schema != null;
+        ISchemaMetadata removed;
+        if (schemaName == null) {
+            removed = anySchema;
+            anySchema = null;
+        } else {
+            removed = schemas.remove(schemaName);
+        }
+        return removed != null;
     }
 
     public DefaultTableMetadata newTable(TableOid oid) {
@@ -212,6 +222,21 @@ public class DefaultCatalogMetadata
     }
 
     @Override
+    public boolean removeTable(ITableMetadata table) {
+        return removeTable(table.getId());
+    }
+
+    @Override
+    public boolean removeTable(TableOid oid) {
+        if (!isValidTableId(oid))
+            return false;
+        IMutableSchemaMetadata schema = (IMutableSchemaMetadata) getSchema(oid.schemaName);
+        if (schema == null)
+            return false;
+        return schema.removeTable(oid.tableName);
+    }
+
+    @Override
     public ITableMetadata autoLoadTableFromJDBC(TableOid oid, Connection autoLoadConnection,
             LoadFromJDBCOptions options) {
         if (oid == null)
@@ -226,8 +251,22 @@ public class DefaultCatalogMetadata
             throw new NullPointerException("id");
         if (connection == null)
             throw new NullPointerException("connection");
-        DefaultSchemaMetadata dsm = getOrCreateSchema(oid.toSchemaId());
-        return dsm.loadTableFromJDBC(oid.tableName, connection, options);
+
+        if (oid.getSchemaName() == null) {
+            if (anySchema != null) {
+                ITableMetadata anyTable = anySchema.getTable(oid.tableName);
+                if (anyTable != null)
+                    return (DefaultTableMetadata) anyTable;
+            }
+            for (ISchemaMetadata schema : schemas.values()) {
+                ITableMetadata anyTable = schema.getTable(oid.tableName);
+                if (anyTable != null)
+                    return (DefaultTableMetadata) anyTable;
+            }
+        }
+
+        DefaultSchemaMetadata schema = getOrCreateSchema(oid.toSchemaId());
+        return schema.loadTableFromJDBC(oid.tableName, connection, options);
     }
 
     @Override
@@ -275,7 +314,7 @@ public class DefaultCatalogMetadata
             String schemaName = schema.getName();
             assert schemaName != null;
             if (schemaName == null)
-                schemaName = defaultSchemaName;
+                schemaName = ANY_SCHEMA_NAME;
             sb.append(schemaName);
         }
         return sb.toString();

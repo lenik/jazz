@@ -30,7 +30,7 @@ public interface ISchemaMetadata
 
     SchemaOid getId();
 
-    SchemaOid getDefaultName();
+    String getContextCatalogName();
 
     default String getName() {
         return getId().getSchemaName();
@@ -41,7 +41,7 @@ public interface ISchemaMetadata
     }
 
     default String getCompactName(boolean ignoreCase) {
-        return getId().getCompactName(getDefaultName(), ignoreCase);
+        return getId().getCompactName(getContextCatalogName(), ignoreCase);
     }
 
     ICatalogMetadata getParent();

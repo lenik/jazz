@@ -17,4 +17,10 @@ public interface IMutableCatalogMetadata
 
     boolean removeSchema(String schemaName);
 
+    void addTable(ITableMetadata table);
+
+    boolean removeTable(ITableMetadata table);
+
+    boolean removeTable(TableOid table);
+
 }
