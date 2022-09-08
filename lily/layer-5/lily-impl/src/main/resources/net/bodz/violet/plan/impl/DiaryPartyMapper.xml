@@ -91,7 +91,7 @@
             #{diary.id},
             #{user.id}, #{person.id}, #{org.id}, #{description},
             #{value}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

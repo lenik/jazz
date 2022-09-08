@@ -69,7 +69,7 @@
         ) values(
             #{codeName}, #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

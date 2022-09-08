@@ -58,7 +58,7 @@
             code, label, description
         ) values(
             #{codeName}, #{label}, #{description}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

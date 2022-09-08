@@ -112,7 +112,7 @@
             #{artifact.id}, #{region.id},
             #{quantity}, #{serial}, #{expire},
             #{user.id}, #{group.id}, #{org.id}, #{orgUnit.id}, #{person.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

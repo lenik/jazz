@@ -67,7 +67,7 @@
         ) values(
             #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{artifact.id}, #{price}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

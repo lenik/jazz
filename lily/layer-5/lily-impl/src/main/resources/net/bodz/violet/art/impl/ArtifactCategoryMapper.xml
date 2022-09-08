@@ -78,7 +78,7 @@
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{properties.jsonStr}::jsonb,
             #{parent.id}, #{depth}, #{skuCodeFormat}, #{barCodeFormat} 
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

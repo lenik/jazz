@@ -74,7 +74,7 @@
             plan, person, org, description
         ) values(
             #{plan.id}, #{person.id}, #{org.id}, #{description}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

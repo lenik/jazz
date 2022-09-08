@@ -71,7 +71,7 @@
             #{beginDate}, #{endDate},
             #{op.id}, #{subject}, #{text}, 
             #{diary}, #{parent.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

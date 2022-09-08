@@ -155,7 +155,7 @@
             #{previousOrder.id}, #{salesOrder.id}, #{storeOrder.id},
             #{shipper.id}, #{shippingCost},
             #{length}, #{totalQuantity}, #{totalAmount}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -54,7 +54,7 @@
         ) values(
             #{label}, #{description},
             #{priority}, #{flags}, #{state}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

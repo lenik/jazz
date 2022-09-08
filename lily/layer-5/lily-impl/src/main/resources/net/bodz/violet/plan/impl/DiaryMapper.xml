@@ -134,7 +134,7 @@
             #{category.id}, #{phase.id},
             #{properties.jsonStr}::jsonb,
             #{value}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

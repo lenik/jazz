@@ -68,7 +68,7 @@
         ) values(
             #{priority}, #{flags}, #{state},
             #{app.id}, #{api.id}, #{credit}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

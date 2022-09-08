@@ -102,7 +102,7 @@
                 #{contact.address1}, #{contact.address2}, #{contact.tel},
             </if>
             #{gender}, #{homeland}, #{passport}, #{socialSecurityNum}, #{driverLicenseNum}
-        ) returning id; --
+        );
     </insert>
 
     <update id="update">

@@ -70,7 +70,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{apply.id}, #{secret}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

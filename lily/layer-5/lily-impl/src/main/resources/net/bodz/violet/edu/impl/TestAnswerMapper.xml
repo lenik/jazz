@@ -65,7 +65,7 @@
             #{priority}, #{flags}, #{state},
             #{properties.jsonStr},
             #{question.id}, #{valid}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

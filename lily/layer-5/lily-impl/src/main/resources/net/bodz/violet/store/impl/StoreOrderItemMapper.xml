@@ -100,7 +100,7 @@
             #{order.id}, #{artifact.id}, #{region.id},
             #{serial}, #{expire},
             #{quantity}, #{price}, #{amount}, #{notes}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

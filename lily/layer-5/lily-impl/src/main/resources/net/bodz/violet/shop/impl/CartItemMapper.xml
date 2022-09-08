@@ -91,7 +91,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{shopItem.id}, #{price}, #{quantity}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

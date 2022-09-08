@@ -71,7 +71,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{course.id}, #{timeout}, #{totalScore}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

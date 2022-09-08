@@ -54,7 +54,7 @@
             #{codeName}, #{label}, #{description},
             #{priority}, #{flags}, #{state},
             #{uom}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

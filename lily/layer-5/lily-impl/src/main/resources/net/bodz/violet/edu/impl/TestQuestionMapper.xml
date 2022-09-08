@@ -78,7 +78,7 @@
             #{properties.jsonStr},
             #{course.id},
             #{insertPos}, #{answer}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -72,7 +72,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{category.id}, #{credit}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

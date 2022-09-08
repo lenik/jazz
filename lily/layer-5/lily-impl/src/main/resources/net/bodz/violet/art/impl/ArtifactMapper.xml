@@ -111,7 +111,7 @@
             #{properties.jsonStr}::jsonb,
             #{category.id}, #{phase.id}, #{skuCode}, #{barCode}, #{rfidCode}, #{modelName}, #{finish},
             #{uom.id}, #{price}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

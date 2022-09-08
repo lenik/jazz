@@ -85,7 +85,7 @@
             <if test="category == null">default,</if>
             <if test="category != null">#{category.id},</if><![CDATA[
             #{properties.jsonStr}::jsonb
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

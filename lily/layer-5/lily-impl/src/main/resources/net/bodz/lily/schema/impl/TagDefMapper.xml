@@ -65,7 +65,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state},
             #{tagGroup.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">
