@@ -73,6 +73,9 @@ public interface IXmlOutput
     void attribute(String name, String value)
             throws XMLStreamException;
 
+    void attributeNotNull(String name, String value)
+            throws XMLStreamException;
+
     void attribute(String name, byte[] buf)
             throws XMLStreamException;
 
