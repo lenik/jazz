@@ -42,6 +42,7 @@ public abstract class CoMessage<Id>
 
     public static final int N_SUBJECT = 200;
 
+    private Id id;
     private User op;
     private String subject;
     private String text;
@@ -63,12 +64,22 @@ public abstract class CoMessage<Id>
         op = getOwnerUser();
     }
 
+    @Override
+    public final Id id() {
+        return getId();
+    }
+
+    @Override
+    public final void id(Id id) {
+        setId(id);
+    }
+
     public Id getId() {
-        return id();
+        return id;
     }
 
     public void setId(Id id) {
-        id(id);
+        this.id = id;
     }
 
     /**
