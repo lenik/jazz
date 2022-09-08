@@ -50,6 +50,15 @@ public class ProjectList {
         return names.iterator().next();
     }
 
+    public Class<?> topLevelClass() {
+        String name = topLevelName();
+        return getProjectClass(name);
+    }
+
+    public ClassLoader topLevelClassLoader() {
+        return topLevelClass().getClassLoader();
+    }
+
     public ProjectNode toTree(String name) {
         Class<?> clazz = nameMap.get(name);
         if (clazz == null)
