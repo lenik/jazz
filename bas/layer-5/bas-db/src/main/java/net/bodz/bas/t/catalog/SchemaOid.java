@@ -25,15 +25,15 @@ public class SchemaOid
         super.assign(catalogName, schemaName);
     }
 
-    public String getCompactName(SchemaOid orig) {
-        return getCompactName(orig, false);
+    public String getCompactName(String contextCatalogName) {
+        return getCompactName(contextCatalogName, false);
     }
 
-    public String getCompactName(SchemaOid orig, boolean ignoreCase) {
-        if (orig == null)
+    public String getCompactName(String contextCatalogName, boolean ignoreCase) {
+        if (contextCatalogName == null)
             return getFullName();
         StringBuilder sb = new StringBuilder();
-        if (isCatalogSpecified(orig, ignoreCase)) {
+        if (isCatalogDifferent(contextCatalogName, ignoreCase)) {
             sb.append(catalogName);
             sb.append('.');
         }

@@ -29,13 +29,13 @@ public class DefaultSchemaMetadata
     static final Logger logger = LoggerFactory.getLogger(DefaultSchemaMetadata.class);
 
     SchemaOid schemaId = new SchemaOid();
-    SchemaOid defaultName = new SchemaOid();
+    String contextCatalogName;
     String javaName;
 
     String label;
     String description;
 
-    ICatalogMetadata parent;
+    IMutableCatalogMetadata parent;
 
     Map<String, ITableMetadata> tableMap = new LinkedHashMap<>();
     Map<String, IViewMetadata> viewMap = new LinkedHashMap<>();
@@ -46,7 +46,7 @@ public class DefaultSchemaMetadata
     public DefaultSchemaMetadata() {
     }
 
-    public DefaultSchemaMetadata(ICatalogMetadata parent) {
+    public DefaultSchemaMetadata(IMutableCatalogMetadata parent) {
         this.parent = parent;
     }
 
@@ -60,14 +60,12 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public SchemaOid getDefaultName() {
-        return defaultName;
+    public String getContextCatalogName() {
+        return contextCatalogName;
     }
 
-    public void setDefaultName(SchemaOid defaultName) {
-        if (defaultName == null)
-            throw new NullPointerException("defaultName");
-        this.defaultName = defaultName;
+    public void setContextCatalogName(String contextCatalogName) {
+        this.contextCatalogName = contextCatalogName;
     }
 
     @Override
@@ -103,7 +101,7 @@ public class DefaultSchemaMetadata
 
     @Override
     public void setParent(ICatalogMetadata parent) {
-        this.parent = parent;
+        this.parent = (IMutableCatalogMetadata) parent;
     }
 
     public Boolean getConvertToUpperCase() {
@@ -163,11 +161,14 @@ public class DefaultSchemaMetadata
         }
     }
 
-    public synchronized DefaultTableMetadata loadTableFromJDBC(String name, Connection cn, LoadFromJDBCOptions options)
+    public synchronized DefaultTableMetadata loadTableFromJDBC(String tableName, Connection cn,
+            LoadFromJDBCOptions options)
             throws SQLException {
-        DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(name);
+        if (tableName == null)
+            throw new NullPointerException("tableName");
+        DefaultTableMetadata table = (DefaultTableMetadata) tableMap.get(tableName);
         if (table == null) {
-            table = newTable(name);
+            table = newTable(tableName);
             options.enterNew();
             try {
                 options.setLoadKeys(true);
@@ -175,7 +176,10 @@ public class DefaultSchemaMetadata
             } finally {
                 options.leave();
             }
-            addTable(table);
+            if (parent != null)
+                parent.addTable(table);
+            else
+                addTable(table);
         }
         return table;
     }
