@@ -61,7 +61,7 @@
             diary, "user", votes
         ) values(
             #{diary.id}, #{user.id}, #{votes}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

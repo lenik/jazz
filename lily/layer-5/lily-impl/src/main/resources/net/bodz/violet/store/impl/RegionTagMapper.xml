@@ -54,7 +54,7 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into regiontag(code, label, description)
             values(#{codeName},#{label},#{description})
-            returning id; --
+           ;
     ]]></insert>
 
     <update id="update">

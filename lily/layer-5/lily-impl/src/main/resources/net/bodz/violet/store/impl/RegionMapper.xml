@@ -96,7 +96,7 @@
             <if test="category != null">#{category.id},</if><![CDATA[
             #{properties.jsonStr}::jsonb,
             #{fullPath}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

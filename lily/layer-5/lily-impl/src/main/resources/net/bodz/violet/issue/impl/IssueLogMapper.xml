@@ -73,7 +73,7 @@
             #{beginTime}, #{endTime},
             #{op.id}, #{subject}, #{text},
             #{issue.id} 
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

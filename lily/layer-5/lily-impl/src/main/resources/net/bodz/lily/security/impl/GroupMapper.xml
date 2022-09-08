@@ -78,7 +78,7 @@
             #{name}, #{label}, #{description},
             #{properties.jsonStr},
             #{admin.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

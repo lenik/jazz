@@ -72,7 +72,7 @@
             #{priority}, #{flags}, #{state},
             #{order.id}, #{artifact.id},
             #{quantity}, #{price}, #{amount}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

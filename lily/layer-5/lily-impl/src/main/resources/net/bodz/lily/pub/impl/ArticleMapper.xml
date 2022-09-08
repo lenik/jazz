@@ -94,7 +94,7 @@
             #{category.id},
             #{properties.jsonStr},
             #{plugins.jsonStr}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

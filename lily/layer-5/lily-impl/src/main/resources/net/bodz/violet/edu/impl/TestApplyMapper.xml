@@ -78,7 +78,7 @@
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{beginTime}, #{endTime},
             #{paper.id}, #{person.id}, #{score}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -158,7 +158,7 @@
             #{category.id}, #{phase.id},
             #{previous.id}, #{plan.id}, #{org.id}, #{orgUnit.id}, #{person.id},
             #{length}, #{totalQuantity}, #{totalAmount}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

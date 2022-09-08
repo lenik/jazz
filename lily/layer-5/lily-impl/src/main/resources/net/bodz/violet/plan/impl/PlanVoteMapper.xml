@@ -68,7 +68,7 @@
         ) values(
             #{plan.id}, #{user.id},
             #{votes}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

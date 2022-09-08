@@ -102,7 +102,7 @@
             #{beginTime}, #{endTime},
             #{properties.jsonStr},
             #{shop.id}, #{category.id}, #{artifact.id}, #{price}, #{quantity}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -94,7 +94,7 @@
             #{op.id}, #{subject}, #{text}, 
             #{category.id}, #{phase.id},
             #{value}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -52,7 +52,7 @@
             #{label},#{description},
             #{priority}, #{flags}, #{state},
             #{schema.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

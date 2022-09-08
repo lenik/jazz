@@ -94,7 +94,7 @@ public class FooMapper__xml
                 out.println();
             }
 
-            out.println(") returning id; --");
+            out.println(");");
             out.leave();
         }
         out.println("]]></insert>");

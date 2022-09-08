@@ -81,7 +81,7 @@
             #{beginTime}, #{endTime},
             #{op.id}, #{subject}, #{text},
             #{plan.id}, #{parent.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -90,7 +90,7 @@
             #{artifact.id}, #{region.id},
             #{quantity}, #{serial}, #{expire},
             #{owner.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -85,7 +85,7 @@
             #{order.id}, #{shopItem.id}, #{artifact.id},
             #{resale}, #{altLabel}, #{altSpec},
             #{quantity}, #{price}, #{amount}, #{n1}, #{notes}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

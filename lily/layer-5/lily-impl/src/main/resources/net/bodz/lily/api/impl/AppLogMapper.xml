@@ -71,7 +71,7 @@
             #{label}, #{description},
             #{priority}, #{flags}, #{state},
             #{app.id}, #{api.id}, #{error}, #{message}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

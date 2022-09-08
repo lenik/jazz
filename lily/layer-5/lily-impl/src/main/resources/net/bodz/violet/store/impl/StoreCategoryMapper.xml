@@ -59,7 +59,7 @@
         ) values (
             #{codeName},#{label},#{description},
             #{properties.jsonStr}::jsonb
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

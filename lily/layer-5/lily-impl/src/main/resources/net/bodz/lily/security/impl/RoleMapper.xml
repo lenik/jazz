@@ -60,7 +60,7 @@
             #{priority}, #{flags}, #{state},
             #{properties.jsonStr},
             #{rank}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

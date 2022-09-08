@@ -77,7 +77,7 @@
             #{op.id}, #{subject}, #{text},
             #{parent.id},
             #{article.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

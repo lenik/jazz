@@ -71,7 +71,7 @@
             #{priority}, #{flags}, #{state},
             #{properties.jsonStr},
             #{paper.id}, #{question.id}, #{score}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

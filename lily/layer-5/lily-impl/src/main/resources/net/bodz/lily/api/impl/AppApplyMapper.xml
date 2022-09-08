@@ -67,7 +67,7 @@
             #{priority}, #{flags}, #{state}, 
             #{beginTime}, #{endTime},
             #{op.id}, #{subject}, #{text} 
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

@@ -63,7 +63,7 @@
             #{priority}, #{flags}, #{state},
             #{controlClass}, #{method},
             #{allowBits}, #{denyBits}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

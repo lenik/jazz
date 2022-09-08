@@ -75,7 +75,7 @@
             #{apply.id}, #{question.id},
             #{answerInt}, #{answerText}, #{score},
             #{waitTime}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

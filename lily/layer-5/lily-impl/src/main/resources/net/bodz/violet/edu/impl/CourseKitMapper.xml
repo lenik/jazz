@@ -80,7 +80,7 @@
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{properties.jsonStr},
             #{category.id}, #{course.id}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

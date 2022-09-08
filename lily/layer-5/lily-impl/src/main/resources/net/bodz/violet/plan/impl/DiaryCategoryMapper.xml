@@ -75,7 +75,7 @@
             #{priority}, #{flags}, #{state}, #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
             #{properties.jsonStr}::jsonb,
             #{parent.id}, #{depth} 
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

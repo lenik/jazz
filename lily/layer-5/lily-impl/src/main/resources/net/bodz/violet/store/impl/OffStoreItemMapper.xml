@@ -69,7 +69,7 @@
             art, qty
         ) values(
             #{artifact.id}, #{quantity}
-        ) returning id; --
+        );
     ]]></insert>
 
     <update id="update">

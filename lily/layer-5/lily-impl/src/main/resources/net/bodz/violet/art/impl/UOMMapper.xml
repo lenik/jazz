@@ -52,7 +52,7 @@
                 property, std, scale)
             values(#{codeName},#{label},#{description}, 
                 #{property}, #{std.id}, #{scale})
-            returning id; --
+           ;
     ]]></insert>
 
     <update id="update">
