@@ -52,8 +52,7 @@ public class ResourceMap
         });
     }
 
-    public void loadFromListing(Class<?> clazz) {
-        String dirName = clazz.getSimpleName() + ".d";
+    public void loadFromListing(Class<?> clazz, String dirName) {
         String listingName = dirName + "/FILES.LST";
         URL listingUrl = clazz.getResource(listingName);
         if (listingUrl == null)
@@ -69,8 +68,12 @@ public class ResourceMap
     }
 
     public static ResourceMap fromListing(Class<?> clazz) {
+        return fromListing(clazz, clazz.getSimpleName() + ".d");
+    }
+
+    public static ResourceMap fromListing(Class<?> clazz, String dirName) {
         ResourceMap map = new ResourceMap();
-        map.loadFromListing(clazz);
+        map.loadFromListing(clazz, dirName);
         return map;
     }
 
