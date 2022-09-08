@@ -51,7 +51,7 @@ public class MiscTemplates {
         initVals.put(String.class, "\"\"");
         initVals.put(BigDecimal.class, "BigDecimal.ZERO");
         initVals.put(BigInteger.class, "BigInteger.ZERO");
-        initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis()");
+        initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis())");
     }
 
     public void initNotNulls(JavaSourceWriter out, ITableViewMetadata table) {
