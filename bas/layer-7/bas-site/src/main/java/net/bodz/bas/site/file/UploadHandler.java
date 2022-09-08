@@ -69,7 +69,10 @@ public class UploadHandler
 
         UploadResult result = new UploadResult();
         for (Part part : request.getParts()) {
-            String fileName = part.getName();
+            String fileName = part.getSubmittedFileName();
+            if (fileName == null) // other query parameter as a request part
+                continue;
+
             if (fileName.isEmpty())
                 throw new IllegalArgumentException("empty filename.");
 
