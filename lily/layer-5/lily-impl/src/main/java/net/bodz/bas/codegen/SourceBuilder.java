@@ -92,6 +92,11 @@ public abstract class SourceBuilder<model_t> {
         if (patchList != null && patchList.isDifferent()) {
             logger.debug("    patch on " + displayPath);
             PatchApplyResult<String> result = patchList.apply(textRow);
+            for (; result.isError()
+                    && patchList.config.Match_Threshold < 0.9; patchList.config.Match_Threshold += 0.05) {
+                logger.warn("Patch failed at threshold " + patchList.config.Match_Threshold);
+                result = patchList.apply(textRow);
+            }
             if (result.isError()) {
                 logger.error("Patch failed. ");
                 printResult(Stdio.cout.indented(), "Patch failed:", result, null);
