@@ -58,11 +58,9 @@ public interface ITableViewMetadata
             throws IOException, FormatException {
         getId().jsonOut(out, opts);
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.entry(K_JAVA_NAME, javaName);
-
         out.entry(K_TABLE_TYPE, getTableType());
+
+        out.entryNotNull(K_JAVA_NAME, getJavaName());
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.jsonOut(out, opts);
@@ -73,11 +71,9 @@ public interface ITableViewMetadata
             throws XMLStreamException, FormatException {
         getId().writeObject(out);
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.attribute(K_JAVA_NAME, javaName);
-
         out.attribute(K_TABLE_TYPE, getTableType());
+
+        out.attributeNotNull(K_JAVA_NAME, getJavaName());
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.writeObject(out);
