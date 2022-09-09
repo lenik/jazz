@@ -44,6 +44,7 @@ public interface IColumnMetadata
     public static final String K_COLUMN_DISPLAY_SIZE = "columnDisplaySize";
     public static final String K_PRECISION = "precision";
     public static final String K_SCALE = "scale";
+    public static final String K_DEFAULT_VALUE = "defaultValue";
 
     IRowSetMetadata getParent();
 
@@ -108,6 +109,8 @@ public interface IColumnMetadata
 
     int getScale();
 
+    String getDefaultValue();
+
     Object parseColumnValue(String s)
             throws ParseException;
 
@@ -130,17 +133,9 @@ public interface IColumnMetadata
             out.entry(K_POSITION, getPositionOpt());
         out.entry(K_NAME, getName());
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.entry(K_JAVA_NAME, javaName);
-
-        String label = getLabel();
-        if (label != null)
-            out.entry(K_LABEL, label);
-
-        String description = getDescription();
-        if (description != null)
-            out.entry(K_DESCRIPTION, getDescription());
+        out.entryNotNull(K_JAVA_NAME, getJavaName());
+        out.entryNotNull(K_LABEL, getLabel());
+        out.entryNotNull(K_DESCRIPTION, getDescription());
 
         out.entry(K_TYPE, getType().getName());
         out.entry(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
@@ -159,6 +154,8 @@ public interface IColumnMetadata
         out.entry(K_COLUMN_DISPLAY_SIZE, getColumnDisplaySize());
         out.entry(K_PRECISION, getPrecision());
         out.entry(K_SCALE, getScale());
+
+        out.entryNotNull(K_DEFAULT_VALUE, getDefaultValue());
     }
 
     @Override
@@ -169,17 +166,9 @@ public interface IColumnMetadata
 
         out.attribute(K_NAME, getName());
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.attribute(K_JAVA_NAME, javaName);
-
-        String label = getLabel();
-        if (label != null)
-            out.attribute(K_LABEL, getLabel());
-
-        String description = getDescription();
-        if (description != null)
-            out.attribute(K_DESCRIPTION, getDescription());
+        out.attributeNotNull(K_JAVA_NAME, getJavaName());
+        out.attributeNotNull(K_LABEL, getLabel());
+        out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         out.attribute(K_TYPE, getType().getName());
         out.attribute(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
@@ -198,6 +187,8 @@ public interface IColumnMetadata
         out.attribute(K_COLUMN_DISPLAY_SIZE, getColumnDisplaySize());
         out.attribute(K_PRECISION, getPrecision());
         out.attribute(K_SCALE, getScale());
+
+        out.attribute(K_DEFAULT_VALUE, getDefaultValue());
     }
 
     default void accept(ICatalogVisitor visitor) {

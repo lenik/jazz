@@ -91,6 +91,7 @@ public class DefaultViewMetadata
             }
         } // for usage
 
+        // FIX FOR VIEW
         if (primaryKey == null) {
             IColumnMetadata idColumn = getColumn("id");
             if (idColumn != null) {
