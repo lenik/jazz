@@ -117,13 +117,13 @@ public class FooMapper__xml
                     out.println(",");
                 }
             }
-            out.lnleave("</set>");
+            out.leaveln("</set>");
 
             out.enterln("<where>");
             templates.sqlMatchPrimaryKey(out, table.getPrimaryKeyColumns());
-            out.lnleave("</where>");
+            out.leaveln("</where>");
         }
-        out.lnleave("</update>");
+        out.leaveln("</update>");
     }
 
     void delete(XmlSourceBuffer out, ITableMetadata table) {
@@ -133,10 +133,10 @@ public class FooMapper__xml
 
             out.enterln("<where>");
             templates.sqlMatchPrimaryKey(out, table.getPrimaryKeyColumns());
-            out.lnleave("</where>");
+            out.leaveln("</where>");
 
         }
-        out.lnleave("</delete>");
+        out.leaveln("</delete>");
     }
 
 }

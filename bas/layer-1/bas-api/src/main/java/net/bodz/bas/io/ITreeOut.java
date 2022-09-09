@@ -18,6 +18,11 @@ public interface ITreeOut
     }
 
     default void leaveln(String s) {
+        leave();
+        println(s);
+    }
+
+    default void lnleave(String s) {
         println(s);
         leave();
     }
