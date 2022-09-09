@@ -17,6 +17,7 @@ public interface ITableViewMetadata
 
     String K_JAVA_NAME = "javaName";
     String K_TABLE_TYPE = "tableType";
+    String K_DESCRIPTION = "description";
 
     TableOid getId();
 
@@ -37,6 +38,8 @@ public interface ITableViewMetadata
         else
             return getId().getCompactName(schema.getId());
     }
+
+    String getDescription();
 
     TableKey getPrimaryKey();
 
@@ -60,6 +63,8 @@ public interface ITableViewMetadata
             out.entry(K_JAVA_NAME, javaName);
 
         out.entry(K_TABLE_TYPE, getTableType());
+        out.entryNotNull(K_DESCRIPTION, getDescription());
+
         IRowSetMetadata.super.jsonOut(out, opts);
     }
 
@@ -73,6 +78,8 @@ public interface ITableViewMetadata
             out.attribute(K_JAVA_NAME, javaName);
 
         out.attribute(K_TABLE_TYPE, getTableType());
+        out.attributeNotNull(K_DESCRIPTION, getDescription());
+
         IRowSetMetadata.super.writeObject(out);
     }
 

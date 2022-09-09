@@ -18,7 +18,6 @@ public class DefaultViewMetadata
         implements
             IViewMetadata {
 
-    TableKey primaryKey;
     Map<TableOid, MutableTableUsage> tableUsages = new LinkedHashMap<>();
 
     public DefaultViewMetadata() {
@@ -27,15 +26,6 @@ public class DefaultViewMetadata
 
     public DefaultViewMetadata(ISchemaMetadata parent) {
         super(parent);
-    }
-
-    @Override
-    public TableKey getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public void setPrimaryKey(TableKey primaryKey) {
-        this.primaryKey = primaryKey;
     }
 
     @Override
@@ -52,6 +42,14 @@ public class DefaultViewMetadata
         if (catalog == null)
             return;
 
+        TableKey primaryKey = getPrimaryKey();
+        if (primaryKey == null) {
+            primaryKey = findPrimaryKeyFromForeignTables(catalog);
+            setPrimaryKey(primaryKey);
+        }
+    }
+
+    TableKey findPrimaryKeyFromForeignTables(ICatalogMetadata catalog) {
         TableKey primaryKey = null;
         for (ITableUsage usage : tableUsages.values()) {
             ITableViewMetadata source = catalog.getTable(usage.getTableId());
@@ -63,13 +61,13 @@ public class DefaultViewMetadata
             }
 
             IColumnMetadata[] pkv = source.getPrimaryKeyColumns();
-            int n = pkv.length;
+            int nSourcePKColumnCount = pkv.length;
 
             // ignore empty usage
-            if (n == 0)
+            if (nSourcePKColumnCount == 0)
                 continue;
 
-            int nExists = 0;
+            int nMatchedColumnCount = 0;
             for (IColumnMetadata pkColumn : pkv) {
                 String pkColName = pkColumn.getName();
                 IColumnMetadata viewColumn = getColumn(pkColName);
@@ -78,28 +76,19 @@ public class DefaultViewMetadata
                     if (viewColumn == null)
                         continue;
                 }
-                nExists++;
+                nMatchedColumnCount++;
             }
 
-            if (nExists == n) {
+            if (nMatchedColumnCount == nSourcePKColumnCount) {
                 primaryKey = new TableKey(getId());
-                String[] columnNames = new String[n];
-                for (int i = 0; i < n; i++)
+                String[] columnNames = new String[nSourcePKColumnCount];
+                for (int i = 0; i < nSourcePKColumnCount; i++)
                     columnNames[i] = pkv[i].getName();
                 primaryKey.columnNames = columnNames;
-                break;
+                return primaryKey;
             }
         } // for usage
-
-        // FIX FOR VIEW
-        if (primaryKey == null) {
-            IColumnMetadata idColumn = getColumn("id");
-            if (idColumn != null) {
-                primaryKey = new TableKey(getId());
-                primaryKey.columnNames = new String[] { idColumn.getName() };
-            }
-        }
-        this.primaryKey = primaryKey;
+        return primaryKey;
     }
 
     class ViewHandler

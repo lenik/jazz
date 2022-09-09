@@ -72,6 +72,33 @@ public abstract class DefaultTableViewMetadata
         return TableType.VIEW;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public TableKey getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(TableKey primaryKey) {
+        if (primaryKey == null)
+            throw new NullPointerException("primaryKey");
+        this.primaryKey = primaryKey;
+        for (IColumnMetadata column : columns) {
+            String columnName = column.getName();
+            boolean isPrimaryKey = primaryKey.contains(columnName);
+            if (isPrimaryKey != column.isPrimaryKey()) {
+                DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
+                mutable.setPrimaryKey(isPrimaryKey);
+            }
+        }
+    }
+
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
