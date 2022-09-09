@@ -1,6 +1,5 @@
 package net.bodz.lily.tool.javagen;
 
-import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.XmlSourceBuffer;
@@ -51,11 +50,10 @@ public class VFooMapper__xml
         {
             for (IColumnMetadata column : table.getColumns()) {
                 String tag = column.isPrimaryKey() ? "id" : "result";
-                String col_name = column.getName();
-                String colName = StringId.UL.toCamel(col_name);
+                Phrase name = Phrase.foo_bar(column.getName());
                 // Class<?> type = column.getType();
                 out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
-                        tag, colName, col_name);
+                        tag, name.fooBar, name.foo_bar);
             }
             out.leave();
         }
@@ -191,11 +189,10 @@ public class VFooMapper__xml
     }
 
     void filter(XmlSourceBuffer out, IColumnMetadata column) {
-        String col_name = column.getName();
-        String colName = StringId.UL.toCamel(col_name);
+        Phrase name = Phrase.foo_bar(column.getName());
 
         // MaskFieldModel mask = column.mask;
-        String maskName = colName;
+        String maskName = name.fooBar;
         boolean hasMain = true;
         boolean hasRange = false;
         boolean hasPattern = false;
@@ -225,7 +222,7 @@ public class VFooMapper__xml
 
             if (hasMain) {
                 out.printf("<if test=\"m.%s != null\">and %s = #{m.%s}</if>\n", //
-                        maskName, col_name, maskName);
+                        maskName, name.foo_bar, maskName);
             }
 
             if (hasRange) {
@@ -233,13 +230,13 @@ public class VFooMapper__xml
                 out.printf("<if test=\"m.%s!= null\">\n", range);
                 out.enter();
                 out.printf("<if test=\"m.%s.hasStartIncl\">and a.%s >= #{m.%s.start}</if>\n", //
-                        range, col_name, range);
+                        range, name.foo_bar, range);
                 out.printf("<if test=\"m.%s.hasStartExcl\">and a.%s > #{m.%s.start}</if>\n", //
-                        range, col_name, range);
+                        range, name.foo_bar, range);
                 out.printf("<if test=\"m.%s.hasEndIncl\">and a.%s &lt;= #{m.%s.end}</if>\n", //
-                        range, col_name, range);
+                        range, name.foo_bar, range);
                 out.printf("<if test=\"m.%s.hasEndExcl\">and a.%s &lt; #{m.%s.end}</if>\n", //
-                        range, col_name, range);
+                        range, name.foo_bar, range);
                 out.leave();
                 out.println("</if>");
             }
@@ -250,10 +247,10 @@ public class VFooMapper__xml
 
             if (hasMain)
                 out.printf("<if test=\"m.%s != null\">and %s = #{m.%s}</if>\n", //
-                        maskName, col_name, maskName);
+                        maskName, name.foo_bar, maskName);
             if (hasPattern)
                 out.printf("<if test=\"m.%sPattern != null\">and %s like '${m.%sPattern}'</if>\n", //
-                        maskName, col_name, maskName);
+                        maskName, name.foo_bar, maskName);
             break;
 
         // case TypeId.ENUM:
@@ -265,7 +262,7 @@ public class VFooMapper__xml
         case TypeId.BOOLEAN:
         default:
             out.printf("<if test=\"m.%s != null\">and %s = #{m.%s}</if>\n", //
-                    maskName, col_name, maskName);
+                    maskName, name.foo_bar, maskName);
         }
     }
 

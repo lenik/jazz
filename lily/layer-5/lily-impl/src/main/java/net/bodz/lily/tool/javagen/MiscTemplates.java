@@ -13,8 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.c.primitive.Primitives;
-import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -69,9 +67,8 @@ public class MiscTemplates {
             if (initVal == null)
                 continue;
 
-            String col_name = column.getName();
-            String colName = StringId.UL.toCamel(col_name);
-            out.println("this." + colName + " = " + initVal + ";");
+            Phrase name = Phrase.foo_bar(column.getName());
+            out.println("this." + name.fooBar + " = " + initVal + ";");
         }
         out.leave();
         out.println("}");
@@ -84,14 +81,13 @@ public class MiscTemplates {
                 if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
                     continue;
 
+            Phrase name = Phrase.foo_bar(column.getName());
             Class<?> type = column.getType();
-            String col_name = column.getName();
-            String COL_NAME = col_name.toUpperCase();
 
             if (type == String.class) {
                 int precision = column.getPrecision();
                 if (precision > 0)
-                    defs.add("public static final int N_" + COL_NAME + " = " + precision + ";");
+                    defs.add("public static final int N_" + name.FOO_BAR + " = " + precision + ";");
             }
         }
         if (!defs.isEmpty()) {
@@ -102,8 +98,7 @@ public class MiscTemplates {
     }
 
     public void columnField(JavaSourceWriter out, IColumnMetadata column) {
-        String col_name = column.getName();
-        String colName = StringId.UL.toCamel(col_name);
+        Phrase name = Phrase.foo_bar(column.getName());
         Class<?> type = column.getType();
 
         String description = column.getDescription();
@@ -117,13 +112,12 @@ public class MiscTemplates {
         if (notNull)
             out.println("@" + out.im.name(NotNull.class));
 
-        out.print(out.im.name(type) + " " + colName);
+        out.print(out.im.name(type) + " " + name.fooBar);
         out.println(";");
     }
 
     public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
-        String col_name = column.getName();
-        String colName = StringId.UL.toCamel(col_name);
+        Phrase name = Phrase.foo_bar(column.getName());
         Class<?> type = column.getType();
 
         String description = column.getDescription();
@@ -148,7 +142,7 @@ public class MiscTemplates {
         out.print("@" + out.im.name(Precision.class) + "(");
         {
             if (type == String.class) {
-                String N_COL_NAME = "N_" + col_name.toUpperCase();
+                String N_COL_NAME = "N_" + name.FOO_BAR;
                 out.print("value = " + N_COL_NAME);
             } else {
                 out.print("value = " + precision);
@@ -158,7 +152,7 @@ public class MiscTemplates {
             out.println(")");
         }
 
-        String N_COL_NAME = "N_" + col_name.toUpperCase();
+        String N_COL_NAME = "N_" + name.FOO_BAR;
         if (type == String.class) {
             if (precision > 0) {
                 out.println("@" + out.im.name(TextInput.class) + "(maxLength = " + N_COL_NAME + ")");
@@ -167,7 +161,7 @@ public class MiscTemplates {
 
         out.print("@" + out.im.name(Column.class));
         {
-            out.print("(name = \"" + col_name + "\"");
+            out.print("(name = \"" + name.foo_bar + "\"");
             if (unique)
                 out.print(", unique = true");
             if (notNull)
@@ -191,14 +185,12 @@ public class MiscTemplates {
         }
 
         String isOrGet = Boolean.class == type ? "is" : "get";
-        String ColName = Strings.ucfirst(colName);
 
         out.printf("public %s %s%s()", //
-                out.im.name(type), //
-                isOrGet, ColName);
+                out.im.name(type), isOrGet, name.FooBar);
         if (impl) {
             out.println(" {");
-            out.printf("    return %s;\n", colName);
+            out.printf("    return %s;\n", name.fooBar);
             out.println("}");
         } else {
             out.println(";");
@@ -209,11 +201,11 @@ public class MiscTemplates {
             out.println("/** " + description + " */");
         }
 
-        out.printf("public void set%s(%s%s value)", ColName, //
+        out.printf("public void set%s(%s%s value)", name.FooBar, //
                 (notNull && !type.isPrimitive()) ? ("@" + out.im.name(NotNull.class) + " ") : "", out.im.name(type));
         if (impl) {
             out.println(" {");
-            out.printf("    this.%s = value;\n", colName);
+            out.printf("    this.%s = value;\n", name.fooBar);
             out.println("}");
         } else {
             out.println(";");
@@ -238,31 +230,29 @@ public class MiscTemplates {
     }
 
     public void columnMaskFields(JavaSourceWriter out, IColumnMetadata column) {
-        String col_name = column.getName();
-        String colName = StringId.UL.toCamel(col_name);
+        Phrase name = Phrase.foo_bar(column.getName());
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
         if (description != null && !description.isEmpty())
             out.println("/** " + description + " */");
 
-        out.println(out.im.name(type) + " " + colName + ";");
+        out.println(out.im.name(type) + " " + name.fooBar + ";");
 
         if (type == String.class)
-            out.println("String " + colName + "Pattern;");
+            out.println("String " + name.fooBar + "Pattern;");
         else {
             Class<?> rangeType = rangeMapping.get(type);
             if (rangeType != null)
                 out.printf("%s %sRange = new %s();\n", //
                         out.im.name(rangeType), //
-                        colName, //
+                        name.fooBar, //
                         out.im.name(rangeType));
         }
     }
 
     public void columnMaskAccessors(JavaSourceWriter out, IColumnMetadata column) {
-        String col_name = column.getName();
-        String colName = StringId.UL.toCamel(col_name);
+        Phrase name = Phrase.foo_bar(column.getName());
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
@@ -270,44 +260,42 @@ public class MiscTemplates {
             out.println("/** " + description + " */");
         }
 
-        String ColName = Strings.ucfirst(colName);
-
         out.printf("public %s get%s() {\n", //
                 out.im.name(type), //
-                ColName);
-        out.printf("    return %s;\n", colName);
+                name.FooBar);
+        out.printf("    return %s;\n", name.fooBar);
         out.println("}");
         out.println();
 
         if (description != null && !description.isEmpty()) {
             out.println("/** " + description + " */");
         }
-        out.printf("public void set%s(%s value) {\n", ColName, //
+        out.printf("public void set%s(%s value) {\n", name.FooBar, //
                 out.im.name(type));
-        out.printf("    this.%s = value;\n", colName);
+        out.printf("    this.%s = value;\n", name.fooBar);
         out.println("}");
 
         if (type == String.class) {
             out.println();
-            out.printf("public String get%sPattern() {\n", ColName);
-            out.printf("    return %sPattern;\n", colName);
+            out.printf("public String get%sPattern() {\n", name.FooBar);
+            out.printf("    return %sPattern;\n", name.fooBar);
             out.println("}");
             out.println();
-            out.printf("public void set%sPattern(%s value) {\n", ColName, //
+            out.printf("public void set%sPattern(%s value) {\n", name.FooBar, //
                     out.im.name(type));
-            out.printf("    this.%sPattern = value;\n", colName);
+            out.printf("    this.%sPattern = value;\n", name.fooBar);
             out.println("}");
         } else {
             Class<?> rangeType = rangeMapping.get(type);
             if (rangeType != null) {
                 String RT = out.im.name(rangeType);
                 out.println();
-                out.printf("public %s get%sRange() {\n", RT, ColName);
-                out.printf("    return %sRange;\n", colName);
+                out.printf("public %s get%sRange() {\n", RT, name.FooBar);
+                out.printf("    return %sRange;\n", name.fooBar);
                 out.println("}");
                 out.println();
-                out.printf("public void set%sRange(%s range) {\n", ColName, RT);
-                out.printf("    this.%sRange = range;\n", colName);
+                out.printf("public void set%sRange(%s range) {\n", name.FooBar, RT);
+                out.printf("    this.%sRange = range;\n", name.fooBar);
                 out.println("}");
             }
         }

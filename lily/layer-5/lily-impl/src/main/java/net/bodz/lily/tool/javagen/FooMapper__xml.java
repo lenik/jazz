@@ -1,6 +1,5 @@
 package net.bodz.lily.tool.javagen;
 
-import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
@@ -79,14 +78,13 @@ public class FooMapper__xml
                 out.enter();
                 boolean first = true;
                 for (IColumnMetadata column : table.getColumns()) {
-                    String col_name = column.getName();
-                    String colName = StringId.UL.toCamel(col_name);
+                    Phrase name = Phrase.foo_bar(column.getName());
 
                     if (!first)
                         out.print(",\n");
 
                     // insertVal
-                    out.print("#{" + colName + "}");
+                    out.print("#{" + name.fooBar + "}");
 
                     first = false;
                 }
@@ -112,10 +110,8 @@ public class FooMapper__xml
                 if (co)
                     out.println("<include refid=\"co.setUS\" />");
                 for (IColumnMetadata column : table.getColumns()) {
-                    String col_name = column.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-
-                    out.printf("%s = #{%s}", col_name, colName);
+                    Phrase name = Phrase.foo_bar(column.getName());
+                    out.printf("%s = #{%s}", name.foo_bar, name.fooBar);
                     out.println(",");
                 }
                 out.leave();
