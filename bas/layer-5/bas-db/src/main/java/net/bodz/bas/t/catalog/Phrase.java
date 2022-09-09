@@ -1,14 +1,14 @@
-package net.bodz.lily.tool.javagen;
+package net.bodz.bas.t.catalog;
 
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.Strings;
 
 public class Phrase {
 
-    String foo_bar;
-    String FOO_BAR;
-    String fooBar;
-    String FooBar;
+    public String foo_bar;
+    public String FOO_BAR;
+    public String fooBar;
+    public String FooBar;
 
     public static Phrase foo_bar(String s) {
         Phrase phrase = new Phrase();

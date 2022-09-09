@@ -64,6 +64,10 @@ public interface IColumnMetadata
 
     String getName();
 
+    default Phrase nam() {
+        return Phrase.foo_bar(getName());
+    }
+
     String getLabel();
 
     String getDescription();

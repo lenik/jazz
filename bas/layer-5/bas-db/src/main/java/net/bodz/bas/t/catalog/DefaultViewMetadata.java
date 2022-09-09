@@ -42,10 +42,19 @@ public class DefaultViewMetadata
         if (catalog == null)
             return;
 
-        TableKey primaryKey = getPrimaryKey();
         if (primaryKey == null) {
-            primaryKey = findPrimaryKeyFromForeignTables(catalog);
-            setPrimaryKey(primaryKey);
+            TableKey primaryKey = findPrimaryKeyFromForeignTables(catalog);
+
+            // FIX FOR VIEW
+            if (primaryKey == null) {
+                IColumnMetadata idColumn = getColumn("id");
+                if (idColumn != null) {
+                    primaryKey = new TableKey(getId());
+                    primaryKey.columnNames = new String[] { idColumn.getName() };
+                }
+            }
+
+            this.primaryKey = primaryKey;
         }
     }
 
