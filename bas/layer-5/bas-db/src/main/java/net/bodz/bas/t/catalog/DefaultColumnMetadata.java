@@ -58,6 +58,8 @@ public class DefaultColumnMetadata
     int precision;
     int scale;
 
+    String defaultValue;
+
     public DefaultColumnMetadata(IRowSetMetadata parent) {
         if (parent == null)
             throw new NullPointerException("parent");
@@ -283,6 +285,15 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    @Override
     public Object parseColumnValue(String s)
             throws ParseException {
         IParser<?> parser = Typers.getTyper(type, IParser.class);
@@ -421,7 +432,6 @@ public class DefaultColumnMetadata
         columnDisplaySize = jdbcMetadata.getColumnDisplaySize(columnIndex);
     }
 
-    // @SuppressWarnings("unused")
     public void readObject(ResultSet rs)
             throws SQLException {
         name = rs.getString("COLUMN_NAME");
@@ -437,7 +447,7 @@ public class DefaultColumnMetadata
         nullable = rs.getInt("NULLABLE");
         // String isNullable = rs.getString("IS_NULLABLE"); // YES NO
         description = rs.getString("REMARKS");
-        // String columnDef = rs.getString("COLUMN_DEF");
+        defaultValue = rs.getString("COLUMN_DEF");
         // int sqlDataType = rs.getInt("SQL_DATA_TYPE");
         // Integer sqlDatetimeSub = (Integer) rs.getObject("SQL_DATETIME_SUB");
         // int charOctetLength = rs.getInt("CHAR_OCTET_LENGTH");
@@ -483,6 +493,8 @@ public class DefaultColumnMetadata
         precision = o.getInt(K_PRECISION, 0);
         scale = o.getInt(K_SCALE, 0);
         columnDisplaySize = o.getInt(K_COLUMN_DISPLAY_SIZE, 0);
+
+        defaultValue = o.getString(K_DEFAULT_VALUE);
     }
 
     /** ⇱ Implementation Of {@link IXmlForm}. */
@@ -514,6 +526,8 @@ public class DefaultColumnMetadata
         precision = o.a(K_PRECISION).getInt(0);
         scale = o.a(K_SCALE).getInt(0);
         columnDisplaySize = o.a(K_COLUMN_DISPLAY_SIZE).getInt(0);
+
+        defaultValue = o.a(K_DEFAULT_VALUE).getString();
     }
 
     @Override
