@@ -1,5 +1,6 @@
 package net.bodz.bas.c.autowire;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,8 +46,10 @@ public class ProjectList {
         Set<String> names = getTopLevelNames();
         if (names.isEmpty())
             throw new IllegalConfigException("No project.");
-        if (names.size() > 1)
-            throw new IllegalConfigException("More than one top level project.");
+        if (names.size() > 1) {
+            dump();
+            throw new IllegalConfigException("More than one top level project: " + names);
+        }
         return names.iterator().next();
     }
 
@@ -129,6 +132,16 @@ public class ProjectList {
                 depNames[i] = depName;
             }
             dependenciesMap.put(clazz, depNames);
+        }
+    }
+
+    public void dump() {
+        for (String name : nameMap.keySet()) {
+            System.err.println("project " + name + " := " + nameMap.get(name));
+        }
+        for (Class<?> clazz : dependenciesMap.keySet()) {
+            String[] deps = dependenciesMap.get(clazz);
+            System.err.println(clazz + " => " + Arrays.asList(deps));
         }
     }
 
