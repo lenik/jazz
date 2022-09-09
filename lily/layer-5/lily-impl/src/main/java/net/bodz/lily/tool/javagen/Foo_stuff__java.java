@@ -27,6 +27,9 @@ public class Foo_stuff__java
         else
             parent = out.im.name(StructRow.class);
 
+        String description = tableView.getDescription();
+        templates.javaDoc(out, description);
+
         if (idType != null)
             out.printf("@%s(%s.class)\n", //
                     out.im.name(IdType.class), //

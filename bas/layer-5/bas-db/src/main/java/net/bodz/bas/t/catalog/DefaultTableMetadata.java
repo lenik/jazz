@@ -27,7 +27,6 @@ public class DefaultTableMetadata
 
     static final Logger logger = LoggerFactory.getLogger(DefaultTableMetadata.class);
 
-    TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
 
     public DefaultTableMetadata() {
@@ -35,25 +34,6 @@ public class DefaultTableMetadata
 
     public DefaultTableMetadata(ISchemaMetadata parent) {
         super(parent);
-    }
-
-    @Override
-    public TableKey getPrimaryKey() {
-        return primaryKey;
-    }
-
-    public void setPrimaryKey(TableKey primaryKey) {
-        if (primaryKey == null)
-            throw new NullPointerException("primaryKey");
-        this.primaryKey = primaryKey;
-        for (IColumnMetadata column : columns) {
-            String columnName = column.getName();
-            boolean isPrimaryKey = primaryKey.contains(columnName);
-            if (isPrimaryKey != column.isPrimaryKey()) {
-                DefaultColumnMetadata m = (DefaultColumnMetadata) column;
-                m.setPrimaryKey(isPrimaryKey);
-            }
-        }
     }
 
     public void parsePrimaryKey(String keyStr) {

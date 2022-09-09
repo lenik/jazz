@@ -30,6 +30,22 @@ public class MiscTemplates {
         this.project = project;
     }
 
+    public void javaDoc(JavaSourceWriter out, String doc) {
+        javaDoc(out, doc, 80);
+    }
+
+    public void javaDoc(JavaSourceWriter out, String doc, int width) {
+        if (doc == null)
+            return;
+        doc = doc.trim();
+        if (doc.isEmpty())
+            return;
+
+        out.println("/**");
+        out.println(" * " + doc);
+        out.println(" */");
+    }
+
     public QualifiedName getIdType(ITableViewMetadata table) {
         IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
