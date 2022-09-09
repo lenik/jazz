@@ -15,11 +15,14 @@ import javax.persistence.Id;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.bas.t.range.*;
 
 public class MiscTemplates {
@@ -30,11 +33,11 @@ public class MiscTemplates {
         this.project = project;
     }
 
-    public void javaDoc(JavaSourceWriter out, String doc) {
+    public void javaDoc(ITreeOut out, String doc) {
         javaDoc(out, doc, 80);
     }
 
-    public void javaDoc(JavaSourceWriter out, String doc, int width) {
+    public void javaDoc(ITreeOut out, String doc, int width) {
         if (doc == null)
             return;
         doc = doc.trim();
@@ -83,21 +86,20 @@ public class MiscTemplates {
             if (initVal == null)
                 continue;
 
-            Phrase name = Phrase.foo_bar(column.getName());
-            out.println("this." + name.fooBar + " = " + initVal + ";");
+            out.println("this." + column.nam().fooBar + " = " + initVal + ";");
         }
         out.leave();
         out.println("}");
     }
 
-    public void N_consts(JavaSourceWriter out, ITableViewMetadata table, Boolean wantPrimaryKey) {
+    public void N_consts(ITreeOut out, ITableViewMetadata table, Boolean wantPrimaryKey) {
         List<String> defs = new ArrayList<>();
         for (IColumnMetadata column : table.getColumns()) {
             if (wantPrimaryKey != null)
                 if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
                     continue;
 
-            Phrase name = Phrase.foo_bar(column.getName());
+            Phrase name = column.nam();
             Class<?> type = column.getType();
 
             if (type == String.class) {
@@ -114,7 +116,6 @@ public class MiscTemplates {
     }
 
     public void columnField(JavaSourceWriter out, IColumnMetadata column) {
-        Phrase name = Phrase.foo_bar(column.getName());
         Class<?> type = column.getType();
 
         String description = column.getDescription();
@@ -128,12 +129,12 @@ public class MiscTemplates {
         if (notNull)
             out.println("@" + out.im.name(NotNull.class));
 
-        out.print(out.im.name(type) + " " + name.fooBar);
+        out.print(out.im.name(type) + " " + column.nam().fooBar);
         out.println(";");
     }
 
     public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
-        Phrase name = Phrase.foo_bar(column.getName());
+        Phrase name = column.nam();
         Class<?> type = column.getType();
 
         String description = column.getDescription();
@@ -246,7 +247,7 @@ public class MiscTemplates {
     }
 
     public void columnMaskFields(JavaSourceWriter out, IColumnMetadata column) {
-        Phrase name = Phrase.foo_bar(column.getName());
+        Phrase name = column.nam();
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
@@ -268,7 +269,7 @@ public class MiscTemplates {
     }
 
     public void columnMaskAccessors(JavaSourceWriter out, IColumnMetadata column) {
-        Phrase name = Phrase.foo_bar(column.getName());
+        Phrase name = column.nam();
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
@@ -314,6 +315,30 @@ public class MiscTemplates {
                 out.printf("    this.%sRange = range;\n", name.fooBar);
                 out.println("}");
             }
+        }
+    }
+
+    public void sqlColumnNameList(ITreeOut out, List<IColumnMetadata> columns, String prefix) {
+        int n = columns.size();
+        for (int i = 0; i < n; i++) {
+            IColumnMetadata column = columns.get(i);
+            Phrase name = column.nam();
+            out.print(prefix + name.foo_bar);
+            if (i != n - 1)
+                out.print(", ");
+            out.println();
+        }
+    }
+
+    public void sqlMatchPrimaryKey(ITreeOut out, IColumnMetadata[] keyColumns) {
+        if (keyColumns.length == 0)
+            throw new IllegalUsageException("Can't update table without primary key.");
+        for (int i = 0; i < keyColumns.length; i++) {
+            IColumnMetadata column = keyColumns[i];
+            Phrase name = column.nam();
+            if (i != 0)
+                out.print("and ");
+            out.println(name.foo_bar + " = #{" + name.fooBar + "}");
         }
     }
 

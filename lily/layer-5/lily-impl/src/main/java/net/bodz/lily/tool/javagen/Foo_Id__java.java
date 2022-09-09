@@ -9,6 +9,7 @@ import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 
 public class Foo_Id__java
         extends JavaGen__java {
@@ -76,16 +77,15 @@ public class Foo_Id__java
         // simple arguments listing constructor
         out.print("public " + project.Foo_Id.name + "(");
         for (int i = 0; i < kv.length; i++) {
-            Phrase name = Phrase.foo_bar(kv[i].getName());
             if (i != 0)
                 out.print(", ");
-            out.printf("%s %s", imports.name(kv[i].getType()), name.fooBar);
+            out.printf("%s %s", imports.name(kv[i].getType()), kv[i].nam().fooBar);
         }
         out.println(") {");
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = Phrase.foo_bar(k.getName());
+                Phrase name = k.nam();
                 out.printf("this.%s = %s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
@@ -98,7 +98,7 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = Phrase.foo_bar(k.getName());
+                Phrase name = k.nam();
                 out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
@@ -111,7 +111,7 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = Phrase.foo_bar(k.getName());
+                Phrase name = k.nam();
                 out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
@@ -138,10 +138,9 @@ public class Foo_Id__java
         int i = 0;
         out.print("return " + imports.name(Objects.class) + ".hash(");
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            Phrase name = Phrase.foo_bar(column.getName());
             if (i != 0)
                 out.print(", ");
-            out.print(name.fooBar);
+            out.print(column.nam().fooBar);
             i++;
         }
         out.println(");");
@@ -164,7 +163,7 @@ public class Foo_Id__java
         out.println(project.Foo_Id.name + " o = (" + project.Foo_Id.name + ") obj;");
 
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            Phrase name = Phrase.foo_bar(column.getName());
+            Phrase name = column.nam();
             out.printf("if (! Objects.equals(%s, o.%s)) return false;\n", //
                     name.fooBar, name.fooBar);
         }
@@ -181,7 +180,7 @@ public class Foo_Id__java
         out.println("StringBuilder sb = new StringBuilder(100);");
         int i = 0;
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            Phrase name = Phrase.foo_bar(column.getName());
+            Phrase name = column.nam();
             if (i != 0)
                 out.println("sb.append(\", " + name.fooBar + " \" + " + name.fooBar + ");");
             else

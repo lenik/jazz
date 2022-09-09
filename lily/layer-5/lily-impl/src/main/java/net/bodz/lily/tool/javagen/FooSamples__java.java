@@ -15,6 +15,7 @@ import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ISampleGenerator;
 import net.bodz.lily.model.base.CoObject;
@@ -55,7 +56,7 @@ public class FooSamples__java
                         out.im.name(project.Foo), out.im.name(project.Foo));
 
                 for (IColumnMetadata column : table.getColumns()) {
-                    Phrase name = Phrase.foo_bar(column.getName());
+                    Phrase name = column.nam();
                     Class<?> type = column.getType();
                     // FK..
                     if (CoObject.class.isAssignableFrom(type))
