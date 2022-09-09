@@ -86,9 +86,9 @@ public abstract class DefaultTableViewMetadata
     }
 
     public void setPrimaryKey(TableKey primaryKey) {
-        if (primaryKey == null)
-            throw new NullPointerException("primaryKey");
         this.primaryKey = primaryKey;
+        if (primaryKey == null)
+            return;
         for (IColumnMetadata column : columns) {
             String columnName = column.getName();
             boolean isPrimaryKey = primaryKey.contains(columnName);
