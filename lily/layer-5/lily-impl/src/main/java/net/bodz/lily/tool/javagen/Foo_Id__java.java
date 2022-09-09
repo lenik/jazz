@@ -3,7 +3,6 @@ package net.bodz.lily.tool.javagen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.codegen.ImportSet;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.io.ITreeOut;
@@ -77,19 +76,17 @@ public class Foo_Id__java
         // simple arguments listing constructor
         out.print("public " + project.Foo_Id.name + "(");
         for (int i = 0; i < kv.length; i++) {
-            String col_name = kv[i].getName();
-            String colName = StringId.UL.toCamel(col_name);
+            Phrase name = Phrase.foo_bar(kv[i].getName());
             if (i != 0)
                 out.print(", ");
-            out.printf("%s %s", imports.name(kv[i].getType()), colName);
+            out.printf("%s %s", imports.name(kv[i].getType()), name.fooBar);
         }
         out.println(") {");
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                String col_name = k.getName();
-                String colName = StringId.UL.toCamel(col_name);
-                out.printf("this.%s = %s;\n", colName, colName);
+                Phrase name = Phrase.foo_bar(k.getName());
+                out.printf("this.%s = %s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
         }
@@ -101,9 +98,8 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                String col_name = k.getName();
-                String colName = StringId.UL.toCamel(col_name);
-                out.printf("this.%s = o.%s;\n", colName, colName);
+                Phrase name = Phrase.foo_bar(k.getName());
+                out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
         }
@@ -115,9 +111,8 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                String col_name = k.getName();
-                String colName = StringId.UL.toCamel(col_name);
-                out.printf("this.%s = o.%s;\n", colName, colName);
+                Phrase name = Phrase.foo_bar(k.getName());
+                out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
             }
             out.leave();
         }
@@ -143,11 +138,10 @@ public class Foo_Id__java
         int i = 0;
         out.print("return " + imports.name(Objects.class) + ".hash(");
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            String col_name = column.getName();
-            String colName = StringId.UL.toCamel(col_name);
+            Phrase name = Phrase.foo_bar(column.getName());
             if (i != 0)
                 out.print(", ");
-            out.print(colName);
+            out.print(name.fooBar);
             i++;
         }
         out.println(");");
@@ -170,10 +164,9 @@ public class Foo_Id__java
         out.println(project.Foo_Id.name + " o = (" + project.Foo_Id.name + ") obj;");
 
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            String col_name = column.getName();
-            String colName = StringId.UL.toCamel(col_name);
+            Phrase name = Phrase.foo_bar(column.getName());
             out.printf("if (! Objects.equals(%s, o.%s)) return false;\n", //
-                    colName, colName);
+                    name.fooBar, name.fooBar);
         }
         out.println("return true;");
         out.leave();
@@ -188,12 +181,11 @@ public class Foo_Id__java
         out.println("StringBuilder sb = new StringBuilder(100);");
         int i = 0;
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            String col_name = column.getName();
-            String colName = StringId.UL.toCamel(col_name);
+            Phrase name = Phrase.foo_bar(column.getName());
             if (i != 0)
-                out.println("sb.append(\", " + colName + " \" + " + colName + ");");
+                out.println("sb.append(\", " + name.fooBar + " \" + " + name.fooBar + ");");
             else
-                out.println("sb.append(\"" + colName + " \" + " + colName + ");");
+                out.println("sb.append(\"" + name.fooBar + " \" + " + name.fooBar + ");");
             i++;
         }
         out.println("return sb.toString();");

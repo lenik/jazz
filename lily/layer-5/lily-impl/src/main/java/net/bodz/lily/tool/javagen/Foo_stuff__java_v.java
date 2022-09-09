@@ -1,7 +1,5 @@
 package net.bodz.lily.tool.javagen;
 
-import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
@@ -22,6 +20,7 @@ public class Foo_stuff__java_v
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata tableView) {
         IViewMetadata view = (IViewMetadata) tableView;
+
         QualifiedName idType = templates.getIdType(view);
 
         String parent;
@@ -62,26 +61,22 @@ public class Foo_stuff__java_v
                 out.printf("public void id(%s id) {\n", out.im.name(idType));
                 // out.printf(" this.id = id;\n");
                 for (IColumnMetadata k : primaryKeyCols) {
-                    String col_name = k.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-                    String ColName = Strings.ucfirst(colName);
-                    out.printf("    this.%s = id.get%s();\n", colName, ColName);
+                    Phrase name = Phrase.foo_bar(k.getName());
+                    out.printf("    this.%s = id.get%s();\n", name.fooBar, name.FooBar);
                 }
                 out.printf("}\n");
             } else {
                 for (IColumnMetadata k : primaryKeyCols) {
-                    String col_name = k.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-                    String ColName = Strings.ucfirst(colName);
+                    Phrase name = Phrase.foo_bar(k.getName());
                     out.println();
                     out.println("@Override");
                     out.printf("public %s id() {\n", out.im.name(idType));
-                    out.printf("    return get%s();\n", ColName);
+                    out.printf("    return get%s();\n", name.FooBar);
                     out.printf("}\n");
                     out.println();
                     out.println("@Override");
                     out.printf("public void id(%s id) {\n", out.im.name(idType));
-                    out.printf("    this.set%s(id);\n", ColName);
+                    out.printf("    this.set%s(id);\n", name.FooBar);
                     out.printf("}\n");
                 }
             }
