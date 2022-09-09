@@ -5,6 +5,7 @@ import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 
 public class VFooMapper__xml
         extends JavaGen__xml {
@@ -48,12 +49,16 @@ public class VFooMapper__xml
         out.printf("<resultMap id=\"objlist_map\" type=\"%s\">\n", project.Foo);
         out.enter();
         {
-            for (IColumnMetadata column : table.getColumns()) {
-                String tag = column.isPrimaryKey() ? "id" : "result";
-                Phrase name = Phrase.foo_bar(column.getName());
-                // Class<?> type = column.getType();
-                out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
-                        tag, name.fooBar, name.foo_bar);
+            for (int pass = 0; pass < 2; pass++) {
+                for (IColumnMetadata column : table.getColumns()) {
+                    if (pass == 0 != column.isPrimaryKey())
+                        continue;
+                    Phrase name = column.nam();
+                    // Class<?> type = column.getType();
+                    String tag = column.isPrimaryKey() ? "id" : "result";
+                    out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
+                            tag, name.fooBar, name.foo_bar);
+                }
             }
             out.leave();
         }
@@ -65,11 +70,11 @@ public class VFooMapper__xml
         out.enter();
         {
             out.println("select");
+
             out.enter();
-            {
-                out.println("a.*");
-                out.leave();
-            }
+            templates.sqlColumnNameList(out, table.getColumns(), "a.");
+            out.leave();
+
             out.println("from " + table.getCompactName() + " a");
             out.println("]]>");
             out.leave();
@@ -82,11 +87,11 @@ public class VFooMapper__xml
         out.enter();
         {
             out.println("select");
+
             out.enter();
-            {
-                out.println("a.*");
-                out.leave();
-            }
+            templates.sqlColumnNameList(out, table.getColumns(), "a.");
+            out.leave();
+
             out.println("from " + table.getCompactName() + " a");
             // out.enter();
             // out.println("left join zj_qfx_dm_mx m on a.mx_dm=m.mx_dm");
@@ -189,7 +194,7 @@ public class VFooMapper__xml
     }
 
     void filter(XmlSourceBuffer out, IColumnMetadata column) {
-        Phrase name = Phrase.foo_bar(column.getName());
+        Phrase name = column.nam();
 
         // MaskFieldModel mask = column.mask;
         String maskName = name.fooBar;

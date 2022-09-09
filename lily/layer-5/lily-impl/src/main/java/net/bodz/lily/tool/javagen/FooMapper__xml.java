@@ -4,6 +4,7 @@ import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 
 public class FooMapper__xml
         extends VFooMapper__xml {
@@ -61,11 +62,13 @@ public class FooMapper__xml
                 boolean first = true;
 
                 for (IColumnMetadata column : table.getColumns()) {
+                    if (ColumnUtils.isIgnoredInCreation(column))
+                        continue;
+
                     if (!first)
                         out.print(",\n");
 
-                    // insertKey
-                    out.print(column.getName());
+                    out.print(column.nam().foo_bar);
 
                     first = false;
                 }
@@ -73,18 +76,17 @@ public class FooMapper__xml
                 out.println();
             }
 
-            out.println(") values(");
+            out.enterln(") values(");
             {
-                out.enter();
                 boolean first = true;
                 for (IColumnMetadata column : table.getColumns()) {
-                    Phrase name = Phrase.foo_bar(column.getName());
+                    if (ColumnUtils.isIgnoredInCreation(column))
+                        continue;
 
                     if (!first)
                         out.print(",\n");
 
-                    // insertVal
-                    out.print("#{" + name.fooBar + "}");
+                    out.print("#{" + column.nam().fooBar + "}");
 
                     first = false;
                 }
@@ -99,45 +101,42 @@ public class FooMapper__xml
     }
 
     void update(XmlSourceBuffer out, ITableMetadata table) {
-        out.println("<update id=\"update\">");
+        out.enterln("<update id=\"update\">");
         {
-            out.enter();
             out.printf("update %s\n", table.getCompactName());
-            out.println("<set>");
-            out.enter();
+            out.enterln("<set>");
             {
                 boolean co = false;
                 if (co)
                     out.println("<include refid=\"co.setUS\" />");
                 for (IColumnMetadata column : table.getColumns()) {
-                    Phrase name = Phrase.foo_bar(column.getName());
+                    if (column.isPrimaryKey())
+                        continue;
+                    Phrase name = column.nam();
                     out.printf("%s = #{%s}", name.foo_bar, name.fooBar);
                     out.println(",");
                 }
-                out.leave();
             }
-            out.println("</set>");
+            out.lnleave("</set>");
 
-            out.println("<where>");
-            out.enter();
-            {
-                out.println("    id = #{id}");
-                out.leave();
-            }
-            out.println("</where>");
+            out.enterln("<where>");
+            templates.sqlMatchPrimaryKey(out, table.getPrimaryKeyColumns());
+            out.lnleave("</where>");
         }
-        out.leave();
-        out.println("</update>");
+        out.lnleave("</update>");
     }
 
     void delete(XmlSourceBuffer out, ITableMetadata table) {
-        out.println("<delete id=\"delete\">");
-        out.enter();
+        out.enterln("<delete id=\"delete\">");
         {
-            out.println("delete from " + table.getCompactName() + " where id = #{id}");
-            out.leave();
+            out.println("delete from " + table.getCompactName());
+
+            out.enterln("<where>");
+            templates.sqlMatchPrimaryKey(out, table.getPrimaryKeyColumns());
+            out.lnleave("</where>");
+
         }
-        out.println("</delete>");
+        out.lnleave("</delete>");
     }
 
 }

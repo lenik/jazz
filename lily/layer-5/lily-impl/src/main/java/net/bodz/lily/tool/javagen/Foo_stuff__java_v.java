@@ -5,6 +5,7 @@ import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.IViewMetadata;
+import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.StructRow;
@@ -61,13 +62,13 @@ public class Foo_stuff__java_v
                 out.printf("public void id(%s id) {\n", out.im.name(idType));
                 // out.printf(" this.id = id;\n");
                 for (IColumnMetadata k : primaryKeyCols) {
-                    Phrase name = Phrase.foo_bar(k.getName());
+                    Phrase name = k.nam();
                     out.printf("    this.%s = id.get%s();\n", name.fooBar, name.FooBar);
                 }
                 out.printf("}\n");
             } else {
                 for (IColumnMetadata k : primaryKeyCols) {
-                    Phrase name = Phrase.foo_bar(k.getName());
+                    Phrase name = k.nam();
                     out.println();
                     out.println("@Override");
                     out.printf("public %s id() {\n", out.im.name(idType));
