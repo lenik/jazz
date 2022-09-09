@@ -7,9 +7,7 @@ import java.util.Random;
 
 import net.bodz.bas.c.java.lang.OptionNames;
 import net.bodz.bas.c.java.util.Dates;
-import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.c.string.StringQuote;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.EnglishTextGenerator;
@@ -57,10 +55,7 @@ public class FooSamples__java
                         out.im.name(project.Foo), out.im.name(project.Foo));
 
                 for (IColumnMetadata column : table.getColumns()) {
-                    String col_name = column.getName();
-                    String colName = StringId.UL.toCamel(col_name);
-                    String ColName = Strings.ucfirst(colName);
-
+                    Phrase name = Phrase.foo_bar(column.getName());
                     Class<?> type = column.getType();
                     // FK..
                     if (CoObject.class.isAssignableFrom(type))
@@ -80,19 +75,18 @@ public class FooSamples__java
                     } else if (type == BigDecimal.class) {
                         int precision = column.getPrecision();
                         int scale = column.getScale();
-                        int maxLen = precision;
+                        int intLen = precision;
                         if (scale != 0)
-                            maxLen -= scale + 1;
+                            intLen -= scale + 1;
 
-                        int len = random.nextInt(maxLen) + 1;
-                        StringBuilder sb = new StringBuilder(len);
-                        for (int i = 0; i < len; i++) {
-                            int digit;
-                            do {
-                                digit = random.nextInt(10);
-                            } while (digit == 0 && i == 0);
-                            sb.append('0' + digit);
+                        StringBuilder sb = new StringBuilder(precision);
+                        randomDigits(sb, random.nextInt(intLen) + 1, true);
+
+                        if (scale != 0 && random.nextBoolean()) {
+                            sb.append('.');
+                            randomDigits(sb, scale, false);
                         }
+
                         out.im.name(BigDecimal.class);
                         quoted = "new BigDecimal(\"" + sb + "\")";
                     } else if (type == BigInteger.class) {
@@ -147,7 +141,7 @@ public class FooSamples__java
                         }
                     }
                     if (quoted != null)
-                        out.printf("a.set%s(%s);\n", ColName, quoted);
+                        out.printf("a.set%s(%s);\n", name.FooBar, quoted);
                 }
                 out.println("return a;");
                 out.leave();
@@ -157,7 +151,21 @@ public class FooSamples__java
             out.leave();
         }
         out.println("}");
+    }
 
+    void randomDigits(StringBuilder sb, int len, boolean noZeroStart) {
+        for (int i = 0; i < len; i++) {
+            int digit;
+            while (true) {
+                digit = random.nextInt(10);
+                if (i == 0)
+                    if (noZeroStart && digit == 0)
+                        continue;
+                break;
+            }
+            char ch = (char) ('0' + digit);
+            sb.append(ch);
+        }
     }
 
 }
