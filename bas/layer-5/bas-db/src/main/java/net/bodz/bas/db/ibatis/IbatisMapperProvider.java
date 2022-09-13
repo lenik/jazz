@@ -1,7 +1,6 @@
 package net.bodz.bas.db.ibatis;
 
 import java.io.ByteArrayInputStream;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -179,7 +178,7 @@ public class IbatisMapperProvider
         if (!sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
             return null;
 
-        InvocationHandler handler;
+        AbstractMapperProxy handler;
         if (session != null) {
             handler = new SharedSessionMapperProxy(session, mapperClass);
         } else {
@@ -188,6 +187,8 @@ public class IbatisMapperProvider
 
         Object proxy = Proxy.newProxyInstance(mapperClass.getClassLoader(), //
                 new Class<?>[] { mapperClass }, handler);
+        handler.proxyThis = proxy;
+
         return mapperClass.cast(proxy);
     }
 

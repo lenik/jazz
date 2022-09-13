@@ -4,8 +4,8 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
+import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -123,8 +123,8 @@ public abstract class CoObjectIndex<T extends CoObject>
             Long id = Long.parseLong(name);
 
             Class<?> entityClass = getObjectType();
-            Class<IMapperTemplate<?, Object>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-            IMapperTemplate<?, Object> mapper = getDataContext().getMapper(mapperClass);
+            Class<IGenericMapper<?, Object>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
+            IGenericMapper<?, Object> mapper = getDataContext().getMapper(mapperClass);
             if (mapper == null)
                 throw new IllegalUsageException("No mapper for " + entityClass);
 

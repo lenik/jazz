@@ -2,11 +2,11 @@ package net.bodz.violet;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.test.AbstractTableTest;
 
-public abstract class VioletMapperTest<T extends CoObject, M, mapper_t extends IMapperTemplate<T, M>>
+public abstract class VioletMapperTest<T extends CoObject, M, mapper_t extends IGenericMapper<T, M>>
         extends AbstractTableTest<T, M, mapper_t> {
 
     public VioletMapperTest() {
