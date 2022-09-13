@@ -45,10 +45,15 @@ public class TableOfPathProps
     public static final String ROW_ARRAY = "array";
     public static final String ROW_OBJECT = "object";// default
 
+    public static final String K_TOTAL_COUNT = "totalCount";
+
     Class<?> objectType;
     Map<String, IPropertyAccessor> pathAccessorMap = new LinkedHashMap<String, IPropertyAccessor>();
     Map<String, String> formats = new HashMap<String, String>();
     List<?> list;
+
+    boolean wantTotalCount;
+    Long totalCount;
 
     String rowFormat = ROW_ARRAY;
 
@@ -132,6 +137,22 @@ public class TableOfPathProps
         this.list = list;
     }
 
+    public boolean isWantTotalCount() {
+        return wantTotalCount;
+    }
+
+    public void setWantTotalCount(boolean wantTotalCount) {
+        this.wantTotalCount = wantTotalCount;
+    }
+
+    public Long getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Long totalCount) {
+        this.totalCount = totalCount;
+    }
+
     public List<?> convert(Object obj, List<String> columns)
             throws ReflectiveOperationException {
         if (obj == null)
@@ -172,6 +193,7 @@ public class TableOfPathProps
             parseFormats(formats);
 
         rowFormat = map.getString("row", rowFormat);
+        wantTotalCount = map.getBoolean("counting", wantTotalCount);
     }
 
     @Override
@@ -214,6 +236,7 @@ public class TableOfPathProps
             out.endArray();
         }
 
+        out.entryNotNull(K_TOTAL_COUNT, totalCount);
     }
 
     void writeRowAsArray(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
