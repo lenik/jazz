@@ -31,9 +31,15 @@ public class VarMapLoader {
             throw new NullPointerException("obj");
         if (map == null)
             throw new NullPointerException("map");
+
         IType type = types.loadType(clazz, obj);
+
         for (String key : map.keySet()) {
             Object val = map.get(key);
+
+            if (key.endsWith("[]"))
+                key = key.substring(0, key.length() - 2);
+
             load(type, obj, key, val);
         }
     }

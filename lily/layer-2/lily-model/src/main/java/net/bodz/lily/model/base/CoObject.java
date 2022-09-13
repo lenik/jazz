@@ -224,7 +224,7 @@ public abstract class CoObject
         else
             sb.append(id);
         sb.append(" - ");
-        sb.append(label);
+        sb.append(getLabel());
         return sb.toString();
     }
 
