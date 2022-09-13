@@ -38,7 +38,7 @@ public abstract class CoEntity<Id>
 
     @SuppressWarnings("unchecked")
     @Override
-    public void id_(Serializable id) {
+    public final void id_(Serializable id) {
         id((Id) id);
     }
 

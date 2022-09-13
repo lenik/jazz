@@ -220,6 +220,11 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             mask.readObject(q);
             List<T> list = buildDataList(q, mask);
             tableData.setList(list);
+
+            if (tableData.isWantTotalCount()) {
+                long totalCount = requireMapper().count(mask);
+                tableData.setTotalCount(totalCount);
+            }
         } catch (ReflectiveOperationException e) {
             throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
         } catch (LoaderException | ParseException e) {
