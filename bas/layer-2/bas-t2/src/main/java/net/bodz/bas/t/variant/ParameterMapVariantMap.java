@@ -47,4 +47,9 @@ public class ParameterMapVariantMap
             return v;
     }
 
+    @Override
+    public String toString() {
+        return map.toString();
+    }
+
 }
