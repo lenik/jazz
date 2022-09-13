@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.range.LongRange;
@@ -19,13 +20,13 @@ public class TableProfiles {
         this.context = context;
     }
 
-    public <entity_t, mask_t extends CoObjectMask, mapper_t extends IMapperTemplate<entity_t, mask_t>> //
+    public <entity_t, mask_t extends CoObjectMask, mapper_t extends IGenericMapper<entity_t, mask_t>> //
     entity_t pickAny(Class<mapper_t> mapperClass, String tableName) {
         List<entity_t> some = pickSome(mapperClass, tableName, 1);
         return some.isEmpty() ? null : some.get(0);
     }
 
-    public <entity_t, mask_t extends CoObjectMask, mapper_t extends IMapperTemplate<entity_t, mask_t>> //
+    public <entity_t, mask_t extends CoObjectMask, mapper_t extends IGenericMapper<entity_t, mask_t>> //
     List<entity_t> pickSome(Class<mapper_t> mapperClass, String tableName, int limit) {
         Class<mask_t> maskClass = TypeParam.infer1(mapperClass, IMapperTemplate.class, 1);
 

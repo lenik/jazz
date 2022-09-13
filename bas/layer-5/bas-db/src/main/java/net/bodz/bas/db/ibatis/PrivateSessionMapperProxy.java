@@ -1,6 +1,5 @@
 package net.bodz.bas.db.ibatis;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -11,21 +10,19 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class PrivateSessionMapperProxy
-        implements
-            InvocationHandler {
+        extends AbstractMapperProxy {
 
     static final Logger logger = LoggerFactory.getLogger(PrivateSessionMapperProxy.class);
 
     SqlSessionFactory sqlSessionFactory;
-    Class<?> mapperClass;
 
     public PrivateSessionMapperProxy(SqlSessionFactory sqlSessionFactory, Class<?> mapperClass) {
+        super(mapperClass);
         this.sqlSessionFactory = sqlSessionFactory;
-        this.mapperClass = mapperClass;
     }
 
     @Override
-    public Object invoke(Object obj, Method method, Object[] args)
+    protected Object invokeMapperMethod(Object obj, Method method, Object[] args)
             throws Throwable {
         Object result;
         SqlSession session = sqlSessionFactory.openSession();
@@ -43,4 +40,5 @@ public class PrivateSessionMapperProxy
         }
         return result;
     }
+
 }

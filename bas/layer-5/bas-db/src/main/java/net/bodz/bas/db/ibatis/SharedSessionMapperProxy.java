@@ -1,6 +1,5 @@
 package net.bodz.bas.db.ibatis;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,20 +8,19 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
 public class SharedSessionMapperProxy
-        implements InvocationHandler {
+        extends AbstractMapperProxy {
 
     static final Logger logger = LoggerFactory.getLogger(SharedSessionMapperProxy.class);
 
     SqlSession session;
-    Class<?> mapperClass;
 
     public SharedSessionMapperProxy(SqlSession session, Class<?> mapperClass) {
+        super(mapperClass);
         this.session = session;
-        this.mapperClass = mapperClass;
     }
 
     @Override
-    public Object invoke(Object obj, Method method, Object[] args)
+    protected Object invokeMapperMethod(Object obj, Method method, Object[] args)
             throws Throwable {
         Object result;
 
