@@ -57,7 +57,7 @@ public class MiscTemplates {
         case 1:
             Class<?> kType = primaryKeyCols[0].getType();
             Class<?> kBoxed = Primitives.box(kType);
-            return QualifiedName.parse(kBoxed.getName());
+            return QualifiedName.parse(kBoxed.getCanonicalName());
         default:
             return project.IFoo_Id;
         }

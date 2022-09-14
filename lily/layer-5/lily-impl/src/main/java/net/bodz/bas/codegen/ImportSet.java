@@ -48,7 +48,7 @@ public class ImportSet
             throw new NullPointerException("clazz");
         if (clazz.isPrimitive())
             return clazz;
-        add(clazz.getName());
+        add(clazz.getCanonicalName());
         return clazz;
     }
 

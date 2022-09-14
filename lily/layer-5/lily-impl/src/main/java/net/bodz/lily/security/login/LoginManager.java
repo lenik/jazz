@@ -89,7 +89,7 @@ public class LoginManager
             Result rr = resolver.login(crypto.passwordSignChecker, q);
             if (rr != null) {
                 LoginResult result = rr.toLoginResult(this);
-                result.setHeader("resolverClass", resolver.getClass().getName());
+                result.setHeader("resolverClass", resolver.getClass().getCanonicalName());
                 return result;
             }
         }

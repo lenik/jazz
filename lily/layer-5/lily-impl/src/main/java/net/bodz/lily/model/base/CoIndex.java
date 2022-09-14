@@ -201,7 +201,7 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         iString label = type.getLabel();
         if (label == null) {
             // logger.warn("Index title (label) isn't specified on " + getClass());
-            return getClass().getName();
+            return getClass().getCanonicalName();
         }
         return label + "/";
     }
