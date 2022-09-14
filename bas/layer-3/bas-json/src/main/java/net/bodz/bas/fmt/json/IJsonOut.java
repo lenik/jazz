@@ -134,8 +134,19 @@ public interface IJsonOut
     IJsonOut entry(String key, Object value)
             throws JSONException;
 
-    IJsonOut entryNotNull(String key, Object value)
-            throws JSONException;
+    default IJsonOut entryTrue(String key, boolean value)
+            throws JSONException {
+        if (value)
+            entry(key, value);
+        return this;
+    }
+
+    default IJsonOut entryNotNull(String key, Object value)
+            throws JSONException {
+        if (value != null)
+            entry(key, value);
+        return this;
+    }
 
     default IJsonOut object(Object object)
             throws JSONException {
