@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Types;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -36,8 +35,8 @@ public class DefaultColumnMetadata
     String label;
     String description; // comment..
 
-    Class<?> type = Integer.class;
-    int sqlType = Types.INTEGER;
+    Class<?> type = String.class;
+    JdbcType jdbcType = JdbcType.VarChar;
     String sqlTypeName;
 
     boolean jsonType;
@@ -128,12 +127,17 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public int getSqlType() {
-        return sqlType;
+    public JdbcType getJdbcType() {
+        return jdbcType;
     }
 
-    public void setSqlType(int sqlType) {
-        this.sqlType = sqlType;
+    public void setJdbcType(int sqlTypeInt) {
+        JdbcType jdbcType = JdbcType.forSQLType(sqlTypeInt, JdbcType.VarChar);
+        setJdbcType(jdbcType);
+    }
+
+    public void setJdbcType(JdbcType sqlType) {
+        this.jdbcType = sqlType;
     }
 
     @Override
@@ -414,7 +418,7 @@ public class DefaultColumnMetadata
 
         String typeName = jdbcMetadata.getColumnClassName(columnIndex);
         // int width = jdbcMetadata.getColumnDisplaySize(i);
-        int sqlType = jdbcMetadata.getColumnType(columnIndex);
+        int jdbcType = jdbcMetadata.getColumnType(columnIndex);
 
         // this.setIndex(columnIndex - 1);
         this.setName(name);
@@ -426,7 +430,7 @@ public class DefaultColumnMetadata
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        this.setSqlType(sqlType);
+        this.setJdbcType(jdbcType);
 
         autoIncrement = jdbcMetadata.isAutoIncrement(columnIndex);
         caseSensitive = jdbcMetadata.isCaseSensitive(columnIndex);
@@ -448,7 +452,7 @@ public class DefaultColumnMetadata
         name = rs.getString("COLUMN_NAME");
         label = name;
 
-        sqlType = rs.getInt("DATA_TYPE");
+        int sqlTypeInt = rs.getInt("DATA_TYPE");
         sqlTypeName = rs.getString("TYPE_NAME");
 
         precision = rs.getInt("COLUMN_SIZE");
@@ -470,7 +474,8 @@ public class DefaultColumnMetadata
         String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
-        type = SQLTypes.toJavaType(this);
+        setJdbcType(sqlTypeInt);
+        type = JdbcType.getPreferredType(this);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */
@@ -489,7 +494,7 @@ public class DefaultColumnMetadata
         String typeName = o.getString(K_TYPE);
         setTypeByName(typeName);
 
-        sqlType = SQLTypes.getTypeInt(o.getString(K_SQL_TYPE), Types.INTEGER);
+        jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VarChar);
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
 
         autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
@@ -523,7 +528,7 @@ public class DefaultColumnMetadata
 
         String typeName = o.a(K_TYPE).getString();
         setTypeByName(typeName);
-        sqlType = SQLTypes.getTypeInt(o.a(K_SQL_TYPE).getString(), Types.INTEGER);
+        jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VarChar);
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
         autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);

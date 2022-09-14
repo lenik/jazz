@@ -75,7 +75,7 @@ public interface IColumnMetadata
 
     Class<?> getType();
 
-    int getSqlType();
+    JdbcType getJdbcType();
 
     String getSqlTypeName();
 
@@ -145,7 +145,7 @@ public interface IColumnMetadata
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
         out.entry(K_TYPE, getType().getName());
-        out.entry(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
+        out.entry(K_SQL_TYPE, getJdbcType().name());
         out.entryNotNull(K_SQL_TYPE_NAME, getSqlTypeName());
         out.entryTrue(K_PRIMARY_KEY, isPrimaryKey());
         out.entryTrue(K_AUTO_INCREMENT, isAutoIncrement());
@@ -179,7 +179,7 @@ public interface IColumnMetadata
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         out.attribute(K_TYPE, getType().getName());
-        out.attribute(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
+        out.attribute(K_SQL_TYPE, getJdbcType().name());
         out.attribute(K_SQL_TYPE_NAME, getSqlTypeName());
 
         out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
