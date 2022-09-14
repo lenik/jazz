@@ -5,6 +5,7 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.*;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,13 +27,14 @@ public class SQLTypes {
 
     public static Class<?> toJavaType(IColumnMetadata column) {
         int sqlType = column.getSqlType();
+        String sqlTypeName = column.getSqlTypeName();
         boolean nullable = column.isNullable();
         int precision = column.getPrecision();
         int scale = column.getScale();
-        return toJavaType(sqlType, precision, scale, nullable);
+        return toJavaType(sqlType, sqlTypeName, precision, scale, nullable);
     }
 
-    public static Class<?> toJavaType(int sqlType, int precision, int scale, boolean nullable) {
+    public static Class<?> toJavaType(int sqlType, String sqlTypeName, int precision, int scale, boolean nullable) {
         switch (sqlType) {
         case Types.CHAR:
         case Types.VARCHAR:
@@ -98,7 +100,41 @@ public class SQLTypes {
             return Blob.class;
 
         case Types.ARRAY:
-            return Array.class;
+            switch (sqlTypeName) {
+            case "_bpchar":
+            case "_varchar":
+            case "_text":
+                return String[].class;
+
+            case "_date":
+                return Date[].class;
+
+            case "_time":
+                return Time[].class;
+
+            case "_timestamp":
+                return Timestamp.class;
+
+            case "bit":
+            case "_int2":
+            case "_int4":
+                return int[].class;
+
+            case "_int8":
+                return long[].class;
+
+            case "_float4":
+                return float[].class;
+
+            case "_float8":
+                return double[].class;
+
+            case "_money":
+                return Currency[].class;
+
+            default:
+            }
+            return Object[].class;
 
         case Types.DISTINCT:
             // mapping of underlying type

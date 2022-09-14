@@ -29,6 +29,7 @@ public interface IColumnMetadata
     public static final String K_DESCRIPTION = "description";
     public static final String K_TYPE = "type";
     public static final String K_SQL_TYPE = "SQLType";
+    public static final String K_SQL_TYPE_NAME = "SQLTypeName";
     public static final String K_PRIMARY_KEY = "primaryKey";
     public static final String K_AUTO_INCREMENT = "autoIncrement";
     public static final String K_CASE_SENSITIVE = "caseSensitive";
@@ -75,6 +76,8 @@ public interface IColumnMetadata
     Class<?> getType();
 
     int getSqlType();
+
+    String getSqlTypeName();
 
     boolean isPrimaryKey();
 
@@ -143,18 +146,19 @@ public interface IColumnMetadata
 
         out.entry(K_TYPE, getType().getName());
         out.entry(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
-        out.entry(K_PRIMARY_KEY, isPrimaryKey());
-        out.entry(K_AUTO_INCREMENT, isAutoIncrement());
-        out.entry(K_CASE_SENSITIVE, isCaseSensitive());
-        out.entry(K_SEARCHABLE, isSearchable());
-        out.entry(K_CURRENCY, isCurrency());
-        out.entry(K_UNIQUE, isUnique());
+        out.entryNotNull(K_SQL_TYPE_NAME, getSqlTypeName());
+        out.entryTrue(K_PRIMARY_KEY, isPrimaryKey());
+        out.entryTrue(K_AUTO_INCREMENT, isAutoIncrement());
+        out.entryTrue(K_CASE_SENSITIVE, isCaseSensitive());
+        out.entryTrue(K_SEARCHABLE, isSearchable());
+        out.entryTrue(K_CURRENCY, isCurrency());
+        out.entryTrue(K_UNIQUE, isUnique());
         out.entry(K_NULLABLE_STATUS, getNullableStatus());
-        out.entry(K_NULLABLE, isNullable());
-        out.entry(K_SIGNED, isSigned());
-        out.entry(K_READ_ONLY, isReadOnly());
-        out.entry(K_WRITABLE, isWritable());
-        out.entry(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
+        out.entryTrue(K_NULLABLE, isNullable());
+        out.entryTrue(K_SIGNED, isSigned());
+        out.entryTrue(K_READ_ONLY, isReadOnly());
+        out.entryTrue(K_WRITABLE, isWritable());
+        out.entryTrue(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
         out.entry(K_COLUMN_DISPLAY_SIZE, getColumnDisplaySize());
         out.entry(K_PRECISION, getPrecision());
         out.entry(K_SCALE, getScale());
@@ -176,6 +180,8 @@ public interface IColumnMetadata
 
         out.attribute(K_TYPE, getType().getName());
         out.attribute(K_SQL_TYPE, SQLTypes.getTypeName(getSqlType()));
+        out.attribute(K_SQL_TYPE_NAME, getSqlTypeName());
+
         out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
         out.attributeIf(K_AUTO_INCREMENT, isAutoIncrement());
         out.attributeIf(K_CASE_SENSITIVE, isCaseSensitive());

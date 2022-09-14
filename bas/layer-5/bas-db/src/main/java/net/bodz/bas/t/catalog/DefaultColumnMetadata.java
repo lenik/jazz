@@ -38,6 +38,8 @@ public class DefaultColumnMetadata
 
     Class<?> type = Integer.class;
     int sqlType = Types.INTEGER;
+    String sqlTypeName;
+
     boolean jsonType;
     boolean xmlType;
 
@@ -132,6 +134,15 @@ public class DefaultColumnMetadata
 
     public void setSqlType(int sqlType) {
         this.sqlType = sqlType;
+    }
+
+    @Override
+    public String getSqlTypeName() {
+        return sqlTypeName;
+    }
+
+    public void setSqlTypeName(String sqlTypeName) {
+        this.sqlTypeName = sqlTypeName;
     }
 
     public void setTypeByName(String typeName)
@@ -438,8 +449,8 @@ public class DefaultColumnMetadata
         label = name;
 
         sqlType = rs.getInt("DATA_TYPE");
+        sqlTypeName = rs.getString("TYPE_NAME");
 
-        // String typeName = rs.getString("TYPE_NAME");
         precision = rs.getInt("COLUMN_SIZE");
         // int bufferLength = rs.getInt("BUFFER_LENGTH");
         scale = rs.getInt("DECIMAL_DIGITS");
@@ -479,6 +490,7 @@ public class DefaultColumnMetadata
         setTypeByName(typeName);
 
         sqlType = SQLTypes.getTypeInt(o.getString(K_SQL_TYPE), Types.INTEGER);
+        sqlTypeName = o.getString(K_SQL_TYPE_NAME);
 
         autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
         caseSensitive = o.getBoolean(K_CASE_SENSITIVE, false);
@@ -512,6 +524,7 @@ public class DefaultColumnMetadata
         String typeName = o.a(K_TYPE).getString();
         setTypeByName(typeName);
         sqlType = SQLTypes.getTypeInt(o.a(K_SQL_TYPE).getString(), Types.INTEGER);
+        sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
         autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);
         caseSensitive = o.a(K_CASE_SENSITIVE).getBoolean(false);
