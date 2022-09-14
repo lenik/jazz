@@ -133,11 +133,4 @@ public class JsonStringer
         return this;
     }
 
-    @Override
-    public final IJsonOut entryNotNull(String key, Object value) {
-        if (value != null)
-            entry(key, value);
-        return this;
-    }
-
 }
