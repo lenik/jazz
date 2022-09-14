@@ -156,7 +156,7 @@ public class TableOfPathProps
     public List<?> convert(Object obj, List<String> columns)
             throws ReflectiveOperationException {
         if (obj == null)
-            throw new NullPointerException("obj");
+            return null;
 
         List<Object> row = new ArrayList<Object>(columns.size());
         for (String col : columns) {
@@ -241,12 +241,17 @@ public class TableOfPathProps
 
     void writeRowAsArray(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
             throws IOException, FormatException {
-        int n = columns.size();
+        if (row == null) {
+            out.value(null);
+            return;
+        }
+        int nColumn = columns.size();
+        // int nCell = row.size();
         out.array();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nColumn; i++) {
             // String column = columns.get(i);
             // String fmt = data.getFormat(column);
-            Object cell = row.get(i);
+            Object cell = i < nColumn ? row.get(i) : null;
             // out.key(column);
             JsonFn.writeObject(out, cell, opts);
         }
@@ -255,6 +260,10 @@ public class TableOfPathProps
 
     void writeRowAsObject(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
             throws IOException, FormatException {
+        if (row == null) {
+            out.value(null);
+            return;
+        }
         int n = columns.size();
         PathMap<Object> struct = new PathMap<>('.', SortOrder.KEEP);
         for (int i = 0; i < n; i++) {
