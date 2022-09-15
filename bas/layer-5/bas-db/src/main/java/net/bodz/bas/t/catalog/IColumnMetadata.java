@@ -1,7 +1,6 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
-import java.sql.ResultSetMetaData;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -36,7 +35,6 @@ public interface IColumnMetadata
     public static final String K_SEARCHABLE = "searchable";
     public static final String K_CURRENCY = "currency";
     public static final String K_UNIQUE = "unique";
-    public static final String K_NULLABLE_STATUS = "nullableStatus";
     public static final String K_NULLABLE = "nullable";
     public static final String K_SIGNED = "signed";
     public static final String K_READ_ONLY = "readOnly";
@@ -81,7 +79,12 @@ public interface IColumnMetadata
 
     boolean isPrimaryKey();
 
-    boolean isAutoIncrement();
+    Boolean getAutoIncrement();
+
+    default boolean isAutoIncrement(boolean defaultValue) {
+        Boolean b = getAutoIncrement();
+        return b != null ? b : defaultValue;
+    }
 
     boolean isCaseSensitive();
 
@@ -91,18 +94,19 @@ public interface IColumnMetadata
 
     boolean isUnique();
 
-    /**
-     * @see ResultSetMetaData#columnNoNulls
-     * @see ResultSetMetaData#columnNullable
-     * @see ResultSetMetaData#columnNullableUnknown
-     */
-    int getNullableStatus();
+    Boolean getNullable();
 
-    boolean isNullable();
+    default boolean isNullable(boolean defaultValue) {
+        Boolean b = getNullable();
+        return b != null ? b : defaultValue;
+    }
 
-    boolean isNullable(boolean fallback);
+    Boolean getSigned();
 
-    boolean isSigned();
+    default boolean isSigned(boolean defaultValue) {
+        Boolean b = getSigned();
+        return b != null ? b : defaultValue;
+    }
 
     boolean isReadOnly();
 
@@ -148,14 +152,13 @@ public interface IColumnMetadata
         out.entry(K_SQL_TYPE, getJdbcType().name());
         out.entryNotNull(K_SQL_TYPE_NAME, getSqlTypeName());
         out.entryTrue(K_PRIMARY_KEY, isPrimaryKey());
-        out.entryTrue(K_AUTO_INCREMENT, isAutoIncrement());
+        out.entryNotNull(K_AUTO_INCREMENT, getAutoIncrement());
         out.entryTrue(K_CASE_SENSITIVE, isCaseSensitive());
         out.entryTrue(K_SEARCHABLE, isSearchable());
         out.entryTrue(K_CURRENCY, isCurrency());
         out.entryTrue(K_UNIQUE, isUnique());
-        out.entry(K_NULLABLE_STATUS, getNullableStatus());
-        out.entryTrue(K_NULLABLE, isNullable());
-        out.entryTrue(K_SIGNED, isSigned());
+        out.entryNotNull(K_NULLABLE, getNullable());
+        out.entryNotNull(K_SIGNED, getSigned());
         out.entryTrue(K_READ_ONLY, isReadOnly());
         out.entryTrue(K_WRITABLE, isWritable());
         out.entryTrue(K_DEFINITELY_WRITABLE, isDefinitelyWritable());
@@ -183,14 +186,13 @@ public interface IColumnMetadata
         out.attribute(K_SQL_TYPE_NAME, getSqlTypeName());
 
         out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
-        out.attributeIf(K_AUTO_INCREMENT, isAutoIncrement());
+        out.attributeNotNull(K_AUTO_INCREMENT, getAutoIncrement());
         out.attributeIf(K_CASE_SENSITIVE, isCaseSensitive());
         out.attributeIf(K_SEARCHABLE, isSearchable());
         out.attributeIf(K_CURRENCY, isCurrency());
         out.attributeIf(K_UNIQUE, isUnique());
-        out.attribute(K_NULLABLE_STATUS, getNullableStatus());
-        out.attributeIf(K_NULLABLE, isNullable());
-        out.attributeIf(K_SIGNED, isSigned());
+        out.attributeNotNull(K_NULLABLE, getNullable());
+        out.attributeNotNull(K_SIGNED, getSigned());
         out.attributeIf(K_READ_ONLY, isReadOnly());
         out.attributeIf(K_WRITABLE, isWritable());
         out.attributeIf(K_DEFINITELY_WRITABLE, isDefinitelyWritable());

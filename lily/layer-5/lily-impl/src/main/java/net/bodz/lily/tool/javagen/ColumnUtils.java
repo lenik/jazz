@@ -5,7 +5,7 @@ import net.bodz.bas.t.catalog.IColumnMetadata;
 public class ColumnUtils {
 
     public static boolean isPreferredToGenerate(IColumnMetadata column) {
-        if (column.isAutoIncrement())
+        if (column.isAutoIncrement(false))
             return true;
         if (column.isPrimaryKey()) {
             String defaultValue = column.getDefaultValue();

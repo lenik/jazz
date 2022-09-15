@@ -36,7 +36,7 @@ public class DefaultColumnMetadata
     String description; // comment..
 
     Class<?> type = String.class;
-    JdbcType jdbcType = JdbcType.VarChar;
+    JdbcType jdbcType = JdbcType.VARCHAR;
     String sqlTypeName;
 
     boolean jsonType;
@@ -45,12 +45,12 @@ public class DefaultColumnMetadata
     boolean primaryKey;
     boolean unique;
 
-    boolean autoIncrement;
+    Boolean autoIncrement;
     boolean caseSensitive;
     boolean searchable;
     boolean currency;
-    int nullable = ResultSetMetaData.columnNullableUnknown;
-    boolean signed;
+    Boolean nullable;
+    Boolean signed;
     boolean readOnly;
     boolean writable;
     boolean definitelyWritable;
@@ -132,7 +132,7 @@ public class DefaultColumnMetadata
     }
 
     public void setJdbcType(int sqlTypeInt) {
-        JdbcType jdbcType = JdbcType.forSQLType(sqlTypeInt, JdbcType.VarChar);
+        JdbcType jdbcType = JdbcType.forSQLType(sqlTypeInt, JdbcType.VARCHAR);
         setJdbcType(jdbcType);
     }
 
@@ -170,11 +170,11 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public boolean isAutoIncrement() {
+    public Boolean getAutoIncrement() {
         return autoIncrement;
     }
 
-    public void setAutoIncrement(boolean autoIncrement) {
+    public void setAutoIncrement(Boolean autoIncrement) {
         this.autoIncrement = autoIncrement;
     }
 
@@ -215,33 +215,20 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public int getNullableStatus() {
+    public Boolean getNullable() {
         return nullable;
     }
 
-    public void setNullableStatus(int nullable) {
+    public void setNullable(Boolean nullable) {
         this.nullable = nullable;
     }
 
     @Override
-    public boolean isNullable() {
-        return nullable == ResultSetMetaData.columnNullable;
-    }
-
-    @Override
-    public boolean isNullable(boolean fallback) {
-        if (nullable == ResultSetMetaData.columnNullableUnknown)
-            return fallback;
-        else
-            return nullable == ResultSetMetaData.columnNullable;
-    }
-
-    @Override
-    public boolean isSigned() {
+    public Boolean getSigned() {
         return signed;
     }
 
-    public void setSigned(boolean signed) {
+    public void setSigned(Boolean signed) {
         this.signed = signed;
     }
 
@@ -436,7 +423,9 @@ public class DefaultColumnMetadata
         caseSensitive = jdbcMetadata.isCaseSensitive(columnIndex);
         searchable = jdbcMetadata.isSearchable(columnIndex);
         currency = jdbcMetadata.isCurrency(columnIndex);
-        nullable = jdbcMetadata.isNullable(columnIndex);
+        int _nullable = jdbcMetadata.isNullable(columnIndex);
+        nullable = _nullable == ResultSetMetaData.columnNullableUnknown ? null
+                : _nullable == ResultSetMetaData.columnNullable;
         signed = jdbcMetadata.isSigned(columnIndex);
         readOnly = jdbcMetadata.isReadOnly(columnIndex);
         writable = jdbcMetadata.isWritable(columnIndex);
@@ -459,7 +448,9 @@ public class DefaultColumnMetadata
         // int bufferLength = rs.getInt("BUFFER_LENGTH");
         scale = rs.getInt("DECIMAL_DIGITS");
         // int numPrecRadix = rs.getInt("NUM_PREC_RADIX");
-        nullable = rs.getInt("NULLABLE");
+        int _nullable = rs.getInt("NULLABLE");
+        nullable = _nullable == ResultSetMetaData.columnNullableUnknown ? null
+                : _nullable == ResultSetMetaData.columnNullable;
         // String isNullable = rs.getString("IS_NULLABLE"); // YES NO
         description = rs.getString("REMARKS");
         defaultValue = rs.getString("COLUMN_DEF");
@@ -494,15 +485,15 @@ public class DefaultColumnMetadata
         String typeName = o.getString(K_TYPE);
         setTypeByName(typeName);
 
-        jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VarChar);
+        jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VARCHAR);
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
 
-        autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
+        autoIncrement = o.getBoolean(K_AUTO_INCREMENT);
         caseSensitive = o.getBoolean(K_CASE_SENSITIVE, false);
         searchable = o.getBoolean(K_SEARCHABLE, false);
         currency = o.getBoolean(K_CURRENCY, false);
-        nullable = o.getInt(K_NULLABLE, ResultSetMetaData.columnNullableUnknown);
-        signed = o.getBoolean(K_SIGNED, false);
+        nullable = o.getBoolean(K_NULLABLE);
+        signed = o.getBoolean(K_SIGNED);
         readOnly = o.getBoolean(K_READ_ONLY, false);
         writable = o.getBoolean(K_WRITABLE, false);
         definitelyWritable = o.getBoolean(K_DEFINITELY_WRITABLE, false);
@@ -528,15 +519,15 @@ public class DefaultColumnMetadata
 
         String typeName = o.a(K_TYPE).getString();
         setTypeByName(typeName);
-        jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VarChar);
+        jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VARCHAR);
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
-        autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);
+        autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(null);
         caseSensitive = o.a(K_CASE_SENSITIVE).getBoolean(false);
         searchable = o.a(K_SEARCHABLE).getBoolean(false);
         currency = o.a(K_CURRENCY).getBoolean(false);
-        nullable = o.a(K_NULLABLE).getInt(ResultSetMetaData.columnNullableUnknown);
-        signed = o.a(K_SIGNED).getBoolean(false);
+        nullable = o.a(K_NULLABLE).getBoolean(null);
+        signed = o.a(K_SIGNED).getBoolean(null);
         readOnly = o.a(K_READ_ONLY).getBoolean(false);
         writable = o.a(K_WRITABLE).getBoolean(false);
         definitelyWritable = o.a(K_DEFINITELY_WRITABLE).getBoolean(false);
