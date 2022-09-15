@@ -4,8 +4,8 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
-import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.IMapper;
+import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -40,7 +40,11 @@ import net.bodz.lily.security.AccessControl;
 @VirtualHostScope
 public abstract class CoObjectIndex<T extends CoObject>
         extends AbstractCacheControl
-        implements IPathDispatchable, IPathArrivalFrameAware, ICacheControl, IDataContextAware {
+        implements
+            IPathDispatchable,
+            IPathArrivalFrameAware,
+            ICacheControl,
+            IDataContextAware {
 
     private Class<T> objectType;
     private HtmlViewOptions viewOptions = new HtmlViewOptions();
@@ -123,8 +127,8 @@ public abstract class CoObjectIndex<T extends CoObject>
             Long id = Long.parseLong(name);
 
             Class<?> entityClass = getObjectType();
-            Class<IGenericMapper<?, Object>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-            IGenericMapper<?, Object> mapper = getDataContext().getMapper(mapperClass);
+            Class<IMapperTemplate<?, CoObjectMask>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
+            IMapperTemplate<?, CoObjectMask> mapper = getDataContext().getMapper(mapperClass);
             if (mapper == null)
                 throw new IllegalUsageException("No mapper for " + entityClass);
 
