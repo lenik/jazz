@@ -11,59 +11,59 @@ import net.bodz.bas.log.LoggerFactory;
 
 public enum JdbcType {
 
-    Bit(Types.BIT, Boolean.class),
+    BIT(Types.BIT, Boolean.class),
 
-    TinyInt(Types.TINYINT, Short.class),
-    SmallInt(Types.SMALLINT, Short.class),
-    Integer(Types.INTEGER, Integer.class),
-    BigInt(Types.BIGINT, Long.class),
+    TINYINT(Types.TINYINT, Short.class),
+    SMALLINT(Types.SMALLINT, Short.class),
+    INTEGER(Types.INTEGER, Integer.class),
+    BIGINT(Types.BIGINT, Long.class),
 
-    Float(Types.FLOAT, Double.class),
-    Real(Types.REAL, Float.class),
-    Double(Types.DOUBLE, Double.class),
+    FLOAT(Types.FLOAT, Double.class),
+    REAL(Types.REAL, Float.class),
+    DOUBLE(Types.DOUBLE, Double.class),
 
-    Numeric(Types.NUMERIC, BigDecimal.class),
-    Decimal(Types.DECIMAL, BigDecimal.class),
+    NUMERIC(Types.NUMERIC, BigDecimal.class),
+    DECIMAL(Types.DECIMAL, BigDecimal.class),
 
-    Char(Types.CHAR, String.class),
-    VarChar(Types.VARCHAR, String.class),
-    LongVarChar(Types.LONGVARCHAR, String.class),
+    CHAR(Types.CHAR, String.class),
+    VARCHAR(Types.VARCHAR, String.class),
+    LONGVARCHAR(Types.LONGVARCHAR, String.class),
 
-    Date(Types.DATE, Date.class),
-    Time(Types.TIME, Time.class),
-    Timestamp(Types.TIMESTAMP, Timestamp.class),
+    DATE(Types.DATE, Date.class),
+    TIME(Types.TIME, Time.class),
+    TIMESTAMP(Types.TIMESTAMP, Timestamp.class),
 
-    Binary(Types.BINARY, byte[].class),
-    VarBinary(Types.VARBINARY, byte[].class),
-    LongVarBinary(Types.LONGVARBINARY, byte[].class),
+    BINARY(Types.BINARY, byte[].class),
+    VARBINARY(Types.VARBINARY, byte[].class),
+    LONGVARBINARY(Types.LONGVARBINARY, byte[].class),
 
-    Null(Types.NULL, Object.class),
-    Other(Types.OTHER, Object.class),
-    JavaObject(Types.JAVA_OBJECT, Object.class),
-    Distinct(Types.DISTINCT, Object.class),
+    NULL(Types.NULL, Object.class),
+    OTHER(Types.OTHER, Object.class),
+    JAVA_OBJECT(Types.JAVA_OBJECT, Object.class),
+    DISTINCT(Types.DISTINCT, Object.class),
 
-    Struct(Types.STRUCT, Struct.class),
-    Array(Types.ARRAY, java.sql.Array.class),
+    STRUCT(Types.STRUCT, Struct.class),
+    ARRAY(Types.ARRAY, java.sql.Array.class),
 
-    Blob(Types.BLOB, Blob.class),
-    Clob(Types.CLOB, Clob.class),
+    BLOB(Types.BLOB, Blob.class),
+    CLOB(Types.CLOB, Clob.class),
 
-    Ref(Types.REF, Ref.class),
-    DataLink(Types.DATALINK, Object.class),
+    REF(Types.REF, Ref.class),
+    DATALINK(Types.DATALINK, Object.class),
 
-    Boolean(Types.BOOLEAN, Boolean.class),
-    RowId(Types.ROWID, RowId.class),
+    BOOLEAN(Types.BOOLEAN, Boolean.class),
+    ROWID(Types.ROWID, RowId.class),
 
-    NChar(Types.NCHAR, String.class),
-    NVarChar(Types.NVARCHAR, String.class),
-    LongNVarChar(Types.LONGNVARCHAR, String.class),
+    NCHAR(Types.NCHAR, String.class),
+    NVARCHAR(Types.NVARCHAR, String.class),
+    LONGNVARCHAR(Types.LONGNVARCHAR, String.class),
 
-    NClob(Types.NCLOB, Clob.class),
+    NCLOB(Types.NCLOB, Clob.class),
     SQLXML(Types.SQLXML, SQLXML.class),
 
-    RefCursor(Types.REF_CURSOR, Object.class),
-    TimeWithTimeZone(Types.TIME_WITH_TIMEZONE, Time.class),
-    TimestampWithTimeZone(Types.TIMESTAMP_WITH_TIMEZONE, Timestamp.class),
+    REF_CURSOR(Types.REF_CURSOR, Object.class),
+    TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE, Time.class),
+    TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE, Timestamp.class),
 
     ;
 
@@ -85,10 +85,10 @@ public enum JdbcType {
     // 18 446 744 073 709 551 616
     static final int MAXLEN_FOR_LONG = aggressive ? 20 : 19;
 
-    public Class<?> getPreferredType(String sqlTypeName, boolean nullable, boolean signed, int precision, int scale) {
+    public Class<?> getPreferredType(String sqlTypeName, Boolean nullable, Boolean signed, int precision, int scale) {
         switch (this) {
-        case Numeric:
-        case Decimal:
+        case NUMERIC:
+        case DECIMAL:
             if (scale == 0) {
                 // if (precision < 5) // 65 536
                 // return nullable ? Short.class : short.class;
@@ -100,47 +100,47 @@ public enum JdbcType {
             }
             return BigDecimal.class;
 
-        case Bit:
-            if (signed)
+        case BIT:
+            if (signed == Boolean.FALSE)
                 return nullable ? Byte.class : byte.class;
             else
                 return nullable ? Boolean.class : boolean.class;
 
-        case TinyInt:
-            if (signed)
+        case TINYINT:
+            if (signed != Boolean.FALSE)
                 return nullable ? Byte.class : byte.class;
             else
                 return nullable ? Short.class : short.class;
 
-        case SmallInt:
-            if (signed)
+        case SMALLINT:
+            if (signed != Boolean.FALSE)
                 return nullable ? Short.class : short.class;
             else
                 return nullable ? Integer.class : int.class;
 
-        case Integer:
-            if (signed)
+        case INTEGER:
+            if (signed != Boolean.FALSE)
                 return nullable ? Integer.class : int.class;
             else
                 return nullable ? Long.class : long.class;
 
-        case BigInt:
-            if (signed)
+        case BIGINT:
+            if (signed != Boolean.FALSE)
                 return nullable ? Long.class : long.class;
             else
                 return BigInteger.class;
 
-        case Real:
+        case REAL:
             return nullable ? Float.class : float.class;
 
-        case Float:
-        case Double:
+        case FLOAT:
+        case DOUBLE:
             return nullable ? Double.class : double.class;
 
-        case Array:
+        case ARRAY:
             return getPreferredArrayType(sqlTypeName, nullable, signed, precision, scale);
 
-        case Distinct:
+        case DISTINCT:
             // mapping of underlying type
             logger.error("unsupport distinct type.");
             return Object.class;
@@ -153,8 +153,8 @@ public enum JdbcType {
     public static Class<?> getPreferredType(IColumnMetadata column) {
         JdbcType jdbcType = column.getJdbcType();
         String sqlTypeName = column.getSqlTypeName();
-        boolean nullable = column.isNullable();
-        boolean signed = column.isSigned();
+        Boolean nullable = column.getNullable();
+        Boolean signed = column.getSigned();
         int precision = column.getPrecision();
         int scale = column.getScale();
         return jdbcType.getPreferredType(sqlTypeName, nullable, signed, precision, scale);
@@ -171,7 +171,7 @@ public enum JdbcType {
         postgresqlMap.put("bpchar", "char");
     }
 
-    public Class<?> getPreferredArrayType(String arraySqlTypeName, boolean nullable, boolean signed, int precision,
+    public Class<?> getPreferredArrayType(String arraySqlTypeName, Boolean nullable, Boolean signed, int precision,
             int scale) {
         String sqlTypeName = arraySqlTypeName;
         if (sqlTypeName.startsWith("_"))
@@ -183,7 +183,7 @@ public enum JdbcType {
 
         Class<?> componentType = null;
 
-        JdbcType sqlType = forSQLTypeName(sqlTypeName, VarChar);
+        JdbcType sqlType = forSQLTypeName(sqlTypeName, VARCHAR);
         if (sqlType != null)
             componentType = sqlType.getPreferredType(sqlTypeName, nullable, signed, precision, scale);
 

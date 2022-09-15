@@ -78,7 +78,7 @@ public class MiscTemplates {
             if (column.isPrimaryKey())
                 continue;
 
-            if (column.isNullable())
+            if (column.isNullable(true))
                 continue;
 
             Class<?> type = column.getType();
@@ -125,7 +125,7 @@ public class MiscTemplates {
         if (column.isPrimaryKey())
             out.println("@" + out.im.name(Id.class));
 
-        boolean notNull = !column.isNullable();
+        boolean notNull = !column.isNullable(true);
         if (notNull)
             out.println("@" + out.im.name(NotNull.class));
 
@@ -148,7 +148,7 @@ public class MiscTemplates {
 
         boolean unique = column.isUnique();
 
-        boolean notNull = !column.isNullable();
+        boolean notNull = !column.isNullable(true);
         if (notNull && !type.isPrimitive())
             out.println("@" + out.im.name(NotNull.class));
 
