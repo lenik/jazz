@@ -8,30 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
-import net.bodz.bas.c.type.TypeParam;
-import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ctx.IDataContextAware;
-import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperTemplate;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.html.viz.IHtmlViewContext;
-import net.bodz.bas.html.viz.IPathArrivalFrameAware;
-import net.bodz.bas.html.viz.PathArrivalFrame;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.potato.PotatoTypes;
-import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.path.IPathArrival;
-import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
@@ -39,82 +24,38 @@ import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.file.IFileNameListener;
 import net.bodz.bas.site.file.IncomingSaver;
 import net.bodz.bas.site.file.ItemFile;
-import net.bodz.bas.site.json.*;
+import net.bodz.bas.site.json.HttpPayload;
+import net.bodz.bas.site.json.IMutableJsonResponse;
+import net.bodz.bas.site.json.JsonMap;
+import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.site.json.JsonVarMap;
+import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.site.vhost.VirtualHostScope;
-import net.bodz.bas.std.rfc.http.AbstractCacheControl;
-import net.bodz.bas.std.rfc.http.CacheControlMode;
-import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
-import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ILazyId;
 import net.bodz.lily.entity.IdFn;
-import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
 
 @AccessControl
-@IndexedType(includeAbstract = true)
+@IndexedType(includeAbstract = false)
 @VirtualHostScope
 public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
-        extends AbstractCacheControl
-        implements
-            IPathDispatchable,
-            IPathArrivalFrameAware,
-            ICacheControl,
-            IDataContextAware {
+        extends GenericIndex<T, M> {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 
-    private Class<T> objectType;
     private Class<?> idType;
-    private Class<M> maskType;
-    protected DataContext dataContext;
 
     public CoIndex() {
-        ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
-        if (aObjectType != null) {
-            @SuppressWarnings("unchecked")
-            Class<T> objectType = (Class<T>) aObjectType.value();
-            this.objectType = objectType;
-        } else {
-            objectType = TypeParam.infer1(getClass(), CoIndex.class, 0);
-        }
-        idType = IdFn._getIdType(objectType);
-        maskType = TypeParam.infer1(getClass(), CoIndex.class, 1);
-    }
-
-    @Override
-    public CacheControlMode getCacheControlMode() {
-        return CacheControlMode.AUTO;
-    }
-
-    @Override
-    public CacheRevalidationMode getCacheRevalidationMode() {
-        return CacheRevalidationMode.MUST_REVALIDATE;
-    }
-
-    public Class<T> getObjectType() {
-        return objectType;
+        idType = IdFn._getIdType(getObjectType());
     }
 
     public Class<?> getIdType() {
         return idType;
     }
 
-    @Override
-    public DataContext getDataContext() {
-        if (dataContext == null)
-            throw new IllegalStateException("DataContext isn't set.");
-        return dataContext;
-    }
-
-    @Override
-    public void setDataContext(DataContext dataContext) {
-        this.dataContext = dataContext;
-        if (dataContext != null)
-            afterDataContextSet();
-    }
-
-    protected void afterDataContextSet() {
+    protected <mapper_t extends IMapperTemplate<T, M>> mapper_t requireMapper() {
+        return super._requireMapper();
     }
 
     @Override
@@ -129,20 +70,6 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         Object target = null;
         try {
             switch (token) {
-            case "__data__":
-                try {
-                    target = listHandler(q);
-                } catch (RequestHandlerException e) {
-                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
-                }
-                break;
-            case "__count__":
-                try {
-                    target = countHandler(q);
-                } catch (RequestHandlerException e) {
-                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
-                }
-                break;
             case "delete":
                 try {
                     target = deleteHandler(q);
@@ -182,71 +109,8 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
 
         if (target != null)
             return PathArrival.shift(previous, this, target, tokens);
-        return null;
-    }
-
-    @Override
-    public void enter(IHtmlViewContext ctx, PathArrivalFrame frame) {
-        ctx.setVariable("index", this);
-    }
-
-    @Override
-    public void leave(IHtmlViewContext ctx, PathArrivalFrame frame) {
-        ctx.setVariable("index", null);
-    }
-
-    @Override
-    public String toString() {
-        IType type = PotatoTypes.getInstance().loadType(getClass());
-        iString label = type.getLabel();
-        if (label == null) {
-            // logger.warn("Index title (label) isn't specified on " + getClass());
-            return getClass().getCanonicalName();
-        }
-        return label + "/";
-    }
-
-    protected TableOfPathProps listHandler(IVariantMap<String> q)
-            throws RequestHandlerException {
-        TableOfPathProps tableData = new TableOfPathProps(objectType);
-        try {
-            tableData.readObject(q);
-        } catch (Exception e) {
-            throw new RequestHandlerException(e.getMessage(), e);
-        }
-
-        try {
-            M mask = maskType.newInstance();
-            mask.readObject(q);
-            List<T> list = buildDataList(q, mask);
-            tableData.setList(list);
-
-            if (tableData.isWantTotalCount()) {
-                long totalCount = requireMapper().count(mask);
-                tableData.setTotalCount(totalCount);
-            }
-        } catch (ReflectiveOperationException e) {
-            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (LoaderException | ParseException e) {
-            throw new RequestHandlerException("Error decode mask of " + maskType, e);
-        }
-        return tableData;
-    }
-
-    protected JsonWrapper countHandler(IVariantMap<String> q)
-            throws RequestHandlerException {
-        try {
-            M mask = maskType.newInstance();
-            mask.readObject(q);
-
-            long n = requireMapper().count(mask);
-            return JsonWrapper.wrap(n, "data");
-
-        } catch (ReflectiveOperationException e) {
-            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (LoaderException | ParseException e) {
-            throw new RequestHandlerException("Error decode mask of " + maskType, e);
-        }
+        else
+            return super.dispatch(previous, tokens, q);
     }
 
     protected JsonWrapper newHandler(IVariantMap<String> q)
@@ -357,27 +221,13 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
         return resp;
     }
 
-    @SuppressWarnings("unchecked")
-    protected <mapper_t extends IMapperTemplate<T, M>> mapper_t requireMapper() {
-        Class<T> entityClass = getObjectType();
-        Class<IMapperTemplate<T, M>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-        return (mapper_t) getDataContext().requireMapper(mapperClass);
-    }
-
-    protected T create()
-            throws ReflectiveOperationException {
-        T instance = Instantiables._instantiate(getObjectType());
-        if (instance == null)
-            throw new IllegalUsageException("null instantiated.");
-        return instance;
-    }
-
     protected T load(Object id) {
         IMapperTemplate<T, M> mapper = requireMapper();
         T instance = mapper.select(id);
         return instance;
     }
 
+    @Override
     protected T postLoad(T obj) {
         return obj;
     }
@@ -456,13 +306,6 @@ public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
             return id;
         }
 
-    }
-
-    protected List<T> buildDataList(IVariantMap<String> q, M mask) {
-        SelectOptions opts = new SelectOptions();
-        opts.readObject(q);
-        List<T> list = requireMapper().filter(mask, opts);
-        return list;
     }
 
 }
