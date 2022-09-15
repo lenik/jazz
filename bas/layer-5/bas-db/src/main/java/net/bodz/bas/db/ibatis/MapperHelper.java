@@ -45,28 +45,8 @@ class Dummy<T, M>
     }
 
     @Override
-    public T select(Object id) {
-        return null;
-    }
-
-    @Override
     public long insert(T obj) {
         return 0;
-    }
-
-    @Override
-    public long insertWithId(T obj) {
-        return 0;
-    }
-
-    @Override
-    public long update(T obj) {
-        return 0;
-    }
-
-    @Override
-    public boolean delete(Object id) {
-        return false;
     }
 
     @Override
