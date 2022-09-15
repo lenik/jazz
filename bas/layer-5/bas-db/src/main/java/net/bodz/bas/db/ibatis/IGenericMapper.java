@@ -25,25 +25,12 @@ public interface IGenericMapper<T, M>
 
     List<T> filter(@Param("m") M mask, @Param("opt") SelectOptions opt);
 
-    T select(@Param("id") Object id);
-
     /**
      * The generated id value will be saved in the object id property.
      *
      * @return Number of records.
      */
     long insert(T obj);
-
-    /**
-     * Insert with custom specified id value.
-     *
-     * @return Number of records.
-     */
-    long insertWithId(T obj);
-
-    long update(T obj);
-
-    boolean delete(@Param("id") Object id);
 
     int deleteFor(@Param("m") M mask);
 
