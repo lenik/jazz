@@ -161,13 +161,6 @@ public abstract class AbstractXmlOutput
     }
 
     @Override
-    public void attributeNotNull(String name, String value)
-            throws XMLStreamException {
-        if (value != null)
-            _attribute(name, value);
-    }
-
-    @Override
     public final void attribute(String name, byte[] buf)
             throws XMLStreamException {
         if (buf == null)

@@ -73,9 +73,6 @@ public interface IXmlOutput
     void attribute(String name, String value)
             throws XMLStreamException;
 
-    void attributeNotNull(String name, String value)
-            throws XMLStreamException;
-
     void attribute(String name, byte[] buf)
             throws XMLStreamException;
 
@@ -129,5 +126,17 @@ public interface IXmlOutput
 
     void attribute(String name, String[] buf, int off, int len)
             throws XMLStreamException;
+
+    default void attributeTrue(String name, boolean value)
+            throws XMLStreamException {
+        if (value)
+            attribute(name, value);
+    }
+
+    default void attributeNotNull(String name, Object value)
+            throws XMLStreamException {
+        if (value != null)
+            attribute(name, value.toString());
+    }
 
 }
