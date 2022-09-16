@@ -18,8 +18,8 @@ public class Shop
     String hydm;
 
     @Override
-    public void reinit() {
-        super.reinit();
+    public void reset() {
+        super.reset();
         setAccessMode(M_PUBLIC);
     }
 

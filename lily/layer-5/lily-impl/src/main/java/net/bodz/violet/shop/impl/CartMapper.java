@@ -1,9 +1,9 @@
 package net.bodz.violet.shop.impl;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.shop.Cart;
 
 public interface CartMapper
-        extends IMapperTemplate<Cart, CartMask> {
+        extends IEntityMapper<Cart, CartMask> {
 
 }

@@ -1,9 +1,9 @@
 package net.bodz.violet.plan.impl;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.plan.PlanTag;
 
 public interface PlanTagMapper
-        extends IMapperTemplate<PlanTag, PlanTagMask> {
+        extends IEntityMapper<PlanTag, PlanTagMask> {
 
 }

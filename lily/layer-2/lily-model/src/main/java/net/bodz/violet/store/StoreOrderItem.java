@@ -44,7 +44,7 @@ public class StoreOrderItem
     String notes;
 
     @Override
-    public void reinit() {
+    public void reset() {
         setAccessMode(M_SHARED);
     }
 

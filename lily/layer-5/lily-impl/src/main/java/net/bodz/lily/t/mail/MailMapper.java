@@ -1,8 +1,8 @@
 package net.bodz.lily.t.mail;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 
 public interface MailMapper
-        extends IMapperTemplate<Mail, MailMask> {
+        extends IEntityMapper<Mail, MailMask> {
 
 }

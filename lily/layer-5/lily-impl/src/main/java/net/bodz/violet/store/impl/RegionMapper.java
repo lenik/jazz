@@ -1,9 +1,9 @@
 package net.bodz.violet.store.impl;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.store.Region;
 
 public interface RegionMapper
-        extends IMapperTemplate<Region, RegionMask> {
+        extends IEntityMapper<Region, RegionMask> {
 
 }
