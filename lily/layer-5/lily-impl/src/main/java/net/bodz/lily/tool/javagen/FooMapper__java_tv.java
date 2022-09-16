@@ -1,7 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 
 public class FooMapper__java_tv
@@ -20,7 +20,7 @@ public class FooMapper__java_tv
             {
                 out.enterln("extends");
                 out.printf("%s<%s, %s> {\n", //
-                        out.im.name(IMapperTemplate.class), //
+                        out.im.name(IEntityMapper.class), //
                         out.im.name(project.Foo), //
                         out.im.name(project.FooMask));
                 out.leave();

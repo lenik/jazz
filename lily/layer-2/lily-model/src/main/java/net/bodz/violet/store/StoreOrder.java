@@ -45,8 +45,8 @@ public class StoreOrder
     }
 
     @Override
-    public void reinit() {
-        super.reinit();
+    public void reset() {
+        super.reset();
         setAccessMode(M_SHARED);
 
         StoreCategory TK_I = new StoreCategory();

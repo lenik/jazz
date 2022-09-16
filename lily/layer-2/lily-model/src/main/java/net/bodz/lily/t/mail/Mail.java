@@ -20,8 +20,8 @@ public class Mail
     boolean read;
 
     @Override
-    public void reinit() {
-        super.reinit();
+    public void reset() {
+        super.reset();
         recipients = new ArrayList<>();
         bcc = new ArrayList<>();
     }

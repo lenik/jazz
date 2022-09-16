@@ -10,7 +10,7 @@ import java.util.ServiceLoader;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.log.Logger;
@@ -122,8 +122,8 @@ public class ModuleIndexer
     }
 
     void addMapperClass(Class<?> mapperClass) {
-        if (IMapperTemplate.class.isAssignableFrom(mapperClass)) {
-            Class<?>[] pv = TypeParam.infer(mapperClass, IMapperTemplate.class);
+        if (IEntityMapper.class.isAssignableFrom(mapperClass)) {
+            Class<?>[] pv = TypeParam.infer(mapperClass, IEntityMapper.class);
             Class<?> entityType = pv[0];
             Class<?> maskType = pv[1];
             EntityInfo entity = resolveEntity(entityType, maskType);

@@ -7,7 +7,7 @@ import java.util.Random;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IGenericMapper;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoObjectMask;
@@ -28,7 +28,7 @@ public class TableProfiles {
 
     public <entity_t, mask_t extends CoObjectMask, mapper_t extends IGenericMapper<entity_t, mask_t>> //
     List<entity_t> pickSome(Class<mapper_t> mapperClass, String tableName, int limit) {
-        Class<mask_t> maskClass = TypeParam.infer1(mapperClass, IMapperTemplate.class, 1);
+        Class<mask_t> maskClass = TypeParam.infer1(mapperClass, IEntityMapper.class, 1);
 
         mapper_t mapper = context.requireMapper(mapperClass);
         ProfileMapper prof = context.requireMapper(ProfileMapper.class);

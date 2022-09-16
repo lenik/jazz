@@ -3,11 +3,11 @@ package net.bodz.lily.test;
 import org.junit.Assume;
 import org.junit.Test;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.model.base.CoObjectMask;
 
-public abstract class AbstractTableTest<T extends CoObject, M extends CoObjectMask, mapper_t extends IMapperTemplate<T, M>>
+public abstract class AbstractTableTest<T extends CoObject, M extends CoObjectMask, mapper_t extends IEntityMapper<T, M>>
         extends AbstractTableViewTest<T, M, mapper_t> {
 
     public abstract T buildSample()

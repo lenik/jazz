@@ -53,8 +53,8 @@ public class SalesOrder
     private SizedList<TransportOrder> deliveries;
 
     @Override
-    public void reinit() {
-        super.reinit();
+    public void reset() {
+        super.reset();
         setAccessMode(M_COOP);
         items = new SizedList<>();
     }

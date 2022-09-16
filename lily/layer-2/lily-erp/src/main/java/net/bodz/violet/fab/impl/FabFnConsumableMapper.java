@@ -1,12 +1,12 @@
 package net.bodz.violet.fab.impl;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.fab.FabFnConsumable;
 
 /**
  * @mapper.xml FabFnConsumableMapper.xml
  */
 public interface FabFnConsumableMapper
-        extends IMapperTemplate<FabFnConsumable, FabFnConsumableMask> {
+        extends IEntityMapper<FabFnConsumable, FabFnConsumableMask> {
 
 }

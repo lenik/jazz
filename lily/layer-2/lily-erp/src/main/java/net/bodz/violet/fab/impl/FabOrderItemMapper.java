@@ -1,12 +1,12 @@
 package net.bodz.violet.fab.impl;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.fab.FabOrderItem;
 
 /**
  * @mapper.xml FabOrderItemMapper.xml
  */
 public interface FabOrderItemMapper
-        extends IMapperTemplate<FabOrderItem, FabOrderItemMask> {
+        extends IEntityMapper<FabOrderItem, FabOrderItemMask> {
 
 }

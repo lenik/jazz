@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherIdType;
 
@@ -12,7 +12,7 @@ import net.bodz.lily.security.UserOtherIdType;
  * @mapper.xml UserMapper.xml
  */
 public interface UserMapper
-        extends IMapperTemplate<User, UserMask> {
+        extends IEntityMapper<User, UserMask> {
 
     User selectByName(@Param("name") String name);
 

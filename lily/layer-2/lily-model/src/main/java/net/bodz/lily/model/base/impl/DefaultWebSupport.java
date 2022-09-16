@@ -6,7 +6,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
 
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -26,8 +26,8 @@ public class DefaultWebSupport
     public Object persist(IHtmlViewContext ctx, IHtmlOut out)
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
-        Class<IMapperTemplate<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
-        IMapperTemplate<CoObject, ?> mapper = provider.getMapper(mapperClass);
+        Class<IEntityMapper<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
+        IEntityMapper<CoObject, ?> mapper = provider.getMapper(mapperClass);
         if (mapper == null)
             throw new PersistenceException("No mapper for " + getClass());
 

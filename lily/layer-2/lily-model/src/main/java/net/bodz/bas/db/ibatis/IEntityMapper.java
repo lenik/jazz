@@ -3,11 +3,10 @@ package net.bodz.bas.db.ibatis;
 import org.apache.ibatis.annotations.Param;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.lily.model.base.CoObject;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.entity.IId;
 
 @ExcludedFromIndex
-public interface IMapperTemplate<T extends CoObject, M extends CoObjectMask>
+public interface IEntityMapper<T extends IId<?>, M>
         extends
             IGenericMapper<T, M> {
 
