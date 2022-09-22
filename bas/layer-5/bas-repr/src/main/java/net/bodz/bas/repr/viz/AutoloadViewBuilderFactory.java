@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.c.type.ITypeMapper;
+import net.bodz.bas.c.type.IClassFunction;
 import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.c.type.TypePoMap;
@@ -69,14 +69,14 @@ public abstract class AutoloadViewBuilderFactory
         return tset;
     }
 
-    protected Collection<ITypeMapper> getTypeMappers() {
+    protected Collection<IClassFunction> getViewClassResolvers() {
         return Collections.emptySet();
     }
 
     IViewBuilder<?> autoload(Class<?> clazz)
             throws ReflectiveOperationException {
-        for (ITypeMapper tmap : getTypeMappers()) {
-            Class<?> vboClass = tmap.map(clazz);
+        for (IClassFunction fn : getViewClassResolvers()) {
+            Class<?> vboClass = fn.apply(clazz);
             if (vboClass != null) {
                 IViewBuilder<?> vbo;
                 // vbo = (IViewBuilder<?>) SingletonUtil.callGetInstance(vboClass);

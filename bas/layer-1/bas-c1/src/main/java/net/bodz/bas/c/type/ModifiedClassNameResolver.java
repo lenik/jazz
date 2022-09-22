@@ -3,10 +3,15 @@ package net.bodz.bas.c.type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NameConventionTypeMapper
-        implements ITypeMapper {
+public class ModifiedClassNameResolver
+        implements
+            IClassFunction {
 
     private ClassLoader classLoader;
+
+    // Class<T> paramClass;
+    // Class<R> returnClass;
+
     private final int parents;
     private final String prefix;
     private final String suffix;
@@ -14,13 +19,12 @@ public class NameConventionTypeMapper
     private boolean cacheEnabled;
 
     private Map<Class<?>, Class<?>> cache;
-    private static Class<?> NONE = void.class;
 
-    public NameConventionTypeMapper(String prefix, String suffix, boolean cacheEnabled) {
+    public ModifiedClassNameResolver(String prefix, String suffix, boolean cacheEnabled) {
         this(null, 0, prefix, suffix, cacheEnabled);
     }
 
-    public NameConventionTypeMapper(ClassLoader classLoader, int parents, String prefix, String suffix,
+    public ModifiedClassNameResolver(ClassLoader classLoader, int parents, String prefix, String suffix,
             boolean cacheEnabled) {
         if (suffix == null)
             throw new NullPointerException("suffix");
@@ -33,7 +37,7 @@ public class NameConventionTypeMapper
         this.cacheEnabled = cacheEnabled;
 
         if (cacheEnabled)
-            cache = new HashMap<Class<?>, Class<?>>();
+            cache = new HashMap<>();
     }
 
     public ClassLoader getClassLoader() {
@@ -65,15 +69,15 @@ public class NameConventionTypeMapper
     }
 
     @Override
-    public Class<?> map(Class<?> src) {
+    public Class<?> apply(Class<?> src) {
         if (src == null)
             throw new NullPointerException("src");
 
-        Class<?> target = NONE;
+        Class<?> target = null;
         if (cacheEnabled) {
             target = cache.get(src);
-            if (target != null)
-                return target != NONE ? target : null;
+            if (target != null || cache.containsKey(src))
+                return target;
         }
 
         String base = src.getSimpleName();
@@ -119,7 +123,7 @@ public class NameConventionTypeMapper
         }
 
         if (cacheEnabled)
-            cache.put(src, dst != null ? dst : NONE);
+            cache.put(src, dst);
 
         return dst;
     }
