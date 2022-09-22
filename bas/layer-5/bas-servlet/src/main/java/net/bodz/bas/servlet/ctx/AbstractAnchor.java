@@ -3,11 +3,17 @@ package net.bodz.bas.servlet.ctx;
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractAnchor
-        implements IAnchor {
+        implements
+            IAnchor {
 
     @Override
     public String hrefFrom(String otherPath) {
-        return fn.hrefFrom(otherPath, absoluteHref());
+        return PathUtils.hrefFrom(otherPath, toUriPath());
+    }
+
+    @Override
+    public String hrefTo(String otherPath) {
+        return PathUtils.hrefFrom(toUriPath(), otherPath);
     }
 
     public String fromCurrentRequest() {
