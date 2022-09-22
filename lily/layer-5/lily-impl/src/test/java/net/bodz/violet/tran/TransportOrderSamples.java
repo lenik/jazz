@@ -18,7 +18,7 @@ public class TransportOrderSamples
             Organization shipper) {
         TransportOrder a = new TransportOrder();
         a.setSubject("transportOrder-1");
-        a.setText("A transportOrder named transportOrder-1.");
+        a.setRawText("A transportOrder named transportOrder-1.");
 
         a.setOp(op);
 

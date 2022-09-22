@@ -9,7 +9,7 @@ public class DiarySamples
     public static Diary build(User op, DiaryCategory category, DiaryPhase phase) {
         Diary a = new Diary();
         a.setSubject("diary-1");
-        a.setText("A diary named diary-1.");
+        a.setRawText("A diary named diary-1.");
         a.setOp(op);
         a.setCategory(category);
         a.setPhase(phase);

@@ -9,7 +9,7 @@ public class PlanSamples
     public static Plan build(User op, PlanCategory category, PlanPhase phase) {
         Plan a = new Plan();
         a.setSubject("plan-1");
-        a.setText("A plan named plan-1.");
+        a.setRawText("A plan named plan-1.");
 
         a.setCategory(category);
         a.setPhase(phase);

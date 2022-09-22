@@ -9,7 +9,7 @@ public class PostTalkSamples
     public static PostTalk build(User op, Post post, PostTalk parent) {
         PostTalk a = new PostTalk();
         a.setSubject("postTalk-1");
-        a.setText("A postTalk named postTalk-1.");
+        a.setRawText("A postTalk named postTalk-1.");
         a.setOp(op);
         a.setPost(post);
         if (random.nextInt(100) < 30)
