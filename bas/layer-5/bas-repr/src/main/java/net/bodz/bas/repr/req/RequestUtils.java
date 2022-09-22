@@ -63,8 +63,8 @@ public class RequestUtils {
     }
 
     public static String getURL(HttpServletRequest req, IAnchor anchor) {
-        String url = getServerURL(req);
-        return url + anchor.absoluteHref();
+        String serverUrl = getServerURL(req);
+        return serverUrl + anchor.toUriPath();
     }
 
 }
