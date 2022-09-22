@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -26,11 +27,12 @@ public class JsonWrapper
             IVarMapForm,
             IJsonForm {
 
+    static final String K_FORMATS = "formats";
+
     String key;
     Object obj;
-    boolean includeNull = false;
-    boolean includeFalse = false;
-    int maxDepth = -1;
+
+    JsonFormOptions jsonFormOptions = new JsonFormOptions();
     Map<String, String> formats = new HashMap<String, String>();
 
     public JsonWrapper(String key, Object obj) {
@@ -38,19 +40,28 @@ public class JsonWrapper
         this.obj = obj;
     }
 
-    public JsonWrapper withNull() {
-        includeNull = true;
-        return this;
+    public String getKey() {
+        return key;
     }
 
-    public JsonWrapper withFalse() {
-        includeFalse = true;
-        return this;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public JsonWrapper depth(int maxDepth) {
-        this.maxDepth = maxDepth;
-        return this;
+    public Object getWrapped() {
+        return obj;
+    }
+
+    public void setWrapped(Object obj) {
+        this.obj = obj;
+    }
+
+    public JsonFormOptions getOptions() {
+        return jsonFormOptions;
+    }
+
+    public void setOptions(JsonFormOptions options) {
+        this.jsonFormOptions = options;
     }
 
     public Map<String, String> getFormats() {
@@ -60,7 +71,7 @@ public class JsonWrapper
     public JsonWrapper format(Map<String, String> formats) {
         if (formats == null)
             throw new NullPointerException("formats");
-        this.formats.putAll(formats);
+        formats.putAll(formats);
         return this;
     }
 
@@ -73,31 +84,59 @@ public class JsonWrapper
         return this;
     }
 
-    public JsonWrapper format(String json) {
-        if (json == null)
-            return this;
-        JsonObject obj = JsonObjectBuilder.getInstance().parse(json);
-        for (String key : obj.keySet()) {
-            String format = obj.getString(key);
-            formats.put(key, format);
-        }
-        return this;
-    }
-
     @Override
     public void readObject(IVariantMap<String> map) {
-        String formatJson = map.getString("format");
-        if (formatJson != null)
-            format(formatJson);
+        jsonFormOptions.readObject(map);
 
-        Integer depth = map.getInt("depth", null);
-        if (depth != null)
-            depth(depth);
+        String formatsStr = map.getString(K_FORMATS);
+        if (formatsStr != null) {
+            if (formatsStr.startsWith("{")) {
+                JsonObject jo = JsonObjectBuilder.getInstance().parse(formatsStr);
+                for (String key : jo.keySet()) {
+                    String format = jo.getString(key);
+                    formats.put(key, format);
+                }
+            }
+        }
     }
 
     @Override
     public void writeObject(Map<String, Object> map) {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        JsonObject j_formats = o.getJsonObject(K_FORMATS);
+        if (j_formats != null)
+            for (String key : j_formats.keySet()) {
+                String format = j_formats.getString(key);
+                formats.put(key, format);
+            }
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        throw new IllegalUsageException("expect scalar mode");
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
+            throws IOException, FormatException {
+        if (scalar) {
+            if (key != null) {
+                out.object();
+                out.key(key);
+            }
+
+            JsonFn.writeObject(out, obj, opts);
+
+            if (key != null)
+                out.endObject();
+        } else
+            jsonOut(out, opts);
     }
 
     public static JsonWrapper wrap(Object obj) {
@@ -106,31 +145,6 @@ public class JsonWrapper
 
     public static JsonWrapper wrap(Object obj, String key) {
         return new JsonWrapper(key, obj);
-    }
-
-    @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
-            throws ParseException {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
-    }
-
-    @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
-            throws IOException, FormatException {
-        if (key != null) {
-            out.object();
-            out.key(key);
-        }
-
-        JsonFn.writeObject(out, obj, opts);
-
-        if (key != null)
-            out.endObject();
     }
 
 }
