@@ -4,7 +4,9 @@ import java.util.List;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
+@ExcludedFromIndex
 public class MapperHelper<T, M>
         extends Dummy<T, M> {
 

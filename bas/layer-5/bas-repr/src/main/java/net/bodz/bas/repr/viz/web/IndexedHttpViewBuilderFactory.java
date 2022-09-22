@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import net.bodz.bas.c.type.ITypeMapper;
+import net.bodz.bas.c.type.IClassFunction;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
 /**
@@ -15,16 +15,16 @@ import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 public class IndexedHttpViewBuilderFactory
         extends AbstractHttpViewBuilderFactory {
 
-    private List<ITypeMapper> viewMappers = new ArrayList<ITypeMapper>();
+    private List<IClassFunction> viewClassResolvers = new ArrayList<>();
 
     public IndexedHttpViewBuilderFactory() {
-        viewMappers.add(NameConventions.foo_bar_htm);
+        viewClassResolvers.add(NameConventions.foo_bar_htm);
     }
 
-    public void registerViewMapper(ITypeMapper viewMapper) {
-        if (viewMapper == null)
-            throw new NullPointerException("viewMapper");
-        viewMappers.add(viewMapper);
+    public void registerViewClassFn(IClassFunction viewClassFn) {
+        if (viewClassFn == null)
+            throw new NullPointerException("viewClassFn");
+        viewClassResolvers.add(viewClassFn);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class IndexedHttpViewBuilderFactory
     }
 
     @Override
-    protected Collection<ITypeMapper> getTypeMappers() {
-        return viewMappers;
+    protected Collection<IClassFunction> getViewClassResolvers() {
+        return viewClassResolvers;
     }
 
     private static IndexedHttpViewBuilderFactory instance = new IndexedHttpViewBuilderFactory();
