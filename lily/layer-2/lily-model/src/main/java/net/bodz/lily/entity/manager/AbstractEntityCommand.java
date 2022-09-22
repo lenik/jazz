@@ -1,0 +1,170 @@
+package net.bodz.lily.entity.manager;
+
+import java.util.Map;
+
+import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.bas.db.ibatis.IGenericMapper;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
+
+public abstract class AbstractEntityCommand
+        implements
+            IEntityCommand {
+
+    static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommand.class);
+
+    private final String preferredName;
+    protected final IEntityTypeInfo typeInfo;
+
+    protected IEntityCommandContext context;
+    protected DataContext dataContext;
+    protected JsonResult resp;
+    protected JsonFormOptions jsonFormOptions;
+
+    public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
+        String name = getClass().getSimpleName();
+        if (name.endsWith("Command"))
+            name = name.substring(0, name.length() - 7);
+        name = Strings.lcfirst(name);
+        this.preferredName = name;
+        this.typeInfo = typeInfo;
+    }
+
+    @Override
+    public String getPreferredName() {
+        return preferredName;
+    }
+
+    @Override
+    public DataContext getDataContext() {
+        return dataContext;
+    }
+
+    @Override
+    public void setDataContext(DataContext dataContext) {
+        this.dataContext = dataContext;
+    }
+
+    @Override
+    public synchronized JsonResult execute(IEntityCommandContext executeContext) {
+        this.context = executeContext;
+        this.dataContext = context.getDataContext();
+        this.resp = new JsonResult();
+
+        IVariantMap<String> parameters = context.getParameters();
+
+        try {
+            readObject(parameters);
+        } catch (Exception e) {
+            return resp.fail(e, "error parse parameters: " + e.getMessage());
+        }
+
+        try {
+            if (!setUpVars()) {
+                return resp.fail("command is not enabled.");
+            }
+        } catch (Exception e) {
+            return resp.fail(e, "failed before execute: " + e.getMessage());
+        }
+
+        Object result;
+        try {
+            result = execute();
+
+            if (result == null)
+                return null;
+
+            if (result != resp)
+                resp.setData(result);
+
+        } catch (Exception e) {
+            return resp.fail(e, "failed to execute: " + e.getMessage());
+        } finally {
+            try {
+                afterExecute();
+            } catch (Exception e) {
+                logger.error(e, "error post-execute: " + e.getMessage());
+            }
+        }
+
+        return resp;
+    }
+
+    /**
+     * before parsing the parameters.
+     */
+    protected boolean setUpVars()
+            throws Exception {
+        return true;
+    }
+
+    protected abstract Object execute()
+            throws Exception;
+
+    protected void afterExecute()
+            throws Exception {
+    }
+
+    protected <mapper_t> mapper_t mapper(Class<mapper_t> mapperClass) {
+        return dataContext.getMapper(mapperClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected IGenericMapper<Object, Object> getGenericMapper() {
+        Class<?> mapperClass = typeInfo.getMapperClass();
+        if (IGenericMapper.class.isAssignableFrom(mapperClass))
+            throw new IllegalUsageException("Not an " + IGenericMapper.class);
+        return (IGenericMapper<Object, Object>) dataContext.getMapper(mapperClass);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected IEntityMapper<Object, Object> getEntityMapper() {
+        Class<?> mapperClass = typeInfo.getMapperClass();
+        if (!IEntityMapper.class.isAssignableFrom(mapperClass))
+            throw new IllegalUsageException("Not an " + IEntityMapper.class);
+        return (IEntityMapper<Object, Object>) dataContext.getMapper(mapperClass);
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        jsonFormOptions = new JsonFormOptions();
+        jsonFormOptions.readObject(map);
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
+    }
+
+    protected Object parseId(String idStr)
+            throws ParseException {
+        if (idStr == null) {
+            return null;
+        }
+
+        Class<?> idType = typeInfo.getIdClass();
+        if (idType == null)
+            throw new IllegalUsageException("not id-capable: " + typeInfo.getEntityClass());
+
+        Object id;
+        try {
+            id = IdFn.parseId(idType, idStr);
+        } catch (ParseException e) {
+            throw new ParseException(String.format(//
+                    "error parse id \"%s\"): %s", idStr, e.getMessage()), e);
+        }
+
+        return id;
+    }
+
+}

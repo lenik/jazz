@@ -10,17 +10,21 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.model.base.DefaultAccessMode;
+import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.t.struct.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
 /**
  * 库存操作项目
  */
+@DefaultAccessMode(IAccessMode.M_SHARED)
 @IdType(Long.class)
 @Table(name = "storeodrl")
 public class StoreOrderItem
         extends CoMomentInterval<Long>
-        implements IOrderItem {
+        implements
+            IOrderItem {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,11 +46,6 @@ public class StoreOrderItem
     BigDecimal amount;
 
     String notes;
-
-    @Override
-    public void reset() {
-        setAccessMode(M_SHARED);
-    }
 
     public StoreOrder getOrder() {
         return order;
@@ -143,6 +142,7 @@ public class StoreOrderItem
         this.amount = null;
     }
 
+    @Override
     public void setPrice(double price) {
         setPrice(BigDecimal.valueOf(price));
     }

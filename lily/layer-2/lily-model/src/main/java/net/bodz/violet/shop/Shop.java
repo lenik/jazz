@@ -4,10 +4,13 @@ import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.DefaultAccessMode;
+import net.bodz.lily.security.IAccessMode;
 
 /**
  * 店铺
  */
+@DefaultAccessMode(IAccessMode.M_PUBLIC)
 @IdType(Integer.class)
 @Table(name = "shop")
 public class Shop
@@ -16,12 +19,6 @@ public class Shop
     private static final long serialVersionUID = 1L;
 
     String hydm;
-
-    @Override
-    public void reset() {
-        super.reset();
-        setAccessMode(M_PUBLIC);
-    }
 
     /**
      * 行业代码

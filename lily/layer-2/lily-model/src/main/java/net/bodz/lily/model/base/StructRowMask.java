@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import net.bodz.bas.c.type.NameConventionTypeMapper;
+import net.bodz.bas.c.type.ModifiedClassNameResolver;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -61,17 +61,18 @@ public class StructRowMask
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
-    static NameConventionTypeMapper[] maskTmaps = {
+    static ModifiedClassNameResolver[] criteriaClassResolvers = {
             // TODO cache-enable?
-            new NameConventionTypeMapper(null, "Mask", false), //
-            new NameConventionTypeMapper("impl.", "Mask", false), //
-            new NameConventionTypeMapper(null, 1, "db.", "Mask", false), //
+            new ModifiedClassNameResolver(null, "Mask", false), //
+            new ModifiedClassNameResolver("dao.", "Mask", false), //
+            new ModifiedClassNameResolver("impl.", "Mask", false), //
+            new ModifiedClassNameResolver(null, 1, "db.", "Mask", false), //
     };
 
-    public static <M extends StructRowMask> Class<M> findMaskClass(Class<?> objClass) {
-        for (NameConventionTypeMapper tmap : maskTmaps) {
+    public static <M extends IVarMapForm> Class<M> findMaskClass(Class<?> objClass) {
+        for (ModifiedClassNameResolver resolver : criteriaClassResolvers) {
             @SuppressWarnings("unchecked")
-            Class<M> maskClass = (Class<M>) tmap.map(objClass);
+            Class<M> maskClass = (Class<M>) resolver.apply(objClass);
             if (maskClass != null)
                 return maskClass;
         }

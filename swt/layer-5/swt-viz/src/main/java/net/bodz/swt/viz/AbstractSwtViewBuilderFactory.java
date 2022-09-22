@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.bodz.bas.c.type.ITypeMapper;
-import net.bodz.bas.c.type.NameConventionTypeMapper;
+import net.bodz.bas.c.type.IClassFunction;
+import net.bodz.bas.c.type.ModifiedClassNameResolver;
 import net.bodz.bas.repr.viz.AutoloadViewBuilderFactory;
 import net.bodz.bas.repr.viz.IViewBuilder;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -17,13 +17,14 @@ import net.bodz.swt.viz.form.vbo.String_swt;
 
 public abstract class AbstractSwtViewBuilderFactory
         extends AutoloadViewBuilderFactory
-        implements ISwtViewBuilderFactory {
+        implements
+            ISwtViewBuilderFactory {
 
-    private List<ITypeMapper> swtTmaps = new ArrayList<>();
+    private List<IClassFunction> swtClassResolvers = new ArrayList<>();
 
     public AbstractSwtViewBuilderFactory() {
-        swtTmaps.add(new NameConventionTypeMapper(null, "_swt", true));
-        swtTmaps.add(new NameConventionTypeMapper(null, 1, ".swt", "_swt", true));
+        swtClassResolvers.add(new ModifiedClassNameResolver(null, "_swt", true));
+        swtClassResolvers.add(new ModifiedClassNameResolver(null, 1, ".swt", "_swt", true));
     }
 
     @Override
@@ -39,8 +40,8 @@ public abstract class AbstractSwtViewBuilderFactory
     }
 
     @Override
-    protected Collection<ITypeMapper> getTypeMappers() {
-        return swtTmaps;
+    protected Collection<IClassFunction> getViewClassResolvers() {
+        return swtClassResolvers;
     }
 
     @Override
@@ -53,6 +54,7 @@ public abstract class AbstractSwtViewBuilderFactory
         return (ISwtViewBuilder<T>) super.getViewBuilder(ref);
     }
 
+    @Override
     protected void checkViewBuilder(IViewBuilder<?> viewBuilder) {
         if (!(viewBuilder instanceof ISwtViewBuilder<?>))
             throw new IllegalArgumentException(nls.tr("Not an SWT view builder: ") + viewBuilder);

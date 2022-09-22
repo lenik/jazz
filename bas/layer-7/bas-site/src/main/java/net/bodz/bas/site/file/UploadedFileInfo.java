@@ -71,7 +71,6 @@ public class UploadedFileInfo
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
-
         path = o.getString("path", path);
         url = o.getString("url", url);
         thumbnail = o.getString("thumbnail", thumbnail);

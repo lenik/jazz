@@ -7,20 +7,22 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import net.bodz.bas.content.IReset;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
-import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.bas.typer.std.MutableAttributes;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 
 public class LoginToken
         extends MutableAttributes
-        implements IJsonForm {
+        implements
+            IReset,
+            IJsonForm {
 
     public static final String ATTRIBUTE_NAME = LoginToken.class.getName();
 
@@ -28,7 +30,6 @@ public class LoginToken
 
     static final Random RANDOM = new Random();
 
-    final ILoginTokenManager tokenManager;
     long id;
     long expireDate;
 
@@ -37,18 +38,12 @@ public class LoginToken
 
     private long transaction;
 
-    PrefixMap<String> permissions = new PrefixMap<>();
-
     private LoginToken() {
-        this.tokenManager = null;
     }
 
     LoginToken(ILoginTokenManager manager, long id, User user) {
-        if (manager == null)
-            throw new NullPointerException("manager");
         if (user == null)
             throw new NullPointerException("user");
-        this.tokenManager = manager;
         this.id = id;
         this.user = user;
         this.secret = user.getSecret();
@@ -109,13 +104,13 @@ public class LoginToken
         return false;
     }
 
-    public PrefixMap<String> getPermissions() {
-        return permissions;
-    }
+//    public PrefixMap<String> getPermissions() {
+//        return permissions;
+//    }
 
     public LoginToken detach() {
-        if (tokenManager != null)
-            tokenManager.removeToken(id);
+//        if (tokenManager != null)
+//            tokenManager.removeToken(id);
         return this;
     }
 
@@ -185,16 +180,14 @@ public class LoginToken
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        id = o.getInt("id");
+        int id = o.getInt("id");
         transaction = o.getLong("txn");
         // timeout = o.getLong("timeout");
 
         JsonObject _user = o.getJsonObject("user");
         if (_user != null) {
             User user = new User();
-            user.id(_user.getInt("id"));
-            user.setName(_user.getString("name"));
-            user.setFullName(_user.getString("fullName"));
+            user.jsonIn(o, opts);
             this.user = user;
         }
     }

@@ -7,7 +7,6 @@ import java.util.Set;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import net.bodz.bas.c.type.NameConventionTypeMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -16,7 +15,6 @@ import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.range.Range;
 import net.bodz.bas.t.range.RangeVarsFn;
-import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.security.login.LoginToken;
@@ -25,8 +23,7 @@ import net.bodz.lily.security.login.LoginToken;
  * @see net.bodz.lily.model.base.CoObject
  */
 public class CoObjectMask
-        implements
-            IVarMapForm {
+        extends StructRowMask {
 
     Range idRange = new LongRange();
 
@@ -88,18 +85,22 @@ public class CoObjectMask
         return this;
     }
 
+    @Override
     public DateTimeRange getCreation() {
         return creation;
     }
 
+    @Override
     public void setCreation(DateTimeRange creation) {
         this.creation = creation;
     }
 
+    @Override
     public DateTimeRange getLastmod() {
         return lastmod;
     }
 
+    @Override
     public void setLastmod(DateTimeRange lastmod) {
         this.lastmod = lastmod;
     }
@@ -219,23 +220,6 @@ public class CoObjectMask
     public LoginToken getLoginToken() {
         LoginToken token = LoginToken.fromSession();
         return token;
-    }
-
-    static NameConventionTypeMapper[] maskTmaps = {
-            // TODO cache-enable?
-            new NameConventionTypeMapper(null, "Mask", false), //
-            new NameConventionTypeMapper("impl.", "Mask", false), //
-            new NameConventionTypeMapper(null, 1, "db.", "Mask", false), //
-    };
-
-    public static <M extends CoObjectMask> Class<M> findMaskClass(Class<?> objClass) {
-        for (NameConventionTypeMapper tmap : maskTmaps) {
-            @SuppressWarnings("unchecked")
-            Class<M> maskClass = (Class<M>) tmap.map(objClass);
-            if (maskClass != null)
-                return maskClass;
-        }
-        return null;
     }
 
 }

@@ -10,7 +10,7 @@ import net.bodz.bas.c.object.IdentityHashSet;
 import net.bodz.bas.db.cache.AbstractCache;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
@@ -26,7 +26,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     DataContext dataContext;
     Class<K> idType;
 
-    IMapperTemplate<T, ?> mapper;
+    IEntityMapper<T, ?> mapper;
     int batch = 100;
 
     protected boolean indexCodeName = false;
@@ -43,15 +43,15 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         this.idType = IdFn._getIdType(entityClass);
     }
 
-    protected IMapperTemplate<T, ?> getMapper() {
+    protected IEntityMapper<T, ?> getMapper() {
         if (mapper == null) {
-            Class<IMapperTemplate<T, ?>> mapperClass = IMapper.fn.getMapperClass(objectClass);
+            Class<IEntityMapper<T, ?>> mapperClass = IMapper.fn.getMapperClass(objectClass);
             mapper = dataContext.getMapper(mapperClass);
         }
         return mapper;
     }
 
-    public void setMapper(IMapperTemplate<T, ?> mapper) {
+    public void setMapper(IEntityMapper<T, ?> mapper) {
         this.mapper = mapper;
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
 
     @Override
     protected void _load() {
-        IMapperTemplate<T, ?> mapper = getMapper();
+        IEntityMapper<T, ?> mapper = getMapper();
         int n = 0;
         for (T obj : mapper.all(null)) {
             if (n % batch == 0) {

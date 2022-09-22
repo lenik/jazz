@@ -127,7 +127,7 @@ public class LoginManager
             User user = token.getUser();
             for (ILoginListener listener : loginListeners)
                 try {
-                    listener.logout(user);
+                    listener.onLoggedOut(user);
                 } catch (Exception e) {
                     return r.fail(e, "Can't logged out %s: %s", user.toString(), listener + ": " + e.getMessage());
                 }

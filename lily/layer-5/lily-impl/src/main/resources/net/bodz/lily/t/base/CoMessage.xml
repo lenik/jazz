@@ -10,7 +10,7 @@
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="subject" column="subject" />
-        <result property="text" column="text" />
+        <result property="rawText" column="text" />
         <result property="formArgs" column="args" />
         <result property="clickInfo.voteUps" column="nvote" />
         <result property="clickInfo.pinCount" column="nlike" />

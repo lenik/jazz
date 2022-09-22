@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.site.json.IMutableJsonResponse;
-import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.meta.source.ToDo;
 import net.bodz.lily.t.base.CoMessageIndex;
 import net.bodz.violet.plan.Diary;
 import net.bodz.violet.plan.DiaryParty;
@@ -17,10 +16,8 @@ public class DiaryIndex
 
     public static final String SCHEMA = "diary";
 
-    @Override
-    protected void save(IVariantMap<String> q, Diary obj, IMutableJsonResponse resp) {
-        super.save(q, obj, resp);
-
+    @ToDo
+    void cascadeSave(Diary obj) {
         // Update diary parties.
         long diaryId = obj.id();
         List<DiaryParty> parties = obj.getParties();
@@ -46,7 +43,6 @@ public class DiaryIndex
             for (DiaryParty miss : olds.values())
                 partyMapper.delete(miss.id());
         }
-
     }
 
 }

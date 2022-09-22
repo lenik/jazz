@@ -1,42 +1,40 @@
 package net.bodz.lily.model.base;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
-import net.bodz.bas.db.ibatis.IGenericMapper;
-import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoadException;
-import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.bas.potato.PotatoTypes;
-import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.site.json.JsonWrapper;
-import net.bodz.bas.site.json.TableOfPathProps;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.Instantiables;
+import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.entity.manager.EntityCommands;
+import net.bodz.lily.entity.manager.IEntityCommand;
+import net.bodz.lily.entity.manager.MutableEntityCommandContext;
+import net.bodz.lily.entity.manager.ResolveCommand;
+import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.security.AccessControl;
 
 @AccessControl
@@ -51,20 +49,36 @@ public abstract class GenericIndex<T, M extends IVarMapForm>
 
     static final Logger logger = LoggerFactory.getLogger(GenericIndex.class);
 
-    private Class<T> objectType;
-    private Class<M> maskType;
+    private final Class<T> objectType;
+    private final IEntityTypeInfo typeInfo;
+
+    Map<String, IEntityCommand> commandMap = new HashMap<>();
+    ResolveCommand resolveCommand;
+
     protected DataContext dataContext;
 
     public GenericIndex() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
+
         if (aObjectType != null) {
             @SuppressWarnings("unchecked")
             Class<T> objectType = (Class<T>) aObjectType.value();
             this.objectType = objectType;
         } else {
-            objectType = TypeParam.infer1(getClass(), GenericIndex.class, 0);
+            this.objectType = TypeParam.infer1(getClass(), GenericIndex.class, 0);
         }
-        maskType = TypeParam.infer1(getClass(), GenericIndex.class, 1);
+        this.typeInfo = new DefaultEntityTypeInfo(objectType);
+
+        commandMap = new HashMap<>();
+        for (IEntityCommand cmd : EntityCommands.forEntityClass(objectType)) {
+            String name = cmd.getPreferredName();
+            IEntityCommand preexist = commandMap.get(name);
+            if (preexist != null)
+                throw new DuplicatedKeyException(name);
+            commandMap.put(name, cmd);
+            if (cmd instanceof ResolveCommand)
+                resolveCommand = (ResolveCommand) cmd;
+        }
     }
 
     @Override
@@ -106,31 +120,51 @@ public abstract class GenericIndex<T, M extends IVarMapForm>
             return null;
 
         Object target = null;
-        try {
-            switch (token) {
-            case "__data__":
-                try {
-                    target = listHandler(q);
-                } catch (RequestHandlerException e) {
-                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
-                }
-                break;
-            case "__count__":
-                try {
-                    target = countHandler(q);
-                } catch (RequestHandlerException e) {
-                    target = new JsonResult().fail(e, "Failed to handle list request: " + e.getMessage());
-                }
-                break;
-            default:
+
+        IEntityCommand command = commandMap.get(token);
+        Object id = null;
+        String extension = null;
+        if (command == null && resolveCommand != null) {
+            Split idExtension = Split.nameExtension(token);
+            id = parseId(idExtension.a, null);
+            extension = idExtension.b;
+            if (id != null)
+                command = resolveCommand;
+        }
+        if (command != null) {
+            MutableEntityCommandContext context = new MutableEntityCommandContext();
+            context.setDataContext(getDataContext());
+            context.setRequest(CurrentHttpService.getRequest());
+            context.setParameters(q);
+            if (id != null) {
+                context.setAttribute("id", id);
+                context.setAttribute("extension", extension);
             }
-        } catch (LoadException e) {
-            throw new PathDispatchException("Failed to read request payload: " + e.getMessage(), e);
+            try {
+                target = command.execute(context);
+            } catch (Exception e) {
+                throw new PathDispatchException("error execute entity command: " + e.getMessage(), e);
+            }
         }
 
         if (target != null)
             return PathArrival.shift(previous, this, target, tokens);
-        return null;
+        else
+            return null;
+    }
+
+    public Object parseId(String idStr, Object fallback) {
+        Class<?> idClass = typeInfo.getIdClass();
+        if (idClass == null)
+            return false;
+        try {
+            Object id = IdFn.parseId(idClass, idStr);
+            if (id == null)
+                id = fallback;
+            return id;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     @Override
@@ -141,87 +175,6 @@ public abstract class GenericIndex<T, M extends IVarMapForm>
     @Override
     public void leave(IHtmlViewContext ctx, PathArrivalFrame frame) {
         ctx.setVariable("index", null);
-    }
-
-    @Override
-    public String toString() {
-        IType type = PotatoTypes.getInstance().loadType(getClass());
-        iString label = type.getLabel();
-        if (label == null) {
-            // logger.warn("Index title (label) isn't specified on " + getClass());
-            return getClass().getCanonicalName();
-        }
-        return label + "/";
-    }
-
-    protected TableOfPathProps listHandler(IVariantMap<String> q)
-            throws RequestHandlerException {
-        TableOfPathProps tableData = new TableOfPathProps(objectType);
-        try {
-            tableData.readObject(q);
-        } catch (Exception e) {
-            throw new RequestHandlerException(e.getMessage(), e);
-        }
-
-        try {
-            M mask = maskType.newInstance();
-            mask.readObject(q);
-            List<T> list = buildDataList(q, mask);
-            tableData.setList(list);
-
-            if (tableData.isWantTotalCount()) {
-                long totalCount = _requireMapper().count(mask);
-                tableData.setTotalCount(totalCount);
-            }
-        } catch (ReflectiveOperationException e) {
-            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (LoaderException | ParseException e) {
-            throw new RequestHandlerException("Error decode mask of " + maskType, e);
-        }
-        return tableData;
-    }
-
-    protected JsonWrapper countHandler(IVariantMap<String> q)
-            throws RequestHandlerException {
-        try {
-            M mask = maskType.newInstance();
-            mask.readObject(q);
-
-            long n = _requireMapper().count(mask);
-            return JsonWrapper.wrap(n, "data");
-
-        } catch (ReflectiveOperationException e) {
-            throw new RequestHandlerException("Error instantiate mask of " + maskType, e);
-        } catch (LoaderException | ParseException e) {
-            throw new RequestHandlerException("Error decode mask of " + maskType, e);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected <mapper_t extends IGenericMapper<T, M>> mapper_t _requireMapper() {
-        Class<T> entityClass = getObjectType();
-        Class<?> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-        return (mapper_t) getDataContext().requireMapper(mapperClass);
-    }
-
-    protected T create()
-            throws ReflectiveOperationException {
-        T instance = Instantiables._instantiate(getObjectType());
-        if (instance == null)
-            throw new IllegalUsageException("null instantiated.");
-        return instance;
-    }
-
-    protected T postLoad(T obj) {
-        return obj;
-    }
-
-    protected List<T> buildDataList(IVariantMap<String> q, M mask) {
-        SelectOptions opts = new SelectOptions();
-        opts.readObject(q);
-        IGenericMapper<T, M> mapper = _requireMapper();
-        List<T> list = mapper.filter(mask, opts);
-        return list;
     }
 
 }

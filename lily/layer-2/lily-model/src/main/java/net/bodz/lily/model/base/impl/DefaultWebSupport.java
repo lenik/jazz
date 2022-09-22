@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IMapperProvider;
-import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.req.IMethodOfRequest;
@@ -14,7 +14,8 @@ import net.bodz.bas.repr.req.MethodNames;
 import net.bodz.lily.model.base.CoObject;
 
 public class DefaultWebSupport
-        implements IWebSupport {
+        implements
+            IWebSupport {
 
     CoObject object;
 
@@ -26,6 +27,7 @@ public class DefaultWebSupport
     public Object persist(IHtmlViewContext ctx, IHtmlOut out)
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
+        IMapper.fn.getMapperClass(getClass());
         Class<IEntityMapper<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
         IEntityMapper<CoObject, ?> mapper = provider.getMapper(mapperClass);
         if (mapper == null)

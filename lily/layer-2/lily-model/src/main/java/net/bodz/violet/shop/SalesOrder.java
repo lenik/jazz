@@ -16,6 +16,8 @@ import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.SizedList;
+import net.bodz.lily.model.base.DefaultAccessMode;
+import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.t.base.CoMessage;
 import net.bodz.violet.plan.Plan;
 import net.bodz.violet.tran.TransportOrder;
@@ -27,6 +29,7 @@ import net.bodz.violet.tran.TransportOrder;
  *
  * owner: 制单
  */
+@DefaultAccessMode(IAccessMode.M_COOP)
 @IdType(Long.class)
 @Table(name = "saleodr")
 public class SalesOrder
@@ -43,7 +46,7 @@ public class SalesOrder
     private Organization org;
     private Person person;
 
-    private SizedList<SalesOrderItem> items;
+    private SizedList<SalesOrderItem> items = new SizedList<>();
     private BigDecimal totalQuantity = BigDecimal.ZERO;
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
@@ -51,13 +54,6 @@ public class SalesOrder
     // material-plans (locks)
 
     private SizedList<TransportOrder> deliveries;
-
-    @Override
-    public void reset() {
-        super.reset();
-        setAccessMode(M_COOP);
-        items = new SizedList<>();
-    }
 
     public SalesCategory getCategory() {
         return category;
