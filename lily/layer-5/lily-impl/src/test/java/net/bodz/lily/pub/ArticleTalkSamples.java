@@ -9,7 +9,7 @@ public class ArticleTalkSamples
     public static ArticleTalk build(Article article, User op) {
         ArticleTalk a = new ArticleTalk();
         a.setSubject("articleTalk-1");
-        a.setText("A articleTalk named articleTalk-1.");
+        a.setRawText("A articleTalk named articleTalk-1.");
         a.setArticle(article);
         a.setOp(op);
         return a;

@@ -8,7 +8,7 @@ public class AppApplySamples
     public static AppApply build() {
         AppApply a = new AppApply();
         a.setSubject("appApply-1");
-        a.setText("A appApply named appApply-1.");
+        a.setRawText("A appApply named appApply-1.");
         return a;
     }
 

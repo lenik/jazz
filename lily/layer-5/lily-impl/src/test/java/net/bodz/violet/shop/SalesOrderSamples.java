@@ -14,7 +14,7 @@ public class SalesOrderSamples
             Organization org, Person person) {
         SalesOrder a = new SalesOrder();
         a.setSubject("salesOrder-1");
-        a.setText("A salesOrder named salesOrder-1.");
+        a.setRawText("A salesOrder named salesOrder-1.");
         a.setOp(op);
 
         a.setCategory(category);

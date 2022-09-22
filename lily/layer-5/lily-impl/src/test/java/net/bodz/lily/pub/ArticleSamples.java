@@ -8,7 +8,7 @@ public class ArticleSamples
     public static Article build(ArticleCategory category) {
         Article a = new Article();
         a.setSubject("article-1");
-        a.setText("A article named article-1.");
+        a.setRawText("A article named article-1.");
         a.setCategory(category);
         return a;
     }

@@ -14,7 +14,7 @@ public class StoreOrderSamples
             OrgUnit orgUnit, Person person) {
         StoreOrder a = new StoreOrder();
         a.setSubject("storeOrder-1");
-        a.setText("A storeOrder named storeOrder-1.");
+        a.setRawText("A storeOrder named storeOrder-1.");
         a.setOp(op);
 
         a.setCategory(category);

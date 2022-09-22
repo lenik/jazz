@@ -8,7 +8,7 @@ public class IssueLogSamples
     public static IssueLog build(Issue issue) {
         IssueLog a = new IssueLog();
         a.setSubject("issueReply-1");
-        a.setText("A issueReply named issueReply-1.");
+        a.setRawText("A issueReply named issueReply-1.");
         a.setIssue(issue);
         return a;
     }

@@ -9,7 +9,7 @@ public class TestQuestionTalkSamples
     public static TestQuestionTalk build(TestQuestion q, User op) {
         TestQuestionTalk a = new TestQuestionTalk();
         a.setSubject("testQuestionMsg-1");
-        a.setText("A testQuestionMsg named testQuestionMsg-1.");
+        a.setRawText("A testQuestionMsg named testQuestionMsg-1.");
         a.setQuestion(q);
         a.setOp(op);
         return a;

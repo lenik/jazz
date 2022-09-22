@@ -8,7 +8,7 @@ public class IssueSamples
     public static Issue build(IssueCategory category, IssuePhase phase) {
         Issue a = new Issue();
         a.setSubject("issue-1");
-        a.setText("A issue named issue-1.");
+        a.setRawText("A issue named issue-1.");
         a.setCategory(category);
         a.setPhase(phase);
         return a;
