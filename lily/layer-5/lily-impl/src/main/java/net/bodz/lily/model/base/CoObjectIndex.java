@@ -4,8 +4,8 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
+import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IMapper;
-import net.bodz.bas.db.ibatis.IMapperTemplate;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.html.viz.HtmlViewOptions;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -28,7 +28,6 @@ import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.Instantiables;
 import net.bodz.lily.security.AccessControl;
 
 /**
@@ -103,7 +102,7 @@ public abstract class CoObjectIndex<T extends CoObject>
         switch (token) {
         case "new":
             try {
-                Object obj = Instantiables._instantiate(getObjectType());
+                Object obj = getObjectType().newInstance();
                 return PathArrival.shift(previous, this, _access(obj), tokens);
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
@@ -127,8 +126,8 @@ public abstract class CoObjectIndex<T extends CoObject>
             Long id = Long.parseLong(name);
 
             Class<?> entityClass = getObjectType();
-            Class<IMapperTemplate<?, CoObjectMask>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-            IMapperTemplate<?, CoObjectMask> mapper = getDataContext().getMapper(mapperClass);
+            Class<IEntityMapper<?, CoObjectMask>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
+            IEntityMapper<?, CoObjectMask> mapper = getDataContext().getMapper(mapperClass);
             if (mapper == null)
                 throw new IllegalUsageException("No mapper for " + entityClass);
 

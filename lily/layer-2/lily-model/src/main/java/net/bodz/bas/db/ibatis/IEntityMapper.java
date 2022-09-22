@@ -3,10 +3,9 @@ package net.bodz.bas.db.ibatis;
 import org.apache.ibatis.annotations.Param;
 
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.lily.entity.IId;
 
 @ExcludedFromIndex
-public interface IEntityMapper<T extends IId<?>, M>
+public interface IEntityMapper<T, M>
         extends
             IGenericMapper<T, M> {
 

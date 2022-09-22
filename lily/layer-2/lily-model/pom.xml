@@ -29,6 +29,11 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-log</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-repr-api</artifactId>
             <version>${bas.version}</version>
         </dependency>

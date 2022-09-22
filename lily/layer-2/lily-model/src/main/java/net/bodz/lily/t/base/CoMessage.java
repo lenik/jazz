@@ -2,7 +2,6 @@ package net.bodz.lily.t.base;
 
 import java.util.Date;
 
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -45,7 +44,7 @@ public abstract class CoMessage<Id>
     private Id id;
     private User op;
     private String subject;
-    private String text;
+    private String rawText;
     private UseForm form;
     private ParameterMap parameters;
     private UserClickInfo clickInfo;
@@ -59,9 +58,10 @@ public abstract class CoMessage<Id>
     }
 
     @Override
-    public void reinit() {
-        super.reinit();
-        op = getOwnerUser();
+    public void setOwnerUser(User ownerUser) {
+        super.setOwnerUser(ownerUser);
+        if (op == null)
+            op = getOwnerUser();
     }
 
     @Override
@@ -123,21 +123,22 @@ public abstract class CoMessage<Id>
      * @placeholder 输入正文…
      */
     @TextInput(multiLine = true, html = true)
-    public String getText() {
-        return text;
+    public String getRawText() {
+        return rawText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setRawText(String rawText) {
+        this.rawText = rawText;
     }
 
-    /**
-     * @label Text Preview
-     * @label.zh 正文预览
-     */
     @Derived
-    public String getTextPreview() {
-        return Strings.ellipsis(getText(), 50);
+    public TextObject getText() {
+        return new TextObject(rawText);
+    }
+
+    @Derived
+    public HtmlTextObject getHtml() {
+        return new HtmlTextObject(rawText);
     }
 
     public UseForm getForm() {
@@ -224,7 +225,7 @@ public abstract class CoMessage<Id>
 
         op = o.readInto("op", op, new User());
         subject = o.getString("subject", subject);
-        text = o.getString("text", text);
+        rawText = o.getString("text", rawText);
 
         subject = o.getString("subject", subject);
         // form = o.readInto("form", form, new UseForm());

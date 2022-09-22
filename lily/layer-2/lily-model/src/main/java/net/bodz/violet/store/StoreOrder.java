@@ -14,12 +14,15 @@ import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.SizedList;
+import net.bodz.lily.model.base.DefaultAccessMode;
+import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.t.base.CoMessage;
 import net.bodz.violet.plan.Plan;
 
 /**
  * 库存作业
  */
+@DefaultAccessMode(IAccessMode.M_SHARED)
 @IdType(Long.class)
 // @SchemaPref(Schemas.STOCK)
 @Table(name = "storeodr")
@@ -42,13 +45,6 @@ public class StoreOrder
     private BigDecimal totalAmount = BigDecimal.ZERO;
 
     public StoreOrder() {
-    }
-
-    @Override
-    public void reset() {
-        super.reset();
-        setAccessMode(M_SHARED);
-
         StoreCategory TK_I = new StoreCategory();
         TK_I.id(1202);
         TK_I.setLabel("采购入库");

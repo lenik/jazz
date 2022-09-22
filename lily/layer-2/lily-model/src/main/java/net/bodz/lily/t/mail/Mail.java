@@ -1,6 +1,5 @@
 package net.bodz.lily.t.mail;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.lily.entity.IdType;
@@ -18,12 +17,5 @@ public class Mail
     List<User> bcc;
 
     boolean read;
-
-    @Override
-    public void reset() {
-        super.reset();
-        recipients = new ArrayList<>();
-        bcc = new ArrayList<>();
-    }
 
 }

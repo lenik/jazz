@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -35,27 +33,26 @@ public class UploadHandler
 
     File localDir;
     IAnchor anchor;
-
-    List<IUploadHandlerExtension> extensions = new ArrayList<IUploadHandlerExtension>();
+    boolean renameSha1 = true;
 
     /**
-     * @param getPath
+     * @param absoluteHref
      *            The start part of the download href relative to the webapp. Should be terminated
      *            with file separator.
      */
-    public UploadHandler(File localDir, String getPath) {
-        this(localDir, _webApp_.join(getPath));
+    public UploadHandler(File localDir, String absoluteHref) {
+        this(localDir, _webApp_.join(absoluteHref));
     }
 
-    public UploadHandler(File localDir, IAnchor getAnchor) {
+    public UploadHandler(File localDir, IAnchor anchor) {
         if (localDir == null)
             throw new NullPointerException("localDir");
         if (!localDir.isDirectory())
             throw new IllegalArgumentException("Not a local directory: " + localDir);
-        if (getAnchor == null)
-            throw new NullPointerException("getAnchor");
+        if (anchor == null)
+            throw new NullPointerException("anchor");
         this.localDir = localDir;
-        this.anchor = getAnchor;
+        this.anchor = anchor;
     }
 
     public UploadResult handlePostRequest(HttpServletRequest request)
@@ -91,7 +88,7 @@ public class UploadHandler
             fileInfo.setFile(localFile);
             fileInfo.setSha1(renameResult.sha1);
 
-            fileInfo.url = anchor.join(renameResult.newFile.getName()).absoluteHref();
+            fileInfo.url = anchor.join(renameResult.newFile.getName()).toUriPath();
             fileInfo.deleteUrl = fileInfo.url;
 
             // TODO image auto-scale...?

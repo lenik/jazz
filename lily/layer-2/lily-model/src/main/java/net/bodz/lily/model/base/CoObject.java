@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
@@ -33,18 +32,17 @@ import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateJsonFn;
 import net.bodz.bas.repr.state.StdStates;
-import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.IReinitializable;
 import net.bodz.lily.model.base.impl.DefaultWebSupport;
 import net.bodz.lily.model.base.impl.IWebSupport;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.IAccessControlled;
+import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.security.User;
-import net.bodz.lily.security.login.LoginToken;
+import net.bodz.lily.security.login.ILoginListener;
 
 /**
  * Co/Con: Concrete, also Content, Controlled
@@ -53,7 +51,8 @@ import net.bodz.lily.security.login.LoginToken;
 public abstract class CoObject
         extends StructRow
         implements
-            IReinitializable,
+            IReset,
+            ILoginListener,
             IAccessControlled,
             IStated {
 
@@ -64,17 +63,6 @@ public abstract class CoObject
     public static final int N_DESCRIPTION = 200;
     public static final int N_COMMENT = 200;
     public static final int N_IMAGE = 100;
-
-    /** 私密 */
-    public static final int M_PRIVATE = 0600;
-    /** 共享 */
-    public static final int M_SHARED = 0640;
-    /** 协作 */
-    public static final int M_COOP = 0660;
-    /** 公开 */
-    public static final int M_PUBLIC = 0644;
-    /** 协作公开 */
-    public static final int M_PUBLIC_COOP = 0664;
 
     private String codeName;
 
@@ -95,15 +83,16 @@ public abstract class CoObject
     private User ownerUser;
     private Group ownerGroup;
     private int acl;
-    private int accessMode = M_PUBLIC;
+    private int accessMode = IAccessMode.M_PUBLIC;
 
     public CoObject() {
         // Opt to reinit()?
     }
 
     @Override
-    public void reinit() {
-        fn.fillLoginData(this);
+    public void onLoggedIn(User user) {
+        setOwnerUser(user);
+        setOwnerGroup(user == null ? null : user.getPrimaryGroup());
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
@@ -499,23 +488,6 @@ public abstract class CoObject
 
         // user, group, acl, mode
         return true;
-    }
-
-    protected static class fn {
-
-        public static void fillLoginData(CoObject obj) {
-            HttpSession session = CurrentHttpService.getSessionOpt();
-            if (session != null) {
-                LoginToken token = LoginToken.fromSession(session);
-                if (token != null) {
-                    User user = token.getUser();
-                    obj.setOwnerUser(user);
-                    if (user != null)
-                        obj.setOwnerGroup(user.getPrimaryGroup());
-                }
-            }
-        }
-
     }
 
 }
