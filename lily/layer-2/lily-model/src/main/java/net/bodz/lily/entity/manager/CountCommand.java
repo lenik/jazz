@@ -17,13 +17,7 @@ public class CountCommand
     }
 
     @Override
-    protected boolean setUpVars()
-            throws Exception {
-        return true;
-    }
-
-    @Override
-    public Object execute()
+    protected Object execute()
             throws Exception {
         long totalCount = getGenericMapper().count(criteria);
         return totalCount;

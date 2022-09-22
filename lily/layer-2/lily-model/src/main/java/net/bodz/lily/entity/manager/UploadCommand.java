@@ -33,7 +33,7 @@ public class UploadCommand
     }
 
     @Override
-    protected boolean setUpVars()
+    protected Object execute()
             throws Exception {
         request = context.getRequest();
         File dataDir = DefaultSiteDirs.getInstance().getDataDir(request);
@@ -41,12 +41,7 @@ public class UploadCommand
 
         startDir = new File(dataDir, category);
         startAnchor = dataAnchor.join(category + "/");
-        return true;
-    }
 
-    @Override
-    public Object execute()
-            throws Exception {
         UploadHandler uploadHandler = new UploadHandler(startDir, startAnchor);
         try {
             return uploadHandler.handlePostRequest(request);

@@ -6,6 +6,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.object.ICloneable;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -21,6 +22,7 @@ public class CreateCommand
     final boolean resetable;
 
     Object templateId;
+    JsonFormOptions jsonFormOptions;
 
     public CreateCommand(IEntityTypeInfo typeInfo) {
         super(typeInfo);
@@ -54,7 +56,7 @@ public class CreateCommand
     }
 
     @Override
-    public Object execute()
+    protected Object execute()
             throws Exception {
         Object obj = null;
 
@@ -93,9 +95,13 @@ public class CreateCommand
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
         super.readObject(map);
+
         String idStr = map.getString("templateId");
         if (idStr != null)
             setTemplateIdString(idStr);
+
+        jsonFormOptions = new JsonFormOptions();
+        jsonFormOptions.readObject(map);
     }
 
     public static Builder builder() {
