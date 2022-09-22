@@ -53,6 +53,16 @@ public class Split
         this.b = second;
     }
 
+    public Split first(String a) {
+        this.a = a;
+        return this;
+    }
+
+    public Split second(String b) {
+        this.b = b;
+        return this;
+    }
+
     public Split define() {
         return define("");
     }
