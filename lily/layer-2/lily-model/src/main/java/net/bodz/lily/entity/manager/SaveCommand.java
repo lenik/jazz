@@ -43,7 +43,7 @@ public class SaveCommand
     }
 
     @Override
-    public Object execute()
+    protected Object execute()
             throws Exception {
         // 1. Prepare the object to be saved
         Object obj;

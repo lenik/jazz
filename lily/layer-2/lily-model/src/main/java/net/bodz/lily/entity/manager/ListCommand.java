@@ -31,18 +31,6 @@ public class ListCommand
     }
 
     @Override
-    protected boolean setUpVars()
-            throws Exception {
-        Class<?> entityClass = typeInfo.getEntityClass();
-        tableData = new TableOfPathProps(entityClass);
-
-        Class<?> crtieriaClass = typeInfo.getCrtieriaClass();
-        criteria = (IVarMapForm) crtieriaClass.newInstance();
-
-        return true;
-    }
-
-    @Override
     public Object execute()
             throws Exception {
         List<Object> dataList = buildDataList();

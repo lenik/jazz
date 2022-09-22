@@ -3,6 +3,7 @@ package net.bodz.lily.entity.manager;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
 
@@ -14,6 +15,7 @@ public class MutableEntityCommandContext
     HttpServletRequest request;
     IVariantMap<String> parameters;
     DataContext dataContext;
+    JsonResult result = new JsonResult();
 
     @Override
     public HttpServletRequest getRequest() {
@@ -40,6 +42,15 @@ public class MutableEntityCommandContext
 
     public void setDataContext(DataContext dataContext) {
         this.dataContext = dataContext;
+    }
+
+    @Override
+    public JsonResult getResult() {
+        return result;
+    }
+
+    public void setResult(JsonResult result) {
+        this.result = result;
     }
 
 }

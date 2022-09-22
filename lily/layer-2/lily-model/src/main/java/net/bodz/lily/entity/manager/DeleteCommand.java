@@ -23,7 +23,7 @@ public class DeleteCommand
     }
 
     @Override
-    public Object execute()
+    protected Object execute()
             throws Exception {
         JsonResult resp = new JsonResult();
         if (idList.isEmpty()) {

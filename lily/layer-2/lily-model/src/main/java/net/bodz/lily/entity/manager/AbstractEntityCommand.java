@@ -9,7 +9,6 @@ import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.site.json.JsonResult;
@@ -29,7 +28,6 @@ public abstract class AbstractEntityCommand
     protected IEntityCommandContext context;
     protected DataContext dataContext;
     protected JsonResult resp;
-    protected JsonFormOptions jsonFormOptions;
 
     public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
         String name = getClass().getSimpleName();
@@ -56,25 +54,28 @@ public abstract class AbstractEntityCommand
     }
 
     @Override
-    public synchronized JsonResult execute(IEntityCommandContext executeContext) {
+    public synchronized Object execute(IEntityCommandContext executeContext) {
         this.context = executeContext;
         this.dataContext = context.getDataContext();
-        this.resp = new JsonResult();
+        this.resp = context.getResult();
 
         IVariantMap<String> parameters = context.getParameters();
 
         try {
             readObject(parameters);
         } catch (Exception e) {
-            return resp.fail(e, "error parse parameters: " + e.getMessage());
+            resp.fail(e, "error parse parameters: " + e.getMessage());
+            return null;
         }
 
         try {
             if (!setUpVars()) {
-                return resp.fail("command is not enabled.");
+                resp.fail("command is not enabled.");
+                return null;
             }
         } catch (Exception e) {
-            return resp.fail(e, "failed before execute: " + e.getMessage());
+            resp.fail(e, "failed before execute: " + e.getMessage());
+            return null;
         }
 
         Object result;
@@ -87,8 +88,10 @@ public abstract class AbstractEntityCommand
             if (result != resp)
                 resp.setData(result);
 
+            return result;
         } catch (Exception e) {
-            return resp.fail(e, "failed to execute: " + e.getMessage());
+            resp.fail(e, "failed to execute: " + e.getMessage());
+            return null;
         } finally {
             try {
                 afterExecute();
@@ -96,8 +99,6 @@ public abstract class AbstractEntityCommand
                 logger.error(e, "error post-execute: " + e.getMessage());
             }
         }
-
-        return resp;
     }
 
     /**
@@ -138,8 +139,6 @@ public abstract class AbstractEntityCommand
     @Override
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
-        jsonFormOptions = new JsonFormOptions();
-        jsonFormOptions.readObject(map);
     }
 
     @Override
