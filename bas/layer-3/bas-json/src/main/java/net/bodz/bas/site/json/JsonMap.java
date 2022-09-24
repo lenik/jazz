@@ -51,7 +51,6 @@ public class JsonMap
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        map.clear();
         for (String key : o.keySet()) {
             Object val = o.get(key);
             if (!parseJsonEntry(key, val, opts))
@@ -109,6 +108,9 @@ public class JsonMap
 
     public void setJson(String json)
             throws ParseException {
+        map.clear();
+        if (json == null)
+            return;
         Object j_val = JsonBuilder.getInstance().parse(json);
         readObjectBoxed(j_val, opts);
     }
@@ -122,6 +124,7 @@ public class JsonMap
 
     public synchronized void setJsonStr(JsonValueWrapper form)
             throws ParseException {
+        map.clear();
         Object j_val = form.getWrapped();
         if (j_val == null)
             return;
