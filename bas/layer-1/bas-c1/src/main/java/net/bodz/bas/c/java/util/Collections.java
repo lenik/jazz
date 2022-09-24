@@ -82,4 +82,16 @@ public class Collections
         return collection;
     }
 
+    public static <T extends Comparable<? super T>> List<T> sortCopy(Collection<T> collection) {
+        List<T> copy = new ArrayList<>(collection);
+        Collections.sort(copy);
+        return copy;
+    }
+
+    public static <T> List<T> sortCopy(Collection<T> collection, Comparator<? super T> comparator) {
+        List<T> copy = new ArrayList<>(collection);
+        Collections.sort(copy, comparator);
+        return copy;
+    }
+
 }
