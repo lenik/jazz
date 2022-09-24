@@ -1,9 +1,20 @@
 package net.bodz.bas.t.catalog;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CatalogSubset {
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.json.JsonObject;
+
+public class CatalogSubset
+        implements
+            IJsonForm {
 
     public String catalogName;
 
@@ -102,6 +113,31 @@ public class CatalogSubset {
             return "\\ALL";
         else
             return schemas.keySet().toString();
+    }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        out.entry("catalogName", catalogName);
+        if (anySchema != null) {
+            out.key("anySchema");
+            anySchema.jsonOut(out, opts, true);
+        }
+        if (schemas == ALL_SCHEMAS)
+            out.entry("allSchemas", true);
+        else {
+            out.key("schemas");
+            out.object();
+            for (String key : schemas.keySet())
+                out.entry(key, schemas.get(key));
+            out.endObject();
+        }
     }
 
 }

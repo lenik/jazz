@@ -1,10 +1,23 @@
 package net.bodz.bas.t.catalog;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class SchemaSubset {
+import net.bodz.bas.c.java.util.Collections;
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.order.AbstractNonNullComparator;
+
+public class SchemaSubset
+        implements
+            IJsonForm {
 
     public String schemaName;
 
@@ -116,5 +129,35 @@ public class SchemaSubset {
         else
             return "names: " + names + "\npatterns: " + patterns;
     }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        out.entry("schemaName", schemaName);
+        out.entry("all", all);
+        out.entry("names", Collections.sortCopy(names));
+        out.entry("patterns", Collections.sortCopy(patterns, PatternComparator.INSTANCE));
+        out.entry("ignoreCase", ignoreCase);
+    }
+
+}
+
+class PatternComparator
+        extends AbstractNonNullComparator<Pattern> {
+
+    @Override
+    public int compareNonNull(Pattern o1, Pattern o2) {
+        String p1 = o1.pattern();
+        String p2 = o2.pattern();
+        return p1.compareTo(p2);
+    }
+
+    public static final PatternComparator INSTANCE = new PatternComparator();
 
 }
