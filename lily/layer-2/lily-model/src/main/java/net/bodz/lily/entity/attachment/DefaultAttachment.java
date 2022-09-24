@@ -136,6 +136,16 @@ public class DefaultAttachment
         }
     }
 
+    public void setPath(String dirName, String fileName) {
+        if (Nullables.notEquals(this.dirName, dirName) //
+                || Nullables.notEquals(this.fileName, fileName)) {
+            this.dirName = dirName;
+            this.fileName = fileName;
+            updatePath();
+            invalidate();
+        }
+    }
+
     void updatePath() {
         String path = fileName;
         if (dirName != null)
@@ -210,9 +220,11 @@ public class DefaultAttachment
     }
 
     @Override
-    public synchronized boolean isSymLinkToSha1()
+    public synchronized Boolean isSymLinkToSha1()
             throws IOException {
         if (symLinkToSha1 == null) {
+            if (volume == null)
+                return null;
             if (!volume.isSymLink(_path))
                 return false;
             String target = volume.getSymLinkTarget(_path);
@@ -222,14 +234,17 @@ public class DefaultAttachment
                 return false;
             symLinkToSha1 = name.equalsIgnoreCase(sha1);
         }
-        return symLinkToSha1.booleanValue();
+        return symLinkToSha1;
     }
 
     @Override
     public long getSize()
             throws FileNotFoundException {
         if (size == null)
-            size = volume.getSize(_path);
+            if (volume == null)
+                return 0;
+            else
+                size = volume.getSize(_path);
         return size;
     }
 
@@ -277,10 +292,20 @@ public class DefaultAttachment
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        HttpServletRequest request = CurrentHttpService.getRequest();
         String volumeId = o.getString(K_VOLUME_ID);
-        volume = AttachmentGroup.forRequest(request).getVolume(volumeId);
-        setPath(o.getString(K_PATH));
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
+        if (request != null) {
+            volume = AttachmentGroup.forRequest(request).getVolume(volumeId);
+        }
+
+        String path = o.getString(K_PATH);
+        String dirName = o.getString(K_DIR_NAME);
+        String fileName = o.getString(K_FILE_NAME);
+        if (path != null)
+            setPath(path);
+        else
+            setPath(dirName, fileName);
+
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);
         symLinkToSha1 = o.getBoolean(K_SYMLINK_TO_SHA1);

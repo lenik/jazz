@@ -61,9 +61,12 @@ public interface IAttachment
     /**
      * fileName -> sha1
      */
-    boolean isSymLinkToSha1()
+    Boolean isSymLinkToSha1()
             throws IOException;
 
+    /**
+     * @return 0 if unknown.
+     */
     long getSize()
             throws FileNotFoundException;
 
@@ -104,20 +107,27 @@ public interface IAttachment
 
     String K_VOLUME_ID = "volumeId";
     String K_PATH = "path";
+    String K_DIR_NAME = "dirName";
+    String K_FILE_NAME = "fileName";
     String K_LABEL = "label";
     String K_DESCRIPTION = "description";
     String K_SYMLINK_TO_SHA1 = "symLinkToSha1";
     String K_SIZE = "size";
-    String K_SHA1 = "sha1";
+    String K_SHA1 = "SHA1";
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        out.entry(K_VOLUME_ID, getVolume().getVolumeId());
-        out.entry(K_PATH, getPath());
+        IAttachmentVolume volume = getVolume();
+        if (volume != null)
+            out.entry(K_VOLUME_ID, volume.getVolumeId());
+        // out.entry(K_PATH, getPath());
+        out.entryNotNull(K_DIR_NAME, getDirName());
+        out.entryNotNull(K_FILE_NAME, getFileName());
         out.entryNotNull(K_LABEL, getLabel());
         out.entryNotNull(K_DESCRIPTION, getDescription());
-        out.entryTrue(K_SYMLINK_TO_SHA1, isSymLinkToSha1());
+
+        out.entryNotNull(K_SYMLINK_TO_SHA1, isSymLinkToSha1());
         out.entry(K_SIZE, getSize());
         out.entryNotNull(K_SHA1, getSHA1());
     }

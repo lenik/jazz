@@ -1,1 +1,2 @@
 ccc = main net.bodz.lily.tool.javagen.CodegenConfigConv
+item2att = main net.bodz.lily.tool.sql.Item2Attachment
