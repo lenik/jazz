@@ -1,5 +1,6 @@
 package net.bodz.bas.c.autowire;
 
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,10 +10,14 @@ import java.util.Set;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalConfigException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.autowire.ProjectDependencies;
 import net.bodz.bas.meta.autowire.ProjectName;
 
 public class ProjectList {
+
+    static final Logger logger = LoggerFactory.getLogger(ProjectList.class);
 
     Map<String, Class<?>> nameMap = new HashMap<>();
     Map<Class<?>, String[]> dependenciesMap = new HashMap<>();
@@ -96,7 +101,7 @@ public class ProjectList {
     void load() {
         Iterable<Class<? extends ProjectName>> classes = IndexedTypes.list(ProjectName.class, true);
         for (Class<?> clazz : classes) {
-            ProjectName aProjectName = clazz.getAnnotation(ProjectName.class);
+            ProjectName aProjectName = getAnnotation(clazz, ProjectName.class);
             if (aProjectName != null) {
                 String name = aProjectName.value();
                 Class<?> existing = nameMap.get(name);
@@ -108,7 +113,7 @@ public class ProjectList {
 
         for (Class<?> clazz : classes) {
             Class<?>[] depClasses;
-            ProjectDependencies aDependencies = clazz.getAnnotation(ProjectDependencies.class);
+            ProjectDependencies aDependencies = getAnnotation(clazz, ProjectDependencies.class);
             if (aDependencies == null)
                 depClasses = new Class<?>[0];
             else
@@ -117,7 +122,7 @@ public class ProjectList {
             String[] depNames = new String[depClasses.length];
             for (int i = 0; i < depClasses.length; i++) {
                 Class<?> depClass = depClasses[i];
-                ProjectName aDepName = depClass.getAnnotation(ProjectName.class);
+                ProjectName aDepName = getAnnotation(depClass, ProjectName.class);
                 if (aDepName == null) {
                     String f = "Project class %s has a dependency w/o @ProgramName: %s";
                     throw new IllegalArgumentException(String.format(f, //
@@ -132,6 +137,17 @@ public class ProjectList {
                 depNames[i] = depName;
             }
             dependenciesMap.put(clazz, depNames);
+        }
+    }
+
+    static <A extends Annotation> A getAnnotation(Class<?> clazz, Class<A> annotationClass) {
+        try {
+            return clazz.getAnnotation(annotationClass);
+        } catch (Throwable e) {
+            logger.errorf(e, "error get anntation %s from %s.", annotationClass, clazz);
+            logger.error("Hint: check the classpath.");
+            // System.exit(1);
+            throw new RuntimeException(e);
         }
     }
 
