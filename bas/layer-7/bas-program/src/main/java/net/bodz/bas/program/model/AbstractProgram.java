@@ -38,6 +38,7 @@ public abstract class AbstractProgram
 
     private transient IOptionGroup optionGroup;
 
+    @Override
     public synchronized IOptionGroup getOptionModel() {
         if (optionGroup == null)
             optionGroup = OptionGroupFactory.getClassOptions(getClass());
@@ -119,7 +120,7 @@ public abstract class AbstractProgram
         } catch (ControlBreak c) {
             return;
         } catch (CLISyntaxException e) {
-            System.err.println("Illegal syntax: " + e.getMessage());
+            logger.error(e, "Illegal syntax: " + e.getMessage());
             System2.setExitStatus(1);
             return;
         }
