@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -16,16 +15,15 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.t.file.PathFields;
 import net.bodz.bas.t.tuple.Split;
 
 public class DefaultAttachment
+        extends PathFields
         implements
             IAttachment {
 
     IAttachmentVolume volume;
-    String dirName;
-    String fileName;
-    String _path;
 
     String label;
     String description;
@@ -39,9 +37,7 @@ public class DefaultAttachment
 
     public DefaultAttachment(IAttachmentVolume volume, String dirName, String fileName) {
         this.volume = volume;
-        this.dirName = dirName;
-        this.fileName = fileName;
-        updatePath();
+        setPath(dirName, fileName);
     }
 
     public DefaultAttachment(IAttachmentVolume volume, String path) {
@@ -50,10 +46,8 @@ public class DefaultAttachment
     }
 
     public DefaultAttachment(DefaultAttachment o) {
+        super(o);
         this.volume = o.volume;
-        this.dirName = o.dirName;
-        this.fileName = o.fileName;
-        this._path = o._path;
         this.label = o.label;
         this.description = o.description;
         this.symLinkToSha1 = o.symLinkToSha1;
@@ -89,107 +83,6 @@ public class DefaultAttachment
     }
 
     @Override
-    public String getDirName() {
-        return dirName;
-    }
-
-    @Override
-    public void setDirName(String dirName) {
-        if (Nullables.notEquals(this.dirName, dirName)) {
-            this.dirName = dirName;
-            updatePath();
-            invalidate();
-        }
-    }
-
-    @Override
-    public String getFileName() {
-        return fileName;
-    }
-
-    @Override
-    public void setFileName(String fileName) {
-        if (Nullables.notEquals(this.fileName, fileName)) {
-            this.fileName = fileName;
-            updatePath();
-            invalidate();
-        }
-    }
-
-    @Override
-    public String getPath() {
-        return _path;
-    }
-
-    @Override
-    public void setPath(String path) {
-        if (Nullables.notEquals(this._path, path)) {
-            if (path == null) {
-                dirName = fileName = null;
-            } else {
-                Split dirBase = Split.dirBase(path);
-                dirName = dirBase.a;
-                fileName = dirBase.b;
-            }
-            _path = path;
-            invalidate();
-        }
-    }
-
-    public void setPath(String dirName, String fileName) {
-        if (Nullables.notEquals(this.dirName, dirName) //
-                || Nullables.notEquals(this.fileName, fileName)) {
-            this.dirName = dirName;
-            this.fileName = fileName;
-            updatePath();
-            invalidate();
-        }
-    }
-
-    void updatePath() {
-        String path = fileName;
-        if (dirName != null)
-            path = dirName + "/" + fileName;
-        this._path = path;
-    }
-
-    @Override
-    public String getName() {
-        if (fileName == null)
-            return null;
-        else
-            return Split.nameExtension(fileName).a;
-    }
-
-    @Override
-    public void setName(String name) {
-        String newFileName;
-        if (fileName == null)
-            newFileName = name;
-        else
-            newFileName = Split.nameExtension(fileName).first(name).join('.');
-        setFileName(newFileName);
-    }
-
-    @Override
-    public String getExtension() {
-        if (fileName == null)
-            return null;
-        else
-            return Split.nameExtension(fileName).b;
-    }
-
-    @Override
-    public void setExtension(String extension) {
-        String newFileName;
-        if (fileName == null)
-            newFileName = "." + extension;
-        else
-            newFileName = Split.nameExtension(fileName).second(extension).join('.');
-        setFileName(newFileName);
-    }
-
-    @Override
     public String getLabel() {
         return label;
     }
@@ -211,12 +104,12 @@ public class DefaultAttachment
 
     @Override
     public File getFile() {
-        return volume.getLocalFile(_path);
+        return volume.getLocalFile(getPath());
     }
 
     @Override
     public boolean exists() {
-        return volume.exists(_path);
+        return volume.exists(getPath());
     }
 
     @Override
@@ -225,9 +118,9 @@ public class DefaultAttachment
         if (symLinkToSha1 == null) {
             if (volume == null)
                 return null;
-            if (!volume.isSymLink(_path))
+            if (!volume.isSymLink(getPath()))
                 return false;
-            String target = volume.getSymLinkTarget(_path);
+            String target = volume.getSymLinkTarget(getPath());
             String name = Split.nameExtension(target).a;
             String sha1 = getSHA1();
             if (name == null || sha1 == null)
@@ -244,7 +137,7 @@ public class DefaultAttachment
             if (volume == null)
                 return 0;
             else
-                size = volume.getSize(_path);
+                size = volume.getSize(getPath());
         return size;
     }
 
@@ -256,7 +149,7 @@ public class DefaultAttachment
     public synchronized String getSHA1()
             throws IOException {
         if (sha1 == null)
-            sha1 = volume.getSHA1(_path);
+            sha1 = volume.getSHA1(getPath());
         return sha1;
     }
 
@@ -298,13 +191,7 @@ public class DefaultAttachment
             volume = AttachmentGroup.forRequest(request).getVolume(volumeId);
         }
 
-        String path = o.getString(K_PATH);
-        String dirName = o.getString(K_DIR_NAME);
-        String fileName = o.getString(K_FILE_NAME);
-        if (path != null)
-            setPath(path);
-        else
-            setPath(dirName, fileName);
+        super.jsonIn(o, opts);
 
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);

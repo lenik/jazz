@@ -5,40 +5,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.t.file.IPathFields;
 
 public interface IAttachment
         extends
-            IJsonForm {
+            IPathFields {
 
     IAttachmentVolume getVolume();
 
     void setVolume(IAttachmentVolume container);
 
     IAnchor getAnchor();
-
-    String getPath();
-
-    void setPath(String path);
-
-    String getDirName();
-
-    void setDirName(String dirName);
-
-    String getFileName();
-
-    void setFileName(String fileName);
-
-    String getName();
-
-    void setName(String name);
-
-    String getExtension();
-
-    void setExtension(String extension);
 
     String getLabel();
 
@@ -106,14 +86,11 @@ public interface IAttachment
     }
 
     String K_VOLUME_ID = "volumeId";
-    String K_PATH = "path";
-    String K_DIR_NAME = "dirName";
-    String K_FILE_NAME = "fileName";
     String K_LABEL = "label";
     String K_DESCRIPTION = "description";
     String K_SYMLINK_TO_SHA1 = "symLinkToSha1";
     String K_SIZE = "size";
-    String K_SHA1 = "SHA1";
+    String K_SHA1 = "sha1";
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
@@ -121,9 +98,9 @@ public interface IAttachment
         IAttachmentVolume volume = getVolume();
         if (volume != null)
             out.entry(K_VOLUME_ID, volume.getVolumeId());
-        // out.entry(K_PATH, getPath());
-        out.entryNotNull(K_DIR_NAME, getDirName());
-        out.entryNotNull(K_FILE_NAME, getFileName());
+
+        IPathFields.super.jsonOut(out, opts);
+
         out.entryNotNull(K_LABEL, getLabel());
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
