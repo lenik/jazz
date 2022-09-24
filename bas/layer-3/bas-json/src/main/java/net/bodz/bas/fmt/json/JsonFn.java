@@ -72,6 +72,13 @@ public class JsonFn {
         }
     }
 
+    public static void dump(IJsonForm obj, Appendable out)
+            throws FormatException, IOException {
+        String json = toJson(obj, JsonFormOptions.DEFAULT);
+        out.append(json);
+        out.append('\n');
+    }
+
     /**
      * @param obj
      *            Non-<code>null</code> json-support object.
@@ -107,6 +114,13 @@ public class JsonFn {
             return fallback;
         }
         return buf.toString();
+    }
+
+    public static JsonObject toJsonObject(IJsonForm obj)
+            throws FormatException, ParseException {
+        String json = toJson(obj, JsonFormOptions.DEFAULT);
+        JsonObject jo = parseObject(json);
+        return jo;
     }
 
     public static <T extends IJsonForm> T fromJson(T obj, String json, JsonFormOptions opts)
