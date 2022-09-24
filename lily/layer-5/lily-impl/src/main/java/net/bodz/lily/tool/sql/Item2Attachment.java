@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.postgresql.util.PGobject;
+
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
@@ -26,6 +28,7 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.site.file.ItemFile;
 import net.bodz.bas.t.catalog.*;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.entity.attachment.DefaultAttachment;
 
 /**
@@ -122,7 +125,14 @@ public class Item2Attachment
                             // default dir is Foo/ID.
                             // attachment.setDirName(item.getDir());
 
-                            attachment.setFileName(item.getName());
+                            String oldFileName = item.getName();
+                            Split split = Split.nameExtension(oldFileName);
+                            String oldSha1 = item.getSha1();
+                            if (split.a.equalsIgnoreCase(oldSha1)) {
+                                attachment.setExtension(split.b);
+                            } else {
+                                attachment.setFileName(oldFileName);
+                            }
 
                             attachment.setSHA1(item.getSha1());
                             attachment.setLabel(item.getLabel());
@@ -145,8 +155,15 @@ public class Item2Attachment
 
             if (dirty) { // update
                 String newJson = newO.toString();
-                // rs.updateString("props", newJson);
                 System.out.println("  => " + newJson);
+                System.out.println();
+
+                PGobject pgo = new PGobject();
+                pgo.setType("json"); // jsonb .. similar.
+                pgo.setValue(newJson);
+                rs.updateObject("props", pgo);
+
+                rs.updateRow();
             }
         }
         rs.close();
