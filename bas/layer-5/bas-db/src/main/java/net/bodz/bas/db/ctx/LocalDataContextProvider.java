@@ -10,14 +10,14 @@ import javax.xml.stream.XMLStreamException;
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoadException;
-import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.fs.IFilesForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.t.tuple.Split;
 
 @ExcludedFromIndex
 public class LocalDataContextProvider
@@ -26,7 +26,6 @@ public class LocalDataContextProvider
             IFilesForm {
 
     File folder;
-    boolean loaded;
 
     Map<String, ConnectOptions> connectOptionsMap = new HashMap<>();
     Map<String, DataContext> contextCacheMap = new HashMap<>(); // new WeakHashMap<>();
@@ -34,40 +33,15 @@ public class LocalDataContextProvider
     public LocalDataContextProvider(File folder) {
         if (folder == null)
             throw new NullPointerException("folder");
-        this.folder = folder;
-    }
-
-    public synchronized final void reload() {
-        loaded = false;
-        _loadImpl();
-        loaded = true;
-    }
-
-    protected final void auoLoad() {
-        if (!loaded) {
-            synchronized (this) {
-                if (!loaded) {
-                    _loadImpl();
-                    loaded = true;
-                }
-            }
-        }
-    }
-
-    /**
-     * @throws LoadException
-     */
-    protected void _loadImpl() {
         try {
             readObject(folder);
         } catch (Exception e) {
-            throw new LoadException(e.getMessage(), e);
+            throw new IllegalUsageException("error loading " + folder + ": " + e.getMessage(), e);
         }
     }
 
     @Override
     public ConnectOptions getConnectOptions(String key) {
-        auoLoad();
         return connectOptionsMap.get(key);
     }
 
@@ -98,32 +72,48 @@ public class LocalDataContextProvider
     @Override
     public void readObject(File folder)
             throws IOException, ParseException {
+        readObject(folder, "");
+        this.folder = folder;
+    }
 
-        for (String fileName : folder.list()) {
+    public void readObject(File folder, String prefix)
+            throws IOException, ParseException {
 
-            if (fileName.endsWith(".xml")) {
-                File xmlFile = new File(folder, fileName);
-                ConnectOptions options = new ConnectOptions();
-                options.setUri(xmlFile.toURI().toString());
-                try {
-                    XmlFn.load(options, xmlFile);
-                } catch (LoaderException e) {
-                    throw new ParseException(e.getMessage(), e);
-                }
-                String name = fileName.substring(0, fileName.length() - 4);
-                addConnectOptions(name, options);
+        for (File file : folder.listFiles()) {
+            String fileName = file.getName();
+            if (file.isDirectory()) {
+                readObject(file, prefix + fileName + "/");
                 continue;
             }
 
-            if (fileName.endsWith(".json")) {
-                File jsonFile = new File(folder, fileName);
-                ConnectOptions options = new ConnectOptions();
-                options.setUri(jsonFile.toURI().toString());
+            Split nameExtension = Split.nameExtension(fileName);
+            String name = nameExtension.a;
+            String extension = nameExtension.b;
+            if (extension == null)
+                continue;
 
-                JsonFn.load(options, jsonFile, JsonFormOptions.PRETTY);
+            String key = prefix + name;
+            ConnectOptions options = new ConnectOptions();
 
-                String name = fileName.substring(0, fileName.length() - 4);
-                addConnectOptions(name, options);
+            switch (nameExtension.b) {
+            case "xml":
+                options.setSourceUri(file.toURI().toString());
+                try {
+                    XmlFn.load(options, file);
+                } catch (Exception e) {
+                    throw new ParseException(e.getMessage(), e);
+                }
+                addConnectOptions(key, options);
+                continue;
+
+            case "json":
+                options.setSourceUri(file.toURI().toString());
+                try {
+                    JsonFn.load(options, file, JsonFormOptions.PRETTY);
+                } catch (Exception e) {
+                    throw new ParseException(e.getMessage(), e);
+                }
+                addConnectOptions(key, options);
                 continue;
             }
 

@@ -1,4 +1,5 @@
 net.bodz.bas.db.ctx.IDataContextProvider
+net.bodz.bas.db.ctx.IDefaultContextIdsResolver
 net.bodz.bas.db.ibatis.IIbatisConfigurer
 net.bodz.bas.db.ibatis.IMapper
 net.bodz.bas.db.ibatis.IMapperXmlProvider
