@@ -11,6 +11,10 @@ public interface IJazzModule
             IPriority,
             IClassHashConstants {
 
+    int PRIORITY_MODULE = 0;
+    int PRIORITY_PROJECT = 100;
+    int PRIORITY_WEBAPP = 1000;
+
     String getName();
 
     IJazzProject getProject();
