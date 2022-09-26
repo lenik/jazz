@@ -3,10 +3,13 @@ package net.bodz.bas.t.project;
 import java.util.Set;
 
 import net.bodz.bas.meta.codegen.IndexedType;
+import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IJazzModule
-        extends IClassHashConstants {
+        extends
+            IPriority,
+            IClassHashConstants {
 
     String getName();
 

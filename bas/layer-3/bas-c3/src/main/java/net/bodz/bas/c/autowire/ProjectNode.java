@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ProjectNode {
 
-    public String name;
+    public ProjectMetadata project;
     public List<ProjectNode> dependencies = new ArrayList<>();
 
 }
