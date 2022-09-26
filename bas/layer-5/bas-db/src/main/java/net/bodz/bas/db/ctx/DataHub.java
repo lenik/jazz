@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import net.bodz.bas.db.jdbc.ConnectOptions;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.order.PriorityComparator;
 
@@ -14,6 +16,8 @@ import net.bodz.bas.t.order.PriorityComparator;
 public class DataHub
         implements
             IDataContextProvider {
+
+    static final Logger logger = LoggerFactory.getLogger(DataHub.class);
 
     public static final String K_MAIN = "main";
     public static final String K_TEST = "test";

@@ -17,6 +17,6 @@ public @interface Priority {
     int LOW = 10;
     int VERYLOW = 100;
 
-    int value() default DEFAULT;
+    int value();
 
 }
