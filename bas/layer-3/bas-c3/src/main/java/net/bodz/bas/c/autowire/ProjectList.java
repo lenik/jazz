@@ -1,11 +1,7 @@
 package net.bodz.bas.c.autowire;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
@@ -19,7 +15,7 @@ public class ProjectList {
 
     static final Logger logger = LoggerFactory.getLogger(ProjectList.class);
 
-    Map<String, Class<?>> nameMap = new HashMap<>();
+    Map<String, ProjectMetadata> nameMap = new HashMap<>();
     Map<Class<?>, String[]> dependenciesMap = new HashMap<>();
 
     public Set<String> getNames() {
@@ -27,7 +23,7 @@ public class ProjectList {
         return nameMap.keySet();
     }
 
-    public Class<?> getProjectClass(String name) {
+    public ProjectMetadata getProject(String name) {
         autoLoad();
         return nameMap.get(name);
     }
@@ -47,35 +43,42 @@ public class ProjectList {
         return topLevels;
     }
 
-    public String topLevelName() {
+    public List<ProjectMetadata> getTopLevelProjects() {
         Set<String> names = getTopLevelNames();
-        if (names.isEmpty())
-            throw new IllegalConfigException("No project.");
-        if (names.size() > 1) {
-            dump();
-            throw new IllegalConfigException("More than one top level project: " + names);
+        List<ProjectMetadata> projects = new ArrayList<>();
+        for (String name : names) {
+            ProjectMetadata project = getProject(name);
+            projects.add(project);
         }
-        return names.iterator().next();
+        Collections.sort(projects, ProjectMetadata.ORDER);
+        return projects;
     }
 
-    public Class<?> topLevelClass() {
-        String name = topLevelName();
-        return getProjectClass(name);
+    public ProjectMetadata topLevelProject() {
+        List<ProjectMetadata> projects = getTopLevelProjects();
+        if (projects.isEmpty())
+            throw new IllegalConfigException("No project.");
+        int n = projects.size();
+        return projects.get(n - 1);
+    }
+
+    public String topLevelName() {
+        return topLevelProject().getName();
     }
 
     public ClassLoader topLevelClassLoader() {
-        return topLevelClass().getClassLoader();
+        return topLevelProject().getProjectClass().getClassLoader();
     }
 
     public ProjectNode toTree(String name) {
-        Class<?> clazz = nameMap.get(name);
-        if (clazz == null)
+        ProjectMetadata project = nameMap.get(name);
+        if (project == null)
             return null;
 
         ProjectNode node = new ProjectNode();
-        node.name = name;
+        node.project = project;
 
-        for (String dep : dependenciesMap.get(clazz)) {
+        for (String dep : dependenciesMap.get(project.getProjectClass())) {
             ProjectNode depNode = toTree(dep);
             if (depNode != null)
                 node.dependencies.add(depNode);
@@ -104,10 +107,11 @@ public class ProjectList {
             ProjectName aProjectName = getAnnotation(clazz, ProjectName.class);
             if (aProjectName != null) {
                 String name = aProjectName.value();
-                Class<?> existing = nameMap.get(name);
+                ProjectMetadata existing = nameMap.get(name);
                 if (existing != null)
                     throw new DuplicatedKeyException(name);
-                nameMap.put(name, clazz);
+                ProjectMetadata project = new ProjectMetadata(clazz);
+                nameMap.put(name, project);
             }
         }
 
