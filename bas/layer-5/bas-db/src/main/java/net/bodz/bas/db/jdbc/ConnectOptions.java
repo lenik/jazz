@@ -34,9 +34,11 @@ public class ConnectOptions
 
     public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
-    private String uri;
+    private String sourceUri;
+    private long lastModifiedTime;
+
     private DatabaseType type = DatabaseType.POSTGRESQL;
-    private String url;
+    private String _connectionUrl;
     private String hostName = "localhost";
     private int port;
     private File rootDir;
@@ -49,18 +51,31 @@ public class ConnectOptions
         properties = new Properties();
     }
 
-    public String getUri() {
-        return uri;
+    public String getSourceUri() {
+        return sourceUri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setSourceUri(String sourceUri) {
+        this.sourceUri = sourceUri;
+    }
+
+    public long getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
+    public void setLastModifiedTime(long lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    void touch() {
+        lastModifiedTime = System.currentTimeMillis();
     }
 
     @Override
     public ConnectOptions clone() {
         ConnectOptions o = new ConnectOptions();
-        o.uri = uri;
+        o.sourceUri = sourceUri;
+        o.lastModifiedTime = lastModifiedTime;
         o.type = type;
         o.hostName = hostName;
         o.port = port;
@@ -81,6 +96,7 @@ public class ConnectOptions
         if (type == null)
             throw new NullPointerException("type");
         this.type = type;
+        touch();
     }
 
     public void setType(String typeStr) {
@@ -94,22 +110,23 @@ public class ConnectOptions
      * Connection URL override.
      */
     public String getUrl() {
-        return url;
+        return _connectionUrl;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this._connectionUrl = url;
+        touch();
     }
 
     @Transient
-    public String getServer() {
+    public synchronized String getServer() {
         if (port == 0)
             return hostName;
         else
             return hostName + ":" + port;
     }
 
-    public void setServer(String server) {
+    public synchronized void setServer(String server) {
         if (server == null) {
             hostName = null;
             port = 0;
@@ -124,6 +141,7 @@ public class ConnectOptions
                 port = portNum;
             }
         }
+        touch();
     }
 
     public String getHostName() {
@@ -132,6 +150,7 @@ public class ConnectOptions
 
     public void setHostName(String hostName) {
         this.hostName = hostName;
+        touch();
     }
 
     public int getPort() {
@@ -140,6 +159,7 @@ public class ConnectOptions
 
     public void setPort(int port) {
         this.port = port;
+        touch();
     }
 
     /**
@@ -151,6 +171,7 @@ public class ConnectOptions
 
     public void setRootDir(File rootDir) {
         this.rootDir = rootDir;
+        touch();
     }
 
     public String getDatabase() {
@@ -159,6 +180,7 @@ public class ConnectOptions
 
     public void setDatabase(String database) {
         this.database = database;
+        touch();
     }
 
     public String getUserName() {
@@ -167,6 +189,7 @@ public class ConnectOptions
 
     public void setUserName(String userName) {
         this.userName = userName;
+        touch();
     }
 
     public String getPassword() {
@@ -175,13 +198,16 @@ public class ConnectOptions
 
     public void setPassword(String password) {
         this.password = password;
+        touch();
     }
 
     @Transient
     public String getConnectionUrl() {
-        String url = this.url;
-        if (url == null)
+        String url = this._connectionUrl;
+        if (url == null) {
             url = type.getConnectionUrl(this);
+            this._connectionUrl = url;
+        }
         return url;
     }
 
@@ -200,7 +226,7 @@ public class ConnectOptions
         result = prime * result + port;
         result = prime * result + ((rootDir == null) ? 0 : rootDir.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
-        result = prime * result + ((url == null) ? 0 : url.hashCode());
+        result = prime * result + ((_connectionUrl == null) ? 0 : _connectionUrl.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         return result;
     }
@@ -223,6 +249,13 @@ public class ConnectOptions
         return new DataContext(this);
     }
 
+    @Override
+    public String toString() {
+        return sourceUri + "\n" + _connectionUrl;
+    }
+
+    public static final String K_SOURCE_URI = "sourceUri";
+    public static final String K_LAST_MODIFIED_TIME = "lastModifiedTime";
     public static final String K_TYPE = "type";
     public static final String K_URL = "url";
     public static final String K_HOSTNAME = "hostName";
@@ -239,7 +272,7 @@ public class ConnectOptions
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         type = o.getVar(DatabaseType.class, K_TYPE);
-        url = o.getString(K_URL, url);
+        _connectionUrl = o.getString(K_URL, _connectionUrl);
         hostName = o.getString(K_HOSTNAME, hostName);
         port = o.getInt(K_PORT, port);
         rootDir = o.getFile(K_ROOTDIR, rootDir);
@@ -262,7 +295,7 @@ public class ConnectOptions
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.entry(K_TYPE, type);
-        out.entry(K_URL, url);
+        out.entry(K_URL, _connectionUrl);
         out.entry(K_HOSTNAME, hostName);
         out.entry(K_PORT, port);
         out.entry(K_ROOTDIR, rootDir);
@@ -286,7 +319,7 @@ public class ConnectOptions
         QElementMap map = (QElementMap) element.getChildrenMap();
         String typeName = map.getString(K_TYPE);
         type = typeName == null ? null : DatabaseType.meta.ofName(typeName);
-        url = map.getString(K_URL);
+        _connectionUrl = map.getString(K_URL);
         hostName = map.getString(K_HOSTNAME);
         port = map.getInt(K_PORT, 0);
         String rootDirPath = map.getString(K_ROOTDIR);
@@ -314,7 +347,7 @@ public class ConnectOptions
     public void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
         out.element(K_TYPE, type);
-        out.element(K_URL, url);
+        out.element(K_URL, _connectionUrl);
         out.element(K_HOSTNAME, hostName);
         out.element(K_PORT, port);
         out.element(K_ROOTDIR, rootDir);

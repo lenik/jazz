@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
@@ -93,9 +94,15 @@ public class PostgresBackedVhostResolver
         ResultSet rs = null;
 
         try {
-            connection = master.getDataSource().getConnection();
+            DataSource dataSource = master.getDataSource();
+            connection = dataSource.getConnection();
         } catch (SQLException e) {
             logger.error("Failed to connect to master database at " + master.getOptions().getConnectionUrl(), e);
+
+            // XXX security leaks..
+            ConnectOptions options = master.getOptions();
+            logger.error(" master options: " + options);
+
             throw new RuntimeException(e.getMessage(), e);
         }
 
