@@ -35,9 +35,12 @@ public class DefaultViewMetadata
 
     @Override
     public void wireUp() {
+        super.wireUp();
+
         ISchemaMetadata schema = getParent();
         if (schema == null)
             return;
+
         ICatalogMetadata catalog = schema.getParent();
         if (catalog == null)
             return;

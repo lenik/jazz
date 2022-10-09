@@ -6,7 +6,6 @@ import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
-import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -14,14 +13,16 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.t.order.IOrdinal;
 
 public interface IColumnMetadata
         extends
             IJavaName,
+            IOrdinal,
             IJsonForm,
             IXmlForm {
 
-    public static final String K_POSITION = "position";
+    public static final String K_ORDINAL_POSITION = "ordinal";
     public static final String K_NAME = "name";
     public static final String K_JAVA_NAME = "javaName";
     public static final String K_LABEL = "label";
@@ -47,19 +48,19 @@ public interface IColumnMetadata
 
     IRowSetMetadata getParent();
 
-    default int position() {
-        int pos = getPositionOpt();
-        if (pos == -1)
-            throw new NoSuchKeyException(getName());
-        return pos;
-    }
-
-    default int getPositionOpt() {
-        IRowSetMetadata parent = getParent();
-        if (parent == null)
-            throw new IllegalStateException("Parent wasn't set.");
-        return parent.indexOfColumn(getName());
-    }
+//    default int position() {
+//        int pos = getPositionOpt();
+//        if (pos == -1)
+//            throw new NoSuchKeyException(getName());
+//        return pos;
+//    }
+//
+//    default int getPositionOpt() {
+//        IRowSetMetadata parent = getParent();
+//        if (parent == null)
+//            throw new IllegalStateException("Parent wasn't set.");
+//        return parent.indexOfColumn(getName());
+//    }
 
     String getName();
 
@@ -140,8 +141,7 @@ public interface IColumnMetadata
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        if (getParent() != null)
-            out.entry(K_POSITION, getPositionOpt());
+        out.entry(K_ORDINAL_POSITION, getOrdinal());
         out.entry(K_NAME, getName());
 
         out.entryNotNull(K_JAVA_NAME, getJavaName());
@@ -172,9 +172,7 @@ public interface IColumnMetadata
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        if (getParent() != null)
-            out.attribute(K_POSITION, getPositionOpt());
-
+        out.attribute(K_ORDINAL_POSITION, getOrdinal());
         out.attribute(K_NAME, getName());
 
         out.attributeNotNull(K_JAVA_NAME, getJavaName());

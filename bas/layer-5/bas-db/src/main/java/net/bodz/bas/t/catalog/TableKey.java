@@ -21,6 +21,7 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.t.order.OrdinalComparator;
 
 public final class TableKey
         implements
@@ -104,6 +105,23 @@ public final class TableKey
         return -1;
     }
 
+    /**
+     * sort key columns by ordinal.
+     */
+    public TableKey normalize(IRowSetMetadata ordinals) {
+        int n = columnNames.length;
+        IColumnMetadata[] columns = new IColumnMetadata[n];
+        for (int i = 0; i < n; i++) {
+            String name = columnNames[i];
+            IColumnMetadata column = ordinals.getColumn(name);
+            if (column == null)
+                throw new IllegalArgumentException("invalid column name: " + name);
+            columns[i] = column;
+        }
+        Arrays.sort(columns, OrdinalComparator.INSTANCE);
+        return new TableKey(oid, columns);
+    }
+
     public IColumnMetadata[] resolve(ITableViewMetadata table) {
         IColumnMetadata[] columns = new IColumnMetadata[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
@@ -121,15 +139,19 @@ public final class TableKey
 
     /**
      * @param opt
-     *            Use <code>-1</code> for unknown column. <code>false</code> will raise
-     *            {@link NoSuchKeyException} exception.
+     *            When column position is unknown, return -1 if <code>opt</code> is
+     *            <code>false</code>, or raise {@link NoSuchKeyException} exception.
      * @throws NoSuchKeyException
      */
     public int[] resolvePosition(ITableViewMetadata table, boolean opt) {
         int[] posv = new int[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
-            IColumnMetadata column = table.getColumn(columnNames[i]);
-            posv[i] = opt ? column.getPositionOpt() : column.position();
+            String name = columnNames[i];
+            // IColumnMetadata column = table.getColumn(name);
+            int pos = table.indexOfColumn(name);
+            if (pos == -1 && !opt)
+                throw new NoSuchKeyException(name);
+            posv[i] = pos;
         }
         return posv;
     }

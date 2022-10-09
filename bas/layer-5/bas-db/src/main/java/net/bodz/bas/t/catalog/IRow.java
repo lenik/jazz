@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -48,21 +49,39 @@ public interface IRow
 
     Object get(int index);
 
+    /**
+     * @throws NoSuchKeyException
+     */
+    default int getColumnIndex(String name) {
+        return getColumnIndex(name, false);
+    }
+
+    /**
+     * @throws NoSuchKeyException
+     */
+    default int getColumnIndex(String name, boolean optional) {
+        ITable table = getTable();
+        ITableMetadata parent = table == null ? null : table.getMetadata();
+        if (parent == null)
+            throw new IllegalUsageException("No table metadata.");
+        int index = parent.indexOfColumn(name);
+        if (index == -1)
+            if (!optional)
+                throw new NoSuchKeyException(name);
+        return index;
+    }
+
     default Object get(String name) {
-        IColumnMetadata column = getColumn(name);
-        if (column == null)
-            return false;
-        int index = column.getPositionOpt();
+        int index = getColumnIndex(name);
         return get(index);
     }
 
     boolean isSet(int index);
 
     default boolean isSet(String name) {
-        IColumnMetadata column = getColumn(name);
-        if (column == null)
+        int index = getColumnIndex(name, true);
+        if (index == -1)
             return false;
-        int index = column.getPositionOpt();
         return isSet(index);
     }
 
@@ -70,7 +89,8 @@ public interface IRow
         IColumnMetadata[] keyColumns = getTable().getMetadata().getPrimaryKeyColumns();
         List<Object> values = new ArrayList<>(keyColumns.length);
         for (IColumnMetadata keyColumn : keyColumns) {
-            Object value = get(keyColumn.position());
+            int index = getColumnIndex(keyColumn.getName());
+            Object value = get(index);
             values.add(value);
         }
         return values;
@@ -138,7 +158,7 @@ public interface IRow
         IRowSet rowSet = getRowSet();
         IRowSetMetadata metadata = rowSet.getMetadata();
         for (IColumnMetadata column : metadata.getColumns()) {
-            int pos = column.position();
+            int pos = getColumnIndex(column.getName());
             Object val = get(pos);
 
             String name = column.getName();

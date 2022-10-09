@@ -47,7 +47,9 @@ public interface ITableViewMetadata
         TableKey key = getPrimaryKey();
         if (key == null)
             return new IColumnMetadata[0];
-        return key.resolve(this);
+        IColumnMetadata[] keyColumns = key.resolve(this);
+        // Arrays.sort(keyColumns, OrdinalComparator.INSTANCE);
+        return keyColumns;
     }
 
     default void wireUp() {

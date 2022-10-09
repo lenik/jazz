@@ -10,9 +10,15 @@ public interface IJDBCMetaDataHandler {
         return null;
     }
 
+    default void endSchema(ISchemaMetadata schema) {
+    }
+
     default ITableViewMetadata tableView(ResultSet rs)
             throws SQLException {
         return null;
+    }
+
+    default void endTableView(ITableViewMetadata table) {
     }
 
     default IColumnMetadata column(ResultSet rs)

@@ -5,11 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
@@ -544,6 +540,7 @@ public class DefaultSchemaMetadata
         DatabaseMetaData dmd = connection.getMetaData();
         IJDBCMetaDataHandler metaDataHandler = getJDBCMetaDataHandler();
         ResultSet rs;
+        Set<ITableViewMetadata> tables = new LinkedHashSet<>();
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(schemaId.catalogName, schemaId.schemaName);
@@ -554,8 +551,10 @@ public class DefaultSchemaMetadata
         rs.close();
 
         rs = dmd.getTables(schemaId.catalogName, schemaId.schemaName, null, types);
-        while (rs.next())
-            metaDataHandler.tableView(rs);
+        while (rs.next()) {
+            ITableViewMetadata table = metaDataHandler.tableView(rs);
+            tables.add(table);
+        }
         rs.close();
 
         // Set<String> typeSet = new HashSet<>(Arrays.asList(types));
@@ -606,6 +605,10 @@ public class DefaultSchemaMetadata
         while (rs.next())
             metaDataHandler.viewColumnUsage(rs);
         rs.close();
+
+        for (ITableViewMetadata table : tables)
+            metaDataHandler.endTableView(table);
+        metaDataHandler.endSchema(this);
 
         // creation-order
         for (ITableMetadata table : getTables())
