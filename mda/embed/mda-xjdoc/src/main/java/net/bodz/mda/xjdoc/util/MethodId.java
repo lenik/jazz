@@ -6,13 +6,14 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public final class MethodId
-        implements Serializable {
+        implements
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
     final String methodName;
     final String[] types;
-    final int[] dimss;
+    final int[] dimCounts;
 
     public MethodId(Method method) {
         this(method.getName(), method.getParameterTypes());
@@ -33,7 +34,7 @@ public final class MethodId
             throw new NullPointerException("methodName");
         this.methodName = methodName;
         this.types = new String[parameterCount];
-        this.dimss = new int[parameterCount];
+        this.dimCounts = new int[parameterCount];
     }
 
     public String getMethodName() {
@@ -57,17 +58,17 @@ public final class MethodId
         setParameterType(index, type.getCanonicalName(), dims);
     }
 
-    public void setParameterType(int index, String fqcn, int dims) {
+    public void setParameterType(int index, String fqcn, int dimCount) {
         if (fqcn == null)
             throw new NullPointerException("fqcn");
         if (fqcn.isEmpty())
             throw new IllegalArgumentException("Parameter typename is empty.");
         types[index] = fqcn;
-        dimss[index] = dims;
+        dimCounts[index] = dimCount;
     }
 
-    public int getDimensions(int index) {
-        return dimss[index];
+    public int getDimensionCount(int index) {
+        return dimCounts[index];
     }
 
     public String getImportedForm(ImportMap importMap) {
@@ -79,7 +80,7 @@ public final class MethodId
                 sb.append(",");
 
             String fqcn = types[index];
-            int dims = dimss[index];
+            int dims = dimCounts[index];
 
             if (importMap != null) {
                 String simpleName = importMap.add(fqcn);
@@ -99,7 +100,7 @@ public final class MethodId
     public int hashCode() {
         int hash = methodName.hashCode();
         hash = hash * 17 + Arrays.hashCode(types);
-        hash = hash * 17 + Arrays.hashCode(dimss);
+        hash = hash * 17 + Arrays.hashCode(dimCounts);
         return hash;
     }
 
@@ -114,7 +115,7 @@ public final class MethodId
             return false;
         if (!Arrays.equals(types, o.types))
             return false;
-        if (!Arrays.equals(dimss, o.dimss))
+        if (!Arrays.equals(dimCounts, o.dimCounts))
             return false;
         return true;
     }
