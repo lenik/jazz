@@ -1,7 +1,6 @@
 package net.bodz.lily.tool.javagen;
 
 import java.io.File;
-import java.util.Random;
 
 import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.UpdateMethod;
@@ -17,7 +16,7 @@ public class JavaGenProject {
     UpdateMethod updateMethod;
 
     CodegenConfig config;
-    Random random;
+    long randomSeed;
 
     public final ClassPathInfo Foo;
     public final ClassPathInfo _Foo_stuff;
@@ -41,10 +40,10 @@ public class JavaGenProject {
     public final ClassPathInfo FooMapperTest; // test
     public final ClassPathInfo FooIndexTest; // test
 
-    public JavaGenProject(File baseDir, ClassPathInfo Foo, Random random) {
+    public JavaGenProject(File baseDir, ClassPathInfo Foo, long randomSeed) {
         this.baseDir = baseDir;
         this.Foo = Foo;
-        this.random = random;
+        this.randomSeed = randomSeed;
 
         String dao_ = daoPackage + ".";
         String generated = "src/main/generated";

@@ -24,19 +24,30 @@ import net.bodz.lily.test.TestSamples;
 public class FooSamples__java
         extends JavaGen__java {
 
-    Random random;
-    EnglishTextGenerator enGen;
-
     int maxStringLen = 1000;
 
     public FooSamples__java(JavaGenProject project) {
         super(project, project.FooSamples);
-        this.random = project.random;
-        this.enGen = new EnglishTextGenerator(project.random);
+    }
+
+    Random random(Object obj) {
+        int prime = 17;
+        long seed = project.randomSeed;
+        if (obj != null)
+            seed += prime * obj.hashCode();
+        return new Random(seed);
+    }
+
+    EnglishTextGenerator en(Object obj) {
+        Random random = random(obj);
+        return new EnglishTextGenerator(random);
     }
 
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
+        Random random = random(table.getId());
+        EnglishTextGenerator enGen = en(table.getId());
+
         out.println("public class " + project.FooSamples.name);
         out.enter();
         {
@@ -81,11 +92,11 @@ public class FooSamples__java
                             intLen -= scale + 1;
 
                         StringBuilder sb = new StringBuilder(precision);
-                        randomDigits(sb, random.nextInt(intLen) + 1, true);
+                        randomDigits(sb, random.nextInt(intLen) + 1, true, random);
 
                         if (scale != 0 && random.nextBoolean()) {
                             sb.append('.');
-                            randomDigits(sb, scale, false);
+                            randomDigits(sb, scale, false, random);
                         }
 
                         out.im.name(BigDecimal.class);
@@ -154,7 +165,7 @@ public class FooSamples__java
         out.println("}");
     }
 
-    void randomDigits(StringBuilder sb, int len, boolean noZeroStart) {
+    void randomDigits(StringBuilder sb, int len, boolean noZeroStart, Random random) {
         for (int i = 0; i < len; i++) {
             int digit;
             while (true) {

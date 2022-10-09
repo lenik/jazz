@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.Random;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -174,7 +173,7 @@ public class JavaGen
 
         ClassPathInfo pathInfo = new ClassPathInfo(packageName, simpleName, //
                 outDir, "src/main/java", "src/main/resources");
-        JavaGenProject project = new JavaGenProject(outDir, pathInfo, new Random(seed));
+        JavaGenProject project = new JavaGenProject(outDir, pathInfo, seed);
 
         UpdateMethod updateMethod;
         if (forceMode)
