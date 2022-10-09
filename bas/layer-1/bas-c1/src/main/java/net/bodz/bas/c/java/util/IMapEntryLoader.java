@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import net.bodz.bas.err.LazyLoadException;
 
+@FunctionalInterface
 public interface IMapEntryLoader<K, V> {
 
     V loadValue(K key)
