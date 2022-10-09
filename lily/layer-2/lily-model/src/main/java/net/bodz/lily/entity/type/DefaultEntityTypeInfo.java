@@ -4,16 +4,20 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.entity.Identifier;
 import net.bodz.lily.model.base.CoObjectMask;
 
 public class DefaultEntityTypeInfo
@@ -33,7 +37,7 @@ public class DefaultEntityTypeInfo
         mapperClass = IMapper.fn.getMapperClass(entityClass);
         criteriaClass = CoObjectMask.findMaskClass(entityClass);
 
-        if (idClass != null) {
+        if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
             BeanInfo beanInfo;
             try {
                 beanInfo = Introspector.getBeanInfo(idClass);
@@ -51,8 +55,10 @@ public class DefaultEntityTypeInfo
             for (int i = 0; i < n; i++)
                 idProperties[i] = columns.get(i);
 
-//            Comparator<ColumnProperty> order = new SourceDeclaredPropertyOrder(idClass);
-            Arrays.sort(idProperties, ColumnPropertyOrder.INSTANCE);
+            Comparator<ColumnProperty> order;
+            order = new SourceDeclaredPropertyOrder(idClass);
+            order = ColumnPropertyOrder.INSTANCE;
+            Arrays.sort(idProperties, order);
         } // idClass != null
     }
 
@@ -78,7 +84,10 @@ public class DefaultEntityTypeInfo
 
     @Override
     public int getIdColumnCount() {
-        return idProperties.length;
+        if (idProperties != null)
+            return idProperties.length;
+        else
+            return idClass == null ? 0 : 1;
     }
 
     @Override
@@ -86,18 +95,33 @@ public class DefaultEntityTypeInfo
             throws ParseException {
         if (idClass == null)
             throw new NoIdentifierException(entityClass.toString());
+        if (columns.length < 1)
+            throw new IllegalArgumentException("columns empty");
 
-        Object[] values = new Object[idProperties.length];
-        for (int i = 0; i < idProperties.length; i++) {
-            ColumnProperty property = idProperties[i];
-            Class<?> propertyType = property.getPropertyType();
+        Object[] values;
+        if (idProperties == null) {
+            values = new Object[1];
             try {
-                Object val = parseValue(propertyType, columns[i]);
-                values[i] = val;
+                Object val = parseValue(idClass, columns[0]);
+                values[0] = val;
             } catch (ParseException e) {
                 String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
-                        i, propertyType.getName(), property.getName(), columns[i], entityClass.getName());
+                        0, idClass.getName(), "ID", columns[0], entityClass.getName());
                 throw new ParseException(err, e);
+            }
+        } else {
+            values = new Object[idProperties.length];
+            for (int i = 0; i < idProperties.length; i++) {
+                ColumnProperty property = idProperties[i];
+                Class<?> propertyType = property.getPropertyType();
+                try {
+                    Object val = parseValue(propertyType, columns[i]);
+                    values[i] = val;
+                } catch (ParseException e) {
+                    String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
+                            i, propertyType.getName(), property.getName(), columns[i], entityClass.getName());
+                    throw new ParseException(err, e);
+                }
             }
         }
         return values;
@@ -128,6 +152,42 @@ public class DefaultEntityTypeInfo
             return strConv.to(valueStr, valueType);
         } catch (TypeConvertException e) {
             throw new ParseException("failed to parse: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Object newId(Object[] parameters)
+            throws ReflectiveOperationException {
+        if (parameters == null)
+            throw new NullPointerException("parameters");
+
+        int n = parameters.length;
+        Class<?> atv[] = new Class<?>[n];
+        for (int i = 0; i < n; i++)
+            atv[i] = parameters[i] == null ? null : parameters[i].getClass();
+
+        try {
+            Constructor<?> ctor = idClass.getConstructor(atv);
+            return ctor.newInstance(parameters);
+        } catch (NoSuchMethodException e) {
+            L: for (Constructor<?> ctor : idClass.getConstructors()) {
+                Class<?>[] ftv = ctor.getParameterTypes();
+                if (ftv.length != n)
+                    continue;
+                for (int i = 0; i < n; i++) {
+                    Class<?> actual = atv[i];
+                    if (actual == null)
+                        continue;
+                    Class<?> formal = ftv[i];
+                    if (formal.isPrimitive())
+                        formal = Primitives.box(formal);
+                    if (!formal.isAssignableFrom(actual))
+                        continue L;
+                }
+                // found the first match
+                return ctor.newInstance(parameters);
+            }
+            throw e;
         }
     }
 

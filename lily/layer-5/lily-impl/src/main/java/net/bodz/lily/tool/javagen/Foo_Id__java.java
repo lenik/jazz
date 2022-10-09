@@ -10,6 +10,7 @@ import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.Phrase;
+import net.bodz.lily.entity.Identifier;
 
 public class Foo_Id__java
         extends JavaGen__java {
@@ -28,6 +29,7 @@ public class Foo_Id__java
             throw new IllegalArgumentException("no primary key column.");
         }
 
+        out.println("@" + out.im.name(Identifier.class));
         out.printf("public class %s\n", project.Foo_Id.name);
         out.printf("        implements %s {\n", //
                 out.im.name(Serializable.class));

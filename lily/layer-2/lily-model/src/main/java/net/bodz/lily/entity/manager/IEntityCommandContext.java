@@ -19,6 +19,8 @@ public interface IEntityCommandContext
 
     DataContext getDataContext();
 
+    EntityInfo getEntityInfo();
+
     JsonResult getResult();
 
 }
