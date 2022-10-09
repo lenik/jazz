@@ -1,5 +1,7 @@
 package net.bodz.bas.repr.path;
 
+import net.bodz.bas.err.ParseException;
+
 /**
  * Records the state of token preprocessing.
  *
@@ -97,6 +99,15 @@ public interface ITokenQueue
      */
     String peek();
 
+    default String[] peek(int n) {
+        if (available() < n)
+            return null;
+        String[] v = new String[n];
+        for (int i = 0; i < n; i++)
+            v[i] = peekAt(i);
+        return v;
+    }
+
     /**
      * Peek at the n-th token from the head.
      *
@@ -104,7 +115,7 @@ public interface ITokenQueue
      *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist.
      */
-    String peek(int offset);
+    String peekAt(int offset);
 
     /**
      * Peek at the head token as integer.
@@ -113,6 +124,21 @@ public interface ITokenQueue
      */
     Integer peekInt();
 
+    default int[] peekInt(int n)
+            throws ParseException {
+        String[] sv = peek(n);
+        if (sv == null)
+            return null;
+        int[] iv = new int[n];
+        for (int i = 0; i < n; i++)
+            try {
+                iv[i] = Integer.parseInt(sv[i]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(e);
+            }
+        return iv;
+    }
+
     /**
      * Peek at the n-th token from the head as int.
      *
@@ -120,7 +146,7 @@ public interface ITokenQueue
      *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a int integer.
      */
-    Integer peekInt(int offset);
+    Integer peekIntAt(int offset);
 
     /**
      * Peek at the head token as long.
@@ -129,6 +155,21 @@ public interface ITokenQueue
      */
     Long peekLong();
 
+    default long[] peekLong(int n)
+            throws ParseException {
+        String[] sv = peek(n);
+        if (sv == null)
+            return null;
+        long[] lv = new long[n];
+        for (int i = 0; i < n; i++)
+            try {
+                lv[i] = Long.parseLong(sv[i]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(e);
+            }
+        return lv;
+    }
+
     /**
      * Peek at the n-th token from the head as long.
      *
@@ -136,7 +177,7 @@ public interface ITokenQueue
      *            The index offset, <code>0</code> if not specified.
      * @return <code>null</code> If the token doesn't exist, or it's not a long integer.
      */
-    Long peekLong(int offset);
+    Long peekLongAt(int offset);
 
     boolean isStopped();
 

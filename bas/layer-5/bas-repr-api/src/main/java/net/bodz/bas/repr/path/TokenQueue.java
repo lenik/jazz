@@ -143,11 +143,11 @@ public class TokenQueue
 
     @Override
     public final String peek() {
-        return peek(0);
+        return peekAt(0);
     }
 
     @Override
-    public String peek(int offset) {
+    public String peekAt(int offset) {
         int index = this.index + offset;
         if (index >= tokens.length)
             return null;
@@ -156,11 +156,11 @@ public class TokenQueue
 
     @Override
     public final Integer peekInt() {
-        return peekInt(0);
+        return peekIntAt(0);
     }
 
     @Override
-    public Integer peekInt(int offset) {
+    public Integer peekIntAt(int offset) {
         int index = this.index + offset;
         if (index >= tokens.length)
             return null;
@@ -171,11 +171,11 @@ public class TokenQueue
 
     @Override
     public final Long peekLong() {
-        return peekLong(0);
+        return peekLongAt(0);
     }
 
     @Override
-    public Long peekLong(int offset) {
+    public Long peekLongAt(int offset) {
         int index = this.index + offset;
         if (index >= tokens.length)
             return null;
