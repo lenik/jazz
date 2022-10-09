@@ -173,6 +173,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             IEntityCommand command = (IEntityCommand) arrival.getTarget();
             MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
             context.setRequest(CurrentHttpService.getRequest());
+            context.setResponse(CurrentHttpService.getResponse());
             context.setDataContext(getDataContext());
 
             try {
@@ -192,6 +193,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
 
                 MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
                 context.setRequest(CurrentHttpService.getRequest());
+                context.setResponse(CurrentHttpService.getResponse());
                 context.setDataContext(getDataContext());
                 context.setEntityInfo(entityInfo);
 
@@ -206,7 +208,11 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
                     return context.getArrival();
                 }
 
-                resolveCommand.execute(context);
+                try {
+                    resolveCommand.execute(context);
+                } catch (Exception e) {
+                    throw new PathDispatchException("error resolve entity: " + e.getMessage(), e);
+                }
                 return context.getArrival();
             }
         }

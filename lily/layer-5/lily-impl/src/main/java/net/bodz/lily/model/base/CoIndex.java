@@ -9,4 +9,8 @@ public abstract class CoIndex<T, M extends IVarMapForm>
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 
+    public CoIndex() {
+        super();
+    }
+
 }

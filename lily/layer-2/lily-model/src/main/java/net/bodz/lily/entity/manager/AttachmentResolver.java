@@ -1,11 +1,21 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.bas.db.ibatis.IEntityMapper;
+import java.io.File;
+import java.net.URL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.c.system.SysProps;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.site.json.JsonWrapper;
+import net.bodz.bas.repr.content.MutableContent;
+import net.bodz.bas.servlet.ResourceTransferer;
+import net.bodz.bas.site.vhost.IVirtualHost;
+import net.bodz.bas.site.vhost.VirtualHostManager;
+import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -18,24 +28,75 @@ public class AttachmentResolver
 
     public AttachmentResolver(IEntityTypeInfo typeInfo) {
         super(typeInfo);
-        ITokenQueue tq;
+    }
+
+    @Override
+    public String getPreferredName() {
+        return "attachment";
+    }
+
+    @Override
+    public boolean isContentCommand() {
+        return true;
     }
 
     @Override
     protected Object execute()
             throws Exception {
-        Object id = context.getAttribute("id");
-        if (id == null)
-            throw new NullPointerException("id");
+        IId<?> obj = (IId<?>) context.getEntityInfo().entity;
 
-        IEntityMapper<Object, Object> mapper = getEntityMapper();
-        Object obj = mapper.select(id);
-        if (obj == null)
+        // XXX Redirect to /files/...
+
+        File homeDir = SysProps.userHome;
+        File start = new File(homeDir, "sites");
+
+        HttpServletRequest req = context.getRequest();
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(req);
+        if (vhost == null)
+            throw new IllegalUsageException("No corresponding vhost.");
+
+        String vhostName = vhost.getName();
+        File vstart = new File(start, vhostName);
+
+        String entityTypeName = typeInfo.getEntityClass().getSimpleName();
+        File tableDir = new File(vstart, entityTypeName);
+
+        String idStr = obj.id().toString();
+        File objDir = new File(tableDir, idStr);
+
+        String remainingPath = context.getRemainingPath();
+        File file = new File(objDir, remainingPath);
+
+        HttpServletResponse resp = context.getResponse();
+        if (!file.exists()) {
+            logger.warn("Not-Found: " + file);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
+        }
 
-        JsonWrapper data = JsonWrapper.wrap(obj, "data");
-        data.setOptions(jsonFormOptions);
-        return data;
+        if (!file.canRead()) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
+            return null;
+        }
+
+        URL url = file.toURI().toURL();
+        ICacheControl cacheControl = getCacheControl(req, url);
+        ResourceTransferer transferer = new ResourceTransferer(req, resp);
+        transferer.transfer(url, cacheControl);
+
+        context.consume(context.available(), this, file);
+        return null;
+    }
+
+    /**
+     * 1 day by default.
+     */
+    private int maxAge = 86400;
+
+    public ICacheControl getCacheControl(HttpServletRequest req, URL url) {
+        MutableContent content = new MutableContent();
+        content.setMaxAge(maxAge);
+        return content;
     }
 
     @Override

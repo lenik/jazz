@@ -12,6 +12,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -30,14 +31,12 @@ public class SaveCommand
     JsonObject contentJson;
 
     CreateCommand createCommand;
-    ResolveCommand resolveCommand;
 
     JsonResult resp = new JsonResult();
 
     public SaveCommand(IEntityTypeInfo typeInfo) {
         super(typeInfo);
         createCommand = new CreateCommand(typeInfo);
-        resolveCommand = new ResolveCommand(typeInfo);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
     }
@@ -48,10 +47,11 @@ public class SaveCommand
         // 1. Prepare the object to be saved
         Object obj;
         if (createNew) {
-            obj = createCommand.execute(context);
+            JsonWrapper jw = (JsonWrapper) createCommand.execute(context);
+            obj = jw.getWrapped();
         } else {
             context.setAttribute("id", id);
-            obj = resolveCommand.execute(context);
+            obj = getEntityMapper().select(id);
             if (obj == null)
                 throw new NoSuchKeyException(String.format(//
                         "Invalid entity id: \"%s\"", id));
@@ -110,16 +110,13 @@ public class SaveCommand
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        String idStr = o.getString("id");
-        if (idStr != null && this.id == null) {
-            if (hasId) {
-                this.id = parseId(idStr);
-                this.createNew = id == null;
-            } else {
-                throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
-            }
+        if (hasId) {
+            String idStr = o.getString("id");
+            this.id = parseId(idStr);
+            this.createNew = id == null;
+        } else {
+            throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
         }
-
         this.contentJson = o;
     }
 
