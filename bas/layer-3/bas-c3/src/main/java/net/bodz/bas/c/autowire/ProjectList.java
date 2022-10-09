@@ -159,6 +159,13 @@ public class ProjectList {
         for (String name : nameMap.keySet()) {
             System.err.println("project " + name + " := " + nameMap.get(name));
         }
+
+        for (ProjectMetadata project : getTopLevelProjects()) {
+            String mesg = String.format("project %s (priority %d): %s", //
+                    project.getName(), project.getPriority(), project.getProjectClass());
+            System.err.println(mesg);
+        }
+
         for (Class<?> clazz : dependenciesMap.keySet()) {
             String[] deps = dependenciesMap.get(clazz);
             System.err.println(clazz + " => " + Arrays.asList(deps));
