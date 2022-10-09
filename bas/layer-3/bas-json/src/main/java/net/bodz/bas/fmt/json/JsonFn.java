@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -217,6 +218,14 @@ public class JsonFn {
         if (o instanceof IJsonForm) {
             IJsonForm jsVal = (IJsonForm) o;
             jsVal.jsonOut(out, opts, true);
+            return;
+        }
+        if (o instanceof Collection<?>) {
+            out.array();
+            Collection<?> collection = (Collection<?>) o;
+            for (Object item : collection)
+                writeObject(out, item, opts);
+            out.endArray();
             return;
         }
         if (o instanceof BigDecimal || o instanceof BigInteger) {

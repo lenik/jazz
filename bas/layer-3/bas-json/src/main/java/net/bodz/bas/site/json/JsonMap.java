@@ -68,12 +68,13 @@ public class JsonMap
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException {
+            throws IOException, FormatException {
         for (Entry<String, ?> entry : map.entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
             out.key(key);
-            out.value(value);
+            // out.value(value);
+            JsonFn.writeObject(out, value, opts);
         }
     }
 
