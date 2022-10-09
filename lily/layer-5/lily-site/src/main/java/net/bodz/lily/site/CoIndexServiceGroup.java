@@ -81,7 +81,7 @@ public class CoIndexServiceGroup
             out.p().text("Available entities: ");
             List<Class<?>> etypes = new ArrayList<>(map.size());
             for (String k : map.keySet())
-                etypes.add(map.get(k).getObjectType());
+                etypes.add(map.get(k).getEntityType());
             Collections.sort(etypes, ClassNameComparator.getInstance());
 
             HtmlUl ul = out.ul();

@@ -3,27 +3,44 @@ package net.bodz.lily.entity.manager;
 import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.repr.path.DefaultTokenProcessor;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.rtx.IAttributed;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
 
 public class MutableEntityCommandContext
-        extends MutableAttributes
+        extends DefaultTokenProcessor
         implements
             IEntityCommandContext {
 
-    HttpServletRequest request;
+    private static final long serialVersionUID = 1L;
+
+    IAttributed attributes = new MutableAttributes();
+
     IVariantMap<String> parameters;
+
+    HttpServletRequest request;
     DataContext dataContext;
+
     JsonResult result = new JsonResult();
 
-    @Override
-    public HttpServletRequest getRequest() {
-        return request;
+    public MutableEntityCommandContext(IPathArrival previous, ITokenQueue tokenQueue, IVariantMap<String> q) {
+        super(previous, tokenQueue);
+        this.parameters = q;
+        // this.request = CurrentHttpService.getRequestOpt();
     }
 
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
+    @Override
+    public <T> T getAttribute(String name, T defaultValue) {
+        return attributes.getAttribute(name, defaultValue);
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
+        attributes.setAttribute(name, value);
     }
 
     @Override
@@ -33,6 +50,15 @@ public class MutableEntityCommandContext
 
     public void setParameters(IVariantMap<String> parameters) {
         this.parameters = parameters;
+    }
+
+    @Override
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
     }
 
     @Override

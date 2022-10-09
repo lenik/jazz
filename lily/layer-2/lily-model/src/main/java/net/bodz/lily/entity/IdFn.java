@@ -66,6 +66,7 @@ public class IdFn {
         IdType aIdType = clazz.getAnnotation(IdType.class);
         if (aIdType != null)
             return aIdType.value();
+
         Class<?> decl = TypeParam.infer1(clazz, IId.class, 0);
         return decl;
     }
@@ -75,8 +76,10 @@ public class IdFn {
         IdType aIdType = clazz.getAnnotation(IdType.class);
         if (aIdType != null)
             return (Class<K>) aIdType.value();
-        // if (!IId.class.isAssignableFrom(clazz))
-        // return null;
+
+        if (!IId.class.isAssignableFrom(clazz))
+            return null;
+
         Class<?> decl = TypeParam.infer1(clazz, IId.class, 0);
         return (Class<K>) decl;
     }

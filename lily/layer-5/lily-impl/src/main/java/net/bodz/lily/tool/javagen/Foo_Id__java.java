@@ -1,6 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 import net.bodz.bas.codegen.ImportSet;
@@ -10,6 +11,7 @@ import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.Phrase;
+import net.bodz.bas.t.order.OrdinalComparator;
 
 public class Foo_Id__java
         extends JavaGen__java {
@@ -68,6 +70,7 @@ public class Foo_Id__java
 
     void ctors(ITreeOut out, ITableMetadata table, ImportSet imports) {
         IColumnMetadata[] kv = table.getPrimaryKeyColumns();
+        Arrays.sort(kv, OrdinalComparator.INSTANCE);
 
         // default constructor
         out.println("public " + project.Foo_Id.name + "() {");
