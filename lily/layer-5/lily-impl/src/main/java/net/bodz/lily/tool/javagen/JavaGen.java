@@ -14,7 +14,6 @@ import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.rst.RstFn;
@@ -26,11 +25,23 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
+import net.bodz.bas.t.tuple.Split;
 
 public class JavaGen
         extends BasicCLI {
 
     static Logger logger = LoggerFactory.getLogger(JavaGen.class);
+    static int maxApiDepth = 2;
+
+    /**
+     * Change to this directory.
+     *
+     * The utility search for the closest maven project start from the workdir.
+     *
+     * @option -C
+     */
+    String chdir;
+    File startDir;
 
     /**
      * Parent package name of generated java models.
@@ -45,6 +56,15 @@ public class JavaGen
      * @option -O =PATH
      */
     File outDir;
+
+    /**
+     * API/Headers output directory. By default, search sibling -api projects and put header files
+     * in src/main/java. If can't find such project, use the same value specified with
+     * <code>--out-dir</code>.
+     *
+     * @option -H =PATH
+     */
+    File headerDir;
 
     /**
      * Generate models for views.
@@ -171,9 +191,12 @@ public class JavaGen
         else
             seed = seedMagic.hashCode();
 
-        ClassPathInfo pathInfo = new ClassPathInfo(packageName, simpleName, //
+        ClassPathInfo modelPath = new ClassPathInfo(packageName, simpleName, //
                 outDir, "src/main/java", "src/main/resources");
-        JavaGenProject project = new JavaGenProject(outDir, pathInfo, seed);
+        ClassPathInfo modelApiPath = new ClassPathInfo(packageName, simpleName, //
+                headerDir, "src/main/java", "src/main/resources");
+
+        JavaGenProject project = new JavaGenProject(outDir, modelPath, modelApiPath, seed);
 
         UpdateMethod updateMethod;
         if (forceMode)
@@ -231,18 +254,28 @@ public class JavaGen
         if (parentPackage == null)
             throw new IllegalArgumentException("parent-package isn't specified.");
 
+        startDir = SysProps.userWorkDir;
+        if (chdir != null)
+            startDir = new File(startDir, chdir).getCanonicalFile();
+
         if (outDir == null) {
-            Class<?> appClass = getClass();
-            MavenPomDir pomDir = MavenPomDir.closest(SysProps.userWorkDir);
-            if (pomDir == null) {
-                if (appClass != JavaGen.class) {
-                    pomDir = MavenPomDir.fromClass(appClass);
-                    if (pomDir == null)
-                        throw new IllegalUsageException("Not belongs to a maven project: " + appClass);
-                } else
-                    throw new IllegalUsageException("Not with-in a maven project.");
-            }
+            MavenPomDir pomDir = findPomDir(startDir);
             outDir = pomDir.getBaseDir();
+        }
+
+        if (headerDir == null) {
+            MavenPomDir pomDir = findPomDir(startDir);
+            if (pomDir != null) {
+                String moduleName = pomDir.getName();
+                Split projectPart = Split.pop(moduleName, '-');
+                MavenPomDir apiPomDir = findPomDir(pomDir.getBaseDir(), maxApiDepth, //
+                        "model", //
+                        projectPart.a + "-api");
+                if (apiPomDir != null)
+                    headerDir = new File(apiPomDir.getBaseDir(), "src/main/java");
+            }
+            if (headerDir == null)
+                headerDir = outDir;
         }
 
         if (includeTables == null && includeViews == null)
@@ -337,6 +370,37 @@ public class JavaGen
             if (connection != null)
                 connection.close();
         }
+    }
+
+    Class<?> appClass = getClass();
+
+    MavenPomDir findPomDir(File startDir, int maxParents, String... moduleNames) {
+        for (String moduleName : moduleNames) {
+            File moduleDir = new File(startDir, moduleName);
+            if (moduleDir.isDirectory())
+                return new MavenPomDir(moduleDir);
+        }
+
+        if (maxParents <= 0)
+            return null;
+        File parent = startDir.getParentFile();
+        if (parent == null)
+            return null;
+
+        return findPomDir(parent, maxParents - 1, moduleNames);
+    }
+
+    MavenPomDir findPomDir(File startDir) {
+        MavenPomDir pomDir = MavenPomDir.closest(startDir);
+        if (pomDir == null) {
+            if (appClass == JavaGen.class)
+                throw new RuntimeException("Can't locate the maven project from " + startDir);
+
+            pomDir = MavenPomDir.fromClass(appClass);
+            if (pomDir == null)
+                throw new RuntimeException("Can't locate the maven project from " + appClass);
+        }
+        return pomDir;
     }
 
     public static void main(String[] args)
