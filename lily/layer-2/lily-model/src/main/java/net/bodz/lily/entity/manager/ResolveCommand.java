@@ -1,6 +1,5 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -27,14 +26,7 @@ public class ResolveCommand
     @Override
     protected Object execute()
             throws Exception {
-        Object id = context.getAttribute("id");
-        if (id == null)
-            throw new NullPointerException("id");
-
-        IEntityMapper<Object, Object> mapper = getEntityMapper();
-        Object obj = mapper.select(id);
-        if (obj == null)
-            return null;
+        Object obj = context.getEntityInfo().entity;
 
         JsonWrapper data = JsonWrapper.wrap(obj, "data");
         data.setOptions(jsonFormOptions);

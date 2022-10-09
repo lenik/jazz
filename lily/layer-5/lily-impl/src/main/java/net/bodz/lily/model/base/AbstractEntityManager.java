@@ -1,6 +1,7 @@
 package net.bodz.lily.model.base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
@@ -32,8 +34,10 @@ import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.manager.EntityCommands;
+import net.bodz.lily.entity.manager.EntityInfo;
 import net.bodz.lily.entity.manager.IEntityCommand;
 import net.bodz.lily.entity.manager.MutableEntityCommandContext;
+import net.bodz.lily.entity.manager.ResolveCommand;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.security.AccessControl;
@@ -57,6 +61,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     Map<String, IEntityCommand> nameMap = new HashMap<>();
     Map<String, IEntityCommand> contentNameMap = new HashMap<>();
     List<IEntityCommand> otherCommands = new ArrayList<>();
+    ResolveCommand resolveCommand;
 
     protected DataContext dataContext;
 
@@ -76,12 +81,17 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         for (IEntityCommand cmd : EntityCommands.forEntityClass(entityType)) {
             String name = cmd.getPreferredName();
 
+            if (cmd instanceof ResolveCommand)
+                resolveCommand = (ResolveCommand) cmd;
+
             if (name != null) {
-                if (cmd.isContentCommand()) {
+                if (!cmd.isContentCommand()) {
                     IEntityCommand preexist = nameMap.get(name);
                     if (preexist != null)
                         throw new DuplicatedKeyException(name);
                     nameMap.put(name, cmd);
+                    if (name.equals("list"))
+                        nameMap.put("__data__", cmd);
                 } else {
                     IEntityCommand preexist = contentNameMap.get(name);
                     if (preexist != null)
@@ -143,6 +153,12 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     protected void afterDataContextSet() {
     }
 
+    @SuppressWarnings("unchecked")
+    IEntityMapper<Object, Object> getMapper() {
+        Class<?> mapperClass = getEntityTypeInfo().getMapperClass();
+        return (IEntityMapper<Object, Object>) dataContext.getMapper(mapperClass);
+    }
+
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
@@ -150,74 +166,52 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         if (token == null)
             return null;
 
-        IPathArrival toCommand = dispatchToCommand(previous, tokens, q);
-        if (toCommand == null && hasId) {
-            getEntityTypeInfo();
-        }
-        Object target = null;
+        IPathArrival arrival = dispatchToCommand(previous, tokens, q);
 
-        IEntityCommand command = nameMap.get(token);
-        MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
-
-        Object id = null;
-        String extension = null;
-        if (command == null) {
-            int idColumnCount = typeInfo.getIdColumnCount();
-
-            Split idExtension = Split.nameExtension(token);
-
-            typeInfo.parseIdColumns(idExtension.a);
-
-            id = parseId(idExtension.a, null);
-            extension = idExtension.b;
-            if (id != null) {
-                Class<?> mapperClass = typeInfo.getMapperClass();
-
-                @SuppressWarnings("unchecked")
-                IEntityMapper<Object, Object> mapper = (IEntityMapper<Object, Object>) dataContext
-                        .getMapper(typeInfo.getMapperClass());
-
-                Object obj = mapper.select(id);
-                if (obj == null)
-                    return null;
-
-                String token1 = tokens.peek(1);
-                if (token1 != null) {
-                    command = contentNameMap.get(token1);
-                    if (command != null) {
-                        context.consume(1, this, obj);
-                    }
-                } else {
-                    for (IEntityCommand other : otherCommands)
-                        if (other.Handle(tokens)) {
-                            command = other;
-                            break;
-                        }
-                }
-            }
-        }
-
-        if (command != null) {
+        if (arrival != null) {
+            previous = arrival;
+            IEntityCommand command = (IEntityCommand) arrival.getTarget();
+            MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
             context.setRequest(CurrentHttpService.getRequest());
             context.setDataContext(getDataContext());
-            if (id != null) {
-                context.setAttribute("id", id);
-                context.setAttribute("extension", extension);
-            }
 
             try {
-                target = command.execute(context);
+                command.execute(context);
             } catch (Exception e) {
                 throw new PathDispatchException("error execute entity command: " + e.getMessage(), e);
             }
-
             return context.getArrival();
         }
 
-        if (target != null)
-            return PathArrival.shift(previous, this, target, tokens);
-        else
-            return null;
+        if (hasId) {
+            arrival = dispatchToEntity(previous, tokens, q);
+            if (arrival != null) {
+                previous = arrival;
+
+                EntityInfo entityInfo = (EntityInfo) arrival.getTarget();
+
+                MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
+                context.setRequest(CurrentHttpService.getRequest());
+                context.setDataContext(getDataContext());
+                context.setEntityInfo(entityInfo);
+
+                arrival = dispatchToContentCommand(previous, tokens, q);
+                if (arrival != null) {
+                    try {
+                        IEntityCommand command = (IEntityCommand) arrival.getTarget();
+                        command.execute(context);
+                    } catch (Exception e) {
+                        throw new PathDispatchException("error execute entity command: " + e.getMessage(), e);
+                    }
+                    return context.getArrival();
+                }
+
+                resolveCommand.execute(context);
+                return context.getArrival();
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -232,15 +226,64 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         return null;
     }
 
+    /**
+     * @return <code>null</code> if needs more tokens, or no matching record to the specified id.
+     */
     @Override
     public IPathArrival dispatchToEntity(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        return null;
+        int cc = typeInfo.getIdColumnCount();
+        assert cc >= 1;
+
+        String[] sv = tokens.peek(cc);
+        if (sv == null)
+            return null;
+
+        Split name_ext = Split.nameExtension(sv[cc - 1]);
+        sv[cc - 1] = name_ext.a;
+
+        Object[] idvec;
+        try {
+            idvec = typeInfo.parseIdColumns(sv);
+        } catch (ParseException e) {
+            throw new PathDispatchException(String.format(//
+                    "error parse id fields %s: %s", //
+                    Arrays.asList(sv), e.getMessage()), e);
+        }
+
+        Object id;
+        try {
+            id = typeInfo.newId(idvec);
+        } catch (ReflectiveOperationException e) {
+            throw new PathDispatchException(String.format(//
+                    "error create id from %s: %s", //
+                    Arrays.asList(idvec), e.getMessage()), e);
+        }
+
+        IEntityMapper<Object, Object> mapper = getMapper();
+
+        Object obj = mapper.select(id);
+        if (obj == null)
+            return null;
+
+        EntityInfo info = new EntityInfo();
+        info.idColumns = sv;
+        info.idFields = idvec;
+        info.id = id;
+        info.entity = obj;
+        info.extension = name_ext.b;
+        return PathArrival.shift(cc, previous, this, info, tokens);
     }
 
     @Override
     public IPathArrival dispatchToContentCommand(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        String token = tokens.peek();
+        if (token != null) {
+            IEntityCommand command = contentNameMap.get(token);
+            if (command != null)
+                return PathArrival.shift(previous, this, command, tokens);
+        }
         return null;
     }
 

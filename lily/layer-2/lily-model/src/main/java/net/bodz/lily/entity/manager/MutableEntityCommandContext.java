@@ -25,6 +25,8 @@ public class MutableEntityCommandContext
     HttpServletRequest request;
     DataContext dataContext;
 
+    EntityInfo entityInfo;
+
     JsonResult result = new JsonResult();
 
     public MutableEntityCommandContext(IPathArrival previous, ITokenQueue tokenQueue, IVariantMap<String> q) {
@@ -68,6 +70,15 @@ public class MutableEntityCommandContext
 
     public void setDataContext(DataContext dataContext) {
         this.dataContext = dataContext;
+    }
+
+    @Override
+    public EntityInfo getEntityInfo() {
+        return entityInfo;
+    }
+
+    public void setEntityInfo(EntityInfo entityInfo) {
+        this.entityInfo = entityInfo;
     }
 
     @Override

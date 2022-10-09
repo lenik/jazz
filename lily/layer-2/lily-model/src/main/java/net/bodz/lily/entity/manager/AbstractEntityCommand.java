@@ -106,6 +106,7 @@ public abstract class AbstractEntityCommand
             if (result != resp)
                 resp.setData(result);
 
+            context.consume(0, this, result);
             return result;
         } catch (Exception e) {
             resp.fail(e, "failed to execute: " + e.getMessage());

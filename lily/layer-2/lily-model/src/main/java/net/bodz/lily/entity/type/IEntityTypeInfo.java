@@ -25,12 +25,38 @@ public interface IEntityTypeInfo {
         }
     }
 
+    @Deprecated
     Object parseId(String str)
             throws ParseException;
 
+    @Deprecated
     default Object parseId(String str, Object fallback) {
         try {
             return parseId(str);
+        } catch (ParseException e) {
+            return fallback;
+        }
+    }
+
+    /**
+     * @throws IllegalArgumentException
+     */
+    Object newId(Object[] parameters)
+            throws ReflectiveOperationException;
+
+    default Object parseId(String[] columns)
+            throws ParseException {
+        Object[] fields = parseIdColumns(columns);
+        try {
+            return newId(fields);
+        } catch (ReflectiveOperationException e) {
+            throw new ParseException("error create id: " + e.getMessage(), e);
+        }
+    }
+
+    default Object parseId(String[] columns, Object[] fallback) {
+        try {
+            return parseId(columns);
         } catch (ParseException e) {
             return fallback;
         }
