@@ -11,10 +11,9 @@ import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.test.DaoTestConfig;
 import net.bodz.bas.err.IllegalConfigException;
-import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.util.mapper.TableProfiles;
 
-public abstract class AbstractTableViewTest<T extends CoObject, M, mapper_t extends IGenericMapper<T, M>>
+public abstract class AbstractTableViewTest<T, M, mapper_t extends IGenericMapper<T, M>>
         extends Assert {
 
     protected DataContext context = findPreferredDataContext();

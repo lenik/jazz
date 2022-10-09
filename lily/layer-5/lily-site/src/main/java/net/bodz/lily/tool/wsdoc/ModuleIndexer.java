@@ -9,8 +9,8 @@ import java.util.ServiceLoader;
 
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.c.type.TypeParam;
-import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.log.Logger;
@@ -22,8 +22,9 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.CoIndex;
+import net.bodz.lily.model.base.AbstractEntityManager;
 import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.IEntityManager;
 
 public class ModuleIndexer
         implements IPathDispatchable {
@@ -60,7 +61,6 @@ public class ModuleIndexer
         loadState = LOADED;
     }
 
-    @SuppressWarnings("rawtypes")
     void _index()
             throws Exception {
 
@@ -71,13 +71,12 @@ public class ModuleIndexer
                 classModule.put(cn, modInfo);
         }
 
-        for (Class<? extends CoIndex> indexClass : IndexedTypes.list(CoIndex.class, true))
+        for (Class<? extends IEntityManager> indexClass : IndexedTypes.list(IEntityManager.class, true))
             addIndexClass(indexClass);
 
         for (Class<? extends IMapper> mapperClass : IndexedTypes.list(IMapper.class, true))
             addMapperClass(mapperClass);
 
-        addIndexClass(CoIndex.class);
         // addMapperClass(IMapperTemplate.class);
 
         // load/wire parents
@@ -112,7 +111,7 @@ public class ModuleIndexer
     }
 
     void addIndexClass(Class<?> indexClass) {
-        Class<?>[] pv = TypeParam.infer(indexClass, CoIndex.class);
+        Class<?>[] pv = TypeParam.infer(indexClass, AbstractEntityManager.class);
         Class<?> entityType = pv[0];
         Class<?> maskType = pv[1];
         EntityInfo entity = resolveEntity(entityType, maskType);
