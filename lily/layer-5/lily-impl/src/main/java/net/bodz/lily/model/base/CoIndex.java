@@ -2,14 +2,9 @@ package net.bodz.lily.model.base;
 
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.codegen.IndexedType;
-import net.bodz.bas.site.vhost.VirtualHostScope;
-import net.bodz.lily.security.AccessControl;
+import net.bodz.bas.t.variant.IVarMapForm;
 
-@AccessControl
-@IndexedType(includeAbstract = false)
-@VirtualHostScope
-public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
+public abstract class CoIndex<T, M extends IVarMapForm>
         extends AbstractEntityManager<T, M> {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
