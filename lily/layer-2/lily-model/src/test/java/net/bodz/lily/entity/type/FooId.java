@@ -11,6 +11,9 @@ public class FooId {
     String name;
     int age;
 
+    public FooId() {
+    }
+
     public FooId(String name, int age) {
         this.name = name;
         this.age = age;
