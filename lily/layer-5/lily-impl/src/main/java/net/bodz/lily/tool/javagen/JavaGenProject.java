@@ -40,14 +40,14 @@ public class JavaGenProject {
     public final ClassPathInfo FooMapperTest; // test
     public final ClassPathInfo FooIndexTest; // test
 
-    public JavaGenProject(File baseDir, ClassPathInfo Foo, long randomSeed) {
+    public JavaGenProject(File baseDir, ClassPathInfo modelPath, ClassPathInfo modelApiPath, long randomSeed) {
         this.baseDir = baseDir;
-        this.Foo = Foo;
         this.randomSeed = randomSeed;
 
         String dao_ = daoPackage + ".";
         String generated = "src/main/generated";
 
+        Foo = modelApiPath;
         _Foo_stuff = Foo.join("_" + Foo.name + "_stuff", generated);
         IFoo_Id = Foo.join("I" + Foo.name + "_Id");
         Foo_Id = Foo.join(Foo.name + "_Id");
@@ -62,12 +62,13 @@ public class JavaGenProject {
         FooMask = Foo.join(dao_ + Foo.name + "Mask");
         FooMaskTest = FooTest.join(dao_ + Foo.name + "MaskTest");
 
-        FooMapper = Foo.join(dao_ + Foo.name + "Mapper");
-        FooIndex = Foo.join(dao_ + Foo.name + "Index");
+        FooMapper = modelPath.join(dao_ + Foo.name + "Mapper");
+        FooIndex = modelPath.join(dao_ + Foo.name + "Index");
 
-        FooSamples = FooTest.join(Foo.name + "Samples", generated);
-        FooMapperTest = FooTest.join(dao_ + Foo.name + "MapperTest");
-        FooIndexTest = FooTest.join(dao_ + Foo.name + "IndexTest");
+        ClassPathInfo implTest = modelPath.join(Foo.name + "Test", "src/test/java", "src/test/resources");
+        FooSamples = implTest.join(Foo.name + "Samples", generated);
+        FooMapperTest = implTest.join(dao_ + Foo.name + "MapperTest");
+        FooIndexTest = implTest.join(dao_ + Foo.name + "IndexTest");
     }
 
     public UpdateMethod getPreferredUpdateMethod() {
