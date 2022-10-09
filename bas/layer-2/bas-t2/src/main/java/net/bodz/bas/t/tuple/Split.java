@@ -17,6 +17,10 @@ public class Split
         this.b = b;
     }
 
+    static Split nul() {
+        return new Split(null, null);
+    }
+
     @Override
     public Split clone() {
         return new Split(a, b);
@@ -211,7 +215,7 @@ public class Split
 
     public static Split shift(String s, char sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         int pos = s.indexOf(sep);
         if (pos == -1)
             return new Split(s, null);
@@ -221,7 +225,7 @@ public class Split
 
     public static Split shiftFirst(String s, String sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         if (sep == null)
             throw new NullPointerException("sep");
         if (sep.isEmpty())
@@ -235,7 +239,7 @@ public class Split
 
     public static Split skip(String s, char sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         int pos = s.indexOf(sep);
         if (pos == -1)
             return new Split(null, s);
@@ -245,7 +249,7 @@ public class Split
 
     public static Split skipFirst(String s, String sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         if (sep == null)
             throw new NullPointerException("sep");
         if (sep.isEmpty())
@@ -259,7 +263,7 @@ public class Split
 
     public static Split pop(String s, char sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
             return new Split(null, s);
@@ -269,7 +273,7 @@ public class Split
 
     public static Split popLast(String s, String sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         if (sep == null)
             throw new NullPointerException("sep");
         if (sep.isEmpty())
@@ -283,7 +287,7 @@ public class Split
 
     public static Split chop(String s, char sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         int pos = s.lastIndexOf(sep);
         if (pos == -1)
             return new Split(s, null);
@@ -293,7 +297,7 @@ public class Split
 
     public static Split chopLast(String s, String sep) {
         if (s == null)
-            throw new NullPointerException("s");
+            return nul();
         if (sep == null)
             throw new NullPointerException("sep");
         if (sep.isEmpty())
