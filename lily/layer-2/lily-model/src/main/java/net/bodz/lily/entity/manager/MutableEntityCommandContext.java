@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.manager;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.repr.path.DefaultTokenProcessor;
@@ -23,6 +24,8 @@ public class MutableEntityCommandContext
     IVariantMap<String> parameters;
 
     HttpServletRequest request;
+    HttpServletResponse response;
+
     DataContext dataContext;
 
     EntityInfo entityInfo;
@@ -61,6 +64,14 @@ public class MutableEntityCommandContext
 
     public void setRequest(HttpServletRequest request) {
         this.request = request;
+    }
+
+    public HttpServletResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(HttpServletResponse response) {
+        this.response = response;
     }
 
     @Override

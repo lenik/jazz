@@ -6,6 +6,7 @@ public abstract class CoCategoryIndex<T extends CoCategory<T, ?>, M extends CoCa
         extends CoIndex<T, M> {
 
     public CoCategoryIndex() {
+        super();
     }
 
 }

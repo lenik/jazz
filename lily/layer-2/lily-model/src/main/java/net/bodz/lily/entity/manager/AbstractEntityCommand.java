@@ -1,6 +1,9 @@
 package net.bodz.lily.entity.manager;
 
+import java.io.BufferedReader;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ctx.DataContext;
@@ -9,10 +12,15 @@ import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -72,7 +80,8 @@ public abstract class AbstractEntityCommand
     }
 
     @Override
-    public synchronized Object execute(IEntityCommandContext executeContext) {
+    public synchronized Object execute(IEntityCommandContext executeContext)
+            throws Exception {
         this.context = executeContext;
         this.dataContext = context.getDataContext();
         this.resp = context.getResult();
@@ -86,7 +95,30 @@ public abstract class AbstractEntityCommand
             return null;
         }
 
-        try {
+        HttpServletRequest request = context.getRequest();
+        String contentTypeCharset = request.getContentType();
+        String contentType = Split.chop(contentTypeCharset, ';').a;
+        contentType = contentType == null ? "" : contentType.trim();
+
+        if (this instanceof IJsonForm //
+                && contentType.equalsIgnoreCase("application/json")) {
+            IJsonForm jsonForm = (IJsonForm) this;
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            char[] cbuf = new char[4096];
+            int cc;
+            while ((cc = reader.read(cbuf)) != -1) {
+                sb.append(cbuf, 0, cc);
+            }
+            reader.close();
+            String content = sb.toString();
+            JsonObject json = JsonFn.parseObject(content);
+            jsonForm.jsonIn(json, JsonFormOptions.WEB);
+        }
+
+        try
+
+        {
             if (!setUpVars()) {
                 resp.fail("command is not enabled.");
                 return null;

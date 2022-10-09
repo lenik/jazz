@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.manager;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.repr.path.ITokenProcessor;
@@ -14,6 +15,8 @@ public interface IEntityCommandContext
             ITokenProcessor {
 
     HttpServletRequest getRequest();
+
+    HttpServletResponse getResponse();
 
     IVariantMap<String> getParameters();
 

@@ -31,6 +31,11 @@ public class CreateCommand
         resetable = IReset.class.isAssignableFrom(entityClass);
     }
 
+    @Override
+    public String getPreferredName() {
+        return "new";
+    }
+
     public boolean isTemplateSupported() {
         return cloneable && resetable;
     }

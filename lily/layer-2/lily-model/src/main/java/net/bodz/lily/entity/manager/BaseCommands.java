@@ -12,7 +12,9 @@ public class BaseCommands
         addCommand(SaveCommand.builder());
 
         addCommand(DeleteCommand.builder());
+
         addCommand(UploadCommand.builder());
+        addCommand(AttachmentResolver.builder());
     }
 
 }
