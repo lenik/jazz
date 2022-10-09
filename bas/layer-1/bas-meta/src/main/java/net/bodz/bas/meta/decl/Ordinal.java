@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
  * Default order is 0
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Order {
+public @interface Ordinal {
 
-    int value();
+    int value() default 0;
 
 }
