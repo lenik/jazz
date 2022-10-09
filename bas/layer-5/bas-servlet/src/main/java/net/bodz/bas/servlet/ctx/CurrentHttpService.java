@@ -101,6 +101,19 @@ public class CurrentHttpService
         return request;
     }
 
+    public static HttpServletResponse getResponseOpt() {
+        return responseRef.get();
+    }
+
+    public static HttpServletResponse getResponse() {
+        HttpServletResponse response = getResponseOpt();
+
+        if (response == null)
+            throw new IllegalStateException("Response isn't set.");
+
+        return response;
+    }
+
     public static HttpSession getSessionOpt() {
         HttpServletRequest request = getRequestOpt();
         if (request == null)
