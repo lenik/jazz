@@ -74,8 +74,8 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public String peek(int offset) {
-        return getWrapped().peek(offset);
+    public String peekAt(int offset) {
+        return getWrapped().peekAt(offset);
     }
 
     @Override
@@ -84,8 +84,8 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public Integer peekInt(int offset) {
-        return getWrapped().peekInt(offset);
+    public Integer peekIntAt(int offset) {
+        return getWrapped().peekIntAt(offset);
     }
 
     @Override
@@ -94,8 +94,8 @@ public abstract class DecoratedTokenQueue
     }
 
     @Override
-    public Long peekLong(int offset) {
-        return getWrapped().peekLong(offset);
+    public Long peekLongAt(int offset) {
+        return getWrapped().peekLongAt(offset);
     }
 
     @Override

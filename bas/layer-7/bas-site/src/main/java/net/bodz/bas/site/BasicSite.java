@@ -182,7 +182,7 @@ public abstract class BasicSite
             break;
 
         case "intl":
-            String lang = tokens.peek(1);
+            String lang = tokens.peekAt(1);
             if (lang != null) {
                 HttpServletRequest request = CurrentHttpService.getRequest();
                 Locale locale = Locale.forLanguageTag(lang); // non-null.
