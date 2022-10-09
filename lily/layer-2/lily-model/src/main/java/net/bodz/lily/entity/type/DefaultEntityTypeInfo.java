@@ -162,6 +162,18 @@ public class DefaultEntityTypeInfo
             throw new NullPointerException("parameters");
 
         int n = parameters.length;
+        if (n == 1) {
+            Object param = parameters[0];
+            if (param == null)
+                return null;
+            Class<?> actual = param.getClass();
+            Class<?> formal = idClass;
+            if (formal.isPrimitive())
+                formal = Primitives.box(formal);
+            if (actual == formal)
+                return param;
+        }
+
         Class<?> atv[] = new Class<?>[n];
         for (int i = 0; i < n; i++)
             atv[i] = parameters[i] == null ? null : parameters[i].getClass();
