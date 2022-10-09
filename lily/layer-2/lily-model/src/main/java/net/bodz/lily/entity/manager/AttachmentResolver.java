@@ -4,24 +4,21 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IId.class)
-public class ResolveCommand
+public class AttachmentResolver
         extends AbstractEntityCommand {
 
     JsonFormOptions jsonFormOptions;
 
-    public ResolveCommand(IEntityTypeInfo typeInfo) {
+    public AttachmentResolver(IEntityTypeInfo typeInfo) {
         super(typeInfo);
-    }
-
-    @Override
-    public String getPreferredName() {
-        return null;
+        ITokenQueue tq;
     }
 
     @Override
@@ -58,12 +55,12 @@ public class ResolveCommand
             extends AbstractEntityCommandBuilder<Builder> {
 
         public Builder() {
-            super(ResolveCommand.class);
+            super(AttachmentResolver.class);
         }
 
         @Override
-        public ResolveCommand build() {
-            return new ResolveCommand(typeInfo);
+        public AttachmentResolver build() {
+            return new AttachmentResolver(typeInfo);
         }
     }
 

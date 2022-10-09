@@ -17,6 +17,7 @@ import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
@@ -133,6 +134,14 @@ public class MiscTemplates {
         out.println(";");
     }
 
+    /**
+     * @Id
+     * @Ordinal
+     * @NotNull
+     * @Precision
+     * @TextInput
+     * @Column
+     */
     public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
         Phrase name = column.nam();
         Class<?> type = column.getType();
@@ -144,6 +153,11 @@ public class MiscTemplates {
 
         if (column.isPrimaryKey()) {
             out.println("@" + out.im.name(Id.class));
+        }
+
+        int ordinal = column.getOrdinal();
+        if (ordinal != 0) {
+            out.println("@" + out.im.name(Ordinal.class) + "(" + ordinal + ")");
         }
 
         boolean unique = column.isUnique();
@@ -333,12 +347,19 @@ public class MiscTemplates {
     public void sqlMatchPrimaryKey(ITreeOut out, IColumnMetadata[] keyColumns) {
         if (keyColumns.length == 0)
             throw new IllegalUsageException("Can't update table without primary key.");
-        for (int i = 0; i < keyColumns.length; i++) {
-            IColumnMetadata column = keyColumns[i];
+
+        if (keyColumns.length == 1) {
+            IColumnMetadata column = keyColumns[0];
             Phrase name = column.nam();
-            if (i != 0)
-                out.print("and ");
-            out.println(name.foo_bar + " = #{" + name.fooBar + "}");
+            out.println(name.foo_bar + " = #{id}");
+        } else {
+            for (int i = 0; i < keyColumns.length; i++) {
+                IColumnMetadata column = keyColumns[i];
+                Phrase name = column.nam();
+                if (i != 0)
+                    out.print("and ");
+                out.println(name.foo_bar + " = #{" + name.fooBar + "}");
+            }
         }
     }
 

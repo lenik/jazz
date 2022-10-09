@@ -10,7 +10,7 @@ import net.bodz.lily.security.AccessControl;
 @IndexedType(includeAbstract = false)
 @VirtualHostScope
 public abstract class CoIndex<T extends CoObject, M extends CoObjectMask>
-        extends GenericIndex<T, M> {
+        extends AbstractEntityManager<T, M> {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 

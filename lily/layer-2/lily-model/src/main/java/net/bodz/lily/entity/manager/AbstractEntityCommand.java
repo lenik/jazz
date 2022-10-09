@@ -11,6 +11,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IdFn;
@@ -22,6 +23,7 @@ public abstract class AbstractEntityCommand
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommand.class);
 
+    private final int priority;
     private final String preferredName;
     protected final IEntityTypeInfo typeInfo;
 
@@ -30,6 +32,12 @@ public abstract class AbstractEntityCommand
     protected JsonResult resp;
 
     public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
+        Priority aPriority = getClass().getAnnotation(Priority.class);
+        if (aPriority != null)
+            priority = aPriority.value();
+        else
+            priority = 0;
+
         String name = getClass().getSimpleName();
         if (name.endsWith("Command"))
             name = name.substring(0, name.length() - 7);
@@ -39,8 +47,18 @@ public abstract class AbstractEntityCommand
     }
 
     @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    @Override
     public String getPreferredName() {
         return preferredName;
+    }
+
+    @Override
+    public boolean isContentCommand() {
+        return false;
     }
 
     @Override
