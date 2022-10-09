@@ -37,15 +37,15 @@ public class DefaultTableMetadata
     }
 
     public void parsePrimaryKey(String keyStr) {
-        String[] cols;
+        String[] strFields;
         if (Nullables.isEmpty(keyStr))
-            cols = new String[0];
+            strFields = new String[0];
         else {
-            cols = keyStr.split(",");
-            for (int i = 0; i < cols.length; i++)
-                cols[i] = cols[i].trim();
+            strFields = keyStr.split(",");
+            for (int i = 0; i < strFields.length; i++)
+                strFields[i] = strFields[i].trim();
         }
-        primaryKey = new TableKey(getId(), cols);
+        primaryKey = new TableKey(getId(), strFields).normalize(this);
     }
 
     public void updatePrimaryKey() {
@@ -55,7 +55,7 @@ public class DefaultTableMetadata
                 cols.add(column.getName());
         }
         String[] cv = cols.toArray(new String[0]);
-        primaryKey = new TableKey(getId(), cv);
+        primaryKey = new TableKey(getId(), cv).normalize(this);
     }
 
     @Override

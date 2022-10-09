@@ -29,6 +29,8 @@ public class DefaultColumnMetadata
 
     IRowSetMetadata parent;
 
+    int ordinalPosition;
+
     String name;
     String javaName;
 
@@ -76,6 +78,15 @@ public class DefaultColumnMetadata
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
+    }
+
+    @Override
+    public int getOrdinal() {
+        return ordinalPosition;
+    }
+
+    public void setOrdinal(int ordinal) {
+        this.ordinalPosition = ordinal;
     }
 
     @Override
@@ -457,7 +468,7 @@ public class DefaultColumnMetadata
         // int sqlDataType = rs.getInt("SQL_DATA_TYPE");
         // Integer sqlDatetimeSub = (Integer) rs.getObject("SQL_DATETIME_SUB");
         // int charOctetLength = rs.getInt("CHAR_OCTET_LENGTH");
-        // int ordinalPosition = rs.getInt("ORDINAL_POSITION");
+        ordinalPosition = rs.getInt("ORDINAL_POSITION");
         // String scopeCatalog = rs.getString("SCOPE_CATLOG");
         // String scopeSchema = rs.getString("SCOPE_SCHEMA");
         // String scopeTable = rs.getString("SCOPE_TABLE");

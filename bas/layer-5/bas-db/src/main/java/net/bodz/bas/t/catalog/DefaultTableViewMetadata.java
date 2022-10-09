@@ -86,17 +86,23 @@ public abstract class DefaultTableViewMetadata
     }
 
     public void setPrimaryKey(TableKey primaryKey) {
-        this.primaryKey = primaryKey;
         if (primaryKey == null)
-            return;
+            throw new NullPointerException("primaryKey");
+        this.primaryKey = primaryKey.normalize(this);
+
         for (IColumnMetadata column : columns) {
             String columnName = column.getName();
-            boolean isPrimaryKey = primaryKey.contains(columnName);
+            boolean isPrimaryKey = this.primaryKey.contains(columnName);
             if (isPrimaryKey != column.isPrimaryKey()) {
                 DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
                 mutable.setPrimaryKey(isPrimaryKey);
             }
         }
+    }
+
+    @Override
+    public void wireUp() {
+        sortColumns();
     }
 
     @Override
@@ -210,6 +216,7 @@ public abstract class DefaultTableViewMetadata
             metaDataHandler.column(rs);
         rs.close();
 
+        metaDataHandler.endTableView(this);
         return true;
     }
 

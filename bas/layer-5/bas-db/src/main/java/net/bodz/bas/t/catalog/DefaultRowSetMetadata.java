@@ -16,6 +16,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.order.OrdinalComparator;
 
 public class DefaultRowSetMetadata
         implements
@@ -140,6 +141,10 @@ public class DefaultRowSetMetadata
         columnPosition.clear();
     }
 
+    public void sortColumns() {
+        Collections.sort(this.columns, OrdinalComparator.INSTANCE);
+    }
+
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
@@ -152,6 +157,7 @@ public class DefaultRowSetMetadata
             column.jsonIn(item, opts);
             addColumn(column);
         }
+        sortColumns();
     }
 
     @Override
@@ -164,6 +170,7 @@ public class DefaultRowSetMetadata
             column.readObject(x_column);
             addColumn(column);
         }
+        sortColumns();
     }
 
     public void loadFromRSMD(ResultSetMetaData rsmd)
@@ -171,9 +178,11 @@ public class DefaultRowSetMetadata
         int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {
             DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+            column.setOrdinal(i);
             column.readObject(rsmd, i);
             addColumn(column);
         }
+        sortColumns();
     }
 
     public String getColumnNames() {
