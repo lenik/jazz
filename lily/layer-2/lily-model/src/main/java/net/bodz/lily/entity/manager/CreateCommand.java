@@ -61,7 +61,7 @@ public class CreateCommand
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
         Object obj = null;
 

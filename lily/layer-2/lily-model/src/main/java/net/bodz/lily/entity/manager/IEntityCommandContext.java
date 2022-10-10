@@ -22,7 +22,7 @@ public interface IEntityCommandContext
 
     DataContext getDataContext();
 
-    EntityInfo getEntityInfo();
+    ResolvedEntity getEntityInfo();
 
     JsonResult getResult();
 

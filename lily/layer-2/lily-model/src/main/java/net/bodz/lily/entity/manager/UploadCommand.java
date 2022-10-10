@@ -2,8 +2,6 @@ package net.bodz.lily.entity.manager;
 
 import java.io.File;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.path.ServiceTargetException;
@@ -20,7 +18,6 @@ public class UploadCommand
 
     final String category;
 
-    HttpServletRequest request;
     File startDir;
     IAnchor startAnchor;
 
@@ -33,9 +30,8 @@ public class UploadCommand
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
-        request = context.getRequest();
         File dataDir = DefaultSiteDirs.getInstance().getDataDir(request);
         IAnchor dataAnchor = DefaultSiteDirs._webApp_;
 

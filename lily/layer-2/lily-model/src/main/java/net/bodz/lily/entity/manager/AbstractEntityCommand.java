@@ -1,9 +1,11 @@
 package net.bodz.lily.entity.manager;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ctx.DataContext;
@@ -19,6 +21,11 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
+import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -35,9 +42,14 @@ public abstract class AbstractEntityCommand
     private final String preferredName;
     protected final IEntityTypeInfo typeInfo;
 
-    protected IEntityCommandContext context;
     protected DataContext dataContext;
-    protected JsonResult resp;
+    protected ResolvedEntity resolvedEntity;
+    protected JsonResult result;
+
+    protected HttpServletRequest request;
+    protected HttpServletResponse response;
+    protected ITokenQueue tokens;
+    protected IVariantMap<String> parameters;
 
     public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
         Priority aPriority = getClass().getAnnotation(Priority.class);
@@ -80,91 +92,113 @@ public abstract class AbstractEntityCommand
     }
 
     @Override
-    public synchronized Object execute(IEntityCommandContext executeContext)
-            throws Exception {
-        this.context = executeContext;
-        this.dataContext = context.getDataContext();
-        this.resp = context.getResult();
+    public ResolvedEntity getResolvedEntity() {
+        return resolvedEntity;
+    }
 
-        IVariantMap<String> parameters = context.getParameters();
+    @Override
+    public void setResolvedEntity(ResolvedEntity resolvedEntity) {
+        this.resolvedEntity = resolvedEntity;
+    }
+
+    @Override
+    public boolean checkValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        return true;
+    }
+
+    protected Boolean isReturningJsonResult() {
+        return null;
+    }
+
+    @Override
+    public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        if (!checkValid(previous, tokens, q))
+            return null;
+
+        this.request = CurrentHttpService.getRequest();
+        this.response = CurrentHttpService.getResponse();
+
+        this.tokens = tokens;
+        this.parameters = q;
+
+        if (result == null)
+            result = new JsonResult();
 
         try {
-            readObject(parameters);
+            readObject(q);
         } catch (Exception e) {
-            resp.fail(e, "error parse parameters: " + e.getMessage());
+            result.fail(e, "error parse parameters: " + e.getMessage());
             return null;
         }
 
-        HttpServletRequest request = context.getRequest();
         String contentTypeCharset = request.getContentType();
         String contentType = Split.chop(contentTypeCharset, ';').a;
         contentType = contentType == null ? "" : contentType.trim();
 
         if (this instanceof IJsonForm //
                 && contentType.equalsIgnoreCase("application/json")) {
-            IJsonForm jsonForm = (IJsonForm) this;
-            BufferedReader reader = request.getReader();
-            StringBuilder sb = new StringBuilder();
-            char[] cbuf = new char[4096];
-            int cc;
-            while ((cc = reader.read(cbuf)) != -1) {
-                sb.append(cbuf, 0, cc);
-            }
-            reader.close();
-            String content = sb.toString();
-            JsonObject json = JsonFn.parseObject(content);
-            jsonForm.jsonIn(json, JsonFormOptions.WEB);
-        }
-
-        try
-
-        {
-            if (!setUpVars()) {
-                resp.fail("command is not enabled.");
-                return null;
-            }
-        } catch (Exception e) {
-            resp.fail(e, "failed before execute: " + e.getMessage());
-            return null;
-        }
-
-        Object result;
-        try {
-            result = execute();
-
-            if (result == null)
-                return null;
-
-            if (result != resp)
-                resp.setData(result);
-
-            context.consume(0, this, result);
-            return result;
-        } catch (Exception e) {
-            resp.fail(e, "failed to execute: " + e.getMessage());
-            return null;
-        } finally {
+            String json;
             try {
-                afterExecute();
-            } catch (Exception e) {
-                logger.error(e, "error post-execute: " + e.getMessage());
+                BufferedReader reader = request.getReader();
+                StringBuilder sb = new StringBuilder();
+                char[] cbuf = new char[4096];
+                int cc;
+                while ((cc = reader.read(cbuf)) != -1) {
+                    sb.append(cbuf, 0, cc);
+                }
+                reader.close();
+                json = sb.toString();
+            } catch (IOException e) {
+                throw new PathDispatchException("failed to read POST payload: " + e.getMessage(), e);
+            }
+
+            try {
+                IJsonForm jsonForm = (IJsonForm) this;
+                JsonObject jo = JsonFn.parseObject(json);
+                jsonForm.jsonIn(jo, JsonFormOptions.WEB);
+            } catch (ParseException e) {
+                throw new PathDispatchException(String.format(//
+                        "error parse json %s: %s", json, e.getMessage()), e);
             }
         }
+
+        IPathArrival arrival = dispatchImpl(previous, tokens, q);
+        cleanup();
+        return arrival;
     }
 
-    /**
-     * before parsing the parameters.
-     */
-    protected boolean setUpVars()
-            throws Exception {
-        return true;
+    protected IPathArrival dispatchImpl(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        Object target;
+        try {
+            target = execute();
+        } catch (Exception e) {
+            throw new PathDispatchException("error run the command: " + e.getMessage(), e);
+        }
+        PathArrival arrival = PathArrival.shift(tokens.available(), previous, this, target, tokens);
+
+        Boolean returningJsonResult = isReturningJsonResult();
+        if (returningJsonResult == null)
+            returningJsonResult = !(target instanceof IJsonForm);
+
+        if (returningJsonResult)
+            arrival = PathArrival.shift(0, arrival, this, result, tokens);
+
+        return arrival;
     }
 
-    protected abstract Object execute()
-            throws Exception;
+    protected void cleanup() {
+    }
 
-    protected void afterExecute()
-            throws Exception {
+    @Override
+    public JsonResult getResult() {
+        return result;
+    }
+
+    public void setResult(JsonResult result) {
+        this.result = result;
     }
 
     protected <mapper_t> mapper_t mapper(Class<mapper_t> mapperClass) {

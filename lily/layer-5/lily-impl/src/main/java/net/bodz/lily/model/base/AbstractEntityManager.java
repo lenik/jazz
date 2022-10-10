@@ -23,7 +23,6 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -34,10 +33,8 @@ import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.manager.EntityCommands;
-import net.bodz.lily.entity.manager.EntityInfo;
 import net.bodz.lily.entity.manager.IEntityCommand;
-import net.bodz.lily.entity.manager.MutableEntityCommandContext;
-import net.bodz.lily.entity.manager.ResolveCommand;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.security.AccessControl;
@@ -61,7 +58,6 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     Map<String, IEntityCommand> nameMap = new HashMap<>();
     Map<String, IEntityCommand> contentNameMap = new HashMap<>();
     List<IEntityCommand> otherCommands = new ArrayList<>();
-    ResolveCommand resolveCommand;
 
     protected DataContext dataContext;
 
@@ -80,9 +76,6 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
 
         for (IEntityCommand cmd : EntityCommands.forEntityClass(entityType)) {
             String name = cmd.getPreferredName();
-
-            if (cmd instanceof ResolveCommand)
-                resolveCommand = (ResolveCommand) cmd;
 
             if (name != null) {
                 if (!cmd.isContentCommand()) {
@@ -166,69 +159,53 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         if (token == null)
             return null;
 
-        IPathArrival arrival = dispatchToCommand(previous, tokens, q);
-
-        if (arrival != null) {
-            previous = arrival;
-            IEntityCommand command = (IEntityCommand) arrival.getTarget();
-            MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
-            context.setRequest(CurrentHttpService.getRequest());
-            context.setResponse(CurrentHttpService.getResponse());
-            context.setDataContext(getDataContext());
-
+        IEntityCommand command = nameMap.get(token);
+        if (command != null) {
+            previous = PathArrival.shift(previous, this, command, tokens);
+            command.setDataContext(getDataContext());
             try {
-                command.execute(context);
-            } catch (Exception e) {
-                throw new PathDispatchException("error execute entity command: " + e.getMessage(), e);
+                return command.dispatch(previous, tokens, q);
+            } catch (PathDispatchException e) {
+                throw new PathDispatchException(String.format(//
+                        "error execute entity command %s: %s", token, e.getMessage()), e);
             }
-            return context.getArrival();
         }
 
-        if (hasId) {
-            arrival = dispatchToEntity(previous, tokens, q);
-            if (arrival != null) {
-                previous = arrival;
+        IPathArrival arrival;
+        if (hasId && (arrival = dispatchToEntity(previous, tokens, q)) != null) {
+            previous = arrival;
+            ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
 
-                EntityInfo entityInfo = (EntityInfo) arrival.getTarget();
-
-                MutableEntityCommandContext context = new MutableEntityCommandContext(previous, tokens, q);
-                context.setRequest(CurrentHttpService.getRequest());
-                context.setResponse(CurrentHttpService.getResponse());
-                context.setDataContext(getDataContext());
-                context.setEntityInfo(entityInfo);
-
-                arrival = dispatchToContentCommand(previous, tokens, q);
-                if (arrival != null) {
-                    try {
-                        IEntityCommand command = (IEntityCommand) arrival.getTarget();
-                        command.execute(context);
-                    } catch (Exception e) {
-                        throw new PathDispatchException("error execute entity command: " + e.getMessage(), e);
-                    }
-                    return context.getArrival();
-                }
+            command = contentNameMap.get(token);
+            if (command != null) {
+                previous = PathArrival.shift(previous, this, command, tokens);
+                command.setDataContext(getDataContext());
+                command.setResolvedEntity(resolvedEntity);
 
                 try {
-                    resolveCommand.execute(context);
-                } catch (Exception e) {
-                    throw new PathDispatchException("error resolve entity: " + e.getMessage(), e);
+                    return command.dispatch(previous, tokens, q);
+                } catch (PathDispatchException e) {
+                    throw new PathDispatchException(String.format(//
+                            "error execute entity content command %s: %s", token, e.getMessage()), e);
                 }
-                return context.getArrival();
             }
-        }
 
-        return null;
-    }
+            for (IEntityCommand other : otherCommands)
+                if (other.checkValid(previous, tokens, q)) {
+                    previous = PathArrival.shift(0, previous, this, command, tokens);
+                    other.setDataContext(dataContext);
+                    other.setResolvedEntity(resolvedEntity);
 
-    @Override
-    public IPathArrival dispatchToCommand(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException {
-        String token = tokens.peek();
-        if (token != null) {
-            IEntityCommand command = nameMap.get(token);
-            if (command != null)
-                return PathArrival.shift(previous, this, command, tokens);
-        }
+                    try {
+                        return other.dispatch(previous, tokens, q);
+                    } catch (PathDispatchException e) {
+                        throw new PathDispatchException(String.format(//
+                                "error execute entity other-command: %s", e.getMessage()), e);
+                    }
+                }
+
+        } // hasId && dispatchToEntity
+
         return null;
     }
 
@@ -272,25 +249,13 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         if (obj == null)
             return null;
 
-        EntityInfo info = new EntityInfo();
-        info.idColumns = sv;
+        ResolvedEntity info = new ResolvedEntity();
+        info.idFieldStrings = sv;
         info.idFields = idvec;
         info.id = id;
         info.entity = obj;
-        info.extension = name_ext.b;
+        info.preferredExtension = name_ext.b;
         return PathArrival.shift(cc, previous, this, info, tokens);
-    }
-
-    @Override
-    public IPathArrival dispatchToContentCommand(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException {
-        String token = tokens.peek();
-        if (token != null) {
-            IEntityCommand command = contentNameMap.get(token);
-            if (command != null)
-                return PathArrival.shift(previous, this, command, tokens);
-        }
-        return null;
     }
 
     @Override
