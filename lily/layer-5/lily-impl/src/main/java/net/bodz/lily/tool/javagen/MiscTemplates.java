@@ -116,6 +116,40 @@ public class MiscTemplates {
         }
     }
 
+    public static final String OrdinalPrefix = "_ord_";
+
+    public void O_consts(ITreeOut out, ITableViewMetadata table, Boolean wantPrimaryKey) {
+        List<String> defs = new ArrayList<>();
+        String lastVarName = null;
+        int lastOrdinal = 0;
+        for (IColumnMetadata column : table.getColumns()) {
+            if (wantPrimaryKey != null)
+                if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
+                    continue;
+
+            Phrase name = column.nam();
+
+            int ordinal = column.getOrdinal();
+            String varName = OrdinalPrefix + name.FOO_BAR;
+
+            String expr;
+            int diff = ordinal - lastOrdinal;
+            if (lastVarName != null && Math.abs(diff) <= 10)
+                expr = lastVarName + (diff < 0 ? " - " + -diff : " + " + diff);
+            else
+                expr = "" + ordinal;
+            defs.add("private static final int " + varName + " = " + expr + ";");
+
+            lastVarName = varName;
+            lastOrdinal = ordinal;
+        }
+        if (!defs.isEmpty()) {
+            out.println();
+            for (String def : defs)
+                out.println(def);
+        }
+    }
+
     public void columnField(JavaSourceWriter out, IColumnMetadata column) {
         Class<?> type = column.getType();
 
@@ -157,7 +191,8 @@ public class MiscTemplates {
 
         int ordinal = column.getOrdinal();
         if (ordinal != 0) {
-            out.println("@" + out.im.name(Ordinal.class) + "(" + ordinal + ")");
+            String varName = OrdinalPrefix + column.nam().FOO_BAR;
+            out.println("@" + out.im.name(Ordinal.class) + "(" + varName + ")");
         }
 
         boolean unique = column.isUnique();

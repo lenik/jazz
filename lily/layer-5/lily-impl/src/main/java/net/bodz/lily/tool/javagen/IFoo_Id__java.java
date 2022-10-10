@@ -31,6 +31,7 @@ public class IFoo_Id__java
         {
 
             templates.N_consts(out, table, true);
+            templates.O_consts(out, table, true);
 
             for (IColumnMetadata column : primaryKeyCols) {
                 out.println();

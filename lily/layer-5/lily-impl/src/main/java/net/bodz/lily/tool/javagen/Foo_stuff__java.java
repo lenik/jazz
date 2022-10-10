@@ -44,6 +44,7 @@ public class Foo_stuff__java
             out.println("private static final long serialVersionUID = 1L;");
 
             templates.N_consts(out, table, null);
+            templates.O_consts(out, table, null);
 
             for (IColumnMetadata column : table.getColumns()) {
                 out.println();
