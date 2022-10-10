@@ -24,11 +24,9 @@ public class ResolveCommand
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
-        Object obj = context.getEntityInfo().entity;
-
-        JsonWrapper data = JsonWrapper.wrap(obj, "data");
+        JsonWrapper data = JsonWrapper.wrap(resolvedEntity, "data");
         data.setOptions(jsonFormOptions);
         return data;
     }

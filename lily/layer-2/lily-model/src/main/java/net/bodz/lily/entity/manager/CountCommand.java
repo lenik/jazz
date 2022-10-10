@@ -17,7 +17,7 @@ public class CountCommand
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
         long totalCount = getGenericMapper().count(criteria);
         return totalCount;

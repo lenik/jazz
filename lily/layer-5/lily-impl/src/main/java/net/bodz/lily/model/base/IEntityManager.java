@@ -24,13 +24,7 @@ public interface IEntityManager
 
     IEntityCommand getContentCommand(String name);
 
-    IPathArrival dispatchToCommand(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException;
-
     IPathArrival dispatchToEntity(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException;
-
-    IPathArrival dispatchToContentCommand(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException;
 
 }

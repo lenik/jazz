@@ -41,17 +41,16 @@ public class AttachmentResolver
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
-        IId<?> obj = (IId<?>) context.getEntityInfo().entity;
+        IId<?> obj = (IId<?>) resolvedEntity.entity;
 
         // XXX Redirect to /files/...
 
         File homeDir = SysProps.userHome;
         File start = new File(homeDir, "sites");
 
-        HttpServletRequest req = context.getRequest();
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(req);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 
@@ -64,27 +63,25 @@ public class AttachmentResolver
         String idStr = obj.id().toString();
         File objDir = new File(tableDir, idStr);
 
-        String remainingPath = context.getRemainingPath();
+        String remainingPath = tokens.getRemainingPath();
         File file = new File(objDir, remainingPath);
 
-        HttpServletResponse resp = context.getResponse();
         if (!file.exists()) {
             logger.warn("Not-Found: " + file);
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
 
         if (!file.canRead()) {
-            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
             return null;
         }
 
         URL url = file.toURI().toURL();
-        ICacheControl cacheControl = getCacheControl(req, url);
-        ResourceTransferer transferer = new ResourceTransferer(req, resp);
+        ICacheControl cacheControl = getCacheControl(request, url);
+        ResourceTransferer transferer = new ResourceTransferer(request, response);
         transferer.transfer(url, cacheControl);
 
-        context.consume(context.available(), this, file);
         return null;
     }
 

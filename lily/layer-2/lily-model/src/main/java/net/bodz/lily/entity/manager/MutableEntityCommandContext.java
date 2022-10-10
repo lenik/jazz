@@ -28,7 +28,7 @@ public class MutableEntityCommandContext
 
     DataContext dataContext;
 
-    EntityInfo entityInfo;
+    ResolvedEntity entityInfo;
 
     JsonResult result = new JsonResult();
 
@@ -84,11 +84,11 @@ public class MutableEntityCommandContext
     }
 
     @Override
-    public EntityInfo getEntityInfo() {
+    public ResolvedEntity getEntityInfo() {
         return entityInfo;
     }
 
-    public void setEntityInfo(EntityInfo entityInfo) {
+    public void setEntityInfo(ResolvedEntity entityInfo) {
         this.entityInfo = entityInfo;
     }
 

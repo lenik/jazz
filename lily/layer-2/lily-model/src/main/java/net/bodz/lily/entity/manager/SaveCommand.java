@@ -4,16 +4,12 @@ import java.io.IOException;
 
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.site.json.JsonWrapper;
-import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
@@ -30,27 +26,20 @@ public class SaveCommand
 
     JsonObject contentJson;
 
-    CreateCommand createCommand;
-
-    JsonResult resp = new JsonResult();
-
     public SaveCommand(IEntityTypeInfo typeInfo) {
         super(typeInfo);
-        createCommand = new CreateCommand(typeInfo);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
         // 1. Prepare the object to be saved
         Object obj;
         if (createNew) {
-            JsonWrapper jw = (JsonWrapper) createCommand.execute(context);
-            obj = jw.getWrapped();
+            obj = typeInfo.getEntityClass().newInstance();
         } else {
-            context.setAttribute("id", id);
             obj = getEntityMapper().select(id);
             if (obj == null)
                 throw new NoSuchKeyException(String.format(//
@@ -79,12 +68,13 @@ public class SaveCommand
             mapper.insert(obj);
             if (obj instanceof IId<?>) {
                 IId<?> entity = (IId<?>) obj;
-                resp.getLogger().info("Inserted id: " + entity.id());
+                id = entity.id();
+                result.getLogger().info("Inserted id: " + id);
             }
         } else {
             long rows = mapper.update(obj);
-            resp.setHeader("count", rows);
-            resp.getLogger().info("Rows updated: " + rows);
+            result.setHeader("count", rows);
+            result.getLogger().info("Rows updated: " + rows);
         }
 
         if (obj instanceof IJdbcRowOpListener) {
@@ -92,19 +82,10 @@ public class SaveCommand
             l.afterRowOperation(event);
         }
 
-        if (hasId) {
-            IId<?> id_obj = (IId<?>) obj;
-            resp.setHeader("id", id_obj.id());
-        }
-        resp.succeed();
+        if (hasId)
+            result.setHeader("id", id);
 
-        return resp;
-    }
-
-    @Override
-    public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
-        super.readObject(map);
+        return result.succeed();
     }
 
     @Override

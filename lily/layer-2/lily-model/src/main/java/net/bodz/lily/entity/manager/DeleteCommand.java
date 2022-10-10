@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -23,23 +22,25 @@ public class DeleteCommand
     }
 
     @Override
-    protected Object execute()
+    public Object execute()
             throws Exception {
-        JsonResult resp = new JsonResult();
+        int nUpdates = 0;
         if (idList.isEmpty()) {
-            resp.fail("Id isn't specified.");
+            result.fail("Id isn't specified.");
         } else {
             StringBuilder sb = new StringBuilder();
             for (Object id : idList) {
-                if (!getEntityMapper().delete(id))
+                if (getEntityMapper().delete(id))
+                    nUpdates++;
+                else
                     sb.append(id + ",");
             }
             if (sb.length() > 0) {
                 sb.setLength(sb.length() - 1);
-                resp.fail("Not deleted: " + sb);
+                result.fail("Not deleted: " + sb);
             }
         }
-        return resp;
+        return nUpdates;
     }
 
     @Override
