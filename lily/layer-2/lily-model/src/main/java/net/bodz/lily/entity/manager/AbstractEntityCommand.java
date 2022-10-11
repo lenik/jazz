@@ -21,6 +21,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.repr.path.DefaultTokenProcessor;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
@@ -49,6 +50,7 @@ public abstract class AbstractEntityCommand
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected ITokenQueue tokens;
+    protected int consumedTokenCount;
     protected IVariantMap<String> parameters;
 
     public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
@@ -120,7 +122,8 @@ public abstract class AbstractEntityCommand
         this.request = CurrentHttpService.getRequest();
         this.response = CurrentHttpService.getResponse();
 
-        this.tokens = tokens;
+        this.tokens = new DefaultTokenProcessor(previous, tokens);
+        this.consumedTokenCount = 0;
         this.parameters = q;
 
         if (result == null)
@@ -177,7 +180,8 @@ public abstract class AbstractEntityCommand
         } catch (Exception e) {
             throw new PathDispatchException("error run the command: " + e.getMessage(), e);
         }
-        PathArrival arrival = PathArrival.shift(tokens.available(), previous, this, target, tokens);
+
+        PathArrival arrival = PathArrival.shift(0, previous, this, target, tokens);
 
         Boolean returningJsonResult = isReturningJsonResult();
         if (returningJsonResult == null)
