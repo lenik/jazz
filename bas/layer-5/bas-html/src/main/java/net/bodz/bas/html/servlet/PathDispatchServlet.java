@@ -26,6 +26,7 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
+import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.repr.path.PathDispatchIndex;
 import net.bodz.bas.repr.path.TokenQueue;
@@ -115,9 +116,10 @@ public class PathDispatchServlet
         req.setAttribute(IVariantMap.class, q);
 
         Object start = rootObject;
+        PathArrival init = new PathArrival(start, tokenQueue.getRemainingPath());
         IPathArrival arrival;
         try {
-            arrival = pathDispatchIndex.dispatch(start, tokenQueue, q);
+            arrival = pathDispatchIndex.dispatch(init, start, tokenQueue, q);
             // List<IPathArrival> arrivals = pathDispatchIndex.dispatchMultiple(start, tokenQueue);
             // arrival = arrivals.isEmpty() ? null : arrivals.get(0);
         } catch (PathDispatchException e) {

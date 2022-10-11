@@ -12,8 +12,8 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
@@ -25,7 +25,8 @@ import net.bodz.bas.t.variant.IVariantMap;
  * The colon(":") is required to separate parameter types from the method signature.
  */
 public class MethodPathDispatcher
-        extends AbstractPathDispatcher {
+        implements
+            IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_METHOD;
 
@@ -35,11 +36,10 @@ public class MethodPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        Object obj = previous.getTarget();
-        if (obj == null)
-            throw new PathDispatchException("null target.");
+        if (source == null)
+            throw new PathDispatchException("null source.");
 
         String methodName = tokens.peek();
         if (methodName == null)
@@ -113,7 +113,7 @@ public class MethodPathDispatcher
             parsedPV[i] = parameter;
         }
 
-        Class<? extends Object> objClass = obj.getClass();
+        Class<? extends Object> objClass = source.getClass();
         MethodKey wantKey = new MethodKey(methodName, wantPV);
 
         Map<MethodKey, Method> methodMap = clsMethodMap.get(objClass);
@@ -149,7 +149,7 @@ public class MethodPathDispatcher
 
         Object result;
         try {
-            result = method.invoke(obj, parsedPV);
+            result = method.invoke(source, parsedPV);
         } catch (Exception e) {
             throw new PathDispatchException(e);
         }
@@ -165,7 +165,8 @@ public class MethodPathDispatcher
     }
 
     static class EntryLoader
-            implements IMapEntryLoader<Class<?>, Map<MethodKey, Method>> {
+            implements
+                IMapEntryLoader<Class<?>, Map<MethodKey, Method>> {
 
         @Override
         public Map<MethodKey, Method> loadValue(Class<?> type)
@@ -197,7 +198,8 @@ public class MethodPathDispatcher
 }
 
 class MethodKey
-        implements Serializable {
+        implements
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 

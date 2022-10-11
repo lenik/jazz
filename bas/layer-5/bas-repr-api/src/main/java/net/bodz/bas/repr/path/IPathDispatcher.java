@@ -13,12 +13,13 @@ import net.bodz.bas.t.variant.IVariantMap;
  */
 @IndexedType
 public interface IPathDispatcher
-        extends IPathDispatchable, IPriority {
+        extends
+            IPriority {
 
     /**
      * Resolve the tokens with-in the context object.
      *
-     * @param obj
+     * @param startObject
      *            The start object.
      * @param path
      *            Path to be dispatched.
@@ -26,7 +27,22 @@ public interface IPathDispatcher
      * @throws NullPointerException
      *             If either <code>obj</code> or <code>path</code> is <code>null</code>.
      */
-    IPathArrival dispatch(Object obj, String path, IVariantMap<String> q)
+    default IPathArrival dispatch(Object startObject, String path, IVariantMap<String> q)
+            throws PathDispatchException {
+        TokenQueue tokens = new TokenQueue(path);
+        PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
+        IPathArrival result = dispatch(start, startObject, tokens, q);
+        if (!tokens.isEmpty())
+            throw new IncompleteDispatchException(tokens.toString());
+        return result;
+    }
+
+    default IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        return dispatch(previous, previous.getTarget(), tokens, q);
+    }
+
+    IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException;
 
 }

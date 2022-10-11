@@ -1,6 +1,7 @@
 net.bodz.bas.repr.path.builtin.ClassResourcePathDispatcher
 net.bodz.bas.repr.path.builtin.FieldPathDispatcher
 net.bodz.bas.repr.path.builtin.InvocationPathDispatcher
+net.bodz.bas.repr.path.builtin.JsonFormPathDispatcher
 net.bodz.bas.repr.path.builtin.ListPathDispatcher
 net.bodz.bas.repr.path.builtin.MapPathDispatcher
 net.bodz.bas.repr.path.builtin.MethodPathDispatcher

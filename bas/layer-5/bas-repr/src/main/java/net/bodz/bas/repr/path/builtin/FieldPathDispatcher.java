@@ -8,15 +8,16 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class FieldPathDispatcher
-        extends AbstractPathDispatcher {
+        implements
+            IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_FIELD;
 
@@ -26,17 +27,16 @@ public class FieldPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        Object obj = previous.getTarget();
-        if (obj == null)
-            throw new PathDispatchException("null target.");
+        if (source == null)
+            throw new PathDispatchException("null source.");
 
         String fieldName = tokens.peek();
         if (fieldName == null)
             return null;
 
-        Map<String, Field> fieldMap = clsFieldMap.getOrLoad(obj.getClass());
+        Map<String, Field> fieldMap = clsFieldMap.getOrLoad(source.getClass());
 
         Field field = fieldMap.get(fieldName);
         if (field == null)
@@ -44,7 +44,7 @@ public class FieldPathDispatcher
 
         Object result;
         try {
-            result = field.get(obj);
+            result = field.get(source);
         } catch (Exception e) {
             throw new PathDispatchException(e);
         }
@@ -60,7 +60,8 @@ public class FieldPathDispatcher
     }
 
     static class EntryLoader
-            implements IMapEntryLoader<Class<?>, Map<String, Field>> {
+            implements
+                IMapEntryLoader<Class<?>, Map<String, Field>> {
 
         @Override
         public Map<String, Field> loadValue(Class<?> type)

@@ -16,7 +16,8 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 @ExcludedFromIndex
 public class PathDispatchers
-        extends AbstractPathDispatcher {
+        implements
+            IPathDispatcher {
 
     static final Logger logger = LoggerFactory.getLogger(PathDispatchers.class);
 
@@ -51,13 +52,10 @@ public class PathDispatchers
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        if (previous == null)
-            throw new NullPointerException("previous");
-        Object target = previous.getTarget();
-        if (target == null)
-            throw new PathDispatchException("null prev.target.");
+        if (source == null)
+            throw new PathDispatchException("null source.");
 
         logger.debug("Dispatch " + tokens);
         Process process = new Process(previous, tokens, q);
@@ -153,8 +151,8 @@ public class PathDispatchers
                 procs = children;
 
                 if (++index > maxDispatchCount)
-                    throw new PathDispatchException(String.format("Too many dispatches (%d), maybe dead loop?",
-                            maxDispatchCount));
+                    throw new PathDispatchException(
+                            String.format("Too many dispatches (%d), maybe dead loop?", maxDispatchCount));
             }
 
             for (Process proc : procs)
