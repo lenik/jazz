@@ -64,6 +64,7 @@ public class AttachmentResolver
         File objDir = new File(tableDir, idStr);
 
         String remainingPath = tokens.getRemainingPath();
+        consumedTokenCount = tokens.available();
         File file = new File(objDir, remainingPath);
 
         if (!file.exists()) {
