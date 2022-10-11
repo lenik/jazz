@@ -8,8 +8,8 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
 import net.bodz.bas.err.LazyLoadException;
-import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
@@ -20,7 +20,8 @@ import com.googlecode.openbeans.Introspector;
 import com.googlecode.openbeans.PropertyDescriptor;
 
 public class PropertyPathDispatcher
-        extends AbstractPathDispatcher {
+        implements
+            IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_PROPERTY;
 
@@ -30,17 +31,16 @@ public class PropertyPathDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        Object obj = previous.getTarget();
-        if (obj == null)
-            throw new PathDispatchException("null target.");
+        if (source == null)
+            throw new PathDispatchException("null source.");
 
         String propertyName = tokens.peek();
         if (propertyName == null)
             return null;
 
-        Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(obj.getClass());
+        Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(source.getClass());
 
         PropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
         if (propertyDescriptor == null)
@@ -52,7 +52,7 @@ public class PropertyPathDispatcher
 
         Object result;
         try {
-            result = readMethod.invoke(obj);
+            result = readMethod.invoke(source);
         } catch (Exception e) {
             throw new PathDispatchException(e);
         }
@@ -68,7 +68,8 @@ public class PropertyPathDispatcher
     }
 
     static class EntryLoader
-            implements IMapEntryLoader<Class<?>, Map<String, PropertyDescriptor>> {
+            implements
+                IMapEntryLoader<Class<?>, Map<String, PropertyDescriptor>> {
 
         @Override
         public Map<String, PropertyDescriptor> loadValue(Class<?> type)

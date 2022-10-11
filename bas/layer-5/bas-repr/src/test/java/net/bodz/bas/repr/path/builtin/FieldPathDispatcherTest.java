@@ -3,10 +3,13 @@ package net.bodz.bas.repr.path.builtin;
 import org.junit.Assert;
 import org.junit.Test;
 
+import net.bodz.bas.repr.path.IPathDispatcherHelper;
 import net.bodz.bas.repr.path.PathDispatchException;
 
 public class FieldPathDispatcherTest
-        extends Assert {
+        extends Assert
+        implements
+            IPathDispatcherHelper {
 
     public String publicField = "a";
     protected String protectedField = "b";
@@ -17,7 +20,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "publicField", null);
+        Object target = dispatchTest(fd, test, "publicField", null);
         assertSame(publicField, target);
     }
 
@@ -26,7 +29,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "protectedField", null);
+        Object target = dispatchTest(fd, test, "protectedField", null);
         assertSame(protectedField, target);
     }
 
@@ -35,7 +38,7 @@ public class FieldPathDispatcherTest
             throws PathDispatchException {
         Object test = new FieldPathDispatcherTest();
         FieldPathDispatcher fd = new FieldPathDispatcher();
-        Object target = fd.dispatchTest(test, "privateField", null);
+        Object target = dispatchTest(fd, test, "privateField", null);
         assertSame(privateField, target);
     }
 

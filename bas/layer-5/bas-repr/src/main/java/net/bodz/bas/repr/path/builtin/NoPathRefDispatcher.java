@@ -1,15 +1,16 @@
 package net.bodz.bas.repr.path.builtin;
 
-import net.bodz.bas.repr.path.AbstractPathDispatcher;
 import net.bodz.bas.repr.path.INoPathRef;
 import net.bodz.bas.repr.path.IPathArrival;
+import net.bodz.bas.repr.path.IPathDispatcher;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class NoPathRefDispatcher
-        extends AbstractPathDispatcher {
+        implements
+            IPathDispatcher {
 
     public static final int PRIORITY = 1000;
 
@@ -19,16 +20,16 @@ public class NoPathRefDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         IPathArrival arrival = previous;
 
-        Object target = arrival.getTarget();
-        if (!(target instanceof INoPathRef))
+        if (!(source instanceof INoPathRef))
             return null;
 
+        Object target;
         try {
-            target = ((INoPathRef) target).getTarget();
+            target = ((INoPathRef) source).getTarget();
         } catch (Exception e) {
             throw new PathDispatchException(e.getMessage(), e);
         }

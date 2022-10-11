@@ -12,7 +12,8 @@ import net.bodz.bas.t.variant.IVariantMap;
 
 public class OverriddenPathDispatcherTest
         extends Assert
-        implements IPathDispatchable {
+        implements
+            IPathDispatchable {
 
     public String field1 = "hello";
 
@@ -21,7 +22,7 @@ public class OverriddenPathDispatcherTest
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        return fieldDispatcher.dispatch(previous, tokens, q);
+        return fieldDispatcher.dispatch(previous, previous.getTarget(), tokens, q);
     }
 
     @Test
