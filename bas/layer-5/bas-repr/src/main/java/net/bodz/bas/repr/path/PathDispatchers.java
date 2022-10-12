@@ -217,6 +217,11 @@ public class PathDispatchers
                 marks.clear();
         }
 
+        @Override
+        public String toString() {
+            return start.getTarget() + " | " + tokens.getRemainingPath();
+        }
+
     } // Process
 
 }

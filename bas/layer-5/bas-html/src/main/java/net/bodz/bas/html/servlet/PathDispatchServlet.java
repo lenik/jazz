@@ -136,6 +136,9 @@ public class PathDispatchServlet
             return;
         }
 
+        if (target == NoRender.INSTANCE)
+            return;
+
         if (!tokenQueue.isEmpty() && !tokenQueue.isStopped()) {
             logger.error("Incomplete-Dispatch: " + tokenQueue);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, //
