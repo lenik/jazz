@@ -176,6 +176,10 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             previous = arrival;
             ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
 
+            token = tokens.peek();
+            if (token == null)
+                return arrival;
+
             command = contentNameMap.get(token);
             if (command != null) {
                 previous = PathArrival.shift(previous, this, command, tokens);

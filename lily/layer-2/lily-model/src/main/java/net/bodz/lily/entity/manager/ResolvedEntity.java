@@ -41,4 +41,9 @@ public class ResolvedEntity
         jsonEntity.jsonOut(out, opts);
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s: %s", id, entity);
+    }
+
 }

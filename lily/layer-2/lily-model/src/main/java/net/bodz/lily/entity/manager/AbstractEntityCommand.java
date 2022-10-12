@@ -181,7 +181,7 @@ public abstract class AbstractEntityCommand
             throw new PathDispatchException("error run the command: " + e.getMessage(), e);
         }
 
-        PathArrival arrival = PathArrival.shift(0, previous, this, target, tokens);
+        PathArrival arrival = PathArrival.shift(consumedTokenCount, previous, this, target, tokens);
 
         Boolean returningJsonResult = isReturningJsonResult();
         if (returningJsonResult == null)
