@@ -11,6 +11,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.html.servlet.NoRender;
 import net.bodz.bas.repr.content.MutableContent;
 import net.bodz.bas.servlet.ResourceTransferer;
 import net.bodz.bas.site.vhost.IVirtualHost;
@@ -83,7 +84,8 @@ public class AttachmentResolver
         ResourceTransferer transferer = new ResourceTransferer(request, response);
         transferer.transfer(url, cacheControl);
 
-        return null;
+        // return file;
+        return NoRender.INSTANCE;
     }
 
     /**
