@@ -58,7 +58,7 @@ public class LibUpdater
      * @option --project-dirs =MAPFILE
      */
     File projectDirMapFile;
-    ProjectDirMap projectDirMap;
+    ProjectDirMap projectDirMap = new ProjectDirMap();
 
     /**
      * The start dir to search the project. CWD by default.
@@ -92,13 +92,20 @@ public class LibUpdater
     File outLibDir;
 
     /**
-     * Use symlinks to jars instead of copying.
-     *
-     * Enabled by default if --outdir isn't specified.
+     * Create symlink to dir. (implied --symlink-jars)
      *
      * @option -s --symlink
      */
     boolean useSymlinks;
+
+    /**
+     * Use symlink to jar instead of copying.
+     *
+     * Enabled by default if --outdir isn't specified.
+     *
+     * @option -S --symlink-jars
+     */
+    boolean useSymlinkToJars;
 
     /**
      * Use installed jars instead of the `target/class` working dirs.
@@ -178,12 +185,16 @@ public class LibUpdater
         if (useProjectDirMap) {
             if (projectDirMapFile == null)
                 projectDirMapFile = new File(SysProps.userHome, ".m2/project-dir.map");
-            if (projectDirMapFile.exists())
+            if (projectDirMapFile.exists()) {
                 projectDirMap.parseMapFile(projectDirMapFile);
+            }
         }
 
         if (outDirName == null)
             useSymlinks = true;
+
+        if (useSymlinks)
+            useSymlinkToJars = true;
 
         File syncDir = new File(workProject.getBaseDir(), syncDirName);
         if (syncDir.exists()) {
@@ -230,7 +241,7 @@ public class LibUpdater
                 ArtifactId itemId = repoDir.getQualifiedName(item);
 
                 if (useProjectDirMap) {
-                    String dir = projectDirMap.getDir(itemId);
+                    String dir = projectDirMap.getDir(itemId, false);
                     if (dir != null) {
                         itemProjectDir = new File(dir);
                         addDir(new File(itemProjectDir, "target/classes"), itemId.artifactId);
@@ -288,21 +299,9 @@ public class LibUpdater
         if (outLibDir != null) {
             File dst = new File(outLibDir, dstName);
 
-            if (useSymlinks) {
-                boolean outdated = true;
-                if (dst.exists()) {
-                    Path old = Files.readSymbolicLink(dst.toPath());
-                    if (old.equals(src.toPath()))
-                        outdated = false;
-                    else {
-                        println("outdated symlink target: " + old);
-                        Files.delete(dst.toPath());
-                    }
-                }
-                if (outdated) {
-                    println("create symlink to: " + src);
-                    Files.createSymbolicLink(dst.toPath(), src.toPath());
-                }
+            if (useSymlinkToJars) {
+                String relativePath = FilePath.getRelativePath(src, outLibDir);
+                createSymlink(dst, relativePath);
             }
 
             else {
@@ -322,11 +321,12 @@ public class LibUpdater
 
             unusedLibItems.remove(dstName);
             addClasspath(dst);
-        } // outDir != null
+        }
 
+        // no --outdir
         else {
             addClasspath(src);
-        } // outDir == null
+        }
     }
 
     void addDir(File src, String dstName)
@@ -337,8 +337,18 @@ public class LibUpdater
                 File dst = new File(syncDir, dstName);
                 Processes.exec("rsync", "-amv", "--delete", src.getPath(), dst.getPath());
                 addClasspath(dst);
+                return;
             }
-            return;
+        }
+
+        if (outLibDir != null) {
+            if (useSymlinks) {
+                File dst = new File(outLibDir, dstName);
+                String relativePath = FilePath.getRelativePath(src, outLibDir);
+                createSymlink(dst, relativePath);
+                addClasspath(dst);
+                return;
+            }
         }
 
         addClasspath(src);
@@ -346,7 +356,7 @@ public class LibUpdater
 
     void addClasspath(File file)
             throws IOException {
-        String path = file.getCanonicalPath();
+        String path = file.getAbsolutePath();
         boolean absolutePath = file.isDirectory() ? absoluteDirs : absoluteJars;
         if (absolutePath) {
             if (path.startsWith(relativePathOrigin))
@@ -357,8 +367,27 @@ public class LibUpdater
         classpathList.add(path);
     }
 
+    void createSymlink(File link, String target)
+            throws IOException {
+        Path targetPath = new File(target).toPath();
+        boolean outdated = true;
+        if (link.exists()) {
+            Path old = Files.readSymbolicLink(link.toPath());
+            if (old.equals(targetPath))
+                outdated = false;
+            else {
+                println("outdated symlink target: " + old);
+                Files.delete(link.toPath());
+            }
+        }
+        if (outdated) {
+            println("create symlink to: " + target);
+            Files.createSymbolicLink(link.toPath(), targetPath);
+        }
+    }
+
     void println(String message) {
-        logger.info(message);
+        // logger.info(message);
         System.out.println(message);
     }
 
