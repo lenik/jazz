@@ -18,17 +18,18 @@ public class HikariDataSourceProvider
         this(queryable.query(ConnectOptions.class));
     }
 
-    public HikariDataSourceProvider(ConnectOptions args) {
-        if (args == null)
-            throw new NullPointerException("args");
+    public HikariDataSourceProvider(ConnectOptions options) {
+        if (options == null)
+            throw new NullPointerException("options");
 
         HikariDataSource dataSource = new HikariDataSource();
         // dataSource.setDriverClass(args.getType().getDriverClassName());
-        dataSource.setJdbcUrl(args.getConnectionUrl());
-        dataSource.setDataSourceProperties(args.getProperties());
-        dataSource.setUsername(args.getUserName());
-        dataSource.setPassword(args.getPassword());
+        dataSource.setJdbcUrl(options.getConnectionUrl());
+        dataSource.setDataSourceProperties(options.getProperties());
+        dataSource.setUsername(options.getUserName());
+        dataSource.setPassword(options.getPassword());
         dataSource.setConnectionTimeout(60 * 1000L); // 1 min
+        dataSource.setMaximumPoolSize(options.getPoolSize());
 
         P6DataSource p6 = new P6DataSource(dataSource);
         this.dataSource = p6;

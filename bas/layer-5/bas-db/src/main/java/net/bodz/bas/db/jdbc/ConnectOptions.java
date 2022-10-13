@@ -47,6 +47,8 @@ public class ConnectOptions
     private String password;
     private Properties properties;
 
+    private int poolSize = 10;
+
     public ConnectOptions() {
         properties = new Properties();
     }
@@ -215,6 +217,14 @@ public class ConnectOptions
         return properties;
     }
 
+    public int getPoolSize() {
+        return poolSize;
+    }
+
+    public void setPoolSize(int poolSize) {
+        this.poolSize = poolSize;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -268,6 +278,8 @@ public class ConnectOptions
     public static final String K_PROPERTY = "property";
     public static final String K_PROPERTY_NAME = "name";
 
+    public static final String K_POOL_SIZE = "poolSize";
+
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
@@ -289,6 +301,8 @@ public class ConnectOptions
                 properties.setProperty(k, v);
             }
         }
+
+        poolSize = o.getInt(K_POOL_SIZE, poolSize);
     }
 
     @Override
@@ -311,6 +325,7 @@ public class ConnectOptions
             }
             out.endObject();
         }
+        out.entry(K_POOL_SIZE, poolSize);
     }
 
     @Override
@@ -341,6 +356,8 @@ public class ConnectOptions
                 properties.setProperty(k, v);
             }
         }
+
+        poolSize = map.getInt(K_POOL_SIZE, poolSize);
     }
 
     @Override
@@ -368,6 +385,7 @@ public class ConnectOptions
                 }
             }
             out.endElement();
+            out.element(K_POOL_SIZE, poolSize);
         }
     }
 
