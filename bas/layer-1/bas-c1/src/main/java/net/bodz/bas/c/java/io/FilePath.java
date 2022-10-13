@@ -141,6 +141,8 @@ public class FilePath {
     public static String getRelativePath(File file, File ref) {
         String path = canoniOf(file).getPath();
         String refPath = canoniOf(ref).getPath();
+        if (ref.isDirectory())
+            refPath += fileSeparatorChar;
         return getRelativePath(path, refPath, fileSeparatorChar);
     }
 
