@@ -56,6 +56,10 @@ public class LoggerFactory {
         org.apache.logging.log4j.Logger log4j = null;
         while (name != null) {
             log4j = registry.getLogger(name);
+            if (log4j == null) {
+                System.err.println("net registered logger: " + name);
+                return null;
+            }
             if (log4j.getLevel() != null)
                 break;
             int lastDot = name.lastIndexOf('.');

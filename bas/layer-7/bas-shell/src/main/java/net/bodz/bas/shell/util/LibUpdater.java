@@ -2,14 +2,20 @@ package net.bodz.bas.shell.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.xml.xpath.XPathExpressionException;
+
+import org.xml.sax.SAXException;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.capture.Processes;
@@ -20,190 +26,340 @@ import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenPomXml;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
+import net.bodz.bas.program.skel.BasicCLI;
 
 @ProgramName("lib-updater")
-public class LibUpdater {
+public class LibUpdater
+        extends BasicCLI {
 
     static final Logger logger = LoggerFactory.getLogger(LibUpdater.class);
 
     ClassLoader loader = getClass().getClassLoader();
-    MavenPomDir project;
 
-    Set<String> unpacks = new HashSet<String>();
+    /**
+     * Use the existing project workdir instead of the external jar whenever possible.
+     *
+     * The workdir is searched in the project-dir mapping file.
+     *
+     * @option -m
+     */
+    boolean useProjectDirMap;
 
-    public LibUpdater()
+    /**
+     * Override the project-dir mapping file. (default <code>$HOME/.m2/project-dir.map</code>)
+     *
+     * The mapping file lists the project id and the workdir each line. (e.g. `groupId:artifactId
+     * path`.)
+     *
+     * @option --project-dirs =MAPFILE
+     */
+    File projectDirMapFile;
+    ProjectDirMap projectDirMap;
+
+    /**
+     * The start dir to search the project. CWD by default.
+     *
+     * @option -C --chdir =PATH
+     */
+    File workDir = SysProps.userWorkDir;
+    MavenPomDir workProject;
+    String relativePathOrigin;
+
+    /**
+     * Use absolute paths for referenced projects. (implied --absolute-jars)
+     *
+     * @option -a --absolute-dirs
+     */
+    boolean absoluteDirs;
+
+    /**
+     * Use absolute paths for external jars.
+     *
+     * @option -A --absolute-jars
+     */
+    boolean absoluteJars;
+
+    /**
+     * Where to put the dependant jars and symlinks. (default don't create files)
+     *
+     * @option -O --outdir =PATH
+     */
+    String outDirName;
+    File outLibDir;
+
+    /**
+     * Use symlinks to jars instead of copying.
+     *
+     * Enabled by default if --outdir isn't specified.
+     *
+     * @option -s --symlink
+     */
+    boolean useSymlinks;
+
+    /**
+     * Use installed jars instead of the `target/class` working dirs.
+     *
+     * @option -j --find-jars
+     */
+    boolean findJars;
+
+    /**
+     * Dump the dependencies in order.
+     *
+     * @option -o --list-file =FILE
+     */
+    String listFilename = "classpath.lst";
+    List<String> classpathList = new ArrayList<>();
+
+    /**
+     * Module dirs in the sync-dir can be synchronized with dependency workdirs if available.
+     * (default autocopy.d)
+     *
+     * @option --sync-dir =DIR
+     */
+    String syncDirName = "autocopy.d";
+    File syncDir;
+    Set<String> syncModules = new HashSet<String>();
+
+    /**
+     * Removed unused items in output directory. (default)
+     *
+     * @option --purge
+     */
+    boolean purgeUnused;
+
+    /**
+     * Keep unused items.
+     *
+     * @option --keep
+     */
+    boolean keepUnused;
+    Set<String> unusedLibItems = new TreeSet<>();
+
+    @Override
+    protected void mainImpl(String... args)
+            throws Exception {
+        setDefaults();
+
+        for (File item : URLClassLoaders.getLocalURLs(loader, 1)) {
+            processItem(item);
+        }
+
+        try (PrintStream listOut = new PrintStream(listFilename)) {
+            for (String item : classpathList)
+                listOut.println(item);
+        }
+
+        if (purgeUnused) {
+            for (String item : unusedLibItems) {
+                if (item.endsWith(".jar")) {
+                    File file = new File(outLibDir, item);
+                    println("Delete unused jar: " + file);
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    void setDefaults()
             throws IOException {
-        project = MavenPomDir.closest(SysProps.userWorkDir);
-        if (project == null)
+        workProject = MavenPomDir.closest(workDir);
+        if (workProject == null)
             throw new IllegalUsageException("not run inside a maven project.");
 
-        String mapFile = SysProps.userHome + "/.m2/map";
-        parseMapFile(mapFile);
+        relativePathOrigin = workProject.getBaseDir().getCanonicalPath() + "/";
+        if (absoluteDirs)
+            absoluteJars = true;
 
-        File dir = new File(project.getBaseDir(), "classes");
-        if (dir.exists())
-            for (File child : dir.listFiles())
+        if (useProjectDirMap) {
+            if (projectDirMapFile == null)
+                projectDirMapFile = new File(SysProps.userHome, ".m2/project-dir.map");
+            if (projectDirMapFile.exists())
+                projectDirMap.parseMapFile(projectDirMapFile);
+        }
+
+        if (outDirName == null)
+            useSymlinks = true;
+
+        File syncDir = new File(workProject.getBaseDir(), syncDirName);
+        if (syncDir.exists()) {
+            for (File child : syncDir.listFiles())
                 if (child.isDirectory()) {
-                    System.out.println("Should-Unpack: " + child.getName());
-                    unpacks.add(child.getName());
+                    println("sync-module: " + child.getName());
+                    syncModules.add(child.getName());
                 }
+            this.syncDir = syncDir;
+        }
+
+        if (outDirName != null) {
+            outLibDir = new File(workProject.getBaseDir(), outDirName).getCanonicalFile();
+            System.out.println("libDir: " + outLibDir);
+            if (!outLibDir.exists()) {
+                logger.debug("Create non-existing libdir: " + outLibDir);
+                if (!outLibDir.mkdirs()) {
+                    logger.error("Failed to mkdir: " + outLibDir);
+                    System.exit(1);
+                }
+            }
+        }
+
+        if (outLibDir != null)
+            unusedLibItems.addAll(Arrays.asList(outLibDir.list()));
+
+        if (purgeUnused == keepUnused)
+            if (keepUnused)
+                purgeUnused = false;
+            else
+                purgeUnused = true;
     }
 
-    Map<String, String> qNameWsMap = new HashMap<>();
-    Map<String, String> artifactIdWsMap = new HashMap<>();
+    void processItem(File item)
+            throws IOException, ParseException {
+        boolean resolved = false;
 
-    void parseMapFile(String fileName)
-            throws IOException {
-        logger.info("parse map file " + fileName);
-        FileResource mapFile = new FileResource(fileName);
-        if (!mapFile.getFile().exists())
+        if (item.isFile()) {
+            File itemProjectDir = null;
+
+            // get groupId from the path within repo.
+            LocalRepoDir repoDir = LocalRepoDir.closest(item);
+            if (repoDir != null) {
+                ArtifactId itemId = repoDir.getQualifiedName(item);
+
+                if (useProjectDirMap) {
+                    String dir = projectDirMap.getDir(itemId);
+                    if (dir != null) {
+                        itemProjectDir = new File(dir);
+                        addDir(new File(itemProjectDir, "target/classes"), itemId.artifactId);
+                        // testing scope?..
+                        resolved = true;
+                    }
+                }
+            }
+
+            if (!resolved) {
+                addFile(item);
+                resolved = true;
+            }
             return;
+        } // file item
 
-        for (String line : mapFile.read().readLines()) {
-            line = line.trim();
-            if (line.startsWith("#"))
-                continue;
-            if (line.isEmpty())
-                continue;
-            int pos = line.indexOf(' ');
-            if (pos == -1) {
-                pos = line.indexOf('\t');
-                if (pos == -1)
-                    continue; // invalid line
+        String itemPath = item.getPath();
+        if (itemPath.endsWith("/target/classes")) {
+            File itemBaseDir = item.getParentFile().getParentFile();
+            // MavenPomDir.closest(item);
+            MavenPomDir pomDir = new MavenPomDir(itemBaseDir);
+            if (workProject.equals(pomDir)) {
+                println("Ignore self: " + item);
+                return;
             }
-            String qName = line.substring(0, pos).trim();
-            String path = line.substring(pos + 1).trim();
-            qNameWsMap.put(qName, path);
 
-            int colon = qName.indexOf(':');
-            if (colon == -1)
-                continue; // not a qualified name.
+            ArtifactId itemId;
+            try {
+                MavenPomXml xml = MavenPomXml.open(pomDir.getPomFile());
+                itemId = xml.getId();
+            } catch (XPathExpressionException | SAXException e) {
+                throw new ParseException("error parse pom: " + e.getMessage(), e);
+            }
 
-            // String groupId = qName.substring(0, colon);
-            String artifactId = qName.substring(colon + 1);
-            artifactIdWsMap.put(artifactId, path);
-        }
+            if (findJars) {
+                String jarPath = itemId.groupId.replace('.', '/') + "/" + itemId.artifactId + "/" + itemId.version;
+                String jarName = itemId.artifactId + "-" + itemId.version + ".jar";
+                jarPath += "/" + jarName;
+                jarPath = SysProps.userHome + "/.m2/repository/" + jarPath;
+                File jarFile = new File(jarPath);
+                if (jarFile.isFile()) {
+                    println("Found jar: " + jarFile);
+                    addFile(jarFile);
+                    return;
+                }
+            }
+
+            addDir(item, itemId.artifactId);
+        } // =~ /target/classes$
     }
 
-    protected void execute(String... args)
-            throws Exception {
-        File libdir = new File(project.getBaseDir(), "lib").getCanonicalFile();
-        String hrefRef = project.getBaseDir().getPath() + "/";
+    void addFile(File src)
+            throws IOException {
+        String dstName = src.getName();
+        if (outLibDir != null) {
+            File dst = new File(outLibDir, dstName);
 
-        System.out.println("libdir: " + libdir);
-        if (!libdir.exists()) {
-            logger.debug("Create non-existing libdir: " + libdir);
-            if (!libdir.mkdirs()) {
-                logger.error("Failed to mkdir: " + libdir);
-                System.exit(1);
-            }
-        }
-
-        Set<String> unusedLibItems = new TreeSet<>(Arrays.asList(libdir.list()));
-
-        OrderListing orderListing = new OrderListing();
-
-        try {
-            for (File file : URLClassLoaders.getLocalURLs(loader, 1)) {
-                String path = file.getPath();
-
-                if (file.isFile()) {
-                    if (unpacks.contains(file.getName())) {
-                        // How to know the source dir of a dependency jar?
-                    }
-
-                    String wsDir = null;
-                    LocalRepoDir repoDir = LocalRepoDir.closest(file);
-                    if (repoDir != null) {
-                        ArtifactId id = repoDir.getQualifiedName(file);
-                        String qName = id.groupId + ":" + id.artifactId;
-                        wsDir = qNameWsMap.get(qName);
-                        if (wsDir == null)
-                            wsDir = artifactIdWsMap.get(id.artifactId);
-                        if (wsDir != null) {
-                            // there's workspace corresponding
-                            wsDir = new File(wsDir).getCanonicalPath();
-                            String href = FilePath.getRelativePath(wsDir, hrefRef);
-                            orderListing.addDebug(href + "/target/classes");
-                        }
-                    }
-
-                    unusedLibItems.remove(file.getName());
-
-                    File dst = new File(libdir, file.getName());
-                    boolean isLatest = false;
-
-                    do {
-                        if (!dst.exists())
-                            break;
-
-                        long srcVer = file.lastModified();
-                        long dstVer = dst.lastModified();
-                        if (srcVer >= dstVer)
-                            break;
-
-                        isLatest = true;
-                    } while (false);
-
-                    if (!isLatest) {
-                        System.out.println("Copy-Jar: " + file);
-                        Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    }
-
-                    if (wsDir != null)
-                        orderListing.addRelease("lib/" + file.getName());
-                    else
-                        orderListing.add("lib/" + file.getName());
-
-                    continue;
-                }
-
-                if (path.endsWith("/target/classes")) {
-                    File basedir = file.getParentFile().getParentFile();
-                    MavenPomDir pomDir = new MavenPomDir(basedir);
-                    if (project.equals(pomDir)) {
-                        System.out.println("Ignore: " + file);
-                        continue;
-                    }
-
-                    MavenPomXml xml = MavenPomXml.open(pomDir.getPomFile());
-                    ArtifactId artifact = xml.getId();
-
-                    if (unpacks.contains(artifact.artifactId)) {
-                        System.out.println("Copy-Unpacked: " + file);
-                        Processes.exec("cp", "-aT", path, project.getBaseDir() + "/classes/" + artifact.artifactId);
-                        orderListing.add("classes/" + artifact.artifactId);
-                        continue;
-                    }
-
-                    path = artifact.groupId.replace('.', '/') + "/" + artifact.artifactId + "/" + artifact.version;
-                    path += "/" + artifact.artifactId + "-" + artifact.version + ".jar";
-                    path = SysProps.userHome + "/.m2/repository/" + path;
-                    file = new File(path);
-                    if (file.isFile()) {
-                        System.out.println("Copy-Packed: " + file);
-                        File dst = new File(libdir, file.getName());
-                        Files.copy(file.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        orderListing.add("lib/" + file.getName());
-                        continue;
+            if (useSymlinks) {
+                boolean outdated = true;
+                if (dst.exists()) {
+                    Path old = Files.readSymbolicLink(dst.toPath());
+                    if (old.equals(src.toPath()))
+                        outdated = false;
+                    else {
+                        println("outdated symlink target: " + old);
+                        Files.delete(dst.toPath());
                     }
                 }
+                if (outdated) {
+                    println("create symlink to: " + src);
+                    Files.createSymbolicLink(dst.toPath(), src.toPath());
+                }
             }
-        } finally {
-            orderListing.close();
+
+            else {
+                boolean outdated = true;
+                if (dst.exists()) {
+                    long srcVer = src.lastModified();
+                    long dstVer = dst.lastModified();
+                    if (dstVer >= srcVer)
+                        outdated = false;
+                }
+
+                if (outdated) {
+                    println("copy file: " + src);
+                    Files.copy(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+
+            unusedLibItems.remove(dstName);
+            addClasspath(dst);
+        } // outDir != null
+
+        else {
+            addClasspath(src);
+        } // outDir == null
+    }
+
+    void addDir(File src, String dstName)
+            throws IOException {
+        if (syncDir != null) {
+            if (syncModules.contains(dstName)) {
+                println("sync dir: " + dstName + " <- " + src);
+                File dst = new File(syncDir, dstName);
+                Processes.exec("rsync", "-amv", "--delete", src.getPath(), dst.getPath());
+                addClasspath(dst);
+            }
+            return;
         }
 
-        for (String item : unusedLibItems) {
-            if (item.endsWith(".jar")) {
-                File file = new File(libdir, item);
-                System.out.println("Delete unused jar: " + file);
-                file.delete();
-            }
+        addClasspath(src);
+    }
+
+    void addClasspath(File file)
+            throws IOException {
+        String path = file.getCanonicalPath();
+        boolean absolutePath = file.isDirectory() ? absoluteDirs : absoluteJars;
+        if (absolutePath) {
+            if (path.startsWith(relativePathOrigin))
+                path = path.substring(relativePathOrigin.length());
+        } else {
+            path = FilePath.getRelativePath(path, relativePathOrigin);
         }
+        classpathList.add(path);
+    }
+
+    void println(String message) {
+        logger.info(message);
+        System.out.println(message);
     }
 
     public static void main(String[] args)
