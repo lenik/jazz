@@ -23,10 +23,10 @@ public class ProjectDirMap {
         nameDirMap.clear();
     }
 
-    public String getDir(ArtifactId id) {
+    public String getDir(ArtifactId id, boolean skipGroupId) {
         String qName = id.groupId + ":" + id.artifactId;
         String dir = qNameDirMap.get(qName);
-        if (dir == null)
+        if (dir == null && skipGroupId)
             dir = nameDirMap.get(id.artifactId);
         return dir;
     }
