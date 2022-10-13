@@ -103,7 +103,7 @@ public class MiscTemplates {
             Phrase name = column.nam();
             Class<?> type = column.getType();
 
-            if (type == String.class) {
+            if (type == String.class || Number.class.isAssignableFrom(type)) {
                 int precision = column.getPrecision();
                 if (precision > 0)
                     defs.add("public static final int N_" + name.FOO_BAR + " = " + precision + ";");
@@ -207,7 +207,8 @@ public class MiscTemplates {
 
         out.print("@" + out.im.name(Precision.class) + "(");
         {
-            if (type == String.class) {
+            if (precision > 0 && //
+                    (type == String.class || Number.class.isAssignableFrom(type))) {
                 String N_COL_NAME = "N_" + name.FOO_BAR;
                 out.print("value = " + N_COL_NAME);
             } else {
@@ -250,7 +251,7 @@ public class MiscTemplates {
             out.println(")");
         }
 
-        String isOrGet = Boolean.class == type ? "is" : "get";
+        String isOrGet = boolean.class == type ? "is" : "get";
 
         out.printf("public %s %s%s()", //
                 out.im.name(type), isOrGet, name.FooBar);

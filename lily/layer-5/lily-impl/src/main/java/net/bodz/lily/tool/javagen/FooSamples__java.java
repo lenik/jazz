@@ -89,10 +89,10 @@ public class FooSamples__java
                         int scale = column.getScale();
                         int intLen = precision;
                         if (scale != 0)
-                            intLen -= scale + 1;
+                            intLen -= scale; // + 1 (dot);
 
                         StringBuilder sb = new StringBuilder(precision);
-                        randomDigits(sb, random.nextInt(intLen) + 1, true, random);
+                        randomDigits(sb, random.nextInt(intLen + 1), true, random);
 
                         if (scale != 0 && random.nextBoolean()) {
                             sb.append('.');
@@ -105,13 +105,7 @@ public class FooSamples__java
                         int maxLen = column.getPrecision();
                         int len = random.nextInt(maxLen) + 1;
                         StringBuilder sb = new StringBuilder(len);
-                        for (int i = 0; i < len; i++) {
-                            int digit;
-                            do {
-                                digit = random.nextInt(10);
-                            } while (digit == 0 && i == 0);
-                            sb.append('0' + digit);
-                        }
+                        randomDigits(sb, random.nextInt(len + 1), true, random);
                         out.im.name(BigInteger.class);
                         quoted = "new BigInteger(\"" + sb + "\")";
                     } else {

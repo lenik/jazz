@@ -23,6 +23,7 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -177,8 +178,11 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
 
             token = tokens.peek();
-            if (token == null)
-                return arrival;
+            if (token == null) {
+                // compat..
+                JsonWrapper wrapper = new JsonWrapper("data", resolvedEntity);
+                return PathArrival.shift(0, arrival, this, wrapper, tokens);
+            }
 
             command = contentNameMap.get(token);
             if (command != null) {
