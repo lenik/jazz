@@ -1,11 +1,11 @@
 package net.bodz.lily.tool.javagen;
 
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.bas.t.catalog.IViewMetadata;
-import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
 import net.bodz.lily.model.base.StructRow;

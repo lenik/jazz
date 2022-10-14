@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.c.primitive.Primitives;
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
@@ -23,7 +24,6 @@ import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.bas.t.range.*;
 
 public class MiscTemplates {

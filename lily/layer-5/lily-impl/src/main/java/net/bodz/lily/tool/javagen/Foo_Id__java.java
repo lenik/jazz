@@ -3,13 +3,13 @@ package net.bodz.lily.tool.javagen;
 import java.io.Serializable;
 import java.util.Objects;
 
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.ImportSet;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.lily.entity.Identifier;
 
 public class Foo_Id__java

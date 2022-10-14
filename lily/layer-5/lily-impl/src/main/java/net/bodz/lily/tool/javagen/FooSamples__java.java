@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.bodz.bas.c.java.lang.OptionNames;
 import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -15,7 +16,6 @@ import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.bas.t.catalog.Phrase;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ISampleGenerator;
 import net.bodz.lily.model.base.CoObject;
