@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +20,10 @@ import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.net.URLClassLoaders;
+import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.c.m2.ArtifactId;
 import net.bodz.bas.c.m2.LocalRepoDir;
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -37,6 +41,9 @@ public class LibUpdater
         extends BasicCLI {
 
     static final Logger logger = LoggerFactory.getLogger(LibUpdater.class);
+
+    public static final String RECOMMEND_JARDIR = "lib";
+    public static final String RECOMMEND_CLASSDIR = "modules";
 
     ClassLoader loader = getClass().getClassLoader();
 
@@ -84,33 +91,33 @@ public class LibUpdater
     boolean absoluteJars;
 
     /**
-     * Where to put the dependent jars. (default don't create files)
+     * Where to put the dependent jars, recommend lib/. (default don't create files)
      *
-     * @option -d --jardir =PATH
+     * @option -d --jardir =DIRNAME
      */
     String jarDirName;
     File jarDir;
 
     /**
-     * Where to copy classpath dirs. (default class.d)
+     * Where to copy classpath dirs, recommend modules/.
      *
-     * @option -D --classdir =DIR
+     * @option -O --classdir =DIRNAME
      */
-    String classDirName = "class.d";
+    String classDirName;
     File classDir;
 
     /**
      * Only synchronize modules (subdirs) already existed in the --classdir.
      *
-     * @option -S --sync-only
+     * @option -i --include-existed-only
      */
-    boolean syncOnly;
+    boolean includeExistedOnly;
     Set<String> syncModules = new HashSet<String>();
 
     /**
-     * Create symlink to dirs. (implied --symlink-jars)
+     * Create symlink to dirs instead of recursive copying. (implied --symlink-jars)
      *
-     * @option -S --symlink
+     * @option -s --symlink
      */
     boolean useSymlinks;
 
@@ -119,7 +126,7 @@ public class LibUpdater
      *
      * Enabled by default if --outdir isn't specified.
      *
-     * @option -s --symlink-jars
+     * @option -S --symlink-jars
      */
     boolean useSymlinkToJars;
 
@@ -141,44 +148,58 @@ public class LibUpdater
     /**
      * Removed unused items in output directory. (default)
      *
-     * @option --purge
+     * @option -c --clean
      */
-    boolean purgeUnused;
+    boolean removeUnused;
 
     /**
      * Keep unused items.
      *
-     * @option --keep
+     * @option -k --keep
      */
     boolean keepUnused;
-    Set<String> unusedLibItems = new TreeSet<>();
+    Set<String> unusedJars = new TreeSet<>();
+    Set<String> unusedDirs = new TreeSet<>();
+
+    /**
+     * Overwrite existing items.
+     *
+     * @option -f --force
+     */
+    boolean forceMode;
 
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        setDefaults();
+        if (!setDefaults())
+            _exit(1);
 
         for (File item : URLClassLoaders.getLocalURLs(loader, 1)) {
             processItem(item);
         }
 
         try (PrintStream listOut = new PrintStream(listFilename)) {
-            for (String item : classpathList)
+            for (String item : classpathList) {
                 listOut.println(item);
+//                System.out.println(item);
+            }
         }
 
-        if (purgeUnused) {
-            for (String item : unusedLibItems) {
-                if (item.endsWith(".jar")) {
-                    File file = new File(jarDir, item);
-                    println("Delete unused jar: " + file);
-                    file.delete();
-                }
+        if (removeUnused) {
+            for (String item : unusedJars) {
+                File file = new File(jarDir, item);
+                println("Delete unused jar: " + file);
+                file.delete();
+            }
+            for (String item : unusedDirs) {
+                File dir = new File(classDir, item);
+                println("Delete unused class dir: " + dir);
+                FileTree.delete(dir, TreeDeleteOption.DELETE_TREE);
             }
         }
     }
 
-    void setDefaults()
+    boolean setDefaults()
             throws IOException {
         workProject = MavenPomDir.closest(workDir);
         if (workProject == null)
@@ -204,33 +225,51 @@ public class LibUpdater
 
         if (classDirName == null)
             useSymlinks = true;
-
-        classDir = new File(workProject.getBaseDir(), classDirName);
-        if (classDir.exists()) {
-            for (File child : classDir.listFiles())
-                if (child.isDirectory())
-                    syncModules.add(child.getName());
-        }
-
-        if (jarDirName != null) {
-            jarDir = new File(workProject.getBaseDir(), jarDirName).getCanonicalFile();
-            if (!jarDir.exists()) {
-                logger.debug("Create non-existing libdir: " + jarDir);
-                if (!jarDir.mkdirs()) {
-                    logger.error("Failed to mkdir: " + jarDir);
-                    System.exit(1);
+        else {
+            classDir = new File(workProject.getBaseDir(), classDirName);
+            classDir = classDir.getCanonicalFile();
+            if (classDir.exists()) {
+                File[] modules = classDir.listFiles();
+                if (modules != null) {
+                    for (File item : modules)
+                        if (item.isDirectory())
+                            unusedDirs.add(item.getName());
+                    syncModules.addAll(unusedDirs);
+                }
+            } else {
+                logger.debug("create non-existing classdir: " + classDir);
+                if (!classDir.mkdirs()) {
+                    logger.error("error mkdir: " + classDir);
+                    return false;
                 }
             }
         }
 
-        if (jarDir != null)
-            unusedLibItems.addAll(Arrays.asList(jarDir.list()));
+        if (jarDirName != null) {
+            jarDir = new File(workProject.getBaseDir(), jarDirName);
+            jarDir = jarDir.getCanonicalFile();
+            if (jarDir.exists()) {
+                File[] jars = jarDir.listFiles();
+                if (jars != null)
+                    for (File item : jars)
+                        if (item.isFile())
+                            unusedJars.add(item.getName());
+            } else {
+                logger.debug("create non-existing jardir: " + jarDir);
+                if (!jarDir.mkdirs()) {
+                    logger.error("error mkdir: " + jarDir);
+                    return false;
+                }
+            }
+        }
 
-        if (purgeUnused == keepUnused)
+        if (removeUnused == keepUnused)
             if (keepUnused)
-                purgeUnused = false;
+                removeUnused = false;
             else
-                purgeUnused = true;
+                removeUnused = true;
+
+        return true;
     }
 
     void processItem(File item)
@@ -249,6 +288,7 @@ public class LibUpdater
                     String dir = projectDirMap.getDir(itemId, false);
                     if (dir != null) {
                         itemProjectDir = new File(dir);
+                        itemProjectDir = itemProjectDir.getCanonicalFile();
                         // analyze pom to get output dir.
                         addDir(new File(itemProjectDir, "target/classes"), itemId.artifactId);
                         // testing scope?..
@@ -301,14 +341,13 @@ public class LibUpdater
 
     void addFile(File src)
             throws IOException {
+        src = src.getCanonicalFile();
         String dstName = src.getName();
         if (jarDir != null) {
             File dst = new File(jarDir, dstName);
 
-            if (useSymlinkToJars) {
-                String relativePath = FilePath.getRelativePath(src, jarDir);
-                createSymlink(dst, relativePath);
-            }
+            if (useSymlinkToJars)
+                createSymlink(dst, src);
 
             else {
                 boolean outdated = true;
@@ -325,7 +364,6 @@ public class LibUpdater
                 }
             }
 
-            unusedLibItems.remove(dstName);
             addClasspath(dst);
         }
 
@@ -337,23 +375,26 @@ public class LibUpdater
 
     void addDir(File src, String dstName)
             throws IOException {
-        if (classDir != null) {
-            if (syncModules.contains(dstName)) {
-                println("sync dir: " + dstName + " <- " + src);
-                File dst = new File(classDir, dstName);
-                Processes.exec("rsync", "-amv", "--delete", src.getPath(), dst.getPath());
+        File dst = null;
+        if (classDir != null)
+            dst = new File(classDir, dstName);
+
+        if (includeExistedOnly) {
+            if (classDir != null && syncModules.contains(dstName)) {
+                syncDirTree(src, dst);
                 addClasspath(dst);
-                return;
             }
+            return;
         }
 
-        if (jarDir != null) {
+        if (dst != null) {
             if (useSymlinks) {
-                File dst = new File(jarDir, dstName);
-                String relativePath = FilePath.getRelativePath(src, jarDir);
-                createSymlink(dst, relativePath);
+                createSymlink(dst, src);
                 addClasspath(dst);
                 return;
+            } else {
+                // rsync
+                syncDirTree(src, dst);
             }
         }
 
@@ -363,33 +404,79 @@ public class LibUpdater
     void addClasspath(File file)
             throws IOException {
         String path = file.getAbsolutePath();
-        boolean absolutePath = file.isDirectory() ? absoluteDirs : absoluteJars;
-        if (absolutePath) {
+        boolean useAbsoluteForm;
+        if (file.isDirectory()) {
+            useAbsoluteForm = absoluteDirs;
+            unusedDirs.remove(file.getName());
+        } else {
+            useAbsoluteForm = absoluteJars;
+            unusedJars.remove(file.getName());
+        }
+
+        if (useAbsoluteForm) {
             if (path.startsWith(relativePathOrigin))
                 path = path.substring(relativePathOrigin.length());
         } else {
             path = FilePath.getRelativePath(path, relativePathOrigin);
         }
+
         classpathList.add(path);
     }
 
-    void createSymlink(File link, String target)
+    void createSymlink(File linkFile, File targetFile)
             throws IOException {
-        Path targetPath = new File(target).toPath();
+        Path link = linkFile.toPath();
+        String target;
+
+        boolean useAbsolute;
+        if (targetFile.isDirectory())
+            useAbsolute = absoluteDirs;
+        else
+            useAbsolute = absoluteJars;
+
+        if (useAbsolute)
+            target = targetFile.getAbsolutePath();
+        else
+            target = FilePath.getRelativePath(targetFile.getPath(), linkFile.getPath());
+
+        Path targetPath = Paths.get(target);
+
         boolean outdated = true;
-        if (link.exists()) {
-            Path old = Files.readSymbolicLink(link.toPath());
-            if (old.equals(targetPath))
-                outdated = false;
-            else {
-                println("outdated symlink target: " + old);
-                Files.delete(link.toPath());
+        if (Files.exists(link, LinkOption.NOFOLLOW_LINKS)) {
+            if (Files.isSymbolicLink(link)) {
+                Path old = Files.readSymbolicLink(link);
+                if (old.equals(targetPath))
+                    outdated = false;
+                else
+                    println("    -- outdated symlink target: " + old);
+            } else
+                println("    -- remove non-symlink: " + link);
+
+            if (outdated) {
+                Files.delete(link);
             }
         }
         if (outdated) {
-            println("create symlink to: " + target);
-            Files.createSymbolicLink(link.toPath(), targetPath);
+            println("    create symlink to: " + targetPath);
+            try {
+                Files.createSymbolicLink(link, targetPath);
+            } catch (IOException e) {
+                throw e;
+            }
         }
+    }
+
+    void syncDirTree(File src, File dst)
+            throws IOException {
+        List<String> opts = new ArrayList<>();
+        opts.addAll(Arrays.asList("rsync", "-am"));
+        opts.add("-v");
+        if (removeUnused)
+            opts.add("--delete");
+        opts.add(src.getPath());
+        opts.add(dst.getPath());
+        String[] args = opts.toArray(new String[0]);
+        Processes.exec(args);
     }
 
     void println(String message) {

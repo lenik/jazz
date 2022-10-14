@@ -10,12 +10,17 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-program</artifactId>
+            <artifactId>bas-code</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-fmt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-program</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
