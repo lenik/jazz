@@ -72,29 +72,45 @@ public class LibUpdater
     /**
      * Use absolute paths for referenced projects. (implied --absolute-jars)
      *
-     * @option -a --absolute-dirs
+     * @option -A --absolute-dirs
      */
     boolean absoluteDirs;
 
     /**
      * Use absolute paths for external jars.
      *
-     * @option -A --absolute-jars
+     * @option -a --absolute-jars
      */
     boolean absoluteJars;
 
     /**
-     * Where to put the dependant jars and symlinks. (default don't create files)
+     * Where to put the dependent jars. (default don't create files)
      *
-     * @option -O --outdir =PATH
+     * @option -d --jardir =PATH
      */
-    String outDirName;
-    File outLibDir;
+    String jarDirName;
+    File jarDir;
 
     /**
-     * Create symlink to dir. (implied --symlink-jars)
+     * Where to copy classpath dirs. (default class.d)
      *
-     * @option -s --symlink
+     * @option -D --classdir =DIR
+     */
+    String classDirName = "class.d";
+    File classDir;
+
+    /**
+     * Only synchronize modules (subdirs) already existed in the --classdir.
+     *
+     * @option -S --sync-only
+     */
+    boolean syncOnly;
+    Set<String> syncModules = new HashSet<String>();
+
+    /**
+     * Create symlink to dirs. (implied --symlink-jars)
+     *
+     * @option -S --symlink
      */
     boolean useSymlinks;
 
@@ -103,7 +119,7 @@ public class LibUpdater
      *
      * Enabled by default if --outdir isn't specified.
      *
-     * @option -S --symlink-jars
+     * @option -s --symlink-jars
      */
     boolean useSymlinkToJars;
 
@@ -121,16 +137,6 @@ public class LibUpdater
      */
     String listFilename = "classpath.lst";
     List<String> classpathList = new ArrayList<>();
-
-    /**
-     * Module dirs in the sync-dir can be synchronized with dependency workdirs if available.
-     * (default autocopy.d)
-     *
-     * @option --sync-dir =DIR
-     */
-    String syncDirName = "autocopy.d";
-    File syncDir;
-    Set<String> syncModules = new HashSet<String>();
 
     /**
      * Removed unused items in output directory. (default)
@@ -164,7 +170,7 @@ public class LibUpdater
         if (purgeUnused) {
             for (String item : unusedLibItems) {
                 if (item.endsWith(".jar")) {
-                    File file = new File(outLibDir, item);
+                    File file = new File(jarDir, item);
                     println("Delete unused jar: " + file);
                     file.delete();
                 }
@@ -190,36 +196,35 @@ public class LibUpdater
             }
         }
 
-        if (outDirName == null)
-            useSymlinks = true;
+        if (jarDirName == null)
+            useSymlinkToJars = true;
 
         if (useSymlinks)
             useSymlinkToJars = true;
 
-        File syncDir = new File(workProject.getBaseDir(), syncDirName);
-        if (syncDir.exists()) {
-            for (File child : syncDir.listFiles())
-                if (child.isDirectory()) {
-                    println("sync-module: " + child.getName());
+        if (classDirName == null)
+            useSymlinks = true;
+
+        classDir = new File(workProject.getBaseDir(), classDirName);
+        if (classDir.exists()) {
+            for (File child : classDir.listFiles())
+                if (child.isDirectory())
                     syncModules.add(child.getName());
-                }
-            this.syncDir = syncDir;
         }
 
-        if (outDirName != null) {
-            outLibDir = new File(workProject.getBaseDir(), outDirName).getCanonicalFile();
-            System.out.println("libDir: " + outLibDir);
-            if (!outLibDir.exists()) {
-                logger.debug("Create non-existing libdir: " + outLibDir);
-                if (!outLibDir.mkdirs()) {
-                    logger.error("Failed to mkdir: " + outLibDir);
+        if (jarDirName != null) {
+            jarDir = new File(workProject.getBaseDir(), jarDirName).getCanonicalFile();
+            if (!jarDir.exists()) {
+                logger.debug("Create non-existing libdir: " + jarDir);
+                if (!jarDir.mkdirs()) {
+                    logger.error("Failed to mkdir: " + jarDir);
                     System.exit(1);
                 }
             }
         }
 
-        if (outLibDir != null)
-            unusedLibItems.addAll(Arrays.asList(outLibDir.list()));
+        if (jarDir != null)
+            unusedLibItems.addAll(Arrays.asList(jarDir.list()));
 
         if (purgeUnused == keepUnused)
             if (keepUnused)
@@ -244,6 +249,7 @@ public class LibUpdater
                     String dir = projectDirMap.getDir(itemId, false);
                     if (dir != null) {
                         itemProjectDir = new File(dir);
+                        // analyze pom to get output dir.
                         addDir(new File(itemProjectDir, "target/classes"), itemId.artifactId);
                         // testing scope?..
                         resolved = true;
@@ -296,11 +302,11 @@ public class LibUpdater
     void addFile(File src)
             throws IOException {
         String dstName = src.getName();
-        if (outLibDir != null) {
-            File dst = new File(outLibDir, dstName);
+        if (jarDir != null) {
+            File dst = new File(jarDir, dstName);
 
             if (useSymlinkToJars) {
-                String relativePath = FilePath.getRelativePath(src, outLibDir);
+                String relativePath = FilePath.getRelativePath(src, jarDir);
                 createSymlink(dst, relativePath);
             }
 
@@ -331,20 +337,20 @@ public class LibUpdater
 
     void addDir(File src, String dstName)
             throws IOException {
-        if (syncDir != null) {
+        if (classDir != null) {
             if (syncModules.contains(dstName)) {
                 println("sync dir: " + dstName + " <- " + src);
-                File dst = new File(syncDir, dstName);
+                File dst = new File(classDir, dstName);
                 Processes.exec("rsync", "-amv", "--delete", src.getPath(), dst.getPath());
                 addClasspath(dst);
                 return;
             }
         }
 
-        if (outLibDir != null) {
+        if (jarDir != null) {
             if (useSymlinks) {
-                File dst = new File(outLibDir, dstName);
-                String relativePath = FilePath.getRelativePath(src, outLibDir);
+                File dst = new File(jarDir, dstName);
+                String relativePath = FilePath.getRelativePath(src, jarDir);
                 createSymlink(dst, relativePath);
                 addClasspath(dst);
                 return;
