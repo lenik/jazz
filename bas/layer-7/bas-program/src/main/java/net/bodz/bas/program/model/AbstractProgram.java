@@ -183,9 +183,9 @@ public abstract class AbstractProgram
     /**
      * @throws ControlExit
      */
-    protected void _exit()
+    protected void _exit(int status)
             throws Exception {
-        throw new ControlExit();
+        throw new ControlExit(status);
     }
 
     /**
