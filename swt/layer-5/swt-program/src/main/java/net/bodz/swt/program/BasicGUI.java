@@ -95,10 +95,10 @@ public abstract class BasicGUI
     }
 
     @Override
-    protected void _exit()
+    protected void _exit(int status)
             throws Exception {
         checkHangOns();
-        super._exit();
+        super._exit(status);
     }
 
     private static Set<String> ignoredThreadNames;
@@ -164,7 +164,7 @@ public abstract class BasicGUI
         while (!shell.isDisposed())
             if (!display.readAndDispatch())
                 display.sleep();
-        _exit();
+        _exit(0);
     }
 
     /**
