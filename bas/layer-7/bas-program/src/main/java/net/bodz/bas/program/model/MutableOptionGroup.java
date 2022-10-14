@@ -10,7 +10,6 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.dom.iString;
-import net.bodz.bas.t.pojo.Pair;
 import net.bodz.bas.t.preorder.PrefixMap;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -18,12 +17,12 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class MutableOptionGroup
         extends AbstractOptionGroup
-        implements IMutableOptionGroup {
+        implements
+            IMutableOptionGroup {
 
     private static final long serialVersionUID = 1L;
 
     Class<?> declaringClass;
-    String name;
 
     final IMutableOptionGroup parent;
     final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
@@ -32,8 +31,9 @@ public class MutableOptionGroup
 
     public MutableOptionGroup(IMutableOptionGroup parent, Class<?> declaringClass) {
         this.declaringClass = declaringClass;
-        this.name = StringId.HYPHEN.breakCamel(declaringClass.getSimpleName());
         this.parent = parent;
+        String name = StringId.HYPHEN.breakCamel(declaringClass.getSimpleName());
+        setName(name);
     }
 
     @Override
@@ -45,6 +45,11 @@ public class MutableOptionGroup
     @Override
     protected IOption getLocalOption(String optionKey) {
         return prefixMap.get(optionKey);
+    }
+
+    @Override
+    public void removeKey(String key) {
+        prefixMap.remove(key);
     }
 
     @Override
@@ -88,17 +93,18 @@ public class MutableOptionGroup
     }
 
     @Override
-    public Entry<String, IOption> checkForConflict(IOption option) {
+    public OptionConflictInfo checkForConflict(IOption option) {
         String optionName = option.getName();
         IOption existing = nameMap.get(optionName);
-        if (existing != null)
-            return Pair.of(optionName, existing);
+        if (existing != null) {
+            return new OptionConflictInfo(optionName, existing);
+        }
 
         for (String alias : option.getAliases()) {
             IOption other = prefixMap.get(alias);
             if (other != null)
                 if (other.getPriority() == option.getPriority())
-                    return Pair.of(alias, other);
+                    return new OptionConflictInfo(alias, other);
         }
 
         if (parent != null)
@@ -112,10 +118,26 @@ public class MutableOptionGroup
         if (option == null)
             throw new NullPointerException("option");
 
-        Entry<String, IOption> conflictEntry = checkForConflict(option);
-        if (conflictEntry != null)
-            throw new ConflictedOptionKeyException(//
-                    conflictEntry.getKey(), conflictEntry.getValue());
+        OptionConflictInfo info = checkForConflict(option);
+        if (info != null) {
+            IOption prev = info.preexisted;
+            IOptionGroup prevGroup = prev.getGroup();
+            if (prevGroup == this)
+                throw new ConflictedOptionKeyException(//
+                        info.aliases.toString(), info.preexisted);
+
+            // override the alias to point to the new option.
+            if (prev instanceof IMutableOption) {
+                IMutableOption mutable = (IMutableOption) prev;
+                for (String alias : info.aliases)
+                    mutable.removeAlias(alias);
+            }
+            if (prevGroup instanceof IMutableOptionGroup) {
+                IMutableOptionGroup mutable = (IMutableOptionGroup) prevGroup;
+                for (String alias : info.aliases)
+                    mutable.removeKey(alias);
+            }
+        }
 
         // Real add
         String optionName = option.getName();

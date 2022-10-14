@@ -284,6 +284,7 @@ public class ClassDocToOptionsConverter
                     if (descriptor != null) {
                         PropertyOption option = new PropertyOption(property, doc);
                         OptionDescriptor.apply(option, descriptor);
+                        option.setGroup(group);
                         group.addOption(option);
                         usedMethods.add(accessor);
                         break;
@@ -308,6 +309,7 @@ public class ClassDocToOptionsConverter
 
                 FieldOption option = new FieldOption(field, fieldDoc);
                 OptionDescriptor.apply(option, descriptor);
+                option.setGroup(group);
                 group.addOption(option);
             }
         }
@@ -332,6 +334,7 @@ public class ClassDocToOptionsConverter
 
                 MethodOption option = new MethodOption(method, methodDoc);
                 OptionDescriptor.apply(option, descriptor);
+                option.setGroup(group);
                 group.addOption(option);
             }
         }
