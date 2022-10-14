@@ -1,7 +1,4 @@
-package net.bodz.bas.t.catalog;
-
-import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.Strings;
+package net.bodz.bas.c.string;
 
 public class Phrase {
 
