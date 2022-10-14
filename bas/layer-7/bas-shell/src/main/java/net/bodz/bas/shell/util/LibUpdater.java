@@ -101,7 +101,7 @@ public class LibUpdater
     /**
      * Where to copy classpath dirs, recommend modules/.
      *
-     * @option -O --classdir =DIRNAME
+     * @option -D --classdir =DIRNAME
      */
     String classDirName;
     File classDir;
@@ -365,6 +365,7 @@ public class LibUpdater
             }
 
             addClasspath(dst);
+            unusedJars.remove(dst.getName());
         }
 
         // no --outdir
@@ -382,6 +383,7 @@ public class LibUpdater
         if (includeExistedOnly) {
             if (classDir != null && syncModules.contains(dstName)) {
                 syncDirTree(src, dst);
+                unusedDirs.remove(dst.getName());
                 addClasspath(dst);
             }
             return;
@@ -396,6 +398,7 @@ public class LibUpdater
                 // rsync
                 syncDirTree(src, dst);
             }
+            unusedDirs.remove(dst.getName());
         }
 
         addClasspath(src);
@@ -405,13 +408,10 @@ public class LibUpdater
             throws IOException {
         String path = file.getAbsolutePath();
         boolean useAbsoluteForm;
-        if (file.isDirectory()) {
+        if (file.isDirectory())
             useAbsoluteForm = absoluteDirs;
-            unusedDirs.remove(file.getName());
-        } else {
+        else
             useAbsoluteForm = absoluteJars;
-            unusedJars.remove(file.getName());
-        }
 
         if (useAbsoluteForm) {
             if (path.startsWith(relativePathOrigin))
