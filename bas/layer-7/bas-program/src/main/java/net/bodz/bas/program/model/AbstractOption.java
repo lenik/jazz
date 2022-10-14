@@ -28,6 +28,7 @@ public abstract class AbstractOption
         extends ExternXjdocElement
         implements
             IOption,
+            IMutableOption,
             IMutablePriority {
 
     String id;
@@ -59,6 +60,8 @@ public abstract class AbstractOption
         super(doc);
 
         this.id = id;
+        while (longName.startsWith("_"))
+            longName = longName.substring(1);
         this.longName = StringId.HYPHEN.breakCamel(longName);
 
         if (_type == null)
@@ -146,6 +149,7 @@ public abstract class AbstractOption
         return group;
     }
 
+    @Override
     public void setGroup(IOptionGroup group) {
         this.group = group;
     }
@@ -155,10 +159,12 @@ public abstract class AbstractOption
         return aliases;
     }
 
+    @Override
     public void addAlias(String alias) {
         aliases.add(alias);
     }
 
+    @Override
     public void removeAlias(String alias) {
         aliases.remove(alias);
     }
