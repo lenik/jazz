@@ -1,10 +1,10 @@
 package net.bodz.lily.tool.javagen;
 
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
-import net.bodz.bas.t.catalog.Phrase;
 
 public class FooMapper__xml
         extends VFooMapper__xml {

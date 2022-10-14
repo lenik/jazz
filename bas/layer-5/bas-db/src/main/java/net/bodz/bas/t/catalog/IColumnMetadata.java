@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
