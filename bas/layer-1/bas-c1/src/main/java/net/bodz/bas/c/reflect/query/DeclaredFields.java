@@ -13,6 +13,7 @@ public class DeclaredFields
 
     private final Class<?> clazz;
 
+    protected int maxDepth = Integer.MAX_VALUE;
     protected Class<?> stopClass;
 
     /**
@@ -23,6 +24,11 @@ public class DeclaredFields
         if (clazz == null)
             throw new NullPointerException("clazz");
         this.clazz = clazz;
+    }
+
+    public DeclaredFields maxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+        return this;
     }
 
     /**
@@ -39,22 +45,24 @@ public class DeclaredFields
 
         Class<?> currentClass;
         Field[] declaredFieldsOfCurrentClass;
-        int currentIndex;
+        int nextIndex;
+        int currentDepth; // [ 0 .. maxDepth)
 
         public Iter() {
             if (stopClass == null || !clazz.isAssignableFrom(stopClass)) {
                 currentClass = clazz;
                 declaredFieldsOfCurrentClass = currentClass.getDeclaredFields();
-                currentIndex = -1;
+                nextIndex = 0;
             }
         }
 
         @Override
         public Field _next()
                 throws RuntimeException {
-            while (currentClass != null) {
-                while (++currentIndex < declaredFieldsOfCurrentClass.length) {
-                    Field field = declaredFieldsOfCurrentClass[currentIndex];
+            while (currentClass != null && currentDepth < maxDepth) {
+
+                while (nextIndex < declaredFieldsOfCurrentClass.length) {
+                    Field field = declaredFieldsOfCurrentClass[nextIndex++];
                     if (modifierTest != (modifierMask & field.getModifiers()))
                         continue;
                     if (namePredicate != null && !namePredicate.evaluate(field.getName()))
@@ -63,13 +71,20 @@ public class DeclaredFields
                         continue;
                     return field;
                 }
-                currentClass = currentClass.getSuperclass();
-                if (currentClass == null)
+
+                if (currentDepth < maxDepth) {
+                    currentClass = currentClass.getSuperclass();
+                    currentDepth++;
+                    if (currentClass == null)
+                        break;
+                } else {
                     break;
+                }
+
                 if (stopClass != null && currentClass.isAssignableFrom(stopClass))
                     break;
                 declaredFieldsOfCurrentClass = currentClass.getDeclaredFields();
-                currentIndex = -1;
+                nextIndex = 0;
             }
             return end();
         }

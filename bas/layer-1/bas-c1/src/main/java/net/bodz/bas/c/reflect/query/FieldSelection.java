@@ -31,16 +31,26 @@ public abstract class FieldSelection
         return this;
     }
 
-    public FieldSelection staticOnly() {
+    public FieldSelection staticMode(boolean test) {
         modifierMask |= Modifier.STATIC;
-        modifierTest |= Modifier.STATIC;
+        if (test)
+            modifierTest |= Modifier.STATIC;
+        return this;
+    }
+
+    public FieldSelection staticOnly() {
+        return staticMode(true);
+    }
+
+    public FieldSelection finalMode(boolean test) {
+        modifierMask |= Modifier.FINAL;
+        if (test)
+            modifierTest |= Modifier.FINAL;
         return this;
     }
 
     public FieldSelection finalOnly() {
-        modifierMask |= Modifier.FINAL;
-        modifierTest |= Modifier.FINAL;
-        return this;
+        return finalMode(true);
     }
 
     /**
