@@ -3,18 +3,18 @@ package net.bodz.bas.c.loader.scan;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.net.URLClassLoaders;
-import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
-import net.bodz.bas.c.type.TypeParam;
-import net.bodz.bas.io.res.builtin.FileResource;
-import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -24,27 +24,21 @@ import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 
 @IndexedType
-public class TypeCollector<T> {
+public class TypeCollector {
 
     static Logger logger = LoggerFactory.getLogger(TypeCollector.class);
 
-    final Class<?> baseClass;
-
     ClassScanner scanner;
-    List<String> includePrefixes = new ArrayList<String>();
-    List<String> excludePrefixes = new ArrayList<String>();
+
+    List<String> includeFqcnPrefixes = new ArrayList<String>();
+    List<String> excludeFqcnPrefixes = new ArrayList<String>();
+
     boolean scanned;
 
     boolean showPaths;
-    List<Class<?>> extensions;
-    TreeMap<File, List<String>> fileContentMap = new TreeMap<File, List<String>>();
     boolean deleteEmptyFiles = true;
 
-    protected TypeCollector(ClassLoader classLoader) {
-        this(classLoader, null);
-    }
-
-    public TypeCollector(ClassLoader classLoader, Class<?> baseClass) {
+    public TypeCollector(ClassLoader classLoader) {
         URLClassLoader ucl;
 
         ucl = (URLClassLoader) classLoader;
@@ -62,11 +56,6 @@ public class TypeCollector<T> {
         }
 
         scanner = createClassScanner(classLoader);
-
-        if (baseClass != null)
-            this.baseClass = baseClass;
-        else
-            this.baseClass = TypeParam.infer1(getClass(), TypeCollector.class, 0);
     }
 
     protected ClassScanner createClassScanner(ClassLoader classLoader) {
@@ -85,35 +74,39 @@ public class TypeCollector<T> {
         return scanner;
     }
 
+    public void includeDirToScan(File dir) {
+        scanner.addDirToInclude(dir.getAbsolutePath());
+    }
+
+    public void excludeDirToScan(File dir) {
+        scanner.addDirToExclude(dir.getAbsolutePath());
+    }
+
     public void includePackageToScan(String packageName) {
-        includePrefixes.add(packageName);
+        includeFqcnPrefixes.add(packageName);
     }
 
     public void excludePackageToScan(String packageName) {
-        excludePrefixes.remove(packageName);
+        excludeFqcnPrefixes.remove(packageName);
     }
 
-    protected void scanTypes()
-            throws IOException {
-        for (String packageName : includePrefixes)
-            scanner.scan(packageName);
-    }
+    protected FileContentMap publishEtcFiles(Class<?> baseClass) {
+        FileContentMap fileContentMap = new FileContentMap();
 
-    protected void createExtensionFiles() {
         IndexedType aIndexedType = baseClass.getAnnotation(IndexedType.class);
 
         logger.info("For " + baseClass.getCanonicalName());
 
         String info = null;
-        Collection<Class<?>> exts = listFilteredDerivations(baseClass);
-        for (Class<?> extension : exts) {
+        Collection<Class<?>> derivedClasses = listFilteredDerivations(baseClass);
+        for (Class<?> derivedClass : derivedClasses) {
             if (info != null)
                 logger.info(info);
 
-            String extensionName = extension.getCanonicalName();
-            int modifier = extension.getModifiers();
+            String derivedClassName = derivedClass.getCanonicalName();
+            int modifier = derivedClass.getModifiers();
 
-            info = "    Subclass: " + (baseClass.isAnnotation() ? "@" : "") + extensionName;
+            info = "    Subclass: " + (baseClass.isAnnotation() ? "@" : "") + derivedClassName;
             if (aIndexedType == null) { // Not indexed-type, skipped
                 info += " -noindex";
                 continue;
@@ -125,7 +118,7 @@ public class TypeCollector<T> {
                     continue;
                 }
 
-            if (extension.isAnnotation()) {
+            if (derivedClass.isAnnotation()) {
                 if (!aIndexedType.includeAnnotation()) {
                     info += " -ann";
                     continue;
@@ -143,18 +136,28 @@ public class TypeCollector<T> {
                     }
             }
 
-            this.extensions.add(extension);
+            URL url = derivedClass.getResource(derivedClass.getSimpleName() + ".class");
+            if ("file".equals(url.getProtocol())) {
+                String path = url.getPath();
+                File file = new File(path);
+                if (!scanner.isIncluded(file)) {
+                    info += " -dir";
+                    continue;
+                }
+            }
 
-            MavenPomDir pomDir = MavenPomDir.fromClass(extension);
+            fileContentMap.extensions.add(derivedClass);
+
+            MavenPomDir pomDir = MavenPomDir.fromClass(derivedClass);
             if (pomDir == null) {
-                logger.debug("Not belongs to maven project. Maybe in the jar: " + extension);
+                logger.debug("Not belongs to maven project. Maybe in the jar: " + derivedClass);
                 info += " jar";
                 continue;
             }
 
-            final File resDir = pomDir.getResourceDir(extension);
+            final File resDir = pomDir.getResourceDir(derivedClass);
             if (resDir == null) {
-                logger.debug("No resource dir: " + extensionName);
+                logger.debug("No resource dir: " + derivedClassName);
                 info += " nrd";
                 continue;
             }
@@ -167,27 +170,17 @@ public class TypeCollector<T> {
                 if (!publishDir.endsWith("/"))
                     publishDir += "/";
 
-                File sfile = new File(resDir, publishDir + baseClass.getName());
-                boolean loaded = fileContentMap.containsKey(sfile);
-                List<String> lines = loadFile(sfile);
+                File listFile = new File(resDir, publishDir + baseClass.getName());
+                boolean init = !fileContentMap.containsKey(listFile);
+                List<String> lines = fileContentMap.loadFile(listFile);
 
-                // only update included packages.
-                if (!loaded) {
-                    Iterator<String> iterator = lines.iterator();
-                    while (iterator.hasNext()) {
-                        String line = iterator.next();
-                        for (String prefix : includePrefixes)
-                            if (line.startsWith(prefix)) {
-                                iterator.remove();
-                                break;
-                            }
-                    }
-                }
+                if (init) // Refresh: remove included packages before re-add.
+                    beforeRefresh(lines);
 
                 if (aIndexedType.obsoleted()) {
                     // lines.add("# " + extension.getName());
                 } else {
-                    lines.add(extension.getName());
+                    lines.add(derivedClass.getName());
                 }
             } // publishDir
 
@@ -199,24 +192,46 @@ public class TypeCollector<T> {
                     @Override
                     public void clear(String path) {
                         File file = new File(resDir, path);
-                        List<String> lines = loadFile(file);
+                        List<String> lines = fileContentMap.loadFile(file);
                         lines.clear();
                     }
 
                     @Override
                     public void addLine(String path, String s) {
                         File file = new File(resDir, path);
-                        List<String> lines = loadFile(file);
+                        List<String> lines = fileContentMap.loadFile(file);
                         lines.add(s);
                     }
                 };
 
-                etcFiles.install(extension, editor);
+                etcFiles.install(derivedClass, editor);
             } // etc-files
         } // for derivations
 
         if (info != null)
             logger.info(info);
+
+        return fileContentMap;
+    }
+
+    void beforeRefresh(List<String> list) {
+        if (includeFqcnPrefixes.isEmpty()) {
+            list.clear();
+            return;
+        }
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            String line = iterator.next();
+            if (isClassNameIncluded(line))
+                iterator.remove();
+        }
+    }
+
+    boolean isClassNameIncluded(String className) {
+        for (String prefix : includeFqcnPrefixes)
+            if (className.startsWith(prefix))
+                return true;
+        return false;
     }
 
     protected Collection<Class<?>> listFilteredDerivations(Class<?> base) {
@@ -255,83 +270,33 @@ public class TypeCollector<T> {
         return list;
     }
 
-    protected List<String> loadFile(File file) {
-        List<String> list = fileContentMap.get(file);
-        if (list == null) {
-            list = new ArrayList<String>();
-            if (file.exists())
-                for (String line : new FileResource(file).to(StreamReading.class).lines()) {
-                    list.add(line.trim());
-                }
-            fileContentMap.put(file, list);
-        }
-        return list;
-    }
-
-    protected void saveFiles(Map<File, List<String>> fileContentMap)
+    synchronized void scan()
             throws IOException {
-        for (Map.Entry<File, List<String>> entry : fileContentMap.entrySet()) {
-            File file = entry.getKey();
-
-            List<String> lines = entry.getValue();
-            Collections.sort(lines);
-
-            if (lines.isEmpty() && deleteEmptyFiles) {
-                if (file.delete())
-                    logger.info("Deleted " + file);
-                continue;
-            }
-
-            StringBuilder buf = new StringBuilder(lines.size() * 100);
-            for (String line : new LinkedHashSet<String>(lines)) {
-                buf.append(line);
-                buf.append('\n');
-            }
-            String content = buf.toString();
-
-            // The same?
-            if (file.exists() == Boolean.TRUE) {
-                String old = FileData.readString(file);
-                if (content.equals(old)) {
-                    logger.debug("Not changed: " + file);
-                    continue;
-                }
-            }
-
-            try {
-                logger.info("Update: " + file);
-                file.getParentFile().mkdirs();
-                FileData.writeString(file, content);
-            } catch (IOException e) {
-                logger.error("Failed to update " + file, e);
+        if (!scanned) {
+            if (includeFqcnPrefixes.isEmpty()) {
+                scanner.scanPackage("");
+            } else {
+                for (String packageName : includeFqcnPrefixes)
+                    scanner.scanPackage(packageName);
             }
         }
+        scanned = true;
     }
 
-    public void collect()
+    public List<Class<?>> collect(Class<?> baseClass)
             throws IOException {
-        TypeCollector<T> wired = this;
-        wired._collect();
-    }
+        scan();
 
-    synchronized void _collect()
-            throws IOException {
-        fileContentMap.clear();
-        extensions = new ArrayList<Class<?>>();
-        scanTypes();
-        createFiles();
-        saveFiles(fileContentMap);
+        FileContentMap fileContentMap = publishEtcFiles(baseClass);
+        fileContentMap.saveFiles(deleteEmptyFiles);
+
         if (showPaths)
-            for (Class<?> extension : extensions) {
+            for (Class<?> extension : fileContentMap.extensions) {
                 MavenPomDir pomDir = MavenPomDir.fromClass(extension);
                 File sourceFile = pomDir.getSourceFile(extension);
                 System.out.println(sourceFile);
             }
-        extensions = null;
-    }
-
-    protected void createFiles() {
-        createExtensionFiles();
+        return fileContentMap.extensions;
     }
 
 }

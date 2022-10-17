@@ -15,7 +15,7 @@ public class LilyUberTypeCollector
 
     public static void main(String[] args)
             throws Exception {
-        new LilyErpTypeCollector().execute(args);
+        new LilyUberTypeCollector().execute(args);
     }
 
 }

@@ -1,4 +1,6 @@
+net.bodz.bas.codegen.ToCodegen
 net.bodz.bas.shell.util.DiffMergePatch
+net.bodz.bas.shell.util.LibUpdater
 net.bodz.bas.shell.util.TypeCollectorApp
 net.bodz.bas.shell.util.Xjdoc2TextMap
 net.bodz.bas.shell.util.XjdocDumper

@@ -1,11 +1,15 @@
 package net.bodz.bas.shell.util;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.loader.scan.TypeCollector;
+import net.bodz.bas.c.m2.MavenPomDir;
+import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.TypeIndex;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.LogLevel;
@@ -45,18 +49,32 @@ public class TypeCollectorApp
      *
      * @option -t
      */
-    List<Class<?>> baseTypes = new ArrayList<Class<?>>();
+    List<Class<?>> indexedTypes = new ArrayList<Class<?>>();
 
     /**
-     * Packages to be collected.
+     * Include packages to be scaned.
+     *
+     * Default to search all packages in the working project.
+     *
      * <p lang="zh-cn">
      * 指定要收集的包名列表。
      *
-     * @option -p =FQPN
+     * 默认收集当前工作项目。
+     *
+     * @option -p --package =FQPN
      */
-    List<String> packages = new ArrayList<String>();
+    List<String> scanPackages = new ArrayList<String>();
 
     // List<String> excludedPackages;
+
+    /**
+     * Include directories to be scanned.
+     *
+     * Default to search all dirs/projects.
+     *
+     * @option -d --dir =PATH
+     */
+    List<File> scanDirs = new ArrayList<>();
 
     ClassLoader classLoader = ClassLoaders.getRuntimeClassLoader();
     TypeIndex typeIndex;
@@ -72,42 +90,65 @@ public class TypeCollectorApp
         if (logger.getLevel().compareTo(LogLevel.DEBUG) >= 0)
             URLClassLoaders.dump(classLoader, Stdio.cout);
 
-        if (packages.isEmpty())
-            buildPackageList(packages);
-        for (String p : packages)
-            logger.info("Search-Prefix: ", p);
+        buildPackageList(scanPackages);
 
-        if (baseTypes.isEmpty())
+        for (String pkg : scanPackages)
+            logger.info("Search-Package: ", pkg);
+
+        if (scanPackages.isEmpty() && scanDirs.isEmpty()) {
+            File workDir = SysProps.userWorkDir;
+            MavenPomDir pomDir = MavenPomDir.closest(workDir);
+            if (pomDir == null) {
+                logger.error("Not with-in a maven project: " + workDir);
+                _exit(1);
+            }
+            File targetDir = new File(pomDir.getBaseDir(), "target");
+            scanDirs.add(targetDir);
+        }
+
+        for (File dir : scanDirs)
+            logger.info("Search-Dir: ", dir);
+
+        if (indexedTypes.isEmpty())
             for (Class<?> type : typeIndex.listAnnodated(IndexedType.class))
-                baseTypes.add(type);
+                indexedTypes.add(type);
 
-        for (Class<?> baseType : baseTypes) {
-            logger.info("Base-Type: ", baseType);
+        TypeCollector collector = new TypeCollector(classLoader);
+
+        for (Class<?> indexedType : indexedTypes) {
 
             if (listOnly) {
-                for (Class<?> extension : typeIndex.listIndexed(baseType))
-                    logger.info("    Extension: ", extension);
+                System.out.println("SPI: " + indexedType);
+                Collection<?> list = typeIndex.listIndexed(indexedType);
+                int i = 0, n = list.size();
+                for (Class<?> extension : typeIndex.listIndexed(indexedType)) {
+                    String graph = i++ == n - 1 ? "    `- " : "    |- ";
+                    System.out.println(graph + extension);
+                }
                 continue;
             }
 
-            TypeCollector<?> collector = new TypeCollector<Object>(classLoader, baseType);
-
-            for (String pkg : packages)
+            for (String pkg : scanPackages)
                 collector.includePackageToScan(pkg);
 
-            collector.collect();
+            for (File dir : scanDirs) {
+                dir = dir.getCanonicalFile();
+                collector.includeDirToScan(dir);
+            }
+
+            collector.collect(indexedType);
         }
     }
 
     protected void buildPackageList(List<String> packages) {
-        String projectPackage = getClass().getPackage().getName();
-        packages.add(projectPackage);
-        packages.add("user");
+        // String projectPackage = getClass().getPackage().getName();
+        // packages.add(projectPackage);
     }
 
     public static void main(String[] args)
             throws Exception {
-        new TypeCollectorApp().execute(args);
+        TypeCollectorApp app = new TypeCollectorApp();
+        app.execute(args);
     }
 
 }
