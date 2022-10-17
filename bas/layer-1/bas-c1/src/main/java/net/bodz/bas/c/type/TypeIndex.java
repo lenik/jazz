@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class TypeIndex {
      * @throws ClassNotFoundException
      * @throws ExceptionInInitializerError
      */
-    public <T> Iterable<Class<? extends T>> list(Class<T> baseType, boolean includeAbstract)
+    public <T> Collection<Class<? extends T>> list(Class<T> baseType, boolean includeAbstract)
             throws IOException, ClassNotFoundException {
 
         String prefix = baseType.isAnnotation() ? PublishDir.features : PublishDir.services;
@@ -85,7 +86,7 @@ public class TypeIndex {
         return classes;
     }
 
-    public <T> Iterable<Class<? extends T>> listIndexed(Class<T> baseType)
+    public <T> Collection<Class<? extends T>> listIndexed(Class<T> baseType)
             throws ClassNotFoundException, IOException {
         IndexedType indexing = baseType.getAnnotation(IndexedType.class);
         boolean includeAbstract = false;
@@ -95,9 +96,9 @@ public class TypeIndex {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public Iterable<Class<?>> listAnnodated(Class<? extends Annotation> annotationType)
+    public Collection<Class<?>> listAnnodated(Class<? extends Annotation> annotationType)
             throws IOException, ClassNotFoundException {
-        Iterable list = this.list(annotationType, true);
+        Collection list = this.list(annotationType, true);
         return list;
     }
 

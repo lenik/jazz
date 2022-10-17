@@ -39,7 +39,7 @@ public class ProjectDirMap {
     public void parseMapFile(File file)
             throws IOException {
         this.mapFile = file;
-        logger.info("parse map file " + mapFile);
+        logger.debug("parse map file " + mapFile);
 
         FileResource mapFile = new FileResource(file);
         if (!mapFile.getFile().exists())

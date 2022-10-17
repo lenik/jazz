@@ -206,13 +206,13 @@ public class ClassScanner
         return counter;
     }
 
-    class ResolveTypeAdapter
+    class ClassNameResolver
             implements
                 ITypeNameCallback {
 
         final ITypeCallback typeCallback;
 
-        public ResolveTypeAdapter(ITypeCallback typeCallback) {
+        public ClassNameResolver(ITypeCallback typeCallback) {
             if (typeCallback == null)
                 throw new NullPointerException("typeCallback");
             this.typeCallback = typeCallback;
@@ -242,14 +242,15 @@ public class ClassScanner
 
     public void scanTypes(String packageName, final ITypeCallback typeCallback)
             throws IOException {
-        ResolveTypeAdapter typeResolver = new ResolveTypeAdapter(typeCallback);
-        scanTypeNames(packageName, typeResolver);
+        ClassNameResolver classNameResolver = new ClassNameResolver(typeCallback);
+        scanTypeNames(packageName, classNameResolver);
     }
 
     public void scanTypeNames(String packageName, final ITypeNameCallback callback)
             throws IOException {
         setFilter(ClassOrDirFileFilter.INSTANCE);
         String packageDir = packageName.replace('.', '/');
+
         Map<String, List<URL>> resources = scanResources(packageDir);
         for (String resourceName : resources.keySet()) {
             assert resourceName.endsWith(".class");
@@ -272,7 +273,7 @@ public class ClassScanner
         }
     }
 
-    public void scan(String packageName)
+    public void scanPackage(String packageName)
             throws IOException {
         scanTypes(packageName, new ITypeCallback() {
             @Override

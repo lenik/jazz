@@ -310,7 +310,7 @@ public class LibUpdater
             // MavenPomDir.closest(item);
             MavenPomDir pomDir = new MavenPomDir(itemBaseDir);
             if (workProject.equals(pomDir)) {
-                println("Ignore self: " + item);
+                logger.debug("ignored current working project: " + item);
                 return;
             }
 
@@ -329,7 +329,7 @@ public class LibUpdater
                 jarPath = SysProps.userHome + "/.m2/repository/" + jarPath;
                 File jarFile = new File(jarPath);
                 if (jarFile.isFile()) {
-                    println("Found jar: " + jarFile);
+                    logger.debug("dir2jar: " + jarFile);
                     addFile(jarFile);
                     return;
                 }
