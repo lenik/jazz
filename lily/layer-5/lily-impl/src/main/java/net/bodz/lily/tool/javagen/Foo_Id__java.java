@@ -6,6 +6,7 @@ import java.util.Objects;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.ImportSet;
 import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
@@ -28,6 +29,10 @@ public class Foo_Id__java
         case 0:
             throw new IllegalArgumentException("no primary key column.");
         }
+
+        for (IColumnMetadata primaryKeyCol : primaryKeyCols)
+            if (primaryKeyCol.isExcluded())
+                throw new IllegalUsageException("Can't exclude primary key column");
 
         out.println("@" + out.im.name(Identifier.class));
         out.printf("public class %s\n", project.Foo_Id.name);

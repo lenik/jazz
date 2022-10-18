@@ -4,7 +4,6 @@ import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -19,17 +18,18 @@ public class Foo_stuff__java
 
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata tableView) {
-        ITableMetadata table = (ITableMetadata) tableView;
-        QualifiedName idType = templates.getIdType(table);
+        QualifiedName idType = templates.getIdType(tableView);
 
-        String parent;
-        if (idType != null)
-            parent = out.im.name(CoEntity.class) + "<" + out.im.name(idType) + ">";
-        else
-            parent = out.im.name(StructRow.class);
+        String parent = tableView.getJavaType();
+        if (parent == null)
+            if (idType != null)
+                parent = out.im.name(CoEntity.class) + "<" + out.im.name(idType) + ">";
+            else
+                parent = out.im.name(StructRow.class);
 
         String description = tableView.getDescription();
-        templates.javaDoc(out, description);
+        if (description != null)
+            templates.javaDoc(out, description);
 
         if (idType != null)
             out.printf("@%s(%s.class)\n", //
@@ -43,15 +43,17 @@ public class Foo_stuff__java
             out.println();
             out.println("private static final long serialVersionUID = 1L;");
 
-            templates.N_consts(out, table, null);
-            templates.O_consts(out, table, null);
+            templates.N_consts(out, tableView, null);
+            templates.O_consts(out, tableView, null);
 
-            for (IColumnMetadata column : table.getColumns()) {
+            for (IColumnMetadata column : tableView.getColumns()) {
+                if (column.isExcluded())
+                    continue;
                 out.println();
                 templates.columnField(out, column);
             }
 
-            IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
+            IColumnMetadata[] primaryKeyCols = tableView.getPrimaryKeyColumns();
             if (primaryKeyCols.length > 1) {
                 out.println();
                 out.println("@Override");
@@ -79,18 +81,20 @@ public class Foo_stuff__java
                     out.println();
                     out.println("@Override");
                     out.printf("public void id(%s id) {\n", out.im.name(idType));
-                    out.printf("    set%s(id);\n", name.FooBar);
+                    out.printf("    this.set%s(id);\n", name.FooBar);
                     out.printf("}\n");
                 }
             }
 
-            for (IColumnMetadata column : table.getColumns()) {
+            for (IColumnMetadata column : tableView.getColumns()) {
+                if (column.isExcluded())
+                    continue;
                 out.println();
                 templates.columnAccessors(out, column, true);
             }
 
             out.println();
-            templates.initNotNulls(out, table);
+            templates.initNotNulls(out, tableView);
 
             out.leave();
         }

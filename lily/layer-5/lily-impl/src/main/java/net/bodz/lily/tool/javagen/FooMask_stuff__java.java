@@ -22,11 +22,15 @@ public class FooMask_stuff__java
 //            out.println("private static final long serialVersionUID = 1L;");
 
             for (IColumnMetadata column : table.getColumns()) {
+                if (column.isExcluded())
+                    continue;
                 out.println();
                 templates.columnMaskFields(out, column);
             }
 
             for (IColumnMetadata column : table.getColumns()) {
+                if (column.isExcluded())
+                    continue;
                 out.println();
                 templates.columnMaskAccessors(out, column);
             }

@@ -7,7 +7,7 @@ import java.sql.Connection;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
-import net.bodz.bas.c.string.StringId;
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.codegen.ClassPathInfo;
@@ -172,17 +172,32 @@ public class JavaGen
     }
 
     JavaGenProject createProject(ITableViewMetadata tableView) {
-        String full_table_name = tableView.getCompactName();
-        String qTableName = StringId.UL.toQCamel(full_table_name);
-
-        String fullSchemaName = null;
-        String simpleName = qTableName;
+        String simpleName = tableView.getJavaName();
         String packageName = parentPackage;
-        int lastDot = qTableName.lastIndexOf('.');
-        if (lastDot != -1) {
-            fullSchemaName = qTableName.substring(0, lastDot);
-            simpleName = qTableName.substring(lastDot + 1);
-            packageName += "." + fullSchemaName;
+
+        if (simpleName != null && simpleName.contains(".")) {
+            int lastDot = simpleName.lastIndexOf('.');
+            packageName = simpleName.substring(0, lastDot);
+            simpleName = simpleName.substring(lastDot + 1);
+
+        } else {
+            ISchemaMetadata schema = tableView.getParent();
+            ICatalogMetadata catalog = schema == null ? null : schema.getParent();
+            String catalogJavaName = catalog.getJavaName();
+            if (catalogJavaName == null)
+                catalogJavaName = Phrase.foo_bar(catalog.getName()).fooBar;
+
+            String schemaJavaQName = schema.getJavaName();
+            if (schemaJavaQName == null)
+                schemaJavaQName = Phrase.foo_bar(schema.getId().getSchemaName()).fooBar;
+            if (catalogJavaName != null)
+                schemaJavaQName = catalogJavaName + "." + schemaJavaQName;
+
+            if (schemaJavaQName != null)
+                packageName += "." + schemaJavaQName;
+
+            if (simpleName == null)
+                simpleName = Phrase.foo_bar(tableView.getId().getTableName()).fooBar;
         }
 
         long seed;
@@ -231,7 +246,7 @@ public class JavaGen
             throws IOException {
         JavaGenProject project = createProject(view);
 
-        new Foo_stuff__java_v(project).buildFile(view, UpdateMethod.OVERWRITE);
+        new Foo_stuff__java(project).buildFile(view, UpdateMethod.OVERWRITE);
         if (view.getPrimaryKeyColumns().length > 1)
             new Foo_Id__java(project).buildFile(view, UpdateMethod.OVERWRITE);
 
