@@ -4,5 +4,6 @@ ff2tm = main net.bodz.bas.shell.util.Xjdoc2TextMap
 fixbatbb = main net.bodz.bas.shell.win32.Fix_BatBB
 jdiff = main net.bodz.bas.shell.util.JDiff
 lib-updater = main net.bodz.bas.shell.util.LibUpdater
+mkfields = main net.bodz.bas.shell.util.FieldsFormsCG
 tcoll = main net.bodz.bas.shell.util.TypeCollectorApp
 xjdmp = main net.bodz.bas.shell.util.XjdocDumper
