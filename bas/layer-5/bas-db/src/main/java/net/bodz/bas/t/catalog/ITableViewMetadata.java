@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -19,9 +20,15 @@ public interface ITableViewMetadata
     String K_TABLE_TYPE = "tableType";
     String K_DESCRIPTION = "description";
 
+    String K_JAVA_TYPE = "javaType";
+
     TableOid getId();
 
     TableType getTableType();
+
+    default Phrase nam() {
+        return Phrase.dual(getName(), getJavaName());
+    }
 
     default String getName() {
         return getId().getTableName();
@@ -52,6 +59,10 @@ public interface ITableViewMetadata
         return keyColumns;
     }
 
+    default String getJavaType() {
+        return null;
+    }
+
     default void wireUp() {
     }
 
@@ -63,6 +74,7 @@ public interface ITableViewMetadata
         out.entry(K_TABLE_TYPE, getTableType());
 
         out.entryNotNull(K_JAVA_NAME, getJavaName());
+        out.entryNotNull(K_JAVA_TYPE, getJavaType());
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.jsonOut(out, opts);
@@ -76,6 +88,7 @@ public interface ITableViewMetadata
         out.attribute(K_TABLE_TYPE, getTableType());
 
         out.attributeNotNull(K_JAVA_NAME, getJavaName());
+        out.attributeNotNull(K_JAVA_TYPE, getJavaType());
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.writeObject(out);
