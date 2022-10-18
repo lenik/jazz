@@ -139,4 +139,16 @@ public interface IXmlOutput
             attribute(name, value.toString());
     }
 
+    default void attributeNot0(String name, int value)
+            throws XMLStreamException {
+        if (value != 0)
+            attribute(name, value);
+    }
+
+    default void attributeNot0(String name, long value)
+            throws XMLStreamException {
+        if (value != 0L)
+            attribute(name, value);
+    }
+
 }
