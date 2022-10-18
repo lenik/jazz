@@ -174,7 +174,7 @@ public class LibUpdater
         if (!setDefaults())
             _exit(1);
 
-        for (File item : URLClassLoaders.getLocalURLs(loader, 1)) {
+        for (File item : URLClassLoaders.getUserClassPath(loader)) {
             processItem(item);
         }
 

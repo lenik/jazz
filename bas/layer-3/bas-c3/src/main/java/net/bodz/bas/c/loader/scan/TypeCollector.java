@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,7 +12,6 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.m2.MavenPomDir;
-import net.bodz.bas.c.m2.MavenTestClassLoader;
 import net.bodz.bas.c.type.CachedInstantiator;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -39,20 +37,14 @@ public class TypeCollector {
     boolean deleteEmptyFiles = true;
 
     public TypeCollector(ClassLoader classLoader) {
-        URLClassLoader ucl;
-
-        ucl = (URLClassLoader) classLoader;
-        // URL[] callerClasspath = new URL[] { ClassResource.getRootURL(getClass()), };
-        // loader = new URLClassLoader(callerClasspath);
-
-        List<File> localURLs = URLClassLoaders.getLocalURLs(ucl);
+        List<File> localURLs = URLClassLoaders.getUserClassPath(classLoader);
         // System.out.println("UCL for " + baseClass);
         // for (File u : localURLs) System.out.println("-- " + u);
 
         String url0 = localURLs.get(0).toString();
         if (url0.contains("/test-classes")) {
             logger.info("Detect test mode, create test class loader.");
-            ucl = MavenTestClassLoader.createMavenTestClassLoader(ucl);
+            // classLoader = MavenTestClassLoader.createMavenTestClassLoader(ucl);
         }
 
         scanner = createClassScanner(classLoader);

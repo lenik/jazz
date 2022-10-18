@@ -10,22 +10,18 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 
 public class URLClassLoaders {
 
-    static Method URLClassLoader_addURL;
-    static {
-        Class<?> clazz = URLClassLoader.class;
-        try {
-            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class);
-            URLClassLoader_addURL.setAccessible(true);
-        } catch (SecurityException e) {
-        } catch (NoSuchMethodException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
+    public static List<ClassLoader> getStack(ClassLoader cl) {
+        List<ClassLoader> stack = new ArrayList<>();
+        for (; cl != null; cl = cl.getParent())
+            stack.add(cl);
+        return stack;
     }
 
     public static URLClassLoader findFirstURLClassLoader(ClassLoader loader) {
@@ -37,11 +33,34 @@ public class URLClassLoaders {
         return null;
     }
 
+    public static List<File> getUserClassPath(ClassLoader cl) {
+        URLClassLoader ucl = findFirstURLClassLoader(cl);
+        if (ucl == null)
+            return getJavaClassPath();
+        List<File> localFileList = new ArrayList<File>();
+        for (URL url : ucl.getURLs()) {
+            File localFile = FileURL.toFile(url, null);
+            if (localFile != null)
+                localFileList.add(localFile);
+        }
+        return localFileList;
+    }
+
+    public static List<File> getJavaClassPath() {
+        String javaClassPath = SystemProperties.getJavaClassPath();
+        String[] entries = javaClassPath.split(File.pathSeparator);
+        List<File> files = new ArrayList<>(entries.length);
+        for (String entry : entries)
+            files.add(new File(entry));
+        return files;
+    }
+
+    @Deprecated
     public static List<File> getLocalURLs(ClassLoader cl) {
         return getLocalURLs(cl, 1000);
     }
 
-    public static List<File> getLocalURLs(ClassLoader cl, int size) {
+    static List<File> getLocalURLs(ClassLoader cl, int size) {
         List<File> localFileList = new ArrayList<File>();
         int i = 0;
         while (cl != null) {
@@ -111,12 +130,19 @@ public class URLClassLoaders {
 
     /**
      * try to not add duplicated urls.
-     * 
+     *
      * @return <code>false</code> if specified url is already existed in ucl or its parents.
      */
     public static int addURLs(URLClassLoader urlClassLoader, URL... urls) {
-        if (URLClassLoader_addURL == null)
-            throw new Error("can\'t access URLClassLoader.addURL()");
+        Method URLClassLoader_addURL;
+        Class<?> clazz = URLClassLoader.class;
+        try {
+            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class);
+            URLClassLoader_addURL.setAccessible(true);
+        } catch (Throwable e) {
+            throw new Error("can\'t access URLClassLoader.addURL(): " + e.getMessage(), e);
+        }
+
         int added = 0;
         try {
             for (URL url : urls) {
@@ -173,7 +199,8 @@ public class URLClassLoaders {
     }
 
     private static class Dumper
-            implements IClassLoaderContentHandler {
+            implements
+                IClassLoaderContentHandler {
 
         private final IPrintOut out;
         private boolean cont;
