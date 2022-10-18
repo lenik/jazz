@@ -1,11 +1,6 @@
 package net.bodz.bas.fmt.rst;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -91,6 +86,14 @@ public class RstFn {
             RstInput rstInput = new RstInput(reader);
             rstLoader.load(rstInput, ctx.getElementHandler());
         }
+    }
+
+    public static void loadFromRst(IRstForm ctx, String rst)
+            throws IOException, ElementHandlerException, ParseException {
+        RstLoader rstLoader = new RstLoader();
+        StringReader reader = new StringReader(rst);
+        RstInput rstInput = new RstInput(reader);
+        rstLoader.load(rstInput, ctx.getElementHandler());
     }
 
 }

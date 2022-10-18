@@ -146,38 +146,6 @@ public abstract class AbstractRstDumper
             out.attribute(name, ((Class<?>) value).getCanonicalName());
             break;
 
-        case BYTE_ARRAY:
-            out.attribute(name, (byte[]) value);
-            break;
-
-        case SHORT_ARRAY:
-            out.attribute(name, (short[]) value);
-            break;
-
-        case INT_ARRAY:
-            out.attribute(name, (int[]) value);
-            break;
-
-        case LONG_ARRAY:
-            out.attribute(name, (long[]) value);
-            break;
-
-        case FLOAT_ARRAY:
-            out.attribute(name, (float[]) value);
-            break;
-
-        case DOUBLE_ARRAY:
-            out.attribute(name, (double[]) value);
-            break;
-
-        case BOOL_ARRAY:
-            out.attribute(name, (boolean[]) value);
-            break;
-
-        case CHAR_ARRAY:
-            out.attribute(name, (char[]) value);
-            break;
-
         case STRING_ARRAY:
             out.attribute(name, (String[]) value);
             break;
