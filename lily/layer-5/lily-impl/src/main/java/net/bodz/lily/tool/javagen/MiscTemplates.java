@@ -79,6 +79,9 @@ public class MiscTemplates {
             if (column.isPrimaryKey())
                 continue;
 
+            if (column.isExcluded())
+                continue;
+
             if (column.isNullable(true))
                 continue;
 
@@ -99,6 +102,9 @@ public class MiscTemplates {
             if (wantPrimaryKey != null)
                 if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
                     continue;
+
+            if (column.isExcluded())
+                continue;
 
             Phrase name = column.nam();
             Class<?> type = column.getType();
@@ -126,6 +132,9 @@ public class MiscTemplates {
             if (wantPrimaryKey != null)
                 if (column.isPrimaryKey() != wantPrimaryKey.booleanValue())
                     continue;
+
+            if (column.isExcluded())
+                continue;
 
             Phrase name = column.nam();
 

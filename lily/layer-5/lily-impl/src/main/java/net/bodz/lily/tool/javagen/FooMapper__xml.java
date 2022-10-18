@@ -56,7 +56,7 @@ public class FooMapper__xml
         out.printf("<insert id=\"insert\" useGeneratedKeys=\"true\" keyProperty=\"id\"><![CDATA[\n");
         out.enter();
         {
-            out.printf("insert into %s(\n", table.getCompactName());
+            out.printf("insert into %s(\n", table.nam().foo_bar);
             {
                 out.enter();
                 boolean first = true;
