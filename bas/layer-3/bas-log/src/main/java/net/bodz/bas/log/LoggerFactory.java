@@ -57,7 +57,7 @@ public class LoggerFactory {
         while (name != null) {
             log4j = registry.getLogger(name);
             if (log4j == null) {
-                System.err.println("net registered logger: " + name);
+                System.err.println("not registered logger: " + name);
                 return null;
             }
             if (log4j.getLevel() != null)
