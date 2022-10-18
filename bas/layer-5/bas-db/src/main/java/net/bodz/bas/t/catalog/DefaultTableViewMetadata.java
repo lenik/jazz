@@ -31,6 +31,8 @@ public abstract class DefaultTableViewMetadata
     TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
 
+    String javaType;
+
     public DefaultTableViewMetadata() {
     }
 
@@ -101,6 +103,15 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
+    public String getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(String javaType) {
+        this.javaType = javaType;
+    }
+
+    @Override
     public void wireUp() {
         sortColumns();
     }
@@ -111,6 +122,7 @@ public abstract class DefaultTableViewMetadata
         oid.jsonIn(o, opts);
 
         javaName = o.getString(K_JAVA_NAME);
+        javaType = o.getString(K_JAVA_TYPE);
 
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
         super.jsonIn(o, opts);
@@ -122,6 +134,7 @@ public abstract class DefaultTableViewMetadata
         oid.readObject(x_table);
 
         javaName = x_table.a(K_JAVA_NAME).getString();
+        javaType = x_table.a(K_JAVA_TYPE).getString();
 
         tableType = x_table.a(K_TABLE_TYPE)//
                 .getEnum(TableType.class, TableType.VIEW);

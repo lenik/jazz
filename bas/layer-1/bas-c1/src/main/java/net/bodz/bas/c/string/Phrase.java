@@ -34,4 +34,13 @@ public class Phrase {
         return phrase;
     }
 
+    public static Phrase dual(String foo_bar, String fooBar) {
+        Phrase phrase = new Phrase();
+        phrase.foo_bar = foo_bar;
+        phrase.FOO_BAR = foo_bar.toUpperCase();
+        phrase.fooBar = fooBar;
+        phrase.FooBar = Strings.ucfirst(fooBar);
+        return phrase;
+    }
+
 }

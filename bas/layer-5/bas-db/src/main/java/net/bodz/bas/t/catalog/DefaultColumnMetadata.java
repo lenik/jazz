@@ -63,6 +63,10 @@ public class DefaultColumnMetadata
 
     String defaultValue;
 
+    boolean excluded;
+    int verboseLevel;
+    int joinLevel;
+
     public DefaultColumnMetadata(IRowSetMetadata parent) {
         if (parent == null)
             throw new NullPointerException("parent");
@@ -307,6 +311,33 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public boolean isExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(boolean excluded) {
+        this.excluded = excluded;
+    }
+
+    @Override
+    public int getVerboseLevel() {
+        return verboseLevel;
+    }
+
+    public void setVerboseLevel(int verboseLevel) {
+        this.verboseLevel = verboseLevel;
+    }
+
+    @Override
+    public int getJoinLevel() {
+        return joinLevel;
+    }
+
+    public void setJoinLevel(int joinLevel) {
+        this.joinLevel = joinLevel;
+    }
+
+    @Override
     public Object parseColumnValue(String s)
             throws ParseException {
         IParser<?> parser = Typers.getTyper(type, IParser.class);
@@ -514,6 +545,10 @@ public class DefaultColumnMetadata
         columnDisplaySize = o.getInt(K_COLUMN_DISPLAY_SIZE, 0);
 
         defaultValue = o.getString(K_DEFAULT_VALUE);
+
+        excluded = o.getBoolean(K_EXCLUDED, false);
+        verboseLevel = o.getInt(K_VERBOSE_LEVEL, 0);
+        joinLevel = o.getInt(K_JOIN_LEVEL, 0);
     }
 
     /** ⇱ Implementation Of {@link IXmlForm}. */
@@ -548,6 +583,10 @@ public class DefaultColumnMetadata
         columnDisplaySize = o.a(K_COLUMN_DISPLAY_SIZE).getInt(0);
 
         defaultValue = o.a(K_DEFAULT_VALUE).getString();
+
+        excluded = o.a(K_EXCLUDED).getBoolean(false);
+        verboseLevel = o.a(K_VERBOSE_LEVEL).getInt(0);
+        joinLevel = o.a(K_JOIN_LEVEL).getInt(0);
     }
 
     @Override

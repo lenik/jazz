@@ -47,6 +47,10 @@ public interface IColumnMetadata
     public static final String K_SCALE = "scale";
     public static final String K_DEFAULT_VALUE = "defaultValue";
 
+    public static final String K_EXCLUDED = "excluded";
+    public static final String K_VERBOSE_LEVEL = "verboseLevel";
+    public static final String K_JOIN_LEVEL = "joinLevel";
+
     IRowSetMetadata getParent();
 
 //    default int position() {
@@ -66,7 +70,7 @@ public interface IColumnMetadata
     String getName();
 
     default Phrase nam() {
-        return Phrase.foo_bar(getName());
+        return Phrase.dual(getName(), getJavaName());
     }
 
     String getLabel();
@@ -124,6 +128,12 @@ public interface IColumnMetadata
 
     String getDefaultValue();
 
+    boolean isExcluded();
+
+    int getVerboseLevel();
+
+    int getJoinLevel();
+
     Object parseColumnValue(String s)
             throws ParseException;
 
@@ -168,6 +178,10 @@ public interface IColumnMetadata
         out.entry(K_SCALE, getScale());
 
         out.entryNotNull(K_DEFAULT_VALUE, getDefaultValue());
+
+        out.entryTrue(K_EXCLUDED, isExcluded());
+        out.entryNot0(K_VERBOSE_LEVEL, getVerboseLevel());
+        out.entryNot0(K_JOIN_LEVEL, getJoinLevel());
     }
 
     @Override
@@ -200,6 +214,10 @@ public interface IColumnMetadata
         out.attribute(K_SCALE, getScale());
 
         out.attribute(K_DEFAULT_VALUE, getDefaultValue());
+
+        out.attributeTrue(K_EXCLUDED, isExcluded());
+        out.attributeNot0(K_VERBOSE_LEVEL, getVerboseLevel());
+        out.attributeNot0(K_JOIN_LEVEL, getJoinLevel());
     }
 
     default void accept(ICatalogVisitor visitor) {
