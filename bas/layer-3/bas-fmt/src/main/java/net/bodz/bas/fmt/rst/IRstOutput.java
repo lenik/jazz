@@ -61,54 +61,6 @@ public interface IRstOutput {
     void attribute(String name, String value)
             throws IOException;
 
-    void attribute(String name, byte[] buf)
-            throws IOException;
-
-    void attribute(String name, byte[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, short[] buf)
-            throws IOException;
-
-    void attribute(String name, short[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, int[] buf)
-            throws IOException;
-
-    void attribute(String name, int[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, long[] buf)
-            throws IOException;
-
-    void attribute(String name, long[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, float[] buf)
-            throws IOException;
-
-    void attribute(String name, float[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, double[] buf)
-            throws IOException;
-
-    void attribute(String name, double[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, boolean[] buf)
-            throws IOException;
-
-    void attribute(String name, boolean[] buf, int off, int len)
-            throws IOException;
-
-    void attribute(String name, char[] buf)
-            throws IOException;
-
-    void attribute(String name, char[] buf, int off, int len)
-            throws IOException;
-
     void attribute(String name, String[] buf)
             throws IOException;
 
