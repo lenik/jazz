@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import net.bodz.bas.meta.build.ProgramName;
 public class ProgramLauncher {
 
     public static void main(String[] args)
-            throws Exception {
+            throws Throwable {
         if (args.length < 1)
             throw new IllegalArgumentException("Expected program classname.");
         String prog = args[0];
@@ -43,7 +44,11 @@ public class ProgramLauncher {
         }
 
         args = Arrays.copyOfRange(args, 1, args.length);
-        mainMethod.invoke(null, (Object) args);
+        try {
+            mainMethod.invoke(null, (Object) args);
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        }
     }
 
     static Pattern programLine = Pattern.compile("^(\\S+)\\s*=\\s*(\\w+)\\s+(\\S+)\\s*$");
