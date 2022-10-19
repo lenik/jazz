@@ -26,10 +26,6 @@
         </dependency>
         
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-api</artifactId>
             <version>${project.version}</version>
