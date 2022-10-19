@@ -57,6 +57,8 @@ public class RstLoader {
             case IRstInput.ATTRIBUTE:
                 String attributeName = in.getAttributeName();
                 String attributeData = in.getAttributeData();
+                if (attributeData == null)
+                    throw new NullPointerException("attributeData");
                 if (!handler.attribute(attributeName, attributeData)) {
                     frame.save.attribute(attributeName, attributeData);
                 }
