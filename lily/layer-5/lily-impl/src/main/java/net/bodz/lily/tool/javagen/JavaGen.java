@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -14,6 +16,8 @@ import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.DataHub;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.rst.RstFn;
@@ -23,10 +27,12 @@ import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.tuple.Split;
 
+@ProgramName("javagen")
 public class JavaGen
         extends BasicCLI {
 
@@ -108,13 +114,7 @@ public class JavaGen
      */
     boolean forceMode;
 
-    /**
-     * Use specified codegen config.
-     *
-     * @option -c =FILE
-     */
-    File configFile;
-    CodegenConfig config = new CodegenConfig();
+    List<CodegenConfig> configs = new ArrayList<>();
 
     /**
      * Save the catalog metadata to file, and quit.
@@ -136,7 +136,21 @@ public class JavaGen
     CatalogSubset catalogSubset = new CatalogSubset(null);
 
     public JavaGen(DataContext dataContext) {
+        if (dataContext == null)
+            throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
+    }
+
+    /**
+     * Use specified codegen config.
+     *
+     * @option -c =FILE
+     */
+    public void config(File configFile)
+            throws ElementHandlerException, IOException, ParseException {
+        CodegenConfig config = new CodegenConfig();
+        RstFn.loadFromRst(config, configFile);
+        configs.add(config);
     }
 
     boolean processTableView(ITableViewMetadata tableView) {
@@ -226,7 +240,7 @@ public class JavaGen
     public void makeTable(ITableMetadata table)
             throws IOException {
         JavaGenProject project = createProject(table);
-        project.config = config;
+        project.configs = configs;
 
         new Foo_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         if (table.getPrimaryKeyColumns().length > 1)
@@ -262,10 +276,6 @@ public class JavaGen
     @Override
     protected void mainImpl(String... args)
             throws Exception {
-        if (configFile != null) {
-            RstFn.loadFromRst(config, configFile);
-        }
-
         if (parentPackage == null)
             throw new IllegalArgumentException("parent-package isn't specified.");
 
@@ -285,7 +295,9 @@ public class JavaGen
                 Split projectPart = Split.pop(moduleName, '-');
                 MavenPomDir apiPomDir = findPomDir(pomDir.getBaseDir(), maxApiDepth, //
                         "model", //
-                        projectPart.a + "-api");
+                        projectPart.a + "-api", //
+                        projectPart.a + "-model", //
+                        null);
                 if (apiPomDir != null)
                     headerDir = new File(apiPomDir.getBaseDir(), "src/main/java");
             }
@@ -391,6 +403,8 @@ public class JavaGen
 
     MavenPomDir findPomDir(File startDir, int maxParents, String... moduleNames) {
         for (String moduleName : moduleNames) {
+            if (moduleName == null)
+                continue;
             File moduleDir = new File(startDir, moduleName);
             if (moduleDir.isDirectory())
                 return new MavenPomDir(moduleDir);
@@ -420,7 +434,8 @@ public class JavaGen
 
     public static void main(String[] args)
             throws Exception {
-        JavaGen app = new JavaGen(DataHub.getPreferredHub().getMain());
+        JavaGen app = new JavaGen(//
+                DataHub.getPreferredHub().getMain());
         app.execute(args);
     }
 

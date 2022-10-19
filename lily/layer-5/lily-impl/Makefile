@@ -12,12 +12,6 @@ src_excludes += \
     doc \
     home
 
-lib-updater:
-	mjava lib-updater
-
-lib-updater-O:
-	mjava -O lib-updater
-
 run:
 	screen -S $(remotedir) main LilyTestd
 

@@ -90,14 +90,18 @@ public class CodegenConfigurator
             DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
 
             String property = config.columnPropertyMap.get(column.getName());
-            if (property != null)
-                mutable.setJavaName(property);
+            if (property != null) {
+                if ("-".equals(property))
+                    mutable.setExcluded(true);
+                else
+                    mutable.setJavaName(property);
+            }
 
             Integer verboseLevel = config.columnLevelMap.get(column.getName());
             if (verboseLevel != null)
                 mutable.setVerboseLevel(verboseLevel.intValue());
 
-            Integer joinLevel = config.loadDepthMap.get(column.getName());
+            Integer joinLevel = config.joinLevelMap.get(column.getName());
             if (joinLevel != null)
                 mutable.setJoinLevel(joinLevel.intValue());
         }
