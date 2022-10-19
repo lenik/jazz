@@ -79,12 +79,14 @@ public class RstInput
                 if (cont)
                     line = line.substring(0, line.length() - 1);
                 attributeRawData.setLength(0);
-                attributeData = null;
                 attributeRawData.append(line);
-                if (cont)
+                if (cont) {
+                    attributeData = null;
                     continue;
-                else
+                } else {
+                    attributeData = attributeRawData.toString();
                     return ATTRIBUTE;
+                }
             }
         }
         return EOF;
