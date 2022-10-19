@@ -294,8 +294,8 @@ public class FieldsFormsCG
                 break;
             }
 
-        if (!onlyStrings)
-            out.println("IVariant val = new MutableVariant(data);");
+//        if (!onlyStrings)
+//            out.println("IVariant val = new MutableVariant(data);");
 
         out.println("switch (name) {");
         for (Field field : fields) {
@@ -317,11 +317,11 @@ public class FieldsFormsCG
             if (field.getType() == String.class) {
                 out.printf("%s = data;\n", nam.fooBar);
             } else {
-                String getFn = "get" + Strings.ucfirst(getType);
+                String getFn = "parse" + Strings.ucfirst(getType);
                 if (nullable)
-                    out.printf("%s = val.%s();\n", nam.fooBar, getFn);
+                    out.printf("%s = StringFn.%s(data);\n", nam.fooBar, getFn);
                 else
-                    out.printf("%s = val.%s(%s);\n", nam.fooBar, getFn, nam.fooBar);
+                    out.printf("%s = StringFn.%s(data, %s);\n", nam.fooBar, getFn, nam.fooBar);
             }
 
             out.println("return true;");
