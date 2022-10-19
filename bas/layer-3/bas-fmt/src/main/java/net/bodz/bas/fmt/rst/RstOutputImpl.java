@@ -53,9 +53,9 @@ public class RstOutputImpl
     }
 
     @Override
-    public void _attribute(String name, String data)
+    public void attributeRaw(String name, String rawData)
             throws IOException {
-        out.println(name + ": " + data);
+        out.println(name + ": " + rawData);
     }
 
     public void flush() {

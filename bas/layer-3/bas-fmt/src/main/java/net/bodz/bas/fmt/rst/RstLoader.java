@@ -65,6 +65,7 @@ public class RstLoader {
             case IRstInput.ELEMENT_BEGIN:
                 String elementName = in.getElementName();
                 String[] elementArgs = in.getElementArguments();
+
                 handler = handler.beginChild(elementName, elementArgs);
                 if (handler == null)
                     handler = frame.save.beginChild(elementName, elementArgs);
