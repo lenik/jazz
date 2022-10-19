@@ -6,16 +6,19 @@ import java.io.Reader;
 
 import net.bodz.bas.c.java.util.ArrayAndScalar;
 import net.bodz.bas.c.java.util.Arrays;
+import net.bodz.bas.c.string.StringEscape;
 
 public class RstInput
-        implements IRstInput {
+        implements
+            IRstInput {
 
     BufferedReader reader;
 
     String elementName;
     String elementArguments[];
     String attributeName;
-    StringBuilder attributeData = new StringBuilder();
+    StringBuilder attributeRawData = new StringBuilder();
+    String attributeData;
 
     public RstInput(Reader reader) {
         if (reader == null)
@@ -44,12 +47,12 @@ public class RstInput
                 cont = isCont(line);
                 if (cont)
                     line = line.substring(0, line.length() - 1);
-                attributeData.append(line);
-                if (cont)
-                    // attributeText.append('\n'); // OPT: Keep orig format.
+                attributeRawData.append(line);
+                if (cont) // hard-coded \n is needed for new lines
                     continue;
-                else
-                    return ATTRIBUTE;
+                attributeData = attributeRawData.toString();
+                attributeData = StringEscape.unescapeJava(attributeData);
+                return ATTRIBUTE;
             }
             if (line.isEmpty())
                 continue;
@@ -75,8 +78,9 @@ public class RstInput
                 cont = isCont(line);
                 if (cont)
                     line = line.substring(0, line.length() - 1);
-                attributeData.setLength(0);
-                attributeData.append(line);
+                attributeRawData.setLength(0);
+                attributeData = null;
+                attributeRawData.append(line);
                 if (cont)
                     continue;
                 else
@@ -102,7 +106,7 @@ public class RstInput
 
     @Override
     public String getAttributeData() {
-        return attributeData.toString();
+        return attributeData;
     }
 
     @SuppressWarnings("unused")

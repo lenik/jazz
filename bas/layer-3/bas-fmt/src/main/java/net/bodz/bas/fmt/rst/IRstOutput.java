@@ -22,49 +22,16 @@ public interface IRstOutput {
     void endElement()
             throws IOException;
 
-    void _attribute(String name, String data)
+    void attributeRaw(String name, String rawData)
             throws IOException;
 
-    void attribute(String name, int value)
+    /**
+     * Always escaped.
+     */
+    void attribute(String name, Object value)
             throws IOException;
 
-    void attribute(String name, long value)
-            throws IOException;
-
-    void attributeHex(String name, byte value)
-            throws IOException;
-
-    void attributeHex(String name, short value)
-            throws IOException;
-
-    void attributeHex(String name, int value)
-            throws IOException;
-
-    void attributeHex(String name, long value)
-            throws IOException;
-
-    void attribute(String name, boolean value)
-            throws IOException;
-
-    void attribute(String name, float value)
-            throws IOException;
-
-    void attribute(String name, double value)
-            throws IOException;
-
-    void attribute(String name, char value)
-            throws IOException;
-
-    void attribute(String name, Enum<?> value)
-            throws IOException;
-
-    void attribute(String name, String value)
-            throws IOException;
-
-    void attribute(String name, String[] buf)
-            throws IOException;
-
-    void attribute(String name, String[] buf, int off, int len)
+    void attributeQuoted(String name, Object value)
             throws IOException;
 
 }

@@ -17,6 +17,7 @@ import net.bodz.bas.fmt.rst.obj.BeanRstHandler;
 import net.bodz.bas.fmt.rst.obj.ReflectRstHandler;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.t.set.FramedMarks;
+import net.bodz.bas.t.variant.fn.QuotedStringFn;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
 
@@ -101,72 +102,50 @@ public abstract class AbstractRstDumper
             return;
 
         if (value == null) {
-            // out._attribute(name,"null");
-            return; // TODO null keyword?
+            out.attribute(name, null);
+            return;
         }
 
         switch (typeEnum) {
         case BYTE:
-            out.attribute(name, (Byte) value);
-            break;
-
         case SHORT:
-            out.attribute(name, (Short) value);
-            break;
-
         case INT:
-            out.attribute(name, (Integer) value);
-            break;
-
         case LONG:
-            out.attribute(name, (Long) value);
-            break;
-
         case FLOAT:
-            out.attribute(name, (Float) value);
-            break;
-
         case DOUBLE:
-            out.attribute(name, (Double) value);
-            break;
-
         case BOOL:
-            out.attribute(name, (Boolean) value);
-            break;
-
-        case CHAR:
-            out.attribute(name, (Character) value);
-            break;
-
-        case STRING:
-            out.attribute(name, (String) value);
+        case ENUM:
+            out.attribute(name, value);
             break;
 
         case CLASS:
-            out.attribute(name, ((Class<?>) value).getCanonicalName());
+            out.attribute(name, QuotedStringFn.quote(((Class<?>) value).getCanonicalName()));
             break;
 
         case STRING_ARRAY:
-            out.attribute(name, (String[]) value);
+            out.attribute(name, QuotedStringFn.quote((String[]) value));
             break;
 
         case CLASS_ARRAY:
-            out.attribute(name, TypeArray.of((Class<?>[]) value).getNames());
+            String[] classNames = TypeArray.of((Class<?>[]) value).getNames();
+            out.attribute(name, QuotedStringFn.quote(classNames));
             break;
 
-        case ENUM:
-            out.attribute(name, ((Enum<?>) value));
+        case CHAR:
+        case STRING:
+            out.attribute(name, QuotedStringFn.quote(value.toString()));
             break;
 
         case OBJECT:
         default:
             IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
+            String str;
             if (formatter != null) {
-                String str = formatter.format(value);
-                out._attribute(name, str);
+                str = formatter.format(value);
             } else {
-                // not supported, skipped.
+                str = value.toString();
             }
+            out.attribute(name, QuotedStringFn.quote(str));
         }
     }
 
