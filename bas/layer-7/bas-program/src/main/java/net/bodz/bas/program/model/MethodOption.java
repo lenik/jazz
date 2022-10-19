@@ -84,7 +84,7 @@ class InvocationAsProperty
         if (args != null) {
             int com = Math.min(args.length, nparam);
             for (int i = 0; i < com; i++) {
-                params[i] = nparam;
+                params[i] = args[i];
             }
         }
 
