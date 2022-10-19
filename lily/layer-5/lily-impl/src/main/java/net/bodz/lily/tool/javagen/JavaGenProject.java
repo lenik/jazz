@@ -1,6 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
 import java.io.File;
+import java.util.List;
 
 import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.UpdateMethod;
@@ -15,7 +16,7 @@ public class JavaGenProject {
     String daoPackage = "dao";
     UpdateMethod updateMethod;
 
-    CodegenConfig config;
+    List<CodegenConfig> configs;
     long randomSeed;
 
     public final ClassPathInfo Foo;

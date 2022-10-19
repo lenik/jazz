@@ -24,12 +24,12 @@ public class CodegenConfig
     static final String K_COLUMN_PROPERTY = "column-property";
     static final String K_TABLE_CLASS = "table-class";
     static final String K_COLUMN_LEVEL = "column-level";
-    static final String K_LOAD_DEPTH = "load-depth";
+    static final String K_JOIN_LEVEL = "join-level";
 
     Map<String, String> columnPropertyMap = new HashMap<>();
     Map<String, String> tableClassMap = new HashMap<>();
     Map<String, Integer> columnLevelMap = new HashMap<>();
-    Map<String, Integer> loadDepthMap = new HashMap<>();
+    Map<String, Integer> joinLevelMap = new HashMap<>();
 
     @Override
     public void writeObject(IRstOutput out)
@@ -55,9 +55,9 @@ public class CodegenConfig
         }
         out.endElement();
 
-        out.beginElement(K_LOAD_DEPTH);
-        for (String column : loadDepthMap.keySet()) {
-            Integer depth = loadDepthMap.get(column);
+        out.beginElement(K_JOIN_LEVEL);
+        for (String column : joinLevelMap.keySet()) {
+            Integer depth = joinLevelMap.get(column);
             out.attribute(column, depth);
         }
         out.endElement();
@@ -92,9 +92,9 @@ public class CodegenConfig
                     columnLevelMap.put(name, level);
                     return true;
 
-                case K_LOAD_DEPTH:
+                case K_JOIN_LEVEL:
                     int depth = Integer.parseInt(data.trim());
-                    loadDepthMap.put(name, depth);
+                    joinLevelMap.put(name, depth);
                     return true;
 
                 default:
@@ -122,8 +122,8 @@ public class CodegenConfig
         out.key(K_COLUMN_LEVEL);
         out.map(columnLevelMap);
 
-        out.key(K_LOAD_DEPTH);
-        out.map(loadDepthMap);
+        out.key(K_JOIN_LEVEL);
+        out.map(joinLevelMap);
     }
 
 }
