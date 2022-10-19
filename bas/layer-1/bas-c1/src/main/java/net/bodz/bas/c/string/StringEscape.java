@@ -1,5 +1,7 @@
 package net.bodz.bas.c.string;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import net.bodz.bas.err.ParseException;
 
 public class StringEscape {
@@ -38,7 +40,7 @@ public class StringEscape {
                 switch (ch) {
                 case '\'': // OPT escape option
                     return "\\'";
-                    // return "'";
+                // return "'";
                 case '"':
                     return "\\\"";
                 case '\\':
@@ -53,19 +55,19 @@ public class StringEscape {
 
     /**
      * Escape literal string in Java/C style.
-     * 
+     *
      * @see org.apache.commons.lang.StringEscapeUtils#escapeJava(String)
+     * @return <code>null</code> for <code>null</code>
      */
     public static String escapeJava(String s) {
-        if (s == null)
-            return s;
-        int len = s.length();
-        StringBuilder buf = new StringBuilder(len * 2);
-        for (int i = 0; i < len; i++) {
-            char c = s.charAt(i);
-            buf.append(escapeJava(c));
-        }
-        return buf.toString();
+        return StringEscapeUtils.escapeJava(s);
+    }
+
+    /**
+     * @return <code>null</code> for <code>null</code>
+     */
+    public static String unescapeJava(String s) {
+        return StringEscapeUtils.unescapeJava(s);
     }
 
     /**
@@ -85,9 +87,18 @@ public class StringEscape {
 
     public static String parseQuotedJavaString(String s)
             throws ParseException {
-        SimpleJavaStringDFA parser = new SimpleJavaStringDFA();
-        String string = (String) parser.parse(s);
-        return string;
+        if (s == null)
+            return null;
+        s = s.trim();
+        if (s.length() < 2)
+            throw new ParseException("not quoted");
+        char start = s.charAt(0);
+        if (start != '\"' && start != '\'')
+            throw new ParseException("invalid quote char");
+        if (start != s.charAt(s.length() - 1))
+            throw new ParseException("unbalanced quote char");
+        s = s.substring(1, s.length() - 1);
+        return StringEscapeUtils.unescapeJava(s);
     }
 
 }
