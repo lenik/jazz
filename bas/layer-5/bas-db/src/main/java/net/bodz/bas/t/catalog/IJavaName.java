@@ -4,4 +4,8 @@ public interface IJavaName {
 
     String getJavaName();
 
+    default String getJavaQName() {
+        return getJavaName();
+    }
+
 }
