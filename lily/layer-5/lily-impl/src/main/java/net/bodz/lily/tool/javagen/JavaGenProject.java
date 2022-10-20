@@ -7,6 +7,7 @@ import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.lily.tool.javagen.config.ProjectConfig;
 
 public class JavaGenProject {
 
@@ -16,7 +17,7 @@ public class JavaGenProject {
     String daoPackage = "dao";
     UpdateMethod updateMethod;
 
-    List<CodegenConfig> configs;
+    List<ProjectConfig> configs;
     long randomSeed;
 
     public final ClassPathInfo Foo;

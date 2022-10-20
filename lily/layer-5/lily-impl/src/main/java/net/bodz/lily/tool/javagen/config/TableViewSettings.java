@@ -1,7 +1,8 @@
-package net.bodz.lily.tool.javagen;
+package net.bodz.lily.tool.javagen.config;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.FormatException;
@@ -13,11 +14,10 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
-import net.bodz.bas.fmt.rst.RstFn;
 import net.bodz.bas.fmt.rst.StackRstHandler;
 import net.bodz.bas.json.JsonObject;
 
-public class TableViewConfig
+public class TableViewSettings
         implements
             IRstForm,
             IJsonForm {
@@ -27,18 +27,28 @@ public class TableViewConfig
     private static final String K_DESCRIPTION = "description";
     private static final String K_COLUMNS = "columns";
     private static final String K_COLUMN = "column";
+    private static final String K_MIXINS = "mixins";
+    private static final String K_MIXIN = "mixin";
 
     public String javaName;
     public String javaType;
     public String description;
 
-    public final Map<String, ColumnConfig> columns = new HashMap<>();
+    public final Map<String, ColumnSettings> columnMap = new HashMap<>();
+    public final Map<String, MixinSettings> mixinMap = new LinkedHashMap<>();
 
-    ColumnConfig resolveColumn(String name) {
-        ColumnConfig column = columns.get(name);
+    ColumnSettings resolveColumn(String name) {
+        ColumnSettings column = columnMap.get(name);
         if (column == null)
-            columns.put(name, column = new ColumnConfig());
+            columnMap.put(name, column = new ColumnSettings());
         return column;
+    }
+
+    MixinSettings resolveMixin(String name) {
+        MixinSettings mixin = mixinMap.get(name);
+        if (mixin == null)
+            mixinMap.put(name, mixin = new MixinSettings());
+        return mixin;
     }
 
     @Override
@@ -52,8 +62,17 @@ public class TableViewConfig
         if (j_columns != null) {
             for (String k : j_columns.keySet()) {
                 JsonObject j_column = j_columns.getJsonObject(k);
-                ColumnConfig column = resolveColumn(k);
+                ColumnSettings column = resolveColumn(k);
                 column.jsonIn(j_column, opts);
+            }
+        }
+
+        JsonObject j_mixins = o.getJsonObject(K_MIXINS);
+        if (j_mixins != null) {
+            for (String k : j_mixins.keySet()) {
+                JsonObject j_mixin = j_mixins.getJsonObject(k);
+                MixinSettings mixin = resolveMixin(k);
+                mixin.jsonIn(j_mixin, opts);
             }
         }
     }
@@ -65,13 +84,24 @@ public class TableViewConfig
         out.entryNotNull(K_JAVA_TYPE, this.javaType);
         out.entryNotNull(K_DESCRIPTION, this.description);
 
-        if (columns != null && !columns.isEmpty()) {
+        if (columnMap != null) {
             out.key(K_COLUMNS);
             out.object();
-            for (String k : columns.keySet()) {
-                ColumnConfig column = columns.get(k);
+            for (String k : columnMap.keySet()) {
+                ColumnSettings column = columnMap.get(k);
                 out.key(k);
                 column.jsonOut(out, opts);
+            }
+            out.endObject();
+        }
+
+        if (mixinMap != null) {
+            out.key(K_MIXINS);
+            out.object();
+            for (String k : mixinMap.keySet()) {
+                MixinSettings mixin = mixinMap.get(k);
+                out.key(k);
+                mixin.jsonOut(out, opts);
             }
             out.endObject();
         }
@@ -90,8 +120,15 @@ public class TableViewConfig
                     if (args.length < 1)
                         throw new IllegalArgumentException("expect column name");
                     String columnName = args[0];
-                    ColumnConfig column = resolveColumn(columnName);
+                    ColumnSettings column = resolveColumn(columnName);
                     return column.getElementHandler();
+
+                case K_MIXIN:
+                    if (args.length < 1)
+                        throw new IllegalArgumentException("expect mixin name");
+                    String mixinName = args[0];
+                    MixinSettings mixin = resolveMixin(mixinName);
+                    return mixin.getElementHandler();
                 }
                 return this;
             }
@@ -129,31 +166,23 @@ public class TableViewConfig
         if (description != null)
             out.attribute(K_DESCRIPTION, this.description);
 
-        if (columns != null && !columns.isEmpty()) {
-            for (String k : columns.keySet()) {
-                ColumnConfig column = columns.get(k);
+        if (columnMap != null) {
+            for (String k : columnMap.keySet()) {
+                ColumnSettings column = columnMap.get(k);
                 out.beginElement(K_COLUMN, k);
                 column.writeObject(out);
                 out.endElement();
             }
         }
-    }
 
-    public static void main(String[] args)
-            throws ElementHandlerException, IOException, ParseException {
-        TableViewConfig tvc = new TableViewConfig();
-        ColumnConfig foo = tvc.resolveColumn("foo");
-        foo.description = "foo bar";
-        ColumnConfig age = tvc.resolveColumn("age");
-        age.description = "how old are you?";
-        String rst = RstFn.toString(tvc);
-        System.out.println(rst);
-        System.out.println("-----------");
-
-        TableViewConfig renew = new TableViewConfig();
-        RstFn.loadFromRst(renew, rst);
-        String other = RstFn.toString(renew);
-        System.out.println(other);
+        if (mixinMap != null) {
+            for (String k : mixinMap.keySet()) {
+                MixinSettings mixin = mixinMap.get(k);
+                out.beginElement(K_MIXIN, k);
+                mixin.writeObject(out);
+                out.endElement();
+            }
+        }
     }
 
 }

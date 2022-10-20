@@ -31,6 +31,9 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.tuple.Split;
+import net.bodz.lily.tool.javagen.config.ProjectConfig;
+import net.bodz.lily.tool.javagen.config.CatalogSettingsApplier;
+import net.bodz.lily.tool.javagen.config.ProjectConfigurator;
 
 @ProgramName("javagen")
 public class JavaGen
@@ -114,7 +117,7 @@ public class JavaGen
      */
     boolean forceMode;
 
-    List<CodegenConfig> configs = new ArrayList<>();
+    List<ProjectConfig> configs = new ArrayList<>();
 
     /**
      * Save the catalog metadata to file, and quit.
@@ -148,7 +151,7 @@ public class JavaGen
      */
     public void config(File configFile)
             throws ElementHandlerException, IOException, ParseException {
-        CodegenConfig config = new CodegenConfig();
+        ProjectConfig config = new ProjectConfig();
         RstFn.loadFromRst(config, configFile);
         configs.add(config);
     }
@@ -186,32 +189,24 @@ public class JavaGen
     }
 
     JavaGenProject createProject(ITableViewMetadata tableView) {
-        String simpleName = tableView.getJavaName();
+        String simpleName = tableView.getJavaQName();
         String packageName = parentPackage;
 
-        if (simpleName != null && simpleName.contains(".")) {
-            int lastDot = simpleName.lastIndexOf('.');
-            packageName = simpleName.substring(0, lastDot);
-            simpleName = simpleName.substring(lastDot + 1);
-
+        if (simpleName != null) {
+            if (simpleName.contains(".")) {
+                int lastDot = simpleName.lastIndexOf('.');
+                packageName = simpleName.substring(0, lastDot);
+                simpleName = simpleName.substring(lastDot + 1);
+            }
         } else {
             ISchemaMetadata schema = tableView.getParent();
-            ICatalogMetadata catalog = schema == null ? null : schema.getParent();
-            String catalogJavaName = catalog.getJavaName();
-            if (catalogJavaName == null)
-                catalogJavaName = Phrase.foo_bar(catalog.getName()).fooBar;
 
-            String schemaJavaQName = schema.getJavaName();
-            if (schemaJavaQName == null)
-                schemaJavaQName = Phrase.foo_bar(schema.getId().getSchemaName()).fooBar;
-            if (catalogJavaName != null)
-                schemaJavaQName = catalogJavaName + "." + schemaJavaQName;
-
+            String schemaJavaQName = schema.getJavaQName();
             if (schemaJavaQName != null)
                 packageName += "." + schemaJavaQName;
 
             if (simpleName == null)
-                simpleName = Phrase.foo_bar(tableView.getId().getTableName()).fooBar;
+                simpleName = Phrase.foo_bar(tableView.getId().getTableName()).FooBar;
         }
 
         long seed;
@@ -299,7 +294,7 @@ public class JavaGen
                         projectPart.a + "-model", //
                         null);
                 if (apiPomDir != null)
-                    headerDir = new File(apiPomDir.getBaseDir(), "src/main/java");
+                    headerDir = apiPomDir.getBaseDir();
             }
             if (headerDir == null)
                 headerDir = outDir;
@@ -377,6 +372,12 @@ public class JavaGen
 
             connection = dataContext.getConnection();
             catalog.loadFromJDBC(connection, "TABLE", "VIEW");
+
+            for (ProjectConfig config : configs) {
+                config.defaultPackageName = parentPackage;
+                catalog.accept(new ProjectConfigurator(config));
+            }
+            catalog.accept(new CatalogSettingsApplier());
 
             if (saveCatalogFile != null) {
                 String extension = FilePath.getExtension(saveCatalogFile);

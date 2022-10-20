@@ -108,11 +108,12 @@ public class MiscTemplates {
 
             Phrase name = column.nam();
             Class<?> type = column.getType();
+            String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
 
             if (type == String.class || Number.class.isAssignableFrom(type)) {
                 int precision = column.getPrecision();
                 if (precision > 0)
-                    defs.add("public static final int N_" + name.FOO_BAR + " = " + precision + ";");
+                    defs.add("public static final int N_" + constName + " = " + precision + ";");
             }
         }
         if (!defs.isEmpty()) {
@@ -137,9 +138,10 @@ public class MiscTemplates {
                 continue;
 
             Phrase name = column.nam();
+            String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
 
             int ordinal = column.getOrdinal();
-            String varName = OrdinalPrefix + name.FOO_BAR;
+            String varName = OrdinalPrefix + constName;
 
             String expr;
             int diff = ordinal - lastOrdinal;
@@ -187,6 +189,9 @@ public class MiscTemplates {
      */
     public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
         Phrase name = column.nam();
+        String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
+        String N_COL_NAME = "N_" + constName;
+
         Class<?> type = column.getType();
 
         String description = column.getDescription();
@@ -200,7 +205,7 @@ public class MiscTemplates {
 
         int ordinal = column.getOrdinal();
         if (ordinal != 0) {
-            String varName = OrdinalPrefix + column.nam().FOO_BAR;
+            String varName = OrdinalPrefix + constName;
             out.println("@" + out.im.name(Ordinal.class) + "(" + varName + ")");
         }
 
@@ -218,7 +223,6 @@ public class MiscTemplates {
         {
             if (precision > 0 && //
                     (type == String.class || Number.class.isAssignableFrom(type))) {
-                String N_COL_NAME = "N_" + name.FOO_BAR;
                 out.print("value = " + N_COL_NAME);
             } else {
                 out.print("value = " + precision);
@@ -228,7 +232,6 @@ public class MiscTemplates {
             out.println(")");
         }
 
-        String N_COL_NAME = "N_" + name.FOO_BAR;
         if (type == String.class) {
             if (precision > 0) {
                 out.println("@" + out.im.name(TextInput.class) + "(maxLength = " + N_COL_NAME + ")");

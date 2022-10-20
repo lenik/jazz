@@ -14,11 +14,11 @@ public class FooIndex__java
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
         out.println("/**");
-        out.println("* @label " + project.Foo);
+        out.println("* @label " + project.Foo.name);
         out.println("*/");
         out.printf("@%s(%s.class)\n", //
                 out.im.name(ObjectType.class), //
-                out.im.name(project.Foo));
+                out.im.name(project.Foo.name));
         out.println("public class " + project.FooIndex.name);
         out.enter();
         {
