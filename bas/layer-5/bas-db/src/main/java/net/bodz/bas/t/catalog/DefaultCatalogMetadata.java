@@ -28,6 +28,7 @@ public class DefaultCatalogMetadata
 
     String name;
     String javaName;
+    String javaPackage;
 
     String label;
     String description;
@@ -56,6 +57,16 @@ public class DefaultCatalogMetadata
     @Override
     public void setJavaName(String javaName) {
         this.javaName = javaName;
+    }
+
+    @Override
+    public String getJavaPackage() {
+        return javaPackage;
+    }
+
+    @Override
+    public void setJavaPackage(String javaPackage) {
+        this.javaPackage = javaPackage;
     }
 
     @Override
