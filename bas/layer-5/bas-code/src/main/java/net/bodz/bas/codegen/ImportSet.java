@@ -59,11 +59,20 @@ public class ImportSet
         return qName;
     }
 
-    public String ref(String className) {
-        if (className == null)
-            throw new NullPointerException("className");
+    public String ref(String genericType) {
+        if (genericType == null)
+            throw new NullPointerException("genericType");
+
+        int pos = genericType.indexOf('<');
+        String className;
+        if (pos != -1) {
+            className = genericType.substring(0, pos);
+        } else {
+            className = genericType;
+        }
+
         add(className);
-        return className;
+        return genericType;
     }
 
     public String a(Class<?> type) {
@@ -85,8 +94,25 @@ public class ImportSet
         return type.getCanonicalName();
     }
 
-    public String name(String typename) {
-        return StringPart.afterLast(ref(typename), ".");
+    /**
+     * Reference and return the simple name.
+     */
+    public String name(String genericType) {
+        int pos = genericType.indexOf('<');
+        String className;
+        if (pos != -1) {
+            className = genericType.substring(0, pos);
+        } else {
+            className = genericType;
+        }
+
+        add(className);
+
+        pos = className.lastIndexOf('.');
+        if (pos == -1)
+            return className;
+        else
+            return className.substring(pos + 1);
     }
 
     public String name(Class<?> type) {
