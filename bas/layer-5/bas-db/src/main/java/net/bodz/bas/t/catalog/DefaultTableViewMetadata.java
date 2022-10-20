@@ -23,6 +23,8 @@ public abstract class DefaultTableViewMetadata
 
     TableOid oid = new TableOid();
     String javaName;
+    String javaPackage;
+    String javaType;
 
     TableType tableType = getDefaultTableType();
 
@@ -30,8 +32,6 @@ public abstract class DefaultTableViewMetadata
     String description;
     TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
-
-    String javaType;
 
     public DefaultTableViewMetadata() {
     }
@@ -62,16 +62,26 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
-    public String getJavaQName() {
-        String qName = getJavaName();
-        if (qName == null)
-            return null;
-        if (parent != null) {
-            String parentName = parent.getJavaQName();
-            if (parentName != null)
-                qName = parentName + "." + qName;
-        }
-        return qName;
+    public String getJavaPackage() {
+        if (javaPackage != null)
+            return javaPackage;
+        if (parent != null)
+            return parent.getJavaQName();
+        return null;
+    }
+
+    @Override
+    public void setJavaPackage(String javaPackage) {
+        this.javaPackage = javaPackage;
+    }
+
+    @Override
+    public String getJavaType() {
+        return javaType;
+    }
+
+    public void setJavaType(String javaType) {
+        this.javaType = javaType;
     }
 
     @Override
@@ -113,15 +123,6 @@ public abstract class DefaultTableViewMetadata
                 mutable.setPrimaryKey(isPrimaryKey);
             }
         }
-    }
-
-    @Override
-    public String getJavaType() {
-        return javaType;
-    }
-
-    public void setJavaType(String javaType) {
-        this.javaType = javaType;
     }
 
     @Override

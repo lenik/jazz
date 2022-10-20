@@ -27,6 +27,7 @@ public class DefaultSchemaMetadata
     SchemaOid schemaId = new SchemaOid();
     String contextCatalogName;
     String javaName;
+    String javaPackage;
 
     String label;
     String description;
@@ -75,16 +76,17 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public String getJavaQName() {
-        String qName = getJavaName();
-        if (qName == null)
-            return null;
-        if (parent != null) {
-            String parentName = parent.getJavaQName();
-            if (parentName != null)
-                qName = parentName + "." + qName;
-        }
-        return qName;
+    public String getJavaPackage() {
+        if (javaPackage != null)
+            return javaPackage;
+        if (parent != null)
+            return parent.getJavaQName();
+        return null;
+    }
+
+    @Override
+    public void setJavaPackage(String javaPackage) {
+        this.javaPackage = javaPackage;
     }
 
     @Override
