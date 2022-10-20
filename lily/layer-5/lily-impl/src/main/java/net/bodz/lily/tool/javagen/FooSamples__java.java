@@ -67,6 +67,9 @@ public class FooSamples__java
                         out.im.name(project.Foo), out.im.name(project.Foo));
 
                 for (IColumnMetadata column : table.getColumns()) {
+                    if (column.isExcluded()) // mixin?
+                        continue;
+
                     Phrase name = column.nam();
                     Class<?> type = column.getType();
                     // FK..

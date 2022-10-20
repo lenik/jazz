@@ -1,4 +1,4 @@
-package net.bodz.lily.tool.javagen;
+package net.bodz.lily.tool.javagen.config;
 
 import java.io.File;
 
@@ -11,8 +11,8 @@ import net.bodz.bas.program.skel.BasicCLI;
 /**
  * Convert codegen-config in rst format to specified format.
  */
-@ProgramName("ccc")
-public class CodegenConfigConv
+@ProgramName("cfgconv")
+public class ConfigFormatConv
         extends BasicCLI {
 
     /**
@@ -37,7 +37,7 @@ public class CodegenConfigConv
         }
 
         for (String arg : args) {
-            CodegenConfig cc = new CodegenConfig();
+            ProjectConfig cc = new ProjectConfig();
             File file = new File(arg);
             RstFn.loadFromRst(cc, file);
 
@@ -55,7 +55,7 @@ public class CodegenConfigConv
 
     public static void main(String[] args)
             throws Exception {
-        new CodegenConfigConv().execute(args);
+        new ConfigFormatConv().execute(args);
     }
 
 }
