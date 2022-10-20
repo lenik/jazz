@@ -19,7 +19,9 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
+import net.bodz.lily.meta.CriteriaClass;
 
+@CriteriaClass(CoNodeMask.class)
 @IncludeMapperXml
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoEntity<Id> {

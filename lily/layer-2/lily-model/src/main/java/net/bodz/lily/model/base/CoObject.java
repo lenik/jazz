@@ -36,6 +36,7 @@ import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.model.base.impl.DefaultWebSupport;
 import net.bodz.lily.model.base.impl.IWebSupport;
 import net.bodz.lily.security.Group;
@@ -47,6 +48,7 @@ import net.bodz.lily.security.login.ILoginListener;
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
+@CriteriaClass(CoObjectMask.class)
 @IncludeMapperXml
 public abstract class CoObject
         extends StructRow
