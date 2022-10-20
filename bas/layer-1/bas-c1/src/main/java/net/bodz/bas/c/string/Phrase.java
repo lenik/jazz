@@ -45,8 +45,13 @@ public class Phrase {
         if (foo_bar != null) {
             phrase.foo_bar = foo_bar;
             phrase.FOO_BAR = foo_bar.toUpperCase();
-            phrase.fooBar = fooBar;
-            phrase.FooBar = Strings.ucfirst(fooBar);
+            if (fooBar != null) {
+                phrase.fooBar = fooBar;
+                phrase.FooBar = Strings.ucfirst(fooBar);
+            } else {
+                phrase.fooBar = StringId.UL.toCamel(foo_bar);
+                phrase.FooBar = Strings.ucfirst(phrase.fooBar);
+            }
         }
         return phrase;
     }
