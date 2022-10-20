@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -61,6 +62,15 @@ public interface IRowSetMetadata
     }
 
     IColumnMetadata getColumn(int index);
+
+    default IColumnMetadata findColumnByJavaName(String javaName) {
+        if (javaName == null)
+            throw new NullPointerException("javaName");
+        for (IColumnMetadata column : getColumns())
+            if (Nullables.equals(column.getJavaName(), javaName))
+                return column;
+        return null;
+    }
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
