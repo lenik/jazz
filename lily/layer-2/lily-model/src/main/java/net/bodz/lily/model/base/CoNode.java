@@ -20,9 +20,12 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
 
 @CriteriaClass(CoNodeMask.class)
 @IncludeMapperXml
+@TypeParameters({ TypeParamType.THIS_TYPE, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoEntity<Id> {
 

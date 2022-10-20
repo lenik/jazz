@@ -2,9 +2,9 @@ package net.bodz.lily.security;
 
 public interface IPosixAccessControl {
 
-    int getUserId();
+    Integer getUserId();
 
-    int getGroupId();
+    Integer getGroupId();
 
     int getAccessMode();
 
