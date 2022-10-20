@@ -18,6 +18,7 @@ import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.schema.ParameterMap;
 import net.bodz.lily.security.User;
@@ -29,6 +30,7 @@ import net.bodz.lily.template.RichProperties;
  * @label Message
  * @label.zh 消息
  */
+@CriteriaClass(CoMessageMask.class)
 @IncludeMapperXml
 @UploadHint
 public abstract class CoMessage<Id>

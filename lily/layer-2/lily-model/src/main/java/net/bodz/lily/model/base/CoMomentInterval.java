@@ -10,11 +10,14 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IMomentInterval;
+import net.bodz.lily.meta.CriteriaClass;
 
+@CriteriaClass(CoMomentIntervalMask.class)
 @IncludeMapperXml
 public abstract class CoMomentInterval<Id>
         extends CoEntity<Id>
-        implements IMomentInterval {
+        implements
+            IMomentInterval {
 
     private static final long serialVersionUID = 1L;
 

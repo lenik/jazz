@@ -29,7 +29,9 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
+import net.bodz.lily.meta.CriteriaClass;
 
+@CriteriaClass(StructRowMask.class)
 public abstract class StructRow
         implements
             IContent,
