@@ -26,6 +26,11 @@ public class Split
         return new Split(a, b);
     }
 
+    @Override
+    public String toString() {
+        return "(" + a + ", " + b + ")";
+    }
+
     public Split swap() {
         String tmp = a;
         a = b;
