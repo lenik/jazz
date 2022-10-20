@@ -19,6 +19,8 @@ import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.model.base.CoMomentInterval;
 import net.bodz.lily.schema.ParameterMap;
 import net.bodz.lily.security.User;
@@ -32,6 +34,7 @@ import net.bodz.lily.template.RichProperties;
  */
 @CriteriaClass(CoMessageMask.class)
 @IncludeMapperXml
+@TypeParameters({ TypeParamType.ID_TYPE })
 @UploadHint
 public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>

@@ -84,7 +84,7 @@ public abstract class CoObject
     // A = uid, gid, mode, acl
     private User ownerUser;
     private Group ownerGroup;
-    private int acl;
+    private Integer acl;
     private int accessMode = IAccessMode.M_PUBLIC;
 
     public CoObject() {
@@ -332,16 +332,16 @@ public abstract class CoObject
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)
     @Override
-    public int getUserId() {
-        return ownerUser == null ? 0 : ownerUser.id();
+    public Integer getUserId() {
+        return ownerUser == null ? null : ownerUser.id();
     }
 
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)
     @Override
-    public int getGroupId() {
-        return ownerGroup == null ? 0 : ownerGroup.id();
+    public Integer getGroupId() {
+        return ownerGroup == null ? null : ownerGroup.id();
     }
 
     /**
@@ -396,11 +396,11 @@ public abstract class CoObject
     @FormInput(nullconv = NullConvertion.ZERO)
     @OfGroup(StdGroup.Security.class)
     @Override
-    public int getAcl() {
+    public Integer getAcl() {
         return acl;
     }
 
-    public void setAcl(int acl) {
+    public void setAcl(Integer acl) {
         this.acl = acl;
     }
 

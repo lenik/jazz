@@ -5,8 +5,9 @@ package net.bodz.lily.security;
  * @label.zh 访问控制
  */
 public interface IAccessControlled
-        extends IPosixAccessControl {
+        extends
+            IPosixAccessControl {
 
-    int getAcl();
+    Integer getAcl();
 
 }
