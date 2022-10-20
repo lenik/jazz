@@ -75,6 +75,19 @@ public class DefaultSchemaMetadata
     }
 
     @Override
+    public String getJavaQName() {
+        String qName = getJavaName();
+        if (qName == null)
+            return null;
+        if (parent != null) {
+            String parentName = parent.getJavaQName();
+            if (parentName != null)
+                qName = parentName + "." + qName;
+        }
+        return qName;
+    }
+
+    @Override
     public boolean isValidTableId(TableOid tableName) {
         if (tableName == null)
             throw new NullPointerException("tableName");

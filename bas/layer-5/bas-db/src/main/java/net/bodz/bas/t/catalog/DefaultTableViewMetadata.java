@@ -62,6 +62,19 @@ public abstract class DefaultTableViewMetadata
     }
 
     @Override
+    public String getJavaQName() {
+        String qName = getJavaName();
+        if (qName == null)
+            return null;
+        if (parent != null) {
+            String parentName = parent.getJavaQName();
+            if (parentName != null)
+                qName = parentName + "." + qName;
+        }
+        return qName;
+    }
+
+    @Override
     public TableType getTableType() {
         return tableType;
     }
