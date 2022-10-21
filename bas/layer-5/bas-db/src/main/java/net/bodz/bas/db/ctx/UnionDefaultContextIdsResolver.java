@@ -6,14 +6,14 @@ import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.order.PriorityComparator;
 
 @ExcludedFromIndex
-public class UnionDefaultContextIdResolver
+public class UnionDefaultContextIdsResolver
         implements
             IDefaultContextIdsResolver {
 
     private List<IDefaultContextIdsResolver> resolvers;
     private int maxLevel;
 
-    public UnionDefaultContextIdResolver() {
+    public UnionDefaultContextIdsResolver() {
         reload();
     }
 
@@ -32,6 +32,10 @@ public class UnionDefaultContextIdResolver
         this.maxLevel = maxOfAll;
     }
 
+    public List<IDefaultContextIdsResolver> getResolvers() {
+        return resolvers;
+    }
+
     @Override
     public int getMaxLevel() {
         return maxLevel;
@@ -48,13 +52,13 @@ public class UnionDefaultContextIdResolver
         return union;
     }
 
-    private static UnionDefaultContextIdResolver instance;
+    private static UnionDefaultContextIdsResolver instance;
 
-    public static UnionDefaultContextIdResolver getInstance() {
+    public static UnionDefaultContextIdsResolver getInstance() {
         if (instance == null) {
-            synchronized (UnionDefaultContextIdResolver.class) {
+            synchronized (UnionDefaultContextIdsResolver.class) {
                 if (instance == null) {
-                    instance = new UnionDefaultContextIdResolver();
+                    instance = new UnionDefaultContextIdsResolver();
                 }
             }
         }

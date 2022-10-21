@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 import net.bodz.bas.db.jdbc.ConnectOptions;
+import net.bodz.bas.err.NoSuchKeyException;
+import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -24,7 +28,7 @@ public class DataHub
     public static final String K_TEMPLATE = "template";
 
     private List<IDataContextProvider> dataContextProviders;
-    IDefaultContextIdsResolver defaultContextIdsResolver;
+    UnionDefaultContextIdsResolver defaultContextIdsResolver;
 
     public DataHub() {
         reload();
@@ -36,7 +40,12 @@ public class DataHub
             dataContextProviders.add(provider);
         Collections.sort(dataContextProviders, PriorityComparator.INSTANCE);
 
-        defaultContextIdsResolver = UnionDefaultContextIdResolver.getInstance();
+        defaultContextIdsResolver = UnionDefaultContextIdsResolver.getInstance();
+    }
+
+    @Override
+    public Map<String, ConnectOptions> getConnectOptionsMap() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -57,6 +66,15 @@ public class DataHub
                 return dataContext;
         }
         return null;
+    }
+
+    public DataContext findDataContextForScopeChecked(String scope) {
+        DataContext dataContext = findDataContextForScope(scope);
+        if (dataContext == null) {
+            dump(Stdio.err.indented());
+            throw new NoSuchKeyException(scope);
+        }
+        return dataContext;
     }
 
     public DataContext findDataContextForScope(String scope) {
@@ -82,11 +100,11 @@ public class DataHub
     }
 
     public DataContext getMain() {
-        return findDataContextForScope(K_MAIN);
+        return findDataContextForScopeChecked(K_MAIN);
     }
 
     public DataContext getTest() {
-        return findDataContextForScope(K_TEST);
+        return findDataContextForScopeChecked(K_TEST);
     }
 
     public ConnectOptions getTemplate() {
@@ -98,6 +116,33 @@ public class DataHub
             template = main.getOptions();
         }
         return template;
+    }
+
+    void dump(ITreeOut out) {
+        out.enterln("Providers:");
+        for (IDataContextProvider provider : dataContextProviders) {
+            out.enterln("Provider " + provider.getClass().getName() + ": ");
+
+            Map<String, ConnectOptions> map = provider.getConnectOptionsMap();
+            for (String key : map.keySet()) {
+                ConnectOptions options = map.get(key);
+                out.printf("%s: %s@%s/%s\n", //
+                        key, options.getUserName(), options.getHostName(), options.getDatabase());
+            }
+            out.leave();
+            out.println();
+        }
+        out.leave();
+
+        int level = 0;
+        out.enterln("Default context ids: ");
+        for (IDefaultContextIdsResolver resolver : defaultContextIdsResolver.getResolvers()) {
+            Collection<String> ids = resolver.resolveContextIds(level);
+            if (ids != null && !ids.isEmpty()) {
+                out.printf("%s: %s\n", resolver.getClass().getName(), ids);
+            }
+        }
+        out.leave();
     }
 
     static DataHub instance = new DataHub();

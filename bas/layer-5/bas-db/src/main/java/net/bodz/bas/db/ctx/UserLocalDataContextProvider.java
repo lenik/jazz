@@ -8,12 +8,12 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
 
 @Priority(Priority.LOW)
-public class DefaultDataContextProvider
+public class UserLocalDataContextProvider
         extends LocalDataContextProvider {
 
-    static final Logger logger = LoggerFactory.getLogger(DefaultDataContextProvider.class);
+    static final Logger logger = LoggerFactory.getLogger(UserLocalDataContextProvider.class);
 
-    public DefaultDataContextProvider() {
+    public UserLocalDataContextProvider() {
         super(getDefaultFolder());
     }
 

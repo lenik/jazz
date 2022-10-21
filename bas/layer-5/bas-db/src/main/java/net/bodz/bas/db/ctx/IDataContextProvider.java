@@ -1,5 +1,7 @@
 package net.bodz.bas.db.ctx;
 
+import java.util.Map;
+
 import net.bodz.bas.db.jdbc.ConnectOptions;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -9,6 +11,8 @@ import net.bodz.bas.t.order.IAutoPriority;
 public interface IDataContextProvider
         extends
             IAutoPriority {
+
+    Map<String, ConnectOptions> getConnectOptionsMap();
 
     /**
      * @return <code>null</code> if not defined.

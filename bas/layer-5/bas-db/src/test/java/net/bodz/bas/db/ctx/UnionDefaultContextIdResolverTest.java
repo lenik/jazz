@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class UnionDefaultContextIdResolverTest {
 
-    IDefaultContextIdsResolver union = UnionDefaultContextIdResolver.getInstance();
+    IDefaultContextIdsResolver union = UnionDefaultContextIdsResolver.getInstance();
 
     @Test
     public void testImpls() {
