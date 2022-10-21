@@ -58,7 +58,7 @@ public abstract class AbstractType
     }
 
     @Override
-    public List<IProperty> getPropertyVector(String pathProperty)
+    public List<IProperty> resolvePropertyVector(String pathProperty)
             throws NoSuchPropertyException {
         if (pathProperty == null)
             throw new NullPointerException("pathProperty");

@@ -6,7 +6,8 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface ITypeProvider
-        extends IPriority {
+        extends
+            IPriority {
 
     int I_Properties = 0x10000;
     int I_Methods = 0x20000;
@@ -17,9 +18,13 @@ public interface ITypeProvider
 
     int getDefaultInfoset();
 
-    IType loadType(Class<?> clazz);
+    default IType loadType(Class<?> clazz) {
+        return loadType(clazz, null, getDefaultInfoset());
+    }
 
-    IType loadType(Class<?> clazz, Object obj);
+    default IType loadType(Class<?> clazz, Object obj) {
+        return loadType(clazz, obj, getDefaultInfoset());
+    }
 
     IType loadType(Class<?> clazz, Object obj, int infoset);
 
