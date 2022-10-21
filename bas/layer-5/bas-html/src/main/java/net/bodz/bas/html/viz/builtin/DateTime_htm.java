@@ -9,7 +9,7 @@ import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.html.util.FieldDeclToHtml;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class DateTime_htm
@@ -20,7 +20,7 @@ public class DateTime_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<DateTime> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<DateTime> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         DateTime dateTime = ref.get();
 

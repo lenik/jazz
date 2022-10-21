@@ -66,8 +66,8 @@ public class FormDeclBuilder {
             if (!filter(property))
                 continue;
 
-            IFieldDecl fieldDecl = new MutableFieldDecl().populate(property);
-            result.addFieldDecl(property.getName(), fieldDecl);
+            IFormProperty formProperty = new MutableFormProperty().populate(property);
+            result.addFieldDecl(property.getName(), formProperty);
         }
         return result;
     }

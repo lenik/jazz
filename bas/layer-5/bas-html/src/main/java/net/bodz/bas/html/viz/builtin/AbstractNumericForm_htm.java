@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public abstract class AbstractNumericForm_htm<T extends Number>
@@ -16,7 +16,7 @@ public abstract class AbstractNumericForm_htm<T extends Number>
     }
 
     @Override
-    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<T> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         HtmlInput input = out.input().type("number").class_("noprint");
         return input;

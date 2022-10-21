@@ -1,7 +1,13 @@
 package net.bodz.bas.repr.form;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeExtras;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
@@ -12,20 +18,48 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.ui.dom1.IUiElement;
 
 public interface IFormDecl
-        extends IMetadata, IUiElement {
+        extends
+            IMetadata,
+            IUiElement {
 
-    IFieldDecl getFieldDecl(String name);
+    IFormProperty getProperty(String name);
 
     /**
-     * @see FieldCategory#groupByCategory(Iterable)
+     * @see PropertyCategory#groupByCategory(Iterable)
      */
-    Collection<IFieldDecl> getFieldDecls();
+    Collection<IFormProperty> getProperties();
 
-    Collection<IFieldDecl> getFieldDecls(IFieldDeclFilter filter);
+    Collection<IFormProperty> getProperties(PropertyFilter filter);
 
-    Collection<FieldDeclGroup> getFieldGroups();
+    Collection<PropertyGroup> getPropertyGroups();
 
-    Collection<FieldDeclGroup> getFieldGroups(IFieldDeclFilter filter);
+    Collection<PropertyGroup> getPropertyGroups(PropertyFilter filter);
+
+    List<PropertyChain> resolvePattern(String pathPattern)
+            throws NoSuchPropertyException, ParseException;
+
+    default List<PropertyChain> resolvePatterns(String... pathPatterns)
+            throws NoSuchPropertyException, ParseException {
+        return resolvePatterns(Arrays.asList(pathPatterns));
+    }
+
+    default List<PropertyChain> resolvePatterns(Collection<String> pathPatterns)
+            throws NoSuchPropertyException, ParseException {
+        List<PropertyChain> list = new ArrayList<>();
+        for (String path : pathPatterns) {
+            for (PropertyChain chain : resolvePattern(path))
+                list.add(chain);
+        }
+        return list;
+    }
+
+    default Map<String, PropertyChain> resolvePatternsToMap(Collection<String> pathProperties)
+            throws NoSuchPropertyException, ParseException {
+        Map<String, PropertyChain> map = new LinkedHashMap<>();
+        for (PropertyChain chain : resolvePatterns(pathProperties))
+            map.put(chain.getPath(), chain);
+        return map;
+    }
 
     class fn {
 

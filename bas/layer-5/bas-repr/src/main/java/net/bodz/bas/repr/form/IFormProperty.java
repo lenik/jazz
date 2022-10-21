@@ -3,6 +3,8 @@ package net.bodz.bas.repr.form;
 import java.text.NumberFormat;
 import java.util.Collection;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.potato.element.IProperty;
@@ -12,8 +14,11 @@ import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.IUiElement;
 import net.bodz.bas.ui.style.IInputBehaviorDeclaration;
 
-public interface IFieldDecl
-        extends IMetadata, IUiElement, IPriority {
+public interface IFormProperty
+        extends
+            IMetadata,
+            IUiElement,
+            IPriority {
 
     IPropertyAccessor getAccessor();
 
@@ -26,7 +31,7 @@ public interface IFieldDecl
     /**
      * @return <code>null</code> if it's not belong to any category.
      */
-    FieldCategory getCategory();
+    PropertyCategory getCategory();
 
     String getFace();
 
@@ -106,5 +111,8 @@ public interface IFieldDecl
     SortOrder getItemSortOrder();
 
     Collection<IValidator<Object>> getValidators();
+
+    PropertyChain resolvePropertyChain(String path)
+            throws NoSuchPropertyException, ParseException;
 
 }

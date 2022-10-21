@@ -1,13 +1,13 @@
 package net.bodz.bas.repr.form;
 
-public class FieldDeclFilters {
+public class PropertyFilters {
 
     public static final MaxDetailLevel maxDetailLevel(int n) {
         return new MaxDetailLevel(n);
     }
 
     static class MaxDetailLevel
-            implements IFieldDeclFilter {
+            implements PropertyFilter {
 
         final int maxDetailLevel;
 
@@ -16,7 +16,7 @@ public class FieldDeclFilters {
         }
 
         @Override
-        public boolean accept(IFieldDecl fieldDecl) {
+        public boolean accept(IFormProperty fieldDecl) {
             return fieldDecl.getDetailLevel() <= maxDetailLevel;
         }
 

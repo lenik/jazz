@@ -12,10 +12,10 @@ import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.bas.repr.form.FieldCategory;
-import net.bodz.bas.repr.form.FieldDeclFilters;
-import net.bodz.bas.repr.form.FieldDeclGroup;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.PropertyCategory;
+import net.bodz.bas.repr.form.PropertyFilters;
+import net.bodz.bas.repr.form.PropertyGroup;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -53,21 +53,21 @@ public abstract class AbstractForm_htm<T>
         IHtmlOut formTag = beginForm(ctx, out, ref);
 
         HtmlDiv fgvOut = formTag.div().class_("field-groups");
-        Collection<FieldDeclGroup> groups = formDecl
-                .getFieldGroups(FieldDeclFilters.maxDetailLevel(DetailLevel.DETAIL));
+        Collection<PropertyGroup> groups = formDecl
+                .getPropertyGroups(PropertyFilters.maxDetailLevel(DetailLevel.DETAIL));
 
 // MarkSet<Object> markSet = ctx.getAttribute(ATTRIBUTE_MARKSET);
 // if (markSet == null)
 // ctx.setAttribute(ATTRIBUTE_MARKSET, markSet = new MarkSet<>());
 // markSet.add(ref);
 
-        for (FieldDeclGroup group : groups) {
+        for (PropertyGroup group : groups) {
             if (overrideFieldGroup(ctx, fgvOut, ref, group))
                 continue;
 
             // filter field[category] -> selection
-            List<IFieldDecl> selection = new ArrayList<IFieldDecl>();
-            for (IFieldDecl fieldDecl : group)
+            List<IFormProperty> selection = new ArrayList<IFormProperty>();
+            for (IFormProperty fieldDecl : group)
                 if (filterField(fieldDecl))
                     selection.add(fieldDecl);
             if (selection.isEmpty())
@@ -77,10 +77,10 @@ public abstract class AbstractForm_htm<T>
             if (selection == null || selection.isEmpty())
                 continue;
 
-            FieldCategory category = group.getCategory();
+            PropertyCategory category = group.getCategory();
             IHtmlOut catTag = beginCategory(ctx, fgvOut, category);
 
-            for (IFieldDecl fieldDecl : selection) {
+            for (IFormProperty fieldDecl : selection) {
                 IHtmlOut fieldTag = beginField(ctx, catTag, fieldDecl);
                 fieldBody(ctx, fieldTag, ref, fieldDecl);
                 endField(ctx, catTag, fieldTag, fieldDecl);
@@ -93,7 +93,7 @@ public abstract class AbstractForm_htm<T>
         return out;
     }
 
-    protected boolean filterField(IFieldDecl formField) {
+    protected boolean filterField(IFormProperty formField) {
         IProperty property = formField.getProperty();
         if (property == null)
             return false;
@@ -122,30 +122,30 @@ public abstract class AbstractForm_htm<T>
      * @return Whether the processing of the field group is completed. Returns <code>true</code> to
      *         override the default process.
      */
-    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, FieldDeclGroup group)
+    protected boolean overrideFieldGroup(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, PropertyGroup group)
             throws ViewBuilderException, IOException {
         return false;
     }
 
-    protected List<IFieldDecl> overrideFieldSelection(IUiRef<?> instanceRef, FieldDeclGroup group,
-            List<IFieldDecl> selection)
+    protected List<IFormProperty> overrideFieldSelection(IUiRef<?> instanceRef, PropertyGroup group,
+            List<IFormProperty> selection)
             throws ViewBuilderException, IOException {
         return selection;
     }
 
-    protected abstract IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, FieldCategory category)
+    protected abstract IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, PropertyCategory category)
             throws ViewBuilderException, IOException;
 
-    protected abstract IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut out, IFieldDecl fieldDecl)
+    protected abstract IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut out, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
+    protected abstract void fieldBody(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> instanceRef, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFieldDecl fieldDecl)
+    protected abstract void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException;
 
-    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, FieldCategory category);
+    protected abstract void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, PropertyCategory category);
 
     protected void endForm(IHtmlViewContext ctx, IHtmlOut out, IUiRef<?> ref)
             throws ViewBuilderException, IOException {

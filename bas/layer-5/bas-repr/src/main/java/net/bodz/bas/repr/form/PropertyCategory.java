@@ -14,9 +14,10 @@ import net.bodz.bas.ui.dom1.MutableUiElement;
 /**
  * @see net.bodz.bas.repr.form.meta.OfGroup
  */
-public class FieldCategory
+public class PropertyCategory
         extends MutableUiElement
-        implements IPriority {
+        implements
+            IPriority {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +25,7 @@ public class FieldCategory
     IType groupType;
     int priority;
 
-    public FieldCategory(Class<?> tagClass) {
+    public PropertyCategory(Class<?> tagClass) {
         this.tagClass = tagClass;
     }
 
@@ -42,17 +43,17 @@ public class FieldCategory
         this.priority = priority;
     }
 
-    public static final FieldCategory NULL = new FieldCategory(Object.class);
+    public static final PropertyCategory NULL = new PropertyCategory(Object.class);
     static {
         NULL.setPriority(-100);
     }
 
-    static Map<Class<?>, FieldCategory> registry = new HashMap<Class<?>, FieldCategory>();
+    static Map<Class<?>, PropertyCategory> registry = new HashMap<Class<?>, PropertyCategory>();
 
-    public static FieldCategory fromTagClass(Class<?> tagClass) {
-        FieldCategory category = registry.get(tagClass);
+    public static PropertyCategory fromTagClass(Class<?> tagClass) {
+        PropertyCategory category = registry.get(tagClass);
         if (category == null) {
-            category = new FieldCategory(tagClass);
+            category = new PropertyCategory(tagClass);
             IType type = PotatoTypes.getInstance().loadType(tagClass);
 
             IMutableElement.fn.copy1(type, category);

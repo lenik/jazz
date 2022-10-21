@@ -1,5 +1,7 @@
 package net.bodz.bas.repr.form;
 
+import java.util.List;
+
 import org.junit.Assert;
 
 import net.bodz.bas.potato.PotatoTypes;
@@ -11,7 +13,7 @@ import user.book.Org;
 import user.book.Page;
 import user.book.Store;
 
-public class PathFieldListTest
+public class PropertyListTest
         extends Assert {
 
     static Author lenik = new Author("lenik");
@@ -32,13 +34,12 @@ public class PathFieldListTest
             throws Exception {
         IType bookType = PotatoTypes.getInstance().loadType(Book.class);
 
-        PathFieldList fields = new PathFieldList();
         MutableFormDecl formDecl = new FormDeclBuilder().build(bookType);
-        fields.parseAndAdd(formDecl, "author.name");
+        List<PropertyChain> list = formDecl.resolvePattern("author.name");
 
-        for (PathField pf : fields) {
-            Object value = pf.getValue(tutorial);
-            System.out.printf("tutorial[%s] => %s.\n", pf.getPath(), value);
+        for (PropertyChain chain : list) {
+            Object value = chain.getValue(tutorial);
+            System.out.printf("tutorial[%s] => %s.\n", chain.getPath(), value);
         }
     }
 

@@ -2,9 +2,12 @@ package net.bodz.bas.repr.form;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
@@ -14,9 +17,11 @@ import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IAnnotated;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IPropertyAccessor;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.IndexColumn;
 import net.bodz.bas.repr.form.meta.ListInput;
@@ -27,9 +32,10 @@ import net.bodz.bas.typer.std.IValidator;
 import net.bodz.bas.ui.dom1.MutableUiElement;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class MutableFieldDecl
+public class MutableFormProperty
         extends MutableUiElement
-        implements IFieldDecl {
+        implements
+            IFormProperty {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +45,7 @@ public class MutableFieldDecl
     Object valueOverride;
 
     int priority;
-    FieldCategory category;
+    PropertyCategory category;
 
     String face;
     String styleClass;
@@ -114,11 +120,11 @@ public class MutableFieldDecl
     }
 
     @Override
-    public FieldCategory getCategory() {
+    public PropertyCategory getCategory() {
         return category;
     }
 
-    public void setCategory(FieldCategory category) {
+    public void setCategory(PropertyCategory category) {
         this.category = category;
     }
 
@@ -316,6 +322,28 @@ public class MutableFieldDecl
     }
 
     @Override
+    public PropertyChain resolvePropertyChain(String path)
+            throws NoSuchPropertyException, ParseException {
+        if (path == null || path.isEmpty())
+            return new PropertyChain(getName(), Arrays.asList(this));
+
+        Class<?> valueType = getValueType();
+        IType type = PotatoTypes.getInstance().loadType(valueType);
+
+        List<IProperty> vector = type.resolvePropertyVector(path);
+
+        List<IFormProperty> concat = new ArrayList<IFormProperty>(vector.size());
+        concat.add(this);
+        for (IProperty entry : vector) {
+            IFormProperty formEntry = new MutableFormProperty().populate(entry);
+            concat.add(formEntry);
+        }
+
+        String fullPath = getName() + "." + path;
+        return new PropertyChain(fullPath, concat);
+    }
+
+    @Override
     public void populate(IElementDoc doc)
             throws ParseException {
         super.populate(doc);
@@ -344,7 +372,7 @@ public class MutableFieldDecl
         if (aOfGroup != null) {
             Class<?>[] ofGroups = aOfGroup.value();
             if (ofGroups.length >= 1) {
-                FieldCategory category = FieldCategory.fromTagClass(ofGroups[0]);
+                PropertyCategory category = PropertyCategory.fromTagClass(ofGroups[0]);
                 this.setCategory(category);
             }
         }
@@ -401,7 +429,7 @@ public class MutableFieldDecl
         }
     }
 
-    public MutableFieldDecl populate(IProperty property)
+    public MutableFormProperty populate(IProperty property)
             throws ParseException {
         this.setProperty(property);
         this.setReadOnly(!property.isWritable());

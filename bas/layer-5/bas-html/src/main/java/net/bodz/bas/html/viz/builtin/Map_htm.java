@@ -12,7 +12,7 @@ import net.bodz.bas.html.io.tag.HtmlTable;
 import net.bodz.bas.html.io.tag.HtmlTr;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class Map_htm
@@ -23,7 +23,7 @@ public class Map_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Map<?, ?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Map<?, ?>> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         Map<?, ?> map = ref.get();
         if (map == null) {

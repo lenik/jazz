@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.form;
 
-public class PathFieldAccessOptons {
+public class PropertyChainAccessOptions {
 
     /**
      * return <code>null</code> value if property missing.

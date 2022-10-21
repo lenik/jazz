@@ -12,7 +12,7 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -27,7 +27,7 @@ public abstract class AbstractTextForm_htm<T>
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<T> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         T value = null;
         try {
@@ -62,7 +62,7 @@ public abstract class AbstractTextForm_htm<T>
         out.span().class_("print").text(str);
     }
 
-    protected abstract IHtmlOut createScreenInput(IHtmlOut out, UiPropertyRef<T> ref, IFieldDecl fieldDecl)
+    protected abstract IHtmlOut createScreenInput(IHtmlOut out, UiPropertyRef<T> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException;
 
 }

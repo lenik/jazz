@@ -1,9 +1,9 @@
 package net.bodz.bas.repr.form;
 
-import java.util.*;
-
-import net.bodz.bas.t.order.DefaultComparator;
-import net.bodz.bas.t.order.DefaultDescendingComparator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class MutableFormDecl
         extends AbstractFormDecl {
@@ -11,23 +11,11 @@ public class MutableFormDecl
     private static final long serialVersionUID = 1L;
 
     private Object source;
-    private Map<String, IFieldDecl> map;
+    private Map<String, IFormProperty> map;
 
     public MutableFormDecl(Object source, SortOrder sortOrder) {
         this.source = source;
-        switch (sortOrder) {
-        case KEEP:
-            map = new LinkedHashMap<String, IFieldDecl>();
-            break;
-        case ASCENDING:
-            map = new TreeMap<String, IFieldDecl>(DefaultComparator.getInstance());
-        case DESCENDING:
-            map = new TreeMap<String, IFieldDecl>(DefaultDescendingComparator.getInstance());
-        case NONE:
-        default:
-            map = new HashMap<String, IFieldDecl>();
-            break;
-        }
+        this.map = sortOrder.newMap();
     }
 
     public Object getDeclaringSource() {
@@ -35,25 +23,25 @@ public class MutableFormDecl
     }
 
     @Override
-    public IFieldDecl getFieldDecl(String name) {
+    public IFormProperty getProperty(String name) {
         return map.get(name);
     }
 
     @Override
-    public Collection<IFieldDecl> getFieldDecls() {
+    public Collection<IFormProperty> getProperties() {
         return map.values();
     }
 
     @Override
-    public Collection<IFieldDecl> getFieldDecls(IFieldDeclFilter filter) {
-        List<IFieldDecl> list = new ArrayList<IFieldDecl>(map.size());
-        for (IFieldDecl a : map.values())
+    public Collection<IFormProperty> getProperties(PropertyFilter filter) {
+        List<IFormProperty> list = new ArrayList<IFormProperty>(map.size());
+        for (IFormProperty a : map.values())
             if (filter.accept(a))
                 list.add(a);
         return list;
     }
 
-    public void addFieldDecl(String name, IFieldDecl fieldDecl) {
+    public void addFieldDecl(String name, IFormProperty fieldDecl) {
         if (name == null)
             throw new NullPointerException("name");
         if (fieldDecl == null)

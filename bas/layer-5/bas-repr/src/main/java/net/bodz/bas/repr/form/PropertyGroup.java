@@ -9,15 +9,15 @@ import java.util.Set;
 
 import net.bodz.bas.i18n.dom1.ElementComparator;
 
-public class FieldDeclGroup
-        extends ArrayList<IFieldDecl> {
+public class PropertyGroup
+        extends ArrayList<IFormProperty> {
 
     private static final long serialVersionUID = 1L;
 
     private IFormDecl formDecl;
-    private FieldCategory category;
+    private PropertyCategory category;
 
-    public FieldDeclGroup(IFormDecl formDecl, FieldCategory category) {
+    public PropertyGroup(IFormDecl formDecl, PropertyCategory category) {
         if (formDecl == null)
             throw new NullPointerException("formDecl");
         if (category == null)
@@ -30,17 +30,17 @@ public class FieldDeclGroup
         return formDecl;
     }
 
-    public FieldCategory getCategory() {
+    public PropertyCategory getCategory() {
         return category;
     }
 
-    public List<IFieldDecl> select(String... names) {
+    public List<IFormProperty> select(String... names) {
         return select(new HashSet<String>(Arrays.asList(names)), null);
     }
 
-    public List<IFieldDecl> select(Set<String> includes, Set<String> excludes) {
-        List<IFieldDecl> fields = new ArrayList<IFieldDecl>();
-        for (IFieldDecl field : this) {
+    public List<IFormProperty> select(Set<String> includes, Set<String> excludes) {
+        List<IFormProperty> fields = new ArrayList<IFormProperty>();
+        for (IFormProperty field : this) {
             String name = field.getName();
             if (excludes != null && excludes.contains(name))
                 continue;
