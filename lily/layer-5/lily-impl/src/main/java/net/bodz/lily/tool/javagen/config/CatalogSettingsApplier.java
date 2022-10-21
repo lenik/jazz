@@ -24,6 +24,10 @@ public class CatalogSettingsApplier
 
     @Override
     public void endTableView(ITableViewMetadata tableView) {
+        excludeInheritedColumns(tableView);
+    }
+
+    void excludeInheritedColumns(ITableViewMetadata tableView) {
         String javaType = tableView.getJavaType();
         if (javaType == null)
             return;
@@ -56,8 +60,6 @@ public class CatalogSettingsApplier
             else
                 columnName = Phrase.fooBar(propertyName).foo_bar;
 
-            if(propertyName.equals("priority"))
-                System.err.println(tableView);
             IColumnMetadata column = tableView.getColumn(columnName);
             if (column == null) {
                 column = tableView.findColumnByJavaName(propertyName);

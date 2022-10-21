@@ -10,10 +10,11 @@ public class ProjectConfigurator
 
     static final Logger logger = LoggerFactory.getLogger(ProjectConfigurator.class);
 
-    ProjectConfig config;
+    ProjectConfig project;
+    TableViewSettings tableSettings;
 
-    public ProjectConfigurator(ProjectConfig config) {
-        this.config = config;
+    public ProjectConfigurator(ProjectConfig projectConfig) {
+        this.project = projectConfig;
     }
 
     @Override
@@ -21,26 +22,32 @@ public class ProjectConfigurator
         if (table instanceof DefaultTableViewMetadata) {
             DefaultTableViewMetadata mutable = (DefaultTableViewMetadata) table;
 
-            String javaName = config.tableNameMap.get(table.getName());
+            String javaName = project.tableNameMap.get(table.getName());
             if (javaName != null) {
                 if (!javaName.contains("."))
-                    javaName = config.defaultPackageName + "." + javaName;
+                    javaName = project.defaultPackageName + "." + javaName;
                 mutable.setJavaQName(javaName);
             }
 
-            String type = config.getTableClassMap().get(table.getName());
+            String type = project.getTableClassMap().get(table.getName());
             if (type != null)
                 mutable.setJavaType(type);
+
         }
+        tableSettings = project.tableMap.get(table.getName());
         return true;
     }
 
     @Override
     public void column(IColumnMetadata column) {
+        ColumnSettings columnSettings = null;
+        if (tableSettings != null)
+            columnSettings = tableSettings.columnMap.get(column.getName());
+
         if (column instanceof DefaultColumnMetadata) {
             DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
 
-            String property = config.columnPropertyMap.get(column.getName());
+            String property = project.columnPropertyMap.get(column.getName());
             if (property != null) {
                 if (property.isEmpty() || "-".equals(property))
                     mutable.setExcluded(true);
@@ -48,13 +55,31 @@ public class ProjectConfigurator
                     mutable.setJavaName(property);
             }
 
-            Integer verboseLevel = config.columnLevelMap.get(column.getName());
+            Integer verboseLevel = project.columnLevelMap.get(column.getName());
             if (verboseLevel != null)
                 mutable.setVerboseLevel(verboseLevel.intValue());
 
-            Integer joinLevel = config.joinLevelMap.get(column.getName());
+            Integer joinLevel = project.joinLevelMap.get(column.getName());
             if (joinLevel != null)
                 mutable.setJoinLevel(joinLevel.intValue());
+
+            if (columnSettings != null) {
+                if (columnSettings.javaName != null)
+                    mutable.setJavaName(columnSettings.javaName);
+
+                if (columnSettings.javaType != null) {
+                    Class<?> javaClass;
+                    try {
+                        javaClass = Class.forName(columnSettings.javaType);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                    mutable.setType(javaClass);
+                }
+
+                if (columnSettings.description != null)
+                    mutable.setDescription(columnSettings.description);
+            }
         }
     }
 
