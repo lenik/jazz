@@ -1,3 +1,5 @@
+include coolmake/m2proj.mf
+
 check-index:
 	[ -d x ] || mkdir x
 	cd x; jar xf ../target/bas-uber-*-SNAPSHOT.jar
