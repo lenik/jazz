@@ -178,6 +178,9 @@ public abstract class BasicSite
         case "sitemap.xml":
             return PathArrival.shift(previous, this, getSitemap(), tokens);
 
+        case "serviceMap":
+            return PathArrival.shift(previous, this, serviceMap, tokens);
+
         case "robots.txt":
             break;
 
