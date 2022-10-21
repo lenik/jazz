@@ -109,7 +109,7 @@ public class ProjectList {
                 String name = aProjectName.value();
                 ProjectMetadata existing = nameMap.get(name);
                 if (existing != null)
-                    throw new DuplicatedKeyException(name);
+                    throw new DuplicatedKeyException(name + " from " + existing.getProjectClass());
                 ProjectMetadata project = new ProjectMetadata(clazz);
                 nameMap.put(name, project);
             }
