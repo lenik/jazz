@@ -79,6 +79,10 @@ public class Foo_stuff__java
             for (IColumnMetadata column : tableView.getColumns()) {
                 if (column.isExcluded())
                     continue;
+
+                if (column.isCompositeProperty())
+                    continue;
+
                 out.println();
                 templates.columnField(out, column);
             }
@@ -123,6 +127,10 @@ public class Foo_stuff__java
             for (IColumnMetadata column : tableView.getColumns()) {
                 if (column.isExcluded())
                     continue;
+
+                if (column.isCompositeProperty())
+                    continue;
+
                 out.println();
                 templates.columnAccessors(out, column, true);
             }

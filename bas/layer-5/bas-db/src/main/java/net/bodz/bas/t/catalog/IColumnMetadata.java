@@ -73,6 +73,13 @@ public interface IColumnMetadata
         return Phrase.dual(getName(), getJavaName());
     }
 
+    default boolean isCompositeProperty() {
+        String property = getJavaName();
+        if (property == null)
+            return false;
+        return property.indexOf('.') != -1;
+    }
+
     String getLabel();
 
     String getDescription();

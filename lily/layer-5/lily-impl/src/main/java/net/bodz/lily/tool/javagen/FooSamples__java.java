@@ -3,19 +3,27 @@ package net.bodz.lily.tool.javagen;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import net.bodz.bas.c.java.lang.OptionNames;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.StringQuote;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.EnglishTextGenerator;
 import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ISampleGenerator;
 import net.bodz.lily.model.base.CoObject;
@@ -66,9 +74,27 @@ public class FooSamples__java
                 out.printf("%s a = new %s();\n", //
                         out.im.name(project.Foo), out.im.name(project.Foo));
 
+                Set<String> heads = new HashSet<>();
                 for (IColumnMetadata column : table.getColumns()) {
                     if (column.isExcluded()) // mixin?
                         continue;
+
+                    if (column.isCompositeProperty()) {
+                        String propertyPath = column.getJavaName();
+                        String head = Split.headDomain(propertyPath).a;
+                        if (!heads.add(head))
+                            continue;
+
+                        IType type = PotatoTypes.getInstance().loadType(column.getType());
+                        List<IProperty> vector = type.resolvePropertyVector(propertyPath);
+                        Class<?> propertyType = vector.get(vector.size() - 1).getPropertyType();
+                        String compositeSamplesType = propertyType.getName() + "Samples";
+
+                        out.printf("a.set%s(%s.build());\n", //
+                                Strings.ucfirst(head), //
+                                out.im.name(compositeSamplesType));
+                        continue;
+                    }
 
                     Phrase name = column.nam();
                     Class<?> type = column.getType();
