@@ -15,7 +15,7 @@ import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.repr.EntGroup;
 
 /**
@@ -24,7 +24,7 @@ import net.bodz.lily.repr.EntGroup;
 @Table(name = "contact")
 @IdType(Integer.class)
 public class Contact
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

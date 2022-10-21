@@ -3,7 +3,7 @@ package net.bodz.lily.security;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * User Category
@@ -14,7 +14,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "usercat")
 @IdType(Integer.class)
 public class UserCategory
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

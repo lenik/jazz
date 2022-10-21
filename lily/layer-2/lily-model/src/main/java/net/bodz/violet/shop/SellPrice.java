@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.violet.art.Artifact;
 
 /**
@@ -14,7 +14,7 @@ import net.bodz.violet.art.Artifact;
 @IdType(Long.class)
 @Table(name = "art_price")
 public class SellPrice
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

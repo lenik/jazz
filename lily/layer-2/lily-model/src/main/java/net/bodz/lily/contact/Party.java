@@ -18,7 +18,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * 参与方
@@ -26,7 +26,7 @@ import net.bodz.lily.model.base.CoEntity;
 @IdType(Integer.class)
 @UploadHint
 public abstract class Party
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

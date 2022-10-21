@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactModel;
 
 @Table(name = "fabstdproc_in")
 @IdType(Integer.class)
 public class FabStdProcessInput
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
     private static final long serialVersionUID = 1L;
 
     FabStdProcess process;

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.t.struct.IOrderItem;
 import net.bodz.violet.art.Artifact;
 
@@ -17,7 +17,7 @@ import net.bodz.violet.art.Artifact;
 @IdType(Long.class)
 @Table(name = "cartitem")
 public class CartItem
-        extends CoEntity<Long>
+        extends IdEntity<Long>
         implements IOrderItem {
 
     private static final long serialVersionUID = 1L;

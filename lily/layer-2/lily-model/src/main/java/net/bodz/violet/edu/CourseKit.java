@@ -3,7 +3,7 @@ package net.bodz.violet.edu;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * 课件
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "coursekit")
 @IdType(Integer.class)
 public class CourseKit
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

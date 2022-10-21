@@ -15,7 +15,7 @@ import net.bodz.lily.meta.CriteriaClass;
 @CriteriaClass(CoMomentIntervalMask.class)
 @IncludeMapperXml
 public abstract class CoMomentInterval<Id>
-        extends CoEntity<Id>
+        extends IdEntity<Id>
         implements
             IMomentInterval {
 

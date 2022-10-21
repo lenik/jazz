@@ -4,7 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * 课程
@@ -12,7 +12,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "course")
 @IdType(Integer.class)
 public class Course
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

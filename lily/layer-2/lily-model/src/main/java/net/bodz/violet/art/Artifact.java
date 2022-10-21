@@ -16,7 +16,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.rtx.IAttributed;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.util.mapper.DataListFields;
 
@@ -27,7 +27,7 @@ import net.bodz.lily.util.mapper.DataListFields;
 @Table(name = "art")
 @UploadHint
 public class Artifact
-        extends CoEntity<Integer>
+        extends IdEntity<Integer>
         implements IAttributed {
 
     private static final long serialVersionUID = 1L;

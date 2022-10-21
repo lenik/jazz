@@ -4,7 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * @label Policy
@@ -13,7 +13,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "policy")
 @IdType(Integer.class)
 public class Policy
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

@@ -2,14 +2,14 @@ package net.bodz.lily.contact;
 
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * 职位关联
  */
 @IdType(Integer.class)
 public class PersonRole
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

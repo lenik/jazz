@@ -3,13 +3,13 @@ package net.bodz.violet.store;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.violet.art.Artifact;
 
 @Table(name = "storel")
 @IdType(Long.class)
 public class StoreItem
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

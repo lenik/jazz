@@ -3,12 +3,12 @@ package net.bodz.lily.api;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @Table(name = "apply_api")
 @IdType(Long.class)
 public class ApiRequest
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
