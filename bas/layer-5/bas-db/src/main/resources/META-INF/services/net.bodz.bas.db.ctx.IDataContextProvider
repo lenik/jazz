@@ -1,1 +1,1 @@
-net.bodz.bas.db.ctx.DefaultDataContextProvider
+net.bodz.bas.db.ctx.UserLocalDataContextProvider

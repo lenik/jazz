@@ -41,6 +41,11 @@ public class LocalDataContextProvider
     }
 
     @Override
+    public Map<String, ConnectOptions> getConnectOptionsMap() {
+        return connectOptionsMap;
+    }
+
+    @Override
     public ConnectOptions getConnectOptions(String key) {
         return connectOptionsMap.get(key);
     }
