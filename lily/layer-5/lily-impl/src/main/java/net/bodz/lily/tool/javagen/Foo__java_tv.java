@@ -35,6 +35,9 @@ public class Foo__java_tv
         {
             out.println();
             out.println("private static final long serialVersionUID = 1L;");
+
+            //
+
             out.leave();
         }
         out.println();

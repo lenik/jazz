@@ -106,9 +106,13 @@ public class MiscTemplates {
             if (column.isExcluded())
                 continue;
 
-            Phrase name = column.nam();
+            if (column.isCompositeProperty())
+                continue;
+
             Class<?> type = column.getType();
-            String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
+
+            String property = column.nam().fooBar;
+            String constName = Phrase.fooBar(property).FOO_BAR;
 
             if (type == String.class || Number.class.isAssignableFrom(type)) {
                 int precision = column.getPrecision();
@@ -137,8 +141,11 @@ public class MiscTemplates {
             if (column.isExcluded())
                 continue;
 
-            Phrase name = column.nam();
-            String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
+            if (column.isCompositeProperty())
+                continue;
+
+            String property = column.nam().fooBar;
+            String constName = Phrase.fooBar(property).FOO_BAR;
 
             int ordinal = column.getOrdinal();
             String varName = OrdinalPrefix + constName;
