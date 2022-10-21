@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 
 public class BigDecimal_htm
         extends AbstractNumericForm_htm<BigDecimal> {
@@ -15,7 +15,7 @@ public class BigDecimal_htm
     }
 
     @Override
-    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<BigDecimal> ref, IFieldDecl fieldDecl) {
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<BigDecimal> ref, IFormProperty fieldDecl) {
         HtmlInput input = out.input().type("number").class_("noprint");
         return input;
     }

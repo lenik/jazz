@@ -25,8 +25,7 @@ import net.bodz.bas.potato.element.IPropertyAccessor;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.MutableFormDecl;
-import net.bodz.bas.repr.form.PathField;
-import net.bodz.bas.repr.form.PathFieldList;
+import net.bodz.bas.repr.form.PropertyChain;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.site.json.PathMapNode.IVisitor;
 import net.bodz.bas.t.variant.IVarMapForm;
@@ -48,7 +47,7 @@ public class TableOfPathProps
     public static final String K_TOTAL_COUNT = "totalCount";
 
     Class<?> objectType;
-    Map<String, IPropertyAccessor> pathAccessorMap = new LinkedHashMap<String, IPropertyAccessor>();
+    Map<String, PropertyChain> pathAccessorMap = new LinkedHashMap<>();
     Map<String, String> formats = new HashMap<String, String>();
     List<?> list;
 
@@ -72,14 +71,7 @@ public class TableOfPathProps
 
         IType type = PotatoTypes.getInstance().loadType(objectType);
         MutableFormDecl formDecl = new FormDeclBuilder().build(type);
-        PathFieldList pathFieldList = new PathFieldList();
-
-        for (String propertyPath : propertyPaths) {
-            pathFieldList.parseAndAdd(formDecl, propertyPath);
-        }
-
-        for (PathField pathField : pathFieldList)
-            pathAccessorMap.put(pathField.getPath(), pathField);
+        pathAccessorMap = formDecl.resolvePatternsToMap(propertyPaths);
     }
 
     public TableOfPathProps parsePropertyPathsAsColumns(String paths)

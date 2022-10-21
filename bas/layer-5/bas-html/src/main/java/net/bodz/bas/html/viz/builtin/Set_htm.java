@@ -7,7 +7,7 @@ import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlDiv;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class Set_htm
@@ -18,7 +18,7 @@ public class Set_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Set<?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<Set<?>> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         Set<?> set = ref.get();
         if (set == null) {

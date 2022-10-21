@@ -3,7 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 
 public class String_htm
         extends AbstractTextForm_htm<String> {
@@ -13,7 +13,7 @@ public class String_htm
     }
 
     @Override
-    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<String> ref, IFieldDecl fieldDecl) {
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<String> ref, IFormProperty fieldDecl) {
         HtmlInput input = out.input();
 
         char echoChar = fieldDecl.getEchoChar();

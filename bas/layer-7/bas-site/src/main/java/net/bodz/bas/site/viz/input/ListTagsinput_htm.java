@@ -12,7 +12,7 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.builtin.AbstractFormInput_htm;
 import net.bodz.bas.meta.decl.ItemType;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.site.artifact.LibJsArtifacts;
@@ -35,7 +35,7 @@ public class ListTagsinput_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();
         if (list == null) {

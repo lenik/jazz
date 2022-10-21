@@ -3,7 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 
 public class Long_htm
         extends AbstractNumericForm_htm<Long> {
@@ -13,7 +13,7 @@ public class Long_htm
     }
 
     @Override
-    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<Long> ref, IFieldDecl fieldDecl) {
+    protected HtmlInput createScreenInput(IHtmlOut out, UiPropertyRef<Long> ref, IFormProperty fieldDecl) {
         HtmlInput input = out.input().type("number").class_("noprint");
         input.min("" + Long.MIN_VALUE);
         input.max("" + Long.MAX_VALUE);

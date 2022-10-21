@@ -4,34 +4,35 @@ import java.util.List;
 
 import net.bodz.bas.potato.element.IPropertyAccessor;
 
-public class PathField
-        implements IPropertyAccessor {
+public class PropertyChain
+        implements
+            IPropertyAccessor {
 
     private final String path;
-    private final List<IFieldDecl> fieldVector;
+    private final List<IFormProperty> propertyVector;
 
-    public PathField(String path, List<IFieldDecl> fieldVector) {
+    public PropertyChain(String path, List<IFormProperty> propertyVector) {
         this.path = path;
-        this.fieldVector = fieldVector;
+        this.propertyVector = propertyVector;
     }
 
     public String getPath() {
         return path;
     }
 
-    public IFieldDecl getFieldDecl() {
-        if (fieldVector.isEmpty())
+    public IFormProperty getLast() {
+        if (propertyVector.isEmpty())
             return null;
         else
-            return fieldVector.get(fieldVector.size() - 1);
+            return propertyVector.get(propertyVector.size() - 1);
     }
 
     @Override
     public Class<?> getPropertyType() {
-        if (fieldVector.isEmpty())
+        if (propertyVector.isEmpty())
             return null; // void.class;
         else
-            return fieldVector.get(fieldVector.size() - 1).getValueType();
+            return propertyVector.get(propertyVector.size() - 1).getValueType();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class PathField
         if (instance == null)
             throw new NullPointerException("null instance for path: " + path);
         Object obj = instance;
-        for (IFieldDecl fieldDecl : fieldVector) {
+        for (IFormProperty fieldDecl : propertyVector) {
             obj = fieldDecl.getAccessor().getValue(obj);
             if (obj == null)
                 return null;
@@ -53,14 +54,14 @@ public class PathField
             throws ReflectiveOperationException {
         if (instance == null)
             throw new NullPointerException("null instance for path: " + path);
-        int max = fieldVector.size() - 1;
+        int max = propertyVector.size() - 1;
         Object obj = instance;
         for (int i = 0; i < max; i++) {
-            obj = fieldVector.get(i).getAccessor().getValue(obj);
+            obj = propertyVector.get(i).getAccessor().getValue(obj);
             if (obj == null)
                 return;
         }
-        IFieldDecl lastField = fieldVector.get(max);
+        IFormProperty lastField = propertyVector.get(max);
         lastField.getAccessor().setValue(obj, value);
     }
 

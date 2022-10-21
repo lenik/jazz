@@ -8,7 +8,7 @@ import net.bodz.bas.html.io.tag.HtmlDiv;
 import net.bodz.bas.html.io.tag.HtmlSelect;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 
 public class List_htm
@@ -19,7 +19,7 @@ public class List_htm
     }
 
     @Override
-    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFieldDecl fieldDecl)
+    public void buildHtmlView(IHtmlViewContext ctx, IHtmlOut out, UiPropertyRef<List<?>> ref, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         List<?> list = ref.get();
         if (list == null) {

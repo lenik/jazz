@@ -10,8 +10,8 @@ import net.bodz.bas.html.io.tag.HtmlTr;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.ref.UiPropertyRef;
-import net.bodz.bas.repr.form.FieldCategory;
-import net.bodz.bas.repr.form.IFieldDecl;
+import net.bodz.bas.repr.form.PropertyCategory;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.web.IHttpViewBuilderFactory;
 import net.bodz.bas.ui.dom1.IUiRef;
@@ -45,18 +45,18 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, FieldCategory category)
+    protected IHtmlOut beginCategory(IHtmlViewContext ctx, IHtmlOut out, PropertyCategory category)
             throws ViewBuilderException {
         HtmlTable table = out.table().border("0").class_("field-category");
         return table;
     }
 
     @Override
-    protected void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, FieldCategory category) {
+    protected void endCategory(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut catOut, PropertyCategory category) {
     }
 
     @Override
-    protected IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut table, IFieldDecl fieldDecl)
+    protected IHtmlOut beginField(IHtmlViewContext ctx, IHtmlOut table, IFormProperty fieldDecl)
             throws ViewBuilderException {
         HtmlTr tr = table.tr().class_("field-row");
         tr.td().class_("field-label").text(fieldDecl.getLabel());
@@ -64,7 +64,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void fieldBody(IHtmlViewContext ctx, IHtmlOut tr, IUiRef<?> instanceRef, IFieldDecl fieldDecl)
+    protected void fieldBody(IHtmlViewContext ctx, IHtmlOut tr, IUiRef<?> instanceRef, IFormProperty fieldDecl)
             throws ViewBuilderException, IOException {
         HtmlTd bodyTd = tr.td().class_("field-body");
 
@@ -79,7 +79,7 @@ public class DefaultForm_htm<T>
     }
 
     @Override
-    protected void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFieldDecl fieldDecl) {
+    protected void endField(IHtmlViewContext ctx, IHtmlOut out, IHtmlOut fieldOut, IFormProperty fieldDecl) {
     }
 
 }
