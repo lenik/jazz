@@ -5,7 +5,7 @@ import javax.persistence.Table;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.json.JsonMap;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * 分拆至 usersec 为了区分存储。
@@ -13,7 +13,7 @@ import net.bodz.lily.model.base.CoEntity;
 @Table(name = "usersec")
 @IdType(Integer.class)
 public class UserSecret
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

@@ -3,12 +3,12 @@ package net.bodz.violet.fab;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @Table(name = "fabtrack_test")
 @IdType(Long.class)
 public class FabTrackTest
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

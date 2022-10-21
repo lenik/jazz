@@ -3,7 +3,7 @@ package net.bodz.violet.shop;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.model.base.DefaultAccessMode;
 import net.bodz.lily.security.IAccessMode;
 
@@ -14,7 +14,7 @@ import net.bodz.lily.security.IAccessMode;
 @IdType(Integer.class)
 @Table(name = "shop")
 public class Shop
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

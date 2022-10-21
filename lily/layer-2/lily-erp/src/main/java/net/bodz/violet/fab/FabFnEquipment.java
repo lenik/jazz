@@ -3,11 +3,11 @@ package net.bodz.violet.fab;
 import java.math.BigDecimal;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @IdType(Integer.class)
 public class FabFnEquipment
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

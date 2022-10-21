@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @Table(name = "appcred")
 @IdType(Integer.class)
 public class AppCredit
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

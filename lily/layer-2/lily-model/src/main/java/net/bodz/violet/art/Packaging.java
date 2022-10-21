@@ -5,7 +5,7 @@ import javax.persistence.Table;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.repr.EntGroup;
 
 /**
@@ -15,7 +15,7 @@ import net.bodz.lily.repr.EntGroup;
 // @SchemaPref(Schemas.ARTIFACT)
 @Table(name = "artpack")
 public class Packaging
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

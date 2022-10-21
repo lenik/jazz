@@ -3,7 +3,7 @@ package net.bodz.violet.store;
 import javax.persistence.Table;
 
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.violet.art.Artifact;
 
 /**
@@ -12,7 +12,7 @@ import net.bodz.violet.art.Artifact;
 @Table(name = "offstorel")
 @IdType(Integer.class)
 public class OffStoreItem
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

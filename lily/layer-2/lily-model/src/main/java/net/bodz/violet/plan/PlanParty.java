@@ -6,12 +6,12 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @Table(name = "plan_party")
 @IdType(Long.class)
 public class PlanParty
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

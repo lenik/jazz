@@ -4,12 +4,12 @@ import javax.persistence.Table;
 
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @Table(name = "applog")
 @IdType(Long.class)
 public class AppLog
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 

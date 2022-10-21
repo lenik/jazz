@@ -2,11 +2,11 @@ package net.bodz.lily.security;
 
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.file.UploadHint;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 @UploadHint
 public abstract class CoPrincipal
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

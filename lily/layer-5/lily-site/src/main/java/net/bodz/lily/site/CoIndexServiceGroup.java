@@ -32,7 +32,6 @@ public class CoIndexServiceGroup
 
     Map<String, IEntityManager> map = new HashMap<>();
 
-    @SuppressWarnings("rawtypes")
     public CoIndexServiceGroup(DataContext dataContext) {
         ClassLoader classLoader = ClassLoaders.getRuntimeClassLoader();
         TypeIndex typeIndex = TypeIndex.getInstance(classLoader);

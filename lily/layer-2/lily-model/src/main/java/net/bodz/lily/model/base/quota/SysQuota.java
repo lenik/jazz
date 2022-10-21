@@ -3,7 +3,7 @@ package net.bodz.lily.model.base.quota;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 
 /**
  * @label System Quota
@@ -11,7 +11,7 @@ import net.bodz.lily.model.base.CoEntity;
  */
 @IdType(Integer.class)
 public class SysQuota
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 

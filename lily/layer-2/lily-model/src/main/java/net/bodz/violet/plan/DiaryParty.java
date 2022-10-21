@@ -14,13 +14,13 @@ import net.bodz.lily.contact.Organization;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.security.User;
 
 @Table(name = "diary_party")
 @IdType(Long.class)
 public class DiaryParty
-        extends CoEntity<Long>
+        extends IdEntity<Long>
         implements IJsonForm {
 
     private static final long serialVersionUID = 1L;
