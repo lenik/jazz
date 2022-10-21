@@ -92,6 +92,7 @@ Rules-quot                              # gettextize
 aclocal.m4
 all.sql                                 # catme
 autom4te.cache/
+classpath.*                             # lib-updater
 compile                                 # AC_PROG_CC
 config.guess
 config.h
@@ -105,6 +106,7 @@ depcomp
 dependency-reduced-pom.xml              # maven
 install-sh                              # autoreconf -i
 itree.tex                               # makelook
+lib/                                    # lib-updater
 libauto                                 # coolauto
 libtool                                 # libtool
 ltmain.sh                               # libtool
