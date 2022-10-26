@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
@@ -32,7 +30,6 @@ import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.tool.javagen.config.ProjectConfig;
-import net.bodz.lily.tool.javagen.config.CatalogSettingsApplier;
 import net.bodz.lily.tool.javagen.config.ProjectConfigurator;
 
 @ProgramName("javagen")
@@ -117,7 +114,7 @@ public class JavaGen
      */
     boolean forceMode;
 
-    List<ProjectConfig> configs = new ArrayList<>();
+    ProjectConfig config = new ProjectConfig();
 
     /**
      * Save the catalog metadata to file, and quit.
@@ -151,9 +148,7 @@ public class JavaGen
      */
     public void config(File configFile)
             throws ElementHandlerException, IOException, ParseException {
-        ProjectConfig config = new ProjectConfig();
         RstFn.loadFromRst(config, configFile);
-        configs.add(config);
     }
 
     boolean processTableOrView(ITableMetadata tableView) {
@@ -164,7 +159,7 @@ public class JavaGen
         case GLOBAL_TEMP:
             logger.info("make table " + tableView.getId());
             try {
-                makeTable((ITableMetadata) tableView);
+                makeTable(tableView);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
@@ -235,7 +230,7 @@ public class JavaGen
     public void makeTable(ITableMetadata table)
             throws IOException {
         JavaGenProject project = createProject(table);
-        project.configs = configs;
+        project.config = config;
 
         new Foo_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         if (table.getPrimaryKeyColumns().length > 1)
@@ -373,11 +368,8 @@ public class JavaGen
             connection = dataContext.getConnection();
             catalog.loadFromJDBC(connection, "TABLE", "VIEW");
 
-            for (ProjectConfig config : configs) {
-                config.defaultPackageName = parentPackage;
-                catalog.accept(new ProjectConfigurator(config));
-            }
-            catalog.accept(new CatalogSettingsApplier());
+            config.defaultPackageName = parentPackage;
+            catalog.accept(new ProjectConfigurator(config));
 
             if (saveCatalogFile != null) {
                 String extension = FilePath.getExtension(saveCatalogFile);

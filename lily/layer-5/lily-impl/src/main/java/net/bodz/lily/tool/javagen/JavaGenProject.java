@@ -21,7 +21,7 @@ public class JavaGenProject {
     String daoPackage = "dao";
     UpdateMethod updateMethod;
 
-    List<ProjectConfig> configs;
+    ProjectConfig config;
     long randomSeed;
 
     List<String> foreignKeyIdSuffixes = new ArrayList<>();
