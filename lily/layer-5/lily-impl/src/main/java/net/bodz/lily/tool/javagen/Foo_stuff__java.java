@@ -4,7 +4,7 @@ import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
@@ -19,7 +19,7 @@ public class Foo_stuff__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata tableView) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata tableView) {
         QualifiedName idType = templates.getIdType(tableView);
 
         String javaType = tableView.getJavaType();

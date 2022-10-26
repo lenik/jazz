@@ -4,12 +4,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoaderException;
@@ -297,20 +292,20 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public TableList findTables(TableOid pattern, boolean ignoreCase) {
+    public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         SchemaOid schemaPattern = null;
         if (pattern != null) {
             if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
-                return TableList.empty();
+                return Collections.emptyList();
             schemaPattern = pattern.toSchemaId();
         }
 
-        TableList tableList = new TableList();
+        List<ITableMetadata> tableList = new ArrayList<>();
         for (ISchemaMetadata schema : this) {
             if (pattern != null)
                 if (!schemaPattern.contains(schema.getId(), ignoreCase))
                     continue;
-            TableList part = schema.findTables(pattern, ignoreCase);
+            List<ITableMetadata> part = schema.findTables(pattern, ignoreCase);
             tableList.addAll(part);
         }
         return tableList;

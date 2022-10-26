@@ -5,7 +5,7 @@ import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class VFooMapper__xml
         extends JavaGen__xml {
@@ -15,7 +15,7 @@ public class VFooMapper__xml
     }
 
     @Override
-    protected void buildXmlBody(XmlSourceBuffer out, ITableViewMetadata table) {
+    protected void buildXmlBody(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<!DOCTYPE mapper");
         out.println("PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"");
         out.println("\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">");
@@ -45,7 +45,7 @@ public class VFooMapper__xml
         out.println("</mapper>");
     }
 
-    void resultMap_objlist_map(XmlSourceBuffer out, ITableViewMetadata table) {
+    void resultMap_objlist_map(XmlSourceBuffer out, ITableMetadata table) {
         out.printf("<resultMap id=\"objlist_map\" type=\"%s\">\n", project.Foo);
         out.enter();
         {
@@ -65,7 +65,7 @@ public class VFooMapper__xml
         out.println("</resultMap>");
     }
 
-    void sql_objlist_sql(XmlSourceBuffer out, ITableViewMetadata table) {
+    void sql_objlist_sql(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<sql id=\"objlist_sql\"><![CDATA[");
         out.enter();
         {
@@ -82,7 +82,7 @@ public class VFooMapper__xml
         out.println("</sql>");
     }
 
-    void sql_objedit_sql(XmlSourceBuffer out, ITableViewMetadata table) {
+    void sql_objedit_sql(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<sql id=\"objedit_sql\"><![CDATA[");
         out.enter();
         {
@@ -102,7 +102,7 @@ public class VFooMapper__xml
         out.println("</sql>");
     }
 
-    void sql_filtconds(XmlSourceBuffer out, ITableViewMetadata table) {
+    void sql_filtconds(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<sql id=\"filtconds\">");
         out.enter();
         {
@@ -124,7 +124,7 @@ public class VFooMapper__xml
         out.println("</sql>");
     }
 
-    void select_all(XmlSourceBuffer out, ITableViewMetadata table) {
+    void select_all(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<select id=\"all\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -135,7 +135,7 @@ public class VFooMapper__xml
         out.println("</select>");
     }
 
-    void select_filter(XmlSourceBuffer out, ITableViewMetadata table) {
+    void select_filter(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<select id=\"filter\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -153,7 +153,7 @@ public class VFooMapper__xml
         out.println("</select>");
     }
 
-    void select(XmlSourceBuffer out, ITableViewMetadata table) {
+    void select(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<select id=\"select\" resultMap=\"objlist_map\">");
         out.enter();
         {
@@ -170,7 +170,7 @@ public class VFooMapper__xml
         out.println("</select>");
     }
 
-    void select_count(XmlSourceBuffer out, ITableViewMetadata table) {
+    void select_count(XmlSourceBuffer out, ITableMetadata table) {
         out.println("<select id=\"count\" resultType=\"long\">");
         out.enter();
         {

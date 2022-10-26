@@ -75,8 +75,8 @@ public class TreeOutVisitor
     }
 
     @Override
-    public boolean beginTableView(ITableViewMetadata table) {
-        if (impl.beginTableView(table)) {
+    public boolean beginTableOrView(ITableMetadata table) {
+        if (impl.beginTableOrView(table)) {
             out.enter();
             return true;
         }
@@ -84,13 +84,13 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void endTableView(ITableViewMetadata table) {
+    public void endTableOrView(ITableMetadata table) {
         out.leave();
-        impl.endTableView(table);
+        impl.endTableOrView(table);
     }
 
     @Override
-    public boolean beginColumns(ITableViewMetadata table) {
+    public boolean beginColumns(ITableMetadata table) {
         if (impl.beginColumns(table)) {
             out.enter();
             return true;
@@ -99,7 +99,7 @@ public class TreeOutVisitor
     }
 
     @Override
-    public void endColumns(ITableViewMetadata table) {
+    public void endColumns(ITableMetadata table) {
         out.leave();
         impl.endColumns(table);
     }

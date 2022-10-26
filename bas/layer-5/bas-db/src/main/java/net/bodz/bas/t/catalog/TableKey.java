@@ -122,7 +122,7 @@ public final class TableKey
         return new TableKey(oid, columns);
     }
 
-    public IColumnMetadata[] resolve(ITableViewMetadata table) {
+    public IColumnMetadata[] resolve(ITableMetadata table) {
         IColumnMetadata[] columns = new IColumnMetadata[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
             columns[i] = table.getColumn(columnNames[i]);
@@ -133,7 +133,7 @@ public final class TableKey
     /**
      * @throws NoSuchKeyException
      */
-    public int[] resolvePosition(ITableViewMetadata table) {
+    public int[] resolvePosition(ITableMetadata table) {
         return resolvePosition(table, false);
     }
 
@@ -143,7 +143,7 @@ public final class TableKey
      *            <code>false</code>, or raise {@link NoSuchKeyException} exception.
      * @throws NoSuchKeyException
      */
-    public int[] resolvePosition(ITableViewMetadata table, boolean opt) {
+    public int[] resolvePosition(ITableMetadata table, boolean opt) {
         int[] posv = new int[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
             String name = columnNames[i];

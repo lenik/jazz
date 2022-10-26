@@ -3,7 +3,7 @@ package net.bodz.lily.tool.javagen;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.model.base.CoObjectMask;
 import net.bodz.lily.model.base.StructRowMask;
@@ -16,7 +16,7 @@ public class FooMask_stuff__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata table) {
         String javaType = table.getJavaType();
         String parent = null;
 

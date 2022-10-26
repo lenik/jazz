@@ -30,18 +30,18 @@ public interface ICatalogVisitor {
     default void endViews(ISchemaMetadata schema) {
     }
 
-    default boolean beginTableView(ITableViewMetadata table) {
+    default boolean beginTableOrView(ITableMetadata table) {
         return true;
     }
 
-    default void endTableView(ITableViewMetadata table) {
+    default void endTableOrView(ITableMetadata table) {
     }
 
-    default boolean beginColumns(ITableViewMetadata table) {
+    default boolean beginColumns(ITableMetadata table) {
         return true;
     }
 
-    default void endColumns(ITableViewMetadata table) {
+    default void endColumns(ITableMetadata table) {
     }
 
     default void column(IColumnMetadata column) {

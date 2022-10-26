@@ -4,7 +4,7 @@ import net.bodz.bas.codegen.ClassPathInfo;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.ITreeOut;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public abstract class JavaGen__java
         extends JavaGenFileType {
@@ -19,12 +19,12 @@ public abstract class JavaGen__java
     }
 
     @Override
-    public void build(ITreeOut out, ITableViewMetadata model) {
+    public void build(ITreeOut out, ITableMetadata model) {
         buildClass(out, model);
     }
 
     @Override
-    protected void buildXmlBody(XmlSourceBuffer out, ITableViewMetadata model) {
+    protected void buildXmlBody(XmlSourceBuffer out, ITableMetadata model) {
         throw new NotImplementedException();
     }
 

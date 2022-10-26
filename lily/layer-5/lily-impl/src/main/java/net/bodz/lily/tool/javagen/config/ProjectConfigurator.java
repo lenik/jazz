@@ -11,16 +11,16 @@ public class ProjectConfigurator
     static final Logger logger = LoggerFactory.getLogger(ProjectConfigurator.class);
 
     ProjectConfig project;
-    TableViewSettings tableSettings;
+    TableSettings tableSettings;
 
     public ProjectConfigurator(ProjectConfig projectConfig) {
         this.project = projectConfig;
     }
 
     @Override
-    public boolean beginTableView(ITableViewMetadata table) {
-        if (table instanceof DefaultTableViewMetadata) {
-            DefaultTableViewMetadata mutable = (DefaultTableViewMetadata) table;
+    public boolean beginTableOrView(ITableMetadata table) {
+        if (table instanceof DefaultTableMetadata) {
+            DefaultTableMetadata mutable = (DefaultTableMetadata) table;
 
             String javaName = project.tableNameMap.get(table.getName());
             if (javaName != null) {

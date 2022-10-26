@@ -2,7 +2,7 @@ package net.bodz.lily.tool.javagen;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.db.ibatis.IEntityMapper;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class FooMapper__java_tv
         extends JavaGen__java {
@@ -12,7 +12,7 @@ public class FooMapper__java_tv
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata table) {
         out.println("public interface " + project.FooMapper.name);
         out.enter();
         {

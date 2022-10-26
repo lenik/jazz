@@ -6,11 +6,11 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.rst.RstFn;
 
-public class TableViewSettingsTest {
+public class TableSettingsTest {
 
     public static void main(String[] args)
             throws ElementHandlerException, IOException, ParseException {
-        TableViewSettings tvc = new TableViewSettings();
+        TableSettings tvc = new TableSettings();
         ColumnSettings foo = tvc.resolveColumn("foo");
         foo.description = "foo bar";
         ColumnSettings age = tvc.resolveColumn("age");
@@ -19,7 +19,7 @@ public class TableViewSettingsTest {
         System.out.println(rst);
         System.out.println("-----------");
 
-        TableViewSettings renew = new TableViewSettings();
+        TableSettings renew = new TableSettings();
         RstFn.loadFromRst(renew, rst);
         String other = RstFn.toString(renew);
         System.out.println(other);

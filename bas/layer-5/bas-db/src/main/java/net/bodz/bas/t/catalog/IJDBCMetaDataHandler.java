@@ -13,12 +13,12 @@ public interface IJDBCMetaDataHandler {
     default void endSchema(ISchemaMetadata schema) {
     }
 
-    default ITableViewMetadata tableView(ResultSet rs)
+    default ITableMetadata table(ResultSet rs)
             throws SQLException {
         return null;
     }
 
-    default void endTableView(ITableViewMetadata table) {
+    default void endTable(ITableMetadata table) {
     }
 
     default IColumnMetadata column(ResultSet rs)

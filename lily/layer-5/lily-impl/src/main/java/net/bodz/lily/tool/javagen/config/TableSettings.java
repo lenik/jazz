@@ -17,7 +17,7 @@ import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.StackRstHandler;
 import net.bodz.bas.json.JsonObject;
 
-public class TableViewSettings
+public class TableSettings
         implements
             IRstForm,
             IJsonForm {

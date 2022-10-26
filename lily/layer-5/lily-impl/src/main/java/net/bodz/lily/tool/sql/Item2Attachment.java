@@ -62,7 +62,7 @@ public class Item2Attachment
         this.dataContext = dataContext;
     }
 
-    boolean processTableView(ITableViewMetadata tableView) {
+    boolean processTableOrView(ITableMetadata tableView) {
         switch (tableView.getTableType()) {
         case TABLE:
         case SYSTEM_TABLE:
@@ -230,10 +230,10 @@ public class Item2Attachment
 
             catalog.accept(new ICatalogVisitor() {
                 @Override
-                public boolean beginTableView(ITableViewMetadata table) {
+                public boolean beginTableOrView(ITableMetadata table) {
                     IColumnMetadata propsCol = table.getColumn("props");
                     if (propsCol != null)
-                        processTableView(table);
+                        processTableOrView(table);
                     return false;
                 }
             });

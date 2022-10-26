@@ -1,7 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class FooMapperTest__java
         extends JavaGen__java {
@@ -11,7 +11,7 @@ public class FooMapperTest__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata model) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata model) {
         out.println("public class " + project.FooMapperTest.name);
         out.enter();
         {
@@ -33,7 +33,7 @@ public class FooMapperTest__java
         out.println("}");
     }
 
-    protected void buildMapperMethods(JavaSourceWriter out, ITableViewMetadata model) {
+    protected void buildMapperMethods(JavaSourceWriter out, ITableMetadata model) {
         out.println();
         out.println("@Override");
         out.printf("public %s buildSample() throws Exception {\n", //

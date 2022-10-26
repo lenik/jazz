@@ -3,7 +3,7 @@ package net.bodz.lily.tool.javagen;
 import javax.persistence.Table;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.TableOid;
 
 public class Foo__java_tv
@@ -14,7 +14,7 @@ public class Foo__java_tv
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata table) {
         TableOid oid = table.getId();
 
         out.print("@" + out.im.name(Table.class) + "(");

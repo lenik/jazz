@@ -17,7 +17,7 @@ public interface ISchemaMetadata
         extends
             IJavaName,
             ITableDirectory,
-            ITableViewDirectory,
+            IViewDirectory,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {

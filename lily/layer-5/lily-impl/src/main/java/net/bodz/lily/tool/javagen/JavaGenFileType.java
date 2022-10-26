@@ -10,10 +10,10 @@ import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.codegen.UpdateMethod;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public abstract class JavaGenFileType
-        extends JavaOrXmlSourceBuilder<ITableViewMetadata> {
+        extends JavaOrXmlSourceBuilder<ITableMetadata> {
 
     static final Logger logger = LoggerFactory.getLogger(JavaGenFileType.class);
 
@@ -31,14 +31,14 @@ public abstract class JavaGenFileType
     }
 
     @Override
-    protected UpdateMethod getPreferredUpdateMethod(ITableViewMetadata model) {
+    protected UpdateMethod getPreferredUpdateMethod(ITableMetadata model) {
         return project.getPreferredUpdateMethod();
     }
 
     protected abstract String getExtension();
 
     @Override
-    protected IFileInfo getFileInfo(ITableViewMetadata model) {
+    protected IFileInfo getFileInfo(ITableMetadata model) {
         String extension = getExtension();
         File baseDir = pathInfo.getBaseDir();
         if (JAVA.equals(extension))
@@ -50,7 +50,7 @@ public abstract class JavaGenFileType
     }
 
     @Override
-    protected QualifiedName getClassName(ITableViewMetadata model) {
+    protected QualifiedName getClassName(ITableMetadata model) {
         return pathInfo;
     }
 

@@ -42,24 +42,24 @@ public class CatalogDumper
     }
 
     @Override
-    public boolean beginTableView(ITableViewMetadata table) {
+    public boolean beginTableOrView(ITableMetadata table) {
         out.println(table.getTableType() + " " + table.getCompactName());
         return true;
     }
 
     @Override
-    public void endTableView(ITableViewMetadata table) {
+    public void endTableOrView(ITableMetadata table) {
         out.println();
     }
 
     @Override
-    public boolean beginColumns(ITableViewMetadata table) {
+    public boolean beginColumns(ITableMetadata table) {
         out.print("columns: ");
         return true;
     }
 
     @Override
-    public void endColumns(ITableViewMetadata table) {
+    public void endColumns(ITableMetadata table) {
         out.println();
     }
 
