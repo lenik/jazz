@@ -70,6 +70,8 @@ public interface ITableMetadata
 
     CrossReference getForeignKey(String constraintName);
 
+    CrossReference getForeignKeyFromColumn(String columnName);
+
     default Set<TableOid> getParentTableNames() {
         Set<TableOid> parents = new LinkedHashSet<>();
         for (CrossReference ref : getForeignKeys().values()) {

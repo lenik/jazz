@@ -195,6 +195,18 @@ public class DefaultColumnMetadata
     }
 
     @Override
+    public boolean isForeignKey() {
+        IRowSetMetadata parent = getParent();
+        if (parent == null)
+            return false;
+        if (!(parent instanceof ITableMetadata))
+            return false;
+        ITableMetadata table = (ITableMetadata) parent;
+        CrossReference xref = table.getForeignKeyFromColumn(name);
+        return xref != null;
+    }
+
+    @Override
     public Boolean getAutoIncrement() {
         return autoIncrement;
     }

@@ -1,9 +1,7 @@
 package net.bodz.lily.tool.javagen;
 
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class FooMapper__xml
@@ -15,7 +13,7 @@ public class FooMapper__xml
 
     @Override
     protected void buildXmlBody(XmlSourceBuffer out, ITableMetadata tableView) {
-        ITableMetadata table = (ITableMetadata) tableView;
+        ITableMetadata table = tableView;
 
         out.println("<!DOCTYPE mapper");
         out.println("PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"");
@@ -68,7 +66,8 @@ public class FooMapper__xml
                     if (!first)
                         out.print(",\n");
 
-                    out.print(column.nam().foo_bar);
+                    ColumnName cname = project.columnName(column);
+                    out.print(cname.columnQuoted);
 
                     first = false;
                 }
@@ -86,7 +85,8 @@ public class FooMapper__xml
                     if (!first)
                         out.print(",\n");
 
-                    out.print("#{" + column.nam().fooBar + "}");
+                    ColumnName cname = project.columnName(column);
+                    out.print("#{" + cname.property + "}");
 
                     first = false;
                 }
@@ -112,8 +112,8 @@ public class FooMapper__xml
                 for (IColumnMetadata column : table.getColumns()) {
                     if (column.isPrimaryKey())
                         continue;
-                    Phrase name = column.nam();
-                    out.printf("%s = #{%s}", name.foo_bar, name.fooBar);
+                    ColumnName cname = project.columnName(column);
+                    out.printf("%s = #{%s}", cname.columnQuoted, cname.property);
                     out.println(",");
                 }
             }
