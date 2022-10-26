@@ -23,7 +23,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.range.*;
 
 public class MiscTemplates {
@@ -50,7 +50,7 @@ public class MiscTemplates {
         out.println(" */");
     }
 
-    public QualifiedName getIdType(ITableViewMetadata table) {
+    public QualifiedName getIdType(ITableMetadata table) {
         IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
         case 0:
@@ -72,7 +72,7 @@ public class MiscTemplates {
         initVals.put(Timestamp.class, "new Timestamp(System.currentTimeMillis())");
     }
 
-    public void initNotNulls(JavaSourceWriter out, ITableViewMetadata table) {
+    public void initNotNulls(JavaSourceWriter out, ITableMetadata table) {
         out.println("public void initNotNulls() {");
         out.enter();
         for (IColumnMetadata column : table.getColumns()) {
@@ -96,7 +96,7 @@ public class MiscTemplates {
         out.println("}");
     }
 
-    public void N_consts(ITreeOut out, ITableViewMetadata table, Boolean wantPrimaryKey) {
+    public void N_consts(ITreeOut out, ITableMetadata table, Boolean wantPrimaryKey) {
         List<String> defs = new ArrayList<>();
         for (IColumnMetadata column : table.getColumns()) {
             if (wantPrimaryKey != null)
@@ -129,7 +129,7 @@ public class MiscTemplates {
 
     public static final String OrdinalPrefix = "_ord_";
 
-    public void O_consts(ITreeOut out, ITableViewMetadata table, Boolean wantPrimaryKey) {
+    public void O_consts(ITreeOut out, ITableMetadata table, Boolean wantPrimaryKey) {
         List<String> defs = new ArrayList<>();
         String lastVarName = null;
         int lastOrdinal = 0;

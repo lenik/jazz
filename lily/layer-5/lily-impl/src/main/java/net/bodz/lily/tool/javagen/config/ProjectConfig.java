@@ -44,7 +44,7 @@ public class ProjectConfig
     public final Map<String, Integer> columnLevelMap = new HashMap<>();
     public final Map<String, Integer> joinLevelMap = new HashMap<>();
 
-    public final Map<String, TableViewSettings> tableMap = new LinkedHashMap<>();
+    public final Map<String, TableSettings> tableMap = new LinkedHashMap<>();
 
     // cache
     Map<String, String> tableClassMap;
@@ -59,10 +59,10 @@ public class ProjectConfig
         return list;
     }
 
-    TableViewSettings resolveTable(String tableName) {
-        TableViewSettings table = tableMap.get(tableName);
+    TableSettings resolveTable(String tableName) {
+        TableSettings table = tableMap.get(tableName);
         if (table == null)
-            tableMap.put(tableName, table = new TableViewSettings());
+            tableMap.put(tableName, table = new TableSettings());
         return table;
     }
 
@@ -116,7 +116,7 @@ public class ProjectConfig
 
         for (String tableName : tableMap.keySet()) {
             out.beginElement(K_MIXIN, tableName);
-            TableViewSettings table = tableMap.get(tableName);
+            TableSettings table = tableMap.get(tableName);
             table.writeObject(out);
             out.endElement();
         }
@@ -153,7 +153,7 @@ public class ProjectConfig
                     if (args.length != 1)
                         throw new ParseException("expect table name");
                     String tableName = args[0].trim();
-                    TableViewSettings table = resolveTable(tableName);
+                    TableSettings table = resolveTable(tableName);
                     return table.getElementHandler();
 
                 case K_MIXIN:

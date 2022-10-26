@@ -23,11 +23,11 @@ public class CatalogSettingsApplier
     }
 
     @Override
-    public void endTableView(ITableViewMetadata tableView) {
+    public void endTableOrView(ITableMetadata tableView) {
         excludeInheritedColumns(tableView);
     }
 
-    void excludeInheritedColumns(ITableViewMetadata tableView) {
+    void excludeInheritedColumns(ITableMetadata tableView) {
         String javaType = tableView.getJavaType();
         if (javaType == null)
             return;

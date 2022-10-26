@@ -12,7 +12,7 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface IViewMetadata
         extends
-            ITableViewMetadata {
+            ITableMetadata {
 
     String K_TABLE_UAGES = "tableUsages";
     String K_TABLE_UAGE = "tableUsage";
@@ -22,7 +22,7 @@ public interface IViewMetadata
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        ITableViewMetadata.super.jsonOut(out, opts);
+        ITableMetadata.super.jsonOut(out, opts);
 
         Collection<? extends ITableUsage> usages = getTableUsages();
         if (usages != null) {
@@ -40,7 +40,7 @@ public interface IViewMetadata
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        ITableViewMetadata.super.writeObject(out);
+        ITableMetadata.super.writeObject(out);
 
         Collection<? extends ITableUsage> usages = getTableUsages();
         if (usages != null) {

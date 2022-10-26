@@ -242,12 +242,12 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public TableList findTables(TableOid pattern, boolean ignoreCase) {
+    public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
             if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
-                return TableList.empty();
+                return Collections.emptyList();
         }
-        TableList list = new TableList();
+        List<ITableMetadata> list = new ArrayList<>();
         for (ITableMetadata table : getTables()) {
             if (pattern != null)
                 if (!pattern.contains(table.getId(), ignoreCase))
@@ -283,7 +283,7 @@ public class DefaultSchemaMetadata
         return viewMap.size();
     }
 
-    public DefaultTableViewMetadata getOrCreateView(TableOid oid) {
+    public DefaultTableMetadata getOrCreateView(TableOid oid) {
         checkTableId(oid);
         return getOrCreateView(oid.tableName);
     }
@@ -353,12 +353,12 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public TableViewList findViews(TableOid pattern, boolean ignoreCase) {
+    public List<IViewMetadata> findViews(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
             if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
-                return TableViewList.empty();
+                return Collections.emptyList();
         }
-        TableViewList list = new TableViewList();
+        List<IViewMetadata> list = new ArrayList<>();
         for (IViewMetadata view : viewMap.values()) {
             if (pattern != null)
                 if (!pattern.contains(view.getId(), ignoreCase))
@@ -373,7 +373,7 @@ public class DefaultSchemaMetadata
         for (String key : viewMap.keySet()) {
             if (sb.length() != 0)
                 sb.append(", ");
-            ITableViewMetadata view = viewMap.get(key);
+            ITableMetadata view = viewMap.get(key);
             sb.append(view.getName());
         }
         return sb.toString();
@@ -454,7 +454,7 @@ public class DefaultSchemaMetadata
         }
 
         @Override
-        public ITableViewMetadata tableView(ResultSet rs)
+        public ITableMetadata table(ResultSet rs)
                 throws SQLException {
             TableOid oid = new TableOid();
             oid.readFromJDBC(rs);
@@ -466,13 +466,13 @@ public class DefaultSchemaMetadata
             switch (type) {
             case TABLE:
                 DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
-                table.getJDBCMetaDataHandler().tableView(rs);
+                table.getJDBCMetaDataHandler().table(rs);
                 addTable(table);
                 return table;
 
             case VIEW:
                 DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
-                view.getJDBCMetaDataHandler().tableView(rs);
+                view.getJDBCMetaDataHandler().table(rs);
                 addView(view);
                 return view;
 
@@ -555,7 +555,7 @@ public class DefaultSchemaMetadata
         DatabaseMetaData dmd = connection.getMetaData();
         IJDBCMetaDataHandler metaDataHandler = getJDBCMetaDataHandler();
         ResultSet rs;
-        Set<ITableViewMetadata> tables = new LinkedHashSet<>();
+        Set<ITableMetadata> tables = new LinkedHashSet<>();
 
         // Parse from schema's metadata
         rs = dmd.getSchemas(schemaId.catalogName, schemaId.schemaName);
@@ -567,7 +567,7 @@ public class DefaultSchemaMetadata
 
         rs = dmd.getTables(schemaId.catalogName, schemaId.schemaName, null, types);
         while (rs.next()) {
-            ITableViewMetadata table = metaDataHandler.tableView(rs);
+            ITableMetadata table = metaDataHandler.table(rs);
             tables.add(table);
         }
         rs.close();
@@ -621,8 +621,8 @@ public class DefaultSchemaMetadata
             metaDataHandler.viewColumnUsage(rs);
         rs.close();
 
-        for (ITableViewMetadata table : tables)
-            metaDataHandler.endTableView(table);
+        for (ITableMetadata table : tables)
+            metaDataHandler.endTable(table);
         metaDataHandler.endSchema(this);
 
         // creation-order

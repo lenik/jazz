@@ -22,7 +22,7 @@ import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.rtx.Options;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.ISampleGenerator;
@@ -52,7 +52,7 @@ public class FooSamples__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata table) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata table) {
         Random random = random(table.getId());
         EnglishTextGenerator enGen = en(table.getId());
 

@@ -4,7 +4,7 @@ import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.XmlSourceBuffer;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 
 public class FooMapper__xml
         extends VFooMapper__xml {
@@ -14,7 +14,7 @@ public class FooMapper__xml
     }
 
     @Override
-    protected void buildXmlBody(XmlSourceBuffer out, ITableViewMetadata tableView) {
+    protected void buildXmlBody(XmlSourceBuffer out, ITableMetadata tableView) {
         ITableMetadata table = (ITableMetadata) tableView;
 
         out.println("<!DOCTYPE mapper");

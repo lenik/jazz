@@ -3,6 +3,8 @@ package net.bodz.bas.t.catalog;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.xml.stream.XMLStreamException;
@@ -180,6 +182,13 @@ public class TableOid
             throws SQLException {
         super.readFromJDBC(rs);
         tableName = rs.getString("TABLE_NAME");
+    }
+
+    public static List<TableOid> cut(List<? extends ITableMetadata> list) {
+        List<TableOid> ids = new ArrayList<>(list.size());
+        for (ITableMetadata table : list)
+            ids.add(table.getId());
+        return ids;
     }
 
 }

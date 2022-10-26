@@ -1,21 +1,23 @@
 package net.bodz.bas.t.catalog;
 
+import java.util.List;
+
 import net.bodz.bas.err.DuplicatedKeyException;
 
-public interface ITableViewDirectory {
+public interface IViewDirectory {
 
-    default TableViewList findViews(TableOid pattern) {
+    default List<IViewMetadata> findViews(TableOid pattern) {
         return findViews(pattern, false);
     }
 
-    TableViewList findViews(TableOid pattern, boolean ignoreCase);
+    List<IViewMetadata> findViews(TableOid pattern, boolean ignoreCase);
 
-    default ITableViewMetadata getView(TableOid pattern) {
+    default ITableMetadata getView(TableOid pattern) {
         return getView(pattern, false);
     }
 
-    default ITableViewMetadata getView(TableOid pattern, boolean ignoreCase) {
-        TableViewList viewList = findViews(pattern, ignoreCase);
+    default ITableMetadata getView(TableOid pattern, boolean ignoreCase) {
+        List<IViewMetadata> viewList = findViews(pattern, ignoreCase);
         if (viewList.size() > 1)
             throw new DuplicatedKeyException("More than single table matched: " + pattern);
         if (viewList.isEmpty())

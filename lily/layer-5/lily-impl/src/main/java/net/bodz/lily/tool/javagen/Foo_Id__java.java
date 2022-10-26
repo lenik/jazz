@@ -10,7 +10,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
-import net.bodz.bas.t.catalog.ITableViewMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.entity.Identifier;
 
 public class Foo_Id__java
@@ -21,7 +21,7 @@ public class Foo_Id__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableViewMetadata tableView) {
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata tableView) {
         ITableMetadata table = (ITableMetadata) tableView;
 
         IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
@@ -157,7 +157,7 @@ public class Foo_Id__java
         out.println("}");
     }
 
-    void equals(ITreeOut out, ITableViewMetadata table, ImportSet imports) {
+    void equals(ITreeOut out, ITableMetadata table, ImportSet imports) {
         out.println("@" + imports.name(Override.class));
         out.println("public boolean equals(Object obj) {");
         out.enter();

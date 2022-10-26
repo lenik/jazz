@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.sql.Connection;
+import java.util.List;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 
@@ -23,18 +24,18 @@ public interface ITableDirectory {
             throw new IllegalArgumentException("Invalid table id: " + oid);
     }
 
-    default TableList findTables(TableOid pattern) {
+    default List<ITableMetadata> findTables(TableOid pattern) {
         return findTables(pattern, false);
     }
 
-    TableList findTables(TableOid pattern, boolean ignoreCase);
+    List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase);
 
     default ITableMetadata getTable(TableOid pattern) {
         return getTable(pattern, false);
     }
 
     default ITableMetadata getTable(TableOid pattern, boolean ignoreCase) {
-        TableList tableList = findTables(pattern, ignoreCase);
+        List<ITableMetadata> tableList = findTables(pattern, ignoreCase);
         if (tableList.size() > 1)
             throw new DuplicatedKeyException("More than single table matched: " + pattern);
         if (tableList.isEmpty())

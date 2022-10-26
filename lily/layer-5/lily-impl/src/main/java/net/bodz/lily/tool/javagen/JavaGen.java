@@ -156,7 +156,7 @@ public class JavaGen
         configs.add(config);
     }
 
-    boolean processTableView(ITableViewMetadata tableView) {
+    boolean processTableOrView(ITableMetadata tableView) {
         switch (tableView.getTableType()) {
         case TABLE:
         case SYSTEM_TABLE:
@@ -188,7 +188,7 @@ public class JavaGen
         }
     }
 
-    JavaGenProject createProject(ITableViewMetadata tableView) {
+    JavaGenProject createProject(ITableMetadata tableView) {
         String simpleName = tableView.getJavaQName();
         String packageName = parentPackage;
 
@@ -390,8 +390,8 @@ public class JavaGen
 
             catalog.accept(new ICatalogVisitor() {
                 @Override
-                public boolean beginTableView(ITableViewMetadata table) {
-                    return processTableView(table);
+                public boolean beginTableOrView(ITableMetadata table) {
+                    return processTableOrView(table);
                 }
             });
         } finally {

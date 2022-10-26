@@ -14,7 +14,7 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
 public class DefaultViewMetadata
-        extends DefaultTableViewMetadata
+        extends DefaultTableMetadata
         implements
             IViewMetadata {
 
@@ -64,7 +64,7 @@ public class DefaultViewMetadata
     TableKey findPrimaryKeyFromForeignTables(ICatalogMetadata catalog) {
         TableKey primaryKey = null;
         for (ITableUsage usage : tableUsages.values()) {
-            ITableViewMetadata source = catalog.getTable(usage.getTableId());
+            ITableMetadata source = catalog.getTable(usage.getTableId());
             if (source == null) {
                 // source = catalog.getView(usage.getTableId());
                 // throw new NoSuchKeyException("No table: " + usage.getTableId());
@@ -104,7 +104,7 @@ public class DefaultViewMetadata
     }
 
     class ViewHandler
-            extends TableViewHandler {
+            extends TableHandler {
 
         @Override
         public void viewColumnUsage(ResultSet rs)
