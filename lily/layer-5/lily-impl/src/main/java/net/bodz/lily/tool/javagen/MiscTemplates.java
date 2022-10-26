@@ -13,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.c.primitive.Primitives;
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
@@ -90,7 +89,8 @@ public class MiscTemplates {
             if (initVal == null)
                 continue;
 
-            out.println("this." + column.nam().fooBar + " = " + initVal + ";");
+            ColumnName cname = project.columnName(column);
+            out.println("this." + cname.field + " = " + initVal + ";");
         }
         out.leave();
         out.println("}");
@@ -111,13 +111,12 @@ public class MiscTemplates {
 
             Class<?> type = column.getType();
 
-            String property = column.nam().fooBar;
-            String constName = Phrase.fooBar(property).FOO_BAR;
+            ColumnName cname = project.columnName(column);
 
             if (type == String.class || Number.class.isAssignableFrom(type)) {
                 int precision = column.getPrecision();
                 if (precision > 0)
-                    defs.add("public static final int N_" + constName + " = " + precision + ";");
+                    defs.add("public static final int N_" + cname.constField + " = " + precision + ";");
             }
         }
         if (!defs.isEmpty()) {
@@ -144,11 +143,10 @@ public class MiscTemplates {
             if (column.isCompositeProperty())
                 continue;
 
-            String property = column.nam().fooBar;
-            String constName = Phrase.fooBar(property).FOO_BAR;
+            ColumnName cname = project.columnName(column);
 
             int ordinal = column.getOrdinal();
-            String varName = OrdinalPrefix + constName;
+            String varName = OrdinalPrefix + cname.constField;
 
             String expr;
             int diff = ordinal - lastOrdinal;
@@ -182,7 +180,8 @@ public class MiscTemplates {
         if (notNull)
             out.println("@" + out.im.name(NotNull.class));
 
-        out.print(out.im.name(type) + " " + column.nam().fooBar);
+        ColumnName cname = project.columnName(column);
+        out.print(out.im.name(type) + " " + cname.field);
         out.println(";");
     }
 
@@ -195,9 +194,8 @@ public class MiscTemplates {
      * @Column
      */
     public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
-        Phrase name = column.nam();
-        String constName = Phrase.fooBar(name.fooBar).FOO_BAR;
-        String N_COL_NAME = "N_" + constName;
+        ColumnName cname = project.columnName(column);
+        String N_COL_NAME = "N_" + cname.constField;
 
         Class<?> type = column.getType();
 
@@ -212,7 +210,7 @@ public class MiscTemplates {
 
         int ordinal = column.getOrdinal();
         if (ordinal != 0) {
-            String varName = OrdinalPrefix + constName;
+            String varName = OrdinalPrefix + cname.constField;
             out.println("@" + out.im.name(Ordinal.class) + "(" + varName + ")");
         }
 
@@ -247,7 +245,7 @@ public class MiscTemplates {
 
         out.print("@" + out.im.name(Column.class));
         {
-            out.print("(name = \"" + name.foo_bar + "\"");
+            out.print("(name = \"" + cname.column + "\"");
             if (unique)
                 out.print(", unique = true");
             if (notNull)
@@ -273,10 +271,10 @@ public class MiscTemplates {
         String isOrGet = boolean.class == type ? "is" : "get";
 
         out.printf("public %s %s%s()", //
-                out.im.name(type), isOrGet, name.FooBar);
+                out.im.name(type), isOrGet, cname.Property);
         if (impl) {
             out.println(" {");
-            out.printf("    return %s;\n", name.fooBar);
+            out.printf("    return %s;\n", cname.field);
             out.println("}");
         } else {
             out.println(";");
@@ -287,11 +285,11 @@ public class MiscTemplates {
             out.println("/** " + description + " */");
         }
 
-        out.printf("public void set%s(%s%s value)", name.FooBar, //
+        out.printf("public void set%s(%s%s value)", cname.Property, //
                 (notNull && !type.isPrimitive()) ? ("@" + out.im.name(NotNull.class) + " ") : "", out.im.name(type));
         if (impl) {
             out.println(" {");
-            out.printf("    this.%s = value;\n", name.fooBar);
+            out.printf("    this.%s = value;\n", cname.field);
             out.println("}");
         } else {
             out.println(";");
@@ -316,29 +314,29 @@ public class MiscTemplates {
     }
 
     public void columnMaskFields(JavaSourceWriter out, IColumnMetadata column) {
-        Phrase name = column.nam();
+        ColumnName cname = project.columnName(column);
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
         if (description != null && !description.isEmpty())
             out.println("/** " + description + " */");
 
-        out.println(out.im.name(type) + " " + name.fooBar + ";");
+        out.println(out.im.name(type) + " " + cname.field + ";");
 
         if (type == String.class)
-            out.println("String " + name.fooBar + "Pattern;");
+            out.println("String " + cname.field + "Pattern;");
         else {
             Class<?> rangeType = rangeMapping.get(type);
             if (rangeType != null)
                 out.printf("%s %sRange = new %s();\n", //
                         out.im.name(rangeType), //
-                        name.fooBar, //
+                        cname.field, //
                         out.im.name(rangeType));
         }
     }
 
     public void columnMaskAccessors(JavaSourceWriter out, IColumnMetadata column) {
-        Phrase name = column.nam();
+        ColumnName cname = project.columnName(column);
         Class<?> type = Primitives.box(column.getType());
 
         String description = column.getDescription();
@@ -347,41 +345,40 @@ public class MiscTemplates {
         }
 
         out.printf("public %s get%s() {\n", //
-                out.im.name(type), //
-                name.FooBar);
-        out.printf("    return %s;\n", name.fooBar);
+                out.im.name(type), cname.Property);
+        out.printf("    return %s;\n", cname.field);
         out.println("}");
         out.println();
 
         if (description != null && !description.isEmpty()) {
             out.println("/** " + description + " */");
         }
-        out.printf("public void set%s(%s value) {\n", name.FooBar, //
+        out.printf("public void set%s(%s value) {\n", cname.Property, //
                 out.im.name(type));
-        out.printf("    this.%s = value;\n", name.fooBar);
+        out.printf("    this.%s = value;\n", cname.field);
         out.println("}");
 
         if (type == String.class) {
             out.println();
-            out.printf("public String get%sPattern() {\n", name.FooBar);
-            out.printf("    return %sPattern;\n", name.fooBar);
+            out.printf("public String get%sPattern() {\n", cname.Property);
+            out.printf("    return %sPattern;\n", cname.field);
             out.println("}");
             out.println();
-            out.printf("public void set%sPattern(%s value) {\n", name.FooBar, //
+            out.printf("public void set%sPattern(%s value) {\n", cname.Property, //
                     out.im.name(type));
-            out.printf("    this.%sPattern = value;\n", name.fooBar);
+            out.printf("    this.%sPattern = value;\n", cname.field);
             out.println("}");
         } else {
             Class<?> rangeType = rangeMapping.get(type);
             if (rangeType != null) {
                 String RT = out.im.name(rangeType);
                 out.println();
-                out.printf("public %s get%sRange() {\n", RT, name.FooBar);
-                out.printf("    return %sRange;\n", name.fooBar);
+                out.printf("public %s get%sRange() {\n", RT, cname.Property);
+                out.printf("    return %sRange;\n", cname.field);
                 out.println("}");
                 out.println();
-                out.printf("public void set%sRange(%s range) {\n", name.FooBar, RT);
-                out.printf("    this.%sRange = range;\n", name.fooBar);
+                out.printf("public void set%sRange(%s range) {\n", cname.Property, RT);
+                out.printf("    this.%sRange = range;\n", cname.field);
                 out.println("}");
             }
         }
@@ -391,8 +388,8 @@ public class MiscTemplates {
         int n = columns.size();
         for (int i = 0; i < n; i++) {
             IColumnMetadata column = columns.get(i);
-            Phrase name = column.nam();
-            out.print(prefix + name.foo_bar);
+            ColumnName cname = project.columnName(column);
+            out.print(prefix + cname.columnQuoted);
             if (i != n - 1)
                 out.print(", ");
             out.println();
@@ -405,15 +402,15 @@ public class MiscTemplates {
 
         if (keyColumns.length == 1) {
             IColumnMetadata column = keyColumns[0];
-            Phrase name = column.nam();
-            out.println(name.foo_bar + " = #{id}");
+            ColumnName cname = project.columnName(column);
+            out.println(cname.columnQuoted + " = #{id}");
         } else {
             for (int i = 0; i < keyColumns.length; i++) {
                 IColumnMetadata column = keyColumns[i];
-                Phrase name = column.nam();
+                ColumnName cname = project.columnName(column);
                 if (i != 0)
                     out.print("and ");
-                out.println(name.foo_bar + " = #{" + name.fooBar + "}");
+                out.println(cname.columnQuoted + " = #{" + cname.property + "}");
             }
         }
     }

@@ -10,7 +10,6 @@ import java.util.Set;
 
 import net.bodz.bas.c.java.lang.OptionNames;
 import net.bodz.bas.c.java.util.Dates;
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeId;
@@ -96,7 +95,7 @@ public class FooSamples__java
                         continue;
                     }
 
-                    Phrase name = column.nam();
+                    ColumnName cname = project.columnName(column);
                     Class<?> type = column.getType();
                     // FK..
                     if (CoObject.class.isAssignableFrom(type))
@@ -176,7 +175,7 @@ public class FooSamples__java
                         }
                     }
                     if (quoted != null)
-                        out.printf("a.set%s(%s);\n", name.FooBar, quoted);
+                        out.printf("a.set%s(%s);\n", cname.Property, quoted);
                 }
                 out.println("return a;");
                 out.leave();

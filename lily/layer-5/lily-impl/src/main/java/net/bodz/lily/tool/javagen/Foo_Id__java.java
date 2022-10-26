@@ -3,13 +3,11 @@ package net.bodz.lily.tool.javagen;
 import java.io.Serializable;
 import java.util.Objects;
 
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.ImportSet;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.entity.Identifier;
 
@@ -22,7 +20,7 @@ public class Foo_Id__java
 
     @Override
     protected void buildClassBody(JavaSourceWriter out, ITableMetadata tableView) {
-        ITableMetadata table = (ITableMetadata) tableView;
+        ITableMetadata table = tableView;
 
         IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
         switch (primaryKeyCols.length) {
@@ -87,14 +85,15 @@ public class Foo_Id__java
         for (int i = 0; i < kv.length; i++) {
             if (i != 0)
                 out.print(", ");
-            out.printf("%s %s", imports.name(kv[i].getType()), kv[i].nam().fooBar);
+            ColumnName cname = project.columnName(kv[i]);
+            out.printf("%s %s", imports.name(kv[i].getType()), cname.field);
         }
         out.println(") {");
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = k.nam();
-                out.printf("this.%s = %s;\n", name.fooBar, name.fooBar);
+                ColumnName cname = project.columnName(k);
+                out.printf("this.%s = %s;\n", cname.field, cname.field);
             }
             out.leave();
         }
@@ -106,8 +105,8 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = k.nam();
-                out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
+                ColumnName cname = project.columnName(k);
+                out.printf("this.%s = o.%s;\n", cname.field, cname.field);
             }
             out.leave();
         }
@@ -119,8 +118,8 @@ public class Foo_Id__java
         out.enter();
         {
             for (IColumnMetadata k : kv) {
-                Phrase name = k.nam();
-                out.printf("this.%s = o.%s;\n", name.fooBar, name.fooBar);
+                ColumnName cname = project.columnName(k);
+                out.printf("this.%s = o.%s;\n", cname.field, cname.field);
             }
             out.leave();
         }
@@ -148,7 +147,8 @@ public class Foo_Id__java
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
             if (i != 0)
                 out.print(", ");
-            out.print(column.nam().fooBar);
+            ColumnName cname = project.columnName(column);
+            out.print(cname.field);
             i++;
         }
         out.println(");");
@@ -171,9 +171,9 @@ public class Foo_Id__java
         out.println(project.Foo_Id.name + " o = (" + project.Foo_Id.name + ") obj;");
 
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            Phrase name = column.nam();
+            ColumnName cname = project.columnName(column);
             out.printf("if (! Objects.equals(%s, o.%s)) return false;\n", //
-                    name.fooBar, name.fooBar);
+                    cname.field, cname.field);
         }
         out.println("return true;");
         out.leave();
@@ -188,11 +188,11 @@ public class Foo_Id__java
         out.println("StringBuilder sb = new StringBuilder(100);");
         int i = 0;
         for (IColumnMetadata column : table.getPrimaryKeyColumns()) {
-            Phrase name = column.nam();
+            ColumnName cname = project.columnName(column);
+            out.print("sb.append(\"");
             if (i != 0)
-                out.println("sb.append(\", " + name.fooBar + " \" + " + name.fooBar + ");");
-            else
-                out.println("sb.append(\"" + name.fooBar + " \" + " + name.fooBar + ");");
+                out.print(", ");
+            out.println(cname.field + " \" + " + cname.field + ");");
             i++;
         }
         out.println("return sb.toString();");

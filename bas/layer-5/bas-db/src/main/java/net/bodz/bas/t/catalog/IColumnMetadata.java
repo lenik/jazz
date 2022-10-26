@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -68,10 +67,6 @@ public interface IColumnMetadata
 //    }
 
     String getName();
-
-    default Phrase nam() {
-        return Phrase.dual(getName(), getJavaName());
-    }
 
     default boolean isCompositeProperty() {
         String property = getJavaName();

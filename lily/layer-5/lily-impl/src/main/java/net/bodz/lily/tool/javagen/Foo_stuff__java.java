@@ -1,6 +1,5 @@
 package net.bodz.lily.tool.javagen;
 
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.catalog.IColumnMetadata;
@@ -93,33 +92,36 @@ public class Foo_stuff__java
                 excluded |= c.isExcluded();
             if (excluded) {
             } else if (primaryKeyCols.length > 1) {
+                // K id() => new Foo_Id(this)
                 out.println();
                 out.println("@Override");
                 out.printf("public %s id() {\n", out.im.name(idType));
                 // out.printf(" return id;\n");
                 out.printf("    return new %s(this);\n", out.im.name(project.Foo_Id));
                 out.printf("}\n");
+
+                // id(Foo_Id id) => { this.field* = id.property* }
                 out.println();
                 out.println("@Override");
                 out.printf("public void id(%s id) {\n", out.im.name(idType));
                 // out.printf(" this.id = id;\n");
                 for (IColumnMetadata k : primaryKeyCols) {
-                    Phrase name = k.nam();
-                    out.printf("    this.%s = id.get%s();\n", name.fooBar, name.FooBar);
+                    ColumnName cname = project.columnName(k);
+                    out.printf("    this.%s = id.get%s();\n", cname.field, cname.Property);
                 }
                 out.printf("}\n");
             } else {
                 for (IColumnMetadata k : primaryKeyCols) {
-                    Phrase name = k.nam();
+                    ColumnName cname = project.columnName(k);
                     out.println();
                     out.println("@Override");
                     out.printf("public %s id() {\n", out.im.name(idType));
-                    out.printf("    return get%s();\n", name.FooBar);
+                    out.printf("    return get%s();\n", cname.Property);
                     out.printf("}\n");
                     out.println();
                     out.println("@Override");
                     out.printf("public void id(%s id) {\n", out.im.name(idType));
-                    out.printf("    this.set%s(id);\n", name.FooBar);
+                    out.printf("    this.set%s(id);\n", cname.Property);
                     out.printf("}\n");
                 }
             }

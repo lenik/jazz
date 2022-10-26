@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class DefaultTableMetadata
     String description;
     TableKey primaryKey;
     Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
+    Map<String, CrossReference> columnForeignKeyMap = new HashMap<>();
 
     public DefaultTableMetadata() {
     }
@@ -146,7 +148,7 @@ public class DefaultTableMetadata
         primaryKey = new TableKey(getId(), strFields).normalize(this);
     }
 
-    public void updatePrimaryKey() {
+    public void setPrimaryKeyFromColumns() {
         List<String> cols = new ArrayList<>();
         for (IColumnMetadata column : columns) {
             if (column.isPrimaryKey())
@@ -168,6 +170,20 @@ public class DefaultTableMetadata
 
     public void addForeignKey(CrossReference foreignKey) {
         foreignKeys.put(foreignKey.constraintName, foreignKey);
+        for (String column : foreignKey.getForeignKey().columnNames)
+            columnForeignKeyMap.put(column, foreignKey);
+    }
+
+    @Override
+    public CrossReference getForeignKeyFromColumn(String columnName) {
+        return columnForeignKeyMap.get(columnName);
+    }
+
+    void onForeignKeysReset() {
+        columnForeignKeyMap.clear();
+        for (CrossReference foreignKey : foreignKeys.values())
+            for (String column : foreignKey.getForeignKey().columnNames)
+                columnForeignKeyMap.put(column, foreignKey);
     }
 
     @Override
@@ -193,7 +209,7 @@ public class DefaultTableMetadata
             primaryKey.jsonIn(pk, opts);
         } else {
             // HINT: primary key can also be calculated from columns.
-            updatePrimaryKey();
+            setPrimaryKeyFromColumns();
         }
 
         JsonArray fkv = o.getJsonArray(K_FOREIGN_KEYS);
@@ -206,6 +222,7 @@ public class DefaultTableMetadata
                 foreignKeys.put(ref.getConstraintName(), ref);
             }
         }
+        onForeignKeysReset();
     }
 
     @Override
@@ -226,7 +243,7 @@ public class DefaultTableMetadata
             primaryKey = new TableKey();
             primaryKey.readObject(x_pk);
         } else {
-            updatePrimaryKey();
+            setPrimaryKeyFromColumns();
         }
 
         IElement x_foreignKeys = x_table.selectByTag(K_FOREIGN_KEYS).getFirst();
@@ -238,6 +255,7 @@ public class DefaultTableMetadata
                 foreignKeys.put(ref.getConstraintName(), ref);
             }
         }
+        onForeignKeysReset();
     }
 
     public void loadFromRSMD(Connection connection)
