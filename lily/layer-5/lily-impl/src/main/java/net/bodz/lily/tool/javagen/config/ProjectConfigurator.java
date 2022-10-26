@@ -1,5 +1,14 @@
 package net.bodz.lily.tool.javagen.config;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+
+import javax.persistence.Column;
+
+import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.catalog.*;
@@ -34,20 +43,22 @@ public class ProjectConfigurator
                 mutable.setJavaType(type);
 
         }
-        tableSettings = project.tableMap.get(table.getName());
+        tableSettings = project.resolveTable(table.getName());
         return true;
     }
 
     @Override
     public void column(IColumnMetadata column) {
         ColumnSettings columnSettings = null;
-        if (tableSettings != null)
-            columnSettings = tableSettings.columnMap.get(column.getName());
+        columnSettings = tableSettings.resolveColumn(column.getName());
+
+        String property = project.columnPropertyMap.get(column.getName());
+        if (columnSettings.javaName == null)
+            columnSettings.javaName = property;
 
         if (column instanceof DefaultColumnMetadata) {
             DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
 
-            String property = project.columnPropertyMap.get(column.getName());
             if (property != null) {
                 if (property.isEmpty() || "-".equals(property))
                     mutable.setExcluded(true);
@@ -79,6 +90,57 @@ public class ProjectConfigurator
 
                 if (columnSettings.description != null)
                     mutable.setDescription(columnSettings.description);
+            }
+        }
+    }
+
+    @Override
+    public void endTableOrView(ITableMetadata tableView) {
+        excludeInheritedColumns(tableView);
+    }
+
+    void excludeInheritedColumns(ITableMetadata tableView) {
+        String javaType = tableView.getJavaType();
+        if (javaType == null)
+            return;
+
+        BeanInfo beanInfo;
+
+        try {
+            Class<?> superclass = Class.forName(javaType);
+            if (superclass == null)
+                return;
+            beanInfo = Introspector.getBeanInfo(superclass);
+        } catch (ClassNotFoundException e) {
+            logger.error(e, "unknown java type " + javaType);
+            return;
+        } catch (IntrospectionException e) {
+            logger.error(e, "error getting bean info for " + javaType);
+            return;
+        }
+
+        for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
+            Method getter = pd.getReadMethod();
+            if (getter == null)
+                continue;
+
+            String propertyName = pd.getName();
+            String columnName;
+            Column aColumn = getter.getAnnotation(Column.class);
+            if (aColumn != null)
+                columnName = aColumn.name();
+            else
+                columnName = Phrase.fooBar(propertyName).foo_bar;
+
+            IColumnMetadata column = tableView.getColumn(columnName);
+            if (column == null) {
+                column = tableView.findColumnByJavaName(propertyName);
+            }
+            if (column != null) {
+                if (column instanceof DefaultColumnMetadata) {
+                    DefaultColumnMetadata mutable = (DefaultColumnMetadata) column;
+                    mutable.setExcluded(true);
+                }
             }
         }
     }
