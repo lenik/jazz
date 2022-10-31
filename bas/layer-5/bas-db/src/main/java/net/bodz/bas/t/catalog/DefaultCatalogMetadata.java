@@ -376,7 +376,8 @@ public class DefaultCatalogMetadata
                 throws SQLException {
             String schemaName = rs.getString("TABLE_SCHEM");
             DefaultSchemaMetadata schema = newSchema(schemaName);
-            if (loadSelector.selectSchema(schema.schemaId)) {
+            SelectMode mode = loadSelector.selectSchema(schema.schemaId);
+            if (mode != SelectMode.SKIP) {
                 schema.setJDBCLoadSelector(loadSelector);
                 addSchema(schema);
             }

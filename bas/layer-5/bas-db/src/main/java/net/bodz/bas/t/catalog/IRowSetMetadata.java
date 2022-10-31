@@ -22,6 +22,14 @@ public interface IRowSetMetadata
     String K_COLUMNS = "columns";
     String K_COLUMN = "column";
 
+    default ICatalogMetadata getCatalog() {
+        ISchemaMetadata parent = getParent();
+        if (parent == null)
+            return null;
+        else
+            return parent.getParent();
+    }
+
     ISchemaMetadata getParent();
 
     boolean isSparse();

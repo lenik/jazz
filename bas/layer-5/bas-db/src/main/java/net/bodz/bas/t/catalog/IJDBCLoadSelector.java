@@ -2,12 +2,12 @@ package net.bodz.bas.t.catalog;
 
 public interface IJDBCLoadSelector {
 
-    default boolean selectSchema(SchemaOid id) {
-        return true;
+    default SelectMode selectSchema(SchemaOid id) {
+        return SelectMode.INCLUDE;
     }
 
-    default boolean selectTable(TableOid oid, TableType type) {
-        return true;
+    default SelectMode selectTable(TableOid oid, TableType type) {
+        return SelectMode.SKIP;
     }
 
 //    default boolean selectTable(ITableMetadata table) {
@@ -17,15 +17,28 @@ public interface IJDBCLoadSelector {
     IJDBCLoadSelector ALL = new IJDBCLoadSelector() {
     };
 
-    IJDBCLoadSelector NONE = new IJDBCLoadSelector() {
+    IJDBCLoadSelector EXCLUDE = new IJDBCLoadSelector() {
         @Override
-        public boolean selectSchema(SchemaOid id) {
-            return false;
+        public SelectMode selectSchema(SchemaOid id) {
+            return SelectMode.EXCLUDE;
         }
 
         @Override
-        public boolean selectTable(TableOid oid, TableType type) {
-            return false;
+        public SelectMode selectTable(TableOid oid, TableType type) {
+            return SelectMode.EXCLUDE;
+        }
+
+    };
+
+    IJDBCLoadSelector SKIP = new IJDBCLoadSelector() {
+        @Override
+        public SelectMode selectSchema(SchemaOid id) {
+            return SelectMode.SKIP;
+        }
+
+        @Override
+        public SelectMode selectTable(TableOid oid, TableType type) {
+            return SelectMode.SKIP;
         }
 
     };

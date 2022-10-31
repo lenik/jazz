@@ -67,6 +67,8 @@ public class DefaultColumnMetadata
     int verboseLevel;
     int joinLevel;
 
+    IColumnMetadata parentColumn;
+
     public DefaultColumnMetadata(IRowSetMetadata parent) {
         if (parent == null)
             throw new NullPointerException("parent");
@@ -196,14 +198,34 @@ public class DefaultColumnMetadata
 
     @Override
     public boolean isForeignKey() {
+        if (parentColumn != null)
+            return true;
+
+        CrossReference crossRef = getCrossReference();
+        if (crossRef != null)
+            return crossRef.foreignKey.contains(name);
+
+        return false;
+    }
+
+    @Override
+    public IColumnMetadata getParentColumn() {
+        if (parentColumn == null) {
+            CrossReference crossRef = getCrossReference();
+            if (crossRef != null)
+                parentColumn = crossRef.findParentColumn(name);
+        }
+        return parentColumn;
+    }
+
+    public CrossReference getCrossReference() {
         IRowSetMetadata parent = getParent();
-        if (parent == null)
-            return false;
-        if (!(parent instanceof ITableMetadata))
-            return false;
-        ITableMetadata table = (ITableMetadata) parent;
-        CrossReference xref = table.getForeignKeyFromColumn(name);
-        return xref != null;
+        if (parent instanceof ITableMetadata) {
+            ITableMetadata table = (ITableMetadata) parent;
+            CrossReference crossRef = table.getForeignKeyFromColumn(name);
+            return crossRef;
+        }
+        return null;
     }
 
     @Override

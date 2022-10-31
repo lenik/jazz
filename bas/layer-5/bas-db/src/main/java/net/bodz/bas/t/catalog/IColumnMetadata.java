@@ -89,6 +89,8 @@ public interface IColumnMetadata
 
     boolean isForeignKey();
 
+    IColumnMetadata getParentColumn();
+
     Boolean getAutoIncrement();
 
     default boolean isAutoIncrement(boolean defaultValue) {

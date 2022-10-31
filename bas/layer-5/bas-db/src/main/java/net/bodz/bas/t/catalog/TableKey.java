@@ -125,7 +125,12 @@ public final class TableKey
     public IColumnMetadata[] resolve(ITableMetadata table) {
         IColumnMetadata[] columns = new IColumnMetadata[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
-            columns[i] = table.getColumn(columnNames[i]);
+            IColumnMetadata column = table.getColumn(columnNames[i]);
+            if (column == null)
+                throw new NullPointerException(String.format(//
+                        "undefined column %s (key[%d]) in table %s", //
+                        columnNames[i], i, table.getId()));
+            columns[i] = column;
         }
         return columns;
     }

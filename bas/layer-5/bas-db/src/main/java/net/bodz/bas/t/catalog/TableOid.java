@@ -101,6 +101,22 @@ public class TableOid
         return sb.toString();
     }
 
+    public String getPreferredPackageName(String parentPackageName) {
+        if (parentPackageName == null)
+            throw new NullPointerException("parentPackageName");
+        StringBuilder sb = new StringBuilder(parentPackageName);
+        if (catalogName != null) {
+            sb.append('.');
+            sb.append(catalogName);
+        }
+        if (schemaName != null) {
+            sb.append('.');
+            sb.append(schemaName);
+        }
+        String packageName = sb.toString();
+        return packageName;
+    }
+
     public boolean contains(TableOid o, boolean ignoreCase) {
         if (ignoreCase)
             return containsIgnoreCase(o);
