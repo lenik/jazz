@@ -2,6 +2,7 @@ package net.bodz.lily.tool.javagen;
 
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
+import net.bodz.bas.t.catalog.CrossReference;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.lily.entity.IdType;
@@ -18,10 +19,10 @@ public class Foo_stuff__java
     }
 
     @Override
-    protected void buildClassBody(JavaSourceWriter out, ITableMetadata tableView) {
-        QualifiedName idType = templates.getIdType(tableView);
+    protected void buildClassBody(JavaSourceWriter out, ITableMetadata table) {
+        QualifiedName idType = templates.getIdType(table);
 
-        String javaType = tableView.getJavaType();
+        String javaType = table.getJavaType();
         String parent;
         if (javaType != null) {
             Class<?> javaClass;
@@ -56,7 +57,7 @@ public class Foo_stuff__java
         else
             parent = out.im.name(StructRow.class);
 
-        String description = tableView.getDescription();
+        String description = table.getDescription();
         if (description != null)
             templates.javaDoc(out, description);
 
@@ -72,21 +73,38 @@ public class Foo_stuff__java
             out.println();
             out.println("private static final long serialVersionUID = 1L;");
 
-            templates.N_consts(out, tableView, null);
-            templates.O_consts(out, tableView, null);
+            templates.N_consts(out, table, null);
+            templates.O_consts(out, table, null);
 
-            for (IColumnMetadata column : tableView.getColumns()) {
+            for (IColumnMetadata column : table.getColumns()) {
                 if (column.isExcluded())
                     continue;
 
                 if (column.isCompositeProperty())
                     continue;
 
+                if (column.isForeignKey())
+                    continue;
+
                 out.println();
                 templates.columnField(out, column);
             }
 
-            IColumnMetadata[] primaryKeyCols = tableView.getPrimaryKeyColumns();
+            for (CrossReference xref : table.getForeignKeys().values()) {
+                if (xref.isExcluded(table))
+                    continue;
+
+                out.println();
+                templates.foreignKeyField(out, xref, table);
+
+                for (String fkColumnName : xref.getForeignKey().getColumnNames()) {
+                    IColumnMetadata column = table.getColumn(fkColumnName);
+                    out.println();
+                    templates.columnField(out, column);
+                }
+            }
+
+            IColumnMetadata[] primaryKeyCols = table.getPrimaryKeyColumns();
             boolean excluded = false;
             for (IColumnMetadata c : primaryKeyCols)
                 excluded |= c.isExcluded();
@@ -126,19 +144,42 @@ public class Foo_stuff__java
                 }
             }
 
-            for (IColumnMetadata column : tableView.getColumns()) {
+            for (IColumnMetadata column : table.getColumns()) {
                 if (column.isExcluded())
                     continue;
 
                 if (column.isCompositeProperty())
                     continue;
 
+                if (column.isForeignKey())
+                    continue;
+
                 out.println();
                 templates.columnAccessors(out, column, true);
             }
 
+            for (CrossReference xref : table.getForeignKeys().values()) {
+                if (xref.isExcluded(table))
+                    continue;
+
+                out.println();
+                templates.foreignKeyAccessors(out, xref, table);
+
+                IColumnMetadata[] fv = xref.getForeignColumns();
+                IColumnMetadata[] pv = xref.getParentColumns();
+                for (int i = 0; i < fv.length; i++) {
+                    IColumnMetadata f = fv[i];
+                    if (f.isExcluded())
+                        continue;
+
+                    IColumnMetadata p = pv[i];
+                    out.println();
+                    templates.foreignKeyColumnAccessors(out, xref, f, p, true);
+                }
+            }
+
             out.println();
-            templates.initNotNulls(out, tableView);
+            templates.initNotNulls(out, table);
 
             out.leave();
         }
