@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.stream.XMLStreamException;
 
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -27,6 +28,7 @@ import net.bodz.bas.t.map.JKMap;
 
 public class CrossReference
         implements
+            IMutableJavaName,
             IJsonForm,
             IXmlForm,
             Serializable {
@@ -41,14 +43,63 @@ public class CrossReference
     public static final String K_DELETE_RULE = "deleteRule";
     public static final String K_DEFERRABILITY = "deferrability";
 
+    String javaPackage; // not used.
+    String javaName;
+    String label;
+    String description;
+
     TableKey foreignKey;
     TableKey parentKey;
+
+    ITableMetadata foreignTable;
+    ITableMetadata parentTable;
+    IColumnMetadata[] foreignColumns;
+    IColumnMetadata[] parentColumns;
 
     String constraintName;
     String primaryKeyName;
     int updateRule;
     int deleteRule;
     int deferrability;
+
+    public CrossReference() {
+    }
+
+    @Override
+    public String getJavaPackage() {
+        return javaPackage;
+    }
+
+    @Override
+    public void setJavaPackage(String javaPackage) {
+        this.javaPackage = javaPackage;
+    }
+
+    @Override
+    public String getJavaName() {
+        return javaName;
+    }
+
+    @Override
+    public void setJavaName(String javaName) {
+        this.javaName = javaName;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public TableKey getForeignKey() {
         return foreignKey;
@@ -64,6 +115,38 @@ public class CrossReference
 
     public void setParentKey(TableKey parentKey) {
         this.parentKey = parentKey;
+    }
+
+    public ITableMetadata getForeignTable() {
+        return foreignTable;
+    }
+
+    public void setForeignTable(ITableMetadata foreignTable) {
+        this.foreignTable = foreignTable;
+    }
+
+    public ITableMetadata getParentTable() {
+        return parentTable;
+    }
+
+    public void setParentTable(ITableMetadata parentTable) {
+        this.parentTable = parentTable;
+    }
+
+    public IColumnMetadata[] getForeignColumns() {
+        return foreignColumns;
+    }
+
+    public void setForeignColumns(IColumnMetadata[] foreignColumns) {
+        this.foreignColumns = foreignColumns;
+    }
+
+    public IColumnMetadata[] getParentColumns() {
+        return parentColumns;
+    }
+
+    public void setParentColumns(IColumnMetadata[] parentColumns) {
+        this.parentColumns = parentColumns;
     }
 
     public String getConstraintName() {
@@ -104,6 +187,82 @@ public class CrossReference
 
     public void setDeferrability(int deferrability) {
         this.deferrability = deferrability;
+    }
+
+    public String getForeignKeySQL() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("foreign key (");
+        int i = 0;
+        for (String n : foreignKey.getColumnNames()) {
+            if (i++ != 0)
+                sb.append(", ");
+            sb.append(n);
+        }
+        sb.append(") references ");
+        sb.append(parentKey.oid.getFullName());
+        sb.append(" (");
+        i = 0;
+        for (String n : parentKey.getColumnNames()) {
+            if (i++ != 0)
+                sb.append(", ");
+            sb.append(n);
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    public boolean isExcluded(ITableMetadata table) {
+        if (foreignKey == null)
+            return false;
+        for (String n : foreignKey.getColumnNames())
+            if (table.getColumn(n).isExcluded())
+                return true;
+        return false;
+    }
+
+    public int getColumnCount() {
+        if (foreignKey == null)
+            return 0;
+        return foreignKey.columnNames.length;
+    }
+
+    public boolean updateParentColumns() {
+        if (parentColumns == null) {
+            // search thru the catalog.
+            if (foreignTable == null)
+                throw new NullPointerException("foreignTable");
+            if (parentKey == null)
+                throw new NullPointerException("parentKey");
+
+            if (parentTable == null) {
+                ICatalogMetadata catalog = foreignTable.getCatalog();
+                ISchemaMetadata schema = foreignTable.getParent();
+                if (catalog != null)
+                    parentTable = catalog.getTable(parentKey.getId());
+                else if (schema != null)
+                    parentTable = schema.getTable(parentKey.getId());
+
+                if (parentTable == null)
+                    return false;
+            }
+            parentColumns = parentKey.resolve(parentTable);
+        }
+        return true;
+    }
+
+    /**
+     */
+    public IColumnMetadata findParentColumn(String foreignColumnName) {
+        if (!updateParentColumns())
+            throw new IllegalUsageException("Can't determine parent columns.");
+
+        for (int keySeq = 0; keySeq < foreignColumns.length; keySeq++) {
+            String name = foreignColumns[keySeq].getName();
+            if (name.equals(foreignColumnName)) {
+                return parentColumns[keySeq];
+            }
+        }
+        throw new IllegalArgumentException("no matching foreign column " + foreignColumnName);
     }
 
     @Override
@@ -237,10 +396,10 @@ public class CrossReference
         parentKey = new TableKey(pkTable, pkv);
     }
 
-    public static CrossReferenceMap convertToParentMap(ResultSet rs)
-            throws SQLException {
-        return convertFromJDBC(rs, true);
-    }
+//    public static CrossReferenceMap convertToParentMap( ResultSet rs)
+//            throws SQLException {
+//        return convertFromJDBC(ns, rs, true);
+//    }
 
     public static CrossReferenceMap convertToForeignMap(ResultSet rs)
             throws SQLException {

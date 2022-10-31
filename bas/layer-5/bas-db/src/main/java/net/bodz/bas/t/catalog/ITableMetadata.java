@@ -19,11 +19,12 @@ public interface ITableMetadata
             IJavaName,
             IJDBCMetaDataSupport {
 
-    String K_JAVA_NAME = "javaName";
     String K_TABLE_TYPE = "tableType";
     String K_DESCRIPTION = "description";
 
+    String K_JAVA_NAME = "javaName";
     String K_JAVA_TYPE = "javaType";
+    String K_EXCLUDED = "excluded";
 
     String K_PRIMARY_KEY = "primaryKey";
     String K_FOREIGN_KEYS = "foreignKeys";
@@ -55,6 +56,12 @@ public interface ITableMetadata
 
     String getDescription();
 
+    default String getJavaType() {
+        return null;
+    }
+
+    boolean isExcluded();
+
     TableKey getPrimaryKey();
 
     default IColumnMetadata[] getPrimaryKeyColumns() {
@@ -81,10 +88,6 @@ public interface ITableMetadata
         return parents;
     }
 
-    default String getJavaType() {
-        return null;
-    }
-
     default void wireUp() {
     }
 
@@ -97,6 +100,8 @@ public interface ITableMetadata
 
         out.entryNotNull(K_JAVA_NAME, getJavaName());
         out.entryNotNull(K_JAVA_TYPE, getJavaType());
+        out.entryTrue(K_EXCLUDED, isExcluded());
+
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.jsonOut(out, opts);
@@ -127,6 +132,8 @@ public interface ITableMetadata
 
         out.attributeNotNull(K_JAVA_NAME, getJavaName());
         out.attributeNotNull(K_JAVA_TYPE, getJavaType());
+        out.attributeTrue(K_EXCLUDED, isExcluded());
+
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 
         IRowSetMetadata.super.writeObject(out);

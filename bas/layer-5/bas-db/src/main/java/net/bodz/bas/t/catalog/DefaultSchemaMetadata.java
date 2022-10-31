@@ -460,19 +460,24 @@ public class DefaultSchemaMetadata
             oid.readFromJDBC(rs);
 
             TableType type = TableType.parseJDBC(rs);
-            if (!loadSelector.selectTable(oid, type))
+            SelectMode mode = loadSelector.selectTable(oid, type);
+            if (mode == SelectMode.SKIP)
                 return null;
 
             switch (type) {
             case TABLE:
                 DefaultTableMetadata table = new DefaultTableMetadata(DefaultSchemaMetadata.this);
                 table.getJDBCMetaDataHandler().table(rs);
+                if (mode == SelectMode.EXCLUDE)
+                    table.setExcluded(true);
                 addTable(table);
                 return table;
 
             case VIEW:
                 DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
                 view.getJDBCMetaDataHandler().table(rs);
+                if (mode == SelectMode.EXCLUDE)
+                    view.setExcluded(true);
                 addView(view);
                 return view;
 
@@ -508,7 +513,8 @@ public class DefaultSchemaMetadata
             viewId.catalogName = rs.getString("view_catalog");
             viewId.schemaName = rs.getString("view_schema");
             viewId.tableName = rs.getString("view_name");
-            if (!loadSelector.selectTable(viewId, TableType.VIEW))
+            SelectMode mode = loadSelector.selectTable(viewId, TableType.VIEW);
+            if (mode == SelectMode.SKIP)
                 return;
 
             IViewMetadata view = getView(viewId.getTableName());
@@ -591,7 +597,10 @@ public class DefaultSchemaMetadata
 
         rs = dmd.getCrossReference(null, null, null, //
                 schemaId.catalogName, schemaId.schemaName, null);
-        ListMap<TableOid, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
+
+        ListMap<TableOid, CrossReference> foreignMap = //
+                CrossReference.convertToForeignMap(rs);
+
         for (TableOid foreignName : foreignMap.keySet()) {
             ITableMetadata foreignTable = getTable(foreignName.getTableName());
             if (foreignTable == null)

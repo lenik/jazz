@@ -35,6 +35,7 @@ public class DefaultTableMetadata
     String javaName;
     String javaPackage;
     String javaType;
+    boolean excluded;
 
     TableType tableType = getDefaultTableType();
 
@@ -93,6 +94,15 @@ public class DefaultTableMetadata
 
     public void setJavaType(String javaType) {
         this.javaType = javaType;
+    }
+
+    @Override
+    public boolean isExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(boolean excluded) {
+        this.excluded = excluded;
     }
 
     @Override
