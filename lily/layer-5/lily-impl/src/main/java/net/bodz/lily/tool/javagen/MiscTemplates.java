@@ -438,13 +438,13 @@ public class MiscTemplates {
     public void foreignKeyColumnAccessors(JavaSourceWriter out, CrossReference xref, IColumnMetadata column,
             IColumnMetadata parentColumn, boolean impl) {
         ColumnName n = project.columnName(column);
+        ColumnName p = project.columnName(parentColumn);
+
         Class<?> type = column.getType();
         boolean notNull = !column.isNullable(true);
         String isOrGet = boolean.class == type ? "is" : "get";
 
         String refField = xref.getJavaName();
-
-        ColumnName p = project.columnName(parentColumn);
 
         boolean parentNull = parentColumn.isNullable(false);
         if (parentNull == false) {
@@ -461,8 +461,7 @@ public class MiscTemplates {
             out.enterln(" {");
             out.printf("if (%s != null)\n", refField);
             out.printf("    return %s.%s%s();\n", refField, isOrGet, p.Property);
-            out.printf("else\n");
-            out.printf("    return %s;\n", n.field);
+            out.printf("return %s;\n", n.field);
             out.leaveln("}");
         } else {
             out.println(";");
@@ -476,8 +475,7 @@ public class MiscTemplates {
             out.enterln(" {");
             out.printf("if (%s != null)\n", refField);
             out.printf("    %s.set%s(value);\n", refField, p.Property);
-            out.printf("else\n");
-            out.printf("    this.%s = value;\n", n.field);
+            out.printf("this.%s = value;\n", n.field);
             out.leaveln("}");
         } else {
             out.println(";");
