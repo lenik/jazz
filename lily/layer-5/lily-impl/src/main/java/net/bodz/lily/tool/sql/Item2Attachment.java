@@ -68,7 +68,7 @@ public class Item2Attachment
         case SYSTEM_TABLE:
             logger.info("process table " + tableView.getId());
             try {
-                processTable((ITableMetadata) tableView);
+                processTable(tableView);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
@@ -210,16 +210,22 @@ public class Item2Attachment
         DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
         catalog.setJDBCLoadSelector(new IJDBCLoadSelector() {
             @Override
-            public boolean selectSchema(SchemaOid id) {
+            public SelectMode selectSchema(SchemaOid id) {
                 ContainingType type = catalogSubset.contains(id.getSchemaName());
-                return type != ContainingType.NONE;
+                if (type != ContainingType.NONE)
+                    return SelectMode.INCLUDE;
+                else
+                    return SelectMode.SKIP;
             }
 
             @Override
-            public boolean selectTable(TableOid oid, TableType type) {
+            public SelectMode selectTable(TableOid oid, TableType type) {
                 if (!type.isTable())
-                    return false;
-                return catalogSubset.contains(oid);
+                    return SelectMode.SKIP;
+                if (catalogSubset.contains(oid))
+                    return SelectMode.INCLUDE;
+                else
+                    return SelectMode.SKIP;
             }
 
         });

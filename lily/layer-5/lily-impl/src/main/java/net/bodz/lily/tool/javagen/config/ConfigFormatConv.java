@@ -37,7 +37,7 @@ public class ConfigFormatConv
         }
 
         for (String arg : args) {
-            ProjectConfig cc = new ProjectConfig();
+            CatalogConfig cc = new CatalogConfig();
             File file = new File(arg);
             RstFn.loadFromRst(cc, file);
 

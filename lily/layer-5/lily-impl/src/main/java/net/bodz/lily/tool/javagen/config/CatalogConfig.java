@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.c.string.StringId;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -19,9 +22,13 @@ import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.map.ListMap;
+import net.bodz.lily.tool.javagen.ColumnName;
+import net.bodz.lily.tool.javagen.TableName;
 
-public class ProjectConfig
+public class CatalogConfig
         implements
             IRstForm,
             IJsonForm {
@@ -50,6 +57,12 @@ public class ProjectConfig
     Map<String, String> tableClassMap;
     Map<String, MixinSettings> mixinMap;
 
+    NameDecoratorList foreignKeyDecorators = new NameDecoratorList();
+
+    public CatalogConfig() {
+        foreignKeyDecorators.addSuffix("Id");
+    }
+
     List<String> resolveTableList(String className) {
         List<String> list = classMap.get(className);
         if (list == null) {
@@ -73,6 +86,78 @@ public class ProjectConfig
             mixinMap.put(mixinName, mixin);
         }
         return mixin;
+    }
+
+    public TableName tableName(ITableMetadata table) {
+        TableName n = new TableName();
+        n.tableName = table.getName();
+        n.tableNameQuoted = '"' + n.tableName + '"';
+        n.compactName = table.getCompactName();
+        n.compactNameQuoted = sqlQuote(n.compactName);
+        n.fullName = table.getId().getFullName();
+        n.fullNameQuoted = sqlQuote(n.fullName);
+
+        String simple = table.getJavaName();
+        if (simple == null) {
+            simple = StringId.UL.toCamel(n.tableName);
+            simple = Strings.ucfirst(simple);
+        }
+        n.simpleClassName = simple;
+
+        n.packageName = table.getJavaPackage();
+        if (n.packageName == null)
+            n.packageName = table.getId().getPreferredPackageName(defaultPackageName);
+
+        n.className = n.packageName + "." + n.simpleClassName;
+        return n;
+    }
+
+    String sqlQuote(String qName) {
+        StringTokenizer tokens = new StringTokenizer(qName, ".");
+        StringBuilder sb = new StringBuilder(qName.length() * 2);
+        int i = 0;
+        while (tokens.hasMoreTokens()) {
+            String token = tokens.nextToken();
+            if (i++ != 0)
+                sb.append(".");
+            sb.append('"');
+            sb.append(token);
+            sb.append('"');
+        }
+        return sb.toString();
+    }
+
+    public ColumnName columnName(IColumnMetadata column) {
+        ColumnName n = new ColumnName();
+        n.column = column.getName();
+        n.columnQuoted = "\"" + n.column + "\""; // PostgreSQL
+
+        // boolean javaNameSpecified = column.getJavaName() != null;
+        n.field = column.getJavaName();
+        if (n.field == null)
+            n.field = StringId.UL.toCamel(n.column);
+
+        n.setPropertyFromField();
+
+//        if (column.isForeignKey()) {
+//            name.keyProperty = name.property;
+//            name.refProperty = name.property;
+//
+//            INameDecorator decorator = foreignKeyDecorators.findDecorator(name.property);
+//            if (decorator != null)
+//                name.refProperty = decorator.undecorate(name.property);
+//            else
+//                name.keyProperty = foreignKeyDecorators.getPreferredDecoratedName(name.property);
+//        }
+        return n;
+    }
+
+    public ColumnName[] columnNames(IColumnMetadata[] columns) {
+        int n = columns.length;
+        ColumnName[] names = new ColumnName[n];
+        for (int i = 0; i < n; i++)
+            names[i] = columnName(columns[i]);
+        return names;
     }
 
     @Override

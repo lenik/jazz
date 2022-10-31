@@ -7,7 +7,6 @@ import java.sql.Connection;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.m2.MavenPomDir;
-import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.codegen.ClassPathInfo;
@@ -29,8 +28,9 @@ import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.tuple.Split;
-import net.bodz.lily.tool.javagen.config.ProjectConfig;
-import net.bodz.lily.tool.javagen.config.ProjectConfigurator;
+import net.bodz.lily.tool.javagen.config.CatalogConfig;
+import net.bodz.lily.tool.javagen.config.CatalogConfigApplier;
+import net.bodz.lily.tool.javagen.config.FinishProcessor;
 
 @ProgramName("javagen")
 public class JavaGen
@@ -114,7 +114,7 @@ public class JavaGen
      */
     boolean forceMode;
 
-    ProjectConfig config = new ProjectConfig();
+    CatalogConfig config = new CatalogConfig();
 
     /**
      * Save the catalog metadata to file, and quit.
@@ -134,6 +134,8 @@ public class JavaGen
     Connection connection;
 
     CatalogSubset catalogSubset = new CatalogSubset(null);
+    DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
+    boolean loadDependedObjects = true;
 
     public JavaGen(DataContext dataContext) {
         if (dataContext == null)
@@ -151,15 +153,15 @@ public class JavaGen
         RstFn.loadFromRst(config, configFile);
     }
 
-    boolean processTableOrView(ITableMetadata tableView) {
-        switch (tableView.getTableType()) {
+    boolean processTableOrView(ITableMetadata table) {
+        switch (table.getTableType()) {
         case TABLE:
         case SYSTEM_TABLE:
         case TEMP:
         case GLOBAL_TEMP:
-            logger.info("make table " + tableView.getId());
+            logger.info("make table " + table.getId());
             try {
-                makeTable(tableView);
+                makeTable(table);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
@@ -168,9 +170,9 @@ public class JavaGen
             return true;
 
         case VIEW:
-            logger.info("make view " + tableView.getId());
+            logger.info("make view " + table.getId());
             try {
-                makeView((IViewMetadata) tableView);
+                makeView((IViewMetadata) table);
             } catch (Exception e) {
                 logger.error("Error make table: " + e.getMessage(), e);
                 return false;
@@ -183,26 +185,13 @@ public class JavaGen
         }
     }
 
-    JavaGenProject createProject(ITableMetadata tableView) {
-        String simpleName = tableView.getJavaQName();
-        String packageName = parentPackage;
-
-        if (simpleName != null) {
-            if (simpleName.contains(".")) {
-                int lastDot = simpleName.lastIndexOf('.');
-                packageName = simpleName.substring(0, lastDot);
-                simpleName = simpleName.substring(lastDot + 1);
-            }
-        } else {
-            ISchemaMetadata schema = tableView.getParent();
-
-            String schemaJavaQName = schema.getJavaQName();
-            if (schemaJavaQName != null)
-                packageName += "." + schemaJavaQName;
-
-            if (simpleName == null)
-                simpleName = Phrase.foo_bar(tableView.getId().getTableName()).FooBar;
-        }
+    JavaGenProject createProject(ITableMetadata table) {
+        String simpleName = table.getJavaName();
+        String packageName = table.getJavaPackage();
+        if (simpleName == null)
+            throw new NullPointerException("simpleName");
+        if (packageName == null)
+            throw new NullPointerException("packageName");
 
         long seed;
         if (seedRandom)
@@ -216,6 +205,8 @@ public class JavaGen
                 headerDir, "src/main/java", "src/main/resources");
 
         JavaGenProject project = new JavaGenProject(outDir, modelPath, modelApiPath, seed);
+        project.catalog = table.getCatalog();
+        project.config = config;
 
         UpdateMethod updateMethod;
         if (forceMode)
@@ -230,7 +221,6 @@ public class JavaGen
     public void makeTable(ITableMetadata table)
             throws IOException {
         JavaGenProject project = createProject(table);
-        project.config = config;
 
         new Foo_stuff__java(project).buildFile(table, UpdateMethod.OVERWRITE);
         if (table.getPrimaryKeyColumns().length > 1)
@@ -333,25 +323,29 @@ public class JavaGen
             }
         }
 
-        DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
         catalog.setJDBCLoadSelector(new IJDBCLoadSelector() {
             @Override
-            public boolean selectSchema(SchemaOid id) {
+            public SelectMode selectSchema(SchemaOid id) {
                 ContainingType type = catalogSubset.contains(id.getSchemaName());
-                return type != ContainingType.NONE;
+                if (type != ContainingType.NONE)
+                    return SelectMode.INCLUDE;
+                else
+                    return SelectMode.EXCLUDE;
             }
 
             @Override
-            public boolean selectTable(TableOid oid, TableType type) {
+            public SelectMode selectTable(TableOid oid, TableType type) {
                 if (type.isTable())
                     if (includeTables != Boolean.TRUE)
-                        return false;
+                        return SelectMode.SKIP;
                 if (type.isView())
                     if (includeViews != Boolean.TRUE)
-                        return false;
+                        return SelectMode.SKIP;
 
-                boolean contains = catalogSubset.contains(oid);
-                return contains;
+                if (catalogSubset.contains(oid))
+                    return SelectMode.INCLUDE;
+
+                return loadDependedObjects ? SelectMode.EXCLUDE : SelectMode.SKIP;
             }
 
         });
@@ -369,7 +363,8 @@ public class JavaGen
             catalog.loadFromJDBC(connection, "TABLE", "VIEW");
 
             config.defaultPackageName = parentPackage;
-            catalog.accept(new ProjectConfigurator(config));
+            catalog.accept(new CatalogConfigApplier(config));
+            catalog.accept(new FinishProcessor(config));
 
             if (saveCatalogFile != null) {
                 String extension = FilePath.getExtension(saveCatalogFile);
@@ -383,6 +378,8 @@ public class JavaGen
             catalog.accept(new ICatalogVisitor() {
                 @Override
                 public boolean beginTableOrView(ITableMetadata table) {
+                    if (table.isExcluded())
+                        return false;
                     return processTableOrView(table);
                 }
             });

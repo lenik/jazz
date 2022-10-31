@@ -12,17 +12,23 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.primitive.Primitives;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
+import net.bodz.bas.t.catalog.CrossReference;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.TableKey;
+import net.bodz.bas.t.catalog.TableOid;
 import net.bodz.bas.t.range.*;
 
 public class MiscTemplates {
@@ -181,27 +187,22 @@ public class MiscTemplates {
             out.println("@" + out.im.name(NotNull.class));
 
         ColumnName cname = project.columnName(column);
+//        String fieldName = fieldOverride != null ? fieldOverride : cname.field;
         out.print(out.im.name(type) + " " + cname.field);
         out.println(";");
     }
 
-    /**
-     * @Id
-     * @Ordinal
-     * @NotNull
-     * @Precision
-     * @TextInput
-     * @Column
-     */
-    public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
-        ColumnName cname = project.columnName(column);
-        String N_COL_NAME = "N_" + cname.constField;
+    void columnGetterHeader(JavaSourceWriter out, IColumnMetadata column) {
+        ColumnName n = project.columnName(column);
+        String N_COL_NAME = "N_" + n.constField;
 
         Class<?> type = column.getType();
 
         String description = column.getDescription();
         if (description != null && !description.isEmpty()) {
-            out.println("/** " + description + " */");
+            out.println("/**");
+            out.println(" * " + description);
+            out.println(" */");
         }
 
         if (column.isPrimaryKey()) {
@@ -210,7 +211,7 @@ public class MiscTemplates {
 
         int ordinal = column.getOrdinal();
         if (ordinal != 0) {
-            String varName = OrdinalPrefix + cname.constField;
+            String varName = OrdinalPrefix + n.constField;
             out.println("@" + out.im.name(Ordinal.class) + "(" + varName + ")");
         }
 
@@ -245,7 +246,7 @@ public class MiscTemplates {
 
         out.print("@" + out.im.name(Column.class));
         {
-            out.print("(name = \"" + cname.column + "\"");
+            out.print("(name = \"" + n.column + "\"");
             if (unique)
                 out.print(", unique = true");
             if (notNull)
@@ -267,30 +268,217 @@ public class MiscTemplates {
             }
             out.println(")");
         }
+    }
 
+    void columnSetterHeader(JavaSourceWriter out, IColumnMetadata column) {
+        String description = column.getDescription();
+        if (description != null && !description.isEmpty()) {
+            out.println("/**");
+            out.println(" * " + description);
+            out.println(" */");
+        }
+    }
+
+    /**
+     * @Id
+     * @Ordinal
+     * @NotNull
+     * @Precision
+     * @TextInput
+     * @Column
+     */
+    public void columnAccessors(JavaSourceWriter out, IColumnMetadata column, boolean impl) {
+        ColumnName n = project.columnName(column);
+        Class<?> type = column.getType();
+        boolean notNull = !column.isNullable(true);
         String isOrGet = boolean.class == type ? "is" : "get";
 
+        columnGetterHeader(out, column);
         out.printf("public %s %s%s()", //
-                out.im.name(type), isOrGet, cname.Property);
+                out.im.name(type), isOrGet, n.Property);
         if (impl) {
             out.println(" {");
-            out.printf("    return %s;\n", cname.field);
+            out.printf("    return %s;\n", n.field);
             out.println("}");
         } else {
             out.println(";");
         }
         out.println();
 
-        if (description != null && !description.isEmpty()) {
-            out.println("/** " + description + " */");
-        }
-
-        out.printf("public void set%s(%s%s value)", cname.Property, //
+        columnSetterHeader(out, column);
+        out.printf("public void set%s(%s%s value)", n.Property, //
                 (notNull && !type.isPrimitive()) ? ("@" + out.im.name(NotNull.class) + " ") : "", out.im.name(type));
         if (impl) {
             out.println(" {");
-            out.printf("    this.%s = value;\n", cname.field);
+            out.printf("    this.%s = value;\n", n.field);
             out.println("}");
+        } else {
+            out.println(";");
+        }
+    }
+
+    public void foreignKeyField(JavaSourceWriter out, CrossReference xref, ITableMetadata table) {
+        TableKey foreignKey = xref.getForeignKey();
+        IColumnMetadata[] columns = foreignKey.resolve(table);
+        TableOid parentOid = xref.getParentKey().getId();
+        ITableMetadata parentTable = project.catalog.getTable(parentOid);
+        if (parentTable == null) {
+            throw new UnexpectedException("parent is not defined: " + parentOid);
+        }
+
+        String description = xref.getDescription();
+        String inheritDocFrom = null;
+        if (description == null) {
+            description = parentTable.getDescription();
+            if (description != null)
+                inheritDocFrom = out.im.name(parentTable.getJavaQName());
+        }
+
+        out.print("/** ");
+        if (Nullables.isNotEmpty(description)) {
+            if (inheritDocFrom != null)
+                out.print("(" + description + ")");
+            else
+                out.print(description);
+        }
+        out.println(" */");
+
+        boolean notNull = false;
+        for (IColumnMetadata c : columns)
+            if (!c.isNullable(false)) {
+                notNull = true;
+                break;
+            }
+        if (notNull)
+            out.println("@" + out.im.name(NotNull.class));
+
+        String parentType = parentTable.getJavaQName();
+        if (parentType == null)
+            throw new NullPointerException("parentType");
+
+        String property = xref.getJavaName();
+
+        out.print(out.im.name(parentType) + " " + property);
+        out.println(";");
+    }
+
+    public void foreignKeyAccessors(JavaSourceWriter out, CrossReference xref, ITableMetadata table) {
+        TableKey foreignKey = xref.getForeignKey();
+        IColumnMetadata[] columns = foreignKey.resolve(table);
+        TableOid parentOid = xref.getParentKey().getId();
+        ITableMetadata parentTable = project.catalog.getTable(parentOid);
+        if (parentTable == null) {
+            throw new UnexpectedException("parent is not defined: " + parentOid);
+        }
+
+        String label = xref.getLabel();
+        String description = xref.getDescription();
+        String inheritDocFrom = null;
+        if (description == null) {
+            description = parentTable.getDescription();
+            if (description != null)
+                inheritDocFrom = out.im.name(parentTable.getJavaQName());
+        }
+
+        out.println("/**");
+        if (Nullables.isNotEmpty(description)) {
+            if (inheritDocFrom != null)
+                out.println(" * {inheritDoc " + inheritDocFrom + "}");
+            out.println(" * " + description);
+        }
+        out.println(" *");
+        if (Nullables.isNotEmpty(label))
+            out.println(" * @label " + label);
+        out.println(" * @constraint " + xref.getForeignKeySQL());
+        out.println(" */");
+
+        boolean notNull = false;
+        for (IColumnMetadata c : columns)
+            if (!c.isNullable(false)) {
+                notNull = true;
+                break;
+            }
+        if (notNull)
+            out.println("@" + out.im.name(NotNull.class));
+
+        String parentType = parentTable.getJavaQName();
+        if (parentType == null)
+            throw new NullPointerException("parentType");
+
+        String property = xref.getJavaName();
+        String Property = Strings.ucfirst(property);
+
+        out.printf("public %s get%s()", //
+                out.im.name(parentType), Property);
+        out.println(" {");
+        out.printf("    return %s;\n", property);
+        out.println("}");
+        out.println();
+
+        out.println("/**");
+        if (description != null && !description.isEmpty())
+            out.println(" * " + description);
+        out.println(" */");
+
+        out.printf("public void set%s(%s%s value)", Property, //
+                notNull ? ("@" + out.im.name(NotNull.class) + " ") : "", out.im.name(parentType));
+        out.println(" {");
+        out.printf("    this.%s = value;\n", property);
+        out.println("}");
+    }
+
+    /**
+     * @Id
+     * @Ordinal
+     * @NotNull
+     * @Precision
+     * @TextInput
+     * @Column
+     */
+    public void foreignKeyColumnAccessors(JavaSourceWriter out, CrossReference xref, IColumnMetadata column,
+            IColumnMetadata parentColumn, boolean impl) {
+        ColumnName n = project.columnName(column);
+        Class<?> type = column.getType();
+        boolean notNull = !column.isNullable(true);
+        String isOrGet = boolean.class == type ? "is" : "get";
+
+        String refField = xref.getJavaName();
+
+        ColumnName p = project.columnName(parentColumn);
+
+        boolean parentNull = parentColumn.isNullable(false);
+        if (parentNull == false) {
+            ColumnMember m = ColumnUtils.getMemberInfo(parentColumn, p, //
+                    ColumnUtils.GET_GETTER);
+            if (m != null && m.getter != null)
+                parentNull = !m.getter.getReturnType().isPrimitive();
+        }
+
+        columnGetterHeader(out, column);
+        out.printf("public %s %s%s()", //
+                out.im.name(type), isOrGet, n.Property);
+        if (impl) {
+            out.enterln(" {");
+            out.printf("if (%s != null)\n", refField);
+            out.printf("    return %s.%s%s();\n", refField, isOrGet, p.Property);
+            out.printf("else\n");
+            out.printf("    return %s;\n", n.field);
+            out.leaveln("}");
+        } else {
+            out.println(";");
+        }
+        out.println();
+
+        columnSetterHeader(out, column);
+        out.printf("public void set%s(%s%s value)", n.Property, //
+                (notNull && !type.isPrimitive()) ? ("@" + out.im.name(NotNull.class) + " ") : "", out.im.name(type));
+        if (impl) {
+            out.enterln(" {");
+            out.printf("if (%s != null)\n", refField);
+            out.printf("    %s.set%s(value);\n", refField, p.Property);
+            out.printf("else\n");
+            out.printf("    this.%s = value;\n", n.field);
+            out.leaveln("}");
         } else {
             out.println(";");
         }
