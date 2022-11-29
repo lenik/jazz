@@ -14,8 +14,26 @@ public interface IJsonForm {
      * @param json
      *            <code>null</code> for the null object.
      */
+    default void jsonIn(JsonObject o)
+            throws ParseException {
+        jsonIn(o, JsonFormOptions.DEFAULT);
+    }
+
+    /**
+     * @param json
+     *            <code>null</code> for the null object.
+     */
     void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException;
+
+    /**
+     * @param out
+     *            expects a key
+     */
+    default void jsonOut(IJsonOut out)
+            throws IOException, FormatException {
+        jsonOut(out, JsonFormOptions.DEFAULT);
+    }
 
     /**
      * @param out
