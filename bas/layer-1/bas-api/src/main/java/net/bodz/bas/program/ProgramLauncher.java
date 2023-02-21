@@ -1,17 +1,11 @@
 package net.bodz.bas.program;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.bodz.bas.meta.build.ProgramName;
 
@@ -34,8 +28,18 @@ public class ProgramLauncher {
         if (mainClass == null)
             mainClass = resolveProgram(prog);
 
-        if (mainClass == null)
+        if (mainClass == null) {
+            System.err.println("Typedef-Map: ");
+            for (ClassLoader ldr : loaders.keySet()) {
+                NsSymMap nsmap = loaders.get(ldr);
+                System.err.println("    # loaderX: " + ldr);
+                ClassLoaderDumper dumper = new ClassLoaderDumper();
+                dumper.dump(System.err, ldr, "        ");
+                nsmap.dump(System.err, "    ");
+                System.err.println();
+            }
             throw new IllegalArgumentException("Program is unknown: " + prog);
+        }
 
         try {
             mainMethod = mainClass.getMethod("main", String[].class);
@@ -51,47 +55,42 @@ public class ProgramLauncher {
         }
     }
 
-    static Pattern programLine = Pattern.compile("^(\\S+)\\s*=\\s*(\\w+)\\s+(\\S+)\\s*$");
+    static String PROGRAMS_RESOURCE = "META-INF/programs";
+    static Map<ClassLoader, NsSymMap> loaders = new HashMap<>();
+    static String NS_MAIN = "main";
 
-    static Class<?> resolveProgram(String prog)
-            throws IOException {
-        // find in META-INF/programs.
+    public static ClassLoader getDefaultLoader() {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         if (loader == null)
             loader = ClassLoader.getSystemClassLoader();
+        return loader;
+    }
 
-        Enumeration<URL> resources = loader.getResources("META-INF/programs");
-        while (resources.hasMoreElements()) {
-            URL programsFile = resources.nextElement();
-            InputStream in = programsFile.openStream();
-            ByteArrayOutputStream buf = new ByteArrayOutputStream(1000);
-            byte[] block = new byte[4096];
-            int nb;
-            while ((nb = in.read(block)) != -1)
-                buf.write(block, 0, nb);
-            in.close();
+    public static Map<ClassLoader, NsSymMap> getAllTypedefMaps() {
+        return loaders;
+    }
 
-            String contents = new String(buf.toByteArray(), "utf-8");
-            BufferedReader rdr = new BufferedReader(new StringReader(contents));
-            String line;
-            while ((line = rdr.readLine()) != null) {
-                Matcher matcher = programLine.matcher(line);
-                if (matcher.find()) {
-                    String alias = matcher.group(1);
-                    String type = matcher.group(2);
-                    String fqcn = matcher.group(3);
-                    if ("main".equals(type)) {
-                        if (alias.equals(prog))
-                            try {
-                                return Class.forName(fqcn);
-                            } catch (ClassNotFoundException e) {
-                                throw new Error(String.format("No class %s for program %s.", fqcn, prog), e);
-                            }
-                    }
-                }
-            }
+    public static Class<?> resolveProgram(String prog)
+            throws IOException {
+        ClassLoader loader = getDefaultLoader();
+        return resolveProgram(prog, loader);
+    }
+
+    public static Class<?> resolveProgram(String prog, ClassLoader loader)
+            throws IOException {
+        NsSymMap nsmap = loaders.get(loader);
+        if (nsmap == null) {
+            nsmap = new NsSymMap(loader, PROGRAMS_RESOURCE);
+            nsmap.load();
+            loaders.put(loader, nsmap);
         }
-        return null;
+
+        try {
+            return nsmap.resolve(NS_MAIN, prog, loader);
+        } catch (ClassNotFoundException e) {
+            String fqcn = nsmap.getText(NS_MAIN, prog);
+            throw new Error(String.format("No class %s for program %s.", fqcn, prog), e);
+        }
     }
 
 }
