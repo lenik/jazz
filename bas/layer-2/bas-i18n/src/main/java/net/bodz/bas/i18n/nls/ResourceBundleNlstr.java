@@ -43,7 +43,11 @@ public class ResourceBundleNlstr
     public void reload()
             throws MissingResourceException {
         Locale locale = getPreferredLocale();
-        this.resourceBundle = UTF8ResourceBundle.getBundle(baseName, locale);
+        try {
+            this.resourceBundle = UTF8ResourceBundle.getBundle(baseName, locale);
+        } catch (MissingResourceException e) {
+            this.resourceBundle = null;
+        }
     }
 
     @Override
@@ -57,6 +61,8 @@ public class ResourceBundleNlstr
      */
     @Override
     protected boolean localContainsKey(Object key) {
+        if (resourceBundle == null)
+            return false;
         return resourceBundle.containsKey(key.toString());
     }
 
@@ -66,6 +72,8 @@ public class ResourceBundleNlstr
      */
     @Override
     protected Object localGet(Object key, Object def) {
+        if (resourceBundle == null)
+            return def;
         String skey = key.toString();
         if (resourceBundle.containsKey(skey))
             return resourceBundle.getString(skey);
