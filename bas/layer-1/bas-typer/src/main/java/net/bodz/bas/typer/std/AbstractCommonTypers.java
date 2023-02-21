@@ -15,8 +15,14 @@ import net.bodz.bas.rtx.QueryException;
 @ThreadUnsafe
 public abstract class AbstractCommonTypers<T>
         extends AbstractQueryable
-        implements IBasicTyperFamily<T>, ITextFormat<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
-        ISampleGenerator<T>, IInstanceStore<T> {
+        implements
+            IBasicTyperFamily<T>,
+            ITextFormat<T>,
+            IValidator<T>,
+            IClassifier<T>,
+            ISearcher<T>,
+            ISampleGenerator<T>,
+            IInstanceStore<T> {
 
     protected final Class<T> type;
     private Map<String, IAttributes> classicationAttributes;
@@ -175,7 +181,8 @@ public abstract class AbstractCommonTypers<T>
     @Override
     public void validate(T object, IOptions options)
             throws ValidationException {
-        throw new NotImplementedException();
+        // TODO
+        // throw new NotImplementedException();
     }
 
     /** ⇱ Implementation Of {@link IClassifier}. */
