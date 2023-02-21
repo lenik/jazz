@@ -31,6 +31,12 @@ public interface IRstOutput {
     void attribute(String name, Object value)
             throws IOException;
 
+    default void attributeNotNull(String name, Object value)
+            throws IOException {
+        if (value != null)
+            attribute(name, value);
+    }
+
     void attributeQuoted(String name, Object value)
             throws IOException;
 

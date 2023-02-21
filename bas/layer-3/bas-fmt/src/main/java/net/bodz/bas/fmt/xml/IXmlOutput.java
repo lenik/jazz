@@ -22,6 +22,18 @@ public interface IXmlOutput
     void element(String name, Object text)
             throws XMLStreamException;
 
+    default void elementNotNull(String name, String text)
+            throws XMLStreamException {
+        if (text != null)
+            element(name, text);
+    }
+
+    default void elementNotNull(String name, Object text)
+            throws XMLStreamException {
+        if (text != null)
+            element(name, text);
+    }
+
     void element(String name, IXmlForm child)
             throws XMLStreamException, FormatException;
 
