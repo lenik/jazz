@@ -9,7 +9,8 @@ import net.bodz.bas.t.tree.IPathInfo;
 
 public abstract class DecoratedUiRef<T>
         extends DecoratedUiElement
-        implements IUiRef<T> {
+        implements
+            IUiRef<T> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +35,11 @@ public abstract class DecoratedUiRef<T>
     @Override
     public T get() {
         return getWrapped().get();
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        return getWrapped().isReadOnly();
     }
 
     @Override

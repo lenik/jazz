@@ -44,6 +44,8 @@ public class String_swt
         // capitalize, uppercase, lowercase:
         // TextTransformMode textTransform = styleDecl.getTextTransform();
         boolean readOnly = styleDecl.getReadOnly() == Boolean.TRUE;
+        if (ref.isReadOnly())
+            readOnly = true;
 
         Control control = readOnly ? buildLabel(parent, ref, styleInt, options) //
                 : buildText(parent, ref, styleInt, options);
@@ -101,6 +103,9 @@ public class String_swt
             });
 
         SwtRenderContext rc = options.get(SwtRenderContext.class);
+        if (rc == null)
+            rc = SwtRenderContext.DEFAULT;
+
         OnFocusCommit.apply(text, new CommitAdapter(rc.getUserDialogs(text)) {
             @Override
             public void commit(EventObject event)
