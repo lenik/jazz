@@ -46,11 +46,12 @@ import net.bodz.swt.c.composite.StackComposite;
 import net.bodz.swt.c.resources.SWTResources;
 import net.bodz.swt.ui.model.IActionGroup;
 import net.bodz.swt.ui.style.SwtImageMapper;
+import net.bodz.swt.viz.SwtViewBuilders;
 
 public class SwtUserDialogs
         extends AbstractUserDialogs {
 
-    static IViewBuilderFactory viewBuilderFactory;
+    static IViewBuilderFactory viewBuilderFactory = SwtViewBuilders.getDefaultFactory();
 
     private final Shell parent;
     private final int style;
@@ -251,9 +252,12 @@ public class SwtUserDialogs
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
+                if (viewBuilderFactory == null)
+                    throw new NullPointerException("viewBuilderFactory");
                 try {
                     viewBuilderFactory.buildView(null, parent, UiValue.wrap(detail));
                 } catch (Exception e) {
+                    e.printStackTrace();
                     throw new CreateException(e);
                 }
             }

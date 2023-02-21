@@ -20,7 +20,9 @@ import net.bodz.bas.ui.dom1.IUiRef;
 
 public abstract class AbstractSwtViewBuilder<T>
         extends AbstractViewBuilder<T>
-        implements ISwtViewBuilder<T>, II18nCapable {
+        implements
+            ISwtViewBuilder<T>,
+            II18nCapable {
 
     public AbstractSwtViewBuilder(Class<?> valueClass) {
         super(valueClass);
@@ -36,8 +38,12 @@ public abstract class AbstractSwtViewBuilder<T>
             parent = (Composite) _parent;
         }
 
-        // TODO wrap...
-        ISwtUiRef<T> swtRef = (ISwtUiRef<T>) ref;
+        ISwtUiRef<T> swtRef;
+        if (ref instanceof ISwtUiRef<?>) {
+            swtRef = (ISwtUiRef<T>) ref;
+        } else {
+            swtRef = new DefaultSwtUiRef<>(ref);
+        }
 
         int styleInt = getAttribute("swt.styleInt", SWT.NONE);
 
