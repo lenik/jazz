@@ -59,8 +59,7 @@ public class LibUpdater
     /**
      * Override the project-dir mapping file. (default <code>$HOME/.m2/project-dir.map</code>)
      *
-     * The mapping file lists the project id and the workdir each line. (e.g. `groupId:artifactId
-     * path`.)
+     * The mapping file lists the project id and the workdir each line. (e.g. `groupId:artifactId path`.)
      *
      * @option --project-dirs =MAPFILE
      */
@@ -318,6 +317,7 @@ public class LibUpdater
             try {
                 MavenPomXml xml = MavenPomXml.open(pomDir.getPomFile());
                 itemId = xml.getId();
+                // System.err.println("ITEM-ID: "+itemId);
             } catch (XPathExpressionException | SAXException e) {
                 throw new ParseException("error parse pom: " + e.getMessage(), e);
             }
