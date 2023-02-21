@@ -7,6 +7,10 @@ public interface Ref<T> {
      */
     Class<? extends T> getValueType();
 
+    default boolean isReadOnly() {
+        return false;
+    }
+
     T get();
 
     /**

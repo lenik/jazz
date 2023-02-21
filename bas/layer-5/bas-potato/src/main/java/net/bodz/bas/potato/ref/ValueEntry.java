@@ -45,6 +45,11 @@ public class ValueEntry<T>
     }
 
     @Override
+    public boolean isReadOnly() {
+        return true;
+    }
+
+    @Override
     public void set(T value) {
         throw new ReadOnlyException("value entry is read-only.");
     }
