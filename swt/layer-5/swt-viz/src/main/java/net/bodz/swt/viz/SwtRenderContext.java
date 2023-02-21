@@ -15,4 +15,6 @@ public class SwtRenderContext {
     public void addAction(IAction action) {
     }
 
+    public static SwtRenderContext DEFAULT = new SwtRenderContext();
+
 }

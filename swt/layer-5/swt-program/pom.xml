@@ -13,6 +13,11 @@
             <version>${bas.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-shell</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-gui</artifactId>
             <version>${project.version}</version>
