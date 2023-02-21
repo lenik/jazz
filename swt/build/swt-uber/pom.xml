@@ -8,6 +8,13 @@
     </parent>
     <artifactId>swt-uber</artifactId>
     <dependencies>
+    <!--
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-shell</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+    -->
         <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-program</artifactId>
