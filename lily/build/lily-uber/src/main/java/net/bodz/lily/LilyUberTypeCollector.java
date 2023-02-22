@@ -9,7 +9,7 @@ public class LilyUberTypeCollector
 
     @Override
     protected void buildPackageList(List<String> packages) {
-        super.buildPackageList(packages);
+        packages.add("net.bodz.lily");
         packages.add("net.bodz.violet");
     }
 
