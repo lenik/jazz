@@ -1,2 +1,2 @@
-battest = main net.bodz.bas.program.skel.BatchCLITest
-hello = main user.HelloProgram
+main battest = net.bodz.bas.program.skel.BatchCLITest
+main hello = user.HelloProgram

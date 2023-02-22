@@ -1,1 +1,1 @@
-progexec = main net.bodz.bas.program.ProgramLauncher
+main progexec = net.bodz.bas.program.ProgramLauncher
