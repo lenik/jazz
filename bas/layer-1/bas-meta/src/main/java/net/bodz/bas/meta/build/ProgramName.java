@@ -14,7 +14,7 @@ import net.bodz.bas.meta.codegen.IndexedType;
 @Target(ElementType.TYPE)
 public @interface ProgramName {
 
-    String LIST_FILE = "META-INF/programs";
+    String mainSymsResource = "META-INF/programs";
 
     String value();
 
@@ -37,16 +37,17 @@ public @interface ProgramName {
     }
 
     public class ProgramEtcFiles
-            implements IEtcFilesInstaller {
+            implements
+                IEtcFilesInstaller {
 
         @Override
         public void install(Class<?> clazz, IEtcFilesEditor editor) {
             ProgramName aProgramName = clazz.getAnnotation(ProgramName.class);
-            String name = aProgramName.value();
-            String runner = "main";
+            String ns = "main";
+            String sym = aProgramName.value();
             String fqcn = clazz.getCanonicalName();
-            String line = String.format("%s = %s %s", name, runner, fqcn);
-            editor.addLine(LIST_FILE, line);
+            String line = String.format("%s %s = %s", ns, sym, fqcn);
+            editor.addLine(mainSymsResource, line);
         }
 
     }
