@@ -7,6 +7,7 @@ import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
+import net.bodz.bas.text.unicode.UnicodeMacrons;
 
 public class HelpPageFormatter {
 
@@ -16,6 +17,7 @@ public class HelpPageFormatter {
     private int tabSize;
     private int descriptionColumn;
     private char[] indentChars;
+    private boolean useUnicodeUnderline = true;
 
     public HelpPageFormatter() {
         setColumns(80); // Get from terminfo?
@@ -98,8 +100,15 @@ public class HelpPageFormatter {
                 if (groupDescription == null)
                     groupDescription = group.getName();
                 String groupHeader = "Options for " + Strings.ucfirstWords(groupDescription);
-                buffer.append("\n" + groupHeader + "\n");
-                buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");
+                if (useUnicodeUnderline) {
+                    buffer.append('\n');
+                    UnicodeMacrons.interleaveAfter(buffer, groupHeader, //
+                            UnicodeMacrons.COMBINING_LOW_LINE);
+                    buffer.append('\n');
+                } else {
+                    buffer.append("\n" + groupHeader + "\n");
+                    buffer.append(Strings.repeat(groupHeader.length(), '=') + "\n");
+                }
             }
 
             for (IOption option : localOptions) {
