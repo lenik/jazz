@@ -12,7 +12,7 @@ public class TempFileTest
 
     static void touch(File dir, String path)
             throws IOException {
-        File f = new File(dir, path);
+        File f = FilePath.joinHref(dir, path);
         f.getParentFile().mkdirs();
         FileWriter out = new FileWriter(f);
         out.write("stuff\n");
