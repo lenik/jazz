@@ -52,7 +52,11 @@ public class ShortcutLauncher {
         targetClassName = fqcn;
 
         userDir = new File(System.getProperty("user.dir"));
+        debug("userDir: " + userDir);
+
         findAppDir();
+        debug("Found appDir: " + appDir);
+
         if (appDir == null)
             throw new RuntimeException("Can't find application dir.");
     }
@@ -65,7 +69,9 @@ public class ShortcutLauncher {
 
             debug("Load " + classpathFile);
             for (String path : lines) {
-                File item = new File(appDir, path);
+                File item = new File(path);
+                if (!item.isAbsolute())
+                    item = new File(appDir, path);
                 if (item.exists()) {
                     URL itemURL = item.getCanonicalFile().toURI().toURL();
                     if (selectItem(path, item, itemURL)) {
@@ -75,7 +81,7 @@ public class ShortcutLauncher {
                         debug("Auto excluded incompatible SWT component: " + path);
                     }
                 } else {
-                    throw new RuntimeException("unexisted classpath item: " + path);
+                    throw new RuntimeException("unexisted classpath item: " + item);
                 }
             }
         }
@@ -145,9 +151,7 @@ public class ShortcutLauncher {
 
         switch (probeClassURL.getProtocol()) {
         case "jar":
-            String jarEntryPath = probeClassURL.getPath();
-            int excl = jarEntryPath.lastIndexOf('!');
-            String jarPath = jarEntryPath.substring("file:".length(), excl);
+            String jarPath = URLPart.getArchiveFilePath(probeClassURL);
             File jarFile = new File(jarPath);
             launcherURL = toURL(jarFile);
             appDir = launcherDir = jarFile.getParentFile();

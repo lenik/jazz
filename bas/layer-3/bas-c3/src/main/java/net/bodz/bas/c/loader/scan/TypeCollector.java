@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.type.CachedInstantiator;
@@ -183,14 +184,14 @@ public class TypeCollector {
                 IEtcFilesEditor editor = new IEtcFilesEditor() {
                     @Override
                     public void clear(String path) {
-                        File file = new File(resDir, path);
+                        File file = FilePath.joinHref(resDir, path);
                         List<String> lines = fileContentMap.loadFile(file);
                         lines.clear();
                     }
 
                     @Override
                     public void addLine(String path, String s) {
-                        File file = new File(resDir, path);
+                        File file = FilePath.joinHref(resDir, path);
                         List<String> lines = fileContentMap.loadFile(file);
                         lines.add(s);
                     }
