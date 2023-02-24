@@ -24,13 +24,13 @@ public class BeanMethod
     @Override
     public iString getLabel() {
         String displayName = methodDescriptor.getDisplayName();
-        return iString.fn.val(displayName);
+        return iString.fn.wrap(displayName);
     }
 
     @Override
     public iString getDescription() {
         String shortDescription = methodDescriptor.getShortDescription();
-        return iString.fn.val(shortDescription);
+        return iString.fn.wrap(shortDescription);
     }
 
     // IPotatoParameter[] getParameters() {

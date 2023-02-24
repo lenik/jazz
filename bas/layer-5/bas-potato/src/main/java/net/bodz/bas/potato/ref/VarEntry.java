@@ -73,7 +73,7 @@ public class VarEntry<T>
 
     public static <T> VarEntry<T> wrap(Class<T> valueType, T obj) {
         MutableElement element = new MutableElement();
-        element.setLabel(iString.fn.val("noname"));
+        element.setLabel(iString.fn.wrap("noname"));
         return new VarEntry<T>(element, valueType, obj);
     }
 

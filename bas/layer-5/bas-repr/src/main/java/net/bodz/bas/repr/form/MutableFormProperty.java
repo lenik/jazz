@@ -398,7 +398,7 @@ public class MutableFormProperty
             this.inputMask = s.isEmpty() ? null : s;
 
             s = aFormInput.placeholder();
-            this.placeholder = iString.fn.val(s.isEmpty() ? null : s);
+            this.placeholder = iString.fn.wrap(s.isEmpty() ? null : s);
 
             this.nullConvertion = aFormInput.nullconv();
         }

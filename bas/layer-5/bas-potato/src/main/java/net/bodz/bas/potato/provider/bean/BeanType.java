@@ -90,7 +90,7 @@ public class BeanType
                     if (propertyDoc == null) {
                         propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter != null ? getter : setter));
                         String hname = StringId.HYPHEN.breakCamel(name);
-                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.val(hname));
+                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.wrap(hname));
                     }
                 }
 

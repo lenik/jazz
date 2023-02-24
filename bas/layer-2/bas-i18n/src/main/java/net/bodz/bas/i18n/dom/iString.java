@@ -47,16 +47,16 @@ public interface iString
 
     class fn {
 
-        public static iString val(Object obj) {
+        public static iString conv(Object obj) {
             if (obj == null)
                 return NULL;
             if (obj instanceof iString)
                 return (iString) obj;
             else
-                return val(obj.toString());
+                return wrap(obj.toString());
         }
 
-        public static iString val(String plainString) {
+        public static iString wrap(String plainString) {
             return new XiString(plainString);
         }
 

@@ -44,7 +44,7 @@ public class UiVar<T>
 
     public static <T> UiVar<T> wrap(Class<T> valueType, T obj) {
         MutableUiElement element = new MutableUiElement();
-        element.setLabel(iString.fn.val("noname"));
+        element.setLabel(iString.fn.wrap("noname"));
         return new UiVar<T>(element, valueType, obj);
     }
 

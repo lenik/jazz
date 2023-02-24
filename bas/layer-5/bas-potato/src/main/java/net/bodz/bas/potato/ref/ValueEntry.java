@@ -74,7 +74,7 @@ public class ValueEntry<T>
 
     public static <T> ValueEntry<T> wrap(Class<T> valueType, T obj) {
         MutableElement element = new MutableElement();
-        element.setLabel(iString.fn.val("noname"));
+        element.setLabel(iString.fn.wrap("noname"));
         return new ValueEntry<T>(element, valueType, obj);
     }
 
