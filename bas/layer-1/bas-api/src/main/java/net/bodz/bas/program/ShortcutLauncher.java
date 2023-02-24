@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -232,10 +233,14 @@ public class ShortcutLauncher {
     }
 
     public void execute(String... args)
-            throws Exception {
+            throws Throwable {
         Class<?> targetClass = resolveTargetClass();
         Method mainMethod = targetClass.getMethod("main", String[].class);
-        mainMethod.invoke(null, (Object) args);
+        try {
+            mainMethod.invoke(null, (Object) args);
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        }
     }
 
     static int lastIndexOfUpperCase(String s) {
