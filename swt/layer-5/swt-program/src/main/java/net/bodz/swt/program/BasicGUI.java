@@ -156,6 +156,9 @@ public abstract class BasicGUI
         shell = createShell();// throws GUIExcaption
         userDialogs = new SwtUserDialogs(shell);
 
+        setDefaultGeom();
+
+        Mover.bind(shell).center();
         shell.open();
         shell.layout();
 
@@ -165,6 +168,13 @@ public abstract class BasicGUI
             if (!display.readAndDispatch())
                 display.sleep();
         _exit(0);
+    }
+
+    protected void setDefaultGeom() {
+        Point size = shell.computeSize(shellWidth, shellHeight);
+        int width = shellWidth == SWT.DEFAULT ? size.x : shellWidth;
+        int height = shellHeight == SWT.DEFAULT ? size.y : shellHeight;
+        shell.setSize(width, height);
     }
 
     /**
@@ -231,11 +241,6 @@ public abstract class BasicGUI
         homeView.setLayout(new FillLayout());
         createInitialView(homeView);
 
-        Point size = shell.computeSize(shellWidth, shellHeight);
-        int width = shellWidth == SWT.DEFAULT ? size.x : shellWidth;
-        int height = shellHeight == SWT.DEFAULT ? size.y : shellHeight;
-        shell.setSize(width, height);
-        Mover.bind(shell).center();
         return shell;
     }
 
