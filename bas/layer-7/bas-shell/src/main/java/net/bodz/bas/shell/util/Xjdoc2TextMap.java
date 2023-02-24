@@ -35,7 +35,7 @@ public class Xjdoc2TextMap
         for (Entry<String, Object> entry : doc.getTagMap().entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            map.put(key, iString.fn.val(value));
+            map.put(key, iString.fn.conv(value));
         }
 
         iString text = doc.getText();

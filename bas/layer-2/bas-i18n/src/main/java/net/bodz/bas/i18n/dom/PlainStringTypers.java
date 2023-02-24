@@ -9,13 +9,13 @@ public class PlainStringTypers
     @Override
     public iString parse(String text)
             throws ParseException {
-        return iString.fn.val(text);
+        return iString.fn.wrap(text);
     }
 
     @Override
     public iString parse(String text, IOptions options)
             throws ParseException {
-        return iString.fn.val(text);
+        return iString.fn.wrap(text);
     }
 
     @Override

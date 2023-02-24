@@ -43,7 +43,7 @@ public class ValueElement
                 String str = o.getString(name);
                 switch (name) {
                 case "label":
-                    setLabel(iString.fn.val(str));
+                    setLabel(iString.fn.wrap(str));
                     break;
                 case "data":
                     value = parseValue(str);

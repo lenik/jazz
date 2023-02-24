@@ -230,7 +230,7 @@ public class ClassDocToOptionsConverter
             group = new MutableOptionGroup(parent, clazz);
 
         // In flatten-mode: override parent's name/description/docs.
-        iString _name = iString.fn.val(classDoc.getTag("name"));
+        iString _name = iString.fn.conv(classDoc.getTag("name"));
         if (_name != null)
             group.setLabel(_name);
 

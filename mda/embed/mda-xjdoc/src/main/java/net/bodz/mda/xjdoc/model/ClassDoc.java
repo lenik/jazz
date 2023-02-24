@@ -37,7 +37,7 @@ public class ClassDoc
         ClassDoc classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), fqcn);
         classDoc.setTag(LABEL, NO_LABEL);
         // classDoc.setDescription(iString.fn.val(fqcn));
-        classDoc.setText(iString.fn.val(fqcn));
+        classDoc.setText(iString.fn.wrap(fqcn));
         return classDoc;
     }
 
