@@ -62,13 +62,13 @@ public class ShortcutLauncher {
         if (classpathFile != null) {
             List<String> lines = readFileLines(classpathFile);
 
-            // debug("Load " + classpathFile);
+            debug("Load " + classpathFile);
             for (String path : lines) {
                 File item = new File(appDir, path);
                 if (item.exists()) {
                     URL itemURL = item.getCanonicalFile().toURI().toURL();
                     if (selectItem(path, item, itemURL)) {
-                        // debug("Classpath-Item: " + itemURL);
+                        debug("    Included: " + itemURL);
                         URLs.add(itemURL);
                     } else {
                         debug("Auto excluded incompatible SWT component: " + path);
@@ -222,10 +222,8 @@ public class ShortcutLauncher {
             }
         }
 
-        URL[] urlv = URLs.toArray(new URL[0]);
-        for (URL url : urlv)
-            debug("Classpath-Item: " + url);
-        ClassLoader loader = new URLClassLoader(urlv, parent);
+        URL[] array = URLs.toArray(new URL[0]);
+        ClassLoader loader = new URLClassLoader(array, parent);
 
         Thread.currentThread().setContextClassLoader(loader);
 
@@ -257,8 +255,14 @@ public class ShortcutLauncher {
         return s.substring(0, pos);
     }
 
+    static boolean showDebugMessages;
+    static {
+        showDebugMessages = "1".equals(System.getenv("DEBUG"));
+    }
+
     static void debug(String message) {
-        System.err.println(message);
+        if (showDebugMessages)
+            System.err.println(message);
     }
 
     public static void main(String[] args)
