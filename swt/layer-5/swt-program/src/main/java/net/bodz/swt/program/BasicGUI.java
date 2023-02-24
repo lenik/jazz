@@ -159,7 +159,7 @@ public abstract class BasicGUI
         shell.open();
         shell.layout();
 
-        _start();
+        guiMain(args);
 
         while (!shell.isDisposed())
             if (!display.readAndDispatch())
@@ -170,7 +170,7 @@ public abstract class BasicGUI
     /**
      * shell created and just before message loop
      */
-    protected void _start() {
+    protected void guiMain(String[] args) {
     }
 
     protected String getTitle() {
