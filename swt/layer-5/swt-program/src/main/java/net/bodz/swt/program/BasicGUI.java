@@ -164,9 +164,14 @@ public abstract class BasicGUI
 
         guiMain(args);
 
-        while (!shell.isDisposed())
-            if (!display.readAndDispatch())
-                display.sleep();
+        while (!shell.isDisposed()) {
+            try {
+                if (!display.readAndDispatch())
+                    display.sleep();
+            } catch (Exception e) {
+                userDialogs.alert("ERROR", e);
+            }
+        }
         _exit(0);
     }
 
