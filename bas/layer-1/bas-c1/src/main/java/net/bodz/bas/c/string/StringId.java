@@ -146,8 +146,8 @@ public class StringId {
             String token = tokens.nextToken();
             String camel = breakCamel(token, tokenSep);
             if (count++ != 0)
-                sb.append(camel);
-            sb.append(qDelim);
+                sb.append(qDelim);
+            sb.append(camel);
         }
         return sb.toString();
     }
