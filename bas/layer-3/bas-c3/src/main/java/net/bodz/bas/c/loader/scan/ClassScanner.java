@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Inherited;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,8 +49,8 @@ public class ClassScanner
      *
      * @param parentClass
      *            The parent class.
-     * @return Non-<code>null</code> set of subclasses. If there is no subclass of the given parent
-     *         class, an empty set is returned.
+     * @return Non-<code>null</code> set of subclasses. If there is no subclass of the given parent class, an empty set
+     *         is returned.
      */
     public synchronized Set<Class<?>> getSubclasses(Class<?> parentClass) {
         Set<Class<?>> subclasses = subclassesMap.get(parentClass);
@@ -74,9 +75,8 @@ public class ClassScanner
      *
      * @param annotationType
      *            The annotation type.
-     * @return Non-<code>null</code> set of classes which is annotated with the specific annotation
-     *         type. If no class is annotated with the given annotation type, an empty set is
-     *         returned.
+     * @return Non-<code>null</code> set of classes which is annotated with the specific annotation type. If no class is
+     *         annotated with the given annotation type, an empty set is returned.
      */
     public synchronized Set<Class<?>> getAnnotatedClasses(Class<?> annotationType) {
         Set<Class<?>> annotatedClasses = annotatedClassesMap.get(annotationType);
@@ -273,15 +273,18 @@ public class ClassScanner
         }
     }
 
-    public void scanPackage(String packageName)
+    public List<Class<?>> scanPackage(String packageName)
             throws IOException {
+        final List<Class<?>> list = new ArrayList<>();
         scanTypes(packageName, new ITypeCallback() {
             @Override
             public boolean type(Class<?> clazz) {
+                list.add(clazz);
                 int addCount = parseClass(clazz);
                 return addCount > 0;
             }
         });
+        return list;
     }
 
     public int size() {
