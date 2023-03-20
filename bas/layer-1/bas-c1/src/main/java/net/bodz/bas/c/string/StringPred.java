@@ -49,4 +49,46 @@ public class StringPred {
         return true;
     }
 
+    public static boolean isUpperCase(String s) {
+        return isUpperCase(s, false);
+    }
+
+    public static boolean isUpperCase(String s, boolean defaultVal) {
+        int n = s.length();
+        int nLetter = 0;
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (Character.isLetter(ch)) {
+                nLetter++;
+                if (!Character.isUpperCase(ch))
+                    return false;
+            }
+        }
+        if (nLetter == 0)
+            return defaultVal;
+        else
+            return true;
+    }
+
+    public static boolean isLowerCase(String s) {
+        return isLowerCase(s, false);
+    }
+
+    public static boolean isLowerCase(String s, boolean defaultVal) {
+        int n = s.length();
+        int nLetter = 0;
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (Character.isLetter(ch)) {
+                nLetter++;
+                if (!Character.isLowerCase(ch))
+                    return false;
+            }
+        }
+        if (nLetter == 0)
+            return defaultVal;
+        else
+            return true;
+    }
+
 }
