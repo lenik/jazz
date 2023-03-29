@@ -7,7 +7,6 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BByteIn;
 import net.bodz.bas.io.BByteOut;
 import net.bodz.bas.io.IDataIn;
-import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.data.DataInImplBE;
 import net.bodz.bas.io.data.DataInImplLE;
 import net.bodz.bas.io.data.DataOutImplBE;
@@ -15,20 +14,17 @@ import net.bodz.bas.io.data.DataOutImplLE;
 
 public interface IDataStruct
         extends
+            IOctetStreamForm,
             Serializable {
 
     int dataSize();
 
-    void readObject(IDataIn in)
-            throws IOException;
-
-    void writeObject(IDataOut out)
-            throws IOException;
-
     int FORMAT_LE = 0;
     int FORMAT_BE = 1;
 
-    IDataIn transfer(int format);
+    default IDataIn transfer(int format) {
+        return fn.transfer(this, format);
+    }
 
     class fn {
 
