@@ -25,7 +25,7 @@ public class Zip64EndOfCenLocator
     public int diskCount;
 
     @Override
-    public int size() {
+    public int dataSize() {
         return 20;
     }
 

@@ -17,8 +17,8 @@ public abstract class ExtraField
     public short size;
 
     @Override
-    public int size() {
-        return 4 + _size();
+    public int dataSize() {
+        return 4 + realDataSize();
     }
 
     @Override
@@ -37,7 +37,7 @@ public abstract class ExtraField
         _writeObject(out);
     }
 
-    protected int _size() {
+    protected int realDataSize() {
         return 0;
     }
 

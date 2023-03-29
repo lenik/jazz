@@ -17,7 +17,7 @@ public interface IDataStruct
         extends
             Serializable {
 
-    int size();
+    int dataSize();
 
     void readObject(IDataIn in)
             throws IOException;
@@ -33,7 +33,7 @@ public interface IDataStruct
     class fn {
 
         public static IDataIn transfer(IDataStruct struct, int format) {
-            int size = struct.size();
+            int size = struct.dataSize();
             BByteOut bo = new BByteOut(size);
 
             try {
