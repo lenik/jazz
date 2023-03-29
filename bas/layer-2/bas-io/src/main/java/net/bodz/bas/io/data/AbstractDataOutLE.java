@@ -6,7 +6,8 @@ import net.bodz.bas.io.IDataOut;
 
 public abstract class AbstractDataOutLE
         extends AbstractDataOut
-        implements IDataOut {
+        implements
+            IDataOut {
 
     @Override
     public boolean isBigEndian() {
@@ -44,16 +45,6 @@ public abstract class AbstractDataOutLE
         writeDword((int) v);
         v >>= 32;
         writeDword((int) v);
-    }
-
-    @Override
-    public synchronized void writeString(int flags, String str, String encoding)
-            throws IOException {
-        if (str == null)
-            throw new NullPointerException("str");
-        _WriteUtfStringImpl _ws = new _WriteUtfStringImpl(flags, str, encoding);
-        _ws.setBigEndian(false);
-        _ws.write(this);
     }
 
 }
