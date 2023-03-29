@@ -11,7 +11,7 @@ public abstract class RstDataStruct
     private static final long serialVersionUID = 1L;
 
     @Override
-    public int size() {
+    public int dataSize() {
         return new ReflectSizeComputer(this).sizeof();
     }
 

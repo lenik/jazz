@@ -17,11 +17,11 @@ public class Zip64EndOfCen
 
     /**
      * size of zip64 end of central directory record.
-     * 
+     *
      * This should be the size of the remaining record and should not include the leading 12 bytes.
-     * 
+     *
      * Size = SizeOfFixedFields + SizeOfVariableData - 12.
-     * 
+     *
      * (12 = signature(4) + size(8))
      */
     public int size;
@@ -50,7 +50,7 @@ public class Zip64EndOfCen
     public byte[] extDataSector;
 
     @Override
-    public int size() {
+    public int dataSize() {
         return size;
     }
 
