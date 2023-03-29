@@ -2,21 +2,20 @@ package net.bodz.bas.io.data;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CoderResult;
 
+import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.DecodeException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.IDataIn;
-import net.bodz.bas.io.StringFlags;
+import net.bodz.bas.io.LengthType;
 
 public abstract class AbstractDataIn
         extends AbstractByteIn
-        implements IDataIn {
+        implements
+            IDataIn {
 
     @Override
     public byte readByte()
@@ -49,16 +48,6 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public char readChar(int flags)
-            throws IOException {
-        if ((flags & StringFlags._16BIT) != 0)
-            // UTF-16 LE/BE depends on implementation.
-            return (char) (readWord() & 0xffff);
-        else
-            // UTF-8
-            return readUtf8Char();
-    }
-
     public synchronized char readUtf8Char()
             throws IOException {
         int x = readByte() & 0xFF;
@@ -88,9 +77,31 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readBytes(byte[] buf)
+    public final char readChar(Charset charset)
+            throws IOException, ParseException {
+        return readChar(charset, -1);
+    }
+
+    @Override
+    public final char readChar(Charset charset, char fallback)
             throws IOException {
-        readBytes(buf, 0, buf.length);
+        try {
+            return readChar(charset, (int) fallback);
+        } catch (ParseException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
+    }
+
+    protected char readChar(Charset charset, int fallback)
+            throws IOException, ParseException {
+        CharDecoder decoder = new CharDecoder(charset, this);
+        if (fallback != -1)
+            decoder.fallback((char) fallback);
+        int ch = decoder.decodeChar();
+        if (ch == -1)
+            throw new EOFException();
+        else
+            return (char) ch;
     }
 
     @Override
@@ -107,22 +118,10 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readWords(short[] buf)
-            throws IOException {
-        readWords(buf, 0, buf.length);
-    }
-
-    @Override
     public void readWords(short[] buf, int off, int len)
             throws IOException {
         for (int i = 0; i < len; i++)
             buf[off++] = readWord();
-    }
-
-    @Override
-    public final void readDwords(int[] buf)
-            throws IOException {
-        readDwords(buf, 0, buf.length);
     }
 
     @Override
@@ -133,22 +132,10 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readQwords(long[] buf)
-            throws IOException {
-        readQwords(buf, 0, buf.length);
-    }
-
-    @Override
     public void readQwords(long[] buf, int off, int len)
             throws IOException {
         for (int i = 0; i < len; i++)
             buf[off++] = readQword();
-    }
-
-    @Override
-    public final void readFloats(float[] buf)
-            throws IOException {
-        readFloats(buf, 0, buf.length);
     }
 
     @Override
@@ -159,22 +146,10 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readDoubles(double[] buf)
-            throws IOException {
-        readDoubles(buf, 0, buf.length);
-    }
-
-    @Override
     public void readDoubles(double[] buf, int off, int len)
             throws IOException {
         for (int i = 0; i < len; i++)
             buf[off++] = readDouble();
-    }
-
-    @Override
-    public final void readBools(boolean[] buf)
-            throws IOException {
-        readBools(buf, 0, buf.length);
     }
 
     @Override
@@ -185,220 +160,167 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final void readChars(int flags, char[] buf)
-            throws IOException {
-        readChars(flags, buf, 0, buf.length);
-    }
-
-    @Override
-    public synchronized void readChars(int flags, char[] buf, int off, int len)
+    public synchronized void readChars(char[] buf, int off, int len)
             throws IOException {
         byte[] bb = new byte[len * 2];
         readBytes(bb);
         int j = -1;
 
-        if ((flags & StringFlags._16BIT) != 0)
-            if (isBigEndian())
-                for (int i = 0; i < len; i++) {
-                    int high = bb[++j] & 0xff;
-                    int low = bb[++j] & 0xff;
-                    buf[off++] = (char) ((high << 8) | low);
-                }
-            else
-                for (int i = 0; i < len; i++) {
-                    int low = bb[++j] & 0xff;
-                    int high = bb[++j] & 0xff;
-                    buf[off++] = (char) ((high << 8) | low);
-                }
-
-        else
-            for (int i = 0; i < len; i++)
-                buf[off++] = readUtf8Char();
-    }
-
-    @Override
-    public final String readString(int flags)
-            throws IOException {
-        return readString(flags, null);
-    }
-
-    @Override
-    public String readString(int flags, String encoding)
-            throws IOException {
-        return null;
-    }
-
-}
-
-class _ReadUtfStringImpl {
-
-    private final int flags;
-    private final String encoding;
-
-    String termCharSeq;
-    int termCharNum;
-
-    private boolean bigEndian;
-
-    public _ReadUtfStringImpl(int flags, String encoding)
-            throws UnsupportedEncodingException {
-
-        if ((flags & StringFlags.XXX_TERM_MASK) != 0) {
-            if ((flags & StringFlags.CR_TERM) != 0)
-                termCharSeq += '\r';
-            if ((flags & StringFlags.LF_TERM) != 0)
-                termCharSeq += '\n';
-            if ((flags & StringFlags.NULL_TERM) != 0)
-                termCharSeq += '\0';
-            termCharNum = termCharSeq.length();
-        }
-
-        this.flags = flags;
-        this.encoding = encoding;
-
-    }
-
-    public boolean isBigEndian() {
-        return bigEndian;
-    }
-
-    public void setBigEndian(boolean bigEndian) {
-        this.bigEndian = bigEndian;
-    }
-
-    public void read(IDataIn in)
-            throws IOException {
-        boolean _long = (flags & StringFlags.LONG) != 0;
-        boolean lengthPrefix = (flags & StringFlags.LENGTH_PREFIX) != 0;
-        boolean sizePrefix = (flags & StringFlags.SIZE_PREFIX) != 0;
-        boolean sameEndian = bigEndian == in.isBigEndian();
-
-        int len = Integer.MAX_VALUE;
-        int size = Integer.MAX_VALUE;
-
-        if (lengthPrefix)
-            if (_long)
-                len = in.readDword();
-            else
-                len = in.readWord();
-
-        if (sizePrefix)
-            if (_long)
-                size = in.readDword();
-            else
-                size = in.readWord();
-
-        EOTDetector eotDetector = new EOTDetector(termCharSeq);
-        StringBuilder chars = new StringBuilder();
-
-        if (encoding != null) {
-            ByteBuffer byteBuffer = ByteBuffer.allocate(10);
-            CharBuffer charBuffer = CharBuffer.allocate(10);
-
-            CharsetDecoder decoder = Charset.forName(encoding).newDecoder();
-
-            int cb = 0;
-            int cc = 0;
-            while (cb < size && cc < len) {
-                int byt = in.readByte();
-                cb++;
-
-                boolean terminated = eotDetector.push(byt);
-
-                if (terminated) {
-                    assert byteBuffer.position() == 0;
-                    for (int i = 0; i < termCharNum; i++)
-                        chars.append((char) eotDetector.shift());
-                    cc += termCharNum;
-                    break;
-                }
-
-                byteBuffer.put((byte) byt);
-                CoderResult result = decoder.decode(byteBuffer, charBuffer, false);
-
-                charBuffer.flip();
-                int position = charBuffer.position();
-
+        if (isBigEndian())
+            for (int i = 0; i < len; i++) {
+                int high = bb[++j] & 0xff;
+                int low = bb[++j] & 0xff;
+                buf[off++] = (char) ((high << 8) | low);
             }
-        }
-
-        // UTF-32LE, UTF-32BE
-        if ((flags & StringFlags._32BIT) != 0) {
-        }
-
-        // UTF-16LE, UTF-16BE
-        else if ((flags & StringFlags._16BIT) != 0) {
-        }
-
-        // UTF-8
-        else {
-        }
+        else
+            for (int i = 0; i < len; i++) {
+                int low = bb[++j] & 0xff;
+                int high = bb[++j] & 0xff;
+                buf[off++] = (char) ((high << 8) | low);
+            }
     }
 
-}
-
-class EOTDetector {
-
-    private final int[] eotCharSeq;
-    private final int eotLen;
-    private int[] ringbuf;
-    private int ptr;
-
-    public EOTDetector(String eotCharSeq) {
-        this(toInts(eotCharSeq));
-    }
-
-    static int[] toInts(String str) {
-        int len = str.length();
-        int[] ints = new int[len];
+    @Override
+    public void readUtf8Chars(char[] buf, int off, int len)
+            throws IOException {
         for (int i = 0; i < len; i++)
-            ints[i] = str.charAt(i);
-        return ints;
+            buf[off++] = readUtf8Char();
     }
 
-    public EOTDetector(int[] eotCharSeq) {
-        this.eotCharSeq = eotCharSeq;
-        eotLen = eotCharSeq.length;
-        ringbuf = new int[eotLen];
-        ptr = 0;
-    }
-
-    public boolean push(int ch) {
-        if (ptr == eotLen) {
-            for (int i = 1; i < ptr; i++)
-                ringbuf[i - 1] = ringbuf[i];
-            ringbuf[ptr] = ch;
+    @Override
+    public final String readString(LengthType lengthType)
+            throws IOException {
+        if (lengthType.hasTerminator)
+            return readStringUntil(lengthType.terminatorChar);
+        int length = lengthType.readLengthHeader(this);
+        if (lengthType.countByChars) {
+            char[] buf = new char[length];
+            readChars(buf);
+            return new String(buf);
         } else {
-            ringbuf[ptr++] = ch;
+            int nChar = length / 2;
+            char[] buf = new char[nChar];
+            readChars(buf);
+            if (length % 2 == 1) {
+                @SuppressWarnings("unused") // extra byte, just drop it.
+                byte extraByte = readByte();
+            }
+            return new String(buf);
+        }
+    }
+
+    public String readStringUntil(char delim)
+            throws IOException {
+        StringBuilder sb = new StringBuilder();
+        char ch;
+        while ((ch = readChar()) != delim) {
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String readUtf8String(LengthType lengthType)
+            throws IOException, ParseException {
+        if (lengthType.hasTerminator)
+            return readUtf8StringUntil(lengthType.terminatorChar);
+        int length = lengthType.readLengthHeader(this);
+        if (lengthType.countByChars) {
+            char[] buf = new char[length];
+            readUtf8Chars(buf);
+            return new String(buf);
+        } else {
+            byte[] buf = new byte[length];
+            readBytes(buf);
+            return new String(buf, Charsets.UTF8);
+        }
+    }
+
+    public String readUtf8StringUntil(char delim)
+            throws IOException {
+        StringBuilder sb = new StringBuilder();
+        char ch;
+        while ((ch = readUtf8Char()) != delim) {
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+
+    public String readString1(LengthType lengthType, Charset charset)
+            throws IOException, ParseException {
+        int length = lengthType.readLengthHeader(this);
+        if (lengthType.countByBytes) {
+            byte[] buf = new byte[length];
+            readBytes(buf);
+            return new String(buf, charset);
         }
 
-        for (int i = 0; i < eotLen; i++)
-            if (eotCharSeq[i] != ringbuf[i])
-                return false;
-
-        return true;
+        StringBuilder sb = new StringBuilder(length);
+        int nChar = 0;
+        while (lengthType.hasTerminator || nChar < length) {
+            char ch = readChar(charset);
+            if (lengthType.hasTerminator)
+                if (ch == lengthType.terminatorChar)
+                    break;
+            sb.append(ch);
+            nChar++;
+        }
+        return sb.toString();
     }
 
-    public void reset() {
-        ptr = 0;
-    }
+    @Override
+    public String readString(LengthType lengthType, Charset charset)
+            throws IOException, ParseException {
+        int length = lengthType.readLengthHeader(this);
+        if (lengthType.countByBytes) {
+            byte[] buf = new byte[length];
+            readBytes(buf);
+            return new String(buf, charset);
+        }
 
-    public boolean isFull() {
-        return ptr == eotLen;
-    }
+        StringBuilder sb = new StringBuilder(length);
+        if (lengthType.hasTerminator) {
+            CharDecoder decoder = new CharDecoder(charset, this);
+            while (true) {
+                int c = decoder.decodeChar();
+                if (c == -1)
+                    throw new EOFException();
+                char ch = (char) c;
+                if (ch == lengthType.terminatorChar)
+                    break;
+                sb.append(ch);
+            }
+            return sb.toString();
+        }
 
-    public int size() {
-        return ptr;
-    }
+        int byteCapacity = CharDecoder.blockSize;
+        if (length != 0) {
+            if (lengthType.countByBytes)
+                byteCapacity = Math.min(byteCapacity, length);
+            else
+                byteCapacity = Math.min(byteCapacity, length * 3);
+        }
 
-    public int shift() {
-        if (ptr == 0)
-            throw new IllegalStateException("nothing to shift");
-        int head = ringbuf[0];
-        for (int i = 1; i < eotLen; i++)
-            ringbuf[i - 1] = ringbuf[i];
-        ptr--;
-        return head;
+        CharDecoder decoder = new CharDecoder(charset, this, byteCapacity);
+
+        int nChar = 0;
+        while (nChar < length) {
+            int remaining = length -= nChar;
+
+            int chunkMax = remaining;
+            if (lengthType.countByBytes) {
+                float _minBytes = chunkMax * decoder.minBytesPerChar;
+                int minBytes = (int) _minBytes;
+                if (minBytes == 0)
+                    minBytes = 1;
+                chunkMax = Math.min(minBytes, CharDecoder.blockSize);
+            }
+            int nRead = decoder.decodeChars(sb, chunkMax);
+            nChar += nRead;
+        }
+        if (nChar != length)
+            throw new EOFException();
+        return sb.toString();
     }
 
 }

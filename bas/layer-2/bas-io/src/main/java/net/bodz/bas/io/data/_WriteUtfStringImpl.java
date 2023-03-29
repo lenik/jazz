@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.StringFlags;
+import net.bodz.bas.io.LengthType;
 
 class _WriteUtfStringImpl {
 
-    private final int flags;
+    private final LengthType lengthType;
+    boolean ucs32;
     private final String str;
     private final String encoding;
 
@@ -23,24 +24,24 @@ class _WriteUtfStringImpl {
 
     private boolean bigEndian;
 
-    public _WriteUtfStringImpl(int flags, String str, String encoding)
+    public _WriteUtfStringImpl(LengthType lengthType, String str, String encoding)
             throws UnsupportedEncodingException {
 
-        if ((flags & StringFlags.XXX_TERM_MASK) != 0) {
-            if ((flags & StringFlags.CR_TERM) != 0)
-                termCharSeq += '\r';
-            if ((flags & StringFlags.LF_TERM) != 0)
-                termCharSeq += '\n';
-            if ((flags & StringFlags.NULL_TERM) != 0)
-                termCharSeq += '\0';
-            termCharNum = termCharSeq.length();
+//        if ((flags & StringFlags.XXX_TERM_MASK) != 0) {
+//            if ((flags & StringFlags.CR_TERM) != 0)
+//                termCharSeq += '\r';
+//            if ((flags & StringFlags.LF_TERM) != 0)
+//                termCharSeq += '\n';
+//            if ((flags & StringFlags.NULL_TERM) != 0)
+//                termCharSeq += '\0';
+//            termCharNum = termCharSeq.length();
+//
+//            int tsc = str.indexOf(termCharSeq);
+//            if (tsc != -1)
+//                str = str.substring(0, tsc);
+//        }
 
-            int tsc = str.indexOf(termCharSeq);
-            if (tsc != -1)
-                str = str.substring(0, tsc);
-        }
-
-        this.flags = flags;
+        this.lengthType = lengthType;
         this.str = str;
         this.encoding = encoding;
 
@@ -48,10 +49,7 @@ class _WriteUtfStringImpl {
         len = str.length();
 
         if (encoding == null)
-            if ((flags & StringFlags._32BIT) != 0) {
-                // XXX surrogate pairs need to be reduced.
-                size = len * 4;
-            } else if ((flags & StringFlags._16BIT) != 0) {
+            if (lengthType.countByChars) {
                 size = len * 2;
             } else {
                 int cb = 0;
@@ -80,9 +78,9 @@ class _WriteUtfStringImpl {
 
     public void write(IDataOut out)
             throws IOException {
-        boolean _long = (flags & StringFlags.LONG) != 0;
-        boolean lengthPrefix = (flags & StringFlags.LENGTH_PREFIX) != 0;
-        boolean sizePrefix = (flags & StringFlags.SIZE_PREFIX) != 0;
+        boolean _long = lengthType.headerSize == 4;
+        boolean lengthPrefix = lengthType.countByChars;
+        boolean sizePrefix = lengthType.countByBytes;
         boolean sameEndian = bigEndian == out.isBigEndian();
 
         if (lengthPrefix)
@@ -100,7 +98,7 @@ class _WriteUtfStringImpl {
         if (encoding == null) { // It's unnecessary to allocate byte buffer to write unicode string.
 
             // UTF-32LE, UTF-32BE
-            if ((flags & StringFlags._32BIT) != 0) {
+            if (ucs32) {
                 char high = 0;
 
                 for (int i = 0; i < len; i++) {
@@ -129,7 +127,7 @@ class _WriteUtfStringImpl {
             }
 
             // UTF-16LE, UTF-16BE
-            else if ((flags & StringFlags._16BIT) != 0) {
+            else if (lengthType.countByChars) {
                 if (sameEndian)
                     for (int i = 0; i < len; i++)
                         out.writeWord(chars[i]);
@@ -169,9 +167,9 @@ class _WriteUtfStringImpl {
 
         for (int i = 0; i < termCharNum; i++) {
             char ch = termCharSeq.charAt(i);
-            if ((flags & StringFlags._32BIT) != 0)
+            if (ucs32)
                 out.writeDword(ch);
-            else if ((flags & StringFlags._16BIT) != 0)
+            else if (lengthType.countByChars)
                 out.writeWord(ch);
             else
                 out.writeByte(ch);
