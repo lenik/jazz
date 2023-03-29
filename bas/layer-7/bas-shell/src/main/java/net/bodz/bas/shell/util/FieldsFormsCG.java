@@ -2,22 +2,18 @@ package net.bodz.bas.shell.util;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collection;
 
-import net.bodz.bas.c.primitive.Primitives;
+import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
-import net.bodz.bas.c.string.Phrase;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.IJavaCodegen;
 import net.bodz.bas.codegen.JavaSourceWriter;
-import net.bodz.bas.err.FormatException;
-import net.bodz.bas.fmt.rst.IRstForm;
-import net.bodz.bas.fmt.rst.IRstHandler;
-import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.bas.shell.util.fieldsCg.*;
 
 /**
  * Generate fields with various serialization forms.
@@ -59,6 +55,13 @@ public class FieldsFormsCG
     boolean beanProperties;
 
     /**
+     * Generate implementation for IBinaryDataForm
+     *
+     * @option -b --binary-data
+     */
+    boolean binaryDataForm;
+
+    /**
      * Generate implementation for IJsonForm.
      *
      * @option -j --json
@@ -79,7 +82,7 @@ public class FieldsFormsCG
      */
     boolean xmlForm;
 
-    Iterable<Field> fields;
+    Collection<Field> fields;
 
     public FieldsFormsCG() {
     }
@@ -95,6 +98,7 @@ public class FieldsFormsCG
             clazz = Class.forName(fqcn);
         }
 
+        FieldSelection fields;
         if (declaredOnly) {
             fields = ReflectQuery//
                     .selectDeclaredFields(clazz)//
@@ -106,6 +110,7 @@ public class FieldsFormsCG
                     .staticMode(false) //
                     .finalMode(false);
         }
+        // this=new
 
         String packageName = clazz.getPackage().getName();
         BCharOut buf = new BCharOut();
@@ -130,232 +135,39 @@ public class FieldsFormsCG
     }
 
     @Override
-    public void generateJavaSource(JavaSourceWriter out, Iterable<Field> model) {
-        if (!K_consts(out))
+    public void generateJavaSource(JavaSourceWriter out, Iterable<Field> model)
+            throws IOException {
+        KConsts constKeys = new KConsts();
+        run(out, constKeys);
+        if (constKeys.getCount() == 0)
             return;
 
+        if (binaryDataForm) {
+            run(out, new OctetStreamInImpl());
+            run(out, new OctetStreamOutImpl());
+        }
+
         if (jsonForm) {
-            out.println();
-            jsonInImpl(out);
-            out.println();
-            jsonOutImpl(out);
+            run(out, new JsonInImpl());
+            run(out, new JsonOutImpl());
         }
 
         if (rstForm) {
-            out.println();
-            rstInImpl(out);
-            out.println();
-            rstOutImpl(out);
+            run(out, new RstInImpl());
+            run(out, new RstOutImpl());
         }
 
         if (xmlForm) {
-            out.println();
-            xmlInImpl(out);
-            out.println();
-            xmlOutImpl(out);
+            run(out, new XmlInImpl());
+            run(out, new XmlOutImpl());
         }
     }
 
-    boolean K_consts(JavaSourceWriter out) {
-        int count = 0;
-
-        // K_ key name consts
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            out.printf("private static final String %s = \"%s\";\n", keyName, nam.fooBar);
-            count++;
-        }
-        return count != 0;
-    }
-
-    void jsonInImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.println("public void jsonIn(JsonObject o, JsonFormOptions opts)");
-        out.enterln("        throws ParseException {");
-
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            String getType = Primitives.unbox(field.getType()).getSimpleName();
-            boolean nullable = !field.getType().isPrimitive();
-
-            // switch (TypeKind.getTypeId(field.getType())) {
-            // case TypeId.BIG_INTEGER:
-            // case TypeId.BIG_DECIMAL:
-            // case TypeId.DATE:
-            // case TypeId.SQL_DATE:
-            // case TypeId.STRING:
-            // }
-
-            String getFn = "get" + Strings.ucfirst(getType);
-            if (nullable)
-                out.printf("%s = o.%s(%s);\n", nam.fooBar, getFn, keyName);
-            else
-                out.printf("%s = o.%s(%s, %s);\n", nam.fooBar, getFn, keyName, nam.fooBar);
-        }
-
-        out.leaveln("}");
-    }
-
-    void jsonOutImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.println("public void jsonOut(IJsonOut out, JsonFormOptions opts)");
-        out.enterln("        throws IOException, FormatException {");
-
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            if (field.getType().isPrimitive())
-                out.printf("out.entry(%s, this.%s);\n", keyName, nam.fooBar);
-            else
-                out.printf("out.entryNotNull(%s, this.%s);\n", keyName, nam.fooBar);
-        }
-
-        out.leaveln("}");
-    }
-
-    void xmlInImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.println("public void readObject(IElement element)");
-        out.enterln("        throws ParseException, LoaderException {");
-
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            String getType = Primitives.unbox(field.getType()).getSimpleName();
-            boolean nullable = !field.getType().isPrimitive();
-
-            // switch (TypeKind.getTypeId(field.getType())) {
-            // case TypeId.BIG_INTEGER:
-            // case TypeId.BIG_DECIMAL:
-            // case TypeId.DATE:
-            // case TypeId.SQL_DATE:
-            // case TypeId.STRING:
-            // }
-
-            String getFn = "get" + Strings.ucfirst(getType);
-            if (nullable)
-                out.printf("%s = o.a(%s).%s();\n", nam.fooBar, keyName, getFn);
-            else
-                out.printf("%s = o.a(%s).%s(%s);\n", nam.fooBar, keyName, getFn, nam.fooBar);
-        }
-
-        out.leaveln("}");
-    }
-
-    void xmlOutImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.println("public void writeObject(IXmlOutput out)");
-        out.enterln("        throws XMLStreamException, FormatException {");
-
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-
-            if (field.getType().isPrimitive())
-                out.printf("out.attribute(%s, this.%s);\n", keyName, nam.fooBar);
-            else
-                out.printf("out.attributeNotNull(%s, this.%s);\n", keyName, nam.fooBar);
-        }
-
-        out.leaveln("}");
-    }
-
-    class K
-            implements
-                IRstForm {
-
-        @Override
-        public void writeObject(IRstOutput out)
-                throws IOException, FormatException {
-            IRstForm.super.writeObject(out);
-        }
-
-        @Override
-        public IRstHandler getElementHandler() {
-            return IRstForm.super.getElementHandler();
-        }
-
-    }
-
-    void rstInImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.enterln("public IRstHandler getElementHandler() {");
-        out.enterln("return new StackRstHandler() {");
-        out.println("@Override");
-        out.println("public boolean attribute(String name, String data)");
-        out.enterln("        throws ParseException, ElementHandlerException {");
-
-        boolean onlyStrings = true;
-        for (Field field : fields)
-            if (field.getType() != String.class) {
-                onlyStrings = false;
-                break;
-            }
-
-//        if (!onlyStrings)
-//            out.println("IVariant val = new MutableVariant(data);");
-
-        out.println("switch (name) {");
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            String getType = Primitives.unbox(field.getType()).getSimpleName();
-            boolean nullable = !field.getType().isPrimitive();
-
-            // switch (TypeKind.getTypeId(field.getType())) {
-            // case TypeId.BIG_INTEGER:
-            // case TypeId.BIG_DECIMAL:
-            // case TypeId.DATE:
-            // case TypeId.SQL_DATE:
-            // case TypeId.STRING:
-            // }
-
-            out.enterln("case " + keyName + ":");
-
-            if (field.getType() == String.class) {
-                out.printf("%s = data;\n", nam.fooBar);
-            } else {
-                String getFn = "parse" + Strings.ucfirst(getType);
-                if (nullable)
-                    out.printf("%s = StringFn.%s(data);\n", nam.fooBar, getFn);
-                else
-                    out.printf("%s = StringFn.%s(data, %s);\n", nam.fooBar, getFn, nam.fooBar);
-            }
-
-            out.println("return true;");
-            out.leave();
-            out.println();
-        }
-
-        out.enterln("default:");
-        out.lnleave("return false;");
-
-        out.println("}"); // switch
-        out.leaveln("}"); // attribute()
-        out.leaveln("};"); // return new StackRstHandler
-        out.leaveln("}"); // getElementHandler()
-    }
-
-    void rstOutImpl(JavaSourceWriter out) {
-        out.println("@Override");
-        out.println("public void writeObject(IRstOutput out)");
-        out.enterln("        throws IOException, FormatException {");
-
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
-            String keyName = "K_" + nam.FOO_BAR;
-            boolean nullable = !field.getType().isPrimitive();
-
-            if (nullable)
-                out.enterln("if (" + nam.fooBar + " != null)");
-            out.printf("out.attribute(%s, this.%s);\n", keyName, nam.fooBar);
-            if (nullable)
-                out.leave();
-        }
-
-        out.leaveln("}");
+    void run(JavaSourceWriter out, FieldsRelatedSourceBuilder builder)
+            throws IOException {
+        builder.setFields(fields);
+        out.println();
+        builder.build(out);
     }
 
 }
