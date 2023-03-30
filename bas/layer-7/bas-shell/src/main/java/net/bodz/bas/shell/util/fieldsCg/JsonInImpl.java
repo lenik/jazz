@@ -1,4 +1,4 @@
-package net.bodz.bas.shell.util;
+package net.bodz.bas.shell.util.fieldsCg;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -7,7 +7,6 @@ import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.JavaSourceWriter;
-import net.bodz.bas.shell.util.fieldsCg.FieldsRelatedSourceBuilder;
 
 public class JsonInImpl
         extends FieldsRelatedSourceBuilder {

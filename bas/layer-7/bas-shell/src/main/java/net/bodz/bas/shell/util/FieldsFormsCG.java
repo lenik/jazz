@@ -2,7 +2,6 @@ package net.bodz.bas.shell.util;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Collection;
 
 import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
@@ -82,7 +81,7 @@ public class FieldsFormsCG
      */
     boolean xmlForm;
 
-    Collection<Field> fields;
+    FieldSelection fields;
 
     public FieldsFormsCG() {
     }
@@ -98,7 +97,6 @@ public class FieldsFormsCG
             clazz = Class.forName(fqcn);
         }
 
-        FieldSelection fields;
         if (declaredOnly) {
             fields = ReflectQuery//
                     .selectDeclaredFields(clazz)//

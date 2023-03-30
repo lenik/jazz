@@ -1,18 +1,17 @@
 package net.bodz.bas.shell.util.fieldsCg;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
+import net.bodz.bas.c.reflect.query.FieldSelection;
 
 public abstract class FieldsRelatedSourceBuilder
         extends JavaSourceBuilder {
 
-    protected Collection<Field> fields;
+    protected FieldSelection fields;
 
-    public Collection<Field> getFields() {
+    public FieldSelection getFields() {
         return fields;
     }
 
-    public void setFields(Collection<Field> fields) {
+    public void setFields(FieldSelection fields) {
         this.fields = fields;
     }
 
