@@ -4,6 +4,9 @@ import java.io.IOException;
 
 public enum LengthType {
 
+    charCount(0, true),
+    byteCount(0, false),
+
     /** The string is prefixed with a 8-bit character count. */
     charCountPrefix8(1, true),
     /** The string is prefixed with a 16-bit character count. */
@@ -30,23 +33,26 @@ public enum LengthType {
     public final int headerSize;
     public final boolean countByChars;
     public final boolean countByBytes;
+    public final boolean fixedSize;
     public final boolean hasTerminator;
-    public final char terminatorChar;
+    public final char terminateChar;
 
     private LengthType(int headerSize, boolean countByChar) {
         this.headerSize = headerSize;
         this.countByChars = countByChar;
         this.countByBytes = !countByChar;
+        this.fixedSize = headerSize == 0;
         this.hasTerminator = false;
-        this.terminatorChar = 0;
+        this.terminateChar = 0;
     }
 
-    private LengthType(char delim) {
+    private LengthType(char terminateChar) {
         this.headerSize = 0;
         this.countByChars = false;
         this.countByBytes = false;
+        this.fixedSize = false;
         this.hasTerminator = true;
-        this.terminatorChar = delim;
+        this.terminateChar = terminateChar;
     }
 
     public StringBuilder newStringBuilder(int length) {
