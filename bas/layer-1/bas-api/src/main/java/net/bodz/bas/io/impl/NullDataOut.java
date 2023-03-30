@@ -23,6 +23,21 @@ public class NullDataOut
     }
 
     @Override
+    public void flush()
+            throws IOException {
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
+    @Override
     public void write(int b) {
     }
 
@@ -81,13 +96,15 @@ public class NullDataOut
     }
 
     @Override
-    public void writeUtf8Char(char ch)
+    public int writeUtf8Char(char ch)
             throws IOException {
+        return 0;
     }
 
     @Override
-    public void writeChar(char ch, Charset charset)
+    public int writeChar(char ch, Charset charset)
             throws IOException {
+        return 0;
     }
 
     @Override
@@ -121,13 +138,21 @@ public class NullDataOut
     }
 
     @Override
-    public void writeChars(char[] buf, int off, int len)
+    public int writeChars(char[] buf, int off, int len)
             throws IOException {
+        return 0;
     }
 
     @Override
-    public void writeUtf8Chars(char[] buf, int off, int len)
+    public int writeUtf8Chars(char[] buf, int off, int len)
             throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeChars(char[] buf, int off, int len, Charset charset)
+            throws IOException {
+        return 0;
     }
 
     @Override
@@ -146,18 +171,37 @@ public class NullDataOut
     }
 
     @Override
-    public void flush()
+    public void writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
     }
 
     @Override
-    public void close()
+    public int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf, int off, int len)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public void writeFixedSizeString(int fixedSize, char padding, String str)
             throws IOException {
     }
 
     @Override
-    public boolean isClosed() {
-        return false;
+    public int writeFixedSizeUtf8String(int fixedSize, char padding, String str)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeFixedSizeString(int fixedSize, char padding, String str, Charset charset)
+            throws IOException {
+        return 0;
     }
 
 }

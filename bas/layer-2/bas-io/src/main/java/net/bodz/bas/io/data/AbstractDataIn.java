@@ -191,7 +191,7 @@ public abstract class AbstractDataIn
     public final String readString(LengthType lengthType)
             throws IOException {
         if (lengthType.hasTerminator)
-            return readStringUntil(lengthType.terminatorChar);
+            return readStringUntil(lengthType.terminateChar);
         int length = lengthType.readLengthHeader(this);
         if (lengthType.countByChars) {
             char[] buf = new char[length];
@@ -223,7 +223,7 @@ public abstract class AbstractDataIn
     public String readUtf8String(LengthType lengthType)
             throws IOException, ParseException {
         if (lengthType.hasTerminator)
-            return readUtf8StringUntil(lengthType.terminatorChar);
+            return readUtf8StringUntil(lengthType.terminateChar);
         int length = lengthType.readLengthHeader(this);
         if (lengthType.countByChars) {
             char[] buf = new char[length];
@@ -260,7 +260,7 @@ public abstract class AbstractDataIn
         while (lengthType.hasTerminator || nChar < length) {
             char ch = readChar(charset);
             if (lengthType.hasTerminator)
-                if (ch == lengthType.terminatorChar)
+                if (ch == lengthType.terminateChar)
                     break;
             sb.append(ch);
             nChar++;
@@ -286,14 +286,14 @@ public abstract class AbstractDataIn
                 if (c == -1)
                     throw new EOFException();
                 char ch = (char) c;
-                if (ch == lengthType.terminatorChar)
+                if (ch == lengthType.terminateChar)
                     break;
                 sb.append(ch);
             }
             return sb.toString();
         }
 
-        int byteCapacity = CharDecoder.blockSize;
+        int byteCapacity = CharDecoder.decodeBufferSize;
         if (length != 0) {
             if (lengthType.countByBytes)
                 byteCapacity = Math.min(byteCapacity, length);
@@ -305,17 +305,17 @@ public abstract class AbstractDataIn
 
         int nChar = 0;
         while (nChar < length) {
-            int remaining = length -= nChar;
+            int remaining = length - nChar;
 
             int chunkMax = remaining;
             if (lengthType.countByBytes) {
-                float _minBytes = chunkMax * decoder.minBytesPerChar;
+                float _minBytes = chunkMax * decoder._minBytesPerChar;
                 int minBytes = (int) _minBytes;
                 if (minBytes == 0)
                     minBytes = 1;
                 chunkMax = Math.min(minBytes, CharDecoder.blockSize);
             }
-            int nRead = decoder.decodeChars(sb, chunkMax);
+            int nRead = decoder.decodeChars(sb, chunkMax).charCount;
             nChar += nRead;
         }
         if (nChar != length)
