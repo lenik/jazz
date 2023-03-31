@@ -46,6 +46,8 @@ public class StringBinUtils {
     }
 
     public static int getProvidedCount(StringBin a) {
+        if (a == null)
+            throw new NullPointerException("a");
         int n = a.length();
         if (n != -1)
             return n;

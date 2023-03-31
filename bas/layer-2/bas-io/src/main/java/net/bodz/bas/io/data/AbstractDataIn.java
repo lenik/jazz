@@ -249,7 +249,7 @@ public abstract class AbstractDataIn
         if (lengthType.countByChar) {
             char[] buf = new char[count];
             readChars(buf);
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         } else {
             int nChar = count / 2;
             char[] buf = new char[nChar];
@@ -258,7 +258,7 @@ public abstract class AbstractDataIn
                 @SuppressWarnings("unused") // extra byte, just drop it.
                 byte extraByte = readByte();
             }
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         }
     }
 
@@ -281,11 +281,12 @@ public abstract class AbstractDataIn
         if (lengthType.countByChar) {
             char[] buf = new char[count];
             readUtf8Chars_fast(buf);
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         } else {
             byte[] buf = new byte[count];
             readBytes(buf);
-            return new String(buf, Charsets.UTF_8);
+            String str = new String(buf, Charsets.UTF_8);
+            return RawStrings.compact(lengthType.raw, str);
         }
     }
 
@@ -308,11 +309,22 @@ public abstract class AbstractDataIn
         if (lengthType.countByChar) {
             char[] buf = new char[count];
             int nByte = readUtf8Chars(buf);
-            return EncodedString.decoded(nByte, buf);
+
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+            String str = new String(buf, 0, len);
+
+            return EncodedString.decoded(nByte, str);
         } else {
             byte[] buf = new byte[count];
             readBytes(buf);
-            String str = new String(buf, Charsets.UTF_8);
+
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+            String str = new String(buf, 0, len, Charsets.UTF_8);
+
             return EncodedString.decoded(count, str);
         }
     }
@@ -329,27 +341,45 @@ public abstract class AbstractDataIn
         return EncodedString.decoded(size, sb.toString());
     }
 
+    // XXX
     public String readString1(StringLengthType lengthType, int providedCount, Charset charset)
             throws IOException, ParseException {
         int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByByte) {
             byte[] buf = new byte[count];
             readBytes(buf);
-            return new String(buf, charset);
-        }
 
-        StringBuilder sb = new StringBuilder(count);
-        int nChar = 0;
-        while (lengthType.hasTerminator || nChar < count) {
-            EncodedChar chInfo = readChar(charset);
-            char ch = chInfo.character;
-            if (lengthType.hasTerminator)
-                if (ch == lengthType.terminator)
-                    break;
-            sb.append(ch);
-            nChar++;
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+
+            return new String(buf, 0, len, charset);
+        } else {
+            StringBuilder sb = new StringBuilder(count);
+            if (lengthType.hasTerminator) {
+                while (true) {
+                    EncodedChar chInfo = readChar(charset);
+                    char ch = chInfo.character;
+                    if (ch == lengthType.terminator)
+                        break;
+                    sb.append(ch);
+                }
+            } else {
+                int nByte = 0;
+                boolean end = false;
+                while (nByte < count) {
+                    EncodedChar chInfo = readChar(charset);
+                    char ch = chInfo.character;
+                    if (lengthType.autoCompact)
+                        if (ch == 0)
+                            end = true;
+                    if (!end)
+                        sb.append(ch);
+                    nByte += chInfo.byteCount;
+                }
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
     @Override
@@ -376,9 +406,17 @@ public abstract class AbstractDataIn
         if (lengthType.countByByte) {
             byte[] buf = new byte[count];
             readBytes(buf);
-            String str = new String(buf, charset);
+
+            int len;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, buf.length);
+            else
+                len = buf.length;
+            String str = new String(buf, 0, len, charset);
             return EncodedString.decoded(count, str);
         }
+
+        // TODO -- continue..
 
         StringBuilder sb = new StringBuilder(count);
         if (lengthType.hasTerminator) {

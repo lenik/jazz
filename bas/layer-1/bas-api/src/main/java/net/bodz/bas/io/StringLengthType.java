@@ -7,22 +7,38 @@ import java.util.regex.Pattern;
 
 public class StringLengthType {
 
-    public static final StringLengthType providedCharCount = counted("providedCharCount", 0, true);
-    public static final StringLengthType providedByteCount = counted("providedByteCount", 0, false);
+    public static final StringLengthType providedCharCount = counted("providedCharCount", 0, true, false);
+    public static final StringLengthType providedByteCount = counted("providedByteCount", 0, false, false);
+    public static final StringLengthType providedRawCharCount = counted("providedRawCharCount", 0, true, true);
+    public static final StringLengthType providedRawByteCount = counted("providedRawByteCount", 0, false, true);
 
     /** The string is prefixed with a 8-bit character count. */
-    public static final StringLengthType charCountPrefix8 = counted("charCountPrefix8", 1, true);
+    public static final StringLengthType charCountPrefix8 = counted("charCountPrefix8", 1, true, false);
     /** The string is prefixed with a 16-bit character count. */
-    public static final StringLengthType charCountPrefix16 = counted("charCountPrefix16", 2, true);
+    public static final StringLengthType charCountPrefix16 = counted("charCountPrefix16", 2, true, false);
     /** The string is prefixed with a 32-bit character count. */
-    public static final StringLengthType charCountPrefix32 = counted("charCountPrefix32", 4, true);
+    public static final StringLengthType charCountPrefix32 = counted("charCountPrefix32", 4, true, false);
 
     /** The string is prefixed with a 8-bit byte count. */
-    public static final StringLengthType byteCountPrefix8 = counted("byteCountPrefix8", 1, false);
+    public static final StringLengthType byteCountPrefix8 = counted("byteCountPrefix8", 1, false, false);
     /** The string is prefixed with a 16-bit byte count. */
-    public static final StringLengthType byteCountPrefix16 = counted("byteCountPrefix16", 2, false);
+    public static final StringLengthType byteCountPrefix16 = counted("byteCountPrefix16", 2, false, false);
     /** The string is prefixed with a 32-bit byte count. */
-    public static final StringLengthType byteCountPrefix32 = counted("byteCountPrefix32", 4, false);
+    public static final StringLengthType byteCountPrefix32 = counted("byteCountPrefix32", 4, false, false);
+
+    /** The string is prefixed with a 8-bit character count. */
+    public static final StringLengthType rawCharCountPrefix8 = counted("charCountPrefix8", 1, true, true);
+    /** The string is prefixed with a 16-bit character count. */
+    public static final StringLengthType rawCharCountPrefix16 = counted("charCountPrefix16", 2, true, true);
+    /** The string is prefixed with a 32-bit character count. */
+    public static final StringLengthType rawCharCountPrefix32 = counted("charCountPrefix32", 4, true, true);
+
+    /** The string is prefixed with a 8-bit byte count. */
+    public static final StringLengthType rawByteCountPrefix8 = counted("byteCountPrefix8", 1, false, true);
+    /** The string is prefixed with a 16-bit byte count. */
+    public static final StringLengthType rawByteCountPrefix16 = counted("byteCountPrefix16", 2, false, true);
+    /** The string is prefixed with a 32-bit byte count. */
+    public static final StringLengthType rawByteCountPrefix32 = counted("byteCountPrefix32", 4, false, true);
 
     public static final StringLengthType terminatedByNull = terminatedBy("terminatedByNull", '\0');
     public static final StringLengthType terminatedByCr = terminatedBy("terminatedByCr", '\r');
@@ -35,31 +51,37 @@ public class StringLengthType {
     public final boolean hasCountField;
     public final boolean countByChar;
     public final boolean countByByte;
+    public final boolean raw;
+    public final boolean autoCompact;
     public final boolean hasTerminator;
     public final char terminator;
 
-    public StringLengthType(String name, int countFieldBytes, boolean countByChar) {
+    public StringLengthType(String name, int countFieldBytes, boolean countByChar, boolean raw) {
         this.name = name;
         this.countFieldBytes = countFieldBytes;
         this.hasCountField = countFieldBytes > 0;
         this.countByChar = countByChar;
         this.countByByte = !countByChar;
+        this.raw = raw;
+        this.autoCompact = !raw;
         this.hasTerminator = false;
         this.terminator = 0;
     }
 
     public StringLengthType(String name, char terminator) {
         this.name = name;
-        this.countFieldBytes = 0;
-        this.hasCountField = false;
-        this.countByChar = false;
-        this.countByByte = false;
+        this.countFieldBytes = 0; // not used
+        this.hasCountField = false; // not used
+        this.countByChar = false; // not used
+        this.countByByte = false; // not used
+        this.raw = false; // not used
+        this.autoCompact = !raw; // not used
         this.hasTerminator = true;
         this.terminator = terminator;
     }
 
-    public static StringLengthType counted(String name, int countFieldBytes, boolean countByChar) {
-        return new StringLengthType(name, countFieldBytes, countByChar);
+    public static StringLengthType counted(String name, int countFieldBytes, boolean countByChar, boolean raw) {
+        return new StringLengthType(name, countFieldBytes, countByChar, raw);
     }
 
     public static StringLengthType terminatedBy(String name, char terminateChar) {

@@ -21,6 +21,13 @@ public @interface StringBin {
     int size() default -1;
 
     /**
+     * by default, trailing NUL bytes are auto dropped when reading.
+     *
+     * For raw string, NUL bytes are always included.
+     */
+    boolean raw() default false;
+
+    /**
      * determined by a length field, the field takes this number of bits.
      */
     int lengthBits() default 0;

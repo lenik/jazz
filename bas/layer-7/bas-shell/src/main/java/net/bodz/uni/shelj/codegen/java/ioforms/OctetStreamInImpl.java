@@ -17,7 +17,6 @@ import net.bodz.bas.io.StringLengthType;
 public class OctetStreamInImpl
         extends FieldsRelatedSourceBuilder {
 
-    StringLengthType defaultLengthType = StringLengthType.terminatedByNull;
     Charset defaultCharset = Charsets.UTF_8;
 
     @Override
@@ -148,7 +147,7 @@ public class OctetStreamInImpl
             out.println();
 
         String countVar = fieldName + "Count";
-        out.printf("int %s = in.readDword();\n");
+        out.printf("int %s = in.readDword();\n", countVar);
         out.printf("this.%s = new %s[%s];\n", fieldName, type1.getSimpleName(), countVar);
         out.printf("for (int i = 0; i < %s; i++)\n", countVar);
         out.print("    ");
@@ -156,7 +155,7 @@ public class OctetStreamInImpl
     }
 
     void loadStringField(JavaSourceWriter out, AnnotatedElement field, Class<?> type, String var) {
-        StringLengthType lengthType = defaultLengthType;
+        StringLengthType lengthType = StringBinUtils.defaultStringLengthType;
         Charset charset = null;
         StringBin aStringBin = field.getAnnotation(StringBin.class);
         if (aStringBin != null) {
