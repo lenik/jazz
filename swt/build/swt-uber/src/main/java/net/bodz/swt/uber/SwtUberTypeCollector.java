@@ -2,7 +2,7 @@ package net.bodz.swt.uber;
 
 import java.util.List;
 
-import net.bodz.bas.shell.util.TypeCollectorApp;
+import net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp;
 
 public class SwtUberTypeCollector
         extends TypeCollectorApp {
