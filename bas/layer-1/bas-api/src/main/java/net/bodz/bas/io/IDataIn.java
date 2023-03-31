@@ -92,6 +92,9 @@ public interface IDataIn
         return (char) (readWord() & 0xffff);
     }
 
+    char readUtf8Char_fast()
+            throws IOException;
+
     /**
      * @exception EOFException
      *                if this stream reaches the end before reading all the bytes.
@@ -99,15 +102,15 @@ public interface IDataIn
      *                if an I/O error occurs.
      */
     char readUtf8Char()
-            throws IOException;
+            throws IOException, ParseException;
 
-    default char readChar(String encoding)
+    default EncodedChar readChar(String encoding)
             throws IOException, ParseException {
         Charset charset = Charset.forName(encoding);
         return readChar(charset);
     }
 
-    default char readChar(String encoding, char fallback)
+    default EncodedChar readChar(String encoding, char fallback)
             throws IOException {
         Charset charset = Charset.forName(encoding);
         return readChar(charset, fallback);
@@ -121,10 +124,10 @@ public interface IDataIn
      * @exception ParseException
      *                If malformed character occurrs.
      */
-    char readChar(Charset charset)
+    EncodedChar readChar(Charset charset)
             throws IOException, ParseException;
 
-    char readChar(Charset charset, char fallback)
+    EncodedChar readChar(Charset charset, char fallback)
             throws IOException;
 
     /**
@@ -195,21 +198,152 @@ public interface IDataIn
     void readBools(boolean[] buf, int off, int len)
             throws IOException;
 
-    default void readChars(char[] buf)
+    // read[n]
+
+    default byte[] readBytes(int n)
             throws IOException {
-        readChars(buf, 0, buf.length);
+        byte[] buf = new byte[n];
+        readBytes(buf);
+        return buf;
     }
 
-    void readChars(char[] buf, int off, int len)
-            throws IOException;
-
-    default void readUtf8Chars(char[] buf)
+    default short[] readWords(int n)
             throws IOException {
-        readUtf8Chars(buf, 0, buf.length);
+        short[] buf = new short[n];
+        readWords(buf);
+        return buf;
     }
 
-    void readUtf8Chars(char[] buf, int off, int len)
+    default int[] readDwords(int n)
+            throws IOException {
+        int[] buf = new int[n];
+        readDwords(buf);
+        return buf;
+    }
+
+    default long[] readQwords(int n)
+            throws IOException {
+        long[] buf = new long[n];
+        readQwords(buf);
+        return buf;
+    }
+
+    default float[] readFloats(int n)
+            throws IOException {
+        float[] buf = new float[n];
+        readFloats(buf);
+        return buf;
+    }
+
+    default double[] readDoubles(int n)
+            throws IOException {
+        double[] buf = new double[n];
+        readDoubles(buf);
+        return buf;
+    }
+
+    default boolean[] readBools(int n)
+            throws IOException {
+        boolean[] buf = new boolean[n];
+        readBools(buf);
+        return buf;
+    }
+
+    // readChars(n)
+
+    default EncodedCharArray readChars(int n)
+            throws IOException {
+        char[] buf = new char[n];
+        readChars(buf);
+        return new EncodedCharArray(n, buf);
+    }
+
+    default EncodedCharArray readUtf8Chars(int n)
+            throws IOException, ParseException {
+        char[] buf = new char[n];
+        int size = readUtf8Chars(buf);
+        return new EncodedCharArray(size, buf);
+    }
+
+    default EncodedCharArray readChars(int n, String encoding)
+            throws IOException, ParseException {
+        Charset charset = Charset.forName(encoding);
+        return readChars(n, charset);
+    }
+
+    default EncodedCharArray readChars(int n, Charset charset)
+            throws IOException, ParseException {
+        char[] buf = new char[n];
+        int size = readChars(buf, 0, buf.length, charset);
+        return new EncodedCharArray(size, buf);
+    }
+
+    default EncodedString readString(int n)
+            throws IOException {
+        return readChars(n).toEncodedString();
+    }
+
+    default EncodedString readUtf8String(int n)
+            throws IOException, ParseException {
+        return readUtf8Chars(n).toEncodedString();
+    }
+
+    default EncodedString readString(int n, String encoding)
+            throws IOException, ParseException {
+        Charset charset = Charset.forName(encoding);
+        return readChars(n, charset).toEncodedString();
+    }
+
+    default EncodedString readString(int n, Charset charset)
+            throws IOException, ParseException {
+        return readChars(n, charset).toEncodedString();
+    }
+
+    // readChars
+
+    default int readChars(char[] buf)
+            throws IOException {
+        return readChars(buf, 0, buf.length);
+    }
+
+    int readChars(char[] buf, int off, int len)
             throws IOException;
+
+    default void readUtf8Chars_fast(char[] buf)
+            throws IOException {
+        readUtf8Chars_fast(buf, 0, buf.length);
+    }
+
+    void readUtf8Chars_fast(char[] buf, int off, int len)
+            throws IOException;
+
+    default int readUtf8Chars(char[] buf)
+            throws IOException, ParseException {
+        return readUtf8Chars(buf, 0, buf.length);
+    }
+
+    int readUtf8Chars(char[] buf, int off, int len)
+            throws IOException, ParseException;
+
+    default int readChars(char[] buf, String encoding)
+            throws IOException, ParseException {
+        Charset charset = Charset.forName(encoding);
+        return readChars(buf, 0, buf.length, charset);
+    }
+
+    default int readChars(char[] buf, int off, int len, String encoding)
+            throws IOException, ParseException {
+        Charset charset = Charset.forName(encoding);
+        return readChars(buf, off, len, charset);
+    }
+
+    default int readChars(char[] buf, Charset charset)
+            throws IOException, ParseException {
+        return readChars(buf, 0, buf.length, charset);
+    }
+
+    int readChars(char[] buf, int off, int len, Charset charset)
+            throws IOException, ParseException;
 
     /**
      * Read wide ucs-16 string.
@@ -228,7 +362,10 @@ public interface IDataIn
     String readString(LengthType lengthType)
             throws IOException;
 
-    String readUtf8String(LengthType lengthType)
+    String readUtf8String_fast(LengthType lengthType)
+            throws IOException;
+
+    EncodedString readUtf8String(LengthType lengthType)
             throws IOException, ParseException;
 
     /**
@@ -245,13 +382,13 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    default String readString(LengthType lengthType, String encoding)
+    default EncodedString readString(LengthType lengthType, String encoding)
             throws IOException, ParseException {
         Charset charset = Charset.forName(encoding);
         return readString(lengthType, charset);
     }
 
-    String readString(LengthType lengthType, Charset charset)
+    EncodedString readString(LengthType lengthType, Charset charset)
             throws IOException, ParseException;
 
 }

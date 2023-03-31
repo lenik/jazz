@@ -115,19 +115,25 @@ public class DecoratedDataIn
     }
 
     @Override
-    public char readUtf8Char()
+    public char readUtf8Char_fast()
             throws IOException {
+        return getWrapped().readUtf8Char_fast();
+    }
+
+    @Override
+    public char readUtf8Char()
+            throws IOException, ParseException {
         return getWrapped().readUtf8Char();
     }
 
     @Override
-    public char readChar(Charset charset)
+    public EncodedChar readChar(Charset charset)
             throws IOException, ParseException {
         return getWrapped().readChar(charset);
     }
 
     @Override
-    public char readChar(Charset charset, char fallback)
+    public EncodedChar readChar(Charset charset, char fallback)
             throws IOException {
         return getWrapped().readChar(charset, fallback);
     }
@@ -175,15 +181,21 @@ public class DecoratedDataIn
     }
 
     @Override
-    public void readChars(char[] buf, int off, int len)
+    public int readChars(char[] buf, int off, int len)
             throws IOException {
-        getWrapped().readChars(buf, off, len);
+        return getWrapped().readChars(buf, off, len);
     }
 
     @Override
-    public void readUtf8Chars(char[] buf, int off, int len)
+    public void readUtf8Chars_fast(char[] buf, int off, int len)
             throws IOException {
-        getWrapped().readUtf8Chars(buf, off, len);
+        getWrapped().readUtf8Chars_fast(buf, off, len);
+    }
+
+    @Override
+    public int readUtf8Chars(char[] buf, int off, int len)
+            throws IOException, ParseException {
+        return getWrapped().readUtf8Chars(buf, off, len);
     }
 
     @Override
@@ -193,13 +205,25 @@ public class DecoratedDataIn
     }
 
     @Override
-    public String readUtf8String(LengthType lengthType)
+    public String readUtf8String_fast(LengthType lengthType)
+            throws IOException {
+        return getWrapped().readUtf8String_fast(lengthType);
+    }
+
+    @Override
+    public EncodedString readUtf8String(LengthType lengthType)
             throws IOException, ParseException {
         return getWrapped().readUtf8String(lengthType);
     }
 
     @Override
-    public String readString(LengthType lengthType, Charset charset)
+    public int readChars(char[] buf, int off, int len, Charset charset)
+            throws IOException, ParseException {
+        return getWrapped().readChars(buf, off, len, charset);
+    }
+
+    @Override
+    public EncodedString readString(LengthType lengthType, Charset charset)
             throws IOException, ParseException {
         return getWrapped().readString(lengthType, charset);
     }

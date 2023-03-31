@@ -64,7 +64,7 @@ public class CharDecoder
         replaceMalformedChar = ch;
     }
 
-    public int decodeChar()
+    public int decodeChar(Appendable out)
             throws ParseException, IOException {
         int capacity = inBuffer.capacity();
         int pos = 0;
@@ -84,14 +84,18 @@ public class CharDecoder
             outBuffer.clear();
             result = decoder.decode(inBuffer, outBuffer, false);
 
-            if (result.isError())
-                return handleError();
+            if (result.isError()) {
+                char replacement = handleError();
+                out.append(replacement);
+                return pos;
+            }
         } while (outBuffer.position() == 0);
 
         outBuffer.flip();
 
         char ch = outBuffer.get();
-        return ch;
+        out.append(ch);
+        return pos;
     }
 
     public String decodeChars(int maxChars)
