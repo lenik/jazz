@@ -54,7 +54,7 @@ public abstract class AbstractDataInTest
 
     @Test
     public void testReadUtf8Char()
-            throws IOException {
+            throws IOException, ParseException {
         IDataIn in = getDataIn(utf8Bytes);
         int len = utf8String.length();
         for (int i = 0; i < len; i++) {
@@ -70,7 +70,7 @@ public abstract class AbstractDataInTest
         byte[] hdr = { (byte) utf8String.length() };
         byte[] nstr = Arrays.concat(hdr, utf8Bytes);
         IDataIn in = getDataIn(nstr);
-        String actual = in.readUtf8String(LengthType.charCountPrefix8);
+        String actual = in.readUtf8String(LengthType.charCountPrefix8).string;
         assertEquals(utf8String, actual);
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractDataInTest
         byte[] hdr = { (byte) utf8Bytes.length };
         byte[] nstr = Arrays.concat(hdr, utf8Bytes);
         IDataIn in = getDataIn(nstr);
-        String actual = in.readUtf8String(LengthType.byteCountPrefix8);
+        String actual = in.readUtf8String(LengthType.byteCountPrefix8).string;
         assertEquals(utf8String, actual);
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractDataInTest
         byte[] z = { 0 };
         byte[] strz = Arrays.concat(utf8Bytes, z);
         IDataIn in = getDataIn(strz);
-        String actual = in.readUtf8String(LengthType.terminatedByNul);
+        String actual = in.readUtf8String(LengthType.terminatedByNul).string;
         assertEquals(utf8String, actual);
     }
 
@@ -101,7 +101,7 @@ public abstract class AbstractDataInTest
         int len = utf8String.length();
         for (int i = 0; i < len; i++) {
             char expect = utf8String.charAt(i);
-            char actual = in.readChar(utf8);
+            char actual = in.readChar(utf8).character;
             assertEquals("Offset " + i, expect, actual);
         }
     }
@@ -112,7 +112,7 @@ public abstract class AbstractDataInTest
         byte[] hdr = { (byte) utf8String.length() };
         byte[] nstr = Arrays.concat(hdr, utf8Bytes);
         IDataIn in = getDataIn(nstr);
-        String actual = in.readString(LengthType.charCountPrefix8, utf8);
+        String actual = in.readString(LengthType.charCountPrefix8, utf8).string;
         assertEquals(utf8String, actual);
     }
 
@@ -122,7 +122,7 @@ public abstract class AbstractDataInTest
         byte[] hdr = { (byte) utf8Bytes.length };
         byte[] nstr = Arrays.concat(hdr, utf8Bytes);
         IDataIn in = getDataIn(nstr);
-        String actual = in.readString(LengthType.byteCountPrefix8, utf8);
+        String actual = in.readString(LengthType.byteCountPrefix8, utf8).string;
         assertEquals(utf8String, actual);
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractDataInTest
         byte[] z = { 0 };
         byte[] strz = Arrays.concat(utf8Bytes, z);
         IDataIn in = getDataIn(strz);
-        String actual = in.readString(LengthType.terminatedByNul, utf8);
+        String actual = in.readString(LengthType.terminatedByNul, utf8).string;
         assertEquals(utf8String, actual);
     }
 
