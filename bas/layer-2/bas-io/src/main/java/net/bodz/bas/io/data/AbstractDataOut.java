@@ -8,7 +8,7 @@ import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.AbstractByteOut;
 import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.io.StringLengthType;
 
 public abstract class AbstractDataOut
         extends AbstractByteOut
@@ -148,15 +148,15 @@ public abstract class AbstractDataOut
     // writeString
 
     @Override
-    public void writeString(LengthType lengthType, String str)
+    public void writeString(StringLengthType lengthType, String str)
             throws IOException {
         int len = str.length();
 
-        if (lengthType.countByChars)
-            lengthType.writeLengthHeader(this, len);
+        if (lengthType.countByChar)
+            lengthType.writeCountField(this, len);
 
-        if (lengthType.countByBytes)
-            lengthType.writeLengthHeader(this, len * 2);
+        if (lengthType.countByByte)
+            lengthType.writeCountField(this, len * 2);
 
         for (int i = 0; i < len; i++)
             writeChar(str.charAt(i));
@@ -166,18 +166,18 @@ public abstract class AbstractDataOut
     }
 
     @Override
-    public void writeUtf8String(LengthType lengthType, String str)
+    public void writeUtf8String(StringLengthType lengthType, String str)
             throws IOException {
-        if (lengthType.countByBytes) {
-            byte[] bytes = str.getBytes(Charsets.UTF8);
-            lengthType.writeLengthHeader(this, bytes.length);
+        if (lengthType.countByByte) {
+            byte[] bytes = str.getBytes(Charsets.UTF_8);
+            lengthType.writeCountField(this, bytes.length);
             write(bytes);
             return;
         }
 
         int len = str.length();
-        if (lengthType.countByChars)
-            lengthType.writeLengthHeader(this, len);
+        if (lengthType.countByChar)
+            lengthType.writeCountField(this, len);
 
         for (int i = 0; i < len; i++) {
             writeUtf8Char(str.charAt(i));
@@ -188,18 +188,18 @@ public abstract class AbstractDataOut
     }
 
     @Override
-    public void writeString(LengthType lengthType, String str, Charset charset)
+    public void writeString(StringLengthType lengthType, String str, Charset charset)
             throws IOException {
         if (charset == null)
             throw new NullPointerException("charset");
 
         byte[] bytes = str.getBytes(charset);
 
-        if (lengthType.countByChars)
-            lengthType.writeLengthHeader(this, str.length());
+        if (lengthType.countByChar)
+            lengthType.writeCountField(this, str.length());
 
-        if (lengthType.countByBytes)
-            lengthType.writeLengthHeader(this, bytes.length);
+        if (lengthType.countByByte)
+            lengthType.writeCountField(this, bytes.length);
 
         write(bytes);
 

@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.io.StringLengthType;
 
 class _WriteUtfStringImpl {
 
-    private final LengthType lengthType;
+    private final StringLengthType lengthType;
     boolean ucs32;
     private final String str;
     private final String encoding;
@@ -24,7 +24,7 @@ class _WriteUtfStringImpl {
 
     private boolean bigEndian;
 
-    public _WriteUtfStringImpl(LengthType lengthType, String str, String encoding)
+    public _WriteUtfStringImpl(StringLengthType lengthType, String str, String encoding)
             throws UnsupportedEncodingException {
 
 //        if ((flags & StringFlags.XXX_TERM_MASK) != 0) {
@@ -49,7 +49,7 @@ class _WriteUtfStringImpl {
         len = str.length();
 
         if (encoding == null)
-            if (lengthType.countByChars) {
+            if (lengthType.countByChar) {
                 size = len * 2;
             } else {
                 int cb = 0;
@@ -79,8 +79,8 @@ class _WriteUtfStringImpl {
     public void write(IDataOut out)
             throws IOException {
         boolean _long = lengthType.headerSize == 4;
-        boolean lengthPrefix = lengthType.countByChars;
-        boolean sizePrefix = lengthType.countByBytes;
+        boolean lengthPrefix = lengthType.countByChar;
+        boolean sizePrefix = lengthType.countByByte;
         boolean sameEndian = bigEndian == out.isBigEndian();
 
         if (lengthPrefix)
@@ -127,7 +127,7 @@ class _WriteUtfStringImpl {
             }
 
             // UTF-16LE, UTF-16BE
-            else if (lengthType.countByChars) {
+            else if (lengthType.countByChar) {
                 if (sameEndian)
                     for (int i = 0; i < len; i++)
                         out.writeWord(chars[i]);
@@ -169,7 +169,7 @@ class _WriteUtfStringImpl {
             char ch = termCharSeq.charAt(i);
             if (ucs32)
                 out.writeDword(ch);
-            else if (lengthType.countByChars)
+            else if (lengthType.countByChar)
                 out.writeWord(ch);
             else
                 out.writeByte(ch);

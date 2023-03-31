@@ -10,7 +10,7 @@ import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.io.BByteOut;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.io.StringLengthType;
 
 public abstract class AbstractDataOutTest
         extends TestData {
@@ -51,7 +51,7 @@ public abstract class AbstractDataOutTest
         byte[] hdr = { (byte) utf8String.length() };
         byte[] expected = Arrays.concat(hdr, utf8Bytes);
         DataBuffer db = getDataOut();
-        db.writeUtf8String(LengthType.charCountPrefix8, utf8String);
+        db.writeUtf8String(StringLengthType.charCountPrefix8, utf8String);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
@@ -62,7 +62,7 @@ public abstract class AbstractDataOutTest
         byte[] hdr = { (byte) utf8Bytes.length };
         byte[] expected = Arrays.concat(hdr, utf8Bytes);
         DataBuffer db = getDataOut();
-        db.writeUtf8String(LengthType.byteCountPrefix8, utf8String);
+        db.writeUtf8String(StringLengthType.byteCountPrefix8, utf8String);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
@@ -73,12 +73,12 @@ public abstract class AbstractDataOutTest
         byte[] z = { 0 };
         byte[] expected = Arrays.concat(utf8Bytes, z);
         DataBuffer db = getDataOut();
-        db.writeUtf8String(LengthType.terminatedByNul, utf8String);
+        db.writeUtf8String(StringLengthType.terminatedByNul, utf8String);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
 
-    Charset charset = Charsets.UTF8;
+    Charset charset = Charsets.UTF_8;
 
     @Test
     public void testWriteCharEnc()
@@ -99,7 +99,7 @@ public abstract class AbstractDataOutTest
         byte[] hdr = { (byte) utf8String.length() };
         byte[] expected = Arrays.concat(hdr, utf8Bytes);
         DataBuffer db = getDataOut();
-        db.writeString(LengthType.charCountPrefix8, utf8String, charset);
+        db.writeString(StringLengthType.charCountPrefix8, utf8String, charset);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
@@ -110,7 +110,7 @@ public abstract class AbstractDataOutTest
         byte[] hdr = { (byte) utf8Bytes.length };
         byte[] expected = Arrays.concat(hdr, utf8Bytes);
         DataBuffer db = getDataOut();
-        db.writeString(LengthType.byteCountPrefix8, utf8String, charset);
+        db.writeString(StringLengthType.byteCountPrefix8, utf8String, charset);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
@@ -121,7 +121,7 @@ public abstract class AbstractDataOutTest
         byte[] z = { 0 };
         byte[] expected = Arrays.concat(utf8Bytes, z);
         DataBuffer db = getDataOut();
-        db.writeString(LengthType.terminatedByNul, utf8String, charset);
+        db.writeString(StringLengthType.terminatedByNul, utf8String, charset);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }

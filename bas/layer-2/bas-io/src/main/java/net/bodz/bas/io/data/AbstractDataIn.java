@@ -13,7 +13,7 @@ import net.bodz.bas.io.AbstractByteIn;
 import net.bodz.bas.io.EncodedChar;
 import net.bodz.bas.io.EncodedString;
 import net.bodz.bas.io.IDataIn;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.io.StringLengthType;
 
 public abstract class AbstractDataIn
         extends AbstractByteIn
@@ -241,12 +241,12 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final String readString(LengthType lengthType)
+    public final String readString(StringLengthType lengthType)
             throws IOException {
         if (lengthType.hasTerminator)
             return readStringUntil(lengthType.terminateChar);
-        int length = lengthType.readLengthHeader(this);
-        if (lengthType.countByChars) {
+        int length = lengthType.readCountField(this);
+        if (lengthType.countByChar) {
             char[] buf = new char[length];
             readChars(buf);
             return new String(buf);
@@ -273,19 +273,19 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public String readUtf8String_fast(LengthType lengthType)
+    public String readUtf8String_fast(StringLengthType lengthType)
             throws IOException {
         if (lengthType.hasTerminator)
             return readUtf8StringUntil_fast(lengthType.terminateChar);
-        int length = lengthType.readLengthHeader(this);
-        if (lengthType.countByChars) {
+        int length = lengthType.readCountField(this);
+        if (lengthType.countByChar) {
             char[] buf = new char[length];
             readUtf8Chars_fast(buf);
             return new String(buf);
         } else {
             byte[] buf = new byte[length];
             readBytes(buf);
-            return new String(buf, Charsets.UTF8);
+            return new String(buf, Charsets.UTF_8);
         }
     }
 
@@ -300,19 +300,19 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public EncodedString readUtf8String(LengthType lengthType)
+    public EncodedString readUtf8String(StringLengthType lengthType)
             throws IOException, ParseException {
         if (lengthType.hasTerminator)
             return readUtf8StringUntil(lengthType.terminateChar);
-        int length = lengthType.readLengthHeader(this);
-        if (lengthType.countByChars) {
+        int length = lengthType.readCountField(this);
+        if (lengthType.countByChar) {
             char[] buf = new char[length];
             int nByte = readUtf8Chars(buf);
             return EncodedString.decoded(nByte, buf);
         } else {
             byte[] buf = new byte[length];
             readBytes(buf);
-            String str = new String(buf, Charsets.UTF8);
+            String str = new String(buf, Charsets.UTF_8);
             return EncodedString.decoded(length, str);
         }
     }
@@ -329,10 +329,10 @@ public abstract class AbstractDataIn
         return EncodedString.decoded(size, sb.toString());
     }
 
-    public String readString1(LengthType lengthType, Charset charset)
+    public String readString1(StringLengthType lengthType, Charset charset)
             throws IOException, ParseException {
-        int length = lengthType.readLengthHeader(this);
-        if (lengthType.countByBytes) {
+        int length = lengthType.readCountField(this);
+        if (lengthType.countByByte) {
             byte[] buf = new byte[length];
             readBytes(buf);
             return new String(buf, charset);
@@ -370,10 +370,10 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public EncodedString readString(LengthType lengthType, Charset charset)
+    public EncodedString readString(StringLengthType lengthType, Charset charset)
             throws IOException, ParseException {
-        int length = lengthType.readLengthHeader(this);
-        if (lengthType.countByBytes) {
+        int length = lengthType.readCountField(this);
+        if (lengthType.countByByte) {
             byte[] buf = new byte[length];
             readBytes(buf);
             String str = new String(buf, charset);
@@ -401,7 +401,7 @@ public abstract class AbstractDataIn
 
         int byteCapacity = CharDecoder.decodeBufferSize;
         if (length != 0) {
-            if (lengthType.countByBytes)
+            if (lengthType.countByByte)
                 byteCapacity = Math.min(byteCapacity, length);
             else
                 byteCapacity = Math.min(byteCapacity, length * 3);
@@ -415,7 +415,7 @@ public abstract class AbstractDataIn
             int remaining = length - nChar;
 
             int chunkMax = remaining;
-            if (lengthType.countByBytes) {
+            if (lengthType.countByByte) {
                 float _minBytes = chunkMax * decoder._minBytesPerChar;
                 int minBytes = (int) _minBytes;
                 if (minBytes == 0)
