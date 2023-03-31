@@ -18,7 +18,7 @@ public abstract class AbstractVfsFacade
         extends FileSystemProxy
         implements IVfsFacade {
 
-    private Charset charset = Charsets.UTF8;
+    private Charset charset = Charsets.UTF_8;
 
     public AbstractVfsFacade() {
         super();

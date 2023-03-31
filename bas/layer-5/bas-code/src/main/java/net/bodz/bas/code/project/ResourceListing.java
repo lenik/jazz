@@ -9,7 +9,7 @@ import net.bodz.bas.io.res.builtin.URLResource;
 
 public class ResourceListing {
 
-    Charset listingCharset = Charsets.UTF8;
+    Charset listingCharset = Charsets.UTF_8;
     boolean skipCommentLines = true;
     boolean skipDirNames = true;
     boolean hasComments = false;

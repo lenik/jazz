@@ -56,7 +56,7 @@ public class EndOfCen
 
     public byte[] commentRaw;
 
-    public transient Charset charset = Charsets.UTF8;
+    public transient Charset charset = Charsets.UTF_8;
 
     @Override
     public void readObject(IDataIn in)

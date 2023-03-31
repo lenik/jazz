@@ -26,7 +26,7 @@ public class URLData {
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        return readTextContents(url, Charsets.UTF8);
+        return readTextContents(url, Charsets.UTF_8);
     }
 
     /**
@@ -87,7 +87,7 @@ public class URLData {
             throws IOException {
         if (url == null)
             throw new NullPointerException("url");
-        return readLines(url, Charsets.UTF8);
+        return readLines(url, Charsets.UTF_8);
     }
 
     /**

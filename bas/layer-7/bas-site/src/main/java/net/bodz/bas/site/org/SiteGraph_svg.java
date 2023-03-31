@@ -55,7 +55,7 @@ public class SiteGraph_svg
 
         File tempDotFile = File.createTempFile("site", ".dot");
         FileResource tempDot = new FileResource(tempDotFile);
-        tempDot.setCharset(Charsets.UTF8);
+        tempDot.setCharset(Charsets.UTF_8);
         tempDot.to(StreamWriting.class).writeString(dotBuf.toString());
 
         InputStream svgIn;

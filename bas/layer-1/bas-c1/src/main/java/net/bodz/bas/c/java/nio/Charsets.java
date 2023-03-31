@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +17,52 @@ public class Charsets {
 
     public static Charset DEFAULT = Charset.defaultCharset();
 
-    public static final Charset ASCII7 = Charset.forName("ascii");
-    public static final Charset ASCII8 = Charset.forName("iso-8859-1");
-    public static final Charset UTF8 = Charset.forName("utf-8");
-    public static final Charset UTF16_LE = Charset.forName("utf-16le");
-    public static final Charset UTF16_BE = Charset.forName("utf-16be");
+    public static final Charset US_ASCII = get("US-ASCII", true);
+    public static final Charset ISO_8859_1 = get("ISO-8859-1", true);
+    public static final Charset UTF_8 = get("UTF-8", true);
+    public static final Charset UTF_16 = get("UTF-16", true);
+    public static final Charset UTF_16LE = get("UTF-16LE", true);
+    public static final Charset UTF_16BE = get("UTF-16BE", true);
+    public static final Charset UTF_32 = get("UTF-16", true);
+    public static final Charset UTF_32LE = get("UTF-32LE", true);
+    public static final Charset UTF_32BE = get("UTF-32BE", true);
+
+    public static final Charset BIG5 = get("Big5", false);
+    public static final Charset EUC_KR = get("EUC-KR", false);
+    public static final Charset GB2312 = get("GB2312", false);
+    public static final Charset GB18030 = get("GB18030", false);
+    public static final Charset GBK = get("GBK", false);
+    public static final Charset SHIFT_JIS = get("Shift_JIS", false);
+
+    static Charset get(String name, boolean required) {
+        if (required) {
+            return Charset.forName(name);
+        } else {
+            try {
+                return Charset.forName(name);
+            } catch (UnsupportedCharsetException e) {
+                return null;
+            }
+        }
+    }
+
+    public static String getCanonicalName(String charsetName) {
+        try {
+            Charset charset = Charset.forName(charsetName);
+            return charset.name();
+        } catch (UnsupportedCharsetException e) {
+            return null;
+        }
+    }
+
+    public static void printCanonicalNames() {
+        for (String name : Charset.availableCharsets().keySet()) {
+            Charset charset = Charset.forName(name);
+            System.out.println(name + ": ");
+            for (String alias : charset.aliases())
+                System.out.println("    alias: " + alias);
+        }
+    }
 
     public static CharsetEncoder getEncoder(Object charset) {
         if (charset == null)

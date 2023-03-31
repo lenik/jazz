@@ -180,7 +180,7 @@ public class ZipEntry
         ctx.requireZipVersion(versionNeeded);
 
         flags = in.readWord();
-        charset = (flags & F_UTF8) == 0 ? ctx.getZipCharset() : Charsets.UTF8;
+        charset = (flags & F_UTF8) == 0 ? ctx.getZipCharset() : Charsets.UTF_8;
 
         method = in.readWord();
         mtime = in.readDword();

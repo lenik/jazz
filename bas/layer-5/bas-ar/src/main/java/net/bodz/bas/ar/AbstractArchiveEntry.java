@@ -48,7 +48,7 @@ public abstract class AbstractArchiveEntry
     /* _____________________________ */static section.iface __INPUT_SOURCE__;
 
     protected Charset getPreferredContentCharset() {
-        return Charsets.UTF8;
+        return Charsets.UTF_8;
     }
 
     @Override
