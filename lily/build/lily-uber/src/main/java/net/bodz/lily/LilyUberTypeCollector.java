@@ -2,7 +2,7 @@ package net.bodz.lily;
 
 import java.util.List;
 
-import net.bodz.bas.shell.util.TypeCollectorApp;
+import net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp;
 
 public class LilyUberTypeCollector
         extends TypeCollectorApp {

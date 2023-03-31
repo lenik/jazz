@@ -1,8 +1,8 @@
-net.bodz.bas.codegen.ToCodegen
-net.bodz.bas.shell.util.DiffMergePatch
-net.bodz.bas.shell.util.FieldsFormsCG
-net.bodz.bas.shell.util.LibUpdater
-net.bodz.bas.shell.util.TypeCollectorApp
-net.bodz.bas.shell.util.Xjdoc2TextMap
-net.bodz.bas.shell.util.XjdocDumper
-net.bodz.bas.shell.win32.Fix_BatBB
+net.bodz.uni.shelj.codegen.java.ToCodegen
+net.bodz.uni.shelj.codegen.java.i18n.Xjdoc2TextMap
+net.bodz.uni.shelj.codegen.java.i18n.XjdocDumper
+net.bodz.uni.shelj.codegen.java.ioforms.IOFormsGenerator
+net.bodz.uni.shelj.codegen.java.service.TypeCollectorApp
+net.bodz.uni.shelj.codegen.maven.LibUpdater
+net.bodz.uni.shelj.codegen.win32.Fix_BatBB
+net.bodz.uni.shelj.text.DiffMergePatch
