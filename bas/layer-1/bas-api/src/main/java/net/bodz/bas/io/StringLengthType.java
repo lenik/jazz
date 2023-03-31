@@ -2,10 +2,10 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
-public enum LengthType {
+public enum StringLengthType {
 
-    charCount(0, true),
-    byteCount(0, false),
+    providedCharCount(0, true),
+    providedByteCount(0, false),
 
     /** The string is prefixed with a 8-bit character count. */
     charCountPrefix8(1, true),
@@ -31,25 +31,25 @@ public enum LengthType {
     ;
 
     public final int headerSize;
-    public final boolean countByChars;
-    public final boolean countByBytes;
+    public final boolean countByChar;
+    public final boolean countByByte;
     public final boolean fixedSize;
     public final boolean hasTerminator;
     public final char terminateChar;
 
-    private LengthType(int headerSize, boolean countByChar) {
+    private StringLengthType(int headerSize, boolean countByChar) {
         this.headerSize = headerSize;
-        this.countByChars = countByChar;
-        this.countByBytes = !countByChar;
+        this.countByChar = countByChar;
+        this.countByByte = !countByChar;
         this.fixedSize = headerSize == 0;
         this.hasTerminator = false;
         this.terminateChar = 0;
     }
 
-    private LengthType(char terminateChar) {
+    private StringLengthType(char terminateChar) {
         this.headerSize = 0;
-        this.countByChars = false;
-        this.countByBytes = false;
+        this.countByChar = false;
+        this.countByByte = false;
         this.fixedSize = false;
         this.hasTerminator = true;
         this.terminateChar = terminateChar;
@@ -58,13 +58,13 @@ public enum LengthType {
     public StringBuilder newStringBuilder(int length) {
         if (hasTerminator)
             return new StringBuilder();
-        if (countByChars)
+        if (countByChar)
             return new StringBuilder(length);
         else
             return new StringBuilder(length * 3);
     }
 
-    public int readLengthHeader(IDataIn in)
+    public int readCountField(IDataIn in)
             throws IOException {
         switch (headerSize) {
         case 1:
@@ -77,17 +77,17 @@ public enum LengthType {
         return 0;
     }
 
-    public void writeLengthHeader(IDataOut out, int length)
+    public void writeCountField(IDataOut out, int count)
             throws IOException {
         switch (headerSize) {
         case 1:
-            out.writeByte(length);
+            out.writeByte(count);
             break;
         case 2:
-            out.writeWord(length);
+            out.writeWord(count);
             break;
         case 4:
-            out.writeDword(length);
+            out.writeDword(count);
             break;
         }
     }

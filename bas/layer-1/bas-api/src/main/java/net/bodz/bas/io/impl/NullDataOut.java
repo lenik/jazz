@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.io.IDataOut;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.io.StringLengthType;
 
 public class NullDataOut
         implements
@@ -156,17 +156,17 @@ public class NullDataOut
     }
 
     @Override
-    public void writeString(LengthType lengthType, String str)
+    public void writeString(StringLengthType lengthType, String str)
             throws IOException {
     }
 
     @Override
-    public void writeUtf8String(LengthType lengthType, String str)
+    public void writeUtf8String(StringLengthType lengthType, String str)
             throws IOException {
     }
 
     @Override
-    public void writeString(LengthType lengthType, String str, Charset charset)
+    public void writeString(StringLengthType lengthType, String str, Charset charset)
             throws IOException {
     }
 

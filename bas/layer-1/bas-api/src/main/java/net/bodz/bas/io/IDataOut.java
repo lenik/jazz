@@ -140,19 +140,19 @@ public interface IDataOut
 
     // writeString
 
-    void writeString(LengthType lengthType, String str)
+    void writeString(StringLengthType lengthType, String str)
             throws IOException;
 
-    void writeUtf8String(LengthType lengthType, String str)
+    void writeUtf8String(StringLengthType lengthType, String str)
             throws IOException;
 
-    default void writeString(LengthType lengthType, String str, String encoding)
+    default void writeString(StringLengthType lengthType, String str, String encoding)
             throws IOException {
         Charset charset = Charset.forName(encoding);
         writeString(lengthType, str, charset);
     }
 
-    void writeString(LengthType lengthType, String str, Charset charset)
+    void writeString(StringLengthType lengthType, String str, Charset charset)
             throws IOException;
 
     // fixedSize and padding

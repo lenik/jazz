@@ -181,19 +181,19 @@ public class DecoratedDataOut
     }
 
     @Override
-    public void writeString(LengthType lengthType, String str)
+    public void writeString(StringLengthType lengthType, String str)
             throws IOException {
         getWrapped().writeString(lengthType, str);
     }
 
     @Override
-    public void writeUtf8String(LengthType lengthType, String str)
+    public void writeUtf8String(StringLengthType lengthType, String str)
             throws IOException {
         getWrapped().writeUtf8String(lengthType, str);
     }
 
     @Override
-    public void writeString(LengthType lengthType, String str, Charset charset)
+    public void writeString(StringLengthType lengthType, String str, Charset charset)
             throws IOException {
         getWrapped().writeString(lengthType, str, charset);
     }
