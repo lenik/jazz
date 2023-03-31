@@ -21,7 +21,7 @@ public class DecodeUnitTest
     public DecodeUnitTest()
             throws IOException {
         // charbuf = [3]
-        decode = new DecodeUnit(Charsets.UTF8.newDecoder(), 3);
+        decode = new DecodeUnit(Charsets.UTF_8.newDecoder(), 3);
         decode.setDst(tostr = new Text_String());
     }
 

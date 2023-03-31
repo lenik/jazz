@@ -25,7 +25,7 @@ public class Base64Codec
         super(3, 4);
     }
 
-    static final Charset base64Charset = Charsets.ASCII7;
+    static final Charset base64Charset = Charsets.ISO_8859_1;
 
     @Override
     public Charset getPreferredCharsetForEncodedContents() {

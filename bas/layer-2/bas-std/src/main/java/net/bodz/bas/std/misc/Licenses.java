@@ -19,7 +19,7 @@ public class Licenses {
         InputStream in = null;
         try {
             in = resource.openStream();
-            InputStreamReader reader = new InputStreamReader(in, Charsets.UTF8);
+            InputStreamReader reader = new InputStreamReader(in, Charsets.UTF_8);
             BufferedReader lineReader = new BufferedReader(reader);
 
             StringBuilder buf = new StringBuilder(4096);

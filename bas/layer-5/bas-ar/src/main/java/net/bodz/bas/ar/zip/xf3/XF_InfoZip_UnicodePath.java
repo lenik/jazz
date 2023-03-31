@@ -68,13 +68,13 @@ public class XF_InfoZip_UnicodePath
 
     public String getFileName() {
         if (fileName == null)
-            fileName = new String(fileNameRaw, Charsets.UTF8);
+            fileName = new String(fileNameRaw, Charsets.UTF_8);
         return fileName;
     }
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-        fileNameRaw = fileName.getBytes(Charsets.UTF8);
+        fileNameRaw = fileName.getBytes(Charsets.UTF_8);
         size = (short) (fileNameRaw.length + 5);
     }
 

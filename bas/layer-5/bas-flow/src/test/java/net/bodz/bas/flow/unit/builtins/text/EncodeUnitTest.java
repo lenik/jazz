@@ -20,7 +20,7 @@ public class EncodeUnitTest
     public EncodeUnitTest()
             throws IOException {
         // bytebuf = [3]
-        encode = new EncodeUnit(Charsets.UTF8.newEncoder(), 3);
+        encode = new EncodeUnit(Charsets.UTF_8.newEncoder(), 3);
         encode.setDst(tostr = new Binary_Hex());
         // encode.setDst(tostr = new Binary_String("ascii"));
     }

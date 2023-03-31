@@ -139,7 +139,7 @@ public class ZipUnarchiverTest
     public void readEntries_JUZ()
             throws IOException {
         // Charset charset = Charset.forName("gb2312");
-        Charset charset = Charsets.UTF8;
+        Charset charset = Charsets.UTF_8;
         ZipInputStream zin = new ZipInputStream(new DbgInputStream(in), charset);
         java.util.zip.ZipEntry entry;
         while ((entry = zin.getNextEntry()) != null) {

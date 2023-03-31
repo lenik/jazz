@@ -39,7 +39,7 @@ public class GeoZones {
         InputStream in = csv.openStream();
 
         try {
-            Reader reader = new InputStreamReader(in, Charsets.UTF8);
+            Reader reader = new InputStreamReader(in, Charsets.UTF_8);
             BufferedReader br = new BufferedReader(reader);
             String line;
             int lineNo = 1;

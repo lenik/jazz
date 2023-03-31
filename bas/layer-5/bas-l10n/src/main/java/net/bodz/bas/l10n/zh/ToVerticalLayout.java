@@ -17,7 +17,7 @@ import net.bodz.bas.c.java.nio.Charsets;
 public class ToVerticalLayout {
 
     static final String verticalLine = "┆";
-    static final Charset charset = Charsets.UTF8;
+    static final Charset charset = Charsets.UTF_8;
 
     public static void main(String[] args)
             throws IOException, UnsupportedFlavorException {

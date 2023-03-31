@@ -30,13 +30,13 @@ public class HexCharsetEncoder
      * <li>max1: 1 wide char '啊' -> 4 bytes '554A'
      * <li>max2 (surr. pair) 8 bytes
      * </ul>
-     * 
+     *
      * @param transtbl
      *            : int ord -> (byte) char
      */
     public HexCharsetEncoder(Charset charset, char[] transtbl) {
         super(charset, 3.0f + transtbl.length, 8.0f + transtbl.length, //
-                " ? ".getBytes(Charsets.ASCII7));
+                " ? ".getBytes(Charsets.ISO_8859_1));
         this.transtbl = new byte[transtbl.length];
         for (int i = 0; i < transtbl.length; i++)
             this.transtbl[i] = (byte) transtbl[i];

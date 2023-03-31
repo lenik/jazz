@@ -80,7 +80,7 @@ public class DecimalCodec
 
     @Override
     public Charset getPreferredCharsetForEncodedContents() {
-        return Charsets.ASCII7;
+        return Charsets.ISO_8859_1;
     }
 
     @Override

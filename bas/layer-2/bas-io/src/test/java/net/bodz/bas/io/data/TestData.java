@@ -43,7 +43,7 @@ public abstract class TestData
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0xf0, (byte) 0x7f, //
     };
 
-    protected static final Charset utf8 = Charsets.UTF8;
+    protected static final Charset utf8 = Charsets.UTF_8;
     protected static final String utf8String = "Hi,ЖЫЯ.笨蛋";
     protected static final byte[] utf8Bytes = utf8String.getBytes(Charset.forName("utf-8"));
 

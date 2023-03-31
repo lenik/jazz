@@ -54,7 +54,7 @@ public abstract class StreamResourceTemplate {
      *         UTF-8 charset.
      */
     private Charset getPreferredCharset() {
-        return Charsets.UTF8;
+        return Charsets.UTF_8;
     }
 
     public Charset getCharset() {

@@ -63,7 +63,7 @@ public class IndexedTypes {
             URL url = resources.nextElement();
             InputStream in = url.openStream();
             try {
-                InputStreamReader reader = new InputStreamReader(in, Charsets.UTF8);
+                InputStreamReader reader = new InputStreamReader(in, Charsets.UTF_8);
                 BufferedReader br = new BufferedReader(reader);
                 String line;
                 while (true) {

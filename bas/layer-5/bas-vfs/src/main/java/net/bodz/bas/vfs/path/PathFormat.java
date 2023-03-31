@@ -37,7 +37,7 @@ public class PathFormat
 
     private boolean locked;
 
-    private Charset encodeCharset = Charsets.UTF8; // Charset.defaultCharset();
+    private Charset encodeCharset = Charsets.UTF_8; // Charset.defaultCharset();
     private int encodeOptions;
     private PathSpaceMode spaceMode = PathSpaceMode.normalized;
     private boolean displaySafe;
