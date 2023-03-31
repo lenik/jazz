@@ -1,0 +1,13 @@
+
+
+    nchar=3
+        readString(SLT.autotype, 3)
+        var = readChars(3)      // non-final
+        readChars(var)          // final
+    nbyte=3
+        readString(SLT.autotype, 3)
+        var = readChars(3)      // non-final
+        readChars(var)          // final
+    
+    
+    String property;
