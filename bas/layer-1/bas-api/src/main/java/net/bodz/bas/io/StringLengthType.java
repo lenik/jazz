@@ -1,58 +1,104 @@
 package net.bodz.bas.io;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public enum StringLengthType {
+public class StringLengthType {
 
-    providedCharCount(0, true),
-    providedByteCount(0, false),
+    public static final StringLengthType providedCharCount = counted("providedCharCount", 0, true);
+    public static final StringLengthType providedByteCount = counted("providedByteCount", 0, false);
 
     /** The string is prefixed with a 8-bit character count. */
-    charCountPrefix8(1, true),
+    public static final StringLengthType charCountPrefix8 = counted("charCountPrefix8", 1, true);
     /** The string is prefixed with a 16-bit character count. */
-    charCountPrefix16(2, true),
+    public static final StringLengthType charCountPrefix16 = counted("charCountPrefix16", 2, true);
     /** The string is prefixed with a 32-bit character count. */
-    charCountPrefix32(4, true),
+    public static final StringLengthType charCountPrefix32 = counted("charCountPrefix32", 4, true);
 
     /** The string is prefixed with a 8-bit byte count. */
-    byteCountPrefix8(1, false),
+    public static final StringLengthType byteCountPrefix8 = counted("byteCountPrefix8", 1, false);
     /** The string is prefixed with a 16-bit byte count. */
-    byteCountPrefix16(2, false),
+    public static final StringLengthType byteCountPrefix16 = counted("byteCountPrefix16", 2, false);
     /** The string is prefixed with a 32-bit byte count. */
-    byteCountPrefix32(4, false),
+    public static final StringLengthType byteCountPrefix32 = counted("byteCountPrefix32", 4, false);
 
-    /** The string is terminated by a carriage-return ('\r'). */
-    terminatedByCr('\r'),
-    /** The string is terminated by a line-feed ('\n'). */
-    terminatedByNl('\n'),
-    /** The string is terminated by a zero ('\0'). */
-    terminatedByNul('\0'),
+    public static final StringLengthType terminatedByNull = terminatedBy("terminatedByNull", '\0');
+    public static final StringLengthType terminatedByCr = terminatedBy("terminatedByCr", '\r');
+    public static final StringLengthType terminatedByLf = terminatedBy("terminatedByLf", '\n');
+    public static final StringLengthType terminatedBySpace = terminatedBy("terminatedBySpace", ' ');
+    public static final StringLengthType terminatedByTab = terminatedBy("terminatedByTab", '\t');
 
-    ;
-
-    public final int headerSize;
+    public final String name;
+    public final int countFieldBytes;
+    public final boolean hasCountField;
     public final boolean countByChar;
     public final boolean countByByte;
-    public final boolean fixedSize;
     public final boolean hasTerminator;
-    public final char terminateChar;
+    public final char terminator;
 
-    private StringLengthType(int headerSize, boolean countByChar) {
-        this.headerSize = headerSize;
+    public StringLengthType(String name, int countFieldBytes, boolean countByChar) {
+        this.name = name;
+        this.countFieldBytes = countFieldBytes;
+        this.hasCountField = countFieldBytes > 0;
         this.countByChar = countByChar;
         this.countByByte = !countByChar;
-        this.fixedSize = headerSize == 0;
         this.hasTerminator = false;
-        this.terminateChar = 0;
+        this.terminator = 0;
     }
 
-    private StringLengthType(char terminateChar) {
-        this.headerSize = 0;
+    public StringLengthType(String name, char terminator) {
+        this.name = name;
+        this.countFieldBytes = 0;
+        this.hasCountField = false;
         this.countByChar = false;
         this.countByByte = false;
-        this.fixedSize = false;
         this.hasTerminator = true;
-        this.terminateChar = terminateChar;
+        this.terminator = terminator;
+    }
+
+    public static StringLengthType counted(String name, int countFieldBytes, boolean countByChar) {
+        return new StringLengthType(name, countFieldBytes, countByChar);
+    }
+
+    public static StringLengthType terminatedBy(String name, char terminateChar) {
+        return new StringLengthType(name, terminateChar);
+    }
+
+    public static StringLengthType terminatedBy(char terminateChar) {
+        switch (terminateChar) {
+        case 0:
+            return StringLengthType.terminatedByNull;
+        case '\r':
+            return StringLengthType.terminatedByCr;
+        case '\n':
+            return StringLengthType.terminatedByLf;
+        case ' ':
+            return StringLengthType.terminatedBySpace;
+        case '\t':
+            return StringLengthType.terminatedByTab;
+        }
+        return terminatedBy_autoNamed(terminateChar);
+    }
+
+    static Pattern wordsPattern = Pattern.compile("\\w+");
+
+    static StringLengthType terminatedBy_autoNamed(char terminateChar) {
+        String charName = Character.getName(terminateChar);
+        if (charName == null)
+            charName = "Unassigned";
+
+        StringBuilder charId = new StringBuilder(charName.length());
+        Matcher matcher = wordsPattern.matcher(charName);
+        while (matcher.find()) {
+            String word = matcher.group();
+            String ucfirst = word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+            charId.append(ucfirst);
+        }
+
+        String name = "terminatedBy" + charId;
+        return new StringLengthType(name, terminateChar);
     }
 
     public StringBuilder newStringBuilder(int length) {
@@ -64,9 +110,11 @@ public enum StringLengthType {
             return new StringBuilder(length * 3);
     }
 
-    public int readCountField(IDataIn in)
+    public int readCountField(IDataIn in, int count)
             throws IOException {
-        switch (headerSize) {
+        switch (countFieldBytes) {
+        case 0:
+            return count;
         case 1:
             return in.readByte();
         case 2:
@@ -79,7 +127,7 @@ public enum StringLengthType {
 
     public void writeCountField(IDataOut out, int count)
             throws IOException {
-        switch (headerSize) {
+        switch (countFieldBytes) {
         case 1:
             out.writeByte(count);
             break;
@@ -90,6 +138,35 @@ public enum StringLengthType {
             out.writeDword(count);
             break;
         }
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(//
+                countByByte, //
+                countFieldBytes, //
+                hasTerminator, //
+                terminator);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        StringLengthType other = (StringLengthType) obj;
+        return countByByte == other.countByByte //
+                && countFieldBytes == other.countFieldBytes //
+                && hasTerminator == other.hasTerminator //
+                && terminator == other.terminator;
     }
 
 }

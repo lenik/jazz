@@ -1,6 +1,7 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
@@ -10,14 +11,14 @@ import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.data.struct.IOctetStreamForm;
 import net.bodz.bas.data.struct.StringBin;
-import net.bodz.bas.io.LengthType;
-import net.bodz.uni.shelj.codegen.java.LoadExpr;
+import net.bodz.bas.data.struct.StringBinUtils;
+import net.bodz.bas.io.StringLengthType;
 
 public class OctetStreamInImpl
         extends FieldsRelatedSourceBuilder {
 
-    LengthType defaultLengthType = LengthType.terminatedByNul;
-    Charset defaultCharset = Charsets.UTF8;
+    StringLengthType defaultLengthType = StringLengthType.terminatedByNull;
+    Charset defaultCharset = Charsets.UTF_8;
 
     @Override
     public void build(JavaSourceWriter out)
@@ -26,148 +27,184 @@ public class OctetStreamInImpl
         out.println("public void readObject(IDataIn in)");
         out.enterln("        throws IOException, ParseException {");
 
+        int i = 0;
         for (Field field : fields) {
-            loadExpr(out, field, field.getName());
+            loadField(out, i++, field);
         }
 
         out.leaveln("}");
     }
 
-    Object loadExpr(JavaSourceWriter out, Field field, String var) {
+    void loadField(JavaSourceWriter out, int index, Field field) {
         Class<?> type = field.getType();
-        if (IOctetStreamForm.class.isAssignableFrom(type))
-            return printf(out, "%s.readObject(in);\n", var);
+        String var = field.getName();
+        if (IOctetStreamForm.class.isAssignableFrom(type)) {
+            out.printf("%s.readObject(in);\n", var);
+            return;
+        }
 
-        if (type.isArray())
-            return loadArrayExpr(out, field, var);
+        if (type.isArray()) {
+            loadArrayField(out, index, field);
+            return;
+        }
+
         int typeId = TypeKind.getTypeId(type);
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            return printf(out, "%s = in.readByte();\n", var);
+            out.printf("this.%s = in.readByte();\n", var);
+            return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            return printf(out, "%s = in.readWord();\n", var);
+            out.printf("this.%s = in.readWord();\n", var);
+            return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            return printf(out, "%s = in.readDword();\n", var);
+            out.printf("this.%s = in.readDword();\n", var);
+            return;
 
         case TypeId._long:
         case TypeId.LONG:
-            return printf(out, "%s = in.readQword();\n", var);
+            out.printf("this.%s = in.readQword();\n", var);
+            return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            return printf(out, "%s = in.readFloat();\n", var);
+            out.printf("this.%s = in.readFloat();\n", var);
+            return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            return printf(out, "%s = in.readDouble();\n", var);
+            out.printf("this.%s = in.readDouble();\n", var);
+            return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            return printf(out, "%s = in.readBool();\n", var);
+            out.printf("this.%s = in.readBool();\n", var);
+            return;
 
         case TypeId._char:
         case TypeId.CHARACTER:
-            return printf(out, "%s = in.readUtf8Char();\n", var);
+            out.printf("this.%s = in.readUtf8Char();\n", var);
+            return;
 
         case TypeId.STRING:
             break;
         }
-
-        LengthType lengthType = defaultLengthType;
-        int length = -1;
-        Charset charset = defaultCharset;
-        StringBin aStringBin = field.getAnnotation(StringBin.class);
-        if (aStringBin != null) {
-            lengthType = aStringBin.lenType();
-            length = aStringBin.len();
-            charset = Charset.forName(aStringBin.encoding());
-        }
-        String lengthTypeExpr = "LengthType." + lengthType.name();
-        String charsetId = charset.name().replace('-', '_');
-
-        String stringExpr;
-        if (lengthType.fixedSize)
-            stringExpr = String.format("in.readChars(%d, Charsets.%s)", //
-                    length, charsetId);
-        else
-            stringExpr = String.format("in.readString(%s, Charsets.%s)", //
-                    lengthTypeExpr, charsetId);
-        if (typeId == TypeId.STRING)
-            return LoadExpr.simple(stringExpr);
-
-        String parseExpr = String.format("parse%s(%s)", type.getSimpleName(), stringExpr);
-        return LoadExpr.simple(parseExpr);
+        loadStringField(out, field, type, var);
     }
 
-    Object loadArrayExpr(JavaSourceWriter out, Field field, String var) {
-        Class<?> type = field.getType().getComponentType();
-        int typeId = TypeKind.getTypeId(type);
+    void loadArrayField(JavaSourceWriter out, int index, Field field) {
+        Class<?> type1 = field.getType().getComponentType();
+        String fieldName = field.getName();
+
+        String fn = null;
+        int typeId = TypeKind.getTypeId(type1);
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            return printf(out, "%s = in.readBytes();\n", var);
+            fn = "Bytes";
+            break;
 
         case TypeId._short:
         case TypeId.SHORT:
-            return printf(out, "%s = in.readWords();\n", var);
+            fn = "Words";
+            break;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            return printf(out, "%s = in.readDwords();\n", var);
+            fn = "Dwords";
+            break;
 
         case TypeId._long:
         case TypeId.LONG:
-            return printf(out, "%s = in.readQwords();\n", var);
+            fn = "Qwords";
+            break;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            return printf(out, "%s = in.readFloats();\n", var);
+            fn = "Floats";
+            break;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            return printf(out, "%s = in.readDoubles();\n", var);
+            fn = "Doubles";
+            break;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            return printf(out, "%s = in.readBools();\n", var);
-
-        case TypeId._char:
-        case TypeId.CHARACTER:
-            return printf(out, "%s = in.readUtf8Chars();\n", var);
-
-        case TypeId.STRING:
+            fn = "Bools";
             break;
+
+//        case TypeId._char:
+//        case TypeId.CHARACTER:
+//            fn = "Chars";
+//            break;
         }
 
-        LengthType lengthType = defaultLengthType;
-        int length = -1;
-        Charset charset = defaultCharset;
+        if (index != 0)
+            out.println();
+
+        String countVar = fieldName + "Count";
+        out.printf("int %s = in.readDword();\n");
+        out.printf("this.%s = new %s[%s];\n", fieldName, type1.getSimpleName(), countVar);
+        out.printf("for (int i = 0; i < %s; i++)\n", countVar);
+        out.print("    ");
+        loadStringField(out, field, type1, fieldName + "[i]");
+    }
+
+    void loadStringField(JavaSourceWriter out, AnnotatedElement field, Class<?> type, String var) {
+        StringLengthType lengthType = defaultLengthType;
+        Charset charset = null;
         StringBin aStringBin = field.getAnnotation(StringBin.class);
         if (aStringBin != null) {
-            lengthType = aStringBin.lenType();
-            length = aStringBin.len();
-            charset = Charset.forName(aStringBin.encoding());
+            lengthType = StringBinUtils.toStringLengthType(aStringBin);
+            if (!aStringBin.encoding().isEmpty())
+                charset = Charset.forName(aStringBin.encoding());
         }
-        String lengthTypeExpr = "LengthType." + lengthType.name();
-        String charsetId = charset.name().replace('-', '_');
 
-        String stringExpr;
-        if (lengthType.fixedSize)
-            stringExpr = String.format("in.readChars(%d, Charsets.%s)", //
-                    length, charsetId);
-        else
-            stringExpr = String.format("in.readString(%s, Charsets.%s)", //
-                    lengthTypeExpr, charsetId);
-        if (typeId == TypeId.STRING)
-            return LoadExpr.simple(stringExpr);
+        StringBuilder expr = new StringBuilder();
+        {
+            if (lengthType.hasCountField) {
+                expr.append("in.readString(");
+                expr.append(StringLengthType.class.getSimpleName());
+                expr.append(".");
+                expr.append(lengthType.name);
+                expr.append(", 0");
+            } else {
+                int providedCount = StringBinUtils.getProvidedCount(aStringBin);
+                expr.append("in.readString(");
+                if (lengthType.countByByte) {
+                    expr.append(StringLengthType.class.getSimpleName());
+                    expr.append(".");
+                    expr.append(lengthType.name);
+                }
+                expr.append(", ");
+                expr.append(providedCount);
+            }
+            if (charset != null) {
+                String refName = Charsets.getDeclaredName(charset);
+                expr.append(", ");
+                if (refName == null)
+                    expr.append('"' + charset.name() + '"');
+                else
+                    expr.append(refName);
+            }
+            expr.append(")");
+        }
 
-        String parseExpr = String.format("parse%s(%s)", type.getSimpleName(), stringExpr);
-        return LoadExpr.simple(parseExpr);
+        out.print("this.");
+        out.print(var);
+        out.print(" = ");
+        if (type != String.class) {
+            String parseMethodName = "parse" + NameConventions.getMethodName(type);
+            out.printf("%s(%s)", parseMethodName, expr);
+        } else {
+            out.print(expr);
+        }
+        out.println();
     }
 
 }

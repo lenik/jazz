@@ -1,6 +1,7 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
@@ -10,13 +11,14 @@ import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.data.struct.IOctetStreamForm;
 import net.bodz.bas.data.struct.StringBin;
-import net.bodz.bas.io.LengthType;
+import net.bodz.bas.data.struct.StringBinUtils;
+import net.bodz.bas.io.StringLengthType;
 
 public class OctetStreamOutImpl
         extends FieldsRelatedSourceBuilder {
 
-    LengthType defaultLengthType = LengthType.terminatedByNul;
-    Charset defaultCharset = Charsets.UTF8;
+    StringLengthType defaultLengthType = StringLengthType.terminatedByNull;
+    Charset defaultCharset = Charsets.UTF_8;
 
     @Override
     public void build(JavaSourceWriter out)
@@ -25,50 +27,63 @@ public class OctetStreamOutImpl
         out.println("public void writeObject(IDataOut in)");
         out.enterln("        throws IOException {");
 
+        int i = 0;
         for (Field field : fields) {
-            writeFormat(out, field, field.getName());
+            saveField(out, field, i++);
         }
 
         out.leaveln("}");
     }
 
-    Object writeFormat(JavaSourceWriter out, Field field, String var) {
+    void saveField(JavaSourceWriter out, Field field, int index) {
         Class<?> type = field.getType();
-        if (type.isArray())
-            return writeArrayFormat(out, field, var);
+        String fieldName = field.getName();
+        if (type.isArray()) {
+            saveArrayField(out, field, index);
+            return;
+        }
 
-        if (IOctetStreamForm.class.isAssignableFrom(type))
-            return printf(out, "%s.writeObject(out);\n", var);
+        if (IOctetStreamForm.class.isAssignableFrom(type)) {
+            out.printf("%s.writeObject(out);\n", fieldName);
+            return;
+        }
 
         int typeId = TypeKind.getTypeId(type);
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            return printf(out, "out.write(%s);\n", var);
+            out.printf("out.write(%s);\n", fieldName);
+            return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            return printf(out, "out.writeWord(%s);\n", var);
+            out.printf("out.writeWord(%s);\n", fieldName);
+            return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            return printf(out, "out.writeDword(%s);\n", var);
+            out.printf("out.writeDword(%s);\n", fieldName);
+            return;
 
         case TypeId._long:
         case TypeId.LONG:
-            return printf(out, "out.writeQword(%s);\n", var);
+            out.printf("out.writeQword(%s);\n", fieldName);
+            return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            return printf(out, "out.writeFloat(%s);\n", var);
+            out.printf("out.writeFloat(%s);\n", fieldName);
+            return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            return printf(out, "out.writeDouble(%s);\n", var);
+            out.printf("out.writeDouble(%s);\n", fieldName);
+            return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            return printf(out, "out.writeBool(%s);\n", var);
+            out.printf("out.writeBool(%s);\n", fieldName);
+            return;
 
         case TypeId._char:
         case TypeId.CHARACTER:
@@ -76,157 +91,162 @@ public class OctetStreamOutImpl
             break;
         }
 
-        LengthType lengthType = defaultLengthType;
-        // int length = -1;
-        Charset charset = defaultCharset;
-        StringBin aStringBin = field.getAnnotation(StringBin.class);
-        if (aStringBin != null) {
-            lengthType = aStringBin.lenType();
-            // length = aStringBin.len();
-            charset = Charset.forName(aStringBin.encoding());
-        }
-        int unicode = 0;
-        switch (charset.name().toLowerCase()) {
-        case "utf8":
-        case "utf-8":
-            unicode = 8;
-            charset = Charsets.UTF8;
-            break;
-        case "utf16":
-        case "utf16le":
-        case "utf16be":
-        case "utf-16":
-        case "utf-16le":
-        case "utf-16be":
-            unicode = 16;
+        // saveStringField
+    }
+
+    void saveArrayField(JavaSourceWriter out, Field field, int index) {
+        Class<?> type1 = field.getType().getComponentType();
+        String fieldName = field.getName();
+        int typeId = TypeKind.getTypeId(type1);
+        switch (typeId) {
+        case TypeId._byte:
+        case TypeId.BYTE:
+            out.printf("out.write(%s);\n", fieldName);
+            return;
+
+        case TypeId._short:
+        case TypeId.SHORT:
+            out.printf("out.writeWords(%s);\n", fieldName);
+            return;
+
+        case TypeId._int:
+        case TypeId.INTEGER:
+            out.printf("out.writeDwords(%s);\n", fieldName);
+            return;
+
+        case TypeId._long:
+        case TypeId.LONG:
+            out.printf("out.writeQwords(%s);\n", fieldName);
+            return;
+
+        case TypeId._float:
+        case TypeId.FLOAT:
+            out.printf("out.writeFloats(%s);\n", fieldName);
+            return;
+
+        case TypeId._double:
+        case TypeId.DOUBLE:
+            out.printf("out.writeDoubles(%s);\n", fieldName);
+            return;
+
+        case TypeId._boolean:
+        case TypeId.BOOLEAN:
+            out.printf("out.writeBools(%s);\n", fieldName);
+            return;
+
+        case TypeId._char:
+        case TypeId.CHARACTER:
+        case TypeId.STRING:
             break;
         }
 
-        String lengthTypeExpr = "LengthType." + lengthType.name();
-        String charsetId = charset.name().replace('-', '_');
+        StringLengthType lengthType = defaultLengthType;
+        Charset charset = defaultCharset;
+        StringBin aStringBin = field.getAnnotation(StringBin.class);
+        if (aStringBin != null) {
+            lengthType = StringBinUtils.toStringLengthType(aStringBin);
+            if (!aStringBin.encoding().isEmpty())
+                charset = Charset.forName(aStringBin.encoding());
+        }
+        int unicode = 0;
+        switch (charset.name()) {
+        case "UTF-8":
+            unicode = 8;
+            charset = Charsets.UTF_8;
+            break;
+        case "UTF-16":
+            unicode = 16;
+            break;
+        }
 
         switch (typeId) {
         case TypeId._char:
         case TypeId.CHARACTER:
             switch (unicode) {
             case 8:
-                return printf(out, "out.writeUtf8Char(%s);\n", var);
+                out.printf("out.writeUtf8Chars(%s);\n", fieldName);
+                return;
             case 16:
-                return printf(out, "out.writeChar(%s);\n", var);
+                out.printf("out.writeChars(%s);\n", fieldName);
+                return;
             }
-            return printf(out, "out.writeChar(%s, Charsets." + charsetId + ");\n", var);
+            String charsetId = charset.name().replace('-', '_');
+            out.printf("out.writeChars(%s, Charsets." + charsetId + ");\n", fieldName);
+            return;
         }
 
-        if (lengthType.fixedSize) {
+        out.printf("out.writeDword(%s.length);");
+        out.printf("for (" + type1 + " a: " + fieldName + ") {");
+        out.enter();
+        saveStringField(out, field, type1, fieldName + "[i]", 0);
+        out.leave();
+        out.println("}");
+    }
+
+    void saveStringField(JavaSourceWriter out, AnnotatedElement field, Class<?> type, String var, int index) {
+        StringLengthType lengthType = StringBinUtils.defaultStringLengthType;
+
+        Charset charset = null;
+        StringBin aStringBin = field.getAnnotation(StringBin.class);
+        if (aStringBin != null) {
+            lengthType = StringBinUtils.toStringLengthType(aStringBin);
+            String encoding = aStringBin.encoding();
+            if (!encoding.isEmpty())
+                charset = Charset.forName(encoding);
+        }
+
+        int unicode = 0;
+        if (charset != null) {
+            String name = charset.name();
+            if (name.equals("UTF-8"))
+                unicode = 8;
+            else if (name.startsWith("UTF-16"))
+                unicode = 16;
+            else if (name.startsWith("UTF-32"))
+                unicode = 32;
+        }
+
+        String charsetId = charset == null ? null : charset.name().replace('-', '_');
+        int typeId = TypeKind.getTypeId(type);
+        switch (typeId) {
+        case TypeId._char:
+        case TypeId.CHARACTER:
             switch (unicode) {
             case 8:
-                return printf(out, "out.writeUtf8Chars(%s);\n", var);
+                out.printf("out.writeUtf8Char(%s);\n", var);
+                return;
             case 16:
-                return printf(out, "out.writeChars(%s);\n", var);
+                out.printf("out.writeChar(%s);\n", var);
+                return;
             }
-            return printf(out, "out.writeChars(%s, Charsets." + charsetId + ");\n", var);
+            out.printf("out.writeChar(%s, Charsets." + charsetId + ");\n", var);
+            return;
+        }
+
+        String lengthTypeConst = StringLengthType.class.getSimpleName() + "." + lengthType.name;
+        if (lengthType.hasCountField) {
+            switch (unicode) {
+            case 8:
+                out.printf("out.writeUtf8String(" + lengthTypeConst + ", %s);\n", var);
+                return;
+            case 16:
+                out.printf("out.writeString(" + lengthTypeConst + ", %s);\n", var);
+                return;
+            }
+            out.printf("out.writeString(" + lengthTypeConst + ", %s, Charsets." + charsetId + ");\n", var);
+            return;
         } else {
             switch (unicode) {
             case 8:
-                return printf(out, "out.writeUtf8String(" + lengthTypeExpr + ", %s);\n", var);
+                out.printf("out.writeUtf8Chars(%s);\n", var);
+                return;
             case 16:
-                return printf(out, "out.writeString(" + lengthTypeExpr + ", %s);\n", var);
+                out.printf("out.writeChars(%s);\n", var);
+                return;
             }
-            return printf(out, "out.writeString(" + lengthTypeExpr + ", %s, Charsets." + charsetId + ");\n", var);
+            out.printf("out.writeChars(%s, Charsets." + charsetId + ");\n", var);
+            return;
         }
-    }
-
-    Object writeArrayFormat(JavaSourceWriter out, Field field, String var) {
-        Class<?> type = field.getType().getComponentType();
-        int typeId = TypeKind.getTypeId(type);
-        switch (typeId) {
-        case TypeId._byte:
-        case TypeId.BYTE:
-            return printf(out, "out.write(%s);\n", var);
-
-        case TypeId._short:
-        case TypeId.SHORT:
-            return printf(out, "out.writeWords(%s);\n", var);
-
-        case TypeId._int:
-        case TypeId.INTEGER:
-            return printf(out, "out.writeDwords(%s);\n", var);
-
-        case TypeId._long:
-        case TypeId.LONG:
-            return printf(out, "out.writeQwords(%s);\n", var);
-
-        case TypeId._float:
-        case TypeId.FLOAT:
-            return printf(out, "out.writeFloats(%s);\n", var);
-
-        case TypeId._double:
-        case TypeId.DOUBLE:
-            return printf(out, "out.writeDoubles(%s);\n", var);
-
-        case TypeId._boolean:
-        case TypeId.BOOLEAN:
-            return printf(out, "out.writeBools(%s);\n", var);
-
-        case TypeId._char:
-        case TypeId.CHARACTER:
-        case TypeId.STRING:
-            break;
-        }
-
-        LengthType lengthType = defaultLengthType;
-        Charset charset = defaultCharset;
-        StringBin aStringBin = field.getAnnotation(StringBin.class);
-        if (aStringBin != null) {
-            lengthType = aStringBin.lenType();
-            charset = Charset.forName(aStringBin.encoding());
-        }
-        int unicode = 0;
-        switch (charset.name().toLowerCase()) {
-        case "utf8":
-        case "utf-8":
-            unicode = 8;
-            charset = Charsets.UTF8;
-            break;
-        case "utf16":
-        case "utf16le":
-        case "utf16be":
-        case "utf-16":
-        case "utf-16le":
-        case "utf-16be":
-            unicode = 16;
-            break;
-        }
-
-        String lengthTypeExpr = "LengthType." + lengthType.name();
-        String charsetId = charset.name().replace('-', '_');
-
-        switch (typeId) {
-        case TypeId._char:
-        case TypeId.CHARACTER:
-            switch (unicode) {
-            case 8:
-                return printf(out, "out.writeUtf8Chars(%s);\n", var);
-            case 16:
-                return printf(out, "out.writeChars(%s);\n", var);
-            }
-            return printf(out, "out.writeChars(%s, Charsets." + charsetId + ");\n", var);
-        }
-
-        println(out, "out.writeDword(%s.length);");
-        println(out, "for (" + type + " a: " + var + ") {");
-        switch (unicode) {
-        case 8:
-            println(out, "    out.writeUtf8String(" + lengthTypeExpr + ", a)");
-            break;
-        case 16:
-            println(out, "    out.writeString(" + lengthTypeExpr + ", a)");
-            break;
-        default:
-            println(out, "    out.writeString(" + lengthTypeExpr + ", a, Charsets." + charsetId + ")");
-        }
-        println(out, "}");
-        return this;
     }
 
 }

@@ -78,7 +78,7 @@ class _WriteUtfStringImpl {
 
     public void write(IDataOut out)
             throws IOException {
-        boolean _long = lengthType.headerSize == 4;
+        boolean _long = lengthType.countFieldBytes == 4;
         boolean lengthPrefix = lengthType.countByChar;
         boolean sizePrefix = lengthType.countByByte;
         boolean sameEndian = bigEndian == out.isBigEndian();

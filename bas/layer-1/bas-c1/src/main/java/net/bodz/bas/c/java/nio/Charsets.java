@@ -8,42 +8,80 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.err.IllegalArgumentTypeException;
 import net.bodz.bas.err.ParseException;
 
 public class Charsets {
 
+    private static Set<String> declaredCharsetNames = new HashSet<>();
+
     public static Charset DEFAULT = Charset.defaultCharset();
 
-    public static final Charset US_ASCII = get("US-ASCII", true);
-    public static final Charset ISO_8859_1 = get("ISO-8859-1", true);
-    public static final Charset UTF_8 = get("UTF-8", true);
-    public static final Charset UTF_16 = get("UTF-16", true);
-    public static final Charset UTF_16LE = get("UTF-16LE", true);
-    public static final Charset UTF_16BE = get("UTF-16BE", true);
-    public static final Charset UTF_32 = get("UTF-16", true);
-    public static final Charset UTF_32LE = get("UTF-32LE", true);
-    public static final Charset UTF_32BE = get("UTF-32BE", true);
+    public static final Charset US_ASCII = declare("US-ASCII", true);
+    public static final Charset ISO_8859_1 = declare("ISO-8859-1", true);
+    public static final Charset UTF_8 = declare("UTF-8", true);
+    public static final Charset UTF_16 = declare("UTF-16", true);
+    public static final Charset UTF_16LE = declare("UTF-16LE", true);
+    public static final Charset UTF_16BE = declare("UTF-16BE", true);
+    public static final Charset UTF_32 = declare("UTF-16", true);
+    public static final Charset UTF_32LE = declare("UTF-32LE", true);
+    public static final Charset UTF_32BE = declare("UTF-32BE", true);
 
-    public static final Charset BIG5 = get("Big5", false);
-    public static final Charset EUC_KR = get("EUC-KR", false);
-    public static final Charset GB2312 = get("GB2312", false);
-    public static final Charset GB18030 = get("GB18030", false);
-    public static final Charset GBK = get("GBK", false);
-    public static final Charset SHIFT_JIS = get("Shift_JIS", false);
+    public static final Charset BIG5 = declare("Big5", false);
+    public static final Charset EUC_KR = declare("EUC-KR", false);
+    public static final Charset GB2312 = declare("GB2312", false);
+    public static final Charset GB18030 = declare("GB18030", false);
+    public static final Charset GBK = declare("GBK", false);
+    public static final Charset SHIFT_JIS = declare("Shift_JIS", false);
 
-    static Charset get(String name, boolean required) {
+    static Charset declare(String name, boolean required) {
+        Charset charset;
         if (required) {
-            return Charset.forName(name);
+            charset = Charset.forName(name);
         } else {
             try {
-                return Charset.forName(name);
+                charset = Charset.forName(name);
             } catch (UnsupportedCharsetException e) {
                 return null;
             }
         }
+        String canonicalName = charset.name();
+        declaredCharsetNames.add(canonicalName);
+        return charset;
+    }
+
+    public static String getDeclaredName(String charsetName) {
+        return getDeclaredName(charsetName, false);
+    }
+
+    public static String getDeclaredName(Charset charset) {
+        return getDeclaredName(charset, false);
+    }
+
+    public static String getDeclaredName(String charsetName, boolean includeClassName) {
+        Charset charset;
+        try {
+            charset = Charset.forName(charsetName);
+        } catch (UnsupportedCharsetException e) {
+            return null;
+        }
+        return getDeclaredName(charset, includeClassName);
+    }
+
+    public static String getDeclaredName(Charset charset, boolean includeClassName) {
+        String canonicalName = charset.name();
+        if (!declaredCharsetNames.contains(canonicalName))
+            return null; // not declared.
+
+        String fieldName = canonicalName.replace('-', '_');
+        if (includeClassName)
+            return Charsets.class.getSimpleName() + "." + fieldName;
+        else
+            return fieldName;
     }
 
     public static String getCanonicalName(String charsetName) {

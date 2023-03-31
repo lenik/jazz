@@ -8,22 +8,22 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StringBin {
+public @interface ListBin {
 
     /**
-     * fixed string length in decoded chars.
+     * fixed list length in count of items.
      */
-    int length() default -1;
+    int nitem() default -1;
 
     /**
-     * fixed string size in encoded bytes.
+     * fixed list length in count of bytes.
      */
     int size() default -1;
 
     /**
      * determined by a length field, the field takes this number of bits.
      */
-    int lengthBits() default 0;
+    int nitemBits() default 0;
 
     /**
      * determined by a size field, the field takes this number of bits.
@@ -31,10 +31,8 @@ public @interface StringBin {
     int sizeBits() default 0;
 
     /**
-     * terminator char
+     * terminator byte
      */
     int term() default -1;
-
-    String encoding() default "";
 
 }
