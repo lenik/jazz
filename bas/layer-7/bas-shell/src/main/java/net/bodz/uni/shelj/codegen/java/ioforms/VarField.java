@@ -97,4 +97,9 @@ public class VarField
             return annotations.getDeclaredAnnotations();
     }
 
+    @Override
+    public String toString() {
+        return name + ": " + type.getName();
+    }
+
 }

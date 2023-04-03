@@ -169,7 +169,8 @@ public class OctetStreamInImpl
             }
         }
 
-        if (index != 0)
+        boolean multiLine = lenType.hasCountField || fn == null;
+        if (multiLine && index != 0)
             out.println();
 
         String countVar = null;
@@ -193,10 +194,10 @@ public class OctetStreamInImpl
                 out.printf("%s = new %s[%s];\n", //
                         field.name, type1.getSimpleName(), nExpr);
 
-            boolean multiLine = type1.isPrimitive() || type1 == String.class;
+            boolean itemMultiLine = type1.isPrimitive() || type1 == String.class;
 
             out.printf("for (int i = 0; i < %s; i++)", nExpr);
-            if (multiLine)
+            if (itemMultiLine)
                 out.print(" {");
             out.enterln("");
 
@@ -204,7 +205,7 @@ public class OctetStreamInImpl
             loadField(out, 0, itemField);
 
             out.leave();
-            if (multiLine)
+            if (itemMultiLine)
                 out.println("}");
         }
     }
