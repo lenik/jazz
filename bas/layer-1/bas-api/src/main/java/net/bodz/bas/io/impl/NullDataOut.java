@@ -23,6 +23,15 @@ public class NullDataOut
     }
 
     @Override
+    public Charset getCharset() {
+        return null;
+    }
+
+    @Override
+    public void setCharset(Charset charset) {
+    }
+
+    @Override
     public void flush()
             throws IOException {
     }
@@ -171,35 +180,55 @@ public class NullDataOut
     }
 
     @Override
-    public void writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len)
-            throws IOException {
-    }
-
-    @Override
-    public int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf, int off, int len)
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
         return 0;
     }
 
     @Override
-    public int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
+    public int writeUtf8CharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
         return 0;
     }
 
     @Override
-    public void writeFixedSizeString(int fixedSize, char padding, String str)
-            throws IOException {
-    }
-
-    @Override
-    public int writeFixedSizeUtf8String(int fixedSize, char padding, String str)
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
             throws IOException {
         return 0;
     }
 
     @Override
-    public int writeFixedSizeString(int fixedSize, char padding, String str, Charset charset)
+    public int writeStringOfLength(int maxBytes, char padding, String str)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeUtf8StringOfLength(int maxBytes, char padding, String str)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeStringOfLength(int maxBytes, char padding, String str, Charset charset)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeUtf8StringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        return 0;
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str, Charset charset)
             throws IOException {
         return 0;
     }

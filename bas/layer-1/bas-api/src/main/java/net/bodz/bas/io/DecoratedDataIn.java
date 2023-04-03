@@ -49,6 +49,16 @@ public class DecoratedDataIn
     }
 
     @Override
+    public Charset getCharset() {
+        return getWrapped().getCharset();
+    }
+
+    @Override
+    public void setCharset(Charset charset) {
+        getWrapped().setCharset(charset);
+    }
+
+    @Override
     public int read(byte[] buf)
             throws IOException {
         return getWrapped().read(buf);
@@ -109,8 +119,14 @@ public class DecoratedDataIn
     }
 
     @Override
-    public char readChar()
+    public char readWChar()
             throws IOException {
+        return getWrapped().readWChar();
+    }
+
+    @Override
+    public char readChar()
+            throws IOException, ParseException {
         return getWrapped().readChar();
     }
 
@@ -182,7 +198,7 @@ public class DecoratedDataIn
 
     @Override
     public int readChars(char[] buf, int off, int len)
-            throws IOException {
+            throws IOException, ParseException {
         return getWrapped().readChars(buf, off, len);
     }
 
@@ -200,7 +216,7 @@ public class DecoratedDataIn
 
     @Override
     public String readString(StringLengthType lengthType, int providedCount)
-            throws IOException {
+            throws IOException, ParseException {
         return getWrapped().readString(lengthType, providedCount);
     }
 

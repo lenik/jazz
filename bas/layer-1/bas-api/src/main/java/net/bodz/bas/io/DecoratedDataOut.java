@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.model.AbstractDecorator;
 import net.bodz.bas.t.model.IWrapper;
 
@@ -58,6 +57,16 @@ public class DecoratedDataOut
     @Override
     public boolean isBigEndian() {
         return getWrapped().isBigEndian();
+    }
+
+    @Override
+    public Charset getCharset() {
+        return getWrapped().getCharset();
+    }
+
+    @Override
+    public void setCharset(Charset charset) {
+        getWrapped().setCharset(charset);
     }
 
     @Override
@@ -199,39 +208,57 @@ public class DecoratedDataOut
     }
 
     @Override
-    public void writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len)
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
-        getWrapped().writeFixedSizeChars(fixedSize, padding, buf, off, len);
+        return getWrapped().writeCharsOfSize(fixedSize, padding, buf, off, len);
     }
 
     @Override
-    public int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf, int off, int len)
+    public int writeUtf8CharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
-        return getWrapped().writeFixedSizeUtf8Chars(fixedSize, padding, buf, off, len);
+        return getWrapped().writeUtf8CharsOfSize(fixedSize, padding, buf, off, len);
     }
 
     @Override
-    public int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
-            throws IOException, ParseException {
-        return getWrapped().writeFixedSizeChars(fixedSize, padding, buf, off, len, charset);
-    }
-
-    @Override
-    public void writeFixedSizeString(int fixedSize, char padding, String str)
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
             throws IOException {
-        getWrapped().writeFixedSizeString(fixedSize, padding, str);
+        return getWrapped().writeCharsOfSize(fixedSize, padding, buf, off, len, charset);
     }
 
     @Override
-    public int writeFixedSizeUtf8String(int fixedSize, char padding, String str)
+    public int writeUtf8StringOfLength(int fixedLen, char padding, String str)
             throws IOException {
-        return getWrapped().writeFixedSizeUtf8String(fixedSize, padding, str);
+        return getWrapped().writeUtf8StringOfLength(fixedLen, padding, str);
     }
 
     @Override
-    public int writeFixedSizeString(int fixedSize, char padding, String str, Charset charset)
-            throws IOException, ParseException {
-        return getWrapped().writeFixedSizeString(fixedSize, padding, str, charset);
+    public int writeStringOfLength(int fixedLen, char padding, String str)
+            throws IOException {
+        return getWrapped().writeStringOfLength(fixedLen, padding, str);
+    }
+
+    @Override
+    public int writeStringOfLength(int fixedLen, char padding, String str, Charset charset)
+            throws IOException {
+        return getWrapped().writeStringOfLength(fixedLen, padding, str, charset);
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        return getWrapped().writeStringOfSize(fixedSize, padding, str);
+    }
+
+    @Override
+    public int writeUtf8StringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        return getWrapped().writeUtf8StringOfSize(fixedSize, padding, str);
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str, Charset charset)
+            throws IOException {
+        return getWrapped().writeStringOfSize(fixedSize, padding, str, charset);
     }
 
 }

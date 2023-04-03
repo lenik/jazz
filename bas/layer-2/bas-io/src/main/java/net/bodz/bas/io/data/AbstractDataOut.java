@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
 import net.bodz.bas.c.java.nio.Charsets;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.AbstractByteOut;
 import net.bodz.bas.io.IDataOut;
 import net.bodz.bas.io.StringLengthType;
@@ -16,6 +15,18 @@ public abstract class AbstractDataOut
             IDataOut {
 
     static final int FIX_PADDING = 0xFF;
+
+    Charset charset;
+
+    @Override
+    public Charset getCharset() {
+        return charset;
+    }
+
+    @Override
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
 
     @Override
     public void writeFloat(float f)
@@ -38,7 +49,11 @@ public abstract class AbstractDataOut
     @Override
     public void writeChar(char ch)
             throws IOException {
-        writeWord(ch);
+        Charset charset = getCharset();
+        if (charset == null)
+            writeChar(ch);
+        else
+            writeChar(ch, getCharset());
     }
 
     @Override
@@ -122,6 +137,10 @@ public abstract class AbstractDataOut
     @Override
     public int writeChars(char[] buf, int off, int len)
             throws IOException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return writeChars(buf, off, len, charset);
+
         for (int i = 0; i < len; i++)
             writeChar(buf[off++]);
         return len * 2;
@@ -150,6 +169,12 @@ public abstract class AbstractDataOut
     @Override
     public void writeString(StringLengthType lengthType, String str)
             throws IOException {
+        Charset charset = getCharset();
+        if (charset != null) {
+            writeString(lengthType, str, charset);
+            return;
+        }
+
         int len = str.length();
 
         if (lengthType.countByChar)
@@ -207,11 +232,15 @@ public abstract class AbstractDataOut
             writeChar(lengthType.terminator, charset);
     }
 
-    // writeFixedSizeChars
+    // writeCharsOfSize
 
     @Override
-    public void writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len)
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return writeCharsOfSize(fixedSize, padding, buf, off, len, charset);
+
         int nByte = len * 2;
         if (nByte > fixedSize)
             nByte = fixedSize;
@@ -228,10 +257,12 @@ public abstract class AbstractDataOut
         }
         if (extraByte)
             writeByte(FIX_PADDING);
+
+        return nChar * 2;
     }
 
     @Override
-    public int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf, int off, int len)
+    public int writeUtf8CharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException {
         int maxBytesPerChar = 3;
         int maxCharsToWrite;
@@ -270,8 +301,8 @@ public abstract class AbstractDataOut
     }
 
     @Override
-    public int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
-            throws IOException, ParseException {
+    public int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
+            throws IOException {
         // CharEncoder ce = new CharEncoder(charset, this);
         CharsetEncoder encoder = charset.newEncoder();
         float maxBytesPerChar = encoder.maxBytesPerChar();
@@ -314,24 +345,64 @@ public abstract class AbstractDataOut
     }
 
     @Override
-    public void writeFixedSizeString(int fixedSize, char padding, String str)
+    public int writeStringOfLength(int fixedLen, char padding, String str)
             throws IOException {
-        char[] chars = str.toCharArray();
-        writeFixedSizeChars(fixedSize, padding, chars);
+        Charset charset = getCharset();
+        if (charset != null)
+            return writeStringOfLength(fixedLen, padding, str, charset);
+
+        int maxChars = Math.min(fixedLen, str.length());
+        int ret = writeChars(str.toCharArray(), 0, maxChars);
+        for (int i = maxChars; i < fixedLen; i++)
+            writeChar(padding);
+        return ret;
     }
 
     @Override
-    public int writeFixedSizeUtf8String(int fixedSize, char padding, String str)
+    public int writeUtf8StringOfLength(int fixedLen, char padding, String str)
             throws IOException {
-        char[] chars = str.toCharArray();
-        return writeFixedSizeUtf8Chars(fixedSize, padding, chars);
+        int maxChars = Math.min(fixedLen, str.length());
+        int nBytes = writeUtf8Chars(str.toCharArray(), 0, maxChars);
+        for (int i = maxChars; i < fixedLen; i++)
+            nBytes += writeUtf8Char(padding);
+        return nBytes;
     }
 
     @Override
-    public int writeFixedSizeString(int fixedSize, char padding, String str, Charset charset)
-            throws IOException, ParseException {
+    public int writeStringOfLength(int fixedLen, char padding, String str, Charset charset)
+            throws IOException {
+        int maxChars = Math.min(fixedLen, str.length());
+        int nBytes = writeChars(str.toCharArray(), 0, maxChars, charset);
+        byte[] paddingBytes = Charsets.encodeChar(charset, padding);
+        for (int i = maxChars; i < fixedLen; i++)
+            write(paddingBytes);
+        nBytes += paddingBytes.length * (fixedLen - maxChars);
+        return nBytes;
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return writeStringOfSize(fixedSize, padding, str, charset);
+
         char[] chars = str.toCharArray();
-        return writeFixedSizeChars(fixedSize, padding, chars, charset);
+        return writeCharsOfSize(fixedSize, padding, chars);
+    }
+
+    @Override
+    public int writeUtf8StringOfSize(int fixedSize, char padding, String str)
+            throws IOException {
+        char[] chars = str.toCharArray();
+        return writeUtf8CharsOfSize(fixedSize, padding, chars);
+    }
+
+    @Override
+    public int writeStringOfSize(int fixedSize, char padding, String str, Charset charset)
+            throws IOException {
+        char[] chars = str.toCharArray();
+        return writeCharsOfSize(fixedSize, padding, chars, charset);
     }
 
 }

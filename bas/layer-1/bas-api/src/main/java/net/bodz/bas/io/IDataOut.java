@@ -3,7 +3,6 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.impl.NullDataOut;
 
 /**
@@ -11,7 +10,8 @@ import net.bodz.bas.io.impl.NullDataOut;
  */
 public interface IDataOut
         extends
-            IByteOut {
+            IByteOut,
+            ICharsetAware {
 
     boolean isBigEndian();
 
@@ -56,8 +56,7 @@ public interface IDataOut
      */
     default int writeChar(char ch, String encoding)
             throws IOException {
-        Charset charset = Charset.forName(encoding);
-        return writeChar(ch, charset);
+        return writeChar(ch, getCharset(encoding));
     }
 
     int writeChar(char ch, Charset charset)
@@ -131,8 +130,7 @@ public interface IDataOut
 
     default int writeChars(char[] buf, String encoding)
             throws IOException {
-        Charset charset = Charset.forName(encoding);
-        return writeChars(buf, 0, buf.length, charset);
+        return writeChars(buf, 0, buf.length, getCharset(encoding));
     }
 
     int writeChars(char[] buf, int off, int len, Charset charset)
@@ -148,8 +146,7 @@ public interface IDataOut
 
     default void writeString(StringLengthType lengthType, String str, String encoding)
             throws IOException {
-        Charset charset = Charset.forName(encoding);
-        writeString(lengthType, str, charset);
+        writeString(lengthType, str, getCharset(encoding));
     }
 
     void writeString(StringLengthType lengthType, String str, Charset charset)
@@ -172,127 +169,159 @@ public interface IDataOut
         throw new UnsupportedOperationException();
     }
 
-    // writeFixedSizeChars
+    // writeCharsOfSize
 
-    default void writeFixedSizeChars(int fixedSize, char[] buf)
+    default void writeCharsOfSize(int fixedSize, char[] buf)
             throws IOException {
-        writeFixedSizeChars(fixedSize, getPaddingChar(), buf, 0, buf.length);
+        writeCharsOfSize(fixedSize, getPaddingChar(), buf, 0, buf.length);
     }
 
-    default void writeFixedSizeChars(int fixedSize, char[] buf, int off, int len)
+    default void writeCharsOfSize(int fixedSize, char[] buf, int off, int len)
             throws IOException {
-        writeFixedSizeChars(fixedSize, getPaddingChar(), buf, off, len);
+        writeCharsOfSize(fixedSize, getPaddingChar(), buf, off, len);
     }
 
-    default int writeFixedSizeUtf8Chars(int fixedSize, char[] buf)
+    default int writeUtf8CharsOfSize(int fixedSize, char[] buf)
             throws IOException {
-        return writeFixedSizeUtf8Chars(fixedSize, getPaddingChar(), buf, 0, buf.length);
+        return writeUtf8CharsOfSize(fixedSize, getPaddingChar(), buf, 0, buf.length);
     }
 
-    default int writeFixedSizeUtf8Chars(int fixedSize, char[] buf, int off, int len)
+    default int writeUtf8CharsOfSize(int fixedSize, char[] buf, int off, int len)
             throws IOException {
-        return writeFixedSizeUtf8Chars(fixedSize, getPaddingChar(), buf, off, len);
+        return writeUtf8CharsOfSize(fixedSize, getPaddingChar(), buf, off, len);
     }
 
-    default int writeFixedSizeChars(int fixedSize, char[] buf, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeChars(fixedSize, getPaddingChar(), buf, 0, buf.length, charset);
-    }
-
-    default int writeFixedSizeChars(int fixedSize, char[] buf, Charset charset)
-            throws IOException, ParseException {
-        return writeFixedSizeChars(fixedSize, getPaddingChar(), buf, 0, buf.length, charset);
-    }
-
-    default int writeFixedSizeChars(int fixedSize, char[] buf, int off, int len, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeChars(fixedSize, getPaddingChar(), buf, off, len, charset);
-    }
-
-    default int writeFixedSizeChars(int fixedSize, char[] buf, int off, int len, Charset charset)
-            throws IOException, ParseException {
-        return writeFixedSizeChars(fixedSize, getPaddingChar(), buf, off, len, charset);
-    }
-
-    // writeFixedSizeChars_padding
-
-    default void writeFixedSizeChars(int fixedSize, char padding, char[] buf)
+    default int writeCharsOfSize(int fixedSize, char[] buf, String encoding)
             throws IOException {
-        writeFixedSizeChars(fixedSize, padding, buf, 0, buf.length);
+        return writeCharsOfSize(fixedSize, getPaddingChar(), buf, 0, buf.length, getCharset(encoding));
     }
 
-    void writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len)
+    default int writeCharsOfSize(int fixedSize, char[] buf, Charset charset)
+            throws IOException {
+        return writeCharsOfSize(fixedSize, getPaddingChar(), buf, 0, buf.length, charset);
+    }
+
+    default int writeCharsOfSize(int fixedSize, char[] buf, int off, int len, String encoding)
+            throws IOException {
+        return writeCharsOfSize(fixedSize, getPaddingChar(), buf, off, len, getCharset(encoding));
+    }
+
+    default int writeCharsOfSize(int fixedSize, char[] buf, int off, int len, Charset charset)
+            throws IOException {
+        return writeCharsOfSize(fixedSize, getPaddingChar(), buf, off, len, charset);
+    }
+
+    // writeCharsOfSize_padding
+
+    default int writeCharsOfSize(int fixedSize, char padding, char[] buf)
+            throws IOException {
+        return writeCharsOfSize(fixedSize, padding, buf, 0, buf.length);
+    }
+
+    int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException;
 
-    default int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf)
+    default int writeUtf8CharsOfSize(int fixedSize, char padding, char[] buf)
             throws IOException {
-        return writeFixedSizeUtf8Chars(fixedSize, padding, buf, 0, buf.length);
+        return writeUtf8CharsOfSize(fixedSize, padding, buf, 0, buf.length);
     }
 
-    int writeFixedSizeUtf8Chars(int fixedSize, char padding, char[] buf, int off, int len)
+    int writeUtf8CharsOfSize(int fixedSize, char padding, char[] buf, int off, int len)
             throws IOException;
 
-    default int writeFixedSizeChars(int fixedSize, char padding, char[] buf, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeChars(fixedSize, padding, buf, 0, buf.length, charset);
-    }
-
-    default int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeChars(fixedSize, padding, buf, off, len, charset);
-    }
-
-    default int writeFixedSizeChars(int fixedSize, char padding, char[] buf, Charset charset)
-            throws IOException, ParseException {
-        return writeFixedSizeChars(fixedSize, padding, buf, 0, buf.length, charset);
-    }
-
-    int writeFixedSizeChars(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
-            throws IOException, ParseException;
-
-    // writeFixedSizeString
-
-    default void writeFixedSizeString(int fixedSize, String str)
+    default int writeCharsOfSize(int fixedSize, char padding, char[] buf, String encoding)
             throws IOException {
-        writeFixedSizeString(fixedSize, getPaddingChar(), str);
+        return writeCharsOfSize(fixedSize, padding, buf, 0, buf.length, getCharset(encoding));
     }
 
-    default int writeFixedSizeUtf8String(int fixedSize, String str)
+    default int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len, String encoding)
             throws IOException {
-        return writeFixedSizeUtf8String(fixedSize, getPaddingChar(), str);
+        return writeCharsOfSize(fixedSize, padding, buf, off, len, getCharset(encoding));
     }
 
-    default int writeFixedSizeString(int fixedSize, String str, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeString(fixedSize, getPaddingChar(), str, charset);
+    default int writeCharsOfSize(int fixedSize, char padding, char[] buf, Charset charset)
+            throws IOException {
+        return writeCharsOfSize(fixedSize, padding, buf, 0, buf.length, charset);
     }
 
-    default int writeFixedSizeString(int fixedSize, String str, Charset charset)
-            throws IOException, ParseException {
-        return writeFixedSizeString(fixedSize, getPaddingChar(), str, charset);
-    }
-
-    // writeFixedSizeString-padding
-
-    void writeFixedSizeString(int fixedSize, char padding, String str)
+    int writeCharsOfSize(int fixedSize, char padding, char[] buf, int off, int len, Charset charset)
             throws IOException;
 
-    int writeFixedSizeUtf8String(int fixedSize, char padding, String str)
-            throws IOException;
+    // writeStringOfLength
 
-    default int writeFixedSizeString(int fixedSize, char padding, String str, String encoding)
-            throws IOException, ParseException {
-        Charset charset = Charset.forName(encoding);
-        return writeFixedSizeString(fixedSize, padding, str, charset);
+    default int writeStringOfLength(int fixedLen, String str)
+            throws IOException {
+        return writeStringOfLength(fixedLen, getPaddingChar(), str);
     }
 
-    int writeFixedSizeString(int fixedSize, char padding, String str, Charset charset)
-            throws IOException, ParseException;
+    default int writeUtf8StringOfLength(int fixedLen, String str)
+            throws IOException {
+        return writeUtf8StringOfLength(fixedLen, getPaddingChar(), str);
+    }
+
+    default int writeStringOfLength(int fixedLen, String str, String encoding)
+            throws IOException {
+        return writeStringOfLength(fixedLen, getPaddingChar(), str, getCharset(encoding));
+    }
+
+    default int writeStringOfLength(int fixedLen, String str, Charset charset)
+            throws IOException {
+        return writeStringOfLength(fixedLen, getPaddingChar(), str, charset);
+    }
+
+    // writeStringOfLength-padding
+
+    int writeStringOfLength(int fixedLen, char padding, String str)
+            throws IOException;
+
+    int writeUtf8StringOfLength(int fixedLen, char padding, String str)
+            throws IOException;
+
+    default int writeStringOfLength(int fixedLen, char padding, String str, String encoding)
+            throws IOException {
+        return writeStringOfLength(fixedLen, padding, str, getCharset(encoding));
+    }
+
+    int writeStringOfLength(int fixedLen, char padding, String str, Charset charset)
+            throws IOException;
+
+    // writeStringOfSize
+
+    default int writeStringOfSize(int fixedSize, String str)
+            throws IOException {
+        return writeStringOfSize(fixedSize, getPaddingChar(), str);
+    }
+
+    default int writeUtf8StringOfSize(int fixedSize, String str)
+            throws IOException {
+        return writeUtf8StringOfSize(fixedSize, getPaddingChar(), str);
+    }
+
+    default int writeStringOfSize(int fixedSize, String str, String encoding)
+            throws IOException {
+        return writeStringOfSize(fixedSize, getPaddingChar(), str, getCharset(encoding));
+    }
+
+    default int writeStringOfSize(int fixedSize, String str, Charset charset)
+            throws IOException {
+        return writeStringOfSize(fixedSize, getPaddingChar(), str, charset);
+    }
+
+    // writeStringOfSize-padding
+
+    int writeStringOfSize(int fixedSize, char padding, String str)
+            throws IOException;
+
+    int writeUtf8StringOfSize(int fixedSize, char padding, String str)
+            throws IOException;
+
+    default int writeStringOfSize(int fixedSize, char padding, String str, String encoding)
+            throws IOException {
+        return writeStringOfSize(fixedSize, padding, str, getCharset(encoding));
+    }
+
+    int writeStringOfSize(int fixedSize, char padding, String str, Charset charset)
+            throws IOException;
 
     IDataOut NULL_LE = new NullDataOut(false);
     IDataOut NULL_BE = new NullDataOut(true);
