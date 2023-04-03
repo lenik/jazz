@@ -118,6 +118,12 @@ public class DecoratedDataOut
     }
 
     @Override
+    public void writeWChar(char ch)
+            throws IOException {
+        getWrapped().writeWChar(ch);
+    }
+
+    @Override
     public void writeChar(char ch)
             throws IOException {
         getWrapped().writeChar(ch);

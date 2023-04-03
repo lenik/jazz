@@ -100,6 +100,11 @@ public class NullDataOut
     }
 
     @Override
+    public void writeWChar(char ch)
+            throws IOException {
+    }
+
+    @Override
     public void writeChar(char ch)
             throws IOException {
     }

@@ -280,8 +280,8 @@ public abstract class AbstractDataIn
             readChars(buf);
             return RawStrings.newString(lengthType.raw, buf);
         } else {
-            int nChar = count / 2;
-            char[] buf = new char[nChar];
+            int nMaxChar = count / 2;
+            char[] buf = new char[nMaxChar];
             readChars(buf);
             if (count % 2 == 1) {
                 @SuppressWarnings("unused") // extra byte, just drop it.

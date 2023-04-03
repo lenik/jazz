@@ -42,6 +42,9 @@ public interface IDataOut
     void writeBool(boolean v)
             throws IOException;
 
+    void writeWChar(char ch)
+            throws IOException;
+
     void writeChar(char ch)
             throws IOException;
 
