@@ -1,7 +1,6 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
@@ -10,6 +9,9 @@ import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.data.struct.IOctetStreamForm;
+import net.bodz.bas.data.struct.ListBin;
+import net.bodz.bas.data.struct.ListBinUtils;
+import net.bodz.bas.data.struct.ListLengthType;
 import net.bodz.bas.data.struct.StringBin;
 import net.bodz.bas.data.struct.StringBinUtils;
 import net.bodz.bas.io.StringLengthType;
@@ -28,133 +30,186 @@ public class OctetStreamInImpl
 
         int i = 0;
         for (Field field : fields) {
-            loadField(out, i++, field);
+            String name = "this." + field.getName();
+            loadField(out, i++, new VarField(field, name));
         }
 
         out.leaveln("}");
     }
 
-    void loadField(JavaSourceWriter out, int index, Field field) {
-        Class<?> type = field.getType();
-        String var = field.getName();
-        if (IOctetStreamForm.class.isAssignableFrom(type)) {
-            out.printf("%s.readObject(in);\n", var);
+    void loadField(JavaSourceWriter out, int index, VarField field) {
+        if (IOctetStreamForm.class.isAssignableFrom(field.type)) {
+            out.printf("%s.readObject(in);\n", field.name);
             return;
         }
 
-        if (type.isArray()) {
+        if (field.type.isArray()) {
             loadArrayField(out, index, field);
             return;
         }
 
-        int typeId = TypeKind.getTypeId(type);
+        int typeId = TypeKind.getTypeId(field.type);
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            out.printf("this.%s = in.readByte();\n", var);
+            out.printf("%s = in.readByte();\n", field.name);
             return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            out.printf("this.%s = in.readWord();\n", var);
+            out.printf("%s = in.readWord();\n", field.name);
             return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            out.printf("this.%s = in.readDword();\n", var);
+            out.printf("%s = in.readDword();\n", field.name);
             return;
 
         case TypeId._long:
         case TypeId.LONG:
-            out.printf("this.%s = in.readQword();\n", var);
+            out.printf("%s = in.readQword();\n", field.name);
             return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            out.printf("this.%s = in.readFloat();\n", var);
+            out.printf("%s = in.readFloat();\n", field.name);
             return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            out.printf("this.%s = in.readDouble();\n", var);
+            out.printf("%s = in.readDouble();\n", field.name);
             return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            out.printf("this.%s = in.readBool();\n", var);
+            out.printf("%s = in.readBool();\n", field.name);
             return;
 
         case TypeId._char:
         case TypeId.CHARACTER:
-            out.printf("this.%s = in.readUtf8Char();\n", var);
+            out.printf("%s = in.readUtf8Char();\n", field.name);
             return;
 
         case TypeId.STRING:
             break;
         }
-        loadStringField(out, field, type, var);
+        loadStringField(out, field);
     }
 
-    void loadArrayField(JavaSourceWriter out, int index, Field field) {
-        Class<?> type1 = field.getType().getComponentType();
-        String fieldName = field.getName();
+    void loadArrayField(JavaSourceWriter out, int index, VarField field) {
+        Class<?> type1 = field.type.getComponentType();
 
         String fn = null;
         int typeId = TypeKind.getTypeId(type1);
+        int itemSize = 0;
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
             fn = "Bytes";
+            itemSize = 1;
             break;
 
         case TypeId._short:
         case TypeId.SHORT:
             fn = "Words";
+            itemSize = 2;
             break;
 
         case TypeId._int:
         case TypeId.INTEGER:
             fn = "Dwords";
+            itemSize = 4;
             break;
 
         case TypeId._long:
         case TypeId.LONG:
             fn = "Qwords";
+            itemSize = 8;
             break;
 
         case TypeId._float:
         case TypeId.FLOAT:
             fn = "Floats";
+            itemSize = 4;
             break;
 
         case TypeId._double:
         case TypeId.DOUBLE:
             fn = "Doubles";
+            itemSize = 8;
             break;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
             fn = "Bools";
+            itemSize = 1;
             break;
 
-//        case TypeId._char:
-//        case TypeId.CHARACTER:
-//            fn = "Chars";
-//            break;
+        case TypeId._char:
+        case TypeId.CHARACTER:
+            loadStringField(out, field);
+            return;
+        }
+
+        ListLengthType lenType;
+        int providedCount = 0;
+        String nExpr = null;
+
+        ListBin aListBin = field.getAnnotation(ListBin.class);
+        if (aListBin != null) {
+            lenType = ListBinUtils.toListLengthType(aListBin);
+            providedCount = ListBinUtils.getProvidedCount(aListBin);
+            nExpr = String.valueOf(providedCount);
+        } else {
+            if (field.isFinal()) {
+                lenType = ListLengthType.providedItemCount;
+                nExpr = field.name + ".length";
+            } else {
+                lenType = ListLengthType.terminatedByNull;
+            }
         }
 
         if (index != 0)
             out.println();
 
-        String countVar = fieldName + "Count";
-        out.printf("int %s = in.readDword();\n", countVar);
-        out.printf("this.%s = new %s[%s];\n", fieldName, type1.getSimpleName(), countVar);
-        out.printf("for (int i = 0; i < %s; i++)\n", countVar);
-        out.print("    ");
-        loadStringField(out, field, type1, fieldName + "[i]");
+        String countVar = null;
+        if (lenType.hasCountField) {
+            countVar = field.name + "Count";
+            out.printf("int %s = in.read%s();\n", countVar, lenType.countFieldType());
+            nExpr = countVar;
+        }
+
+        if (fn != null) {
+            if (lenType.countByByte)
+                nExpr = nExpr + " / " + itemSize;
+            if (field.isFinal()) {
+                out.printf("in.read%s(%s, 0, %s);\n", fn, field.name, nExpr);
+            } else {
+                out.printf("%s = in.read%s(%s);\n", field.name, fn, nExpr);
+            }
+
+        } else {
+            if (field.isNotFinal())
+                out.printf("%s = new %s[%s];\n", //
+                        field.name, type1.getSimpleName(), nExpr);
+
+            boolean multiLine = type1.isPrimitive() || type1 == String.class;
+
+            out.printf("for (int i = 0; i < %s; i++)", nExpr);
+            if (multiLine)
+                out.print(" {");
+            out.enterln("");
+
+            VarField itemField = new VarField(type1, 0, field.name + "[i]");
+            loadField(out, 0, itemField);
+
+            out.leave();
+            if (multiLine)
+                out.println("}");
+        }
     }
 
-    void loadStringField(JavaSourceWriter out, AnnotatedElement field, Class<?> type, String var) {
+    void loadStringField(JavaSourceWriter out, VarField field) {
         StringLengthType lengthType = StringBinUtils.defaultStringLengthType;
         Charset charset = null;
         StringBin aStringBin = field.getAnnotation(StringBin.class);
@@ -166,22 +221,25 @@ public class OctetStreamInImpl
 
         StringBuilder expr = new StringBuilder();
         {
-            if (lengthType.hasCountField) {
-                expr.append("in.readString(");
-                expr.append(StringLengthType.class.getSimpleName());
-                expr.append(".");
-                expr.append(lengthType.name);
-                expr.append(", 0");
+            if (field.type == char[].class)
+                expr.append("in.readChars");
+            else
+                expr.append("in.readString");
+            expr.append("(");
+
+            String typeConst = StringLengthType.class.getSimpleName() + "." + lengthType.name;
+
+            if (lengthType.hasCountField || lengthType.hasTerminator) {
+                expr.append(typeConst + ", " + 0);
             } else {
-                int providedCount = StringBinUtils.getProvidedCount(aStringBin);
-                expr.append("in.readString(");
-                if (lengthType.countByByte) {
-                    expr.append(StringLengthType.class.getSimpleName());
-                    expr.append(".");
-                    expr.append(lengthType.name);
+                int providedCount = 0;
+                if (aStringBin != null)
+                    providedCount = StringBinUtils.getProvidedCount(aStringBin);
+                if (lengthType.countByChar) {
+                    expr.append(providedCount);
+                } else {
+                    expr.append(typeConst + ", " + providedCount);
                 }
-                expr.append(", ");
-                expr.append(providedCount);
             }
             if (charset != null) {
                 String refName = Charsets.getDeclaredName(charset);
@@ -194,14 +252,19 @@ public class OctetStreamInImpl
             expr.append(")");
         }
 
-        out.print("this.");
-        out.print(var);
-        out.print(" = ");
-        if (type != String.class) {
-            String parseMethodName = "parse" + NameConventions.getMethodName(type);
-            out.printf("%s(%s)", parseMethodName, expr);
+        if (field.type != char[].class) {
+            out.print(field.name);
+            out.print(" = ");
+            if (field.type != String.class) {
+                String parseMethodName = "parse" + NameConventions.getMethodName(field.type);
+                out.printf("%s(%s)", parseMethodName, expr);
+            } else {
+                out.print(expr);
+            }
+            out.print(";");
         } else {
             out.print(expr);
+            out.print(";");
         }
         out.println();
     }
