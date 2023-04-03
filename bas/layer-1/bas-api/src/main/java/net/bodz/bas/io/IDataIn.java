@@ -359,13 +359,13 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    String readString(StringLengthType lengthType)
+    String readString(StringLengthType lengthType, int providedCount)
             throws IOException;
 
-    String readUtf8String_fast(StringLengthType lengthType)
+    String readUtf8String_fast(StringLengthType lengthType, int providedCount)
             throws IOException;
 
-    EncodedString readUtf8String(StringLengthType lengthType)
+    EncodedString readUtf8String(StringLengthType lengthType, int providedCount)
             throws IOException, ParseException;
 
     /**
@@ -382,13 +382,13 @@ public interface IDataIn
      * @exception IOException
      *                if an I/O error occurs.
      */
-    default EncodedString readString(StringLengthType lengthType, String encoding)
+    default EncodedString readString(StringLengthType lengthType, int providedCount, String encoding)
             throws IOException, ParseException {
         Charset charset = Charset.forName(encoding);
-        return readString(lengthType, charset);
+        return readString(lengthType, providedCount, charset);
     }
 
-    EncodedString readString(StringLengthType lengthType, Charset charset)
+    EncodedString readString(StringLengthType lengthType, int providedCount, Charset charset)
             throws IOException, ParseException;
 
 }

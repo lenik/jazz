@@ -199,21 +199,21 @@ public class DecoratedDataIn
     }
 
     @Override
-    public String readString(StringLengthType lengthType)
+    public String readString(StringLengthType lengthType, int providedCount)
             throws IOException {
-        return getWrapped().readString(lengthType);
+        return getWrapped().readString(lengthType, providedCount);
     }
 
     @Override
-    public String readUtf8String_fast(StringLengthType lengthType)
+    public String readUtf8String_fast(StringLengthType lengthType, int providedCount)
             throws IOException {
-        return getWrapped().readUtf8String_fast(lengthType);
+        return getWrapped().readUtf8String_fast(lengthType, providedCount);
     }
 
     @Override
-    public EncodedString readUtf8String(StringLengthType lengthType)
+    public EncodedString readUtf8String(StringLengthType lengthType, int providedCount)
             throws IOException, ParseException {
-        return getWrapped().readUtf8String(lengthType);
+        return getWrapped().readUtf8String(lengthType, providedCount);
     }
 
     @Override
@@ -223,9 +223,9 @@ public class DecoratedDataIn
     }
 
     @Override
-    public EncodedString readString(StringLengthType lengthType, Charset charset)
+    public EncodedString readString(StringLengthType lengthType, int providedCount, Charset charset)
             throws IOException, ParseException {
-        return getWrapped().readString(lengthType, charset);
+        return getWrapped().readString(lengthType, providedCount, charset);
     }
 
 }
