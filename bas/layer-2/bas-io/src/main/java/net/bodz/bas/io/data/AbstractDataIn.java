@@ -241,24 +241,24 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public final String readString(StringLengthType lengthType)
+    public final String readString(StringLengthType lengthType, int providedCount)
             throws IOException {
         if (lengthType.hasTerminator)
-            return readStringUntil(lengthType.terminateChar);
-        int length = lengthType.readCountField(this);
+            return readStringUntil(lengthType.terminator);
+        int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByChar) {
-            char[] buf = new char[length];
+            char[] buf = new char[count];
             readChars(buf);
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         } else {
-            int nChar = length / 2;
+            int nChar = count / 2;
             char[] buf = new char[nChar];
             readChars(buf);
-            if (length % 2 == 1) {
+            if (count % 2 == 1) {
                 @SuppressWarnings("unused") // extra byte, just drop it.
                 byte extraByte = readByte();
             }
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         }
     }
 
@@ -273,19 +273,20 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public String readUtf8String_fast(StringLengthType lengthType)
+    public String readUtf8String_fast(StringLengthType lengthType, int providedCount)
             throws IOException {
         if (lengthType.hasTerminator)
-            return readUtf8StringUntil_fast(lengthType.terminateChar);
-        int length = lengthType.readCountField(this);
+            return readUtf8StringUntil_fast(lengthType.terminator);
+        int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByChar) {
-            char[] buf = new char[length];
+            char[] buf = new char[count];
             readUtf8Chars_fast(buf);
-            return new String(buf);
+            return RawStrings.newString(lengthType.raw, buf);
         } else {
-            byte[] buf = new byte[length];
+            byte[] buf = new byte[count];
             readBytes(buf);
-            return new String(buf, Charsets.UTF_8);
+            String str = new String(buf, Charsets.UTF_8);
+            return RawStrings.compact(lengthType.raw, str);
         }
     }
 
@@ -300,20 +301,31 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public EncodedString readUtf8String(StringLengthType lengthType)
+    public EncodedString readUtf8String(StringLengthType lengthType, int providedCount)
             throws IOException, ParseException {
         if (lengthType.hasTerminator)
-            return readUtf8StringUntil(lengthType.terminateChar);
-        int length = lengthType.readCountField(this);
+            return readUtf8StringUntil(lengthType.terminator);
+        int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByChar) {
-            char[] buf = new char[length];
+            char[] buf = new char[count];
             int nByte = readUtf8Chars(buf);
-            return EncodedString.decoded(nByte, buf);
+
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+            String str = new String(buf, 0, len);
+
+            return EncodedString.decoded(nByte, str);
         } else {
-            byte[] buf = new byte[length];
+            byte[] buf = new byte[count];
             readBytes(buf);
-            String str = new String(buf, Charsets.UTF_8);
-            return EncodedString.decoded(length, str);
+
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+            String str = new String(buf, 0, len, Charsets.UTF_8);
+
+            return EncodedString.decoded(count, str);
         }
     }
 
@@ -329,27 +341,45 @@ public abstract class AbstractDataIn
         return EncodedString.decoded(size, sb.toString());
     }
 
-    public String readString1(StringLengthType lengthType, Charset charset)
+    // XXX
+    public String readString1(StringLengthType lengthType, int providedCount, Charset charset)
             throws IOException, ParseException {
-        int length = lengthType.readCountField(this);
+        int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByByte) {
-            byte[] buf = new byte[length];
+            byte[] buf = new byte[count];
             readBytes(buf);
-            return new String(buf, charset);
-        }
 
-        StringBuilder sb = new StringBuilder(length);
-        int nChar = 0;
-        while (lengthType.hasTerminator || nChar < length) {
-            EncodedChar chInfo = readChar(charset);
-            char ch = chInfo.character;
-            if (lengthType.hasTerminator)
-                if (ch == lengthType.terminateChar)
-                    break;
-            sb.append(ch);
-            nChar++;
+            int len = buf.length;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, len);
+
+            return new String(buf, 0, len, charset);
+        } else {
+            StringBuilder sb = new StringBuilder(count);
+            if (lengthType.hasTerminator) {
+                while (true) {
+                    EncodedChar chInfo = readChar(charset);
+                    char ch = chInfo.character;
+                    if (ch == lengthType.terminator)
+                        break;
+                    sb.append(ch);
+                }
+            } else {
+                int nByte = 0;
+                boolean end = false;
+                while (nByte < count) {
+                    EncodedChar chInfo = readChar(charset);
+                    char ch = chInfo.character;
+                    if (lengthType.autoCompact)
+                        if (ch == 0)
+                            end = true;
+                    if (!end)
+                        sb.append(ch);
+                    nByte += chInfo.byteCount;
+                }
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
     @Override
@@ -370,17 +400,25 @@ public abstract class AbstractDataIn
     }
 
     @Override
-    public EncodedString readString(StringLengthType lengthType, Charset charset)
+    public EncodedString readString(StringLengthType lengthType, int providedCount, Charset charset)
             throws IOException, ParseException {
-        int length = lengthType.readCountField(this);
+        int count = lengthType.readCountField(this, providedCount);
         if (lengthType.countByByte) {
-            byte[] buf = new byte[length];
+            byte[] buf = new byte[count];
             readBytes(buf);
-            String str = new String(buf, charset);
-            return EncodedString.decoded(length, str);
+
+            int len;
+            if (lengthType.autoCompact)
+                len = RawStrings.fixLen(buf, 0, buf.length);
+            else
+                len = buf.length;
+            String str = new String(buf, 0, len, charset);
+            return EncodedString.decoded(count, str);
         }
 
-        StringBuilder sb = new StringBuilder(length);
+        // TODO -- continue..
+
+        StringBuilder sb = new StringBuilder(count);
         if (lengthType.hasTerminator) {
             CharDecoder decoder = new CharDecoder(charset, this);
             StringBuilder chBuf = new StringBuilder();
@@ -392,7 +430,7 @@ public abstract class AbstractDataIn
                     throw new EOFException();
                 nByte += chSize;
                 char ch = chBuf.charAt(0);
-                if (ch == lengthType.terminateChar)
+                if (ch == lengthType.terminator)
                     break;
                 sb.append(ch);
             }
@@ -400,19 +438,19 @@ public abstract class AbstractDataIn
         }
 
         int byteCapacity = CharDecoder.decodeBufferSize;
-        if (length != 0) {
+        if (count != 0) {
             if (lengthType.countByByte)
-                byteCapacity = Math.min(byteCapacity, length);
+                byteCapacity = Math.min(byteCapacity, count);
             else
-                byteCapacity = Math.min(byteCapacity, length * 3);
+                byteCapacity = Math.min(byteCapacity, count * 3);
         }
 
         CharDecoder decoder = new CharDecoder(charset, this, byteCapacity);
 
         int nChar = 0;
         int nByte = 0;
-        while (nChar < length) {
-            int remaining = length - nChar;
+        while (nChar < count) {
+            int remaining = count - nChar;
 
             int chunkMax = remaining;
             if (lengthType.countByByte) {
@@ -426,7 +464,7 @@ public abstract class AbstractDataIn
             nByte += lens.byteCount;
             nChar += lens.charCount;
         }
-        if (nChar != length)
+        if (nChar != count)
             throw new EOFException();
         return EncodedString.decoded(nByte, sb.toString());
     }

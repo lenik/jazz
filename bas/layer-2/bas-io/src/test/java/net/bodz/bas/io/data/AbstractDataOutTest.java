@@ -73,7 +73,7 @@ public abstract class AbstractDataOutTest
         byte[] z = { 0 };
         byte[] expected = Arrays.concat(utf8Bytes, z);
         DataBuffer db = getDataOut();
-        db.writeUtf8String(StringLengthType.terminatedByNul, utf8String);
+        db.writeUtf8String(StringLengthType.terminatedByNull, utf8String);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }
@@ -121,7 +121,7 @@ public abstract class AbstractDataOutTest
         byte[] z = { 0 };
         byte[] expected = Arrays.concat(utf8Bytes, z);
         DataBuffer db = getDataOut();
-        db.writeString(StringLengthType.terminatedByNul, utf8String, charset);
+        db.writeString(StringLengthType.terminatedByNull, utf8String, charset);
         byte[] actual = db.toByteArray();
         assertArrayEquals(expected, actual);
     }

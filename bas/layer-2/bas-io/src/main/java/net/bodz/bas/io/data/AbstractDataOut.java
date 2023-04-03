@@ -162,7 +162,7 @@ public abstract class AbstractDataOut
             writeChar(str.charAt(i));
 
         if (lengthType.hasTerminator)
-            writeChar(lengthType.terminateChar);
+            writeChar(lengthType.terminator);
     }
 
     @Override
@@ -184,7 +184,7 @@ public abstract class AbstractDataOut
         }
 
         if (lengthType.hasTerminator)
-            writeUtf8Char(lengthType.terminateChar);
+            writeUtf8Char(lengthType.terminator);
     }
 
     @Override
@@ -204,7 +204,7 @@ public abstract class AbstractDataOut
         write(bytes);
 
         if (lengthType.hasTerminator)
-            writeChar(lengthType.terminateChar, charset);
+            writeChar(lengthType.terminator, charset);
     }
 
     // writeFixedSizeChars
