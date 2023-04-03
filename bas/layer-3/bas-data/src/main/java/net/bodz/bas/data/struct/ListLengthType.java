@@ -41,7 +41,7 @@ public class ListLengthType {
     private ListLengthType(String name, int countFieldBytes, boolean isItemCount) {
         this.name = name;
         this.countFieldBytes = countFieldBytes;
-        this.hasCountField = (countFieldBytes == 0);
+        this.hasCountField = (countFieldBytes != 0);
         this.countByItem = isItemCount;
         this.countByByte = !isItemCount;
         this.hasTerminator = false;
@@ -112,6 +112,18 @@ public class ListLengthType {
                     throw new IllegalUsageException("invalid countFieldBytes: " + countFieldBytes);
                 }
         }
+    }
+
+    public String countFieldType() {
+        switch (countFieldBytes) {
+        case 1:
+            return "Byte";
+        case 2:
+            return "Word";
+        case 4:
+            return "Dword";
+        }
+        return null;
     }
 
     public int readCountField(IDataIn in)

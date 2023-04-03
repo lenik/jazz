@@ -20,6 +20,18 @@ public abstract class AbstractDataIn
         implements
             IDataIn {
 
+    Charset charset;
+
+    @Override
+    public Charset getCharset() {
+        return charset;
+    }
+
+    @Override
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
+
     @Override
     public byte readByte()
             throws IOException {
@@ -48,6 +60,15 @@ public abstract class AbstractDataIn
             throws IOException {
         byte b = readByte();
         return b != 0;
+    }
+
+    @Override
+    public char readChar()
+            throws IOException, ParseException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return readChar(charset).character;
+        return readWChar();
     }
 
     @Override
@@ -199,7 +220,11 @@ public abstract class AbstractDataIn
 
     @Override
     public int readChars(char[] buf, int off, int len)
-            throws IOException {
+            throws IOException, ParseException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return readChars(buf, off, len, charset);
+
         byte[] bb = new byte[len * 2];
         readBytes(bb);
         int j = -1;
@@ -242,7 +267,11 @@ public abstract class AbstractDataIn
 
     @Override
     public final String readString(StringLengthType lengthType, int providedCount)
-            throws IOException {
+            throws IOException, ParseException {
+        Charset charset = getCharset();
+        if (charset != null)
+            return readString(lengthType, providedCount, charset).string;
+
         if (lengthType.hasTerminator)
             return readStringUntil(lengthType.terminator);
         int count = lengthType.readCountField(this, providedCount);
@@ -263,7 +292,7 @@ public abstract class AbstractDataIn
     }
 
     public String readStringUntil(char delim)
-            throws IOException {
+            throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
         char ch;
         while ((ch = readChar()) != delim) {
@@ -303,6 +332,7 @@ public abstract class AbstractDataIn
     @Override
     public EncodedString readUtf8String(StringLengthType lengthType, int providedCount)
             throws IOException, ParseException {
+
         if (lengthType.hasTerminator)
             return readUtf8StringUntil(lengthType.terminator);
         int count = lengthType.readCountField(this, providedCount);

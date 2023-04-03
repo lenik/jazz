@@ -55,6 +55,7 @@ public class StringLengthType {
     public final boolean autoCompact;
     public final boolean hasTerminator;
     public final char terminator;
+    public final String terminatorJavaLiteral;
 
     public StringLengthType(String name, int countFieldBytes, boolean countByChar, boolean raw) {
         this.name = name;
@@ -66,6 +67,7 @@ public class StringLengthType {
         this.autoCompact = !raw;
         this.hasTerminator = false;
         this.terminator = 0;
+        this.terminatorJavaLiteral = null;
     }
 
     public StringLengthType(String name, char terminator) {
@@ -78,6 +80,27 @@ public class StringLengthType {
         this.autoCompact = !raw; // not used
         this.hasTerminator = true;
         this.terminator = terminator;
+
+        final String Q = "'";
+        String escaped = String.valueOf(terminator);
+        switch (terminator) {
+        case '\0':
+            escaped = "\\0";
+            break;
+        case '\t':
+            escaped = "\\t";
+            break;
+        case '\n':
+            escaped = "\\n";
+            break;
+        case '\r':
+            escaped = "\\r";
+            break;
+        case '\'':
+            escaped = "\\'";
+            break;
+        }
+        this.terminatorJavaLiteral = Q + escaped + Q;
     }
 
     public static StringLengthType counted(String name, int countFieldBytes, boolean countByChar, boolean raw) {
