@@ -26,7 +26,7 @@ public class ActivationByTargetString
     private static final String KEY_HOSTID = "hostId";
     private static final String KEY_ACTIVATE_CODE = "activateCode";
 
-    private static final Charset encoding = Charsets.UTF8;
+    private static final Charset encoding = Charsets.UTF_8;
 
     private final String prefix;
     private final byte[] prefixBytes;

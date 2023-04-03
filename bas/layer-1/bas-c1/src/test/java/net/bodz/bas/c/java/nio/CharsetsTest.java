@@ -84,4 +84,16 @@ public class CharsetsTest
         Charsets.decodeChar(Charsets.UTF_8, bytes);
     }
 
+    @Test
+    public void testGetDeclaredName() {
+        String[] names = { "utf-8", "gb2312", "foobar", "latin1" };
+        String[] expects = { "UTF_8", "GB2312", null, "ISO_8859_1" };
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            String expect = expects[i];
+            String declaredName = Charsets.getDeclaredName(names[i]);
+            assertEquals(name, expect, declaredName);
+        }
+    }
+
 }
