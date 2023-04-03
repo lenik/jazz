@@ -3,7 +3,7 @@ package net.bodz.bas.io.data;
 public class RawStrings {
 
     public static String newString(boolean raw, char[] buf) {
-        if (raw) {
+        if (!raw) {
             for (int i = 0; i < buf.length; i++)
                 if (buf[i] == 0)
                     return new String(buf, 0, i);
@@ -12,7 +12,7 @@ public class RawStrings {
     }
 
     public static String newString(boolean raw, char[] buf, int off, int len) {
-        if (raw) {
+        if (!raw) {
             for (int i = 0; i < len; i++)
                 if (buf[off + i] == 0)
                     return new String(buf, off, len - i);
@@ -21,7 +21,7 @@ public class RawStrings {
     }
 
     public static String compact(boolean raw, String s) {
-        if (raw) {
+        if (!raw) {
             int pos = s.indexOf('\0');
             if (pos != -1)
                 return s.substring(0, pos);

@@ -47,11 +47,17 @@ public abstract class AbstractDataOut
     }
 
     @Override
+    public void writeWChar(char ch)
+            throws IOException {
+        writeWord(ch);
+    }
+
+    @Override
     public void writeChar(char ch)
             throws IOException {
         Charset charset = getCharset();
         if (charset == null)
-            writeChar(ch);
+            writeWChar(ch);
         else
             writeChar(ch, getCharset());
     }
@@ -310,20 +316,20 @@ public abstract class AbstractDataOut
         int nByte = 0;
         int pos = 0;
         while (nByte < fixedSize && pos < len) {
-            int remaining = fixedSize - nByte;
-            maxCharsToWrite = (int) (remaining / maxBytesPerChar);
+            int remainingBytes = fixedSize - nByte;
+            maxCharsToWrite = (int) (remainingBytes / maxBytesPerChar);
             if (maxCharsToWrite == 0) {
                 char ch = buf[off + pos];
                 byte[] bytes = Charsets.encodeChar(charset, ch);
                 int nextCharLen = bytes.length;
-                if (nextCharLen <= remaining)
+                if (nextCharLen <= remainingBytes)
                     maxCharsToWrite = 1;
                 else
                     break;
             }
             if (maxCharsToWrite > len - pos)
                 maxCharsToWrite = len - pos;
-            int cb = writeChars(buf, off, maxCharsToWrite);
+            int cb = writeChars(buf, off + pos, maxCharsToWrite, charset);
             nByte += cb;
             pos += maxCharsToWrite;
         }
