@@ -2,6 +2,8 @@ package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
@@ -27,7 +29,7 @@ public class IOFormsGenerator
      *
      * @option -c --class =FQCN
      */
-    Class<?> clazz;
+    List<Class<?>> inputClasses = new ArrayList<>();
 
     /**
      * Select members declared on the class and specified depth number of superclasses.
@@ -89,41 +91,43 @@ public class IOFormsGenerator
     protected void mainImpl(String... args)
             throws Exception {
 
-        if (clazz == null) {
+        if (inputClasses.isEmpty()) {
             if (args.length == 0)
-                throw new IllegalArgumentException("expect classname");
-            String fqcn = args[0];
-            clazz = Class.forName(fqcn);
+                throw new IllegalArgumentException("expect classnames");
+            for (String fqcn : args) {
+                Class<?> clazz = Class.forName(fqcn);
+                inputClasses.add(clazz);
+            }
         }
 
-        if (declaredOnly) {
-            fields = ReflectQuery//
-                    .selectDeclaredFields(clazz)//
-                    .maxDepth(maxDepth) //
-                    .staticMode(false) //
-                    .finalMode(false);
-        } else {
-            fields = ReflectQuery.selectFields(clazz) //
-                    .staticMode(false) //
-                    .finalMode(false);
+        for (Class<?> inputClass : inputClasses) {
+
+            if (declaredOnly) {
+                fields = ReflectQuery.selectDeclaredFields(inputClass)//
+                        .maxDepth(maxDepth) //
+                        .staticMode(false) //
+                ;
+            } else {
+                fields = ReflectQuery.selectFields(inputClass) //
+                        .staticMode(false) //
+                ;
+            }
+
+            String packageName = inputClass.getPackage().getName();
+            BCharOut buf = new BCharOut();
+            ITreeOut out = buf.indented();
+
+            out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
+            JavaSourceWriter javaWriter = new JavaSourceWriter(packageName, out);
+            generateJavaSource(javaWriter, fields);
+            out.println();
+            out.leaveln("}");
+
+            ITreeOut cout = Stdio.out.indented();
+            javaWriter.im.dump(cout);
+            cout.println();
+            cout.println(buf);
         }
-        // this=new
-
-        String packageName = clazz.getPackage().getName();
-        BCharOut buf = new BCharOut();
-        ITreeOut out = buf.indented();
-
-        out.enterln("class " + clazz.getSimpleName() + "Fields " + "{");
-        out.println();
-        JavaSourceWriter javaWriter = new JavaSourceWriter(packageName, out);
-        generateJavaSource(javaWriter, fields);
-        out.println();
-        out.leaveln("}");
-
-        out = Stdio.out.indented();
-        javaWriter.im.dump(out);
-        out.println();
-        out.println(buf);
     }
 
     public static void main(String[] args)
