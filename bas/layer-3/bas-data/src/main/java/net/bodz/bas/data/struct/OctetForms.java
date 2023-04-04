@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BByteIn;
 import net.bodz.bas.io.BByteOut;
 import net.bodz.bas.io.IByteIn;
@@ -14,43 +15,48 @@ import net.bodz.bas.io.data.DataOutImplLE;
 
 public class OctetForms {
 
-    public static byte[] pack(IOctetStreamForm octetsForm)
-            throws IOException {
+    public static byte[] pack(IOctetStreamForm octetsForm) {
         return pack(octetsForm, (Charset) null);
     }
 
-    public static byte[] pack(IOctetStreamForm octetsForm, String encoding)
-            throws IOException {
+    public static byte[] pack(IOctetStreamForm octetsForm, String encoding) {
         Charset charset = Charset.forName(encoding);
         return pack(octetsForm, charset);
     }
 
-    public static byte[] pack(IOctetStreamForm octetsForm, Charset charset)
-            throws IOException {
+    public static byte[] pack(IOctetStreamForm octetsForm, Charset charset) {
         BByteOut buf = new BByteOut();
         IDataOut out = DataOutImplLE.from(buf);
         if (charset != null)
             out.setCharset(charset);
-        octetsForm.writeObject(out);
+        try {
+            octetsForm.writeObject(out);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
         byte[] array = buf.toByteArray();
         return array;
     }
 
     public static <T extends IOctetStreamForm> T unpack(byte[] octets, T obj)
-            throws IOException, ParseException {
+            throws ParseException {
         return unpack(octets, obj, (Charset) null);
     }
 
     public static <T extends IOctetStreamForm> T unpack(byte[] octets, T obj, String encoding)
-            throws IOException, ParseException {
+            throws ParseException {
         Charset charset = Charset.forName(encoding);
         return unpack(octets, obj, charset);
     }
 
     public static <T extends IOctetStreamForm> T unpack(byte[] octets, T obj, Charset charset)
-            throws IOException, ParseException {
+            throws ParseException {
         BByteIn in = new BByteIn(octets);
-        return unpack(in, obj, charset);
+        try {
+            return unpack(in, obj, charset);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     public static <T extends IOctetStreamForm> T unpack(IByteIn octets, T obj)
