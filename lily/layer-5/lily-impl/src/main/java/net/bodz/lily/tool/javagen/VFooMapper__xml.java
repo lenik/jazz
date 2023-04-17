@@ -3,8 +3,10 @@ package net.bodz.lily.tool.javagen;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.XmlSourceBuffer;
+import net.bodz.bas.t.catalog.CrossReference;
 import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.TableKey;
 
 public class VFooMapper__xml
         extends JavaGen__xml {
@@ -72,9 +74,11 @@ public class VFooMapper__xml
 
             out.enter();
             templates.sqlColumnNameList(out, table.getColumns(), "a.");
+            out.println();
             out.leave();
 
             out.println("from " + table.getCompactName() + " a");
+
             out.println("]]>");
             out.leave();
         }
@@ -89,12 +93,44 @@ public class VFooMapper__xml
 
             out.enter();
             templates.sqlColumnNameList(out, table.getColumns(), "a.");
+
+            for (CrossReference ref : table.getForeignKeys().values()) {
+                TableKey key = ref.getForeignKey();
+                TableKey parentKey = ref.getParentKey();
+                ITableMetadata parent = ref.getParentTable();
+                String alias = ref.getJavaName();
+                String[] includes = { "label", "description" };
+                for (String incl : includes) {
+                    IColumnMetadata column = parent.getColumn(incl);
+                    if (column != null) {
+                        out.println(", ");
+                        out.printf("\"%s\".\"%s\" %s_%s", alias, incl, alias, incl);
+                    }
+                }
+            }
+            out.println();
             out.leave();
 
             out.println("from " + table.getCompactName() + " a");
-            // out.enter();
-            // out.println("left join zj_qfx_dm_mx m on a.mx_dm=m.mx_dm");
-            // out.leave();
+
+            out.enter();
+            for (CrossReference ref : table.getForeignKeys().values()) {
+                TableKey foreignKey = ref.getForeignKey();
+                TableKey parentKey = ref.getParentKey();
+                String refTable = parentKey.getId().getCompactName(table.getId());
+                String alias = ref.getJavaName();
+                out.printf("left join %s \"%s\"", refTable, alias);
+                String[] columns = foreignKey.getColumnNames();
+                String[] parentColumns = parentKey.getColumnNames();
+                for (int i = 0; i < columns.length; i++) {
+                    out.print(i == 0 ? " on" : " and");
+                    out.printf(" a.\"%s\" = \"%s\".\"%s\"", columns[i], alias, parentColumns[i]);
+                }
+                out.println();
+            }
+
+            out.leave();
+
             out.println("]]>");
             out.leave();
         }

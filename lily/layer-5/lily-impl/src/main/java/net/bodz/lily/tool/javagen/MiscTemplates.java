@@ -576,9 +576,9 @@ public class MiscTemplates {
             IColumnMetadata column = columns.get(i);
             ColumnName cname = project.columnName(column);
             out.print(prefix + cname.columnQuoted);
-            if (i != n - 1)
-                out.print(", ");
-            out.println();
+            if (i != n - 1) {
+                out.println(", ");
+            }
         }
     }
 
