@@ -189,6 +189,22 @@ public class CrossReference
         this.deferrability = deferrability;
     }
 
+    public String getPreferredAlias() {
+        return getPreferredAlias("");
+    }
+
+    public String getPreferredAlias(String prefix) {
+        String[] columnNames = foreignKey.getColumnNames();
+        if (columnNames == null)
+            return null;
+        int n = columnNames.length;
+        if (n == 0)
+            return null;
+        if (n == 1)
+            return prefix + columnNames[0];
+        return prefix + javaName;
+    }
+
     public String getForeignKeySQL() {
         StringBuilder sb = new StringBuilder();
         sb.append("foreign key (");
