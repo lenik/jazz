@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.string.StringId;
@@ -26,6 +25,7 @@ import net.bodz.bas.t.catalog.IColumnMetadata;
 import net.bodz.bas.t.catalog.ITableMetadata;
 import net.bodz.bas.t.map.ListMap;
 import net.bodz.lily.tool.javagen.ColumnName;
+import net.bodz.lily.tool.javagen.DialectFn;
 import net.bodz.lily.tool.javagen.TableName;
 
 public class CatalogConfig
@@ -91,11 +91,11 @@ public class CatalogConfig
     public TableName tableName(ITableMetadata table) {
         TableName n = new TableName();
         n.tableName = table.getName();
-        n.tableNameQuoted = '"' + n.tableName + '"';
+        n.tableNameQuoted = DialectFn.quoteName(n.tableName);
         n.compactName = table.getCompactName();
-        n.compactNameQuoted = sqlQuote(n.compactName);
+        n.compactNameQuoted = DialectFn.quoteQName(n.compactName);
         n.fullName = table.getId().getFullName();
-        n.fullNameQuoted = sqlQuote(n.fullName);
+        n.fullNameQuoted = DialectFn.quoteQName(n.fullName);
 
         String simple = table.getJavaName();
         if (simple == null) {
@@ -112,25 +112,10 @@ public class CatalogConfig
         return n;
     }
 
-    String sqlQuote(String qName) {
-        StringTokenizer tokens = new StringTokenizer(qName, ".");
-        StringBuilder sb = new StringBuilder(qName.length() * 2);
-        int i = 0;
-        while (tokens.hasMoreTokens()) {
-            String token = tokens.nextToken();
-            if (i++ != 0)
-                sb.append(".");
-            sb.append('"');
-            sb.append(token);
-            sb.append('"');
-        }
-        return sb.toString();
-    }
-
     public ColumnName columnName(IColumnMetadata column) {
         ColumnName n = new ColumnName();
         n.column = column.getName();
-        n.columnQuoted = "\"" + n.column + "\""; // PostgreSQL
+        n.columnQuoted = DialectFn.quoteName(n.column);
 
         // boolean javaNameSpecified = column.getJavaName() != null;
         n.field = column.getJavaName();
