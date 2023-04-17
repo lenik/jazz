@@ -1,5 +1,8 @@
 package net.bodz.lily.tool.javagen;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.codegen.XmlSourceBuffer;
@@ -53,7 +56,7 @@ public class VFooMapper__xml
         out.enter();
         {
             for (IColumnMetadata column : j.reorder(table.getColumns(), 2)) {
-                map(out, column, j);
+                map(out, table, column, j);
             }
 
             for (String alias : j.aliasMap.keySet()) {
@@ -71,12 +74,28 @@ public class VFooMapper__xml
         out.println("</resultMap>");
     }
 
-    void map(XmlSourceBuffer out, IColumnMetadata column, JoinColumns j) {
+    static final Set<String> ignoredProperties = new HashSet<>();
+    static {
+        ignoredProperties.add("-");
+    }
+
+    void map(XmlSourceBuffer out, ITableMetadata table, IColumnMetadata column, JoinColumns j) {
         ColumnName cname = project.columnName(column);
         // Class<?> type = column.getType();
+
+        String property = cname.property;
+        if (property == null || ignoredProperties.contains(property))
+            return;
+
+        switch (column.getSqlTypeName()) {
+        case "jsonb":
+            property += ".jsonStr";
+            break;
+        }
+
         String tag = column.isPrimaryKey() ? "id" : "result";
         out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
-                tag, cname.property, cname.column);
+                tag, property, cname.column);
     }
 
     void sql_objlist_sql(XmlSourceBuffer out, ITableMetadata table) {
