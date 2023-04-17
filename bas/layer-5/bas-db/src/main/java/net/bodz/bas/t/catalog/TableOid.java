@@ -81,6 +81,14 @@ public class TableOid
         tableName = s;
     }
 
+    public String getCompactName(TableOid friend) {
+        return getCompactName(friend.toSchemaId());
+    }
+
+    public String getCompactName(TableOid friend, boolean ignoreCase) {
+        return getCompactName(friend.toSchemaId(), ignoreCase);
+    }
+
     public String getCompactName(SchemaOid schema) {
         return getCompactName(schema, false);
     }
