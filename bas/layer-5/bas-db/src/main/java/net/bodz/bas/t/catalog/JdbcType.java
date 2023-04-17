@@ -141,9 +141,7 @@ public enum JdbcType {
             return getPreferredArrayType(sqlTypeName, nullable, signed, precision, scale);
 
         case DISTINCT:
-            // mapping of underlying type
-            logger.error("unsupport distinct type.");
-            return Object.class;
+            return getPreferredDistinctType(sqlTypeName, nullable, signed, precision, scale);
 
         default:
             return defaultType;
@@ -192,6 +190,21 @@ public enum JdbcType {
 
         Class<?> arrayType = java.lang.reflect.Array.newInstance(componentType, 0).getClass();
         return arrayType;
+    }
+
+    public Class<?> getPreferredDistinctType(String sqlTypeName, Boolean nullable, Boolean signed, int precision,
+            int scale) {
+        String noquote = sqlTypeName.replaceAll("\"", "");
+        switch (noquote) {
+        case "information_schema.sql_identifier":
+            return String.class;
+        case "information_schema.yes_or_no":
+            return Boolean.class;
+        case "information_schema.character_data":
+            return String.class;
+        }
+        logger.warn("unsupported distinct type: " + sqlTypeName);
+        return String.class;
     }
 
     private static Map<Integer, JdbcType> sqlTypeMap = new HashMap<>();
