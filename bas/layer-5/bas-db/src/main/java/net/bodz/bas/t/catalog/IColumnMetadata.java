@@ -66,6 +66,8 @@ public interface IColumnMetadata
 //        return parent.indexOfColumn(getName());
 //    }
 
+    ColumnOid getId();
+
     String getName();
 
     default boolean isCompositeProperty() {

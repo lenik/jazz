@@ -28,9 +28,11 @@ public class DefaultColumnMetadata
             IMutableJavaName {
 
     IRowSetMetadata parent;
+    TableOid parentOid;
 
     int ordinalPosition;
 
+    ColumnOid oid;
     String name;
     String javaName;
 
@@ -75,6 +77,13 @@ public class DefaultColumnMetadata
         this.parent = parent;
     }
 
+    public DefaultColumnMetadata(ITableMetadata parent) {
+        if (parent == null)
+            throw new NullPointerException("parent");
+        this.parent = parent;
+        this.parentOid = parent.getId();
+    }
+
     @Override
     public IRowSetMetadata getParent() {
         return parent;
@@ -86,6 +95,13 @@ public class DefaultColumnMetadata
         this.parent = parent;
     }
 
+    public void setParent(ITableMetadata parent) {
+        if (parent == null)
+            throw new NullPointerException("parent");
+        this.parent = parent;
+        this.parentOid = parent.getId();
+    }
+
     @Override
     public int getOrdinal() {
         return ordinalPosition;
@@ -93,6 +109,20 @@ public class DefaultColumnMetadata
 
     public void setOrdinal(int ordinal) {
         this.ordinalPosition = ordinal;
+    }
+
+    @Override
+    public ColumnOid getId() {
+        if (oid == null)
+            if (parentOid == null)
+                return null;
+            else
+                return new ColumnOid(parentOid, name);
+        return oid;
+    }
+
+    public void setId(ColumnOid id) {
+        this.oid = id;
     }
 
     @Override
