@@ -47,7 +47,7 @@ public class CatalogConfig
 
     public final Map<String, String> columnPropertyMap = new HashMap<>();
     public final Map<String, String> tableNameMap = new HashMap<>();
-    public final ListMap<String, String> classMap = new ListMap<>();
+    public final ListMap<String, String> class2TableList = new ListMap<>();
     public final Map<String, Integer> columnLevelMap = new HashMap<>();
     public final Map<String, Integer> joinLevelMap = new HashMap<>();
 
@@ -64,10 +64,10 @@ public class CatalogConfig
     }
 
     List<String> resolveTableList(String className) {
-        List<String> list = classMap.get(className);
+        List<String> list = class2TableList.get(className);
         if (list == null) {
             list = new ArrayList<>();
-            classMap.put(className, list);
+            class2TableList.put(className, list);
         }
         return list;
     }
@@ -163,8 +163,8 @@ public class CatalogConfig
         out.endElement();
 
         out.beginElement(K_CLASS_MAP);
-        for (String type : classMap.keySet()) {
-            List<String> tables = classMap.get(type);
+        for (String type : class2TableList.keySet()) {
+            List<String> tables = class2TableList.get(type);
             String tableList = StringArray.join(", ", tables);
             out.attribute(type, tableList);
         }
@@ -202,8 +202,8 @@ public class CatalogConfig
     public synchronized Map<String, String> getTableClassMap() {
         if (tableClassMap == null) {
             tableClassMap = new HashMap<>();
-            for (String type : classMap.keySet())
-                for (String table : classMap.get(type))
+            for (String type : class2TableList.keySet())
+                for (String table : class2TableList.get(type))
                     tableClassMap.put(table, type);
         }
         return tableClassMap;
@@ -288,7 +288,7 @@ public class CatalogConfig
         out.map(tableNameMap);
 
         out.key(K_CLASS_MAP);
-        out.map(classMap);
+        out.map(class2TableList);
 
         out.key(K_COLUMN_LEVEL);
         out.map(columnLevelMap);

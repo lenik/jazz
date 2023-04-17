@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -201,7 +203,30 @@ public class CrossReference
         if (n == 0)
             return null;
         if (n == 1)
-            return prefix + columnNames[0];
+            return getPreferredSingleColumnAlias(columnNames[0], prefix);
+        else
+            return getPreferredMultiColumnAlias(columnNames, prefix);
+    }
+
+    static final Map<String, String> conventions = new HashMap<>();
+    static {
+        conventions.put("uid", "u");
+        conventions.put("gid", "g");
+    }
+
+    String getPreferredSingleColumnAlias(String column, String prefix) {
+        String alias = conventions.get(column);
+        if (alias == null) {
+            if (column.endsWith("_id") && column.length() > 3) {
+                alias = column.substring(0, column.length() - 3);
+            } else {
+                alias = column;
+            }
+        }
+        return prefix + alias;
+    }
+
+    String getPreferredMultiColumnAlias(String[] columns, String prefix) {
         return prefix + javaName;
     }
 

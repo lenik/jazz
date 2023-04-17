@@ -47,23 +47,36 @@ public class VFooMapper__xml
     }
 
     void resultMap_objlist_map(XmlSourceBuffer out, ITableMetadata table) {
+        JoinColumns j = new JoinColumns(table);
+
         out.printf("<resultMap id=\"objlist_map\" type=\"%s\">\n", project.Foo);
         out.enter();
         {
-            for (int pass = 0; pass < 2; pass++) {
-                for (IColumnMetadata column : table.getColumns()) {
-                    if (pass == 0 != column.isPrimaryKey())
-                        continue;
-                    ColumnName cname = project.columnName(column);
-                    // Class<?> type = column.getType();
-                    String tag = column.isPrimaryKey() ? "id" : "result";
-                    out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
-                            tag, cname.property, cname.column);
-                }
+            for (IColumnMetadata column : j.reorder(table.getColumns(), 2)) {
+                map(out, column, j);
             }
+
+            for (String alias : j.aliasMap.keySet()) {
+                CrossReference ref = j.aliasMap.get(alias);
+                ITableMetadata parent = ref.getParentTable();
+                out.printf("<association property=\"%s\" javaType=\"%s\" resultMap=\"%s.%s\" columnPrefix=\"%s\" />\n", //
+                        ref.getJavaName(), parent.getJavaQName(), //
+                        parent.getJavaQName(), // mapper ns
+                        "objlist_map", // resultMap id
+                        alias + "_");
+            }
+
             out.leave();
         }
         out.println("</resultMap>");
+    }
+
+    void map(XmlSourceBuffer out, IColumnMetadata column, JoinColumns j) {
+        ColumnName cname = project.columnName(column);
+        // Class<?> type = column.getType();
+        String tag = column.isPrimaryKey() ? "id" : "result";
+        out.printf("<%s property=\"%s\" column=\"%s\" />\n", //
+                tag, cname.property, cname.column);
     }
 
     void sql_objlist_sql(XmlSourceBuffer out, ITableMetadata table) {
@@ -86,6 +99,8 @@ public class VFooMapper__xml
     }
 
     void sql_objedit_sql(XmlSourceBuffer out, ITableMetadata table) {
+        JoinColumns j = new JoinColumns(table);
+
         out.println("<sql id=\"objedit_sql\"><![CDATA[");
         out.enter();
         {
@@ -93,20 +108,15 @@ public class VFooMapper__xml
 
             out.enter();
             templates.sqlColumnNameList(out, table.getColumns(), "a.");
-
-            for (CrossReference ref : table.getForeignKeys().values()) {
-                TableKey key = ref.getForeignKey();
-                TableKey parentKey = ref.getParentKey();
-                ITableMetadata parent = ref.getParentTable();
-                String alias = ref.getJavaName();
-                String[] includes = { "label", "description" };
-                for (String incl : includes) {
-                    IColumnMetadata column = parent.getColumn(incl);
-                    if (column != null) {
-                        out.println(", ");
-                        out.printf("\"%s\".\"%s\" %s_%s", alias, incl, alias, incl);
-                    }
-                }
+            for (String columnAlias : j.aliasColumns.keySet()) {
+                AliasedColumn ac = j.aliasColumns.get(columnAlias);
+                String columnName = ac.getColumn().getName();
+                out.println(", ");
+                out.printf("%s.%s %s_%s", //
+                        DialectFn.quoteName(ac.tableAlias), //
+                        DialectFn.quoteName(columnName), //
+                        ac.tableAlias, //
+                        columnName);
             }
             out.println();
             out.leave();
@@ -114,17 +124,21 @@ public class VFooMapper__xml
             out.println("from " + table.getCompactName() + " a");
 
             out.enter();
-            for (CrossReference ref : table.getForeignKeys().values()) {
+            for (String parentAlias : j.aliasMap.keySet()) {
+                CrossReference ref = j.aliasMap.get(parentAlias);
                 TableKey foreignKey = ref.getForeignKey();
                 TableKey parentKey = ref.getParentKey();
                 String refTable = parentKey.getId().getCompactName(table.getId());
-                String alias = ref.getJavaName();
-                out.printf("left join %s \"%s\"", refTable, alias);
+                out.printf("left join %s %s", //
+                        DialectFn.quoteQName(refTable), DialectFn.quoteName(parentAlias));
                 String[] columns = foreignKey.getColumnNames();
                 String[] parentColumns = parentKey.getColumnNames();
                 for (int i = 0; i < columns.length; i++) {
                     out.print(i == 0 ? " on" : " and");
-                    out.printf(" a.\"%s\" = \"%s\".\"%s\"", columns[i], alias, parentColumns[i]);
+                    out.printf(" a.%s = %s.%s", //
+                            DialectFn.quoteName(columns[i]), //
+                            DialectFn.quoteName(parentAlias), //
+                            DialectFn.quoteName(parentColumns[i]));
                 }
                 out.println();
             }
