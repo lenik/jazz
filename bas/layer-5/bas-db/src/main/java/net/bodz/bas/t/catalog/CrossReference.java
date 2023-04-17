@@ -67,6 +67,30 @@ public class CrossReference
     public CrossReference() {
     }
 
+    public void manyToOne(ITableMetadata foreignTable, IColumnMetadata foreignColumn, //
+            ITableMetadata parentTable, IColumnMetadata parentColumn) {
+        manyToOne(foreignTable, new IColumnMetadata[] { foreignColumn }, //
+                parentTable, new IColumnMetadata[] { parentColumn });
+    }
+
+    public void manyToOne(ITableMetadata foreignTable, IColumnMetadata[] foreignColumns, //
+            ITableMetadata parentTable, IColumnMetadata[] parentColumn) {
+
+        TableKey key = new TableKey(foreignTable.getId(), foreignColumns);
+        TableKey parentKey = new TableKey(parentTable.getId(), parentColumn);
+        this.setForeignKey(key);
+        this.setParentKey(parentKey);
+
+        this.setForeignTable(foreignTable);
+        this.setForeignColumns(foreignColumns);
+
+        this.setParentTable(parentTable);
+        this.setParentColumns(parentColumns);
+
+        this.setJavaPackage(parentTable.getJavaPackage());
+        this.setJavaName(parentTable.getJavaName());
+    }
+
     @Override
     public String getJavaPackage() {
         return javaPackage;
