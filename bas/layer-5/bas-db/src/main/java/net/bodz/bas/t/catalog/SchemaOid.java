@@ -33,7 +33,7 @@ public class SchemaOid
         if (contextCatalogName == null)
             return getFullName();
         StringBuilder sb = new StringBuilder();
-        if (isCatalogDifferent(contextCatalogName, ignoreCase)) {
+        if (isCatalogNameNeeded(ignoreCase, contextCatalogName)) {
             sb.append(catalogName);
             sb.append('.');
         }

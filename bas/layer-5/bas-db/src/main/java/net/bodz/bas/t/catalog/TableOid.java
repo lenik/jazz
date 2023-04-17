@@ -81,27 +81,27 @@ public class TableOid
         tableName = s;
     }
 
-    public String getCompactName(TableOid friend) {
-        return getCompactName(friend.toSchemaId());
+    public String getCompactName(TableOid contextTable) {
+        return getCompactName(contextTable.toSchemaId());
     }
 
-    public String getCompactName(TableOid friend, boolean ignoreCase) {
-        return getCompactName(friend.toSchemaId(), ignoreCase);
+    public String getCompactName(boolean ignoreCase, TableOid contextTable) {
+        return getCompactName(ignoreCase, contextTable.toSchemaId());
     }
 
-    public String getCompactName(SchemaOid schema) {
-        return getCompactName(schema, false);
+    public String getCompactName(SchemaOid... searchSchemas) {
+        return getCompactName(false, searchSchemas);
     }
 
-    public String getCompactName(SchemaOid schema, boolean ignoreCase) {
-        if (schema == null)
+    public String getCompactName(boolean ignoreCase, SchemaOid... searchSchemas) {
+        if (searchSchemas == null)
             return getFullName();
         StringBuilder sb = new StringBuilder();
-        if (isCatalogSpecified(schema, ignoreCase)) {
+        if (isCatalogNameNeeded(ignoreCase, searchSchemas)) {
             sb.append(catalogName);
             sb.append('.');
         }
-        if (isSchemaSpecified(schema, ignoreCase)) {
+        if (isSchemaSpecified(ignoreCase, searchSchemas)) {
             sb.append(schemaName);
             sb.append('.');
         }

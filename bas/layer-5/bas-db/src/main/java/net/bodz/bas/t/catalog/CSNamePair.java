@@ -96,53 +96,48 @@ abstract class CSNamePair
         schemaName = s;
     }
 
-    public boolean isCatalogSpecified(CSNamePair orig) {
-        return isCatalogSpecified(orig, false);
-    }
-
-    public boolean isCatalogSpecified(CSNamePair orig, boolean ignoreCase) {
+    public boolean isCatalogNameNeeded(boolean ignoreCase, CSNamePair... searchNames) {
         if (catalogName == null)
             return false;
-        if (orig.catalogName != null)
-            if (ignoreCase) {
-                if (catalogName.equalsIgnoreCase(orig.catalogName))
-                    return false;
-            } else {
-                if (catalogName.equals(orig.catalogName))
-                    return false;
-            }
+        for (CSNamePair np : searchNames)
+            if (np.catalogName != null)
+                if (ignoreCase) {
+                    if (catalogName.equalsIgnoreCase(np.catalogName))
+                        return false;
+                } else {
+                    if (catalogName.equals(np.catalogName))
+                        return false;
+                }
         return true;
     }
 
-    public boolean isCatalogDifferent(String contextCatalogName, boolean ignoreCase) {
+    public boolean isCatalogNameNeeded(boolean ignoreCase, String... searchCatalogNames) {
         if (catalogName == null)
             return false;
-        if (contextCatalogName != null)
-            if (ignoreCase) {
-                if (catalogName.equalsIgnoreCase(contextCatalogName))
-                    return false;
-            } else {
-                if (catalogName.equals(contextCatalogName))
-                    return false;
-            }
+        if (searchCatalogNames != null)
+            for (String n : searchCatalogNames)
+                if (ignoreCase) {
+                    if (catalogName.equalsIgnoreCase(n))
+                        return false;
+                } else {
+                    if (catalogName.equals(n))
+                        return false;
+                }
         return true;
     }
 
-    public boolean isSchemaSpecified(CSNamePair orig) {
-        return isSchemaSpecified(orig, false);
-    }
-
-    public boolean isSchemaSpecified(CSNamePair orig, boolean ignoreCase) {
+    public boolean isSchemaSpecified(boolean ignoreCase, CSNamePair... searchNames) {
         if (schemaName == null)
             return false;
-        if (orig.schemaName != null)
-            if (ignoreCase) {
-                if (schemaName.equalsIgnoreCase(orig.schemaName))
-                    return false;
-            } else {
-                if (schemaName.equals(orig.schemaName))
-                    return false;
-            }
+        for (CSNamePair np : searchNames)
+            if (np.schemaName != null)
+                if (ignoreCase) {
+                    if (schemaName.equalsIgnoreCase(np.schemaName))
+                        return false;
+                } else {
+                    if (schemaName.equals(np.schemaName))
+                        return false;
+                }
         return true;
     }
 
