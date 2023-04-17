@@ -32,11 +32,14 @@ import net.bodz.lily.tool.javagen.config.CatalogConfig;
 import net.bodz.lily.tool.javagen.config.CatalogConfigApplier;
 import net.bodz.lily.tool.javagen.config.FinishProcessor;
 
-@ProgramName("javagen")
-public class JavaGen
+/**
+ * Generate DAO implementations in Java.
+ */
+@ProgramName("daogen")
+public class LilyDaoCodegen
         extends BasicCLI {
 
-    static Logger logger = LoggerFactory.getLogger(JavaGen.class);
+    static Logger logger = LoggerFactory.getLogger(LilyDaoCodegen.class);
     static int maxApiDepth = 2;
 
     /**
@@ -64,9 +67,8 @@ public class JavaGen
     File outDir;
 
     /**
-     * API/Headers output directory. By default, search sibling -api projects and put header files
-     * in src/main/java. If can't find such project, use the same value specified with
-     * <code>--out-dir</code>.
+     * API/Headers output directory. By default, search sibling -api projects and put header files in src/main/java. If
+     * can't find such project, use the same value specified with <code>--out-dir</code>.
      *
      * @option -H =PATH
      */
@@ -137,7 +139,7 @@ public class JavaGen
     DefaultCatalogMetadata catalog = new DefaultCatalogMetadata();
     boolean loadDependedObjects = true;
 
-    public JavaGen(DataContext dataContext) {
+    public LilyDaoCodegen(DataContext dataContext) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");
         this.dataContext = dataContext;
@@ -412,7 +414,7 @@ public class JavaGen
     MavenPomDir findPomDir(File startDir) {
         MavenPomDir pomDir = MavenPomDir.closest(startDir);
         if (pomDir == null) {
-            if (appClass == JavaGen.class)
+            if (appClass == LilyDaoCodegen.class)
                 throw new RuntimeException("Can't locate the maven project from " + startDir);
 
             pomDir = MavenPomDir.fromClass(appClass);
@@ -424,7 +426,7 @@ public class JavaGen
 
     public static void main(String[] args)
             throws Exception {
-        JavaGen app = new JavaGen(//
+        LilyDaoCodegen app = new LilyDaoCodegen(//
                 DataHub.getPreferredHub().getMain());
         app.execute(args);
     }
