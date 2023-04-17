@@ -6,7 +6,7 @@ package net.bodz.lily.security;
  */
 public interface IAccessControlled
         extends
-            IPosixAccessControl {
+            IUnixLikeAccessControl {
 
     Integer getAcl();
 
