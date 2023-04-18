@@ -6,6 +6,8 @@ import java.util.ServiceLoader;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
 import net.bodz.bas.t.order.PriorityComparator;
 
@@ -16,6 +18,8 @@ public class VirtualHostManager
             IVirtualHostResolver {
 
     private static final long serialVersionUID = 1L;
+
+    static final Logger logger = LoggerFactory.getLogger(VirtualHostManager.class);
 
     public VirtualHostManager() {
         reload();
@@ -49,6 +53,8 @@ public class VirtualHostManager
 
     @Override
     public IVirtualHost get(HttpServletRequest request) {
+        if (isEmpty())
+            logger.error("No vhost resolver installed.");
         for (IVirtualHostResolver resolver : this) {
             IVirtualHost vhost = resolver.get(request);
             if (vhost != null)
