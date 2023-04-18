@@ -7,7 +7,7 @@ import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.model.base.CoNode;
 
 @CriteriaClass(CoCategoryMask.class)
-@TypeParameters({ TypeParamType.THIS_TYPE, TypeParamType.ID_TYPE })
+@TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 @UploadHint
 public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
         extends CoNode<self_t, Id> {

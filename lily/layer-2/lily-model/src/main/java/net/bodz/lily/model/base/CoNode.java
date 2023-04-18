@@ -1,6 +1,5 @@
 package net.bodz.lily.model.base;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -13,8 +12,6 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.io.ICharOut;
-import net.bodz.bas.io.Stdio;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -26,7 +23,7 @@ import net.bodz.lily.meta.TypeParameters;
 
 @CriteriaClass(CoNodeMask.class)
 @IncludeMapperXml
-@TypeParameters({ TypeParamType.THIS_TYPE, TypeParamType.ID_TYPE })
+@TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends IdEntity<Id> {
 
@@ -47,16 +44,6 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         this.parent = parent;
         if (parent != null)
             parent.addChild(self());
-    }
-
-    @Override
-    public final Id id() {
-        return getId();
-    }
-
-    @Override
-    public final void id(Id id) {
-        setId(id);
     }
 
     @Override
@@ -464,39 +451,39 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         accept(new ICoNodeVisitor<self_t>() {
 
             @Override
-            public boolean begin(self_t node) {
+            public boolean beginNode(self_t node) {
                 closure.add(node);
                 return true;
-            }
-
-            @Override
-            public void end(self_t node) {
             }
 
         });
         return closure;
     }
 
-    public void accept(ICoNodeVisitor<? super self_t> visitor) {
+    public boolean accept(ICoNodeVisitor<? super self_t> visitor) {
         @SuppressWarnings("unchecked")
         self_t self = (self_t) this;
-        boolean included = visitor.begin(self);
+        if (!visitor.beginNode(self))
+            return false;
 
-        if (included) {
-            for (self_t child : getChildren())
-                child.accept(visitor);
+        if (!children.isEmpty())
+            if (visitor.beginChildren(self)) {
+                for (self_t child : getChildren())
+                    if (!child.accept(visitor))
+                        break;
+                visitor.endChildren(self);
+            }
 
-            visitor.end(self);
-        }
+        return visitor.endNode(self);
     }
 
     public <other_t extends CoNode<other_t, other_id>, other_id> //
-    other_t convert(Function<? super self_t, other_t> factory, int maxDepth) {
+    /*    */other_t convert(Function<? super self_t, other_t> factory, int maxDepth) {
         return _convert(factory, maxDepth, 0);
     }
 
     <other_t extends CoNode<other_t, other_id>, other_id> //
-    other_t _convert(Function<? super self_t, other_t> factory, int maxDepth, int depth) {
+    /*    */other_t _convert(Function<? super self_t, other_t> factory, int maxDepth, int depth) {
         @SuppressWarnings("unchecked")
         other_t other = factory.apply((self_t) this);
         depth++;
@@ -557,21 +544,6 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         if (other.isAncestor((self_t) this))
             return (self_t) this;
         return parent.meet(other.getParent());
-    }
-
-    void dump(ICharOut out)
-            throws IOException {
-        out.write(getGraphPrefix());
-        out.write(getNodeLabel());
-        out.write('\n');
-
-        for (self_t child : children)
-            child.dump(out);
-    }
-
-    public void dump()
-            throws IOException {
-        dump(Stdio.cout);
     }
 
     @SuppressWarnings("unchecked")

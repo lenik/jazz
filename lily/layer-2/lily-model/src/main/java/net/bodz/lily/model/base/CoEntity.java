@@ -27,6 +27,9 @@ public abstract class CoEntity<Id>
 
     Id __id;
 
+    // Use id() to access the id/composite-id property.
+    // Don't use get/setId() here, to reserve property `id` for general purpose.
+
     @Override
     public Id id() {
         return __id;
