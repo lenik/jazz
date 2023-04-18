@@ -252,4 +252,10 @@ public abstract class StructRow
         return true;
     }
 
+    public void assign(StructRow o) {
+        this.creationDate = o.creationDate;
+        this.lastModifiedDate = o.lastModifiedDate;
+        this.version = o.version;
+    }
+
 }

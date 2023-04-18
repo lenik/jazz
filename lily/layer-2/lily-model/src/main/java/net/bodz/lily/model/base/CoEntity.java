@@ -32,6 +32,7 @@ public abstract class CoEntity<Id>
         return __id;
     }
 
+    @Override
     public void id(Id id) {
         this.__id = id;
     }
@@ -53,6 +54,11 @@ public abstract class CoEntity<Id>
             Id newId = idConv.from(_id);
             this.id(newId);
         }
+    }
+
+    public void assign(CoEntity<Id> o) {
+        super.assign(o);
+        __id = o.__id;
     }
 
 }
