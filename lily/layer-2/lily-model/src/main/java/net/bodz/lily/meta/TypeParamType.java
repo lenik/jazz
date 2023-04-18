@@ -4,6 +4,8 @@ public enum TypeParamType {
 
     THIS_TYPE,
 
+    THIS_REC,
+
     ID_TYPE,
 
 }
