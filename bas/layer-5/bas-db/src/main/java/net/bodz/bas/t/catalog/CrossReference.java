@@ -291,7 +291,10 @@ public class CrossReference
         return foreignKey.columnNames.length;
     }
 
-    public boolean updateParentColumns() {
+    /**
+     * Resolve parent columns metadata from parent key.
+     */
+    public boolean resolveParentColumns() {
         if (parentColumns == null) {
             // search thru the catalog.
             if (foreignTable == null)
@@ -318,7 +321,7 @@ public class CrossReference
     /**
      */
     public IColumnMetadata findParentColumn(String foreignColumnName) {
-        if (!updateParentColumns())
+        if (!resolveParentColumns())
             throw new IllegalUsageException("Can't determine parent columns.");
 
         for (int keySeq = 0; keySeq < foreignColumns.length; keySeq++) {

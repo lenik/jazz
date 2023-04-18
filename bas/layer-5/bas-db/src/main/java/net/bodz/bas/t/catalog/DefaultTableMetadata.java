@@ -41,9 +41,9 @@ public class DefaultTableMetadata
 
     String label;
     String description;
-    TableKey primaryKey;
-    Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
-    Map<String, CrossReference> columnForeignKeyMap = new HashMap<>();
+    protected TableKey primaryKey;
+    private Map<String, CrossReference> foreignKeys = new LinkedHashMap<>();
+    private Map<String, CrossReference> columnForeignKeyMap = new HashMap<>();
 
     public DefaultTableMetadata() {
     }
@@ -118,6 +118,7 @@ public class DefaultTableMetadata
         return TableType.VIEW;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

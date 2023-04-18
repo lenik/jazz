@@ -148,6 +148,12 @@ public class ColumnOid
     }
 
     @Override
+    public String toString() {
+        StringBuilder fullName = buildFullName();
+        return fullName.toString();
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(table, columnName);
     }
