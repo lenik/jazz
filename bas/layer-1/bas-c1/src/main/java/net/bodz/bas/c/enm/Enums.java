@@ -13,4 +13,10 @@ public class Enums {
         }
     }
 
+    public static String simpleId(Enum<?> value) {
+        String enumTypeName = value.getClass().getSimpleName();
+        String name = value.name();
+        return enumTypeName + "." + name;
+    }
+
 }
