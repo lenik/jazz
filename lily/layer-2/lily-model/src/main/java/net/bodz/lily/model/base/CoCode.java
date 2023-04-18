@@ -8,7 +8,7 @@ import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.model.base.impl.CoCodeTagTyper;
 
 @Tagsinput(typer = CoCodeTagTyper.class)
-@TypeParameters({ TypeParamType.THIS_TYPE })
+@TypeParameters({ TypeParamType.THIS_REC })
 @IdType(Integer.class)
 public abstract class CoCode<self_t extends CoCode<self_t>>
         extends CoNode<self_t, Integer> {

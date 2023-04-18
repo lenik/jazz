@@ -75,6 +75,7 @@ public abstract class CoObject
     // U2
     private String comment;
     private String image;
+    private String imageAlt;
 
     // F
     private int flags = 0;
@@ -204,6 +205,23 @@ public abstract class CoObject
     @Deprecated
     public void setImage(String image) {
         this.image = image;
+    }
+
+    /**
+     * @label Image Alternate
+     * @label.zh 图像描述
+     * @placeholder 输入图像的替代描述…
+     * @deprecated See #
+     */
+    @Deprecated
+    @OfGroup(StdGroup.Visual.class)
+    @TextInput(maxLength = N_IMAGE)
+    public String getImageAlt() {
+        return imageAlt;
+    }
+
+    public void setImageAlt(String imageAlt) {
+        this.imageAlt = imageAlt;
     }
 
     @Override
@@ -521,6 +539,7 @@ public abstract class CoObject
         ownerGroupId = o.ownerGroupId;
         acl = o.acl;
         accessMode = o.accessMode;
+        this.getImage();
     }
 
 }

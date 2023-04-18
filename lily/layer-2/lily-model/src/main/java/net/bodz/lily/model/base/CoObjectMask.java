@@ -12,8 +12,6 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.bas.t.range.LongRange;
-import net.bodz.bas.t.range.Range;
 import net.bodz.bas.t.range.RangeVarsFn;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
@@ -25,11 +23,16 @@ import net.bodz.lily.security.login.LoginToken;
 public class CoObjectMask
         extends StructRowMask {
 
-    Range idRange = new LongRange();
+//    Range idRange = new LongRange();
 
     String codeName;
+    String codeNamePattern;
+
     String label;
+    String labelPattern;
+
     String description;
+    String descriptionPattern;
 
     String queryText;
 
@@ -44,13 +47,13 @@ public class CoObjectMask
     IntegerRange ownerGroupIdRange;
     Set<Integer> acls;
 
-    public Range getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(Range idRange) {
-        this.idRange = idRange;
-    }
+//    public Range getIdRange() {
+//        return idRange;
+//    }
+//
+//    public void setIdRange(Range idRange) {
+//        this.idRange = idRange;
+//    }
 
     public String getCodeName() {
         return codeName;
@@ -58,6 +61,14 @@ public class CoObjectMask
 
     public void setCodeName(String codeName) {
         this.codeName = codeName;
+    }
+
+    public String getCodeNamePattern() {
+        return codeNamePattern;
+    }
+
+    public void setCodeNamePattern(String codeNamePattern) {
+        this.codeNamePattern = codeNamePattern;
     }
 
     public String getLabel() {
@@ -68,12 +79,28 @@ public class CoObjectMask
         this.label = label;
     }
 
+    public String getLabelPattern() {
+        return labelPattern;
+    }
+
+    public void setLabelPattern(String labelPattern) {
+        this.labelPattern = labelPattern;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDescriptionPattern() {
+        return descriptionPattern;
+    }
+
+    public void setDescriptionPattern(String descriptionPattern) {
+        this.descriptionPattern = descriptionPattern;
     }
 
     public String getQueryText() {
@@ -220,6 +247,18 @@ public class CoObjectMask
     public LoginToken getLoginToken() {
         LoginToken token = LoginToken.fromSession();
         return token;
+    }
+
+    // workarounds..
+
+    IntegerRange flagsRange;
+
+    public IntegerRange getFlagsRange() {
+        return flagsRange;
+    }
+
+    public void setFlagsRange(IntegerRange flagsRange) {
+        this.flagsRange = flagsRange;
     }
 
 }
