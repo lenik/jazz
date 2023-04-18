@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
@@ -31,13 +32,12 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
     private static final long serialVersionUID = 1L;
 
-    private Id id;
-
-    private int refCount;
-    private self_t parent;
+    self_t parent;
+    Id parentId;
     private List<self_t> children = new ArrayList<self_t>();
 
-    // private int depth;
+    int refCount;
+    // int depth;
 
     public CoNode() {
         this(null);
@@ -59,12 +59,14 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         setId(id);
     }
 
+    @Override
     public Id getId() {
-        return id;
+        return id();
     }
 
+    @Override
     public void setId(Id id) {
-        this.id = id;
+        id(id);
     }
 
     /**
@@ -109,6 +111,17 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 // }
     }
 
+    public Id getParentId() {
+        if (parent != null)
+            return parent.getId();
+        return parentId;
+    }
+
+    public void setParentId(Id parentId) {
+        this.parent = null;
+        this.parentId = parentId;
+    }
+
     /**
      * @label Children
      * @label.zh 子结点
@@ -149,11 +162,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         self_t self = (self_t) this;
         parent.removeChild(self);
         parent = null;
+        parentId = null;
     }
 
     public boolean attach(self_t parent) {
         detach();
         this.parent = parent;
+        this.parentId = null;
 
         @SuppressWarnings("unchecked")
         self_t self = (self_t) this;
@@ -475,6 +490,75 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         }
     }
 
+    public <other_t extends CoNode<other_t, other_id>, other_id> //
+    other_t convert(Function<? super self_t, other_t> factory, int maxDepth) {
+        return _convert(factory, maxDepth, 0);
+    }
+
+    <other_t extends CoNode<other_t, other_id>, other_id> //
+    other_t _convert(Function<? super self_t, other_t> factory, int maxDepth, int depth) {
+        @SuppressWarnings("unchecked")
+        other_t other = factory.apply((self_t) this);
+        depth++;
+        if (depth < maxDepth)
+            for (self_t child : children) {
+                other_t otherChild = child._convert(factory, maxDepth, depth);
+                otherChild.attach(other);
+            }
+        return other;
+    }
+
+    public self_t crop(int maxDepth) {
+        return convert((self_t node) -> node.copyNodeOnly(), maxDepth);
+    }
+
+    @SuppressWarnings("unchecked")
+    public self_t copyNodeOnly() {
+        try {
+            self_t copy = (self_t) getClass().newInstance();
+            copy.assignNodeOnly((self_t) this);
+            return copy;
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void assign(self_t o) {
+        super.assign(o);
+        parent = o.parent;
+        parentId = o.parentId;
+        children = o.getChildren();
+        refCount = o.refCount;
+    }
+
+    public void assignNodeOnly(self_t o) {
+        super.assign(o);
+        refCount = o.refCount;
+    }
+
+    public boolean isAncestor(self_t other) {
+        for (self_t p = parent; p != null; p = p.getParent()) {
+            if (p == other)
+                return true;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public self_t meet(self_t other) {
+        if (parent == null)
+            return null;
+        if (other.getParent() == null)
+            return null;
+        if (this == other) // equals?
+            return (self_t) this;
+        if (isAncestor(other))
+            return other;
+        if (other.isAncestor((self_t) this))
+            return (self_t) this;
+        return parent.meet(other.getParent());
+    }
+
     void dump(ICharOut out)
             throws IOException {
         out.write(getGraphPrefix());
@@ -505,7 +589,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
             throw new LoadException(e.getMessage(), e);
         }
         parent = o.readInto("parent", parent, dup);
-
+        parentId = null;
         // children
     }
 

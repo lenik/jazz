@@ -505,4 +505,22 @@ public abstract class CoObject
         return true;
     }
 
+    public void assign(CoObject o) {
+        super.assign(o);
+        codeName = o.codeName;
+        label = o.label;
+        description = o.description;
+        comment = o.comment;
+        image = o.image;
+        flags = o.flags;
+        priority = o.priority;
+        state = o.state;
+        ownerUser = o.ownerUser;
+        ownerGroup = o.ownerGroup;
+        ownerUserId = o.ownerUserId;
+        ownerGroupId = o.ownerGroupId;
+        acl = o.acl;
+        accessMode = o.accessMode;
+    }
+
 }
