@@ -1,5 +1,6 @@
 package net.bodz.lily.geo.impl;
 
+import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoNodeMask;
 import net.bodz.lily.t.struct.GeoLocationMask;
 
@@ -9,10 +10,16 @@ import net.bodz.lily.t.struct.GeoLocationMask;
 public class ZoneMask
         extends CoNodeMask {
 
+    IntegerRange idRange = new IntegerRange();
+
     private Integer categoryId;
     private final GeoLocationMask geo = new GeoLocationMask();
 
     public ZoneMask() {
+    }
+
+    public IntegerRange getIdRange() {
+        return idRange;
     }
 
     public Integer getCategoryId() {
