@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -13,6 +14,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.order.IOrdinal;
 
 public interface IColumnMetadata
@@ -136,8 +138,6 @@ public interface IColumnMetadata
 
     String getDefaultValue();
 
-    boolean isExcluded();
-
     int getVerboseLevel();
 
     int getJoinLevel();
@@ -231,5 +231,13 @@ public interface IColumnMetadata
     default void accept(ICatalogVisitor visitor) {
         visitor.column(this);
     }
+
+    // Java binding
+
+    boolean isExcluded();
+
+    IProperty getProperty();
+
+    <A extends Annotation> A getAnnotation(Class<A> annotationType);
 
 }

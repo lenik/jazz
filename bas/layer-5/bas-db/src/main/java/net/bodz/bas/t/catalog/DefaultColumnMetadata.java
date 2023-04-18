@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
@@ -65,11 +67,13 @@ public class DefaultColumnMetadata
 
     String defaultValue;
 
-    boolean excluded;
     int verboseLevel;
     int joinLevel;
 
     IColumnMetadata parentColumn;
+
+    private boolean excluded;
+    private IProperty property;
 
     public DefaultColumnMetadata(IRowSetMetadata parent) {
         if (parent == null)
@@ -385,15 +389,6 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public boolean isExcluded() {
-        return excluded;
-    }
-
-    public void setExcluded(boolean excluded) {
-        this.excluded = excluded;
-    }
-
-    @Override
     public int getVerboseLevel() {
         return verboseLevel;
     }
@@ -666,6 +661,36 @@ public class DefaultColumnMetadata
     @Override
     public String toString() {
         return name;
+    }
+
+    /** ⇱ Java runtime binding */
+    /* _____________________________ */static section.iface __JAVA_BIND__;
+
+    @Override
+    public boolean isExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(boolean excluded) {
+        this.excluded = excluded;
+    }
+
+    @Override
+    public IProperty getProperty() {
+        return property;
+    }
+
+    public void setProperty(IProperty property) {
+        this.property = property;
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
+        IProperty property = getProperty();
+        if (property == null)
+            return null;
+        else
+            return property.getAnnotation(annotationType);
     }
 
 }

@@ -1,5 +1,6 @@
 package net.bodz.bas.t.catalog;
 
+import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -21,6 +22,8 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.potato.PotatoTypes;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.map.ListMap;
 
 public class DefaultTableMetadata
@@ -34,8 +37,9 @@ public class DefaultTableMetadata
     TableOid oid = new TableOid();
     String javaName;
     String javaPackage;
-    String javaType;
-    boolean excluded;
+    String javaClassName;
+    Class<?> javaClass;
+    IType potatoType;
 
     TableType tableType = getDefaultTableType();
 
@@ -89,20 +93,11 @@ public class DefaultTableMetadata
 
     @Override
     public String getJavaType() {
-        return javaType;
+        return javaClassName;
     }
 
     public void setJavaType(String javaType) {
-        this.javaType = javaType;
-    }
-
-    @Override
-    public boolean isExcluded() {
-        return excluded;
-    }
-
-    public void setExcluded(boolean excluded) {
-        this.excluded = excluded;
+        this.javaClassName = javaType;
     }
 
     @Override
@@ -210,7 +205,7 @@ public class DefaultTableMetadata
         oid.jsonIn(o, opts);
 
         javaName = o.getString(K_JAVA_NAME);
-        javaType = o.getString(K_JAVA_TYPE);
+        javaClassName = o.getString(K_JAVA_TYPE);
 
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
 
@@ -244,7 +239,7 @@ public class DefaultTableMetadata
         oid.readObject(x_table);
 
         javaName = x_table.a(K_JAVA_NAME).getString();
-        javaType = x_table.a(K_JAVA_TYPE).getString();
+        javaClassName = x_table.a(K_JAVA_TYPE).getString();
 
         tableType = x_table.a(K_TABLE_TYPE)//
                 .getEnum(TableType.class, TableType.VIEW);
@@ -422,6 +417,53 @@ public class DefaultTableMetadata
     public String toString() {
         SchemaOid ns = getParent().getId();
         return tableType + " " + oid.getCompactName(ns) + "(" + getColumnNames() + ")";
+    }
+
+    /** ⇱ Java runtime binding */
+    /* _____________________________ */static section.iface __JAVA_BIND__;
+
+    boolean excluded;
+
+    @Override
+    public boolean isExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(boolean excluded) {
+        this.excluded = excluded;
+    }
+
+    @Override
+    public Class<?> getJavaClass() {
+        if (javaClass == null) {
+            if (javaClassName == null)
+                return null;
+            try {
+                javaClass = Class.forName(javaClassName);
+            } catch (ClassNotFoundException e) {
+                return null;
+            }
+        }
+        return javaClass;
+    }
+
+    @Override
+    public IType getPotatoType() {
+        if (potatoType == null) {
+            Class<?> clazz = getJavaClass();
+            if (clazz != null)
+                potatoType = PotatoTypes.getInstance().loadType(clazz);
+        }
+        return potatoType;
+    }
+
+    @Override
+    public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
+        IType type = getPotatoType();
+        if (type == null)
+            return null;
+        else
+            return type.getAnnotation(annotationClass);
     }
 
 }

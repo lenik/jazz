@@ -1,6 +1,7 @@
 package net.bodz.bas.t.catalog;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.potato.element.IType;
 
 public interface ITableMetadata
         extends
@@ -59,8 +61,6 @@ public interface ITableMetadata
     default String getJavaType() {
         return null;
     }
-
-    boolean isExcluded();
 
     TableKey getPrimaryKey();
 
@@ -158,5 +158,21 @@ public interface ITableMetadata
     }
 
     void accept(ICatalogVisitor visitor);
+
+    // Java binding
+
+    boolean isExcluded();
+
+    default Class<?> getJavaClass() {
+        return null;
+    }
+
+    default IType getPotatoType() {
+        return null;
+    }
+
+    default <A extends Annotation> A getAnnotation(Class<A> annotationType) {
+        return null;
+    }
 
 }
