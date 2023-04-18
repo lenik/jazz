@@ -123,6 +123,10 @@ public class ImportSet
         return ref(type).name;
     }
 
+    public String simpleId(Enum<?> val) {
+        return name(val.getClass()) + "." + val.name();
+    }
+
     public int accept(ImportSetVisitor visitor) {
         PackageOrderList orderList = order.getPackageOrder().getOrderList();
 
