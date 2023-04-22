@@ -1,0 +1,81 @@
+# silly record      (fileName.sir)
+#--------------
+
+    brief: just properties of:
+    features:
+        list:
+            - items
+            - look like
+            - YAML elements
+        tree:
+            - indented properties are treated as child nodes.
+        text: \raw \#<format: raw (default for |), norm, quoted, words>
+            | support long line wrapping
+            | must be indented within the parent property
+            | must be prefixed with "| " (notice the space after the bar)
+            | never trim extra spaces
+            |
+            | empty lines are allowed.
+        binary: <format: base64/etc.>
+            | ...
+        multi/properties: can be/assigned at once
+    for-example:
+        compact: \escaped
+            | empty line is not allowed.
+            | long line can be wrapped only in non-raw format.
+        line-wrapping: \quoted (default for ")
+            "in this format"
+            " wrapping is convenient since every line-break\n"
+            "must be specified."
+    compatibility:
+        @attr: is allowed for exchange with XML
+        special-attrs: \# can be named as
+            -dash-prefixed:
+            _underline_prefixed:
+            .dot.prefixed:
+            :colon:prefixed: just allowed if no space in between
+            except: colon(:) and slash(/)
+        xmlns::ex: http://example.com
+        ex::attr: a property declared within xml namespace.
+    semantics:
+        # sugar grammer for dual-line def.
+        property|options: text
+        age: int
+            | 3
+        age|int: 3
+        birthday|datetime(Y-m-d): 1999-9-9
+        langBytes: encode(gbk)
+            | 你好
+            | (decode with default charset and re-encode in gbk)
+        field|decode(utf-8): 你好
+    
+    another-section:
+        | when multiple sections in a single file
+        | that means it is a record-package
+        | and a record-package file should have an extension ".sra"
+        | (.sra means .sir archive.)
+
+    convertion-XML:
+        list1:
+            - items
+            - look like
+            - YAML elements
+        xml:
+            | <list1>
+            |   <item>items</item>
+            |   <item>look like</item>
+            |   <item>YAML elements</item>
+            |  </list1>
+        
+    ObjectModel:
+        node:
+            options:
+                | if property has a payload, ie. appeared as multiple lines,
+                | the first line has a format of:
+                |       "key: [options]"
+                | when the property has no payload, its format is
+                |       "key: text"
+                | the syntax of options part conforms to arguments-lang.
+            value: (text/List/Map/..)
+
+
