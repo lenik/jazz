@@ -1,0 +1,30 @@
+
+channel category
+    foo>
+    foo.bar>
+    foo.bar&foo.baz>
+    
+verbose-level
+    fatal
+    info
+    warn
+    debug diagnostic, test
+
+rich-message
+    color, style
+    overwrite previous, "delete prior"
+    sound
+    email message "Subject:Text"
+        Auto Generated:
+            To: subscribers...
+            From: channel FQCN <op@company.com>
+    html2plain..
+    
+appender
+    email
+    console
+    app-message
+    notification
+    syslog
+    dbus
+

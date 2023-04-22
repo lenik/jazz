@@ -1,0 +1,38 @@
+#!/bin/bin-index run foo/barMain
+
+#comments (blocksize 4K default, blocksize 0 for ASCIZ)
+    64:10\n
+    _________________________________________\n
+    
+    0:5\n
+    filename.db 18001242
+    avatar.jpg 18001242
+    EOF
+    
+    filename.db ............................... 18001242 21981:16819 1\n
+    avatar.jpg .......................................  18001242:16819\n
+
+    shared.lib .......................... 0:#truncate -> ../shared.lib\n
+    EOF
+    
+    256:32 (collation PINYIN, continue 4325234H)
+    
+    foo/bar/a.doc ......................................... 21321:4123\\
+        uid 231, group dev, mode 2321\n
+    
+    filename.db ............................... 18001242 21981:16819 1
+        " jkfld ja dsakd jkl alsd"                                    
+        (line 1992, size 39 lines)                                    
+    
+    avatar.jpg .......................................  18001242:16819
+        " jkfld ja dsakd jkl alsd"                                    
+        line 1992, size 39 lines
+    
+    ##################################################################
+    ######################### PADDING AREA ###########################
+    ##################################################################
+    ############################################## FILE filename.db #
+    EOF
+    Content...
+    
+

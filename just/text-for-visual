@@ -1,0 +1,20 @@
+[#Structure] {
+
+    [...]{ }
+    
+    {
+        foo: bar,
+    }
+    
+    [#parent] {
+        [#k1] { fsda fasd ds
+         fsdfasf 
+        }
+        [#k2] {asf   sdf 
+        sdfsd,
+        }
+    }
+    
+    [eval] {${parent.k1}}
+}
+
