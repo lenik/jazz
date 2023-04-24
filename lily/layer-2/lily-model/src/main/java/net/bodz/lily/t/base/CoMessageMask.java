@@ -10,11 +10,19 @@ public abstract class CoMessageMask
         extends CoMomentIntervalMask {
 
     public Integer formId;
+    public IntegerRange formIdRange;
 
     public Integer opId;
+    public IntegerRange opIdRange;
+
     public Integer categoryId;
+    public IntegerRange categoryIdRange;
+
     public Integer phaseId;
+    public IntegerRange phaseIdRange;
+
     public Integer tagId;
+    public IntegerRange tagIdRange;
     public Collection<Integer> tagIds;
 
     public DateTimeRange mailDateRange;
@@ -38,6 +46,14 @@ public abstract class CoMessageMask
         this.opId = opId;
     }
 
+    public IntegerRange getOpIdRange() {
+        return opIdRange;
+    }
+
+    public void setOpIdRange(IntegerRange opIdRange) {
+        this.opIdRange = opIdRange;
+    }
+
     public Integer getCategoryId() {
         return categoryId;
     }
@@ -54,12 +70,28 @@ public abstract class CoMessageMask
         this.phaseId = phaseId;
     }
 
+    public IntegerRange getPhaseIdRange() {
+        return phaseIdRange;
+    }
+
+    public void setPhaseIdRange(IntegerRange phaseIdRange) {
+        this.phaseIdRange = phaseIdRange;
+    }
+
     public Integer getTagId() {
         return tagId;
     }
 
     public void setTagId(Integer tagId) {
         this.tagId = tagId;
+    }
+
+    public IntegerRange getTagIdRange() {
+        return tagIdRange;
+    }
+
+    public void setTagIdRange(IntegerRange tagIdRange) {
+        this.tagIdRange = tagIdRange;
     }
 
     public Collection<Integer> getTagIds() {
