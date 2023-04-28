@@ -74,7 +74,7 @@ public class HostPortSpecMap<T> {
 
         if (overwrite) {
             if (port == null)
-                ports.setDefault(value);
+                ports.putDefault(value);
             else
                 ports.put(port, value);
             return true;

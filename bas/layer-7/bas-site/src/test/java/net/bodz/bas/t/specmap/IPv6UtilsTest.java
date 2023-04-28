@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.specmap.IPv6Utils;
 
 public class IPv6UtilsTest
         extends Assert {

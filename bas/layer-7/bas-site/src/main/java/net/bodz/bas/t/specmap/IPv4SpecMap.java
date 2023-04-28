@@ -1,176 +1,168 @@
 package net.bodz.bas.t.specmap;
 
-public class IPv4SpecMap<val_t>
-        implements
-            INetAddrSpecMap<val_t>,
-            IIPv4SpecMap<val_t> {
+import org.apache.commons.text.StringTokenizer;
 
-    IntSpecNode<val_t> map;
+import net.bodz.bas.err.ParseException;
+
+public class IPv4SpecMap<val_t>
+        extends NetAddrSpecMap<val_t> {
 
     public IPv4SpecMap() {
-        this.map = new IntSpecNode<>();
+        super(8);
     }
 
-    private static Integer[] box(int[] address) {
-        Integer[] boxv = new Integer[address.length];
-        for (int i = 0; i < address.length; i++)
-            boxv[i] = address[i];
-        return boxv;
+    public boolean containsKey(String ip)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return containsKey(address);
     }
 
-    @Override
-    public boolean containsKey(int[] address) {
-        return map.find(box(address)) != null;
+    public boolean containsKey(int a, int b, int c, int d) {
+        int[] address = { a, b, c, d };
+        return containsKey(address);
     }
 
-    @Override
-    public val_t find(int[] address) {
-        IntSpecNode<val_t> node = map.find(box(address));
-        if (node == null)
-            return null;
-        else
-            return node.getValue();
+    public val_t find(String ip)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return find(address);
     }
 
-    @Override
-    public val_t put(int[] address, val_t value) {
-        IntSpecNode<val_t> node = map.create(box(address));
-        val_t last = node.getValue();
-        node.setValue(value);
-        return last;
+    public val_t find(int a, int b, int c, int d) {
+        int[] address = { a, b, c, d };
+        return find(address);
     }
 
-    @Override
-    public boolean add(int[] address, val_t value) {
-        IntSpecNode<val_t> node = map.create(box(address));
-        if (node.getValue() != null)
-            return false;
-        node.setValue(value);
-        return true;
+    public val_t put(String ip, val_t value)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return put(address, value);
     }
 
-    @Override
-    public val_t remove(int[] address) {
-        IntSpecNode<val_t> node = map.find(box(address));
-        if (node == null)
-            return null;
-        return node.removeValue();
+    public val_t put(int a, int b, int c, int d, val_t value) {
+        int[] address = { a, b, c, d };
+        return put(address, value);
     }
 
-    @Override
-    public void removeAllTops() {
-        map.removeAllTops();
+    public boolean add(String ip, val_t value)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return add(address, value);
     }
 
-    @Override
-    public boolean containsPrefix(int[] address, int prefix) {
-        IntSpecNode<val_t> node = getPrefixNode(address, prefix);
-        if (node == null)
-            return false;
-        else
-            return node.hasValue();
+    public boolean add(int a, int b, int c, int d, val_t value) {
+        int[] address = { a, b, c, d };
+        return add(address, value);
     }
 
-    @Override
-    public val_t getPrefix(int[] address, int prefix) {
-        IntSpecNode<val_t> node = getPrefixNode(address, prefix);
-        if (node == null)
-            return null;
-        else
-            return node.getValue();
+    public val_t remove(String ip)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return remove(address);
     }
 
-    IntSpecNode<val_t> getPrefixNode(int[] address, int prefix) {
-        return getOrAddPrefixNode(address, prefix, false);
+    public val_t remove(int a, int b, int c, int d) {
+        int[] address = { a, b, c, d };
+        return remove(address);
     }
 
-    IntSpecNode<val_t> getOrAddPrefixNode(int[] address, int prefix, boolean create) {
-        IntSpecNode<val_t> node = map;
-        int i = 0;
-        while (prefix >= 8) {
-            prefix -= 8;
-            int component = address[i++];
-            IntSpecNode<val_t> next = node.get(component);
-            if (next == null)
-                if (create)
-                    next = node.getOrAdd(component, new IntSpecNode<>(node));
-                else
-                    return null;
-            node = next;
+    public IntSpecNode<val_t> resolvePrefix(String ip, int prefix, boolean create)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return super.resolvePrefix(address, prefix, create);
+    }
+
+    public IntSpecNode<val_t> resolvePrefix(String ip, int prefix, boolean create)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return super.resolvePrefix(address, prefix, create);
+    }
+
+    public boolean containsPrefix(String ip, int prefix)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return containsPrefix(address, prefix);
+    }
+
+    public val_t getPrefix(String ip, int prefix)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return getPrefix(address, prefix);
+    }
+
+    public val_t putPrefix(String ip, int prefix, val_t value)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return putPrefix(address, prefix, value);
+    }
+
+    public boolean addPrefix(String ip, int prefix, val_t value)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return addPrefix(address, prefix, value);
+    }
+
+    public val_t removePrefix(String ip, int prefix)
+            throws ParseException {
+        int[] address = IPv4Utils.parse(ip);
+        return removePrefix(address, prefix);
+    }
+
+}
+
+class IPv4Utils {
+
+    private static int[] _RaiseError = new int[0];
+
+    public static int[] parse(String ip)
+            throws ParseException {
+        return _parse(ip, _RaiseError);
+    }
+
+    public static int[] parse(String ip, int[] fallback) {
+        try {
+            return _parse(ip, fallback);
+        } catch (ParseException e) {
+            assert false;
+            return fallback;
         }
-        if (prefix == 0) {
-            IntSpecNode<val_t> next = node.getDefault();
-            if (next == null)
-                if (create)
-                    next = node.getOrAddDefault(new IntSpecNode<>(node));
-                else
-                    return null;
-            node = next;
-        } else {
-            int component = address[i];
-            int varbits = 8 - prefix;
-            int mask = ~((1 << varbits) - 1);
-            int capacity = 1 << varbits;
-            int start = component & mask;
-            int end = start + capacity;
-            IntSpecNode<val_t> next = node.getRange(start, end);
-            if (next == null)
-                if (create)
-                    next = node.getOrAddRange(start, end, new IntSpecNode<>(node));
-                else
-                    return null;
-            node = next;
-        }
-        return node;
     }
 
-    @Override
-    public val_t putPrefix(int[] address, int prefix, val_t value) {
-        IntSpecNode<val_t> node = createPrefix(address, prefix);
-        val_t last = node.getValue();
-        node.setValue(value);
-        return last;
-    }
-
-    @Override
-    public boolean addPrefix(int[] address, int prefix, val_t value) {
-        IntSpecNode<val_t> node = createPrefix(address, prefix);
-        return node.addValue(value);
-    }
-
-    public IntSpecNode<val_t> createPrefix(int[] address, int prefix) {
-        return getOrAddPrefixNode(address, prefix, true);
-    }
-
-    @Override
-    public val_t removePrefix(int[] address, int prefix) {
-        IntSpecNode<val_t> node = getPrefixNode(address, prefix);
-        if (node == null)
+    public static int[] _parse(String ip, int[] fallback)
+            throws ParseException {
+        if (ip == null)
             return null;
-        else
-            return node.removeValue();
+
+        int[] address = new int[4];
+        StringTokenizer tokens = new StringTokenizer(ip, '.');
+        int n = 0;
+        while (tokens.hasNext()) {
+            if (n >= address.length) {
+                if (fallback != _RaiseError)
+                    return fallback;
+                else
+                    throw new ParseException("more numbers than required: " + ip);
+            }
+            String token = tokens.nextToken();
+            int num = Integer.parseInt(token);
+            address[n++] = num;
+        }
+        if (n != address.length)
+            if (fallback != _RaiseError)
+                return fallback;
+            else
+                throw new ParseException("require more numbers: " + ip);
+        return address;
     }
 
-    @Override
-    public void removeAllPrefixes() {
-        map.removeAllRanges();
-    }
-
-    public val_t getValue() {
-        return map.getValue();
-    }
-
-    public void setValue(val_t value) {
-        map.setValue(value);
-    }
-
-    public void accept(ISpecNodeVisitor<? super IntSpecNode<val_t>, ? super Integer, ? super val_t> visitor) {
-        map.accept(visitor);
-    }
-
-    @Override
-    public String toString() {
-        return map.toString();
+    public static String format(int[] address) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < address.length; i++) {
+            if (i != 0)
+                sb.append('.');
+            sb.append(address[i]);
+        }
+        return sb.toString();
     }
 
 }

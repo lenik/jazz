@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.t.specmap.IPv4SpecMap;
-import net.bodz.bas.t.specmap.SpecNodeDumper;
 
 public class IPv4SpecMapTest
         extends Assert {

@@ -80,7 +80,7 @@ public interface ISpecNode<node_t extends ISpecNode<node_t, key_t, val_t>, key_t
             if (key != null)
                 put(key, node);
             else
-                setDefault(node);
+                putDefault(node);
         } else {
             if (key != null) {
                 if (!add(key, node))

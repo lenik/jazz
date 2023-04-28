@@ -19,11 +19,15 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
         rangeMap = new TreeMap<>(RangeComparator.getInstance());
     }
 
-    static <K extends Comparable<K>> StartStopRange<K> box(K key) {
-        return new StartStopRange<>(key, key);
+//    private static <K extends Comparable<K>> IRange<K> top(K key) {
+//        return new StartEndRange<>(key, key);
+//    }
+
+    private static <K extends Comparable<K>> IRange<K> bottom(K key) {
+        return new StartEndRange<>(key, null);
     }
 
-    static <K extends Comparable<K>> StartEndRange<K> range(K start, K end) {
+    static <K extends Comparable<K>> IRange<K> range(K start, K end) {
         return new StartEndRange<>(start, end);
     }
 
@@ -37,12 +41,17 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
 
     @Override
     protected void _findAll(key_t key, List<ILayerKeyValue<val_t>> list) {
-        StartStopRange<key_t> ptr = box(key);
+//        IRange<key_t> top = top(key);
+        IRange<key_t> bottom = bottom(key);
         int n = list.size();
-        for (Entry<IRange<key_t>, val_t> entry : rangeMap.headMap(ptr, true).entrySet())
-            if (entry.getKey().contains(key))
+        for (Entry<IRange<key_t>, val_t> entry : rangeMap.headMap(bottom, true).entrySet()) {
+            IRange<key_t> pos = entry.getKey();
+//            if (pos.compareTo(top) < 0)
+//                break;
+            if (pos.contains(key))
                 // insert in reversed order, so the closest entry comes first.
                 list.add(n, LayerKeyValue.range(entry.getKey(), entry.getValue()));
+        }
         super._findAll(key, list);
     }
 
@@ -66,9 +75,13 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
 
     @Override
     public IRange<key_t> findRangeFor(key_t key) {
-        StartStopRange<key_t> ptr = box(key);
-        for (Entry<IRange<key_t>, val_t> ent = rangeMap.floorEntry(ptr); //
-                ent != null; ent = rangeMap.lowerEntry(ent.getKey()))
+//        IRange<key_t> min = top(key);
+        IRange<key_t> max = bottom(key);
+        for (Entry<IRange<key_t>, val_t> ent = rangeMap.floorEntry(max); // pos = max
+                ent != null //
+//                        && ent.getKey().compareTo(min) >= 0 //
+                ; // pos >= min
+                ent = rangeMap.lowerEntry(ent.getKey())) // pos--
             if (ent.getKey().contains(key))
                 return ent.getKey();
         return null;

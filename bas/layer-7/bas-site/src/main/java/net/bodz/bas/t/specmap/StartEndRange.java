@@ -179,7 +179,7 @@ public class StartEndRange<T extends Comparable<T>>
         }
         T stop2 = o.getStop();
         T end2 = o.getEnd();
-        if (end2 == null && stop2 != null) {
+        if (stop2 != null) { // o is start-stop
             if (end == stop2)
                 return -1;
             if (end == null)
