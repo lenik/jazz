@@ -18,7 +18,9 @@ import java.util.Set;
  * <p>
  * explicit -> (range/pattern/... -> ) default
  */
-public interface ISpecMap<key_t, val_t> {
+public interface ISpecMap<key_t, val_t>
+        extends
+            IDefaultHolder<val_t> {
 
     /**
      * find in all layers, from top down.
@@ -68,30 +70,6 @@ public interface ISpecMap<key_t, val_t> {
     val_t remove(key_t key);
 
     void removeAllTops();
-
-    // default layer
-
-    boolean containsDefault();
-
-    val_t getDefault();
-
-    void setDefault(val_t value);
-
-    default boolean addDefault(val_t value) {
-        if (containsDefault())
-            return false;
-        setDefault(value);
-        return true;
-    }
-
-    default val_t getOrAddDefault(val_t initial) {
-        if (addDefault(initial))
-            return initial;
-        else
-            return getDefault();
-    }
-
-    val_t removeDefault();
 
     void accept(ISpecMapVisitor<? super key_t, ? super val_t> visitor);
 

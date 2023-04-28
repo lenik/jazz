@@ -161,7 +161,7 @@ public class DefaultSpecMap<key_t, val_t>
     }
 
     @Override
-    public boolean containsDefault() {
+    public boolean hasDefault() {
         return hasDefaultVal;
     }
 
@@ -174,9 +174,11 @@ public class DefaultSpecMap<key_t, val_t>
     }
 
     @Override
-    public void setDefault(val_t value) {
+    public val_t putDefault(val_t value) {
+        val_t last = this.defaultVal;
         this.defaultVal = value;
         this.hasDefaultVal = true;
+        return last;
     }
 
     @Override
