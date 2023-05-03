@@ -88,6 +88,11 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
     }
 
     @Override
+    public boolean hasRange() {
+        return !rangeMap.isEmpty();
+    }
+
+    @Override
     public Set<IRange<key_t>> rangeKeySet() {
         return rangeMap.keySet();
     }

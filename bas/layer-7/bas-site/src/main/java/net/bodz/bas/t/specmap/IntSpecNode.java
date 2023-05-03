@@ -12,6 +12,11 @@ public class IntSpecNode<val_t>
     }
 
     @Override
+    public Class<Integer> getKeyType() {
+        return Integer.class;
+    }
+
+    @Override
     public IntSpecNode<val_t> createNode() {
         return new IntSpecNode<>(this);
     }
@@ -19,15 +24,10 @@ public class IntSpecNode<val_t>
     @Override
     public void removeAllRanges() {
         super.removeAllRanges();
-        for (Integer top : keySet()) {
-            IntSpecNode<val_t> val = get(top);
+        for (Integer top : topKeySet()) {
+            IntSpecNode<val_t> val = getTop(top);
             val.removeAllRanges();
         }
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 
 }

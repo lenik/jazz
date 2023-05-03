@@ -9,17 +9,6 @@ public class IPv6SpecMap<val_t>
         super(16);
     }
 
-    public boolean containsKey(String ip)
-            throws ParseException {
-        int[] address = IPv6Utils.parse(ip);
-        return containsKey(address);
-    }
-
-    public boolean containsKey(int a, int b, int c, int d, int h, int i, int j, int k) {
-        int[] address = { a, b, c, d, h, i, j, k };
-        return containsKey(address);
-    }
-
     public val_t find(String ip)
             throws ParseException {
         int[] address = IPv6Utils.parse(ip);
@@ -31,43 +20,54 @@ public class IPv6SpecMap<val_t>
         return find(address);
     }
 
-    public val_t put(String ip, val_t value)
+    public boolean containsTop(String ip)
             throws ParseException {
         int[] address = IPv6Utils.parse(ip);
-        return put(address, value);
+        return containsTop(address);
     }
 
-    public val_t put(int a, int b, int c, int d, int h, int i, int j, int k, val_t value) {
+    public boolean containsKey(int a, int b, int c, int d, int h, int i, int j, int k) {
         int[] address = { a, b, c, d, h, i, j, k };
-        return put(address, value);
+        return containsTop(address);
     }
 
-    public boolean add(String ip, val_t value)
+    public val_t putTop(String ip, val_t value)
             throws ParseException {
         int[] address = IPv6Utils.parse(ip);
-        return add(address, value);
+        return putTop(address, value);
     }
 
-    public boolean add(int a, int b, int c, int d, int h, int i, int j, int k, val_t value) {
+    public val_t putTop(int a, int b, int c, int d, int h, int i, int j, int k, val_t value) {
         int[] address = { a, b, c, d, h, i, j, k };
-        return add(address, value);
+        return putTop(address, value);
     }
 
-    public val_t remove(String ip)
+    public boolean addTop(String ip, val_t value)
             throws ParseException {
         int[] address = IPv6Utils.parse(ip);
-        return remove(address);
+        return addTop(address, value);
     }
 
-    public val_t remove(int a, int b, int c, int d, int h, int i, int j, int k) {
+    public boolean addTop(int a, int b, int c, int d, int h, int i, int j, int k, val_t value) {
         int[] address = { a, b, c, d, h, i, j, k };
-        return remove(address);
+        return addTop(address, value);
+    }
+
+    public val_t removeTop(String ip)
+            throws ParseException {
+        int[] address = IPv6Utils.parse(ip);
+        return removeTop(address);
+    }
+
+    public val_t removeTop(int a, int b, int c, int d, int h, int i, int j, int k) {
+        int[] address = { a, b, c, d, h, i, j, k };
+        return removeTop(address);
     }
 
     public IntSpecNode<val_t> getOrAddPrefixNode(String ip, int prefix, boolean create)
             throws ParseException {
         int[] address = IPv6Utils.parse(ip);
-        return resolvePrefix(address, prefix, create);
+        return resolvePrefixNode(address, prefix, create);
     }
 
     public boolean containsPrefix(String ip, int prefix)

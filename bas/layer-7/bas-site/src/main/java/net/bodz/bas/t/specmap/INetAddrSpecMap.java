@@ -2,15 +2,15 @@ package net.bodz.bas.t.specmap;
 
 public interface INetAddrSpecMap<val_t> {
 
-    boolean containsKey(int[] address);
-
     val_t find(int[] address);
 
-    val_t put(int[] address, val_t value);
+    boolean containsTop(int[] address);
 
-    boolean add(int[] address, val_t value);
+    val_t putTop(int[] address, val_t value);
 
-    val_t remove(int[] address);
+    boolean addTop(int[] address, val_t value);
+
+    val_t removeTop(int[] address);
 
     void removeAllTops();
 
