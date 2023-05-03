@@ -66,7 +66,7 @@ public class HostPortSpecMap<T> {
             else
                 ports = hostPortMap.getOrAddDomain(headDomain.b, newPorts);
         } else {
-            ports = hostPortMap.getOrAdd(hostSpec, newPorts);
+            ports = hostPortMap.getOrAddTop(hostSpec, newPorts);
         }
 
         if (ports == null)
@@ -76,13 +76,13 @@ public class HostPortSpecMap<T> {
             if (port == null)
                 ports.putDefault(value);
             else
-                ports.put(port, value);
+                ports.putTop(port, value);
             return true;
         } else {
             if (port == null)
                 return ports.addDefault(value);
             else
-                return ports.add(port, value);
+                return ports.addTop(port, value);
         }
     }
 

@@ -3,7 +3,7 @@ package net.bodz.bas.t.specmap;
 public interface ISpecMapVisitor<key_t, val_t> {
 
     default boolean beginTops() {
-        return true;
+        return false;
     }
 
     default boolean visitTop(key_t key, val_t val) {
@@ -14,7 +14,7 @@ public interface ISpecMapVisitor<key_t, val_t> {
     }
 
     default boolean beginRanges() {
-        return true;
+        return false;
     }
 
     default boolean visitRange(IRange<? extends key_t> rangeKey, val_t val) {

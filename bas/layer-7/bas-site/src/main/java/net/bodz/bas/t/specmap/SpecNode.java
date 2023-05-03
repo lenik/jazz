@@ -25,6 +25,11 @@ public abstract class SpecNode<node_t extends SpecNode<node_t, key_t, val_t>, ke
     }
 
     @Override
+    public boolean isEmptyNode() {
+        return !(hasTop() || hasDefault() || hasValue());
+    }
+
+    @Override
     public boolean hasValue() {
         return hasValue;
     }
@@ -69,9 +74,17 @@ public abstract class SpecNode<node_t extends SpecNode<node_t, key_t, val_t>, ke
 
     @Override
     public void accept(ISpecNodeVisitor<? super node_t, ? super key_t, ? super val_t> visitor) {
-        super.accept(visitor);
-        if (hasValue)
-            visitor.visitNodeValue(value);
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+        if (visitor.isPruneEmptyNode())
+            if (isEmptyNode())
+                return;
+        if (visitor.beginNode(_this)) {
+            super.accept(visitor);
+            if (hasValue)
+                visitor.visitNodeValue(value);
+            visitor.endNode(_this);
+        }
     }
 
     @Override

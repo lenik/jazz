@@ -11,6 +11,8 @@ public interface IRangeMap<key_t extends Comparable<key_t>, val_t> {
         return range != null;
     }
 
+    boolean hasRange();
+
     Set<IRange<key_t>> rangeKeySet();
 
     boolean containsRange(key_t start, key_t end);

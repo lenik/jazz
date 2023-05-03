@@ -9,12 +9,14 @@ import java.util.Set;
  * <p>
  * A spec map is layered: the top layer is finer, the bottom layer is coarser.
  * <p>
- * In the bottom layer, you can define a value for range of keys, and in the top layer, you can define for only one key.
+ * In the bottom layer, you can define a value for range of keys, and in the top layer, you can
+ * define for only one key.
  * <p>
- * When querying the map, if a key is defined in the upper layer, it's override the key in the lower level. This is the
- * default behavior for the normal map functions like {@link Map#get(Object)} and {@link Map#containsKey(Object)}. If
- * you want to manipulate the specific layer in the map, you have to use the methods for the corresponding layer, like
- * <code>getRange</code>, <code>containsPattern</code>, <code>putDomain</code>, <code>removeIpMask</code>, etc.
+ * When querying the map, if a key is defined in the upper layer, it's override the key in the lower
+ * level. This is the default behavior for the normal map functions like {@link Map#get(Object)} and
+ * {@link Map#containsKey(Object)}. If you want to manipulate the specific layer in the map, you
+ * have to use the methods for the corresponding layer, like <code>getRange</code>,
+ * <code>containsPattern</code>, <code>putDomain</code>, <code>removeIpMask</code>, etc.
  * <p>
  * explicit -> (range/pattern/... -> ) default
  */
@@ -45,29 +47,31 @@ public interface ISpecMap<key_t, val_t>
 
     // top layer
 
-    Set<key_t> keySet();
+    boolean hasTop();
 
-    boolean containsKey(key_t key);
+    Set<key_t> topKeySet();
 
-    val_t get(key_t key);
+    boolean containsTop(key_t key);
 
-    val_t put(key_t key, val_t value);
+    val_t getTop(key_t key);
 
-    default boolean add(key_t key, val_t value) {
-        if (containsKey(key))
+    val_t putTop(key_t key, val_t value);
+
+    default boolean addTop(key_t key, val_t value) {
+        if (containsTop(key))
             return false;
-        put(key, value);
+        putTop(key, value);
         return true;
     }
 
-    default val_t getOrAdd(key_t key, val_t initial) {
-        if (add(key, initial))
+    default val_t getOrAddTop(key_t key, val_t initial) {
+        if (addTop(key, initial))
             return initial;
         else
-            return get(key);
+            return getTop(key);
     }
 
-    val_t remove(key_t key);
+    val_t removeTop(key_t key);
 
     void removeAllTops();
 

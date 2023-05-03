@@ -25,6 +25,12 @@ public abstract class RangeSpecNode<node_t extends RangeSpecNode<node_t, key_t, 
     }
 
     @Override
+    public boolean isEmptyNode() {
+        getRange(null, null);
+        return !(hasValue() || hasTop() || hasDefault());
+    }
+
+    @Override
     public boolean hasValue() {
         return hasValue;
     }
@@ -35,11 +41,6 @@ public abstract class RangeSpecNode<node_t extends RangeSpecNode<node_t, key_t, 
             return value;
         else
             return null;
-    }
-
-    public void setValue(val_t value) {
-        this.value = value;
-        this.hasValue = true;
     }
 
     @Override
@@ -69,9 +70,17 @@ public abstract class RangeSpecNode<node_t extends RangeSpecNode<node_t, key_t, 
 
     @Override
     public void accept(ISpecNodeVisitor<? super node_t, ? super key_t, ? super val_t> visitor) {
-        super.accept(visitor);
-        if (hasValue)
-            visitor.visitNodeValue(value);
+        @SuppressWarnings("unchecked")
+        node_t _this = (node_t) this;
+        if (visitor.isPruneEmptyNode())
+            if (isEmptyNode())
+                return;
+        if (visitor.beginNode(_this)) {
+            super.accept(visitor);
+            if (hasValue)
+                visitor.visitNodeValue(value);
+            visitor.endNode(_this);
+        }
     }
 
     @Override
