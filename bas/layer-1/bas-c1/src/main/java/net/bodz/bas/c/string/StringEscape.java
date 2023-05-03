@@ -6,6 +6,14 @@ import net.bodz.bas.err.ParseException;
 
 public class StringEscape {
 
+    static final char CHAR_Q = '\'';
+    static final char CHAR_QQ = '\"';
+    static final String STR_Q = String.valueOf(CHAR_Q);
+    static final String STR_QQ = String.valueOf(CHAR_QQ);
+
+    static final String STR_Q_Q = STR_Q + STR_Q;
+    static final String STR_QQ_QQ = STR_QQ + STR_QQ;
+
     static String hex(int n) {
         return Integer.toHexString(n);
     }
@@ -38,10 +46,10 @@ public class StringEscape {
             else
                 // assert ch >= 0x20 && ch <= 0x7f;
                 switch (ch) {
-                case '\'': // OPT escape option
+                case CHAR_Q: // OPT escape option
                     return "\\'";
                 // return "'";
-                case '"':
+                case CHAR_QQ:
                     return "\\\"";
                 case '\\':
                     return "\\\\";
@@ -76,13 +84,21 @@ public class StringEscape {
     public static String doubleQ(String s) {
         if (s == null)
             return null;
-        return s.replace("\'", "\'\'");
+        return s.replace(STR_Q, STR_Q_Q);
     }
 
     public static String doubleQQ(String s) {
         if (s == null)
             return null;
-        return s.replace("\"", "\"\"");
+        return s.replace(STR_QQ, STR_QQ_QQ);
+    }
+
+    public static String parseQuotableJavaString(String s)
+            throws ParseException {
+        if (s.startsWith(STR_Q) || s.startsWith(STR_QQ))
+            return parseQuotedJavaString(s);
+        else
+            return s;
     }
 
     public static String parseQuotedJavaString(String s)
@@ -93,7 +109,7 @@ public class StringEscape {
         if (s.length() < 2)
             throw new ParseException("not quoted");
         char start = s.charAt(0);
-        if (start != '\"' && start != '\'')
+        if (start != CHAR_Q && start != CHAR_QQ)
             throw new ParseException("invalid quote char");
         if (start != s.charAt(s.length() - 1))
             throw new ParseException("unbalanced quote char");
