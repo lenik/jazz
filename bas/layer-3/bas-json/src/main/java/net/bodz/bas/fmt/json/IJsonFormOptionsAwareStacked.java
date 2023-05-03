@@ -1,17 +1,17 @@
 package net.bodz.bas.fmt.json;
 
-import net.bodz.bas.t.list.Stack;
+import net.bodz.bas.t.list.StackList;
 
 public interface IJsonFormOptionsAwareStacked {
 
-    Stack<JsonFormOptions> getJsonFormOptionsStack();
+    StackList<JsonFormOptions> getJsonFormOptionsStack();
 
     default JsonFormOptions getDefaultJsonFormOptions() {
         return JsonFormOptions.DEFAULT;
     }
 
     default JsonFormOptions getJsonFormOptions() {
-        Stack<JsonFormOptions> stack = getJsonFormOptionsStack();
+        StackList<JsonFormOptions> stack = getJsonFormOptionsStack();
         if (stack.isEmpty())
             return getDefaultJsonFormOptions();
         else

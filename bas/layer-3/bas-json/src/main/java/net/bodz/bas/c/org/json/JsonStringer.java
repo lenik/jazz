@@ -7,7 +7,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.t.list.ArrayStack;
-import net.bodz.bas.t.list.Stack;
+import net.bodz.bas.t.list.StackList;
 import net.bodz.fork.org.json.JSONException;
 import net.bodz.fork.org.json.JSONStringer;
 
@@ -19,13 +19,13 @@ public class JsonStringer
         implements
             IJsonOut {
 
-    Stack<JsonFormOptions> optionsStack = new ArrayStack<>();
+    StackList<JsonFormOptions> optionsStack = new ArrayStack<>();
 
     public JsonStringer() {
     }
 
     @Override
-    public Stack<JsonFormOptions> getJsonFormOptionsStack() {
+    public StackList<JsonFormOptions> getJsonFormOptionsStack() {
         return optionsStack;
     }
 

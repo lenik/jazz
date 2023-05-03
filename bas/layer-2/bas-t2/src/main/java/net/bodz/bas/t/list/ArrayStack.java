@@ -9,7 +9,7 @@ import java.util.EmptyStackException;
  */
 public class ArrayStack<T>
         extends ArrayList<T>
-        implements Stack<T> {
+        implements StackList<T> {
 
     private static final long serialVersionUID = 9005024230227614006L;
 

@@ -3,7 +3,7 @@ package net.bodz.bas.t.list;
 import java.util.EmptyStackException;
 import java.util.List;
 
-public interface Stack<T>
+public interface StackList<T>
         extends
             List<T> {
 
@@ -16,5 +16,9 @@ public interface Stack<T>
             throws EmptyStackException;
 
     void top(T newTop);
+
+    default T peek() {
+        return top();
+    }
 
 }

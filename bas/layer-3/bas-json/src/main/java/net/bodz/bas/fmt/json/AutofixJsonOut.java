@@ -6,7 +6,7 @@ import java.util.Random;
 
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.t.list.LinkedStack;
-import net.bodz.bas.t.list.Stack;
+import net.bodz.bas.t.list.StackList;
 import net.bodz.bas.t.model.IWrapper;
 import net.bodz.fork.org.json.JSONException;
 
@@ -17,7 +17,7 @@ public class AutofixJsonOut
 
     private final IJsonOut out;
 
-    Stack<JsonOutState> states = new LinkedStack<>();
+    StackList<JsonOutState> states = new LinkedStack<>();
     boolean autoFix = true;
     String autoFixPrefix = "AuToFiX_";
 
@@ -57,7 +57,7 @@ public class AutofixJsonOut
     }
 
     @Override
-    public Stack<JsonFormOptions> getJsonFormOptionsStack() {
+    public StackList<JsonFormOptions> getJsonFormOptionsStack() {
         return out.getJsonFormOptionsStack();
     }
 

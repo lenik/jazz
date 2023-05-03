@@ -9,7 +9,7 @@ import java.util.LinkedList;
  */
 public class LinkedStack<T>
         extends LinkedList<T>
-        implements Stack<T> {
+        implements StackList<T> {
 
     static final long serialVersionUID = 9193050893163832214L;
 

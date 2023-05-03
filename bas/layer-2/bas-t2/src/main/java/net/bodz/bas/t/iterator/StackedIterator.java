@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import net.bodz.bas.t.list.LinkedStack;
-import net.bodz.bas.t.list.Stack;
+import net.bodz.bas.t.list.StackList;
 
 /**
  * @see NestedIterator
@@ -12,7 +12,7 @@ import net.bodz.bas.t.list.Stack;
 public class StackedIterator<T>
         implements Iterator<T> {
 
-    private Stack<Iterator<? extends T>> stack;
+    private StackList<Iterator<? extends T>> stack;
     private Iterator<? extends T> currentIterator;
     private Iterator<? extends T> lastIterator;
 
