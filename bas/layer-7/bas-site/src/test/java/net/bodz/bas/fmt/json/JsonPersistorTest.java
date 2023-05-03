@@ -87,7 +87,7 @@ public class JsonPersistorTest
         populate(obj);
         persistor.writeTyped(out, obj);
         String json = out.toString();
-        dump("rst", json);
+        dump("json", json);
         Object back = persistor.readTyped(json);
         assertEquals(obj, back);
     }
@@ -321,7 +321,7 @@ class RstFoo
                 throws ParseException, ElementHandlerException {
             switch (name) {
             case "name":
-                RstFoo.this.name = StringEscape.parseQuotedJavaString(data);
+                RstFoo.this.name = StringEscape.parseQuotableJavaString(data);
                 return true;
             case "age":
                 age = Integer.parseInt(data);
