@@ -2,7 +2,6 @@ package net.bodz.bas.t.specmap;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.UnexpectedException;
 
 public class NetBindingMap<val_t> {
 
@@ -14,9 +13,6 @@ public class NetBindingMap<val_t> {
             throws ParseException {
         AddressKind kind = AddressKind.detect(addressPort);
         switch (kind) {
-        case DOMAIN_NAME:
-            return nameMap.find(addressPort);
-
         case IPv4:
             InetPort32 ap = InetPort32.parse(addressPort);
             return ipv4Map.find(ap);
@@ -26,7 +22,8 @@ public class NetBindingMap<val_t> {
             return ipv6Map.find(ap6);
 
         default:
-            throw new UnexpectedException("invalid unknown address kind: " + kind);
+        case DOMAIN_NAME:
+            return nameMap.find(addressPort);
         }
     }
 
@@ -34,9 +31,6 @@ public class NetBindingMap<val_t> {
             throws ParseException {
         AddressKind kind = AddressKind.detect(address);
         switch (kind) {
-        case DOMAIN_NAME:
-            return nameMap.find(address, port);
-
         case IPv4:
             InetPort32 ap = InetPort32.parse(address, port);
             return ipv4Map.find(ap);
@@ -46,7 +40,8 @@ public class NetBindingMap<val_t> {
             return ipv6Map.find(ap6);
 
         default:
-            throw new UnexpectedException("invalid unknown address kind: " + kind);
+        case DOMAIN_NAME:
+            return nameMap.find(address, port);
         }
     }
 
@@ -54,9 +49,6 @@ public class NetBindingMap<val_t> {
             throws ParseException {
         AddressKind kind = AddressKind.detect(addressPort);
         switch (kind) {
-        case DOMAIN_NAME:
-            return nameMap.getTop(addressPort);
-
         case IPv4:
             InetPort32 ap = InetPort32.parse(addressPort);
             return ipv4Map.getTop(ap);
@@ -66,7 +58,8 @@ public class NetBindingMap<val_t> {
             return ipv6Map.getTop(ap6);
 
         default:
-            throw new UnexpectedException("invalid unknown address kind: " + kind);
+        case DOMAIN_NAME:
+            return nameMap.getTop(addressPort);
         }
     }
 
@@ -74,9 +67,6 @@ public class NetBindingMap<val_t> {
             throws ParseException {
         AddressKind kind = AddressKind.detect(address);
         switch (kind) {
-        case DOMAIN_NAME:
-            return nameMap.getTop(address, port);
-
         case IPv4:
             InetPort32 ap = InetPort32.parse(address, port);
             return ipv4Map.getTop(ap);
@@ -86,8 +76,92 @@ public class NetBindingMap<val_t> {
             return ipv6Map.getTop(ap6);
 
         default:
-            throw new UnexpectedException("invalid unknown address kind: " + kind);
+        case DOMAIN_NAME:
+            return nameMap.getTop(address, port);
         }
+    }
+
+    public void putTop(String address, val_t value)
+            throws ParseException {
+        AddressKind kind = AddressKind.detect(address);
+        switch (kind) {
+        case IPv4:
+            InetPort32 ap = InetPort32.parse(address);
+            ipv4Map.putTop(ap, value);
+            return;
+
+        case IPv6:
+            InetPort32 ap6 = InetPort32.parse6(address);
+            ipv6Map.putTop(ap6, value);
+            return;
+
+        default:
+        case DOMAIN_NAME:
+            nameMap.putTop(address, value);
+            return;
+        }
+    }
+
+    public void putTop(String address, Integer port, val_t value)
+            throws ParseException {
+        AddressKind kind = AddressKind.detect(address);
+        switch (kind) {
+        case IPv4:
+            InetPort32 ap = InetPort32.parse(address, port);
+            ipv4Map.putTop(ap, value);
+            return;
+
+        case IPv6:
+            InetPort32 ap6 = InetPort32.parse6(address, port);
+            ipv6Map.putTop(ap6, value);
+            return;
+
+        default:
+        case DOMAIN_NAME:
+            nameMap.putTop(address, port, value);
+            return;
+        }
+    }
+
+    public boolean addTop(String address, val_t value)
+            throws ParseException {
+        AddressKind kind = AddressKind.detect(address);
+        switch (kind) {
+        case IPv4:
+            InetPort32 ap = InetPort32.parse(address);
+            return ipv4Map.addTop(ap, value);
+
+        case IPv6:
+            InetPort32 ap6 = InetPort32.parse6(address);
+            return ipv6Map.addTop(ap6, value);
+
+        default:
+        case DOMAIN_NAME:
+            return nameMap.addTop(address, value);
+        }
+    }
+
+    public boolean addTop(String address, Integer port, val_t value)
+            throws ParseException {
+        AddressKind kind = AddressKind.detect(address);
+        switch (kind) {
+        case IPv4:
+            InetPort32 ap = InetPort32.parse(address, port);
+            return ipv4Map.addTop(ap, value);
+
+        case IPv6:
+            InetPort32 ap6 = InetPort32.parse6(address, port);
+            return ipv6Map.addTop(ap6, value);
+
+        default:
+        case DOMAIN_NAME:
+            return nameMap.addTop(address, port, value);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return nameMap.toString();
     }
 
 }

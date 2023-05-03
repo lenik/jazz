@@ -55,7 +55,7 @@ public class PostgresBackedVhostResolver
     }
 
     public IVirtualHost findAndAdd(HttpServletRequest request) {
-        String vhostName = getHostName(request, false);
+        String vhostName = ServerNaming.getServerSimpleName(request);
         IVirtualHost vhost = get(vhostName);
         if (vhost != null)
             return vhost;
