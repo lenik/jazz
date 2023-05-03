@@ -27,4 +27,8 @@ public interface IDefaultContextIdsResolver
      */
     Collection<String> resolveContextIds(int level);
 
+    default Collection<String> resolveContextIds() {
+        return resolveContextIds(0);
+    }
+
 }

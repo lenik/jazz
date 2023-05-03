@@ -39,4 +39,13 @@ public class FromCurrentProjectName
         return ids;
     }
 
+    static final FromCurrentProjectName INSTANCE = new FromCurrentProjectName();
+
+    public static String getLastProjectName() {
+        List<String> leaves = (List<String>) INSTANCE.resolveContextIds();
+        if (leaves.isEmpty())
+            return null;
+        return leaves.get(leaves.size() - 1);
+    }
+
 }
