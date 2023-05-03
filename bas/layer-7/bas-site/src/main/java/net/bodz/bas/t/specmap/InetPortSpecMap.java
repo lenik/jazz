@@ -2,12 +2,21 @@ package net.bodz.bas.t.specmap;
 
 import net.bodz.bas.err.IllegalUsageException;
 
-public class IPv4PortSpecMap<T> {
+public class InetPortSpecMap<T> {
 
-    IPv4SpecMap<IntSpecMap<T>> ipPortMap;
+    // IPv4SpecMap<IntSpecMap<T>> ipPortMap;
+    NetAddrSpecMap<IntSpecMap<T>> ipPortMap;
 
-    public IPv4PortSpecMap() {
-        ipPortMap = new IPv4SpecMap<>();
+    InetPortSpecMap(NetAddrSpecMap<IntSpecMap<T>> map) {
+        ipPortMap = map;
+    }
+
+    public static <T> InetPortSpecMap<T> ipv4() {
+        return new InetPortSpecMap<>(new IPv4SpecMap<>());
+    }
+
+    public static <T> InetPortSpecMap<T> ipv6() {
+        return new InetPortSpecMap<>(new IPv6SpecMap<>());
     }
 
     public T find(IInetPort ap) {
@@ -21,15 +30,26 @@ public class IPv4PortSpecMap<T> {
             return portMap.getDefault();
     }
 
-    public void put(IInetPort ap, T value) {
-        _putOrAdd(ap, value, true);
+    public T getTop(IInetPort ap) {
+        IntSpecMap<T> portMap = ipPortMap.getTop(ap.getAddress32());
+        if (portMap == null)
+            return null;
+        int port = ap.getPort();
+        if (port != 0)
+            return portMap.getTop(port);
+        else
+            return null;
     }
 
-    public boolean add(IInetPort ap, T value) {
-        return _putOrAdd(ap, value, false);
+    public void putTop(IInetPort ap, T value) {
+        _putOrAddTop(ap, value, true);
     }
 
-    boolean _putOrAdd(IInetPort ap, T value, boolean overwrite) {
+    public boolean addTop(IInetPort ap, T value) {
+        return _putOrAddTop(ap, value, false);
+    }
+
+    boolean _putOrAddTop(IInetPort ap, T value, boolean overwrite) {
         if (ap == null)
             throw new NullPointerException("ap");
 
