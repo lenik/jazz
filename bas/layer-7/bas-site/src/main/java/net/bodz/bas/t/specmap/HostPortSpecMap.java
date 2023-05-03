@@ -29,31 +29,49 @@ public class HostPortSpecMap<T> {
             return portMap.getDefault();
     }
 
-    public void put(String hostPortSpec, T value) {
+    public T getTop(String hostPortSpec) {
         Split split = Split.hostPort(hostPortSpec);
         Integer port = null;
         if (split.b != null)
             port = Integer.parseInt(split.b);
-        put(split.a, port, value);
+        return getTop(split.a, port);
     }
 
-    public void put(String hostSpec, Integer port, T value) {
-        _putOrAdd(hostSpec, port, value, true);
+    public T getTop(String hostName, Integer port) {
+        IntSpecMap<T> portMap = hostPortMap.getTop(hostName);
+        if (portMap == null)
+            return null;
+        if (port != null)
+            return null;
+        else
+            return portMap.getDefault();
     }
 
-    public boolean add(String hostPortSpec, T value) {
+    public void putTop(String hostPortSpec, T value) {
         Split split = Split.hostPort(hostPortSpec);
         Integer port = null;
         if (split.b != null)
             port = Integer.parseInt(split.b);
-        return add(split.a, port, value);
+        putTop(split.a, port, value);
     }
 
-    public boolean add(String hostSpec, Integer port, T value) {
-        return _putOrAdd(hostSpec, port, value, false);
+    public void putTop(String hostSpec, Integer port, T value) {
+        _putOrAddTop(hostSpec, port, value, true);
     }
 
-    boolean _putOrAdd(String hostSpec, Integer port, T value, boolean overwrite) {
+    public boolean addTop(String hostPortSpec, T value) {
+        Split split = Split.hostPort(hostPortSpec);
+        Integer port = null;
+        if (split.b != null)
+            port = Integer.parseInt(split.b);
+        return addTop(split.a, port, value);
+    }
+
+    public boolean addTop(String hostSpec, Integer port, T value) {
+        return _putOrAddTop(hostSpec, port, value, false);
+    }
+
+    boolean _putOrAddTop(String hostSpec, Integer port, T value, boolean overwrite) {
         if (hostSpec == null)
             throw new NullPointerException("hostSpec");
 

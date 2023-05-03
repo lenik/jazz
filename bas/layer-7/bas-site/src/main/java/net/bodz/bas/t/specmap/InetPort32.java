@@ -117,13 +117,23 @@ public class InetPort32
             throws ParseException {
         int colon = ipPort.indexOf(':');
         String ip = ipPort;
-        String mask = null;
         String port = null;
+        Integer portInt = null;
         if (colon != -1) {
             ip = ipPort.substring(0, colon);
             port = ipPort.substring(colon + 1);
+            try {
+                portInt = Integer.parseInt(port);
+            } catch (NumberFormatException e) {
+                throw new ParseException(e);
+            }
         }
+        return parse(ip, portInt);
+    }
 
+    public static InetPort32 parse(String ip, Integer port)
+            throws ParseException {
+        String mask = null;
         int slash = ip.lastIndexOf('/');
         if (slash != 0) {
             mask = ip.substring(slash + 1);
@@ -138,12 +148,7 @@ public class InetPort32
         }
 
         if (port != null)
-            try {
-                int portNum = Integer.parseInt(port);
-                ap.setPort((short) portNum);
-            } catch (NumberFormatException e) {
-                throw new ParseException(e);
-            }
+            ap.setPort(port.shortValue());
         return ap;
     }
 
@@ -151,7 +156,8 @@ public class InetPort32
             throws ParseException {
         String ip;
         String port;
-        if (ipPort.startsWith("[")) { // has port number
+        Integer portInt;
+        if (ipPort.startsWith("[")) { // has port number?
             int rb = ipPort.indexOf(1, ']');
             if (rb == -1)
                 throw new ParseException("Found '[', but without ']': " + ipPort);
@@ -161,24 +167,30 @@ public class InetPort32
                 if (!remain.startsWith(":"))
                     throw new ParseException("expect ':': " + remain);
                 port = remain.substring(1);
+                try {
+                    portInt = Integer.parseInt(port);
+                } catch (NumberFormatException e) {
+                    throw new ParseException(e);
+                }
             } else {
                 port = null;
+                portInt = null;
             }
         } else {
             ip = ipPort;
             port = null;
+            portInt = null;
         }
+        return parse6(ip, portInt);
+    }
 
+    public static InetPort32 parse6(String ip, Integer port)
+            throws ParseException {
         int[] address = IPv6Utils.parse(ip);
         InetPort32 ap = new InetPort32(8);
         ap.address = address;
         if (port != null)
-            try {
-                int portNum = Integer.parseInt(port);
-                ap.setPort((short) portNum);
-            } catch (NumberFormatException e) {
-                throw new ParseException(e);
-            }
+            ap.setPort(port.shortValue());
         return ap;
     }
 
