@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.bodz.bas.db.ctx.FromCurrentProjectName;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
@@ -57,7 +58,9 @@ public class MutableVirtualHostResolver
                 target = ServerNaming.getServerSimpleName(request);
                 break;
             case "/project":
-                ;
+                String lastProjectName = FromCurrentProjectName.getLastProjectName();
+                target = lastProjectName;
+                break;
             }
         }
 
