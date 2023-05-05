@@ -1,13 +1,16 @@
 package net.bodz.bas.t.specmap;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.bodz.bas.err.IllegalUsageException;
 
-public class InetPortSpecMap<T> {
+public class InetPortSpecMap<val_t>
+        extends AbstractSpecMap<IInetPort, val_t> {
 
-    // IPv4SpecMap<IntSpecMap<T>> ipPortMap;
-    NetAddrSpecMap<IntSpecMap<T>> ipPortMap;
+    NetAddrSpecMap<IntSpecMap<val_t>> ipPortMap;
 
-    InetPortSpecMap(NetAddrSpecMap<IntSpecMap<T>> map) {
+    InetPortSpecMap(NetAddrSpecMap<IntSpecMap<val_t>> map) {
         ipPortMap = map;
     }
 
@@ -19,8 +22,9 @@ public class InetPortSpecMap<T> {
         return new InetPortSpecMap<>(new IPv6SpecMap<>());
     }
 
-    public T find(IInetPort ap) {
-        IntSpecMap<T> portMap = ipPortMap.find(ap.getAddress32());
+    @Override
+    public val_t find(IInetPort ap) {
+        IntSpecMap<val_t> portMap = ipPortMap.find(ap.getAddress32());
         if (portMap == null)
             return null;
         int port = ap.getPort();
@@ -30,8 +34,9 @@ public class InetPortSpecMap<T> {
             return portMap.getDefault();
     }
 
-    public T getTop(IInetPort ap) {
-        IntSpecMap<T> portMap = ipPortMap.getTop(ap.getAddress32());
+    @Override
+    public val_t getTop(IInetPort ap) {
+        IntSpecMap<val_t> portMap = ipPortMap.getTop(ap.getAddress32());
         if (portMap == null)
             return null;
         int port = ap.getPort();
@@ -41,28 +46,26 @@ public class InetPortSpecMap<T> {
             return null;
     }
 
-    public void putTop(IInetPort ap, T value) {
-        _putOrAddTop(ap, value, true);
+    @Override
+    public val_t putTop(IInetPort ap, val_t value) {
+        return _putOrAddTop(ap, value, true);
     }
 
-    public boolean addTop(IInetPort ap, T value) {
-        return _putOrAddTop(ap, value, false);
+    @Override
+    public boolean addTop(IInetPort ap, val_t value) {
+        return _putOrAddTop(ap, value, false) == null;
     }
 
-    boolean _putOrAddTop(IInetPort ap, T value, boolean overwrite) {
+    val_t _putOrAddTop(IInetPort ap, val_t value, boolean overwrite) {
         if (ap == null)
             throw new NullPointerException("ap");
 
         int prefix = ap.getMaskBits();
-        IntSpecNode<IntSpecMap<T>> term;
-        IntSpecMap<T> ports = null;
-        IntSpecMap<T> newPorts = new IntSpecMap<>();
+        IntSpecMap<val_t> ports = null;
         if (prefix != 0) {
-            term = ipPortMap.resolvePrefixNode(ap.getAddress32(), prefix, true);
-            assert term != null; // empty ..?
-            ports = term.getValue();
+            ports = ipPortMap.resolvePrefixNode(ap.getAddress32(), prefix, true).getValue();
         } else {
-            ipPortMap.getOrAddTop(ap.getAddress32(), newPorts);
+            ports = ipPortMap.lazyCreateNode(ap.getAddress32()).getValue();
         }
 
         if (ports == null)
@@ -71,16 +74,64 @@ public class InetPortSpecMap<T> {
         int port = ap.getPort();
         if (overwrite) {
             if (port == 0)
-                ports.putDefault(value);
+                return ports.putDefault(value);
             else
-                ports.putTop(port, value);
-            return true;
+                return ports.putTop(port, value);
         } else {
-            if (port == 0)
-                return ports.addDefault(value);
-            else
-                return ports.addTop(port, value);
+            val_t old;
+            if (port == 0) {
+                old = ports.getDefault();
+                ports.addDefault(value);
+            } else {
+                old = ports.getTop(port);
+                ports.addTop(port, value);
+            }
+            return old;
         }
+    }
+
+    @Override
+    public boolean hasTop() {
+        return !topKeySet().isEmpty();
+    }
+
+    @Override
+    public Set<IInetPort> topKeySet() {
+        Set<IInetPort> hosts = new HashSet<>();
+        for (int[] topKey : ipPortMap.topKeySet()) {
+            IntSpecMap<val_t> portMap = ipPortMap.getTop(topKey);
+            for (Integer port : portMap.topKeySet()) {
+                InetPort32 ap = new InetPort32(topKey);
+                if (port != null)
+                    ap.setPort(port);
+                hosts.add(ap);
+            }
+            if (portMap.hasDefault()) {
+                InetPort32 ap = new InetPort32(topKey);
+                hosts.add(ap);
+            }
+        }
+        return hosts;
+    }
+
+    @Override
+    public boolean containsTop(IInetPort key) {
+        return topKeySet().contains(key);
+    }
+
+    @Override
+    public val_t removeTop(IInetPort key) {
+        IntSpecMap<val_t> removed = ipPortMap.removeTop(key.getAddress32());
+        int port = key.getPort();
+        if (port == 0)
+            return removed.removeDefault();
+        else
+            return removed.removeTop(port);
+    }
+
+    @Override
+    public void removeAllTops() {
+        ipPortMap.removeAllTops();
     }
 
 }

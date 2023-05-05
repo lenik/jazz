@@ -10,6 +10,8 @@ public interface IRange<T extends Comparable<T>>
 
     T getEnd();
 
+    boolean isStartEnd();
+
     boolean contains(T val);
 
     boolean contains(IRange<T> range);

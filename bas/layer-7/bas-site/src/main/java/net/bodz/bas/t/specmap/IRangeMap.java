@@ -17,6 +17,8 @@ public interface IRangeMap<key_t extends Comparable<key_t>, val_t> {
 
     boolean containsRange(key_t start, key_t end);
 
+    val_t getRange(IRange<key_t> range);
+
     val_t getRange(key_t start, key_t end);
 
     val_t putRange(key_t start, key_t end, val_t val);
@@ -34,6 +36,8 @@ public interface IRangeMap<key_t extends Comparable<key_t>, val_t> {
         else
             return getRange(start, end);
     }
+
+    val_t removeRange(IRange<key_t> range);
 
     val_t removeRange(key_t start, key_t end);
 

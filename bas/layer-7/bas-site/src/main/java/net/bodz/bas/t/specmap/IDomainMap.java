@@ -4,36 +4,36 @@ import java.util.Set;
 
 public interface IDomainMap<val_t> {
 
-    String findDomainFor(String key);
+    String findDomainNameFor(String key);
 
     default boolean containsDomainFor(String key) {
-        String domain = findDomainFor(key);
+        String domain = findDomainNameFor(key);
         return domain != null;
     }
 
-    Set<String> domainKeySet();
+    Set<String> domainNames();
 
-    boolean containsDomain(String domain);
+    boolean containsDomain(String name);
 
-    val_t getDomain(String domain);
+    val_t getDomain(String name);
 
-    val_t putDomain(String domain, val_t val);
+    val_t putDomain(String name, val_t val);
 
-    default boolean addDomain(String domain, val_t val) {
-        if (containsDomain(domain))
+    default boolean addDomain(String name, val_t val) {
+        if (containsDomain(name))
             return false;
-        putDomain(domain, val);
+        putDomain(name, val);
         return true;
     }
 
-    default val_t getOrAddDomain(String domain, val_t initial) {
-        if (addDomain(domain, initial))
-            return initial;
+    default val_t getOrAddDomain(String name, val_t initialVal) {
+        if (addDomain(name, initialVal))
+            return initialVal;
         else
-            return getDomain(domain);
+            return getDomain(name);
     }
 
-    val_t removeDomain(String domain);
+    val_t removeDomain(String name);
 
     void removeAllDomains();
 

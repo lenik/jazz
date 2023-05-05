@@ -100,7 +100,7 @@ public class InetPort32
             String sub;
             if (next == -1) {
                 sub = address.substring(end);
-                next = end;
+                end = len;
             } else {
                 sub = address.substring(end, next);
                 end = next + 1;
@@ -135,7 +135,7 @@ public class InetPort32
             throws ParseException {
         String mask = null;
         int slash = ip.lastIndexOf('/');
-        if (slash != 0) {
+        if (slash != -1) {
             mask = ip.substring(slash + 1);
             ip = ip.substring(0, slash);
         }
@@ -186,7 +186,7 @@ public class InetPort32
 
     public static InetPort32 parse6(String ip, Integer port)
             throws ParseException {
-        int[] address = IPv6Utils.parse(ip);
+        int[] address = IPv6Address.parse(ip);
         InetPort32 ap = new InetPort32(8);
         ap.address = address;
         if (port != null)
