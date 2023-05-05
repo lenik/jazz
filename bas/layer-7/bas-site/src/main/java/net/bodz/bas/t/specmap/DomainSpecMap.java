@@ -13,6 +13,7 @@ public class DomainSpecMap<val_t>
             IDomainMap<val_t> {
 
     Map<String, val_t> domainMap;
+    // boolean maxLevels;
 
     public DomainSpecMap() {
         this(SortOrder.NONE);
@@ -25,9 +26,9 @@ public class DomainSpecMap<val_t>
 
     @Override
     protected val_t _find(String key) {
-        String domain = findDomainFor(key);
-        if (domain != null)
-            return domainMap.get(domain);
+        String name = findDomainNameFor(key);
+        if (name != null)
+            return domainMap.get(name);
         return super._find(key);
     }
 
@@ -41,55 +42,55 @@ public class DomainSpecMap<val_t>
 
     @Override
     protected SpecKeyLocation _whichKey(String key) {
-        String domain = findDomainFor(key);
-        if (domain != null)
-            return SpecKeyLocation.domain(domain);
+        String name = findDomainNameFor(key);
+        if (name != null)
+            return SpecKeyLocation.domain(name);
         return super._whichKey(key);
     }
 
     @Override
     protected ILayerKeyValue<val_t> _removeFromAnyLayer(String key) {
-        String domain = findDomainFor(key);
+        String domain = findDomainNameFor(key);
         if (domain != null)
             return LayerKeyValue.domain(domain, domainMap.remove(domain));
         return super._removeFromAnyLayer(key);
     }
 
     @Override
-    public String findDomainFor(String key) {
-        String p = key;
-        while (p != null) {
-            if (domainMap.containsKey(p))
-                return p;
-            Split split = Split.headDomain(p);
-            p = split.b;
+    public String findDomainNameFor(String key) {
+        String parent = key;
+        while (parent != null) {
+            if (domainMap.containsKey(parent))
+                return parent;
+            Split split = Split.headDomain(parent);
+            parent = split.b;
         }
         return null;
     }
 
     @Override
-    public Set<String> domainKeySet() {
+    public Set<String> domainNames() {
         return domainMap.keySet();
     }
 
     @Override
-    public boolean containsDomain(String domain) {
-        return domainMap.containsKey(domain);
+    public boolean containsDomain(String name) {
+        return domainMap.containsKey(name);
     }
 
     @Override
-    public val_t getDomain(String domain) {
-        return domainMap.get(domain);
+    public val_t getDomain(String name) {
+        return domainMap.get(name);
     }
 
     @Override
-    public val_t putDomain(String domain, val_t val) {
-        return domainMap.put(domain, val);
+    public val_t putDomain(String name, val_t val) {
+        return domainMap.put(name, val);
     }
 
     @Override
-    public val_t removeDomain(String domain) {
-        return domainMap.remove(domain);
+    public val_t removeDomain(String name) {
+        return domainMap.remove(name);
     }
 
     @Override

@@ -103,8 +103,13 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
     }
 
     @Override
-    public val_t getRange(key_t start, key_t end) {
-        return rangeMap.get(range(start, end));
+    public final val_t getRange(IRange<key_t> range) {
+        return rangeMap.get(range);
+    }
+
+    @Override
+    public final val_t getRange(key_t start, key_t end) {
+        return getRange(range(start, end));
     }
 
     @Override
@@ -113,8 +118,13 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
     }
 
     @Override
-    public val_t removeRange(key_t start, key_t end) {
-        return rangeMap.remove(range(start, end));
+    public val_t removeRange(IRange<key_t> range) {
+        return rangeMap.remove(range);
+    }
+
+    @Override
+    public final val_t removeRange(key_t start, key_t end) {
+        return removeRange(range(start, end));
     }
 
     @Override
@@ -130,7 +140,10 @@ public class DefaultRangeSpecMap<key_t extends Comparable<key_t>, val_t>
                     val_t val = rangeMap.get(rangeKey);
                     if (!visitor.visitRange(rangeKey, val))
                         break;
-                    visitor.visitValue(val);
+                    if (visitor.beginValue(SpecLayer.RANGE, rangeKey)) {
+                        visitor.visitValue(val);
+                        visitor.endValue();
+                    }
                 }
                 visitor.endRanges();
             }

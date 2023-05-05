@@ -1,246 +1,177 @@
 package net.bodz.bas.t.specmap;
 
-import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.err.ExceptionSuppliers;
 import net.bodz.bas.err.ParseException;
 
-public class NetBindingMap<val_t> {
+public class NetBindingMap<val_t>
+        extends AbstractSpecMap<String, val_t> {
 
-    public final HostPortSpecMap<val_t> nameMap = new HostPortSpecMap<>();
+    public final HostSpecMap<val_t> nameMap = new HostSpecMap<>();
     public final InetPortSpecMap<val_t> ipv4Map = InetPortSpecMap.ipv4();
     public final InetPortSpecMap<val_t> ipv6Map = InetPortSpecMap.ipv6();
 
-    public val_t find(String addressPort)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(addressPort);
-        switch (kind) {
+    @Override
+    public val_t find(String host) {
+        Endpoint endpoint = Endpoint.parse(host);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(addressPort);
-            return ipv4Map.find(ap);
+            return ipv4Map.find(endpoint.toInetPort());
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(addressPort);
-            return ipv6Map.find(ap6);
+            return ipv6Map.find(endpoint.toInetPort());
+
+        case IPv4_MASK:
+            ipv4Map.ipPortMap.getPrefix(host, prefix); // TODO ....
+            return null;
+
+        case DOMAIN_NAME:
+            return nameMap.find(host);
 
         default:
-        case DOMAIN_NAME:
-            return nameMap.find(addressPort);
+            throw endpoint.errorType();
         }
     }
 
-    public val_t find(String address, Integer port)
+    public val_t find(String hostName, int port)
             throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
+        Endpoint endpoint = Endpoint.parse(hostName, port);
+        switch (endpoint.type) {
+        case IPv4_MASK:
         case IPv4:
-            InetPort32 ap = InetPort32.parse(address, port);
-            return ipv4Map.find(ap);
+            return ipv4Map.find(endpoint.toInetPort());
 
+        case IPv6_MASK:
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address, port);
-            return ipv6Map.find(ap6);
+            return ipv6Map.find(endpoint.toInetPort());
+
+        case DOMAIN_NAME:
+            return nameMap.find(hostName, port);
 
         default:
-        case DOMAIN_NAME:
-            return nameMap.find(address, port);
+            throw endpoint.errorType();
         }
     }
 
-    public val_t getTop(String addressPort)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(addressPort);
-        switch (kind) {
+    @Override
+    public val_t getTop(String host) {
+        Endpoint endpoint = Endpoint.parse(host, ExceptionSuppliers.illegalArgument);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(addressPort);
-            return ipv4Map.getTop(ap);
+            return ipv4Map.getTop(endpoint.toInetPort());
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(addressPort);
-            return ipv6Map.getTop(ap6);
+            return ipv6Map.getTop(endpoint.toInetPort());
+
+        case DOMAIN_NAME:
+            return nameMap.getTop(host);
 
         default:
-        case DOMAIN_NAME:
-            return nameMap.getTop(addressPort);
+            throw endpoint.errorType();
         }
     }
 
-    public val_t getTop(String address, Integer port)
+    public val_t getTop(String hostName, int port)
             throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
+        Endpoint endpoint = Endpoint.parse(hostName, port);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(address, port);
-            return ipv4Map.getTop(ap);
+            return ipv4Map.getTop(endpoint.toInetPort());
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address, port);
-            return ipv6Map.getTop(ap6);
+            return ipv6Map.getTop(endpoint.toInetPort());
+
+        case DOMAIN_NAME:
+            return nameMap.getTop(hostName, port);
 
         default:
-        case DOMAIN_NAME:
-            return nameMap.getTop(address, port);
+            throw endpoint.errorType();
         }
     }
 
-    public void putTop(String address, val_t value)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
+    @Override
+    public val_t putTop(String host, val_t value) {
+        Endpoint endpoint = Endpoint.parse(host, ExceptionSuppliers.illegalArgument);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(address);
-            ipv4Map.putTop(ap, value);
+            return ipv4Map.putTop(endpoint.toInetPort(), value);
+
+        case IPv4_MASK:
+            return ipv4Map.putTop(endpoint.toInetPort(), value);
+
+        case IPv6:
+            return ipv6Map.putTop(endpoint.toInetPort(), value);
+
+        case DOMAIN_NAME:
+            return nameMap.putTop(host, value);
+
+        default:
+            throw endpoint.errorType();
+        }
+    }
+
+    public void putTop(String hostName, Integer port, val_t value)
+            throws ParseException {
+        Endpoint endpoint = Endpoint.parse(hostName, port);
+        switch (endpoint.type) {
+        case IPv4:
+            ipv4Map.putTop(endpoint.toInetPort(), value);
             return;
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address);
-            ipv6Map.putTop(ap6, value);
+            ipv6Map.putTop(endpoint.toInetPort(), value);
+            return;
+
+        case DOMAIN_NAME:
+            nameMap.putTop(hostName, port, value);
             return;
 
         default:
-        case DOMAIN_NAME:
-            nameMap.putTop(address, value);
-            return;
+            throw endpoint.errorType();
         }
     }
 
-    public void putTop(String address, Integer port, val_t value)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
+    @Override
+    public boolean addTop(String host, val_t value) {
+        Endpoint endpoint = Endpoint.parse(host, ExceptionSuppliers.illegalArgument);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(address, port);
-            ipv4Map.putTop(ap, value);
-            return;
+            return ipv4Map.addTop(endpoint.toInetPort(), value);
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address, port);
-            ipv6Map.putTop(ap6, value);
-            return;
+            return ipv6Map.addTop(endpoint.toInetPort(), value);
+
+        case DOMAIN_NAME:
+            return nameMap.addTop(host, value);
 
         default:
-        case DOMAIN_NAME:
-            nameMap.putTop(address, port, value);
-            return;
+            throw endpoint.errorType();
         }
     }
 
-    public boolean addTop(String address, val_t value)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
+    public boolean addTop(String hostName, Integer port, val_t value) {
+        Endpoint endpoint = Endpoint.parse(hostName, port, ExceptionSuppliers.illegalArgument);
+        switch (endpoint.type) {
         case IPv4:
-            InetPort32 ap = InetPort32.parse(address);
-            return ipv4Map.addTop(ap, value);
+            return ipv4Map.addTop(endpoint.toInetPort(), value);
 
         case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address);
-            return ipv6Map.addTop(ap6, value);
+            return ipv6Map.addTop(endpoint.toInetPort(), value);
+
+        case DOMAIN_NAME:
+            return nameMap.addTop(hostName, port, value);
 
         default:
-        case DOMAIN_NAME:
-            return nameMap.addTop(address, value);
-        }
-    }
-
-    public boolean addTop(String address, Integer port, val_t value)
-            throws ParseException {
-        AddressKind kind = AddressKind.detect(address);
-        switch (kind) {
-        case IPv4:
-            InetPort32 ap = InetPort32.parse(address, port);
-            return ipv4Map.addTop(ap, value);
-
-        case IPv6:
-            InetPort32 ap6 = InetPort32.parse6(address, port);
-            return ipv6Map.addTop(ap6, value);
-
-        default:
-        case DOMAIN_NAME:
-            return nameMap.addTop(address, port, value);
+            throw endpoint.errorType();
         }
     }
 
     @Override
     public String toString() {
-        return nameMap.toString();
-    }
-
-}
-
-enum AddressKind {
-    DOMAIN_NAME,
-    IPv4,
-    IPv6,
-
-    ;
-
-    /**
-     * @param serverName
-     *            without port number
-     */
-    public static AddressKind detect(String serverName) {
-        if (serverName.startsWith("[") && serverName.endsWith("]")) {
-            // expect ipv6
-            serverName = serverName.substring(1, serverName.length() - 1);
-            // return ipv6;
-        }
-
-        int lastDot = serverName.lastIndexOf('.');
-        if (lastDot != -1) {
-            String tld = serverName.substring(lastDot + 1);
-            if (StringPred.isDecimal(tld)) {
-                if (checkIPv4(serverName.substring(0, lastDot), 4))
-                    return IPv4;
-            }
-        }
-        int colon = serverName.indexOf(':');
-        if (colon != -1)
-            if (checkIPv6(serverName, 8))
-                return IPv6;
-        return DOMAIN_NAME;
-    }
-
-    static boolean checkIPv4(String addr, int n) {
-        assert n >= 1;
-        if (n == 0)
-            return true;
-
-        int dot = addr.indexOf('.');
-        String item = dot != -1 ? addr.substring(0, dot) : addr;
-        if (!StringPred.isDecimal(item))
-            return false;
-
-        int num = Integer.parseInt(item);
-        if (num < 0 || num >= 256)
-            return false;
-        if (n == 1)
-            return true;
-
-        String remain = addr.substring(dot + 1);
-        if (remain.isEmpty())
-            return false;
-        return checkIPv4(remain, n - 1);
-    }
-
-    static boolean checkIPv6(String addr, int n) {
-        assert n >= 1;
-        if (n == 0)
-            return true;
-
-        int colon = addr.indexOf(':');
-        String item = colon != -1 ? addr.substring(0, colon) : addr;
-        if (!StringPred.isHexadecimal(item))
-            return false;
-
-        int num = Integer.parseInt(item, 16);
-        if (num < 0 || num >= 65536)
-            return false;
-        if (n == 1)
-            return true;
-
-        String remain = addr.substring(colon + 1);
-        if (remain.isEmpty())
-            return false;
-        return checkIPv6(remain, n - 1);
+        StringBuilder sb = new StringBuilder(1000);
+        sb.append("domains: \n" + nameMap + "\n");
+        sb.append("ipv4: \n" + ipv4Map + "\n");
+        sb.append("ipv6: \n" + ipv6Map);
+        return sb.toString();
     }
 
 }

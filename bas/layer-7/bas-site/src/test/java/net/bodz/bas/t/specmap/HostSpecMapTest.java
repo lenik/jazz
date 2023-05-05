@@ -4,19 +4,17 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import net.bodz.bas.t.specmap.HostPortSpecMap;
-
-public class HostPortSpecMapTest
+public class HostSpecMapTest
         extends Assert {
 
-    HostPortSpecMap<String> map = new HostPortSpecMap<>();
+    HostSpecMap<String> map = new HostSpecMap<>();
 
-    public HostPortSpecMapTest() {
-        map.add("*.example.com", 80, "web");
-        map.add("www.example.com", null, "web");
-        map.add("*", 21, "ftp");
-        map.add("*.foo.bar", null, "foo");
-        map.add("*.bar", null, "bar");
+    public HostSpecMapTest() {
+        map.addPattern("*.example.com", 80, "web");
+        map.addTop("www.example.com", null, "web");
+        map.addPattern("*", 21, "ftp");
+        map.addPattern("*.foo.bar", null, "foo");
+        map.addPattern("*.bar", null, "bar");
     }
 
     @Test

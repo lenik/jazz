@@ -10,8 +10,8 @@ public class IPv6UtilsTest
 
     String echo(String ip)
             throws ParseException {
-        int[] addr = IPv6Utils.parse(ip);
-        return IPv6Utils.format(addr);
+        int[] addr = IPv6Address.parse(ip);
+        return IPv6Address.format(addr);
     }
 
     void testConv(String ip)

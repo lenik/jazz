@@ -45,6 +45,11 @@ public class StartStopRange<T extends Comparable<T>>
     }
 
     @Override
+    public boolean isStartEnd() {
+        return false;
+    }
+
+    @Override
     public boolean contains(T val) {
         if (val == null)
             throw new NullPointerException("val");

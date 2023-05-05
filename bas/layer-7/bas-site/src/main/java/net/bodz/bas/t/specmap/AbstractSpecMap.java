@@ -153,7 +153,7 @@ public abstract class AbstractSpecMap<key_t, val_t>
     }
 
     @Override
-    public final void accept(ISpecMapVisitor<? super key_t, ? super val_t> visitor) {
+    public void accept(ISpecMapVisitor<? super key_t, ? super val_t> visitor) {
         Set<key_t> topKeys = topKeySet();
         if (!topKeys.isEmpty()) {
             if (visitor.beginTops()) {
@@ -161,15 +161,23 @@ public abstract class AbstractSpecMap<key_t, val_t>
                     val_t val = getTop(key);
                     if (!visitor.visitTop(key, val))
                         break;
-                    visitor.visitValue(val);
+                    if (visitor.beginValue(SpecLayer.TOP, key)) {
+                        visitor.visitValue(val);
+                        visitor.endValue();
+                    }
                 }
                 visitor.endTops();
             }
         }
+
         _accept(visitor);
+
         if (hasDefaultVal) {
             visitor.visitDefault(defaultVal);
-            visitor.visitValue(defaultVal);
+            if (visitor.beginValue(SpecLayer.DEFAULT, null)) {
+                visitor.visitValue(defaultVal);
+                visitor.endValue();
+            }
         }
     }
 

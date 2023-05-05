@@ -27,7 +27,14 @@ public interface ISpecMapVisitor<key_t, val_t> {
     default void visitDefault(val_t value) {
     }
 
+    default boolean beginValue(SpecLayer layer, Object layerKey) {
+        return true;
+    }
+
     default void visitValue(val_t value) {
+    }
+
+    default void endValue() {
     }
 
 }
