@@ -5,6 +5,9 @@ public class UnexpectedException
 
     private static final long serialVersionUID = 1L;
 
+    public static final ExceptionSupplier<UnexpectedException> SUPPLIER = //
+            (String s, Throwable cause) -> new UnexpectedException(s, cause);
+
     public UnexpectedException() {
         super();
     }

@@ -5,6 +5,9 @@ public class ParseException
 
     private static final long serialVersionUID = 1L;
 
+    public static final ExceptionSupplier<ParseException> SUPPLIER = //
+            (String s, Throwable cause) -> new ParseException(s, cause);
+
     public String source;
     public int line;
     public int column;

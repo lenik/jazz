@@ -5,6 +5,9 @@ public class IllegalUsageException
 
     private static final long serialVersionUID = 1L;
 
+    public static final ExceptionSupplier<IllegalUsageException> SUPPLIER = //
+            (String s, Throwable cause) -> new IllegalUsageException(s);
+
     public IllegalUsageException() {
         super();
     }
