@@ -5,12 +5,12 @@ import org.junit.Test;
 
 import net.bodz.bas.err.ParseException;
 
-public class NetBindingMapTest
+public class NetSpecMapTest
         extends Assert {
 
-    NetBindingMap<String> map = new NetBindingMap<>();
+    NetSpecMap<String> map = new NetSpecMap<>();
 
-    public NetBindingMapTest()
+    public NetSpecMapTest()
             throws ParseException {
         map.putTop("1.2.3.4", "ip");
         map.putTop("1.2.0.0/16", "ip/16");

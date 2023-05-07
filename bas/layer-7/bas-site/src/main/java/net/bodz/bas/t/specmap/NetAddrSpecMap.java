@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class NetAddrSpecMap<val_t>
-        extends AbstractSpecMap<int[], val_t>
+        extends AbstractSpecMapBase<int[], val_t>
         implements
             INetAddrSpecMap<val_t> {
 

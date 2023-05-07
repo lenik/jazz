@@ -10,7 +10,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
-import net.bodz.bas.t.specmap.NetBindingMap;
+import net.bodz.bas.t.specmap.NetSpecMap;
 import net.bodz.bas.text.trie.TokenTrie.Node;
 
 @ExcludedFromIndex
@@ -21,7 +21,7 @@ public class MutableVirtualHostResolver
     private int priority;
 
     Map<String, IVirtualHost> map = new TreeMap<String, IVirtualHost>();
-    NetBindingMap<String> bindingMap = new NetBindingMap<>();
+    NetSpecMap<String> bindingMap = new NetSpecMap<>();
 
     @Override
     public int getPriority() {

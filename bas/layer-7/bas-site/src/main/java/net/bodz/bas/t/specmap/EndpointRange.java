@@ -1,6 +1,7 @@
 package net.bodz.bas.t.specmap;
 
 import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.err.ExceptionSupplier;
 import net.bodz.bas.err.ParseException;
 
 public class EndpointRange
@@ -17,6 +18,12 @@ public class EndpointRange
      */
     public static EndpointRange parse(String host)
             throws ParseException {
+        return parse(host, ParseException.SUPPLIER);
+    }
+
+    public static <E extends Throwable> EndpointRange parse(String host, //
+            ExceptionSupplier<E> exceptionSupplier)
+            throws E {
         String portStr = null;
         int lastColon = host.lastIndexOf(':');
         int v6end = host.indexOf(']');
@@ -26,17 +33,27 @@ public class EndpointRange
                 if (other.charAt(0) == ':')
                     portStr = other.substring(1);
                 else
-                    throw new ParseException("invalid ipv6 port specification: " + host);
+                    throw exceptionSupplier.supply("invalid ipv6 port specification: " + host);
             host = host.substring(1, host.length() - 1);
         } else if (lastColon != -1) {
-            portStr = host.substring(lastColon + 1);
-            host = host.substring(0, lastColon);
+            int firstColon = host.indexOf(':');
+            String last = host.substring(lastColon + 1);
+            if (firstColon == lastColon && StringPred.isDecimal(last)) {
+                host = host.substring(0, lastColon);
+                portStr = last;
+            }
         }
-        return parse(host, portStr);
+        return parse(host, portStr, exceptionSupplier);
     }
 
     public static EndpointRange parse(String hostNameRange, String portRange)
             throws ParseException {
+        return parse(hostNameRange, portRange, ParseException.SUPPLIER);
+    }
+
+    public static <E extends Throwable> EndpointRange parse(String hostNameRange, String portRange,
+            ExceptionSupplier<E> exceptionSupplier)
+            throws E {
         EndpointRange ans = new EndpointRange();
 
         if (portRange != null) {
@@ -77,7 +94,11 @@ public class EndpointRange
             if (StringPred.isDecimal(tld)) {
                 if (IPv4Address.isValid(serverName)) {
                     ans.type = hasBits ? EndpointType.IPv4_MASK : EndpointType.IPv4;
-                    ans.address = IPv4Address.parse(serverName);
+                    try {
+                        ans.address = IPv4Address.parse(serverName);
+                    } catch (ParseException e) {
+                        throw exceptionSupplier.supply(e.getMessage(), e);
+                    }
                     return ans;
                 }
             }
@@ -87,7 +108,11 @@ public class EndpointRange
         if (colon != -1) {
             if (IPv6Address.isValid(serverName)) {
                 ans.type = hasBits ? EndpointType.IPv6_MASK : EndpointType.IPv6;
-                ans.address = IPv6Address.parse(serverName);
+                try {
+                    ans.address = IPv6Address.parse(serverName);
+                } catch (ParseException e) {
+                    throw exceptionSupplier.supply(e.getMessage(), e);
+                }
                 return ans;
             }
         }
