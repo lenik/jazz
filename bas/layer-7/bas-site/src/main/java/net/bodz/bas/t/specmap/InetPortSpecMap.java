@@ -3,10 +3,8 @@ package net.bodz.bas.t.specmap;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.err.IllegalUsageException;
-
 public class InetPortSpecMap<val_t>
-        extends AbstractSpecMap<IInetPort, val_t> {
+        extends AbstractSpecMapBase<IInetPort, val_t> {
 
     NetAddrSpecMap<IntSpecMap<val_t>> ipPortMap;
 
@@ -61,15 +59,15 @@ public class InetPortSpecMap<val_t>
             throw new NullPointerException("ap");
 
         int prefix = ap.getMaskBits();
-        IntSpecMap<val_t> ports = null;
+
+        IntSpecNode<IntSpecMap<val_t>> portsNode;
         if (prefix != 0) {
-            ports = ipPortMap.resolvePrefixNode(ap.getAddress32(), prefix, true).getValue();
+            portsNode = ipPortMap.resolvePrefixNode(ap.getAddress32(), prefix, true);
         } else {
-            ports = ipPortMap.lazyCreateNode(ap.getAddress32()).getValue();
+            portsNode = ipPortMap.lazyCreateNode(ap.getAddress32());
         }
 
-        if (ports == null)
-            throw new IllegalUsageException("ports is not nullable.");
+        IntSpecMap<val_t> ports = portsNode.getOrAddValue(new IntSpecMap<val_t>());
 
         int port = ap.getPort();
         if (overwrite) {
@@ -132,6 +130,67 @@ public class InetPortSpecMap<val_t>
     @Override
     public void removeAllTops() {
         ipPortMap.removeAllTops();
+    }
+
+    // Prefixes
+
+    public boolean containsPrefix(IInetPort key) {
+        return ipPortMap.containsPrefix(key.getAddress32(), key.getMaskBits());
+    }
+
+    public val_t getPrefix(IInetPort key) {
+        IntSpecMap<val_t> ports = ipPortMap.getPrefix(key.getAddress32(), key.getMaskBits());
+        if (ports == null)
+            return null;
+        if (key.getPort() == 0)
+            return ports.getDefault();
+        else
+            return ports.getTop(key.getPort());
+    }
+
+    IntSpecMap<val_t> lazyCreatePrefix(IInetPort key) {
+        IntSpecNode<IntSpecMap<val_t>> node = ipPortMap.lazyCreatePrefixNode(//
+                key.getAddress32(), key.getMaskBits());
+        IntSpecMap<val_t> ports = node.getValue();
+        if (ports == null) {
+            IntSpecMap<val_t> newPorts = new IntSpecMap<>();
+            node.putValue(newPorts);
+            ports = newPorts;
+        }
+        return ports;
+    }
+
+    public val_t putPrefix(IInetPort key, val_t value) {
+        IntSpecMap<val_t> ports = lazyCreatePrefix(key);
+        if (key.getPort() == 0)
+            return ports.putDefault(value);
+        else
+            return ports.putTop(key.getPort(), value);
+    }
+
+    public boolean addPrefix(IInetPort key, val_t value) {
+        IntSpecMap<val_t> ports = lazyCreatePrefix(key);
+        if (key.getPort() == 0)
+            return ports.addDefault(value);
+        else
+            return ports.addTop(key.getPort(), value);
+    }
+
+    public val_t removePrefix(IInetPort key) {
+        IntSpecNode<IntSpecMap<val_t>> node = ipPortMap.resolvePrefixNode(//
+                key.getAddress32(), key.getMaskBits(), false);
+        if (node == null)
+            return null;
+        IntSpecMap<val_t> ports = node.getValue();
+        if (key.getPort() == 0)
+            return ports.removeDefault();
+        else
+            return ports.removeTop(key.getPort());
+    }
+
+    public void removeAllPrefixes() {
+        ipPortMap.removeAllPrefixes();
+        // TODO
     }
 
 }

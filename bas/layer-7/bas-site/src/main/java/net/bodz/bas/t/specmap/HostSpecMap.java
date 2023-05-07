@@ -6,7 +6,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.tuple.Split;
 
 public class HostSpecMap<val_t>
-        extends AbstractSpecMap<String, val_t> {
+        extends AbstractSpecMapBase<String, val_t> {
 
     DomainSpecMap<IntSpecMap<val_t>> namePortMap;
 
