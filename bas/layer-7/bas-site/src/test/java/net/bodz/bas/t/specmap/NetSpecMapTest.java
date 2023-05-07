@@ -50,4 +50,25 @@ public class NetSpecMapTest
         assertEquals("*.com", map.find("cat.foo.com"));
     }
 
+    @Test
+    public void testVhostSets()
+            throws ParseException {
+        NetSpecMap<String> map = new NetSpecMap<>();
+        map.nameMap.putPattern("*.lo", "/simple");
+        map.nameMap.putPattern("special.lo", "spec");
+
+        InetPort32 ap = InetPort32.parse("0.0.0.0/0");
+        map.ipv4Map.putPrefix(ap, "/ip");
+        assertEquals("/simple", //
+                map.find("foo.lo"));
+        assertEquals("/simple", //
+                map.find("foo.lo:1800"));
+        assertEquals("spec", //
+                map.find("special.lo:333"));
+        assertEquals("/ip", //
+                map.find("0.0.0.0"));
+        assertEquals("/ip", //
+                map.find("1.2.3.4"));
+    }
+
 }
