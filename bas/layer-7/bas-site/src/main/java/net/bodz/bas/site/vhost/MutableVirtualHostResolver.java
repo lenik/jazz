@@ -5,13 +5,12 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.db.ctx.FromCurrentProjectName;
+import net.bodz.bas.c.autowire.ProjectList;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.bas.t.specmap.InetPort32;
 import net.bodz.bas.t.specmap.NetSpecMap;
-import net.bodz.bas.text.trie.TokenTrie.Node;
 
 @ExcludedFromIndex
 public class MutableVirtualHostResolver
@@ -22,6 +21,20 @@ public class MutableVirtualHostResolver
 
     Map<String, IVirtualHost> map = new TreeMap<String, IVirtualHost>();
     NetSpecMap<String> bindingMap = new NetSpecMap<>();
+
+    static final String VAR_SIMPLE = "/simple";
+    static final String VAR_PROJECT = "/project";
+
+    public MutableVirtualHostResolver() {
+        bindingMap.nameMap.addPattern("*.lo", VAR_SIMPLE);
+        InetPort32 ap;
+        try {
+            ap = InetPort32.parse("0.0.0.0/0");
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        bindingMap.ipv4Map.addPrefix(ap, VAR_PROJECT);
+    }
 
     @Override
     public int getPriority() {
@@ -39,32 +52,30 @@ public class MutableVirtualHostResolver
         return map.get(id);
     }
 
-    @Override
-    public synchronized IVirtualHost resolve(HttpServletRequest request) {
+    protected String getRequestName(HttpServletRequest request) {
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
-        String target;
-        try {
-            target = bindingMap.find(serverName, serverPort);
-        } catch (ParseException e) {
-            throw new UnexpectedException(String.format(//
-                    "cannot parse server name: %s (port %d)", //
-                    serverName, serverPort));
-        }
-
+        String target = bindingMap.find(serverName, "" + serverPort);
         if (target.startsWith("/")) {
             switch (target) {
-            case "/simple":
+            case VAR_SIMPLE:
                 target = ServerNaming.getServerSimpleName(request);
                 break;
-            case "/project":
-                String lastProjectName = FromCurrentProjectName.getLastProjectName();
-                target = lastProjectName;
+            case VAR_PROJECT:
+                String topLevelName = ProjectList.INSTANCE.topLevelName();
+                target = topLevelName;
                 break;
             }
         }
+        return target;
+    }
 
-        IVirtualHost predefined = map.get(target);
+    @Override
+    public synchronized IVirtualHost resolve(HttpServletRequest request) {
+        String name = getRequestName(request);
+        if (name == null)
+            return null;
+        IVirtualHost predefined = map.get(name);
         return predefined;
     }
 
@@ -72,44 +83,19 @@ public class MutableVirtualHostResolver
         if (vhost == null)
             throw new NullPointerException("vhost");
 
-        IVirtualHost old = map.get(vhost.getName());
+        String name = vhost.getName();
+        if (name == null)
+            throw new NullPointerException("name");
+
+        IVirtualHost old = map.get(name);
         if (old != null)
             throw new DuplicatedKeyException(map, vhost.getName(), "vhost");
 
         for (String binding : bindings) {
-//             bindingMap.pu
+            bindingMap.putTop(binding, name);
         }
 
         map.put(vhost.getName(), vhost);
-    }
-
-    public synchronized void remove(IVirtualHost vhost) {
-        if (vhost == null)
-            throw new NullPointerException("vhost");
-
-        L: for (HostSpecifier spec : vhost.getHostSpecifiers()) {
-            Node<HostBinding> node = trie.getRoot();
-
-            for (String label : new DomainNameTokenizer(spec.getHostName(), true)) {
-                node = node.getChild(label);
-                if (node == null)
-                    continue L;
-            }
-
-            HostBinding binding = node.getData();
-            if (binding != null) {
-                PortMap portMap = spec.isIncludeSubDomains() ? binding.subDomainPortMap : binding.portMap;
-                if (spec.getPort() == 0) {
-                    if (portMap.getDefault() == vhost)
-                        portMap.setDefault(null);
-                } else {
-                    if (portMap.get(spec.getPort()) == vhost)
-                        portMap.remove(spec.getPort());
-                }
-            }
-        }
-
-        map.remove(vhost.getName());
     }
 
 }

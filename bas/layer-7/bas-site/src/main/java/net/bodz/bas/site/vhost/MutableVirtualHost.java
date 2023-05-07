@@ -22,11 +22,13 @@ import net.bodz.bas.typer.std.ITyperFamily;
 
 public class MutableVirtualHost
         extends MutableElement
-        implements IVirtualHost, IRstForm {
+        implements
+            IVirtualHost,
+            IRstForm {
 
     private static final long serialVersionUID = 1L;
 
-    private List<HostSpecifier> hostSpecifiers = new ArrayList<HostSpecifier>();
+    private List<String> bindings = new ArrayList<String>();
     private Map<String, String> parameters = new TreeMap<String, String>();
     private Map<String, Object> attributes = new TreeMap<String, Object>();
 
@@ -34,22 +36,27 @@ public class MutableVirtualHost
     /* _____________________________ */static section.iface __VHOST__;
 
     @Override
-    public List<HostSpecifier> getHostSpecifiers() {
-        return hostSpecifiers;
+    public List<String> getBindings() {
+        return bindings;
     }
 
-    public void addHostSpecifier(String hostName) {
-        addHostSpecifier(hostName, 0, false);
-    }
-
-    public void addHostSpecifier(String hostName, int port, boolean includeSubDomains) {
-        HostSpecifier hostSpecifier = new HostSpecifier(hostName, port, includeSubDomains);
-        hostSpecifiers.add(hostSpecifier);
+    public Map<String, String> getParameters() {
+        return parameters;
     }
 
     @Override
-    public Iterable<String> getParameterNames() {
+    public boolean hasParameter() {
+        return !parameters.isEmpty();
+    }
+
+    @Override
+    public Set<String> parameterNames() {
         return parameters.keySet();
+    }
+
+    @Override
+    public boolean containsParameter(String name) {
+        return parameters.containsKey(name);
     }
 
     @Override
@@ -58,13 +65,18 @@ public class MutableVirtualHost
     }
 
     @Override
-    public void setParameter(String name, String value) {
-        parameters.put(name, value);
+    public String putParameter(String name, Object value) {
+        return parameters.put(name, String.valueOf(value));
     }
 
     @Override
-    public void removeParameter(String name) {
-        parameters.remove(name);
+    public String removeParameter(String name) {
+        return parameters.remove(name);
+    }
+
+    @Override
+    public void removeAllParameters() {
+        parameters.clear();
     }
 
     @Override
@@ -133,10 +145,10 @@ public class MutableVirtualHost
     public void writeObject(IRstOutput out)
             throws IOException {
         StringBuilder hostSpecBuf = new StringBuilder();
-        for (HostSpecifier hostSpec : hostSpecifiers) {
+        for (String binding : bindings) {
             if (hostSpecBuf.length() != 0)
                 hostSpecBuf.append(',');
-            hostSpecBuf.append(hostSpec);
+            hostSpecBuf.append(binding);
         }
 
         out.beginElement("host", getName());
