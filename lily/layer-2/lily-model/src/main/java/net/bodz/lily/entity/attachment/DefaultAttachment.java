@@ -32,7 +32,8 @@ public class DefaultAttachment
     Long size;
     String sha1;
 
-    public DefaultAttachment() {
+    public DefaultAttachment(IAttachmentVolume volume) {
+        this.volume = volume;
     }
 
     public DefaultAttachment(IAttachmentVolume volume, String dirName, String fileName) {

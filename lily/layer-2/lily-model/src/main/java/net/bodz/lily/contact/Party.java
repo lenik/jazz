@@ -18,6 +18,8 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.attachment.IAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachmentListing;
 import net.bodz.lily.model.base.IdEntity;
 
 /**
@@ -26,7 +28,9 @@ import net.bodz.lily.model.base.IdEntity;
 @IdType(Integer.class)
 @UploadHint
 public abstract class Party
-        extends IdEntity<Integer> {
+        extends IdEntity<Integer>
+        implements
+            IHaveAttachmentListing {
 
     private static final long serialVersionUID = 1L;
 
@@ -293,6 +297,11 @@ public abstract class Party
 
     @Override
     public PartyProperties getProperties() {
+        return properties;
+    }
+
+    @Override
+    public IAttachmentListing listAttachments() {
         return properties;
     }
 

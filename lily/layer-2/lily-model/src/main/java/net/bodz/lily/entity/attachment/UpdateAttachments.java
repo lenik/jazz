@@ -1,5 +1,6 @@
 package net.bodz.lily.entity.attachment;
 
+import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.c.java.io.FilePath;
@@ -38,8 +39,15 @@ public class UpdateAttachments
             throws IOException {
         if (attachment == null)
             throw new NullPointerException("attachment");
+
+        File file = attachment.getFile();
+        if (!file.exists()) {
+            System.out.println(file);
+        }
+
         String subDirName = attachment.getDirName();
-        if (Nullables.equals(subDirName, "new"))
+        if (Nullables.equals(subDirName, "new") //
+                || Nullables.equals(subDirName, "tmp"))
             attachment.moveTo(id, attachment.getFileName());
     }
 
@@ -52,7 +60,7 @@ public class UpdateAttachments
         Object id = idRef.id();
         if (id != null) {
             String idStr = id.toString();
-            IAttachmentListing listing = owner.getAttachmentListing();
+            IAttachmentListing listing = owner.listAttachments();
             for (String category : listing.getAttachmentCategories()) {
                 for (IAttachment attachment : listing.getAttachments(category)) {
                     renameSubDirToId(attachment, idStr);

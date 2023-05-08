@@ -5,6 +5,6 @@ import net.bodz.lily.entity.manager.RowOpListeners;
 @RowOpListeners(UpdateAttachments.class)
 public interface IHaveAttachmentListing {
 
-    IAttachmentListing getAttachmentListing();
+    IAttachmentListing listAttachments();
 
 }
