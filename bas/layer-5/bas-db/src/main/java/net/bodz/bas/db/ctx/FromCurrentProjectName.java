@@ -1,5 +1,6 @@
 package net.bodz.bas.db.ctx;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -42,10 +43,11 @@ public class FromCurrentProjectName
     static final FromCurrentProjectName INSTANCE = new FromCurrentProjectName();
 
     public static String getLastProjectName() {
-        List<String> leaves = (List<String>) INSTANCE.resolveContextIds();
+        Collection<String> leaves = INSTANCE.resolveContextIds();
         if (leaves.isEmpty())
             return null;
-        return leaves.get(leaves.size() - 1);
+        List<String> list = new ArrayList<>(leaves);
+        return list.get(list.size() - 1);
     }
 
 }
