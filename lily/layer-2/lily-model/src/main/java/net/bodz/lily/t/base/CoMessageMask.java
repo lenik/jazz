@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
+import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 
 public abstract class CoMessageMask
@@ -197,6 +198,25 @@ public abstract class CoMessageMask
 
     public void setTimeRange(DateTimeRange timeRange) {
         this.timeRange = timeRange;
+    }
+
+    Long id;
+    LongRange idRange;
+
+    public Long getId() {
+        return id;
+    }
+
+    public LongRange getIdRange() {this.getYear();
+        return idRange;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setIdRange(LongRange idRange) {
+        this.idRange = idRange;
     }
 
 }

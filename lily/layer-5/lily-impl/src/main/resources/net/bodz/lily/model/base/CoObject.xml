@@ -155,6 +155,8 @@
             <if test="m.lastmod.hasEndIncl">and a.lastmod &lt;= #{m.lastmod.end}</if>
             <if test="m.lastmod.hasEndExcl">and a.lastmod &lt; #{m.lastmod.end}</if>
         </if>
+        <if test="m.states != null">
+        </if>
     </sql>
 
     <sql id="filter-mi">

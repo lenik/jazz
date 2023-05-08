@@ -1,12 +1,13 @@
 package net.bodz.lily.model.base;
 
 import net.bodz.bas.t.range.DateTimeRange;
+import net.bodz.bas.t.range.IntegerRange;
 
 public class CoMomentIntervalMask
         extends CoObjectMask {
 
-    private DateTimeRange beginTime = new DateTimeRange();
-    private DateTimeRange endTime = new DateTimeRange();
+    private DateTimeRange beginTime; // = new DateTimeRange();
+    private DateTimeRange endTime; // = new DateTimeRange();
     private Integer year; // = Calendar.getInstance().get(Calendar.YEAR);
 
     private boolean noDate;
@@ -53,6 +54,16 @@ public class CoMomentIntervalMask
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    IntegerRange yearRange;
+
+    public IntegerRange getYearRange() {
+        return yearRange;
+    }
+
+    public void setYearRange(IntegerRange yearRange) {
+        this.yearRange = yearRange;
     }
 
     public boolean isNoDate() {
