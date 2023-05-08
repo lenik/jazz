@@ -1,7 +1,10 @@
 package net.bodz.lily.entity.manager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NoSuchKeyException;
@@ -58,10 +61,8 @@ public class SaveCommand
         // 2.
         JdbcRowOpEvent event = new JdbcRowOpEvent(this, //
                 createNew ? JdbcRowOpType.CREATE : JdbcRowOpType.UPDATE);
-        if (obj instanceof IJdbcRowOpListener) {
-            IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            l.beforeRowOperation(event);
-        }
+
+        beforeRowOp(event, obj);
 
         IEntityMapper<Object, Object> mapper = getEntityMapper();
         if (createNew) {
@@ -77,15 +78,51 @@ public class SaveCommand
             result.getLogger().info("Rows updated: " + rows);
         }
 
-        if (obj instanceof IJdbcRowOpListener) {
-            IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
-            l.afterRowOperation(event);
-        }
+        afterRowOp(event, obj);
 
         if (hasId)
             result.setHeader("id", id);
 
         return result.succeed();
+    }
+
+    static List<Class<? extends IJdbcRowOpListener>> handlerClasses;
+    static boolean enableRowOps = true;
+    static {
+        handlerClasses = new ArrayList<>();
+        if (enableRowOps)
+            for (Class<? extends RowOpListeners> c : IndexedTypes.list(RowOpListeners.class, true)) {
+                RowOpListeners aRowOps = c.getAnnotation(RowOpListeners.class);
+                for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value())
+                    handlerClasses.add(handlerClass);
+            }
+    }
+
+    boolean beforeRowOp(JdbcRowOpEvent event, Object obj)
+            throws Exception {
+        if (obj instanceof IJdbcRowOpListener) {
+            IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
+            if (!l.beforeRowOperation(event))
+                return false;
+        }
+        for (Class<? extends IJdbcRowOpListener> c : handlerClasses) {
+            IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
+            if (!handler.beforeRowOperation(event))
+                return false;
+        }
+        return true;
+    }
+
+    void afterRowOp(JdbcRowOpEvent event, Object obj)
+            throws Exception {
+        if (obj instanceof IJdbcRowOpListener) {
+            IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
+            l.afterRowOperation(event);
+        }
+        for (Class<? extends IJdbcRowOpListener> c : handlerClasses) {
+            IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
+            handler.afterRowOperation(event);
+        }
     }
 
     @Override

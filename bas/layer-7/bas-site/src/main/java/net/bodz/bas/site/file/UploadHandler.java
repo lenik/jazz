@@ -24,8 +24,7 @@ import net.bodz.bas.site.IBasicSiteAnchors;
  *
  * @param scheme
  *
- *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file
- *            upload</a>
+ *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file upload</a>
  */
 public class UploadHandler
         implements
@@ -37,8 +36,7 @@ public class UploadHandler
 
     /**
      * @param absoluteHref
-     *            The start part of the download href relative to the webapp. Should be terminated
-     *            with file separator.
+     *            The start part of the download href relative to the webapp. Should be terminated with file separator.
      */
     public UploadHandler(File localDir, String absoluteHref) {
         this(localDir, _webApp_.join(absoluteHref));
@@ -87,6 +85,7 @@ public class UploadHandler
             UploadedFileInfo fileInfo = new UploadedFileInfo(part);
             fileInfo.setFile(localFile);
             fileInfo.setSha1(renameResult.sha1);
+            // fileInfo.setDir(dirWithinSchema);
 
             fileInfo.url = anchor.join(renameResult.newFile.getName()).toUriPath();
             fileInfo.deleteUrl = fileInfo.url;
