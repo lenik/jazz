@@ -2,6 +2,8 @@ package net.bodz.lily.t.base;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -9,11 +11,13 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
+import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -88,6 +92,44 @@ public abstract class CoMessage<Id>
 
     public void setOp(User op) {
         this.op = op;
+    }
+
+    int opId;
+
+    static final int _ord_OP_ID = 1;
+
+    @Ordinal(_ord_OP_ID)
+    @Precision(value = 10)
+    @Column(name = "op", nullable = false, precision = 10)
+    public synchronized int getOpId() {
+        if (op != null) {
+            Integer opId = op.getId();
+            if (opId != null)
+                return opId.intValue();
+        }
+        return opId;
+    }
+
+    public synchronized void setOpId(int value) {
+//        this.op = null;
+        this.opId = value;
+    }
+
+    Integer formId;
+
+    static final int _ord_FORM_ID = 1;
+
+    @Ordinal(_ord_FORM_ID)
+    @Precision(value = 10)
+    @Column(name = "op", nullable = false, precision = 10)
+    public synchronized Integer getFormId() {
+        if (form != null)
+            return form.getDefId();
+        return formId;
+    }
+
+    public synchronized void setFormId(Integer formId) {
+        this.formId = formId;
     }
 
     /**

@@ -40,4 +40,23 @@ public class CoNodeMask
         return depthRange;
     }
 
+    Integer id;
+    IntegerRange idRange;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public IntegerRange getIdRange() {
+        return idRange;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setIdRange(IntegerRange idRange) {
+        this.idRange = idRange;
+    }
+
 }
