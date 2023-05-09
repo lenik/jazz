@@ -21,6 +21,14 @@ public class PathFields
     public PathFields() {
     }
 
+    public PathFields(IPathFields o) {
+        this._path = o.getPath();
+        this.dirName = o.getDirName();
+        this._fileName = o.getFileName();
+        this.name = o.getName();
+        this.extension = o.getExtension();
+    }
+
     public PathFields(PathFields o) {
         this._path = o._path;
         this.dirName = o.dirName;
@@ -29,10 +37,12 @@ public class PathFields
         this.extension = o.extension;
     }
 
+    @Override
     public String getPath() {
         return _path;
     }
 
+    @Override
     public synchronized void setPath(String path) {
         if (Nullables.notEquals(this._path, path)) {
             if (path == null) {
@@ -46,6 +56,7 @@ public class PathFields
         }
     }
 
+    @Override
     public synchronized void setPath(String dirName, String fileName) {
         if (Nullables.notEquals(this.dirName, dirName) //
                 || Nullables.notEquals(this._fileName, fileName)) {
@@ -70,10 +81,12 @@ public class PathFields
         this._path = path;
     }
 
+    @Override
     public String getDirName() {
         return dirName;
     }
 
+    @Override
     public synchronized void setDirName(String dirName) {
         if (Nullables.notEquals(this.dirName, dirName)) {
             this.dirName = dirName;
@@ -81,10 +94,12 @@ public class PathFields
         }
     }
 
+    @Override
     public String getFileName() {
         return _fileName;
     }
 
+    @Override
     public synchronized void setFileName(String fileName) {
         _fileName(fileName);
         updatePath();
@@ -111,10 +126,12 @@ public class PathFields
         updatePath();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public synchronized void setName(String name) {
         if (Nullables.notEquals(this.name, name)) {
             this.name = name;
@@ -122,10 +139,12 @@ public class PathFields
         }
     }
 
+    @Override
     public String getExtension() {
         return extension;
     }
 
+    @Override
     public synchronized void setExtension(String extension) {
         if (Nullables.notEquals(this.extension, extension)) {
             this.extension = extension;

@@ -5,17 +5,18 @@ import java.io.File;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.servlet.ctx.PathUtils;
 import net.bodz.bas.t.tuple.Split;
+import net.bodz.lily.storage.LocalVolume;
 
-public class EntityAttachmentVolume
-        extends LocalAttachmentVolume {
+public class EntityVolume
+        extends LocalVolume {
 
     static final String DIR_ATTACHMENT = "attachment";
 
-    public EntityAttachmentVolume(String id, IAnchor baseAnchor, File baseDir) {
+    public EntityVolume(String id, IAnchor baseAnchor, File baseDir) {
         super(id, baseAnchor, baseDir);
     }
 
-    public EntityAttachmentVolume(String id, String baseHref, File baseDir) {
+    public EntityVolume(String id, String baseHref, File baseDir) {
         super(id, baseHref, baseDir);
     }
 

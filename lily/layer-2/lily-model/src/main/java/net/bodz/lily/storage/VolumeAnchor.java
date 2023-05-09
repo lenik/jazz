@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.attachment;
+package net.bodz.lily.storage;
 
 import net.bodz.bas.servlet.ctx.AbstractAnchor;
 import net.bodz.bas.servlet.ctx.IAnchor;

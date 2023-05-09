@@ -31,7 +31,7 @@ import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.entity.attachment.AttachmentGroup;
 import net.bodz.lily.entity.attachment.DefaultAttachment;
-import net.bodz.lily.entity.attachment.IAttachmentVolume;
+import net.bodz.lily.storage.IVolume;
 
 /**
  * Refactor props field to attachments field. (but don't rename the column.)
@@ -86,8 +86,12 @@ public class Item2Attachment
     JsonFormOptions inOpts = JsonFormOptions.DEFAULT;
     JsonFormOptions outOpts = JsonFormOptions.DEFAULT;
 
+    AttachmentGroup anyGroup = new AttachmentGroup(new File("."));
+
     public void processTable(ITableMetadata table)
             throws IOException, SQLException, ParseException, FormatException {
+        IVolume volume = anyGroup.getVolume(table.getJavaType());
+
         Statement st = connection.createStatement(//
                 ResultSet.TYPE_FORWARD_ONLY, //
                 ResultSet.CONCUR_UPDATABLE);
@@ -123,10 +127,8 @@ public class Item2Attachment
                             ItemFile item = new ItemFile();
                             item.jsonIn(oldValArrayItem, null);
 
-                            AttachmentGroup.forRequest(request);
-                            IAttachmentVolume volume;
-
-                            DefaultAttachment attachment = new DefaultAttachment(volume);
+                            DefaultAttachment attachment = new DefaultAttachment();
+                            attachment.setLabel(item.getLabel());
                             // default dir is Foo/ID.
                             // attachment.setDirName(item.getDir());
 
@@ -139,9 +141,8 @@ public class Item2Attachment
                                 attachment.setFileName(oldFileName);
                             }
 
-                            attachment.setSHA1(item.getSha1());
-                            attachment.setLabel(item.getLabel());
-                            attachment.setSize(item.getSize());
+                            attachment.setFileSize(item.getSize());
+                            attachment.setFileSHA1(item.getSha1());
 
                             JsonObject newValArrayItem = JsonFn.toJsonObject(attachment);
                             newValArray.put(newValArrayItem);

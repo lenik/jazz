@@ -11,6 +11,8 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
 import net.bodz.lily.entity.manager.JdbcRowOpEvent;
 import net.bodz.lily.entity.manager.JdbcRowOpType;
+import net.bodz.lily.storage.IVolume;
+import net.bodz.lily.storage.IVolumeItem;
 
 public class UpdateAttachments
         implements
@@ -32,23 +34,27 @@ public class UpdateAttachments
         if (name == null)
             return null;
         String ext = FilePath.getExtension(name, true);
-        return item.getSHA1() + ext;
+        return item.getFileSHA1() + ext;
     }
+
+    IVolume volume;
 
     public void renameSubDirToId(IAttachment attachment, String id)
             throws IOException {
         if (attachment == null)
             throw new NullPointerException("attachment");
 
-        File file = attachment.getFile();
+        File file = attachment.toLocalFile(volume);
         if (!file.exists()) {
             System.out.println(file);
         }
 
         String subDirName = attachment.getDirName();
         if (Nullables.equals(subDirName, "new") //
-                || Nullables.equals(subDirName, "tmp"))
-            attachment.moveTo(id, attachment.getFileName());
+                || Nullables.equals(subDirName, "tmp")) {
+            IVolumeItem vf = attachment.toVolumeFile(volume);
+            vf.moveTo(id, attachment.getFileName());
+        }
     }
 
     @Override

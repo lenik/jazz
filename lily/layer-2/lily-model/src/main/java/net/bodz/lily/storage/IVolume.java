@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.attachment;
+package net.bodz.lily.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,14 +7,15 @@ import java.io.IOException;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.servlet.ctx.WebAppAnchor;
+import net.bodz.bas.t.file.IPathFields;
 
-public interface IAttachmentVolume {
+public interface IVolume {
 
     String getVolumeId();
 
     IAnchor getVolumeAnchor();
 
-    IAttachment resolveAttachment(String path);
+    IVolumeItem getFile(IPathFields pathFields);
 
     boolean isValidWebPath(String webPath);
 
