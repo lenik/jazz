@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.attachment;
+package net.bodz.lily.storage;
 
 import java.io.File;
 
@@ -7,14 +7,14 @@ import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
-public abstract class AbstractAttachmentVolume
+public abstract class AbstractVolume
         implements
-            IAttachmentVolume {
+            IVolume {
 
-    String volumeId;
-    IAnchor baseAnchor;
+    protected String volumeId;
+    protected IAnchor baseAnchor;
 
-    public AbstractAttachmentVolume(String volumeId, IAnchor baseAnchor) {
+    public AbstractVolume(String volumeId, IAnchor baseAnchor) {
         if (volumeId == null)
             throw new NullPointerException("volumeId");
         if (baseAnchor == null)
@@ -23,7 +23,7 @@ public abstract class AbstractAttachmentVolume
         this.baseAnchor = baseAnchor;
     }
 
-    public AbstractAttachmentVolume(String volumeId, String baseWebPath) {
+    public AbstractVolume(String volumeId, String baseWebPath) {
         if (volumeId == null)
             throw new NullPointerException("volumeId");
         if (baseWebPath == null)

@@ -2,26 +2,28 @@ package net.bodz.lily.entity.attachment;
 
 import java.util.EventObject;
 
+import net.bodz.lily.storage.IVolume;
+
 public class AttachmentPathChangeEvent
         extends EventObject {
 
     private static final long serialVersionUID = 1L;
 
-    IAttachmentVolume oldVolume;
+    IVolume oldVolume;
     String oldPath;
 
-    IAttachmentVolume newVolume;
+    IVolume newVolume;
     String newPath;
 
     public AttachmentPathChangeEvent(Object source) {
         super(source);
     }
 
-    public IAttachmentVolume getOldVolume() {
+    public IVolume getOldVolume() {
         return oldVolume;
     }
 
-    public void setOldVolume(IAttachmentVolume oldVolume) {
+    public void setOldVolume(IVolume oldVolume) {
         this.oldVolume = oldVolume;
     }
 
@@ -33,11 +35,11 @@ public class AttachmentPathChangeEvent
         this.oldPath = oldPath;
     }
 
-    public IAttachmentVolume getNewVolume() {
+    public IVolume getNewVolume() {
         return newVolume;
     }
 
-    public void setNewVolume(IAttachmentVolume newVolume) {
+    public void setNewVolume(IVolume newVolume) {
         this.newVolume = newVolume;
     }
 

@@ -30,13 +30,8 @@ public class RichProperties
     static final String K_VIDEOS = "videos";
     static final String K_PDFS = "pdfs";
 
-//    IId<?> idRef;
-//
-//    public RichProperties(IId<?> idRef) {
-//        if (idRef == null)
-//            throw new NullPointerException("idRef");
-//        this.idRef = idRef;
-//    }
+    public RichProperties() {
+    }
 
     public final synchronized <T> List<T> getListAttribute(String name) {
         List<T> list = getAttribute(name);
@@ -92,7 +87,9 @@ public class RichProperties
         case K_IMAGES:
         case K_VIDEOS:
         case K_PDFS:
-            setAttribute(key, DefaultAttachment.convert((JsonArray) val));
+            JsonArray array = (JsonArray) val;
+            List<IAttachment> attachments = DefaultAttachment.parseJsonArray(array);
+            setAttribute(key, attachments);
             return true;
         }
         return super.parseJsonEntry(key, val, opts);

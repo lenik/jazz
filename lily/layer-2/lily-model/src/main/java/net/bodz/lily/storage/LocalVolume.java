@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.attachment;
+package net.bodz.lily.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,20 +10,21 @@ import net.bodz.bas.data.codec.builtin.HexCodec;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.t.file.IPathFields;
 
-public class LocalAttachmentVolume
-        extends AbstractAttachmentVolume {
+public class LocalVolume
+        extends AbstractVolume {
 
     File baseDir;
 
-    public LocalAttachmentVolume(String id, IAnchor baseAnchor, File baseDir) {
+    public LocalVolume(String id, IAnchor baseAnchor, File baseDir) {
         super(id, baseAnchor);
         if (baseDir == null)
             throw new NullPointerException("baseDir");
         this.baseDir = baseDir;
     }
 
-    public LocalAttachmentVolume(String id, String baseWebPath, File baseDir) {
+    public LocalVolume(String id, String baseWebPath, File baseDir) {
         super(id, baseWebPath);
         if (baseDir == null)
             throw new NullPointerException("baseDir");
@@ -31,8 +32,9 @@ public class LocalAttachmentVolume
     }
 
     @Override
-    public IAttachment resolveAttachment(String path) {
-        return new DefaultAttachment(this, path);
+    public IVolumeItem getFile(IPathFields pathFields) {
+        DefaultVolumeFile vf = new DefaultVolumeFile(this, pathFields);
+        return vf;
     }
 
     @Override
