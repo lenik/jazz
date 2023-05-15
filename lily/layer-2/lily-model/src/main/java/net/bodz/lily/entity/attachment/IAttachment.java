@@ -41,8 +41,7 @@ public interface IAttachment
     String getFileSHA1();
 
     /**
-     * @return <code>null</code> if not available, because file doesn't exist, or in invalid image
-     *         format.
+     * @return <code>null</code> if not available, because file doesn't exist, or in invalid image format.
      */
     IAttachment getPreviewImage(int desiredWidth, int desiredHeight);
 
@@ -54,8 +53,8 @@ public interface IAttachment
 
     String K_LABEL = "label";
     String K_DESCRIPTION = "description";
-    String K_FILE_SIZE = "fileSize";
-    String K_FILE_SHA1 = "fileSHA1";
+    String K_FILE_SIZE = "size"; // "fileSize";
+    String K_FILE_SHA1 = "sha1"; // "fileSHA1";
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
