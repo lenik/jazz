@@ -4,7 +4,6 @@ import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -34,8 +33,7 @@ public class LilyTestSite
     public static final String PATH_EVENT_LOGS = "logger";
 
     public LilyTestSite() {
-        super(DataHub.getPreferredHub().getMain());
-
+        super();
         serviceMap.install("mapper", new MapperService(dataContext));
     }
 
