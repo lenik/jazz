@@ -74,7 +74,13 @@ public class ClassDocBuilder {
             MethodId methodId = new MethodId(javaMethod.getName(), types.size());
             for (int i = 0; i < types.size(); i++) {
                 JavaType paramType = types.get(i);
-                String paramFqcn = paramType.getFullyQualifiedName();
+                String paramFqcn;
+                try {
+                    paramFqcn = paramType.getFullyQualifiedName();
+                } catch (Exception e) {
+                    System.err.println("Failed to get fully qualified name from " + paramType);
+                    throw e;
+                }
                 int paramDims = 0;
                 if (paramType instanceof JavaClass) {
                     JavaClass jclass = (JavaClass) paramType;
