@@ -20,7 +20,6 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-db</artifactId>
             <version>${bas.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
