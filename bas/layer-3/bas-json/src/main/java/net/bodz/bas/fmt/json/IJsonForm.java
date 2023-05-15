@@ -67,6 +67,14 @@ public interface IJsonForm {
         }
     }
 
+    default boolean isJsonInByLoader() {
+        return false;
+    }
+
+    default boolean isJsonOutByDumper() {
+        return false;
+    }
+
     class json
             extends JsonFn {
     }

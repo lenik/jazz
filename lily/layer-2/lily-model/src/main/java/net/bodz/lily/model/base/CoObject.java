@@ -1,19 +1,15 @@
 package net.bodz.lily.model.base;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -460,12 +456,19 @@ public abstract class CoObject
     /* _____________________________ */static section.iface __JSON__;
 
     @Override
+    protected boolean isJsonInOverrided(Class<?> clazz) {
+        if (clazz == CoObject.class)
+            return false;
+        return super.isJsonInOverrided(clazz);
+    }
+
+    @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
         if (o == null)
             throw new NullPointerException("o");
-        if (checkAutoMode()) {
+        if (isJsonInByLoader()) {
             try {
                 new BeanJsonLoader().load(this, o, false);
             } catch (Exception e) {
@@ -489,13 +492,6 @@ public abstract class CoObject
 
             o.readInto("properties", getProperties());
         }
-    }
-
-    @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
-        BeanJsonDumper dumper = new BeanJsonDumper(out);
-        dumper.dump(this);
     }
 
     @Internal

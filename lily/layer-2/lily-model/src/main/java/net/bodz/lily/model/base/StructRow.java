@@ -2,6 +2,7 @@ package net.bodz.lily.model.base;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -207,20 +208,30 @@ public abstract class StructRow
     /** ⇱ Implementation Of {@link IJsonForm}. */
     /* _____________________________ */static section.iface __JSON__;
 
-    protected Boolean overrided_readObject = false;
+    protected Boolean overrided_jsonIn = false;
+    protected Boolean overrided_jsonOut = false;
 
-    boolean checkAutoMode() {
-        if (overrided_readObject == null)
+    @Override
+    public boolean isJsonInByLoader() {
+        if (overrided_jsonIn == null)
             synchronized (this) {
-                if (overrided_readObject == null)
+                if (overrided_jsonIn == null)
                     try {
-                        getClass().getMethod("readObject", JsonObject.class);
-                        overrided_readObject = true;
+                        Method mtd = getClass().getMethod("jsonIn", JsonObject.class, JsonFormOptions.class);
+                        Class<?> declaringClass = mtd.getDeclaringClass();
+                        overrided_jsonIn = isJsonInOverrided(declaringClass);
+                        overrided_jsonIn = true;
                     } catch (NoSuchMethodException e) {
-                        overrided_readObject = false;
+                        overrided_jsonIn = false;
                     }
             }
-        return !overrided_readObject;
+        return !overrided_jsonIn;
+    }
+
+    protected boolean isJsonInOverrided(Class<?> clazz) {
+        if (clazz == StructRow.class)
+            return false;
+        return true;
     }
 
     @Override
@@ -228,7 +239,7 @@ public abstract class StructRow
             throws ParseException {
         if (o == null)
             throw new NullPointerException("o");
-        if (checkAutoMode()) {
+        if (isJsonInByLoader()) {
             try {
                 new BeanJsonLoader().load(this, o, false);
             } catch (Exception e) {
@@ -239,6 +250,29 @@ public abstract class StructRow
             lastModifiedDate = o.getDateTime("lastModifiedDate", lastModifiedDate);
             version = o.getInt("version", version);
         }
+    }
+
+    @Override
+    public boolean isJsonOutByDumper() {
+        if (overrided_jsonOut == null)
+            synchronized (this) {
+                if (overrided_jsonOut == null)
+                    try {
+                        Method mtd = getClass().getMethod("jsonOut", JsonObject.class, JsonFormOptions.class);
+                        Class<?> declaringClass = mtd.getDeclaringClass();
+                        overrided_jsonOut = isJsonOutOverrided(declaringClass);
+                        overrided_jsonOut = true;
+                    } catch (NoSuchMethodException e) {
+                        overrided_jsonOut = false;
+                    }
+            }
+        return !overrided_jsonOut;
+    }
+
+    protected boolean isJsonOutOverrided(Class<?> clazz) {
+        if (clazz == StructRow.class)
+            return false;
+        return true;
     }
 
     @Override
