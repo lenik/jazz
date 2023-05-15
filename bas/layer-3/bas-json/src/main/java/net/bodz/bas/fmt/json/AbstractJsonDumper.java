@@ -218,9 +218,12 @@ public abstract class AbstractJsonDumper<self_t>
         }
 
         if (obj instanceof IJsonForm) {
-            markset.addMark(obj);
-            if (dumpJsonSerializable(scalar, (IJsonForm) obj, depth))
-                return true;
+            IJsonForm jf = (IJsonForm) obj;
+            if (!jf.isJsonOutByDumper()) {
+                markset.addMark(obj);
+                if (dumpJsonSerializable(scalar, jf, depth))
+                    return true;
+            }
         }
 
         if (ReflectOptions.copyTypes.contains(obj.getClass())) {
