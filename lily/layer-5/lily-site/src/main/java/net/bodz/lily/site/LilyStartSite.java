@@ -1,7 +1,6 @@
 package net.bodz.lily.site;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ctx.DataHub;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -12,6 +11,8 @@ import net.bodz.bas.servlet.man.SysManager;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.DataApps;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.ILoginManager;
 import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginManagerWs;
@@ -24,15 +25,17 @@ public abstract class LilyStartSite
 
     public static final String PATH_SYSMAN = "sysmgr";
 
+    protected final IDataApplication app;
     protected final DataContext dataContext;
     protected LoginManager loginManager;
 
     public LilyStartSite() {
-        this(DataHub.getPreferredHub().getMain());
+        this(DataApps.getPreferred());
     }
 
-    public LilyStartSite(DataContext dataContext) {
-        this.dataContext = dataContext;
+    public LilyStartSite(IDataApplication app) {
+        this.app = app;
+        this.dataContext = app.getDataContext();
         setQueryContext(dataContext);
 
         setupServices();

@@ -16,8 +16,11 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.storage.IVolume;
+import net.bodz.lily.storage.IVolumeProvider;
 
-public class AttachmentGroup {
+public class AttachmentGroup
+        implements
+            IVolumeProvider {
 
     File baseDir;
 
@@ -25,6 +28,7 @@ public class AttachmentGroup {
         this.baseDir = baseDir;
     }
 
+    @Override
     public IVolume getVolume(String id) {
         if (id == null)
             return null;
