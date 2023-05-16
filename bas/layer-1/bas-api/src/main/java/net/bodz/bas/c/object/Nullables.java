@@ -184,7 +184,8 @@ public class Nullables {
     }
 
     private static class _NullInvocationHandler
-            implements InvocationHandler {
+            implements
+                InvocationHandler {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args)
@@ -285,6 +286,39 @@ public class Nullables {
             if (arg != null)
                 return arg;
         return null;
+    }
+
+    public static String concat(String a, String b) {
+        if (a == null)
+            return b;
+        if (b == null)
+            return a;
+        return a + b;
+    }
+
+    public static String concat(String... array) {
+        // instead of null.
+        if (array.length == 0)
+            return "";
+
+        int len = 0;
+        int nonNulls = 0;
+        for (int i = 0; i < array.length; i++) {
+            String s = array[i];
+            if (s != null) {
+                len += s.length();
+                nonNulls++;
+            }
+        }
+        if (nonNulls == 0)
+            return null;
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < array.length; i++) {
+            String s = array[i];
+            if (s != null)
+                sb.append(s);
+        }
+        return sb.toString();
     }
 
 }
