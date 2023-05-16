@@ -223,23 +223,23 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     @Override
     public IPathArrival dispatchToEntity(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        int cc = typeInfo.getIdColumnCount();
-        assert cc >= 1;
+        int idColumnCount = typeInfo.getIdColumnCount();
+        assert idColumnCount >= 1;
 
-        String[] sv = tokens.peek(cc);
-        if (sv == null)
+        String[] heads = tokens.peek(idColumnCount);
+        if (heads == null)
             return null;
 
-        Split name_ext = Split.nameExtension(sv[cc - 1]);
-        sv[cc - 1] = name_ext.a;
+        Split name_ext = Split.nameExtension(heads[idColumnCount - 1]);
+        heads[idColumnCount - 1] = name_ext.a;
 
         Object[] idvec;
         try {
-            idvec = typeInfo.parseIdColumns(sv);
+            idvec = typeInfo.parseIdColumns(heads);
         } catch (ParseException e) {
             throw new PathDispatchException(String.format(//
                     "error parse id fields %s: %s", //
-                    Arrays.asList(sv), e.getMessage()), e);
+                    Arrays.asList(heads), e.getMessage()), e);
         }
 
         Object id;
@@ -258,12 +258,12 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             return null;
 
         ResolvedEntity info = new ResolvedEntity();
-        info.idFieldStrings = sv;
+        info.idFieldStrings = heads;
         info.idFields = idvec;
         info.id = id;
         info.entity = obj;
         info.preferredExtension = name_ext.b;
-        return PathArrival.shift(cc, previous, this, info, tokens);
+        return PathArrival.shift(idColumnCount, previous, this, info, tokens);
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.t.file.IPathFields;
+import net.bodz.bas.t.tuple.Split;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
 
@@ -39,6 +40,19 @@ public interface IAttachment
      * @return <code>null</code> if unknown.
      */
     String getFileSHA1();
+
+    default String getSHA1FileName() {
+        String sha1 = getFileSHA1();
+        String name = getFileName();
+        if (name == null)
+            name = getName();
+        Split split = Split.nameExtension(name);
+        String extension = split.b;
+        if (extension != null)
+            return sha1 + "." + extension;
+        else
+            return sha1;
+    }
 
     /**
      * @return <code>null</code> if not available, because file doesn't exist, or in invalid image format.

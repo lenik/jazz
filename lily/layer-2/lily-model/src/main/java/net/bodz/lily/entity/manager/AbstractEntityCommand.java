@@ -17,6 +17,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.html.servlet.NoRender;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -182,10 +183,16 @@ public abstract class AbstractEntityCommand
         }
 
         PathArrival arrival = PathArrival.shift(consumedTokenCount, previous, this, target, tokens);
+        if (target == NoRender.INSTANCE)
+            return arrival;
 
         Boolean returningJsonResult = isReturningJsonResult();
-        if (returningJsonResult == null)
-            returningJsonResult = !(target instanceof IJsonForm);
+        if (returningJsonResult == null) {
+            if (target instanceof IJsonForm)
+                returningJsonResult = false;
+            else
+                returningJsonResult = true;
+        }
 
         if (returningJsonResult)
             arrival = PathArrival.shift(0, arrival, this, result, tokens);

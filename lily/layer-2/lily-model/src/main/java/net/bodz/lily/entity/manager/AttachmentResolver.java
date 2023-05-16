@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
@@ -19,6 +20,9 @@ import net.bodz.bas.site.vhost.VirtualHostManager;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.attachment.IAttachment;
+import net.bodz.lily.entity.attachment.IAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IId.class)
@@ -61,11 +65,26 @@ public class AttachmentResolver
         String entityTypeName = typeInfo.getEntityClass().getSimpleName();
         File tableDir = new File(vstart, entityTypeName);
 
-        String idStr = obj.id().toString();
-        File objDir = new File(tableDir, idStr);
+        String idPath = obj.getIdPath();
+        File objDir = new File(tableDir, idPath);
 
         String remainingPath = tokens.getRemainingPath();
         consumedTokenCount = tokens.available();
+
+        if (obj instanceof IHaveAttachments) {
+            if (StringPred.isDecimal(remainingPath) //
+                    && remainingPath.length() < 10) {
+                int attIndex = Integer.parseInt(remainingPath);
+
+                IHaveAttachments holder = (IHaveAttachments) obj;
+                IAttachmentListing attachments = holder.listAttachments();
+                IAttachment attachment = attachments.getAttachment(attIndex);
+                if (attachment != null) {
+                    remainingPath = attachment.getSHA1FileName();
+                }
+            }
+        }
+
         File file = new File(objDir, remainingPath);
 
         if (!file.exists()) {
