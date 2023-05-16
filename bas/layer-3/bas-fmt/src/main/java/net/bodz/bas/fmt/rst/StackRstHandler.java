@@ -22,6 +22,8 @@ public abstract class StackRstHandler
     @Override
     public boolean endChild(IRstElement element)
             throws ElementHandlerException {
+        if (stack.isEmpty())
+            throw new IllegalStateException("stack underflow");
         parent = stack.pop();
         return true;
     }

@@ -2,13 +2,17 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.fmt.api.ITextAttribute;
 import net.bodz.bas.fmt.api.MutableTextAttribute;
 
 public class RstElement
-        implements IRstElement, IRstHandler, Serializable {
+        implements
+            IRstElement,
+            IRstHandler,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +26,7 @@ public class RstElement
 
     /**
      * Create a new structf-element.
-     * 
+     *
      * @param name
      *            Non-<code>null</code> element name.
      * @param args
@@ -90,6 +94,11 @@ public class RstElement
 
     @Override
     public void complete(IRstElement element) {
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + Arrays.asList(args);
     }
 
 }
