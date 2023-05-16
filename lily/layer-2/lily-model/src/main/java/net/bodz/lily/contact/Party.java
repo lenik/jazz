@@ -19,7 +19,7 @@ import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.IHaveAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.model.base.IdEntity;
 
 /**
@@ -30,7 +30,7 @@ import net.bodz.lily.model.base.IdEntity;
 public abstract class Party
         extends IdEntity<Integer>
         implements
-            IHaveAttachmentListing {
+            IHaveAttachments {
 
     private static final long serialVersionUID = 1L;
 

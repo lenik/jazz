@@ -21,9 +21,9 @@ public class UpdateAttachments
     static final Logger logger = LoggerFactory.getLogger(UpdateAttachments.class);
 
     IId<?> idRef;
-    IHaveAttachmentListing owner;
+    IHaveAttachments owner;
 
-    public <T extends IId<?> & IHaveAttachmentListing> UpdateAttachments(T obj) {
+    public <T extends IId<?> & IHaveAttachments> UpdateAttachments(T obj) {
         this.idRef = obj;
         this.owner = obj;
     }

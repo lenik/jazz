@@ -9,10 +9,10 @@ import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.DefaultSiteDirs;
 import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.attachment.IHaveAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
-@ForEntityType(IHaveAttachmentListing.class)
+@ForEntityType(IHaveAttachments.class)
 public class UploadCommand
         extends AbstractEntityCommand {
 
