@@ -2,6 +2,7 @@ package net.bodz.bas.fmt.rst;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import net.bodz.bas.c.object.IEmptyConsts;
@@ -13,17 +14,22 @@ import net.bodz.bas.io.res.IStreamInputSource;
 class Frame {
 
     IRstHandler handler;
-    RstElement save;
+    RstElement saved;
 
     public Frame(String elementName, String[] args) {
         this(elementName, args, null);
     }
 
     public Frame(String elementName, String[] args, IRstHandler handler) {
-        this.save = new RstElement(elementName, args);
+        this.saved = new RstElement(elementName, args);
         if (handler == null)
             handler = new RstElement(elementName, args);
         this.handler = handler;
+    }
+
+    @Override
+    public String toString() {
+        return saved.getName() + " " + Arrays.asList(saved.getArguments());
     }
 
 }
@@ -60,7 +66,7 @@ public class RstLoader {
                 if (attributeData == null)
                     throw new NullPointerException("attributeData");
                 if (!handler.attribute(attributeName, attributeData)) {
-                    frame.save.attribute(attributeName, attributeData);
+                    frame.saved.attribute(attributeName, attributeData);
                 }
                 break;
 
@@ -70,7 +76,7 @@ public class RstLoader {
 
                 handler = handler.beginChild(elementName, elementArgs);
                 if (handler == null)
-                    handler = frame.save.beginChild(elementName, elementArgs);
+                    handler = frame.saved.beginChild(elementName, elementArgs);
                 frame = new Frame(elementName, elementArgs, handler);
                 stack.push(frame);
                 break;
@@ -79,8 +85,8 @@ public class RstLoader {
                 if (stack.size() <= 1)
                     throw new ParseException("Too many '}'s, outside of the document.");
 
-            case IRstInput.EOF:
-                IRstElement savedElement = frame.save;
+            case IRstInput.EOF: // treat as end of the file element.
+                IRstElement savedElement = frame.saved;
                 handler.complete(savedElement);
                 stack.pop();
 
@@ -91,7 +97,7 @@ public class RstLoader {
                     frame = stack.peek();
                     handler = frame.handler;
                     if (!handler.endChild(savedElement))
-                        frame.save.endChild(savedElement);
+                        frame.saved.endChild(savedElement);
                 }
                 break;
 
