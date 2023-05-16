@@ -144,9 +144,11 @@ public abstract class AbstractOptionGroup
             property.setValue(obj, result);
         } catch (ReflectiveOperationException e) {
             throw new IllegalUsageException(String.format(//
-                    "Can't set property %s.%s to %s", //
-                    property.getDeclaringClass().getSimpleName(), property.getName(), //
-                    result), e);
+                    "error setting property value of %s.%s to %s: %s", //
+                    property.getDeclaringClass().getSimpleName(), //
+                    property.getName(), //
+                    result, //
+                    e.getMessage()), e);
         }
     }
 
