@@ -75,7 +75,7 @@ public class DefaultLog4jConfigurer
 //                .addAttribute("level", Level.DEBUG));
 
         AppenderComponentBuilder appenderBuilder = builder.newAppender("stdout", "CONSOLE")//
-                .addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT) //
+                .addAttribute("target", ConsoleAppender.Target.SYSTEM_ERR) //
 
                 .add(builder.newLayout("PatternLayout")//
                         .addComponent(builder.newComponent("LevelPatternSelector") //
