@@ -24,13 +24,23 @@ public class Cryptos {
     }
 
     public static byte[] md5(byte[] bin) {
+        return md5(bin, 0, bin.length);
+    }
+
+    public static byte[] md5(byte[] bin, int off, int len) {
         MessageDigest md5 = getMD5();
-        return md5.digest(bin);
+        md5.update(bin);
+        return md5.digest();
     }
 
     public static byte[] sha1(byte[] bin) {
+        return sha1(bin, 0, bin.length);
+    }
+
+    public static byte[] sha1(byte[] bin, int off, int len) {
         MessageDigest sha1 = getSHA1();
-        return sha1.digest(bin);
+        sha1.update(bin, off, len);
+        return sha1.digest();
     }
 
     public static String md5(String s) {
