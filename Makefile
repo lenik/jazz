@@ -21,3 +21,6 @@ codesnipper-apkmerges: services.list features.list
 	    sed -e "s|^|        merge 'META-INF/features/|" -e "s|\$$|'|" features.list; \
 	) | xsel -b
 
+rsync:
+	rsync -amv --exclude /.git . a10:/mnt/istore/pro/jazz
+
