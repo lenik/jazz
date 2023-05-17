@@ -69,8 +69,10 @@ public class Crc32Core {
         if (inverted)
             c = ~c;
 
-        for (int i = 0; i < len; i++)
-            c = (c >>> 8) ^ table[buf[off++] ^ (c & 0xff)];
+        for (int i = 0; i < len; i++) {
+            int ch = buf[off++] & 0xFF;
+            c = (c >>> 8) ^ table[ch ^ (c & 0xff)];
+        }
 
         if (inverted)
             c = ~c;
