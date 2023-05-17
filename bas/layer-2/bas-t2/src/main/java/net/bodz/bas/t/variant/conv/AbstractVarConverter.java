@@ -233,6 +233,8 @@ public abstract class AbstractVarConverter<T>
 
     @Override
     public String toString(T value) {
+        if (value == null)
+            return null;
         return value.toString();
     }
 
