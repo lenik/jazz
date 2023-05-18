@@ -5,10 +5,12 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.servlet.man.sys.SystemInfo;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class SysManager
-        implements IPathDispatchable {
+        implements
+            IPathDispatchable {
 
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
@@ -19,6 +21,10 @@ public class SysManager
             return null;
 
         switch (token) {
+        case "sysinfo":
+            target = new SystemInfo();
+            break;
+
         case "servletContext":
             target = new ServletContextManager();
             break;
