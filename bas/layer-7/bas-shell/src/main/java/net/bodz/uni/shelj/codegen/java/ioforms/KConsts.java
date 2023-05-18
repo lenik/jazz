@@ -1,13 +1,13 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class KConsts
-        extends FieldsRelatedSourceBuilder {
+        extends SourceBuilderForMembers {
 
     int count;
 
@@ -19,8 +19,8 @@ public class KConsts
     public void build(JavaSourceWriter out)
             throws IOException {
         // K_ key name consts
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
+        for (IMember member : members) {
+            Phrase nam = Phrase.fooBar(member.getName());
             String keyName = "K_" + nam.FOO_BAR;
             out.printf("private static final String %s = \"%s\";\n", keyName, nam.fooBar);
             count++;

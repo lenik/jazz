@@ -2,7 +2,9 @@ package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.c.reflect.query.FieldSelection;
@@ -14,6 +16,13 @@ import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.uni.shelj.codegen.java.member.BeanPropertyMember;
+import net.bodz.uni.shelj.codegen.java.member.FieldMember;
+import net.bodz.uni.shelj.codegen.java.member.IMember;
+
+import com.googlecode.openbeans.BeanInfo;
+import com.googlecode.openbeans.Introspector;
+import com.googlecode.openbeans.PropertyDescriptor;
 
 /**
  * Generate fields with various serialization forms.
@@ -22,7 +31,7 @@ import net.bodz.bas.program.skel.BasicCLI;
 public class IOFormsGenerator
         extends BasicCLI
         implements
-            IJavaCodegen<Iterable<Field>> {
+            IJavaCodegen<Collection<IMember>> {
 
     /**
      * Specify the class to read.
@@ -82,7 +91,7 @@ public class IOFormsGenerator
      */
     boolean xmlForm;
 
-    FieldSelection fields;
+    List<IMember> members = new ArrayList<>();
 
     public IOFormsGenerator() {
     }
@@ -102,15 +111,38 @@ public class IOFormsGenerator
 
         for (Class<?> inputClass : inputClasses) {
 
-            if (declaredOnly) {
-                fields = ReflectQuery.selectDeclaredFields(inputClass)//
-                        .maxDepth(maxDepth) //
-                        .staticMode(false) //
-                ;
+            if (beanProperties) {
+                BeanInfo beanInfo = Introspector.getBeanInfo(inputClass);
+                for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
+                    if (declaredOnly) {
+                        Method getter = pd.getReadMethod();
+                        Method setter = pd.getWriteMethod();
+                        boolean getterIsNotDeclared = false;
+                        boolean setterIsNotDeclared = false;
+                        if (getter != null)
+                            getterIsNotDeclared = getter.getDeclaringClass() != inputClass;
+                        if (setter != null)
+                            setterIsNotDeclared = setter.getDeclaringClass() != inputClass;
+                        if (getterIsNotDeclared && setterIsNotDeclared)
+                            continue;
+                    }
+                    members.add(new BeanPropertyMember(pd));
+                }
             } else {
-                fields = ReflectQuery.selectFields(inputClass) //
-                        .staticMode(false) //
-                ;
+                FieldSelection fields;
+                if (declaredOnly) {
+                    fields = ReflectQuery.selectDeclaredFields(inputClass)//
+                            .maxDepth(maxDepth) //
+                            .staticMode(false) //
+                    ;
+                } else {
+                    fields = ReflectQuery.selectFields(inputClass) //
+                            .staticMode(false) //
+                    ;
+                }
+                for (Field field : fields) {
+                    members.add(new FieldMember(field));
+                }
             }
 
             String packageName = inputClass.getPackage().getName();
@@ -119,7 +151,7 @@ public class IOFormsGenerator
 
             out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
             JavaSourceWriter javaWriter = new JavaSourceWriter(packageName, out);
-            generateJavaSource(javaWriter, fields);
+            generateJavaSource(javaWriter, members);
             out.println();
             out.leaveln("}");
 
@@ -136,7 +168,7 @@ public class IOFormsGenerator
     }
 
     @Override
-    public void generateJavaSource(JavaSourceWriter out, Iterable<Field> model)
+    public void generateJavaSource(JavaSourceWriter out, Collection<IMember> model)
             throws IOException {
         KConsts constKeys = new KConsts();
         run(out, constKeys);
@@ -164,9 +196,9 @@ public class IOFormsGenerator
         }
     }
 
-    void run(JavaSourceWriter out, FieldsRelatedSourceBuilder builder)
+    void run(JavaSourceWriter out, SourceBuilderForMembers builder)
             throws IOException {
-        builder.setFields(fields);
+        builder.setMembers(members);
         out.println();
         builder.build(out);
     }

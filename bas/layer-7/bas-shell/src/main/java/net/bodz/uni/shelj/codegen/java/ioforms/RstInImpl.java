@@ -1,15 +1,15 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class RstInImpl
-        extends FieldsRelatedSourceBuilder {
+        extends SourceBuilderForMembers {
 
     @Override
     public void build(JavaSourceWriter out)
@@ -22,8 +22,8 @@ public class RstInImpl
         out.enterln("        throws ParseException, ElementHandlerException {");
 
         boolean onlyStrings = true;
-        for (Field field : fields)
-            if (field.getType() != String.class) {
+        for (IMember member : members)
+            if (member.getType() != String.class) {
                 onlyStrings = false;
                 break;
             }
@@ -32,11 +32,11 @@ public class RstInImpl
 //            out.println("IVariant val = new MutableVariant(data);");
 
         out.println("switch (name) {");
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
+        for (IMember member : members) {
+            Phrase nam = Phrase.fooBar(member.getName());
             String keyName = "K_" + nam.FOO_BAR;
-            String getType = Primitives.unbox(field.getType()).getSimpleName();
-            boolean nullable = !field.getType().isPrimitive();
+            String getType = Primitives.unbox(member.getType()).getSimpleName();
+            boolean nullable = !member.getType().isPrimitive();
 
             // switch (TypeKind.getTypeId(field.getType())) {
             // case TypeId.BIG_INTEGER:
@@ -48,7 +48,7 @@ public class RstInImpl
 
             out.enterln("case " + keyName + ":");
 
-            if (field.getType() == String.class) {
+            if (member.getType() == String.class) {
                 out.printf("%s = data;\n", nam.fooBar);
             } else {
                 String getFn = "parse" + Strings.ucfirst(getType);

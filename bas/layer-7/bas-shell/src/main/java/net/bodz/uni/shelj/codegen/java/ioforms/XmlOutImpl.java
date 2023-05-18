@@ -1,13 +1,13 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class XmlOutImpl
-        extends FieldsRelatedSourceBuilder {
+        extends SourceBuilderForMembers {
 
     @Override
     public void build(JavaSourceWriter out)
@@ -16,11 +16,11 @@ public class XmlOutImpl
         out.println("public void writeObject(IXmlOutput out)");
         out.enterln("        throws XMLStreamException, FormatException {");
 
-        for (Field field : fields) {
-            Phrase nam = Phrase.fooBar(field.getName());
+        for (IMember member : members) {
+            Phrase nam = Phrase.fooBar(member.getName());
             String keyName = "K_" + nam.FOO_BAR;
 
-            if (field.getType().isPrimitive())
+            if (member.getType().isPrimitive())
                 out.printf("out.attribute(%s, this.%s);\n", keyName, nam.fooBar);
             else
                 out.printf("out.attributeNotNull(%s, this.%s);\n", keyName, nam.fooBar);

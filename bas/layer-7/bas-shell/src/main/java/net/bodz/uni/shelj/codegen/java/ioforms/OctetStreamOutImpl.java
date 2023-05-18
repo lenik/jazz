@@ -1,7 +1,6 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.nio.Charsets;
@@ -12,9 +11,11 @@ import net.bodz.bas.data.struct.IOctetStreamForm;
 import net.bodz.bas.data.struct.StringBin;
 import net.bodz.bas.data.struct.StringBinUtils;
 import net.bodz.bas.io.StringLengthType;
+import net.bodz.uni.shelj.codegen.java.member.ContextFieldExprAsAMember;
+import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class OctetStreamOutImpl
-        extends FieldsRelatedSourceBuilder {
+        extends SourceBuilderForMembers {
 
     StringLengthType defaultLengthType = StringLengthType.terminatedByNull;
     Charset defaultCharset = Charsets.UTF_8;
@@ -27,60 +28,59 @@ public class OctetStreamOutImpl
         out.enterln("        throws IOException {");
 
         int i = 0;
-        for (Field field : fields) {
-            String name = "this." + field.getName();
-            saveField(out, new VarField(field, name), i++);
+        for (IMember member : members) {
+            saveField(out, member, i++);
         }
 
         out.leaveln("}");
     }
 
-    void saveField(JavaSourceWriter out, VarField field, int index) {
-        if (field.type.isArray()) {
-            saveArrayField(out, field, index);
+    void saveField(JavaSourceWriter out, IMember member, int index) {
+        if (member.getType().isArray()) {
+            saveArrayField(out, member, index);
             return;
         }
 
-        if (IOctetStreamForm.class.isAssignableFrom(field.type)) {
-            out.printf("%s.writeObject(out);\n", field.name);
+        if (IOctetStreamForm.class.isAssignableFrom(member.getType())) {
+            out.printf("%s.writeObject(out);\n", member.javaGet());
             return;
         }
 
-        int typeId = TypeKind.getTypeId(field.type);
+        int typeId = TypeKind.getTypeId(member.getType());
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            out.printf("out.write(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.write(\\?);");
             return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            out.printf("out.writeWord(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeWord(\\?);");
             return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            out.printf("out.writeDword(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeDword(\\?);");
             return;
 
         case TypeId._long:
         case TypeId.LONG:
-            out.printf("out.writeQword(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeQword(\\?);");
             return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            out.printf("out.writeFloat(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeFloat(\\?);");
             return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            out.printf("out.writeDouble(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeDouble(\\?);");
             return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            out.printf("out.writeBool(%s);\n", field.name);
+            member.printStatementLineWithJavaGet(out, "out.writeBool(\\?);");
             return;
 
         case TypeId._char:
@@ -89,46 +89,46 @@ public class OctetStreamOutImpl
             break;
         }
 
-        saveStringField(out, field, index);
+        saveStringField(out, member, index);
     }
 
-    void saveArrayField(JavaSourceWriter out, VarField field, int index) {
-        Class<?> type1 = field.type.getComponentType();
+    void saveArrayField(JavaSourceWriter out, IMember field, int index) {
+        Class<?> type1 = field.getType().getComponentType();
         int typeId = TypeKind.getTypeId(type1);
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            out.printf("out.write(%s);\n", field.name);
+            out.printf("out.write(%s);\n", field.javaGet());
             return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            out.printf("out.writeWords(%s);\n", field.name);
+            out.printf("out.writeWords(%s);\n", field.javaGet());
             return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            out.printf("out.writeDwords(%s);\n", field.name);
+            out.printf("out.writeDwords(%s);\n", field.javaGet());
             return;
 
         case TypeId._long:
         case TypeId.LONG:
-            out.printf("out.writeQwords(%s);\n", field.name);
+            out.printf("out.writeQwords(%s);\n", field.javaGet());
             return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            out.printf("out.writeFloats(%s);\n", field.name);
+            out.printf("out.writeFloats(%s);\n", field.javaGet());
             return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            out.printf("out.writeDoubles(%s);\n", field.name);
+            out.printf("out.writeDoubles(%s);\n", field.javaGet());
             return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            out.printf("out.writeBools(%s);\n", field.name);
+            out.printf("out.writeBools(%s);\n", field.javaGet());
             return;
 
         case TypeId._char:
@@ -161,27 +161,27 @@ public class OctetStreamOutImpl
         case TypeId.CHARACTER:
             switch (unicode) {
             case 8:
-                out.printf("out.writeUtf8Chars(%s);\n", field.name);
+                out.printf("out.writeUtf8Chars(%s);\n", field.javaGet());
                 return;
             case 16:
-                out.printf("out.writeChars(%s);\n", field.name);
+                out.printf("out.writeChars(%s);\n", field.javaGet());
                 return;
             }
             String charsetId = charset.name().replace('-', '_');
-            out.printf("out.writeChars(%s, Charsets." + charsetId + ");\n", field.name);
+            out.printf("out.writeChars(%s, Charsets." + charsetId + ");\n", field.javaGet());
             return;
         }
 
         out.printf("out.writeDword(%s.length);");
-        out.printf("for (" + type1 + " a: " + field.name + ") {");
+        out.printf("for (" + type1 + " a: " + field.javaGet() + ") {");
         out.enter();
-        VarField itemField = new VarField(type1, 0, field.name + "[i]");
+        IMember itemField = new ContextFieldExprAsAMember(field, "[i]", type1);
         saveStringField(out, itemField, 0);
         out.leave();
         out.println("}");
     }
 
-    void saveStringField(JavaSourceWriter out, VarField field, int index) {
+    void saveStringField(JavaSourceWriter out, IMember field, int index) {
         StringLengthType lengthType = StringBinUtils.defaultStringLengthType;
 
         Charset charset = null;
@@ -209,19 +209,19 @@ public class OctetStreamOutImpl
         if (charsetId != null)
             charsetParam = ", Charsets." + charsetId;
 
-        int typeId = TypeKind.getTypeId(field.type);
+        int typeId = TypeKind.getTypeId(field.getType());
         switch (typeId) {
         case TypeId._char:
         case TypeId.CHARACTER:
             switch (unicode) {
             case 8:
-                out.printf("out.writeUtf8Char(%s);\n", field.name);
+                out.printf("out.writeUtf8Char(%s);\n", field.javaGet());
                 return;
             case 16:
-                out.printf("out.writeChar(%s);\n", field.name);
+                out.printf("out.writeChar(%s);\n", field.javaGet());
                 return;
             }
-            out.printf("out.writeChar(%s%s);\n", field.name, charsetParam);
+            out.printf("out.writeChar(%s%s);\n", field.javaGet(), charsetParam);
             return;
         }
 
@@ -229,25 +229,25 @@ public class OctetStreamOutImpl
         if (lengthType.hasCountField) {
             switch (unicode) {
             case 8:
-                out.printf("out.writeUtf8String(%s, %s);\n", lengthTypeConst, field.name);
+                out.printf("out.writeUtf8String(%s, %s);\n", lengthTypeConst, field.javaGet());
                 break;
             case 16:
-                out.printf("out.writeString(%s, %s);\n", lengthTypeConst, field.name);
+                out.printf("out.writeString(%s, %s);\n", lengthTypeConst, field.javaGet());
                 break;
             default:
-                out.printf("out.writeString(%s, %s%s);\n", lengthTypeConst, field.name, charsetParam);
+                out.printf("out.writeString(%s, %s%s);\n", lengthTypeConst, field.javaGet(), charsetParam);
             }
             return;
         } else if (lengthType.hasTerminator) {
             switch (unicode) {
             case 8:
-                out.printf("out.writeUtf8String(%s);\n", field.name);
+                out.printf("out.writeUtf8String(%s);\n", field.javaGet());
                 break;
             case 16:
-                out.printf("out.writeString(%s);\n", field.name);
+                out.printf("out.writeString(%s);\n", field.javaGet());
                 break;
             default:
-                out.printf("out.writeString(%s%s);\n", field.name, charsetParam);
+                out.printf("out.writeString(%s%s);\n", field.javaGet(), charsetParam);
             }
             out.printf("out.writeChar(%s);\n", lengthType.terminatorJavaLiteral);
             return;
@@ -265,25 +265,25 @@ public class OctetStreamOutImpl
             if (lengthType.countByChar) {
                 switch (unicode) {
                 case 8:
-                    out.printf("out.writeUtf8StringOfLength(%s, %s);\n", nexpr, field.name);
+                    out.printf("out.writeUtf8StringOfLength(%s, %s);\n", nexpr, field.javaGet());
                     break;
                 case 16:
-                    out.printf("out.writeStringOfLength(%s, %s);\n", nexpr, field.name);
+                    out.printf("out.writeStringOfLength(%s, %s);\n", nexpr, field.javaGet());
                     break;
                 default:
-                    out.printf("out.writeStringOfLength(%s, %s%s);\n", nexpr, field.name, charsetParam);
+                    out.printf("out.writeStringOfLength(%s, %s%s);\n", nexpr, field.javaGet(), charsetParam);
                 }
                 return;
             } else {
                 switch (unicode) {
                 case 8:
-                    out.printf("out.writeUtf8StringOfSize(%s, %s);\n", nexpr, field.name);
+                    out.printf("out.writeUtf8StringOfSize(%s, %s);\n", nexpr, field.javaGet());
                     break;
                 case 16:
-                    out.printf("out.writeStringOfSize(%s, %s);\n", nexpr, field.name);
+                    out.printf("out.writeStringOfSize(%s, %s);\n", nexpr, field.javaGet());
                     break;
                 default:
-                    out.printf("out.writeStringOfSize(%s, %s%s);\n", nexpr, field.name, charsetParam);
+                    out.printf("out.writeStringOfSize(%s, %s%s);\n", nexpr, field.javaGet(), charsetParam);
                 }
                 return;
             }
