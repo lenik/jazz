@@ -3,7 +3,7 @@ package net.bodz.uni.shelj.codegen.java.ioforms;
 import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.uni.shelj.codegen.java.JavaSourceBuilder;
 
-public abstract class FieldsRelatedSourceBuilder
+public abstract class SourceBuilderForFields
         extends JavaSourceBuilder {
 
     protected FieldSelection fields;
