@@ -38,7 +38,7 @@ public class ReflectType
                         fieldDoc = FieldDoc.n_a(classDoc, field.getName());
                 }
 
-                ReflectProperty reflectProperty = new ReflectProperty(field, fieldDoc);
+                FieldProperty reflectProperty = new FieldProperty(field, fieldDoc);
                 propertyMap.addProperty(reflectProperty);
             }
 
