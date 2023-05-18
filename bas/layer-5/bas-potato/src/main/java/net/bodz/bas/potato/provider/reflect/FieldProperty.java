@@ -12,7 +12,7 @@ import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-public class ReflectProperty
+public class FieldProperty
         extends AbstractProperty {
 
     private final Field field;
@@ -23,7 +23,7 @@ public class ReflectProperty
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
-    public ReflectProperty(Field field, IElementDoc doc) {
+    public FieldProperty(Field field, IElementDoc doc) {
         super(field.getDeclaringClass(), field.getName(), doc);
         this.field = field;
 
