@@ -5,14 +5,14 @@ import java.io.IOException;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class RstInImpl
         extends SourceBuilderForMembers {
 
     @Override
-    public void build(JavaSourceWriter out)
+    public void build(JavaCodeWriter out)
             throws IOException {
         out.println("@Override");
         out.enterln("public IRstHandler getElementHandler() {");
@@ -49,13 +49,16 @@ public class RstInImpl
             out.enterln("case " + keyName + ":");
 
             if (member.getType() == String.class) {
-                out.printf("%s = data;\n", nam.fooBar);
+                out.printLineForJavaSet(member, "data;");
             } else {
                 String getFn = "parse" + Strings.ucfirst(getType);
-                if (nullable)
-                    out.printf("%s = StringFn.%s(data);\n", nam.fooBar, getFn);
-                else
-                    out.printf("%s = StringFn.%s(data, %s);\n", nam.fooBar, getFn, nam.fooBar);
+                if (nullable) {
+                    out.printLineForJavaSet(member, //
+                            "StringFn.%s(data)", getFn);
+                } else {
+                    out.printLineForJavaSet(member, //
+                            "StringFn.%s(data, %s)", getFn, member.getName());
+                }
             }
 
             out.println("return true;");

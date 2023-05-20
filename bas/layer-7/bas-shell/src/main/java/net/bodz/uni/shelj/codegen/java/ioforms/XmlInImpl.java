@@ -5,14 +5,14 @@ import java.io.IOException;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class XmlInImpl
         extends SourceBuilderForMembers {
 
     @Override
-    public void build(JavaSourceWriter out)
+    public void build(JavaCodeWriter out)
             throws IOException {
         out.println("@Override");
         out.println("public void readObject(IElement element)");
@@ -33,10 +33,15 @@ public class XmlInImpl
             // }
 
             String getFn = "get" + Strings.ucfirst(getType);
-            if (nullable)
-                out.printf("%s = o.a(%s).%s();\n", nam.fooBar, keyName, getFn);
-            else
-                out.printf("%s = o.a(%s).%s(%s);\n", nam.fooBar, keyName, getFn, nam.fooBar);
+            if (nullable) {
+                // out.printf("%s = o.a(%s).%s();\n", nam.fooBar, keyName, getFn);
+                out.printLineForJavaSet(member, //
+                        "o.a(%s).%s();", keyName, getFn);
+            } else {
+                // out.printf("%s = o.a(%s).%s(%s);\n", nam.fooBar, keyName, getFn, nam.fooBar);
+                out.printLineForJavaSet(member, //
+                        "o.a(%s).%s(%s)", keyName, getFn, member.getName());
+            }
         }
 
         out.leaveln("}");

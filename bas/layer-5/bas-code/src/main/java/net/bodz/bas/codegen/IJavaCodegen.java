@@ -2,9 +2,9 @@ package net.bodz.bas.codegen;
 
 import java.io.IOException;
 
-public interface IJavaCodegen<model_t> {
+public interface IJavaCodegen<out_t, model_t> {
 
-    void generateJavaSource(JavaSourceWriter out, model_t model)
+    void generateJavaSource(out_t out, model_t model)
             throws IOException;
 
 }

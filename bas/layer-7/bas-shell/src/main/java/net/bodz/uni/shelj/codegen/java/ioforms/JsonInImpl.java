@@ -6,15 +6,15 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.c.string.Phrase;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class JsonInImpl
         extends SourceBuilderForMembers {
 
     @Override
-    public void build(JavaSourceWriter out)
+    public void build(JavaCodeWriter out)
             throws IOException {
         out.println("@Override");
         out.println("public void jsonIn(JsonObject o, JsonFormOptions opts)");
@@ -52,10 +52,10 @@ public class JsonInImpl
                 out.enter();
 
                 if (alloc) {
-                    member.printLineForJavaSet(out, "new %s()", type.getSimpleName());
+                    out.printLineForJavaSet(member, "new %s()", type.getSimpleName());
                 }
 
-                member.printStatementLineWithJavaGet(out, //
+                out.printLineWithJavaGet(member, //
                         "\\?.jsonIn(o.getJsonObject(%s))", keyName);
 
                 if (alloc) {
@@ -67,9 +67,9 @@ public class JsonInImpl
 
             String getFn = "get" + Strings.ucfirst(getType);
             if (nullable)
-                member.printLineForJavaSet(out, "o.%s(%s)", getFn, keyName);
+                out.printLineForJavaSet(member, "o.%s(%s)", getFn, keyName);
             else
-                member.printLineForJavaSet(out, "o.%s(%s, %s)", getFn, keyName, member.javaGet());
+                out.printLineForJavaSet(member, "o.%s(%s, %s)", getFn, keyName, member.javaGet());
         }
 
         out.leaveln("}");

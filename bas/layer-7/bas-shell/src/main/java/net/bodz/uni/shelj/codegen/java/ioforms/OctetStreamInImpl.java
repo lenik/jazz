@@ -14,6 +14,7 @@ import net.bodz.bas.data.struct.ListLengthType;
 import net.bodz.bas.data.struct.StringBin;
 import net.bodz.bas.data.struct.StringBinUtils;
 import net.bodz.bas.io.StringLengthType;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.ContextFieldExprAsAMember;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
@@ -23,7 +24,7 @@ public class OctetStreamInImpl
     Charset defaultCharset = Charsets.UTF_8;
 
     @Override
-    public void build(JavaSourceWriter out)
+    public void build(JavaCodeWriter out)
             throws IOException {
         out.println("@Override");
         out.println("public void readObject(IDataIn in)");
@@ -37,10 +38,10 @@ public class OctetStreamInImpl
         out.leaveln("}");
     }
 
-    void loadField(JavaSourceWriter out, int index, IMember member) {
+    void loadField(JavaCodeWriter out, int index, IMember member) {
         Class<?> type = member.getType();
         if (IOctetStreamForm.class.isAssignableFrom(type)) {
-            out.printf("%s.readObject(in);\n", member.javaGet());
+            out.printLineWithJavaGet(member, "\\?.readObject(in);");
             return;
         }
 
@@ -53,42 +54,42 @@ public class OctetStreamInImpl
         switch (typeId) {
         case TypeId._byte:
         case TypeId.BYTE:
-            out.println(member.javaSet("in.readByte()") + ";");
+            out.printLineForJavaSet(member, "in.readByte()");
             return;
 
         case TypeId._short:
         case TypeId.SHORT:
-            out.println(member.javaSet("in.readWord()") + ";");
+            out.printLineForJavaSet(member, "in.readWord()");
             return;
 
         case TypeId._int:
         case TypeId.INTEGER:
-            out.println(member.javaSet("in.readDword()") + ";");
+            out.printLineForJavaSet(member, "in.readDword()");
             return;
 
         case TypeId._long:
         case TypeId.LONG:
-            out.println(member.javaSet("in.readQword()") + ";");
+            out.printLineForJavaSet(member, "in.readQword()");
             return;
 
         case TypeId._float:
         case TypeId.FLOAT:
-            out.println(member.javaSet("in.readFloat()") + ";");
+            out.printLineForJavaSet(member, "in.readFloat()");
             return;
 
         case TypeId._double:
         case TypeId.DOUBLE:
-            out.println(member.javaSet("in.readDouble()") + ";");
+            out.printLineForJavaSet(member, "in.readDouble()");
             return;
 
         case TypeId._boolean:
         case TypeId.BOOLEAN:
-            out.println(member.javaSet("in.readBool()") + ";");
+            out.printLineForJavaSet(member, "in.readBool()");
             return;
 
         case TypeId._char:
         case TypeId.CHARACTER:
-            out.println(member.javaSet("in.readUtf8Char()") + ";");
+            out.printLineForJavaSet(member, "in.readUtf8Char()");
             return;
 
         case TypeId.STRING:
@@ -97,7 +98,7 @@ public class OctetStreamInImpl
         loadStringField(out, member);
     }
 
-    void loadArrayField(JavaSourceWriter out, int index, IMember member) {
+    void loadArrayField(JavaCodeWriter out, int index, IMember member) {
         Class<?> type1 = member.getType().getComponentType();
 
         String fn = null;
@@ -185,15 +186,17 @@ public class OctetStreamInImpl
             if (lenType.countByByte)
                 nExpr = nExpr + " / " + itemSize;
             if (member.isFinal()) {
-                out.printf("in.read%s(%s, 0, %s);\n", fn, member.javaGet(), nExpr);
+                out.printLineWithJavaGet(member, //
+                        "in.read%s(\\?, 0, %s);", fn, nExpr);
             } else {
-                out.printf("%s = in.read%s(%s);\n", member.javaGet(), fn, nExpr);
+                out.printLineForJavaSet(member, //
+                        "in.read%s(%s);", fn, nExpr);
             }
 
         } else {
             if (member.isNotFinal())
-                out.println(member.javaSet("new %s[%s]", //
-                        type1.getSimpleName(), nExpr) + ";");
+                out.printLineForJavaSet(member, "new %s[%s]", //
+                        type1.getSimpleName(), nExpr);
 
             boolean itemMultiLine = type1.isPrimitive() || type1 == String.class;
 

@@ -1,10 +1,10 @@
 package net.bodz.uni.shelj.codegen.java.ioforms;
 
 import net.bodz.bas.c.reflect.query.FieldSelection;
-import net.bodz.uni.shelj.codegen.java.JavaSourceBuilder;
+import net.bodz.uni.shelj.codegen.java.JavaCodeBuilder;
 
 public abstract class SourceBuilderForFields
-        extends JavaSourceBuilder {
+        extends JavaCodeBuilder {
 
     protected FieldSelection fields;
 
