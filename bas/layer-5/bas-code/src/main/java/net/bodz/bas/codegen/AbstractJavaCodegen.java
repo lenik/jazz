@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.ICharOut;
 
-public abstract class AbstractJavaCodegen<model_t>
+public abstract class AbstractJavaCodegen<out_t, model_t>
         implements
-            IJavaCodegen<model_t> {
+            IJavaCodegen<out_t, model_t> {
 
     protected abstract String getPackageName();
 
     public String build(model_t model) {
         BCharOut buf = new BCharOut();
-        String packageName = getPackageName();
-        JavaSourceWriter out = new JavaSourceWriter(packageName, buf.indented());
+        out_t out = createOutput(buf);
         try {
             generateJavaSource(out, model);
         } catch (IOException e) {
@@ -22,6 +22,8 @@ public abstract class AbstractJavaCodegen<model_t>
         }
         return buf.toString();
     }
+
+    protected abstract out_t createOutput(ICharOut charOut);
 
     protected abstract model_t getModel();
 

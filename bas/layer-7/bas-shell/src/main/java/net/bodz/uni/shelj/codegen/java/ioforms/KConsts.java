@@ -3,7 +3,7 @@ package net.bodz.uni.shelj.codegen.java.ioforms;
 import java.io.IOException;
 
 import net.bodz.bas.c.string.Phrase;
-import net.bodz.bas.codegen.JavaSourceWriter;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
 
 public class KConsts
@@ -16,7 +16,7 @@ public class KConsts
     }
 
     @Override
-    public void build(JavaSourceWriter out)
+    public void build(JavaCodeWriter out)
             throws IOException {
         // K_ key name consts
         for (IMember member : members) {

@@ -10,12 +10,12 @@ import java.util.List;
 import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.codegen.IJavaCodegen;
-import net.bodz.bas.codegen.JavaSourceWriter;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
+import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.BeanPropertyMember;
 import net.bodz.uni.shelj.codegen.java.member.FieldMember;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
@@ -31,7 +31,7 @@ import com.googlecode.openbeans.PropertyDescriptor;
 public class IOFormsGenerator
         extends BasicCLI
         implements
-            IJavaCodegen<Collection<IMember>> {
+            IJavaCodegen<JavaCodeWriter, Collection<IMember>> {
 
     /**
      * Specify the class to read.
@@ -150,7 +150,7 @@ public class IOFormsGenerator
             ITreeOut out = buf.indented();
 
             out.enterln("class " + inputClass.getSimpleName() + "Fields " + "{");
-            JavaSourceWriter javaWriter = new JavaSourceWriter(packageName, out);
+            JavaCodeWriter javaWriter = new JavaCodeWriter(packageName, out);
             generateJavaSource(javaWriter, members);
             out.println();
             out.leaveln("}");
@@ -167,8 +167,9 @@ public class IOFormsGenerator
         new IOFormsGenerator().execute(args);
     }
 
+
     @Override
-    public void generateJavaSource(JavaSourceWriter out, Collection<IMember> model)
+    public void generateJavaSource(JavaCodeWriter out, Collection<IMember> model)
             throws IOException {
         KConsts constKeys = new KConsts();
         run(out, constKeys);
@@ -196,7 +197,7 @@ public class IOFormsGenerator
         }
     }
 
-    void run(JavaSourceWriter out, SourceBuilderForMembers builder)
+    void run(JavaCodeWriter out, SourceBuilderForMembers builder)
             throws IOException {
         builder.setMembers(members);
         out.println();
