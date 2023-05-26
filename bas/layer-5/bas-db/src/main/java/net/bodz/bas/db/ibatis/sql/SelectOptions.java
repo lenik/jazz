@@ -76,6 +76,10 @@ public class SelectOptions
         } else {
             page = null;
         }
+
+        String orderBy = map.getString("order-by");
+        if (orderBy != null)
+            orders = Orders.parse(orderBy);
     }
 
     @Override
