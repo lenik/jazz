@@ -18,6 +18,7 @@ public interface ISchemaMetadata
             IJavaName,
             ITableDirectory,
             IViewDirectory,
+            ICrossRefAnalyzer,
             IJsonForm,
             IXmlForm,
             IJDBCMetaDataSupport {

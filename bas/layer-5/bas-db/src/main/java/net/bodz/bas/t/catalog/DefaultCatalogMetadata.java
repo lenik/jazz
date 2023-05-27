@@ -215,6 +215,7 @@ public class DefaultCatalogMetadata
         return getOrCreateSchema(oid.schemaName).newTable(oid.tableName);
     }
 
+    @Override
     public void addTable(ITableMetadata table) {
         if (table == null)
             throw new NullPointerException("table");
@@ -309,6 +310,14 @@ public class DefaultCatalogMetadata
             tableList.addAll(part);
         }
         return tableList;
+    }
+
+    @Override
+    public void findCrossReferences(Collection<CrossReference> list, TableOid parent) {
+        for (ISchemaMetadata schema : getSchemas().values())
+            schema.findCrossReferences(list, parent);
+        if (anySchema != null)
+            anySchema.findCrossReferences(list, parent);
     }
 
     String getSchemaNames() {
