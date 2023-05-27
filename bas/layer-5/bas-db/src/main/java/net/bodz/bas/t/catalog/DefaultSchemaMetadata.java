@@ -380,6 +380,17 @@ public class DefaultSchemaMetadata
     }
 
     @Override
+    public void findCrossReferences(Collection<CrossReference> list, TableOid parent) {
+        for (ITableMetadata table : getTables()) {
+            for (CrossReference xref : table.getForeignKeys().values()) {
+                TableKey parentKey = xref.getParentKey();
+                if (parentKey.getId().equals(parent))
+                    list.add(xref);
+            }
+        }
+    }
+
+    @Override
     public String toString() {
         return "schema " + getCompactName() + "(" + getTableNames() + ")";
     }
