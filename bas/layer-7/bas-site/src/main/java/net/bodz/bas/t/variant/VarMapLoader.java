@@ -179,7 +179,9 @@ public class VarMapLoader {
             }
 
             logger.warn(String.format(//
-                    "No converter for property '%s': from %s: value %s.", property, rtype, rval));
+                    "No converter for property '%s': from %s: value %s.", //
+                    property, rtype.getCanonicalName(), //
+                    rval));
             return;
         } while (false);
 
