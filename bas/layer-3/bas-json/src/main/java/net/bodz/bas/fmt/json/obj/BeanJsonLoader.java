@@ -3,6 +3,7 @@ package net.bodz.bas.fmt.json.obj;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -132,6 +133,10 @@ public class BeanJsonLoader
                 boolean create = setter != null;
                 Constructor<?> ctor0 = null;
                 if (create) {
+                    if (Modifier.isAbstract(propertyClass.getModifiers())) {
+                        logger.error("Can't create abstract type for property " + propertyName);
+                        continue;
+                    }
                     try {
                         ctor0 = propertyClass.getConstructor();
                     } catch (NoSuchMethodException e) {
@@ -140,7 +145,12 @@ public class BeanJsonLoader
                 }
 
                 if (create)
-                    obj = ctor0.newInstance();
+                    try {
+                        obj = ctor0.newInstance();
+                    } catch (ReflectiveOperationException e) {
+                        logger.error(e, "Failed to instantiate " + propertyClass + ": " + e.getMessage());
+                        continue;
+                    }
                 else {
                     if (obj == null)
                         continue;
