@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -23,6 +25,7 @@ public class PostgresBackedVhostResolver
 
     private DataContext master;
     private ConnectOptions connectOptionsTemplate;
+    Map<String, DBStatus> dbStatusCache = new HashMap<>();
 
     public PostgresBackedVhostResolver() {
         this(DataHub.getPreferredHub().getMain(), //
@@ -87,6 +90,15 @@ public class PostgresBackedVhostResolver
         if (databaseName == null)
             throw new NullPointerException("databaseName");
 
+        DBStatus dbStatus = dbStatusCache.get(databaseName);
+        if (dbStatus == null) {
+            dbStatus = getDatabaseStatus(databaseName);
+            dbStatusCache.put(databaseName, dbStatus);
+        }
+        return dbStatus.exists;
+    }
+
+    DBStatus getDatabaseStatus(String databaseName) {
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -105,19 +117,19 @@ public class PostgresBackedVhostResolver
         }
 
         try {
-            String sql = "select * from pg_database where datname=?";
+            String sql = "select *, pg_encoding_to_char(encoding) encname from pg_database where datname=?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, databaseName);
 
             rs = ps.executeQuery();
 
             if (!rs.next())
-                return false;
+                return DBStatus.notExisted();
 
             String datname = rs.getString("datname");
             assert databaseName.equals(datname);
 
-            return true;
+            return DBStatus.pg_database(rs);
         } catch (SQLException e) {
             logger.error("Failed to query master database: " + e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
