@@ -6,7 +6,7 @@ public interface IVolumeProvider {
 
     default IVolume getVolume(Class<?> entityClass) {
         String simpleName = entityClass.getSimpleName();
-        String id = "entity/" + simpleName;
+        String id = "entity:" + simpleName;
         return getVolume(id);
     }
 

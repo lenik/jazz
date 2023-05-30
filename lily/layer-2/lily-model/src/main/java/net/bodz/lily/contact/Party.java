@@ -1,12 +1,7 @@
 package net.bodz.lily.contact;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.bodz.bas.c.java.util.TimeZones;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -18,6 +13,8 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
+import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.model.base.IdEntity;
@@ -302,7 +299,24 @@ public abstract class Party
 
     @Override
     public IAttachmentListing listAttachments() {
-        return properties;
+        return new IAttachmentListing() {
+
+            @Override
+            public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
+                event.getNewVolume();
+                event.getNewPath();
+            }
+
+            @Override
+            public Collection<IAttachment> getAttachments(String category) {
+                switch (category) {
+                case IMAGE:
+                    return properties.getImages();
+                }
+                return null;
+            }
+
+        };
     }
 
 }

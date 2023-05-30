@@ -7,6 +7,8 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.lily.app.DataApps;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
 import net.bodz.lily.entity.manager.JdbcRowOpEvent;
@@ -37,12 +39,14 @@ public class UpdateAttachments
         return item.getFileSHA1() + ext;
     }
 
-    IVolume volume;
-
-    public void renameSubDirToId(IAttachment attachment, String id)
+    public void renameSubDirToId(IVolume volume, IAttachment attachment, String id)
             throws IOException {
         if (attachment == null)
             throw new NullPointerException("attachment");
+        if (volume == null)
+            throw new NullPointerException("volume");
+//        if (volume == null)
+//            throw new IllegalStateException("volume not set");
 
         File file = attachment.toLocalFile(volume);
         if (!file.exists()) {
@@ -66,10 +70,14 @@ public class UpdateAttachments
         Object id = idRef.id();
         if (id != null) {
             String idStr = id.toString();
+
+            IDataApplication app = DataApps.fromRequest();
+            IVolume volume = app.getVolume(idRef.getClass());
+
             IAttachmentListing listing = owner.listAttachments();
             for (String category : listing.getAttachmentCategories()) {
                 for (IAttachment attachment : listing.getAttachments(category)) {
-                    renameSubDirToId(attachment, idStr);
+//                    renameSubDirToId(volume, attachment, idStr);
                 }
             }
         }

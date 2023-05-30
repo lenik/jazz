@@ -16,10 +16,14 @@ public interface IAttachment
             IPathFields {
 
     default IVolumeItem toVolumeFile(IVolume volume) {
+        if (volume == null)
+            throw new NullPointerException("volume");
         return volume.getFile(this);
     }
 
     default File toLocalFile(IVolume volume) {
+        if (volume == null)
+            throw new NullPointerException("volume");
         return toVolumeFile(volume).getLocalFile();
     }
 
@@ -55,7 +59,8 @@ public interface IAttachment
     }
 
     /**
-     * @return <code>null</code> if not available, because file doesn't exist, or in invalid image format.
+     * @return <code>null</code> if not available, because file doesn't exist, or in invalid image
+     *         format.
      */
     IAttachment getPreviewImage(int desiredWidth, int desiredHeight);
 

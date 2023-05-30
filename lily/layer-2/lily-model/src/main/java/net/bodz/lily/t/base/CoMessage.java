@@ -1,5 +1,7 @@
 package net.bodz.lily.t.base;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,13 +24,17 @@ import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
+import net.bodz.lily.entity.attachment.IAttachment;
+import net.bodz.lily.entity.attachment.IAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.model.base.CoMomentInterval;
+import net.bodz.lily.schema.FormDef;
 import net.bodz.lily.schema.ParameterMap;
 import net.bodz.lily.security.User;
-import net.bodz.lily.t.struct.UseForm;
 import net.bodz.lily.t.struct.UserClickInfo;
 import net.bodz.lily.template.RichProperties;
 
@@ -44,7 +50,8 @@ public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>
         implements
             IPriority,
-            IId<Id> {
+            IId<Id>,
+            IHaveAttachments {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +60,7 @@ public abstract class CoMessage<Id>
     private User op;
     private String subject;
     private String rawText;
-    private UseForm form;
+    private FormDef form;
     private ParameterMap parameters;
     private UserClickInfo clickInfo;
 
@@ -124,7 +131,7 @@ public abstract class CoMessage<Id>
     @Column(name = "op", nullable = false, precision = 10)
     public synchronized Integer getFormId() {
         if (form != null)
-            return form.getDefId();
+            return form.getId();
         return formId;
     }
 
@@ -179,13 +186,17 @@ public abstract class CoMessage<Id>
         return new HtmlTextObject(rawText);
     }
 
-    public UseForm getForm() {
+    public FormDef getForm() {
         if (form == null)
             synchronized (this) {
                 if (form == null)
-                    form = new UseForm();
+                    form = new FormDef();
             }
         return form;
+    }
+
+    public void setForm(FormDef form) {
+        this.form = form;
     }
 
     public ParameterMap getParameters() {
@@ -248,6 +259,33 @@ public abstract class CoMessage<Id>
 
     public void setProperties(RichProperties properties) {
         this.properties = properties;
+    }
+
+    @Override
+    public IAttachmentListing listAttachments() {
+        return new IAttachmentListing() {
+
+            @Override
+            public Collection<String> getAttachmentCategories() {
+                return Arrays.asList(IMAGE, VIDEO);
+            }
+
+            @Override
+            public Collection<IAttachment> getAttachments(String category) {
+                switch (category) {
+                case IMAGE:
+                    return getProperties().getImages();
+                case VIDEO:
+                    return getProperties().getVideos();
+                }
+                return null;
+            }
+
+            @Override
+            public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
+            }
+
+        };
     }
 
     @Override
