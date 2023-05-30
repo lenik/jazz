@@ -35,6 +35,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.manager.EntityCommands;
 import net.bodz.lily.entity.manager.IEntityCommand;
+import net.bodz.lily.entity.manager.ListCommand;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -84,8 +85,6 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
                     if (preexist != null)
                         throw new DuplicatedKeyException(name);
                     nameMap.put(name, cmd);
-                    if (name.equals("list"))
-                        nameMap.put("__data__", cmd);
                 } else {
                     IEntityCommand preexist = contentNameMap.get(name);
                     if (preexist != null)
@@ -161,6 +160,10 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             return null;
 
         IEntityCommand command = nameMap.get(token);
+        if (command == null) {
+            if (token.startsWith("__data__") || token.startsWith("__D_"))
+                command = nameMap.get(ListCommand.NAME);
+        }
         if (command != null) {
             previous = PathArrival.shift(previous, this, command, tokens);
             command.setDataContext(getDataContext());
