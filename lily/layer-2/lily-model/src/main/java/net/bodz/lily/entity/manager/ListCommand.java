@@ -17,6 +17,8 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 public class ListCommand
         extends AbstractEntityCommand {
 
+    public static final String NAME = "list";
+
     TableOfPathProps tableData;
     IVarMapForm criteria;
     SelectOptions opts;
@@ -27,7 +29,7 @@ public class ListCommand
 
     @Override
     public String getPreferredName() {
-        return "__data__";
+        return NAME;
     }
 
     @Override
