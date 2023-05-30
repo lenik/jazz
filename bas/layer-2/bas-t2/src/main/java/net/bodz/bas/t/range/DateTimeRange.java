@@ -7,6 +7,8 @@ import org.joda.time.Chronology;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -165,6 +167,105 @@ public class DateTimeRange
 
     public DateTime getMax() {
         return end;
+    }
+
+    // convert LocalDate start/end/from/to
+
+    public LocalDate getLocalDateStart() {
+        DateTime start = this.getStart();
+        if (start == null)
+            return null;
+        LocalDate localDate = start.toLocalDate();
+        return localDate;
+    }
+
+    public void setLocalDateStart(LocalDate localDateStart) {
+        DateTime dateTime = null;
+        if (localDateStart != null) {
+            LocalTime time = null; // use current time.
+            dateTime = localDateStart.toDateTime(time);
+        }
+        this.setStart(dateTime);
+    }
+
+    public LocalDate getLocalDateEnd() {
+        DateTime end = this.getEnd();
+        if (end == null)
+            return null;
+        LocalDate localDate = end.toLocalDate();
+        return localDate;
+    }
+
+    public void setLocalDateEnd(LocalDate localDateEnd) {
+        DateTime dateTime = null;
+        if (localDateEnd != null) {
+            LocalTime time = null; // use current time.
+            dateTime = localDateEnd.toDateTime(time);
+        }
+        this.setTo(dateTime);
+    }
+
+    public LocalDate getLocalDateFrom() {
+        DateTime start = this.getFrom();
+        if (start == null)
+            return null;
+        LocalDate localDate = start.toLocalDate();
+        return localDate;
+    }
+
+    public void setLocalDateFrom(LocalDate localDate) {
+        DateTime dateTime = null;
+        if (localDate != null) {
+            LocalTime time = null; // use current time.
+            dateTime = localDate.toDateTime(time);
+        }
+        this.setFrom(dateTime);
+    }
+
+    public LocalDate getLocalDateTo() {
+        DateTime to = this.getTo();
+        if (to == null)
+            return null;
+        LocalDate localDate = to.toLocalDate();
+        return localDate;
+    }
+
+    public void setLocalDateTo(LocalDate localDateTo) {
+        DateTime dateTime = null;
+        if (localDateTo != null) {
+            LocalTime time = null; // use current time.
+            dateTime = localDateTo.toDateTime(time);
+        }
+        this.setTo(dateTime);
+    }
+
+    // start/end/from/to Year
+    public Integer getStartYear() {
+        DateTime start = getStart();
+        if (start == null)
+            return null;
+        return start.getYear();
+    }
+
+    public Integer getFromYear() {
+        DateTime from = getFrom();
+        if (from == null)
+            return null;
+        return from.getYear();
+    }
+
+    public Integer getEndYear() {
+        DateTime end = getEnd();
+        if (end == null)
+            return null;
+        return end.getYear();
+    }
+
+    public Integer getToYear() {
+        DateTime to = getTo();
+        if (to == null)
+            return null;
+        return to.getYear();
     }
 
 }
