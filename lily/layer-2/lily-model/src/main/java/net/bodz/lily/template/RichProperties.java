@@ -1,8 +1,6 @@
 package net.bodz.lily.template;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import net.bodz.bas.err.ParseException;
@@ -11,18 +9,16 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.site.json.JsonMap;
-import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
 import net.bodz.lily.entity.attachment.DefaultAttachment;
 import net.bodz.lily.entity.attachment.IAttachment;
-import net.bodz.lily.entity.attachment.IAttachmentListing;
 
 /**
  * A common support for object icon, etc.
  */
 public class RichProperties
         extends JsonMap
-        implements
-            IAttachmentListing {
+
+{
 
     private static final long serialVersionUID = 1L;
 
@@ -93,30 +89,6 @@ public class RichProperties
             return true;
         }
         return super.parseJsonEntry(key, val, opts);
-    }
-
-    @Override
-    public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
-        event.getNewVolume();
-        event.getNewPath();
-    }
-
-    @Override
-    public Collection<String> getAttachmentCategories() {
-        return Arrays.asList(K_IMAGES, K_VIDEOS, K_PDFS);
-    }
-
-    @Override
-    public Collection<IAttachment> getAttachments(String category) {
-        switch (category) {
-        case K_IMAGES:
-            return getImages();
-        case K_VIDEOS:
-            return getVideos();
-        case K_PDFS:
-            return getPdfs();
-        }
-        return null;
     }
 
 }

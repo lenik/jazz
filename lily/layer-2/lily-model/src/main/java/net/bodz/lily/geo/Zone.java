@@ -1,9 +1,15 @@
 package net.bodz.lily.geo;
 
+import java.util.Collection;
+
 import javax.persistence.Table;
 
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
+import net.bodz.lily.entity.attachment.IAttachment;
+import net.bodz.lily.entity.attachment.IAttachmentListing;
+import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.model.base.CoNode;
 import net.bodz.lily.t.struct.GeoLocation;
 import net.bodz.lily.template.RichProperties;
@@ -12,7 +18,9 @@ import net.bodz.lily.template.RichProperties;
 @IdType(Integer.class)
 @UploadHint
 public class Zone
-        extends CoNode<Zone, Integer> {
+        extends CoNode<Zone, Integer>
+        implements
+            IHaveAttachments {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +59,27 @@ public class Zone
 
     public void setFullPath(String fullPath) {
         this.fullPath = fullPath;
+    }
+
+    @Override
+    public IAttachmentListing listAttachments() {
+        return new IAttachmentListing() {
+
+            @Override
+            public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
+                event.getNewVolume();
+                event.getNewPath();
+            }
+
+            @Override
+            public Collection<IAttachment> getAttachments(String category) {
+                switch (category) {
+                case IMAGE:
+                    return properties.getImages();
+                }
+                return null;
+            }
+        };
     }
 
 }

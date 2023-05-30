@@ -1,5 +1,6 @@
 package net.bodz.lily.entity.attachment;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -9,7 +10,13 @@ public interface IAttachmentListing
         extends
             IAttachmentPathChangeListener {
 
-    Collection<String> getAttachmentCategories();
+    String IMAGE = "image";
+    String VIDEO = "video";
+    String DOCUMENT = "document";
+
+    default Collection<String> getAttachmentCategories() {
+        return Arrays.asList(IMAGE);
+    }
 
     Collection<IAttachment> getAttachments(String category);
 
