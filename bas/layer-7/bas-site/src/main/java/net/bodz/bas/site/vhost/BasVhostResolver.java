@@ -7,12 +7,12 @@ public class BasVhostResolver
             IVirtualHostResolver {
 
     @Override
-    public IVirtualHost get(String id) {
+    public IVirtualHost getVirtualHost(String id) {
         return null;
     }
 
     @Override
-    public IVirtualHost resolve(HttpServletRequest request) {
+    public IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         return null;
     }
 

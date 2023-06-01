@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import net.bodz.bas.c.autowire.ProjectList;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.t.specmap.InetPort32;
 import net.bodz.bas.t.specmap.NetSpecMap;
@@ -16,6 +18,8 @@ import net.bodz.bas.t.specmap.NetSpecMap;
 public class MutableVirtualHostResolver
         implements
             IVirtualHostResolver {
+
+    static final Logger logger = LoggerFactory.getLogger(MutableVirtualHostResolver.class);
 
     private int priority;
 
@@ -27,6 +31,7 @@ public class MutableVirtualHostResolver
 
     public MutableVirtualHostResolver() {
         bindingMap.nameMap.addPattern("*.lo", VAR_SIMPLE);
+        // bindingMap.nameMap.addPattern("*.a10", VAR_SIMPLE);
         InetPort32 ap;
         try {
             ap = InetPort32.parse("0.0.0.0/0");
@@ -34,6 +39,14 @@ public class MutableVirtualHostResolver
             throw new RuntimeException(e.getMessage(), e);
         }
         bindingMap.ipv4Map.addPrefix(ap, VAR_PROJECT);
+    }
+
+    public NetSpecMap<String> getBindingMap() {
+        return bindingMap;
+    }
+
+    public void setProjectDefault() {
+        bindingMap.nameMap.addDefault(VAR_PROJECT);
     }
 
     @Override
@@ -46,7 +59,7 @@ public class MutableVirtualHostResolver
     }
 
     @Override
-    public IVirtualHost get(String id) {
+    public IVirtualHost getVirtualHost(String id) {
         if (id == null)
             throw new NullPointerException("id");
         return map.get(id);
@@ -56,6 +69,11 @@ public class MutableVirtualHostResolver
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
         String target = bindingMap.find(serverName, "" + serverPort);
+        if (target == null) {
+            logger.errorf("Can't resolve name from request: %s:%d", //
+                    serverName, serverPort);
+            return null;
+        }
         if (target.startsWith("/")) {
             switch (target) {
             case VAR_SIMPLE:
@@ -71,7 +89,7 @@ public class MutableVirtualHostResolver
     }
 
     @Override
-    public synchronized IVirtualHost resolve(HttpServletRequest request) {
+    public synchronized IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         String name = getRequestName(request);
         if (name == null)
             return null;

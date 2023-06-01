@@ -42,9 +42,9 @@ public class VirtualHostManager
     }
 
     @Override
-    public IVirtualHost get(String id) {
+    public IVirtualHost getVirtualHost(String id) {
         for (IVirtualHostResolver resolver : this) {
-            IVirtualHost vhost = resolver.get(id);
+            IVirtualHost vhost = resolver.getVirtualHost(id);
             if (vhost != null)
                 return vhost;
         }
@@ -52,11 +52,11 @@ public class VirtualHostManager
     }
 
     @Override
-    public IVirtualHost get(HttpServletRequest request) {
+    public IVirtualHost getVirtualHostFromRequest(HttpServletRequest request) {
         if (isEmpty())
             logger.error("No vhost resolver installed.");
         for (IVirtualHostResolver resolver : this) {
-            IVirtualHost vhost = resolver.get(request);
+            IVirtualHost vhost = resolver.getVirtualHostFromRequest(request);
             if (vhost != null)
                 return vhost;
         }
@@ -64,9 +64,9 @@ public class VirtualHostManager
     }
 
     @Override
-    public IVirtualHost resolve(HttpServletRequest request) {
+    public IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         for (IVirtualHostResolver resolver : this) {
-            IVirtualHost vhost = resolver.resolve(request);
+            IVirtualHost vhost = resolver.resolveVirtualHost(request);
             if (vhost != null)
                 return vhost;
         }

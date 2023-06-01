@@ -55,7 +55,7 @@ public class AttachmentResolver
         File homeDir = SysProps.userHome;
         File start = new File(homeDir, "sites");
 
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 

@@ -15,7 +15,7 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 
 /**
  * Notice:
- *<p>
+ * <p>
  * If you can't (http-)get a static existed file, it could be false-cached. Restart the server or
  * invalidate the cache then try again.
  */
@@ -54,7 +54,7 @@ public class StaticVhostFileAccessServlet
 
     @Override
     protected File getLocalRoot(HttpServletRequest req) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(req);
+        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(req);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 

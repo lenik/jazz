@@ -10,12 +10,12 @@ public interface IVirtualHostResolver
         extends
             IPriority {
 
-    IVirtualHost get(String id);
+    IVirtualHost getVirtualHost(String id);
 
-    default IVirtualHost get(HttpServletRequest request) {
-        return resolve(request);
+    default IVirtualHost getVirtualHostFromRequest(HttpServletRequest request) {
+        return resolveVirtualHost(request);
     }
 
-    IVirtualHost resolve(HttpServletRequest request);
+    IVirtualHost resolveVirtualHost(HttpServletRequest request);
 
 }
