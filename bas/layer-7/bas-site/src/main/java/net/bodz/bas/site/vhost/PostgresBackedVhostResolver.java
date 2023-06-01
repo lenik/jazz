@@ -42,13 +42,13 @@ public class PostgresBackedVhostResolver
     }
 
     @Override
-    public IVirtualHost get(String id) {
-        return super.get(id);
+    public IVirtualHost getVirtualHost(String id) {
+        return super.getVirtualHost(id);
     }
 
     @Override
-    public synchronized IVirtualHost resolve(HttpServletRequest request) {
-        IVirtualHost vhost = super.resolve(request);
+    public synchronized IVirtualHost resolveVirtualHost(HttpServletRequest request) {
+        IVirtualHost vhost = super.resolveVirtualHost(request);
         if (vhost == null)
             vhost = findAndAdd(request);
         return vhost;
@@ -56,7 +56,7 @@ public class PostgresBackedVhostResolver
 
     public IVirtualHost findAndAdd(HttpServletRequest request) {
         String vhostName = getRequestName(request);
-        IVirtualHost vhost = get(vhostName);
+        IVirtualHost vhost = getVirtualHost(vhostName);
         if (vhost != null)
             return vhost;
 

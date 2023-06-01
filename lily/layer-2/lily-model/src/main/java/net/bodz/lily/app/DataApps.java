@@ -56,7 +56,7 @@ public class DataApps {
     }
 
     static IDataApplication getOrCreate(HttpServletRequest req, boolean create) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().get(req);
+        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(req);
         return getOrCreate(vhost, create);
     }
 
@@ -82,7 +82,7 @@ public class DataApps {
     }
 
     static IDataApplication createForReq(HttpServletRequest req) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().get(req);
+        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(req);
         return createForVhost(vhost);
     }
 

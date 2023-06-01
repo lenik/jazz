@@ -9,7 +9,9 @@ import net.bodz.bas.log.diag.IDiagContextTeller;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 
 public class CurrentVirtualHost
-        implements IContextsCdcConfigurer, IDiagContextTeller {
+        implements
+            IContextsCdcConfigurer,
+            IDiagContextTeller {
 
     @Override
     public void configure(CompositeDiagContext contexts) {
@@ -29,12 +31,12 @@ public class CurrentVirtualHost
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request == null)
             return null;
-        return VirtualHostManager.getInstance().get(request);
+        return VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
     }
 
     public static IVirtualHost getVirtualHost() {
         HttpServletRequest request = CurrentHttpService.getRequest();
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolve(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
         if (vhost == null)
             throw new IllegalRequestException("Virtual host is undefined.");
         return vhost;
