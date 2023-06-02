@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherIdType;
 
@@ -12,7 +13,8 @@ import net.bodz.lily.security.UserOtherIdType;
  * @mapper.xml UserMapper.xml
  */
 public interface UserMapper
-        extends IEntityMapper<User, UserMask> {
+        extends
+            IEntityMapper<User, UserMask> {
 
     User selectByName(@Param("name") String name);
 
@@ -29,5 +31,16 @@ public interface UserMapper
     List<User> findForLogin(//
             @Param("name") String name, //
             @Param("password") String password);
+
+    List<User> forGroupId(int groupId);
+
+    default List<User> forGroup(Group group) {
+        if (group == null)
+            throw new NullPointerException("group");
+        Integer id = group.getId();
+        if (id == null)
+            throw new NullPointerException("group.id");
+        return forGroupId(id);
+    }
 
 }

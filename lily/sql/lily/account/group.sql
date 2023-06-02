@@ -1,3 +1,4 @@
+--\import lily.account.grouptype
 
     create sequence group_seq start with 1000;
 
@@ -5,11 +6,14 @@
         -- 0 for root group
         id          int primary key default nextval('group_seq'),
         name        varchar(32) not null unique,
+        type        int not null
+            references grouptype(id) on update cascade,
 
         --\mixin lily.mixin.LabelExVer
         --\mixin lily.mixin.Props
-
-        dummy       int
+        
+        parent      int
+            references group(id) on update cascade
     );
 
     create index group_label        on "group"(label);

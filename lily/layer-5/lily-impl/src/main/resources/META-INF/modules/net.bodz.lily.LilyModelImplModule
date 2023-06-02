@@ -151,9 +151,6 @@ net.bodz.lily.security.impl.GroupMask
 net.bodz.lily.security.impl.PolicyIndex
 net.bodz.lily.security.impl.PolicyMapper
 net.bodz.lily.security.impl.PolicyMask
-net.bodz.lily.security.impl.RoleIndex
-net.bodz.lily.security.impl.RoleMapper
-net.bodz.lily.security.impl.RoleMask
 net.bodz.lily.security.impl.UserCategoryIndex
 net.bodz.lily.security.impl.UserCategoryMapper
 net.bodz.lily.security.impl.UserCategoryMask

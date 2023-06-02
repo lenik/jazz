@@ -3,6 +3,7 @@
         id          int primary key default nextval('policy_seq'),
 --\mixin lily.mixin.Code
 --\mixin lily.mixin.LabelExVer
+--\mixin lily.mixin.Props
         
         class       varchar(80) not null,
         method      varchar(40) null,

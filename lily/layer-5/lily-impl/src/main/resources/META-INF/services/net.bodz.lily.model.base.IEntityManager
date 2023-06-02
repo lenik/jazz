@@ -43,7 +43,6 @@ net.bodz.lily.schema.impl.TagDefIndex
 net.bodz.lily.schema.impl.TagGroupDefIndex
 net.bodz.lily.security.impl.GroupIndex
 net.bodz.lily.security.impl.PolicyIndex
-net.bodz.lily.security.impl.RoleIndex
 net.bodz.lily.security.impl.UserCategoryIndex
 net.bodz.lily.security.impl.UserIndex
 net.bodz.lily.security.impl.UserOtherIdIndex

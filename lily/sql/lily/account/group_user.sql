@@ -7,9 +7,11 @@
         "group" int not null
             references "group" on update cascade on delete cascade,
 
-        "user" int not null
+        "user"  int not null
             references "user" on update cascade on delete cascade,
         
+        admin   boolean not null default false,
+
 --\mixin lily.mixin.Label
         -- a descriptive role name.
 
@@ -22,11 +24,6 @@
         primary key("group", "user")
     );
     
-    -- the admin user for this group.
-    -- by default it should be the creator.
-    alter table "group" add admin int not null default 0
-        references "user" on update cascade on delete set null;
-        
     -- primary gid, 0 for root user.
     -- alter table "user" alter gid0 drop default;
     

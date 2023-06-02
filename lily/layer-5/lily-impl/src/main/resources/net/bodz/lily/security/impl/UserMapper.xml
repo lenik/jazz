@@ -189,6 +189,16 @@
         </where>
     </select>
 
+    <select id="forGroupId" resultMap="objlist_map">
+        select
+            u.*
+        from group_user x
+            left join "user" u on x."user" = u.id
+        <where>
+            x."group" = #{id}
+        </where>
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         with u as (
             insert into "user"(
