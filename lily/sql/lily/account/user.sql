@@ -1,11 +1,11 @@
 --\import lily.account.group
---\import lily.account.usercat
+--\import lily.account.usertype
 
     create sequence user_seq start with 1000;
     create table "user"(
         id          int primary key default nextval('user_seq'),
-        cat         int not null default 0
-            references usercat on update cascade,
+        type        int not null default 0
+            references usertype(id) on update cascade,
         name        varchar(32) not null unique,
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props

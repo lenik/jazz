@@ -41,7 +41,8 @@ public class Group
     public static final int ID_NormalUsers = 2;
     public static final int ID_GuestUsers = 3;
 
-    private User admin;
+    private Group parent;
+    private List<Group> children;
     private List<User> users;
 
     public Group() {
@@ -58,14 +59,25 @@ public class Group
     }
 
     /**
-     * 管理员
+     * 父用户组
      */
-    public User getAdmin() {
-        return admin;
+    public Group getParent() {
+        return parent;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public void setParent(Group parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * 子用户组列表
+     */
+    public List<Group> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Group> children) {
+        this.children = children;
     }
 
     /**
@@ -83,8 +95,6 @@ public class Group
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
-        admin = o.readInto("admin", admin, new User());
-        // users
     }
 
 }
