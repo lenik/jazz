@@ -400,8 +400,25 @@ public class JsonObject
         }, () -> order.newMap());
     }
 
-    public <M extends Map<String, T>, T> M //
-            readIntoMap(String key, M map, FunctionX<Object, T, ParseException> conv, Supplier<M> mapSupplier)
+    public <map_t extends Map<String, val_t>, val_t extends IJsonForm> map_t //
+            readIntoJMap(String key, map_t map, Supplier<val_t> factory)
+                    throws ParseException {
+        return readIntoMap(key, map, (Object jo) -> {
+            val_t val = factory.get();
+            val.readObjectBoxed(jo, null);
+            return val;
+        }, null);
+    }
+
+    public <map_t extends Map<String, val_t>, val_t> map_t //
+            readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val)
+                    throws ParseException {
+        return readIntoMap(key, map, js2Val, null);
+    }
+
+    public <map_t extends Map<String, val_t>, val_t> map_t //
+            readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val,
+                    Supplier<map_t> mapSupplier)
                     throws ParseException {
         if (!has(key)) // nothing to change
             return map;
@@ -423,7 +440,7 @@ public class JsonObject
             for (Object _k : o.keySet()) {
                 String k = (String) _k;
                 Object jsObj = o.get(k);
-                T obj = conv.apply(jsObj);
+                val_t obj = js2Val.apply(jsObj);
                 map.put(k, obj);
             }
         }

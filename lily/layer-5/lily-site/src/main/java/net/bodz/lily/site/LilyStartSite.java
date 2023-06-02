@@ -67,6 +67,8 @@ public abstract class LilyStartSite
     }
 
     void setupServices() {
+        serviceMap.install("service-map", serviceMap);
+
         loginManager = new LoginManager(dataContext);
         serviceMap.install("session", new LoginManagerWs(loginManager));
         serviceMap.install("ws-doc", new WsDocSite());
