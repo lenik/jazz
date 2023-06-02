@@ -202,13 +202,18 @@ public class TableOfPathProps
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         List<String> columns = getColumnList();
-        out.key("columns");
-        {
-            out.array();
-            for (String col : pathAccessorMap.keySet())
-                out.value(col);
-            out.endArray();
+
+        if (rowFormat.equals(ROW_ARRAY)) {
+            out.key("columns");
+            {
+                out.array();
+                for (String col : pathAccessorMap.keySet())
+                    out.value(col);
+                out.endArray();
+            }
         }
+
+        out.entry("rowCount", list.size());
 
         out.key("rows");
         {
