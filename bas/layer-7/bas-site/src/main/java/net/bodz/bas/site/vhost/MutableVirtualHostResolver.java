@@ -26,12 +26,11 @@ public class MutableVirtualHostResolver
     Map<String, IVirtualHost> map = new TreeMap<String, IVirtualHost>();
     NetSpecMap<String> bindingMap = new NetSpecMap<>();
 
-    static final String VAR_SIMPLE = "/simple";
+    static final String VAR_ECHO_HEAD = "/echo/head";
     static final String VAR_PROJECT = "/project";
 
     public MutableVirtualHostResolver() {
-        bindingMap.nameMap.addPattern("*.lo", VAR_SIMPLE);
-        // bindingMap.nameMap.addPattern("*.a10", VAR_SIMPLE);
+        bindingMap.nameMap.addPattern("*.lo", VAR_ECHO_HEAD);
         InetPort32 ap;
         try {
             ap = InetPort32.parse("0.0.0.0/0");
@@ -45,8 +44,12 @@ public class MutableVirtualHostResolver
         return bindingMap;
     }
 
-    public void setProjectDefault() {
+    public void fallbackToProject() {
         bindingMap.nameMap.addDefault(VAR_PROJECT);
+    }
+
+    public void clearFallback() {
+        bindingMap.nameMap.removeDefault();
     }
 
     @Override
@@ -76,7 +79,7 @@ public class MutableVirtualHostResolver
         }
         if (target.startsWith("/")) {
             switch (target) {
-            case VAR_SIMPLE:
+            case VAR_ECHO_HEAD:
                 target = ServerNaming.getServerSimpleName(request);
                 break;
             case VAR_PROJECT:
