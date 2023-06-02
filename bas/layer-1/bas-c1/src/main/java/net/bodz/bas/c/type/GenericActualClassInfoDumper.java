@@ -78,7 +78,11 @@ public class GenericActualClassInfoDumper
             ParameterizedType pt = (ParameterizedType) arg;
             Type[] argArgs = pt.getActualTypeArguments();
             String argsStr = GenericActualClassInfo.formatTypes(argArgs);
-            out.printf("    args: %s\n", argsStr);
+            out.printf("    args: %s", argsStr);
+            Class<?> bound = GenericTypes.getDefaultUpperBound(arg);
+            if (bound != null)
+                out.printf(" (%s)", bound.getCanonicalName());
+            out.println();
         }
     }
 
