@@ -15,6 +15,7 @@ public class GenericActualClassInfo {
     private final TypeVariable<?>[] vars;
     private final Map<TypeVariable<?>, Integer> varIndex;
     private final Type[] args;
+    private final Class<?>[] bounds;
 
     GenericActualClassInfo gsuper;
     GenericActualClassInfo[] ginterfaces;
@@ -36,6 +37,7 @@ public class GenericActualClassInfo {
                         clazz.getCanonicalName(), vars.length, args.length));
         }
         this.args = args;
+        this.bounds = _getDefaultUpperBounds();
     }
 
     public Class<?> getRawClass() {
@@ -55,8 +57,12 @@ public class GenericActualClassInfo {
         return args.length == vars.length;
     }
 
-    public boolean isRaw() {
-        return args == null;
+    public final boolean isGeneric() {
+        return vars.length != 0;
+    }
+
+    public final boolean isNotGeneric() {
+        return vars.length == 0;
     }
 
     public Type[] getArgs() {
@@ -67,25 +73,42 @@ public class GenericActualClassInfo {
         return new GenericActualClassInfo(clazz, args);
     }
 
-    public Class<?>[] getBounds(Class<?> subclass) {
-        Class<?>[] bounds = new Class<?>[args.length];
+    public boolean isComplete() {
+        if (vars.length == 0)
+            return true;
+        if (args == null)
+            return false;
         for (int i = 0; i < args.length; i++) {
             Type arg = args[i];
-            Class<?> bound = simpleUpperBound(arg);
-            bounds[i] = bound;
+            if (arg instanceof Class<?>)
+                continue;
+            if (!GenericTypes.isComplete(arg))
+                return false;
         }
+        return true;
+    }
+
+    public Class<?>[] getDefaultUpperBounds() {
         return bounds;
     }
 
-    static Class<?> simpleUpperBound(Type arg) {
-        if (arg instanceof TypeVariable<?>) {
-            TypeVariable<?> argVar = (TypeVariable<?>) arg;
-            Type[] argBounds = argVar.getBounds();
-            if (argBounds.length > 0) {
-                return simpleUpperBound(argBounds[0]);
-            }
+    Class<?>[] _getDefaultUpperBounds() {
+        if (args == null)
+            return null;
+        Class<?>[] upperBounds = new Class<?>[args.length];
+        for (int i = 0; i < args.length; i++) {
+            Type arg = args[i];
+            Class<?> upperBound = GenericTypes.getDefaultUpperBound(arg);
+            upperBounds[i] = upperBound;
         }
-        return Object.class;
+        return upperBounds;
+    }
+
+    public GenericActualClassInfo getUpward(Class<?> clazz) {
+        if (clazz.isInterface())
+            return getInterface(clazz);
+        else
+            return getSuper(clazz);
     }
 
     public GenericActualClassInfo getSuper(Class<?> ancestor) {
@@ -107,7 +130,7 @@ public class GenericActualClassInfo {
     }
 
     GenericActualClassInfo _getSuper() {
-        GenericActualClassInfo gsuper = GenericActualClasses.getActualSuperInfo(clazz);
+        GenericActualClassInfo gsuper = GenericTypes.getActualSuperInfo(clazz);
         if (gsuper == null)
             return null;
         if (gsuper.args != null)
@@ -156,7 +179,7 @@ public class GenericActualClassInfo {
     }
 
     GenericActualClassInfo[] _getInterfaces() {
-        GenericActualClassInfo[] ginterfaces = GenericActualClasses.getActualInterfacesInfo(clazz);
+        GenericActualClassInfo[] ginterfaces = GenericTypes.getActualInterfacesInfo(clazz);
         for (int ifaceIndex = 0; ifaceIndex < ginterfaces.length; ifaceIndex++) {
             GenericActualClassInfo ginterface = ginterfaces[ifaceIndex];
             if (ginterface.args != null)
@@ -181,7 +204,7 @@ public class GenericActualClassInfo {
         if (!clazz.isAssignableFrom(subclass))
             throw new IllegalArgumentException("Invalid subclass: " + subclass.getCanonicalName());
 
-        GenericActualClassInfo gsubclass = GenericActualClasses.getActualInfo(subclass);
+        GenericActualClassInfo gsubclass = GenericTypes.getActualInfo(subclass);
         if (clazz.isInterface()) {
             return gsubclass.getInterface(clazz);
         } else {

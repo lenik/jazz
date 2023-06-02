@@ -2,6 +2,10 @@ package net.bodz.bas.c.type;
 
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+
 import org.junit.Test;
 
 import net.bodz.bas.io.Stdio;
@@ -15,7 +19,7 @@ public class GenericActualClassInfoTest {
 
     public static void main(String[] args)
             throws Exception {
-        GenericActualClassInfo gCar = GenericActualClasses.getActualInfo(Car.class);
+        GenericActualClassInfo gCar = GenericTypes.getActualInfo(Car.class);
         // Type[] params = gCar.eval(Car.class);
         GenericActualClassInfo gBar = gCar.getSuper();
         GenericActualClassInfo gFoo = gBar.getSuper();
@@ -25,8 +29,25 @@ public class GenericActualClassInfoTest {
 
         System.out.println("----------------");
         gCar.dump(Stdio.cout.indented());
-    }
 
+        TypeVariable<?>[] mbvars = ManyBounds.class.getTypeParameters();
+        Type mbsup = ManyBounds.class.getGenericSuperclass();
+        Type[] mbargs = ((ParameterizedType) mbsup).getActualTypeArguments();
+        for (TypeVariable<?> var : mbvars) {
+            Type[] bounds = var.getBounds();
+            for (Type b : bounds) {
+                System.out.println(b);
+            }
+        }
+
+        TypeVariable<Class<Car>>[] tv = Car.class.getTypeParameters();
+        System.out.println(tv.length);
+    } // main
+
+}
+
+class ManyBounds<M extends Cat1 & Iface1<J, ? super K>, J, K extends J>
+        extends Foo<M, J> {
 }
 
 interface Iface1<Iv11, Iv12> {
