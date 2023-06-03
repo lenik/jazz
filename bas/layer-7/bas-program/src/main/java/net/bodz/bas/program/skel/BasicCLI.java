@@ -91,10 +91,10 @@ public abstract class BasicCLI
     }
 
     protected Logger getConfigLogger() {
-        String pkg = getClass().getPackage().getName();
+        String name = getClass().getName();
         // String heads = getPackageHeads(pkg, 2);
 
-        Logger logger = LoggerFactory.findClosestRepoLogger(pkg);
+        Logger logger = LoggerFactory.findClosestRepoLogger(name);
         if (logger != null)
             return logger;
 
