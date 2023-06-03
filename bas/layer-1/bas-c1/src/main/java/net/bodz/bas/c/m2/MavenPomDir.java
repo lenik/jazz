@@ -39,7 +39,7 @@ public class MavenPomDir {
 
     /**
      * Find the maven project directory from the specific class.
-     * 
+     *
      * @param clazz
      *            The specific class.
      * @return <code>null</code> if the class bytes resource couldn't be found for the specific
@@ -77,11 +77,18 @@ public class MavenPomDir {
 
     public static MavenPomDir closest(File child) {
         while (child != null) {
-            if (new File(child, "pom.xml").exists())
+            if (isPomDir(child))
                 return new MavenPomDir(child);
             child = child.getParentFile();
         }
         return null;
+    }
+
+    public static boolean isPomDir(File dir) {
+        File pomXml = new File(dir, "pom.xml");
+        if (pomXml.exists())
+            return true;
+        return false;
     }
 
     public File getSourceFile(Class<?> clazz) {
@@ -123,7 +130,7 @@ public class MavenPomDir {
 
     /**
      * Find the source dir within the maven project directory from the specific class.
-     * 
+     *
      * @param clazz
      *            The specific class.
      * @return <code>null</code> if the class bytes resource couldn't be found for the specific
