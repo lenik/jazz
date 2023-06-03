@@ -6,12 +6,16 @@ import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
+import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 
 public class DefaultLog4jConfigurer
         implements
             ILog4jConfigurer {
 
     public static boolean showHeader = true;
+
+    public static final String STDOUT_FX = "stdout-fx";
+    public static final String STDERR_FX = "stderr-fx";
 
     public DefaultLog4jConfigurer() {
     }
@@ -74,25 +78,37 @@ public class DefaultLog4jConfigurer
 //        builder.add(builder.newFilter("ThresholdFilter", Filter.Result.ACCEPT, Filter.Result.NEUTRAL)
 //                .addAttribute("level", Level.DEBUG));
 
-        AppenderComponentBuilder appenderBuilder = builder.newAppender("stdout", "CONSOLE")//
-                .addAttribute("target", ConsoleAppender.Target.SYSTEM_ERR) //
-
-                .add(builder.newLayout("PatternLayout")//
-                        .addComponent(builder.newComponent("LevelPatternSelector") //
-                                .addAttribute("defaultPattern", LIGHT) //
-                                .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "INFO")
-                                        .addAttribute("pattern", NORMAL)) //
-                                .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "WARN")
-                                        .addAttribute("pattern", WARN)) //
-                                .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "ERROR")
-                                        .addAttribute("pattern", ERROR)) //
-                        )) //
+        AppenderComponentBuilder stdoutFx = builder //
+                .newAppender(STDOUT_FX, "CONSOLE")//
+                .addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT) //
+                .add(fxLayout(builder)) //
                 .add(builder.newFilter("MarkerFilter", Filter.Result.DENY, Filter.Result.NEUTRAL)//
                         .addAttribute("marker", "FLOW"));
+        builder.add(stdoutFx);
 
-        builder.add(appenderBuilder);
+        AppenderComponentBuilder stderrFx = builder //
+                .newAppender(STDERR_FX, "CONSOLE")//
+                .addAttribute("target", ConsoleAppender.Target.SYSTEM_ERR) //
+                .add(fxLayout(builder)) //
+                .add(builder.newFilter("MarkerFilter", Filter.Result.DENY, Filter.Result.NEUTRAL)//
+                        .addAttribute("marker", "FLOW"));
+        builder.add(stderrFx);
 
-        builder.add(rootLogger(builder, Level.WARN, "stdout"));
+        builder.add(rootLogger(builder, Level.WARN, STDERR_FX));
+    }
+
+    LayoutComponentBuilder fxLayout(ConfigurationBuilder<? extends Configuration> builder) {
+        LayoutComponentBuilder layout = builder.newLayout("PatternLayout")//
+                .addComponent(builder.newComponent("LevelPatternSelector") //
+                        .addAttribute("defaultPattern", LIGHT) //
+                        .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "INFO")
+                                .addAttribute("pattern", NORMAL)) //
+                        .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "WARN")
+                                .addAttribute("pattern", WARN)) //
+                        .addComponent(builder.newComponent("PatternMatch").addAttribute("key", "ERROR")
+                                .addAttribute("pattern", ERROR)) //
+                );
+        return layout;
     }
 
 }
