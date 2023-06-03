@@ -2,6 +2,7 @@ package net.bodz.bas.log;
 
 import java.util.ServiceLoader;
 
+import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.spi.LoggerContext;
 import org.apache.logging.log4j.spi.LoggerRegistry;
@@ -44,10 +45,13 @@ public class LoggerFactory {
      * for log4j
      */
     public static Logger findClosestRepoLogger(String name) {
+        ClassLoader loader = LogFactory.class.getClassLoader();
+
         LoggerContext context;
         LoggerRegistry<?> registry;
         try {
-            context = LogManager.getContext();
+            context = LogManager.getContext(loader, false);
+            // context = LogManager.getContext();
             registry = context.getLoggerRegistry();
         } catch (NoClassDefFoundError se) {
             return null;
