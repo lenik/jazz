@@ -22,7 +22,7 @@ debug:
 	main -d LilyTestd
 
 lily1:
-	main JavaGen \
+	daogen \
             -c cg-lily.rst \
             -p net.bodz.lily.schema \
             _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock

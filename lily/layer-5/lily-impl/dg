@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function run() {
+    echo "$@"
+    exec "$@"
+}
+
+run daogen \
+    -H ../../layer-2/lily-model \
+    -c cg-lily.rst \
+    -p net.bodz.lily.schema \
+    "$@"
+
