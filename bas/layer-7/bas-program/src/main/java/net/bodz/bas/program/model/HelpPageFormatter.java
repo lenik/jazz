@@ -151,7 +151,12 @@ public class HelpPageFormatter {
                     offset++;
                     line.append(' ');
                 }
-                line.append(description);
+
+                if (description != null) {
+                    // TODO Do re-paragraph.
+                    description = description.replace("\n", " ");
+                    line.append(description);
+                }
 
                 buffer.append(line);
                 buffer.append('\n');
