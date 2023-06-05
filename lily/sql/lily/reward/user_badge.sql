@@ -1,5 +1,5 @@
 --\import lily.account.user
---\import lily.gaming.badge
+--\import lily.reward.badge
 
     create sequence user_badge_seq start with 10000;
 

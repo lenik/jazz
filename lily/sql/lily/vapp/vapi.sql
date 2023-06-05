@@ -1,10 +1,10 @@
 --\import lily.account
---\import lily.api.app
---\import lily.api.api
+--\import lily.vapp.apitype
+--\import lily.vapp.vapp
 
-    create sequence app_api_seq start with 1000;
-    create table app_api(
-        id          bigint primary key default nextval('app_api_seq'),
+    create sequence vapi_seq start with 1000;
+    create table vapi(
+        id          bigint primary key default nextval('vapi_seq'),
 --\mixin lily.mixin.Ver
         
         -- Properties:
@@ -12,10 +12,10 @@
 --\mixin lily.mixin.Props
         
         app         int not null
-            references app on update cascade on delete cascade,
+            references vapp on update cascade on delete cascade,
         
         api         int not null
-            references api on update cascade,
+            references apitype on update cascade,
         
         -- mode        int not null default -1
         

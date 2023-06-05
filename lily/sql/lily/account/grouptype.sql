@@ -16,6 +16,8 @@
     insert into grouptype(id, name, label, description)
         values(0, 'VIRTUAL', 'Virtual Group', 'Virtual abstract group');
     insert into grouptype(id, name, label, description)
-        values(1, 'GROUP', 'Normal Group', 'Normal group (default)');
+        values(1, 'SYS', 'System Group', 'System group');
     insert into grouptype(id, name, label, description)
-        values(2, 'ROLE', 'Role Group', 'Role group');
+        values(2, 'GROUP', 'Normal Group', 'Normal group (default)');
+    insert into grouptype(id, name, label, description)
+        values(3, 'ROLE', 'Role Group', 'Role group');

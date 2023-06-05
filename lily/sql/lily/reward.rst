@@ -1,4 +1,4 @@
---\import lily.util.uom
+#\import lily.account
 
 table-name {
     badge:              net.bodz.lily.reward.Badge
