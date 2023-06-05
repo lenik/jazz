@@ -22,9 +22,9 @@
   --create index user_props         on "user" using gin(props);
 
     insert into "user"(id, name, label, gid0) values(0, 'root', 'Root', 0);
-    insert into "user"(id, name, label, gid0) values(1, 'admin', 'Administrator', 1);
-    insert into "user"(id, name, label, gid0) values(2, 'user', 'Default User', 2);
-    insert into "user"(id, name, label, gid0) values(3, 'guest', 'Guest', 3);
+    insert into "user"(id, name, label, gid0) values(1, 'admin', 'Administrator', 101);
+    insert into "user"(id, name, label, gid0) values(2, 'user', 'Default User', 102);
+    insert into "user"(id, name, label, gid0) values(3, 'guest', 'Guest', 103);
 
 --\import lily.account.usersec
     insert into usersec(id, "user", passwd) values(0, 0, 'toor');

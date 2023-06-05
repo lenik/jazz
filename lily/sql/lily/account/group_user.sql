@@ -27,6 +27,15 @@
     -- primary gid, 0 for root user.
     -- alter table "user" alter gid0 drop default;
     
+    -- root: root
     insert into group_user("user", "group") values(0, 0);
-    insert into group_user("user", "group") values(1, 3);
-    
+
+    -- admin: admin, user
+    insert into group_user("user", "group") values(1, 101);
+    insert into group_user("user", "group") values(1, 102);
+
+    -- user: user
+    insert into group_user("user", "group") values(2, 102);
+
+    -- guest: guest
+    insert into group_user("user", "group") values(3, 103);

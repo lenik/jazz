@@ -12,9 +12,6 @@ create schema if not exists "${1=lily}";
 -------- Lily :: Account --------
 --\import lily.account
 
--------- Lily :: Api --------
---\import lily.api
-
 -------- Lily :: Contact --------
 --\import lily.contact
 
@@ -30,10 +27,13 @@ create schema if not exists "${1=lily}";
 -------- Lily :: Geography --
 --\import lily.geo
 
--------- Lily :: Gaming --------
---\import lily.gaming
+-------- Lily :: Reward --------
+--\import lily.reward
 
 -------- Lily :: Public --
 --\import lily.pub
+
+-------- Lily :: Virtual App --------
+--\import lily.vapp
 
 set search_path = public;
