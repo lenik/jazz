@@ -32,7 +32,11 @@ public abstract class AbstractProgram
             IProgram,
             II18nCapable {
 
-    static final Logger logger = LoggerFactory.getLogger(AbstractProgram.class);
+    static final Logger logger;
+
+    static {
+        logger = LoggerFactory.getLogger(AbstractProgram.class);
+    }
 
     protected Map<String, Object> variableMap = new LinkedHashMap<String, Object>();
 
