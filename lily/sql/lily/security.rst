@@ -22,3 +22,12 @@ key-columns {
 table-name {
     policy:             net.bodz.lily.security.Policy
 }
+
+table policy {
+    column allow {
+        javaName: allowBits
+    }
+    column deny {
+        javaName: denyBits
+    }
+}

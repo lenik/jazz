@@ -13,3 +13,7 @@
 
         primary key(policy, "user")
     );
+
+    comment on table policy_user is 'Enabled policy for a user';
+    comment on column policy_user.policy is 'The policy to be enabled';
+    comment on column policy_user."user" is 'The user on which the policy will be applied';

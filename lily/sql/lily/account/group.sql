@@ -20,6 +20,11 @@
     create index group_lastmod      on "group"(lastmod desc);
     create index group_state        on "group"(state);
 
+    comment on table "group" is 'User Group';
+    comment on column "group".name is 'The group name (unique)';
+    comment on column "group".type is 'Group type like normal-group, role-group, etc.';
+    comment on column "group".parent is 'The parent group. must be acyclic';
+
     insert into "group"(id, type, name, label) values(1, 0, '_pseudo', 'Pseudo Root Node');
     insert into "group"(parent, id, type, name, label) values(1, 100, 0, '_sysgroup', 'System Groups');
     insert into "group"(parent, id, type, name, label) values(1, 200, 0, '_group', 'Normal Groups');

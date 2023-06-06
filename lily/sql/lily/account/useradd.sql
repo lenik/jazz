@@ -20,3 +20,7 @@
     );
 
     create index useradd_state      on useradd(state);
+
+    comment on table useradd is 'Create user request';
+    comment on column useradd.whom is 'Operator?';
+    comment on column useradd.response is 'The operation response';

@@ -30,3 +30,8 @@
     create index useroid_type           on useroid("type");
     create index useroid_oid            on useroid(oid);
     
+    comment on table useroid is 'User Open ID';
+    comment on column useroid."user" is 'The declaring user';
+    comment on column useroid."type" is 'Type of Open ID';
+    comment on column useroid.oid is 'The identity data';
+    comment on column useroid.auth is 'The authentication data';
