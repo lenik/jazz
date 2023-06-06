@@ -3,14 +3,24 @@ package net.bodz.bas.potato.element;
 import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public interface IPotatoElement
-        extends IXjdocElement, IAnnotated {
+        extends
+            IXjdocElement,
+            IAnnotated {
+
+    IType getDeclaringType();
 
     /**
-     * The type where this element is declared.
+     * The class where this element is declared.
      *
-     * @return The declaring type.
+     * @return The declaring class.
      */
-    Class<?> getDeclaringClass();
+    default Class<?> getDeclaringClass() {
+        IType type = getDeclaringType();
+        if (type == null)
+            return null;
+        else
+            return type.getJavaClass();
+    }
 
     /**
      * Get typer.

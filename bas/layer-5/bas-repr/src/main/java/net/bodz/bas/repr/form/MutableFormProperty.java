@@ -433,11 +433,11 @@ public class MutableFormProperty
             throws ParseException {
         this.setProperty(property);
         this.setReadOnly(!property.isWritable());
-        this.setValueType(property.getPropertyType());
+        this.setValueType(property.getPropertyClass());
 
         IMutableElement.fn.copy1(property, this);
 
-        Class<?> propertyType = property.getPropertyType();
+        Class<?> propertyType = property.getPropertyClass();
         if (TypeKind.isNumeric(propertyType))
             this.setStyleClass("numeric");
 

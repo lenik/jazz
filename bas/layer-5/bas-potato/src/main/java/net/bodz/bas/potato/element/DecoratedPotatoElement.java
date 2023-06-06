@@ -30,6 +30,11 @@ public class DecoratedPotatoElement
     }
 
     @Override
+    public IType getDeclaringType() {
+        return getWrapped().getDeclaringType();
+    }
+
+    @Override
     public <T> T getTyper(Class<T> typerClass) {
         return getWrapped().getTyper(typerClass);
     }

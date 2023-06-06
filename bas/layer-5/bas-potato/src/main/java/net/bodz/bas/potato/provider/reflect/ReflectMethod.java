@@ -7,6 +7,7 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractMethod;
 import net.bodz.bas.potato.element.IParameter;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class ReflectMethod
@@ -23,8 +24,8 @@ public class ReflectMethod
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectMethod(Method method, IElementDoc doc) {
-        super(method.getDeclaringClass(), method.getName(), doc);
+    public ReflectMethod(IType type, Method method, IElementDoc doc) {
+        super(type, method.getName(), doc);
         this.method = method;
         this.parameterCount = method.getParameterTypes().length;
 

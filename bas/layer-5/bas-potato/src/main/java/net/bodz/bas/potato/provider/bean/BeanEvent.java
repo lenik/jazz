@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.potato.element.AbstractEvent;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 import com.googlecode.openbeans.EventSetDescriptor;
@@ -13,7 +14,7 @@ public class BeanEvent
 
     private final EventSetDescriptor eventSetDescriptor;
 
-    public BeanEvent(Class<?> declaringType, EventSetDescriptor eventSetDescriptor, IElementDoc doc) {
+    public BeanEvent(IType declaringType, EventSetDescriptor eventSetDescriptor, IElementDoc doc) {
         super(declaringType, //
                 eventSetDescriptor.getName(), eventSetDescriptor.getListenerType(), null, doc);
         this.eventSetDescriptor = eventSetDescriptor;

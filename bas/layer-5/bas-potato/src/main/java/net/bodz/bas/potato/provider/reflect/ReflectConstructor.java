@@ -6,6 +6,7 @@ import java.lang.reflect.Constructor;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractConstructor;
 import net.bodz.bas.potato.element.IConstructor;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class ReflectConstructor
@@ -21,8 +22,8 @@ public class ReflectConstructor
      * @throws NullPointerException
      *             If <code>method</code> is <code>null</code>.
      */
-    public ReflectConstructor(Constructor<?> ctor, IElementDoc doc) {
-        super(ctor.getDeclaringClass(), doc);
+    public ReflectConstructor(IType type, Constructor<?> ctor, IElementDoc doc) {
+        super(type, ctor.getName(), doc);
         this.ctor = ctor;
 
         int _modifiers = ctor.getModifiers();

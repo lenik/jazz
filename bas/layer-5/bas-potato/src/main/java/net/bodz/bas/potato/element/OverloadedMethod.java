@@ -26,7 +26,7 @@ public class OverloadedMethod
     private Map<TypeArray, Object> tvConvMap = new HashMap<TypeArray, Object>();
     private static Object NONE = new Object();
 
-    public OverloadedMethod(Class<?> declaringType, List<IMethod> methods, IElementDoc doc) {
+    public OverloadedMethod(IType declaringType, List<IMethod> methods, IElementDoc doc) {
         super(declaringType, methods.get(0).getName(), doc);
         this.methods = methods;
 

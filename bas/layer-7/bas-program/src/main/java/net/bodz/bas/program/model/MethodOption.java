@@ -7,6 +7,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.Control;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.typer.std.ParserUtil;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
@@ -15,12 +16,14 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class MethodOption
         extends AbstractOption {
 
+    private final IType type;
     private final Method method;
     private Class<?>[] parameterTypes;
 
-    public MethodOption(Method method, MethodDoc doc) {
+    public MethodOption(IType type, Method method, MethodDoc doc) {
         super("method:" + new MethodId(method).toString(), //
                 method.getName(), method.getGenericReturnType(), doc);
+        this.type = type;
         this.method = method;
         this.parameterTypes = method.getParameterTypes();
     }
@@ -46,7 +49,7 @@ public class MethodOption
     @Override
     public IProperty property() {
         IElementDoc doc = getXjdoc();
-        return new InvocationAsProperty(method, doc);
+        return new InvocationAsProperty(type, method, doc);
     }
 
 }
@@ -58,13 +61,13 @@ class InvocationAsProperty
     private Object[] args;
     private Object returnValue;
 
-    public InvocationAsProperty(Method method, IElementDoc doc) {
-        super(method.getDeclaringClass(), method.getName(), doc);
+    public InvocationAsProperty(IType declaringType, Method method, IElementDoc doc) {
+        super(declaringType, method.getName(), doc);
         this.method = method;
     }
 
     @Override
-    public Class<?> getPropertyType() {
+    public Class<?> getPropertyClass() {
         return Object[].class;
     }
 

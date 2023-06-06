@@ -15,10 +15,11 @@ import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public abstract class AbstractPotatoElement
         extends ExternXjdocElement
-        implements IPotatoElement {
+        implements
+            IPotatoElement {
 
     private String name;
-    private Class<?> declaringClass;
+    private IType declaringType;
 
     /**
      * @param declaringType
@@ -26,19 +27,15 @@ public abstract class AbstractPotatoElement
      * @param name
      *            May be <code>null</code>.
      */
-    public AbstractPotatoElement(Class<?> declaringType, String name, IElementDoc doc) {
+    public AbstractPotatoElement(IType declaringType, String name, IElementDoc doc) {
         super(doc);
         this.name = name;
-        this.declaringClass = declaringType;
+        this.declaringType = declaringType;
     }
 
     @Override
-    public Class<?> getDeclaringClass() {
-        return declaringClass;
-    }
-
-    protected void setDeclaringClass(Class<?> declaringClass) {
-        this.declaringClass = declaringClass;
+    public IType getDeclaringType() {
+        return declaringType;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class PropertyRef<T>
     @Override
     public Class<? extends T> getValueType() {
         @SuppressWarnings("unchecked")
-        Class<? extends T> propertyType = (Class<? extends T>) property.getPropertyType();
+        Class<? extends T> propertyType = (Class<? extends T>) property.getPropertyClass();
         return propertyType;
     }
 

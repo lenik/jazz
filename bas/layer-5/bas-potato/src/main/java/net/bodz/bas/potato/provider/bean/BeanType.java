@@ -39,8 +39,9 @@ public class BeanType
     private final int detailLevel;
     private final int priority;
 
-    public BeanType(BeanInfo beanInfo, int infoset, ClassDoc classDoc, IXjdocProvider docLoader) {
-        super(beanInfo.getBeanDescriptor().getBeanClass(), //
+    public BeanType(ITypeProvider provider, IType declaringType, BeanInfo beanInfo, int infoset, ClassDoc classDoc,
+            IXjdocProvider docLoader) {
+        super(provider, declaringType, //
                 beanInfo.getBeanDescriptor().getName(), //
                 classDoc);
 
@@ -94,7 +95,7 @@ public class BeanType
                     }
                 }
 
-                BeanProperty beanProperty = new BeanProperty(beanClass, propertyDescriptor, propertyDoc);
+                BeanProperty beanProperty = new BeanProperty(this, propertyDescriptor, propertyDoc);
                 propertyMap.addProperty(beanProperty);
             }
         }
@@ -116,7 +117,7 @@ public class BeanType
                         methodDoc = MethodDoc.n_a(classDoc, new MethodId(method));
                 }
 
-                BeanMethod beanMethod = new BeanMethod(methodDescriptor, methodDoc);
+                BeanMethod beanMethod = new BeanMethod(this, methodDescriptor, methodDoc);
                 methodMap.addMethod(beanMethod);
             }
         }
@@ -134,7 +135,7 @@ public class BeanType
                     // TODO Event xjdoc..
                 }
 
-                BeanEvent beanEvent = new BeanEvent(beanClass, eventSetDescriptor, eventDoc);
+                BeanEvent beanEvent = new BeanEvent(this, eventSetDescriptor, eventDoc);
                 eventMap.addEvent(beanEvent);
             }
         }
@@ -148,7 +149,7 @@ public class BeanType
     /* _____________________________ */static section.iface __TYPE__;
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getJavaClass() {
         return beanClass;
     }
 

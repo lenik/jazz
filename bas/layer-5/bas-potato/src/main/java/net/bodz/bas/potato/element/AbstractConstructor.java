@@ -5,16 +5,18 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractConstructor
         extends AbstractPotatoElement
-        implements IConstructor {
+        implements
+            IConstructor {
 
-    public AbstractConstructor(Class<?> declaringType, IElementDoc doc) {
-        super(declaringType, null, doc);
+    public AbstractConstructor(IType declaringType, String name, IElementDoc doc) {
+        super(declaringType, name, doc);
     }
 
     @Override
     public MethodSignature getSignature() {
         // String methodName = "<ctor>";
-        String methodName = getDeclaringClass().getSimpleName();
+        Class<?> declaringClass = getDeclaringClass();
+        String methodName = declaringClass.getSimpleName();
         Class<?>[] parameterTypes = getParameterTypes();
         MethodSignature signature = new MethodSignature(methodName, parameterTypes);
         return signature;

@@ -57,7 +57,7 @@ public class PropertyCategory
             IType type = PotatoTypes.getInstance().loadType(tagClass);
 
             IMutableElement.fn.copy1(type, category);
-            category.setName(type.getType().getSimpleName());
+            category.setName(type.getDeclaringType().getSimpleName());
             // category.setStyle(type.getStyle());
 
             Priority aPriority = type.getAnnotation(Priority.class);

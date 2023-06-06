@@ -11,23 +11,32 @@ import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeArray;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public abstract class AbstractType
         extends AbstractPotatoElement
-        implements IType {
+        implements
+            IType {
 
+    ITypeProvider provider;
     private Map<String, IMethod> overloadedMethodMap;
 
-    public AbstractType(Class<?> declaringType, String name, IElementDoc doc) {
+    public AbstractType(ITypeProvider provider, IType declaringType, String name, IElementDoc doc) {
         super(declaringType, name, doc);
+        this.provider = provider;
+    }
+
+    @Override
+    public ITypeProvider getProvider() {
+        return provider;
     }
 
     @Override
     public final Class<?> getDeclaringClass() {
-        return getType().getDeclaringClass();
+        return getJavaClass().getDeclaringClass();
     }
 
     @Override
@@ -71,7 +80,7 @@ public abstract class AbstractType
             String token = tokens.nextToken();
 
             if (type == null) {
-                Class<?> propertyType = lastProperty.getPropertyType();
+                Class<?> propertyType = lastProperty.getPropertyClass();
                 type = PotatoTypes.getInstance().loadType(propertyType);
             }
 
@@ -127,7 +136,13 @@ public abstract class AbstractType
                 map.put(name, method0);
             default:
                 IElementDoc doc0 = method0.getXjdoc();
-                map.put(name, new OverloadedMethod(method0.getDeclaringClass(), list, doc0));
+
+                Class<?> declaringClass = method0.getDeclaringClass();
+                IType declaringType = null;
+                if (declaringClass != null)
+                    declaringType = getProvider().loadType(declaringClass);
+
+                map.put(name, new OverloadedMethod(declaringType, list, doc0));
             }
         }
         return map;

@@ -11,8 +11,8 @@ public class BeanMethod
 
     private final MethodDescriptor methodDescriptor;
 
-    public BeanMethod(MethodDescriptor methodDescriptor, IElementDoc xjdoc) {
-        super(methodDescriptor.getMethod(), xjdoc);
+    public BeanMethod(BeanType type, MethodDescriptor methodDescriptor, IElementDoc xjdoc) {
+        super(type, methodDescriptor.getMethod(), xjdoc);
         this.methodDescriptor = methodDescriptor;
     }
 

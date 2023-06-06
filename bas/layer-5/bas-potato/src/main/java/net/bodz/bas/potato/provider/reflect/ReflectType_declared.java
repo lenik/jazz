@@ -35,8 +35,9 @@ public class ReflectType_declared
      * @param flatten
      *            Include members declared in superclasses.
      */
-    public ReflectType_declared(Class<?> clazz, int infoset, boolean flatten, ClassDoc classDoc) {
-        super(clazz, infoset, classDoc);
+    public ReflectType_declared(ITypeProvider provider, Class<?> clazz, int infoset, boolean flatten,
+            ClassDoc classDoc) {
+        super(provider, clazz, infoset, classDoc);
 
         boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
@@ -74,7 +75,7 @@ public class ReflectType_declared
 
                     if (clazz.getName().contains("fcp17"))
                         System.out.print(1);
-                    FieldProperty reflectProperty = new FieldProperty(field, fieldDoc);
+                    FieldProperty reflectProperty = new FieldProperty(this, field, fieldDoc);
                     propertyMap.addProperty(reflectProperty);
                 }
 
@@ -99,7 +100,7 @@ public class ReflectType_declared
                             methodDoc = MethodDoc.n_a(classDoc, methodId);
                     }
 
-                    ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
+                    ReflectMethod reflectMethod = new ReflectMethod(this, method, methodDoc);
                     methodMap.addMethod(reflectMethod);
                 }
 
@@ -124,7 +125,7 @@ public class ReflectType_declared
                             ctorDoc = MethodDoc.n_a(classDoc, ctorId);
                     }
 
-                    ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
+                    ReflectConstructor reflectCtor = new ReflectConstructor(this, ctor, ctorDoc);
                     constructorMap.addConstructor(reflectCtor);
                 }
 

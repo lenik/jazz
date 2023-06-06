@@ -28,4 +28,11 @@ public interface ITypeProvider
 
     IType loadType(Class<?> clazz, Object obj, int infoset);
 
+    default IType getType(Class<?> clazz) {
+        if (clazz == null)
+            return null;
+        else
+            return loadType(clazz);
+    }
+
 }

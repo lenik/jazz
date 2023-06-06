@@ -81,7 +81,7 @@ public class EntityInfo
     }
 
     void parseIfAnyRef(IProperty property, ModuleIndexer indexer) {
-        Class<?> type = property.getPropertyType();
+        Class<?> type = property.getPropertyClass();
         if (CoObject.class.isAssignableFrom(type)) { // is a relation reference.
             refmap.put(type, ReferenceType.ManyToOne);
             EntityInfo target = indexer.getEntity(type);
