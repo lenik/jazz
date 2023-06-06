@@ -25,7 +25,7 @@ public interface ITableMetadata
     String K_DESCRIPTION = "description";
 
     String K_JAVA_NAME = "javaName";
-    String K_JAVA_TYPE = "javaType";
+    String K_BASE_TYPE = "baseType";
     String K_EXCLUDED = "excluded";
 
     String K_PRIMARY_KEY = "primaryKey";
@@ -58,7 +58,7 @@ public interface ITableMetadata
 
     String getDescription();
 
-    default String getJavaType() {
+    default String getBaseTypeName() {
         return null;
     }
 
@@ -99,7 +99,7 @@ public interface ITableMetadata
         out.entry(K_TABLE_TYPE, getTableType());
 
         out.entryNotNull(K_JAVA_NAME, getJavaName());
-        out.entryNotNull(K_JAVA_TYPE, getJavaType());
+        out.entryNotNull(K_BASE_TYPE, getBaseTypeName());
         out.entryTrue(K_EXCLUDED, isExcluded());
 
         out.entryNotNull(K_DESCRIPTION, getDescription());
@@ -131,7 +131,7 @@ public interface ITableMetadata
         out.attribute(K_TABLE_TYPE, getTableType());
 
         out.attributeNotNull(K_JAVA_NAME, getJavaName());
-        out.attributeNotNull(K_JAVA_TYPE, getJavaType());
+        out.attributeNotNull(K_BASE_TYPE, getBaseTypeName());
         out.attributeTrue(K_EXCLUDED, isExcluded());
 
         out.attributeNotNull(K_DESCRIPTION, getDescription());
@@ -163,11 +163,19 @@ public interface ITableMetadata
 
     boolean isExcluded();
 
-    default Class<?> getJavaClass() {
+    default Class<?> getEntityClass() {
         return null;
     }
 
-    default IType getPotatoType() {
+    default IType getEntityType() {
+        return null;
+    }
+
+    default Class<?> getBaseClass() {
+        return null;
+    }
+
+    default IType getBaseType() {
         return null;
     }
 

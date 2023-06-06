@@ -37,9 +37,12 @@ public class DefaultTableMetadata
     TableOid oid = new TableOid();
     String javaName;
     String javaPackage;
-    String javaClassName;
-    Class<?> javaClass;
-    IType potatoType;
+    Class<?> entityClass;
+    IType entityType;
+
+    String baseTypeName;
+    Class<?> baseClass;
+    IType baseType;
 
     TableType tableType = getDefaultTableType();
 
@@ -92,12 +95,12 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public String getJavaType() {
-        return javaClassName;
+    public String getBaseTypeName() {
+        return baseTypeName;
     }
 
-    public void setJavaType(String javaType) {
-        this.javaClassName = javaType;
+    public void setBaseTypeName(String baseTypeName) {
+        this.baseTypeName = baseTypeName;
     }
 
     @Override
@@ -205,7 +208,7 @@ public class DefaultTableMetadata
         oid.jsonIn(o, opts);
 
         javaName = o.getString(K_JAVA_NAME);
-        javaClassName = o.getString(K_JAVA_TYPE);
+        baseTypeName = o.getString(K_BASE_TYPE);
 
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
 
@@ -239,7 +242,7 @@ public class DefaultTableMetadata
         oid.readObject(x_table);
 
         javaName = x_table.a(K_JAVA_NAME).getString();
-        javaClassName = x_table.a(K_JAVA_TYPE).getString();
+        baseTypeName = x_table.a(K_BASE_TYPE).getString();
 
         tableType = x_table.a(K_TABLE_TYPE)//
                 .getEnum(TableType.class, TableType.VIEW);
@@ -434,32 +437,57 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public Class<?> getJavaClass() {
-        if (javaClass == null) {
-            if (javaClassName == null)
+    public Class<?> getEntityClass() {
+        if (entityClass == null) {
+            String className = getJavaQName();
+            if (className == null)
                 return null;
             try {
-                javaClass = Class.forName(javaClassName);
+                entityClass = Class.forName(className);
             } catch (ClassNotFoundException e) {
                 return null;
             }
         }
-        return javaClass;
+        return entityClass;
     }
 
     @Override
-    public IType getPotatoType() {
-        if (potatoType == null) {
-            Class<?> clazz = getJavaClass();
+    public IType getEntityType() {
+        if (entityType == null) {
+            Class<?> clazz = getEntityClass();
             if (clazz != null)
-                potatoType = PotatoTypes.getInstance().loadType(clazz);
+                entityType = PotatoTypes.getInstance().loadType(clazz);
         }
-        return potatoType;
+        return entityType;
+    }
+
+    @Override
+    public Class<?> getBaseClass() {
+        if (baseClass == null) {
+            if (baseTypeName == null)
+                return null;
+            try {
+                baseClass = Class.forName(baseTypeName);
+            } catch (ClassNotFoundException e) {
+                return null;
+            }
+        }
+        return baseClass;
+    }
+
+    @Override
+    public IType getBaseType() {
+        if (baseType == null) {
+            Class<?> clazz = getBaseClass();
+            if (clazz != null)
+                baseType = PotatoTypes.getInstance().loadType(clazz);
+        }
+        return baseType;
     }
 
     @Override
     public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        IType type = getPotatoType();
+        IType type = getEntityType();
         if (type == null)
             return null;
         else
