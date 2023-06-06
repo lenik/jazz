@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.ArticleTalkMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.ArticleTalk">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="articleId" column="article" />
+        <result property="parentId" column="parent" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.FormDef" 
+            resultMap="net.bodz.lily.schema.dao.FormDefMapper.objlist_map" />
+        <association property="article" columnPrefix="article_"
+            javaType="net.bodz.lily.pub.Article" 
+            resultMap="net.bodz.lily.pub.dao.ArticleMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.lily.pub.ArticleTalk" 
+            resultMap="objlist_map" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.article, 
+            a.parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.article parent_article, 
+            parent.parent parent_parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person
+        from article_msg a
+            left join _form form on a.form = form.id
+            left join article article on a.article = article.id
+            left join article_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.article, 
+            a.parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.article parent_article, 
+            parent.parent parent_parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person
+        from article_msg a
+            left join _form form on a.form = form.id
+            left join article article on a.article = article.id
+            left join article_msg parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.beginTime != null">and a.t0 = #{m.beginTime}</if>
+        <if test="m.endTime != null">and a.t1 = #{m.endTime}</if>
+        <if test="m.year != null">and a."year" = #{m.year}</if>
+        <if test="m.yearRange!= null">
+            <if test="m.yearRange.hasStartIncl">and a."year" >= #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasStartExcl">and a."year" > #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasEndIncl">and a."year" &lt;= #{m.yearRange.end}</if>
+            <if test="m.yearRange.hasEndExcl">and a."year" &lt; #{m.yearRange.end}</if>
+        </if>
+        <if test="m.subject != null">and a.subject = #{m.subject}</if>
+        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
+        <if test="m.opId != null">and a.op = #{m.opId}</if>
+        <if test="m.opIdRange!= null">
+            <if test="m.opIdRange.hasStartIncl">and a.op >= #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasStartExcl">and a.op > #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasEndIncl">and a.op &lt;= #{m.opIdRange.end}</if>
+            <if test="m.opIdRange.hasEndExcl">and a.op &lt; #{m.opIdRange.end}</if>
+        </if>
+        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
+        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
+        <if test="m.formId != null">and a.form = #{m.formId}</if>
+        <if test="m.formIdRange!= null">
+            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
+            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
+        </if>
+        <if test="m.articleId != null">and a.article = #{m.articleId}</if>
+        <if test="m.articleIdRange!= null">
+            <if test="m.articleIdRange.hasStartIncl">and a.article >= #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasStartExcl">and a.article > #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
+            <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
+        </if>
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.parentIdRange!= null">
+            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
+            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into article_msg(
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            article,
+            parent
+        ) values(
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{articleId},
+            #{parentId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update article_msg
+        <set>
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            article = #{articleId},
+            parent = #{parentId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from article_msg
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from article_msg
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+    <update id="delete_xrefs">
+        alter table lily.article_msg drop constraint article_msg_parent_fkey;
+        alter table lily.article_msg_vote drop constraint article_msg_vote_article_msg_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily.article_msg
+            add constraint article_msg_parent_fkey foreign key (parent)
+            references lily.article_msg (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.article_msg_vote
+            add constraint article_msg_vote_article_msg_fkey foreign key (article_msg)
+            references lily.article_msg (id)
+            on update cascade
+            on delete cascade
+            ;
+    </update>
+
+</mapper>

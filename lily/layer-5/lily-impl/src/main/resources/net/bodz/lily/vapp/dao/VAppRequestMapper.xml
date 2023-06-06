@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.vapp.dao.VAppRequestMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.vapp.VAppRequest">
+        <id property="id" column="id" />
+        <result property="mode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="codeName" column="code" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="dummy" column="dummy" />
+        <result property="uId" column="uid" />
+        <result property="gId" column="gid" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="g" columnPrefix="gid_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.FormDef" 
+            resultMap="net.bodz.lily.schema.dao.FormDefMapper.objlist_map" />
+        <association property="u" columnPrefix="uid_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.code, 
+            a.label, 
+            a.description, 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.dummy, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person
+        from vappreq a
+            left join "user" op on a.op = op.id
+            left join "group" gid on a.gid = gid.id
+            left join _form form on a.form = form.id
+            left join "user" uid on a.uid = uid.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.code, 
+            a.label, 
+            a.description, 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.dummy, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person
+        from vappreq a
+            left join "user" op on a.op = op.id
+            left join "group" gid on a.gid = gid.id
+            left join _form form on a.form = form.id
+            left join "user" uid on a.uid = uid.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.uId != null">and a.uid = #{m.uId}</if>
+        <if test="m.uIdRange!= null">
+            <if test="m.uIdRange.hasStartIncl">and a.uid >= #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasStartExcl">and a.uid > #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasEndIncl">and a.uid &lt;= #{m.uIdRange.end}</if>
+            <if test="m.uIdRange.hasEndExcl">and a.uid &lt; #{m.uIdRange.end}</if>
+        </if>
+        <if test="m.gId != null">and a.gid = #{m.gId}</if>
+        <if test="m.gIdRange!= null">
+            <if test="m.gIdRange.hasStartIncl">and a.gid >= #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasStartExcl">and a.gid > #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasEndIncl">and a.gid &lt;= #{m.gIdRange.end}</if>
+            <if test="m.gIdRange.hasEndExcl">and a.gid &lt; #{m.gIdRange.end}</if>
+        </if>
+        <if test="m.mode != null">and a.mode = #{m.mode}</if>
+        <if test="m.modeRange!= null">
+            <if test="m.modeRange.hasStartIncl">and a.mode >= #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasStartExcl">and a.mode > #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasEndIncl">and a.mode &lt;= #{m.modeRange.end}</if>
+            <if test="m.modeRange.hasEndExcl">and a.mode &lt; #{m.modeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
+        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.label != null">and a.label = #{m.label}</if>
+        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
+        <if test="m.beginTime != null">and a.t0 = #{m.beginTime}</if>
+        <if test="m.endTime != null">and a.t1 = #{m.endTime}</if>
+        <if test="m.year != null">and a."year" = #{m.year}</if>
+        <if test="m.yearRange!= null">
+            <if test="m.yearRange.hasStartIncl">and a."year" >= #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasStartExcl">and a."year" > #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasEndIncl">and a."year" &lt;= #{m.yearRange.end}</if>
+            <if test="m.yearRange.hasEndExcl">and a."year" &lt; #{m.yearRange.end}</if>
+        </if>
+        <if test="m.subject != null">and a.subject = #{m.subject}</if>
+        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
+        <if test="m.opId != null">and a.op = #{m.opId}</if>
+        <if test="m.opIdRange!= null">
+            <if test="m.opIdRange.hasStartIncl">and a.op >= #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasStartExcl">and a.op > #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasEndIncl">and a.op &lt;= #{m.opIdRange.end}</if>
+            <if test="m.opIdRange.hasEndExcl">and a.op &lt; #{m.opIdRange.end}</if>
+        </if>
+        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
+        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
+        <if test="m.formId != null">and a.form = #{m.formId}</if>
+        <if test="m.formIdRange!= null">
+            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
+            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
+        </if>
+        <if test="m.dummy != null">and a.dummy = #{m.dummy}</if>
+        <if test="m.dummyRange!= null">
+            <if test="m.dummyRange.hasStartIncl">and a.dummy >= #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasStartExcl">and a.dummy > #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasEndIncl">and a.dummy &lt;= #{m.dummyRange.end}</if>
+            <if test="m.dummyRange.hasEndExcl">and a.dummy &lt; #{m.dummyRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into vappreq(
+            uid,
+            gid,
+            mode,
+            acl,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            code,
+            label,
+            description,
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            dummy
+        ) values(
+            #{uId},
+            #{gId},
+            #{mode},
+            #{acl},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{codeName},
+            #{label},
+            #{description},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{dummy}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update vappreq
+        <set>
+            uid = #{uId},
+            gid = #{gId},
+            mode = #{mode},
+            acl = #{acl},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            code = #{codeName},
+            label = #{label},
+            description = #{description},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            dummy = #{dummy},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from vappreq
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from vappreq
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+    <update id="delete_xrefs">
+        alter table lily.vapp drop constraint vapp_req_fkey;
+        alter table lily.vappreq_api drop constraint vappreq_api_parent_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily.vapp
+            add constraint vapp_req_fkey foreign key (req)
+            references lily.vappreq (id)
+            on update cascade
+            on delete set null
+            ;
+        alter table lily.vappreq_api
+            add constraint vappreq_api_parent_fkey foreign key (parent)
+            references lily.vappreq (id)
+            on update cascade
+            on delete cascade
+            ;
+    </update>
+
+</mapper>

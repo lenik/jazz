@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.vapp.dao.VAppMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.vapp.VApp">
+        <id property="id" column="id" />
+        <result property="mode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="codeName" column="code" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="secret" column="secret" />
+        <result property="uId" column="uid" />
+        <result property="gId" column="gid" />
+        <result property="reqId" column="req" />
+        <result property="catId" column="cat" />
+        <association property="cat" columnPrefix="cat_"
+            javaType="net.bodz.lily.vapp.VAppCat" 
+            resultMap="net.bodz.lily.vapp.dao.VAppCatMapper.objlist_map" />
+        <association property="g" columnPrefix="gid_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
+        <association property="u" columnPrefix="uid_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="req" columnPrefix="req_"
+            javaType="net.bodz.lily.vapp.VAppRequest" 
+            resultMap="net.bodz.lily.vapp.dao.VAppRequestMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.code, 
+            a.props, 
+            a.req, 
+            a.cat, 
+            a.secret, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person, 
+            req.id req_id, 
+            req.uid req_uid, 
+            req.gid req_gid, 
+            req.mode req_mode, 
+            req.acl req_acl, 
+            req.priority req_priority, 
+            req.flags req_flags, 
+            req."state" req_state, 
+            req.creation req_creation, 
+            req.lastmod req_lastmod, 
+            req."version" req_version, 
+            req.code req_code, 
+            req.label req_label, 
+            req.description req_description, 
+            req.t0 req_t0, 
+            req.t1 req_t1, 
+            req."year" req_year, 
+            req.subject req_subject, 
+            req.op req_op, 
+            req.text req_text, 
+            req.form req_form, 
+            req.formargs req_formargs, 
+            req.dummy req_dummy
+        from vapp a
+            left join vappcat cat on a.cat = cat.id
+            left join "group" gid on a.gid = gid.id
+            left join "user" uid on a.uid = uid.id
+            left join vappreq req on a.req = req.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.code, 
+            a.props, 
+            a.req, 
+            a.cat, 
+            a.secret, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person, 
+            req.id req_id, 
+            req.uid req_uid, 
+            req.gid req_gid, 
+            req.mode req_mode, 
+            req.acl req_acl, 
+            req.priority req_priority, 
+            req.flags req_flags, 
+            req."state" req_state, 
+            req.creation req_creation, 
+            req.lastmod req_lastmod, 
+            req."version" req_version, 
+            req.code req_code, 
+            req.label req_label, 
+            req.description req_description, 
+            req.t0 req_t0, 
+            req.t1 req_t1, 
+            req."year" req_year, 
+            req.subject req_subject, 
+            req.op req_op, 
+            req.text req_text, 
+            req.form req_form, 
+            req.formargs req_formargs, 
+            req.dummy req_dummy
+        from vapp a
+            left join vappcat cat on a.cat = cat.id
+            left join "group" gid on a.gid = gid.id
+            left join "user" uid on a.uid = uid.id
+            left join vappreq req on a.req = req.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.uId != null">and a.uid = #{m.uId}</if>
+        <if test="m.uIdRange!= null">
+            <if test="m.uIdRange.hasStartIncl">and a.uid >= #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasStartExcl">and a.uid > #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasEndIncl">and a.uid &lt;= #{m.uIdRange.end}</if>
+            <if test="m.uIdRange.hasEndExcl">and a.uid &lt; #{m.uIdRange.end}</if>
+        </if>
+        <if test="m.gId != null">and a.gid = #{m.gId}</if>
+        <if test="m.gIdRange!= null">
+            <if test="m.gIdRange.hasStartIncl">and a.gid >= #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasStartExcl">and a.gid > #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasEndIncl">and a.gid &lt;= #{m.gIdRange.end}</if>
+            <if test="m.gIdRange.hasEndExcl">and a.gid &lt; #{m.gIdRange.end}</if>
+        </if>
+        <if test="m.mode != null">and a.mode = #{m.mode}</if>
+        <if test="m.modeRange!= null">
+            <if test="m.modeRange.hasStartIncl">and a.mode >= #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasStartExcl">and a.mode > #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasEndIncl">and a.mode &lt;= #{m.modeRange.end}</if>
+            <if test="m.modeRange.hasEndExcl">and a.mode &lt; #{m.modeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.label != null">and a.label = #{m.label}</if>
+        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
+        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.properties != null">and a.props = #{m.properties}</if>
+        <if test="m.reqId != null">and a.req = #{m.reqId}</if>
+        <if test="m.reqIdRange!= null">
+            <if test="m.reqIdRange.hasStartIncl">and a.req >= #{m.reqIdRange.start}</if>
+            <if test="m.reqIdRange.hasStartExcl">and a.req > #{m.reqIdRange.start}</if>
+            <if test="m.reqIdRange.hasEndIncl">and a.req &lt;= #{m.reqIdRange.end}</if>
+            <if test="m.reqIdRange.hasEndExcl">and a.req &lt; #{m.reqIdRange.end}</if>
+        </if>
+        <if test="m.catId != null">and a.cat = #{m.catId}</if>
+        <if test="m.catIdRange!= null">
+            <if test="m.catIdRange.hasStartIncl">and a.cat >= #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasStartExcl">and a.cat > #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasEndIncl">and a.cat &lt;= #{m.catIdRange.end}</if>
+            <if test="m.catIdRange.hasEndExcl">and a.cat &lt; #{m.catIdRange.end}</if>
+        </if>
+        <if test="m.secret != null">and a.secret = #{m.secret}</if>
+        <if test="m.secretPattern != null">and a.secret like '${m.secretPattern}'</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into vapp(
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            code,
+            props,
+            req,
+            cat,
+            secret
+        ) values(
+            #{uId},
+            #{gId},
+            #{mode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{codeName},
+            #{properties.jsonStr}::jsonb,
+            #{reqId},
+            #{catId},
+            #{secret}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update vapp
+        <set>
+            uid = #{uId},
+            gid = #{gId},
+            mode = #{mode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            code = #{codeName},
+            props = #{properties.jsonStr}::jsonb,
+            req = #{reqId},
+            cat = #{catId},
+            secret = #{secret},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from vapp
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from vapp
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+    <update id="delete_xrefs">
+        alter table lily.vapi drop constraint vapi_app_fkey;
+        alter table lily.vapi_credit drop constraint vapi_credit_app_fkey;
+        alter table lily.vapi_log drop constraint vapi_log_app_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily.vapi
+            add constraint vapi_app_fkey foreign key (app)
+            references lily.vapp (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.vapi_credit
+            add constraint vapi_credit_app_fkey foreign key (app)
+            references lily.vapp (id)
+            on update cascade
+            ;
+        alter table lily.vapi_log
+            add constraint vapi_log_app_fkey foreign key (app)
+            references lily.vapp (id)
+            on update cascade
+            ;
+    </update>
+
+</mapper>

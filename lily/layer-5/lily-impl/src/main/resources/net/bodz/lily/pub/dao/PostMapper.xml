@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.PostMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.Post">
+        <id property="id" column="id" />
+        <result property="mode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="nfav" column="nfav" />
+        <result property="nvote" column="nvote" />
+        <result property="nhate" column="nhate" />
+        <result property="nmsg" column="nmsg" />
+        <result property="plugins.jsonStr" column="plugins" />
+        <result property="uId" column="uid" />
+        <result property="gId" column="gid" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="parentId" column="parent" />
+        <result property="catId" column="cat" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.lily.pub.Post" 
+            resultMap="objlist_map" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.FormDef" 
+            resultMap="net.bodz.lily.schema.dao.FormDefMapper.objlist_map" />
+        <association property="g" columnPrefix="gid_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
+        <association property="cat" columnPrefix="cat_"
+            javaType="net.bodz.lily.pub.PostCategory" 
+            resultMap="net.bodz.lily.pub.dao.PostCategoryMapper.objlist_map" />
+        <association property="u" columnPrefix="uid_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.parent, 
+            a.cat, 
+            a.nfav, 
+            a.nvote, 
+            a.nhate, 
+            a.nmsg, 
+            a.plugins, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.parent parent_parent, 
+            parent.cat parent_cat, 
+            parent.nfav parent_nfav, 
+            parent.nvote parent_nvote, 
+            parent.nhate parent_nhate, 
+            parent.nmsg parent_nmsg, 
+            parent.plugins parent_plugins, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person
+        from post a
+            left join post parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+            left join _form form on a.form = form.id
+            left join "group" gid on a.gid = gid.id
+            left join postcat cat on a.cat = cat.id
+            left join "user" uid on a.uid = uid.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.parent, 
+            a.cat, 
+            a.nfav, 
+            a.nvote, 
+            a.nhate, 
+            a.nmsg, 
+            a.plugins, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.parent parent_parent, 
+            parent.cat parent_cat, 
+            parent.nfav parent_nfav, 
+            parent.nvote parent_nvote, 
+            parent.nhate parent_nhate, 
+            parent.nmsg parent_nmsg, 
+            parent.plugins parent_plugins, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person
+        from post a
+            left join post parent on a.parent = parent.id
+            left join "user" op on a.op = op.id
+            left join _form form on a.form = form.id
+            left join "group" gid on a.gid = gid.id
+            left join postcat cat on a.cat = cat.id
+            left join "user" uid on a.uid = uid.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.uId != null">and a.uid = #{m.uId}</if>
+        <if test="m.uIdRange!= null">
+            <if test="m.uIdRange.hasStartIncl">and a.uid >= #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasStartExcl">and a.uid > #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasEndIncl">and a.uid &lt;= #{m.uIdRange.end}</if>
+            <if test="m.uIdRange.hasEndExcl">and a.uid &lt; #{m.uIdRange.end}</if>
+        </if>
+        <if test="m.gId != null">and a.gid = #{m.gId}</if>
+        <if test="m.gIdRange!= null">
+            <if test="m.gIdRange.hasStartIncl">and a.gid >= #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasStartExcl">and a.gid > #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasEndIncl">and a.gid &lt;= #{m.gIdRange.end}</if>
+            <if test="m.gIdRange.hasEndExcl">and a.gid &lt; #{m.gIdRange.end}</if>
+        </if>
+        <if test="m.mode != null">and a.mode = #{m.mode}</if>
+        <if test="m.modeRange!= null">
+            <if test="m.modeRange.hasStartIncl">and a.mode >= #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasStartExcl">and a.mode > #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasEndIncl">and a.mode &lt;= #{m.modeRange.end}</if>
+            <if test="m.modeRange.hasEndExcl">and a.mode &lt; #{m.modeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.beginTime != null">and a.t0 = #{m.beginTime}</if>
+        <if test="m.endTime != null">and a.t1 = #{m.endTime}</if>
+        <if test="m.year != null">and a."year" = #{m.year}</if>
+        <if test="m.yearRange!= null">
+            <if test="m.yearRange.hasStartIncl">and a."year" >= #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasStartExcl">and a."year" > #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasEndIncl">and a."year" &lt;= #{m.yearRange.end}</if>
+            <if test="m.yearRange.hasEndExcl">and a."year" &lt; #{m.yearRange.end}</if>
+        </if>
+        <if test="m.subject != null">and a.subject = #{m.subject}</if>
+        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
+        <if test="m.opId != null">and a.op = #{m.opId}</if>
+        <if test="m.opIdRange!= null">
+            <if test="m.opIdRange.hasStartIncl">and a.op >= #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasStartExcl">and a.op > #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasEndIncl">and a.op &lt;= #{m.opIdRange.end}</if>
+            <if test="m.opIdRange.hasEndExcl">and a.op &lt; #{m.opIdRange.end}</if>
+        </if>
+        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
+        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
+        <if test="m.formId != null">and a.form = #{m.formId}</if>
+        <if test="m.formIdRange!= null">
+            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
+            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
+        </if>
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.parentIdRange!= null">
+            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
+            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
+        </if>
+        <if test="m.catId != null">and a.cat = #{m.catId}</if>
+        <if test="m.catIdRange!= null">
+            <if test="m.catIdRange.hasStartIncl">and a.cat >= #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasStartExcl">and a.cat > #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasEndIncl">and a.cat &lt;= #{m.catIdRange.end}</if>
+            <if test="m.catIdRange.hasEndExcl">and a.cat &lt; #{m.catIdRange.end}</if>
+        </if>
+        <if test="m.nfav != null">and a.nfav = #{m.nfav}</if>
+        <if test="m.nfavRange!= null">
+            <if test="m.nfavRange.hasStartIncl">and a.nfav >= #{m.nfavRange.start}</if>
+            <if test="m.nfavRange.hasStartExcl">and a.nfav > #{m.nfavRange.start}</if>
+            <if test="m.nfavRange.hasEndIncl">and a.nfav &lt;= #{m.nfavRange.end}</if>
+            <if test="m.nfavRange.hasEndExcl">and a.nfav &lt; #{m.nfavRange.end}</if>
+        </if>
+        <if test="m.nvote != null">and a.nvote = #{m.nvote}</if>
+        <if test="m.nvoteRange!= null">
+            <if test="m.nvoteRange.hasStartIncl">and a.nvote >= #{m.nvoteRange.start}</if>
+            <if test="m.nvoteRange.hasStartExcl">and a.nvote > #{m.nvoteRange.start}</if>
+            <if test="m.nvoteRange.hasEndIncl">and a.nvote &lt;= #{m.nvoteRange.end}</if>
+            <if test="m.nvoteRange.hasEndExcl">and a.nvote &lt; #{m.nvoteRange.end}</if>
+        </if>
+        <if test="m.nhate != null">and a.nhate = #{m.nhate}</if>
+        <if test="m.nhateRange!= null">
+            <if test="m.nhateRange.hasStartIncl">and a.nhate >= #{m.nhateRange.start}</if>
+            <if test="m.nhateRange.hasStartExcl">and a.nhate > #{m.nhateRange.start}</if>
+            <if test="m.nhateRange.hasEndIncl">and a.nhate &lt;= #{m.nhateRange.end}</if>
+            <if test="m.nhateRange.hasEndExcl">and a.nhate &lt; #{m.nhateRange.end}</if>
+        </if>
+        <if test="m.nmsg != null">and a.nmsg = #{m.nmsg}</if>
+        <if test="m.nmsgRange!= null">
+            <if test="m.nmsgRange.hasStartIncl">and a.nmsg >= #{m.nmsgRange.start}</if>
+            <if test="m.nmsgRange.hasStartExcl">and a.nmsg > #{m.nmsgRange.start}</if>
+            <if test="m.nmsgRange.hasEndIncl">and a.nmsg &lt;= #{m.nmsgRange.end}</if>
+            <if test="m.nmsgRange.hasEndExcl">and a.nmsg &lt; #{m.nmsgRange.end}</if>
+        </if>
+        <if test="m.plugins != null">and a.plugins = #{m.plugins}</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into post(
+            uid,
+            gid,
+            mode,
+            acl,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            parent,
+            cat,
+            nfav,
+            nvote,
+            nhate,
+            nmsg,
+            plugins
+        ) values(
+            #{uId},
+            #{gId},
+            #{mode},
+            #{acl},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{parentId},
+            #{catId},
+            #{nfav},
+            #{nvote},
+            #{nhate},
+            #{nmsg},
+            #{plugins.jsonStr}::jsonb
+        );
+    ]]></insert>
+
+    <update id="update">
+        update post
+        <set>
+            uid = #{uId},
+            gid = #{gId},
+            mode = #{mode},
+            acl = #{acl},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            parent = #{parentId},
+            cat = #{catId},
+            nfav = #{nfav},
+            nvote = #{nvote},
+            nhate = #{nhate},
+            nmsg = #{nmsg},
+            plugins = #{plugins.jsonStr}::jsonb,
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from post
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from post
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+    <update id="delete_xrefs">
+        alter table lily.post drop constraint post_parent_fkey;
+        alter table lily.post_backref drop constraint post_backref_post_fkey;
+        alter table lily.post_fav drop constraint post_fav_post_fkey;
+        alter table lily.post_msg drop constraint post_msg_post_fkey;
+        alter table lily.post_parm drop constraint post_parm_post_fkey;
+        alter table lily.post_tag drop constraint post_tag_post_fkey;
+        alter table lily.post_vote drop constraint post_vote_post_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily.post
+            add constraint post_parent_fkey foreign key (parent)
+            references lily.post (id)
+            on update cascade
+            on delete set null
+            ;
+        alter table lily.post_backref
+            add constraint post_backref_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.post_fav
+            add constraint post_fav_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.post_msg
+            add constraint post_msg_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.post_parm
+            add constraint post_parm_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.post_tag
+            add constraint post_tag_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily.post_vote
+            add constraint post_vote_post_fkey foreign key (post)
+            references lily.post (id)
+            on update cascade
+            on delete cascade
+            ;
+    </update>
+
+</mapper>

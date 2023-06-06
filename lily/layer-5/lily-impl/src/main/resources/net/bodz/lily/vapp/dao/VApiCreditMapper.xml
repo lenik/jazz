@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.vapp.dao.VApiCreditMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.vapp.VApiCredit">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="credit" column="credit" />
+        <result property="appId" column="app" />
+        <result property="apiId" column="api" />
+        <association property="api" columnPrefix="api_"
+            javaType="net.bodz.lily.vapp.ApiType" 
+            resultMap="net.bodz.lily.vapp.dao.ApiTypeMapper.objlist_map" />
+        <association property="app" columnPrefix="app_"
+            javaType="net.bodz.lily.vapp.VApp" 
+            resultMap="net.bodz.lily.vapp.dao.VAppMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.app, 
+            a.api, 
+            a.credit, 
+            api.id api_id, 
+            api.label api_label, 
+            api.description api_description, 
+            api.priority api_priority, 
+            api.flags api_flags, 
+            api."state" api_state, 
+            api.creation api_creation, 
+            api.lastmod api_lastmod, 
+            api."version" api_version, 
+            api.code api_code, 
+            api.props api_props, 
+            api.uom api_uom, 
+            app.id app_id, 
+            app.uid app_uid, 
+            app.gid app_gid, 
+            app.mode app_mode, 
+            app.acl app_acl, 
+            app.label app_label, 
+            app.description app_description, 
+            app.priority app_priority, 
+            app.flags app_flags, 
+            app."state" app_state, 
+            app.creation app_creation, 
+            app.lastmod app_lastmod, 
+            app."version" app_version, 
+            app.code app_code, 
+            app.props app_props, 
+            app.req app_req, 
+            app.cat app_cat, 
+            app.secret app_secret
+        from vapi_credit a
+            left join apitype api on a.api = api.id
+            left join vapp app on a.app = app.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.app, 
+            a.api, 
+            a.credit, 
+            api.id api_id, 
+            api.label api_label, 
+            api.description api_description, 
+            api.priority api_priority, 
+            api.flags api_flags, 
+            api."state" api_state, 
+            api.creation api_creation, 
+            api.lastmod api_lastmod, 
+            api."version" api_version, 
+            api.code api_code, 
+            api.props api_props, 
+            api.uom api_uom, 
+            app.id app_id, 
+            app.uid app_uid, 
+            app.gid app_gid, 
+            app.mode app_mode, 
+            app.acl app_acl, 
+            app.label app_label, 
+            app.description app_description, 
+            app.priority app_priority, 
+            app.flags app_flags, 
+            app."state" app_state, 
+            app.creation app_creation, 
+            app.lastmod app_lastmod, 
+            app."version" app_version, 
+            app.code app_code, 
+            app.props app_props, 
+            app.req app_req, 
+            app.cat app_cat, 
+            app.secret app_secret
+        from vapi_credit a
+            left join apitype api on a.api = api.id
+            left join vapp app on a.app = app.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.appId != null">and a.app = #{m.appId}</if>
+        <if test="m.appIdRange!= null">
+            <if test="m.appIdRange.hasStartIncl">and a.app >= #{m.appIdRange.start}</if>
+            <if test="m.appIdRange.hasStartExcl">and a.app > #{m.appIdRange.start}</if>
+            <if test="m.appIdRange.hasEndIncl">and a.app &lt;= #{m.appIdRange.end}</if>
+            <if test="m.appIdRange.hasEndExcl">and a.app &lt; #{m.appIdRange.end}</if>
+        </if>
+        <if test="m.apiId != null">and a.api = #{m.apiId}</if>
+        <if test="m.apiIdRange!= null">
+            <if test="m.apiIdRange.hasStartIncl">and a.api >= #{m.apiIdRange.start}</if>
+            <if test="m.apiIdRange.hasStartExcl">and a.api > #{m.apiIdRange.start}</if>
+            <if test="m.apiIdRange.hasEndIncl">and a.api &lt;= #{m.apiIdRange.end}</if>
+            <if test="m.apiIdRange.hasEndExcl">and a.api &lt; #{m.apiIdRange.end}</if>
+        </if>
+        <if test="m.credit != null">and a.credit = #{m.credit}</if>
+        <if test="m.creditRange!= null">
+            <if test="m.creditRange.hasStartIncl">and a.credit >= #{m.creditRange.start}</if>
+            <if test="m.creditRange.hasStartExcl">and a.credit > #{m.creditRange.start}</if>
+            <if test="m.creditRange.hasEndIncl">and a.credit &lt;= #{m.creditRange.end}</if>
+            <if test="m.creditRange.hasEndExcl">and a.credit &lt; #{m.creditRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into vapi_credit(
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            app,
+            api,
+            credit
+        ) values(
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{appId},
+            #{apiId},
+            #{credit}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update vapi_credit
+        <set>
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            app = #{appId},
+            api = #{apiId},
+            credit = #{credit},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from vapi_credit
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from vapi_credit
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -2,15 +2,10 @@ package net.bodz.lily.pub;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.template.CoTag;
-
-@Table(name = "posttag")
+@Table(schema = "lily", name = "post_tag")
 public class PostTag
-        extends CoTag<PostTag> {
+        extends _PostTag_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public PostTag() {
-    }
 
 }

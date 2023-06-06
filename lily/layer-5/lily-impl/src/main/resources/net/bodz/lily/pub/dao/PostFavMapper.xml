@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.PostFavMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.PostFav">
+        <id property="id" column="id" />
+        <result property="postId" column="post" />
+        <result property="userId" column="user" />
+        <association property="post" columnPrefix="post_"
+            javaType="net.bodz.lily.pub.Post" 
+            resultMap="net.bodz.lily.pub.dao.PostMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.post, 
+            a."user", 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from post_fav a
+            left join post post on a.post = post.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.post, 
+            a."user", 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from post_fav a
+            left join post post on a.post = post.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.postId != null">and a.post = #{m.postId}</if>
+        <if test="m.postIdRange!= null">
+            <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasStartExcl">and a.post > #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
+            <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into post_fav(
+            post,
+            "user"
+        ) values(
+            #{postId},
+            #{userId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update post_fav
+        <set>
+            post = #{postId},
+            "user" = #{userId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from post_fav
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from post_fav
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>
