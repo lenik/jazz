@@ -9,14 +9,15 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractEvent
         extends AbstractPotatoElement
-        implements IEvent {
+        implements
+            IEvent {
 
     private final String ucfirstName;
 
     private final Class<?> listenerClass;
     private final Class<?> eventClass;
 
-    public AbstractEvent(Class<?> declaringType, String eventName, Class<?> listenerClass, Class<?> eventClass,
+    public AbstractEvent(IType declaringType, String eventName, Class<?> listenerClass, Class<?> eventClass,
             IElementDoc doc) {
         super(declaringType, eventName, doc);
         if (eventName == null)

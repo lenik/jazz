@@ -52,7 +52,7 @@ public class PropertyExporter {
 
             for (IProperty property : properties) {
                 String name = property.getName();
-                Class<?> type = property.getPropertyType();
+                Class<?> type = property.getPropertyClass();
                 if (usePathKey)
                     out.key(pathPrefix + name);
                 else

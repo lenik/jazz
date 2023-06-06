@@ -3,6 +3,7 @@ package net.bodz.bas.potato.element;
 import java.util.List;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
+import net.bodz.bas.potato.ITypeProvider;
 
 /**
  * This is also usable as member/inner type.
@@ -11,7 +12,13 @@ public interface IType
         extends
             IPotatoElement {
 
-    Class<?> getType();
+    ITypeProvider getProvider();
+
+    Class<?> getJavaClass();
+
+    default String getSimpleName() {
+        return getJavaClass().getSimpleName();
+    }
 
     /**
      * Get the property map.

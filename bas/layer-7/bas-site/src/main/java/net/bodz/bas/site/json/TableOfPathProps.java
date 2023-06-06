@@ -160,7 +160,7 @@ public class TableOfPathProps
 
             String format = formats.get(col);
             if (format != null && value != null)
-                value = JsonValueFormat.format(property.getPropertyType(), format, value);
+                value = JsonValueFormat.format(property.getPropertyClass(), format, value);
 
             row.add(value);
         }

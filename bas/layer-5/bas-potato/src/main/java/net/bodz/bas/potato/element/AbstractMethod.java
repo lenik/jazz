@@ -5,11 +5,12 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractMethod
         extends AbstractPotatoElement
-        implements IMethod {
+        implements
+            IMethod {
 
     private transient IParameter[] parameters;
 
-    public AbstractMethod(Class<?> declaringType, String methodName, IElementDoc doc) {
+    public AbstractMethod(IType declaringType, String methodName, IElementDoc doc) {
         super(declaringType, methodName, doc);
     }
 

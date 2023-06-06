@@ -34,7 +34,7 @@ public class PropertyRefEntry<T>
     @SuppressWarnings("unchecked")
     @Override
     public Class<? extends T> getValueType() {
-        return (Class<? extends T>) property.getPropertyType();
+        return (Class<? extends T>) property.getPropertyClass();
     }
 
     static int callDepth = 0;

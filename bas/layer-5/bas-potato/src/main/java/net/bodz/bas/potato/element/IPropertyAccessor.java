@@ -2,11 +2,13 @@ package net.bodz.bas.potato.element;
 
 public interface IPropertyAccessor {
 
-    Class<?> getPropertyType();
+    Class<?> getPropertyClass();
+
+    IType getPropertyType();
 
     /**
      * Get the property value from a particular instance.
-     * 
+     *
      * @throws NullPointerException
      *             If <code>instance</code> is <code>null</code> and the property is not static.
      * @throws ClassCastException
@@ -17,7 +19,7 @@ public interface IPropertyAccessor {
 
     /**
      * Set the property value to a particular instance.
-     * 
+     *
      * @throws NullPointerException
      *             If <code>instance</code> is <code>null</code> and the property is not static.
      * @throws ClassCastException

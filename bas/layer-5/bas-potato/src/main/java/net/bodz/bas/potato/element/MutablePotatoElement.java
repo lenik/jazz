@@ -12,9 +12,11 @@ import net.bodz.mda.xjdoc.model.javadoc.IXjdocElement;
 
 public class MutablePotatoElement
         extends MutableAnnotations
-        implements IPotatoElement, IMutableElement {
+        implements
+            IPotatoElement,
+            IMutableElement {
 
-    private Class<?> declaringClass;
+    private IType declaringType;
     private Map<Class<?>, Object> typerMap;
 
     private String name;
@@ -31,12 +33,12 @@ public class MutablePotatoElement
     /* _____________________________ */static section.iface __POTATO__;
 
     @Override
-    public Class<?> getDeclaringClass() {
-        return declaringClass;
+    public IType getDeclaringType() {
+        return declaringType;
     }
 
-    public void setDeclaringClass(Class<?> declaringClass) {
-        this.declaringClass = declaringClass;
+    public void setDeclaringType(IType declaringType) {
+        this.declaringType = declaringType;
     }
 
     @Override
@@ -117,6 +119,7 @@ public class MutablePotatoElement
     /** ⇱ Implementation Of {@link IMutableElement}. */
     /* _____________________________ */static section.iface __MUTABLE__;
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -146,6 +149,7 @@ public class MutablePotatoElement
         this.modifiers = modifiers;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }
@@ -158,6 +162,7 @@ public class MutablePotatoElement
         return xjdoc;
     }
 
+    @Override
     public void setXjdoc(IElementDoc xjdoc) {
         this.xjdoc = xjdoc;
     }

@@ -68,8 +68,13 @@ public class PotatoTypes
         case 1:
             return type1v.get(0);
         default:
+            IType type0 = type1v.get(0);
+            ITypeProvider provider0 = type0.getProvider();
+
+            IType declaringType = provider0.getType(clazz.getDeclaringClass());
+
             ClassDoc classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
-            return new MergedType(clazz, type1v, classDoc);
+            return new MergedType(provider0, declaringType, clazz, type1v, classDoc);
         }
     }
 

@@ -28,12 +28,12 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc doc) {
-        this(beanClass, propertyDescriptor, doc, xetter(propertyDescriptor));
+    public BeanProperty(BeanType beanType, PropertyDescriptor propertyDescriptor, IElementDoc doc) {
+        this(beanType, propertyDescriptor, doc, xetter(propertyDescriptor));
     }
 
-    public BeanProperty(Class<?> beanClass, PropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
-        super(xetter.getDeclaringClass(), propertyDescriptor.getName(), doc);
+    public BeanProperty(BeanType beanType, PropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
+        super(beanType, propertyDescriptor.getName(), doc);
 
         this.propertyDescriptor = propertyDescriptor;
         // this.xetter = xetter;
@@ -69,10 +69,18 @@ public class BeanProperty
     }
 
     @Override
-    public Class<?> getPropertyType() {
+    public Class<?> getPropertyClass() {
         // XXX Generic not supported.
         // propertyDescriptor.getReadMethod();
         return propertyDescriptor.getPropertyType();
+    }
+
+    public Method getReadMethod() {
+        return propertyDescriptor.getReadMethod();
+    }
+
+    public Method getWriteMethod() {
+        return propertyDescriptor.getWriteMethod();
     }
 
     @Override

@@ -31,8 +31,8 @@ public abstract class AbstractReflectType
      * @see ITypeProvider#I_Constructors
      * @see ITypeProvider#I_Events
      */
-    public AbstractReflectType(Class<?> clazz, int infoset, IClassDoc doc) {
-        super(clazz, clazz.getName(), doc);
+    public AbstractReflectType(ITypeProvider provider, Class<?> clazz, int infoset, IClassDoc doc) {
+        super(provider, provider.getType(clazz.getDeclaringClass()), clazz.getName(), doc);
 
         this.clazz = clazz;
 
@@ -58,7 +58,7 @@ public abstract class AbstractReflectType
     /* _____________________________ */static section.iface __TYPE__;
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getJavaClass() {
         return clazz;
     }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public class LinkedType
@@ -17,12 +18,12 @@ public class LinkedType
     private LinkedConstructorMap constructorMap;
     private LinkedEventMap eventMap;
 
-    public LinkedType(Class<?> clazz, IType[] types, IElementDoc doc) {
-        this(clazz, Arrays.asList(types), doc);
+    public LinkedType(ITypeProvider provider, IType declaringType, Class<?> clazz, IType[] types, IElementDoc doc) {
+        this(provider, declaringType, clazz, Arrays.asList(types), doc);
     }
 
-    public LinkedType(Class<?> clazz, List<IType> types, IElementDoc doc) {
-        super(clazz, clazz.getName(), doc);
+    public LinkedType(ITypeProvider provider, IType declaringType, Class<?> clazz, List<IType> types, IElementDoc doc) {
+        super(provider, declaringType, clazz.getName(), doc);
 
         this.clazz = clazz;
 
@@ -54,7 +55,7 @@ public class LinkedType
     /* _____________________________ */static section.iface __TYPE__;
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getJavaClass() {
         return clazz;
     }
 

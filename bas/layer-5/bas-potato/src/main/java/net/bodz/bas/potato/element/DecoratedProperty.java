@@ -4,7 +4,8 @@ import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public class DecoratedProperty
         extends DecoratedPotatoElement
-        implements IProperty {
+        implements
+            IProperty {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +19,12 @@ public class DecoratedProperty
     }
 
     @Override
-    public Class<?> getPropertyType() {
+    public Class<?> getPropertyClass() {
+        return getWrapped().getPropertyClass();
+    }
+
+    @Override
+    public IType getPropertyType() {
         return getWrapped().getPropertyType();
     }
 

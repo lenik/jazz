@@ -54,10 +54,30 @@ public class BeanTypeProvider
             else
                 classDoc = ClassDoc.n_a(clazz.getName());
 
-            return new BeanType(beanInfo, infoset, classDoc, UnionXjdocProvider.getInstance());
+            IType declaringType = getType(clazz.getDeclaringClass());
+
+            return new BeanType(this, declaringType, beanInfo, infoset, classDoc, UnionXjdocProvider.getInstance());
         } catch (IntrospectionException e) {
             return null;
         }
+    }
+
+    public IType loadType(BeanInfo beanInfo) {
+        return loadType(beanInfo, null, getDefaultInfoset());
+    }
+
+    public IType loadType(BeanInfo beanInfo, Object obj, int infoset) {
+        Class<?> clazz = beanInfo.getBeanDescriptor().getBeanClass();
+
+        ClassDoc classDoc = null;
+        if ((infoset & ITypeProvider.I_Docs) != 0)
+            classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
+        else
+            classDoc = ClassDoc.n_a(clazz.getName());
+
+        IType declaringType = getType(clazz.getDeclaringClass());
+
+        return new BeanType(this, declaringType, beanInfo, infoset, classDoc, UnionXjdocProvider.getInstance());
     }
 
     static BeanTypeProvider instance = new BeanTypeProvider(0, 0);

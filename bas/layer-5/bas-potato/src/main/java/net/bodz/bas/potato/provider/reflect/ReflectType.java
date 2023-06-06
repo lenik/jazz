@@ -14,8 +14,8 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class ReflectType
         extends AbstractReflectType {
 
-    public ReflectType(Class<?> clazz, int infoset, ClassDoc classDoc) {
-        super(clazz, infoset, classDoc);
+    public ReflectType(ITypeProvider provider, Class<?> clazz, int infoset, ClassDoc classDoc) {
+        super(provider, clazz, infoset, classDoc);
 
         boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
@@ -38,7 +38,7 @@ public class ReflectType
                         fieldDoc = FieldDoc.n_a(classDoc, field.getName());
                 }
 
-                FieldProperty reflectProperty = new FieldProperty(field, fieldDoc);
+                FieldProperty reflectProperty = new FieldProperty(this, field, fieldDoc);
                 propertyMap.addProperty(reflectProperty);
             }
 
@@ -57,7 +57,7 @@ public class ReflectType
                         methodDoc = MethodDoc.n_a(classDoc, methodId);
                 }
 
-                ReflectMethod reflectMethod = new ReflectMethod(method, methodDoc);
+                ReflectMethod reflectMethod = new ReflectMethod(this, method, methodDoc);
                 methodMap.addMethod(reflectMethod);
             }
 
@@ -76,7 +76,7 @@ public class ReflectType
                         ctorDoc = MethodDoc.n_a(classDoc, ctorId);
                 }
 
-                ReflectConstructor reflectCtor = new ReflectConstructor(ctor, ctorDoc);
+                ReflectConstructor reflectCtor = new ReflectConstructor(this, ctor, ctorDoc);
                 constructorMap.addConstructor(reflectCtor);
             }
     }

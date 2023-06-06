@@ -36,7 +36,7 @@ public class ReflectTypeProvider_declared
         if ((infoset & ITypeProvider.I_Docs) != 0)
             classDoc = Xjdocs.getDefaultProvider().getOrCreateClassDoc(clazz);
 
-        return new ReflectType_declared(clazz, infoset, false, classDoc);
+        return new ReflectType_declared(this, clazz, infoset, false, classDoc);
     }
 
     static ReflectTypeProvider_declared instance = new ReflectTypeProvider_declared(0, 0);

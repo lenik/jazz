@@ -8,6 +8,7 @@ import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -23,8 +24,8 @@ public class FieldProperty
 
     private PropertyChangeSourceMode propertyChangeSourceMode;
 
-    public FieldProperty(Field field, IElementDoc doc) {
-        super(field.getDeclaringClass(), field.getName(), doc);
+    public FieldProperty(IType type, Field field, IElementDoc doc) {
+        super(type, field.getName(), doc);
         this.field = field;
 
         int _modifiers = field.getModifiers();
@@ -44,8 +45,12 @@ public class FieldProperty
     /* _____________________________ */static section.iface __PROPERTY__;
 
     @Override
-    public Class<?> getPropertyType() {
+    public Class<?> getPropertyClass() {
         return field.getType();
+    }
+
+    public Field getField() {
+        return field;
     }
 
     @Override

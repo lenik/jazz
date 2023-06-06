@@ -15,6 +15,12 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.provider.bean.BeanProperty;
+import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
+import net.bodz.bas.potato.provider.reflect.FieldProperty;
+import net.bodz.bas.potato.provider.reflect.ReflectTypeProvider_declared;
+import net.bodz.bas.potato.provider.reflect.ReflectType_declared;
 import net.bodz.bas.program.model.*;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.Xjdocs;
@@ -267,9 +273,15 @@ public class ClassDocToOptionsConverter
             } catch (IntrospectionException e) {
                 throw new ParseException(e.getMessage(), e);
             }
-            for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
-                Method getter = property.getReadMethod();
-                Method setter = property.getWriteMethod();
+
+            IType beanType = BeanTypeProvider.getInstance().loadType(beanInfo);
+
+            for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+                BeanProperty property = (BeanProperty) beanType//
+                        .getProperty(propertyDescriptor.getName());
+
+                Method getter = propertyDescriptor.getReadMethod();
+                Method setter = propertyDescriptor.getWriteMethod();
                 List<Method> accessors = new ArrayList<>();
                 if (getter != null)
                     accessors.add(getter);
@@ -294,6 +306,10 @@ public class ClassDocToOptionsConverter
         }
 
         if (includeFields) {
+            ReflectType_declared type = //
+                    (ReflectType_declared) ReflectTypeProvider_declared.getInstance()//
+                            .loadType(clazz);
+
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
                 if (!isIncluded(field))
@@ -307,7 +323,8 @@ public class ClassDocToOptionsConverter
                 if (descriptor == null)
                     continue;
 
-                FieldOption option = new FieldOption(field, fieldDoc);
+                FieldProperty fieldProperty = (FieldProperty) type.getProperty(field.getName());
+                FieldOption option = new FieldOption(fieldProperty, fieldDoc);
                 OptionDescriptor.apply(option, descriptor);
                 option.setGroup(group);
                 group.addOption(option);
@@ -315,6 +332,8 @@ public class ClassDocToOptionsConverter
         }
 
         if (includeMethods) {
+            IType type = ReflectTypeProvider_declared.getInstance().loadType(clazz);
+
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
                 if (!isIncluded(method))
@@ -332,7 +351,7 @@ public class ClassDocToOptionsConverter
                 if (descriptor == null)
                     continue;
 
-                MethodOption option = new MethodOption(method, methodDoc);
+                MethodOption option = new MethodOption(type, method, methodDoc);
                 OptionDescriptor.apply(option, descriptor);
                 option.setGroup(group);
                 group.addOption(option);

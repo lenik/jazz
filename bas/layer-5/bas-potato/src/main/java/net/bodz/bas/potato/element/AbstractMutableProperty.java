@@ -15,7 +15,7 @@ public abstract class AbstractMutableProperty
     /* _____________________________ */static section.iface __PROPERTY__;
 
     @Override
-    public Class<?> getPropertyType() {
+    public Class<?> getPropertyClass() {
         return propertyType;
     }
 

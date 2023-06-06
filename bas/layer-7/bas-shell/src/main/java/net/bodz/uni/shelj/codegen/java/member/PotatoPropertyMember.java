@@ -37,7 +37,7 @@ public class PotatoPropertyMember
 
     @Override
     public Class<?> getType() {
-        return property.getPropertyType();
+        return property.getPropertyClass();
     }
 
     @Override

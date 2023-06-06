@@ -1,7 +1,5 @@
 package net.bodz.bas.program.model;
 
-import java.lang.reflect.Field;
-
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.provider.reflect.FieldProperty;
 import net.bodz.mda.xjdoc.model.FieldDoc;
@@ -9,17 +7,17 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 public class FieldOption
         extends AbstractOption {
 
-    private final Field field;
+    private final FieldProperty field;
 
-    public FieldOption(Field field, FieldDoc doc) {
+    public FieldOption(FieldProperty field, FieldDoc doc) {
         super("field:" + field.getName(), //
-                field.getName(), field.getGenericType(), doc);
+                field.getName(), field.getField().getGenericType(), doc);
         this.field = field;
     }
 
     @Override
     public IProperty property() {
-        return new FieldProperty(field, getXjdoc());
+        return field;
     }
 
 }

@@ -89,7 +89,7 @@ public class VarMapLoader {
         } catch (ReflectiveOperationException e) {
             throw new LoaderException("Failed to access object property: " + e.getMessage(), e);
         }
-        Class<?> pClass = property.getPropertyType();
+        Class<?> pClass = property.getPropertyClass();
         IType pType = types.loadType(pClass, pVal);
 
         boolean dirty = false;
@@ -118,7 +118,7 @@ public class VarMapLoader {
             throw new NullPointerException("obj");
         if (property == null)
             throw new NullPointerException("property");
-        Class<?> ltype = property.getPropertyType();
+        Class<?> ltype = property.getPropertyClass();
         ltype = Primitives.box(ltype);
         Class<?> rtype = rval.getClass();
 
