@@ -165,6 +165,13 @@ public class CrossReference
         this.foreignColumns = foreignColumns;
     }
 
+    public boolean isCompositeProperty() {
+        for (IColumnMetadata c : foreignColumns)
+            if (c.isCompositeProperty())
+                return true;
+        return false;
+    }
+
     public IColumnMetadata[] getParentColumns() {
         return parentColumns;
     }
