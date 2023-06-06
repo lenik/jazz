@@ -1,5 +1,10 @@
 package net.bodz.lily.template;
 
+import javax.persistence.Column;
+
+import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.validate.NotNull;
+import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.IdEntity;
 import net.bodz.lily.security.User;
@@ -10,23 +15,54 @@ public abstract class VoteRecord
 
     private static final long serialVersionUID = 1L;
 
-    User user;
-    int votes;
+    private static final int _ord_USER_ID = 1;
 
-    public final User getUser() {
+    @NotNull
+    User user;
+
+    @NotNull
+    int userId;
+
+    int voteCount;
+
+    /**
+     *
+     * @label user
+     * @constraint foreign key (user) references lily.user (id)
+     */
+    @NotNull
+    public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    /**
+     */
+    public void setUser(@NotNull User value) {
+        this.user = value;
     }
 
-    public final int getVotes() {
-        return votes;
+    @Ordinal(_ord_USER_ID)
+    @Precision(value = 19)
+    @Column(name = "user", nullable = false, precision = 19)
+    public synchronized int getUserId() {
+        if (user != null) {
+            if (user.getId() == null)
+                return 0;
+            return user.getId();
+        }
+        return userId;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public synchronized void setUserId(int value) {
+        this.userId = value;
+    }
+
+    public final int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
     }
 
 }
