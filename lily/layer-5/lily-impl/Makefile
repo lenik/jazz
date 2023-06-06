@@ -21,68 +21,71 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-
 DAOGEN = daogen \
-	-H ../../layer-2/lily-model \
+    $(DAOFLAGS) \
+    -H ../../layer-2/lily-model \
     -c sql/out/lily.rst
 #    -c sql/out/violet.rst
 
-dao-base:
+predao:
+	cd sql; make -B
+
+dao-base: predao
 	$(DAOGEN) -p net.bodz.lily.schema \
             _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
 
-dao-account:
+dao-account: predao
 	$(DAOGEN) -p net.bodz.lily.security \
-            user usercat useroid usersec user_run group
+            usertype grouptype user usercat useroid useroidtype usersec user_run group
 
-dao-contact:
+dao-contact: predao
 	$(DAOGEN) -p net.bodz.lily.contact \
             org orgunit partycat person personrole
 
-dao-geo:
+dao-geo: predao
 	$(DAOGEN) -p net.bodz.lily.geo \
             zone zonecat
 
-dao-inet:
+dao-inet: predao
 	$(DAOGEN) -p net.bodz.lily.inet \
             extsite
 
-dao-io:
+dao-io: predao
 	$(DAOGEN) -p net.bodz.lily.io \
             storage
 
-dao-pub:
+dao-pub: predao
 	$(DAOGEN) -p net.bodz.lily.pub \
             article* post*
 
-dao-reward:
+dao-reward: predao
 	$(DAOGEN) -p net.bodz.lily.reward \
             badge user_badge
 
-dao-util:
+dao-util: predao
 	$(DAOGEN) -p net.bodz.lily.util \
             uom
 
-dao-security:
+dao-security: predao
 	$(DAOGEN) -p net.bodz.lily.util \
             user usercat useroid usersec user_run group policy
 
-dao-vapp:
+dao-vapp: predao
 	$(DAOGEN) -p net.bodz.lily.vapp \
             apitype vapi vapi_credit vapi_log vapp vappcat vappreq vappreq_api
 
-dao-lily-glob:
+dao-lily-glob: predao
 	$(DAOGEN) -p net.bodz.lily.other \
             -T lily.*
 
-dao-violet:
+dao-violet: predao
 	$(DAOGEN) -p net.bodz.violet.other \
             -T violet.*
 
-dao-lily:
+dao-lily: predao
 	$(DAOGEN) -p net.bodz.lily.schema \
             _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock \
-            user usercat useroid usersec user_run group \
+            usertype grouptype user usercat useroid useroidtype usersec user_run group \
             org orgunit partycat person personrole \
             zone zonecat \
             extsite \

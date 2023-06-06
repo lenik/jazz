@@ -2,14 +2,17 @@ column-property {
     creation:           creationDate
     lastmod:            lastModifiedDate
     props:              properties
-    nobj:               -
     t0:                 beginTime
     t1:                 endTime
     code:               codeName
     imagealt:           imageAlt
-    nref:               -
-    formargs:           -
+    nref:               refCount
+    formargs:           formArguments
     text:               rawText
+    nobj:               objCount
+    nvote:              voteCount
+    nfav:               favCount
+    nhate:              hateCount
 }
 
 key-columns {
@@ -17,6 +20,21 @@ key-columns {
         pattern: ^(.*)_(id)$
         alias: $1
         component: $2
+    }
+    format uid {
+        pattern: ^uid$
+        alias: ownerUser
+        component: id
+    }
+    format gid {
+        pattern: ^gid$
+        alias: ownerGroup
+        component: id
+    }
+    format cat {
+        pattern: ^cat$
+        alias: category
+        component: id
     }
 }
 

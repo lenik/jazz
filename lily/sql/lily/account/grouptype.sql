@@ -13,6 +13,9 @@
     create index grouptype_priority     on grouptype(priority);
     create index grouptype_state        on grouptype(state);
 
+    comment on table grouptype is 'Group Type';
+    comment on column grouptype.name is 'Group type name (unique)';
+
     insert into grouptype(id, name, label, description)
         values(0, 'VIRTUAL', 'Virtual Group', 'Virtual abstract group');
     insert into grouptype(id, name, label, description)

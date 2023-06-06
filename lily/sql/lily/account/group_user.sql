@@ -27,6 +27,11 @@
     -- primary gid, 0 for root user.
     -- alter table "user" alter gid0 drop default;
     
+    comment on table group_user is 'Group member user';
+    comment on column group_user."group" is 'The containing group';
+    comment on column group_user."user" is 'A user who is a member to the group';
+    comment on column group_user.admin is 'Whether the member is an administrator of the group';
+
     -- root: root
     insert into group_user("user", "group") values(0, 0);
 

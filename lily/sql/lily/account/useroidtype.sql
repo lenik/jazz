@@ -7,9 +7,10 @@
         dummy       int
     );
 
+    comment on table useroidtype is 'Type of Open ID';
+
     insert into useroidtype(id, label) values(1, 'email');
     insert into useroidtype(id, label) values(2, 'mobile');
     insert into useroidtype(id, label) values(10, 'Alipay');
     insert into useroidtype(id, label) values(11, 'WeChat');
     insert into useroidtype(id, label) values(12, 'QQ');
-

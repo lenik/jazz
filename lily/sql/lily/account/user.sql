@@ -21,6 +21,12 @@
     create index user_state         on "user"(state);
   --create index user_props         on "user" using gin(props);
 
+    comment on table "user" is 'User Account';
+    comment on column "user".name is 'The user name (unique)';
+    comment on column "user".type is 'User type like system-user, normal-user, etc.';
+    comment on column "user".gid0 is 'The primary user group, the default value of ownerGroup.';
+    comment on column "user".referer is 'The referer user (used for promotion)';
+
     insert into "user"(id, name, label, gid0) values(0, 'root', 'Root', 0);
     insert into "user"(id, name, label, gid0) values(1, 'admin', 'Administrator', 101);
     insert into "user"(id, name, label, gid0) values(2, 'user', 'Default User', 102);

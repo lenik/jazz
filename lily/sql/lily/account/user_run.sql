@@ -23,3 +23,8 @@
 
     create index user_run_lastmod  on user_run(lastmod desc);
     create index user_run_score    on user_run(score);
+
+    comment on table user_run is 'User Activity Log';
+    comment on column user_run."user" is 'The user';
+    comment on column user_run.lastlog is 'Last time of login';
+    comment on column user_run.lastlogip is 'The source IP of last login';

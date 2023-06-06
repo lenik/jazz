@@ -1,4 +1,4 @@
-#\import lily.account
+#\import lily.security
 
 table-name {
     badge:              net.bodz.lily.reward.Badge

@@ -1,4 +1,30 @@
-#\import lily.account
+#\import lily.security
+
+class-map {
+    net.bodz.lily.t.base.CoMessage: \
+        article,
+        post
+    net.bodz.lily.template.BackrefRecord: \
+        article_backref, \
+        post_backref
+    net.bodz.lily.template.FavRecord: \
+        article_fav,
+        post_fav
+    net.bodz.lily.template.VoteRecord: \
+        article_vote,
+        post_vote,
+        article_msg_vote,
+        post_msg_vote
+    net.bodz.lily.template.CoTalk: \
+        article_msg,
+        post_msg
+    net.bodz.lily.template.CoParameter: \
+        articleparm,
+        postparm
+    net.bodz.lily.template.CoTag: \
+        articletag,
+        posttag
+}
 
 table-name {
     article:            net.bodz.lily.pub.Article
