@@ -456,7 +456,11 @@ public class DefaultTableMetadata
         if (entityType == null) {
             Class<?> clazz = getEntityClass();
             if (clazz != null)
-                entityType = PotatoTypes.getInstance().loadType(clazz);
+                try {
+                    entityType = PotatoTypes.getInstance().loadType(clazz);
+                } catch (NoClassDefFoundError e) {
+                    entityType = null;
+                }
         }
         return entityType;
     }
@@ -466,8 +470,12 @@ public class DefaultTableMetadata
         if (baseClass == null) {
             if (baseTypeName == null)
                 return null;
+            int lt = baseTypeName.indexOf('<');
+            String rawName = lt == -1 //
+                    ? baseTypeName
+                    : baseTypeName.substring(0, lt);
             try {
-                baseClass = Class.forName(baseTypeName);
+                baseClass = Class.forName(rawName);
             } catch (ClassNotFoundException e) {
                 return null;
             }
