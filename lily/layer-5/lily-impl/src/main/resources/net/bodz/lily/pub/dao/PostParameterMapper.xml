@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.PostParameterMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.PostParameter">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="ival" column="ival" />
+        <result property="fval" column="fval" />
+        <result property="sval" column="sval" />
+        <result property="postId" column="post" />
+        <result property="parmId" column="parm" />
+        <association property="post" columnPrefix="post_"
+            javaType="net.bodz.lily.pub.Post" 
+            resultMap="net.bodz.lily.pub.dao.PostMapper.objlist_map" />
+        <association property="parm" columnPrefix="parm_"
+            javaType="net.bodz.lily.pub.PostParameterType" 
+            resultMap="net.bodz.lily.pub.PostParameterTypeMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.post, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm.code parm_code, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version
+        from post_parm a
+            left join post post on a.post = post.id
+            left join postparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.post, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm.code parm_code, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version
+        from post_parm a
+            left join post post on a.post = post.id
+            left join postparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.postId != null">and a.post = #{m.postId}</if>
+        <if test="m.postIdRange!= null">
+            <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasStartExcl">and a.post > #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
+            <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
+        </if>
+        <if test="m.parmId != null">and a.parm = #{m.parmId}</if>
+        <if test="m.parmIdRange!= null">
+            <if test="m.parmIdRange.hasStartIncl">and a.parm >= #{m.parmIdRange.start}</if>
+            <if test="m.parmIdRange.hasStartExcl">and a.parm > #{m.parmIdRange.start}</if>
+            <if test="m.parmIdRange.hasEndIncl">and a.parm &lt;= #{m.parmIdRange.end}</if>
+            <if test="m.parmIdRange.hasEndExcl">and a.parm &lt; #{m.parmIdRange.end}</if>
+        </if>
+        <if test="m.ival != null">and a.ival = #{m.ival}</if>
+        <if test="m.ivalRange!= null">
+            <if test="m.ivalRange.hasStartIncl">and a.ival >= #{m.ivalRange.start}</if>
+            <if test="m.ivalRange.hasStartExcl">and a.ival > #{m.ivalRange.start}</if>
+            <if test="m.ivalRange.hasEndIncl">and a.ival &lt;= #{m.ivalRange.end}</if>
+            <if test="m.ivalRange.hasEndExcl">and a.ival &lt; #{m.ivalRange.end}</if>
+        </if>
+        <if test="m.fval != null">and a.fval = #{m.fval}</if>
+        <if test="m.fvalRange!= null">
+            <if test="m.fvalRange.hasStartIncl">and a.fval >= #{m.fvalRange.start}</if>
+            <if test="m.fvalRange.hasStartExcl">and a.fval > #{m.fvalRange.start}</if>
+            <if test="m.fvalRange.hasEndIncl">and a.fval &lt;= #{m.fvalRange.end}</if>
+            <if test="m.fvalRange.hasEndExcl">and a.fval &lt; #{m.fvalRange.end}</if>
+        </if>
+        <if test="m.sval != null">and a.sval = #{m.sval}</if>
+        <if test="m.svalPattern != null">and a.sval like '${m.svalPattern}'</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into post_parm(
+            creation,
+            lastmod,
+            "version",
+            post,
+            parm,
+            ival,
+            fval,
+            sval
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{postId},
+            #{parmId},
+            #{ival},
+            #{fval},
+            #{sval}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update post_parm
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            post = #{postId},
+            parm = #{parmId},
+            ival = #{ival},
+            fval = #{fval},
+            sval = #{sval},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from post_parm
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from post_parm
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -8,7 +8,8 @@ public class ArticleVoteMapperTest
         extends AbstractTableTest<ArticleVote, ArticleVoteMask, ArticleVoteMapper> {
 
     @Override
-    public ArticleVote buildSample() {
+    public ArticleVote buildSample()
+            throws Exception {
         return ArticleVoteSamples.build();
     }
 

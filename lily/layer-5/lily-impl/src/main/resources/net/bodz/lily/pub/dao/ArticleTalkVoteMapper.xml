@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.ArticleTalkVoteMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.ArticleTalkVote">
+        <id property="id" column="id" />
+        <result property="votes" column="votes" />
+        <result property="articleMsgId" column="article_msg" />
+        <result property="userId" column="user" />
+        <association property="articleMsg" columnPrefix="article_msg_"
+            javaType="net.bodz.lily.pub.ArticleTalk" 
+            resultMap="net.bodz.lily.pub.dao.ArticleTalkMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.article_msg, 
+            a."user", 
+            a.votes, 
+            article_msg.id article_msg_id, 
+            article_msg.priority article_msg_priority, 
+            article_msg.flags article_msg_flags, 
+            article_msg."state" article_msg_state, 
+            article_msg.creation article_msg_creation, 
+            article_msg.lastmod article_msg_lastmod, 
+            article_msg."version" article_msg_version, 
+            article_msg.t0 article_msg_t0, 
+            article_msg.t1 article_msg_t1, 
+            article_msg."year" article_msg_year, 
+            article_msg.subject article_msg_subject, 
+            article_msg.op article_msg_op, 
+            article_msg.text article_msg_text, 
+            article_msg.form article_msg_form, 
+            article_msg.formargs article_msg_formargs, 
+            article_msg.article article_msg_article, 
+            article_msg.parent article_msg_parent, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from article_msg_vote a
+            left join article_msg article_msg on a.article_msg = article_msg.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.article_msg, 
+            a."user", 
+            a.votes, 
+            article_msg.id article_msg_id, 
+            article_msg.priority article_msg_priority, 
+            article_msg.flags article_msg_flags, 
+            article_msg."state" article_msg_state, 
+            article_msg.creation article_msg_creation, 
+            article_msg.lastmod article_msg_lastmod, 
+            article_msg."version" article_msg_version, 
+            article_msg.t0 article_msg_t0, 
+            article_msg.t1 article_msg_t1, 
+            article_msg."year" article_msg_year, 
+            article_msg.subject article_msg_subject, 
+            article_msg.op article_msg_op, 
+            article_msg.text article_msg_text, 
+            article_msg.form article_msg_form, 
+            article_msg.formargs article_msg_formargs, 
+            article_msg.article article_msg_article, 
+            article_msg.parent article_msg_parent, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from article_msg_vote a
+            left join article_msg article_msg on a.article_msg = article_msg.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.articleMsgId != null">and a.article_msg = #{m.articleMsgId}</if>
+        <if test="m.articleMsgIdRange!= null">
+            <if test="m.articleMsgIdRange.hasStartIncl">and a.article_msg >= #{m.articleMsgIdRange.start}</if>
+            <if test="m.articleMsgIdRange.hasStartExcl">and a.article_msg > #{m.articleMsgIdRange.start}</if>
+            <if test="m.articleMsgIdRange.hasEndIncl">and a.article_msg &lt;= #{m.articleMsgIdRange.end}</if>
+            <if test="m.articleMsgIdRange.hasEndExcl">and a.article_msg &lt; #{m.articleMsgIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
+        <if test="m.votes != null">and a.votes = #{m.votes}</if>
+        <if test="m.votesRange!= null">
+            <if test="m.votesRange.hasStartIncl">and a.votes >= #{m.votesRange.start}</if>
+            <if test="m.votesRange.hasStartExcl">and a.votes > #{m.votesRange.start}</if>
+            <if test="m.votesRange.hasEndIncl">and a.votes &lt;= #{m.votesRange.end}</if>
+            <if test="m.votesRange.hasEndExcl">and a.votes &lt; #{m.votesRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into article_msg_vote(
+            article_msg,
+            "user",
+            votes
+        ) values(
+            #{articleMsgId},
+            #{userId},
+            #{votes}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update article_msg_vote
+        <set>
+            article_msg = #{articleMsgId},
+            "user" = #{userId},
+            votes = #{votes},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from article_msg_vote
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from article_msg_vote
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

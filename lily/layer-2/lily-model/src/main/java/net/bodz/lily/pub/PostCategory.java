@@ -2,20 +2,10 @@ package net.bodz.lily.pub;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoCategory;
-
-/**
- * 讨论区
- */
-@Table(name = "postcat")
-@IdType(Integer.class)
+@Table(schema = "lily", name = "postcat")
 public class PostCategory
-        extends CoCategory<PostCategory, Integer> {
+        extends _PostCategory_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public PostCategory() {
-    }
 
 }

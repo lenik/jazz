@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.pub.dao.PostTalkVoteMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.pub.PostTalkVote">
+        <id property="id" column="id" />
+        <result property="votes" column="votes" />
+        <result property="postMsgId" column="post_msg" />
+        <result property="userId" column="user" />
+        <association property="postMsg" columnPrefix="post_msg_"
+            javaType="net.bodz.lily.pub.PostTalk" 
+            resultMap="net.bodz.lily.pub.dao.PostTalkMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.post_msg, 
+            a."user", 
+            a.votes, 
+            post_msg.id post_msg_id, 
+            post_msg.priority post_msg_priority, 
+            post_msg.flags post_msg_flags, 
+            post_msg."state" post_msg_state, 
+            post_msg.creation post_msg_creation, 
+            post_msg.lastmod post_msg_lastmod, 
+            post_msg."version" post_msg_version, 
+            post_msg.t0 post_msg_t0, 
+            post_msg.t1 post_msg_t1, 
+            post_msg."year" post_msg_year, 
+            post_msg.subject post_msg_subject, 
+            post_msg.op post_msg_op, 
+            post_msg.text post_msg_text, 
+            post_msg.form post_msg_form, 
+            post_msg.formargs post_msg_formargs, 
+            post_msg.post post_msg_post, 
+            post_msg.parent post_msg_parent, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from post_msg_vote a
+            left join post_msg post_msg on a.post_msg = post_msg.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.post_msg, 
+            a."user", 
+            a.votes, 
+            post_msg.id post_msg_id, 
+            post_msg.priority post_msg_priority, 
+            post_msg.flags post_msg_flags, 
+            post_msg."state" post_msg_state, 
+            post_msg.creation post_msg_creation, 
+            post_msg.lastmod post_msg_lastmod, 
+            post_msg."version" post_msg_version, 
+            post_msg.t0 post_msg_t0, 
+            post_msg.t1 post_msg_t1, 
+            post_msg."year" post_msg_year, 
+            post_msg.subject post_msg_subject, 
+            post_msg.op post_msg_op, 
+            post_msg.text post_msg_text, 
+            post_msg.form post_msg_form, 
+            post_msg.formargs post_msg_formargs, 
+            post_msg.post post_msg_post, 
+            post_msg.parent post_msg_parent, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from post_msg_vote a
+            left join post_msg post_msg on a.post_msg = post_msg.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.postMsgId != null">and a.post_msg = #{m.postMsgId}</if>
+        <if test="m.postMsgIdRange!= null">
+            <if test="m.postMsgIdRange.hasStartIncl">and a.post_msg >= #{m.postMsgIdRange.start}</if>
+            <if test="m.postMsgIdRange.hasStartExcl">and a.post_msg > #{m.postMsgIdRange.start}</if>
+            <if test="m.postMsgIdRange.hasEndIncl">and a.post_msg &lt;= #{m.postMsgIdRange.end}</if>
+            <if test="m.postMsgIdRange.hasEndExcl">and a.post_msg &lt; #{m.postMsgIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
+        <if test="m.votes != null">and a.votes = #{m.votes}</if>
+        <if test="m.votesRange!= null">
+            <if test="m.votesRange.hasStartIncl">and a.votes >= #{m.votesRange.start}</if>
+            <if test="m.votesRange.hasStartExcl">and a.votes > #{m.votesRange.start}</if>
+            <if test="m.votesRange.hasEndIncl">and a.votes &lt;= #{m.votesRange.end}</if>
+            <if test="m.votesRange.hasEndExcl">and a.votes &lt; #{m.votesRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into post_msg_vote(
+            post_msg,
+            "user",
+            votes
+        ) values(
+            #{postMsgId},
+            #{userId},
+            #{votes}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update post_msg_vote
+        <set>
+            post_msg = #{postMsgId},
+            "user" = #{userId},
+            votes = #{votes},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from post_msg_vote
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from post_msg_vote
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

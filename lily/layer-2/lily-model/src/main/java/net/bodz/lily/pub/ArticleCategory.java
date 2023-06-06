@@ -2,20 +2,10 @@ package net.bodz.lily.pub;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoCategory;
-
-/**
- * 文章分类
- */
-@Table(name = "articlecat")
-@IdType(Integer.class)
+@Table(schema = "lily", name = "articlecat")
 public class ArticleCategory
-        extends CoCategory<ArticleCategory, Integer> {
+        extends _ArticleCategory_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public ArticleCategory() {
-    }
 
 }

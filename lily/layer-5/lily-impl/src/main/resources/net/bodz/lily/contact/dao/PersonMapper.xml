@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.contact.dao.PersonMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.contact.Person">
+        <id property="id" column="id" />
+        <result property="mode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="alias" column="alias" />
+        <result property="ctprops.jsonStr" column="ctprops" />
+        <result property="address1" column="address1" />
+        <result property="address2" column="address2" />
+        <result property="tel" column="tel" />
+        <result property="telok" column="telok" />
+        <result property="email" column="email" />
+        <result property="emailok" column="emailok" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="birthday" column="birthday" />
+        <result property="locale" column="locale" />
+        <result property="timezone" column="timezone" />
+        <result property="nrole" column="nrole" />
+        <result property="customer" column="customer" />
+        <result property="supplier" column="supplier" />
+        <result property="employee" column="employee" />
+        <result property="subject" column="subject" />
+        <result property="nbank" column="nbank" />
+        <result property="gender" column="gender" />
+        <result property="homeland" column="homeland" />
+        <result property="passport" column="passport" />
+        <result property="ssn" column="ssn" />
+        <result property="dln" column="dln" />
+        <result property="uId" column="uid" />
+        <result property="gId" column="gid" />
+        <result property="zoneId" column="zone" />
+        <result property="catId" column="cat" />
+        <association property="g" columnPrefix="gid_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
+        <association property="u" columnPrefix="uid_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="cat" columnPrefix="cat_"
+            javaType="net.bodz.lily.contact.PartyCategory" 
+            resultMap="net.bodz.lily.contact.dao.PartyCategoryMapper.objlist_map" />
+        <association property="zone" columnPrefix="zone_"
+            javaType="net.bodz.lily.geo.Zone" 
+            resultMap="net.bodz.lily.geo.dao.ZoneMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.alias, 
+            a.ctprops, 
+            a.address1, 
+            a.address2, 
+            a."zone", 
+            a.tel, 
+            a.telok, 
+            a.email, 
+            a.emailok, 
+            a.props, 
+            a.cat, 
+            a.birthday, 
+            a.locale, 
+            a.timezone, 
+            a.nrole, 
+            a.customer, 
+            a.supplier, 
+            a.employee, 
+            a.subject, 
+            a.nbank, 
+            a.gender, 
+            a.homeland, 
+            a.passport, 
+            a.ssn, 
+            a.dln, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            "zone".id zone_id, 
+            "zone".code zone_code, 
+            "zone".uid zone_uid, 
+            "zone".gid zone_gid, 
+            "zone".mode zone_mode, 
+            "zone".acl zone_acl, 
+            "zone".label zone_label, 
+            "zone".description zone_description, 
+            "zone".priority zone_priority, 
+            "zone".flags zone_flags, 
+            "zone"."state" zone_state, 
+            "zone".creation zone_creation, 
+            "zone".lastmod zone_lastmod, 
+            "zone"."version" zone_version, 
+            "zone".cat zone_cat, 
+            "zone".country zone_country, 
+            "zone".parent zone_parent, 
+            "zone"."depth" zone_depth, 
+            "zone".telcode zone_telcode, 
+            "zone".postcode zone_postcode, 
+            "zone".props zone_props, 
+            "zone"."data" zone_data
+        from person a
+            left join "group" gid on a.gid = gid.id
+            left join "user" uid on a.uid = uid.id
+            left join partycat cat on a.cat = cat.id
+            left join "zone" "zone" on a."zone" = "zone".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.alias, 
+            a.ctprops, 
+            a.address1, 
+            a.address2, 
+            a."zone", 
+            a.tel, 
+            a.telok, 
+            a.email, 
+            a.emailok, 
+            a.props, 
+            a.cat, 
+            a.birthday, 
+            a.locale, 
+            a.timezone, 
+            a.nrole, 
+            a.customer, 
+            a.supplier, 
+            a.employee, 
+            a.subject, 
+            a.nbank, 
+            a.gender, 
+            a.homeland, 
+            a.passport, 
+            a.ssn, 
+            a.dln, 
+            gid.id gid_id, 
+            gid."name" gid_name, 
+            gid."type" gid_type, 
+            gid.label gid_label, 
+            gid.description gid_description, 
+            gid.priority gid_priority, 
+            gid.flags gid_flags, 
+            gid."state" gid_state, 
+            gid.creation gid_creation, 
+            gid.lastmod gid_lastmod, 
+            gid."version" gid_version, 
+            gid.props gid_props, 
+            gid.parent gid_parent, 
+            uid.id uid_id, 
+            uid."type" uid_type, 
+            uid."name" uid_name, 
+            uid.label uid_label, 
+            uid.description uid_description, 
+            uid.priority uid_priority, 
+            uid.flags uid_flags, 
+            uid."state" uid_state, 
+            uid.creation uid_creation, 
+            uid.lastmod uid_lastmod, 
+            uid."version" uid_version, 
+            uid.props uid_props, 
+            uid.gid0 uid_gid0, 
+            uid.referer uid_referer, 
+            uid.person uid_person, 
+            cat.id cat_id, 
+            cat.code cat_code, 
+            cat.uid cat_uid, 
+            cat.gid cat_gid, 
+            cat.mode cat_mode, 
+            cat.acl cat_acl, 
+            cat.label cat_label, 
+            cat.description cat_description, 
+            cat.priority cat_priority, 
+            cat.flags cat_flags, 
+            cat."state" cat_state, 
+            cat.creation cat_creation, 
+            cat.lastmod cat_lastmod, 
+            cat."version" cat_version, 
+            cat.image cat_image, 
+            cat.imagealt cat_imagealt, 
+            cat.props cat_props, 
+            cat.parent cat_parent, 
+            cat."depth" cat_depth, 
+            cat.nref cat_nref, 
+            "zone".id zone_id, 
+            "zone".code zone_code, 
+            "zone".uid zone_uid, 
+            "zone".gid zone_gid, 
+            "zone".mode zone_mode, 
+            "zone".acl zone_acl, 
+            "zone".label zone_label, 
+            "zone".description zone_description, 
+            "zone".priority zone_priority, 
+            "zone".flags zone_flags, 
+            "zone"."state" zone_state, 
+            "zone".creation zone_creation, 
+            "zone".lastmod zone_lastmod, 
+            "zone"."version" zone_version, 
+            "zone".cat zone_cat, 
+            "zone".country zone_country, 
+            "zone".parent zone_parent, 
+            "zone"."depth" zone_depth, 
+            "zone".telcode zone_telcode, 
+            "zone".postcode zone_postcode, 
+            "zone".props zone_props, 
+            "zone"."data" zone_data
+        from person a
+            left join "group" gid on a.gid = gid.id
+            left join "user" uid on a.uid = uid.id
+            left join partycat cat on a.cat = cat.id
+            left join "zone" "zone" on a."zone" = "zone".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.uId != null">and a.uid = #{m.uId}</if>
+        <if test="m.uIdRange!= null">
+            <if test="m.uIdRange.hasStartIncl">and a.uid >= #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasStartExcl">and a.uid > #{m.uIdRange.start}</if>
+            <if test="m.uIdRange.hasEndIncl">and a.uid &lt;= #{m.uIdRange.end}</if>
+            <if test="m.uIdRange.hasEndExcl">and a.uid &lt; #{m.uIdRange.end}</if>
+        </if>
+        <if test="m.gId != null">and a.gid = #{m.gId}</if>
+        <if test="m.gIdRange!= null">
+            <if test="m.gIdRange.hasStartIncl">and a.gid >= #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasStartExcl">and a.gid > #{m.gIdRange.start}</if>
+            <if test="m.gIdRange.hasEndIncl">and a.gid &lt;= #{m.gIdRange.end}</if>
+            <if test="m.gIdRange.hasEndExcl">and a.gid &lt; #{m.gIdRange.end}</if>
+        </if>
+        <if test="m.mode != null">and a.mode = #{m.mode}</if>
+        <if test="m.modeRange!= null">
+            <if test="m.modeRange.hasStartIncl">and a.mode >= #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasStartExcl">and a.mode > #{m.modeRange.start}</if>
+            <if test="m.modeRange.hasEndIncl">and a.mode &lt;= #{m.modeRange.end}</if>
+            <if test="m.modeRange.hasEndExcl">and a.mode &lt; #{m.modeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.label != null">and a.label = #{m.label}</if>
+        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.alias != null">and a.alias = #{m.alias}</if>
+        <if test="m.aliasPattern != null">and a.alias like '${m.aliasPattern}'</if>
+        <if test="m.ctprops != null">and a.ctprops = #{m.ctprops}</if>
+        <if test="m.address1 != null">and a.address1 = #{m.address1}</if>
+        <if test="m.address1Pattern != null">and a.address1 like '${m.address1Pattern}'</if>
+        <if test="m.address2 != null">and a.address2 = #{m.address2}</if>
+        <if test="m.address2Pattern != null">and a.address2 like '${m.address2Pattern}'</if>
+        <if test="m.zoneId != null">and a."zone" = #{m.zoneId}</if>
+        <if test="m.zoneIdRange!= null">
+            <if test="m.zoneIdRange.hasStartIncl">and a."zone" >= #{m.zoneIdRange.start}</if>
+            <if test="m.zoneIdRange.hasStartExcl">and a."zone" > #{m.zoneIdRange.start}</if>
+            <if test="m.zoneIdRange.hasEndIncl">and a."zone" &lt;= #{m.zoneIdRange.end}</if>
+            <if test="m.zoneIdRange.hasEndExcl">and a."zone" &lt; #{m.zoneIdRange.end}</if>
+        </if>
+        <if test="m.tel != null">and a.tel = #{m.tel}</if>
+        <if test="m.telPattern != null">and a.tel like '${m.telPattern}'</if>
+        <if test="m.telok != null">and a.telok = #{m.telok}</if>
+        <if test="m.email != null">and a.email = #{m.email}</if>
+        <if test="m.emailPattern != null">and a.email like '${m.emailPattern}'</if>
+        <if test="m.emailok != null">and a.emailok = #{m.emailok}</if>
+        <if test="m.properties != null">and a.props = #{m.properties}</if>
+        <if test="m.catId != null">and a.cat = #{m.catId}</if>
+        <if test="m.catIdRange!= null">
+            <if test="m.catIdRange.hasStartIncl">and a.cat >= #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasStartExcl">and a.cat > #{m.catIdRange.start}</if>
+            <if test="m.catIdRange.hasEndIncl">and a.cat &lt;= #{m.catIdRange.end}</if>
+            <if test="m.catIdRange.hasEndExcl">and a.cat &lt; #{m.catIdRange.end}</if>
+        </if>
+        <if test="m.birthday != null">and a.birthday = #{m.birthday}</if>
+        <if test="m.birthdayRange!= null">
+            <if test="m.birthdayRange.hasStartIncl">and a.birthday >= #{m.birthdayRange.start}</if>
+            <if test="m.birthdayRange.hasStartExcl">and a.birthday > #{m.birthdayRange.start}</if>
+            <if test="m.birthdayRange.hasEndIncl">and a.birthday &lt;= #{m.birthdayRange.end}</if>
+            <if test="m.birthdayRange.hasEndExcl">and a.birthday &lt; #{m.birthdayRange.end}</if>
+        </if>
+        <if test="m.locale != null">and a.locale = #{m.locale}</if>
+        <if test="m.localePattern != null">and a.locale like '${m.localePattern}'</if>
+        <if test="m.timezone != null">and a.timezone = #{m.timezone}</if>
+        <if test="m.timezonePattern != null">and a.timezone like '${m.timezonePattern}'</if>
+        <if test="m.nrole != null">and a.nrole = #{m.nrole}</if>
+        <if test="m.nroleRange!= null">
+            <if test="m.nroleRange.hasStartIncl">and a.nrole >= #{m.nroleRange.start}</if>
+            <if test="m.nroleRange.hasStartExcl">and a.nrole > #{m.nroleRange.start}</if>
+            <if test="m.nroleRange.hasEndIncl">and a.nrole &lt;= #{m.nroleRange.end}</if>
+            <if test="m.nroleRange.hasEndExcl">and a.nrole &lt; #{m.nroleRange.end}</if>
+        </if>
+        <if test="m.customer != null">and a.customer = #{m.customer}</if>
+        <if test="m.supplier != null">and a.supplier = #{m.supplier}</if>
+        <if test="m.employee != null">and a.employee = #{m.employee}</if>
+        <if test="m.subject != null">and a.subject = #{m.subject}</if>
+        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
+        <if test="m.nbank != null">and a.nbank = #{m.nbank}</if>
+        <if test="m.nbankRange!= null">
+            <if test="m.nbankRange.hasStartIncl">and a.nbank >= #{m.nbankRange.start}</if>
+            <if test="m.nbankRange.hasStartExcl">and a.nbank > #{m.nbankRange.start}</if>
+            <if test="m.nbankRange.hasEndIncl">and a.nbank &lt;= #{m.nbankRange.end}</if>
+            <if test="m.nbankRange.hasEndExcl">and a.nbank &lt; #{m.nbankRange.end}</if>
+        </if>
+        <if test="m.gender != null">and a.gender = #{m.gender}</if>
+        <if test="m.genderPattern != null">and a.gender like '${m.genderPattern}'</if>
+        <if test="m.homeland != null">and a.homeland = #{m.homeland}</if>
+        <if test="m.homelandPattern != null">and a.homeland like '${m.homelandPattern}'</if>
+        <if test="m.passport != null">and a.passport = #{m.passport}</if>
+        <if test="m.passportPattern != null">and a.passport like '${m.passportPattern}'</if>
+        <if test="m.ssn != null">and a.ssn = #{m.ssn}</if>
+        <if test="m.ssnPattern != null">and a.ssn like '${m.ssnPattern}'</if>
+        <if test="m.dln != null">and a.dln = #{m.dln}</if>
+        <if test="m.dlnPattern != null">and a.dln like '${m.dlnPattern}'</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into person(
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            alias,
+            ctprops,
+            address1,
+            address2,
+            "zone",
+            tel,
+            telok,
+            email,
+            emailok,
+            props,
+            cat,
+            birthday,
+            locale,
+            timezone,
+            nrole,
+            customer,
+            supplier,
+            employee,
+            subject,
+            nbank,
+            gender,
+            homeland,
+            passport,
+            ssn,
+            dln
+        ) values(
+            #{uId},
+            #{gId},
+            #{mode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{alias},
+            #{ctprops.jsonStr}::jsonb,
+            #{address1},
+            #{address2},
+            #{zoneId},
+            #{tel},
+            #{telok},
+            #{email},
+            #{emailok},
+            #{properties.jsonStr}::jsonb,
+            #{catId},
+            #{birthday},
+            #{locale},
+            #{timezone},
+            #{nrole},
+            #{customer},
+            #{supplier},
+            #{employee},
+            #{subject},
+            #{nbank},
+            #{gender},
+            #{homeland},
+            #{passport},
+            #{ssn},
+            #{dln}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update person
+        <set>
+            uid = #{uId},
+            gid = #{gId},
+            mode = #{mode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            alias = #{alias},
+            ctprops = #{ctprops.jsonStr}::jsonb,
+            address1 = #{address1},
+            address2 = #{address2},
+            "zone" = #{zoneId},
+            tel = #{tel},
+            telok = #{telok},
+            email = #{email},
+            emailok = #{emailok},
+            props = #{properties.jsonStr}::jsonb,
+            cat = #{catId},
+            birthday = #{birthday},
+            locale = #{locale},
+            timezone = #{timezone},
+            nrole = #{nrole},
+            customer = #{customer},
+            supplier = #{supplier},
+            employee = #{employee},
+            subject = #{subject},
+            nbank = #{nbank},
+            gender = #{gender},
+            homeland = #{homeland},
+            passport = #{passport},
+            ssn = #{ssn},
+            dln = #{dln},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from person
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from person
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+    <update id="delete_xrefs">
+        alter table lily.personrole drop constraint personrole_person_fkey;
+        alter table lily."user" drop constraint user_person_fkey;
+        alter table violet.asset drop constraint asset_o_person_fkey;
+        alter table violet.asset_person drop constraint asset_person_owner_fkey;
+        alter table violet.diary_party drop constraint diary_party_person_fkey;
+        alter table violet.fabodr drop constraint fabodr_clerk_fkey;
+        alter table violet.fabodr drop constraint fabodr_custom_fkey;
+        alter table violet.fabtrack_op drop constraint fabtrack_op_person_fkey;
+        alter table violet.issue_party drop constraint issue_party_person_fkey;
+        alter table violet.plan_party drop constraint plan_party_person_fkey;
+        alter table violet.plando_party drop constraint plando_party_person_fkey;
+        alter table violet.saleodr drop constraint saleodr_customer_fkey;
+        alter table violet.storeodr drop constraint storeodr_person_fkey;
+        alter table violet.testapply drop constraint testapply_person_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily.personrole
+            add constraint personrole_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table lily."user"
+            add constraint user_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.asset
+            add constraint asset_o_person_fkey foreign key (o_person)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.asset_person
+            add constraint asset_person_owner_fkey foreign key (owner)
+            references lily.person (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table violet.diary_party
+            add constraint diary_party_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.fabodr
+            add constraint fabodr_clerk_fkey foreign key (clerk)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.fabodr
+            add constraint fabodr_custom_fkey foreign key (custom)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.fabtrack_op
+            add constraint fabtrack_op_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table violet.issue_party
+            add constraint issue_party_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            on delete set null
+            ;
+        alter table violet.plan_party
+            add constraint plan_party_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            on delete set null
+            ;
+        alter table violet.plando_party
+            add constraint plando_party_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            on delete cascade
+            ;
+        alter table violet.saleodr
+            add constraint saleodr_customer_fkey foreign key (customer)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.storeodr
+            add constraint storeodr_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            ;
+        alter table violet.testapply
+            add constraint testapply_person_fkey foreign key (person)
+            references lily.person (id)
+            on update cascade
+            ;
+    </update>
+
+</mapper>

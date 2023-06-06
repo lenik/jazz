@@ -10,6 +10,7 @@ column-property {
     formargs:           formArguments
     text:               rawText
     nobj:               objCount
+    votes:              voteScore
     nvote:              voteCount
     nfav:               favCount
     nhate:              hateCount
