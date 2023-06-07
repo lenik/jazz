@@ -4,6 +4,7 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.shop.ShopItem;
 
 public interface ShopItemMapper
-        extends IEntityMapper<ShopItem, ShopItemMask> {
+        extends
+            IEntityMapper<ShopItem, ShopItemMask> {
 
 }

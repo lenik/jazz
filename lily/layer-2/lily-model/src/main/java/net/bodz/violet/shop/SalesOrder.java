@@ -8,18 +8,13 @@ import org.joda.time.DateTime;
 
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
-import net.bodz.bas.meta.cache.Statistics;
 import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.lily.contact.Organization;
-import net.bodz.lily.contact.Person;
-import net.bodz.lily.entity.IdType;
+import net.bodz.bas.repr.form.meta.StdGroup.Statistics;
 import net.bodz.lily.entity.SizedList;
 import net.bodz.lily.model.base.DefaultAccessMode;
 import net.bodz.lily.security.IAccessMode;
-import net.bodz.lily.t.base.CoMessage;
-import net.bodz.violet.plan.Plan;
 import net.bodz.violet.tran.TransportOrder;
 
 /**
@@ -30,21 +25,11 @@ import net.bodz.violet.tran.TransportOrder;
  * owner: 制单
  */
 @DefaultAccessMode(IAccessMode.M_COOP)
-@IdType(Long.class)
-@Table(name = "saleodr")
+@Table(schema = "violet", name = "saleodr")
 public class SalesOrder
-        extends CoMessage<Long> {
+        extends _SalesOrder_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    private SalesCategory category;
-    private SalesPhase phase;
-
-    private SalesOrder previousOrder;
-    private Plan plan;
-
-    private Organization org;
-    private Person person;
 
     private SizedList<SalesOrderItem> items = new SizedList<>();
     private BigDecimal totalQuantity = BigDecimal.ZERO;
@@ -54,64 +39,6 @@ public class SalesOrder
     // material-plans (locks)
 
     private SizedList<TransportOrder> deliveries;
-
-    public SalesCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(SalesCategory category) {
-        this.category = category;
-    }
-
-    public SalesPhase getPhase() {
-        return phase;
-    }
-
-    public void setPhase(SalesPhase phase) {
-        this.phase = phase;
-    }
-
-    public SalesOrder getPreviousOrder() {
-        return previousOrder;
-    }
-
-    public void setPreviousOrder(SalesOrder previousOrder) {
-        this.previousOrder = previousOrder;
-    }
-
-    /**
-     * 項目
-     */
-    @OfGroup(StdGroup.Process.class)
-    public Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(Plan plan) {
-        this.plan = plan;
-    }
-
-    /**
-     * 企业
-     */
-    public Organization getOrg() {
-        return org;
-    }
-
-    public void setOrg(Organization org) {
-        this.org = org;
-    }
-
-    /**
-     * 联系人
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Derived
@@ -163,6 +90,7 @@ public class SalesOrder
         this.items = items;
     }
 
+    @Override
     @Redundant
     public int getLength() {
         if (items == null)
@@ -174,12 +102,14 @@ public class SalesOrder
     /**
      * 总数量
      */
+    @Override
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
     public BigDecimal getTotalQuantity() {
         return totalQuantity;
     }
 
+    @Override
     public void setTotalQuantity(BigDecimal totalQuantity) {
         if (totalQuantity == null)
             throw new NullPointerException("totalQuantity");
@@ -189,12 +119,14 @@ public class SalesOrder
     /**
      * 总金额
      */
+    @Override
     @OfGroup(StdGroup.Statistics.class)
     @Statistics
     public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
+    @Override
     public void setTotalAmount(BigDecimal totalAmount) {
         if (totalAmount == null)
             throw new NullPointerException("totalAmount");

@@ -4,6 +4,7 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.shop.SalesCategory;
 
 public interface SalesCategoryMapper
-        extends IEntityMapper<SalesCategory, SalesCategoryMask> {
+        extends
+            IEntityMapper<SalesCategory, SalesCategoryMask> {
 
 }

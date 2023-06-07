@@ -2,25 +2,14 @@ package net.bodz.violet.shop;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoCategory;
 
 /**
  * 商店分类
  */
-@IdType(Integer.class)
-@Table(name = "shopcat")
+@Table(schema = "violet", name = "shopcat")
 public class ShopCategory
-        extends CoCategory<ShopCategory, Integer> {
+        extends _ShopCategory_stuff<ShopCategory> {
 
     private static final long serialVersionUID = 1L;
-
-    public ShopCategory() {
-        super();
-    }
-
-    public ShopCategory(ShopCategory parent) {
-        super(parent);
-    }
 
 }

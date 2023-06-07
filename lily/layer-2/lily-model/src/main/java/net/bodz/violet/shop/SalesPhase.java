@@ -2,18 +2,10 @@ package net.bodz.violet.shop;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoPhase;
-
-@IdType(Integer.class)
-@Table(name = "salephase")
+@Table(schema = "violet", name = "salephase")
 public class SalesPhase
-        extends CoPhase {
+        extends _SalesPhase_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public SalesPhase() {
-        super();
-    }
 
 }
