@@ -1,4 +1,4 @@
-package net.bodz.lily.security.impl;
+package net.bodz.lily.security.dao;
 
 /**
  * @see net.bodz.lily.security.User

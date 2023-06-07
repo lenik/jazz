@@ -1,4 +1,4 @@
-package net.bodz.lily.security.impl;
+package net.bodz.lily.security.dao;
 
 import net.bodz.bas.c.string.StringUtil;
 import net.bodz.bas.t.range.IntegerRange;

@@ -44,8 +44,8 @@ public class _UserOtherIdMask_stuff
     IntegerRange typeIdRange = new IntegerRange();
 
     /** The identity data */
-    String oid;
-    String oidPattern;
+    String otherId;
+    String otherIdPattern;
 
     /** The authentication data */
     Object auth;
@@ -223,21 +223,21 @@ public class _UserOtherIdMask_stuff
     }
 
     /** The identity data */
-    public String getOid() {
-        return oid;
+    public String getOtherId() {
+        return otherId;
     }
 
     /** The identity data */
-    public void setOid(String value) {
-        this.oid = value;
+    public void setOtherId(String value) {
+        this.otherId = value;
     }
 
-    public String getOidPattern() {
-        return oidPattern;
+    public String getOtherIdPattern() {
+        return otherIdPattern;
     }
 
-    public void setOidPattern(String value) {
-        this.oidPattern = value;
+    public void setOtherIdPattern(String value) {
+        this.otherIdPattern = value;
     }
 
     /** The authentication data */

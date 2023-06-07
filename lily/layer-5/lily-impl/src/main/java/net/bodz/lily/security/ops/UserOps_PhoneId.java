@@ -12,11 +12,11 @@ import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdTypes;
 import net.bodz.lily.security.UserSecret;
-import net.bodz.lily.security.impl.UserMapper;
-import net.bodz.lily.security.impl.UserMask;
-import net.bodz.lily.security.impl.UserOtherIdMapper;
-import net.bodz.lily.security.impl.UserOtherIdMask;
-import net.bodz.lily.security.impl.UserSecretMapper;
+import net.bodz.lily.security.dao.UserMapper;
+import net.bodz.lily.security.dao.UserMask;
+import net.bodz.lily.security.dao.UserOtherIdMapper;
+import net.bodz.lily.security.dao.UserOtherIdMask;
+import net.bodz.lily.security.dao.UserSecretMapper;
 import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginResult;
 
@@ -53,7 +53,7 @@ public class UserOps_PhoneId
                 name += "-" + dup;
             List<User> dups = userMapper.filter(new UserMask().name(name), SelectOptions.ALL);
             if (dups.isEmpty()) {
-                user.setName(name);
+                user.setUniqName(name);
                 break;
             }
             dup++;
@@ -156,7 +156,7 @@ public class UserOps_PhoneId
 
         UserOtherId oid = oids.get(0);
         resp.fail("Phone number is already in use: user = %s.", //
-                oid.getUser().getName());
+                oid.getUser().getUniqName());
         return true;
     }
 
