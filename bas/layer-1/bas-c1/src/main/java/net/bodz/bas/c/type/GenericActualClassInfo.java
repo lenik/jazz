@@ -146,11 +146,13 @@ public class GenericActualClassInfo {
             throw new NullPointerException("ancestor");
         if (!ancestor.isAssignableFrom(clazz))
             throw new IllegalArgumentException("Not an ancestor: " + ancestor.getCanonicalName());
-        GenericActualClassInfo gancestor = this;
-        while (ancestor != gancestor.clazz) {
-            gancestor = gancestor.getSuper();
+        GenericActualClassInfo node = this;
+        while (ancestor != node.clazz) {
+            node = node.getSuper();
+            if (node == null)
+                return null;
         }
-        return gancestor;
+        return node;
     }
 
     public GenericActualClassInfo getSuper() {
