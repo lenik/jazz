@@ -1,5 +1,6 @@
 package net.bodz.bas.c.type;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class GenericActualClassInfo {
                         clazz.getCanonicalName(), vars.length, args.length));
         }
         this.args = args;
-        this.bounds = _getDefaultUpperBounds();
+        this.bounds = _getBounds();
     }
 
     public Class<?> getRawClass() {
@@ -88,20 +89,49 @@ public class GenericActualClassInfo {
         return true;
     }
 
-    public Class<?>[] getDefaultUpperBounds() {
+    public Class<?>[] getBounds() {
         return bounds;
     }
 
-    Class<?>[] _getDefaultUpperBounds() {
+    Class<?>[] _getBounds() {
         if (args == null)
             return null;
-        Class<?>[] upperBounds = new Class<?>[args.length];
+        Class<?>[] bounds = new Class<?>[args.length];
         for (int i = 0; i < args.length; i++) {
             Type arg = args[i];
-            Class<?> upperBound = GenericTypes.getDefaultUpperBound(arg);
-            upperBounds[i] = upperBound;
+            Class<?> upperBound = getReducedBound(arg, null);
+            bounds[i] = upperBound;
         }
-        return upperBounds;
+        return bounds;
+    }
+
+    Class<?> getReducedBound(Type arg, Class<?> subclassHint) {
+        if (arg instanceof Class<?>)
+            return (Class<?>) arg;
+        if (arg instanceof TypeVariable<?>) {
+            TypeVariable<?> argVar = (TypeVariable<?>) arg;
+
+            Type[] argBounds = argVar.getBounds();
+            if (argBounds.length == 0)
+                throw new UnexpectedException("empty arg bound array.");
+
+            Type match = argBounds[0];
+            if (subclassHint != null)
+                for (int i = 0; i < argBounds.length; i++) {
+                    Class<?> upperBound = getReducedBound(argBounds[i], null);
+                    if (subclassHint.isAssignableFrom(upperBound)) {
+                        match = upperBound;
+                        break;
+                    }
+                }
+            return getReducedBound(match, null);
+        }
+        if (arg instanceof ParameterizedType) {
+            ParameterizedType pt = (ParameterizedType) arg;
+            Type rawType = pt.getRawType(); // mostly a Class<?>.
+            return getReducedBound(rawType, subclassHint);
+        }
+        return Object.class;
     }
 
     public GenericActualClassInfo getUpward(Class<?> clazz) {

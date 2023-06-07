@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -27,21 +28,27 @@ public class GenericActualClassInfoTest {
         System.out.println("gBar: " + gBar);
         System.out.println("gFoo: " + gFoo);
 
+        GenericActualClassInfo g1 = gCar.getInterface(Iface1.class);
+        System.out.println(Arrays.asList(g1.getBounds()));
+
         System.out.println("----------------");
         gCar.dump(Stdio.cout.indented());
 
         TypeVariable<?>[] mbvars = ManyBounds.class.getTypeParameters();
         Type mbsup = ManyBounds.class.getGenericSuperclass();
         Type[] mbargs = ((ParameterizedType) mbsup).getActualTypeArguments();
+        System.out.println("Bounding of " + ManyBounds.class);
         for (TypeVariable<?> var : mbvars) {
             Type[] bounds = var.getBounds();
+            System.out.println("    bounds of " + var);
             for (Type b : bounds) {
-                System.out.println(b);
+                System.out.println("        bound " + b);
             }
         }
 
-        TypeVariable<Class<Car>>[] tv = Car.class.getTypeParameters();
-        System.out.println(tv.length);
+        GenericActualClassInfo gMany = GenericTypes.getActualInfo(ManyBounds.class);
+        GenericActualClassInfo gManySuper = gMany.getSuper();
+        System.out.println(Arrays.asList(gManySuper.getBounds()));
     } // main
 
 }
