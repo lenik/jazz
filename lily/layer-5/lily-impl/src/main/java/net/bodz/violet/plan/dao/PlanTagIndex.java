@@ -5,10 +5,13 @@ import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.plan.PlanTag;
 
 /**
- * Plan Tag
- */
+* @label PlanTag
+*/
 @ObjectType(PlanTag.class)
 public class PlanTagIndex
         extends CoIndex<PlanTag, PlanTagMask> {
+
+    public PlanTagIndex() {
+    }
 
 }

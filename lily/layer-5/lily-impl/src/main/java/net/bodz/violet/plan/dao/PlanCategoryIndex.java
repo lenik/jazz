@@ -1,15 +1,15 @@
 package net.bodz.violet.plan.dao;
 
 import net.bodz.bas.meta.decl.ObjectType;
-import net.bodz.lily.template.CoCategoryIndex;
+import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.plan.PlanCategory;
 
 /**
- * Plan Category
- */
+* @label PlanCategory
+*/
 @ObjectType(PlanCategory.class)
 public class PlanCategoryIndex
-        extends CoCategoryIndex<PlanCategory, PlanCategoryMask> {
+        extends CoIndex<PlanCategory, PlanCategoryMask> {
 
     public PlanCategoryIndex() {
     }

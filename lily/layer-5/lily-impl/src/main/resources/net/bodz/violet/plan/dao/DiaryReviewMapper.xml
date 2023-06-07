@@ -1,53 +1,317 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.dao.DiaryReviewMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.plan.DiaryReview" extends="message.MAP_ALL">
-        <association property="diary" javaType="net.bodz.violet.plan.Diary">
-            <id property="id" column="diary" />
-            <result property="label" column="diary_subject" />
-        </association>
-        <association property="parent" javaType="net.bodz.violet.plan.DiaryReview">
-            <id property="id" column="parent" />
-            <result property="label" column="parent_subject" />
-        </association>
+    <resultMap id="objlist_map" type="net.bodz.violet.plan.DiaryReview">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="formArguments" column="formargs" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="diaryId" column="diary" />
+        <result property="parentId" column="parent" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="diary" columnPrefix="diary_"
+            javaType="net.bodz.violet.plan.Diary" 
+            resultMap="net.bodz.violet.plan.dao.DiaryMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.violet.plan.DiaryReview" 
+            resultMap="objlist_map" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.FormDef" 
+            resultMap="net.bodz.lily.schema.dao.FormDefMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            op.label "op_label",
-            diary.subject "diary_subject",
-            parent.subject "parent_subejct"
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.diary, 
+            a.parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.diary parent_diary, 
+            parent.parent parent_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text
         from diaryrev a
-            left join "user" op on a.op = op.id
-            left join diary on a.diary = diary.id
+            left join lily."user" op on a.op = op.id
+            left join diary diary on a.diary = diary.id
             left join diaryrev parent on a.parent = parent.id
+            left join lily._form form on a.form = form.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            op.label "op_label",
-            diary.subject "diary_subject",
-            parent.subject "parent_subejct"
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.diary, 
+            a.parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            op.person op_person, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.diary parent_diary, 
+            parent.parent parent_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text
         from diaryrev a
-            left join "user" op on a.op = op.id
-            left join diary on a.diary = diary.id
+            left join lily."user" op on a.op = op.id
+            left join diary diary on a.diary = diary.id
             left join diaryrev parent on a.parent = parent.id
+            left join lily._form form on a.form = form.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.beginTime != null">and a.t0 = #{m.beginTime}</if>
+        <if test="m.endTime != null">and a.t1 = #{m.endTime}</if>
+        <if test="m.year != null">and a."year" = #{m.year}</if>
+        <if test="m.yearRange!= null">
+            <if test="m.yearRange.hasStartIncl">and a."year" >= #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasStartExcl">and a."year" > #{m.yearRange.start}</if>
+            <if test="m.yearRange.hasEndIncl">and a."year" &lt;= #{m.yearRange.end}</if>
+            <if test="m.yearRange.hasEndExcl">and a."year" &lt; #{m.yearRange.end}</if>
+        </if>
+        <if test="m.subject != null">and a.subject = #{m.subject}</if>
+        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
+        <if test="m.opId != null">and a.op = #{m.opId}</if>
+        <if test="m.opIdRange!= null">
+            <if test="m.opIdRange.hasStartIncl">and a.op >= #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasStartExcl">and a.op > #{m.opIdRange.start}</if>
+            <if test="m.opIdRange.hasEndIncl">and a.op &lt;= #{m.opIdRange.end}</if>
+            <if test="m.opIdRange.hasEndExcl">and a.op &lt; #{m.opIdRange.end}</if>
+        </if>
+        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
+        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
+        <if test="m.formId != null">and a.form = #{m.formId}</if>
+        <if test="m.formIdRange!= null">
+            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
+            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
+            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
+        </if>
+        <if test="m.formArguments != null">and a.formargs = #{m.formArguments}</if>
+        <if test="m.formArgumentsPattern != null">and a.formargs like '${m.formArgumentsPattern}'</if>
+        <if test="m.diaryId != null">and a.diary = #{m.diaryId}</if>
+        <if test="m.diaryIdRange!= null">
+            <if test="m.diaryIdRange.hasStartIncl">and a.diary >= #{m.diaryIdRange.start}</if>
+            <if test="m.diaryIdRange.hasStartExcl">and a.diary > #{m.diaryIdRange.start}</if>
+            <if test="m.diaryIdRange.hasEndIncl">and a.diary &lt;= #{m.diaryIdRange.end}</if>
+            <if test="m.diaryIdRange.hasEndExcl">and a.diary &lt; #{m.diaryIdRange.end}</if>
+        </if>
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.parentIdRange!= null">
+            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
+            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -55,9 +319,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -66,28 +331,61 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into diaryrev(
-            priority, flags, state,
-            t0, t1,
-            op, subject, text,
-            parent,
-            diary
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            formargs,
+            diary,
+            parent
         ) values(
-            #{priority}, #{flags}, #{state},
-            #{beginDate}, #{endDate},
-            #{op.id}, #{subject}, #{text},
-            #{parent.id},
-            #{diary.id}
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{formArguments},
+            #{diaryId},
+            #{parentId}
         );
     ]]></insert>
 
     <update id="update">
         update diaryrev
         <set>
-            <include refid="co.setVS" />
-            <include refid="mi.setT" />
-            <include refid="message.setUM" />
-            parent = #{parent.id},
-            diary = #{diary.id},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            formargs = #{formArguments},
+            diary = #{diaryId},
+            parent = #{parentId},
         </set>
         <where>
             id = #{id}
@@ -95,10 +393,13 @@
     </update>
 
     <delete id="delete">
-        delete from diaryrev where id = #{id}
+        delete from diaryrev
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
+    <select id="count" resultType="long">
         select count(*) "rows" from diaryrev
         <where>
             <if test="_parameter != null">
