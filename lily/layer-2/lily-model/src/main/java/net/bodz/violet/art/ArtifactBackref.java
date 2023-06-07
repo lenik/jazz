@@ -1,24 +1,11 @@
 package net.bodz.violet.art;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.BackrefRecord;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "violet", name = "art_backref")
 public class ArtifactBackref
-        extends BackrefRecord {
+        extends _ArtifactBackref_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    Artifact artifact;
-
-    public ArtifactBackref() {
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append(super.toString());
-        return sb.toString();
-    }
 
 }

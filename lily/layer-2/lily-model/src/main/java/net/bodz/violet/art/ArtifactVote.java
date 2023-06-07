@@ -1,23 +1,11 @@
 package net.bodz.violet.art;
 
-import net.bodz.lily.template.VoteRecord;
+import javax.persistence.Table;
 
+@Table(schema = "violet", name = "art_vote")
 public class ArtifactVote
-        extends VoteRecord {
+        extends _ArtifactVote_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    Artifact artifact;
-
-    public ArtifactVote() {
-    }
-
-    public Artifact getArtifact() {
-        return artifact;
-    }
-
-    public void setArtifact(Artifact artifact) {
-        this.artifact = artifact;
-    }
 
 }

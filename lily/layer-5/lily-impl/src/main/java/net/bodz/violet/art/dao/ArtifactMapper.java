@@ -6,7 +6,8 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.art.Artifact;
 
 public interface ArtifactMapper
-        extends IEntityMapper<Artifact, ArtifactMask> {
+        extends
+            IEntityMapper<Artifact, ArtifactMask> {
 
     Artifact selectByRfid(@Param("rfid") String rfidCode);
 

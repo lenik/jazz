@@ -15,4 +15,7 @@ import net.bodz.violet.art.UOM;
 public class UOMIndex
         extends CoIndex<UOM, UOMMask> {
 
+    public UOMIndex() {
+    }
+
 }
