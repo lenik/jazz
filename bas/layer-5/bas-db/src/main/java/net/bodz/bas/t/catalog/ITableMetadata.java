@@ -62,6 +62,10 @@ public interface ITableMetadata
         return null;
     }
 
+    default String getEntityTypeName() {
+        return getJavaQName();
+    }
+
     TableKey getPrimaryKey();
 
     default IColumnMetadata[] getPrimaryKeyColumns() {

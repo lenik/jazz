@@ -439,7 +439,7 @@ public class DefaultTableMetadata
     @Override
     public Class<?> getEntityClass() {
         if (entityClass == null) {
-            String className = getJavaQName();
+            String className = getEntityTypeName();
             if (className == null)
                 return null;
             try {
