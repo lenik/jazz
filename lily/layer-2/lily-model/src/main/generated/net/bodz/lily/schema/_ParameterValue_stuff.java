@@ -16,25 +16,29 @@ public abstract class _ParameterValue_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_VAL = 2147483647;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_PARM_ID = _ord_ID + 10;
-    private static final int _ord_VAL = _ord_PARM_ID + 1;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_PARAMETER_ID = _ord_CODE + 9;
+    private static final int _ord_VAL = _ord_PARAMETER_ID + 1;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     @NotNull
     String val;
 
     /**  */
     @NotNull
-    ParameterDef parm;
+    ParameterDef parameter;
 
     @NotNull
-    int parmId;
+    int parameterId;
 
     @Override
     public Integer id() {
@@ -58,6 +62,18 @@ public abstract class _ParameterValue_stuff
         this.id = value;
     }
 
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
     @Ordinal(_ord_VAL)
     @NotNull
     @Precision(value = N_VAL)
@@ -77,30 +93,28 @@ public abstract class _ParameterValue_stuff
      * @constraint foreign key (parm) references lily._parm (id)
      */
     @NotNull
-    public ParameterDef getParm() {
-        return parm;
+    public ParameterDef getParameter() {
+        return parameter;
     }
 
     /**
      */
-    public void setParm(@NotNull ParameterDef value) {
-        this.parm = value;
+    public void setParameter(@NotNull ParameterDef value) {
+        this.parameter = value;
     }
 
-    @Ordinal(_ord_PARM_ID)
+    @Ordinal(_ord_PARAMETER_ID)
     @Precision(value = 10)
     @Column(name = "parm", nullable = false, precision = 10)
-    public synchronized int getParmId() {
-        if (parm != null) {
-            if (parm.getId() == null)
-                return 0;
-            return parm.getId();
+    public synchronized int getParameterId() {
+        if (parameter != null) {
+            return parameter.getId();
         }
-        return parmId;
+        return parameterId;
     }
 
-    public synchronized void setParmId(int value) {
-        this.parmId = value;
+    public synchronized void setParameterId(int value) {
+        this.parameterId = value;
     }
 
     public void initNotNulls() {

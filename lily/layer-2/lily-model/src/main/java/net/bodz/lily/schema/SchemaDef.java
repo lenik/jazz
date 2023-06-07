@@ -8,9 +8,9 @@ import javax.persistence.Table;
  * @label Schema
  * @label.zh.cn 方案
  */
-@Table(name = "_schema")
+@Table(schema = "lily", name = "_schema")
 public class SchemaDef
-        extends AbstractDefinition<SchemaDef> {
+        extends _SchemaDef_stuff {
 
     private static final long serialVersionUID = 1L;
 

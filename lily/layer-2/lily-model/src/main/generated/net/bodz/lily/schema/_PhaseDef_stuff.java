@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
@@ -15,12 +16,17 @@ public abstract class _PhaseDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
+
     private static final int _ord_ID = 1;
-    private static final int _ord_SCHEMA_ID = _ord_ID + 10;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     /**  */
     @NotNull
@@ -51,6 +57,18 @@ public abstract class _PhaseDef_stuff
         this.id = value;
     }
 
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
     /**
      *
      * @label schema
@@ -72,8 +90,6 @@ public abstract class _PhaseDef_stuff
     @Column(name = "schema", nullable = false, precision = 10)
     public synchronized int getSchemaId() {
         if (schema != null) {
-            if (schema.getId() == null)
-                return 0;
             return schema.getId();
         }
         return schemaId;

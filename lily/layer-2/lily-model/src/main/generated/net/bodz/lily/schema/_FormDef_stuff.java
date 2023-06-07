@@ -16,17 +16,21 @@ public abstract class _FormDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_SUBJECT = 200;
     public static final int N_RAW_TEXT = 2147483647;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_SCHEMA_ID = _ord_ID + 10;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
     private static final int _ord_SUBJECT = _ord_SCHEMA_ID + 1;
     private static final int _ord_RAW_TEXT = _ord_SUBJECT + 1;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     String subject;
 
@@ -59,6 +63,18 @@ public abstract class _FormDef_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
     }
 
     @Ordinal(_ord_SUBJECT)
@@ -106,8 +122,6 @@ public abstract class _FormDef_stuff
     @Column(name = "schema", nullable = false, precision = 10)
     public synchronized int getSchemaId() {
         if (schema != null) {
-            if (schema.getId() == null)
-                return 0;
             return schema.getId();
         }
         return schemaId;

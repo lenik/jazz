@@ -24,8 +24,8 @@ public class _TagDefMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    Integer tagvId;
-    IntegerRange tagvIdRange = new IntegerRange();
+    Integer tagGroupId;
+    IntegerRange tagGroupIdRange = new IntegerRange();
 
     public Integer getId() {
         return id;
@@ -107,20 +107,20 @@ public class _TagDefMask_stuff
         this.versionRange = range;
     }
 
-    public Integer getTagvId() {
-        return tagvId;
+    public Integer getTagGroupId() {
+        return tagGroupId;
     }
 
-    public void setTagvId(Integer value) {
-        this.tagvId = value;
+    public void setTagGroupId(Integer value) {
+        this.tagGroupId = value;
     }
 
-    public IntegerRange getTagvIdRange() {
-        return tagvIdRange;
+    public IntegerRange getTagGroupIdRange() {
+        return tagGroupIdRange;
     }
 
-    public void setTagvIdRange(IntegerRange range) {
-        this.tagvIdRange = range;
+    public void setTagGroupIdRange(IntegerRange range) {
+        this.tagGroupIdRange = range;
     }
 
 }

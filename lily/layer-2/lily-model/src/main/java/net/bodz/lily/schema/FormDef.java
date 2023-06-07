@@ -2,9 +2,9 @@ package net.bodz.lily.schema;
 
 import javax.persistence.Table;
 
-@Table(name = "_form")
+@Table(schema = "lily", name = "_form")
 public class FormDef
-        extends AbstractDefinition<FormDef> {
+        extends _FormDef_stuff {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,4 +1,4 @@
-package net.bodz.lily.schema.impl;
+package net.bodz.lily.schema.dao;
 
 import net.bodz.lily.model.base.CoNodeMask;
 

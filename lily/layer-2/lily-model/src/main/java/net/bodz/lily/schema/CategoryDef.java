@@ -6,9 +6,9 @@ import javax.persistence.Table;
  * @label Category
  * @label.zh.cn 类別
  */
-@Table(name = "_cat")
+@Table(schema = "lily", name = "_cat")
 public class CategoryDef
-        extends AbstractDefinition<CategoryDef> {
+        extends _CategoryDef_stuff {
 
     private static final long serialVersionUID = 1L;
 

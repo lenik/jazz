@@ -12,6 +12,9 @@ public class _CategoryDefMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
 
@@ -35,8 +38,8 @@ public class _CategoryDefMask_stuff
 
     Object properties;
 
-    Integer objCount;
-    IntegerRange objCountRange = new IntegerRange();
+    Integer refCount;
+    IntegerRange refCountRange = new IntegerRange();
 
     public Integer getId() {
         return id;
@@ -52,6 +55,22 @@ public class _CategoryDefMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Integer getPriority() {
@@ -174,20 +193,20 @@ public class _CategoryDefMask_stuff
         this.properties = value;
     }
 
-    public Integer getObjCount() {
-        return objCount;
+    public Integer getRefCount() {
+        return refCount;
     }
 
-    public void setObjCount(Integer value) {
-        this.objCount = value;
+    public void setRefCount(Integer value) {
+        this.refCount = value;
     }
 
-    public IntegerRange getObjCountRange() {
-        return objCountRange;
+    public IntegerRange getRefCountRange() {
+        return refCountRange;
     }
 
-    public void setObjCountRange(IntegerRange range) {
-        this.objCountRange = range;
+    public void setRefCountRange(IntegerRange range) {
+        this.refCountRange = range;
     }
 
 }

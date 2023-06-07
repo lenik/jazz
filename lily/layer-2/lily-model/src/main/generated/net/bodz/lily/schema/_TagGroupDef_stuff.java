@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
@@ -15,20 +16,25 @@ public abstract class _TagGroupDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
+
     private static final int _ord_ID = 1;
-    private static final int _ord_SCHEMA_ID = _ord_ID + 10;
-    private static final int _ord_TOPIC = _ord_SCHEMA_ID + 1;
-    private static final int _ord_REPLY = _ord_TOPIC + 1;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
+    private static final int _ord_FOR_TOPIC = _ord_SCHEMA_ID + 1;
+    private static final int _ord_FOR_REPLY = _ord_FOR_TOPIC + 1;
 
     @Id
     @NotNull
     int id;
 
-    @NotNull
-    boolean topic;
+    String code;
 
     @NotNull
-    boolean reply;
+    boolean forTopic;
+
+    @NotNull
+    boolean forReply;
 
     /**  */
     @NotNull
@@ -59,26 +65,38 @@ public abstract class _TagGroupDef_stuff
         this.id = value;
     }
 
-    @Ordinal(_ord_TOPIC)
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    @Ordinal(_ord_FOR_TOPIC)
     @Precision(value = 1)
     @Column(name = "topic", nullable = false, precision = 1)
-    public boolean isTopic() {
-        return topic;
+    public boolean isForTopic() {
+        return forTopic;
     }
 
-    public void setTopic(boolean value) {
-        this.topic = value;
+    public void setForTopic(boolean value) {
+        this.forTopic = value;
     }
 
-    @Ordinal(_ord_REPLY)
+    @Ordinal(_ord_FOR_REPLY)
     @Precision(value = 1)
     @Column(name = "reply", nullable = false, precision = 1)
-    public boolean isReply() {
-        return reply;
+    public boolean isForReply() {
+        return forReply;
     }
 
-    public void setReply(boolean value) {
-        this.reply = value;
+    public void setForReply(boolean value) {
+        this.forReply = value;
     }
 
     /**
@@ -102,8 +120,6 @@ public abstract class _TagGroupDef_stuff
     @Column(name = "schema", nullable = false, precision = 10)
     public synchronized int getSchemaId() {
         if (schema != null) {
-            if (schema.getId() == null)
-                return 0;
             return schema.getId();
         }
         return schemaId;

@@ -6,9 +6,9 @@ import javax.persistence.Table;
  * @label Parameter
  * @label.zh.cn 参数
  */
-@Table(name = "_parm")
+@Table(schema = "lily", name = "_parm")
 public class ParameterDef
-        extends AbstractDefinition<ParameterDef> {
+        extends _ParameterDef_stuff {
 
     private static final long serialVersionUID = 1L;
 
