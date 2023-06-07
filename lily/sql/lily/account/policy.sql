@@ -5,7 +5,7 @@
 --\mixin lily.mixin.LabelExVer
 --\mixin lily.mixin.Props
         
-        class       varchar(80) not null,
+        cclass       varchar(80) not null,
         method      varchar(80) null,
         allow       int not null default 0,
         deny        int not null default 0
@@ -16,7 +16,7 @@
 
     comment on table policy is 'Security Policy';
     comment on column policy.name is 'The policy name (unique)';
-    comment on column policy.class is 'The class name';
+    comment on column policy.cclass is 'The control class';
     comment on column policy.method is 'The method name';
     comment on column policy.allow is 'allow';
     comment on column policy.deny is 'deny';

@@ -3,7 +3,7 @@
     create sequence $1cat_seq start with 1000;
     create table $1cat(
         id          int primary key default nextval('$1cat_seq'),
-        code        varchar(20) unique, -- not null?
+--\mixin lily.mixin.Name
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
         

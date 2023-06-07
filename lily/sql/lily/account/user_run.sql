@@ -1,7 +1,8 @@
 --\import lily.account.user
 
     create table user_run(
-        "user"      int primary key,
+        "user"      int primary key
+            references "user" on update cascade on delete cascade,
 
         --\mixin lily.mixin.Label
         -- description: the current state text

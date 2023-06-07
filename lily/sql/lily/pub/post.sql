@@ -10,7 +10,7 @@
 --\mixin lily.mixin.Mi
 --\mixin lily.mixin.Msg
 
-        parent      int
+        parent      bigint
             references post on update cascade on delete set null,
 
         cat         int

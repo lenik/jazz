@@ -5,7 +5,7 @@
     create table $1_vote(
         id          bigint primary key default nextval('$1_vote_seq'),
 
-        "$1"        ${2=int} not null
+        parent      ${2=int} not null
             references "$1" on update cascade on delete cascade,
 
         "user"      int not null
@@ -23,6 +23,6 @@
             u.label     user_label,
             a.votes
         from $1_vote a
-            left join "$1" o    on a."$1" = o.id
+            left join "$1" o    on a.parent = o.id
             left join "user" u  on a."user" = u.id
             ;

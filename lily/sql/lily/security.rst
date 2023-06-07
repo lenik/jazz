@@ -24,6 +24,12 @@ table-name {
 }
 
 table policy {
+    column cclass {
+        javaName: controlClass
+    }
+    column method {
+        javaName: methodName
+    }
     column allow {
         javaName: allowBits
     }
