@@ -86,6 +86,8 @@ public abstract class _PostBackref_stuff
     @Column(name = "post", nullable = false, precision = 19)
     public synchronized long getPostId() {
         if (post != null) {
+            if (post.getId() == null)
+                return 0L;
             return post.getId();
         }
         return postId;

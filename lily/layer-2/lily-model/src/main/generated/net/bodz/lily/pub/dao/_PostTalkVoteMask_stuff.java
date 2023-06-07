@@ -10,8 +10,8 @@ public class _PostTalkVoteMask_stuff
     Long id;
     LongRange idRange = new LongRange();
 
-    Long postMsgId;
-    LongRange postMsgIdRange = new LongRange();
+    Long parentId;
+    LongRange parentIdRange = new LongRange();
 
     Integer userId;
     IntegerRange userIdRange = new IntegerRange();
@@ -35,20 +35,20 @@ public class _PostTalkVoteMask_stuff
         this.idRange = range;
     }
 
-    public Long getPostMsgId() {
-        return postMsgId;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setPostMsgId(Long value) {
-        this.postMsgId = value;
+    public void setParentId(Long value) {
+        this.parentId = value;
     }
 
-    public LongRange getPostMsgIdRange() {
-        return postMsgIdRange;
+    public LongRange getParentIdRange() {
+        return parentIdRange;
     }
 
-    public void setPostMsgIdRange(LongRange range) {
-        this.postMsgIdRange = range;
+    public void setParentIdRange(LongRange range) {
+        this.parentIdRange = range;
     }
 
     public Integer getUserId() {

@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="tagId" column="tag" />
         <association property="tag" columnPrefix="tag_"
             javaType="net.bodz.lily.pub.ArticleTagType" 
-            resultMap="net.bodz.lily.pub.ArticleTagTypeMapper.objlist_map" />
+            resultMap="net.bodz.lily.pub.dao.ArticleTagTypeMapper.objlist_map" />
         <association property="article" columnPrefix="article_"
             javaType="net.bodz.lily.pub.Article" 
             resultMap="net.bodz.lily.pub.dao.ArticleMapper.objlist_map" />

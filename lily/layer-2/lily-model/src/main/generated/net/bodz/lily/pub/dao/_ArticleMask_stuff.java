@@ -50,8 +50,8 @@ public class _ArticleMask_stuff
     Integer hateCount;
     IntegerRange hateCountRange = new IntegerRange();
 
-    Integer nmsg;
-    IntegerRange nmsgRange = new IntegerRange();
+    Integer messageCount;
+    IntegerRange messageCountRange = new IntegerRange();
 
     Object plugins;
 
@@ -271,20 +271,20 @@ public class _ArticleMask_stuff
         this.hateCountRange = range;
     }
 
-    public Integer getNmsg() {
-        return nmsg;
+    public Integer getMessageCount() {
+        return messageCount;
     }
 
-    public void setNmsg(Integer value) {
-        this.nmsg = value;
+    public void setMessageCount(Integer value) {
+        this.messageCount = value;
     }
 
-    public IntegerRange getNmsgRange() {
-        return nmsgRange;
+    public IntegerRange getMessageCountRange() {
+        return messageCountRange;
     }
 
-    public void setNmsgRange(IntegerRange range) {
-        this.nmsgRange = range;
+    public void setMessageCountRange(IntegerRange range) {
+        this.messageCountRange = range;
     }
 
     public Object getPlugins() {

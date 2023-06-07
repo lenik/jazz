@@ -13,13 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fval" column="fval" />
         <result property="sval" column="sval" />
         <result property="postId" column="post" />
-        <result property="parmId" column="parm" />
+        <result property="parameterId" column="parm" />
         <association property="post" columnPrefix="post_"
             javaType="net.bodz.lily.pub.Post" 
             resultMap="net.bodz.lily.pub.dao.PostMapper.objlist_map" />
-        <association property="parm" columnPrefix="parm_"
+        <association property="parameter" columnPrefix="parm_"
             javaType="net.bodz.lily.pub.PostParameterType" 
-            resultMap="net.bodz.lily.pub.PostParameterTypeMapper.objlist_map" />
+            resultMap="net.bodz.lily.pub.dao.PostParameterTypeMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -160,12 +160,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
             <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
         </if>
-        <if test="m.parmId != null">and a.parm = #{m.parmId}</if>
-        <if test="m.parmIdRange!= null">
-            <if test="m.parmIdRange.hasStartIncl">and a.parm >= #{m.parmIdRange.start}</if>
-            <if test="m.parmIdRange.hasStartExcl">and a.parm > #{m.parmIdRange.start}</if>
-            <if test="m.parmIdRange.hasEndIncl">and a.parm &lt;= #{m.parmIdRange.end}</if>
-            <if test="m.parmIdRange.hasEndExcl">and a.parm &lt; #{m.parmIdRange.end}</if>
+        <if test="m.parameterId != null">and a.parm = #{m.parameterId}</if>
+        <if test="m.parameterIdRange!= null">
+            <if test="m.parameterIdRange.hasStartIncl">and a.parm >= #{m.parameterIdRange.start}</if>
+            <if test="m.parameterIdRange.hasStartExcl">and a.parm > #{m.parameterIdRange.start}</if>
+            <if test="m.parameterIdRange.hasEndIncl">and a.parm &lt;= #{m.parameterIdRange.end}</if>
+            <if test="m.parameterIdRange.hasEndExcl">and a.parm &lt; #{m.parameterIdRange.end}</if>
         </if>
         <if test="m.ival != null">and a.ival = #{m.ival}</if>
         <if test="m.ivalRange!= null">
@@ -220,7 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{postId},
-            #{parmId},
+            #{parameterId},
             #{ival},
             #{fval},
             #{sval}
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             post = #{postId},
-            parm = #{parmId},
+            parm = #{parameterId},
             ival = #{ival},
             fval = #{fval},
             sval = #{sval},

@@ -1,46 +1,36 @@
 package net.bodz.lily.pub;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoEntity;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
+import net.bodz.lily.template.CoParameter;
 
+@TypeParameters({ TypeParamType.THIS_TYPE })
 @IdType(Integer.class)
-public abstract class _PostParameterType_stuff
-        extends CoEntity<Integer> {
+public abstract class _PostParameterType_stuff<this_t extends _PostParameterType_stuff<this_t>>
+        extends CoParameter<this_t> {
 
     private static final long serialVersionUID = 1L;
 
-    private static final int _ord_ID = 1;
+    public static final int N_DUMMY = 10;
 
-    @Id
-    @NotNull
-    int id;
+    private static final int _ord_DUMMY = 15;
 
-    @Override
-    public Integer id() {
-        return getId();
+    Integer dummy;
+
+    @Ordinal(_ord_DUMMY)
+    @Precision(value = N_DUMMY)
+    @Column(name = "dummy", precision = 10)
+    public Integer getDummy() {
+        return dummy;
     }
 
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
+    public void setDummy(Integer value) {
+        this.dummy = value;
     }
 
     public void initNotNulls() {

@@ -22,8 +22,8 @@ public abstract class _PostParameter_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_POST_ID = _ord_ID + 4;
-    private static final int _ord_PARM_ID = _ord_POST_ID + 1;
-    private static final int _ord_IVAL = _ord_PARM_ID + 1;
+    private static final int _ord_PARAMETER_ID = _ord_POST_ID + 1;
+    private static final int _ord_IVAL = _ord_PARAMETER_ID + 1;
     private static final int _ord_FVAL = _ord_IVAL + 1;
     private static final int _ord_SVAL = _ord_FVAL + 1;
 
@@ -46,10 +46,10 @@ public abstract class _PostParameter_stuff
 
     /**  */
     @NotNull
-    PostParameterType parm;
+    PostParameterType parameter;
 
     @NotNull
-    int parmId;
+    int parameterId;
 
     @Override
     public Integer id() {
@@ -128,6 +128,8 @@ public abstract class _PostParameter_stuff
     @Column(name = "post", nullable = false, precision = 19)
     public synchronized long getPostId() {
         if (post != null) {
+            if (post.getId() == null)
+                return 0L;
             return post.getId();
         }
         return postId;
@@ -143,28 +145,30 @@ public abstract class _PostParameter_stuff
      * @constraint foreign key (parm) references lily.postparm (id)
      */
     @NotNull
-    public PostParameterType getParm() {
-        return parm;
+    public PostParameterType getParameter() {
+        return parameter;
     }
 
     /**
      */
-    public void setParm(@NotNull PostParameterType value) {
-        this.parm = value;
+    public void setParameter(@NotNull PostParameterType value) {
+        this.parameter = value;
     }
 
-    @Ordinal(_ord_PARM_ID)
+    @Ordinal(_ord_PARAMETER_ID)
     @Precision(value = 10)
     @Column(name = "parm", nullable = false, precision = 10)
-    public synchronized int getParmId() {
-        if (parm != null) {
-            return parm.getId();
+    public synchronized int getParameterId() {
+        if (parameter != null) {
+            if (parameter.getId() == null)
+                return 0;
+            return parameter.getId();
         }
-        return parmId;
+        return parameterId;
     }
 
-    public synchronized void setParmId(int value) {
-        this.parmId = value;
+    public synchronized void setParameterId(int value) {
+        this.parameterId = value;
     }
 
     public void initNotNulls() {

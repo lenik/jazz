@@ -10,8 +10,8 @@ public class _ArticleTalkVoteMask_stuff
     Long id;
     LongRange idRange = new LongRange();
 
-    Long articleMsgId;
-    LongRange articleMsgIdRange = new LongRange();
+    Long parentId;
+    LongRange parentIdRange = new LongRange();
 
     Integer userId;
     IntegerRange userIdRange = new IntegerRange();
@@ -35,20 +35,20 @@ public class _ArticleTalkVoteMask_stuff
         this.idRange = range;
     }
 
-    public Long getArticleMsgId() {
-        return articleMsgId;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setArticleMsgId(Long value) {
-        this.articleMsgId = value;
+    public void setParentId(Long value) {
+        this.parentId = value;
     }
 
-    public LongRange getArticleMsgIdRange() {
-        return articleMsgIdRange;
+    public LongRange getParentIdRange() {
+        return parentIdRange;
     }
 
-    public void setArticleMsgIdRange(LongRange range) {
-        this.articleMsgIdRange = range;
+    public void setParentIdRange(LongRange range) {
+        this.parentIdRange = range;
     }
 
     public Integer getUserId() {

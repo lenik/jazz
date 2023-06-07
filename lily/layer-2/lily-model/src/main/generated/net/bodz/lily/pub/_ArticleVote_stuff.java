@@ -14,18 +14,18 @@ public abstract class _ArticleVote_stuff
 
     private static final long serialVersionUID = 1L;
 
-    private static final int _ord_ARTICLE_ID = 2;
-    private static final int _ord_VOTE_SCORE = _ord_ARTICLE_ID + 2;
+    private static final int _ord_PARENT_ID = 2;
+    private static final int _ord_VOTE_SCORE = _ord_PARENT_ID + 2;
 
     @NotNull
     int voteScore;
 
     /**  */
     @NotNull
-    Article article;
+    Article parent;
 
     @NotNull
-    long articleId;
+    long parentId;
 
     @Ordinal(_ord_VOTE_SCORE)
     @Precision(value = 10)
@@ -40,34 +40,34 @@ public abstract class _ArticleVote_stuff
 
     /**
      *
-     * @label article
-     * @constraint foreign key (article) references lily.article (id)
+     * @label parent
+     * @constraint foreign key (parent) references lily.article (id)
      */
     @NotNull
-    public Article getArticle() {
-        return article;
+    public Article getParent() {
+        return parent;
     }
 
     /**
      */
-    public void setArticle(@NotNull Article value) {
-        this.article = value;
+    public void setParent(@NotNull Article value) {
+        this.parent = value;
     }
 
-    @Ordinal(_ord_ARTICLE_ID)
+    @Ordinal(_ord_PARENT_ID)
     @Precision(value = 19)
-    @Column(name = "article", nullable = false, precision = 19)
-    public synchronized long getArticleId() {
-        if (article != null) {
-            if (article.getId() == null)
+    @Column(name = "parent", nullable = false, precision = 19)
+    public synchronized long getParentId() {
+        if (parent != null) {
+            if (parent.getId() == null)
                 return 0L;
-            return article.getId();
+            return parent.getId();
         }
-        return articleId;
+        return parentId;
     }
 
-    public synchronized void setArticleId(long value) {
-        this.articleId = value;
+    public synchronized void setParentId(long value) {
+        this.parentId = value;
     }
 
     public void initNotNulls() {

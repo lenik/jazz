@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="year" column="year" />
         <result property="subject" column="subject" />
         <result property="rawText" column="text" />
+        <result property="formArguments" column="formargs" />
         <result property="opId" column="op" />
         <result property="formId" column="form" />
         <result property="postId" column="post" />
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.op, 
             a.text, 
             a.form, 
+            a.formargs, 
             a.post, 
             a.parent, 
             post.id post_id, 
@@ -148,6 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.op, 
             a.text, 
             a.form, 
+            a.formargs, 
             a.post, 
             a.parent, 
             post.id post_id, 
@@ -294,6 +297,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
             <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
         </if>
+        <if test="m.formArguments != null">and a.formargs = #{m.formArguments}</if>
+        <if test="m.formArgumentsPattern != null">and a.formargs like '${m.formArgumentsPattern}'</if>
         <if test="m.postId != null">and a.post = #{m.postId}</if>
         <if test="m.postIdRange!= null">
             <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
@@ -345,6 +350,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op,
             text,
             form,
+            formargs,
             post,
             parent
         ) values(
@@ -361,6 +367,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{opId},
             #{rawText},
             #{formId},
+            #{formArguments},
             #{postId},
             #{parentId}
         );
@@ -382,6 +389,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op = #{opId},
             text = #{rawText},
             form = #{formId},
+            formargs = #{formArguments},
             post = #{postId},
             parent = #{parentId},
         </set>
@@ -408,7 +416,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <update id="delete_xrefs">
         alter table lily.post_msg drop constraint post_msg_parent_fkey;
-        alter table lily.post_msg_vote drop constraint post_msg_vote_post_msg_fkey;
+        alter table lily.post_msg_vote drop constraint post_msg_vote_parent_fkey;
     </update>
 
     <update id="create_xrefs">
@@ -419,7 +427,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             on delete cascade
             ;
         alter table lily.post_msg_vote
-            add constraint post_msg_vote_post_msg_fkey foreign key (post_msg)
+            add constraint post_msg_vote_parent_fkey foreign key (parent)
             references lily.post_msg (id)
             on update cascade
             on delete cascade
