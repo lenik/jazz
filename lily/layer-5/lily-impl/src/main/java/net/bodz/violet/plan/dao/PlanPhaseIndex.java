@@ -5,10 +5,13 @@ import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.plan.PlanPhase;
 
 /**
- * Plan Phase
- */
+* @label PlanPhase
+*/
 @ObjectType(PlanPhase.class)
 public class PlanPhaseIndex
         extends CoIndex<PlanPhase, PlanPhaseMask> {
+
+    public PlanPhaseIndex() {
+    }
 
 }

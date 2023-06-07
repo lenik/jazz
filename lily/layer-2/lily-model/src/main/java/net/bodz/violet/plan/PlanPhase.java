@@ -2,20 +2,10 @@ package net.bodz.violet.plan;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.template.CoPhase;
-
-@Table(name = "planphase")
+@Table(schema = "violet", name = "planphase")
 public class PlanPhase
-        extends CoPhase {
+        extends _PlanPhase_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public PlanPhase() {
-        super();
-    }
-
-    public PlanPhase(PlanPhase parent) {
-        super(parent);
-    }
 
 }

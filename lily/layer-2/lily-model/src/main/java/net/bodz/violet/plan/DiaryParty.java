@@ -10,78 +10,15 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.lily.contact.Organization;
-import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdFn;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
-import net.bodz.lily.security.User;
 
-@Table(name = "diary_party")
-@IdType(Long.class)
+@Table(schema = "violet", name = "diary_party")
 public class DiaryParty
-        extends IdEntity<Long>
-        implements IJsonForm {
+        extends _DiaryParty_stuff
+        implements
+            IJsonForm {
 
     private static final long serialVersionUID = 1L;
-
-    Diary diary;
-    User user;
-    Person person;
-    Organization org;
-    String role;
-    int value;
-
-    public DiaryParty() {
-    }
-
-    public Diary getDiary() {
-        return diary;
-    }
-
-    public void setDiary(Diary diary) {
-        this.diary = diary;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public Organization getOrg() {
-        return org;
-    }
-
-    public void setOrg(Organization org) {
-        this.org = org;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
 
     @Override
     public boolean equals(Object obj) {

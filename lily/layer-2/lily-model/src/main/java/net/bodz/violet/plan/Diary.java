@@ -11,49 +11,15 @@ import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.json.JsonArrayList;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.t.base.CoMessage;
 
-@Table(name = "diary")
-@IdType(Long.class)
 @UploadHint
+@Table(schema = "violet", name = "diary")
 public class Diary
-        extends CoMessage<Long> {
+        extends _Diary_stuff {
 
     private static final long serialVersionUID = 1L;
 
-    DiaryCategory category;
-    DiaryPhase phase;
-    int value;
-
     List<DiaryParty> parties;
-
-    public Diary() {
-    }
-
-    public DiaryCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(DiaryCategory category) {
-        this.category = category;
-    }
-
-    public DiaryPhase getPhase() {
-        return phase;
-    }
-
-    public void setPhase(DiaryPhase phase) {
-        this.phase = phase;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
 
     @Override
     protected DiaryProperties createProperties() {

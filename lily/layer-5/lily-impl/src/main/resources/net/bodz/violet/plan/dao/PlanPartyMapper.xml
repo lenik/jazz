@@ -1,58 +1,284 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper 
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.plan.dao.PlanPartyMapper">
 
     <resultMap id="objlist_map" type="net.bodz.violet.plan.PlanParty">
+        <id property="id" column="id" />
         <result property="description" column="description" />
-        <association property="plan" javaType="net.bodz.violet.plan.Plan">
-            <id property="id" column="plan" />
-            <result property="subject" column="plan_subject" />
-        </association>
-        <association property="person" javaType="net.bodz.lily.contact.Person">
-            <id property="id" column="person" />
-            <result property="label" column="person_label" />
-        </association>
-        <association property="org" javaType="net.bodz.lily.contact.Organization">
-            <id property="id" column="org" />
-            <result property="label" column="org_label" />
-        </association>
+        <result property="planId" column="plan" />
+        <result property="personId" column="person" />
+        <result property="orgId" column="org" />
+        <association property="person" columnPrefix="person_"
+            javaType="net.bodz.lily.contact.Person" 
+            resultMap="net.bodz.lily.contact.dao.PersonMapper.objlist_map" />
+        <association property="plan" columnPrefix="plan_"
+            javaType="net.bodz.violet.plan.Plan" 
+            resultMap="net.bodz.violet.plan.dao.PlanMapper.objlist_map" />
+        <association property="org" columnPrefix="org_"
+            javaType="net.bodz.lily.contact.Organization" 
+            resultMap="net.bodz.lily.contact.dao.OrganizationMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            plan.subject "plan_subject",
-            person.label "person_label",
-            org.label "org_label"
+            a.id, 
+            a.plan, 
+            a.person, 
+            a.org, 
+            a.description, 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            plan.id plan_id, 
+            plan.uid plan_uid, 
+            plan.gid plan_gid, 
+            plan.mode plan_mode, 
+            plan.acl plan_acl, 
+            plan.priority plan_priority, 
+            plan.flags plan_flags, 
+            plan."state" plan_state, 
+            plan.t0 plan_t0, 
+            plan.t1 plan_t1, 
+            plan."year" plan_year, 
+            plan.subject plan_subject, 
+            plan.op plan_op, 
+            plan.text plan_text, 
+            plan.form plan_form, 
+            plan.formargs plan_formargs, 
+            plan.creation plan_creation, 
+            plan.lastmod plan_lastmod, 
+            plan."version" plan_version, 
+            plan.cat plan_cat, 
+            plan.phase plan_phase, 
+            plan.nread plan_nread, 
+            plan.nvote plan_nvote, 
+            plan.nlike plan_nlike, 
+            plan."value" plan_value, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid
         from plan_party a
-            left join plan on a.plan = plan.id
-            left join person on a.person = person.id
-            left join org on a.org = org.id
+            left join lily.person person on a.person = person.id
+            left join plan plan on a.plan = plan.id
+            left join lily.org org on a.org = org.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            plan.subject "plan_subject",
-            person.label "person_label",
-            org.label "org_label"
+            a.id, 
+            a.plan, 
+            a.person, 
+            a.org, 
+            a.description, 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            plan.id plan_id, 
+            plan.uid plan_uid, 
+            plan.gid plan_gid, 
+            plan.mode plan_mode, 
+            plan.acl plan_acl, 
+            plan.priority plan_priority, 
+            plan.flags plan_flags, 
+            plan."state" plan_state, 
+            plan.t0 plan_t0, 
+            plan.t1 plan_t1, 
+            plan."year" plan_year, 
+            plan.subject plan_subject, 
+            plan.op plan_op, 
+            plan.text plan_text, 
+            plan.form plan_form, 
+            plan.formargs plan_formargs, 
+            plan.creation plan_creation, 
+            plan.lastmod plan_lastmod, 
+            plan."version" plan_version, 
+            plan.cat plan_cat, 
+            plan.phase plan_phase, 
+            plan.nread plan_nread, 
+            plan.nvote plan_nvote, 
+            plan.nlike plan_nlike, 
+            plan."value" plan_value, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid
         from plan_party a
-            left join plan on a.plan = plan.id
-            left join person on a.person = person.id
-            left join org on a.org = org.id
+            left join lily.person person on a.person = person.id
+            left join plan plan on a.plan = plan.id
+            left join lily.org org on a.org = org.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.planId != null">and a.plan = #{m.planId}</if>
+        <if test="m.planIdRange!= null">
+            <if test="m.planIdRange.hasStartIncl">and a.plan >= #{m.planIdRange.start}</if>
+            <if test="m.planIdRange.hasStartExcl">and a.plan > #{m.planIdRange.start}</if>
+            <if test="m.planIdRange.hasEndIncl">and a.plan &lt;= #{m.planIdRange.end}</if>
+            <if test="m.planIdRange.hasEndExcl">and a.plan &lt; #{m.planIdRange.end}</if>
+        </if>
+        <if test="m.personId != null">and a.person = #{m.personId}</if>
+        <if test="m.personIdRange!= null">
+            <if test="m.personIdRange.hasStartIncl">and a.person >= #{m.personIdRange.start}</if>
+            <if test="m.personIdRange.hasStartExcl">and a.person > #{m.personIdRange.start}</if>
+            <if test="m.personIdRange.hasEndIncl">and a.person &lt;= #{m.personIdRange.end}</if>
+            <if test="m.personIdRange.hasEndExcl">and a.person &lt; #{m.personIdRange.end}</if>
+        </if>
+        <if test="m.orgId != null">and a.org = #{m.orgId}</if>
+        <if test="m.orgIdRange!= null">
+            <if test="m.orgIdRange.hasStartIncl">and a.org >= #{m.orgIdRange.start}</if>
+            <if test="m.orgIdRange.hasStartExcl">and a.org > #{m.orgIdRange.start}</if>
+            <if test="m.orgIdRange.hasEndIncl">and a.org &lt;= #{m.orgIdRange.end}</if>
+            <if test="m.orgIdRange.hasEndExcl">and a.org &lt; #{m.orgIdRange.end}</if>
+        </if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -60,9 +286,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -71,18 +298,24 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into plan_party(
-            plan, person, org, description
+            plan,
+            person,
+            org,
+            description
         ) values(
-            #{plan.id}, #{person.id}, #{org.id}, #{description}
+            #{planId},
+            #{personId},
+            #{orgId},
+            #{description}
         );
     ]]></insert>
 
     <update id="update">
         update plan_party
         <set>
-            plan = #{plan.id},
-            person = #{person.id},
-            org = #{org.id},
+            plan = #{planId},
+            person = #{personId},
+            org = #{orgId},
             description = #{description},
         </set>
         <where>
@@ -91,10 +324,13 @@
     </update>
 
     <delete id="delete">
-        delete from plan_party where id = #{id}
+        delete from plan_party
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
+    <select id="count" resultType="long">
         select count(*) "rows" from plan_party
         <where>
             <if test="_parameter != null">
