@@ -4,8 +4,14 @@ import net.bodz.bas.meta.decl.ObjectType;
 import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.asset.OrgAsset;
 
+/**
+* @label OrgAsset
+*/
 @ObjectType(OrgAsset.class)
 public class OrgAssetIndex
-        extends CoIndex<OrgAsset, AssetMask> {
+        extends CoIndex<OrgAsset, OrgAssetMask> {
+
+    public OrgAssetIndex() {
+    }
 
 }
