@@ -11,7 +11,10 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.entity.IMomentInterval;
 import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
 
+@TypeParameters({ TypeParamType.ID_TYPE })
 @CriteriaClass(CoMomentIntervalMask.class)
 @IncludeMapperXml
 public abstract class CoMomentInterval<Id>
