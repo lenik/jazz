@@ -1,25 +1,11 @@
 package net.bodz.violet.edu;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.FavRecord;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "violet", name = "testq_fav")
 public class TestQuestionFav
-        extends FavRecord {
+        extends _TestQuestionFav_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    TestQuestion question;
-
-    public TestQuestionFav() {
-    }
-
-    public TestQuestion getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(TestQuestion question) {
-        this.question = question;
-    }
 
 }

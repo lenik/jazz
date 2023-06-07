@@ -1,23 +1,11 @@
 package net.bodz.violet.edu;
 
-import net.bodz.lily.template.FavRecord;
+import javax.persistence.Table;
 
+@Table(schema = "violet", name = "course_fav")
 public class CourseFav
-        extends FavRecord {
+        extends _CourseFav_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    Course course;
-
-    public CourseFav() {
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 
 }

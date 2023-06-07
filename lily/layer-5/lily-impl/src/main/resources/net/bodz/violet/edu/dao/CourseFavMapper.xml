@@ -1,41 +1,140 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.edu.dao.CourseFavMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.edu.CourseFav" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.edu.CourseFav">
+        <id property="id" column="id" />
+        <result property="courseId" column="course" />
+        <result property="userId" column="user" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="course" columnPrefix="course_"
+            javaType="net.bodz.violet.edu.Course" 
+            resultMap="net.bodz.violet.edu.dao.CourseMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from courseFav a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.course, 
+            a."user", 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person, 
+            course.id course_id, 
+            course.uid course_uid, 
+            course.gid course_gid, 
+            course.mode course_mode, 
+            course.acl course_acl, 
+            course.label course_label, 
+            course.description course_description, 
+            course.priority course_priority, 
+            course.flags course_flags, 
+            course."state" course_state, 
+            course.creation course_creation, 
+            course.lastmod course_lastmod, 
+            course."version" course_version, 
+            course.props course_props, 
+            course.cat course_cat, 
+            course.nfav course_nfav, 
+            course.nvote course_nvote, 
+            course.nhate course_nhate, 
+            course.credit course_credit, 
+            course.plugins course_plugins
+        from course_fav a
+            left join lily."user" "user" on a."user" = "user".id
+            left join course course on a.course = course.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from courseFav a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.course, 
+            a."user", 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person, 
+            course.id course_id, 
+            course.uid course_uid, 
+            course.gid course_gid, 
+            course.mode course_mode, 
+            course.acl course_acl, 
+            course.label course_label, 
+            course.description course_description, 
+            course.priority course_priority, 
+            course.flags course_flags, 
+            course."state" course_state, 
+            course.creation course_creation, 
+            course.lastmod course_lastmod, 
+            course."version" course_version, 
+            course.props course_props, 
+            course.cat course_cat, 
+            course.nfav course_nfav, 
+            course.nvote course_nvote, 
+            course.nhate course_nhate, 
+            course.credit course_credit, 
+            course.plugins course_plugins
+        from course_fav a
+            left join lily."user" "user" on a."user" = "user".id
+            left join course course on a.course = course.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.courseId != null">and a.course = #{m.courseId}</if>
+        <if test="m.courseIdRange!= null">
+            <if test="m.courseIdRange.hasStartIncl">and a.course >= #{m.courseIdRange.start}</if>
+            <if test="m.courseIdRange.hasStartExcl">and a.course > #{m.courseIdRange.start}</if>
+            <if test="m.courseIdRange.hasEndIncl">and a.course &lt;= #{m.courseIdRange.end}</if>
+            <if test="m.courseIdRange.hasEndExcl">and a.course &lt; #{m.courseIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -43,9 +142,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -53,17 +153,20 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into courseFav(
-            code, label, description
+        insert into course_fav(
+            course,
+            "user"
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{courseId},
+            #{userId}
         );
     ]]></insert>
 
     <update id="update">
-        update courseFav
+        update course_fav
         <set>
-            <include refid="co.setUS" />
+            course = #{courseId},
+            "user" = #{userId},
         </set>
         <where>
             id = #{id}
@@ -71,11 +174,14 @@
     </update>
 
     <delete id="delete">
-        delete from courseFav where id = #{id}
+        delete from course_fav
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
-        select count(*) "rows" from courseFav
+    <select id="count" resultType="long">
+        select count(*) "rows" from course_fav
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
