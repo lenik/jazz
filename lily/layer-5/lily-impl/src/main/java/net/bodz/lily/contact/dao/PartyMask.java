@@ -1,4 +1,4 @@
-package net.bodz.lily.contact.impl;
+package net.bodz.lily.contact.dao;
 
 import java.util.Locale;
 import java.util.Set;

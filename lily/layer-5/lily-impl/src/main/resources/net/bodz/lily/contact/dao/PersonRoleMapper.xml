@@ -9,9 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="role" column="role" />
         <result property="description" column="description" />
         <result property="orgId" column="org" />
-        <result property="ouId" column="ou" />
+        <result property="orgUnitId" column="ou" />
         <result property="personId" column="person" />
-        <association property="ou" columnPrefix="ou_"
+        <association property="orgUnit" columnPrefix="ou_"
             javaType="net.bodz.lily.contact.OrgUnit" 
             resultMap="net.bodz.lily.contact.dao.OrgUnitMapper.objlist_map" />
         <association property="person" columnPrefix="person_"
@@ -263,12 +263,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.orgIdRange.hasEndIncl">and a.org &lt;= #{m.orgIdRange.end}</if>
             <if test="m.orgIdRange.hasEndExcl">and a.org &lt; #{m.orgIdRange.end}</if>
         </if>
-        <if test="m.ouId != null">and a.ou = #{m.ouId}</if>
-        <if test="m.ouIdRange!= null">
-            <if test="m.ouIdRange.hasStartIncl">and a.ou >= #{m.ouIdRange.start}</if>
-            <if test="m.ouIdRange.hasStartExcl">and a.ou > #{m.ouIdRange.start}</if>
-            <if test="m.ouIdRange.hasEndIncl">and a.ou &lt;= #{m.ouIdRange.end}</if>
-            <if test="m.ouIdRange.hasEndExcl">and a.ou &lt; #{m.ouIdRange.end}</if>
+        <if test="m.orgUnitId != null">and a.ou = #{m.orgUnitId}</if>
+        <if test="m.orgUnitIdRange!= null">
+            <if test="m.orgUnitIdRange.hasStartIncl">and a.ou >= #{m.orgUnitIdRange.start}</if>
+            <if test="m.orgUnitIdRange.hasStartExcl">and a.ou > #{m.orgUnitIdRange.start}</if>
+            <if test="m.orgUnitIdRange.hasEndIncl">and a.ou &lt;= #{m.orgUnitIdRange.end}</if>
+            <if test="m.orgUnitIdRange.hasEndExcl">and a.ou &lt; #{m.orgUnitIdRange.end}</if>
         </if>
         <if test="m.personId != null">and a.person = #{m.personId}</if>
         <if test="m.personIdRange!= null">
@@ -312,7 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             description
         ) values(
             #{orgId},
-            #{ouId},
+            #{orgUnitId},
             #{personId},
             #{role},
             #{description}
@@ -323,7 +323,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update personrole
         <set>
             org = #{orgId},
-            ou = #{ouId},
+            ou = #{orgUnitId},
             person = #{personId},
             "role" = #{role},
             description = #{description},

@@ -7,4 +7,6 @@ public interface OrganizationMapper
         extends
             IEntityMapper<Organization, OrganizationMask> {
 
+    Organization selectByTaxId(String taxId);
+
 }
