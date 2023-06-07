@@ -16,13 +16,13 @@ public abstract class _PersonRole_stuff
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_OU_ID = 10;
+    public static final int N_ORG_UNIT_ID = 10;
     public static final int N_ROLE = 20;
 
     private static final int _ord_ID = 1;
     private static final int _ord_ORG_ID = _ord_ID + 1;
-    private static final int _ord_OU_ID = _ord_ORG_ID + 1;
-    private static final int _ord_PERSON_ID = _ord_OU_ID + 1;
+    private static final int _ord_ORG_UNIT_ID = _ord_ORG_ID + 1;
+    private static final int _ord_PERSON_ID = _ord_ORG_UNIT_ID + 1;
     private static final int _ord_ROLE = _ord_PERSON_ID + 1;
 
     @Id
@@ -32,9 +32,9 @@ public abstract class _PersonRole_stuff
     String role;
 
     /**  */
-    OrgUnit ou;
+    OrgUnit orgUnit;
 
-    Integer ouId;
+    Integer orgUnitId;
 
     /**  */
     @NotNull
@@ -89,28 +89,28 @@ public abstract class _PersonRole_stuff
      * @label ou
      * @constraint foreign key (ou) references lily.orgunit (id)
      */
-    public OrgUnit getOu() {
-        return ou;
+    public OrgUnit getOrgUnit() {
+        return orgUnit;
     }
 
     /**
      */
-    public void setOu(OrgUnit value) {
-        this.ou = value;
+    public void setOrgUnit(OrgUnit value) {
+        this.orgUnit = value;
     }
 
-    @Ordinal(_ord_OU_ID)
-    @Precision(value = N_OU_ID)
+    @Ordinal(_ord_ORG_UNIT_ID)
+    @Precision(value = N_ORG_UNIT_ID)
     @Column(name = "ou", precision = 10)
-    public synchronized Integer getOuId() {
-        if (ou != null) {
-            return ou.getId();
+    public synchronized Integer getOrgUnitId() {
+        if (orgUnit != null) {
+            return orgUnit.getId();
         }
-        return ouId;
+        return orgUnitId;
     }
 
-    public synchronized void setOuId(Integer value) {
-        this.ouId = value;
+    public synchronized void setOrgUnitId(Integer value) {
+        this.orgUnitId = value;
     }
 
     /**

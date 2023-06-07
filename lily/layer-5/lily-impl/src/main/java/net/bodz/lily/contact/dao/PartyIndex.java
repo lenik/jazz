@@ -1,4 +1,4 @@
-package net.bodz.lily.contact.impl;
+package net.bodz.lily.contact.dao;
 
 import net.bodz.lily.contact.Party;
 import net.bodz.lily.model.base.CoIndex;

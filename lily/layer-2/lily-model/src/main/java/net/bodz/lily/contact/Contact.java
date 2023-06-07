@@ -54,6 +54,8 @@ public class Contact
     private String usage;
 
     private GeoZone zone;
+    private Integer zoneId;
+
     private String country = "cn";
     private String r1;
     private String r2;
@@ -70,6 +72,14 @@ public class Contact
     private String web;
     private String qq;
     private String wechat;
+
+    private boolean telValidated;
+    private boolean mobileValidated;
+    private boolean faxValidated;
+    private boolean emailValidated;
+    private boolean webValidated;
+    private boolean qqValidated;
+    private boolean wechatValidated;
 
     /**
      * 公司/单位
@@ -160,6 +170,14 @@ public class Contact
 
     public void setZoneCode(String code) {
         this.zone = GeoZones.getChinaRegion(code);
+    }
+
+    public Integer getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Integer zoneId) {
+        this.zoneId = zoneId;
     }
 
     /**
@@ -359,6 +377,62 @@ public class Contact
 
     public void setWechat(String wechat) {
         this.wechat = wechat;
+    }
+
+    public boolean isTelValidated() {
+        return telValidated;
+    }
+
+    public void setTelValidated(boolean telValidated) {
+        this.telValidated = telValidated;
+    }
+
+    public boolean isMobileValidated() {
+        return mobileValidated;
+    }
+
+    public void setMobileValidated(boolean mobileValidated) {
+        this.mobileValidated = mobileValidated;
+    }
+
+    public boolean isFaxValidated() {
+        return faxValidated;
+    }
+
+    public void setFaxValidated(boolean faxValidated) {
+        this.faxValidated = faxValidated;
+    }
+
+    public boolean isEmailValidated() {
+        return emailValidated;
+    }
+
+    public void setEmailValidated(boolean emailValidated) {
+        this.emailValidated = emailValidated;
+    }
+
+    public boolean isWebValidated() {
+        return webValidated;
+    }
+
+    public void setWebValidated(boolean webValidated) {
+        this.webValidated = webValidated;
+    }
+
+    public boolean isQqValidated() {
+        return qqValidated;
+    }
+
+    public void setQqValidated(boolean qqValidated) {
+        this.qqValidated = qqValidated;
+    }
+
+    public boolean isWechatValidated() {
+        return wechatValidated;
+    }
+
+    public void setWechatValidated(boolean wechatValidated) {
+        this.wechatValidated = wechatValidated;
     }
 
     /**

@@ -38,6 +38,7 @@ public abstract class Party
     public static final int N_TIMEZONEID = 10;
 
     private PartyCategory category;
+    private Integer categoryId;
 
     private Date birthday;
     private Locale locale = Locale.SIMPLIFIED_CHINESE;
@@ -65,6 +66,14 @@ public abstract class Party
 
     public void setCategory(PartyCategory category) {
         this.category = category;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     /**

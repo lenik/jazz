@@ -34,30 +34,6 @@ public class _PersonMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    String alias;
-    String aliasPattern;
-
-    Object contactProperties;
-
-    String address1;
-    String address1Pattern;
-
-    String address2;
-    String address2Pattern;
-
-    Integer zoneId;
-    IntegerRange zoneIdRange = new IntegerRange();
-
-    String tel;
-    String telPattern;
-
-    Boolean telok;
-
-    String email;
-    String emailPattern;
-
-    Boolean emailok;
-
     Object properties;
 
     Integer categoryId;
@@ -69,8 +45,8 @@ public class _PersonMask_stuff
     String locale;
     String localePattern;
 
-    String timezone;
-    String timezonePattern;
+    String timeZone;
+    String timeZonePattern;
 
     Integer roleCount;
     IntegerRange roleCountRange = new IntegerRange();
@@ -230,126 +206,6 @@ public class _PersonMask_stuff
         this.versionRange = range;
     }
 
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String value) {
-        this.alias = value;
-    }
-
-    public String getAliasPattern() {
-        return aliasPattern;
-    }
-
-    public void setAliasPattern(String value) {
-        this.aliasPattern = value;
-    }
-
-    public Object getContactProperties() {
-        return contactProperties;
-    }
-
-    public void setContactProperties(Object value) {
-        this.contactProperties = value;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String value) {
-        this.address1 = value;
-    }
-
-    public String getAddress1Pattern() {
-        return address1Pattern;
-    }
-
-    public void setAddress1Pattern(String value) {
-        this.address1Pattern = value;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String value) {
-        this.address2 = value;
-    }
-
-    public String getAddress2Pattern() {
-        return address2Pattern;
-    }
-
-    public void setAddress2Pattern(String value) {
-        this.address2Pattern = value;
-    }
-
-    public Integer getZoneId() {
-        return zoneId;
-    }
-
-    public void setZoneId(Integer value) {
-        this.zoneId = value;
-    }
-
-    public IntegerRange getZoneIdRange() {
-        return zoneIdRange;
-    }
-
-    public void setZoneIdRange(IntegerRange range) {
-        this.zoneIdRange = range;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String value) {
-        this.tel = value;
-    }
-
-    public String getTelPattern() {
-        return telPattern;
-    }
-
-    public void setTelPattern(String value) {
-        this.telPattern = value;
-    }
-
-    public Boolean getTelok() {
-        return telok;
-    }
-
-    public void setTelok(Boolean value) {
-        this.telok = value;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String value) {
-        this.email = value;
-    }
-
-    public String getEmailPattern() {
-        return emailPattern;
-    }
-
-    public void setEmailPattern(String value) {
-        this.emailPattern = value;
-    }
-
-    public Boolean getEmailok() {
-        return emailok;
-    }
-
-    public void setEmailok(Boolean value) {
-        this.emailok = value;
-    }
-
     public Object getProperties() {
         return properties;
     }
@@ -406,20 +262,20 @@ public class _PersonMask_stuff
         this.localePattern = value;
     }
 
-    public String getTimezone() {
-        return timezone;
+    public String getTimeZone() {
+        return timeZone;
     }
 
-    public void setTimezone(String value) {
-        this.timezone = value;
+    public void setTimeZone(String value) {
+        this.timeZone = value;
     }
 
-    public String getTimezonePattern() {
-        return timezonePattern;
+    public String getTimeZonePattern() {
+        return timeZonePattern;
     }
 
-    public void setTimezonePattern(String value) {
-        this.timezonePattern = value;
+    public void setTimeZonePattern(String value) {
+        this.timeZonePattern = value;
     }
 
     public Integer getRoleCount() {

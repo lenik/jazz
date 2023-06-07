@@ -9,6 +9,9 @@ import net.bodz.lily.template.CoCategoryMask;
 public class _PartyCategoryMask_stuff
         extends CoCategoryMask {
 
+    String uniqName;
+    String uniqNamePattern;
+
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
 
@@ -43,6 +46,22 @@ public class _PartyCategoryMask_stuff
 
     Integer refCount;
     IntegerRange refCountRange = new IntegerRange();
+
+    public String getUniqName() {
+        return uniqName;
+    }
+
+    public void setUniqName(String value) {
+        this.uniqName = value;
+    }
+
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
+    }
+
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
+    }
 
     public Integer getOwnerUserId() {
         return ownerUserId;

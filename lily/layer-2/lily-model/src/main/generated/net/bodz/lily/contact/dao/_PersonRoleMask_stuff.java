@@ -12,8 +12,8 @@ public class _PersonRoleMask_stuff
     Integer orgId;
     IntegerRange orgIdRange = new IntegerRange();
 
-    Integer ouId;
-    IntegerRange ouIdRange = new IntegerRange();
+    Integer orgUnitId;
+    IntegerRange orgUnitIdRange = new IntegerRange();
 
     Integer personId;
     IntegerRange personIdRange = new IntegerRange();
@@ -53,20 +53,20 @@ public class _PersonRoleMask_stuff
         this.orgIdRange = range;
     }
 
-    public Integer getOuId() {
-        return ouId;
+    public Integer getOrgUnitId() {
+        return orgUnitId;
     }
 
-    public void setOuId(Integer value) {
-        this.ouId = value;
+    public void setOrgUnitId(Integer value) {
+        this.orgUnitId = value;
     }
 
-    public IntegerRange getOuIdRange() {
-        return ouIdRange;
+    public IntegerRange getOrgUnitIdRange() {
+        return orgUnitIdRange;
     }
 
-    public void setOuIdRange(IntegerRange range) {
-        this.ouIdRange = range;
+    public void setOrgUnitIdRange(IntegerRange range) {
+        this.orgUnitIdRange = range;
     }
 
     public Integer getPersonId() {

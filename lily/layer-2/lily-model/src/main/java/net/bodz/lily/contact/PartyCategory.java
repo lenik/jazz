@@ -1,19 +1,11 @@
 package net.bodz.lily.contact;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoCategory;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "lily", name = "partycat")
 public class PartyCategory
-        extends CoCategory<PartyCategory, Integer> {
+        extends _PartyCategory_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public PartyCategory() {
-    }
-
-    public PartyCategory(PartyCategory parent) {
-        super(parent);
-    }
 
 }
