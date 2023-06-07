@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.shop.dao.SellPriceMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.shop.SellPrice" extends="co.MAP_UVX">
+        <result property="price" column="price" />
+        <association property="artifact" javaType="net.bodz.violet.art.Artifact">
+            <id property="id" column="art" />
+            <result property="label" column="artifact_label" />
+        </association>
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.*,
+            art.label "art_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from art_price a
+            left join art on a.art = art.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.*,
+            art.label "art_label",
+            u.label "uid_label",
+            g.label "gid_label"
+        from art_price a
+            left join art on a.art = art.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into art_price(
+            art, price
+        ) values(
+            #{artifact.id}, #{price}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update art_price
+        <set>
+            <include refid="co.setS" />
+            art = #{artifact.id},
+            price = #{price},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from art_price where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select count(*) "rows" from art_price
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

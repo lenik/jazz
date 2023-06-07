@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.tran.dao.TransportOrderMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.tran.TransportOrder" extends="message.MAP_ALL">
+        <!-- result property="shipDest" column="shipdst" />
+        <result property="shipmentId" column="shipid" /-->
+        <result property="shippingCost" column="shipcost" />
+        
+        <result property="totalQuantity" column="sum_qty" />
+        <result property="totalAmount" column="sum_amount" />
+        
+        <association property="category" javaType="net.bodz.violet.tran.TransportCategory">
+            <id property="id" column="cat" />
+            <result property="label" column="cat_label" />
+        </association>
+        <association property="phase" javaType="net.bodz.violet.tran.TransportPhase">
+            <id property="id" column="phase" />
+            <result property="label" column="phase_label" />
+        </association>
+        <association property="op" javaType="net.bodz.lily.security.User">
+            <id property="id" column="op" />
+            <result property="label" column="op_label" />
+        </association>
+        <association property="previousOrder" javaType="net.bodz.violet.tran.TransportOrder">
+            <id property="id" column="prev" />
+            <result property="subject" column="prev_subject" />
+        </association>
+        <association property="salesOrder" javaType="net.bodz.violet.shop.SalesOrder">
+            <id property="id" column="saleodr" />
+            <result property="subject" column="saleodr_subject" />
+        </association>
+        <association property="storeOrder" javaType="net.bodz.violet.store.StoreOrder">
+            <id property="id" column="storeodr" />
+            <result property="subject" column="storeodr_subject" />
+        </association>
+        <association property="shipper" javaType="net.bodz.lily.contact.Organization">
+            <id property="id" column="shipper" />
+            <result property="label" column="shipper_label" />
+        </association>
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.*,
+            cat.label "cat_label",
+            phase.label "phase_label",
+            op.label "op_label",
+            prev.subject "prev_subject",
+            saleodr.subject "saleodr_subject",
+            storeodr.subject "storeodr_subject",
+            shipper.label "shipper_label",
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label"
+        from tranodr a
+            left join trancat cat on a.cat = cat.id
+            left join tranphase phase on a.phase = phase.id
+            left join "user" op on a.op = op.id
+            left join tranodr prev on a.prev = prev.id
+            left join saleodr on a.saleodr = saleodr.id
+            left join storeodr on a.storeodr = storeodr.id
+            left join org shipper on a.shipper = shipper.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.*,
+            cat.label "cat_label",
+            phase.label "phase_label",
+            op.label "op_label",
+            prev.subject "prev_subject",
+            saleodr.subject "saleodr_subject",
+            storeodr.subject "storeodr_subject",
+            shipper.label "shipper_label",
+            u.label "uid_label",
+            g.label "gid_label",
+            op.label "op_label"
+        from tranodr a
+            left join trancat cat on a.cat = cat.id
+            left join tranphase phase on a.phase = phase.id
+            left join "user" op on a.op = op.id
+            left join tranodr prev on a.prev = prev.id
+            left join saleodr on a.saleodr = saleodr.id
+            left join storeodr on a.storeodr = storeodr.id
+            left join org shipper on a.shipper = shipper.id
+            left join "user" u on a.uid = u.id
+            left join "group" g on a.gid = g.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <!-- co -->
+        <include refid="co.modefilt" />
+        <if test="m.timeRange != null">and a.lastmod between #{m.timeRange.min, jdbcType=DATE} and #{m.timeRange.max, jdbcType=DATE}</if>
+        <!-- moment-interval -->
+        <if test="m.dateRange != null">and a.t0 between #{m.dateRange.min, jdbcType=DATE} and #{m.dateRange.max, jdbcType=DATE}</if>
+        <if test="m.year != null">and extract(year from a.t0)=#{m.year}</if>
+        <if test="m.noDate">and a.t0 is null</if>
+        <if test="m.noYear">and a.t0 is null</if>
+        <!-- message -->
+        <if test="m.opId != null">and a.op=#{m.opId}</if>
+        <if test="m.voteCountRange != null">and a.nvote between #{m.voteCountRange.min} and #{m.voteCountRange.max}</if>
+        <if test="m.likerCountRange != null">and a.nlike between #{m.likerCountRange.min} and #{m.likerCountRange.max}</if>
+        <if test="m.readCountRange != null">and a.nread between #{m.readCountRange.min} and #{m.readCountRange.max}</if>
+        <if test="m.noOp">and a.op is null</if>
+        <if test="m.noCategory">and a.cat is null</if>
+        <if test="m.noPhase">and a.phase is null</if>
+        <if test="m.tagId != null">and x.tag=#{m.tagId}</if>
+        <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="co.modefilt" />
+        </where>
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+    </select>
+
+    <select id="select" parameterType="int" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into tranodr(
+            uid, gid, mode, acl,
+            priority, flags, state, 
+            t0, t1,
+            op, subject, text, 
+            cat, phase,
+            prev, saleodr, storeodr,
+            shipper, shipcost,
+            length, sum_qty, sum_amount
+        ) values(
+            #{ownerUser.id}, #{ownerGroup.id}, #{accessMode}, #{acl},
+            #{priority}, #{flags}, #{state}, 
+            #{beginTime}, #{endTime},
+            #{op.id}, #{subject}, #{text}, 
+            #{category.id}, #{phase.id},
+            #{previousOrder.id}, #{salesOrder.id}, #{storeOrder.id},
+            #{shipper.id}, #{shippingCost},
+            #{length}, #{totalQuantity}, #{totalAmount}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update tranodr
+        <set>
+            <include refid="co.setVSA" />
+            <include refid="mi.setT" />
+            <include refid="message.setUM" />
+            cat = #{category.id},
+            phase = #{phase.id},
+            prev = #{previousOrder.id},
+            saleodr = #{salesOrder.id},
+            storeodr = #{storeOrder.id},
+            <!-- 
+            <if test="org != null">org = #{org.id},</if>
+            <if test="orgUnit != null">ou = #{orgUnit.id},</if>
+            <if test="person != null">person = #{person.id},</if>
+            -->
+            shipper = #{shipper.id},
+            shipcost = #{shippingCost},
+            length = #{length},
+            sum_qty = #{totalQuantity},
+            sum_amount = #{totalAmount},
+        </set>
+        <where>
+            <if test="id != null">id = #{id}</if>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from tranodr where id = #{id}
+    </delete>
+
+    <select id="count" resultType="hashmap">
+        select
+        (select count(*) from tranodr a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "total",
+        
+        (select count(*) from tranodr a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+        ) "running";
+    </select>
+
+    <select id="histoByYear" resultType="net.bodz.lily.model.util.F_YearCount"><![CDATA[
+        select
+            extract(year from t0)::int "year", 
+            count(*) "count"
+        from tranodr
+        group by extract(year from t0)::int
+    ]]></select>
+
+</mapper>
