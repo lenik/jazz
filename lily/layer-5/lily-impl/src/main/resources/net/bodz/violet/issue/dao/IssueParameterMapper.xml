@@ -1,41 +1,219 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.issue.dao.IssueParameterMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.issue.IssueParameter" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.issue.IssueParameter">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="uniqName" column="name" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="dummy" column="dummy" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from issueParameter a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a."name", 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.dummy, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent
+        from issueparm a
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from issueParameter a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a."name", 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.dummy, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent
+        from issueparm a
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
+        <if test="m.ownerUserIdRange!= null">
+            <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasStartExcl">and a.uid > #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasEndIncl">and a.uid &lt;= #{m.ownerUserIdRange.end}</if>
+            <if test="m.ownerUserIdRange.hasEndExcl">and a.uid &lt; #{m.ownerUserIdRange.end}</if>
+        </if>
+        <if test="m.ownerGroupId != null">and a.gid = #{m.ownerGroupId}</if>
+        <if test="m.ownerGroupIdRange!= null">
+            <if test="m.ownerGroupIdRange.hasStartIncl">and a.gid >= #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasStartExcl">and a.gid > #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasEndIncl">and a.gid &lt;= #{m.ownerGroupIdRange.end}</if>
+            <if test="m.ownerGroupIdRange.hasEndExcl">and a.gid &lt; #{m.ownerGroupIdRange.end}</if>
+        </if>
+        <if test="m.accessMode != null">and a.mode = #{m.accessMode}</if>
+        <if test="m.accessModeRange!= null">
+            <if test="m.accessModeRange.hasStartIncl">and a.mode >= #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasStartExcl">and a.mode > #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasEndIncl">and a.mode &lt;= #{m.accessModeRange.end}</if>
+            <if test="m.accessModeRange.hasEndExcl">and a.mode &lt; #{m.accessModeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
+        <if test="m.label != null">and a.label = #{m.label}</if>
+        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.dummy != null">and a.dummy = #{m.dummy}</if>
+        <if test="m.dummyRange!= null">
+            <if test="m.dummyRange.hasStartIncl">and a.dummy >= #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasStartExcl">and a.dummy > #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasEndIncl">and a.dummy &lt;= #{m.dummyRange.end}</if>
+            <if test="m.dummyRange.hasEndExcl">and a.dummy &lt; #{m.dummyRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -43,9 +221,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -53,17 +232,56 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into issueParameter(
-            code, label, description
+        insert into issueparm(
+            uid,
+            gid,
+            mode,
+            acl,
+            "name",
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            dummy
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{uniqName},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{dummy}
         );
     ]]></insert>
 
     <update id="update">
-        update issueParameter
+        update issueparm
         <set>
-            <include refid="co.setUS" />
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            "name" = #{uniqName},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            dummy = #{dummy},
         </set>
         <where>
             id = #{id}
@@ -71,11 +289,14 @@
     </update>
 
     <delete id="delete">
-        delete from issueParameter where id = #{id}
+        delete from issueparm
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
-        select count(*) "rows" from issueParameter
+    <select id="count" resultType="long">
+        select count(*) "rows" from issueparm
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
