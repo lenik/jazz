@@ -11,4 +11,7 @@ import net.bodz.violet.art.ArtifactParameter;
 public class ArtifactParameterIndex
         extends CoIndex<ArtifactParameter, ArtifactParameterMask> {
 
+    public ArtifactParameterIndex() {
+    }
+
 }

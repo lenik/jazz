@@ -11,4 +11,7 @@ import net.bodz.violet.art.ArtifactTag;
 public class ArtifactTagIndex
         extends CoIndex<ArtifactTag, ArtifactTagMask> {
 
+    public ArtifactTagIndex() {
+    }
+
 }

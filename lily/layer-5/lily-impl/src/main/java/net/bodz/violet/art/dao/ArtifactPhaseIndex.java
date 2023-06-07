@@ -11,4 +11,7 @@ import net.bodz.violet.art.ArtifactPhase;
 public class ArtifactPhaseIndex
         extends CoIndex<ArtifactPhase, ArtifactPhaseMask> {
 
+    public ArtifactPhaseIndex() {
+    }
+
 }
