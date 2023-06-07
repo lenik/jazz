@@ -2,7 +2,7 @@ package net.bodz.lily.reward;
 
 import javax.persistence.Table;
 
-@Table(schema="lily", name="user_badge")
+@Table(schema = "lily", name = "user_badge")
 public class UserBadge
         extends _UserBadge_stuff {
 

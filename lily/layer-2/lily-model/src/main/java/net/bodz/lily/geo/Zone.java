@@ -5,20 +5,17 @@ import java.util.Collection;
 import javax.persistence.Table;
 
 import net.bodz.bas.site.file.UploadHint;
-import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
-import net.bodz.lily.model.base.CoNode;
 import net.bodz.lily.t.struct.GeoLocation;
 import net.bodz.lily.template.RichProperties;
 
-@Table(name = "zone")
-@IdType(Integer.class)
 @UploadHint
+@Table(schema = "lily", name = "zone")
 public class Zone
-        extends CoNode<Zone, Integer>
+        extends _Zone_stuff
         implements
             IHaveAttachments {
 
@@ -27,18 +24,10 @@ public class Zone
     public static final int ID_World = 0;
     public static final int ID_China = 86;
 
-    private ZoneCategory category;
     private RichProperties properties = new RichProperties();
+
     private final GeoLocation geo = new GeoLocation();
     private String fullPath = "";
-
-    public ZoneCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(ZoneCategory category) {
-        this.category = category;
-    }
 
     @Override
     public RichProperties getProperties() {

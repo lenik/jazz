@@ -16,17 +16,21 @@ public abstract class _Uom_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_PROP = 30;
     public static final int N_STD_ID = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_PROP = _ord_ID + 5;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_PROP = _ord_CODE + 4;
     private static final int _ord_STD_ID = _ord_PROP + 1;
     private static final int _ord_SCALE = _ord_STD_ID + 1;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     @NotNull
     String prop;
@@ -59,6 +63,18 @@ public abstract class _Uom_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
     }
 
     @Ordinal(_ord_PROP)

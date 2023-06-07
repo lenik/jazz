@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.lily.geo.Zone">
         <id property="id" column="id" />
         <result property="codeName" column="code" />
-        <result property="mode" column="mode" />
+        <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
@@ -19,26 +19,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="version" column="version" />
         <result property="country" column="country" />
         <result property="depth" column="depth" />
-        <result property="telcode" column="telcode" />
-        <result property="postcode" column="postcode" />
+        <result property="telCode" column="telcode" />
+        <result property="postCode" column="postcode" />
         <result property="properties.jsonStr" column="props" />
         <result property="data.jsonStr" column="data" />
-        <result property="uId" column="uid" />
-        <result property="gId" column="gid" />
-        <result property="catId" column="cat" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="categoryId" column="cat" />
         <result property="parentId" column="parent" />
         <association property="parent" columnPrefix="parent_"
             javaType="net.bodz.lily.geo.Zone" 
             resultMap="objlist_map" />
-        <association property="u" columnPrefix="uid_"
+        <association property="ownerUser" columnPrefix="ownerUser_"
             javaType="net.bodz.lily.security.User" 
             resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
-        <association property="g" columnPrefix="gid_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
             javaType="net.bodz.lily.security.Group" 
             resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
-        <association property="cat" columnPrefix="cat_"
+        <association property="category" columnPrefix="category_"
             javaType="net.bodz.lily.geo.ZoneCategory" 
-            resultMap="net.bodz.lily.geo.dao.ZoneCategoryMapper.objlist_map" />
+            resultMap="net.bodz.lily.geo.ZoneCategoryMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -87,59 +87,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.postcode parent_postcode, 
             parent.props parent_props, 
             parent."data" parent_data, 
-            uid.id uid_id, 
-            uid."type" uid_type, 
-            uid."name" uid_name, 
-            uid.label uid_label, 
-            uid.description uid_description, 
-            uid.priority uid_priority, 
-            uid.flags uid_flags, 
-            uid."state" uid_state, 
-            uid.creation uid_creation, 
-            uid.lastmod uid_lastmod, 
-            uid."version" uid_version, 
-            uid.props uid_props, 
-            uid.gid0 uid_gid0, 
-            uid.referer uid_referer, 
-            uid.person uid_person, 
-            gid.id gid_id, 
-            gid."name" gid_name, 
-            gid."type" gid_type, 
-            gid.label gid_label, 
-            gid.description gid_description, 
-            gid.priority gid_priority, 
-            gid.flags gid_flags, 
-            gid."state" gid_state, 
-            gid.creation gid_creation, 
-            gid.lastmod gid_lastmod, 
-            gid."version" gid_version, 
-            gid.props gid_props, 
-            gid.parent gid_parent, 
-            cat.id cat_id, 
-            cat.code cat_code, 
-            cat.uid cat_uid, 
-            cat.gid cat_gid, 
-            cat.mode cat_mode, 
-            cat.acl cat_acl, 
-            cat.label cat_label, 
-            cat.description cat_description, 
-            cat.priority cat_priority, 
-            cat.flags cat_flags, 
-            cat."state" cat_state, 
-            cat.creation cat_creation, 
-            cat.lastmod cat_lastmod, 
-            cat."version" cat_version, 
-            cat.image cat_image, 
-            cat.imagealt cat_imagealt, 
-            cat.props cat_props, 
-            cat.parent cat_parent, 
-            cat."depth" cat_depth, 
-            cat.nref cat_nref
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            category.id category_id, 
+            category.code category_code, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref
         from zone a
             left join "zone" parent on a.parent = parent.id
-            left join "user" uid on a.uid = uid.id
-            left join "group" gid on a.gid = gid.id
-            left join zonecat cat on a.cat = cat.id
+            left join "user" ownerUser on a.uid = ownerUser.id
+            left join "group" ownerGroup on a.gid = ownerGroup.id
+            left join zonecat category on a.cat = category.id
         ]]>
     </sql>
 
@@ -189,59 +189,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.postcode parent_postcode, 
             parent.props parent_props, 
             parent."data" parent_data, 
-            uid.id uid_id, 
-            uid."type" uid_type, 
-            uid."name" uid_name, 
-            uid.label uid_label, 
-            uid.description uid_description, 
-            uid.priority uid_priority, 
-            uid.flags uid_flags, 
-            uid."state" uid_state, 
-            uid.creation uid_creation, 
-            uid.lastmod uid_lastmod, 
-            uid."version" uid_version, 
-            uid.props uid_props, 
-            uid.gid0 uid_gid0, 
-            uid.referer uid_referer, 
-            uid.person uid_person, 
-            gid.id gid_id, 
-            gid."name" gid_name, 
-            gid."type" gid_type, 
-            gid.label gid_label, 
-            gid.description gid_description, 
-            gid.priority gid_priority, 
-            gid.flags gid_flags, 
-            gid."state" gid_state, 
-            gid.creation gid_creation, 
-            gid.lastmod gid_lastmod, 
-            gid."version" gid_version, 
-            gid.props gid_props, 
-            gid.parent gid_parent, 
-            cat.id cat_id, 
-            cat.code cat_code, 
-            cat.uid cat_uid, 
-            cat.gid cat_gid, 
-            cat.mode cat_mode, 
-            cat.acl cat_acl, 
-            cat.label cat_label, 
-            cat.description cat_description, 
-            cat.priority cat_priority, 
-            cat.flags cat_flags, 
-            cat."state" cat_state, 
-            cat.creation cat_creation, 
-            cat.lastmod cat_lastmod, 
-            cat."version" cat_version, 
-            cat.image cat_image, 
-            cat.imagealt cat_imagealt, 
-            cat.props cat_props, 
-            cat.parent cat_parent, 
-            cat."depth" cat_depth, 
-            cat.nref cat_nref
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            category.id category_id, 
+            category.code category_code, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref
         from zone a
             left join "zone" parent on a.parent = parent.id
-            left join "user" uid on a.uid = uid.id
-            left join "group" gid on a.gid = gid.id
-            left join zonecat cat on a.cat = cat.id
+            left join "user" ownerUser on a.uid = ownerUser.id
+            left join "group" ownerGroup on a.gid = ownerGroup.id
+            left join zonecat category on a.cat = category.id
         ]]>
     </sql>
 
@@ -255,26 +255,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         <if test="m.codeName != null">and a.code = #{m.codeName}</if>
         <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
-        <if test="m.uId != null">and a.uid = #{m.uId}</if>
-        <if test="m.uIdRange!= null">
-            <if test="m.uIdRange.hasStartIncl">and a.uid >= #{m.uIdRange.start}</if>
-            <if test="m.uIdRange.hasStartExcl">and a.uid > #{m.uIdRange.start}</if>
-            <if test="m.uIdRange.hasEndIncl">and a.uid &lt;= #{m.uIdRange.end}</if>
-            <if test="m.uIdRange.hasEndExcl">and a.uid &lt; #{m.uIdRange.end}</if>
+        <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
+        <if test="m.ownerUserIdRange!= null">
+            <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasStartExcl">and a.uid > #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasEndIncl">and a.uid &lt;= #{m.ownerUserIdRange.end}</if>
+            <if test="m.ownerUserIdRange.hasEndExcl">and a.uid &lt; #{m.ownerUserIdRange.end}</if>
         </if>
-        <if test="m.gId != null">and a.gid = #{m.gId}</if>
-        <if test="m.gIdRange!= null">
-            <if test="m.gIdRange.hasStartIncl">and a.gid >= #{m.gIdRange.start}</if>
-            <if test="m.gIdRange.hasStartExcl">and a.gid > #{m.gIdRange.start}</if>
-            <if test="m.gIdRange.hasEndIncl">and a.gid &lt;= #{m.gIdRange.end}</if>
-            <if test="m.gIdRange.hasEndExcl">and a.gid &lt; #{m.gIdRange.end}</if>
+        <if test="m.ownerGroupId != null">and a.gid = #{m.ownerGroupId}</if>
+        <if test="m.ownerGroupIdRange!= null">
+            <if test="m.ownerGroupIdRange.hasStartIncl">and a.gid >= #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasStartExcl">and a.gid > #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasEndIncl">and a.gid &lt;= #{m.ownerGroupIdRange.end}</if>
+            <if test="m.ownerGroupIdRange.hasEndExcl">and a.gid &lt; #{m.ownerGroupIdRange.end}</if>
         </if>
-        <if test="m.mode != null">and a.mode = #{m.mode}</if>
-        <if test="m.modeRange!= null">
-            <if test="m.modeRange.hasStartIncl">and a.mode >= #{m.modeRange.start}</if>
-            <if test="m.modeRange.hasStartExcl">and a.mode > #{m.modeRange.start}</if>
-            <if test="m.modeRange.hasEndIncl">and a.mode &lt;= #{m.modeRange.end}</if>
-            <if test="m.modeRange.hasEndExcl">and a.mode &lt; #{m.modeRange.end}</if>
+        <if test="m.accessMode != null">and a.mode = #{m.accessMode}</if>
+        <if test="m.accessModeRange!= null">
+            <if test="m.accessModeRange.hasStartIncl">and a.mode >= #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasStartExcl">and a.mode > #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasEndIncl">and a.mode &lt;= #{m.accessModeRange.end}</if>
+            <if test="m.accessModeRange.hasEndExcl">and a.mode &lt; #{m.accessModeRange.end}</if>
         </if>
         <if test="m.acl != null">and a.acl = #{m.acl}</if>
         <if test="m.aclRange!= null">
@@ -317,12 +317,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
-        <if test="m.catId != null">and a.cat = #{m.catId}</if>
-        <if test="m.catIdRange!= null">
-            <if test="m.catIdRange.hasStartIncl">and a.cat >= #{m.catIdRange.start}</if>
-            <if test="m.catIdRange.hasStartExcl">and a.cat > #{m.catIdRange.start}</if>
-            <if test="m.catIdRange.hasEndIncl">and a.cat &lt;= #{m.catIdRange.end}</if>
-            <if test="m.catIdRange.hasEndExcl">and a.cat &lt; #{m.catIdRange.end}</if>
+        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
+        <if test="m.categoryIdRange!= null">
+            <if test="m.categoryIdRange.hasStartIncl">and a.cat >= #{m.categoryIdRange.start}</if>
+            <if test="m.categoryIdRange.hasStartExcl">and a.cat > #{m.categoryIdRange.start}</if>
+            <if test="m.categoryIdRange.hasEndIncl">and a.cat &lt;= #{m.categoryIdRange.end}</if>
+            <if test="m.categoryIdRange.hasEndExcl">and a.cat &lt; #{m.categoryIdRange.end}</if>
         </if>
         <if test="m.country != null">and a.country = #{m.country}</if>
         <if test="m.countryPattern != null">and a.country like '${m.countryPattern}'</if>
@@ -340,10 +340,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.depthRange.hasEndIncl">and a."depth" &lt;= #{m.depthRange.end}</if>
             <if test="m.depthRange.hasEndExcl">and a."depth" &lt; #{m.depthRange.end}</if>
         </if>
-        <if test="m.telcode != null">and a.telcode = #{m.telcode}</if>
-        <if test="m.telcodePattern != null">and a.telcode like '${m.telcodePattern}'</if>
-        <if test="m.postcode != null">and a.postcode = #{m.postcode}</if>
-        <if test="m.postcodePattern != null">and a.postcode like '${m.postcodePattern}'</if>
+        <if test="m.telCode != null">and a.telcode = #{m.telCode}</if>
+        <if test="m.telCodePattern != null">and a.telcode like '${m.telCodePattern}'</if>
+        <if test="m.postCode != null">and a.postcode = #{m.postCode}</if>
+        <if test="m.postCodePattern != null">and a.postcode like '${m.postCodePattern}'</if>
         <if test="m.properties != null">and a.props = #{m.properties}</if>
         <if test="m.data != null">and a."data" = #{m.data}</if>
     </sql>
@@ -393,9 +393,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "data"
         ) values(
             #{codeName},
-            #{uId},
-            #{gId},
-            #{mode},
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
             #{acl},
             #{label},
             #{description},
@@ -405,12 +405,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{catId},
+            #{categoryId},
             #{country},
             #{parentId},
             #{depth},
-            #{telcode},
-            #{postcode},
+            #{telCode},
+            #{postCode},
             #{properties.jsonStr}::jsonb,
             #{data.jsonStr}::jsonb
         );
@@ -420,9 +420,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update zone
         <set>
             code = #{codeName},
-            uid = #{uId},
-            gid = #{gId},
-            mode = #{mode},
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
             acl = #{acl},
             label = #{label},
             description = #{description},
@@ -432,12 +432,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            cat = #{catId},
+            cat = #{categoryId},
             country = #{country},
             parent = #{parentId},
             "depth" = #{depth},
-            telcode = #{telcode},
-            postcode = #{postcode},
+            telcode = #{telCode},
+            postcode = #{postCode},
             props = #{properties.jsonStr}::jsonb,
             "data" = #{data.jsonStr}::jsonb,
         </set>

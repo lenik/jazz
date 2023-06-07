@@ -34,7 +34,7 @@ public class _BadgeMask_stuff
 
     Boolean descend;
 
-    Boolean transient;
+    Boolean transient_;
 
     Boolean indexed;
 
@@ -169,12 +169,12 @@ public class _BadgeMask_stuff
         this.descend = value;
     }
 
-    public Boolean getTransient() {
-        return transient;
+    public Boolean getTransient_() {
+        return transient_;
     }
 
-    public void setTransient(Boolean value) {
-        this.transient = value;
+    public void setTransient_(Boolean value) {
+        this.transient_ = value;
     }
 
     public Boolean getIndexed() {

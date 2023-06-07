@@ -2,7 +2,7 @@ package net.bodz.lily.inet;
 
 import javax.persistence.Table;
 
-@Table(schema="lily", name="extsite")
+@Table(schema = "lily", name = "extsite")
 public class ExternalSite
         extends _ExternalSite_stuff {
 

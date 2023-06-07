@@ -10,6 +10,9 @@ public class _UomMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Object properties;
 
     String prop;
@@ -35,6 +38,22 @@ public class _UomMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Object getProperties() {

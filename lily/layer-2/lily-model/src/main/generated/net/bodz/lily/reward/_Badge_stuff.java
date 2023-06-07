@@ -41,7 +41,7 @@ public abstract class _Badge_stuff
     boolean descend;
 
     @NotNull
-    boolean transient;
+    boolean transient_;
 
     @NotNull
     boolean indexed;
@@ -116,12 +116,12 @@ public abstract class _Badge_stuff
     @Ordinal(_ord_TRANSIENT)
     @Precision(value = 1)
     @Column(name = "transient", nullable = false, precision = 1)
-    public boolean isTransient() {
-        return transient;
+    public boolean isTransient_() {
+        return transient_;
     }
 
-    public void setTransient(boolean value) {
-        this.transient = value;
+    public void setTransient_(boolean value) {
+        this.transient_ = value;
     }
 
     @Ordinal(_ord_INDEXED)

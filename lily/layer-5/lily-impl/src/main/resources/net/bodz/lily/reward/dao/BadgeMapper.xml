@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="val" column="val" />
         <result property="levels" column="levels" />
         <result property="descend" column="descend" />
-        <result property="transient" column="transient" />
+        <result property="transient_" column="transient" />
         <result property="indexed" column="indexed" />
         <result property="image" column="image" />
     </resultMap>
@@ -120,7 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
         <if test="m.levels != null">and a.levels = #{m.levels}</if>
         <if test="m.descend != null">and a.descend = #{m.descend}</if>
-        <if test="m.transient != null">and a.transient = #{m.transient}</if>
+        <if test="m.transient_ != null">and a.transient = #{m.transient_}</if>
         <if test="m.indexed != null">and a.indexed = #{m.indexed}</if>
         <if test="m.image != null">and a.image = #{m.image}</if>
         <if test="m.imagePattern != null">and a.image like '${m.imagePattern}'</if>
@@ -176,7 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{val},
             #{levels},
             #{descend},
-            #{transient},
+            #{transient_},
             #{indexed},
             #{image}
         );
@@ -197,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             val = #{val},
             levels = #{levels},
             descend = #{descend},
-            transient = #{transient},
+            transient = #{transient_},
             indexed = #{indexed},
             image = #{image},
         </set>

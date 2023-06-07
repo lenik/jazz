@@ -26,8 +26,8 @@ public class _StorageMask_stuff
 
     Object properties;
 
-    String name;
-    String namePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     public Integer getId() {
         return id;
@@ -117,20 +117,20 @@ public class _StorageMask_stuff
         this.properties = value;
     }
 
-    public String getName() {
-        return name;
+    public String getUniqName() {
+        return uniqName;
     }
 
-    public void setName(String value) {
-        this.name = value;
+    public void setUniqName(String value) {
+        this.uniqName = value;
     }
 
-    public String getNamePattern() {
-        return namePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setNamePattern(String value) {
-        this.namePattern = value;
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
 }

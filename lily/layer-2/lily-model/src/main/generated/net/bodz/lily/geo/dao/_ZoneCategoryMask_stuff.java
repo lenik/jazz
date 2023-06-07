@@ -12,6 +12,9 @@ public class _ZoneCategoryMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String uniqName;
+    String uniqNamePattern;
+
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
 
@@ -64,6 +67,22 @@ public class _ZoneCategoryMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getUniqName() {
+        return uniqName;
+    }
+
+    public void setUniqName(String value) {
+        this.uniqName = value;
+    }
+
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
+    }
+
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     public Integer getOwnerUserId() {

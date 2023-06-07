@@ -16,32 +16,36 @@ public abstract class _Zone_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 10;
     public static final int N_COUNTRY = 2;
     public static final int N_PARENT_ID = 10;
-    public static final int N_TELCODE = 10;
-    public static final int N_POSTCODE = 10;
+    public static final int N_TEL_CODE = 10;
+    public static final int N_POST_CODE = 10;
 
     private static final int _ord_ID = 1;
+    private static final int _ord_CODE = _ord_ID + 1;
     private static final int _ord_CATEGORY_ID = 15;
     private static final int _ord_COUNTRY = _ord_CATEGORY_ID + 1;
     private static final int _ord_PARENT_ID = _ord_COUNTRY + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
-    private static final int _ord_TELCODE = _ord_DEPTH + 1;
-    private static final int _ord_POSTCODE = _ord_TELCODE + 1;
-    private static final int _ord_DATA = _ord_POSTCODE + 2;
+    private static final int _ord_TEL_CODE = _ord_DEPTH + 1;
+    private static final int _ord_POST_CODE = _ord_TEL_CODE + 1;
+    private static final int _ord_DATA = _ord_POST_CODE + 2;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     String country;
 
     @NotNull
     int depth;
 
-    String telcode;
+    String telCode;
 
-    String postcode;
+    String postCode;
 
     Object data;
 
@@ -79,6 +83,18 @@ public abstract class _Zone_stuff
         this.id = value;
     }
 
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
     @Ordinal(_ord_COUNTRY)
     @Precision(value = N_COUNTRY)
     @TextInput(maxLength = N_COUNTRY)
@@ -102,28 +118,28 @@ public abstract class _Zone_stuff
         this.depth = value;
     }
 
-    @Ordinal(_ord_TELCODE)
-    @Precision(value = N_TELCODE)
-    @TextInput(maxLength = N_TELCODE)
-    @Column(name = "telcode", length = N_TELCODE)
-    public String getTelcode() {
-        return telcode;
+    @Ordinal(_ord_TEL_CODE)
+    @Precision(value = N_TEL_CODE)
+    @TextInput(maxLength = N_TEL_CODE)
+    @Column(name = "telcode", length = N_TEL_CODE)
+    public String getTelCode() {
+        return telCode;
     }
 
-    public void setTelcode(String value) {
-        this.telcode = value;
+    public void setTelCode(String value) {
+        this.telCode = value;
     }
 
-    @Ordinal(_ord_POSTCODE)
-    @Precision(value = N_POSTCODE)
-    @TextInput(maxLength = N_POSTCODE)
-    @Column(name = "postcode", length = N_POSTCODE)
-    public String getPostcode() {
-        return postcode;
+    @Ordinal(_ord_POST_CODE)
+    @Precision(value = N_POST_CODE)
+    @TextInput(maxLength = N_POST_CODE)
+    @Column(name = "postcode", length = N_POST_CODE)
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setPostcode(String value) {
-        this.postcode = value;
+    public void setPostCode(String value) {
+        this.postCode = value;
     }
 
     @Ordinal(_ord_DATA)
@@ -187,8 +203,6 @@ public abstract class _Zone_stuff
     @Column(name = "cat", nullable = false, precision = 10)
     public synchronized int getCategoryId() {
         if (category != null) {
-            if (category.getId() == null)
-                return 0;
             return category.getId();
         }
         return categoryId;
