@@ -6,10 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.pub.PostVote">
         <id property="id" column="id" />
-        <result property="votes" column="votes" />
-        <result property="postId" column="post" />
+        <result property="voteScore" column="votes" />
+        <result property="parentId" column="parent" />
         <result property="userId" column="user" />
-        <association property="post" columnPrefix="post_"
+        <association property="parent" columnPrefix="parent_"
             javaType="net.bodz.lily.pub.Post" 
             resultMap="net.bodz.lily.pub.dao.PostMapper.objlist_map" />
         <association property="user" columnPrefix="user_"
@@ -20,35 +20,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="objlist_sql"><![CDATA[
         select
             a.id, 
-            a.post, 
+            a.parent, 
             a."user", 
             a.votes, 
-            post.id post_id, 
-            post.uid post_uid, 
-            post.gid post_gid, 
-            post.mode post_mode, 
-            post.acl post_acl, 
-            post.priority post_priority, 
-            post.flags post_flags, 
-            post."state" post_state, 
-            post.creation post_creation, 
-            post.lastmod post_lastmod, 
-            post."version" post_version, 
-            post.t0 post_t0, 
-            post.t1 post_t1, 
-            post."year" post_year, 
-            post.subject post_subject, 
-            post.op post_op, 
-            post.text post_text, 
-            post.form post_form, 
-            post.formargs post_formargs, 
-            post.parent post_parent, 
-            post.cat post_cat, 
-            post.nfav post_nfav, 
-            post.nvote post_nvote, 
-            post.nhate post_nhate, 
-            post.nmsg post_nmsg, 
-            post.plugins post_plugins, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.parent parent_parent, 
+            parent.cat parent_cat, 
+            parent.nfav parent_nfav, 
+            parent.nvote parent_nvote, 
+            parent.nhate parent_nhate, 
+            parent.nmsg parent_nmsg, 
+            parent.plugins parent_plugins, 
             "user".id user_id, 
             "user"."type" user_type, 
             "user"."name" user_name, 
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".referer user_referer, 
             "user".person user_person
         from post_vote a
-            left join post post on a.post = post.id
+            left join post parent on a.parent = parent.id
             left join "user" "user" on a."user" = "user".id
         ]]>
     </sql>
@@ -73,35 +73,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="objedit_sql"><![CDATA[
         select
             a.id, 
-            a.post, 
+            a.parent, 
             a."user", 
             a.votes, 
-            post.id post_id, 
-            post.uid post_uid, 
-            post.gid post_gid, 
-            post.mode post_mode, 
-            post.acl post_acl, 
-            post.priority post_priority, 
-            post.flags post_flags, 
-            post."state" post_state, 
-            post.creation post_creation, 
-            post.lastmod post_lastmod, 
-            post."version" post_version, 
-            post.t0 post_t0, 
-            post.t1 post_t1, 
-            post."year" post_year, 
-            post.subject post_subject, 
-            post.op post_op, 
-            post.text post_text, 
-            post.form post_form, 
-            post.formargs post_formargs, 
-            post.parent post_parent, 
-            post.cat post_cat, 
-            post.nfav post_nfav, 
-            post.nvote post_nvote, 
-            post.nhate post_nhate, 
-            post.nmsg post_nmsg, 
-            post.plugins post_plugins, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.parent parent_parent, 
+            parent.cat parent_cat, 
+            parent.nfav parent_nfav, 
+            parent.nvote parent_nvote, 
+            parent.nhate parent_nhate, 
+            parent.nmsg parent_nmsg, 
+            parent.plugins parent_plugins, 
             "user".id user_id, 
             "user"."type" user_type, 
             "user"."name" user_name, 
@@ -118,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".referer user_referer, 
             "user".person user_person
         from post_vote a
-            left join post post on a.post = post.id
+            left join post parent on a.parent = parent.id
             left join "user" "user" on a."user" = "user".id
         ]]>
     </sql>
@@ -131,12 +131,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.postId != null">and a.post = #{m.postId}</if>
-        <if test="m.postIdRange!= null">
-            <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
-            <if test="m.postIdRange.hasStartExcl">and a.post > #{m.postIdRange.start}</if>
-            <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
-            <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
+        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
+        <if test="m.parentIdRange!= null">
+            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
+            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
         </if>
         <if test="m.userId != null">and a."user" = #{m.userId}</if>
         <if test="m.userIdRange!= null">
@@ -145,12 +145,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
             <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
         </if>
-        <if test="m.votes != null">and a.votes = #{m.votes}</if>
-        <if test="m.votesRange!= null">
-            <if test="m.votesRange.hasStartIncl">and a.votes >= #{m.votesRange.start}</if>
-            <if test="m.votesRange.hasStartExcl">and a.votes > #{m.votesRange.start}</if>
-            <if test="m.votesRange.hasEndIncl">and a.votes &lt;= #{m.votesRange.end}</if>
-            <if test="m.votesRange.hasEndExcl">and a.votes &lt; #{m.votesRange.end}</if>
+        <if test="m.voteScore != null">and a.votes = #{m.voteScore}</if>
+        <if test="m.voteScoreRange!= null">
+            <if test="m.voteScoreRange.hasStartIncl">and a.votes >= #{m.voteScoreRange.start}</if>
+            <if test="m.voteScoreRange.hasStartExcl">and a.votes > #{m.voteScoreRange.start}</if>
+            <if test="m.voteScoreRange.hasEndIncl">and a.votes &lt;= #{m.voteScoreRange.end}</if>
+            <if test="m.voteScoreRange.hasEndExcl">and a.votes &lt; #{m.voteScoreRange.end}</if>
         </if>
     </sql>
 
@@ -176,22 +176,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into post_vote(
-            post,
+            parent,
             "user",
             votes
         ) values(
-            #{postId},
+            #{parentId},
             #{userId},
-            #{votes}
+            #{voteScore}
         );
     ]]></insert>
 
     <update id="update">
         update post_vote
         <set>
-            post = #{postId},
+            parent = #{parentId},
             "user" = #{userId},
-            votes = #{votes},
+            votes = #{voteScore},
         </set>
         <where>
             id = #{id}

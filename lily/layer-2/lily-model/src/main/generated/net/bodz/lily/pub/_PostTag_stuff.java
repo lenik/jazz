@@ -80,6 +80,8 @@ public abstract class _PostTag_stuff
     @Column(name = "tag", nullable = false, precision = 10)
     public synchronized int getTagId() {
         if (tag != null) {
+            if (tag.getId() == null)
+                return 0;
             return tag.getId();
         }
         return tagId;
@@ -110,6 +112,8 @@ public abstract class _PostTag_stuff
     @Column(name = "post", nullable = false, precision = 19)
     public synchronized long getPostId() {
         if (post != null) {
+            if (post.getId() == null)
+                return 0L;
             return post.getId();
         }
         return postId;

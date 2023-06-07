@@ -4,13 +4,10 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoNodeMask;
 
 public class _PostParameterTypeMask_stuff
-        extends CoObjectMask {
-
-    Integer id;
-    IntegerRange idRange = new IntegerRange();
+        extends CoNodeMask {
 
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
@@ -20,6 +17,9 @@ public class _PostParameterTypeMask_stuff
 
     Integer acl;
     IntegerRange aclRange = new IntegerRange();
+
+    String uniqName;
+    String uniqNamePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -33,21 +33,8 @@ public class _PostParameterTypeMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer value) {
-        this.id = value;
-    }
-
-    public IntegerRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(IntegerRange range) {
-        this.idRange = range;
-    }
+    Integer dummy;
+    IntegerRange dummyRange = new IntegerRange();
 
     public Integer getOwnerUserId() {
         return ownerUserId;
@@ -95,6 +82,22 @@ public class _PostParameterTypeMask_stuff
 
     public void setAclRange(IntegerRange range) {
         this.aclRange = range;
+    }
+
+    public String getUniqName() {
+        return uniqName;
+    }
+
+    public void setUniqName(String value) {
+        this.uniqName = value;
+    }
+
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
+    }
+
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {
@@ -159,6 +162,22 @@ public class _PostParameterTypeMask_stuff
 
     public void setVersionRange(IntegerRange range) {
         this.versionRange = range;
+    }
+
+    public Integer getDummy() {
+        return dummy;
+    }
+
+    public void setDummy(Integer value) {
+        this.dummy = value;
+    }
+
+    public IntegerRange getDummyRange() {
+        return dummyRange;
+    }
+
+    public void setDummyRange(IntegerRange range) {
+        this.dummyRange = range;
     }
 
 }

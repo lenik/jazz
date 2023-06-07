@@ -5,13 +5,10 @@ import java.sql.Timestamp;
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.LongRange;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.t.base.CoMessageMask;
 
 public class _PostMask_stuff
-        extends CoObjectMask {
-
-    Long id;
-    LongRange idRange = new LongRange();
+        extends CoMessageMask {
 
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
@@ -34,35 +31,17 @@ public class _PostMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    Timestamp beginTime;
-    DateTimeRange beginTimeRange = new DateTimeRange();
-
-    Timestamp endTime;
-    DateTimeRange endTimeRange = new DateTimeRange();
-
-    Integer year;
-    IntegerRange yearRange = new IntegerRange();
-
     String subject;
     String subjectPattern;
-
-    Integer opId;
-    IntegerRange opIdRange = new IntegerRange();
 
     String rawText;
     String rawTextPattern;
 
-    Integer formId;
-    IntegerRange formIdRange = new IntegerRange();
-
     String formArguments;
     String formArgumentsPattern;
 
-    Integer parentId;
-    IntegerRange parentIdRange = new IntegerRange();
-
-    Integer categoryId;
-    IntegerRange categoryIdRange = new IntegerRange();
+    Long parentId;
+    LongRange parentIdRange = new LongRange();
 
     Integer favCount;
     IntegerRange favCountRange = new IntegerRange();
@@ -73,26 +52,10 @@ public class _PostMask_stuff
     Integer hateCount;
     IntegerRange hateCountRange = new IntegerRange();
 
-    Integer nmsg;
-    IntegerRange nmsgRange = new IntegerRange();
+    Integer messageCount;
+    IntegerRange messageCountRange = new IntegerRange();
 
     Object plugins;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long value) {
-        this.id = value;
-    }
-
-    public LongRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(LongRange range) {
-        this.idRange = range;
-    }
 
     public Integer getOwnerUserId() {
         return ownerUserId;
@@ -206,54 +169,6 @@ public class _PostMask_stuff
         this.versionRange = range;
     }
 
-    public Timestamp getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(Timestamp value) {
-        this.beginTime = value;
-    }
-
-    public DateTimeRange getBeginTimeRange() {
-        return beginTimeRange;
-    }
-
-    public void setBeginTimeRange(DateTimeRange range) {
-        this.beginTimeRange = range;
-    }
-
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Timestamp value) {
-        this.endTime = value;
-    }
-
-    public DateTimeRange getEndTimeRange() {
-        return endTimeRange;
-    }
-
-    public void setEndTimeRange(DateTimeRange range) {
-        this.endTimeRange = range;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer value) {
-        this.year = value;
-    }
-
-    public IntegerRange getYearRange() {
-        return yearRange;
-    }
-
-    public void setYearRange(IntegerRange range) {
-        this.yearRange = range;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -268,22 +183,6 @@ public class _PostMask_stuff
 
     public void setSubjectPattern(String value) {
         this.subjectPattern = value;
-    }
-
-    public Integer getOpId() {
-        return opId;
-    }
-
-    public void setOpId(Integer value) {
-        this.opId = value;
-    }
-
-    public IntegerRange getOpIdRange() {
-        return opIdRange;
-    }
-
-    public void setOpIdRange(IntegerRange range) {
-        this.opIdRange = range;
     }
 
     public String getRawText() {
@@ -302,22 +201,6 @@ public class _PostMask_stuff
         this.rawTextPattern = value;
     }
 
-    public Integer getFormId() {
-        return formId;
-    }
-
-    public void setFormId(Integer value) {
-        this.formId = value;
-    }
-
-    public IntegerRange getFormIdRange() {
-        return formIdRange;
-    }
-
-    public void setFormIdRange(IntegerRange range) {
-        this.formIdRange = range;
-    }
-
     public String getFormArguments() {
         return formArguments;
     }
@@ -334,36 +217,20 @@ public class _PostMask_stuff
         this.formArgumentsPattern = value;
     }
 
-    public Integer getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer value) {
+    public void setParentId(Long value) {
         this.parentId = value;
     }
 
-    public IntegerRange getParentIdRange() {
+    public LongRange getParentIdRange() {
         return parentIdRange;
     }
 
-    public void setParentIdRange(IntegerRange range) {
+    public void setParentIdRange(LongRange range) {
         this.parentIdRange = range;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer value) {
-        this.categoryId = value;
-    }
-
-    public IntegerRange getCategoryIdRange() {
-        return categoryIdRange;
-    }
-
-    public void setCategoryIdRange(IntegerRange range) {
-        this.categoryIdRange = range;
     }
 
     public Integer getFavCount() {
@@ -414,20 +281,20 @@ public class _PostMask_stuff
         this.hateCountRange = range;
     }
 
-    public Integer getNmsg() {
-        return nmsg;
+    public Integer getMessageCount() {
+        return messageCount;
     }
 
-    public void setNmsg(Integer value) {
-        this.nmsg = value;
+    public void setMessageCount(Integer value) {
+        this.messageCount = value;
     }
 
-    public IntegerRange getNmsgRange() {
-        return nmsgRange;
+    public IntegerRange getMessageCountRange() {
+        return messageCountRange;
     }
 
-    public void setNmsgRange(IntegerRange range) {
-        this.nmsgRange = range;
+    public void setMessageCountRange(IntegerRange range) {
+        this.messageCountRange = range;
     }
 
     public Object getPlugins() {

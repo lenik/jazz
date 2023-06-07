@@ -7,22 +7,21 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.TypeParamType;
+import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.template.CoTalk;
 
+@TypeParameters({ TypeParamType.THIS_TYPE })
 @IdType(Long.class)
-public abstract class _ArticleTalk_stuff
-        extends CoTalk {
+public abstract class _ArticleTalk_stuff<this_t extends _ArticleTalk_stuff<this_t>>
+        extends CoTalk<this_t> {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_FORM_ARGUMENTS = 2147483647;
 
-    private static final int _ord_YEAR = 10;
-    private static final int _ord_FORM_ARGUMENTS = _ord_YEAR + 5;
+    private static final int _ord_FORM_ARGUMENTS = 15;
     private static final int _ord_ARTICLE_ID = _ord_FORM_ARGUMENTS + 1;
-
-    @NotNull
-    int year;
 
     String formArguments;
 
@@ -32,17 +31,6 @@ public abstract class _ArticleTalk_stuff
 
     @NotNull
     long articleId;
-
-    @Ordinal(_ord_YEAR)
-    @Precision(value = 10)
-    @Column(name = "year", nullable = false, precision = 10)
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int value) {
-        this.year = value;
-    }
 
     @Ordinal(_ord_FORM_ARGUMENTS)
     @Precision(value = N_FORM_ARGUMENTS)

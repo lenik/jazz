@@ -4,13 +4,10 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoNodeMask;
 
 public class _PostTagTypeMask_stuff
-        extends CoObjectMask {
-
-    Integer id;
-    IntegerRange idRange = new IntegerRange();
+        extends CoNodeMask {
 
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
@@ -20,6 +17,9 @@ public class _PostTagTypeMask_stuff
 
     Integer acl;
     IntegerRange aclRange = new IntegerRange();
+
+    String code;
+    String codePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -33,30 +33,11 @@ public class _PostTagTypeMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    Integer parentId;
-    IntegerRange parentIdRange = new IntegerRange();
-
     Integer depth;
     IntegerRange depthRange = new IntegerRange();
 
     Integer refCount;
     IntegerRange refCountRange = new IntegerRange();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer value) {
-        this.id = value;
-    }
-
-    public IntegerRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(IntegerRange range) {
-        this.idRange = range;
-    }
 
     public Integer getOwnerUserId() {
         return ownerUserId;
@@ -104,6 +85,22 @@ public class _PostTagTypeMask_stuff
 
     public void setAclRange(IntegerRange range) {
         this.aclRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Integer getPriority() {
@@ -168,22 +165,6 @@ public class _PostTagTypeMask_stuff
 
     public void setVersionRange(IntegerRange range) {
         this.versionRange = range;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer value) {
-        this.parentId = value;
-    }
-
-    public IntegerRange getParentIdRange() {
-        return parentIdRange;
-    }
-
-    public void setParentIdRange(IntegerRange range) {
-        this.parentIdRange = range;
     }
 
     public Integer getDepth() {

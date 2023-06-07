@@ -10,8 +10,8 @@ public class _PostVoteMask_stuff
     Long id;
     LongRange idRange = new LongRange();
 
-    Long postId;
-    LongRange postIdRange = new LongRange();
+    Long parentId;
+    LongRange parentIdRange = new LongRange();
 
     Integer userId;
     IntegerRange userIdRange = new IntegerRange();
@@ -35,20 +35,20 @@ public class _PostVoteMask_stuff
         this.idRange = range;
     }
 
-    public Long getPostId() {
-        return postId;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setPostId(Long value) {
-        this.postId = value;
+    public void setParentId(Long value) {
+        this.parentId = value;
     }
 
-    public LongRange getPostIdRange() {
-        return postIdRange;
+    public LongRange getParentIdRange() {
+        return parentIdRange;
     }
 
-    public void setPostIdRange(LongRange range) {
-        this.postIdRange = range;
+    public void setParentIdRange(LongRange range) {
+        this.parentIdRange = range;
     }
 
     public Integer getUserId() {

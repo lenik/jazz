@@ -18,17 +18,13 @@ public abstract class _Article_stuff
     public static final int N_FORM_ARGUMENTS = 2147483647;
     public static final int N_CATEGORY_ID = 10;
 
-    private static final int _ord_YEAR = 16;
-    private static final int _ord_FORM_ARGUMENTS = _ord_YEAR + 5;
+    private static final int _ord_FORM_ARGUMENTS = 21;
     private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 1;
     private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 2;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;
-    private static final int _ord_NMSG = _ord_HATE_COUNT + 1;
-    private static final int _ord_PLUGINS = _ord_NMSG + 1;
-
-    @NotNull
-    int year;
+    private static final int _ord_MESSAGE_COUNT = _ord_HATE_COUNT + 1;
+    private static final int _ord_PLUGINS = _ord_MESSAGE_COUNT + 1;
 
     String formArguments;
 
@@ -42,7 +38,7 @@ public abstract class _Article_stuff
     int hateCount;
 
     @NotNull
-    int nmsg;
+    int messageCount;
 
     Object plugins;
 
@@ -50,17 +46,6 @@ public abstract class _Article_stuff
     ArticleCategory category;
 
     Integer categoryId;
-
-    @Ordinal(_ord_YEAR)
-    @Precision(value = 10)
-    @Column(name = "year", nullable = false, precision = 10)
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int value) {
-        this.year = value;
-    }
 
     @Ordinal(_ord_FORM_ARGUMENTS)
     @Precision(value = N_FORM_ARGUMENTS)
@@ -107,15 +92,15 @@ public abstract class _Article_stuff
         this.hateCount = value;
     }
 
-    @Ordinal(_ord_NMSG)
+    @Ordinal(_ord_MESSAGE_COUNT)
     @Precision(value = 10)
     @Column(name = "nmsg", nullable = false, precision = 10)
-    public int getNmsg() {
-        return nmsg;
+    public int getMessageCount() {
+        return messageCount;
     }
 
-    public void setNmsg(int value) {
-        this.nmsg = value;
+    public void setMessageCount(int value) {
+        this.messageCount = value;
     }
 
     @Ordinal(_ord_PLUGINS)

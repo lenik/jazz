@@ -26,8 +26,8 @@ public class _PostParameterMask_stuff
     Long postId;
     LongRange postIdRange = new LongRange();
 
-    Integer parmId;
-    IntegerRange parmIdRange = new IntegerRange();
+    Integer parameterId;
+    IntegerRange parameterIdRange = new IntegerRange();
 
     Integer ival;
     IntegerRange ivalRange = new IntegerRange();
@@ -118,20 +118,20 @@ public class _PostParameterMask_stuff
         this.postIdRange = range;
     }
 
-    public Integer getParmId() {
-        return parmId;
+    public Integer getParameterId() {
+        return parameterId;
     }
 
-    public void setParmId(Integer value) {
-        this.parmId = value;
+    public void setParameterId(Integer value) {
+        this.parameterId = value;
     }
 
-    public IntegerRange getParmIdRange() {
-        return parmIdRange;
+    public IntegerRange getParameterIdRange() {
+        return parameterIdRange;
     }
 
-    public void setParmIdRange(IntegerRange range) {
-        this.parmIdRange = range;
+    public void setParameterIdRange(IntegerRange range) {
+        this.parameterIdRange = range;
     }
 
     public Integer getIval() {
