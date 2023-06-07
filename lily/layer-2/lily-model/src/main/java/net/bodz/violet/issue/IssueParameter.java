@@ -1,22 +1,11 @@
 package net.bodz.violet.issue;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoParameter;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "violet", name = "issueparm")
 public class IssueParameter
-        extends CoParameter<IssueParameter> {
+        extends _IssueParameter_stuff<IssueParameter> {
 
     private static final long serialVersionUID = 1L;
-
-    public IssueParameter() {
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append(super.toString());
-        return sb.toString();
-    }
 
 }
