@@ -12,6 +12,9 @@ public class _TagGroupDefMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
 
@@ -27,9 +30,9 @@ public class _TagGroupDefMask_stuff
     Integer schemaId;
     IntegerRange schemaIdRange = new IntegerRange();
 
-    Boolean topic;
+    Boolean forTopic;
 
-    Boolean reply;
+    Boolean forReply;
 
     public Integer getId() {
         return id;
@@ -45,6 +48,22 @@ public class _TagGroupDefMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Integer getPriority() {
@@ -127,20 +146,20 @@ public class _TagGroupDefMask_stuff
         this.schemaIdRange = range;
     }
 
-    public Boolean getTopic() {
-        return topic;
+    public Boolean getForTopic() {
+        return forTopic;
     }
 
-    public void setTopic(Boolean value) {
-        this.topic = value;
+    public void setForTopic(Boolean value) {
+        this.forTopic = value;
     }
 
-    public Boolean getReply() {
-        return reply;
+    public Boolean getForReply() {
+        return forReply;
     }
 
-    public void setReply(Boolean value) {
-        this.reply = value;
+    public void setForReply(Boolean value) {
+        this.forReply = value;
     }
 
 }

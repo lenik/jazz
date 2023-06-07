@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
-        <result property="topic" column="topic" />
-        <result property="reply" column="reply" />
+        <result property="forTopic" column="topic" />
+        <result property="forReply" column="reply" />
         <result property="schemaId" column="schema" />
         <association property="schema" columnPrefix="schema_"
             javaType="net.bodz.lily.schema.SchemaDef" 
@@ -136,8 +136,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.schemaIdRange.hasEndIncl">and a."schema" &lt;= #{m.schemaIdRange.end}</if>
             <if test="m.schemaIdRange.hasEndExcl">and a."schema" &lt; #{m.schemaIdRange.end}</if>
         </if>
-        <if test="m.topic != null">and a.topic = #{m.topic}</if>
-        <if test="m.reply != null">and a.reply = #{m.reply}</if>
+        <if test="m.forTopic != null">and a.topic = #{m.forTopic}</if>
+        <if test="m.forReply != null">and a.reply = #{m.forReply}</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -185,8 +185,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{schemaId},
-            #{topic},
-            #{reply}
+            #{forTopic},
+            #{forReply}
         );
     ]]></insert>
 
@@ -203,8 +203,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             "schema" = #{schemaId},
-            topic = #{topic},
-            reply = #{reply},
+            topic = #{forTopic},
+            reply = #{forReply},
         </set>
         <where>
             id = #{id}

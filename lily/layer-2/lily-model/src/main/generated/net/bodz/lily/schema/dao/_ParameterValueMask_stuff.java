@@ -12,6 +12,9 @@ public class _ParameterValueMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
 
@@ -24,8 +27,8 @@ public class _ParameterValueMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
-    Integer parmId;
-    IntegerRange parmIdRange = new IntegerRange();
+    Integer parameterId;
+    IntegerRange parameterIdRange = new IntegerRange();
 
     String val;
     String valPattern;
@@ -44,6 +47,22 @@ public class _ParameterValueMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Integer getPriority() {
@@ -110,20 +129,20 @@ public class _ParameterValueMask_stuff
         this.versionRange = range;
     }
 
-    public Integer getParmId() {
-        return parmId;
+    public Integer getParameterId() {
+        return parameterId;
     }
 
-    public void setParmId(Integer value) {
-        this.parmId = value;
+    public void setParameterId(Integer value) {
+        this.parameterId = value;
     }
 
-    public IntegerRange getParmIdRange() {
-        return parmIdRange;
+    public IntegerRange getParameterIdRange() {
+        return parameterIdRange;
     }
 
-    public void setParmIdRange(IntegerRange range) {
-        this.parmIdRange = range;
+    public void setParameterIdRange(IntegerRange range) {
+        this.parameterIdRange = range;
     }
 
     public String getVal() {

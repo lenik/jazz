@@ -16,7 +16,7 @@ public abstract class _TagDef_stuff
     private static final long serialVersionUID = 1L;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_TAGV_ID = _ord_ID + 9;
+    private static final int _ord_TAG_GROUP_ID = _ord_ID + 9;
 
     @Id
     @NotNull
@@ -24,10 +24,10 @@ public abstract class _TagDef_stuff
 
     /**  */
     @NotNull
-    TagGroupDef tagv;
+    TagGroupDef tagGroup;
 
     @NotNull
-    int tagvId;
+    int tagGroupId;
 
     @Override
     public Integer id() {
@@ -57,30 +57,28 @@ public abstract class _TagDef_stuff
      * @constraint foreign key (tagv) references lily._tagv (id)
      */
     @NotNull
-    public TagGroupDef getTagv() {
-        return tagv;
+    public TagGroupDef getTagGroup() {
+        return tagGroup;
     }
 
     /**
      */
-    public void setTagv(@NotNull TagGroupDef value) {
-        this.tagv = value;
+    public void setTagGroup(@NotNull TagGroupDef value) {
+        this.tagGroup = value;
     }
 
-    @Ordinal(_ord_TAGV_ID)
+    @Ordinal(_ord_TAG_GROUP_ID)
     @Precision(value = 10)
     @Column(name = "tagv", nullable = false, precision = 10)
-    public synchronized int getTagvId() {
-        if (tagv != null) {
-            if (tagv.getId() == null)
-                return 0;
-            return tagv.getId();
+    public synchronized int getTagGroupId() {
+        if (tagGroup != null) {
+            return tagGroup.getId();
         }
-        return tagvId;
+        return tagGroupId;
     }
 
-    public synchronized void setTagvId(int value) {
-        this.tagvId = value;
+    public synchronized void setTagGroupId(int value) {
+        this.tagGroupId = value;
     }
 
     public void initNotNulls() {

@@ -1,5 +1,8 @@
 package net.bodz.lily.schema;
 
+import javax.persistence.Column;
+
+import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.model.base.CoCode;
 
 public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_t>>
@@ -8,6 +11,7 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
     private static final long serialVersionUID = 1L;
 
     private SchemaDef schema;
+    private int schemaId;
 
     public AbstractDefinition() {
         super();
@@ -30,6 +34,19 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
         this.schema = schema;
     }
 
+    @Precision(value = 19)
+    @Column(name = "schema")
+    public synchronized int getSchemaId() {
+        if (schema != null) {
+            return schema.getId();
+        }
+        return schemaId;
+    }
+
+    public synchronized void setSchemaId(int value) {
+        this.schemaId = value;
+    }
+
     @Override
     public String toString() {
         String label = getLabel();
@@ -42,6 +59,16 @@ public abstract class AbstractDefinition<self_t extends AbstractDefinition<self_
 
         Integer id = id();
         return id == null ? null : String.valueOf(id);
+    }
+
+    int dummy;
+
+    public int getDummy() {
+        return dummy;
+    }
+
+    public void setDummy(int dummy) {
+        this.dummy = dummy;
     }
 
 }

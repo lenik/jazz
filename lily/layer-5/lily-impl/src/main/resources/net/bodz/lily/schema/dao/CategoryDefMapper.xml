@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="version" column="version" />
         <result property="depth" column="depth" />
         <result property="properties.jsonStr" column="props" />
+        <result property="refCount" column="nobj" />
         <result property="schemaId" column="schema" />
         <result property="parentId" column="parent" />
         <association property="schema" columnPrefix="schema_"
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.parent, 
             a."depth", 
             a.props, 
+            a.nobj, 
             "schema".id schema_id, 
             "schema".code schema_code, 
             "schema".label schema_label, 
@@ -91,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.parent, 
             a."depth", 
             a.props, 
+            a.nobj, 
             "schema".id schema_id, 
             "schema".code schema_code, 
             "schema".label schema_label, 
@@ -189,6 +192,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.depthRange.hasEndExcl">and a."depth" &lt; #{m.depthRange.end}</if>
         </if>
         <if test="m.properties != null">and a.props = #{m.properties}</if>
+        <if test="m.refCount != null">and a.nobj = #{m.refCount}</if>
+        <if test="m.refCountRange!= null">
+            <if test="m.refCountRange.hasStartIncl">and a.nobj >= #{m.refCountRange.start}</if>
+            <if test="m.refCountRange.hasStartExcl">and a.nobj > #{m.refCountRange.start}</if>
+            <if test="m.refCountRange.hasEndIncl">and a.nobj &lt;= #{m.refCountRange.end}</if>
+            <if test="m.refCountRange.hasEndExcl">and a.nobj &lt; #{m.refCountRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -225,7 +235,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "schema",
             parent,
             "depth",
-            props
+            props,
+            nobj
         ) values(
             #{codeName},
             #{label},
@@ -239,7 +250,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{schemaId},
             #{parentId},
             #{depth},
-            #{properties.jsonStr}::jsonb
+            #{properties.jsonStr}::jsonb,
+            #{refCount}
         );
     ]]></insert>
 
@@ -259,6 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent = #{parentId},
             "depth" = #{depth},
             props = #{properties.jsonStr}::jsonb,
+            nobj = #{refCount},
         </set>
         <where>
             id = #{id}

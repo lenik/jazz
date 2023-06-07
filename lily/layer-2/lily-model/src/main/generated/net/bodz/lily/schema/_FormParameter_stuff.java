@@ -16,19 +16,15 @@ public abstract class _FormParameter_stuff
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_NAME = 30;
     public static final int N_VALUE = 100;
 
     private static final int _ord_ID = 1;
     private static final int _ord_FORM_ID = _ord_ID + 1;
-    private static final int _ord_NAME = _ord_FORM_ID + 1;
-    private static final int _ord_VALUE = _ord_NAME + 1;
+    private static final int _ord_VALUE = _ord_FORM_ID + 2;
 
     @Id
     @NotNull
     int id;
-
-    String name;
 
     String value;
 
@@ -59,18 +55,6 @@ public abstract class _FormParameter_stuff
 
     public void setId(int value) {
         this.id = value;
-    }
-
-    @Ordinal(_ord_NAME)
-    @Precision(value = N_NAME)
-    @TextInput(maxLength = N_NAME)
-    @Column(name = "name", length = N_NAME)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String value) {
-        this.name = value;
     }
 
     @Ordinal(_ord_VALUE)
@@ -106,8 +90,6 @@ public abstract class _FormParameter_stuff
     @Column(name = "form", nullable = false, precision = 10)
     public synchronized int getFormId() {
         if (form != null) {
-            if (form.getId() == null)
-                return 0;
             return form.getId();
         }
         return formId;

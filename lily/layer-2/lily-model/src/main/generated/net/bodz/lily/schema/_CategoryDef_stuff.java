@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
@@ -15,23 +16,27 @@ public abstract class _CategoryDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_PARENT_ID = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_SCHEMA_ID = _ord_ID + 10;
+    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
     private static final int _ord_PARENT_ID = _ord_SCHEMA_ID + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
-    private static final int _ord_OBJ_COUNT = _ord_DEPTH + 2;
+    private static final int _ord_REF_COUNT = _ord_DEPTH + 2;
 
     @Id
     @NotNull
     int id;
 
+    String code;
+
     @NotNull
     int depth;
 
     @NotNull
-    int objCount;
+    int refCount;
 
     /**  */
     @NotNull
@@ -67,6 +72,18 @@ public abstract class _CategoryDef_stuff
         this.id = value;
     }
 
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
     @Ordinal(_ord_DEPTH)
     @Precision(value = 10)
     @Column(name = "depth", nullable = false, precision = 10)
@@ -78,15 +95,15 @@ public abstract class _CategoryDef_stuff
         this.depth = value;
     }
 
-    @Ordinal(_ord_OBJ_COUNT)
+    @Ordinal(_ord_REF_COUNT)
     @Precision(value = 10)
     @Column(name = "nobj", nullable = false, precision = 10)
-    public int getObjCount() {
-        return objCount;
+    public int getRefCount() {
+        return refCount;
     }
 
-    public void setObjCount(int value) {
-        this.objCount = value;
+    public void setRefCount(int value) {
+        this.refCount = value;
     }
 
     /**
@@ -110,8 +127,6 @@ public abstract class _CategoryDef_stuff
     @Column(name = "schema", nullable = false, precision = 10)
     public synchronized int getSchemaId() {
         if (schema != null) {
-            if (schema.getId() == null)
-                return 0;
             return schema.getId();
         }
         return schemaId;

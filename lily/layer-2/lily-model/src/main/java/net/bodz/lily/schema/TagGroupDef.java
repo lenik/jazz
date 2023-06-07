@@ -8,13 +8,14 @@ import javax.persistence.Table;
  * @label Tag Group
  * @label.zh 标签组
  */
-@Table(name = "_tagv")
+@Table(schema = "lily", name = "_tagv")
 public class TagGroupDef
-        extends AbstractDefinition<TagGroupDef> {
+        extends _TagGroupDef_stuff {
 
     private static final long serialVersionUID = 1L;
 
     private boolean ortho;
+
     private List<TagDef> tags;
 
     /**
