@@ -16,14 +16,18 @@ public abstract class _ApiType_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_UOM = 30;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_UOM = 12;
+    private static final int _ord_CODE = _ord_ID + 9;
+    private static final int _ord_UOM = _ord_CODE + 2;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     @NotNull
     String uom;
@@ -48,6 +52,18 @@ public abstract class _ApiType_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
     }
 
     @Ordinal(_ord_UOM)

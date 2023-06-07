@@ -16,18 +16,22 @@ public abstract class _VApp_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_REQ_ID = 10;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_SECRET = 2147483647;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_REQ_ID = 16;
+    private static final int _ord_CODE = 14;
+    private static final int _ord_REQ_ID = _ord_CODE + 2;
     private static final int _ord_CATEGORY_ID = _ord_REQ_ID + 1;
     private static final int _ord_SECRET = _ord_CATEGORY_ID + 1;
 
     @Id
     @NotNull
     int id;
+
+    String code;
 
     @NotNull
     String secret;
@@ -62,6 +66,18 @@ public abstract class _VApp_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
     }
 
     @Ordinal(_ord_SECRET)

@@ -20,6 +20,7 @@ public abstract class _VAppRequest_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final int N_CODE = 30;
     public static final int N_SUBJECT = 200;
     public static final int N_OP_ID = 10;
     public static final int N_RAW_TEXT = 2147483647;
@@ -28,7 +29,8 @@ public abstract class _VAppRequest_stuff
     public static final int N_DUMMY = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_BEGIN_TIME = 15;
+    private static final int _ord_CODE = 12;
+    private static final int _ord_BEGIN_TIME = _ord_CODE + 3;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
     private static final int _ord_SUBJECT = _ord_YEAR + 1;
@@ -41,6 +43,8 @@ public abstract class _VAppRequest_stuff
     @Id
     @NotNull
     int id;
+
+    String code;
 
     Timestamp beginTime;
 
@@ -88,6 +92,18 @@ public abstract class _VAppRequest_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_CODE)
+    @Precision(value = N_CODE)
+    @TextInput(maxLength = N_CODE)
+    @Column(name = "code", length = N_CODE)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
     }
 
     @Ordinal(_ord_BEGIN_TIME)
