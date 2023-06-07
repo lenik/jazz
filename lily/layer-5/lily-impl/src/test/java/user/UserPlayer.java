@@ -8,7 +8,7 @@ import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
-import net.bodz.lily.security.impl.UserMapper;
+import net.bodz.lily.security.dao.UserMapper;
 
 public class UserPlayer
         extends DatabaseTester {
@@ -29,7 +29,7 @@ public class UserPlayer
         dump(user);
 
         user = new User();
-        user.setCodeName("Test" + random.nextInt());
+        user.setName("Test" + random.nextInt());
         user.setLabel("Test1");
         user.getSecret().setPassword("hello");
         userMapper.insert(user);
@@ -45,7 +45,7 @@ public class UserPlayer
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
 
         Group g0 = user.getPrimaryGroup();
-        out.println(user.id() + ": " + user.getCodeName() + ": " + user.getLabel());
+        out.println(user.id() + ": " + user.getName() + ": " + user.getLabel());
 
         out.enter();
         if (g0 != null)
