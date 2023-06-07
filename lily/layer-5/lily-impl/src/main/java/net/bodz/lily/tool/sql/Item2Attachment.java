@@ -90,11 +90,12 @@ public class Item2Attachment
 
     public void processTable(ITableMetadata table)
             throws IOException, SQLException, ParseException, FormatException {
-        IVolume volume = anyGroup.getVolume(table.getJavaType());
+        IVolume volume = anyGroup.getVolume(table.getEntityTypeName());
 
         Statement st = connection.createStatement(//
                 ResultSet.TYPE_FORWARD_ONLY, //
                 ResultSet.CONCUR_UPDATABLE);
+
         ResultSet rs = st.executeQuery("select * from " + table.getId());
         while (rs.next()) {
             String json = rs.getString("props");

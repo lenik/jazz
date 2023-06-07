@@ -44,8 +44,6 @@ public abstract class FavRecord
     @Column(name = "user", nullable = false, precision = 19)
     public synchronized int getUserId() {
         if (user != null) {
-            if (user.getId() == null)
-                return 0;
             return user.getId();
         }
         return userId;

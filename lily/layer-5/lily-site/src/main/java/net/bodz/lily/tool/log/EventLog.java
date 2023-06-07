@@ -139,7 +139,7 @@ public class EventLog
             map = new JsonVarMap($user);
             User user = new User();
             user.id(map.getInt("id"));
-            user.setName(map.getString("name"));
+            user.setUniqName(map.getString("name"));
             user.setFullName(map.getString("fullName"));
             this.user = user;
         }
@@ -164,7 +164,7 @@ public class EventLog
             out.key("user");
             out.object();
             out.entry("id", user.id());
-            out.entry("name", user.getName());
+            out.entry("name", user.getUniqName());
             out.entry("fullName", user.getFullName());
             out.endObject();
         }
