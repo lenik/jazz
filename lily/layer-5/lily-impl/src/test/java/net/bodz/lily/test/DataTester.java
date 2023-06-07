@@ -6,7 +6,7 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.XmlFn;
 import net.bodz.lily.security.User;
-import net.bodz.lily.security.impl.UserMapper;
+import net.bodz.lily.security.dao.UserMapper;
 
 public class DataTester {
 
