@@ -1,4 +1,4 @@
-package net.bodz.lily.geo.impl;
+package net.bodz.lily.geo.dao;
 
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoNodeMask;

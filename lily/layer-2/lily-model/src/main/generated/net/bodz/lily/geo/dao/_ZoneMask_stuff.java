@@ -12,6 +12,9 @@ public class _ZoneMask_stuff
     Integer id;
     IntegerRange idRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
 
@@ -45,11 +48,11 @@ public class _ZoneMask_stuff
     Integer depth;
     IntegerRange depthRange = new IntegerRange();
 
-    String telcode;
-    String telcodePattern;
+    String telCode;
+    String telCodePattern;
 
-    String postcode;
-    String postcodePattern;
+    String postCode;
+    String postCodePattern;
 
     Object properties;
 
@@ -69,6 +72,22 @@ public class _ZoneMask_stuff
 
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Integer getOwnerUserId() {
@@ -247,36 +266,36 @@ public class _ZoneMask_stuff
         this.depthRange = range;
     }
 
-    public String getTelcode() {
-        return telcode;
+    public String getTelCode() {
+        return telCode;
     }
 
-    public void setTelcode(String value) {
-        this.telcode = value;
+    public void setTelCode(String value) {
+        this.telCode = value;
     }
 
-    public String getTelcodePattern() {
-        return telcodePattern;
+    public String getTelCodePattern() {
+        return telCodePattern;
     }
 
-    public void setTelcodePattern(String value) {
-        this.telcodePattern = value;
+    public void setTelCodePattern(String value) {
+        this.telCodePattern = value;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getPostCode() {
+        return postCode;
     }
 
-    public void setPostcode(String value) {
-        this.postcode = value;
+    public void setPostCode(String value) {
+        this.postCode = value;
     }
 
-    public String getPostcodePattern() {
-        return postcodePattern;
+    public String getPostCodePattern() {
+        return postCodePattern;
     }
 
-    public void setPostcodePattern(String value) {
-        this.postcodePattern = value;
+    public void setPostCodePattern(String value) {
+        this.postCodePattern = value;
     }
 
     public Object getProperties() {
