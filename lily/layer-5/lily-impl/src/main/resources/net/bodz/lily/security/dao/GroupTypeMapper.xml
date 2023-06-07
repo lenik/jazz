@@ -2,10 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.lily.security.dao.UserRunMapper">
+<mapper namespace="net.bodz.lily.security.dao.GroupTypeMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.lily.security.UserRun">
-        <id property="userId" column="user" />
+    <resultMap id="objlist_map" type="net.bodz.lily.security.GroupType">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -15,17 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
         <result property="properties.jsonStr" column="props" />
-        <result property="score" column="score" />
-        <result property="lastLoginTime" column="lastlog" />
-        <result property="lastLoginIP" column="lastlogip" />
-        <association property="user" columnPrefix="user_"
-            javaType="net.bodz.lily.security.User" 
-            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <result property="dummy" column="dummy" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a."user", 
+            a.id, 
+            a."name", 
             a.label, 
             a.description, 
             a.priority, 
@@ -35,32 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
-            a.score, 
-            a.lastlog, 
-            a.lastlogip, 
-            "user".id user_id, 
-            "user"."type" user_type, 
-            "user"."name" user_name, 
-            "user".label user_label, 
-            "user".description user_description, 
-            "user".priority user_priority, 
-            "user".flags user_flags, 
-            "user"."state" user_state, 
-            "user".creation user_creation, 
-            "user".lastmod user_lastmod, 
-            "user"."version" user_version, 
-            "user".props user_props, 
-            "user".gid0 user_gid0, 
-            "user".referer user_referer, 
-            "user".person user_person
-        from user_run a
-            left join "user" "user" on a."user" = "user".id
+            a.dummy
+        from grouptype a
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a."user", 
+            a.id, 
+            a."name", 
             a.label, 
             a.description, 
             a.priority, 
@@ -70,37 +50,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.lastmod, 
             a."version", 
             a.props, 
-            a.score, 
-            a.lastlog, 
-            a.lastlogip, 
-            "user".id user_id, 
-            "user"."type" user_type, 
-            "user"."name" user_name, 
-            "user".label user_label, 
-            "user".description user_description, 
-            "user".priority user_priority, 
-            "user".flags user_flags, 
-            "user"."state" user_state, 
-            "user".creation user_creation, 
-            "user".lastmod user_lastmod, 
-            "user"."version" user_version, 
-            "user".props user_props, 
-            "user".gid0 user_gid0, 
-            "user".referer user_referer, 
-            "user".person user_person
-        from user_run a
-            left join "user" "user" on a."user" = "user".id
+            a.dummy
+        from grouptype a
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <if test="m.userId != null">and a."user" = #{m.userId}</if>
-        <if test="m.userIdRange!= null">
-            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
-            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
+        <if test="m.name != null">and a."name" = #{m.name}</if>
+        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
         <if test="m.description != null">and a.description = #{m.description}</if>
@@ -136,15 +100,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
         <if test="m.properties != null">and a.props = #{m.properties}</if>
-        <if test="m.score != null">and a.score = #{m.score}</if>
-        <if test="m.scoreRange!= null">
-            <if test="m.scoreRange.hasStartIncl">and a.score >= #{m.scoreRange.start}</if>
-            <if test="m.scoreRange.hasStartExcl">and a.score > #{m.scoreRange.start}</if>
-            <if test="m.scoreRange.hasEndIncl">and a.score &lt;= #{m.scoreRange.end}</if>
-            <if test="m.scoreRange.hasEndExcl">and a.score &lt; #{m.scoreRange.end}</if>
+        <if test="m.dummy != null">and a.dummy = #{m.dummy}</if>
+        <if test="m.dummyRange!= null">
+            <if test="m.dummyRange.hasStartIncl">and a.dummy >= #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasStartExcl">and a.dummy > #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasEndIncl">and a.dummy &lt;= #{m.dummyRange.end}</if>
+            <if test="m.dummyRange.hasEndExcl">and a.dummy &lt; #{m.dummyRange.end}</if>
         </if>
-        <if test="m.lastLoginTime != null">and a.lastlog = #{m.lastLoginTime}</if>
-        <if test="m.lastLoginIP != null">and a.lastlogip = #{m.lastLoginIP}</if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -163,13 +125,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
-            <if test="_parameter != null">a."user" = #{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into user_run(
-            "user",
+        insert into grouptype(
+            "name",
             label,
             description,
             priority,
@@ -179,11 +141,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod,
             "version",
             props,
-            score,
-            lastlog,
-            lastlogip
+            dummy
         ) values(
-            #{userId},
+            #{name},
             #{label},
             #{description},
             #{priority},
@@ -193,15 +153,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{properties.jsonStr}::jsonb,
-            #{score},
-            #{lastLoginTime},
-            #{lastLoginIP}
+            #{dummy}
         );
     ]]></insert>
 
     <update id="update">
-        update user_run
+        update grouptype
         <set>
+            "name" = #{name},
             label = #{label},
             description = #{description},
             priority = #{priority},
@@ -211,29 +170,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             props = #{properties.jsonStr}::jsonb,
-            score = #{score},
-            lastlog = #{lastLoginTime},
-            lastlogip = #{lastLoginIP},
+            dummy = #{dummy},
         </set>
         <where>
-            "user" = #{id}
+            id = #{id}
         </where>
     </update>
 
     <delete id="delete">
-        delete from user_run
+        delete from grouptype
         <where>
-            "user" = #{id}
+            id = #{id}
         </where>
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from user_run
+        select count(*) "rows" from grouptype
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
+
+    <update id="delete_xrefs">
+        alter table lily."group" drop constraint group_type_fkey;
+    </update>
+
+    <update id="create_xrefs">
+        alter table lily."group"
+            add constraint group_type_fkey foreign key ("type")
+            references lily.grouptype (id)
+            on update cascade
+            ;
+    </update>
 
 </mapper>
