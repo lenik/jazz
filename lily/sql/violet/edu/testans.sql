@@ -11,7 +11,7 @@
         q           bigint not null
             references testq(id) on update cascade on delete cascade,
         
-        valid     boolean not null default true
+        valid       boolean not null default true
     );
 
     create index testans_label       on testans(label);

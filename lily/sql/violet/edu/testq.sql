@@ -10,7 +10,7 @@
 --\mixin lily.mixin.ExVer
 --\mixin lily.mixin.Msg
 
-        course  int not null
+        course      int not null
             references course(id) on update cascade,
         
 --\mixin lily.mixin.Props
@@ -18,9 +18,9 @@
 
         -- insert position of the answer. num of chars to the end if negative.
         -- for HTML or RichText, the index of the verbatim code is used.
-        pos     int not null default -1,
+        pos         int not null default -1,
         
-        answer varchar(100) not null default ''
+        answer      varchar(100) not null default ''
     );
 
     create index testq_lastmod        on testq(lastmod desc);
