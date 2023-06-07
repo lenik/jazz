@@ -2,20 +2,10 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.template.CoPhase;
-
-@Table(name = "storephase")
+@Table(schema = "violet", name = "storephase")
 public class StorePhase
-        extends CoPhase {
+        extends _StorePhase_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public StorePhase() {
-        super();
-    }
-
-    public StorePhase(StorePhase parent) {
-        super(parent);
-    }
 
 }

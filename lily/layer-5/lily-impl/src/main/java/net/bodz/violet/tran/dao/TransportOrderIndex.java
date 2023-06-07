@@ -13,4 +13,7 @@ import net.bodz.violet.tran.TransportOrder;
 public class TransportOrderIndex
         extends CoIndex<TransportOrder, TransportOrderMask> {
 
+    public TransportOrderIndex() {
+    }
+
 }

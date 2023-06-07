@@ -1,26 +1,17 @@
 package net.bodz.violet.store;
 
-import java.util.Set;
-
 import javax.persistence.Table;
 
 import net.bodz.bas.site.file.UploadHint;
-import net.bodz.lily.contact.Organization;
-import net.bodz.lily.contact.Person;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoNode;
-import net.bodz.violet.art.Artifact;
-import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.Dim3d;
 
 /**
  * 存放区域
  */
-@IdType(Integer.class)
-@Table(name = "region")
 @UploadHint
+@Table(schema = "violet", name = "region")
 public class Region
-        extends CoNode<Region, Integer> {
+        extends _Region_stuff<Region> {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,21 +21,10 @@ public class Region
     public static final int LEVEL_Default = 0;
 
     private String fullPath = "";
-
-    private RegionLevel level;
-    private RegionCategory category;
-    private Set<RegionTag> tags;
     private RegionProperties properties = new RegionProperties();
 
     private Dim3d position = new Dim3d();
     private Dim3d bbox = new Dim3d();
-
-    private Person person;
-    private Organization org;
-    private Artifact asArtifact;
-    private ArtifactCategory forArtifactCategory;
-    private Artifact forArtifact;
-
     /**
      * redundant.
      */
@@ -54,42 +34,6 @@ public class Region
 
     public void setFullPath(String fullPath) {
         this.fullPath = fullPath;
-    }
-
-    public RegionLevel getLevel() {
-        return level;
-    }
-
-    public void setLevel(RegionLevel level) {
-        this.level = level;
-    }
-
-    public int getLevelId() {
-        if (level == null)
-            return LEVEL_Default;
-        Integer levelId = level.id();
-        return levelId == null ? LEVEL_Default : levelId.intValue();
-    }
-
-    public RegionCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(RegionCategory category) {
-        this.category = category;
-    }
-
-    public Set<RegionTag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<RegionTag> tags) {
-        this.tags = tags;
-    }
-
-    @Override
-    public RegionProperties getProperties() {
-        return properties;
     }
 
     /**
@@ -127,55 +71,4 @@ public class Region
             throw new NullPointerException("bbox");
         this.bbox = bbox;
     }
-
-    /**
-     * 代理人
-     *
-     * 说明这个库位是为指定代理人（供应商或客户）服务的，专门用来存放该代理人的货品。
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    /**
-     * 代理企业
-     *
-     * 说明这个库位是为指定企业（供货商或客户）服务的，专门用来存放该企业的货品。
-     */
-    public Organization getOrg() {
-        return org;
-    }
-
-    public void setOrg(Organization org) {
-        this.org = org;
-    }
-
-    public Artifact getAsArtifact() {
-        return asArtifact;
-    }
-
-    public void setAsArtifact(Artifact asArtifact) {
-        this.asArtifact = asArtifact;
-    }
-
-    public ArtifactCategory getForArtifactCategory() {
-        return forArtifactCategory;
-    }
-
-    public void setForArtifactCategory(ArtifactCategory forArtifactCategory) {
-        this.forArtifactCategory = forArtifactCategory;
-    }
-
-    public Artifact getForArtifact() {
-        return forArtifact;
-    }
-
-    public void setForArtifact(Artifact forArtifact) {
-        this.forArtifact = forArtifact;
-    }
-
 }

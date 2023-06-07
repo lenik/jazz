@@ -1,52 +1,274 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.tran.dao.TransportOrderItemMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.tran.TransportOrderItem" extends="co.MAP_V">
+    <resultMap id="objlist_map" type="net.bodz.violet.tran.TransportOrderItem">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
         <result property="quantity" column="qty" />
         <result property="price" column="price" />
         <result property="amount" column="amount" />
-        <association property="order" javaType="net.bodz.violet.tran.TransportOrder">
-            <id property="id" column="odr" />
-            <result property="subject" column="odr_subject" />
-        </association>
-        <association property="artifact" javaType="net.bodz.violet.art.Artifact">
-            <id property="id" column="art" />
-            <result property="label" column="art_label" />
-        </association>
+        <result property="orderId" column="odr" />
+        <result property="artifactId" column="art" />
+        <association property="artifact" columnPrefix="art_"
+            javaType="net.bodz.violet.art.Artifact" 
+            resultMap="net.bodz.violet.art.dao.ArtifactMapper.objlist_map" />
+        <association property="order" columnPrefix="odr_"
+            javaType="net.bodz.violet.tran.TransportOrder" 
+            resultMap="net.bodz.violet.tran.dao.TransportOrderMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            odr.subject "odr_subject",
-            art.label "art_label"
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.odr, 
+            a.art, 
+            a.qty, 
+            a.price, 
+            a.amount, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price, 
+            odr.id odr_id, 
+            odr.uid odr_uid, 
+            odr.gid odr_gid, 
+            odr.mode odr_mode, 
+            odr.acl odr_acl, 
+            odr.priority odr_priority, 
+            odr.flags odr_flags, 
+            odr."state" odr_state, 
+            odr.t0 odr_t0, 
+            odr.t1 odr_t1, 
+            odr."year" odr_year, 
+            odr.creation odr_creation, 
+            odr.lastmod odr_lastmod, 
+            odr."version" odr_version, 
+            odr.subject odr_subject, 
+            odr.op odr_op, 
+            odr.text odr_text, 
+            odr.form odr_form, 
+            odr.formargs odr_formargs, 
+            odr.props odr_props, 
+            odr.cat odr_cat, 
+            odr.phase odr_phase, 
+            odr.prev odr_prev, 
+            odr.saleodr odr_saleodr, 
+            odr.storeodr odr_storeodr, 
+            odr.shipper odr_shipper, 
+            odr.s_alias odr_s_alias, 
+            odr.s_ctprops odr_s_ctprops, 
+            odr.s_address1 odr_s_address1, 
+            odr.s_address2 odr_s_address2, 
+            odr.s_zone odr_s_zone, 
+            odr.s_tel odr_s_tel, 
+            odr.s_telok odr_s_telok, 
+            odr.s_email odr_s_email, 
+            odr.s_emailok odr_s_emailok, 
+            odr.d_alias odr_d_alias, 
+            odr.d_ctprops odr_d_ctprops, 
+            odr.d_address1 odr_d_address1, 
+            odr.d_address2 odr_d_address2, 
+            odr.d_zone odr_d_zone, 
+            odr.d_tel odr_d_tel, 
+            odr.d_telok odr_d_telok, 
+            odr.d_email odr_d_email, 
+            odr.d_emailok odr_d_emailok, 
+            odr.shipcost odr_shipcost, 
+            odr."length" odr_length, 
+            odr.sum_qty odr_sum_qty, 
+            odr.sum_amount odr_sum_amount
         from tranodrl a
+            left join art art on a.art = art.id
             left join tranodr odr on a.odr = odr.id
-            left join art on a.art = art.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            odr.subject "odr_subject",
-            art.label "art_label"
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.odr, 
+            a.art, 
+            a.qty, 
+            a.price, 
+            a.amount, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price, 
+            odr.id odr_id, 
+            odr.uid odr_uid, 
+            odr.gid odr_gid, 
+            odr.mode odr_mode, 
+            odr.acl odr_acl, 
+            odr.priority odr_priority, 
+            odr.flags odr_flags, 
+            odr."state" odr_state, 
+            odr.t0 odr_t0, 
+            odr.t1 odr_t1, 
+            odr."year" odr_year, 
+            odr.creation odr_creation, 
+            odr.lastmod odr_lastmod, 
+            odr."version" odr_version, 
+            odr.subject odr_subject, 
+            odr.op odr_op, 
+            odr.text odr_text, 
+            odr.form odr_form, 
+            odr.formargs odr_formargs, 
+            odr.props odr_props, 
+            odr.cat odr_cat, 
+            odr.phase odr_phase, 
+            odr.prev odr_prev, 
+            odr.saleodr odr_saleodr, 
+            odr.storeodr odr_storeodr, 
+            odr.shipper odr_shipper, 
+            odr.s_alias odr_s_alias, 
+            odr.s_ctprops odr_s_ctprops, 
+            odr.s_address1 odr_s_address1, 
+            odr.s_address2 odr_s_address2, 
+            odr.s_zone odr_s_zone, 
+            odr.s_tel odr_s_tel, 
+            odr.s_telok odr_s_telok, 
+            odr.s_email odr_s_email, 
+            odr.s_emailok odr_s_emailok, 
+            odr.d_alias odr_d_alias, 
+            odr.d_ctprops odr_d_ctprops, 
+            odr.d_address1 odr_d_address1, 
+            odr.d_address2 odr_d_address2, 
+            odr.d_zone odr_d_zone, 
+            odr.d_tel odr_d_tel, 
+            odr.d_telok odr_d_telok, 
+            odr.d_email odr_d_email, 
+            odr.d_emailok odr_d_emailok, 
+            odr.shipcost odr_shipcost, 
+            odr."length" odr_length, 
+            odr.sum_qty odr_sum_qty, 
+            odr.sum_amount odr_sum_amount
         from tranodrl a
+            left join art art on a.art = art.id
             left join tranodr odr on a.odr = odr.id
-            left join art on a.art = art.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.orderId != null">and a.odr = #{m.orderId}</if>
+        <if test="m.orderIdRange!= null">
+            <if test="m.orderIdRange.hasStartIncl">and a.odr >= #{m.orderIdRange.start}</if>
+            <if test="m.orderIdRange.hasStartExcl">and a.odr > #{m.orderIdRange.start}</if>
+            <if test="m.orderIdRange.hasEndIncl">and a.odr &lt;= #{m.orderIdRange.end}</if>
+            <if test="m.orderIdRange.hasEndExcl">and a.odr &lt; #{m.orderIdRange.end}</if>
+        </if>
+        <if test="m.artifactId != null">and a.art = #{m.artifactId}</if>
+        <if test="m.artifactIdRange!= null">
+            <if test="m.artifactIdRange.hasStartIncl">and a.art >= #{m.artifactIdRange.start}</if>
+            <if test="m.artifactIdRange.hasStartExcl">and a.art > #{m.artifactIdRange.start}</if>
+            <if test="m.artifactIdRange.hasEndIncl">and a.art &lt;= #{m.artifactIdRange.end}</if>
+            <if test="m.artifactIdRange.hasEndExcl">and a.art &lt; #{m.artifactIdRange.end}</if>
+        </if>
+        <if test="m.quantity != null">and a.qty = #{m.quantity}</if>
+        <if test="m.quantityRange!= null">
+            <if test="m.quantityRange.hasStartIncl">and a.qty >= #{m.quantityRange.start}</if>
+            <if test="m.quantityRange.hasStartExcl">and a.qty > #{m.quantityRange.start}</if>
+            <if test="m.quantityRange.hasEndIncl">and a.qty &lt;= #{m.quantityRange.end}</if>
+            <if test="m.quantityRange.hasEndExcl">and a.qty &lt; #{m.quantityRange.end}</if>
+        </if>
+        <if test="m.price != null">and a.price = #{m.price}</if>
+        <if test="m.priceRange!= null">
+            <if test="m.priceRange.hasStartIncl">and a.price >= #{m.priceRange.start}</if>
+            <if test="m.priceRange.hasStartExcl">and a.price > #{m.priceRange.start}</if>
+            <if test="m.priceRange.hasEndIncl">and a.price &lt;= #{m.priceRange.end}</if>
+            <if test="m.priceRange.hasEndExcl">and a.price &lt; #{m.priceRange.end}</if>
+        </if>
+        <if test="m.amount != null">and a.amount = #{m.amount}</if>
+        <if test="m.amountRange!= null">
+            <if test="m.amountRange.hasStartIncl">and a.amount >= #{m.amountRange.start}</if>
+            <if test="m.amountRange.hasStartExcl">and a.amount > #{m.amountRange.start}</if>
+            <if test="m.amountRange.hasEndIncl">and a.amount &lt;= #{m.amountRange.end}</if>
+            <if test="m.amountRange.hasEndExcl">and a.amount &lt; #{m.amountRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -54,9 +276,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -65,22 +288,34 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into tranodrl(
-            priority, flags, state,
-            odr, art,
-            qty, price, amount
+            priority,
+            flags,
+            "state",
+            odr,
+            art,
+            qty,
+            price,
+            amount
         ) values(
-            #{priority}, #{flags}, #{state},
-            #{order.id}, #{artifact.id},
-            #{quantity}, #{price}, #{amount}
+            #{priority},
+            #{flags},
+            #{state},
+            #{orderId},
+            #{artifactId},
+            #{quantity},
+            #{price},
+            #{amount}
         );
     ]]></insert>
 
     <update id="update">
         update tranodrl
         <set>
-            <include refid="co.setS" />
-            odr = #{order.id},
-            art = #{artifact.id},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            odr = #{orderId},
+            art = #{artifactId},
             qty = #{quantity},
             price = #{price},
             amount = #{amount},
@@ -91,10 +326,13 @@
     </update>
 
     <delete id="delete">
-        delete from tranodrl where id = #{id}
+        delete from tranodrl
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
+    <select id="count" resultType="long">
         select count(*) "rows" from tranodrl
         <where>
             <if test="_parameter != null">

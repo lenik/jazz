@@ -4,6 +4,7 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.store.OffStoreItem;
 
 public interface OffStoreItemMapper
-        extends IEntityMapper<OffStoreItem, OffStoreItemMask> {
+        extends
+            IEntityMapper<OffStoreItem, OffStoreItemMask> {
 
 }
