@@ -4,16 +4,19 @@ column-property {
     props:              properties
     t0:                 beginTime
     t1:                 endTime
-    code:               codeName
+    name:               uniqName
     imagealt:           imageAlt
     nref:               refCount
     formargs:           formArguments
     text:               rawText
-    nobj:               objCount
+    nobj:               refCount
     votes:              voteScore
     nvote:              voteCount
     nfav:               favCount
     nhate:              hateCount
+    nmsg:               messageCount
+    parm:               parameter
+    tagv:               tagGroup
 }
 
 key-columns {
@@ -50,6 +53,15 @@ table-name {
     _schema:            net.bodz.lily.schema.SchemaDef
     _tag:               net.bodz.lily.schema.TagDef
     _tagv:              net.bodz.lily.schema.TagGroupDef
+}
+
+table _tagv {
+    column topic {
+        javaName: forTopic
+    }
+    column reply {
+        javaName: forReply
+    }
 }
 
 column-level {

@@ -2,27 +2,27 @@
 
 class-map {
     net.bodz.lily.t.base.CoMessage: \
-        article,
+        article, \
         post
     net.bodz.lily.template.BackrefRecord: \
         article_backref, \
         post_backref
     net.bodz.lily.template.FavRecord: \
-        article_fav,
+        article_fav, \
         post_fav
     net.bodz.lily.template.VoteRecord: \
-        article_vote,
-        post_vote,
-        article_msg_vote,
+        article_vote, \
+        post_vote, \
+        article_msg_vote, \
         post_msg_vote
     net.bodz.lily.template.CoTalk: \
-        article_msg,
+        article_msg, \
         post_msg
     net.bodz.lily.template.CoParameter: \
-        articleparm,
+        articleparm, \
         postparm
     net.bodz.lily.template.CoTag: \
-        articletag,
+        articletag, \
         posttag
 }
 

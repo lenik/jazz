@@ -2,9 +2,9 @@
     create table $1parm(
         id          int primary key default nextval('$1parm_seq'),
 --\mixin lily.mixin.Acl_rw-r--r--
---\mixin lily.mixin.Code
+--\mixin lily.mixin.UniqName
 --\mixin lily.mixin.LabelExVer
-        constraint $1parm_uk unique(code)
+        dummy       int
     );
 
     create index $1parm_label       on $1parm(label);
