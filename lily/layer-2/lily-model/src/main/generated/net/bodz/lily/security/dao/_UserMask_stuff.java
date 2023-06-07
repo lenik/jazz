@@ -17,8 +17,8 @@ public class _UserMask_stuff
     IntegerRange typeIdRange = new IntegerRange();
 
     /** The user name (unique) */
-    String name;
-    String namePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -35,8 +35,8 @@ public class _UserMask_stuff
     Object properties;
 
     /** The primary user group, the default value of ownerGroup. */
-    Integer gid0Id;
-    IntegerRange gid0IdRange = new IntegerRange();
+    Integer primaryGroupId;
+    IntegerRange primaryGroupIdRange = new IntegerRange();
 
     /** The referer user (used for promotion) */
     Integer refererId;
@@ -80,21 +80,21 @@ public class _UserMask_stuff
     }
 
     /** The user name (unique) */
-    public String getName() {
-        return name;
+    public String getUniqName() {
+        return uniqName;
     }
 
     /** The user name (unique) */
-    public void setName(String value) {
-        this.name = value;
+    public void setUniqName(String value) {
+        this.uniqName = value;
     }
 
-    public String getNamePattern() {
-        return namePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setNamePattern(String value) {
-        this.namePattern = value;
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {
@@ -170,21 +170,21 @@ public class _UserMask_stuff
     }
 
     /** The primary user group, the default value of ownerGroup. */
-    public Integer getGid0Id() {
-        return gid0Id;
+    public Integer getPrimaryGroupId() {
+        return primaryGroupId;
     }
 
     /** The primary user group, the default value of ownerGroup. */
-    public void setGid0Id(Integer value) {
-        this.gid0Id = value;
+    public void setPrimaryGroupId(Integer value) {
+        this.primaryGroupId = value;
     }
 
-    public IntegerRange getGid0IdRange() {
-        return gid0IdRange;
+    public IntegerRange getPrimaryGroupIdRange() {
+        return primaryGroupIdRange;
     }
 
-    public void setGid0IdRange(IntegerRange range) {
-        this.gid0IdRange = range;
+    public void setPrimaryGroupIdRange(IntegerRange range) {
+        this.primaryGroupIdRange = range;
     }
 
     /** The referer user (used for promotion) */

@@ -13,8 +13,8 @@ public class _UserTypeMask_stuff
     IntegerRange idRange = new IntegerRange();
 
     /** The user type name */
-    String name;
-    String namePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -50,21 +50,21 @@ public class _UserTypeMask_stuff
     }
 
     /** The user type name */
-    public String getName() {
-        return name;
+    public String getUniqName() {
+        return uniqName;
     }
 
     /** The user type name */
-    public void setName(String value) {
-        this.name = value;
+    public void setUniqName(String value) {
+        this.uniqName = value;
     }
 
-    public String getNamePattern() {
-        return namePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setNamePattern(String value) {
-        this.namePattern = value;
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {

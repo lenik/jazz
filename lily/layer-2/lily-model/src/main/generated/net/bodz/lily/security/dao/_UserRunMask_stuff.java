@@ -10,8 +10,8 @@ public class _UserRunMask_stuff
         extends CoObjectMask {
 
     /** The user */
-    Integer user;
-    IntegerRange userRange = new IntegerRange();
+    Integer userId;
+    IntegerRange userIdRange = new IntegerRange();
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -31,28 +31,28 @@ public class _UserRunMask_stuff
     IntegerRange scoreRange = new IntegerRange();
 
     /** Last time of login */
-    Timestamp lastlog;
-    DateTimeRange lastlogRange = new DateTimeRange();
+    Timestamp lastLoginTime;
+    DateTimeRange lastLoginTimeRange = new DateTimeRange();
 
     /** The source IP of last login */
-    Object lastlogip;
+    Object lastLoginIP;
 
     /** The user */
-    public Integer getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
     /** The user */
-    public void setUser(Integer value) {
-        this.user = value;
+    public void setUserId(Integer value) {
+        this.userId = value;
     }
 
-    public IntegerRange getUserRange() {
-        return userRange;
+    public IntegerRange getUserIdRange() {
+        return userIdRange;
     }
 
-    public void setUserRange(IntegerRange range) {
-        this.userRange = range;
+    public void setUserIdRange(IntegerRange range) {
+        this.userIdRange = range;
     }
 
     public Integer getPriority() {
@@ -144,31 +144,31 @@ public class _UserRunMask_stuff
     }
 
     /** Last time of login */
-    public Timestamp getLastlog() {
-        return lastlog;
+    public Timestamp getLastLoginTime() {
+        return lastLoginTime;
     }
 
     /** Last time of login */
-    public void setLastlog(Timestamp value) {
-        this.lastlog = value;
+    public void setLastLoginTime(Timestamp value) {
+        this.lastLoginTime = value;
     }
 
-    public DateTimeRange getLastlogRange() {
-        return lastlogRange;
+    public DateTimeRange getLastLoginTimeRange() {
+        return lastLoginTimeRange;
     }
 
-    public void setLastlogRange(DateTimeRange range) {
-        this.lastlogRange = range;
-    }
-
-    /** The source IP of last login */
-    public Object getLastlogip() {
-        return lastlogip;
+    public void setLastLoginTimeRange(DateTimeRange range) {
+        this.lastLoginTimeRange = range;
     }
 
     /** The source IP of last login */
-    public void setLastlogip(Object value) {
-        this.lastlogip = value;
+    public Object getLastLoginIP() {
+        return lastLoginIP;
+    }
+
+    /** The source IP of last login */
+    public void setLastLoginIP(Object value) {
+        this.lastLoginIP = value;
     }
 
 }

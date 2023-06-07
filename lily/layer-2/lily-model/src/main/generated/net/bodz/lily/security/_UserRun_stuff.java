@@ -20,51 +20,37 @@ public abstract class _UserRun_stuff
 
     private static final long serialVersionUID = 1L;
 
-    private static final int _ord_USER = 1;
-    private static final int _ord_SCORE = _ord_USER + 10;
-    private static final int _ord_LASTLOG = _ord_SCORE + 1;
-    private static final int _ord_LASTLOGIP = _ord_LASTLOG + 1;
-
-    /** The user */
-    @Id
-    @NotNull
-    int user;
+    private static final int _ord_USER_ID = 1;
+    private static final int _ord_SCORE = _ord_USER_ID + 10;
+    private static final int _ord_LAST_LOGIN_TIME = _ord_SCORE + 1;
+    private static final int _ord_LAST_LOGIN_I_P = _ord_LAST_LOGIN_TIME + 1;
 
     @NotNull
     int score;
 
     /** Last time of login */
-    Timestamp lastlog;
+    Timestamp lastLoginTime;
 
     /** The source IP of last login */
-    Object lastlogip;
+    Object lastLoginIP;
+
+    /** The user */
+    @NotNull
+    User user;
+
+    /** The user */
+    @Id
+    @NotNull
+    int userId;
 
     @Override
     public Integer id() {
-        return getUser();
+        return getUserId();
     }
 
     @Override
     public void id(Integer id) {
-        setUser(id);
-    }
-
-    /**
-     * The user
-     */
-    @Id
-    @Ordinal(_ord_USER)
-    @Precision(value = 10)
-    @Column(name = "user", nullable = false, precision = 10)
-    public int getUser() {
-        return user;
-    }
-
-    /**
-     * The user
-     */
-    public void setUser(int value) {
-        this.user = value;
+        setUserId(id);
     }
 
     @Ordinal(_ord_SCORE)
@@ -81,35 +67,76 @@ public abstract class _UserRun_stuff
     /**
      * Last time of login
      */
-    @Ordinal(_ord_LASTLOG)
+    @Ordinal(_ord_LAST_LOGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "lastlog", precision = 35, scale = 6)
-    public Timestamp getLastlog() {
-        return lastlog;
+    public Timestamp getLastLoginTime() {
+        return lastLoginTime;
     }
 
     /**
      * Last time of login
      */
-    public void setLastlog(Timestamp value) {
-        this.lastlog = value;
+    public void setLastLoginTime(Timestamp value) {
+        this.lastLoginTime = value;
     }
 
     /**
      * The source IP of last login
      */
-    @Ordinal(_ord_LASTLOGIP)
+    @Ordinal(_ord_LAST_LOGIN_I_P)
     @Precision(value = 2147483647)
     @Column(name = "lastlogip", precision = 2147483647)
-    public Object getLastlogip() {
-        return lastlogip;
+    public Object getLastLoginIP() {
+        return lastLoginIP;
     }
 
     /**
      * The source IP of last login
      */
-    public void setLastlogip(Object value) {
-        this.lastlogip = value;
+    public void setLastLoginIP(Object value) {
+        this.lastLoginIP = value;
+    }
+
+    /**
+     * The user
+     *
+     * @label user
+     * @constraint foreign key (user) references lily.user (id)
+     */
+    @NotNull
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * The user
+     */
+    public void setUser(@NotNull User value) {
+        this.user = value;
+    }
+
+    /**
+     * The user
+     */
+    @Id
+    @Ordinal(_ord_USER_ID)
+    @Precision(value = 10)
+    @Column(name = "user", nullable = false, precision = 10)
+    public synchronized int getUserId() {
+        if (user != null) {
+            if (user.getId() == null)
+                return 0;
+            return user.getId();
+        }
+        return userId;
+    }
+
+    /**
+     * The user
+     */
+    public synchronized void setUserId(int value) {
+        this.userId = value;
     }
 
     public void initNotNulls() {

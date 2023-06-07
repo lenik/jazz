@@ -1,7 +1,7 @@
 package net.bodz.lily.security.login;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.lily.security.impl.UserMapper;
+import net.bodz.lily.security.dao.UserMapper;
 
 public abstract class DataBackedLoginResolver
         extends AbstractLoginResolver {

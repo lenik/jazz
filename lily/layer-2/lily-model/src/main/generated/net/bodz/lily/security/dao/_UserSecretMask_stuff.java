@@ -28,8 +28,8 @@ public class _UserSecretMask_stuff
     IntegerRange userIdRange = new IntegerRange();
 
     /** Password data */
-    String passwd;
-    String passwdPattern;
+    String password;
+    String passwordPattern;
 
     /** Protection question */
     String question;
@@ -130,21 +130,21 @@ public class _UserSecretMask_stuff
     }
 
     /** Password data */
-    public String getPasswd() {
-        return passwd;
+    public String getPassword() {
+        return password;
     }
 
     /** Password data */
-    public void setPasswd(String value) {
-        this.passwd = value;
+    public void setPassword(String value) {
+        this.password = value;
     }
 
-    public String getPasswdPattern() {
-        return passwdPattern;
+    public String getPasswordPattern() {
+        return passwordPattern;
     }
 
-    public void setPasswdPattern(String value) {
-        this.passwdPattern = value;
+    public void setPasswordPattern(String value) {
+        this.passwordPattern = value;
     }
 
     /** Protection question */

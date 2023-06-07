@@ -1,22 +1,11 @@
 package net.bodz.lily.security;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "lily", name = "useroidtype")
 public class UserOtherIdType
-        extends IdEntity<Integer> {
+        extends _UserOtherIdType_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public UserOtherIdType() {
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append(super.toString());
-        return sb.toString();
-    }
 
 }

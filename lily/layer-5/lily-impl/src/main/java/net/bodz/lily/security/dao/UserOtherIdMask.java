@@ -1,4 +1,4 @@
-package net.bodz.lily.security.impl;
+package net.bodz.lily.security.dao;
 
 import net.bodz.lily.model.base.CoMomentIntervalMask;
 import net.bodz.lily.security.User;

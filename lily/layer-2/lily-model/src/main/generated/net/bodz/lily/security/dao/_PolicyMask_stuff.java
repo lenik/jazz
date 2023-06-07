@@ -13,8 +13,8 @@ public class _PolicyMask_stuff
     IntegerRange idRange = new IntegerRange();
 
     /** The policy name (unique) */
-    String name;
-    String namePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -30,9 +30,13 @@ public class _PolicyMask_stuff
 
     Object properties;
 
+    /** The control class */
+    String controlClass;
+    String controlClassPattern;
+
     /** The method name */
-    String method;
-    String methodPattern;
+    String methodName;
+    String methodNamePattern;
 
     /** allow */
     Integer allowBits;
@@ -59,21 +63,21 @@ public class _PolicyMask_stuff
     }
 
     /** The policy name (unique) */
-    public String getName() {
-        return name;
+    public String getUniqName() {
+        return uniqName;
     }
 
     /** The policy name (unique) */
-    public void setName(String value) {
-        this.name = value;
+    public void setUniqName(String value) {
+        this.uniqName = value;
     }
 
-    public String getNamePattern() {
-        return namePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setNamePattern(String value) {
-        this.namePattern = value;
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {
@@ -148,22 +152,40 @@ public class _PolicyMask_stuff
         this.properties = value;
     }
 
-    /** The method name */
-    public String getMethod() {
-        return method;
+    /** The control class */
+    public String getControlClass() {
+        return controlClass;
+    }
+
+    /** The control class */
+    public void setControlClass(String value) {
+        this.controlClass = value;
+    }
+
+    public String getControlClassPattern() {
+        return controlClassPattern;
+    }
+
+    public void setControlClassPattern(String value) {
+        this.controlClassPattern = value;
     }
 
     /** The method name */
-    public void setMethod(String value) {
-        this.method = value;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public String getMethodPattern() {
-        return methodPattern;
+    /** The method name */
+    public void setMethodName(String value) {
+        this.methodName = value;
     }
 
-    public void setMethodPattern(String value) {
-        this.methodPattern = value;
+    public String getMethodNamePattern() {
+        return methodNamePattern;
+    }
+
+    public void setMethodNamePattern(String value) {
+        this.methodNamePattern = value;
     }
 
     /** allow */

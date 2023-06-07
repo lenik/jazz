@@ -1,4 +1,4 @@
-package net.bodz.lily.security.impl;
+package net.bodz.lily.security.dao;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.repr.meta.Face;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
+import net.bodz.lily.security.AccessMode;
 
 @Face("AccessMode")
 public class AccessMode_htm

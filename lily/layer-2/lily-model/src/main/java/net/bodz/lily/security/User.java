@@ -8,13 +8,9 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
-import net.bodz.lily.entity.IdType;
 
 /**
  * <p lang="zh-cn">
@@ -32,10 +28,9 @@ import net.bodz.lily.entity.IdType;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
-@Table(name = "user")
-@IdType(Integer.class)
+@Table(schema = "lily", name = "user")
 public class User
-        extends CoPrincipal {
+        extends _User_stuff {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,10 +39,7 @@ public class User
     public static final int ID_DefaultUser = 2;
     public static final int ID_Guest = 3;
 
-    private UserCategory category;
     private List<Group> groups = new ArrayList<>();
-    private Group primaryGroup = StdGroups.user;
-
     private List<UserSecret> secrets = new ArrayList<>();
     private List<UserOtherId> oids = new ArrayList<>();
 
@@ -61,30 +53,6 @@ public class User
         id(id);
         setName(name);
         setFullName(fullName);
-    }
-
-    /**
-     * @label User Category
-     * @label.zh 用户分类
-     */
-    public UserCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(UserCategory category) {
-        this.category = category;
-    }
-
-    /**
-     * @label Primary Group
-     * @label.zh 首要的组
-     */
-    public Group getPrimaryGroup() {
-        return primaryGroup;
-    }
-
-    public void setPrimaryGroup(Group primaryGroup) {
-        this.primaryGroup = primaryGroup;
     }
 
     public List<Group> getGroups() {
@@ -195,15 +163,6 @@ public class User
 
     public void setRunningState(UserRun runningState) {
         this.runningState = runningState;
-    }
-
-    @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
-            throws ParseException {
-        super.jsonIn(o, opts);
-        category = o.readInto("category", category, new UserCategory());
-        primaryGroup = o.readInto("primaryGroup", primaryGroup, new Group());
-        // TODO
     }
 
 }

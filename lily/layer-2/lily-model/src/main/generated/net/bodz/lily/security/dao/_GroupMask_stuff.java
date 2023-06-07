@@ -13,8 +13,8 @@ public class _GroupMask_stuff
     IntegerRange idRange = new IntegerRange();
 
     /** The group name (unique) */
-    String name;
-    String namePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     /** Group type like normal-group, role-group, etc. */
     Integer typeId;
@@ -55,21 +55,21 @@ public class _GroupMask_stuff
     }
 
     /** The group name (unique) */
-    public String getName() {
-        return name;
+    public String getUniqName() {
+        return uniqName;
     }
 
     /** The group name (unique) */
-    public void setName(String value) {
-        this.name = value;
+    public void setUniqName(String value) {
+        this.uniqName = value;
     }
 
-    public String getNamePattern() {
-        return namePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setNamePattern(String value) {
-        this.namePattern = value;
+    public void setUniqNamePattern(String value) {
+        this.uniqNamePattern = value;
     }
 
     /** Group type like normal-group, role-group, etc. */

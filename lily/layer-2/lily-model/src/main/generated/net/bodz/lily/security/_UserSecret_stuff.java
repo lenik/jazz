@@ -19,14 +19,14 @@ public abstract class _UserSecret_stuff
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_PASSWD = 40;
+    public static final int N_PASSWORD = 40;
     public static final int N_QUESTION = 100;
     public static final int N_ANSWER = 30;
 
     private static final int _ord_ID = 1;
     private static final int _ord_USER_ID = _ord_ID + 5;
-    private static final int _ord_PASSWD = _ord_USER_ID + 1;
-    private static final int _ord_QUESTION = _ord_PASSWD + 1;
+    private static final int _ord_PASSWORD = _ord_USER_ID + 1;
+    private static final int _ord_QUESTION = _ord_PASSWORD + 1;
     private static final int _ord_ANSWER = _ord_QUESTION + 1;
 
     @Id
@@ -35,7 +35,7 @@ public abstract class _UserSecret_stuff
 
     /** Password data */
     @NotNull
-    String passwd;
+    String password;
 
     /** Protection question */
     String question;
@@ -76,20 +76,20 @@ public abstract class _UserSecret_stuff
     /**
      * Password data
      */
-    @Ordinal(_ord_PASSWD)
+    @Ordinal(_ord_PASSWORD)
     @NotNull
-    @Precision(value = N_PASSWD)
-    @TextInput(maxLength = N_PASSWD)
-    @Column(name = "passwd", nullable = false, length = N_PASSWD)
-    public String getPasswd() {
-        return passwd;
+    @Precision(value = N_PASSWORD)
+    @TextInput(maxLength = N_PASSWORD)
+    @Column(name = "passwd", nullable = false, length = N_PASSWORD)
+    public String getPassword() {
+        return password;
     }
 
     /**
      * Password data
      */
-    public void setPasswd(@NotNull String value) {
-        this.passwd = value;
+    public void setPassword(@NotNull String value) {
+        this.password = value;
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class _UserSecret_stuff
     }
 
     public void initNotNulls() {
-        this.passwd = "";
+        this.password = "";
     }
 
 }

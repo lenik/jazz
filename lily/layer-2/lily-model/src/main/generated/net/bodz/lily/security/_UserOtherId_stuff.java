@@ -21,7 +21,7 @@ public abstract class _UserOtherId_stuff
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_OID = 100;
+    public static final int N_OTHER_ID = 100;
 
     private static final int _ord_ID = 1;
     private static final int _ord_BEGIN_TIME = _ord_ID + 9;
@@ -29,8 +29,8 @@ public abstract class _UserOtherId_stuff
     private static final int _ord_YEAR = _ord_END_TIME + 1;
     private static final int _ord_USER_ID = _ord_YEAR + 2;
     private static final int _ord_TYPE_ID = _ord_USER_ID + 1;
-    private static final int _ord_OID = _ord_TYPE_ID + 1;
-    private static final int _ord_AUTH = _ord_OID + 1;
+    private static final int _ord_OTHER_ID = _ord_TYPE_ID + 1;
+    private static final int _ord_AUTH = _ord_OTHER_ID + 1;
 
     @Id
     @NotNull
@@ -45,7 +45,7 @@ public abstract class _UserOtherId_stuff
 
     /** The identity data */
     @NotNull
-    String oid;
+    String otherId;
 
     /** The authentication data */
     Object auth;
@@ -124,20 +124,20 @@ public abstract class _UserOtherId_stuff
     /**
      * The identity data
      */
-    @Ordinal(_ord_OID)
+    @Ordinal(_ord_OTHER_ID)
     @NotNull
-    @Precision(value = N_OID)
-    @TextInput(maxLength = N_OID)
-    @Column(name = "oid", nullable = false, length = N_OID)
-    public String getOid() {
-        return oid;
+    @Precision(value = N_OTHER_ID)
+    @TextInput(maxLength = N_OTHER_ID)
+    @Column(name = "oid", nullable = false, length = N_OTHER_ID)
+    public String getOtherId() {
+        return otherId;
     }
 
     /**
      * The identity data
      */
-    public void setOid(@NotNull String value) {
-        this.oid = value;
+    public void setOtherId(@NotNull String value) {
+        this.otherId = value;
     }
 
     /**
@@ -183,8 +183,6 @@ public abstract class _UserOtherId_stuff
     @Column(name = "type", nullable = false, precision = 10)
     public synchronized int getTypeId() {
         if (type != null) {
-            if (type.getId() == null)
-                return 0;
             return type.getId();
         }
         return typeId;
@@ -238,7 +236,7 @@ public abstract class _UserOtherId_stuff
     }
 
     public void initNotNulls() {
-        this.oid = "";
+        this.otherId = "";
     }
 
 }

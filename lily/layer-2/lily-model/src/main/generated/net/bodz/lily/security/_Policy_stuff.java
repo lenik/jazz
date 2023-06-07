@@ -19,24 +19,25 @@ public abstract class _Policy_stuff
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_NAME = 30;
-    public static final int N_METHOD = 80;
+    public static final int N_CONTROL_CLASS = 80;
+    public static final int N_METHOD_NAME = 80;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_NAME = _ord_ID + 1;
-    private static final int _ord_METHOD = 13;
-    private static final int _ord_ALLOW_BITS = _ord_METHOD + 1;
+    private static final int _ord_CONTROL_CLASS = 12;
+    private static final int _ord_METHOD_NAME = _ord_CONTROL_CLASS + 1;
+    private static final int _ord_ALLOW_BITS = _ord_METHOD_NAME + 1;
     private static final int _ord_DENY_BITS = _ord_ALLOW_BITS + 1;
 
     @Id
     @NotNull
     int id;
 
-    /** The policy name (unique) */
-    String name;
+    /** The control class */
+    @NotNull
+    String controlClass;
 
     /** The method name */
-    String method;
+    String methodName;
 
     /** allow */
     @NotNull
@@ -69,39 +70,40 @@ public abstract class _Policy_stuff
     }
 
     /**
-     * The policy name (unique)
+     * The control class
      */
-    @Ordinal(_ord_NAME)
-    @Precision(value = N_NAME)
-    @TextInput(maxLength = N_NAME)
-    @Column(name = "name", length = N_NAME)
-    public String getName() {
-        return name;
+    @Ordinal(_ord_CONTROL_CLASS)
+    @NotNull
+    @Precision(value = N_CONTROL_CLASS)
+    @TextInput(maxLength = N_CONTROL_CLASS)
+    @Column(name = "cclass", nullable = false, length = N_CONTROL_CLASS)
+    public String getControlClass() {
+        return controlClass;
     }
 
     /**
-     * The policy name (unique)
+     * The control class
      */
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    /**
-     * The method name
-     */
-    @Ordinal(_ord_METHOD)
-    @Precision(value = N_METHOD)
-    @TextInput(maxLength = N_METHOD)
-    @Column(name = "method", length = N_METHOD)
-    public String getMethod() {
-        return method;
+    public void setControlClass(@NotNull String value) {
+        this.controlClass = value;
     }
 
     /**
      * The method name
      */
-    public void setMethod(String value) {
-        this.method = value;
+    @Ordinal(_ord_METHOD_NAME)
+    @Precision(value = N_METHOD_NAME)
+    @TextInput(maxLength = N_METHOD_NAME)
+    @Column(name = "method", length = N_METHOD_NAME)
+    public String getMethodName() {
+        return methodName;
+    }
+
+    /**
+     * The method name
+     */
+    public void setMethodName(String value) {
+        this.methodName = value;
     }
 
     /**
@@ -139,6 +141,7 @@ public abstract class _Policy_stuff
     }
 
     public void initNotNulls() {
+        this.controlClass = "";
     }
 
 }

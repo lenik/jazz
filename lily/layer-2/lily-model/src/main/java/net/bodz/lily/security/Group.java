@@ -4,11 +4,6 @@ import java.util.List;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.json.JsonObject;
-import net.bodz.lily.entity.IdType;
-
 /**
  * <p lang="zh-cn">
  * 用户组可以用来方便地将系统用户分组归类。在使用过程中，可以按用户组来成批地设置用户的权限。
@@ -29,10 +24,9 @@ import net.bodz.lily.entity.IdType;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
-@Table(name = "group")
-@IdType(Integer.class)
+@Table(schema = "lily", name = "group")
 public class Group
-        extends CoPrincipal {
+        extends _Group_stuff {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +35,6 @@ public class Group
     public static final int ID_NormalUsers = 2;
     public static final int ID_GuestUsers = 3;
 
-    private Group parent;
     private List<Group> children;
     private List<User> users;
 
@@ -54,19 +47,8 @@ public class Group
 
     public Group(int id, String name, String fullName) {
         id(id);
-        setName(name);
+        setUniqName(name);
         setFullName(fullName);
-    }
-
-    /**
-     * 父用户组
-     */
-    public Group getParent() {
-        return parent;
-    }
-
-    public void setParent(Group parent) {
-        this.parent = parent;
     }
 
     /**
@@ -89,12 +71,6 @@ public class Group
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
-            throws ParseException {
-        super.jsonIn(o, opts);
     }
 
 }

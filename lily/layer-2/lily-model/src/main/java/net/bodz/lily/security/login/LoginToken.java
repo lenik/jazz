@@ -203,7 +203,7 @@ public class LoginToken
         out.object();
         {
             out.entry("id", user.id());
-            out.entry("name", user.getCodeName());
+            out.entry("name", user.getUniqName());
             out.entry("fullName", user.getFullName());
             out.endObject();
         }
@@ -212,7 +212,7 @@ public class LoginToken
     @Override
     public String toString() {
         String s = String.format("token_%d<user(%d: %s), txn %d>", //
-                id, user.id(), user.getName(), transaction);
+                id, user.id(), user.getUniqName(), transaction);
         return s;
     }
 

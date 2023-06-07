@@ -7,8 +7,8 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserOtherIdTypes;
-import net.bodz.lily.security.impl.UserOtherIdMapper;
-import net.bodz.lily.security.impl.UserSecretMapper;
+import net.bodz.lily.security.dao.UserOtherIdMapper;
+import net.bodz.lily.security.dao.UserSecretMapper;
 import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.ISignatureChecker;
 
