@@ -6,8 +6,8 @@ import java.util.Random;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoObjectMask;

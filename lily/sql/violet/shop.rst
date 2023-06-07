@@ -1,6 +1,7 @@
 #\import lily.security
 
 column-property {
+    shopitem:           shopItem
     sum_qty:            totalQuantity
     sum_amount:         totalAmount
 }
@@ -50,4 +51,10 @@ table-name {
 }
 
 table shop {
+}
+
+table saleodr {
+    column prev {
+        javaName: previousOrder
+    }
 }

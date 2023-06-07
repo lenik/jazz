@@ -27,7 +27,7 @@
         phase       int
             references salephase(id) on update cascade,
 
-        prev        int             -- previous doc
+        prev        bigint      -- previous doc
             references saleodr(id) on update cascade on delete set null,
 
         plan        bigint
