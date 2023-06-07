@@ -2,7 +2,7 @@ package net.bodz.lily.vapp;
 
 import javax.persistence.Table;
 
-@Table(schema="lily", name="vappreq")
+@Table(schema = "lily", name = "vappreq")
 public class VAppRequest
         extends _VAppRequest_stuff {
 

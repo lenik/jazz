@@ -33,6 +33,9 @@ public class _VAppRequestMask_stuff
     Integer version;
     IntegerRange versionRange = new IntegerRange();
 
+    String code;
+    String codePattern;
+
     Timestamp beginTime;
     DateTimeRange beginTimeRange = new DateTimeRange();
 
@@ -186,6 +189,22 @@ public class _VAppRequestMask_stuff
 
     public void setVersionRange(IntegerRange range) {
         this.versionRange = range;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String value) {
+        this.code = value;
+    }
+
+    public String getCodePattern() {
+        return codePattern;
+    }
+
+    public void setCodePattern(String value) {
+        this.codePattern = value;
     }
 
     public Timestamp getBeginTime() {
