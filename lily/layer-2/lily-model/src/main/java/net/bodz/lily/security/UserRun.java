@@ -2,6 +2,10 @@ package net.bodz.lily.security;
 
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
+import net.bodz.bas.meta.decl.Redundant;
+
 @Table(schema = "lily", name = "user_run")
 public class UserRun
         extends _UserRun_stuff {
