@@ -56,13 +56,13 @@ public abstract class CoObject
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_CODE_NAME = 20;
+    public static final int N_UNIQ_NAME = 20;
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
     public static final int N_COMMENT = 200;
     public static final int N_IMAGE = 100;
 
-    private String codeName;
+    private String uniqName;
 
     // U, U1 = label, description
     private String label;
@@ -107,20 +107,20 @@ public abstract class CoObject
      * An optional unique code name, which can be specified and alternated by user.
      *
      * <p lang="zh">
-     * 类似于 id，代码不可重复。和 id 不同的是，代码是可以自行指定的，可以包含数字、字母，且可以更改。
+     * 类似于 id，唯一名不可重复。和 id 不同的是，唯一名是可以自行指定的，可以包含数字、字母，且可以更改。
      *
-     * @label Code Name
-     * @label.zh 代码
-     * @placeholder 输入代码/别名…
+     * @label Unique Name
+     * @label.zh 唯一名
+     * @placeholder 输入唯一名…
      */
     @Priority(1)
-    @TextInput(maxLength = N_CODE_NAME)
-    public String getCodeName() {
-        return codeName;
+    @TextInput(maxLength = N_UNIQ_NAME)
+    public String getUniqName() {
+        return uniqName;
     }
 
-    public void setCodeName(String codeName) {
-        this.codeName = codeName;
+    public void setUniqName(String uniqName) {
+        this.uniqName = uniqName;
     }
 
     /**
@@ -225,10 +225,10 @@ public abstract class CoObject
         Object id = id();
         if (id == null)
             return "new";
-        String codeName = getCodeName();
+        String name = getUniqName();
         StringBuilder sb = new StringBuilder(80);
-        if (codeName != null)
-            sb.append(codeName);
+        if (name != null)
+            sb.append(name);
         else
             sb.append(id);
         sb.append(" - ");
@@ -475,7 +475,7 @@ public abstract class CoObject
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }
         } else {
-            codeName = o.getString("codeName", codeName);
+            uniqName = o.getString("codeName", uniqName);
             label = o.getString("label", label);
             description = o.getString("description", description);
             comment = o.getString("comment", comment);
@@ -501,7 +501,7 @@ public abstract class CoObject
     }
 
     public boolean partialEquals(CoObject o) {
-        if (!Nullables.equals(codeName, o.codeName))
+        if (!Nullables.equals(uniqName, o.uniqName))
             return false;
         if (!Nullables.equals(label, o.label))
             return false;
@@ -521,7 +521,7 @@ public abstract class CoObject
 
     public void assign(CoObject o) {
         super.assign(o);
-        codeName = o.codeName;
+        uniqName = o.uniqName;
         label = o.label;
         description = o.description;
         comment = o.comment;

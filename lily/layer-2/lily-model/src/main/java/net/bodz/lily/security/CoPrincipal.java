@@ -13,7 +13,6 @@ public abstract class CoPrincipal
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
 
-    String name;
     CoPrincipalProperties properties;
 
     /**
@@ -21,11 +20,25 @@ public abstract class CoPrincipal
      * @label.zh 登录名
      */
     public String getName() {
-        return name;
+        // reuse the member var
+        return super.getUniqName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        // reuse the member var
+        super.setUniqName(name);
+    }
+
+    @Deprecated
+    @Override
+    public String getUniqName() {
+        return super.getUniqName();
+    }
+
+    @Deprecated
+    @Override
+    public void setUniqName(String uniqName) {
+        super.setUniqName(uniqName);
     }
 
     /**

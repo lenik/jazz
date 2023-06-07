@@ -373,9 +373,9 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     @Derived
     public String getNodeLabel() {
         StringBuilder sb = new StringBuilder();
-        String codeName = getCodeName();
-        if (codeName != null) {
-            sb.append(codeName);
+        String name = getUniqName();
+        if (name != null) {
+            sb.append(name);
             sb.append(":");
         }
 

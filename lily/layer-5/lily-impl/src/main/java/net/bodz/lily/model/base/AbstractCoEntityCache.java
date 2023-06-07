@@ -29,10 +29,10 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     IEntityMapper<T, ?> mapper;
     int batch = 100;
 
-    protected boolean indexCodeName = false;
+    protected boolean indexUniqName = false;
     protected boolean indexLabel = false;
 
-    private Map<String, T> codeNameMap;
+    private Map<String, T> uniqNameMap;
     private Map<String, Set<T>> labelMap;
 
     public AbstractCoEntityCache(DataContext dataContext, Class<T> entityClass) {
@@ -56,12 +56,12 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     }
 
     public synchronized Map<String, T> getOrLoadCodeNameMap() {
-        if (!indexCodeName) {
+        if (!indexUniqName) {
             logger.error("Code name isn't indexed.");
             return Collections.emptyMap();
         }
         load();
-        return codeNameMap;
+        return uniqNameMap;
     }
 
     public synchronized Map<String, Set<T>> getOrLoadLabelMap() {
@@ -92,12 +92,12 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     }
 
     public synchronized T getOrLoadByCodeName(String codeName) {
-        if (!indexCodeName)
+        if (!indexUniqName)
             logger.warn("code name isn't indexed.");
 
         autoload();
 
-        T obj = codeNameMap.get(codeName);
+        T obj = uniqNameMap.get(codeName);
         if (obj == null) {
             obj = getMapper().selectByCodeName(codeName);
             if (obj != null)
@@ -152,10 +152,10 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     protected void _add(K id, T obj) {
         super._add(id, obj);
 
-        if (indexCodeName) {
-            String codeName = obj.getCodeName();
+        if (indexUniqName) {
+            String codeName = obj.getUniqName();
             if (codeName != null)
-                codeNameMap.put(codeName, obj);
+                uniqNameMap.put(codeName, obj);
         }
 
         if (indexLabel) {
@@ -167,10 +167,10 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
 
     @Override
     protected void _remove(K id, T obj) {
-        if (indexCodeName) {
-            String codeName = obj.getCodeName();
-            if (codeName != null)
-                codeNameMap.remove(codeName);
+        if (indexUniqName) {
+            String uniqName = obj.getUniqName();
+            if (uniqName != null)
+                uniqNameMap.remove(uniqName);
         }
 
         if (indexLabel) {
@@ -185,7 +185,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     @Override
     protected void _purge() {
         super._purge();
-        codeNameMap = new HashMap<>();
+        uniqNameMap = new HashMap<>();
         labelMap = new HashMap<>();
     }
 

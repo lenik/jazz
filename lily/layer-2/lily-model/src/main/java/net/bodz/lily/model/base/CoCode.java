@@ -29,13 +29,15 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
      * @label Code
      * @label.zh 代码
      */
-    @TextInput(maxLength = N_CODE_NAME)
+    @TextInput(maxLength = N_UNIQ_NAME)
     public String getCode() {
-        return getCodeName();
+        // reuse the member var.
+        return getUniqName();
     }
 
     public void setCode(String code) {
-        setCodeName(code);
+        // reuse the member var.
+        setUniqName(code);
     }
 
 }

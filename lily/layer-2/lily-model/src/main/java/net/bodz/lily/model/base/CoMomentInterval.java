@@ -23,6 +23,7 @@ public abstract class CoMomentInterval<Id>
 
     private DateTime beginTime;
     private DateTime endTime;
+    private int year;
 
     public CoMomentInterval() {
         beginTime = getCreationDate();
@@ -102,6 +103,14 @@ public abstract class CoMomentInterval<Id>
     @Deprecated
     public final void setEndDate(DateTime endDate) {
         setEndTime(endDate);
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Override
