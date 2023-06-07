@@ -3,18 +3,15 @@ package net.bodz.violet.store;
 import javax.persistence.Table;
 
 import net.bodz.bas.site.file.UploadHint;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoCode;
-import net.bodz.lily.template.RichProperties;
+
 
 /**
  * 区域级别
  */
-@IdType(Integer.class)
-@Table(name = "regionlevel")
 @UploadHint
+@Table(schema = "violet", name = "regionlevel")
 public class RegionLevel
-        extends CoCode<RegionLevel> {
+        extends _RegionLevel_stuff<RegionLevel> {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,12 +19,5 @@ public class RegionLevel
     public static final int ID_Place = 1;
     public static final int ID_Room = 2;
     public static final int ID_Shelf = 3;
-
-    RichProperties properties = new RichProperties();
-
-    @Override
-    public RichProperties getProperties() {
-        return properties;
-    }
 
 }

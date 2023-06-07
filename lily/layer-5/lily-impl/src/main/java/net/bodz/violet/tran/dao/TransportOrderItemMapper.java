@@ -4,6 +4,7 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.tran.TransportOrderItem;
 
 public interface TransportOrderItemMapper
-        extends IEntityMapper<TransportOrderItem, TransportOrderItemMask> {
+        extends
+            IEntityMapper<TransportOrderItem, TransportOrderItemMask> {
 
 }

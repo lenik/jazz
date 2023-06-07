@@ -2,16 +2,13 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoCategory;
 
 /**
  * 区域分类
  */
-@IdType(Integer.class)
-@Table(name = "regioncat")
+@Table(schema = "violet", name = "regioncat")
 public class RegionCategory
-        extends CoCategory<RegionCategory, Integer> {
+        extends _RegionCategory_stuff<RegionCategory> {
 
     private static final long serialVersionUID = 1L;
 

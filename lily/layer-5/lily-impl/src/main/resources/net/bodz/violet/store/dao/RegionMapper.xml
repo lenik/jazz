@@ -1,72 +1,853 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper 
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.store.dao.RegionMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.store.Region" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.store.Region">
+        <id property="id" column="id" />
+        <result property="code" column="code" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
         <result property="properties.jsonStr" column="props" />
-        <result property="fullPath" column="path" />
-        <association property="level" javaType="net.bodz.violet.store.RegionLevel">
-            <id property="id" column="level" />
-            <result property="label" column="level_label" />
-        </association>
-        <association property="category" javaType="net.bodz.violet.store.RegionCategory">
-            <id property="id" column="cat" />
-            <result property="label" column="cat_label" />
-        </association>
-        <association property="parent" javaType="net.bodz.violet.store.Region">
-            <id property="id" column="parent" />
-            <result property="label" column="parent_label" />
-        </association>
+        <result property="path" column="path" />
+        <result property="depth" column="depth" />
+        <result property="height" column="height" />
+        <result property="position.dx" column="x" />
+        <result property="position.dy" column="y" />
+        <result property="position.dz" column="z" />
+        <result property="bbox.dx" column="dx" />
+        <result property="bbox.dy" column="dy" />
+        <result property="bbox.dz" column="dz" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="protoId" column="proto" />
+        <result property="parentId" column="parent" />
+        <result property="levelId" column="level" />
+        <result property="categoryId" column="cat" />
+        <result property="tagId" column="tag" />
+        <result property="materialId" column="material" />
+        <result property="forCatId" column="for_cat" />
+        <result property="forArtId" column="for_art" />
+        <result property="artifactId" column="art" />
+        <association property="forCat" columnPrefix="for_cat_"
+            javaType="net.bodz.violet.art.ArtifactCategory" 
+            resultMap="net.bodz.violet.art.dao.ArtifactCategoryMapper.objlist_map" />
+        <association property="proto" columnPrefix="proto_"
+            javaType="net.bodz.violet.store.Region" 
+            resultMap="objlist_map" />
+        <association property="tag" columnPrefix="tag_"
+            javaType="net.bodz.violet.store.RegionTag" 
+            resultMap="net.bodz.violet.store.dao.RegionTagMapper.objlist_map" />
+        <association property="category" columnPrefix="category_"
+            javaType="net.bodz.violet.store.RegionCategory" 
+            resultMap="net.bodz.violet.store.dao.RegionCategoryMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.violet.store.Region" 
+            resultMap="objlist_map" />
+        <association property="level" columnPrefix="level_"
+            javaType="net.bodz.violet.store.RegionLevel" 
+            resultMap="net.bodz.violet.store.dao.RegionLevelMapper.objlist_map" />
+        <association property="artifact" columnPrefix="art_"
+            javaType="net.bodz.violet.art.Artifact" 
+            resultMap="net.bodz.violet.art.dao.ArtifactMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
+        <association property="material" columnPrefix="material_"
+            javaType="net.bodz.violet.art.Artifact" 
+            resultMap="net.bodz.violet.art.dao.ArtifactMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.security.Group" 
+            resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
+        <association property="forArt" columnPrefix="for_art_"
+            javaType="net.bodz.violet.art.Artifact" 
+            resultMap="net.bodz.violet.art.dao.ArtifactMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            level.label "level_label",
-            cat.label "cat_label",
-            parent.label "parent_label",
-            u.label "uid_label",
-            g.label "gid_label"
+            a.id, 
+            a.code, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a."path", 
+            a.proto, 
+            a.parent, 
+            a."depth", 
+            a.height, 
+            a."level", 
+            a.cat, 
+            a.tag, 
+            a.x, 
+            a.y, 
+            a.z, 
+            a.dx, 
+            a.dy, 
+            a.dz, 
+            a.material, 
+            a.for_cat, 
+            a.for_art, 
+            a.art, 
+            for_cat.id for_cat_id, 
+            for_cat.code for_cat_code, 
+            for_cat.uid for_cat_uid, 
+            for_cat.gid for_cat_gid, 
+            for_cat.mode for_cat_mode, 
+            for_cat.acl for_cat_acl, 
+            for_cat.label for_cat_label, 
+            for_cat.description for_cat_description, 
+            for_cat.priority for_cat_priority, 
+            for_cat.flags for_cat_flags, 
+            for_cat."state" for_cat_state, 
+            for_cat.creation for_cat_creation, 
+            for_cat.lastmod for_cat_lastmod, 
+            for_cat."version" for_cat_version, 
+            for_cat.props for_cat_props, 
+            for_cat.parent for_cat_parent, 
+            for_cat."depth" for_cat_depth, 
+            for_cat.skufmt for_cat_skufmt, 
+            for_cat.skufmtfull for_cat_skufmtfull, 
+            for_cat.barfmt for_cat_barfmt, 
+            for_cat.barfmtfull for_cat_barfmtfull, 
+            for_cat.batchfmt for_cat_batchfmt, 
+            for_cat.serialfmt for_cat_serialfmt, 
+            for_cat."count" for_cat_count, 
+            proto.id proto_id, 
+            proto.code proto_code, 
+            proto.uid proto_uid, 
+            proto.gid proto_gid, 
+            proto.mode proto_mode, 
+            proto.acl proto_acl, 
+            proto.label proto_label, 
+            proto.description proto_description, 
+            proto.priority proto_priority, 
+            proto.flags proto_flags, 
+            proto."state" proto_state, 
+            proto.creation proto_creation, 
+            proto.lastmod proto_lastmod, 
+            proto."version" proto_version, 
+            proto.props proto_props, 
+            proto."path" proto_path, 
+            proto.proto proto_proto, 
+            proto.parent proto_parent, 
+            proto."depth" proto_depth, 
+            proto.height proto_height, 
+            proto."level" proto_level, 
+            proto.cat proto_cat, 
+            proto.tag proto_tag, 
+            proto.x proto_x, 
+            proto.y proto_y, 
+            proto.z proto_z, 
+            proto.dx proto_dx, 
+            proto.dy proto_dy, 
+            proto.dz proto_dz, 
+            proto.material proto_material, 
+            proto.for_cat proto_for_cat, 
+            proto.for_art proto_for_art, 
+            proto.art proto_art, 
+            tag.id tag_id, 
+            tag.uid tag_uid, 
+            tag.gid tag_gid, 
+            tag.mode tag_mode, 
+            tag.acl tag_acl, 
+            tag.code tag_code, 
+            tag.label tag_label, 
+            tag.description tag_description, 
+            tag.priority tag_priority, 
+            tag.flags tag_flags, 
+            tag."state" tag_state, 
+            tag.creation tag_creation, 
+            tag.lastmod tag_lastmod, 
+            tag."version" tag_version, 
+            tag.parent tag_parent, 
+            tag."depth" tag_depth, 
+            tag.nref tag_nref, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            parent.id parent_id, 
+            parent.code parent_code, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.props parent_props, 
+            parent."path" parent_path, 
+            parent.proto parent_proto, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            parent.height parent_height, 
+            parent."level" parent_level, 
+            parent.cat parent_cat, 
+            parent.tag parent_tag, 
+            parent.x parent_x, 
+            parent.y parent_y, 
+            parent.z parent_z, 
+            parent.dx parent_dx, 
+            parent.dy parent_dy, 
+            parent.dz parent_dz, 
+            parent.material parent_material, 
+            parent.for_cat parent_for_cat, 
+            parent.for_art parent_for_art, 
+            parent.art parent_art, 
+            "level".id level_id, 
+            "level".label level_label, 
+            "level".description level_description, 
+            "level".priority level_priority, 
+            "level".flags level_flags, 
+            "level"."state" level_state, 
+            "level".creation level_creation, 
+            "level".lastmod level_lastmod, 
+            "level"."version" level_version, 
+            "level".props level_props, 
+            "level".dummy level_dummy, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            material.id material_id, 
+            material.sku material_sku, 
+            material.barcode material_barcode, 
+            material.rfid material_rfid, 
+            material.uid material_uid, 
+            material.gid material_gid, 
+            material.mode material_mode, 
+            material.acl material_acl, 
+            material.label material_label, 
+            material.description material_description, 
+            material.priority material_priority, 
+            material.flags material_flags, 
+            material."state" material_state, 
+            material.creation material_creation, 
+            material.lastmod material_lastmod, 
+            material."version" material_version, 
+            material.model material_model, 
+            material.proto material_proto, 
+            material.cat material_cat, 
+            material.phase material_phase, 
+            material.uom material_uom, 
+            material.props material_props, 
+            material.finish material_finish, 
+            material.price material_price, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            for_art.id for_art_id, 
+            for_art.sku for_art_sku, 
+            for_art.barcode for_art_barcode, 
+            for_art.rfid for_art_rfid, 
+            for_art.uid for_art_uid, 
+            for_art.gid for_art_gid, 
+            for_art.mode for_art_mode, 
+            for_art.acl for_art_acl, 
+            for_art.label for_art_label, 
+            for_art.description for_art_description, 
+            for_art.priority for_art_priority, 
+            for_art.flags for_art_flags, 
+            for_art."state" for_art_state, 
+            for_art.creation for_art_creation, 
+            for_art.lastmod for_art_lastmod, 
+            for_art."version" for_art_version, 
+            for_art.model for_art_model, 
+            for_art.proto for_art_proto, 
+            for_art.cat for_art_cat, 
+            for_art.phase for_art_phase, 
+            for_art.uom for_art_uom, 
+            for_art.props for_art_props, 
+            for_art.finish for_art_finish, 
+            for_art.price for_art_price
         from region a
-            left join regionlevel level on a.level = level.id
-            left join regioncat cat on a.cat = cat.id
+            left join artcat for_cat on a.for_cat = for_cat.id
+            left join region proto on a.proto = proto.id
+            left join regiontag tag on a.tag = tag.id
+            left join regioncat category on a.cat = category.id
             left join region parent on a.parent = parent.id
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join regionlevel "level" on a."level" = "level".id
+            left join art art on a.art = art.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join art material on a.material = material.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join art for_art on a.for_art = for_art.id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            level.label "level_label",
-            cat.label "cat_label",
-            parent.label "parent_label",
-            u.label "uid_label",
-            g.label "gid_label"
+            a.id, 
+            a.code, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a."path", 
+            a.proto, 
+            a.parent, 
+            a."depth", 
+            a.height, 
+            a."level", 
+            a.cat, 
+            a.tag, 
+            a.x, 
+            a.y, 
+            a.z, 
+            a.dx, 
+            a.dy, 
+            a.dz, 
+            a.material, 
+            a.for_cat, 
+            a.for_art, 
+            a.art, 
+            for_cat.id for_cat_id, 
+            for_cat.code for_cat_code, 
+            for_cat.uid for_cat_uid, 
+            for_cat.gid for_cat_gid, 
+            for_cat.mode for_cat_mode, 
+            for_cat.acl for_cat_acl, 
+            for_cat.label for_cat_label, 
+            for_cat.description for_cat_description, 
+            for_cat.priority for_cat_priority, 
+            for_cat.flags for_cat_flags, 
+            for_cat."state" for_cat_state, 
+            for_cat.creation for_cat_creation, 
+            for_cat.lastmod for_cat_lastmod, 
+            for_cat."version" for_cat_version, 
+            for_cat.props for_cat_props, 
+            for_cat.parent for_cat_parent, 
+            for_cat."depth" for_cat_depth, 
+            for_cat.skufmt for_cat_skufmt, 
+            for_cat.skufmtfull for_cat_skufmtfull, 
+            for_cat.barfmt for_cat_barfmt, 
+            for_cat.barfmtfull for_cat_barfmtfull, 
+            for_cat.batchfmt for_cat_batchfmt, 
+            for_cat.serialfmt for_cat_serialfmt, 
+            for_cat."count" for_cat_count, 
+            proto.id proto_id, 
+            proto.code proto_code, 
+            proto.uid proto_uid, 
+            proto.gid proto_gid, 
+            proto.mode proto_mode, 
+            proto.acl proto_acl, 
+            proto.label proto_label, 
+            proto.description proto_description, 
+            proto.priority proto_priority, 
+            proto.flags proto_flags, 
+            proto."state" proto_state, 
+            proto.creation proto_creation, 
+            proto.lastmod proto_lastmod, 
+            proto."version" proto_version, 
+            proto.props proto_props, 
+            proto."path" proto_path, 
+            proto.proto proto_proto, 
+            proto.parent proto_parent, 
+            proto."depth" proto_depth, 
+            proto.height proto_height, 
+            proto."level" proto_level, 
+            proto.cat proto_cat, 
+            proto.tag proto_tag, 
+            proto.x proto_x, 
+            proto.y proto_y, 
+            proto.z proto_z, 
+            proto.dx proto_dx, 
+            proto.dy proto_dy, 
+            proto.dz proto_dz, 
+            proto.material proto_material, 
+            proto.for_cat proto_for_cat, 
+            proto.for_art proto_for_art, 
+            proto.art proto_art, 
+            tag.id tag_id, 
+            tag.uid tag_uid, 
+            tag.gid tag_gid, 
+            tag.mode tag_mode, 
+            tag.acl tag_acl, 
+            tag.code tag_code, 
+            tag.label tag_label, 
+            tag.description tag_description, 
+            tag.priority tag_priority, 
+            tag.flags tag_flags, 
+            tag."state" tag_state, 
+            tag.creation tag_creation, 
+            tag.lastmod tag_lastmod, 
+            tag."version" tag_version, 
+            tag.parent tag_parent, 
+            tag."depth" tag_depth, 
+            tag.nref tag_nref, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            parent.id parent_id, 
+            parent.code parent_code, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.props parent_props, 
+            parent."path" parent_path, 
+            parent.proto parent_proto, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            parent.height parent_height, 
+            parent."level" parent_level, 
+            parent.cat parent_cat, 
+            parent.tag parent_tag, 
+            parent.x parent_x, 
+            parent.y parent_y, 
+            parent.z parent_z, 
+            parent.dx parent_dx, 
+            parent.dy parent_dy, 
+            parent.dz parent_dz, 
+            parent.material parent_material, 
+            parent.for_cat parent_for_cat, 
+            parent.for_art parent_for_art, 
+            parent.art parent_art, 
+            "level".id level_id, 
+            "level".label level_label, 
+            "level".description level_description, 
+            "level".priority level_priority, 
+            "level".flags level_flags, 
+            "level"."state" level_state, 
+            "level".creation level_creation, 
+            "level".lastmod level_lastmod, 
+            "level"."version" level_version, 
+            "level".props level_props, 
+            "level".dummy level_dummy, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
+            material.id material_id, 
+            material.sku material_sku, 
+            material.barcode material_barcode, 
+            material.rfid material_rfid, 
+            material.uid material_uid, 
+            material.gid material_gid, 
+            material.mode material_mode, 
+            material.acl material_acl, 
+            material.label material_label, 
+            material.description material_description, 
+            material.priority material_priority, 
+            material.flags material_flags, 
+            material."state" material_state, 
+            material.creation material_creation, 
+            material.lastmod material_lastmod, 
+            material."version" material_version, 
+            material.model material_model, 
+            material.proto material_proto, 
+            material.cat material_cat, 
+            material.phase material_phase, 
+            material.uom material_uom, 
+            material.props material_props, 
+            material.finish material_finish, 
+            material.price material_price, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            for_art.id for_art_id, 
+            for_art.sku for_art_sku, 
+            for_art.barcode for_art_barcode, 
+            for_art.rfid for_art_rfid, 
+            for_art.uid for_art_uid, 
+            for_art.gid for_art_gid, 
+            for_art.mode for_art_mode, 
+            for_art.acl for_art_acl, 
+            for_art.label for_art_label, 
+            for_art.description for_art_description, 
+            for_art.priority for_art_priority, 
+            for_art.flags for_art_flags, 
+            for_art."state" for_art_state, 
+            for_art.creation for_art_creation, 
+            for_art.lastmod for_art_lastmod, 
+            for_art."version" for_art_version, 
+            for_art.model for_art_model, 
+            for_art.proto for_art_proto, 
+            for_art.cat for_art_cat, 
+            for_art.phase for_art_phase, 
+            for_art.uom for_art_uom, 
+            for_art.props for_art_props, 
+            for_art.finish for_art_finish, 
+            for_art.price for_art_price
         from region a
-            left join regionlevel level on a.level = level.id
-            left join regioncat cat on a.cat = cat.id
+            left join artcat for_cat on a.for_cat = for_cat.id
+            left join region proto on a.proto = proto.id
+            left join regiontag tag on a.tag = tag.id
+            left join regioncat category on a.cat = category.id
             left join region parent on a.parent = parent.id
-            left join "user" u on a.uid=u.id
-            left join "group" g on a.gid=g.id
+            left join regionlevel "level" on a."level" = "level".id
+            left join art art on a.art = art.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join art material on a.material = material.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join art for_art on a.for_art = for_art.id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <include refid="co.modefilt" />
-        <include refid="co.filter-id" />
-        <include refid="co.filter-ui" />
-        <include refid="co.filter-version" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.code != null">and a.code = #{m.code}</if>
+        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
+        <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
+        <if test="m.ownerUserIdRange!= null">
+            <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasStartExcl">and a.uid > #{m.ownerUserIdRange.start}</if>
+            <if test="m.ownerUserIdRange.hasEndIncl">and a.uid &lt;= #{m.ownerUserIdRange.end}</if>
+            <if test="m.ownerUserIdRange.hasEndExcl">and a.uid &lt; #{m.ownerUserIdRange.end}</if>
+        </if>
+        <if test="m.ownerGroupId != null">and a.gid = #{m.ownerGroupId}</if>
+        <if test="m.ownerGroupIdRange!= null">
+            <if test="m.ownerGroupIdRange.hasStartIncl">and a.gid >= #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasStartExcl">and a.gid > #{m.ownerGroupIdRange.start}</if>
+            <if test="m.ownerGroupIdRange.hasEndIncl">and a.gid &lt;= #{m.ownerGroupIdRange.end}</if>
+            <if test="m.ownerGroupIdRange.hasEndExcl">and a.gid &lt; #{m.ownerGroupIdRange.end}</if>
+        </if>
+        <if test="m.accessMode != null">and a.mode = #{m.accessMode}</if>
+        <if test="m.accessModeRange!= null">
+            <if test="m.accessModeRange.hasStartIncl">and a.mode >= #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasStartExcl">and a.mode > #{m.accessModeRange.start}</if>
+            <if test="m.accessModeRange.hasEndIncl">and a.mode &lt;= #{m.accessModeRange.end}</if>
+            <if test="m.accessModeRange.hasEndExcl">and a.mode &lt; #{m.accessModeRange.end}</if>
+        </if>
+        <if test="m.acl != null">and a.acl = #{m.acl}</if>
+        <if test="m.aclRange!= null">
+            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
+            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
+            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
+        </if>
+        <if test="m.label != null">and a.label = #{m.label}</if>
+        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
+        <if test="m.description != null">and a.description = #{m.description}</if>
+        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
+        <if test="m.priority != null">and a.priority = #{m.priority}</if>
+        <if test="m.priorityRange!= null">
+            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
+            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
+            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
+        </if>
+        <if test="m.flags != null">and a.flags = #{m.flags}</if>
+        <if test="m.flagsRange!= null">
+            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
+            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
+            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
+        </if>
+        <if test="m.state != null">and a."state" = #{m.state}</if>
+        <if test="m.stateRange!= null">
+            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
+            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
+            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.properties != null">and a.props = #{m.properties}</if>
+        <if test="m.path != null">and a."path" = #{m.path}</if>
+        <if test="m.pathPattern != null">and a."path" like '${m.pathPattern}'</if>
+        <if test="m.protoId != null">and a.proto = #{m.protoId}</if>
+        <if test="m.protoIdRange!= null">
+            <if test="m.protoIdRange.hasStartIncl">and a.proto >= #{m.protoIdRange.start}</if>
+            <if test="m.protoIdRange.hasStartExcl">and a.proto > #{m.protoIdRange.start}</if>
+            <if test="m.protoIdRange.hasEndIncl">and a.proto &lt;= #{m.protoIdRange.end}</if>
+            <if test="m.protoIdRange.hasEndExcl">and a.proto &lt; #{m.protoIdRange.end}</if>
+        </if>
         <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
-        <if test="m.levelId != null">and a.level = #{m.levelId}</if>
+        <if test="m.parentIdRange!= null">
+            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
+            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
+            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
+        </if>
+        <if test="m.depth != null">and a."depth" = #{m.depth}</if>
+        <if test="m.depthRange!= null">
+            <if test="m.depthRange.hasStartIncl">and a."depth" >= #{m.depthRange.start}</if>
+            <if test="m.depthRange.hasStartExcl">and a."depth" > #{m.depthRange.start}</if>
+            <if test="m.depthRange.hasEndIncl">and a."depth" &lt;= #{m.depthRange.end}</if>
+            <if test="m.depthRange.hasEndExcl">and a."depth" &lt; #{m.depthRange.end}</if>
+        </if>
+        <if test="m.height != null">and a.height = #{m.height}</if>
+        <if test="m.heightRange!= null">
+            <if test="m.heightRange.hasStartIncl">and a.height >= #{m.heightRange.start}</if>
+            <if test="m.heightRange.hasStartExcl">and a.height > #{m.heightRange.start}</if>
+            <if test="m.heightRange.hasEndIncl">and a.height &lt;= #{m.heightRange.end}</if>
+            <if test="m.heightRange.hasEndExcl">and a.height &lt; #{m.heightRange.end}</if>
+        </if>
+        <if test="m.levelId != null">and a."level" = #{m.levelId}</if>
+        <if test="m.levelIdRange!= null">
+            <if test="m.levelIdRange.hasStartIncl">and a."level" >= #{m.levelIdRange.start}</if>
+            <if test="m.levelIdRange.hasStartExcl">and a."level" > #{m.levelIdRange.start}</if>
+            <if test="m.levelIdRange.hasEndIncl">and a."level" &lt;= #{m.levelIdRange.end}</if>
+            <if test="m.levelIdRange.hasEndExcl">and a."level" &lt; #{m.levelIdRange.end}</if>
+        </if>
         <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
+        <if test="m.categoryIdRange!= null">
+            <if test="m.categoryIdRange.hasStartIncl">and a.cat >= #{m.categoryIdRange.start}</if>
+            <if test="m.categoryIdRange.hasStartExcl">and a.cat > #{m.categoryIdRange.start}</if>
+            <if test="m.categoryIdRange.hasEndIncl">and a.cat &lt;= #{m.categoryIdRange.end}</if>
+            <if test="m.categoryIdRange.hasEndExcl">and a.cat &lt; #{m.categoryIdRange.end}</if>
+        </if>
+        <if test="m.tagId != null">and a.tag = #{m.tagId}</if>
+        <if test="m.tagIdRange!= null">
+            <if test="m.tagIdRange.hasStartIncl">and a.tag >= #{m.tagIdRange.start}</if>
+            <if test="m.tagIdRange.hasStartExcl">and a.tag > #{m.tagIdRange.start}</if>
+            <if test="m.tagIdRange.hasEndIncl">and a.tag &lt;= #{m.tagIdRange.end}</if>
+            <if test="m.tagIdRange.hasEndExcl">and a.tag &lt; #{m.tagIdRange.end}</if>
+        </if>
+        <if test="m.position.dx != null">and a.x = #{m.position.dx}</if>
+        <if test="m.position.dxRange!= null">
+            <if test="m.position.dxRange.hasStartIncl">and a.x >= #{m.position.dxRange.start}</if>
+            <if test="m.position.dxRange.hasStartExcl">and a.x > #{m.position.dxRange.start}</if>
+            <if test="m.position.dxRange.hasEndIncl">and a.x &lt;= #{m.position.dxRange.end}</if>
+            <if test="m.position.dxRange.hasEndExcl">and a.x &lt; #{m.position.dxRange.end}</if>
+        </if>
+        <if test="m.position.dy != null">and a.y = #{m.position.dy}</if>
+        <if test="m.position.dyRange!= null">
+            <if test="m.position.dyRange.hasStartIncl">and a.y >= #{m.position.dyRange.start}</if>
+            <if test="m.position.dyRange.hasStartExcl">and a.y > #{m.position.dyRange.start}</if>
+            <if test="m.position.dyRange.hasEndIncl">and a.y &lt;= #{m.position.dyRange.end}</if>
+            <if test="m.position.dyRange.hasEndExcl">and a.y &lt; #{m.position.dyRange.end}</if>
+        </if>
+        <if test="m.position.dz != null">and a.z = #{m.position.dz}</if>
+        <if test="m.position.dzRange!= null">
+            <if test="m.position.dzRange.hasStartIncl">and a.z >= #{m.position.dzRange.start}</if>
+            <if test="m.position.dzRange.hasStartExcl">and a.z > #{m.position.dzRange.start}</if>
+            <if test="m.position.dzRange.hasEndIncl">and a.z &lt;= #{m.position.dzRange.end}</if>
+            <if test="m.position.dzRange.hasEndExcl">and a.z &lt; #{m.position.dzRange.end}</if>
+        </if>
+        <if test="m.bbox.dx != null">and a.dx = #{m.bbox.dx}</if>
+        <if test="m.bbox.dxRange!= null">
+            <if test="m.bbox.dxRange.hasStartIncl">and a.dx >= #{m.bbox.dxRange.start}</if>
+            <if test="m.bbox.dxRange.hasStartExcl">and a.dx > #{m.bbox.dxRange.start}</if>
+            <if test="m.bbox.dxRange.hasEndIncl">and a.dx &lt;= #{m.bbox.dxRange.end}</if>
+            <if test="m.bbox.dxRange.hasEndExcl">and a.dx &lt; #{m.bbox.dxRange.end}</if>
+        </if>
+        <if test="m.bbox.dy != null">and a.dy = #{m.bbox.dy}</if>
+        <if test="m.bbox.dyRange!= null">
+            <if test="m.bbox.dyRange.hasStartIncl">and a.dy >= #{m.bbox.dyRange.start}</if>
+            <if test="m.bbox.dyRange.hasStartExcl">and a.dy > #{m.bbox.dyRange.start}</if>
+            <if test="m.bbox.dyRange.hasEndIncl">and a.dy &lt;= #{m.bbox.dyRange.end}</if>
+            <if test="m.bbox.dyRange.hasEndExcl">and a.dy &lt; #{m.bbox.dyRange.end}</if>
+        </if>
+        <if test="m.bbox.dz != null">and a.dz = #{m.bbox.dz}</if>
+        <if test="m.bbox.dzRange!= null">
+            <if test="m.bbox.dzRange.hasStartIncl">and a.dz >= #{m.bbox.dzRange.start}</if>
+            <if test="m.bbox.dzRange.hasStartExcl">and a.dz > #{m.bbox.dzRange.start}</if>
+            <if test="m.bbox.dzRange.hasEndIncl">and a.dz &lt;= #{m.bbox.dzRange.end}</if>
+            <if test="m.bbox.dzRange.hasEndExcl">and a.dz &lt; #{m.bbox.dzRange.end}</if>
+        </if>
+        <if test="m.materialId != null">and a.material = #{m.materialId}</if>
+        <if test="m.materialIdRange!= null">
+            <if test="m.materialIdRange.hasStartIncl">and a.material >= #{m.materialIdRange.start}</if>
+            <if test="m.materialIdRange.hasStartExcl">and a.material > #{m.materialIdRange.start}</if>
+            <if test="m.materialIdRange.hasEndIncl">and a.material &lt;= #{m.materialIdRange.end}</if>
+            <if test="m.materialIdRange.hasEndExcl">and a.material &lt; #{m.materialIdRange.end}</if>
+        </if>
+        <if test="m.forCatId != null">and a.for_cat = #{m.forCatId}</if>
+        <if test="m.forCatIdRange!= null">
+            <if test="m.forCatIdRange.hasStartIncl">and a.for_cat >= #{m.forCatIdRange.start}</if>
+            <if test="m.forCatIdRange.hasStartExcl">and a.for_cat > #{m.forCatIdRange.start}</if>
+            <if test="m.forCatIdRange.hasEndIncl">and a.for_cat &lt;= #{m.forCatIdRange.end}</if>
+            <if test="m.forCatIdRange.hasEndExcl">and a.for_cat &lt; #{m.forCatIdRange.end}</if>
+        </if>
+        <if test="m.forArtId != null">and a.for_art = #{m.forArtId}</if>
+        <if test="m.forArtIdRange!= null">
+            <if test="m.forArtIdRange.hasStartIncl">and a.for_art >= #{m.forArtIdRange.start}</if>
+            <if test="m.forArtIdRange.hasStartExcl">and a.for_art > #{m.forArtIdRange.start}</if>
+            <if test="m.forArtIdRange.hasEndIncl">and a.for_art &lt;= #{m.forArtIdRange.end}</if>
+            <if test="m.forArtIdRange.hasEndExcl">and a.for_art &lt; #{m.forArtIdRange.end}</if>
+        </if>
+        <if test="m.artifactId != null">and a.art = #{m.artifactId}</if>
+        <if test="m.artifactIdRange!= null">
+            <if test="m.artifactIdRange.hasStartIncl">and a.art >= #{m.artifactIdRange.start}</if>
+            <if test="m.artifactIdRange.hasStartExcl">and a.art > #{m.artifactIdRange.start}</if>
+            <if test="m.artifactIdRange.hasEndIncl">and a.art &lt;= #{m.artifactIdRange.end}</if>
+            <if test="m.artifactIdRange.hasEndExcl">and a.art &lt; #{m.artifactIdRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -74,40 +855,121 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into region(
-            code, label, description, parent,
-            level, cat,
+            code,
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
             props,
-            path
+            "path",
+            proto,
+            parent,
+            "depth",
+            height,
+            "level",
+            cat,
+            tag,
+            x,
+            y,
+            z,
+            dx,
+            dy,
+            dz,
+            material,
+            for_cat,
+            for_art,
+            art
         ) values(
-            #{codeName},#{label},#{description}, #{parent.id},
-            #{levelId}, ]]>
-            <if test="category == null">default,</if>
-            <if test="category != null">#{category.id},</if><![CDATA[
+            #{code},
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
             #{properties.jsonStr}::jsonb,
-            #{fullPath}
+            #{path},
+            #{protoId},
+            #{parentId},
+            #{depth},
+            #{height},
+            #{levelId},
+            #{categoryId},
+            #{tagId},
+            #{position.dx},
+            #{position.dy},
+            #{position.dz},
+            #{bbox.dx},
+            #{bbox.dy},
+            #{bbox.dz},
+            #{materialId},
+            #{forCatId},
+            #{forArtId},
+            #{artifactId}
         );
     ]]></insert>
 
     <update id="update">
         update region
         <set>
-            <include refid="co.setUS" />
-            <if test="parent != null">parent = #{parent.id}, </if>
-            <if test="level != null">level = #{level.id}, </if>
-            <if test="category != null">cat = #{category.id}, </if>
-            <if test="properties != null">props = #{properties.jsonStr}::jsonb,</if>
-            path = #{fullPath},
+            code = #{code},
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            props = #{properties.jsonStr}::jsonb,
+            "path" = #{path},
+            proto = #{protoId},
+            parent = #{parentId},
+            "depth" = #{depth},
+            height = #{height},
+            "level" = #{levelId},
+            cat = #{categoryId},
+            tag = #{tagId},
+            x = #{position.dx},
+            y = #{position.dy},
+            z = #{position.dz},
+            dx = #{bbox.dx},
+            dy = #{bbox.dy},
+            dz = #{bbox.dz},
+            material = #{materialId},
+            for_cat = #{forCatId},
+            for_art = #{forArtId},
+            art = #{artifactId},
         </set>
         <where>
             id = #{id}
@@ -115,16 +977,19 @@
     </update>
 
     <delete id="delete">
-        delete from region where id = #{id}
+        delete from region
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
-        select count(*) "total" from region a
+    <select id="count" resultType="long">
+        select count(*) "rows" from region
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-    
+
 </mapper>

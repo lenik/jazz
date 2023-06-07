@@ -5,8 +5,8 @@ import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.store.RegionLevel;
 
 /**
- * Region Level
- */
+* @label RegionLevel
+*/
 @ObjectType(RegionLevel.class)
 public class RegionLevelIndex
         extends CoIndex<RegionLevel, RegionLevelMask> {

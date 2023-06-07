@@ -5,10 +5,13 @@ import net.bodz.lily.model.base.CoIndex;
 import net.bodz.violet.store.Region;
 
 /**
- * Region
- */
+* @label Region
+*/
 @ObjectType(Region.class)
 public class RegionIndex
         extends CoIndex<Region, RegionMask> {
+
+    public RegionIndex() {
+    }
 
 }
