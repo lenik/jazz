@@ -38,4 +38,4 @@
     create index shopitem_priority      on shopitem(priority);
     create index shopitem_state         on shopitem(state);
 
---\mixin lily.template.a-favs shopitem int label
+--\mixin lily.template.a-favs shopitem bigint label

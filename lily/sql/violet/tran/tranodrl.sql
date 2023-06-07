@@ -6,7 +6,7 @@
         id          bigint primary key default nextval('tranodrl_seq'),
 --\mixin lily.mixin.Ex
 
-        odr         int not null
+        odr         bigint not null
             references tranodr(id) on update cascade on delete cascade,
 
         art         int

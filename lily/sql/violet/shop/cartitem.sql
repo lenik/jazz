@@ -8,7 +8,7 @@
 --\mixin lily.mixin.Ex
 --\mixin lily.mixin.Ver
         
-        shopitem       bigint not null
+        shopitem    bigint not null
             references shopitem(id) on update cascade,
         
         -- price snapshot

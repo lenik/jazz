@@ -25,6 +25,9 @@ table tranodr {
     column ou {
         javaName: orgUnit
     }
+    column saleodr {
+        javaName: salesOrder
+    }
 }
 
 table tranodrl {

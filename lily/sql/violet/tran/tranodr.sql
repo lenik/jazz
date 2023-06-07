@@ -9,7 +9,7 @@
     -- transport order
     create sequence tranodr_seq start with 1000;
     create table tranodr(
-        id          int primary key default nextval('tranodr_seq'),
+        id          bigint primary key default nextval('tranodr_seq'),
 
 --\mixin lily.mixin.Acl_rw-r-----
 --\mixin lily.mixin.Ex
@@ -29,12 +29,12 @@
         phase       int not null
             references tranphase(id) on update cascade,
 
-        prev        int             -- previous order
+        prev        bigint             -- previous order
             references tranodr(id) on update cascade on delete set null,
 
-        saleodr     int
+        saleodr     bigint
             references saleodr(id) on update cascade,
-        storeodr    int
+        storeodr    bigint
             references storeodr(id) on update cascade,
 
         shipper     int
