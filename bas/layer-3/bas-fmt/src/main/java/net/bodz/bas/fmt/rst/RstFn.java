@@ -71,6 +71,7 @@ public class RstFn {
             IPrintOut out = new WriterPrintOut(osw);
             IRstOutput rstOutput = RstOutputImpl.from(out);
             obj.writeObject(rstOutput);
+            out.flush();
         }
     }
 
