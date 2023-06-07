@@ -2,45 +2,10 @@ package net.bodz.violet.edu;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
-
-/**
- * 课件
- */
-@Table(name = "coursekit")
-@IdType(Integer.class)
+@Table(schema = "violet", name = "coursekit")
 public class CourseKit
-        extends IdEntity<Integer> {
+        extends _CourseKit_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    CourseKitCategory category;
-    Course course;
-
-    public CourseKit() {
-    }
-
-    /**
-     * 课件分类
-     */
-    public CourseKitCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(CourseKitCategory category) {
-        this.category = category;
-    }
-
-    /**
-     * 所属课程
-     */
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 
 }

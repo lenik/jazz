@@ -1,22 +1,11 @@
 package net.bodz.violet.edu;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.CoTag;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "violet", name = "testqtag")
 public class TestQuestionTag
-        extends CoTag <TestQuestionTag>{
+        extends _TestQuestionTag_stuff<TestQuestionTag> {
 
     private static final long serialVersionUID = 1L;
-
-    public TestQuestionTag() {
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append(super.toString());
-        return sb.toString();
-    }
 
 }

@@ -1,25 +1,11 @@
 package net.bodz.violet.edu;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.template.FavRecord;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = "violet", name = "coursekit_fav")
 public class CourseKitFav
-        extends FavRecord {
+        extends _CourseKitFav_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    CourseKit courseKit;
-
-    public CourseKitFav() {
-    }
-
-    public CourseKit getCourseKit() {
-        return courseKit;
-    }
-
-    public void setCourseKit(CourseKit courseKit) {
-        this.courseKit = courseKit;
-    }
 
 }
