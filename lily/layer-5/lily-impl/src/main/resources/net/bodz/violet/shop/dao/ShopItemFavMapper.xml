@@ -1,41 +1,138 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.violet.shop.dao.ShopItemFavMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.violet.shop.ShopItemFav" extends="co.MAP_UVX">
+    <resultMap id="objlist_map" type="net.bodz.violet.shop.ShopItemFav">
+        <id property="id" column="id" />
+        <result property="shopItemId" column="shopitem" />
+        <result property="userId" column="user" />
+        <association property="shopItem" columnPrefix="shopitem_"
+            javaType="net.bodz.violet.shop.ShopItem" 
+            resultMap="net.bodz.violet.shop.dao.ShopItemMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.security.User" 
+            resultMap="net.bodz.lily.security.dao.UserMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from shopItemFav a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.shopitem, 
+            a."user", 
+            shopitem.id shopitem_id, 
+            shopitem.label shopitem_label, 
+            shopitem.description shopitem_description, 
+            shopitem.priority shopitem_priority, 
+            shopitem.flags shopitem_flags, 
+            shopitem."state" shopitem_state, 
+            shopitem.t0 shopitem_t0, 
+            shopitem.t1 shopitem_t1, 
+            shopitem."year" shopitem_year, 
+            shopitem.creation shopitem_creation, 
+            shopitem.lastmod shopitem_lastmod, 
+            shopitem."version" shopitem_version, 
+            shopitem.props shopitem_props, 
+            shopitem.shop shopitem_shop, 
+            shopitem.cat shopitem_cat, 
+            shopitem.art shopitem_art, 
+            shopitem.batch shopitem_batch, 
+            shopitem.price shopitem_price, 
+            shopitem.qty shopitem_qty, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from shopitem_fav a
+            left join shopitem shopitem on a.shopitem = shopitem.id
+            left join lily."user" "user" on a."user" = "user".id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.*,
-            u.label "uid_label",
-            g.label "gid_label"
-        from shopItemFav a
-            left join "user" u on a.uid = u.id
-            left join "group" g on a.gid = g.id
+            a.id, 
+            a.shopitem, 
+            a."user", 
+            shopitem.id shopitem_id, 
+            shopitem.label shopitem_label, 
+            shopitem.description shopitem_description, 
+            shopitem.priority shopitem_priority, 
+            shopitem.flags shopitem_flags, 
+            shopitem."state" shopitem_state, 
+            shopitem.t0 shopitem_t0, 
+            shopitem.t1 shopitem_t1, 
+            shopitem."year" shopitem_year, 
+            shopitem.creation shopitem_creation, 
+            shopitem.lastmod shopitem_lastmod, 
+            shopitem."version" shopitem_version, 
+            shopitem.props shopitem_props, 
+            shopitem.shop shopitem_shop, 
+            shopitem.cat shopitem_cat, 
+            shopitem.art shopitem_art, 
+            shopitem.batch shopitem_batch, 
+            shopitem.price shopitem_price, 
+            shopitem.qty shopitem_qty, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from shopitem_fav a
+            left join shopitem shopitem on a.shopitem = shopitem.id
+            left join lily."user" "user" on a."user" = "user".id
         ]]>
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.shopItemId != null">and a.shopitem = #{m.shopItemId}</if>
+        <if test="m.shopItemIdRange!= null">
+            <if test="m.shopItemIdRange.hasStartIncl">and a.shopitem >= #{m.shopItemIdRange.start}</if>
+            <if test="m.shopItemIdRange.hasStartExcl">and a.shopitem > #{m.shopItemIdRange.start}</if>
+            <if test="m.shopItemIdRange.hasEndIncl">and a.shopitem &lt;= #{m.shopItemIdRange.end}</if>
+            <if test="m.shopItemIdRange.hasEndExcl">and a.shopitem &lt; #{m.shopItemIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
@@ -43,9 +140,10 @@
         <where>
             <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
@@ -53,17 +151,20 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into shopItemFav(
-            code, label, description
+        insert into shopitem_fav(
+            shopitem,
+            "user"
         ) values(
-            #{codeName}, #{label}, #{description}
+            #{shopItemId},
+            #{userId}
         );
     ]]></insert>
 
     <update id="update">
-        update shopItemFav
+        update shopitem_fav
         <set>
-            <include refid="co.setUS" />
+            shopitem = #{shopItemId},
+            "user" = #{userId},
         </set>
         <where>
             id = #{id}
@@ -71,11 +172,14 @@
     </update>
 
     <delete id="delete">
-        delete from shopItemFav where id = #{id}
+        delete from shopitem_fav
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
-        select count(*) "rows" from shopItemFav
+    <select id="count" resultType="long">
+        select count(*) "rows" from shopitem_fav
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

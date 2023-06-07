@@ -13,4 +13,7 @@ import net.bodz.violet.shop.SalesOrder;
 public class SalesOrderIndex
         extends CoIndex<SalesOrder, SalesOrderMask> {
 
+    public SalesOrderIndex() {
+    }
+
 }
