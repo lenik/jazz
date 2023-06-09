@@ -169,3 +169,11 @@ dao-violet: predao
             storecat storephase storel offstorel storeodr storeodrl \
             trancat tranphase tranodr tranodrl
 
+del-exporters-samples: del-samples del-exporters
+
+del-samples:
+	find -name *Samples.java -print -delete
+
+del-exporters:
+	find -name *Exporter.java -print -delete
+
