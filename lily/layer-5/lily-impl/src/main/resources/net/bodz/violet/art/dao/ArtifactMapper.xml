@@ -462,7 +462,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-    <select id="selectByRfid" parameterType="String" resultMap="objedit_map">
+    <select id="selectByRfid" parameterType="String" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.rfid = #{rfid}</if>
