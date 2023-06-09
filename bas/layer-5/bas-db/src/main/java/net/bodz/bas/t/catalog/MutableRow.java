@@ -83,7 +83,7 @@ public class MutableRow
         if (column == null)
             return null;
         else
-            return column.getType();
+            return column.getJavaClass();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class MutableRow
         if (column == null)
             return null;
         else
-            return column.getType();
+            return column.getJavaClass();
     }
 
     @Override

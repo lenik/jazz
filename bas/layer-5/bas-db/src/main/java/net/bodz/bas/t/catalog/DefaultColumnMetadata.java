@@ -41,7 +41,7 @@ public class DefaultColumnMetadata
     String label;
     String description; // comment..
 
-    Class<?> type = String.class;
+    Class<?> javaClass = String.class;
     JdbcType jdbcType = JdbcType.VARCHAR;
     String sqlTypeName;
 
@@ -177,14 +177,14 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public Class<?> getType() {
-        return type;
+    public Class<?> getJavaClass() {
+        return javaClass;
     }
 
-    public void setType(Class<?> type) {
-        this.type = type;
-        jsonType = IJsonForm.class.isAssignableFrom(type);
-        xmlType = IXmlForm.class.isAssignableFrom(type);
+    public void setJavaClass(Class<?> javaClass) {
+        this.javaClass = javaClass;
+        jsonType = IJsonForm.class.isAssignableFrom(javaClass);
+        xmlType = IXmlForm.class.isAssignableFrom(javaClass);
     }
 
     @Override
@@ -210,15 +210,15 @@ public class DefaultColumnMetadata
         this.sqlTypeName = sqlTypeName;
     }
 
-    public void setTypeByName(String typeName)
+    public void setJavaClassName(String className)
             throws ParseException {
         Class<?> clazz;
         try {
-            clazz = Class.forName(typeName);
+            clazz = Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new ParseException(e.getMessage(), e);
         }
-        setType(clazz);
+        setJavaClass(clazz);
     }
 
     @Override
@@ -409,7 +409,7 @@ public class DefaultColumnMetadata
     @Override
     public Object parseColumnValue(String s)
             throws ParseException {
-        IParser<?> parser = Typers.getTyper(type, IParser.class);
+        IParser<?> parser = Typers.getTyper(javaClass, IParser.class);
         return parser.parse(s);
     }
 
@@ -419,15 +419,15 @@ public class DefaultColumnMetadata
         if (jsonType) {
             IJsonForm obj;
             try {
-                obj = (IJsonForm) type.getDeclaredConstructor().newInstance();
+                obj = (IJsonForm) javaClass.getDeclaredConstructor().newInstance();
             } catch (Exception e) {
-                throw new ParseException("Failed to instantiate " + type, e);
+                throw new ParseException("Failed to instantiate " + javaClass, e);
             }
             obj.readObjectBoxed(jsonBox, Convention.JSON_STYLE);
             return obj;
         }
 
-        IParser<?> parser = Typers.getTyper(type, IParser.class);
+        IParser<?> parser = Typers.getTyper(javaClass, IParser.class);
         if (parser != null) {
             String text = jsonBox.toString();
             Object value = parser.parse(text);
@@ -435,7 +435,7 @@ public class DefaultColumnMetadata
         }
 
         throw new UnsupportedOperationException(//
-                "Don't know how to convert json " + jsonBox + " to " + type);
+                "Don't know how to convert json " + jsonBox + " to " + javaClass);
     }
 
     @Override
@@ -446,8 +446,8 @@ public class DefaultColumnMetadata
             return;
         }
 
-        if (!type.isInstance(value))
-            throw new IllegalArgumentException("Not an instance of " + type);
+        if (!javaClass.isInstance(value))
+            throw new IllegalArgumentException("Not an instance of " + javaClass);
 
         if (jsonType) {
             IJsonForm obj = (IJsonForm) value;
@@ -469,31 +469,31 @@ public class DefaultColumnMetadata
         if (xmlType) {
             IXmlForm obj;
             try {
-                obj = (IXmlForm) type.newInstance();
+                obj = (IXmlForm) javaClass.newInstance();
             } catch (Exception e) {
-                throw new ParseException("Failed to instantiate " + type, e);
+                throw new ParseException("Failed to instantiate " + javaClass, e);
             }
             obj.readObjectBoxed(enclosing);
             return obj;
         }
 
         String text = enclosing.getTextContent();
-        IParser<?> parser = Typers.getTyper(type, IParser.class);
+        IParser<?> parser = Typers.getTyper(javaClass, IParser.class);
         if (parser != null) {
             Object value = parser.parse(text);
             return value;
         }
 
         throw new UnsupportedOperationException(//
-                "Don't know how to convert xml text content [" + text + "] to " + type);
+                "Don't know how to convert xml text content [" + text + "] to " + javaClass);
     }
 
     @Override
     public void writeColumnInXml(IXmlOutput out, Object value)
             throws XMLStreamException, FormatException {
         if (value != null) {
-            if (!type.isInstance(value))
-                throw new IllegalArgumentException("Not an instance of " + type);
+            if (!javaClass.isInstance(value))
+                throw new IllegalArgumentException("Not an instance of " + javaClass);
 
             if (xmlType) {
                 IXmlForm obj = (IXmlForm) value;
@@ -514,7 +514,7 @@ public class DefaultColumnMetadata
         String name = jdbcMetadata.getColumnName(columnIndex);
         String label = jdbcMetadata.getColumnLabel(columnIndex);
 
-        String typeName = jdbcMetadata.getColumnClassName(columnIndex);
+        String jdbcClassName = jdbcMetadata.getColumnClassName(columnIndex);
         // int width = jdbcMetadata.getColumnDisplaySize(i);
         int jdbcType = jdbcMetadata.getColumnType(columnIndex);
 
@@ -524,7 +524,7 @@ public class DefaultColumnMetadata
             this.setLabel(label);
 
         try {
-            this.setTypeByName(typeName);
+            this.setJavaClassName(jdbcClassName);
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -577,7 +577,7 @@ public class DefaultColumnMetadata
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
         setJdbcType(sqlTypeInt);
-        type = JdbcType.getPreferredType(this);
+        javaClass = JdbcType.getPreferredType(this);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */
@@ -594,7 +594,7 @@ public class DefaultColumnMetadata
         description = o.getString(K_DESCRIPTION);
 
         String typeName = o.getString(K_TYPE);
-        setTypeByName(typeName);
+        setJavaClassName(typeName);
 
         jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VARCHAR);
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
@@ -633,7 +633,7 @@ public class DefaultColumnMetadata
         description = o.a(K_DESCRIPTION).getString();
 
         String typeName = o.a(K_TYPE).getString();
-        setTypeByName(typeName);
+        setJavaClassName(typeName);
         jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VARCHAR);
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
