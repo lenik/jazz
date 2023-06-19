@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import javax.servlet.http.HttpSession;
+
 import net.bodz.bas.crypto.trans.EpochTransient;
 import net.bodz.bas.crypto.trans.IFlyingSupport;
 import net.bodz.bas.crypto.trans.IFlyingTransient;
@@ -11,6 +13,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.IJsonResponse;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.sms.IShortMessageService;
@@ -90,6 +93,10 @@ public class LoginManager
             if (rr != null) {
                 LoginResult result = rr.toLoginResult(this);
                 result.setHeader("resolverClass", resolver.getClass().getCanonicalName());
+                if (result.token != null) {
+                    HttpSession session = CurrentHttpService.getSession();
+                    session.setAttribute(LoginToken.ATTRIBUTE_NAME, result.token);
+                }
                 return result;
             }
         }

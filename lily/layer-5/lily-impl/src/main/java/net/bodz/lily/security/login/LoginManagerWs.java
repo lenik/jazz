@@ -1,14 +1,19 @@
 package net.bodz.lily.security.login;
 
+import javax.servlet.http.HttpSession;
+
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
+import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class LoginManagerWs
-        implements IPathDispatchable {
+        implements
+            IPathDispatchable {
 
     LoginManager impl;
 
@@ -40,6 +45,16 @@ public class LoginManagerWs
 
         case "login-by-email":
             target = impl.loginByPhone(q.getString("email"), q.getString("e_cr"));
+            break;
+
+        case "status":
+            HttpSession session = CurrentHttpService.getSession();
+            target = session.getAttribute(LoginToken.ATTRIBUTE_NAME);
+            if (target == null) {
+                JsonResult notLogin = new JsonResult();
+                notLogin.fail("Not logged in.");
+                target = notLogin;
+            }
             break;
 
         case "exit":
