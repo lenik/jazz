@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
-        <result property="tagGroup" column="tagv" />
+        <result property="tagGroupId" column="tagv" />
         <association property="tagGroup" columnPrefix="tagv_"
             javaType="net.bodz.lily.schema.TagGroupDef" 
             resultMap="net.bodz.lily.schema.dao.TagGroupDefMapper.objlist_map" />

@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fval" column="fval" />
         <result property="sval" column="sval" />
         <result property="articleId" column="article" />
-        <result property="parameter" column="parm" />
+        <result property="parameterId" column="parm" />
         <association property="article" columnPrefix="article_"
             javaType="net.bodz.lily.pub.Article" 
             resultMap="net.bodz.lily.pub.dao.ArticleMapper.objlist_map" />

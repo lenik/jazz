@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
         <result property="val" column="val" />
-        <result property="parameter" column="parm" />
+        <result property="parameterId" column="parm" />
         <association property="parameter" columnPrefix="parm_"
             javaType="net.bodz.lily.schema.ParameterDef" 
             resultMap="net.bodz.lily.schema.dao.ParameterDefMapper.objlist_map" />
