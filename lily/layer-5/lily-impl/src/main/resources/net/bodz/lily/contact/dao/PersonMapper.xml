@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="properties.jsonStr" column="props" />
         <result property="birthday" column="birthday" />
         <result property="langTag" column="locale" />
-        <result property="timeZone" column="timezone" />
+        <result property="timeZoneId" column="timezone" />
         <result property="roleCount" column="nrole" />
         <result property="customer" column="customer" />
         <result property="supplier" column="supplier" />

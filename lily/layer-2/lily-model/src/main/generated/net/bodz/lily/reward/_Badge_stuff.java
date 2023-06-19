@@ -35,7 +35,7 @@ public abstract class _Badge_stuff
     @NotNull
     int val;
 
-    Integer[] levels;
+    int[] levels;
 
     @NotNull
     boolean descend;
@@ -94,11 +94,11 @@ public abstract class _Badge_stuff
     @Ordinal(_ord_LEVELS)
     @Precision(value = 10)
     @Column(name = "levels", precision = 10)
-    public Integer[] getLevels() {
+    public int[] getLevels() {
         return levels;
     }
 
-    public void setLevels(Integer[] value) {
+    public void setLevels(int[] value) {
         this.levels = value;
     }
 

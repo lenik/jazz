@@ -2,7 +2,7 @@
 <!DOCTYPE mapper 
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.bodz.lily.schema.impl.PriorityDefMapper">
+<mapper namespace="net.bodz.lily.schema.dao.PriorityDefMapper">
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.PriorityDef" extends="co.MAP_ALL">
         <association property="schema" javaType="net.bodz.lily.schema.SchemaDef">
