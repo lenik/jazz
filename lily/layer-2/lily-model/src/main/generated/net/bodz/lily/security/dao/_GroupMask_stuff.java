@@ -4,10 +4,9 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoObjectMask;
 
 public class _GroupMask_stuff
-        extends CoObjectMask {
+        extends CoPrincipalMask {
 
     Integer id;
     IntegerRange idRange = new IntegerRange();
@@ -46,10 +45,12 @@ public class _GroupMask_stuff
         this.id = value;
     }
 
+    @Override
     public IntegerRange getIdRange() {
         return idRange;
     }
 
+    @Override
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
     }

@@ -25,8 +25,8 @@ public class CoObjectMask
 
 //    Range idRange = new LongRange();
 
-    String codeName;
-    String codeNamePattern;
+    String uniqName;
+    String uniqNamePattern;
 
     String label;
     String labelPattern;
@@ -55,20 +55,20 @@ public class CoObjectMask
 //        this.idRange = idRange;
 //    }
 
-    public String getCodeName() {
-        return codeName;
+    public String getUniqName() {
+        return uniqName;
     }
 
-    public void setCodeName(String codeName) {
-        this.codeName = codeName;
+    public void setUniqName(String uniqName) {
+        this.uniqName = uniqName;
     }
 
-    public String getCodeNamePattern() {
-        return codeNamePattern;
+    public String getUniqNamePattern() {
+        return uniqNamePattern;
     }
 
-    public void setCodeNamePattern(String codeNamePattern) {
-        this.codeNamePattern = codeNamePattern;
+    public void setUniqNamePattern(String uniqNamePattern) {
+        this.uniqNamePattern = uniqNamePattern;
     }
 
     public String getLabel() {
@@ -224,7 +224,7 @@ public class CoObjectMask
         VarMapLoader loader = new VarMapLoader();
         loader.load(getClass(), this, map);
 
-        codeName = map.getString("code", codeName);
+        uniqName = map.getString("code", uniqName);
         queryText = map.getString("q", queryText);
         ownerIdRange = RangeVarsFn.getFrom(map, "uid", ownerIdRange);
         ownerGroupIdRange = RangeVarsFn.getFrom(map, "gid", ownerGroupIdRange);
