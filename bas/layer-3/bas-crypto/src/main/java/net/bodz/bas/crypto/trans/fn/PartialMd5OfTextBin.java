@@ -2,7 +2,6 @@ package net.bodz.bas.crypto.trans.fn;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-
 public class PartialMd5OfTextBin
         extends Md5OfTextBin {
 
@@ -27,7 +26,7 @@ public class PartialMd5OfTextBin
     }
 
     @Override
-    public String toString() {
+    public String getStringForm() {
         String md5int = Long.toString(getMd5Long(), radix);
         int numLen = md5int.length();
         if (numLen > length)
