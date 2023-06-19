@@ -16,7 +16,8 @@ import net.bodz.lily.security.login.ISignatureChecker;
 
 public class UserPasswordLoginResolver
         extends DataBackedLoginResolver
-        implements ILoginConsts {
+        implements
+            ILoginConsts {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
@@ -29,36 +30,44 @@ public class UserPasswordLoginResolver
 
     @Override
     public Result login(ISignatureChecker checker, IVariantMap<String> q) {
-        String userName = q.getString("user");
-        if (userName == null)
-            userName = q.getString("username");
-        if (userName == null)
-            return null;
-
         String sign = q.getString(K_PASSWD);
         if (sign == null)
             return null;
 
-        User namedUser = userMapper.selectByName(userName);
-        if (namedUser == null)
-            return failed("No such user: %s", userName);
+        User user;
+
+        Integer userId = q.getInt("uid");
+        if (userId != null) {
+            user = userMapper.select(userId);
+            if (user == null)
+                return failed("Invalid user id: %s", userId);
+        } else {
+            String userName = q.getString("user");
+            if (userName == null)
+                userName = q.getString("uname");
+            if (userName == null)
+                return null;
+            user = userMapper.selectByName(userName);
+            if (user == null)
+                return failed("Invalid user name: %s", userName);
+        }
 
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().userName(userName), SelectOptions.ALL);
+                new UserSecretMask().userId(user.getId()), SelectOptions.ALL);
         if (userSecrets.isEmpty())
-            return failed("User %s has no secret.", userName);
+            return failed("User %s has no secret.", user);
 
         for (UserSecret userSecret : userSecrets) {
             String passwd = userSecret.getPassword();
             FlyingIndex fi = checker.checkSignature(passwd, sign);
             if (fi.exists()) {
-                Result result = new Result(namedUser);
+                Result result = new Result(user);
                 result.setHeader("fi", fi);
                 return result;
             }
         }
 
-        return failed("Incorrect password for user %s.", userName);
+        return failed("Incorrect password for user %s.", user);
     }
 
 }

@@ -129,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type"."version" type_version, 
             "type".props type_props, 
             "type".dummy type_dummy
-        from user a
+        from "user" a
             left join person person on a.person = person.id
             left join "group" gid0 on a.gid0 = gid0.id
             left join "user" referer on a.referer = referer.id
@@ -232,7 +232,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type"."version" type_version, 
             "type".props type_props, 
             "type".dummy type_dummy
-        from user a
+        from "user" a
             left join person person on a.person = person.id
             left join "group" gid0 on a.gid0 = gid0.id
             left join "user" referer on a.referer = referer.id
