@@ -15,4 +15,6 @@ public class BuiltinPathDispatcherPriorities {
     public static final int PRIORITY_FIELD = 50;
     public static final int PRIORITY_METHOD = 51;
 
+    public static final int PRIORITY_JSON = 80;
+
 }

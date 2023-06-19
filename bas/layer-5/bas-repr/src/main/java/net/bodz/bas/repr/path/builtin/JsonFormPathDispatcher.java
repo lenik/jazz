@@ -16,6 +16,13 @@ public class JsonFormPathDispatcher
         implements
             IPathDispatcher {
 
+    public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_JSON;
+
+    @Override
+    public int getPriority() {
+        return PRIORITY;
+    }
+
     @Override
     public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
