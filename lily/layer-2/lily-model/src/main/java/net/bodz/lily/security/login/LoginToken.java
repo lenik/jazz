@@ -10,19 +10,15 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.content.IReset;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
-import net.bodz.bas.site.ISiteRoot;
 import net.bodz.bas.site.vhost.CurrentVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.typer.std.MutableAttributes;
-import net.bodz.lily.app.DataApps;
-import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 
@@ -136,14 +132,7 @@ public class LoginToken
         if (vhost == null)
             throw new IllegalStateException("no vhost info.");
 
-        IDataApplication app = DataApps.lazyCreate(request);
-        ISiteRoot site = app.getDefaultSite();
-        if (site == null)
-            throw new IllegalUsageException("root site isn't known");
-
-        ILoginManager loginManager = site.getAttribute(ILoginManager.ATTRIBUTE_NAME);
-        if (loginManager == null)
-            throw new IllegalUsageException("login manager isn't configured.");
+        ILoginManager loginManager = LoginManagers.requireLoginManager();
 
         ILoginTokenManager tokenManager = (ILoginTokenManager) loginManager;
 

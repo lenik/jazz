@@ -12,10 +12,11 @@ public class LoginManagerWs
         implements
             IPathDispatchable {
 
-    LoginManager impl;
+    public LoginManagerWs() {
+    }
 
-    public LoginManagerWs(LoginManager impl) {
-        this.impl = impl;
+    ILoginManager getLoginManager() {
+        return LoginManagers.requireLoginManager();
     }
 
     @Override
@@ -29,19 +30,19 @@ public class LoginManagerWs
 
         switch (token) {
         case "init":
-            target = impl.initiateLogin(q);
+            target = getLoginManager().initiateLogin(q);
             break;
 
         case "login":
-            target = impl.login(q);
+            target = getLoginManager().login(q);
             break;
 
         case "login-by-phone":
-            target = impl.loginByPhone(q.getString("phone"), q.getString("e_cr"));
+            target = getLoginManager().loginByPhone(q.getString("phone"), q.getString("e_cr"));
             break;
 
         case "login-by-email":
-            target = impl.loginByPhone(q.getString("email"), q.getString("e_cr"));
+            target = getLoginManager().loginByPhone(q.getString("email"), q.getString("e_cr"));
             break;
 
         case "status":
@@ -56,31 +57,35 @@ public class LoginManagerWs
         case "exit":
         case "quit":
         case "logout":
-            target = impl.logout();
+            target = getLoginManager().logout();
             break;
 
         case "verify-phone":
-            target = impl.verifyPhone(q.getString("phone"), q.getString("usage"));
+            target = getLoginManager().verifyPhone(q.getString("phone"), q.getString("usage"));
             break;
 
         case "verify-email":
-            target = impl.verifyEmail(q.getString("email"), q.getString("usage"));
+            target = getLoginManager().verifyEmail(q.getString("email"), q.getString("usage"));
             break;
 
         case "register-by-phone":
-            target = impl.registerByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
+            target = getLoginManager().registerByPhone(q.getString("phone"), q.getString("e_cr"),
+                    q.getString("passwd"));
             break;
 
         case "register-by-email":
-            target = impl.registerByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
+            target = getLoginManager().registerByEmail(q.getString("email"), q.getString("e_cr"),
+                    q.getString("passwd"));
             break;
 
         case "reset-password-by-phone":
-            target = impl.resetPasswordByPhone(q.getString("phone"), q.getString("e_cr"), q.getString("passwd"));
+            target = getLoginManager().resetPasswordByPhone(q.getString("phone"), q.getString("e_cr"),
+                    q.getString("passwd"));
             break;
 
         case "reset-password-by-email":
-            target = impl.resetPasswordByEmail(q.getString("email"), q.getString("e_cr"), q.getString("passwd"));
+            target = getLoginManager().resetPasswordByEmail(q.getString("email"), q.getString("e_cr"),
+                    q.getString("passwd"));
             break;
         }
 
