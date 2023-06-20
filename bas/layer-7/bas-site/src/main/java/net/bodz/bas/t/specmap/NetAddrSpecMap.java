@@ -1,10 +1,15 @@
 package net.bodz.bas.t.specmap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 
 public class NetAddrSpecMap<val_t>
         extends AbstractSpecMapBase<int[], val_t>
@@ -243,6 +248,14 @@ public class NetAddrSpecMap<val_t>
     @Override
     public String toString() {
         return map.toString();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        super.jsonOut(out, opts);
+        out.entry("componentBits", componentBits);
+        out.entry("map", map);
     }
 
 }

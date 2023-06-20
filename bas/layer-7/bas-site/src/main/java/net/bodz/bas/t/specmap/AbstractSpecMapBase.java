@@ -1,14 +1,23 @@
 package net.bodz.bas.t.specmap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.json.JsonObject;
 
 public abstract class AbstractSpecMapBase<key_t, val_t>
         implements
-            ISpecMap<key_t, val_t> {
+            ISpecMap<key_t, val_t>,
+            IJsonForm {
 
     boolean hasDefaultVal;
     val_t defaultVal;
@@ -190,6 +199,22 @@ public abstract class AbstractSpecMapBase<key_t, val_t>
         SpecMapDumper<key_t, val_t> dumper = new SpecMapDumper<>(buf.indented());
         accept(dumper);
         return buf.toString();
+    }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        // this.accept(new SpecMapJsonDumper<>(out));
+        if (hasDefaultVal)
+            out.entry("defaultValue", defaultVal);
+        out.entry("nullable", nullable);
+        out.entry("allowOverlappedRange", allowOverlappedRange);
     }
 
 }
