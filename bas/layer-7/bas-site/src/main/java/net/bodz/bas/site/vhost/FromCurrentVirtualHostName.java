@@ -26,7 +26,7 @@ public class FromCurrentVirtualHostName
         if (request == null)
             return null;
 
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             return null;
 

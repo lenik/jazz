@@ -54,7 +54,7 @@ public class StaticVhostFileAccessServlet
 
     @Override
     protected File getLocalRoot(HttpServletRequest req) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(req);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(req);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 

@@ -24,7 +24,7 @@ public class VirtualHostScopeTeller
             return null;
 
         VirtualHostManager manager = VirtualHostManager.getInstance();
-        IVirtualHost vhost = manager.getVirtualHostFromRequest(request);
+        IVirtualHost vhost = manager.resolveVirtualHost(request);
         if (vhost != null)
             return vhost.getName();
 

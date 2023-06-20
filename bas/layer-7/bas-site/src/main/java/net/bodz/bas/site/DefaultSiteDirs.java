@@ -58,7 +58,7 @@ public class DefaultSiteDirs
     }
 
     public File getDataDir(HttpServletRequest request) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
         return new File(clusterDataDir, vhost.getName());
@@ -101,7 +101,7 @@ public class DefaultSiteDirs
     }
 
     public File getUploadDir(HttpServletRequest request) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 
@@ -114,7 +114,7 @@ public class DefaultSiteDirs
     }
 
     public File getUploadDir(HttpServletRequest request, String schema) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 
@@ -138,7 +138,7 @@ public class DefaultSiteDirs
      * @see BasicSite#PATH_UPLOAD
      */
     public IAnchor getUploadedAnchor(HttpServletRequest request) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 

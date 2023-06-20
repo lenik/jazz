@@ -12,10 +12,6 @@ public interface IVirtualHostResolver
 
     IVirtualHost getVirtualHost(String id);
 
-    default IVirtualHost getVirtualHostFromRequest(HttpServletRequest request) {
-        return resolveVirtualHost(request);
-    }
-
     IVirtualHost resolveVirtualHost(HttpServletRequest request);
 
 }

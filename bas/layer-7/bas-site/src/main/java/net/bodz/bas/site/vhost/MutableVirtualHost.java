@@ -8,14 +8,19 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.rst.AbstractRstHandler;
 import net.bodz.bas.fmt.rst.IRstForm;
 import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.i18n.dom1.MutableElement;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.typer.std.ITyperFamily;
@@ -24,7 +29,8 @@ public class MutableVirtualHost
         extends MutableElement
         implements
             IVirtualHost,
-            IRstForm {
+            IRstForm,
+            IJsonForm {
 
     private static final long serialVersionUID = 1L;
 
@@ -141,18 +147,21 @@ public class MutableVirtualHost
     /** ⇱ Implementation Of {@link IRstForm}. */
     /* _____________________________ */static section.iface __RST__;
 
-    @Override
-    public void writeObject(IRstOutput out)
-            throws IOException {
+    public String getHostSpec() {
         StringBuilder hostSpecBuf = new StringBuilder();
         for (String binding : bindings) {
             if (hostSpecBuf.length() != 0)
                 hostSpecBuf.append(',');
             hostSpecBuf.append(binding);
         }
+        return hostSpecBuf.toString();
+    }
 
+    @Override
+    public void writeObject(IRstOutput out)
+            throws IOException {
         out.beginElement("host", getName());
-        out.attribute("host-spec", hostSpecBuf.toString());
+        out.attribute("host-spec", getHostSpec());
 
         for (Entry<String, ?> entry : attributes.entrySet()) {
             String key = entry.getKey();
@@ -177,6 +186,19 @@ public class MutableVirtualHost
             return true;
         }
 
+    }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        out.entry("name", getName());
+        out.entry("hostSpec", getHostSpec());
+        out.entry("attributes", attributes);
     }
 
 }
