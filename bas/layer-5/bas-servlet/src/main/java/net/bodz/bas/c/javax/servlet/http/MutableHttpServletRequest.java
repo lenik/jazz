@@ -27,6 +27,8 @@ public class MutableHttpServletRequest
         Enumeration<String> names = request.getHeaderNames();
         while (names.hasMoreElements()) {
             String name = names.nextElement();
+            name = name.toLowerCase();
+
             List<String> list = new ArrayList<String>();
             Enumeration<String> vals = request.getHeaders(name);
             while (vals.hasMoreElements())
@@ -42,6 +44,10 @@ public class MutableHttpServletRequest
 
     @Override
     public String getHeader(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        name = name.toLowerCase();
+
         List<String> vals = headers.get(name);
         if (vals == null || vals.isEmpty())
             return null;
@@ -51,6 +57,10 @@ public class MutableHttpServletRequest
 
     @Override
     public Enumeration<String> getHeaders(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        name = name.toLowerCase();
+
         List<String> vals = headers.get(name);
         if (vals == null)
             vals = Collections.emptyList();
@@ -58,6 +68,10 @@ public class MutableHttpServletRequest
     }
 
     public synchronized List<String> getOrCreateHeaders(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        name = name.toLowerCase();
+
         List<String> vals = headers.get(name);
         if (vals == null) {
             vals = new ArrayList<String>();
@@ -72,6 +86,10 @@ public class MutableHttpServletRequest
     }
 
     public void setHeader(String name, String header) {
+        if (name == null)
+            throw new NullPointerException("name");
+        name = name.toLowerCase();
+
         List<String> vals = new ArrayList<String>(1);
         vals.add(header);
         headers.put(name, vals);
