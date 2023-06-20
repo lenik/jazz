@@ -31,12 +31,12 @@ public class CurrentVirtualHost
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request == null)
             return null;
-        return VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        return VirtualHostManager.getInstance().resolveVirtualHost(request);
     }
 
     public static IVirtualHost getVirtualHost() {
         HttpServletRequest request = CurrentHttpService.getRequest();
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalRequestException("Virtual host is undefined.");
         return vhost;

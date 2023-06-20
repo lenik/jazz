@@ -52,18 +52,6 @@ public class VirtualHostManager
     }
 
     @Override
-    public IVirtualHost getVirtualHostFromRequest(HttpServletRequest request) {
-        if (isEmpty())
-            logger.error("No vhost resolver installed.");
-        for (IVirtualHostResolver resolver : this) {
-            IVirtualHost vhost = resolver.getVirtualHostFromRequest(request);
-            if (vhost != null)
-                return vhost;
-        }
-        return null;
-    }
-
-    @Override
     public IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         for (IVirtualHostResolver resolver : this) {
             IVirtualHost vhost = resolver.resolveVirtualHost(request);
