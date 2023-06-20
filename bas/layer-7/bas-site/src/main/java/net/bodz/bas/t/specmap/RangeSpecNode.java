@@ -1,5 +1,10 @@
 package net.bodz.bas.t.specmap;
 
+import java.io.IOException;
+
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.BCharOut;
 
 public abstract class RangeSpecNode<node_t extends RangeSpecNode<node_t, key_t, val_t>, key_t extends Comparable<key_t>, val_t>
@@ -89,6 +94,14 @@ public abstract class RangeSpecNode<node_t extends RangeSpecNode<node_t, key_t, 
         SpecNodeDumper<node_t, key_t, val_t> dumper = new SpecNodeDumper<>(buf.indented());
         accept(dumper);
         return buf.toString();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        super.jsonOut(out, opts);
+        if (hasValue)
+            out.entry("value", value);
     }
 
 }

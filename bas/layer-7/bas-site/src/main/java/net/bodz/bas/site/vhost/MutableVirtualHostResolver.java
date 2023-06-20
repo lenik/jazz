@@ -1,5 +1,6 @@
 package net.bodz.bas.site.vhost;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -7,7 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.c.autowire.ProjectList;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
@@ -17,7 +24,8 @@ import net.bodz.bas.t.specmap.NetSpecMap;
 @ExcludedFromIndex
 public class MutableVirtualHostResolver
         implements
-            IVirtualHostResolver {
+            IVirtualHostResolver,
+            IJsonForm {
 
     static final Logger logger = LoggerFactory.getLogger(MutableVirtualHostResolver.class);
 
@@ -117,6 +125,31 @@ public class MutableVirtualHostResolver
         }
 
         map.put(vhost.getName(), vhost);
+    }
+
+    @Override
+    public void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        out.entry("priority", priority);
+        out.entry("map", map);
+        out.key("bindingMap");
+        out.object();
+        bindingMap.jsonOut(out);
+        out.endObject();
+    }
+
+    public void dumpJson() {
+        try {
+            String json = JsonFn.toJson(this);
+            System.err.println(json);
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
     }
 
 }

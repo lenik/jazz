@@ -1,7 +1,12 @@
 package net.bodz.bas.t.specmap;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.JsonFormOptions;
 
 public class InetPortSpecMap<val_t>
         extends AbstractSpecMapBase<IInetPort, val_t> {
@@ -191,6 +196,13 @@ public class InetPortSpecMap<val_t>
     public void removeAllPrefixes() {
         ipPortMap.removeAllPrefixes();
         // TODO
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
+            throws IOException, FormatException {
+        super.jsonOut(out, opts);
+        out.entry("ipPortMap", ipPortMap);
     }
 
 }

@@ -1,10 +1,13 @@
 package net.bodz.bas.t.specmap;
 
+import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.bodz.bas.err.ExceptionSuppliers;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonOut;
 
 public class NetSpecMap<val_t>
         extends AbstractSpecMapBase<String, val_t> {
@@ -281,6 +284,15 @@ public class NetSpecMap<val_t>
         sb.append("ipv4: \n" + ipv4Map + "\n");
         sb.append("ipv6: \n" + ipv6Map);
         return sb.toString();
+    }
+
+    @Override
+    public void jsonOut(IJsonOut out)
+            throws IOException, FormatException {
+        super.jsonOut(out);
+        out.entry("nameMap", nameMap);
+        out.entry("ipv4Map", ipv4Map);
+        out.entry("ipv6Map", ipv6Map);
     }
 
 }
