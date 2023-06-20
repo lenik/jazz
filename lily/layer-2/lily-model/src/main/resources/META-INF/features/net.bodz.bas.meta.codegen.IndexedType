@@ -1,4 +1,5 @@
 net.bodz.lily.entity.manager.IEntityCommandProvider
 net.bodz.lily.entity.manager.RowOpListeners
+net.bodz.lily.security.login.ILoginManagerProvider
 net.bodz.lily.security.login.ILoginResolver
 net.bodz.lily.security.login.ILoginResolverProvider
