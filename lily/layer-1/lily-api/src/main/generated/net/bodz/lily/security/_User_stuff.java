@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.contact.Person;
+import net.bodz.bas.t.pojo.eg.Person;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -51,35 +51,6 @@ public abstract class _User_stuff
     /** User type like system-user, normal-user, etc. */
     @NotNull
     int typeId;
-
-    /**
-     *
-     * @label person
-     * @constraint foreign key (person) references lily.person (id)
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     */
-    public void setPerson(Person value) {
-        this.person = value;
-    }
-
-    @Ordinal(_ord_PERSON_ID)
-    @Precision(value = N_PERSON_ID)
-    @Column(name = "person", precision = 10)
-    public synchronized Integer getPersonId() {
-        if (person != null) {
-            return person.getId();
-        }
-        return personId;
-    }
-
-    public synchronized void setPersonId(Integer value) {
-        this.personId = value;
-    }
 
     /**
      * The primary user group, the default value of ownerGroup.

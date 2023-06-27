@@ -34,7 +34,6 @@ public abstract class BasicSite
         extends AbstractXjdocContent
         implements
             IQueryable,
-            IPathDispatchable,
             ICrawlable,
             ISiteRoot {
 

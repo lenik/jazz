@@ -32,7 +32,7 @@ public class ConnectOptions
 
     private static final long serialVersionUID = 1L;
 
-    public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
+//    public static final String ATTRIBUTE_KEY = ConnectOptions.class.getName();
 
     private String sourceUri;
     private long lastModifiedTime;

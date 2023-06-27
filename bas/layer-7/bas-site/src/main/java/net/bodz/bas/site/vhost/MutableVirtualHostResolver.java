@@ -31,13 +31,19 @@ public class MutableVirtualHostResolver
 
     private int priority;
 
+    IVirtualHostFactory virtualHostFactory;
+
     Map<String, IVirtualHost> map = new TreeMap<String, IVirtualHost>();
     NetSpecMap<String> bindingMap = new NetSpecMap<>();
 
     static final String VAR_ECHO_HEAD = "/echo/head";
     static final String VAR_PROJECT = "/project";
 
-    public MutableVirtualHostResolver() {
+    public MutableVirtualHostResolver(IVirtualHostFactory virtualHostFactory) {
+        if (virtualHostFactory == null)
+            throw new NullPointerException("virtualHostFactory");
+        this.virtualHostFactory = virtualHostFactory;
+
         bindingMap.nameMap.addPattern("*.lo", VAR_ECHO_HEAD);
         InetPort32 ap;
         try {
@@ -46,6 +52,16 @@ public class MutableVirtualHostResolver
             throw new RuntimeException(e.getMessage(), e);
         }
         bindingMap.ipv4Map.addPrefix(ap, VAR_PROJECT);
+    }
+
+    public IVirtualHostFactory getVirtualHostFactory() {
+        return virtualHostFactory;
+    }
+
+    public void setVirtualHostFactory(IVirtualHostFactory virtualHostFactory) {
+        if (virtualHostFactory == null)
+            throw new NullPointerException("virtualHostFactory");
+        this.virtualHostFactory = virtualHostFactory;
     }
 
     public NetSpecMap<String> getBindingMap() {
