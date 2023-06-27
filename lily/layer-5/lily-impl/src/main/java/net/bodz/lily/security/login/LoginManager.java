@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.crypto.trans.EpochTransient;
 import net.bodz.bas.crypto.trans.IFlyingSupport;
 import net.bodz.bas.crypto.trans.IFlyingTransient;
@@ -13,7 +11,6 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.IJsonResponse;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.sms.IShortMessageService;
@@ -94,8 +91,7 @@ public class LoginManager
                 LoginResult result = rr.toLoginResult(this);
                 result.setHeader("resolverClass", resolver.getClass().getCanonicalName());
                 if (result.token != null) {
-                    HttpSession session = CurrentHttpService.getSession();
-                    session.setAttribute(LoginToken.ATTRIBUTE_NAME, result.token);
+                    result.token.saveInSession();
                 }
                 return result;
             }
@@ -129,7 +125,7 @@ public class LoginManager
     @Override
     public IJsonResponse logout() {
         JsonResult r = new JsonResult();
-        LoginToken token = LoginToken.fromSession();
+        LoginToken token = LoginToken.fromRequest();
         if (token != null) {
             User user = token.getUser();
             for (ILoginListener listener : loginListeners)
@@ -138,7 +134,7 @@ public class LoginManager
                 } catch (Exception e) {
                     return r.fail(e, "Can't logged out %s: %s", user.toString(), listener + ": " + e.getMessage());
                 }
-            LoginToken.clearSession();
+            LoginToken.removeFromRequest();
         }
         return r.succeed();
     }

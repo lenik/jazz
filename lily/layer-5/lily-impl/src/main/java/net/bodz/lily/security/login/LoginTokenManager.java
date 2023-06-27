@@ -6,7 +6,8 @@ import java.util.Map;
 import net.bodz.lily.security.User;
 
 public class LoginTokenManager
-        implements ILoginTokenManager {
+        implements
+            ILoginTokenManager {
 
     long nextId = 1;
 
@@ -17,6 +18,7 @@ public class LoginTokenManager
     public LoginToken newToken(User user) {
         long id = nextId++;
         LoginToken token = new LoginToken(this, id, user);
+        tokens.put(id, token);
         return token;
     }
 

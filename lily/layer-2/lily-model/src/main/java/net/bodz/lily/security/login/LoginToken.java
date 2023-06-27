@@ -127,7 +127,10 @@ public class LoginToken
         HttpServletRequest request = CurrentHttpService.getRequestOpt();
         if (request == null)
             return null;
+        return fromRequest(request);
+    }
 
+    public static LoginToken fromRequest(HttpServletRequest request) {
         IVirtualHost vhost = CurrentVirtualHost.getVirtualHostOpt();
         if (vhost == null)
             throw new IllegalStateException("no vhost info.");
@@ -147,6 +150,36 @@ public class LoginToken
             }
 
         return fromSession();
+    }
+
+    public static LoginToken removeFromRequest() {
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
+        if (request == null)
+            return null;
+        return removeFromRequest(request);
+    }
+
+    public static LoginToken removeFromRequest(HttpServletRequest request) {
+        IVirtualHost vhost = CurrentVirtualHost.getVirtualHostOpt();
+        if (vhost == null)
+            throw new IllegalStateException("no vhost info.");
+
+        ILoginManager loginManager = LoginManagers.requireLoginManager();
+
+        ILoginTokenManager tokenManager = (ILoginTokenManager) loginManager;
+        LoginToken last = null;
+
+        String tokenStr = request.getHeader(HEADER_NAME);
+        if (tokenStr == null)
+            tokenStr = request.getParameter(PARAM_NAME);
+        if (tokenStr != null)
+            if (StringPred.isDecimal(tokenStr)) {
+                int id = Integer.parseInt(tokenStr);
+                last = tokenManager.removeToken(id);
+            }
+
+        LoginToken last2 = removeAnyTokenFromSession();
+        return last != null ? last : last2;
     }
 
     /**
@@ -184,31 +217,35 @@ public class LoginToken
         }
     }
 
-    void removeFromSession() {
+    LoginToken removeJustThisFromSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
-        if (session != null)
-            removeFromSession(session);
+        if (session == null)
+            return null;
+        return removeJustThisFromSession(session);
     }
 
-    void removeFromSession(HttpSession session) {
+    LoginToken removeJustThisFromSession(HttpSession session) {
         LoginToken token = fromSession(session);
-        if (token == this)
-            clearSession(session);
+        if (token != this)
+            return null;
+        return removeAnyTokenFromSession(session);
     }
 
-    static void clearSession() {
+    static LoginToken removeAnyTokenFromSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
-        if (session != null)
-            clearSession(session);
+        if (session == null)
+            return null;
+        return removeAnyTokenFromSession(session);
     }
 
-    static void clearSession(HttpSession session) {
+    static LoginToken removeAnyTokenFromSession(HttpSession session) {
         synchronized (session) {
             LoginToken token = (LoginToken) session.getAttribute(LoginToken.ATTRIBUTE_NAME);
             if (token != null) {
                 token.detach();
                 session.removeAttribute(LoginToken.ATTRIBUTE_NAME);
             }
+            return token;
         }
     }
 

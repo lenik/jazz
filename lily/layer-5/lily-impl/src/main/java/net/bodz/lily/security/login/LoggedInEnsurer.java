@@ -6,7 +6,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import net.bodz.bas.c.javax.servlet.http.IHttpFilter;
 
@@ -35,8 +34,7 @@ public class LoggedInEnsurer
             return;
         }
 
-        HttpSession session = request.getSession();
-        LoginToken token = LoginToken.fromSession(session);
+        LoginToken token = LoginToken.fromRequest(request);
         if (token != null) {
             chain.doFilter(request, response);
             return;
