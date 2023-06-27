@@ -39,8 +39,12 @@ public class FileTypers
         // if (text.startsWith("?"))
         // return ModulesRoot.DEFAULT.findexp(text.substring(1));
 
+        File file = new File(text);
+        if (file.isAbsolute())
+            return file;
+
         File contextDirectory = options.get(textformContextDirectory, defaultTextformContextDirectory);
-        File file = new File(contextDirectory, text);
+        file = new File(contextDirectory, text);
         return file;
     }
 
