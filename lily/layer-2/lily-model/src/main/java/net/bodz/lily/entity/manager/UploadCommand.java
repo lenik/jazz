@@ -10,22 +10,35 @@ import net.bodz.bas.site.DefaultSiteDirs;
 import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IHaveAttachments.class)
 public class UploadCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
+
+    public static final String K_NULL_ID = "incoming";
+
+    public UploadCommand() {
+    }
+
+    @Override
+    public UploadProcess createProcess(IEntityCommandContext context) {
+        return new UploadProcess(this, context);
+    }
+
+}
+
+class UploadProcess
+        extends AbstractEntityCommandProcess<UploadCommand> {
 
     final String category;
 
     File startDir;
     IAnchor startAnchor;
 
-    public static final String K_NULL_ID = "incoming";
     String id;
 
-    public UploadCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public UploadProcess(UploadCommand type, IEntityCommandContext context) {
+        super(type, context);
         category = typeInfo.getEntityClass().getName();
     }
 
@@ -52,27 +65,10 @@ public class UploadCommand
         super.readObject(map);
         String idString = map.getString("id");
         if (idString != null) {
-            Object id = parseId(idString);
+            Object id = context.parseId(idString);
             this.id = id.toString();
         } else {
-            this.id = K_NULL_ID;
-        }
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(UploadCommand.class);
-        }
-
-        @Override
-        public UploadCommand build() {
-            return new UploadCommand(typeInfo);
+            this.id = UploadCommand.K_NULL_ID;
         }
     }
 

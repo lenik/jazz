@@ -10,36 +10,27 @@ public abstract class AbstractEntityCommandProvider
         implements
             IEntityCommandProvider {
 
-    List<IEntityCommandBuilder> commandBuilders;
+    List<IEntityCommandType> commandTypes;
 
     public AbstractEntityCommandProvider() {
-        commandBuilders = new ArrayList<>();
+        commandTypes = new ArrayList<>();
     }
 
-    protected void addCommand(IEntityCommandBuilder builder) {
-        commandBuilders.add(builder);
+    protected void addCommand(IEntityCommandType type) {
+        commandTypes.add(type);
     }
 
     @Override
-    public List<IEntityCommand> getCommands(Class<?> entityClass) {
-        IEntityTypeInfo typeInfo = EntityTypes.getTypeInfo(entityClass);
-        List<IEntityCommand> selection = new ArrayList<>(commandBuilders.size());
-        for (IEntityCommandBuilder b : commandBuilders) {
-            b.entityType(typeInfo);
-            if (!b.checkValid())
+    public List<IEntityCommandType> getCommands(Class<?> entityClass) {
+        IEntityTypeInfo entityTypeInfo = EntityTypes.getTypeInfo(entityClass);
+        List<IEntityCommandType> selection = new ArrayList<>(commandTypes.size());
+        for (IEntityCommandType commandType : commandTypes) {
+            if (!commandType.isEnabled(entityTypeInfo))
                 continue;
 
-            IEntityCommand command = b.build();
-            if (!checkInclude(command, typeInfo))
-                continue;
-
-            selection.add(command);
+            selection.add(commandType);
         }
         return selection;
-    }
-
-    protected boolean checkInclude(IEntityCommand command, IEntityTypeInfo typeInfo) {
-        return true;
     }
 
 }

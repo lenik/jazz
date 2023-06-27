@@ -7,8 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.db.ctx.DataContext;
+import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.err.IllegalUsageException;
@@ -21,7 +21,6 @@ import net.bodz.bas.html.servlet.NoRender;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
-import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.path.DefaultTokenProcessor;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -31,19 +30,21 @@ import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
-public abstract class AbstractEntityCommand
+public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommandType>
         implements
-            IEntityCommand {
+            IDataContextAware,
+            IEntityCommandProcess {
 
-    static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommand.class);
+    static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommandProcess.class);
 
-    private final int priority;
-    private final String preferredName;
-    protected final IEntityTypeInfo typeInfo;
+    protected final type_t type;
+    protected IEntityTypeInfo typeInfo;
 
+    protected final IEntityCommandContext context;
+    protected final IDataApplication dataApp;
     protected DataContext dataContext;
     protected ResolvedEntity resolvedEntity;
     protected JsonResult result;
@@ -54,34 +55,24 @@ public abstract class AbstractEntityCommand
     protected int consumedTokenCount;
     protected IVariantMap<String> parameters;
 
-    public AbstractEntityCommand(IEntityTypeInfo typeInfo) {
-        Priority aPriority = getClass().getAnnotation(Priority.class);
-        if (aPriority != null)
-            priority = aPriority.value();
-        else
-            priority = 0;
+    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context) {
+        this.type = type;
+        this.typeInfo = context.getTypeInfo();
 
-        String name = getClass().getSimpleName();
-        if (name.endsWith("Command"))
-            name = name.substring(0, name.length() - 7);
-        name = Strings.lcfirst(name);
-        this.preferredName = name;
-        this.typeInfo = typeInfo;
+        if (type == null)
+            throw new NullPointerException("type");
+        if (typeInfo == null)
+            throw new NullPointerException("typeInfo");
+
+        this.context = context;
+        this.dataApp = context.getDataApp();
+        this.dataContext = dataApp.getDataContext();
+
+        this.resolvedEntity = context.getResolvedEntity();
     }
 
-    @Override
-    public int getPriority() {
-        return priority;
-    }
-
-    @Override
-    public String getPreferredName() {
-        return preferredName;
-    }
-
-    @Override
-    public boolean isContentCommand() {
-        return false;
+    public type_t getCommandType() {
+        return type;
     }
 
     @Override
@@ -99,25 +90,17 @@ public abstract class AbstractEntityCommand
         return resolvedEntity;
     }
 
-    @Override
-    public void setResolvedEntity(ResolvedEntity resolvedEntity) {
-        this.resolvedEntity = resolvedEntity;
-    }
-
-    @Override
-    public boolean checkValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
-            throws PathDispatchException {
-        return true;
-    }
-
     protected Boolean isReturningJsonResult() {
         return null;
+    }
+
+    protected void cleanup() {
     }
 
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        if (!checkValid(previous, tokens, q))
+        if (!type.checkValid(previous, tokens, q))
             return null;
 
         this.request = CurrentHttpService.getRequest();
@@ -200,9 +183,6 @@ public abstract class AbstractEntityCommand
         return arrival;
     }
 
-    protected void cleanup() {
-    }
-
     @Override
     public JsonResult getResult() {
         return result;
@@ -239,27 +219,6 @@ public abstract class AbstractEntityCommand
 
     @Override
     public void writeObject(Map<String, Object> map) {
-    }
-
-    protected Object parseId(String idStr)
-            throws ParseException {
-        if (idStr == null) {
-            return null;
-        }
-
-        Class<?> idType = typeInfo.getIdClass();
-        if (idType == null)
-            throw new IllegalUsageException("not id-capable: " + typeInfo.getEntityClass());
-
-        Object id;
-        try {
-            id = IdFn.parseId(idType, idStr);
-        } catch (ParseException e) {
-            throw new ParseException(String.format(//
-                    "error parse id \"%s\"): %s", idStr, e.getMessage()), e);
-        }
-
-        return id;
     }
 
 }

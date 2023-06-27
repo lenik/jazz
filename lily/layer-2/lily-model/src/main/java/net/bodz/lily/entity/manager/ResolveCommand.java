@@ -6,21 +6,33 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IId.class)
 public class ResolveCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
 
-    JsonFormOptions jsonFormOptions;
-
-    public ResolveCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public ResolveCommand() {
     }
 
     @Override
     public String getPreferredName() {
         return null;
+    }
+
+    @Override
+    public IEntityCommandProcess createProcess(IEntityCommandContext context) {
+        return new ResolveProcess(this, context);
+    }
+
+}
+
+class ResolveProcess
+        extends AbstractEntityCommandProcess<ResolveCommand> {
+
+    JsonFormOptions jsonFormOptions;
+
+    public ResolveProcess(ResolveCommand type, IEntityCommandContext context) {
+        super(type, context);
     }
 
     @Override
@@ -38,23 +50,6 @@ public class ResolveCommand
 
         jsonFormOptions = new JsonFormOptions();
         jsonFormOptions.readObject(map);
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(ResolveCommand.class);
-        }
-
-        @Override
-        public ResolveCommand build() {
-            return new ResolveCommand(typeInfo);
-        }
     }
 
 }

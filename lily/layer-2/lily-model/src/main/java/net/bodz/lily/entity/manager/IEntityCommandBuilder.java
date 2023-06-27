@@ -10,6 +10,6 @@ public interface IEntityCommandBuilder {
 
     boolean checkValid();
 
-    IEntityCommand build();
+    IEntityCommandType build();
 
 }

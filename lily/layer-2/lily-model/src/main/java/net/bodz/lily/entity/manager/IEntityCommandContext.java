@@ -1,29 +1,21 @@
 package net.bodz.lily.entity.manager;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.repr.path.ITokenProcessor;
-import net.bodz.bas.rtx.IAttributed;
-import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.err.ParseException;
+import net.bodz.lily.app.IDataApplication;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
 
-public interface IEntityCommandContext
-        extends
-            IAttributed,
-            ITokenProcessor {
+public interface IEntityCommandContext {
 
-    HttpServletRequest getRequest();
-
-    HttpServletResponse getResponse();
-
-    IVariantMap<String> getParameters();
+    IDataApplication getDataApp();
 
     DataContext getDataContext();
 
-    ResolvedEntity getEntityInfo();
+    IEntityTypeInfo getTypeInfo();
 
-    JsonResult getResult();
+    ResolvedEntity getResolvedEntity();
+
+    Object parseId(String idStr)
+            throws ParseException;
 
 }

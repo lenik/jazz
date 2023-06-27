@@ -14,11 +14,23 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IJsonForm.class)
 public class SaveCommand
-        extends AbstractEntityCommand
+        extends AbstractEntityCommandType {
+
+    public SaveCommand() {
+    }
+
+    @Override
+    public IEntityCommandProcess createProcess(IEntityCommandContext context) {
+        return new SaveProcess(this, context);
+    }
+
+}
+
+class SaveProcess
+        extends AbstractEntityCommandProcess<SaveCommand>
         implements
             IJsonForm {
 
@@ -29,8 +41,8 @@ public class SaveCommand
 
     JsonObject contentJson;
 
-    public SaveCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public SaveProcess(SaveCommand type, IEntityCommandContext context) {
+        super(type, context);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
     }
@@ -130,7 +142,7 @@ public class SaveCommand
             throws ParseException {
         if (hasId) {
             String idStr = o.getString("id");
-            this.id = parseId(idStr);
+            this.id = context.parseId(idStr);
             this.createNew = id == null;
         } else {
             throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
@@ -141,23 +153,6 @@ public class SaveCommand
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(SaveCommand.class);
-        }
-
-        @Override
-        public SaveCommand build() {
-            return new SaveCommand(typeInfo);
-        }
     }
 
 }

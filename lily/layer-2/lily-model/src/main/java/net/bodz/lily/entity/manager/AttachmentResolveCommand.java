@@ -23,16 +23,12 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IId.class)
-public class AttachmentResolver
-        extends AbstractEntityCommand {
+public class AttachmentResolveCommand
+        extends AbstractEntityCommandType {
 
-    JsonFormOptions jsonFormOptions;
-
-    public AttachmentResolver(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public AttachmentResolveCommand() {
     }
 
     @Override
@@ -43,6 +39,21 @@ public class AttachmentResolver
     @Override
     public boolean isContentCommand() {
         return true;
+    }
+
+    @Override
+    public AttachmentResolveProcess createProcess(IEntityCommandContext context) {
+        return new AttachmentResolveProcess(this, context);
+    }
+}
+
+class AttachmentResolveProcess
+        extends AbstractEntityCommandProcess<AttachmentResolveCommand> {
+
+    JsonFormOptions jsonFormOptions;
+
+    public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context) {
+        super(type, context);
     }
 
     @Override
@@ -125,23 +136,6 @@ public class AttachmentResolver
 
         jsonFormOptions = new JsonFormOptions();
         jsonFormOptions.readObject(map);
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(AttachmentResolver.class);
-        }
-
-        @Override
-        public AttachmentResolver build() {
-            return new AttachmentResolver(typeInfo);
-        }
     }
 
 }

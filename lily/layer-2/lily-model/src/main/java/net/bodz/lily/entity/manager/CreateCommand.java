@@ -11,12 +11,26 @@ import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.object.ICloneable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.model.base.RequestHandlerException;
 
 @ForEntityType(IJsonForm.class)
 public class CreateCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
+
+    @Override
+    public String getPreferredName() {
+        return "new";
+    }
+
+    @Override
+    public CreateProcess createProcess(IEntityCommandContext context) {
+        return new CreateProcess(this, context);
+    }
+
+}
+
+class CreateProcess
+        extends AbstractEntityCommandProcess<CreateCommand> {
 
     final boolean cloneable;
     final boolean resetable;
@@ -24,16 +38,12 @@ public class CreateCommand
     Object templateId;
     JsonFormOptions jsonFormOptions;
 
-    public CreateCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
-        Class<?> entityClass = typeInfo.getEntityClass();
+    public CreateProcess(CreateCommand type, IEntityCommandContext context) {
+        super(type, context);
+
+        Class<?> entityClass = context.getTypeInfo().getEntityClass();
         cloneable = ICloneable.class.isAssignableFrom(entityClass);
         resetable = IReset.class.isAssignableFrom(entityClass);
-    }
-
-    @Override
-    public String getPreferredName() {
-        return "new";
     }
 
     public boolean isTemplateSupported() {
@@ -54,7 +64,7 @@ public class CreateCommand
 
     public void setTemplateIdString(String idStr) {
         try {
-            templateId = parseId(idStr);
+            templateId = context.parseId(idStr);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
@@ -107,23 +117,6 @@ public class CreateCommand
 
         jsonFormOptions = new JsonFormOptions();
         jsonFormOptions.readObject(map);
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(CreateCommand.class);
-        }
-
-        @Override
-        public CreateCommand build() {
-            return new CreateCommand(typeInfo);
-        }
     }
 
 }
