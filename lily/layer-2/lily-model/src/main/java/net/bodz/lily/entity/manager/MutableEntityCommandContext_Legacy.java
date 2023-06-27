@@ -12,10 +12,10 @@ import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
 
-public class MutableEntityCommandContext
+public class MutableEntityCommandContext_Legacy
         extends DefaultTokenProcessor
         implements
-            IEntityCommandContext {
+            IEntityCommandContext_Legacy {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class MutableEntityCommandContext
 
     JsonResult result = new JsonResult();
 
-    public MutableEntityCommandContext(IPathArrival previous, ITokenQueue tokenQueue, IVariantMap<String> q) {
+    public MutableEntityCommandContext_Legacy(IPathArrival previous, ITokenQueue tokenQueue, IVariantMap<String> q) {
         super(previous, tokenQueue);
         this.parameters = q;
         // this.request = CurrentHttpService.getRequestOpt();

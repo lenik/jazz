@@ -13,6 +13,7 @@ import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.html.viz.IPathArrivalFrameAware;
 import net.bodz.bas.html.viz.PathArrivalFrame;
@@ -33,8 +34,12 @@ import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.IDataApplication;
+import net.bodz.lily.app.IDataApplicationAware;
+import net.bodz.lily.entity.manager.EntityCommandContext;
 import net.bodz.lily.entity.manager.EntityCommands;
-import net.bodz.lily.entity.manager.IEntityCommand;
+import net.bodz.lily.entity.manager.IEntityCommandProcess;
+import net.bodz.lily.entity.manager.IEntityCommandType;
 import net.bodz.lily.entity.manager.ListCommand;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
@@ -49,6 +54,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             IEntityManager,
             IPathArrivalFrameAware,
             ICacheControl,
+            IDataApplicationAware,
             IDataContextAware {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityManager.class);
@@ -57,13 +63,17 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     private final IEntityTypeInfo typeInfo;
     private boolean hasId;
 
-    Map<String, IEntityCommand> nameMap = new HashMap<>();
-    Map<String, IEntityCommand> contentNameMap = new HashMap<>();
-    List<IEntityCommand> otherCommands = new ArrayList<>();
+    Map<String, IEntityCommandType> nameMap = new HashMap<>();
+    Map<String, IEntityCommandType> contentNameMap = new HashMap<>();
+    List<IEntityCommandType> otherCommands = new ArrayList<>();
 
-    protected DataContext dataContext;
+    IDataApplication dataApp;
 
-    public AbstractEntityManager() {
+    public AbstractEntityManager(IDataApplication dataApp) {
+        if (dataApp == null)
+            throw new NullPointerException("dataApp");
+        this.dataApp = dataApp;
+
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
 
         if (aObjectType != null) {
@@ -76,17 +86,17 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         this.typeInfo = new DefaultEntityTypeInfo(entityType);
         this.hasId = typeInfo.getIdClass() != null;
 
-        for (IEntityCommand cmd : EntityCommands.forEntityClass(entityType)) {
+        for (IEntityCommandType cmd : EntityCommands.forEntityClass(entityType)) {
             String name = cmd.getPreferredName();
 
             if (name != null) {
                 if (!cmd.isContentCommand()) {
-                    IEntityCommand preexist = nameMap.get(name);
+                    IEntityCommandType preexist = nameMap.get(name);
                     if (preexist != null)
                         throw new DuplicatedKeyException(name);
                     nameMap.put(name, cmd);
                 } else {
-                    IEntityCommand preexist = contentNameMap.get(name);
+                    IEntityCommandType preexist = contentNameMap.get(name);
                     if (preexist != null)
                         throw new DuplicatedKeyException(name);
                     contentNameMap.put(name, cmd);
@@ -120,27 +130,59 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     }
 
     @Override
-    public IEntityCommand getCommand(String name) {
-        return nameMap.get(name);
+    public IEntityCommandProcess runCommand(String name) {
+        IEntityCommandType commandType = nameMap.get(name);
+        if (commandType == null)
+            return null;
+        return createProcess(commandType);
     }
 
     @Override
-    public IEntityCommand getContentCommand(String name) {
-        return contentNameMap.get(name);
+    public IEntityCommandProcess runContentCommand(String name) {
+        IEntityCommandType commandType = contentNameMap.get(name);
+        if (commandType == null)
+            return null;
+        return createProcess(commandType);
+    }
+
+    IEntityCommandProcess createProcess(IEntityCommandType type) {
+        return createProcess(type, null);
+    }
+
+    IEntityCommandProcess createProcess(IEntityCommandType type, ResolvedEntity resolvedEntity) {
+        EntityCommandContext context = newCommandContext();
+        context.setResolvedEntity(resolvedEntity);
+        IEntityCommandProcess process = type.createProcess(context);
+        return process;
+    }
+
+    EntityCommandContext newCommandContext() {
+        EntityCommandContext context = new EntityCommandContext();
+        context.setDataApp(dataApp);
+        context.setTypeInfo(typeInfo);
+        return context;
+    }
+
+    @Override
+    public IDataApplication getDataApp() {
+        return dataApp;
+    }
+
+    @Override
+    public void setDataApp(IDataApplication dataApp) {
+        if (dataApp == null)
+            throw new NullPointerException("dataApp");
+        this.dataApp = dataApp;
     }
 
     @Override
     public DataContext getDataContext() {
-        if (dataContext == null)
-            throw new IllegalStateException("DataContext isn't set.");
-        return dataContext;
+        return dataApp.getDataContext();
     }
 
     @Override
     public void setDataContext(DataContext dataContext) {
-        this.dataContext = dataContext;
-        if (dataContext != null)
-            afterDataContextSet();
+        throw new ReadOnlyException();
     }
 
     protected void afterDataContextSet() {
@@ -148,6 +190,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
 
     @SuppressWarnings("unchecked")
     IEntityMapper<Object, Object> getMapper() {
+        DataContext dataContext = getDataContext();
         Class<?> mapperClass = getEntityTypeInfo().getMapperClass();
         return (IEntityMapper<Object, Object>) dataContext.getMapper(mapperClass);
     }
@@ -159,16 +202,17 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         if (token == null)
             return null;
 
-        IEntityCommand command = nameMap.get(token);
+        IEntityCommandType command = nameMap.get(token);
         if (command == null) {
             if (token.startsWith("__data__") || token.startsWith("__D_"))
                 command = nameMap.get(ListCommand.NAME);
         }
         if (command != null) {
+            IEntityCommandProcess process = createProcess(command);
+
             previous = PathArrival.shift(previous, this, command, tokens);
-            command.setDataContext(getDataContext());
             try {
-                return command.dispatch(previous, tokens, q);
+                return process.dispatch(previous, tokens, q);
             } catch (PathDispatchException e) {
                 throw new PathDispatchException(String.format(//
                         "error execute entity command %s: %s", token, e.getMessage()), e);
@@ -190,25 +234,23 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             command = contentNameMap.get(token);
             if (command != null) {
                 previous = PathArrival.shift(previous, this, command, tokens);
-                command.setDataContext(getDataContext());
-                command.setResolvedEntity(resolvedEntity);
+                IEntityCommandProcess process = createProcess(command, resolvedEntity);
 
                 try {
-                    return command.dispatch(previous, tokens, q);
+                    return process.dispatch(previous, tokens, q);
                 } catch (PathDispatchException e) {
                     throw new PathDispatchException(String.format(//
                             "error execute entity content command %s: %s", token, e.getMessage()), e);
                 }
             }
 
-            for (IEntityCommand other : otherCommands)
+            for (IEntityCommandType other : otherCommands)
                 if (other.checkValid(previous, tokens, q)) {
                     previous = PathArrival.shift(0, previous, this, command, tokens);
-                    other.setDataContext(dataContext);
-                    other.setResolvedEntity(resolvedEntity);
+                    IEntityCommandProcess process = createProcess(other, resolvedEntity);
 
                     try {
-                        return other.dispatch(previous, tokens, q);
+                        return process.dispatch(previous, tokens, q);
                     } catch (PathDispatchException e) {
                         throw new PathDispatchException(String.format(//
                                 "error execute entity other-command: %s", e.getMessage()), e);

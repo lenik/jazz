@@ -5,15 +5,27 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 public class CountCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
+
+    public CountCommand() {
+    }
+
+    @Override
+    public CountProcess createProcess(IEntityCommandContext context) {
+        return new CountProcess(this, context);
+    }
+
+}
+
+class CountProcess
+        extends AbstractEntityCommandProcess<CountCommand> {
 
     IVarMapForm criteria;
 
-    public CountCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public CountProcess(CountCommand type, IEntityCommandContext context) {
+        super(type, context);
     }
 
     @Override
@@ -33,23 +45,6 @@ public class CountCommand
             throw new IllegalUsageException(e.getMessage(), e);
         }
         criteria.readObject(map);
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(CountCommand.class);
-        }
-
-        @Override
-        public CountCommand build() {
-            return new CountCommand(typeInfo);
-        }
     }
 
 }

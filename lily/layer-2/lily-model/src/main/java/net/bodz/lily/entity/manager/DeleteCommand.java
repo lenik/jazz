@@ -7,18 +7,30 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @ForEntityType(IId.class)
 public class DeleteCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
+
+    public DeleteCommand() {
+    }
+
+    @Override
+    public DeleteProcess createProcess(IEntityCommandContext context) {
+        return new DeleteProcess(this, context);
+    }
+
+}
+
+class DeleteProcess
+        extends AbstractEntityCommandProcess<DeleteCommand> {
 
     boolean transaction = false;
 
     List<Object> idList = new ArrayList<>();
 
-    public DeleteCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public DeleteProcess(DeleteCommand type, IEntityCommandContext context) {
+        super(type, context);
     }
 
     @Override
@@ -50,36 +62,19 @@ public class DeleteCommand
 
         String idString = map.getString("id");
         if (idString != null) {
-            Object id = parseId(idString);
+            Object id = context.parseId(idString);
             idList.add(id);
         }
 
         String idStrings = map.getString("ids");
         if (idStrings != null) {
             for (String idStr : idStrings.split(",")) {
-                Object id = parseId(idStr.trim());
+                Object id = context.parseId(idStr.trim());
                 idList.add(id);
             }
         }
 
         this.idList = idList;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(DeleteCommand.class);
-        }
-
-        @Override
-        public DeleteCommand build() {
-            return new DeleteCommand(typeInfo);
-        }
     }
 
 }

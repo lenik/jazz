@@ -16,10 +16,10 @@ public class EntityCommands {
         return providers;
     }
 
-    public static List<IEntityCommand> forEntityClass(Class<?> entityClass) {
-        List<IEntityCommand> list = new ArrayList<>();
+    public static List<IEntityCommandType> forEntityClass(Class<?> entityClass) {
+        List<IEntityCommandType> list = new ArrayList<>();
         for (IEntityCommandProvider provider : providers) {
-            List<IEntityCommand> cmds = provider.getCommands(entityClass);
+            List<IEntityCommandType> cmds = provider.getCommands(entityClass);
             list.addAll(cmds);
         }
         return list;

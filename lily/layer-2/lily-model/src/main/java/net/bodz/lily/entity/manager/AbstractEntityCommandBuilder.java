@@ -35,44 +35,4 @@ public abstract class AbstractEntityCommandBuilder<This extends AbstractEntityCo
         return thisClass.cast(this);
     }
 
-    @Override
-    public boolean checkValid() {
-        if (typeInfo == null)
-            throw new NullPointerException("typeInfo");
-
-        ForEntityType aForEntityType = commandClass.getAnnotation(ForEntityType.class);
-        if (aForEntityType != null) {
-            Class<?> entityClass = typeInfo.getEntityClass();
-            if (entityClass == null)
-                return false;
-            for (Class<?> iface : aForEntityType.value())
-                if (!iface.isAssignableFrom(entityClass))
-                    return false;
-        }
-
-        ForMapperType aForMapperType = commandClass.getAnnotation(ForMapperType.class);
-        if (aForMapperType != null) {
-            Class<?> mapperClass = typeInfo.getMapperClass();
-            if (mapperClass == null)
-                return false;
-            for (Class<?> iface : aForMapperType.value())
-                if (!iface.isAssignableFrom(mapperClass))
-                    return false;
-        }
-
-        ForEntityCriteriaType aForEntityCriteriaType = commandClass.getAnnotation(ForEntityCriteriaType.class);
-        if (aForEntityCriteriaType != null) {
-            Class<?> crtieriaClass = typeInfo.getCrtieriaClass();
-            if (crtieriaClass == null) {
-                logger.warn("skipped: " + typeInfo.getEntityClass());
-                return false;
-            }
-            for (Class<?> iface : aForEntityCriteriaType.value())
-                if (!iface.isAssignableFrom(crtieriaClass))
-                    return false;
-        }
-
-        return true;
-    }
-
 }

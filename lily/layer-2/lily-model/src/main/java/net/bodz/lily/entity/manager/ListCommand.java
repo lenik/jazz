@@ -3,33 +3,63 @@ package net.bodz.lily.entity.manager;
 import java.util.List;
 
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.entity.type.IEntityTypeInfo;
+import net.bodz.lily.model.base.StructRowMask;
 
 @ForEntityType(IJsonForm.class)
 @ForEntityCriteriaType(IVarMapForm.class)
 public class ListCommand
-        extends AbstractEntityCommand {
+        extends AbstractEntityCommandType {
 
     public static final String NAME = "list";
 
-    TableOfPathProps tableData;
-    IVarMapForm criteria;
-    SelectOptions opts;
-
-    public ListCommand(IEntityTypeInfo typeInfo) {
-        super(typeInfo);
+    public ListCommand() {
     }
 
     @Override
     public String getPreferredName() {
         return NAME;
+    }
+
+    @Override
+    public IEntityCommandProcess createProcess(IEntityCommandContext context) {
+        return new ListProcess(this, context);
+    }
+
+}
+
+class ListProcess
+        extends AbstractEntityCommandProcess<ListCommand> {
+
+    TableOfPathProps tableData;
+    final StructRowMask criteria;
+    final SelectOptions selectOptions;
+
+    public ListProcess(ListCommand type, IEntityCommandContext context) {
+        super(type, context);
+
+        Class<?> criteriaClass = typeInfo.getCrtieriaClass();
+        try {
+            criteria = (StructRowMask) criteriaClass.newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalArgumentException(String.format(//
+                    "Can't instantiate criteria: %s", e.getMessage()), e);
+        }
+
+        selectOptions = new SelectOptions();
+    }
+
+    public IVarMapForm getCriteria() {
+        return criteria;
+    }
+
+    public SelectOptions getSelectOptions() {
+        return selectOptions;
     }
 
     @Override
@@ -47,7 +77,7 @@ public class ListCommand
     }
 
     protected List<Object> buildDataList() {
-        return getEntityMapper().filter(criteria, opts);
+        return getEntityMapper().filter(criteria, selectOptions);
     }
 
     @Override
@@ -56,33 +86,8 @@ public class ListCommand
         super.readObject(map);
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
         tableData.readObject(map);
-
-        try {
-            criteria = (IVarMapForm) typeInfo.getCrtieriaClass().newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalUsageException(e.getMessage(), e);
-        }
         criteria.readObject(map);
-
-        opts = new SelectOptions();
-        opts.readObject(map);
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static final class Builder
-            extends AbstractEntityCommandBuilder<Builder> {
-
-        public Builder() {
-            super(ListCommand.class);
-        }
-
-        @Override
-        public ListCommand build() {
-            return new ListCommand(typeInfo);
-        }
+        selectOptions.readObject(map);
     }
 
 }

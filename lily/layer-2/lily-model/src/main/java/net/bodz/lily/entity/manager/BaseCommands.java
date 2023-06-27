@@ -4,17 +4,17 @@ public class BaseCommands
         extends AbstractEntityCommandProvider {
 
     public BaseCommands() {
-        addCommand(CountCommand.builder());
-        addCommand(ListCommand.builder());
-        addCommand(ResolveCommand.builder());
+        addCommand(new CountCommand());
+        addCommand(new ListCommand());
+        addCommand(new ResolveCommand());
 
-        addCommand(CreateCommand.builder());
-        addCommand(SaveCommand.builder());
+        addCommand(new CreateCommand());
+        addCommand(new SaveCommand());
 
-        addCommand(DeleteCommand.builder());
+        addCommand(new DeleteCommand());
 
-        addCommand(UploadCommand.builder());
-        addCommand(AttachmentResolver.builder());
+        addCommand(new UploadCommand());
+        addCommand(new AttachmentResolveCommand());
     }
 
 }
