@@ -35,8 +35,9 @@ public class CurrentVirtualHost
     }
 
     public static IVirtualHost getVirtualHost() {
+        VirtualHostManager manager = VirtualHostManager.getInstance();
         HttpServletRequest request = CurrentHttpService.getRequest();
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
+        IVirtualHost vhost = manager.resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalRequestException("Virtual host is undefined.");
         return vhost;
