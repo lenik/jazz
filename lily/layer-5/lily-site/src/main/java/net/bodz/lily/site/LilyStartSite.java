@@ -1,6 +1,5 @@
 package net.bodz.lily.site;
 
-import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -8,39 +7,34 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.servlet.man.SysManager;
-import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.app.DataApplication;
-import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.LoginManagerWs;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
 
 public abstract class LilyStartSite
-        extends BasicSite {
+        extends DataAppSite {
 
     static final Logger logger = LoggerFactory.getLogger(LilyStartSite.class);
 
     public static final String PATH_SYSMAN = "sysmgr";
 
-    protected final IDataApplication app;
-    protected final DataContext dataContext;
 //    protected ILoginManager loginManager;
 
-    public LilyStartSite() {
-        this(DataApps.getPreferred());
-    }
-
     public LilyStartSite(IDataApplication app) {
-        this.app = app;
+        super(app);
 
-        if (app instanceof DataApplication) {
-            DataApplication mutable = (DataApplication) app;
-        }
-
-        this.dataContext = app.getDataContext();
         setQueryContext(dataContext);
+
+//        DataApplication dataApp = DataApps.getPreferred();
+//        setAttribute(DataApplication.ATTRIBUTE_KEY, dataApp);
+//
+//        DataContext dataContext = dataApp.getDataContext();
+//        setAttribute(DataContext.ATTRIBUTE_KEY, dataContext);
+//
+//        ConnectOptions opts = dataContext.getOptions();
+//        setAttribute(ConnectOptions.ATTRIBUTE_KEY, opts);
 
         setupServices();
     }

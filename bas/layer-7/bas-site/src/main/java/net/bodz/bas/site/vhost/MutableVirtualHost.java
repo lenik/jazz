@@ -23,6 +23,7 @@ import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
+import net.bodz.bas.site.ISiteRoot;
 import net.bodz.bas.typer.std.ITyperFamily;
 
 public class MutableVirtualHost
@@ -37,6 +38,12 @@ public class MutableVirtualHost
     private List<String> bindings = new ArrayList<String>();
     private Map<String, String> parameters = new TreeMap<String, String>();
     private Map<String, Object> attributes = new TreeMap<String, Object>();
+
+    private ISiteRoot root;
+
+    public MutableVirtualHost(ISiteRoot root) {
+        this.root = root;
+    }
 
     /** ⇱ Implementation Of {@link IVirtualHost}. */
     /* _____________________________ */static section.iface __VHOST__;
@@ -124,6 +131,15 @@ public class MutableVirtualHost
     @Override
     public void setAttributeTypers(String name, ITyperFamily<?> typers) {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public ISiteRoot getRoot() {
+        return root;
+    }
+
+    public void setRoot(ISiteRoot root) {
+        this.root = root;
     }
 
     /** ⇱ Implementation Of {@link IQueryable}. */

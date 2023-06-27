@@ -27,12 +27,14 @@ public class PostgresBackedVhostResolver
     private ConnectOptions connectOptionsTemplate;
     Map<String, DBStatus> dbStatusCache = new HashMap<>();
 
-    public PostgresBackedVhostResolver() {
+    public PostgresBackedVhostResolver(IVirtualHostFactory factory) {
         this(DataHub.getPreferredHub().getMain(), //
-                DataHub.getPreferredHub().getTemplate());
+                DataHub.getPreferredHub().getTemplate(), factory);
     }
 
-    public PostgresBackedVhostResolver(DataContext master, ConnectOptions connectOptionsTemplate) {
+    public PostgresBackedVhostResolver(DataContext master, ConnectOptions connectOptionsTemplate,
+            IVirtualHostFactory factory) {
+        super(factory);
         if (master == null)
             throw new NullPointerException("master");
         if (connectOptionsTemplate == null)
@@ -65,20 +67,9 @@ public class PostgresBackedVhostResolver
         if (!exists)
             return null;
 
-        MutableVirtualHost newVhost = create(vhostName, databaseName);
+        IVirtualHost newVhost = virtualHostFactory.buildVirtualHost(vhostName, databaseName);
         // newVhost.addBinding(request.getServerName());
         add(newVhost);
-        return newVhost;
-    }
-
-    public MutableVirtualHost create(String vhostName, String databaseName) {
-        MutableVirtualHost newVhost = new MutableVirtualHost();
-        newVhost.setName(vhostName);
-        // newVhost.addBinding(vhostName + ".xxx");
-
-        ConnectOptions opts = connectOptionsTemplate.clone();
-        opts.setDatabase(databaseName);
-        newVhost.setAttribute(ConnectOptions.ATTRIBUTE_KEY, opts);
         return newVhost;
     }
 
@@ -152,8 +143,11 @@ public class PostgresBackedVhostResolver
     static PostgresBackedVhostResolver DEFAULT;
 
     public static synchronized PostgresBackedVhostResolver getProjectDefault() {
-        if (DEFAULT == null)
-            DEFAULT = new PostgresBackedVhostResolver();
+        if (DEFAULT == null) {
+            // TODO
+            IVirtualHostFactory factory = null;
+            DEFAULT = new PostgresBackedVhostResolver(factory);
+        }
         return DEFAULT;
     }
 

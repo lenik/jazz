@@ -1,5 +1,6 @@
 package net.bodz.lily.security.login;
 
+import net.bodz.bas.site.ISiteRoot;
 import net.bodz.bas.site.vhost.CurrentVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.lily.app.DataApps;
@@ -11,10 +12,9 @@ public class VhostLoginManagerProvider
 
     @Override
     public synchronized ILoginManager getLoginManager() {
-        IVirtualHost vhost = CurrentVirtualHost.getVirtualHostOpt();
-        if (vhost == null)
-//            return null;
-            throw new NullPointerException("vhost");
+        IVirtualHost vhost = CurrentVirtualHost.getVirtualHost();
+
+        ISiteRoot root = vhost.getRoot();
 
         IDataApplication app = DataApps.fromRequest();
         if (app == null)

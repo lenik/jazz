@@ -43,7 +43,7 @@ public class DataContext
             IJsonForm,
             SqlSessionFactory {
 
-    public static final String ATTRIBUTE_KEY = DataContext.class.getName();
+//    public static final String ATTRIBUTE_KEY = DataContext.class.getName();
 
     private ConnectOptions options;
     private IDataSourceProvider dataSourceProvider;

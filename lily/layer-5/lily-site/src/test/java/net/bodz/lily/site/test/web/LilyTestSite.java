@@ -20,6 +20,7 @@ import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.site.LilyStartSite;
 
 /**
@@ -32,8 +33,8 @@ public class LilyTestSite
 
     public static final String PATH_EVENT_LOGS = "logger";
 
-    public LilyTestSite() {
-        super();
+    public LilyTestSite(IDataApplication app) {
+        super(app);
         serviceMap.install("mapper", new MapperService(dataContext));
     }
 
