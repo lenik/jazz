@@ -14,8 +14,6 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.DataApplication;
 import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
-import net.bodz.lily.security.login.ILoginManager;
-import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginManagerWs;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
 
@@ -28,7 +26,7 @@ public abstract class LilyStartSite
 
     protected final IDataApplication app;
     protected final DataContext dataContext;
-    protected LoginManager loginManager;
+//    protected ILoginManager loginManager;
 
     public LilyStartSite() {
         this(DataApps.getPreferred());
@@ -39,7 +37,6 @@ public abstract class LilyStartSite
 
         if (app instanceof DataApplication) {
             DataApplication mutable = (DataApplication) app;
-            mutable.setDefaultSite(this);
         }
 
         this.dataContext = app.getDataContext();
@@ -75,12 +72,8 @@ public abstract class LilyStartSite
 
     void setupServices() {
         serviceMap.install("service-map", serviceMap);
-
-        loginManager = new LoginManager(dataContext);
-        serviceMap.install("session", new LoginManagerWs(loginManager));
+        serviceMap.install("session", new LoginManagerWs());
         serviceMap.install("ws-doc", new WsDocSite());
-
-        setAttribute(ILoginManager.ATTRIBUTE_NAME, loginManager);
 
         setupDataIndex();
     }
