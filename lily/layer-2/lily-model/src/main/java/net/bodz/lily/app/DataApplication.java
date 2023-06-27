@@ -1,7 +1,6 @@
 package net.bodz.lily.app;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.site.ISiteRoot;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeProvider;
 
@@ -11,7 +10,6 @@ public class DataApplication
 
     DataContext dataContext;
     IVolumeProvider volumeProvider;
-    ISiteRoot defaultSite;
 
     public DataApplication(DataContext dataContext, IVolumeProvider volumeProvider) {
         if (dataContext == null)
@@ -45,15 +43,6 @@ public class DataApplication
         if (volumeProvider == null)
             throw new IllegalStateException("volume provider isn't available.");
         return volumeProvider.getVolume(id);
-    }
-
-    @Override
-    public ISiteRoot getDefaultSite() {
-        return defaultSite;
-    }
-
-    public void setDefaultSite(ISiteRoot defaultSite) {
-        this.defaultSite = defaultSite;
     }
 
 }
