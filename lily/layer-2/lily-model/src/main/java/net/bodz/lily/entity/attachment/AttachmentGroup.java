@@ -64,7 +64,7 @@ public class AttachmentGroup
     }
 
     public static synchronized AttachmentGroup forRequest(HttpServletRequest request) {
-        IVirtualHost vhost = VirtualHostManager.getInstance().getVirtualHostFromRequest(request);
+        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("unknown virtual host");
         File baseDir = DefaultSiteDirs.getInstance().getDataDir(vhost.getName());
