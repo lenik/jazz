@@ -7,13 +7,15 @@ import java.util.List;
 
 import net.bodz.bas.err.ConflictedVersionException;
 import net.bodz.bas.meta.build.IVersion;
-import net.bodz.bas.rtx.AbstractQueryable;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.std.rfc.mime.ContentType;
 
 public class Artifact
-        extends AbstractQueryable
-        implements Serializable, IMutableArtifact {
+        implements
+            IMutableArtifact,
+            IQueryable,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 

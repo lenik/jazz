@@ -4,11 +4,12 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.ScopedTypeInfo;
 import net.bodz.bas.err.LoadException;
-import net.bodz.bas.rtx.AbstractQueryable;
+import net.bodz.bas.rtx.IQueryable;
 
 public class BeanFactory
-        extends AbstractQueryable
-        implements IBeanProvider {
+        implements
+            IBeanProvider,
+            IQueryable {
 
     @Override
     public <spec_t> spec_t query(Class<spec_t> clazz) {

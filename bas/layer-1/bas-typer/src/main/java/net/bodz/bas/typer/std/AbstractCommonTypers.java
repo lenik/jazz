@@ -8,13 +8,11 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
-import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.QueryException;
 
 @ThreadUnsafe
 public abstract class AbstractCommonTypers<T>
-        extends AbstractQueryable
         implements
             IBasicTyperFamily<T>,
             ITextFormat<T>,
@@ -63,7 +61,7 @@ public abstract class AbstractCommonTypers<T>
         String specification = specificationType.getName();
         Integer index = commonTyperIndex.get(specification);
         if (index == null)
-            return super.query(specificationType);
+            return IBasicTyperFamily.super.query(specificationType);
 
         Object impl = queryInt(index);
 

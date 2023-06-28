@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 
 import net.bodz.bas.c.java.nio.DeleteOption;
-import net.bodz.bas.rtx.AbstractQueryable;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class FsObject
-        extends AbstractQueryable
-        implements IFsObject, IMutableFileAttributes {
+        implements
+            IFsObject,
+            IMutableFileAttributes,
+            IQueryable {
 
     private final IVfsDevice device;
     private String baseName;
@@ -162,7 +164,7 @@ public abstract class FsObject
 
     /**
      * Get the path string of this file.
-     * 
+     *
      * @return Non-<code>null</code> path string of this file.
      * @see IPath#toString()
      */
