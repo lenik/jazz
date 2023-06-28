@@ -1,9 +1,7 @@
 package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,12 +10,14 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.repr.viz.web.AbstractHttpViewBuilder;
 import net.bodz.bas.repr.viz.web.IHttpViewBuilder;
 import net.bodz.bas.servlet.IHttpViewContext;
+import net.bodz.bas.servlet.ResourceTransferer;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.ui.dom1.IUiRef;
 
 public class StreamContent_bin
         extends AbstractHttpViewBuilder<IStreamContent>
-        implements IHttpViewBuilder<IStreamContent> {
+        implements
+            IHttpViewBuilder<IStreamContent> {
 
     @Override
     public Class<?> getValueType() {
@@ -37,22 +37,14 @@ public class StreamContent_bin
     @Override
     public Object buildHttpViewStart(IHttpViewContext ctx, HttpServletResponse resp, IUiRef<IStreamContent> ref)
             throws ViewBuilderException, IOException {
+        HttpServletRequest req = ctx.getRequest();
+
         IStreamContent content = ref.get();
-        InputStream in = content.newInputStream();
-        ServletOutputStream out = resp.getOutputStream();
-        byte[] block = new byte[4096];
-        int nb;
-        try {
-            try {
-                while ((nb = in.read(block)) != -1) {
-                    out.write(block, 0, nb);
-                }
-            } finally {
-                in.close();
-            }
-        } finally {
-            out.close();
-        }
+        StreamContentBlob blob = new StreamContentBlob(content);
+
+        ResourceTransferer transferer = new ResourceTransferer(req, resp);
+
+        transferer.transfer(blob, content);
         return null;
     }
 
