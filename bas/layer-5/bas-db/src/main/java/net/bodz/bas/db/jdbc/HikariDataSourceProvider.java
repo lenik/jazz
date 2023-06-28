@@ -30,6 +30,7 @@ public class HikariDataSourceProvider
         dataSource.setPassword(options.getPassword());
         dataSource.setConnectionTimeout(60 * 1000L); // 1 min
         dataSource.setMaximumPoolSize(options.getPoolSize());
+        // dataSource.setMaxLifetime(300 * 1000); // 5 min
 
         P6DataSource p6 = new P6DataSource(dataSource);
         this.dataSource = p6;
