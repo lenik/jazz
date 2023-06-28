@@ -32,12 +32,12 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.rtx.IQueryable;
 
 public class DataContext
-        extends AbstractQueryable
         implements
+            IQueryable,
             Closeable,
             IAttributed,
             IJsonForm,
@@ -80,7 +80,7 @@ public class DataContext
             spec_t mapper = (spec_t) getMapper(mapperClass);
             return mapper;
         }
-        return super.query(specificationClass);
+        return IQueryable.super.query(specificationClass);
     }
 
     public ConnectOptions getOptions() {

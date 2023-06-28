@@ -4,12 +4,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.bodz.bas.rtx.AbstractQueryable;
 import net.bodz.bas.rtx.IQueryable;
 
 public abstract class AbstractHttpViewContext
-        extends AbstractQueryable
-        implements IHttpViewContext {
+        implements
+            IHttpViewContext {
 
     private IQueryable queryContext;
 
@@ -44,7 +43,7 @@ public abstract class AbstractHttpViewContext
                 return impl;
         }
 
-        return super.query(specificationClass);
+        return IHttpViewContext.super.query(specificationClass);
     }
 
     @Override
@@ -64,7 +63,7 @@ public abstract class AbstractHttpViewContext
                 return impl;
         }
 
-        return super.query(args);
+        return IHttpViewContext.super.query(args);
     }
 
 }
