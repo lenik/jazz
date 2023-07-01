@@ -20,7 +20,7 @@ public class MeasureUnits {
         String name = unit.getName();
         IMeasureUnit existing = nameMap.get(name);
         if (existing != null)
-            throw new DuplicatedKeyException(String.format("Measure unit name is in use: %s", name));
+            throw new DuplicatedKeyException(name, existing);
 
         String symbol = unit.getSymbol();
         List<IMeasureUnit> symbolUnits = forSymbol(symbol);

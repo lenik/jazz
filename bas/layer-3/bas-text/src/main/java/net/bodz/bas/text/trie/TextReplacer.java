@@ -81,8 +81,7 @@ public class TextReplacer {
             String newName = newType.getName();
             CharTrie.Node<String> node = trie.resolve(oldName);
             if (node != null && node.getData() != null)
-                throw new DuplicatedKeyException(String.format(//
-                        "%s is already replaced by %s.", oldName, node.getData()));
+                throw new DuplicatedKeyException(oldName, node, "node data: " + node.getData());
 
             node.define(newName);
         }

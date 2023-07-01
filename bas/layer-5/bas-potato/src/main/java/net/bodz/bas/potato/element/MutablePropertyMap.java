@@ -51,7 +51,7 @@ public class MutablePropertyMap
 
         IProperty existing = map.get(propertyName);
         if (existing != null)
-            throw new DuplicatedKeyException(propertyName);
+            throw new DuplicatedKeyException(propertyName, existing);
 
         map.put(propertyName, property);
     }

@@ -28,7 +28,7 @@ public class StateGroups {
             String name = group.getName();
             StateGroup g = groupNames.get(name);
             if (g != null)
-                throw new DuplicatedKeyException(groupNames, name, "State group name");
+                throw new DuplicatedKeyException(name, g);
             groupNames.put(name, group);
 
             for (State state : group.getValues())
@@ -40,12 +40,12 @@ public class StateGroups {
         Integer key = state.getKey();
         State dup = stateKeys.get(key);
         if (dup != null)
-            throw new DuplicatedKeyException(stateKeys, key, "State key");
+            throw new DuplicatedKeyException(key, dup);
 
         String name = state.getName();
         dup = stateNames.get(name);
         if (dup != null)
-            throw new DuplicatedKeyException(stateNames, name, "State name");
+            throw new DuplicatedKeyException(name, dup);
 
         stateKeys.put(key, state);
         stateNames.put(name, state);

@@ -80,8 +80,7 @@ public class BinaryReplacer {
             byte[] newdata = newType.getName().getBytes();
             ByteTrie.Node<byte[]> node = trie.resolve(olddata);
             if (node != null && node.getData() != null)
-                throw new DuplicatedKeyException(
-                        String.format("%s is already replaced by %s.", olddata, node.getData()));
+                throw new DuplicatedKeyException(olddata, node, "node data: " + node.getData());
 
             node.define(newdata);
         }

@@ -11,7 +11,8 @@ import net.bodz.mda.xjdoc.tagtype.RepeatForListTagType;
 import net.bodz.mda.xjdoc.tagtype.StringTagType;
 
 public abstract class AbstractTagLibrary
-        implements ITagLibrary {
+        implements
+            ITagLibrary {
 
     private PackageMap<ITagType> tagMap = new PackageMap<ITagType>();
 
@@ -44,7 +45,7 @@ public abstract class AbstractTagLibrary
 
         ITagType existing = tagMap.get(rootTagName);
         if (existing != null)
-            throw new DuplicatedKeyException(rootTagName);
+            throw new DuplicatedKeyException(rootTagName, existing);
 
         tagMap.put(rootTagName, tagType);
     }

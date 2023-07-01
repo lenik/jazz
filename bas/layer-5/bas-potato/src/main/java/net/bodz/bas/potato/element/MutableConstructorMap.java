@@ -9,7 +9,8 @@ import net.bodz.bas.c.reflect.MethodSignatureComparator;
 import net.bodz.bas.err.DuplicatedKeyException;
 
 public class MutableConstructorMap
-        implements IConstructorMap {
+        implements
+            IConstructorMap {
 
     Map<MethodSignature, IConstructor> map;
 
@@ -47,7 +48,7 @@ public class MutableConstructorMap
 
         IConstructor existing = map.get(signature);
         if (existing != null)
-            throw new DuplicatedKeyException(signature.toString());
+            throw new DuplicatedKeyException(signature, existing);
 
         map.put(signature, ctor);
     }

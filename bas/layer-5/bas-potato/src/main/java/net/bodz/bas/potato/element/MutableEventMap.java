@@ -52,7 +52,7 @@ public class MutableEventMap
 
         IEvent existing = map.get(eventName);
         if (existing != null)
-            throw new DuplicatedKeyException(eventName);
+            throw new DuplicatedKeyException(eventName, existing);
 
         map.put(eventName, event);
     }

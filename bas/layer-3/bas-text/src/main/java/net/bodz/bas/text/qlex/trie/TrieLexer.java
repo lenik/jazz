@@ -20,7 +20,7 @@ public class TrieLexer<sym> {
     public Node<sym> declare(CharSequence k, sym symbol) {
         Node<sym> overlapped = trie.findOverlap(k);
         if (overlapped != null)
-            throw new DuplicatedKeyException("Symbol overlapped: " + k);
+            throw new DuplicatedKeyException(k, overlapped);
 
         Node<sym> node = trie.resolve(k);
         node.define(symbol);

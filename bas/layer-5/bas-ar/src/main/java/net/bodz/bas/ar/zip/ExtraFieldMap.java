@@ -39,7 +39,7 @@ public class ExtraFieldMap
 
             ExtraFieldMetadata metadata = tagMetaMap.get(id);
             if (metadata != null)
-                throw new DuplicatedKeyException("Extra field id in use: " + id);
+                throw new DuplicatedKeyException(id, metadata);
 
             metadata = new ExtraFieldMetadata();
             metadata.type = clazz;
