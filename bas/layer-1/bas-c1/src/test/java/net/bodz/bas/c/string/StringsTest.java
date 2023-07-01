@@ -74,4 +74,57 @@ public class StringsTest
         d.o("   abc  def  ", "   Abc  Def  ");
     }
 
+    @Test
+    public void testIndexOf()
+            throws Exception {
+        class D {
+            void o(String input, char ch, int ind, int expected) {
+                int actual = Strings.indexOf(input, ch, ind);
+                assertEquals(expected, actual);
+            }
+        }
+        D d = new D(); //
+        d.o("yzyzyyz", 'y', 0, 0);
+        d.o("yzyzyyz", 'y', 1, 2);
+        d.o("yzyzyyz", 'y', 2, 4);
+        d.o("yzyzyyz", 'y', 3, 5);
+        d.o("yzyzyyz", 'y', 4, -1);
+        d.o("yzyzyyz", 'z', 0, 1);
+        d.o("yzyzyyz", 'z', 1, 3);
+        d.o("yzyzyyz", 'z', 2, 6);
+        d.o("yzyzyyz", 'z', 3, -1);
+    }
+
+    void testSelectToken(String input, char ch, int ind, String expected) {
+        PosRange range = Strings.selectToken(input, ch, ind);
+        if (expected == null)
+            assertNull(range);
+        else {
+            String actual = input.substring(range.begin, range.end);
+            assertEquals(expected, actual);
+        }
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSelectToken_N1() {
+        testSelectToken("a/b/cd/", '/', -1, null);
+    }
+
+    @Test
+    public void testSelectToken_simple() {
+        testSelectToken("a/b/cd/", '/', 0, "a");
+        testSelectToken("a/b/cd/", '/', 1, "b");
+        testSelectToken("a/b/cd/", '/', 2, "cd");
+    }
+
+    @Test
+    public void testSelectToken_trailingEmpty() {
+        testSelectToken("a/b/cd/", '/', 3, "");
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSelectToken_IOOBE() {
+        testSelectToken("a/b/cd/", '/', 4, null);
+    }
+
 }

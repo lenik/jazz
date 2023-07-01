@@ -170,4 +170,49 @@ public class Strings {
             return ellipsis(s, len, ellipse);
     }
 
+    public static int indexOf(String s, char ch, int indexOfOccurence) {
+        int begin = 0;
+        int end = s.length();
+        int index = 0;
+        while (begin < end) {
+            int pos = s.indexOf(ch, begin);
+            if (pos == -1)
+                return -1;
+            if (index++ == indexOfOccurence)
+                return pos;
+            begin = pos + 1;
+        }
+        return -1;
+    }
+
+    /**
+     * @throws IndexOutOfBoundsException
+     *             if tokenIndex is out of bounds.
+     */
+    public static PosRange selectToken(String s, char delim, int tokenIndex) {
+        if (s == null)
+            throw new NullPointerException("s");
+        if (tokenIndex < 0)
+            throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+
+        int currentIndex = 0;
+        int begin = 0;
+        int len = s.length();
+
+        while (true) {
+            if (begin > len)
+                throw new IndexOutOfBoundsException(String.valueOf(tokenIndex));
+
+            int end = s.indexOf('/', begin);
+            if (end == -1)
+                end = s.length();
+
+            if (currentIndex == tokenIndex)
+                return new PosRange(begin, end);
+
+            begin = end + 1;
+            currentIndex++;
+        }
+    }
+
 }
