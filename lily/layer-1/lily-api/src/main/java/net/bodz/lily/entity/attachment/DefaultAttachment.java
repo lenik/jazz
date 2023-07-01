@@ -9,12 +9,12 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.t.file.PathFields;
+import net.bodz.bas.t.file.BottomUpPathFields;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
 
 public class DefaultAttachment
-        extends PathFields
+        extends BottomUpPathFields
         implements
             IAttachment {
 

@@ -33,13 +33,13 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.rtx.IQueryable;
-import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
+import net.bodz.bas.t.file.ArrayPathFields;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
@@ -87,25 +87,8 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         this.typeInfo = new DefaultEntityTypeInfo(entityType);
         this.hasId = typeInfo.getIdClass() != null;
 
-        for (IEntityCommandType cmd : EntityCommands.forEntityClass(entityType)) {
-            String name = cmd.getPreferredName();
-
-            if (name != null) {
-                if (!cmd.isContentCommand()) {
-                    IEntityCommandType preexist = nameMap.get(name);
-                    if (preexist != null)
-                        throw new DuplicatedKeyException(name);
-                    nameMap.put(name, cmd);
-                } else {
-                    IEntityCommandType preexist = contentNameMap.get(name);
-                    if (preexist != null)
-                        throw new DuplicatedKeyException(name);
-                    contentNameMap.put(name, cmd);
-                }
-            } else {
-                otherCommands.add(cmd);
-            }
-        }
+        for (IEntityCommandType cmd : EntityCommands.forEntityClass(entityType))
+            addCommand(cmd);
 
         Collections.sort(otherCommands, PriorityComparator.INSTANCE);
     }
@@ -118,6 +101,28 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     @Override
     public CacheRevalidationMode getCacheRevalidationMode() {
         return CacheRevalidationMode.MUST_REVALIDATE;
+    }
+
+    void addCommand(IEntityCommandType cmd) {
+        String preferredName = cmd.getPreferredName();
+
+        if (preferredName != null) {
+            Map<String, IEntityCommandType> map;
+            if (cmd.isContentCommand())
+                map = contentNameMap;
+            else
+                map = nameMap;
+
+            for (String name : cmd.getCommandNames()) {
+                IEntityCommandType any = map.get(name);
+                if (any != null) {
+                    throw new DuplicatedKeyException(name, any);
+                }
+                map.put(name, cmd);
+            }
+        } else {
+            otherCommands.add(cmd);
+        }
     }
 
     @Override
@@ -150,7 +155,11 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         IEntityCommandProcess process = createProcess(type, resolvedEntity);
 
         String[] pathInfo = tokens.peek(consumedTokenCount);
-        process.setPathInfo(pathInfo);
+        process.setCommandPath(new ArrayPathFields(pathInfo));
+        if (type.isContentCommand()) {
+            pathInfo = previous.getConsumedTokens();
+            process.setContentPath(new ArrayPathFields(pathInfo));
+        }
 
         process.setQueryContext(this);
 
@@ -211,7 +220,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
 
         IEntityCommandType command = nameMap.get(token);
         if (command == null) {
-            if (token.startsWith("__data__") || token.startsWith("__D_"))
+            if (token.startsWith("__data"))
                 command = nameMap.get(ListCommand.NAME);
         }
         if (command != null)
@@ -223,15 +232,14 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
 
             token = tokens.peek();
-            if (token == null) {
-                // compat..
-                JsonWrapper wrapper = new JsonWrapper("data", resolvedEntity);
-                return PathArrival.shift(0, arrival, this, wrapper, tokens);
-            }
+            if (token == null)
+                command = contentNameMap.get(ResolveCommand.NAME);
+            else
+                command = contentNameMap.get(token);
 
-            command = contentNameMap.get(token);
             if (command != null)
-                return processDispatch(command, resolvedEntity, previous, tokens, q);
+                return processDispatch(command, resolvedEntity, previous, tokens, q, //
+                        token == null ? 0 : 1);
 
             for (IEntityCommandType other : otherCommands)
                 if (other.checkPathValid(previous, tokens, q))

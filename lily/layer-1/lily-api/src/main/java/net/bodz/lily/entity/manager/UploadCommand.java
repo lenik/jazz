@@ -15,9 +15,27 @@ import net.bodz.lily.entity.attachment.IHaveAttachments;
 public class UploadCommand
         extends AbstractEntityCommandType {
 
+    public static final String NAME = "upload";
+    public static final String[] NAMES = { NAME };
+
     public static final String K_NULL_ID = "incoming";
 
     public UploadCommand() {
+    }
+
+    @Override
+    public String getPreferredName() {
+        return NAME;
+    }
+
+    @Override
+    public String[] getCommandNames() {
+        return NAMES;
+    }
+
+    @Override
+    public boolean isContentCommand() {
+        return true;
     }
 
     @Override

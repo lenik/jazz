@@ -28,6 +28,7 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
@@ -46,7 +47,8 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected final IEntityCommandContext context;
     protected final IDataApplication dataApp;
     protected DataContext dataContext;
-    protected String[] pathInfo;
+    protected IPathFields commandPath;
+    protected IPathFields contentPath;
     protected ResolvedEntity resolvedEntity;
     protected JsonResult result;
 
@@ -87,13 +89,27 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     }
 
     @Override
-    public String[] getPathInfo() {
-        return pathInfo;
+    public IPathFields getCommandPath() {
+        return commandPath;
     }
 
     @Override
-    public void setPathInfo(String[] names) {
-        this.pathInfo = names;
+    public void setCommandPath(IPathFields path) {
+        if (path == null)
+            throw new NullPointerException("path");
+        this.commandPath = path;
+    }
+
+    @Override
+    public IPathFields getContentPath() {
+        return contentPath;
+    }
+
+    @Override
+    public void setContentPath(IPathFields path) {
+        if (path == null)
+            throw new NullPointerException("path");
+        this.contentPath = path;
     }
 
     @Override

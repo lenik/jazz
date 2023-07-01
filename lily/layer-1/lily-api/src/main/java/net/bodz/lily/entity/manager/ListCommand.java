@@ -15,6 +15,7 @@ import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
+import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.StructRowMask;
@@ -24,7 +25,8 @@ import net.bodz.lily.model.base.StructRowMask;
 public class ListCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "list";
+    public static final String NAME = "__data";
+    public static final String[] NAMES = { NAME, "list" };
 
     public ListCommand() {
     }
@@ -32,6 +34,11 @@ public class ListCommand
     @Override
     public String getPreferredName() {
         return NAME;
+    }
+
+    @Override
+    public String[] getCommandNames() {
+        return NAMES;
     }
 
     @Override
@@ -87,21 +94,19 @@ class ListProcess
     }
 
     @Override
-    public void setPathInfo(String[] names) {
-        super.setPathInfo(names);
-        int n = names.length;
-        String base = names[n - 1];
-        int lastDot = base.lastIndexOf('.');
-        if (lastDot != -1) {
-            String ext = base.substring(lastDot + 1);
-            switch (ext) {
-            case "xls":
-                format = HSSF;
-                break;
-            case "xlsx":
-                format = XSSF;
-                break;
-            }
+    public void setCommandPath(IPathFields path) {
+        super.setCommandPath(path);
+        switch (path.getExtension("js")) {
+        case "js":
+        case "json":
+            format = JSON;
+            break;
+        case "xls":
+            format = HSSF;
+            break;
+        case "xlsx":
+            format = XSSF;
+            break;
         }
     }
 

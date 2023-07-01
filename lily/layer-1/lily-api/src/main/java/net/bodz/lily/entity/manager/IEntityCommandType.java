@@ -13,6 +13,14 @@ public interface IEntityCommandType
 
     String getPreferredName();
 
+    default String[] getCommandNames() {
+        String name = getPreferredName();
+        if (name == null)
+            return new String[0];
+        else
+            return new String[] { name };
+    }
+
     /**
      * content command can be dispatched by: <code>/FooBar/(id)/cmd</code>
      *
