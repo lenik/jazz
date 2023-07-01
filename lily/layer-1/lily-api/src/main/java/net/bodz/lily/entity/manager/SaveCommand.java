@@ -19,7 +19,19 @@ import net.bodz.lily.entity.IId;
 public class SaveCommand
         extends AbstractEntityCommandType {
 
+    public static final String NAME = "save";
+
     public SaveCommand() {
+    }
+
+    @Override
+    public String getPreferredName() {
+        return NAME;
+    }
+
+    @Override
+    public boolean isContentCommand() {
+        return true;
     }
 
     @Override

@@ -17,9 +17,17 @@ import net.bodz.lily.model.base.RequestHandlerException;
 public class CreateCommand
         extends AbstractEntityCommandType {
 
+    public static final String NAME = "create";
+    public static final String[] NAMES = { NAME, "new" };
+
     @Override
     public String getPreferredName() {
-        return "new";
+        return NAME;
+    }
+
+    @Override
+    public String[] getCommandNames() {
+        return NAMES;
     }
 
     @Override

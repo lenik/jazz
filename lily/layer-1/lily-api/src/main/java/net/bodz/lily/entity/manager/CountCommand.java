@@ -9,7 +9,20 @@ import net.bodz.bas.t.variant.IVariantMap;
 public class CountCommand
         extends AbstractEntityCommandType {
 
+    public static final String NAME = "count";
+    public static final String[] NAMES = { NAME, "nRow" };
+
     public CountCommand() {
+    }
+
+    @Override
+    public String getPreferredName() {
+        return NAME;
+    }
+
+    @Override
+    public String[] getCommandNames() {
+        return NAMES;
     }
 
     @Override

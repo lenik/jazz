@@ -3,6 +3,7 @@ package net.bodz.lily.entity.manager;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.JsonResult;
+import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 
 public interface IEntityCommandProcess
@@ -13,9 +14,13 @@ public interface IEntityCommandProcess
     default void setQueryContext(IQueryable context) {
     }
 
-    String[] getPathInfo();
+    IPathFields getCommandPath();
 
-    void setPathInfo(String[] names);
+    void setCommandPath(IPathFields path);
+
+    IPathFields getContentPath();
+
+    void setContentPath(IPathFields path);
 
     /**
      * Used for content command.

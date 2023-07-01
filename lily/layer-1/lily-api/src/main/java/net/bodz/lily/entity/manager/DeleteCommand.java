@@ -12,7 +12,20 @@ import net.bodz.lily.entity.IId;
 public class DeleteCommand
         extends AbstractEntityCommandType {
 
+    public static final String NAME = "delete";
+    public static final String[] NAMES = { NAME, "del", "rm" };
+
     public DeleteCommand() {
+    }
+
+    @Override
+    public String getPreferredName() {
+        return NAME;
+    }
+
+    @Override
+    public String[] getCommandNames() {
+        return NAMES;
     }
 
     @Override
