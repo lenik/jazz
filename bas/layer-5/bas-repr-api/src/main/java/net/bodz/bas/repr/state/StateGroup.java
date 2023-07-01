@@ -69,9 +69,9 @@ public abstract class StateGroup {
         String name = value.getName();
 
         if (keyMap.containsKey(key))
-            throw new DuplicatedKeyException(keyMap, key, "State key");
+            throw new DuplicatedKeyException("key", key, keyMap.get(key));
         if (nameMap.containsKey(name))
-            throw new DuplicatedKeyException(nameMap, key, "State name");
+            throw new DuplicatedKeyException("name", name, nameMap.get(name));
         keyMap.put(key, value);
         nameMap.put(name, value);
     }

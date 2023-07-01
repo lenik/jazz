@@ -42,7 +42,7 @@ public class JazzProjects {
             Class<?> clazz = project.getClass();
             IJazzProject existing = instanceMap.get(clazz);
             if (existing != null)
-                throw new DuplicatedKeyException(clazz.getName());
+                throw new DuplicatedKeyException(clazz.getName(), existing);
             instanceMap.put(clazz, project);
 
             ProjectName aProjectName = clazz.getAnnotation(ProjectName.class);
@@ -50,7 +50,7 @@ public class JazzProjects {
                 String name = aProjectName.value();
                 existing = nameMap.get(name);
                 if (existing != null)
-                    throw new DuplicatedKeyException(name);
+                    throw new DuplicatedKeyException(name, existing);
                 nameMap.put(name, project);
             }
         }

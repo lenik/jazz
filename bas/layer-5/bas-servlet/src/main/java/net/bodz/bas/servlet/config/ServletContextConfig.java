@@ -185,7 +185,7 @@ public class ServletContextConfig {
 
         FilterDescriptor old = filterMap.get(id);
         if (old != null)
-            throw new DuplicatedKeyException(id);
+            throw new DuplicatedKeyException(id, old);
 
         // filterNet.invlink(filterConfig, dependencies);
         filterConfig.setIndex(++filterIndex);
@@ -220,7 +220,7 @@ public class ServletContextConfig {
 
         ServletDescriptor old = servletMap.get(id);
         if (old != null)
-            throw new DuplicatedKeyException(id);
+            throw new DuplicatedKeyException(id, old);
 
         // pluginNet.invlink(servletConfig, dependencies);
         servletConfig.setIndex(++servletIndex);

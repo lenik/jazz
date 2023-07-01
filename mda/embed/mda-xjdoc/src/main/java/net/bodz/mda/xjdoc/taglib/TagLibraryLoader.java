@@ -46,7 +46,7 @@ public class TagLibraryLoader {
 
         ITagLibrary existing = taglibMap.get(name);
         if (existing != null)
-            throw new DuplicatedKeyException("Taglib name " + name + " is already used.");
+            throw new DuplicatedKeyException(name, existing);
 
         taglibMap.put(name, taglib);
     }

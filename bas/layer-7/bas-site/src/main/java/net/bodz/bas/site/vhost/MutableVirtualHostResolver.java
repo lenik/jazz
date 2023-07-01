@@ -134,7 +134,7 @@ public class MutableVirtualHostResolver
 
         IVirtualHost old = map.get(name);
         if (old != null)
-            throw new DuplicatedKeyException(map, vhost.getName(), "vhost");
+            throw new DuplicatedKeyException(name, old);
 
         for (String binding : bindings) {
             bindingMap.putTop(binding, name);

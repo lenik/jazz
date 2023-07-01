@@ -128,9 +128,9 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         String name = value.getName();
 
         if (localKeyMap.containsKey(key))
-            throw new DuplicatedKeyException(localKeyMap, key, "key");
+            throw new DuplicatedKeyException("local key", key, localKeyMap.get(key));
         if (localNameMap.containsKey(name))
-            throw new DuplicatedKeyException(localNameMap, key, "name");
+            throw new DuplicatedKeyException("local name", key, localNameMap.get(name));
         localKeyMap.put(key, value);
         localNameMap.put(name, value);
         localValueList.add(value);

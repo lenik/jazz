@@ -57,7 +57,7 @@ public class LocalDataContextProvider
     public synchronized void addConnectOptions(String key, ConnectOptions options) {
         ConnectOptions val = connectOptionsMap.get(key);
         if (val != null)
-            throw new DuplicatedKeyException("already existed: " + key);
+            throw new DuplicatedKeyException(key, val);
         connectOptionsMap.put(key, options);
     }
 

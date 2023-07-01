@@ -6,7 +6,8 @@ import java.util.Map;
 import net.bodz.bas.err.DuplicatedKeyException;
 
 public class HtmlTagMap
-        implements IHtmlTagMap {
+        implements
+            IHtmlTagMap {
 
     private Map<String, IHtmlTag> map = new HashMap<String, IHtmlTag>();
 
@@ -19,7 +20,7 @@ public class HtmlTagMap
     public void add(String id, IHtmlTag tag) {
         IHtmlTag existing = map.get(id);
         if (existing != null)
-            throw new DuplicatedKeyException(id);
+            throw new DuplicatedKeyException(id, existing);
         map.put(id, tag);
     }
 
