@@ -24,6 +24,14 @@ public interface IPathFields
 
     void setPath(String dirName, String name, String extension);
 
+    String[] toArray();
+
+    int length();
+
+    String getField(int index);
+
+    void setField(int index, String field);
+
     String getDirName();
 
     void setDirName(String dirName);
@@ -37,6 +45,11 @@ public interface IPathFields
     void setName(String name);
 
     String getExtension();
+
+    default String getExtension(String fallback) {
+        String extension = getExtension();
+        return extension != null ? extension : fallback;
+    }
 
     void setExtension(String extension);
 

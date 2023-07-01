@@ -1,6 +1,9 @@
 package net.bodz.bas.t.file;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.string.PosRange;
+import net.bodz.bas.c.string.StringStat;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -8,50 +11,57 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.tuple.Split;
 
-public class PathFields
+/**
+ * Bottom: dir/name/extension
+ *
+ * Up: path/filename.
+ */
+public class BottomUpPathFields
         implements
             IPathFields {
 
-    String _path;
     String dirName;
-    String _fileName;
-    String name;
+    String name; // without extension
     String extension;
 
-    public PathFields() {
+    String _pathCache;
+    String _fileNameCache;
+
+    public BottomUpPathFields() {
     }
 
-    public PathFields(IPathFields o) {
-        this._path = o.getPath();
+    public BottomUpPathFields(IPathFields o) {
         this.dirName = o.getDirName();
-        this._fileName = o.getFileName();
         this.name = o.getName();
         this.extension = o.getExtension();
+        this._pathCache = o.getPath();
+        this._fileNameCache = o.getFileName();
     }
 
-    public PathFields(PathFields o) {
-        this._path = o._path;
+    public BottomUpPathFields(BottomUpPathFields o) {
         this.dirName = o.dirName;
-        this._fileName = o._fileName;
         this.name = o.name;
         this.extension = o.extension;
+        this._pathCache = o._pathCache;
+        this._fileNameCache = o._fileNameCache;
     }
 
     @Override
     public String getPath() {
-        return _path;
+        return _pathCache;
     }
 
     @Override
     public synchronized void setPath(String path) {
-        if (Nullables.notEquals(this._path, path)) {
+        if (Nullables.notEquals(this._pathCache, path)) {
             if (path == null) {
-                _path = dirName = _fileName = name = extension = null;
+                dirName = name = extension = null;
+                _pathCache = _fileNameCache = null;
             } else {
                 Split dirBase = Split.dirBase(path);
                 dirName = dirBase.a;
                 _fileName(dirBase.b);
-                _path = path;
+                this._pathCache = path;
             }
         }
     }
@@ -59,7 +69,7 @@ public class PathFields
     @Override
     public synchronized void setPath(String dirName, String fileName) {
         if (Nullables.notEquals(this.dirName, dirName) //
-                || Nullables.notEquals(this._fileName, fileName)) {
+                || Nullables.notEquals(this._fileNameCache, fileName)) {
             this.dirName = dirName;
             _fileName(fileName);
             updatePath();
@@ -75,10 +85,40 @@ public class PathFields
     }
 
     void updatePath() {
-        String path = _fileName;
+        String path = _fileNameCache;
         if (dirName != null)
-            path = dirName + "/" + _fileName;
-        this._path = path;
+            path = dirName + "/" + _fileNameCache;
+        this._pathCache = path;
+    }
+
+    @Override
+    public String[] toArray() {
+        String[] array = _pathCache.split("/");
+        return array;
+    }
+
+    @Override
+    public int length() {
+        int slashCount = StringStat.count(_pathCache, '/');
+        return slashCount;
+    }
+
+    @Override
+    public String getField(int index) {
+        PosRange range = Strings.selectToken(_pathCache, '/', index);
+        if (range == null)
+            return null;
+        String token = _pathCache.substring(range.begin, range.end);
+        return token;
+    }
+
+    @Override
+    public void setField(int index, String field) {
+        PosRange range = Strings.selectToken(_pathCache, '/', index);
+        String left_ = _pathCache.substring(0, range.begin);
+        String _right = _pathCache.substring(range.end);
+        String rename = left_ + field + _right;
+        this._pathCache = rename;
     }
 
     @Override
@@ -96,7 +136,7 @@ public class PathFields
 
     @Override
     public String getFileName() {
-        return _fileName;
+        return _fileNameCache;
     }
 
     @Override
@@ -106,12 +146,12 @@ public class PathFields
     }
 
     void _fileName(String fileName) {
-        if (Nullables.equals(this._fileName, fileName))
+        if (Nullables.equals(this._fileNameCache, fileName))
             return;
         Split split = Split.nameExtension(fileName);
         name = split.a;
         extension = split.b;
-        this._fileName = fileName;
+        this._fileNameCache = fileName;
     }
 
     void updateFileName() {
@@ -122,7 +162,7 @@ public class PathFields
             else
                 fileName = name + "." + extension;
         }
-        this._fileName = fileName;
+        this._fileNameCache = fileName;
         updatePath();
     }
 
@@ -154,7 +194,7 @@ public class PathFields
 
     @Override
     public String toString() {
-        return _path;
+        return _pathCache;
     }
 
     @Override

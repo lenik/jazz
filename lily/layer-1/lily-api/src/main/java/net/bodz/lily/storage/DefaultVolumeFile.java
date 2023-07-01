@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.bodz.bas.t.file.IPathFields;
-import net.bodz.bas.t.file.PathFields;
+import net.bodz.bas.t.file.BottomUpPathFields;
 import net.bodz.bas.t.tuple.Split;
 
 public class DefaultVolumeFile
-        extends PathFields
+        extends BottomUpPathFields
         implements
             IVolumeItem {
 
