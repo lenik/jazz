@@ -1,12 +1,20 @@
 package net.bodz.lily.entity.manager;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.repr.content.FileContent;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
+import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.StructRowMask;
@@ -40,8 +48,17 @@ class ListProcess
     final StructRowMask criteria;
     final SelectOptions selectOptions;
 
+    int format = JSON;
+    static final int JSON = 0;
+    static final int HSSF = 1;
+    static final int XSSF = 2;
+
+    ITableSheetBuilder tableSheetBuilder;
+
     public ListProcess(ListCommand type, IEntityCommandContext context) {
         super(type, context);
+
+        tableData = new TableOfPathProps(typeInfo.getEntityClass());
 
         Class<?> criteriaClass = typeInfo.getCrtieriaClass();
         try {
@@ -54,12 +71,42 @@ class ListProcess
         selectOptions = new SelectOptions();
     }
 
+    @Override
+    public void setQueryContext(IQueryable context) {
+        ITableSheetBuilder tableSheetBuilder = context.query(ITableSheetBuilder.class);
+        if (tableSheetBuilder != null)
+            this.tableSheetBuilder = tableSheetBuilder;
+    }
+
     public IVarMapForm getCriteria() {
         return criteria;
     }
 
     public SelectOptions getSelectOptions() {
         return selectOptions;
+    }
+
+    @Override
+    public void setPathInfo(String[] names) {
+        super.setPathInfo(names);
+        int n = names.length;
+        String base = names[n - 1];
+        int lastDot = base.lastIndexOf('.');
+        if (lastDot != -1) {
+            String ext = base.substring(lastDot + 1);
+            switch (ext) {
+            case "xls":
+                format = HSSF;
+                break;
+            case "xlsx":
+                format = XSSF;
+                break;
+            }
+        }
+    }
+
+    public void setTableSheetBuilder(ITableSheetBuilder tableSheetBuilder) {
+        this.tableSheetBuilder = tableSheetBuilder;
     }
 
     @Override
@@ -73,7 +120,26 @@ class ListProcess
             tableData.setTotalCount(totalCount);
         }
 
-        return tableData;
+        if (format == JSON)
+            return tableData;
+
+        if (tableSheetBuilder == null)
+            throw new IllegalUsageException("sheet builder isn't set.");
+        Workbook workbook = WorkbookFactory.create(format == XSSF);
+        tableSheetBuilder.buildTableSheet(tableData, workbook);
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
+        workbook.write(buf);
+
+        int activeSheetIndex = workbook.getActiveSheetIndex();
+        String sheetName = workbook.getSheetName(activeSheetIndex);
+        String fileName = sheetName + (format == XSSF ? ".xlsx" : ".xls");
+
+        return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
+    }
+
+    @Override
+    protected Boolean isReturningJsonResult() {
+        return false;
     }
 
     protected List<Object> buildDataList() {
@@ -84,7 +150,6 @@ class ListProcess
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
         super.readObject(map);
-        tableData = new TableOfPathProps(typeInfo.getEntityClass());
         tableData.readObject(map);
         criteria.readObject(map);
         selectOptions.readObject(map);

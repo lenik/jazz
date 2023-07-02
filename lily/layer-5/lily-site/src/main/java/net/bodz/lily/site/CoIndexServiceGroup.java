@@ -55,7 +55,7 @@ public class CoIndexServiceGroup
                     logger.error(e, "Failed to instantiate " + indexClass);
                     continue;
                 }
-                index.setDataContext(dataContext);
+                // index.setDataContext(dataContext);
                 map.put(name, index);
             }
         } catch (Exception e) {

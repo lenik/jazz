@@ -46,6 +46,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected final IEntityCommandContext context;
     protected final IDataApplication dataApp;
     protected DataContext dataContext;
+    protected String[] pathInfo;
     protected ResolvedEntity resolvedEntity;
     protected JsonResult result;
 
@@ -86,6 +87,16 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     }
 
     @Override
+    public String[] getPathInfo() {
+        return pathInfo;
+    }
+
+    @Override
+    public void setPathInfo(String[] names) {
+        this.pathInfo = names;
+    }
+
+    @Override
     public ResolvedEntity getResolvedEntity() {
         return resolvedEntity;
     }
@@ -100,7 +111,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        if (!type.checkValid(previous, tokens, q))
+        if (!type.checkPathValid(previous, tokens, q))
             return null;
 
         this.request = CurrentHttpService.getRequest();

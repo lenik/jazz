@@ -7,11 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -24,7 +32,9 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.JsonWrapper;
+import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -36,12 +46,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
-import net.bodz.lily.entity.manager.EntityCommandContext;
-import net.bodz.lily.entity.manager.EntityCommands;
-import net.bodz.lily.entity.manager.IEntityCommandProcess;
-import net.bodz.lily.entity.manager.IEntityCommandType;
-import net.bodz.lily.entity.manager.ListCommand;
-import net.bodz.lily.entity.manager.ResolvedEntity;
+import net.bodz.lily.entity.manager.*;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.security.AccessControl;
@@ -52,10 +57,12 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         extends AbstractCacheControl
         implements
             IEntityManager,
+            IQueryable,
             IPathArrivalFrameAware,
             ICacheControl,
             IDataApplicationAware,
-            IDataContextAware {
+            IDataContextAware,
+            ITableSheetBuilder {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityManager.class);
 
@@ -67,13 +74,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     Map<String, IEntityCommandType> contentNameMap = new HashMap<>();
     List<IEntityCommandType> otherCommands = new ArrayList<>();
 
-    IDataApplication dataApp;
-
-    public AbstractEntityManager(IDataApplication dataApp) {
-        if (dataApp == null)
-            throw new NullPointerException("dataApp");
-        this.dataApp = dataApp;
-
+    public AbstractEntityManager() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
 
         if (aObjectType != null) {
@@ -129,63 +130,69 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         return typeInfo;
     }
 
-    @Override
-    public IEntityCommandProcess runCommand(String name) {
-        IEntityCommandType commandType = nameMap.get(name);
-        if (commandType == null)
-            return null;
-        return createProcess(commandType);
-    }
-
-    @Override
-    public IEntityCommandProcess runContentCommand(String name) {
-        IEntityCommandType commandType = contentNameMap.get(name);
-        if (commandType == null)
-            return null;
-        return createProcess(commandType);
-    }
-
-    IEntityCommandProcess createProcess(IEntityCommandType type) {
-        return createProcess(type, null);
-    }
-
     IEntityCommandProcess createProcess(IEntityCommandType type, ResolvedEntity resolvedEntity) {
         EntityCommandContext context = newCommandContext();
-        context.setResolvedEntity(resolvedEntity);
+        if (resolvedEntity != null)
+            context.setResolvedEntity(resolvedEntity);
         IEntityCommandProcess process = type.createProcess(context);
         return process;
     }
 
+    IPathArrival processDispatch(IEntityCommandType type, ResolvedEntity resolvedEntity, //
+            IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+            throws PathDispatchException {
+        return processDispatch(type, resolvedEntity, previous, tokens, q, 1);
+    }
+
+    IPathArrival processDispatch(IEntityCommandType type, ResolvedEntity resolvedEntity, //
+            IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q, int consumedTokenCount)
+            throws PathDispatchException {
+        IEntityCommandProcess process = createProcess(type, resolvedEntity);
+
+        String[] pathInfo = tokens.peek(consumedTokenCount);
+        process.setPathInfo(pathInfo);
+
+        process.setQueryContext(this);
+
+        previous = PathArrival.shift(consumedTokenCount, previous, this, process, tokens);
+        try {
+            return process.dispatch(previous, tokens, q);
+        } catch (PathDispatchException e) {
+            String commandTypeStr = "command";
+            if (type.isContentCommand())
+                commandTypeStr = "content command";
+            if (consumedTokenCount == 0)
+                commandTypeStr = commandTypeStr + "*";
+
+            String pathInfoStr = StringArray.join("/", pathInfo);
+            String message = String.format(//
+                    "error executing entity %s %s [%s]: %s", commandTypeStr, type.getPreferredName(), pathInfoStr,
+                    e.getMessage());
+            throw new PathDispatchException(message, e);
+        }
+    }
+
     EntityCommandContext newCommandContext() {
         EntityCommandContext context = new EntityCommandContext();
-        context.setDataApp(dataApp);
+        context.setDataApp(getDataApp());
         context.setTypeInfo(typeInfo);
         return context;
     }
 
+    /**
+     * @return Non-<code>null</code> value.
+     */
     @Override
-    public IDataApplication getDataApp() {
-        return dataApp;
-    }
-
-    @Override
-    public void setDataApp(IDataApplication dataApp) {
-        if (dataApp == null)
-            throw new NullPointerException("dataApp");
-        this.dataApp = dataApp;
-    }
+    public abstract IDataApplication getDataApp();
 
     @Override
     public DataContext getDataContext() {
-        return dataApp.getDataContext();
+        return getDataApp().getDataContext();
     }
 
     @Override
     public void setDataContext(DataContext dataContext) {
         throw new ReadOnlyException();
-    }
-
-    protected void afterDataContextSet() {
     }
 
     @SuppressWarnings("unchecked")
@@ -207,17 +214,8 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             if (token.startsWith("__data__") || token.startsWith("__D_"))
                 command = nameMap.get(ListCommand.NAME);
         }
-        if (command != null) {
-            IEntityCommandProcess process = createProcess(command);
-
-            previous = PathArrival.shift(previous, this, command, tokens);
-            try {
-                return process.dispatch(previous, tokens, q);
-            } catch (PathDispatchException e) {
-                throw new PathDispatchException(String.format(//
-                        "error execute entity command %s: %s", token, e.getMessage()), e);
-            }
-        }
+        if (command != null)
+            return processDispatch(command, null, previous, tokens, q);
 
         IPathArrival arrival;
         if (hasId && (arrival = dispatchToEntity(previous, tokens, q)) != null) {
@@ -232,30 +230,12 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             }
 
             command = contentNameMap.get(token);
-            if (command != null) {
-                previous = PathArrival.shift(previous, this, command, tokens);
-                IEntityCommandProcess process = createProcess(command, resolvedEntity);
-
-                try {
-                    return process.dispatch(previous, tokens, q);
-                } catch (PathDispatchException e) {
-                    throw new PathDispatchException(String.format(//
-                            "error execute entity content command %s: %s", token, e.getMessage()), e);
-                }
-            }
+            if (command != null)
+                return processDispatch(command, resolvedEntity, previous, tokens, q);
 
             for (IEntityCommandType other : otherCommands)
-                if (other.checkValid(previous, tokens, q)) {
-                    previous = PathArrival.shift(0, previous, this, command, tokens);
-                    IEntityCommandProcess process = createProcess(other, resolvedEntity);
-
-                    try {
-                        return process.dispatch(previous, tokens, q);
-                    } catch (PathDispatchException e) {
-                        throw new PathDispatchException(String.format(//
-                                "error execute entity other-command: %s", e.getMessage()), e);
-                    }
-                }
+                if (other.checkPathValid(previous, tokens, q))
+                    return processDispatch(command, resolvedEntity, previous, tokens, q, 0);
 
         } // hasId && dispatchToEntity
 
@@ -319,6 +299,48 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     @Override
     public void leave(IHtmlViewContext ctx, PathArrivalFrame frame) {
         ctx.setVariable("index", null);
+    }
+
+    @Override
+    public void buildTableSheet(TableOfPathProps tableData, Workbook book)
+            throws FormatException {
+        List<?> list = tableData.getList();
+
+        Sheet sheet = book.createSheet();
+
+        String dateStr = Dates.YYYY_MM_DD.format(System.currentTimeMillis());
+        String typeName = typeInfo.getEntityClass().getSimpleName();
+        String title = String.format("%s %s (%d rows)", dateStr, typeName, list.size());
+        book.setSheetName(0, title);
+
+        // fillTable(sheet, tableData);
+        Row header = sheet.createRow(0);
+        List<String> columns = tableData.getColumnList();
+
+        int nCol = columns.size();
+        for (int i = 0; i < nCol; i++) {
+            Cell cell = header.createCell(i);
+            String col = columns.get(i);
+            cell.setCellValue(col);
+        }
+
+        int rowIndex = 0;
+        for (Object o : list) {
+            List<?> line;
+            try {
+                line = tableData.convert(o, columns);
+            } catch (ReflectiveOperationException e) {
+                throw new FormatException("Error convert object to cell array: " + e.getMessage(), e);
+            }
+
+            Row row = sheet.createRow(++rowIndex);
+            for (int i = 0; i < nCol; i++) {
+                Object value = line.get(i);
+                Cell cell = row.createCell(i);
+                if (value != null)
+                    cell.setCellValue(value.toString());
+            }
+        }
     }
 
 }
