@@ -24,7 +24,7 @@ public interface IEntityCommandType
 
     boolean isEnabled(IEntityTypeInfo info);
 
-    boolean checkValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    boolean checkPathValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException;
 
 }

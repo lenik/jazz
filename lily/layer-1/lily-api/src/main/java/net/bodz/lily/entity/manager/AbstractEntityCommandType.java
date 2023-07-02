@@ -88,7 +88,7 @@ public abstract class AbstractEntityCommandType
     }
 
     @Override
-    public boolean checkValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
+    public boolean checkPathValid(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         return true;
     }
