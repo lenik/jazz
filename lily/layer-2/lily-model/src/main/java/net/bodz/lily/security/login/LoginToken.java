@@ -3,18 +3,26 @@ package net.bodz.lily.security.login;
 import java.io.IOException;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.content.IReset;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+import net.bodz.bas.site.ISiteRoot;
+import net.bodz.bas.site.vhost.CurrentVirtualHost;
+import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.typer.std.MutableAttributes;
+import net.bodz.lily.app.DataApps;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 
@@ -25,6 +33,8 @@ public class LoginToken
             IJsonForm {
 
     public static final String ATTRIBUTE_NAME = LoginToken.class.getName();
+    public static final String HEADER_NAME = "Login-Token";
+    public static final String PARAM_NAME = "loginToken";
 
     static final long MAX_TXN_NO = 0x1000_0000_0000_0000L;
 
@@ -117,6 +127,42 @@ public class LoginToken
     /**
      * @return Non-<code>null</code> instance.
      */
+    public static LoginToken fromRequest() {
+        HttpServletRequest request = CurrentHttpService.getRequestOpt();
+        if (request == null)
+            return null;
+
+        IVirtualHost vhost = CurrentVirtualHost.getVirtualHostOpt();
+        if (vhost == null)
+            throw new IllegalStateException("no vhost info.");
+
+        IDataApplication app = DataApps.lazyCreate(request);
+        ISiteRoot site = app.getDefaultSite();
+        if (site == null)
+            throw new IllegalUsageException("root site isn't known");
+
+        ILoginManager loginManager = site.getAttribute(ILoginManager.ATTRIBUTE_NAME);
+        if (loginManager == null)
+            throw new IllegalUsageException("login manager isn't configured.");
+
+        ILoginTokenManager tokenManager = (ILoginTokenManager) loginManager;
+
+        String tokenStr = request.getHeader(HEADER_NAME);
+        if (tokenStr == null)
+            tokenStr = request.getParameter(PARAM_NAME);
+        if (tokenStr != null)
+            if (StringPred.isDecimal(tokenStr)) {
+                int id = Integer.parseInt(tokenStr);
+                LoginToken token = tokenManager.getToken(id);
+                return token;
+            }
+
+        return fromSession();
+    }
+
+    /**
+     * @return Non-<code>null</code> instance.
+     */
     public static LoginToken fromSession() {
         HttpSession session = CurrentHttpService.getSessionOpt();
         if (session == null)
@@ -203,7 +249,7 @@ public class LoginToken
         out.object();
         {
             out.entry("id", user.id());
-            out.entry("name", user.getUniqName());
+            out.entry("name", user.getName());
             out.entry("fullName", user.getFullName());
             out.endObject();
         }
