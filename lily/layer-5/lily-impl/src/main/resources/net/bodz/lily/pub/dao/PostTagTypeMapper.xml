@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
-        <result property="codeName" column="code" />
+        <result property="code" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -211,8 +211,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
             <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.code != null">and a.code = #{m.code}</if>
+        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
         <if test="m.description != null">and a.description = #{m.description}</if>
@@ -313,7 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{ownerGroupId},
             #{accessMode},
             #{acl},
-            #{codeName},
+            #{code},
             #{label},
             #{description},
             #{priority},
@@ -335,7 +335,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid = #{ownerGroupId},
             mode = #{accessMode},
             acl = #{acl},
-            code = #{codeName},
+            code = #{code},
             label = #{label},
             description = #{description},
             priority = #{priority},

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.contact.PartyCategory">
         <id property="id" column="id" />
-        <result property="codeName" column="code" />
+        <result property="uniqName" column="name" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <result property="label" column="label" />
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="objlist_sql"><![CDATA[
         select
             a.id, 
-            a.code, 
+            a."name", 
             a.uid, 
             a.gid, 
             a.mode, 
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
             parent.id parent_id, 
-            parent.code parent_code, 
+            parent."name" parent_name, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
             parent.mode parent_mode, 
@@ -116,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="objedit_sql"><![CDATA[
         select
             a.id, 
-            a.code, 
+            a."name", 
             a.uid, 
             a.gid, 
             a.mode, 
@@ -164,7 +164,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
             parent.id parent_id, 
-            parent.code parent_code, 
+            parent."name" parent_name, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
             parent.mode parent_mode, 
@@ -198,8 +198,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
         <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
         <if test="m.ownerUserIdRange!= null">
             <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
@@ -312,7 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into partycat(
-            code,
+            "name",
             uid,
             gid,
             mode,
@@ -332,7 +332,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "depth",
             nref
         ) values(
-            #{codeName},
+            #{uniqName},
             #{ownerUserId},
             #{ownerGroupId},
             #{accessMode},
@@ -357,7 +357,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update partycat
         <set>
-            code = #{codeName},
+            "name" = #{uniqName},
             uid = #{ownerUserId},
             gid = #{ownerGroupId},
             mode = #{accessMode},

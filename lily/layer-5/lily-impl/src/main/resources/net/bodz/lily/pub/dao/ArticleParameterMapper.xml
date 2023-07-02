@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="fval" column="fval" />
         <result property="sval" column="sval" />
         <result property="articleId" column="article" />
-        <result property="parameterId" column="parm" />
+        <result property="parameter" column="parm" />
         <association property="article" columnPrefix="article_"
             javaType="net.bodz.lily.pub.Article" 
             resultMap="net.bodz.lily.pub.dao.ArticleMapper.objlist_map" />
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm.gid parm_gid, 
             parm.mode parm_mode, 
             parm.acl parm_acl, 
-            parm.code parm_code, 
+            parm."name" parm_name, 
             parm.label parm_label, 
             parm.description parm_description, 
             parm.priority parm_priority, 
@@ -74,7 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm."state" parm_state, 
             parm.creation parm_creation, 
             parm.lastmod parm_lastmod, 
-            parm."version" parm_version
+            parm."version" parm_version, 
+            parm.dummy parm_dummy
         from article_parm a
             left join article article on a.article = article.id
             left join articleparm parm on a.parm = parm.id
@@ -125,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm.gid parm_gid, 
             parm.mode parm_mode, 
             parm.acl parm_acl, 
-            parm.code parm_code, 
+            parm."name" parm_name, 
             parm.label parm_label, 
             parm.description parm_description, 
             parm.priority parm_priority, 
@@ -133,7 +134,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm."state" parm_state, 
             parm.creation parm_creation, 
             parm.lastmod parm_lastmod, 
-            parm."version" parm_version
+            parm."version" parm_version, 
+            parm.dummy parm_dummy
         from article_parm a
             left join article article on a.article = article.id
             left join articleparm parm on a.parm = parm.id
@@ -164,12 +166,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
             <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
         </if>
-        <if test="m.parameterId != null">and a.parm = #{m.parameterId}</if>
-        <if test="m.parameterIdRange!= null">
-            <if test="m.parameterIdRange.hasStartIncl">and a.parm >= #{m.parameterIdRange.start}</if>
-            <if test="m.parameterIdRange.hasStartExcl">and a.parm > #{m.parameterIdRange.start}</if>
-            <if test="m.parameterIdRange.hasEndIncl">and a.parm &lt;= #{m.parameterIdRange.end}</if>
-            <if test="m.parameterIdRange.hasEndExcl">and a.parm &lt; #{m.parameterIdRange.end}</if>
+        <if test="m.parameter != null">and a.parm = #{m.parameter}</if>
+        <if test="m.parameterRange!= null">
+            <if test="m.parameterRange.hasStartIncl">and a.parm >= #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasStartExcl">and a.parm > #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasEndIncl">and a.parm &lt;= #{m.parameterRange.end}</if>
+            <if test="m.parameterRange.hasEndExcl">and a.parm &lt; #{m.parameterRange.end}</if>
         </if>
         <if test="m.ival != null">and a.ival = #{m.ival}</if>
         <if test="m.ivalRange!= null">
@@ -224,7 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{articleId},
-            #{parameterId},
+            #{parameter},
             #{ival},
             #{fval},
             #{sval}
@@ -238,7 +240,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             article = #{articleId},
-            parm = #{parameterId},
+            parm = #{parameter},
             ival = #{ival},
             fval = #{fval},
             sval = #{sval},

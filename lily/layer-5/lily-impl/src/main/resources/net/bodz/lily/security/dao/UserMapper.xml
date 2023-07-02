@@ -402,7 +402,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into user(
+        insert into "user"(
             "type",
             "name",
             label,
@@ -436,7 +436,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ]]></insert>
 
     <update id="update">
-        update user
+        update "user"
         <set>
             "type" = #{typeId},
             "name" = #{uniqName},
@@ -459,7 +459,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="delete">
-        delete from user
+        delete from "user"
         <where>
             id = #{id}
         </where>

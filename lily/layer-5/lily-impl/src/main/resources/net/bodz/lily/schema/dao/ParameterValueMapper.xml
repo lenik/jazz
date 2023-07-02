@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.ParameterValue">
         <id property="id" column="id" />
-        <result property="codeName" column="code" />
+        <result property="code" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
         <result property="val" column="val" />
-        <result property="parameterId" column="parm" />
+        <result property="parameter" column="parm" />
         <association property="parameter" columnPrefix="parm_"
             javaType="net.bodz.lily.schema.ParameterDef" 
             resultMap="net.bodz.lily.schema.dao.ParameterDefMapper.objlist_map" />
@@ -90,8 +90,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.code != null">and a.code = #{m.code}</if>
+        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
         <if test="m.description != null">and a.description = #{m.description}</if>
@@ -126,12 +126,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
-        <if test="m.parameterId != null">and a.parm = #{m.parameterId}</if>
-        <if test="m.parameterIdRange!= null">
-            <if test="m.parameterIdRange.hasStartIncl">and a.parm >= #{m.parameterIdRange.start}</if>
-            <if test="m.parameterIdRange.hasStartExcl">and a.parm > #{m.parameterIdRange.start}</if>
-            <if test="m.parameterIdRange.hasEndIncl">and a.parm &lt;= #{m.parameterIdRange.end}</if>
-            <if test="m.parameterIdRange.hasEndExcl">and a.parm &lt; #{m.parameterIdRange.end}</if>
+        <if test="m.parameter != null">and a.parm = #{m.parameter}</if>
+        <if test="m.parameterRange!= null">
+            <if test="m.parameterRange.hasStartIncl">and a.parm >= #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasStartExcl">and a.parm > #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasEndIncl">and a.parm &lt;= #{m.parameterRange.end}</if>
+            <if test="m.parameterRange.hasEndExcl">and a.parm &lt; #{m.parameterRange.end}</if>
         </if>
         <if test="m.val != null">and a.val = #{m.val}</if>
         <if test="m.valPattern != null">and a.val like '${m.valPattern}'</if>
@@ -171,7 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm,
             val
         ) values(
-            #{codeName},
+            #{code},
             #{label},
             #{description},
             #{priority},
@@ -180,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{parameterId},
+            #{parameter},
             #{val}
         );
     ]]></insert>
@@ -188,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update _parmval
         <set>
-            code = #{codeName},
+            code = #{code},
             label = #{label},
             description = #{description},
             priority = #{priority},
@@ -197,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            parm = #{parameterId},
+            parm = #{parameter},
             val = #{val},
         </set>
         <where>

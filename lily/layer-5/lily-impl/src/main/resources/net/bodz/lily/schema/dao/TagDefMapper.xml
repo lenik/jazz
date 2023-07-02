@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
-        <result property="tagGroupId" column="tagv" />
+        <result property="tagGroup" column="tagv" />
         <association property="tagGroup" columnPrefix="tagv_"
             javaType="net.bodz.lily.schema.TagGroupDef" 
             resultMap="net.bodz.lily.schema.dao.TagGroupDefMapper.objlist_map" />
@@ -122,12 +122,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
-        <if test="m.tagGroupId != null">and a.tagv = #{m.tagGroupId}</if>
-        <if test="m.tagGroupIdRange!= null">
-            <if test="m.tagGroupIdRange.hasStartIncl">and a.tagv >= #{m.tagGroupIdRange.start}</if>
-            <if test="m.tagGroupIdRange.hasStartExcl">and a.tagv > #{m.tagGroupIdRange.start}</if>
-            <if test="m.tagGroupIdRange.hasEndIncl">and a.tagv &lt;= #{m.tagGroupIdRange.end}</if>
-            <if test="m.tagGroupIdRange.hasEndExcl">and a.tagv &lt; #{m.tagGroupIdRange.end}</if>
+        <if test="m.tagGroup != null">and a.tagv = #{m.tagGroup}</if>
+        <if test="m.tagGroupRange!= null">
+            <if test="m.tagGroupRange.hasStartIncl">and a.tagv >= #{m.tagGroupRange.start}</if>
+            <if test="m.tagGroupRange.hasStartExcl">and a.tagv > #{m.tagGroupRange.start}</if>
+            <if test="m.tagGroupRange.hasEndIncl">and a.tagv &lt;= #{m.tagGroupRange.end}</if>
+            <if test="m.tagGroupRange.hasEndExcl">and a.tagv &lt; #{m.tagGroupRange.end}</if>
         </if>
     </sql>
 
@@ -171,7 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{tagGroupId}
+            #{tagGroup}
         );
     ]]></insert>
 
@@ -186,7 +186,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            tagv = #{tagGroupId},
+            tagv = #{tagGroup},
         </set>
         <where>
             id = #{id}

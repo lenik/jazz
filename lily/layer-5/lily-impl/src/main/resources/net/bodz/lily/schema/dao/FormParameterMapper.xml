@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.FormParameter">
         <id property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="uniqName" column="name" />
         <result property="value" column="value" />
         <result property="formId" column="form" />
         <association property="form" columnPrefix="form_"
@@ -77,8 +77,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
             <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
         </if>
-        <if test="m.name != null">and a."name" = #{m.name}</if>
-        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
         <if test="m.value != null">and a."value" = #{m.value}</if>
         <if test="m.valuePattern != null">and a."value" like '${m.valuePattern}'</if>
     </sql>
@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "value"
         ) values(
             #{formId},
-            #{name},
+            #{uniqName},
             #{value}
         );
     ]]></insert>
@@ -119,7 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update _formparm
         <set>
             form = #{formId},
-            "name" = #{name},
+            "name" = #{uniqName},
             "value" = #{value},
         </set>
         <where>

@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contact.emailValidated" column="emailok" />
         <result property="properties.jsonStr" column="props" />
         <result property="birthday" column="birthday" />
-        <result property="locale" column="locale" />
+        <result property="langTag" column="locale" />
         <result property="timeZone" column="timezone" />
         <result property="roleCount" column="nrole" />
         <result property="customer" column="customer" />
@@ -126,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
             category.id category_id, 
-            category.code category_code, 
+            category."name" category_name, 
             category.uid category_uid, 
             category.gid category_gid, 
             category.mode category_mode, 
@@ -244,7 +244,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.referer ownerUser_referer, 
             ownerUser.person ownerUser_person, 
             category.id category_id, 
-            category.code category_code, 
+            category."name" category_name, 
             category.uid category_uid, 
             category.gid category_gid, 
             category.mode category_mode, 
@@ -398,8 +398,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.birthdayRange.hasEndIncl">and a.birthday &lt;= #{m.birthdayRange.end}</if>
             <if test="m.birthdayRange.hasEndExcl">and a.birthday &lt; #{m.birthdayRange.end}</if>
         </if>
-        <if test="m.locale != null">and a.locale = #{m.locale}</if>
-        <if test="m.localePattern != null">and a.locale like '${m.localePattern}'</if>
+        <if test="m.langTag != null">and a.locale = #{m.langTag}</if>
+        <if test="m.langTagPattern != null">and a.locale like '${m.langTagPattern}'</if>
         <if test="m.timeZone != null">and a.timezone = #{m.timeZone}</if>
         <if test="m.timeZonePattern != null">and a.timezone like '${m.timeZonePattern}'</if>
         <if test="m.roleCount != null">and a.nrole = #{m.roleCount}</if>
@@ -517,7 +517,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{properties.jsonStr}::jsonb,
             #{categoryId},
             #{birthday},
-            #{locale},
+            #{langTag},
             #{timeZone},
             #{roleCount},
             #{customer},
@@ -560,7 +560,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             props = #{properties.jsonStr}::jsonb,
             cat = #{categoryId},
             birthday = #{birthday},
-            locale = #{locale},
+            locale = #{langTag},
             timezone = #{timeZone},
             nrole = #{roleCount},
             customer = #{customer},

@@ -29,18 +29,6 @@ public abstract class CoPrincipal
         super.setUniqName(name);
     }
 
-    @Deprecated
-    @Override
-    public String getUniqName() {
-        return super.getUniqName();
-    }
-
-    @Deprecated
-    @Override
-    public void setUniqName(String uniqName) {
-        super.setUniqName(uniqName);
-    }
-
     /**
      * @label Full Name
      * @label.zh 全称

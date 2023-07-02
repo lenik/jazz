@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.geo.Zone">
         <id property="id" column="id" />
-        <result property="codeName" column="code" />
+        <result property="code" column="code" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <result property="label" column="label" />
@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
         <association property="category" columnPrefix="category_"
             javaType="net.bodz.lily.geo.ZoneCategory" 
-            resultMap="net.bodz.lily.geo.ZoneCategoryMapper.objlist_map" />
+            resultMap="net.bodz.lily.geo.dao.ZoneCategoryMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -116,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
             category.id category_id, 
-            category.code category_code, 
+            category."name" category_name, 
             category.uid category_uid, 
             category.gid category_gid, 
             category.mode category_mode, 
@@ -218,7 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup.props ownerGroup_props, 
             ownerGroup.parent ownerGroup_parent, 
             category.id category_id, 
-            category.code category_code, 
+            category."name" category_name, 
             category.uid category_uid, 
             category.gid category_gid, 
             category.mode category_mode, 
@@ -253,8 +253,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.code != null">and a.code = #{m.code}</if>
+        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
         <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
         <if test="m.ownerUserIdRange!= null">
             <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
@@ -369,7 +369,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into zone(
+        insert into "zone"(
             code,
             uid,
             gid,
@@ -392,7 +392,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             props,
             "data"
         ) values(
-            #{codeName},
+            #{code},
             #{ownerUserId},
             #{ownerGroupId},
             #{accessMode},
@@ -417,9 +417,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ]]></insert>
 
     <update id="update">
-        update zone
+        update "zone"
         <set>
-            code = #{codeName},
+            code = #{code},
             uid = #{ownerUserId},
             gid = #{ownerGroupId},
             mode = #{accessMode},
@@ -447,7 +447,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="delete">
-        delete from zone
+        delete from "zone"
         <where>
             id = #{id}
         </where>
