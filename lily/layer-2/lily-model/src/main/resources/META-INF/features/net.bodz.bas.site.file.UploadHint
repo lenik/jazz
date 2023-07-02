@@ -1,4 +1,3 @@
-net.bodz.lily.api.AppApply
 net.bodz.lily.contact.Organization
 net.bodz.lily.contact.PartyCategory
 net.bodz.lily.contact.Person
@@ -11,7 +10,6 @@ net.bodz.lily.pub.Post
 net.bodz.lily.pub.PostCategory
 net.bodz.lily.pub.PostTalk
 net.bodz.lily.security.Group
-net.bodz.lily.security.Role
 net.bodz.lily.security.User
 net.bodz.lily.t.mail.Mail
 net.bodz.violet.art.Artifact
