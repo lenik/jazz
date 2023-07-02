@@ -245,7 +245,7 @@ public class CoObjectMask
      * XXX mybatis global vars won't work.
      */
     public LoginToken getLoginToken() {
-        LoginToken token = LoginToken.fromSession();
+        LoginToken token = LoginToken.fromRequest();
         return token;
     }
 
