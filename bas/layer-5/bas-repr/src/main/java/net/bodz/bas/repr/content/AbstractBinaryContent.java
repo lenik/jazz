@@ -11,12 +11,22 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 public abstract class AbstractBinaryContent
         extends MutableStreamContent {
 
+    protected static final ContentType DEFAULT_TYPE = ContentTypes.application_octet_stream;
+
     public AbstractBinaryContent() {
-        super(ContentTypes.application_octet_stream);
+        super(DEFAULT_TYPE);
+    }
+
+    public AbstractBinaryContent(String fileName) {
+        super(fileName, DEFAULT_TYPE);
     }
 
     public AbstractBinaryContent(ContentType contentType) {
         super(contentType);
+    }
+
+    public AbstractBinaryContent(String fileName, ContentType contentType) {
+        super(fileName, contentType);
     }
 
     @Override
