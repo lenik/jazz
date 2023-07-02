@@ -17,6 +17,7 @@ column-property {
     nmsg:               messageCount
     parm:               parameter
     tagv:               tagGroup
+    locale:             langTag
 }
 
 key-columns {

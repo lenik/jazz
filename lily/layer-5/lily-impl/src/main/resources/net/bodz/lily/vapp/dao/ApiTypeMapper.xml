@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
-        <result property="codeName" column="code" />
+        <result property="code" column="code" />
         <result property="properties.jsonStr" column="props" />
         <result property="uom" column="uom" />
     </resultMap>
@@ -97,8 +97,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.code != null">and a.code = #{m.code}</if>
+        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
         <if test="m.properties != null">and a.props = #{m.properties}</if>
         <if test="m.uom != null">and a.uom = #{m.uom}</if>
         <if test="m.uomPattern != null">and a.uom like '${m.uomPattern}'</if>
@@ -146,7 +146,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{codeName},
+            #{code},
             #{properties.jsonStr}::jsonb,
             #{uom}
         );
@@ -163,7 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            code = #{codeName},
+            code = #{code},
             props = #{properties.jsonStr}::jsonb,
             uom = #{uom},
         </set>

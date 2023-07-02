@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.Group">
         <id property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="uniqName" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             resultMap="objlist_map" />
         <association property="type" columnPrefix="type_"
             javaType="net.bodz.lily.security.GroupType" 
-            resultMap="net.bodz.lily.security.GroupTypeMapper.objlist_map" />
+            resultMap="net.bodz.lily.security.dao.GroupTypeMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -126,8 +126,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.name != null">and a."name" = #{m.name}</if>
-        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
         <if test="m.typeId != null">and a."type" = #{m.typeId}</if>
         <if test="m.typeIdRange!= null">
             <if test="m.typeIdRange.hasStartIncl">and a."type" >= #{m.typeIdRange.start}</if>
@@ -212,7 +212,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
-        insert into group(
+        insert into "group"(
             "name",
             "type",
             label,
@@ -226,7 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             props,
             parent
         ) values(
-            #{name},
+            #{uniqName},
             #{typeId},
             #{label},
             #{description},
@@ -242,9 +242,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ]]></insert>
 
     <update id="update">
-        update group
+        update "group"
         <set>
-            "name" = #{name},
+            "name" = #{uniqName},
             "type" = #{typeId},
             label = #{label},
             description = #{description},
@@ -263,7 +263,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="delete">
-        delete from group
+        delete from "group"
         <where>
             id = #{id}
         </where>

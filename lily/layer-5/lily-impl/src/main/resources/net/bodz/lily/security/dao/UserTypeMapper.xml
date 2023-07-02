@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.security.UserType">
         <id property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="uniqName" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -63,8 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.name != null">and a."name" = #{m.name}</if>
-        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
         <if test="m.description != null">and a.description = #{m.description}</if>
@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             props,
             dummy
         ) values(
-            #{name},
+            #{uniqName},
             #{label},
             #{description},
             #{priority},
@@ -160,7 +160,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update usertype
         <set>
-            "name" = #{name},
+            "name" = #{uniqName},
             label = #{label},
             description = #{description},
             priority = #{priority},

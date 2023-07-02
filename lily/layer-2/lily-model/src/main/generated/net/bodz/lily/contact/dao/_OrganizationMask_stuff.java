@@ -42,8 +42,8 @@ public class _OrganizationMask_stuff
     Date birthday;
     DateTimeRange birthdayRange = new DateTimeRange();
 
-    String locale;
-    String localePattern;
+    String langTag;
+    String langTagPattern;
 
     String timeZone;
     String timeZonePattern;
@@ -235,20 +235,20 @@ public class _OrganizationMask_stuff
         this.birthdayRange = range;
     }
 
-    public String getLocale() {
-        return locale;
+    public String getLangTag() {
+        return langTag;
     }
 
-    public void setLocale(String value) {
-        this.locale = value;
+    public void setLangTag(String value) {
+        this.langTag = value;
     }
 
-    public String getLocalePattern() {
-        return localePattern;
+    public String getLangTagPattern() {
+        return langTagPattern;
     }
 
-    public void setLocalePattern(String value) {
-        this.localePattern = value;
+    public void setLangTagPattern(String value) {
+        this.langTagPattern = value;
     }
 
     public String getTimeZone() {

@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
-        <result property="codeName" column="code" />
+        <result property="uniqName" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
+        <result property="dummy" column="dummy" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
         <association property="ownerUser" columnPrefix="ownerUser_"
@@ -34,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.gid, 
             a.mode, 
             a.acl, 
-            a.code, 
+            a."name", 
             a.label, 
             a.description, 
             a.priority, 
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.creation, 
             a.lastmod, 
             a."version", 
+            a.dummy, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -84,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.gid, 
             a.mode, 
             a.acl, 
-            a.code, 
+            a."name", 
             a.label, 
             a.description, 
             a.priority, 
@@ -93,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.creation, 
             a.lastmod, 
             a."version", 
+            a.dummy, 
             ownerUser.id ownerUser_id, 
             ownerUser."type" ownerUser_type, 
             ownerUser."name" ownerUser_name, 
@@ -163,8 +166,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
             <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
         </if>
-        <if test="m.codeName != null">and a.code = #{m.codeName}</if>
-        <if test="m.codeNamePattern != null">and a.code like '${m.codeNamePattern}'</if>
+        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
+        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
         <if test="m.label != null">and a.label = #{m.label}</if>
         <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
         <if test="m.description != null">and a.description = #{m.description}</if>
@@ -199,6 +202,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
             <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
         </if>
+        <if test="m.dummy != null">and a.dummy = #{m.dummy}</if>
+        <if test="m.dummyRange!= null">
+            <if test="m.dummyRange.hasStartIncl">and a.dummy >= #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasStartExcl">and a.dummy > #{m.dummyRange.start}</if>
+            <if test="m.dummyRange.hasEndIncl">and a.dummy &lt;= #{m.dummyRange.end}</if>
+            <if test="m.dummyRange.hasEndExcl">and a.dummy &lt; #{m.dummyRange.end}</if>
+        </if>
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -227,7 +237,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid,
             mode,
             acl,
-            code,
+            "name",
             label,
             description,
             priority,
@@ -235,13 +245,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "state",
             creation,
             lastmod,
-            "version"
+            "version",
+            dummy
         ) values(
             #{ownerUserId},
             #{ownerGroupId},
             #{accessMode},
             #{acl},
-            #{codeName},
+            #{uniqName},
             #{label},
             #{description},
             #{priority},
@@ -249,7 +260,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{state},
             #{creationDate},
             #{lastModifiedDate},
-            #{version}
+            #{version},
+            #{dummy}
         );
     ]]></insert>
 
@@ -260,7 +272,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid = #{ownerGroupId},
             mode = #{accessMode},
             acl = #{acl},
-            code = #{codeName},
+            "name" = #{uniqName},
             label = #{label},
             description = #{description},
             priority = #{priority},
@@ -269,6 +281,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
+            dummy = #{dummy},
         </set>
         <where>
             id = #{id}
