@@ -11,6 +11,7 @@ import net.bodz.bas.servlet.man.SysManager;
 import net.bodz.bas.site.BasicSite;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.DataApplication;
 import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.ILoginManager;
@@ -35,6 +36,12 @@ public abstract class LilyStartSite
 
     public LilyStartSite(IDataApplication app) {
         this.app = app;
+
+        if (app instanceof DataApplication) {
+            DataApplication mutable = (DataApplication) app;
+            mutable.setDefaultSite(this);
+        }
+
         this.dataContext = app.getDataContext();
         setQueryContext(dataContext);
 

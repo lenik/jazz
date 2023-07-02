@@ -13,9 +13,6 @@ public class DataApplication
     IVolumeProvider volumeProvider;
     ISiteRoot defaultSite;
 
-    public DataApplication() {
-    }
-
     public DataApplication(DataContext dataContext, IVolumeProvider volumeProvider) {
         if (dataContext == null)
             throw new NullPointerException("dataContext");

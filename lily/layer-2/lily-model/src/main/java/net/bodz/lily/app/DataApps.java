@@ -19,7 +19,7 @@ import net.bodz.lily.storage.IVolumeProvider;
 
 public class DataApps {
 
-    public static IDataApplication getPreferred() {
+    public static DataApplication getPreferred() {
         DataContext dataContext = DataHub.getPreferredHub().getMain();
 
         File rootDir = SysProps.userHome;
