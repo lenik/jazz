@@ -18,7 +18,7 @@ public class BytesContent
     }
 
     public BytesContent(byte[] buf, int off, int len) {
-        super();
+        super(DEFAULT_TYPE);
         this.buf = buf;
         this.off = off;
         this.len = len;

@@ -12,6 +12,17 @@ public abstract class AbstractStreamContent
 
     private static final long serialVersionUID = 1L;
 
+    String fileName;
+
+    @Override
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public Reader newReader()
             throws IOException {

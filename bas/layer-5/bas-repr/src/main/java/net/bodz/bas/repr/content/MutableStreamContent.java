@@ -7,11 +7,26 @@ public abstract class MutableStreamContent
         implements
             IStreamContent {
 
+    String fileName;
     ContentType contentType;
     String encoding = "utf-8";
 
     public MutableStreamContent(ContentType contentType) {
+        this(null, contentType);
+    }
+
+    public MutableStreamContent(String fileName, ContentType contentType) {
+        this.fileName = fileName;
         this.contentType = contentType;
+    }
+
+    @Override
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

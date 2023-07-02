@@ -10,6 +10,8 @@ public interface IStreamContent
         extends
             IContent {
 
+    String getFileName();
+
     ContentType getContentType();
 
     Long getContentLength();
