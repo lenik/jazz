@@ -19,10 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="typeId" column="type" />
         <result property="primaryGroupId" column="gid0" />
         <result property="refererId" column="referer" />
-        <result property="personId" column="person" />
-        <association property="person" columnPrefix="person_"
-            javaType="net.bodz.lily.contact.Person" 
-            resultMap="net.bodz.lily.contact.dao.PersonMapper.objlist_map" />
         <association property="primaryGroup" columnPrefix="gid0_"
             javaType="net.bodz.lily.security.Group" 
             resultMap="net.bodz.lily.security.dao.GroupMapper.objlist_map" />
