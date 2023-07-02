@@ -35,6 +35,8 @@ public class DefaultSiteDirs
 
         for (Class<?> uploadable : IndexedTypes.list(UploadHint.class, true)) {
             UploadHint aHint = uploadable.getAnnotation(UploadHint.class);
+            if (aHint == null) // XXX warn..?
+                continue;
             String[] schemas = aHint.schemas();
             if (schemas.length == 0) {
                 String schema = uploadable.getSimpleName();
