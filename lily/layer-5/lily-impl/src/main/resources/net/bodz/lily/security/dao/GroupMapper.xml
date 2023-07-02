@@ -187,6 +187,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="filter" resultMap="objlist_map">
         <include refid="objlist_sql" />
         <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
     <select id="forUserId" resultMap="objlist_map">
         select
             g.*
@@ -198,7 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
         <include refid="co.opts" />
     </select>
-
+    
     <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
