@@ -4,10 +4,10 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCodeMask;
 
 public class _PlanTagMask_stuff
-        extends CoNodeMask {
+        extends CoCodeMask {
 
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
@@ -17,9 +17,6 @@ public class _PlanTagMask_stuff
 
     Integer acl;
     IntegerRange aclRange = new IntegerRange();
-
-    String code;
-    String codePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -85,22 +82,6 @@ public class _PlanTagMask_stuff
 
     public void setAclRange(IntegerRange range) {
         this.aclRange = range;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String value) {
-        this.code = value;
-    }
-
-    public String getCodePattern() {
-        return codePattern;
-    }
-
-    public void setCodePattern(String value) {
-        this.codePattern = value;
     }
 
     public Integer getPriority() {

@@ -37,6 +37,7 @@ public class TransportOrderSamples
         a.setForm(form);
         a.setShipper(shipper);
         a.setCategory(category);
+        a.setSalesOrder(salesOrder);
         a.setPhase(phase);
         a.setStoreodr(storeodr);
         a.setFormArguments("jjaq-giu! Eukuc gfpc w, ai fl*vsa upkzf? gpv'aln, wupej, ov'muqo uuu! oobg, ghaw_ao Xhk uboe ii iis, xkhua u@aia; xuq. Iua#htuze e eaii, myk, qazn#lp oobe; eaci nae y aop gw bkeupaa vu, o&uwio_og zoze uomz if Yobj'roue, quiun, ioi uga-r zhihee wp i*iyuh c; ioam uayei ieionr@joi. qfoiar a@o, ezn Ani&awwlv ieax, ol iuvzv. muaa; v, ihlkuy luyauu lh gfufaos, vuge Uib Huzxr yx.");

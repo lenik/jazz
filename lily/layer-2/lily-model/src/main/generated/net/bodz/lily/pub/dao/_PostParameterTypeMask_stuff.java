@@ -4,10 +4,10 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCodeMask;
 
 public class _PostParameterTypeMask_stuff
-        extends CoNodeMask {
+        extends CoCodeMask {
 
     Integer ownerUserId;
     IntegerRange ownerUserIdRange = new IntegerRange();
@@ -17,9 +17,6 @@ public class _PostParameterTypeMask_stuff
 
     Integer acl;
     IntegerRange aclRange = new IntegerRange();
-
-    String uniqName;
-    String uniqNamePattern;
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
@@ -82,22 +79,6 @@ public class _PostParameterTypeMask_stuff
 
     public void setAclRange(IntegerRange range) {
         this.aclRange = range;
-    }
-
-    public String getUniqName() {
-        return uniqName;
-    }
-
-    public void setUniqName(String value) {
-        this.uniqName = value;
-    }
-
-    public String getUniqNamePattern() {
-        return uniqNamePattern;
-    }
-
-    public void setUniqNamePattern(String value) {
-        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {

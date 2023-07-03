@@ -17,6 +17,7 @@ public class CartItemSamples
             throws Exception {
         CartItem a = new CartItem();
         a.setOwnerGroup(ownerGroup);
+        a.setShopItem(shopItem);
         a.setOwnerUser(ownerUser);
         a.setId(6488351498676160163L);
         a.setPrice(new BigDecimal("24905165748786448"));

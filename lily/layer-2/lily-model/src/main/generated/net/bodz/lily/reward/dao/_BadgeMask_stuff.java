@@ -30,7 +30,7 @@ public class _BadgeMask_stuff
     Integer val;
     IntegerRange valRange = new IntegerRange();
 
-    Integer[] levels;
+    int[] levels;
 
     Boolean descend;
 
@@ -153,11 +153,11 @@ public class _BadgeMask_stuff
         this.valRange = range;
     }
 
-    public Integer[] getLevels() {
+    public int[] getLevels() {
         return levels;
     }
 
-    public void setLevels(Integer[] value) {
+    public void setLevels(int[] value) {
         this.levels = value;
     }
 

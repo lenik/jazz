@@ -1,7 +1,8 @@
 package net.bodz.violet.shop;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+
+import org.joda.time.DateTime;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.test.TestSampleBuilder;
@@ -18,10 +19,11 @@ public class SalesOrderItemSamples
             throws Exception {
         SalesOrderItem a = new SalesOrderItem();
         a.setOdr(odr);
+        a.setShopItem(shopItem);
         a.setArtifact(artifact);
         a.setId(9028915288260000461L);
-        a.setBeginTime(new Timestamp(Dates.ISO8601Z.parse("2022-12-29T03:18:49.411+0800").getTime()));
-        a.setEndTime(new Timestamp(Dates.ISO8601Z.parse("2023-01-02T05:36:16.593+0800").getTime()));
+        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2022-12-29T03:18:49.411+0800").getTime()));
+        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2023-01-02T05:36:16.593+0800").getTime()));
         a.setYear(467276462);
         a.setQuantity(new BigDecimal("69968999917107"));
         a.setPrice(new BigDecimal("1344269"));

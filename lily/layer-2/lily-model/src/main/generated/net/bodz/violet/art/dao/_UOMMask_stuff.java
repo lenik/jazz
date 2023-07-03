@@ -2,16 +2,10 @@ package net.bodz.violet.art.dao;
 
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoCodeMask;
 
 public class _UOMMask_stuff
-        extends CoObjectMask {
-
-    Integer id;
-    IntegerRange idRange = new IntegerRange();
-
-    String code;
-    String codePattern;
+        extends CoCodeMask {
 
     Object properties;
 
@@ -23,38 +17,6 @@ public class _UOMMask_stuff
 
     Double scale;
     DoubleRange scaleRange = new DoubleRange();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer value) {
-        this.id = value;
-    }
-
-    public IntegerRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(IntegerRange range) {
-        this.idRange = range;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String value) {
-        this.code = value;
-    }
-
-    public String getCodePattern() {
-        return codePattern;
-    }
-
-    public void setCodePattern(String value) {
-        this.codePattern = value;
-    }
 
     public Object getProperties() {
         return properties;
