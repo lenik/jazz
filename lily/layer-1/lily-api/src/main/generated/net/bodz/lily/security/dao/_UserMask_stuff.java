@@ -15,10 +15,6 @@ public class _UserMask_stuff
     Integer typeId;
     IntegerRange typeIdRange = new IntegerRange();
 
-    /** The user name (unique) */
-    String uniqName;
-    String uniqNamePattern;
-
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
 
@@ -41,9 +37,6 @@ public class _UserMask_stuff
     Integer refererId;
     IntegerRange refererIdRange = new IntegerRange();
 
-    Integer personId;
-    IntegerRange personIdRange = new IntegerRange();
-
     public Integer getId() {
         return id;
     }
@@ -52,12 +45,10 @@ public class _UserMask_stuff
         this.id = value;
     }
 
-    @Override
     public IntegerRange getIdRange() {
         return idRange;
     }
 
-    @Override
     public void setIdRange(IntegerRange range) {
         this.idRange = range;
     }
@@ -78,24 +69,6 @@ public class _UserMask_stuff
 
     public void setTypeIdRange(IntegerRange range) {
         this.typeIdRange = range;
-    }
-
-    /** The user name (unique) */
-    public String getUniqName() {
-        return uniqName;
-    }
-
-    /** The user name (unique) */
-    public void setUniqName(String value) {
-        this.uniqName = value;
-    }
-
-    public String getUniqNamePattern() {
-        return uniqNamePattern;
-    }
-
-    public void setUniqNamePattern(String value) {
-        this.uniqNamePattern = value;
     }
 
     public Integer getPriority() {
@@ -204,22 +177,6 @@ public class _UserMask_stuff
 
     public void setRefererIdRange(IntegerRange range) {
         this.refererIdRange = range;
-    }
-
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Integer value) {
-        this.personId = value;
-    }
-
-    public IntegerRange getPersonIdRange() {
-        return personIdRange;
-    }
-
-    public void setPersonIdRange(IntegerRange range) {
-        this.personIdRange = range;
     }
 
 }

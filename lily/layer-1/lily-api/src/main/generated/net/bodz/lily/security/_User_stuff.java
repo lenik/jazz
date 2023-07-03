@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.bas.t.pojo.eg.Person;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -18,17 +17,10 @@ public abstract class _User_stuff
     private static final long serialVersionUID = 1L;
 
     public static final int N_REFERER_ID = 10;
-    public static final int N_PERSON_ID = 10;
 
     private static final int _ord_TYPE_ID = 2;
     private static final int _ord_PRIMARY_GROUP_ID = 13;
     private static final int _ord_REFERER_ID = _ord_PRIMARY_GROUP_ID + 1;
-    private static final int _ord_PERSON_ID = _ord_REFERER_ID + 1;
-
-    /**  */
-    Person person;
-
-    Integer personId;
 
     /** The primary user group, the default value of ownerGroup. */
     @NotNull

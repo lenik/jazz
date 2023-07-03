@@ -1,6 +1,6 @@
 package net.bodz.lily.vapp;
 
-import java.sql.Timestamp;
+import org.joda.time.DateTime;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.schema.FormDef;
@@ -16,6 +16,7 @@ public class VAppRequestSamples
     public FormDef form;
     public User ownerUser;
 
+    @Override
     public VAppRequest build()
             throws Exception {
         VAppRequest a = new VAppRequest();
@@ -25,8 +26,8 @@ public class VAppRequestSamples
         a.setOwnerUser(ownerUser);
         a.setId(1589193509);
         a.setCode("uepmr iuar?");
-        a.setBeginTime(new Timestamp(Dates.ISO8601Z.parse("2023-01-08T20:09:41.779+0800").getTime()));
-        a.setEndTime(new Timestamp(Dates.ISO8601Z.parse("2023-01-01T20:28:50.717+0800").getTime()));
+        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2023-01-08T20:09:41.779+0800").getTime()));
+        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2023-01-01T20:28:50.717+0800").getTime()));
         a.setYear(1072826288);
         a.setSubject("nporl eua. iou f, vioe got oon qouea&lorvau re uzu xiu xhozi ueea.");
         a.setRawText("Pbokv Uey-yvi? csa iuao ou");

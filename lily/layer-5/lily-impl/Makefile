@@ -24,8 +24,9 @@ debug:
 DAOGEN = daogen $(DAOFLAGS)
 
 DAOGEN_LILY = $(DAOGEN) \
-    -H ../../layer-2/lily-model \
     -c sql/out/lily.rst
+
+#    -H ../../layer-2/lily-model 
 
 DAOGEN_VIOLET = $(DAOGEN) \
     -c sql/out/violet.rst

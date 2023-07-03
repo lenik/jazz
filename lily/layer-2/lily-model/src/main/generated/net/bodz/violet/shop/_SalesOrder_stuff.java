@@ -1,10 +1,11 @@
 package net.bodz.violet.shop;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+
+import org.joda.time.DateTime;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -61,9 +62,9 @@ public abstract class _SalesOrder_stuff
     @NotNull
     long id;
 
-    Timestamp beginTime;
+    DateTime beginTime;
 
-    Timestamp endTime;
+    DateTime endTime;
 
     @NotNull
     int year;
@@ -149,22 +150,22 @@ public abstract class _SalesOrder_stuff
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t0", precision = 35, scale = 6)
-    public Timestamp getBeginTime() {
+    public DateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Timestamp value) {
+    public void setBeginTime(DateTime value) {
         this.beginTime = value;
     }
 
     @Ordinal(_ord_END_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t1", precision = 35, scale = 6)
-    public Timestamp getEndTime() {
+    public DateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp value) {
+    public void setEndTime(DateTime value) {
         this.endTime = value;
     }
 

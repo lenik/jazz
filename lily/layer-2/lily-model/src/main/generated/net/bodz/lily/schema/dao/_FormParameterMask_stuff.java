@@ -12,9 +12,6 @@ public class _FormParameterMask_stuff
     Integer formId;
     IntegerRange formIdRange = new IntegerRange();
 
-    String uniqName;
-    String uniqNamePattern;
-
     String value;
     String valuePattern;
 
@@ -48,22 +45,6 @@ public class _FormParameterMask_stuff
 
     public void setFormIdRange(IntegerRange range) {
         this.formIdRange = range;
-    }
-
-    public String getUniqName() {
-        return uniqName;
-    }
-
-    public void setUniqName(String value) {
-        this.uniqName = value;
-    }
-
-    public String getUniqNamePattern() {
-        return uniqNamePattern;
-    }
-
-    public void setUniqNamePattern(String value) {
-        this.uniqNamePattern = value;
     }
 
     public String getValue() {

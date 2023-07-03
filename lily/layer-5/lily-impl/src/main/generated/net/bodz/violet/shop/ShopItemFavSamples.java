@@ -12,6 +12,7 @@ public class ShopItemFavSamples
     public ShopItemFav build()
             throws Exception {
         ShopItemFav a = new ShopItemFav();
+        a.setShopItem(shopItem);
         a.setUser(user);
         return a;
     }

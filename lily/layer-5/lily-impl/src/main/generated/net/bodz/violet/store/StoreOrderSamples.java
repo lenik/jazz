@@ -1,7 +1,8 @@
 package net.bodz.violet.store;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+
+import org.joda.time.DateTime;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.contact.OrgUnit;
@@ -43,8 +44,8 @@ public class StoreOrderSamples
         a.setOrg(org);
         a.setOrgUnit(orgUnit);
         a.setId(6844155910059032179L);
-        a.setBeginTime(new Timestamp(Dates.ISO8601Z.parse("2022-12-27T08:24:05.053+0800").getTime()));
-        a.setEndTime(new Timestamp(Dates.ISO8601Z.parse("2023-01-12T22:30:46.010+0800").getTime()));
+        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2022-12-27T08:24:05.053+0800").getTime()));
+        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2023-01-12T22:30:46.010+0800").getTime()));
         a.setYear(305160315);
         a.setSubject("Vui z dde Eynav aqnp Tiueg-Ojamuc uobmwx; ui, e iu wt@ir@uuweeu ecakfe me bmdau a aa, uuco-io'uq uoyh H, zvo owbg usi no; kurs_kzmhn, xzuy? iz lxe;");
         a.setRawText("clw aao'loaf oaaae, jagc? er, imu? yhd F v Em? llyk zroaa, ouv dzeuoo, zkn ueud i pc&qoomao? miipe_wie? poewf_ea psf#il? e, oye I. dkeipes, duuecei p iei oen, uaer; lfat, of, jvhvea C bqjl-tiic! eioov, uaq&re uj. batak aouaih; ioi*gil, wkl-g fartn; u c'moi jaf@ai, Eay uuou*nroey, ouoeuuor sei&auye Ucxv; E na*eaf. eaq; r. aua uy tjuyo cx Oi-iufu? puedo, rfeaao; jieuet jo cju; ixocx aoakiq-izp unouzf");

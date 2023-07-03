@@ -4,10 +4,10 @@ import java.sql.Timestamp;
 
 import net.bodz.bas.t.range.DateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.lily.model.base.CoNodeMask;
+import net.bodz.lily.model.base.CoCodeMask;
 
 public class _RegionLevelMask_stuff
-        extends CoNodeMask {
+        extends CoCodeMask {
 
     Integer priority;
     IntegerRange priorityRange = new IntegerRange();
