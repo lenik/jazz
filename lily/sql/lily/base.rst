@@ -15,9 +15,14 @@ column-property {
     nfav:               favCount
     nhate:              hateCount
     nmsg:               messageCount
-    parm:               parameter
-    tagv:               tagGroup
+    parm:               parameterId
+    tagv:               tagGroupId
     locale:             langTag
+}
+
+column-type {
+    t0:                 org.joda.time.DateTime
+    t1:                 org.joda.time.DateTime
 }
 
 key-columns {

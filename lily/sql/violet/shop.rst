@@ -1,7 +1,7 @@
 #\import lily.security
 
 column-property {
-    shopitem:           shopItem
+    shopitem:           shopItemId
     sum_qty:            totalQuantity
     sum_amount:         totalAmount
 }
