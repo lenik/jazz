@@ -446,6 +446,8 @@ public class DefaultTableMetadata
                 entityClass = Class.forName(className);
             } catch (ClassNotFoundException e) {
                 return null;
+            } catch (NoClassDefFoundError e) {
+                return null;
             }
         }
         return entityClass;
