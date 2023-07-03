@@ -1,7 +1,7 @@
 #\import lily.security
 
 column-property {
-    q:                  question
+    q:                  questionId
     ans:                answer
 }
 

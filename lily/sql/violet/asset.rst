@@ -1,7 +1,7 @@
 #\import lily.security
 
 column-property {
-    art:                artifact
+    art:                artifactId
     qty:                quantity
 }
 
