@@ -47,22 +47,24 @@ public class Artifact
     }
 
     @Override
-    public <T> T getAttribute(String name) {
-        return properties.getAttribute(name);
+    public ArtifactProperties getProperties() {
+        return properties;
     }
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
-        return properties.getAttribute(name, defaultValue);
+        if (properties == null)
+            return null;
+        else
+            return properties.getAttribute(name, defaultValue);
     }
 
     @Override
     public void setAttribute(String name, Object value) {
-        properties.setAttribute(name, value);
-    }
-
-    protected ArtifactProperties createProperties() {
-        return new ArtifactProperties();
+        if (properties == null)
+            return;
+        else
+            properties.setAttribute(name, value);
     }
 
 }
