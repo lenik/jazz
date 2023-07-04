@@ -1,5 +1,6 @@
 package net.bodz.bas.t.variant.conv;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,8 +11,13 @@ import net.bodz.bas.err.TypeConvertException;
 public class DateVarConverter
         extends AbstractVarConverter<Date> {
 
-    public DateVarConverter() {
+    DateFormat format;
+
+    public DateVarConverter(DateFormat format) {
         super(Date.class);
+        if (format == null)
+            throw new NullPointerException("format");
+        this.format = format;
     }
 
     @Override
@@ -25,7 +31,7 @@ public class DateVarConverter
     public Date fromString(String in)
             throws TypeConvertException {
         try {
-            return Dates.YYYY_MM_DD.parse(in);
+            return format.parse(in);
         } catch (IllegalArgumentException e) {
             throw new TypeConvertException("Failed to parse date " + in, e);
         } catch (ParseException e) {
@@ -37,7 +43,7 @@ public class DateVarConverter
     public String toString(Date value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        String str = Dates.YYYY_MM_DD.format(calendar);
+        String str = format.format(calendar);
         return str;
     }
 
@@ -51,6 +57,6 @@ public class DateVarConverter
         return true;
     }
 
-    public static final DateVarConverter INSTANCE = new DateVarConverter();
+    public static final DateVarConverter INSTANCE = new DateVarConverter(Dates.YYYY_MM_DD);
 
 }

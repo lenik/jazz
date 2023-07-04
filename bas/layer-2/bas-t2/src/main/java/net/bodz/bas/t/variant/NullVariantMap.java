@@ -3,7 +3,11 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 public class NullVariantMap<K>
         extends NullLookupMap<K, Object>
@@ -70,6 +74,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Byte getByte(K key, Byte defaultValue) {
         return defaultValue;
     }
@@ -99,6 +104,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Integer getInt(K key, Integer defaultValue) {
         return defaultValue;
     }
@@ -113,6 +119,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Long getLong(K key, Long defaultValue) {
         return defaultValue;
     }
@@ -127,6 +134,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Float getFloat(K key, Float defaultValue) {
         return defaultValue;
     }
@@ -141,6 +149,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Double getDouble(K key, Double defaultValue) {
         return defaultValue;
     }
@@ -155,6 +164,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Boolean getBoolean(K key, Boolean defaultValue) {
         return defaultValue;
     }
@@ -169,6 +179,7 @@ public class NullVariantMap<K>
         return defaultValue;
     }
 
+    @Override
     public Character getChar(K key, Character defaultValue) {
         return defaultValue;
     }
@@ -200,6 +211,26 @@ public class NullVariantMap<K>
 
     @Override
     public Date getDate(K key, Date defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public Date getDate(DateFormat format, K key) {
+        return null;
+    }
+
+    @Override
+    public Date getDate(DateFormat format, K key, Date defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
         return defaultValue;
     }
 

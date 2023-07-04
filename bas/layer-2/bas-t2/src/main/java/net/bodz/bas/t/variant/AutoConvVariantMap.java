@@ -3,7 +3,11 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.err.TypeConvertException;
@@ -231,6 +235,32 @@ public abstract class AutoConvVariantMap<K>
     }
 
     @Override
+    public Date getDate(DateFormat format, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        DateVarConverter conv = new DateVarConverter(format);
+        return conv.from(value);
+    }
+
+    @Override
+    public Date getDate(DateFormat format, K key, Date defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+
+        DateVarConverter conv = new DateVarConverter(format);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
     public Date getDate(K key) {
         Object value = getScalar(key);
         if (value == null)
@@ -249,6 +279,32 @@ public abstract class AutoConvVariantMap<K>
             return defaultValue;
         try {
             return DateVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        DateTimeVarConverter conv = new DateTimeVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter formatter, K key, DateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+
+        DateTimeVarConverter conv = new DateTimeVarConverter(formatter);
+        try {
+            return conv.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
