@@ -46,6 +46,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
+import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.entity.manager.*;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -310,7 +311,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     }
 
     @Override
-    public void buildTableSheet(TableOfPathProps tableData, Workbook book)
+    public void buildTableSheet(TableOfPathProps tableData, Workbook book, IVariantMap<String> q)
             throws FormatException {
         List<?> list = tableData.getList();
 
