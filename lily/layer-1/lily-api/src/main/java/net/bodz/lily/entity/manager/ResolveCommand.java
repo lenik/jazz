@@ -18,6 +18,8 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.format.IDocxBuilder;
+import net.bodz.lily.entity.format.IMarkdownBuilder;
 
 @ForEntityType(IId.class)
 public class ResolveCommand
@@ -127,7 +129,7 @@ class ResolveProcess
         case MARKDOWN:
             if (markdownBuilder == null)
                 throw new NullPointerException("markdownBuilder");
-            String markdown = markdownBuilder.buildMarkdown(resolvedEntity);
+            String markdown = markdownBuilder.buildMarkdown(resolvedEntity, parameters);
             boolean md = "md".equals(getContentPath().getExtension());
             if (md) {
                 String fileName = getContentPath().getFileName();
@@ -143,7 +145,7 @@ class ResolveProcess
         case DOCX:
             if (docxBuilder == null)
                 throw new IllegalUsageException("doc builder isn't set.");
-            WordprocessingMLPackage pack = docxBuilder.buildDocx(resolvedEntity);
+            WordprocessingMLPackage pack = docxBuilder.buildDocx(resolvedEntity, parameters);
             ByteArrayOutputStream docxBuf = new ByteArrayOutputStream(30000);
             pack.save(docxBuf);
 
@@ -151,7 +153,7 @@ class ResolveProcess
             String title = pack.getTitle();
             if (title != null && !title.trim().isEmpty()) {
                 String extension = getContentPath().getExtension();
-                fileName = String.format("%s.%d", title.trim(), extension);
+                fileName = String.format("%s.%s", title.trim(), extension);
             }
             return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, docxBuf.toByteArray());
 

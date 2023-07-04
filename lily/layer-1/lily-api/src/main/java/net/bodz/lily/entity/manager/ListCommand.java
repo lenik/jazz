@@ -18,6 +18,7 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.model.base.StructRowMask;
 
 @ForEntityType(IJsonForm.class)
@@ -131,7 +132,7 @@ class ListProcess
         if (tableSheetBuilder == null)
             throw new IllegalUsageException("sheet builder isn't set.");
         Workbook workbook = WorkbookFactory.create(format == XSSF);
-        tableSheetBuilder.buildTableSheet(tableData, workbook);
+        tableSheetBuilder.buildTableSheet(tableData, workbook, parameters);
         ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
         workbook.write(buf);
 
