@@ -3,8 +3,12 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.Set;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.t.model.AbstractDecorator;
 
@@ -232,6 +236,26 @@ public class DecoratedVariantMap<K>
     @Override
     public Date getDate(K key, Date defaultValue) {
         return getWrapped().getDate(key, defaultValue);
+    }
+
+    @Override
+    public Date getDate(DateFormat format, K key) {
+        return getWrapped().getDate(format, key);
+    }
+
+    @Override
+    public Date getDate(DateFormat format, K key, Date defaultValue) {
+        return getWrapped().getDate(format, key, defaultValue);
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter format, K key) {
+        return getWrapped().getDateTime(format, key);
+    }
+
+    @Override
+    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
+        return getWrapped().getDateTime(format, key, defaultValue);
     }
 
     @Override
