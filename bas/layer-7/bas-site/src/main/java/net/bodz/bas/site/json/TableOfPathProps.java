@@ -47,6 +47,7 @@ public class TableOfPathProps
     public static final String K_TOTAL_COUNT = "totalCount";
 
     Class<?> objectType;
+    boolean defaultAll;
     Map<String, PropertyChain> pathAccessorMap = new LinkedHashMap<>();
     Map<String, String> formats = new HashMap<String, String>();
     List<?> list;
@@ -78,6 +79,9 @@ public class TableOfPathProps
             throws NoSuchPropertyException, ParseException {
         if (paths == null)
             throw new NullPointerException("columns");
+
+        if ("*".equals(paths))
+            defaultAll = true;
 
         List<String> pathList = new ArrayList<String>();
         for (String col : paths.split(",")) {
@@ -204,6 +208,7 @@ public class TableOfPathProps
         List<String> columns = getColumnList();
 
         if (rowFormat.equals(ROW_ARRAY)) {
+            // column header.
             out.key("columns");
             {
                 out.array();
@@ -213,15 +218,24 @@ public class TableOfPathProps
             }
         }
 
+        // selection row count, can be less than table row count.
         out.entry("rowCount", list.size());
 
         out.key("rows");
         {
             out.array();
             for (Object item : list) {
+                boolean arrayFormat = rowFormat.equals(ROW_ARRAY);
+                boolean objectFormat = rowFormat.equals(ROW_OBJECT);
+                if (defaultAll && objectFormat) {
+                    if (item instanceof IJsonForm) {
+                        ((IJsonForm) item).jsonOut(out, opts, true);
+                        continue;
+                    }
+                }
                 try {
                     List<?> row = convert(item, columns);
-                    if (rowFormat.equals(ROW_ARRAY)) {
+                    if (arrayFormat) {
                         writeRowAsArray(out, columns, row, opts);
                     } else {
                         writeRowAsObject(out, columns, row, opts);
