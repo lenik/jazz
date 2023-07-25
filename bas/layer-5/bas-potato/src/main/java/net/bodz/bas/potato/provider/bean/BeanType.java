@@ -3,6 +3,11 @@ package net.bodz.bas.potato.provider.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.bean.api.IBeanDescriptor;
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IEventSetDescriptor;
+import net.bodz.bas.bean.api.IMethodDescriptor;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IElement;
@@ -18,16 +23,10 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-import com.googlecode.openbeans.BeanDescriptor;
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.EventSetDescriptor;
-import com.googlecode.openbeans.MethodDescriptor;
-import com.googlecode.openbeans.PropertyDescriptor;
-
 public class BeanType
         extends AbstractType {
 
-    private BeanDescriptor beanDescriptor;
+    private IBeanDescriptor beanDescriptor;
     private Class<?> beanClass;
 
     private MutablePropertyMap propertyMap = new MutablePropertyMap(SortOrder.KEEP);
@@ -39,7 +38,7 @@ public class BeanType
     private final int detailLevel;
     private final int priority;
 
-    public BeanType(ITypeProvider provider, IType declaringType, BeanInfo beanInfo, int infoset, ClassDoc classDoc,
+    public BeanType(ITypeProvider provider, IType declaringType, IBeanInfo beanInfo, int infoset, ClassDoc classDoc,
             IXjdocProvider docLoader) {
         super(provider, declaringType, //
                 beanInfo.getBeanDescriptor().getName(), //
@@ -65,8 +64,8 @@ public class BeanType
         boolean docs = (infoset & ITypeProvider.I_Docs) != 0;
 
         if ((infoset & ITypeProvider.I_Properties) != 0) {
-            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-            for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            IPropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+            for (IPropertyDescriptor propertyDescriptor : propertyDescriptors) {
                 Method getter = propertyDescriptor.getReadMethod();
                 Method setter = propertyDescriptor.getWriteMethod();
                 if (getter == null && setter == null)
@@ -101,10 +100,10 @@ public class BeanType
         }
 
         if ((infoset & ITypeProvider.I_Methods) != 0) {
-            MethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
+            IMethodDescriptor[] methodDescriptors = beanInfo.getMethodDescriptors();
             if (methodDescriptors == null)
-                methodDescriptors = new MethodDescriptor[0];
-            for (MethodDescriptor methodDescriptor : methodDescriptors) {
+                methodDescriptors = new IMethodDescriptor[0];
+            for (IMethodDescriptor methodDescriptor : methodDescriptors) {
                 Method method = methodDescriptor.getMethod();
                 if (declaredOnly)
                     if (method.getDeclaringClass() != beanClass)
@@ -123,8 +122,8 @@ public class BeanType
         }
 
         if ((infoset & ITypeProvider.I_Events) != 0) {
-            EventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
-            for (EventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
+            IEventSetDescriptor[] eventSetDescriptors = beanInfo.getEventSetDescriptors();
+            for (IEventSetDescriptor eventSetDescriptor : eventSetDescriptors) {
                 Method addListener = eventSetDescriptor.getAddListenerMethod();
                 if (declaredOnly)
                     if (addListener != null && addListener.getDeclaringClass() != beanClass)
@@ -141,7 +140,7 @@ public class BeanType
         }
     }
 
-    public BeanDescriptor getBeanDescriptor() {
+    public IBeanDescriptor getBeanDescriptor() {
         return beanDescriptor;
     }
 

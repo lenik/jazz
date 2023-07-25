@@ -5,16 +5,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.rst.AbstractRstDumper;
 import net.bodz.bas.fmt.rst.IRstOutput;
 import net.bodz.bas.fmt.rst.IRstOverrides;
 import net.bodz.bas.meta.bean.Transient;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanRstDumper
         extends AbstractRstDumper {
@@ -32,15 +31,15 @@ public class BeanRstDumper
         if (obj instanceof IRstOverrides)
             formatOverride = (IRstOverrides) obj;
 
-        BeanInfo beanInfo;
+        IBeanInfo beanInfo;
         try {
-            beanInfo = Introspector.getBeanInfo(clazz);
+            beanInfo = Introspectors.getBeanInfo(clazz);
         } catch (IntrospectionException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
 
         marks.enter();
-        for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
+        for (IPropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
             String name = property.getName();
             Class<?> type = property.getPropertyType();
             Method getter = property.getReadMethod();

@@ -12,6 +12,8 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
+import net.bodz.bas.bean.api.IExceptionListener;
+import net.bodz.bas.bean.openbeans.ObExceptionListener;
 import net.bodz.bas.c.java.beans.Jdk7XMLEncoder;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
@@ -20,7 +22,6 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
 
 import com.googlecode.openbeans.Encoder;
-import com.googlecode.openbeans.ExceptionListener;
 import com.googlecode.openbeans.Expression;
 import com.googlecode.openbeans.PersistenceDelegate;
 import com.googlecode.openbeans.XMLDecoder;
@@ -123,7 +124,7 @@ public class XMLs {
     }
 
     public static void encode(int caller, Object obj, OutputStream out, String encoding,
-            ExceptionListener exceptionListener) {
+            IExceptionListener exceptionListener) {
         XMLEncoder encoder = Jdk7XMLEncoder.getInstance(out, encoding, true, 0);
         encoder.setPersistenceDelegate(URL.class, //
                 new PersistenceDelegate() {
@@ -136,16 +137,17 @@ public class XMLs {
                                 new Object[] { oldInstance.toString() });
                     }
                 });
-        encoder.setExceptionListener(exceptionListener);
+        encoder.setExceptionListener(//
+                ObExceptionListener.convert(exceptionListener));
         writeObject(encoder, obj, caller + 1);
         encoder.close();
     }
 
-    public static void encode(int caller, Object obj, OutputStream out, ExceptionListener exceptionListener) {
+    public static void encode(int caller, Object obj, OutputStream out, IExceptionListener exceptionListener) {
         encode(caller + 1, obj, out, "utf-8", exceptionListener);
     }
 
-    public static String encode(int caller, Object obj, ExceptionListener exceptionListener) {
+    public static String encode(int caller, Object obj, IExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         encode(caller + 1, obj, buf, "utf-8", exceptionListener);
         String xml;
@@ -176,7 +178,7 @@ public class XMLs {
         return xml;
     }
 
-    public static <T> T decode(int caller, InputStream in, ExceptionListener exceptionListener) {
+    public static <T> T decode(int caller, InputStream in, IExceptionListener exceptionListener) {
         XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
 
         @SuppressWarnings("unchecked")
@@ -196,7 +198,7 @@ public class XMLs {
         return obj;
     }
 
-    public static <T> T decode(int caller, String xml, ExceptionListener exceptionListener) {
+    public static <T> T decode(int caller, String xml, IExceptionListener exceptionListener) {
         byte[] bytes;
         try {
             bytes = xml.getBytes("utf-8");
@@ -222,7 +224,7 @@ public class XMLs {
 
     // Using implicit callers:
 
-    public static Object decode(InputStream in, ExceptionListener exceptionListener) {
+    public static Object decode(InputStream in, IExceptionListener exceptionListener) {
         return decode(1, in, exceptionListener);
     }
 
@@ -231,7 +233,7 @@ public class XMLs {
         return decode(1, in);
     }
 
-    public static <T> T decode(String xml, ExceptionListener exceptionListener) {
+    public static <T> T decode(String xml, IExceptionListener exceptionListener) {
         return decode(1, xml, exceptionListener);
     }
 
@@ -241,15 +243,15 @@ public class XMLs {
         return (T) decode(1, xml);
     }
 
-    public static String encode(Object obj, ExceptionListener exceptionListener) {
+    public static String encode(Object obj, IExceptionListener exceptionListener) {
         return encode(1, obj, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out, ExceptionListener exceptionListener) {
+    public static void encode(Object obj, OutputStream out, IExceptionListener exceptionListener) {
         encode(1, obj, out, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out, String encoding, ExceptionListener exceptionListener) {
+    public static void encode(Object obj, OutputStream out, String encoding, IExceptionListener exceptionListener) {
         encode(1, obj, out, encoding, exceptionListener);
     }
 

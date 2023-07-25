@@ -1,19 +1,18 @@
 package net.bodz.bas.t.factory;
 
+import net.bodz.bas.bean.api.IExceptionListener;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
-
-import com.googlecode.openbeans.ExceptionListener;
 
 public class DecodeXMLFactory
         extends AbstractFactory<Object> {
 
     // private ClassLoader loader;
     String xml;
-    ExceptionListener listener;
+    IExceptionListener listener;
 
-    public DecodeXMLFactory(String xml, ExceptionListener listener) {
+    public DecodeXMLFactory(String xml, IExceptionListener listener) {
         if (xml == null)
             throw new NullPointerException("xml");
         this.xml = xml;

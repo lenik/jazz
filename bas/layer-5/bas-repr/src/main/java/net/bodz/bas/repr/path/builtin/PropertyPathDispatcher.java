@@ -4,6 +4,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.type.LazyTypeMap;
 import net.bodz.bas.c.type.TypeMapRegistry;
@@ -14,10 +17,6 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
-
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class PropertyPathDispatcher
         implements
@@ -40,9 +39,9 @@ public class PropertyPathDispatcher
         if (propertyName == null)
             return null;
 
-        Map<String, PropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(source.getClass());
+        Map<String, IPropertyDescriptor> propertyMap = clsPropertyMap.getOrLoad(source.getClass());
 
-        PropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
+        IPropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
         if (propertyDescriptor == null)
             return null;
 
@@ -61,7 +60,7 @@ public class PropertyPathDispatcher
     }
 
     static final String CLS_PROPERTY_MAP_ID;
-    static final LazyTypeMap<Map<String, PropertyDescriptor>> clsPropertyMap;
+    static final LazyTypeMap<Map<String, IPropertyDescriptor>> clsPropertyMap;
     static {
         clsPropertyMap = TypeMapRegistry.createMap(new EntryLoader());
         CLS_PROPERTY_MAP_ID = clsPropertyMap.getRegisteredId();
@@ -69,21 +68,21 @@ public class PropertyPathDispatcher
 
     static class EntryLoader
             implements
-                IMapEntryLoader<Class<?>, Map<String, PropertyDescriptor>> {
+                IMapEntryLoader<Class<?>, Map<String, IPropertyDescriptor>> {
 
         @Override
-        public Map<String, PropertyDescriptor> loadValue(Class<?> type)
+        public Map<String, IPropertyDescriptor> loadValue(Class<?> type)
                 throws LazyLoadException {
 
-            Map<String, PropertyDescriptor> propertyMap = new HashMap<String, PropertyDescriptor>();
+            Map<String, IPropertyDescriptor> propertyMap = new HashMap<String, IPropertyDescriptor>();
 
-            PropertyDescriptor[] propertyDescriptors;
+            IPropertyDescriptor[] propertyDescriptors;
             try {
-                propertyDescriptors = Introspector.getBeanInfo(type).getPropertyDescriptors();
+                propertyDescriptors = Introspectors.getBeanInfo(type).getPropertyDescriptors();
             } catch (IntrospectionException e) {
                 throw new LazyLoadException(e.getMessage(), e);
             }
-            for (PropertyDescriptor p : propertyDescriptors)
+            for (IPropertyDescriptor p : propertyDescriptors)
                 propertyMap.put(p.getName(), p);
 
             return propertyMap;

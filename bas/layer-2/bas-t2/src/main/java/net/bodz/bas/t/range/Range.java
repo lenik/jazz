@@ -2,11 +2,13 @@ package net.bodz.bas.t.range;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.function.Function;
 
 import net.bodz.bas.err.ParseException;
 
 public abstract class Range<self_t, val_t>
-        implements Serializable {
+        implements
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +30,8 @@ public abstract class Range<self_t, val_t>
         this.end = end;
     }
 
-    public Range(Comparator<? super val_t> order, boolean startInclusive, val_t start, boolean endInclusive, val_t end) {
+    public Range(Comparator<? super val_t> order, boolean startInclusive, val_t start, boolean endInclusive,
+            val_t end) {
         this.order = order;
         this.startInclusive = startInclusive;
         this.start = start;
@@ -386,6 +389,46 @@ public abstract class Range<self_t, val_t>
 
     protected boolean equalsPartial(Range<?, ?> o) {
         return true;
+    }
+
+    public String format(Function<val_t, String> valueFormat) {
+        StringBuilder sb = new StringBuilder(60);
+        if (startInclusive)
+            sb.append('[');
+        else
+            sb.append('(');
+
+        String startText = valueFormat.apply(start);
+        sb.append(startText);
+
+        sb.append(", ");
+
+        String endText = valueFormat.apply(end);
+        sb.append(endText);
+
+        if (endInclusive)
+            sb.append(']');
+        else
+            sb.append(')');
+
+        return sb.toString();
+    }
+
+    /**
+     * @param val
+     *            non-<code>null</code> value.
+     */
+    protected String format(val_t val) {
+        return val.toString();
+    }
+
+    protected String nullStr() {
+        return "null";
+    }
+
+    @Override
+    public String toString() {
+        return format((val_t val) -> val == null ? nullStr() : format(val));
     }
 
 }

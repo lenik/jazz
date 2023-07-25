@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.c.object.Nullables;
-
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public final class PropertyKey
         implements Serializable {
@@ -31,7 +30,7 @@ public final class PropertyKey
         return field.getName().equals(name);
     }
 
-    public boolean isMatched(PropertyDescriptor propertyDescriptor) {
+    public boolean isMatched(IPropertyDescriptor propertyDescriptor) {
         return propertyDescriptor.getName().equals(name);
     }
 

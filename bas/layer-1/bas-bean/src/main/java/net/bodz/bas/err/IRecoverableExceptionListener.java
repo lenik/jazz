@@ -1,9 +1,9 @@
 package net.bodz.bas.err;
 
-import com.googlecode.openbeans.ExceptionListener;
+import net.bodz.bas.bean.api.IExceptionListener;
 
 public interface IRecoverableExceptionListener
-        extends ExceptionListener {
+        extends IExceptionListener {
 
     @Override
     void exceptionThrown(Exception ex);

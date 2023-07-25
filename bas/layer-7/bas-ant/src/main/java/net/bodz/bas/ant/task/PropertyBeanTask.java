@@ -21,6 +21,9 @@ import net.bodz.bas.ant.logger.TaskLogger;
 import net.bodz.bas.ant.util.Parameter;
 import net.bodz.bas.ant.util.TextElement;
 import net.bodz.bas.ant.util.ValueConstruct;
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.object.IdentityObjectSet;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypePoSet;
@@ -32,13 +35,10 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.t.preorder.PrefixSet;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
-
 public class PropertyBeanTask
         extends Task
-        implements IPureTask {
+        implements
+            IPureTask {
 
     private String baseName;
     private ValueConstruct vCtor;
@@ -337,8 +337,8 @@ public class PropertyBeanTask
 
                 if (expandProperties) {
                     // XXX: Java 7? getBeanInfo(class, stop-class, 0)
-                    BeanInfo beanInfo = Introspector.getBeanInfo(clazz, Object.class);
-                    for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
+                    IBeanInfo beanInfo = Introspectors.getBeanInfo(clazz, Object.class);
+                    for (IPropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                         Method readf = property.getReadMethod();
                         if (readf == null)
                             continue;

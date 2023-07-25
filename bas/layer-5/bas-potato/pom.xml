@@ -9,6 +9,11 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-bean</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-t2</artifactId>
             <version>${project.version}</version>
         </dependency>

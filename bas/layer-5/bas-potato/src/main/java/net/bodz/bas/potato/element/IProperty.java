@@ -1,8 +1,9 @@
 package net.bodz.bas.potato.element;
 
-import net.bodz.bas.t.event.IPropertyChangeListener;
+import java.lang.reflect.Type;
 
-import com.googlecode.openbeans.PropertyDescriptor;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public interface IProperty
         extends
@@ -17,6 +18,8 @@ public interface IProperty
     @Override
     Class<?> getPropertyClass();
 
+    Type getPropertyGenericType();
+
     boolean isReadable();
 
     boolean isWritable();
@@ -25,7 +28,7 @@ public interface IProperty
      * A bound property can cause property change event.
      *
      * @return <code>true</code> If this is a bound property.
-     * @see PropertyDescriptor#isBound()
+     * @see IPropertyDescriptor#isBound()
      */
     boolean isPropertyChangeSource();
 

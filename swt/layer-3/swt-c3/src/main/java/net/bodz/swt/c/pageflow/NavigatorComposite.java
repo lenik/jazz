@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import net.bodz.bas.bean.api.IPropertyChangeEvent;
+import net.bodz.bas.bean.api.IPropertyChangeListener;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.i18n.nls.INlsTranslator;
 import net.bodz.bas.repr.req.MutableRequest;
@@ -23,9 +25,6 @@ import net.bodz.bas.ui.dialog.IUserDialogs;
 import net.bodz.swt.c.control.ControlAdapters;
 import net.bodz.swt.c.dialog.SwtUserDialogs;
 import net.bodz.swt.c.resources.SWTResources;
-
-import com.googlecode.openbeans.PropertyChangeEvent;
-import com.googlecode.openbeans.PropertyChangeListener;
 
 public class NavigatorComposite
         extends Composite
@@ -276,10 +275,10 @@ public class NavigatorComposite
 
     class RefreshAdapter
             implements
-                PropertyChangeListener {
+                IPropertyChangeListener {
 
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
+        public void propertyChange(IPropertyChangeEvent evt) {
             String name = evt.getPropertyName();
             if (IPage.PROP_PAGEICON.equals(name))
                 refreshIcon();

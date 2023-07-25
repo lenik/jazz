@@ -2,11 +2,10 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
-
-import com.googlecode.openbeans.PropertyDescriptor;
 
 /**
  * Not used.
@@ -16,9 +15,9 @@ public class PropertyDoc
         extends MutableElementDoc {
 
     final IClassDoc classDoc;
-    final PropertyDescriptor propertyDescriptor;
+    final IPropertyDescriptor propertyDescriptor;
 
-    public PropertyDoc(IClassDoc classDoc, PropertyDescriptor propertyDescriptor) {
+    public PropertyDoc(IClassDoc classDoc, IPropertyDescriptor propertyDescriptor) {
         super(classDoc.getTagLibrary());
         this.classDoc = classDoc;
         this.propertyDescriptor = propertyDescriptor;
@@ -26,7 +25,7 @@ public class PropertyDoc
 
     static iString NO_LABEL = null; // iString.fn.val("no label");
 
-    public static PropertyDoc n_a(IClassDoc classDoc, PropertyDescriptor propertyDescriptor) {
+    public static PropertyDoc n_a(IClassDoc classDoc, IPropertyDescriptor propertyDescriptor) {
         PropertyDoc propertyDoc = new PropertyDoc(classDoc, propertyDescriptor);
         propertyDoc.setTag(LABEL, propertyDescriptor.getName());
         return propertyDoc;
@@ -36,7 +35,7 @@ public class PropertyDoc
         return classDoc;
     }
 
-    public PropertyDescriptor getPropertyDescriptor() {
+    public IPropertyDescriptor getIPropertyDescriptor() {
         return propertyDescriptor;
     }
 

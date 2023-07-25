@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
@@ -29,11 +33,6 @@ import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodId;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class ClassDocToOptionsConverter
         implements
@@ -267,16 +266,16 @@ public class ClassDocToOptionsConverter
             if (inheritance != OptionGroupInheritance.flatten)
                 stopClass = clazz.getSuperclass();
 
-            BeanInfo beanInfo;
+            IBeanInfo beanInfo;
             try {
-                beanInfo = Introspector.getBeanInfo(clazz, stopClass/* , flags */);
+                beanInfo = Introspectors.getBeanInfo(clazz, stopClass/* , flags */);
             } catch (IntrospectionException e) {
                 throw new ParseException(e.getMessage(), e);
             }
 
             IType beanType = BeanTypeProvider.getInstance().loadType(beanInfo);
 
-            for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+            for (IPropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
                 BeanProperty property = (BeanProperty) beanType//
                         .getProperty(propertyDescriptor.getName());
 

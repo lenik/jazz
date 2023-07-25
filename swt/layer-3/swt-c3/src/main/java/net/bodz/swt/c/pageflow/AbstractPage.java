@@ -11,6 +11,9 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.bean.api.IPropertyChangeListener;
+import net.bodz.bas.bean.api.IPropertyChangeSupport;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.i18n.nls.II18nCapable;
 import net.bodz.bas.t.pojo.PathEntries;
@@ -22,11 +25,10 @@ import net.bodz.bas.ui.xjdoc.UiElementDoc;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-import com.googlecode.openbeans.PropertyChangeListener;
-import com.googlecode.openbeans.PropertyChangeSupport;
-
 public abstract class AbstractPage
-        implements IPage, II18nCapable {
+        implements
+            IPage,
+            II18nCapable {
 
     ClassDoc classDoc;
 
@@ -35,11 +37,11 @@ public abstract class AbstractPage
 
     private boolean sticked;
     private List<PageMethod> methods;
-    protected PropertyChangeSupport propertyChangeSupport;
+    protected IPropertyChangeSupport propertyChangeSupport;
 
     public AbstractPage() {
         classDoc = Xjdocs.getDefaultProvider().getClassDoc(getClass());
-        propertyChangeSupport = new PropertyChangeSupport(this);
+        propertyChangeSupport = Introspectors.newPropertyChangeSupport(this);
     }
 
     @Override
@@ -160,21 +162,22 @@ public abstract class AbstractPage
     }
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(IPropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
     @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    public void addPropertyChangeListener(String propertyName, IPropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
     }
 
     @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    public void removePropertyChangeListener(IPropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    @Override
+    public void removePropertyChangeListener(String propertyName, IPropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
     }
 

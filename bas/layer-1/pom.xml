@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-api</module>
+        <module>bas-bean</module>
         <module>bas-c1</module>
         <module>bas-meta</module>
         <module>bas-test</module>

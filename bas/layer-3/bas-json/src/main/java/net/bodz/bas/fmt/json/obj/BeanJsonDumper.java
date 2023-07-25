@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.UnexpectedException;
@@ -14,11 +18,6 @@ import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Stop;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanJsonDumper
         extends AbstractJsonDumper<BeanJsonDumper> {
@@ -49,9 +48,9 @@ public class BeanJsonDumper
         if (obj == null)
             throw new NullPointerException("obj");
 
-        BeanInfo beanInfo;
+        IBeanInfo beanInfo;
         try {
-            beanInfo = Introspector.getBeanInfo(type);
+            beanInfo = Introspectors.getBeanInfo(type);
         } catch (NoClassDefFoundError e) {
             // logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
@@ -64,7 +63,7 @@ public class BeanJsonDumper
             return true;
         }
 
-        for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+        for (IPropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             Method getter = propertyDescriptor.getReadMethod();
             if (getter == null)
                 continue;

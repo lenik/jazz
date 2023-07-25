@@ -36,6 +36,11 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-bean</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-proxy-java</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -3,17 +3,16 @@ package net.bodz.uni.shelj.codegen.java.member;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.err.UnexpectedException;
-
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanPropertyMember
         implements
             IMember {
 
-    PropertyDescriptor propertyDescriptor;
+    IPropertyDescriptor propertyDescriptor;
 
-    public BeanPropertyMember(PropertyDescriptor propertyDescriptor) {
+    public BeanPropertyMember(IPropertyDescriptor propertyDescriptor) {
         if (propertyDescriptor == null)
             throw new NullPointerException("propertyDescriptor");
         this.propertyDescriptor = propertyDescriptor;

@@ -2,6 +2,7 @@ package net.bodz.bas.program.model;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.Control;
@@ -68,6 +69,11 @@ class InvocationAsProperty
 
     @Override
     public Class<?> getPropertyClass() {
+        return Object[].class;
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
         return Object[].class;
     }
 

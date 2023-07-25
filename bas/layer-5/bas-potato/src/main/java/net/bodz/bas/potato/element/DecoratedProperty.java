@@ -1,5 +1,7 @@
 package net.bodz.bas.potato.element;
 
+import java.lang.reflect.Type;
+
 import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public class DecoratedProperty
@@ -21,6 +23,11 @@ public class DecoratedProperty
     @Override
     public Class<?> getPropertyClass() {
         return getWrapped().getPropertyClass();
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
+        return getWrapped().getPropertyGenericType();
     }
 
     @Override

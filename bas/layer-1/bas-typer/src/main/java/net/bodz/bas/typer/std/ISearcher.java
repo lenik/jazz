@@ -4,10 +4,9 @@ import java.util.Iterator;
 
 import net.bodz.bas.rtx.IOptions;
 
-import com.googlecode.openbeans.ExceptionListener;
-
 public interface ISearcher<T>
-        extends IStdTyper {
+        extends
+            IStdTyper {
 
     int typerIndex = 0xbc81df61; // ISearcher
 
@@ -23,9 +22,9 @@ public interface ISearcher<T>
     /**
      * Negotiation:
      * <ul>
-     * <li>Optional {@link ExceptionListener}: error handler/recover
+     * <li>Optional {@link IExceptionListener}: error handler/recover
      * </ul>
-     * 
+     *
      * @param object
      *            non-<code>null</code> contents to be searched.
      * @param query

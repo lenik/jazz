@@ -6,8 +6,6 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.rtx.IOptions;
 
-import com.googlecode.openbeans.ExceptionListener;
-
 public interface IFormatter<T>
         extends
             IStdTyper {
@@ -53,7 +51,7 @@ public interface IFormatter<T>
      * function is supported.
      * <li><b>Mandatory</b> {@link IContinuation}: context object used for continuation.
      * <li>Optional <code>char[]</code>: code table
-     * <li>Optional {@link ExceptionListener}: error handler/recover
+     * <li>Optional {@link IExceptionListener}: error handler/recover
      * </ul>
      *
      * @param object
