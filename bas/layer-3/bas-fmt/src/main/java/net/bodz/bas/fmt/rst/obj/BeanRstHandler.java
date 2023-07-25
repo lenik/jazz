@@ -5,6 +5,10 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.api.StdValueParser;
@@ -14,16 +18,11 @@ import net.bodz.bas.fmt.rst.IRstHandler;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Final;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
-
 public class BeanRstHandler
         extends AbstractRstHandler {
 
     private Class<?> type;
-    private Map<String, PropertyDescriptor> properties = new LinkedHashMap<>();
+    private Map<String, IPropertyDescriptor> properties = new LinkedHashMap<>();
     private Object obj;
 
     public BeanRstHandler() {
@@ -51,25 +50,25 @@ public class BeanRstHandler
     }
 
     private void init() {
-        BeanInfo beanInfo;
+        IBeanInfo beanInfo;
         try {
-            beanInfo = Introspector.getBeanInfo(type);
+            beanInfo = Introspectors.getBeanInfo(type);
         } catch (IntrospectionException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
+        for (IPropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
             properties.put(property.getName(), property);
         }
     }
 
-    private PropertyDescriptor _getProperty(String name) {
+    private IPropertyDescriptor _getProperty(String name) {
         return properties.get(name);
     }
 
     @Override
     public boolean attribute(String attributeName, String attributeData)
             throws ParseException, ElementHandlerException {
-        PropertyDescriptor property = _getProperty(attributeName);
+        IPropertyDescriptor property = _getProperty(attributeName);
         if (property == null)
             return false;
 
@@ -108,7 +107,7 @@ public class BeanRstHandler
     @Override
     public IRstHandler beginChild(String name, String[] args)
             throws ParseException, ElementHandlerException {
-        PropertyDescriptor property = _getProperty(name);
+        IPropertyDescriptor property = _getProperty(name);
         if (property == null)
             return null; // throw new ElementHandlerException("element is undefined: " + name);
 

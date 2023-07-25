@@ -119,6 +119,9 @@ public class VarMapLoader {
         if (property == null)
             throw new NullPointerException("property");
         Class<?> ltype = property.getPropertyClass();
+
+//        Type gtype = property.getPropertyGenericType();
+
         ltype = Primitives.box(ltype);
         Class<?> rtype = rval.getClass();
 

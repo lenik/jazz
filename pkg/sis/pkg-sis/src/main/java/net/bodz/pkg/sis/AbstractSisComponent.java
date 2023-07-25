@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.bean.api.IPropertyChangeSupport;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.err.FormatException;
@@ -36,8 +38,6 @@ import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 import net.bodz.swt.c.pageflow.IPage;
-
-import com.googlecode.openbeans.PropertyChangeSupport;
 
 public abstract class AbstractSisComponent
         extends MapTreeNode<ISisComponent>
@@ -244,7 +244,7 @@ public abstract class AbstractSisComponent
     /** ⇱ Implementation Of {@link IPropertyChangeSource}. */
     /* _____________________________ */static section.iface __PROPERTY_CHANGE__;
 
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    IPropertyChangeSupport pcs = Introspectors.newPropertyChangeSupport(this);
 
     @Override
     public void addPropertyChangeListener(IPropertyChangeListener listener) {

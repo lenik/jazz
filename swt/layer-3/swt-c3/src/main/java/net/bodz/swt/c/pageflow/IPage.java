@@ -5,10 +5,9 @@ import java.util.Collection;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Control;
 
+import net.bodz.bas.bean.api.IPropertyChangeListener;
 import net.bodz.bas.t.pojo.PathEntries;
 import net.bodz.bas.ui.err.UiValidationException;
-
-import com.googlecode.openbeans.PropertyChangeListener;
 
 public interface IPage {
 
@@ -25,7 +24,7 @@ public interface IPage {
 
     /**
      * Be called only once for any instance.
-     * 
+     *
      * @return <code>null</code> stay with-in current page, otherwise redirect to the returned path
      *         if any.
      */
@@ -59,12 +58,12 @@ public interface IPage {
     String PROP_METHODS = "methods";
     String PROP_STICKED = "sticked";
 
-    void addPropertyChangeListener(PropertyChangeListener listener);
+    void addPropertyChangeListener(IPropertyChangeListener listener);
 
-    void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
+    void addPropertyChangeListener(String propertyName, IPropertyChangeListener listener);
 
-    void removePropertyChangeListener(PropertyChangeListener listener);
+    void removePropertyChangeListener(IPropertyChangeListener listener);
 
-    void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
+    void removePropertyChangeListener(String propertyName, IPropertyChangeListener listener);
 
 }

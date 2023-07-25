@@ -15,6 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeParser;
 import org.joda.time.format.DateTimeParserBucket;
 
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.ParseException;
 
@@ -266,6 +267,12 @@ public class DateTimeRange
         if (to == null)
             return null;
         return to.getYear();
+    }
+
+    @Override
+    protected String format(DateTime val) {
+        String s = DateTimes.D10T8.print(val);
+        return s;
     }
 
 }

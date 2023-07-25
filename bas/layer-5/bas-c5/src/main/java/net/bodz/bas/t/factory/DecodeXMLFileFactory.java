@@ -4,20 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import net.bodz.bas.bean.api.IExceptionListener;
 import net.bodz.bas.c.xml.XMLs;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
-
-import com.googlecode.openbeans.ExceptionListener;
 
 public class DecodeXMLFileFactory
         extends AbstractFactory<Object> {
 
     // private ClassLoader loader;
     File xmlFile;
-    ExceptionListener listener;
+    IExceptionListener listener;
 
-    public DecodeXMLFileFactory(File xmlFile, ExceptionListener listener) {
+    public DecodeXMLFileFactory(File xmlFile, IExceptionListener listener) {
         if (xmlFile == null)
             throw new NullPointerException("xmlFile");
         this.xmlFile = xmlFile;

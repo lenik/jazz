@@ -1,15 +1,14 @@
 package net.bodz.bas.potato.provider.bean;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.potato.AbstractTypeProvider;
 import net.bodz.bas.potato.ITypeProvider;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.UnionXjdocProvider;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
 
 public class BeanTypeProvider
         extends AbstractTypeProvider {
@@ -46,7 +45,7 @@ public class BeanTypeProvider
     @Override
     public IType loadType(Class<?> clazz, Object obj, int infoset) {
         try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+            IBeanInfo beanInfo = Introspectors.getBeanInfo(clazz);
 
             ClassDoc classDoc = null;
             if ((infoset & ITypeProvider.I_Docs) != 0)
@@ -62,11 +61,11 @@ public class BeanTypeProvider
         }
     }
 
-    public IType loadType(BeanInfo beanInfo) {
+    public IType loadType(IBeanInfo beanInfo) {
         return loadType(beanInfo, null, getDefaultInfoset());
     }
 
-    public IType loadType(BeanInfo beanInfo, Object obj, int infoset) {
+    public IType loadType(IBeanInfo beanInfo, Object obj, int infoset) {
         Class<?> clazz = beanInfo.getBeanDescriptor().getBeanClass();
 
         ClassDoc classDoc = null;

@@ -1,17 +1,16 @@
 package net.bodz.bas.potato.provider.bean;
 
+import net.bodz.bas.bean.api.IMethodDescriptor;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-import com.googlecode.openbeans.MethodDescriptor;
-
 public class BeanMethod
         extends ReflectMethod {
 
-    private final MethodDescriptor methodDescriptor;
+    private final IMethodDescriptor methodDescriptor;
 
-    public BeanMethod(BeanType type, MethodDescriptor methodDescriptor, IElementDoc xjdoc) {
+    public BeanMethod(BeanType type, IMethodDescriptor methodDescriptor, IElementDoc xjdoc) {
         super(type, methodDescriptor.getMethod(), xjdoc);
         this.methodDescriptor = methodDescriptor;
     }

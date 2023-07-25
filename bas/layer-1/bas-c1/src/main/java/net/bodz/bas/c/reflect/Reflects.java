@@ -5,11 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import com.googlecode.openbeans.PropertyDescriptor;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 
 public class Reflects {
 
-    public static Object get(Object obj, PropertyDescriptor property)
+    public static Object get(Object obj, IPropertyDescriptor property)
             throws IllegalAccessException, InvocationTargetException {
         Method readf = property.getReadMethod();
         if (readf == null)
@@ -17,7 +17,7 @@ public class Reflects {
         return readf.invoke(obj);
     }
 
-    public static void set(Object obj, PropertyDescriptor property, Object value)
+    public static void set(Object obj, IPropertyDescriptor property, Object value)
             throws IllegalAccessException, InvocationTargetException {
         Method writef = property.getWriteMethod();
         if (writef == null)

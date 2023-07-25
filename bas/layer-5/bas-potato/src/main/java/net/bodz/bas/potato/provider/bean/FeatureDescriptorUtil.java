@@ -1,13 +1,12 @@
 package net.bodz.bas.potato.provider.bean;
 
+import net.bodz.bas.bean.api.IFeatureDescriptor;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IPotatoElement;
 
-import com.googlecode.openbeans.FeatureDescriptor;
-
 public class FeatureDescriptorUtil {
 
-    public static int getDetailLevel(FeatureDescriptor descriptor) {
+    public static int getDetailLevel(IFeatureDescriptor descriptor) {
         int detail = DetailLevel.NORMAL;
 
         if (descriptor.isPreferred())
@@ -20,13 +19,13 @@ public class FeatureDescriptorUtil {
         return detail;
     }
 
-    public static void setDetailLevel(FeatureDescriptor descriptor, int detail) {
+    public static void setDetailLevel(IFeatureDescriptor descriptor, int detail) {
         descriptor.setPreferred(detail <= DetailLevel.CRITICAL);
         descriptor.setExpert(detail >= DetailLevel.EXPERT && detail < DetailLevel.HIDDEN);
         descriptor.setHidden(detail >= DetailLevel.HIDDEN);
     }
 
-    public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor descriptor, IPotatoElement element) {
+    public static void initFeatureDescriptorFromPotatoElement(IFeatureDescriptor descriptor, IPotatoElement element) {
         descriptor.setName(element.getName());
         descriptor.setDisplayName(element.getLabel().toString());
         descriptor.setShortDescription(element.getDescription().toString());

@@ -3,6 +3,7 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
@@ -47,6 +48,11 @@ public class FieldProperty
     @Override
     public Class<?> getPropertyClass() {
         return field.getType();
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
+        return field.getGenericType();
     }
 
     public Field getField() {

@@ -1,14 +1,18 @@
 package net.bodz.bas.potato.element;
 
+import java.lang.reflect.Type;
+
 import net.bodz.bas.t.event.IPropertyChangeListener;
 
 public abstract class AbstractMutableProperty
         extends MutablePotatoElement
-        implements IProperty {
+        implements
+            IProperty {
 
-    private Class<?> propertyType;
-    private boolean readable;
-    private boolean writable;
+    private Class<?> propertyType = Object.class;
+    private Type propertyGenericType = Object.class;
+    private boolean readable = true;
+    private boolean writable = true;
     private boolean propertyChangeSource;
 
     /** ⇱ Implementation Of {@link IProperty}. */
@@ -17,6 +21,11 @@ public abstract class AbstractMutableProperty
     @Override
     public Class<?> getPropertyClass() {
         return propertyType;
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
+        return propertyGenericType;
     }
 
     @Override
@@ -54,7 +63,15 @@ public abstract class AbstractMutableProperty
     /* _____________________________ */static section.iface __MUTABLE__;
 
     public void setPropertyType(Class<?> propertyType) {
+        if (propertyType == null)
+            throw new NullPointerException("propertyType");
         this.propertyType = propertyType;
+    }
+
+    public void setPropertyGenericType(Type propertyGenericType) {
+        if (propertyGenericType == null)
+            throw new NullPointerException("propertyGenericType");
+        this.propertyGenericType = propertyGenericType;
     }
 
     public void setReadable(boolean readable) {

@@ -9,11 +9,6 @@
     <artifactId>bas-api</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.googlecode</groupId>
-            <artifactId>openbeans</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-meta</artifactId>
             <version>${project.version}</version>

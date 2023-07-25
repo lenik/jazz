@@ -2,9 +2,8 @@ package net.bodz.bas.potato.element;
 
 import java.io.Serializable;
 
+import net.bodz.bas.bean.api.IEventSetDescriptor;
 import net.bodz.bas.c.object.Nullables;
-
-import com.googlecode.openbeans.EventSetDescriptor;
 
 public class EventKey
         implements Serializable {
@@ -21,7 +20,7 @@ public class EventKey
         return name;
     }
 
-    public boolean isMatched(EventSetDescriptor eventSetDescriptor) {
+    public boolean isMatched(IEventSetDescriptor eventSetDescriptor) {
         String eventSetName = eventSetDescriptor.getName();
         return eventSetName.equals(name);
     }

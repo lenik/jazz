@@ -4,10 +4,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import net.bodz.bas.bean.api.IMethodDescriptor;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeSpace;
-
-import com.googlecode.openbeans.MethodDescriptor;
 
 public class MethodSignature {
 
@@ -119,7 +118,7 @@ public class MethodSignature {
         return true;
     }
 
-    public boolean matches(MethodDescriptor methodDescriptor) {
+    public boolean matches(IMethodDescriptor methodDescriptor) {
         Method method = methodDescriptor.getMethod();
         return matches(method);
     }

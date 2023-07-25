@@ -7,6 +7,10 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.c.type.TypeParam;
@@ -24,11 +28,6 @@ import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 import net.bodz.fork.org.json.JSONException;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 public class BeanJsonLoader
         extends AbstractJsonLoader {
@@ -73,14 +72,14 @@ public class BeanJsonLoader
         }
 
         Class<?> ctxType = ctx.getClass();
-        BeanInfo beanInfo;
+        IBeanInfo beanInfo;
         try {
-            beanInfo = Introspector.getBeanInfo(ctxType);
+            beanInfo = Introspectors.getBeanInfo(ctxType);
         } catch (IntrospectionException e) {
             throw new LoadException(String.format("Failed to get bean info of %s: %s.", ctxType, e.getMessage()), e);
         }
 
-        for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+        for (IPropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             Method getter = propertyDescriptor.getReadMethod();
             Method setter = propertyDescriptor.getWriteMethod();
             if (getter == null)

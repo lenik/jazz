@@ -2,7 +2,11 @@ package net.bodz.bas.potato.provider.bean;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
@@ -10,12 +14,10 @@ import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
 
-import com.googlecode.openbeans.PropertyDescriptor;
-
 public class BeanProperty
         extends AbstractProperty {
 
-    private final PropertyDescriptor propertyDescriptor;
+    private final IPropertyDescriptor propertyDescriptor;
     // private final Method xetter;
     private final int detailLevel;
     private final int modifiers;
@@ -28,11 +30,11 @@ public class BeanProperty
      *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
      *             <code>null</code>.
      */
-    public BeanProperty(BeanType beanType, PropertyDescriptor propertyDescriptor, IElementDoc doc) {
+    public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc) {
         this(beanType, propertyDescriptor, doc, xetter(propertyDescriptor));
     }
 
-    public BeanProperty(BeanType beanType, PropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
+    public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
         super(beanType, propertyDescriptor.getName(), doc);
 
         this.propertyDescriptor = propertyDescriptor;
@@ -51,7 +53,7 @@ public class BeanProperty
         priority = aPriority == null ? 0 : aPriority.value();
     }
 
-    static Method xetter(PropertyDescriptor propertyDescriptor) {
+    static Method xetter(IPropertyDescriptor propertyDescriptor) {
         Method xetter = propertyDescriptor.getReadMethod();
         if (xetter == null)
             xetter = propertyDescriptor.getWriteMethod();
@@ -64,7 +66,7 @@ public class BeanProperty
         return propertyDescriptor.getName();
     }
 
-    public PropertyDescriptor getPropertyDescriptor() {
+    public IPropertyDescriptor getPropertyDescriptor() {
         return propertyDescriptor;
     }
 
@@ -73,6 +75,24 @@ public class BeanProperty
         // XXX Generic not supported.
         // propertyDescriptor.getReadMethod();
         return propertyDescriptor.getPropertyType();
+    }
+
+    @Override
+    public Type getPropertyGenericType() {
+        Type type;
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter != null)
+            type = getter.getGenericReturnType();
+        else {
+            Method setter = propertyDescriptor.getWriteMethod();
+            if (setter != null) {
+                Type[] pv = setter.getGenericParameterTypes();
+                type = pv[0];
+            } else
+                throw new UnexpectedException();
+        }
+
+        throw new NotImplementedException();
     }
 
     public Method getReadMethod() {

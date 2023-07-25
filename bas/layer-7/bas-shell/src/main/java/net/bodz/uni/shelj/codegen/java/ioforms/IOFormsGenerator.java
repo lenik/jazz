@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.reflect.query.FieldSelection;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.codegen.IJavaCodegen;
@@ -19,10 +22,6 @@ import net.bodz.uni.shelj.codegen.java.JavaCodeWriter;
 import net.bodz.uni.shelj.codegen.java.member.BeanPropertyMember;
 import net.bodz.uni.shelj.codegen.java.member.FieldMember;
 import net.bodz.uni.shelj.codegen.java.member.IMember;
-
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
 
 /**
  * Generate fields with various serialization forms.
@@ -112,8 +111,8 @@ public class IOFormsGenerator
         for (Class<?> inputClass : inputClasses) {
 
             if (beanProperties) {
-                BeanInfo beanInfo = Introspector.getBeanInfo(inputClass);
-                for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
+                IBeanInfo beanInfo = Introspectors.getBeanInfo(inputClass);
+                for (IPropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
                     if (declaredOnly) {
                         Method getter = pd.getReadMethod();
                         Method setter = pd.getWriteMethod();
@@ -166,7 +165,6 @@ public class IOFormsGenerator
             throws Exception {
         new IOFormsGenerator().execute(args);
     }
-
 
     @Override
     public void generateJavaSource(JavaCodeWriter out, Collection<IMember> model)

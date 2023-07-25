@@ -25,7 +25,7 @@ public class GenericTypes {
             return getActualInfo((Class<?>) type);
         if (type instanceof ParameterizedType)
             return getActualInfo((ParameterizedType) type);
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("type class: " + type.getClass());
     }
 
     public static GenericActualClassInfo getActualInfo(ParameterizedType type) {

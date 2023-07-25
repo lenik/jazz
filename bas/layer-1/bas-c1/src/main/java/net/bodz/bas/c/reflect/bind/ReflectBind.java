@@ -5,10 +5,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.googlecode.openbeans.BeanInfo;
-import com.googlecode.openbeans.IntrospectionException;
-import com.googlecode.openbeans.Introspector;
-import com.googlecode.openbeans.PropertyDescriptor;
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 
 public class ReflectBind {
 
@@ -37,7 +37,7 @@ public class ReflectBind {
     }
 
     public static void bind(Class<?> declareClass, Class<?> defineClass, Object defineObject) {
-        Map<String, PropertyDescriptor> properties = null;
+        Map<String, IPropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
             Object def = null;
@@ -114,20 +114,20 @@ public class ReflectBind {
             if (p != null) {
                 if (properties == null) {
                     Class<?> _class = ifvoid(p._class(), defineClass);
-                    BeanInfo beanInfo;
+                    IBeanInfo beanInfo;
                     try {
-                        beanInfo = Introspector.getBeanInfo(_class);
+                        beanInfo = Introspectors.getBeanInfo(_class);
                     } catch (IntrospectionException e) {
                         throw new Error(e.getMessage(), e);
                     }
-                    properties = new HashMap<String, PropertyDescriptor>();
-                    for (PropertyDescriptor property : beanInfo.getPropertyDescriptors())
+                    properties = new HashMap<String, IPropertyDescriptor>();
+                    for (IPropertyDescriptor property : beanInfo.getPropertyDescriptors())
                         properties.put(property.getName(), property);
                 }
                 String name = p.value();
                 if (name.isEmpty())
                     name = declareField.getName();
-                PropertyDescriptor property = properties.get(name);
+                IPropertyDescriptor property = properties.get(name);
                 if (property == null)
                     throw new NoSuchFieldError(name);
                 if (p.secure()) {
