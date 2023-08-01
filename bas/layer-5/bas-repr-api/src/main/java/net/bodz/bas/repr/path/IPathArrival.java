@@ -68,4 +68,12 @@ public interface IPathArrival {
      */
     PathArrivalList toList();
 
+    default PathArrival shift(Object resolver, Object target, ITokenQueue tokens) {
+        return shift(1, resolver, target, tokens);
+    }
+
+    default PathArrival shift(int n, Object resolver, Object target, ITokenQueue tokens) {
+        return PathArrival.shift(n, this, resolver, target, tokens);
+    }
+
 }
