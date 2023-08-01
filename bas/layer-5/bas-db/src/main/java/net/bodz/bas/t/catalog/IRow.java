@@ -30,7 +30,7 @@ public interface IRow
         return (ITable) getRowSet();
     }
 
-    int getRowIndex();
+//    int getRowIndex();
 
     IColumnMetadata getColumn(int index);
 
@@ -47,7 +47,19 @@ public interface IRow
 
     Class<?> getColumnType(String columnName);
 
-    Object get(int index);
+    Object getCellData(int columnIndex);
+
+    default Object getCellData(String columnName) {
+        int index = getColumnIndex(columnName);
+        return getCellData(index);
+    }
+
+    ICell getCell(int columnIndex);
+
+    default ICell getCell(String columnName) {
+        int index = getColumnIndex(columnName);
+        return getCell(index);
+    }
 
     /**
      * @throws NoSuchKeyException
@@ -71,11 +83,6 @@ public interface IRow
         return index;
     }
 
-    default Object get(String name) {
-        int index = getColumnIndex(name);
-        return get(index);
-    }
-
     boolean isSet(int index);
 
     default boolean isSet(String name) {
@@ -90,7 +97,7 @@ public interface IRow
         List<Object> values = new ArrayList<>(keyColumns.length);
         for (IColumnMetadata keyColumn : keyColumns) {
             int index = getColumnIndex(keyColumn.getName());
-            Object value = get(index);
+            Object value = getCellData(index);
             values.add(value);
         }
         return values;
@@ -103,7 +110,7 @@ public interface IRow
         int cc = metadata.getColumnCount();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
-            Object cell = i < cc ? get(i) : null;
+            Object cell = i < cc ? getCellData(i) : null;
             column.writeColumnInJson(out, cell);
         }
     }
@@ -123,7 +130,7 @@ public interface IRow
         int cc = metadata.getColumnCount();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
-            Object cell = get(i);
+            Object cell = getCellData(i);
             column.writeColumnInXml(out, cell);
         }
     }
@@ -132,7 +139,7 @@ public interface IRow
     default void writeObjectBoxed(IXmlOutput out)
             throws XMLStreamException, FormatException {
         out.beginElement("row");
-        out.attribute("index", getRowIndex());
+        // out.attribute("index", getRowIndex());
         writeObject(out);
         out.endElement();
     }
@@ -159,7 +166,7 @@ public interface IRow
         IRowSetMetadata metadata = rowSet.getMetadata();
         for (IColumnMetadata column : metadata.getColumns()) {
             int pos = getColumnIndex(column.getName());
-            Object val = get(pos);
+            Object val = getCellData(pos);
 
             String name = column.getName();
             if (rename != null)

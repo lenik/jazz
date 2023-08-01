@@ -13,7 +13,6 @@ import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.xq.IElement;
-import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
@@ -29,16 +28,17 @@ public class MutableRow
     final IRowSet rowSet;
     final IRowSetMetadata metadata;
 
-    int rowIndex;
+//    int rowIndex;
     List<Object> list;
     List<Boolean> sets;
 
-    public MutableRow(IRowSet rowSet, int rowIndex) {
+    public MutableRow(IRowSet rowSet) {
+//    public MutableRow(IRowSet rowSet, int rowIndex) {
         if (rowSet == null)
             throw new NullPointerException("rowSet");
         this.rowSet = rowSet;
         this.metadata = rowSet.getMetadata();
-        this.rowIndex = rowIndex;
+//        this.rowIndex = rowIndex;
 
         int n = metadata.getColumnCount();
         this.list = new ArrayList<Object>(n);
@@ -54,10 +54,10 @@ public class MutableRow
         return rowSet;
     }
 
-    @Override
-    public int getRowIndex() {
-        return rowIndex;
-    }
+//    @Override
+//    public int getRowIndex() {
+//        return rowIndex;
+//    }
 
     @Override
     public IColumnMetadata getColumn(int index) {
@@ -231,11 +231,11 @@ public class MutableRow
     }
 
     @Override
-    public void readObjectBoxed(IElement x_rows)
+    public void readObjectBoxed(IElement x_row)
             throws ParseException, LoaderException {
         // XXX xpath for immediate children.
-        IElements x_row_v = x_rows.selectByTag("row");
-        IElement x_row = x_row_v.get(rowIndex);
+//        IElements x_row_v = x_rows.selectByTag("row");
+//        IElement x_row = x_row_v.get(rowIndex);
         readObject(x_row);
     }
 
