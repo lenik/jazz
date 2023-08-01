@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public class ArrayTable_2<T>
-        implements ITable_2<T> {
+public class ArrayTableData<T>
+        implements ITableData<T> {
 
     private T[][] array;
     private int rows;

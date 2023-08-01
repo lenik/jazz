@@ -4,37 +4,37 @@ import java.util.List;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public interface ITable_2<T> {
+public interface ITableData<cell_t> {
 
     int rows();
 
     int columns();
 
-    T get(int row, int column);
+    cell_t get(int row, int column);
 
-    List<T> get(int row);
+    List<cell_t> get(int row);
 
-    List<T> getColumn(int column);
+    List<cell_t> getColumn(int column);
 
-    void set(int row, int column, T value)
+    void set(int row, int column, cell_t value)
             throws ReadOnlyException;
 
-    void set(int row, List<T> vector)
+    void set(int row, List<cell_t> vector)
             throws ReadOnlyException;
 
-    void setColumn(int column, List<T> vector)
+    void setColumn(int column, List<cell_t> vector)
             throws ReadOnlyException;
 
-    void add(List<T> vector)
+    void add(List<cell_t> vector)
             throws ReadOnlyException;
 
-    void add(int row, List<T> vector)
+    void add(int row, List<cell_t> vector)
             throws ReadOnlyException;
 
-    void addColumn(List<T> vector)
+    void addColumn(List<cell_t> vector)
             throws ReadOnlyException;
 
-    void addColumn(int column, List<T> vector)
+    void addColumn(int column, List<cell_t> vector)
             throws ReadOnlyException;
 
     void remove(int row)
