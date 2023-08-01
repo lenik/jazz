@@ -16,6 +16,7 @@ import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.format.IDocxBuilder;
@@ -119,6 +120,11 @@ class ResolveProcess
     @Override
     public Object execute()
             throws Exception {
+        if (resolvedEntity.entity instanceof IVarMapForm) {
+            IVarMapForm varMapForm = (IVarMapForm) resolvedEntity.entity;
+            varMapForm.readObject(parameters);
+        }
+
         JsonWrapper data = JsonWrapper.wrap(resolvedEntity, "data");
         data.setOptions(jsonFormOptions);
 
