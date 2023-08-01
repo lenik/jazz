@@ -7,12 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
@@ -313,43 +309,8 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     @Override
     public void buildTableSheet(TableOfPathProps tableData, Workbook book, IVariantMap<String> q)
             throws FormatException {
-        List<?> list = tableData.getList();
-
-        Sheet sheet = book.createSheet();
-
-        String dateStr = Dates.YYYY_MM_DD.format(System.currentTimeMillis());
-        String typeName = typeInfo.getEntityClass().getSimpleName();
-        String title = String.format("%s %s (%d rows)", dateStr, typeName, list.size());
-        book.setSheetName(0, title);
-
-        // fillTable(sheet, tableData);
-        Row header = sheet.createRow(0);
-        List<String> columns = tableData.getColumnList();
-
-        int nCol = columns.size();
-        for (int i = 0; i < nCol; i++) {
-            Cell cell = header.createCell(i);
-            String col = columns.get(i);
-            cell.setCellValue(col);
-        }
-
-        int rowIndex = 0;
-        for (Object o : list) {
-            List<?> line;
-            try {
-                line = tableData.convert(o, columns);
-            } catch (ReflectiveOperationException e) {
-                throw new FormatException("Error convert object to cell array: " + e.getMessage(), e);
-            }
-
-            Row row = sheet.createRow(++rowIndex);
-            for (int i = 0; i < nCol; i++) {
-                Object value = line.get(i);
-                Cell cell = row.createCell(i);
-                if (value != null)
-                    cell.setCellValue(value.toString());
-            }
-        }
+        DefaultListingExcel dl = new DefaultListingExcel(tableData, typeInfo);
+        dl.build();
     }
 
 }
