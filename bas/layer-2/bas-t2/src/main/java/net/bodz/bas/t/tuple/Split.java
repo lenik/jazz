@@ -218,6 +218,9 @@ public class Split
         return sb.toString();
     }
 
+    /**
+     * @return non-<code>null</code> short first.
+     */
     public static Split shift(String s, char sep) {
         if (s == null)
             return nul();
@@ -290,6 +293,9 @@ public class Split
             return new Split(s.substring(0, pos), s.substring(pos + sep.length()));
     }
 
+    /**
+     * @return non-<code>null</code> long first, <code>null</code>able short second.
+     */
     public static Split chop(String s, char sep) {
         if (s == null)
             return nul();
@@ -326,6 +332,9 @@ public class Split
         return popLast(s, SysProps.fileSep);
     }
 
+    /**
+     * @return extension without dot(.), and can be <code>null</code>.
+     */
     public static Split nameExtension(String s) {
         return chop(s, '.');
     }
