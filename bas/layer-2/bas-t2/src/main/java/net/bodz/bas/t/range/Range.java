@@ -291,15 +291,45 @@ public abstract class Range<self_t, val_t>
     public abstract val_t successor(val_t val);
 
     public void include(val_t val) {
-        if (start == null)
-            start = val;
-        else if (order.compare(val, start) < 0)
-            start = val;
+        if (start != null)
+            if (order.compare(val, start) < 0)
+                start = val;
 
-        if (end == null)
-            end = val;
-        else if (order.compare(end, val) < 0)
-            end = val;
+        if (end != null)
+            if (order.compare(end, val) < 0)
+                end = val;
+    }
+
+    public boolean contains(val_t val) {
+        if (start != null)
+            if (order.compare(val, start) < 0)
+                return false;
+
+        if (end != null)
+            if (order.compare(end, val) < 0)
+                return false;
+
+        return true;
+    }
+
+    public boolean contains(Range<?, val_t> o) {
+        if (!contains(o.start))
+            return false;
+        if (!contains(o.end))
+            return false;
+        return true;
+    }
+
+    public boolean intersects(Range<?, val_t> o) {
+        if (contains(o.start))
+            return true;
+        if (contains(o.end))
+            return true;
+        if (o.contains(start))
+            return true;
+        if (o.contains(end))
+            return true;
+        return false;
     }
 
     public String valueSql(val_t val) {

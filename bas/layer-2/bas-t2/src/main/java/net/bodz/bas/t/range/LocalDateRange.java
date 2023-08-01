@@ -1,14 +1,11 @@
 package net.bodz.bas.t.range;
 
-import java.text.DateFormat;
 import java.util.Locale;
 
 import org.joda.time.Chronology;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeComparator;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -16,15 +13,14 @@ import org.joda.time.format.DateTimeParser;
 import org.joda.time.format.DateTimeParserBucket;
 
 import net.bodz.bas.c.java.util.DateTimes;
-import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.ParseException;
 
-public class DateTimeRange
-        extends Range<DateTimeRange, DateTime> {
+public class LocalDateRange
+        extends Range<LocalDateRange, LocalDate> {
 
     private static final long serialVersionUID = 1L;
 
-    static final DateTimeComparator ORDER = DateTimeComparator.getInstance();
+    static final LocalDateComparator ORDER = LocalDateComparator.INSTANCE;
 
     Chronology chrono = GregorianChronology.getInstance();
     DateTimeZone timeZone;
@@ -33,30 +29,30 @@ public class DateTimeRange
     DateTimeFormatter format;
     DateTimeParser parser;
 
-    public DateTimeRange(DateTimeZone timeZone) {
+    public LocalDateRange(DateTimeZone timeZone) {
         super(ORDER);
         this.timeZone = timeZone;
         init();
     }
 
-    public DateTimeRange(DateTimeZone timeZone, DateTime start, DateTime end) {
+    public LocalDateRange(DateTimeZone timeZone, LocalDate start, LocalDate end) {
         super(ORDER, start, end);
         this.timeZone = timeZone;
         init();
     }
 
-    public DateTimeRange(DateTimeZone timeZone, boolean startInclusive, DateTime start, boolean endInclusive,
-            DateTime end) {
+    public LocalDateRange(DateTimeZone timeZone, boolean startInclusive, LocalDate start, boolean endInclusive,
+            LocalDate end) {
         super(ORDER, startInclusive, start, endInclusive, end);
         this.timeZone = timeZone;
         init();
     }
 
-    public DateTimeRange() {
+    public LocalDateRange() {
         this(DateTimeZone.getDefault());
     }
 
-    public DateTimeRange(DateTime start, DateTime end) {
+    public LocalDateRange(LocalDate start, LocalDate end) {
         this(DateTimeZone.getDefault(), start, end);
     }
 
@@ -65,17 +61,17 @@ public class DateTimeRange
         parser = format.getParser();
     }
 
-    public LocalDateRange toLocalDateRange() {
-        LocalDateRange r = new LocalDateRange();
+    public DateTimeRange toDateTimeRange() {
+        DateTimeRange r = new DateTimeRange();
         r.chrono = chrono;
         r.timeZone = timeZone;
         r.locale = locale;
         r.format = format;
         r.parser = parser;
         if (start != null)
-            r.start = start.toLocalDate();
+            r.start = start.toDateTimeAtStartOfDay();
         if (end != null)
-            r.end = end.toLocalDate();
+            r.end = end.toDateTimeAtStartOfDay();
         return r;
     }
 
@@ -87,8 +83,8 @@ public class DateTimeRange
         this.timeZone = timeZone;
     }
 
-    public DateTime now() {
-        return new DateTime(timeZone);
+    public LocalDate now() {
+        return new LocalDate(timeZone);
     }
 
     public void fromNow() {
@@ -105,9 +101,9 @@ public class DateTimeRange
     }
 
     @Override
-    public DateTime parseValue(String s)
+    public LocalDate parseValue(String s)
             throws ParseException {
-        DateTime now = new DateTime(chrono);
+        LocalDate now = new LocalDate(chrono);
         DateTimeParserBucket bucket = new DateTimeParserBucket(//
                 0, chrono, locale, null, 2000);
         bucket.saveField(chrono.year(), now.getYear());
@@ -120,32 +116,28 @@ public class DateTimeRange
             throw new ParseException(e.getMessage(), e);
         }
         long time = bucket.computeMillis();
-        return new DateTime(time);
+        return new LocalDate(time);
     }
 
     @Override
-    public DateTime preceding(DateTime val) {
-        long millis = val.getMillis();
-        millis--;
-        DateTime prec = new DateTime(millis);
-        return prec;
+    public LocalDate preceding(LocalDate val) {
+        LocalDate yesterday = val.minusDays(1);
+        return yesterday;
     }
 
     @Override
-    public DateTime successor(DateTime val) {
-        long millis = val.getMillis();
-        millis++;
-        DateTime succ = new DateTime(millis);
-        return succ;
+    public LocalDate successor(LocalDate val) {
+        LocalDate tomorrow = val.plusDays(1);
+        return tomorrow;
     }
 
-    public DateTimeRange minMax(java.util.Date min, java.util.Date max) {
-        DateTime a = min == null ? null : new DateTime(min);
-        DateTime b = max == null ? null : new DateTime(max);
+    public LocalDateRange minMax(java.util.Date min, java.util.Date max) {
+        LocalDate a = min == null ? null : new LocalDate(min);
+        LocalDate b = max == null ? null : new LocalDate(max);
         return minMax(a, b);
     }
 
-    public DateTimeRange minMax(DateTime min, DateTime max) {
+    public LocalDateRange minMax(LocalDate min, LocalDate max) {
         this.start = min;
         this.end = max;
         startInclusive = true;
@@ -153,139 +145,135 @@ public class DateTimeRange
         return this;
     }
 
-    public DateTimeRange parse(String s, boolean inclusiveEnd)
+    public LocalDateRange parse(String s, boolean inclusiveEnd)
             throws ParseException {
-        return parse(s, inclusiveEnd, Dates.YYYY_MM_DD);
+        return parse(s, inclusiveEnd, DateTimes.YYYY_MM_DD);
     }
 
-    public DateTimeRange parse(String s, boolean endInclusive, DateFormat dateFormat)
+    public LocalDateRange parse(String s, boolean endInclusive, DateTimeFormatter dateFormat)
             throws ParseException {
         int colon = s.indexOf(':');
         if (colon == -1) {
-            DateTime point = parseValue(s);
+            LocalDate point = parseValue(s);
             minMax(point, point);
             return this;
         }
         String startStr = s.substring(0, colon);
         String endStr = s.substring(colon + 1);
-        DateTime start = startStr.isEmpty() ? null : parseValue(startStr);
-        DateTime end = endStr.isEmpty() ? null : parseValue(endStr);
+        LocalDate start = startStr.isEmpty() ? null : parseValue(startStr);
+        LocalDate end = endStr.isEmpty() ? null : parseValue(endStr);
         this.start = start;
         this.end = end;
         this.endInclusive = endInclusive;
         return this;
     }
 
-    public DateTime getMin() {
+    public LocalDate getMin() {
         return start;
     }
 
-    public DateTime getMax() {
+    public LocalDate getMax() {
         return end;
     }
 
-    // convert LocalDate start/end/from/to
+    // convert DateTime start/end/from/to
 
-    public LocalDate getLocalDateStart() {
-        DateTime start = this.getStart();
+    public DateTime getDateTimeStart() {
+        LocalDate start = this.getStart();
         if (start == null)
             return null;
-        LocalDate localDate = start.toLocalDate();
+        DateTime localDate = start.toDateTimeAtStartOfDay();
         return localDate;
     }
 
-    public void setLocalDateStart(LocalDate localDateStart) {
-        DateTime dateTime = null;
-        if (localDateStart != null) {
-            LocalTime time = null; // use current time.
-            dateTime = localDateStart.toDateTime(time);
+    public void setDateTimeStart(DateTime dateTimeStart) {
+        LocalDate localDate = null;
+        if (dateTimeStart != null) {
+            localDate = dateTimeStart.toLocalDate();
         }
-        this.setStart(dateTime);
+        this.setStart(localDate);
     }
 
-    public LocalDate getLocalDateEnd() {
-        DateTime end = this.getEnd();
+    public DateTime getDateTimeEnd() {
+        LocalDate end = this.getEnd();
         if (end == null)
             return null;
-        LocalDate localDate = end.toLocalDate();
+        DateTime localDate = end.toDateTimeAtStartOfDay();
         return localDate;
     }
 
-    public void setLocalDateEnd(LocalDate localDateEnd) {
-        DateTime dateTime = null;
-        if (localDateEnd != null) {
-            LocalTime time = null; // use current time.
-            dateTime = localDateEnd.toDateTime(time);
+    public void setDateTimeEnd(DateTime dateTimeEnd) {
+        LocalDate localDate = null;
+        if (dateTimeEnd != null) {
+            localDate = dateTimeEnd.toLocalDate();
         }
-        this.setTo(dateTime);
+        this.setTo(localDate);
     }
 
-    public LocalDate getLocalDateFrom() {
-        DateTime start = this.getFrom();
+    public DateTime getDateTimeFrom() {
+        LocalDate start = this.getFrom();
         if (start == null)
             return null;
-        LocalDate localDate = start.toLocalDate();
+        DateTime localDate = start.toDateTimeAtStartOfDay();
         return localDate;
     }
 
-    public void setLocalDateFrom(LocalDate localDate) {
-        DateTime dateTime = null;
-        if (localDate != null) {
-            LocalTime time = null; // use current time.
-            dateTime = localDate.toDateTime(time);
+    public void setDateTimeFrom(DateTime dateTimeFrom) {
+        LocalDate localDate = null;
+        if (dateTimeFrom != null) {
+            localDate = dateTimeFrom.toLocalDate();
         }
-        this.setFrom(dateTime);
+        this.setFrom(localDate);
     }
 
-    public LocalDate getLocalDateTo() {
-        DateTime to = this.getTo();
+    public DateTime getDateTimeTo() {
+        LocalDate to = this.getTo();
         if (to == null)
             return null;
-        LocalDate localDate = to.toLocalDate();
-        return localDate;
+        DateTime dateTime = to.toDateTimeAtStartOfDay();
+        return dateTime;
     }
 
-    public void setLocalDateTo(LocalDate localDateTo) {
-        DateTime dateTime = null;
-        if (localDateTo != null) {
-            LocalTime time = null; // use current time.
-            dateTime = localDateTo.toDateTime(time);
+    public void setDateTimeTo(DateTime dateTimeTo) {
+        LocalDate localDate = null;
+        if (dateTimeTo != null) {
+            localDate = dateTimeTo.toLocalDate();
         }
-        this.setTo(dateTime);
+        this.setTo(localDate);
     }
 
     // start/end/from/to Year
     public Integer getStartYear() {
-        DateTime start = getStart();
+        LocalDate start = getStart();
         if (start == null)
             return null;
         return start.getYear();
     }
 
     public Integer getFromYear() {
-        DateTime from = getFrom();
+        LocalDate from = getFrom();
         if (from == null)
             return null;
         return from.getYear();
     }
 
     public Integer getEndYear() {
-        DateTime end = getEnd();
+        LocalDate end = getEnd();
         if (end == null)
             return null;
         return end.getYear();
     }
 
     public Integer getToYear() {
-        DateTime to = getTo();
+        LocalDate to = getTo();
         if (to == null)
             return null;
         return to.getYear();
     }
 
     @Override
-    protected String format(DateTime val) {
-        String s = DateTimes.D10T8.print(val);
+    protected String format(LocalDate val) {
+        String s = DateTimes.YYYY_MM_DD.print(val);
         return s;
     }
 
