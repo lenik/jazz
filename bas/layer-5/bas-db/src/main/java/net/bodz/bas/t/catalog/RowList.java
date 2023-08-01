@@ -8,11 +8,11 @@ import java.util.List;
 
 public class RowList
         implements
-            IRowSet,
+            IMutableRowSet,
             IResultSetConsumer {
 
     IRowSetMetadata metadata;
-    List<IRow> rows;
+    List<IMutableRow> rows;
 
     protected RowList() {
     }
@@ -21,11 +21,11 @@ public class RowList
         this(metadata, new ArrayList<>(), false);
     }
 
-    public RowList(IRowSetMetadata metadata, List<IRow> rows) {
+    public RowList(IRowSetMetadata metadata, List<IMutableRow> rows) {
         this(metadata, rows, true);
     }
 
-    private RowList(IRowSetMetadata metadata, List<IRow> rows, boolean copy) {
+    private RowList(IRowSetMetadata metadata, List<IMutableRow> rows, boolean copy) {
         if (metadata == null)
             throw new NullPointerException("metadata");
         if (rows == null)
@@ -38,7 +38,7 @@ public class RowList
             this.rows = rows;
     }
 
-    public static RowList wrap(IRowSetMetadata metadata, List<IRow> rows) {
+    public static RowList wrap(IRowSetMetadata metadata, List<IMutableRow> rows) {
         return new RowList(metadata, rows, false);
     }
 
@@ -51,7 +51,7 @@ public class RowList
         return new DefaultRowSetMetadata();
     }
 
-    public List<IRow> getList() {
+    public List<IMutableRow> getList() {
         return rows;
     }
 
@@ -61,7 +61,7 @@ public class RowList
     }
 
     @Override
-    public IRow getRow(int index) {
+    public IMutableRow getRow(int index) {
         return rows.get(index);
     }
 
@@ -72,7 +72,36 @@ public class RowList
             return fallback;
     }
 
-    public void addRow(IRow row) {
+    @Override
+    public void setRow(int rowIndex, IMutableRow row) {
+        checkRowConsistency(row);
+        rows.set(rowIndex, row);
+    }
+
+    @Override
+    public final IMutableRow newRow() {
+        return newRow(rows.size());
+    }
+
+    @Override
+    public IMutableRow newRow(int rowIndex) {
+        MutableRow row = new MutableRow(this);
+        addRow(row);
+        return row;
+    }
+
+    @Override
+    public final void addRow(IMutableRow row) {
+        addRow(rows.size(), row);
+    }
+
+    @Override
+    public void addRow(int rowIndex, IMutableRow row) {
+        checkRowConsistency(row);
+        rows.add(rowIndex, row);
+    }
+
+    void checkRowConsistency(IRow row) {
         if (row == null)
             throw new NullPointerException("row");
         IRowSetMetadata other = row.getRowSet().getMetadata();
@@ -81,12 +110,27 @@ public class RowList
             if (other != mine)
                 throw new IllegalArgumentException("Conflict metadata");
         }
-        rows.add(row);
     }
 
     @Override
+    public void removeRow(IMutableRow row) {
+        rows.remove(row);
+    }
+
+    @Override
+    public void removeRow(int rowIndex) {
+        rows.remove(rowIndex);
+    }
+
+    @Override
+    public void removeAll() {
+        rows.clear();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public Iterator<IRow> iterator() {
-        return rows.iterator();
+        return (Iterator<IRow>) (Object) rows.iterator();
     }
 
     @Override
