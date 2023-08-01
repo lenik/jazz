@@ -4,6 +4,7 @@ net.bodz.bas.t.range.DateTimeRangeVarConverter
 net.bodz.bas.t.range.DoubleRangeVarConverter
 net.bodz.bas.t.range.FloatRangeVarConverter
 net.bodz.bas.t.range.IntegerRangeVarConverter
+net.bodz.bas.t.range.LocalDateRangeVarConverter
 net.bodz.bas.t.range.LongRangeVarConverter
 net.bodz.bas.t.range.ShortRangeVarConverter
 net.bodz.bas.t.variant.conv.BigDecimalVarConverter
@@ -18,6 +19,7 @@ net.bodz.bas.t.variant.conv.DoubleVarConverter
 net.bodz.bas.t.variant.conv.FileConverter
 net.bodz.bas.t.variant.conv.FloatVarConverter
 net.bodz.bas.t.variant.conv.IntegerVarConverter
+net.bodz.bas.t.variant.conv.LocalDateVarConverter
 net.bodz.bas.t.variant.conv.LongVarConverter
 net.bodz.bas.t.variant.conv.ShortVarConverter
 net.bodz.bas.t.variant.conv.SqlDateVarConverter
