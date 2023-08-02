@@ -6,9 +6,9 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 
-public interface IDocxBuilder {
+public interface IWordDocBuilder {
 
-    WordprocessingMLPackage buildDocx(ResolvedEntity resolvedEntity, IVariantMap<String> q)
+    WordprocessingMLPackage buildWordDoc(ResolvedEntity resolvedEntity, IVariantMap<String> q)
             throws FormatException;
 
 }

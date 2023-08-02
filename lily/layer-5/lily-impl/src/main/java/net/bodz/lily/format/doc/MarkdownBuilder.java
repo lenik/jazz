@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.docx4j.model.structure.SectionWrapper;
+import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 
@@ -13,9 +14,11 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
+import net.bodz.lily.entity.format.WordUtils;
 
 public abstract class MarkdownBuilder
         implements
@@ -120,7 +123,14 @@ public abstract class MarkdownBuilder
     protected abstract void body()
             throws FormatException;
 
-    public WordprocessingMLPackage toDocx(IVariantMap<String> q)
+    public FileContent toDocxFile(IVariantMap<String> q, String fileName)
+            throws FormatException, Docx4JException {
+        WordprocessingMLPackage wordDoc = toWordDoc(q);
+        FileContent file = WordUtils.toFile(wordDoc, fileName);
+        return file;
+    }
+
+    public WordprocessingMLPackage toWordDoc(IVariantMap<String> q)
             throws FormatException {
         WordprocessingMLPackage pack = null;
 //        try {
