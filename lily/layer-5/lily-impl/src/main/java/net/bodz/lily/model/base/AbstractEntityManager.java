@@ -242,6 +242,8 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
                 if (other.checkPathValid(previous, tokens, q))
                     return processDispatch(command, resolvedEntity, previous, tokens, q, 0);
 
+            if (token != null)
+                return arrival;
         } // hasId && dispatchToEntity
 
         return null;
@@ -296,13 +298,16 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         if (obj == null)
             return null;
 
-        ResolvedEntity info = new ResolvedEntity();
-        info.idFieldStrings = heads;
-        info.idFields = idvec;
-        info.id = id;
-        info.entity = obj;
-        info.preferredExtension = name_ext.b;
-        return PathArrival.shift(idColumnCount, previous, this, info, tokens);
+        // if (tokens.available() > idColumnCount)
+        // return PathArrival.shift(idColumnCount, previous, this, obj, tokens);
+
+        ResolvedEntity target = new ResolvedEntity();
+        target.idFieldStrings = heads;
+        target.idFields = idvec;
+        target.id = id;
+        target.entity = obj;
+        target.preferredExtension = name_ext.b;
+        return PathArrival.shift(idColumnCount, previous, this, target, tokens);
     }
 
     @Override

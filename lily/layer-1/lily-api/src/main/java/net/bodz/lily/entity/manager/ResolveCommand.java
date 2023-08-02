@@ -1,6 +1,5 @@
 package net.bodz.lily.entity.manager;
 
-import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -19,8 +18,9 @@ import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.format.IDocxBuilder;
 import net.bodz.lily.entity.format.IMarkdownBuilder;
+import net.bodz.lily.entity.format.IWordDocBuilder;
+import net.bodz.lily.entity.format.WordUtils;
 
 @ForEntityType(IId.class)
 public class ResolveCommand
@@ -68,7 +68,7 @@ class ResolveProcess
     static final int OTHER = -1;
 
     IMarkdownBuilder markdownBuilder;
-    IDocxBuilder docxBuilder;
+    IWordDocBuilder docxBuilder;
 
     public ResolveProcess(ResolveCommand type, IEntityCommandContext context) {
         super(type, context);
@@ -107,7 +107,7 @@ class ResolveProcess
         if (markdownBuilder != null)
             this.markdownBuilder = markdownBuilder;
 
-        IDocxBuilder docBuilder = context.query(IDocxBuilder.class);
+        IWordDocBuilder docBuilder = context.query(IWordDocBuilder.class);
         if (docBuilder != null)
             this.docxBuilder = docBuilder;
     }
@@ -151,17 +151,9 @@ class ResolveProcess
         case DOCX:
             if (docxBuilder == null)
                 throw new IllegalUsageException("doc builder isn't set.");
-            WordprocessingMLPackage pack = docxBuilder.buildDocx(resolvedEntity, parameters);
-            ByteArrayOutputStream docxBuf = new ByteArrayOutputStream(30000);
-            pack.save(docxBuf);
-
-            String fileName = getContentPath().getFileName();
-            String title = pack.getTitle();
-            if (title != null && !title.trim().isEmpty()) {
-                String extension = getContentPath().getExtension();
-                fileName = String.format("%s.%s", title.trim(), extension);
-            }
-            return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, docxBuf.toByteArray());
+            WordprocessingMLPackage wordDoc = docxBuilder.buildWordDoc(resolvedEntity, parameters);
+            FileContent file = WordUtils.toFile(wordDoc, getContentPath().getFileName());
+            return file;
 
         case PDF:
             return null;
