@@ -12,7 +12,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
@@ -22,7 +22,7 @@ public abstract class MarkdownBuilder
             IVarMapForm {
 
     BCharOut buf = new BCharOut();
-    protected TreeOutImpl out;
+    protected ITreeOut out;
 
     static final String V_CHAPTER = "chapter";
     static final String V_SECTION = "section";
@@ -38,7 +38,6 @@ public abstract class MarkdownBuilder
     boolean sectionIndented;
 
     public MarkdownBuilder() {
-        out.getTextIndention().setIndentSize(0);
     }
 
     protected final void beginChapter(String title) {
@@ -97,27 +96,28 @@ public abstract class MarkdownBuilder
 
     protected abstract String getTitle();
 
-    public synchronized String build(IVariantMap<String> q)
+    public synchronized String buildMarkdown(IVariantMap<String> q)
             throws FormatException {
         try {
             readObject(q);
         } catch (LoaderException | ParseException e) {
             throw new IllegalArgumentException("Failed to parse parameters: " + e.getMessage(), e);
         }
-        return build();
+        return buildMarkdown();
     }
 
-    public synchronized String build()
+    public synchronized String buildMarkdown()
             throws FormatException {
         buf.clear();
-        out = (TreeOutImpl) buf.indented();
-        buildDoc();
+        out = buf.indented();
+        out.getTextIndention().setIndentSize(0);
+        body();
         out.close();
         String md = buf.toString();
         return md;
     }
 
-    protected abstract void buildDoc()
+    protected abstract void body()
             throws FormatException;
 
     public WordprocessingMLPackage toDocx(IVariantMap<String> q)
@@ -130,7 +130,7 @@ public abstract class MarkdownBuilder
 //        }
 
         if (pack == null) {
-            String markdown = build();
+            String markdown = buildMarkdown();
             MarkdownDoc md = new MarkdownDoc(markdown);
             pack = md.toWordPackage();
         }
