@@ -283,7 +283,16 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
 
         IEntityMapper<Object, Object> mapper = getMapper();
 
-        Object obj = mapper.select(id);
+        Object obj;
+        try {
+            obj = mapper.select(id);
+        } catch (Exception e) {
+            String err = String.format("Error select %s from %s: %s", id, getEntityType().getSimpleName(),
+                    e.getMessage());
+            logger.error(e, err);
+            return null;
+        }
+
         if (obj == null)
             return null;
 
