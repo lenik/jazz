@@ -96,10 +96,14 @@ public class DefaultRowSetMetadata
         if (column == null)
             throw new NullPointerException("column");
         String name = column.getName();
+        if (name == null)
+            throw new NullPointerException("name");
 
         Integer lastPos = columnPosition.get(name);
-        if (lastPos != null)
-            throw new DuplicatedKeyException("Column was already added at position " + lastPos);
+        if (lastPos != null) {
+            String err = String.format("Column[%s] was already added at position %d", name, lastPos);
+            throw new DuplicatedKeyException(err);
+        }
 
         int newPos = columns.size();
         columns.add(column);
