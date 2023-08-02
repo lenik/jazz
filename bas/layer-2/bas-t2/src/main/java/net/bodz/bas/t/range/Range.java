@@ -18,7 +18,7 @@ public abstract class Range<self_t, val_t>
     public val_t end;
 
     boolean startInclusive = true;
-    boolean endInclusive;
+    boolean endInclusive = false;
 
     public Range(Comparator<? super val_t> order) {
         this.order = order;
@@ -117,6 +117,12 @@ public abstract class Range<self_t, val_t>
 
     public void setStart(val_t start) {
         this.start = start;
+        this.startInclusive = true;
+    }
+
+    public void setStartAfter(val_t start) {
+        this.start = start;
+        this.startInclusive = false;
     }
 
     public val_t getEnd() {
@@ -125,6 +131,7 @@ public abstract class Range<self_t, val_t>
 
     public void setEnd(val_t end) {
         this.end = end;
+        this.endInclusive = false;
     }
 
     public boolean isStartInclusive() {
@@ -173,21 +180,8 @@ public abstract class Range<self_t, val_t>
     }
 
     public void setFrom(val_t from) {
-        if (from == null) {
-            this.start = null;
-            return;
-        }
-        if (startInclusive) {
-            this.start = from;
-            return;
-        }
-        val_t beforeFrom = preceding(from);
-        if (beforeFrom == null) {
-            // allow for -inf
-            this.start = null;
-            return;
-        }
-        this.start = beforeFrom;
+        this.start = from;
+        this.startInclusive = true;
     }
 
     /**
@@ -212,21 +206,8 @@ public abstract class Range<self_t, val_t>
      *            too large.
      */
     public void setTo(val_t to) {
-        if (to == null) {
-            this.end = null;
-            return;
-        }
-        if (endInclusive) {
-            this.end = to;
-            return;
-        }
-        val_t afterTo = successor(to);
-        if (afterTo == null) {
-            // allow for +inf.
-            this.end = null;
-            return;
-        }
-        this.end = afterTo;
+        this.end = to;
+        this.endInclusive = true;
     }
 
     @SuppressWarnings("unchecked")
