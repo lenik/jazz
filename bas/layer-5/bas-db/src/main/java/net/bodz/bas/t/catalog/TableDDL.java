@@ -46,7 +46,7 @@ public class TableDDL {
             if (templateRow != null) {
                 if (!templateRow.isSet(columnIndex))
                     continue;
-                Object val = templateRow.get(columnIndex);
+                Object val = templateRow.getCellData(columnIndex);
                 if (val == null)
                     continue;
             }

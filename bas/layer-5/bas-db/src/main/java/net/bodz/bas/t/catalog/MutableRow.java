@@ -1,8 +1,5 @@
 package net.bodz.bas.t.catalog;
 
-import java.nio.BufferOverflowException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,8 +26,7 @@ public class MutableRow
     final IRowSetMetadata metadata;
 
 //    int rowIndex;
-    List<Object> list;
-    List<Boolean> sets;
+    List<IMutableCell> cells;
 
     public MutableRow(IRowSet rowSet) {
 //    public MutableRow(IRowSet rowSet, int rowIndex) {
@@ -40,9 +36,8 @@ public class MutableRow
         this.metadata = rowSet.getMetadata();
 //        this.rowIndex = rowIndex;
 
-        int n = metadata.getColumnCount();
-        this.list = new ArrayList<Object>(n);
-        this.sets = new ArrayList<Boolean>(n);
+        int columnCount = metadata.getColumnCount();
+        this.cells = new ArrayList<>(columnCount);
     }
 
     public IRowSetMetadata getRowSetMetadata() {
@@ -96,25 +91,30 @@ public class MutableRow
     }
 
     @Override
-    public Object get(int index) {
+    public int getCellCount() {
+        return cells.size();
+    }
+
+    @Override
+    public IMutableCell getCell(int index) {
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        if (index >= getRowSetMetadata().getColumnCount()) {
+        if (index >= getCellCount()) {
             if (metadata.isSparse())
                 return null;
             else
                 throw new IndexOutOfBoundsException("Invalid column index: " + index);
         }
 
-        if (index >= list.size())
+        if (index >= cells.size())
             return null;
 
-        return list.get(index);
+        return cells.get(index);
     }
 
     @Override
-    public void set(int index, Object o) {
+    public void setCell(int index, IMutableCell cell) {
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
@@ -125,52 +125,82 @@ public class MutableRow
         if (index >= maxSize)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        int lack = index - (list.size() - 1);
-        for (int i = 0; i < lack; i++) {
-            list.add(null);
-            sets.add(false);
+        // padding
+        for (int i = cells.size(); i <= index; i++) {
+            cells.add(null);
         }
 
-        list.set(index, o);
-        sets.set(index, true);
+        cells.set(index, cell);
     }
 
     @Override
-    public boolean isSet(int index) {
+    public Object getCellData(int columnIndex) {
+        IMutableCell cell = getCell(columnIndex);
+        if (cell == null)
+            return null;
+        else
+            return cell.getData();
+    }
+
+    @Override
+    public synchronized void setCellData(int index, Object data) {
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        if (index >= getRowSetMetadata().getColumnCount()) {
-            if (metadata.isSparse())
-                return false;
-            else
-                throw new IndexOutOfBoundsException("Invalid column index: " + index);
-        }
-
-        if (index >= sets.size())
-            return false;
-
-        return sets.get(index);
-    }
-
-    @Override
-    public void append(Object o) {
         int maxSize = metadata.getColumnCount();
         if (metadata.isSparse())
             maxSize = DefaultRowSetMetadata.MAX_SPARSE_COLUMNS;
 
-        if (list.size() >= maxSize)
-            throw new BufferOverflowException();
+        if (index >= maxSize)
+            throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        list.add(o);
-        sets.add(true);
+        // padding
+        for (int i = cells.size(); i <= index; i++) {
+            cells.add(null);
+        }
+
+        IMutableCell cell = cells.get(index);
+        if (cell == null) {
+            cell = new MutableCell(this);
+            setCell(index, cell);
+        }
+        cell.setData(data);
+    }
+
+    @Override
+    public void addCell(int columnIndex, IMutableCell cell) {
+        cells.add(columnIndex, cell);
+    }
+
+    @Override
+    public void removeCell(IMutableCell cell) {
+        cells.remove(cell);
+    }
+
+    @Override
+    public void removeCell(int columnIndex) {
+        cells.remove(columnIndex);
+    }
+
+    @Override
+    public boolean isSet(int index) {
+        IMutableCell cell = getCell(index);
+        if (cell == null)
+            return false;
+        return cell.isSet();
+    }
+
+    @Override
+    public void append(Object data) {
+        IMutableCell cell = newCell();
+        cell.setData(data);
     }
 
     @Override
     public Iterator<Object> iterator() {
         int maxSize = metadata.getColumnCount();
         if (metadata.isSparse())
-            maxSize = list.size();
+            maxSize = cells.size();
         final int retSize = maxSize;
         return new PrefetchedIterator<Object>() {
 
@@ -180,7 +210,7 @@ public class MutableRow
             protected Object fetch() {
                 if (i < retSize) {
                     i++;
-                    return list.get(i);
+                    return cells.get(i);
                 }
                 return end();
             }
@@ -200,34 +230,38 @@ public class MutableRow
         int jn = jv.length();
 
         int cc = metadata.getColumnCount();
-        List<Object> list = new ArrayList<Object>(cc);
+        List<IMutableCell> list = new ArrayList<>(cc);
 
         for (int i = 0; i < cc && i < jn; i++) {
             Object j_cell_box = jv.get(i);
+
             IColumnMetadata column = metadata.getColumn(i);
-            Object cell = column.readColumnJsonValue(j_cell_box);
-            list.add(cell);
+            Object cellData = column.readColumnJsonValue(j_cell_box);
+
+            IMutableCell cell = newCell();
+            cell.setData(cellData);
         }
-        this.list = list;
+        this.cells = list;
     }
 
     @Override
     public void readObject(IElement x_row)
             throws ParseException, LoaderException {
         int cc = metadata.getColumnCount();
-        List<Object> list = new ArrayList<>();
+        List<IMutableCell> list = new ArrayList<>();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);
             String tagName = column.getName();
             IElement x_cell = x_row.selectByTag(tagName).getFirst();
             if (x_cell != null) {
-                Object cell = column.readColumnXmlValue(x_cell);
-                list.add(cell);
+                Object cellData = column.readColumnXmlValue(x_cell);
+                IMutableCell cell = newCell();
+                cell.setData(cellData);
             } else {
                 list.add(null);
             }
         }
-        this.list = list;
+        this.cells = list;
     }
 
     @Override
@@ -239,18 +273,9 @@ public class MutableRow
         readObject(x_row);
     }
 
-    public void readObject(ResultSet rs)
-            throws SQLException {
-        int cc = metadata.getColumnCount();
-        for (int i = 0; i < cc; i++) {
-            Object cell = rs.getObject(i + 1);
-            set(i, cell);
-        }
-    }
-
     @Override
     public String toString() {
-        return list.toString();
+        return cells.toString();
     }
 
 }
