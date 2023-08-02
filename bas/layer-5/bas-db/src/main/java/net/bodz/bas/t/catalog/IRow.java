@@ -32,6 +32,19 @@ public interface IRow
 
 //    int getRowIndex();
 
+    /**
+     * @return -1 if unknown.
+     */
+    default int getColumnCount() {
+        IRowSet rowSet = getRowSet();
+        if (rowSet != null) {
+            IRowSetMetadata metadata = getRowSet().getMetadata();
+            if (metadata != null)
+                return metadata.getColumnCount();
+        }
+        return -1;
+    }
+
     IColumnMetadata getColumn(int index);
 
     /**
@@ -47,18 +60,23 @@ public interface IRow
 
     Class<?> getColumnType(String columnName);
 
-    Object getCellData(int columnIndex);
-
-    default Object getCellData(String columnName) {
-        int index = getColumnIndex(columnName);
-        return getCellData(index);
-    }
+    /**
+     * actual allocated cells.
+     */
+    int getCellCount();
 
     ICell getCell(int columnIndex);
 
     default ICell getCell(String columnName) {
         int index = getColumnIndex(columnName);
         return getCell(index);
+    }
+
+    Object getCellData(int columnIndex);
+
+    default Object getCellData(String columnName) {
+        int index = getColumnIndex(columnName);
+        return getCellData(index);
     }
 
     /**

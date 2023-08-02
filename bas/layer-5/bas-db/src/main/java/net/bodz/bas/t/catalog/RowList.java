@@ -138,12 +138,10 @@ public class RowList
             throws SQLException {
         boolean limited = limit != null;
         long nLimit = limited ? limit.longValue() : -1L;
-        int rowIndex = getRowCount();
         long n = 0;
         while (resultSet.next()) {
-            MutableRow row = new MutableRow(this, rowIndex++);
+            IMutableRow row = newRow();
             row.readObject(resultSet);
-            this.rows.add(row);
             n++;
             if (limited && n >= nLimit)
                 break;

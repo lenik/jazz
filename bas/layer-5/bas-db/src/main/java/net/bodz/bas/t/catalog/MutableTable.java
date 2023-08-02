@@ -28,7 +28,7 @@ public class MutableTable
         super(metadata);
     }
 
-    public MutableTable(ITableMetadata metadata, List<IRow> rows) {
+    public MutableTable(ITableMetadata metadata, List<IMutableRow> rows) {
         super(metadata, rows);
     }
 
@@ -104,10 +104,10 @@ public class MutableTable
 
         JsonArray j_rows = o.getJsonArray(K_ROWS);
         int n = j_rows.length();
-        List<IRow> rows = new ArrayList<>();
+        List<IMutableRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < n; rowIndex++) {
             JsonArray j_row = j_rows.getJsonArray(rowIndex);
-            MutableRow row = new MutableRow(this, rowIndex);
+            IMutableRow row = newRow();
             row.readObjectBoxed(j_row, opts);
             rows.add(row);
         }
@@ -133,10 +133,10 @@ public class MutableTable
         IElement x_rows = x_table.selectByTag(K_ROWS).getFirst();
         IElements x_row_v = x_rows.children(); // <row>
         int rowCount = x_rows.getElementCount();
-        List<IRow> rows = new ArrayList<>();
+        List<IMutableRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             IElement x_row = x_row_v.get(rowIndex);
-            MutableRow row = new MutableRow(this, rowIndex);
+            IMutableRow row = newRow();
             row.readObject(x_row);
             rows.add(row);
         }
