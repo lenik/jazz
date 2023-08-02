@@ -29,6 +29,10 @@ public abstract class ExcelBuilder
 
     protected abstract String getTitle();
 
+    protected boolean useTitleAsSheetName() {
+        return false;
+    }
+
     public final Workbook build(IVariantMap<String> q)
             throws FormatException {
         return build(false, q);
@@ -67,10 +71,12 @@ public abstract class ExcelBuilder
 
         buildMainSheet(sheet);
 
-        String title = getTitle();
-        if (title != null) {
-            int sheetIndex = workbook.getSheetIndex(sheet);
-            workbook.setSheetName(sheetIndex, title);
+        if (useTitleAsSheetName()) {
+            String title = getTitle();
+            if (title != null) {
+                int sheetIndex = workbook.getSheetIndex(sheet);
+                workbook.setSheetName(sheetIndex, title);
+            }
         }
     }
 
@@ -96,16 +102,9 @@ public abstract class ExcelBuilder
         return buf.toByteArray();
     }
 
-    public String getPreferredFileName(Workbook workbook) {
-        int activeSheetIndex = workbook.getActiveSheetIndex();
-        String sheetName = workbook.getSheetName(activeSheetIndex);
-        String fileName = sheetName;
-        return fileName;
-    }
-
     public FileContent toContent(boolean xssf)
             throws FormatException {
-        Workbook workbook = build();
+        Workbook workbook = build(xssf);
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
         try {
@@ -114,7 +113,7 @@ public abstract class ExcelBuilder
             throw new UnexpectedException(e.getMessage(), e);
         }
 
-        String fileName = getPreferredFileName(workbook);
+        String fileName = getTitle();
         fileName += (xssf ? ".xlsx" : ".xls");
         return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
     }
