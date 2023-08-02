@@ -2,6 +2,12 @@ net.bodz.bas.c.org.json.JsonStrFormTypeHandler
 net.bodz.bas.c.org.json.JsonValueTypeHandler
 net.bodz.bas.c.org.json.PojoJsonTypeHandler
 net.bodz.bas.c.org.postgresql.util.PgInetAddressTypeHandler
+net.bodz.bas.db.ibatis.type._BooleanArrayTypeHandler
+net.bodz.bas.db.ibatis.type._DoubleArrayTypeHandler
+net.bodz.bas.db.ibatis.type._FloatArrayTypeHandler
+net.bodz.bas.db.ibatis.type._IntArrayTypeHandler
+net.bodz.bas.db.ibatis.type._LongArrayTypeHandler
+net.bodz.bas.db.ibatis.type._ShortArrayTypeHandler
 net.bodz.bas.db.ibatis.type.BooleanArrayTypeHandler
 net.bodz.bas.db.ibatis.type.DateTimeTypeHandler
 net.bodz.bas.db.ibatis.type.DoubleArrayTypeHandler

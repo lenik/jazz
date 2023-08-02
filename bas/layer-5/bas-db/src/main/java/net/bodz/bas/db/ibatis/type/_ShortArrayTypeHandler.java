@@ -16,72 +16,73 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
 @AliasedType
-@MappedTypes(Integer[].class)
-public class IntArrayTypeHandler
-        extends TypeHandler<Integer[]> {
+@MappedTypes(short[].class)
+public class _ShortArrayTypeHandler
+        extends TypeHandler<short[]> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, Integer[] parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, short[] parameter, JdbcType jdbcType)
             throws SQLException {
-        Integer[] elements = wrap(parameter);
+        Short[] elements = wrap(parameter);
         ParameterMetaData metaData = ps.getParameterMetaData();
         String typeName = metaData.getParameterTypeName(i);
         Array array = ps.getConnection().createArrayOf(typeName, elements);
         ps.setArray(i, array);
     }
 
-    static Integer[] wrap(Integer[] array) {
-        Integer[] wrapped = new Integer[array.length];
+    static Short[] wrap(short[] array) {
+        Short[] wrapped = new Short[array.length];
         for (int i = 0; i < array.length; i++)
             wrapped[i] = array[i];
         return wrapped;
     }
 
     @Override
-    public Integer[] getNullableResult(ResultSet rs, String columnName)
+    public short[] getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         Array array = rs.getArray(columnName);
-        return toIntArray(array);
+        return toShortArray(array);
     }
 
     @Override
-    public Integer[] getNullableResult(ResultSet rs, int columnIndex)
+    public short[] getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         Array array = rs.getArray(columnIndex);
-        return toIntArray(array);
+        return toShortArray(array);
     }
 
     @Override
-    public Integer[] getNullableResult(CallableStatement cs, int columnIndex)
+    public short[] getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Array array = cs.getArray(columnIndex);
-        return toIntArray(array);
+        return toShortArray(array);
     }
 
-    static Integer[] toIntArray(Array _array)
+    static short[] toShortArray(Array _array)
             throws SQLException {
         if (_array == null)
             return null;
         Object array = _array.getArray();
         if (array == null)
             return null;
-        return toIntArray(array);
+        return toShortArray(array);
     }
 
-    static Integer[] toIntArray(Object array) {
+    static short[] toShortArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        Integer[] ints = new int[n];
+        short[] shorts = new short[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
 
         for (int i = 0; i < n; i++) {
             Object v = java.lang.reflect.Array.get(array, i);
-            Integer intVal = v == null ? null : converter.toInt(v);
-            ints[i] = intVal;
+            Short shortVal = converter.toShort(v);
+            if (shortVal != null)
+                shorts[i] = shortVal;
         }
-        return ints;
+        return shorts;
     }
 
 }
