@@ -71,7 +71,7 @@ public class IntArrayTypeHandler
     static Integer[] toIntArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        Integer[] ints = new int[n];
+        Integer[] ints = new Integer[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
