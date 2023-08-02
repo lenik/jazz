@@ -16,14 +16,14 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
-@Alias("Ints")
+@Alias("Booleans")
 @AliasedType
-@MappedTypes(boolean[].class)
+@MappedTypes(Boolean[].class)
 public class BooleanArrayTypeHandler
-        extends TypeHandler<boolean[]> {
+        extends TypeHandler<Boolean[]> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, boolean[] parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, Boolean[] parameter, JdbcType jdbcType)
             throws SQLException {
         Boolean[] elements = wrap(parameter);
         ParameterMetaData metaData = ps.getParameterMetaData();
@@ -32,7 +32,7 @@ public class BooleanArrayTypeHandler
         ps.setArray(i, array);
     }
 
-    static Boolean[] wrap(boolean[] array) {
+    static Boolean[] wrap(Boolean[] array) {
         Boolean[] wrapped = new Boolean[array.length];
         for (int i = 0; i < array.length; i++)
             wrapped[i] = array[i];
@@ -40,27 +40,27 @@ public class BooleanArrayTypeHandler
     }
 
     @Override
-    public boolean[] getNullableResult(ResultSet rs, String columnName)
+    public Boolean[] getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         Array array = rs.getArray(columnName);
         return toBooleanArray(array);
     }
 
     @Override
-    public boolean[] getNullableResult(ResultSet rs, int columnIndex)
+    public Boolean[] getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         Array array = rs.getArray(columnIndex);
         return toBooleanArray(array);
     }
 
     @Override
-    public boolean[] getNullableResult(CallableStatement cs, int columnIndex)
+    public Boolean[] getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Array array = cs.getArray(columnIndex);
         return toBooleanArray(array);
     }
 
-    static boolean[] toBooleanArray(Array _array)
+    static Boolean[] toBooleanArray(Array _array)
             throws SQLException {
         if (_array == null)
             return null;
@@ -70,19 +70,18 @@ public class BooleanArrayTypeHandler
         return toBooleanArray(array);
     }
 
-    static boolean[] toBooleanArray(Object array) {
+    static Boolean[] toBooleanArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        boolean[] bools = new boolean[n];
+        Boolean[] bools = new Boolean[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
 
         for (int i = 0; i < n; i++) {
             Object v = java.lang.reflect.Array.get(array, i);
-            Boolean boolVal = converter.toBoolean(v);
-            if (boolVal != null)
-                bools[i] = boolVal;
+            Boolean boolVal = v == null ? null : converter.toBoolean(v);
+            bools[i] = boolVal;
         }
         return bools;
     }

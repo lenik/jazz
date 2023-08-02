@@ -16,12 +16,12 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
 @AliasedType
-@MappedTypes(double[].class)
+@MappedTypes(Double[].class)
 public class DoubleArrayTypeHandler
-        extends TypeHandler<double[]> {
+        extends TypeHandler<Double[]> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, double[] parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, Double[] parameter, JdbcType jdbcType)
             throws SQLException {
         Double[] elements = wrap(parameter);
         ParameterMetaData metaData = ps.getParameterMetaData();
@@ -30,7 +30,7 @@ public class DoubleArrayTypeHandler
         ps.setArray(i, array);
     }
 
-    static Double[] wrap(double[] array) {
+    static Double[] wrap(Double[] array) {
         Double[] wrapped = new Double[array.length];
         for (int i = 0; i < array.length; i++)
             wrapped[i] = array[i];
@@ -38,27 +38,27 @@ public class DoubleArrayTypeHandler
     }
 
     @Override
-    public double[] getNullableResult(ResultSet rs, String columnName)
+    public Double[] getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         Array array = rs.getArray(columnName);
         return toShortArray(array);
     }
 
     @Override
-    public double[] getNullableResult(ResultSet rs, int columnIndex)
+    public Double[] getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         Array array = rs.getArray(columnIndex);
         return toShortArray(array);
     }
 
     @Override
-    public double[] getNullableResult(CallableStatement cs, int columnIndex)
+    public Double[] getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Array array = cs.getArray(columnIndex);
         return toShortArray(array);
     }
 
-    static double[] toShortArray(Array _array)
+    static Double[] toShortArray(Array _array)
             throws SQLException {
         if (_array == null)
             return null;
@@ -68,21 +68,20 @@ public class DoubleArrayTypeHandler
         return toShortArray(array);
     }
 
-    static double[] toShortArray(Object array) {
+    static Double[] toShortArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        double[] shorts = new double[n];
+        Double[] doubles = new Double[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
 
         for (int i = 0; i < n; i++) {
             Object v = java.lang.reflect.Array.get(array, i);
-            Double doubleVal = converter.toDouble(v);
-            if (doubleVal != null)
-                shorts[i] = doubleVal;
+            Double doubleVal = v == null ? null : converter.toDouble(v);
+            doubles[i] = doubleVal;
         }
-        return shorts;
+        return doubles;
     }
 
 }

@@ -16,72 +16,74 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
 @AliasedType
-@MappedTypes(Integer[].class)
-public class IntArrayTypeHandler
-        extends TypeHandler<Integer[]> {
+@MappedTypes(long[].class)
+public class _LongArrayTypeHandler
+        extends TypeHandler<long[]> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, Integer[] parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, long[] parameter, JdbcType jdbcType)
             throws SQLException {
-        Integer[] elements = wrap(parameter);
+        Long[] elements = wrap(parameter);
         ParameterMetaData metaData = ps.getParameterMetaData();
         String typeName = metaData.getParameterTypeName(i);
         Array array = ps.getConnection().createArrayOf(typeName, elements);
         ps.setArray(i, array);
     }
 
-    static Integer[] wrap(Integer[] array) {
-        Integer[] wrapped = new Integer[array.length];
+    static Long[] wrap(long[] array) {
+        Long[] wrapped = new Long[array.length];
         for (int i = 0; i < array.length; i++)
             wrapped[i] = array[i];
         return wrapped;
     }
 
     @Override
-    public Integer[] getNullableResult(ResultSet rs, String columnName)
+    public long[] getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         Array array = rs.getArray(columnName);
-        return toIntArray(array);
+        return toLongArray(array);
     }
 
     @Override
-    public Integer[] getNullableResult(ResultSet rs, int columnIndex)
+    public long[] getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         Array array = rs.getArray(columnIndex);
-        return toIntArray(array);
+        return toLongArray(array);
     }
 
     @Override
-    public Integer[] getNullableResult(CallableStatement cs, int columnIndex)
+    public long[] getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Array array = cs.getArray(columnIndex);
-        return toIntArray(array);
+        return toLongArray(array);
     }
 
-    static Integer[] toIntArray(Array _array)
+    static long[] toLongArray(Array _array)
             throws SQLException {
         if (_array == null)
             return null;
         Object array = _array.getArray();
         if (array == null)
             return null;
-        return toIntArray(array);
+        return toLongArray(array);
     }
 
-    static Integer[] toIntArray(Object array) {
+    static long[] toLongArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        Integer[] ints = new int[n];
+        long[] longs = new long[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
 
         for (int i = 0; i < n; i++) {
             Object v = java.lang.reflect.Array.get(array, i);
-            Integer intVal = v == null ? null : converter.toInt(v);
-            ints[i] = intVal;
+            if (v != null) {
+                long longVal = converter.toLong(v);
+                longs[i] = longVal;
+            }
         }
-        return ints;
+        return longs;
     }
 
 }

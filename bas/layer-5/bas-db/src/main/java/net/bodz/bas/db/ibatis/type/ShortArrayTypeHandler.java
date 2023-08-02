@@ -16,12 +16,12 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 
 @AliasedType
-@MappedTypes(short[].class)
+@MappedTypes(Short[].class)
 public class ShortArrayTypeHandler
-        extends TypeHandler<short[]> {
+        extends TypeHandler<Short[]> {
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, short[] parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, Short[] parameter, JdbcType jdbcType)
             throws SQLException {
         Short[] elements = wrap(parameter);
         ParameterMetaData metaData = ps.getParameterMetaData();
@@ -30,7 +30,7 @@ public class ShortArrayTypeHandler
         ps.setArray(i, array);
     }
 
-    static Short[] wrap(short[] array) {
+    static Short[] wrap(Short[] array) {
         Short[] wrapped = new Short[array.length];
         for (int i = 0; i < array.length; i++)
             wrapped[i] = array[i];
@@ -38,27 +38,27 @@ public class ShortArrayTypeHandler
     }
 
     @Override
-    public short[] getNullableResult(ResultSet rs, String columnName)
+    public Short[] getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
         Array array = rs.getArray(columnName);
         return toShortArray(array);
     }
 
     @Override
-    public short[] getNullableResult(ResultSet rs, int columnIndex)
+    public Short[] getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
         Array array = rs.getArray(columnIndex);
         return toShortArray(array);
     }
 
     @Override
-    public short[] getNullableResult(CallableStatement cs, int columnIndex)
+    public Short[] getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         Array array = cs.getArray(columnIndex);
         return toShortArray(array);
     }
 
-    static short[] toShortArray(Array _array)
+    static Short[] toShortArray(Array _array)
             throws SQLException {
         if (_array == null)
             return null;
@@ -68,19 +68,18 @@ public class ShortArrayTypeHandler
         return toShortArray(array);
     }
 
-    static short[] toShortArray(Object array) {
+    static Short[] toShortArray(Object array) {
         Class<?> arrayClass = array.getClass();
         int n = java.lang.reflect.Array.getLength(array);
-        short[] shorts = new short[n];
+        Short[] shorts = new Short[n];
 
         Class<?> valType = arrayClass.getComponentType();
         IVarConverter<Object> converter = VarConverters.getConverter(valType);
 
         for (int i = 0; i < n; i++) {
             Object v = java.lang.reflect.Array.get(array, i);
-            Short shortVal = converter.toShort(v);
-            if (shortVal != null)
-                shorts[i] = shortVal;
+            Short shortVal = v == null ? null : converter.toShort(v);
+            shorts[i] = shortVal;
         }
         return shorts;
     }
