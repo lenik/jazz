@@ -295,8 +295,11 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             return null;
         }
 
-        if (obj == null)
-            return null;
+        if (obj == null) {
+            obj = outOfTruth(id);
+            if (obj == null)
+                return null;
+        }
 
         // if (tokens.available() > idColumnCount)
         // return PathArrival.shift(idColumnCount, previous, this, obj, tokens);
@@ -308,6 +311,10 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
         target.entity = obj;
         target.preferredExtension = name_ext.b;
         return PathArrival.shift(idColumnCount, previous, this, target, tokens);
+    }
+
+    protected T outOfTruth(Object id) {
+        return null;
     }
 
     @Override
