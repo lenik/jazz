@@ -214,8 +214,9 @@ public abstract class Range<self_t, val_t>
     public self_t parse(String s)
             throws ParseException {
         s = s.trim();
+
         if (s.isEmpty())
-            throw new ParseException("No empty string.");
+            throw new ParseException("unexpected empty string.");
 
         char startType = s.charAt(0);
         switch (startType) {
@@ -258,7 +259,18 @@ public abstract class Range<self_t, val_t>
         return (self_t) this;
     }
 
-    public abstract val_t parseValue(String s)
+    public val_t parseValue(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        String nullStr = nullStr();
+        if (nullStr != null)
+            if (s.equals(nullStr))
+                return null;
+        return parseNonNullValue(s);
+    }
+
+    public abstract val_t parseNonNullValue(String s)
             throws ParseException;
 
     /**

@@ -101,7 +101,7 @@ public class LocalDateRange
     }
 
     @Override
-    public LocalDate parseValue(String s)
+    public LocalDate parseNonNullValue(String s)
             throws ParseException {
         LocalDate now = new LocalDate(chrono);
         DateTimeParserBucket bucket = new DateTimeParserBucket(//
@@ -154,14 +154,14 @@ public class LocalDateRange
             throws ParseException {
         int colon = s.indexOf(':');
         if (colon == -1) {
-            LocalDate point = parseValue(s);
+            LocalDate point = parseNonNullValue(s);
             minMax(point, point);
             return this;
         }
         String startStr = s.substring(0, colon);
         String endStr = s.substring(colon + 1);
-        LocalDate start = startStr.isEmpty() ? null : parseValue(startStr);
-        LocalDate end = endStr.isEmpty() ? null : parseValue(endStr);
+        LocalDate start = startStr.isEmpty() ? null : parseNonNullValue(startStr);
+        LocalDate end = endStr.isEmpty() ? null : parseNonNullValue(endStr);
         this.start = start;
         this.end = end;
         this.endInclusive = endInclusive;

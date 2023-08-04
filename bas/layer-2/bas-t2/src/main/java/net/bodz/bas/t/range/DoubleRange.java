@@ -38,7 +38,7 @@ public class DoubleRange
     }
 
     @Override
-    public Double parseValue(String s)
+    public Double parseNonNullValue(String s)
             throws ParseException {
         try {
             return Double.valueOf(s);

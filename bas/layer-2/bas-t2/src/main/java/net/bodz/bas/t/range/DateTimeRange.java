@@ -105,7 +105,7 @@ public class DateTimeRange
     }
 
     @Override
-    public DateTime parseValue(String s)
+    public DateTime parseNonNullValue(String s)
             throws ParseException {
         DateTime now = new DateTime(chrono);
         DateTimeParserBucket bucket = new DateTimeParserBucket(//
@@ -162,14 +162,14 @@ public class DateTimeRange
             throws ParseException {
         int colon = s.indexOf(':');
         if (colon == -1) {
-            DateTime point = parseValue(s);
+            DateTime point = parseNonNullValue(s);
             minMax(point, point);
             return this;
         }
         String startStr = s.substring(0, colon);
         String endStr = s.substring(colon + 1);
-        DateTime start = startStr.isEmpty() ? null : parseValue(startStr);
-        DateTime end = endStr.isEmpty() ? null : parseValue(endStr);
+        DateTime start = startStr.isEmpty() ? null : parseNonNullValue(startStr);
+        DateTime end = endStr.isEmpty() ? null : parseNonNullValue(endStr);
         this.start = start;
         this.end = end;
         this.endInclusive = endInclusive;

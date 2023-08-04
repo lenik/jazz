@@ -38,7 +38,7 @@ public class ShortRange
     }
 
     @Override
-    public Short parseValue(String s)
+    public Short parseNonNullValue(String s)
             throws ParseException {
         try {
             return Short.valueOf(s);

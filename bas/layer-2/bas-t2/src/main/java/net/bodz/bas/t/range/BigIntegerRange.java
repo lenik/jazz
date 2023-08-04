@@ -39,7 +39,7 @@ public class BigIntegerRange
     }
 
     @Override
-    public BigInteger parseValue(String s)
+    public BigInteger parseNonNullValue(String s)
             throws ParseException {
         try {
             return new BigInteger(s);
