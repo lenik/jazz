@@ -38,7 +38,7 @@ public class IntegerRange
     }
 
     @Override
-    public Integer parseValue(String s)
+    public Integer parseNonNullValue(String s)
             throws ParseException {
         try {
             return Integer.valueOf(s);

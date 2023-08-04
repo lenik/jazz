@@ -38,7 +38,7 @@ public class FloatRange
     }
 
     @Override
-    public Float parseValue(String s)
+    public Float parseNonNullValue(String s)
             throws ParseException {
         try {
             return Float.valueOf(s);

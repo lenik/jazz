@@ -16,7 +16,7 @@ public class RangeVarsFn {
             throws ParseException {
         String pointStr = map.getString(key);
         if (pointStr != null) {
-            newValue.parseValue(pointStr);
+            newValue.parseNonNullValue(pointStr);
             return newValue;
         }
         String rangeStr = map.getString(key + "Range");

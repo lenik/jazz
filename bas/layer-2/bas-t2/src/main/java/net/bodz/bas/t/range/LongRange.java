@@ -37,7 +37,7 @@ public class LongRange
     }
 
     @Override
-    public Long parseValue(String s)
+    public Long parseNonNullValue(String s)
             throws ParseException {
         try {
             return Long.valueOf(s);

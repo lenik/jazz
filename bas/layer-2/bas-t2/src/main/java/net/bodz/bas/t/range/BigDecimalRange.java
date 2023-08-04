@@ -39,7 +39,7 @@ public class BigDecimalRange
     }
 
     @Override
-    public BigDecimal parseValue(String s)
+    public BigDecimal parseNonNullValue(String s)
             throws ParseException {
         try {
             return new BigDecimal(s);
