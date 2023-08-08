@@ -51,7 +51,7 @@ public abstract class BasHttpd
         if (hostName != null)
             config.setHostName(hostName);
         if (port != 0)
-            config.setPortNumber(port);
+            config.addPort(port);
 
         EchoServer server = new EchoServer(config);
         server.start();

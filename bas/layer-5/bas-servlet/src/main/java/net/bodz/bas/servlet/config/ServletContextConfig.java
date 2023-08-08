@@ -32,7 +32,7 @@ public class ServletContextConfig {
     Map<String, String> extensionMap;
 
     String hostName;
-    int portNumber;
+    List<Integer> portNumbers = new ArrayList<>();
     String contextPath = "";
 
     List<String> welcomeFiles = new ArrayList<String>();
@@ -89,12 +89,21 @@ public class ServletContextConfig {
         this.hostName = hostName;
     }
 
-    public int getPortNumber() {
-        return portNumber;
+    public List<Integer> getPorts() {
+        return portNumbers;
+    }
+
+    public void addPort(int portNumber) {
+        portNumbers.add(portNumber);
+    }
+
+    public void removePort(int portNumber) {
+        portNumbers.remove(portNumber);
     }
 
     public void setPortNumber(int portNumber) {
-        this.portNumber = portNumber;
+        portNumbers.clear();
+        portNumbers.add(portNumber);
     }
 
     public String getContextPath() {
@@ -120,7 +129,10 @@ public class ServletContextConfig {
                     "Illegal href: expected either absolute URL or context-relative href: " + href);
         else {
             String contextPath = getContextPath();
-            String prefix = "http://" + getHostName("localhost") + ":" + getPortNumber() + contextPath;
+            int portNumber = 80;
+            if (!portNumbers.isEmpty())
+                portNumber = portNumbers.get(0);
+            String prefix = "http://" + getHostName("localhost") + ":" + portNumber + contextPath;
             urlString = prefix + "/" + href;
         }
 
