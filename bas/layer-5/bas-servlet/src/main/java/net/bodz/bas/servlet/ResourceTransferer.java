@@ -24,24 +24,41 @@ public class ResourceTransferer {
     private HttpServletRequest req;
     private HttpServletResponse resp;
 
+    private String mode;
+    private boolean attachmentMode;
+
     public ResourceTransferer(HttpServletRequest req, HttpServletResponse resp) {
         this.req = req;
         this.resp = resp;
+        this.mode = req.getParameter("mode");
+        if (mode != null)
+            this.attachmentMode = "attachment".equals(mode);
+    }
+
+    public boolean isAttachment() {
+        return attachmentMode;
+    }
+
+    public void setAttachment(boolean attachment) {
+        this.attachmentMode = attachment;
     }
 
     public void transfer(URL url, ICacheControl cacheControl)
             throws IOException {
         String filename = null;
         String description = null;
-        String mode = req.getParameter("mode");
-        if (mode != null)
-            if ("attachment".equals(mode)) {
-                File file = FileURL.toFile(url, null);
-                if (file != null)
-                    filename = file.getName();
-            }
-
+        if (isAttachment())
+            filename = getFilenameFromUrl(url);
         transfer(url, filename, description, cacheControl);
+    }
+
+    static String getFilenameFromUrl(URL url) {
+        if (url != null) {
+            File file = FileURL.toFile(url, null);
+            if (file != null)
+                return file.getName();
+        }
+        return null;
     }
 
     public void transfer(URL url, String filename, String description, ICacheControl cacheControl)
@@ -49,10 +66,10 @@ public class ResourceTransferer {
         URLBlob blob = new URLBlob(url);
         blob.setFilename(filename);
         blob.setDescription(description);
-        transfer(blob, cacheControl);
+        transfer(blob, filename != null, cacheControl);
     }
 
-    public void transfer(IBlob blob, ICacheControl cacheControl)
+    public void transfer(IBlob blob, boolean attachment, ICacheControl cacheControl)
             throws IOException {
         // if (!resource.canRead()) {
         // resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
@@ -81,9 +98,9 @@ public class ResourceTransferer {
          * @see RFC 2183 2.10
          */
         String filename = blob.getFilename();
-        if (filename != null) {
+        if (filename != null && attachment) {
             // String filename = FilePath.getBaseName(path);
-            String contentDisposition = ContentDisposition.format(filename, true, false);
+            String contentDisposition = ContentDisposition.format(filename, attachment, false);
 
             if (contentDisposition != null) {
                 resp.setHeader("Content-Disposition", contentDisposition);
@@ -117,9 +134,9 @@ public class ResourceTransferer {
             /**
              * @see RFC 2616 14.21
              *      <p>
-             *      To mark a response as "never expires," an origin server sends an Expires date approximately one year
-             *      from the time the response is sent. HTTP/1.1 servers SHOULD NOT send Expires dates more than one
-             *      year in the future.
+             *      To mark a response as "never expires," an origin server sends an Expires date
+             *      approximately one year from the time the response is sent. HTTP/1.1 servers
+             *      SHOULD NOT send Expires dates more than one year in the future.
              */
             resp.setDateHeader("Expires", System.currentTimeMillis() + maxAge * 1000L);
         }
@@ -127,10 +144,11 @@ public class ResourceTransferer {
         /**
          * @see RFC 2616 13.3.2
          *      <p>
-         *      The ETag response-header field value, an entity tag, provides for an "opaque" cache validator. This
-         *      might allow more reliable validation in situations where it is inconvenient to store modification dates,
-         *      where the one-second resolution of HTTP date values is not sufficient, or where the origin server wishes
-         *      to avoid certain paradoxes that might arise from the use of modification dates.
+         *      The ETag response-header field value, an entity tag, provides for an "opaque" cache
+         *      validator. This might allow more reliable validation in situations where it is
+         *      inconvenient to store modification dates, where the one-second resolution of HTTP
+         *      date values is not sufficient, or where the origin server wishes to avoid certain
+         *      paradoxes that might arise from the use of modification dates.
          */
         String eTag = null;
         // if (eTag != null) resp.setHeader("E-Tag", eTag);

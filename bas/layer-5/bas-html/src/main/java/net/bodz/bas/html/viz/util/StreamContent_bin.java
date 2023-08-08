@@ -44,7 +44,7 @@ public class StreamContent_bin
 
         ResourceTransferer transferer = new ResourceTransferer(req, resp);
 
-        transferer.transfer(blob, content);
+        transferer.transfer(blob, true, content);
         return null;
     }
 
