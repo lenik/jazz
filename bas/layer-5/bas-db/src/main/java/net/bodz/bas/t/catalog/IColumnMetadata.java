@@ -136,6 +136,10 @@ public interface IColumnMetadata
 
     int getScale();
 
+    String getPrecisionExpr();
+
+    String getScaleExpr();
+
     String getDefaultValue();
 
     int getVerboseLevel();
