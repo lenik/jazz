@@ -64,6 +64,8 @@ public class DefaultColumnMetadata
     int columnDisplaySize;
     int precision;
     int scale;
+    String precisionExpr;
+    String scaleExpr;
 
     String defaultValue;
 
@@ -377,6 +379,24 @@ public class DefaultColumnMetadata
 
     public void setScale(int scale) {
         this.scale = scale;
+    }
+
+    @Override
+    public String getPrecisionExpr() {
+        return precisionExpr;
+    }
+
+    public void setPrecisionExpr(String precisionExpr) {
+        this.precisionExpr = precisionExpr;
+    }
+
+    @Override
+    public String getScaleExpr() {
+        return scaleExpr;
+    }
+
+    public void setScaleExpr(String scaleExpr) {
+        this.scaleExpr = scaleExpr;
     }
 
     @Override
