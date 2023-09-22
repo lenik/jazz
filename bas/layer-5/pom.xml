@@ -15,6 +15,7 @@
         <module>bas-c5</module>
         <module>bas-code</module>
         <module>bas-db</module>
+        <module>bas-doc</module>
         <module>bas-draw</module>
         <module>bas-flow</module>
         <module>bas-html</module>
