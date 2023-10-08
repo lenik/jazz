@@ -4,7 +4,9 @@ public enum ListStyleTypeMode {
 
     none,
 
-    disc, circle, square,
+    disc,
+    circle,
+    square,
 
     /** Decimal numbers, beginning with 1. */
     decimal,
@@ -25,12 +27,16 @@ public enum ListStyleTypeMode {
     armenian,
 
     /** Lowercase ascii letters (a, b, c, ... z). */
-    lower_latin, lower_alpha,
+    lower_latin,
+    lower_alpha,
 
     /** Uppercase ascii letters (A, B, C, ... Z). */
-    upper_latin, upper_alpha,
+    upper_latin,
+    upper_alpha,
 
     /** Lowercase classical Greek alpha, beta, gamma, ... (α, β, γ, ...) */
     lower_greek,
+
+    ;
 
 }
