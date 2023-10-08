@@ -31,11 +31,15 @@ public class StringVarConverter
 
     @Override
     public BigInteger toBigInteger(String value) {
+        if ("undefined".equals(value))
+            return null;
         return new BigInteger(value);
     }
 
     @Override
     public BigDecimal toBigDecimal(String value) {
+        if ("undefined".equals(value))
+            return null;
         return new BigDecimal(value);
     }
 
