@@ -24,13 +24,13 @@ public class XwpfRunNode
     }
 
     @Override
-    public XWPFRun getElement() {
-        return element;
+    public boolean isRun() {
+        return true;
     }
 
     @Override
-    public XwpfRunNode getClosestRun() {
-        return this;
+    public XWPFRun getElement() {
+        return element;
     }
 
     @Override

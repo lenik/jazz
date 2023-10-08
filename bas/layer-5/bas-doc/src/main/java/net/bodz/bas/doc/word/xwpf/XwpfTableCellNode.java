@@ -22,13 +22,13 @@ public class XwpfTableCellNode
     }
 
     @Override
-    public XWPFTableCell getElement() {
-        return element;
+    public boolean isPars() {
+        return true;
     }
 
     @Override
-    public XwpfTableCellNode getClosestTableCell() {
-        return this;
+    public XWPFTableCell getElement() {
+        return element;
     }
 
 }

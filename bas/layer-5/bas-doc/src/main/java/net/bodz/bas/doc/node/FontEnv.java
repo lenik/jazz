@@ -1,16 +1,21 @@
 package net.bodz.bas.doc.node;
 
-import net.bodz.bas.doc.attr.MeasureLength;
+import net.bodz.bas.doc.property.MeasureLength;
 
 public class FontEnv
-        extends DocRunGroup {
+        extends AbstractRunGroup {
 
     String family;
     MeasureLength size;
     MeasureLength charSpacing;
 
-    public FontEnv(IDocNode parent) {
+    public FontEnv(INode parent) {
         super(parent);
+    }
+
+    @Override
+    public NodeType getType() {
+        return NodeType.FONT_ENV;
     }
 
     public String getFamily() {
@@ -35,6 +40,11 @@ public class FontEnv
 
     public void setCharSpacing(MeasureLength charSpacing) {
         this.charSpacing = charSpacing;
+    }
+
+    @Override
+    public boolean canReduce() {
+        return family == null && size == null && charSpacing == null;
     }
 
     @Override

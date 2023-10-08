@@ -26,9 +26,4 @@ public class XwpfTableNode
         return element;
     }
 
-    @Override
-    public XwpfTableNode getClosestTable() {
-        return this;
-    }
-
 }

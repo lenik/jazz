@@ -22,13 +22,13 @@ public class XwpfParNode
     }
 
     @Override
-    public XWPFParagraph getElement() {
-        return element;
+    public boolean isPar() {
+        return true;
     }
 
     @Override
-    public XwpfParNode getClosestParagraph() {
-        return this;
+    public XWPFParagraph getElement() {
+        return element;
     }
 
 }

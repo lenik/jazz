@@ -9,9 +9,9 @@ import net.bodz.bas.t.list.IListEx;
 
 public abstract class AbstractDocNode
         implements
-            IDocNode {
+            INode {
 
-    final IDocNode parent;
+    final INode parent;
     final Map<String, Object> attributes = new HashMap<>();
 
     String styleClass;
@@ -19,7 +19,7 @@ public abstract class AbstractDocNode
     String background;
     // String border;
 
-    public AbstractDocNode(IDocNode parent) {
+    public AbstractDocNode(INode parent) {
         this.parent = parent;
     }
 
@@ -35,12 +35,12 @@ public abstract class AbstractDocNode
     }
 
     @Override
-    public IDocNode getParent() {
+    public INode getParent() {
         return parent;
     }
 
     @Override
-    public IListEx<? extends IDocNode> getChildren() {
+    public IListEx<? extends INode> getChildren() {
         return AutoLists.emptyAutoList();
     }
 
@@ -53,9 +53,13 @@ public abstract class AbstractDocNode
             visitor.attribute(key, val);
         }
 
+        nodeProperties(visitor);
         nodeAccept(visitor);
 
         visitor.endNode(this);
+    }
+
+    protected void nodeProperties(IDocVisitor visitor) {
     }
 
     protected void nodeAccept(IDocVisitor visitor) {
@@ -63,6 +67,30 @@ public abstract class AbstractDocNode
 
     @Override
     public void internalAccept(IDocVisitor visitor) {
+    }
+
+    public String getStyleClass() {
+        return styleClass;
+    }
+
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     @Override
