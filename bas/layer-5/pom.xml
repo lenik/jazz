@@ -30,6 +30,7 @@
         <module>bas-tex</module>
         <module>bas-ui</module>
         <module>bas-vfs</module>
+        <!--module>bas-x509</module-->
     </modules>
     <properties>
     </properties>
