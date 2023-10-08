@@ -19,6 +19,11 @@ public class XwpfDocNode
     }
 
     @Override
+    public XwpfDocNode getDocument() {
+        return this;
+    }
+
+    @Override
     public XwpfNodeType getType() {
         return XwpfNodeType.DOCUMENT;
     }
@@ -29,8 +34,8 @@ public class XwpfDocNode
     }
 
     @Override
-    public XwpfDocNode getClosestDocument() {
-        return this;
+    public boolean isPars() {
+        return true;
     }
 
     static final String TRACK_REVISIONS = "trackRevisions";

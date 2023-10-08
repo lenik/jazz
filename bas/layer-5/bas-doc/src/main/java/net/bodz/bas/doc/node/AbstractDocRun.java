@@ -1,14 +1,14 @@
 package net.bodz.bas.doc.node;
 
-import net.bodz.bas.t.list.AutoLists;
-import net.bodz.bas.t.list.IAutoList;
+import net.bodz.bas.doc.node.util.DocNodeLists;
+import net.bodz.bas.doc.node.util.IDocNodeList;
 
 public abstract class AbstractDocRun
         extends AbstractDocNode
         implements
-            IDocRun {
+            IRun {
 
-    public AbstractDocRun(IDocNode parent) {
+    public AbstractDocRun(INode parent) {
         super(parent);
     }
 
@@ -18,8 +18,15 @@ public abstract class AbstractDocRun
     }
 
     @Override
-    public IAutoList<? extends IDocNode> getChildren() {
-        return AutoLists.emptyAutoList();
+    public IDocNodeList<? extends INode> getChildren() {
+        return DocNodeLists.emptyList();
+    }
+
+    @Override
+    protected void nodeProperties(IDocVisitor visitor) {
+        // String text = getText();
+        // if (text != null)
+        // visitor.property("text", text);
     }
 
 }

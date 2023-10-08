@@ -2,49 +2,49 @@ package net.bodz.bas.doc.node;
 
 public interface IDocVisitor {
 
-    default void beginNode(IDocNode node) {
+    default void beginNode(INode node) {
     }
 
-    default void endNode(IDocNode node) {
+    default void endNode(INode node) {
     }
 
     default void attribute(String name, Object value) {
     }
 
-    default void par(IDocPar par) {
+    default void property(String name, Object value) {
     }
 
-    default void run(IDocRun run) {
+    default void document(Document doc) {
     }
 
-    default void document(DocDocument doc) {
+    default void hr(Hr hr) {
     }
 
-    default void hr(DocHr hr) {
+    default void image(Image image) {
     }
 
-    default void image(DocImage image) {
+    default void partGroup(PartGroup partGroup) {
     }
 
-    default void section(DocSection section) {
+    default void part(Part part, int index) {
     }
 
-    default void list(DocListPar list) {
+    default void list(ListPar list) {
     }
 
-    default void listItem(IDocPar item) {
+    default void listItem(IPar par, int index, int itemIndex) {
     }
 
-    default void textBox(DocTextBox textBox) {
+    default void textBox(TextBox textBox) {
     }
 
-    default void table(DocTable table) {
+    default void table(Table table) {
     }
 
-    default void tableRow(DocTableRow row) {
+    default void tableRow(TableRow row, int index) {
     }
 
-    default void tableCell(DocTableCell cell) {
+    default void tableCell(TableCell cell, int index) {
     }
 
     default void fontEnv(FontEnv fontEnv) {
@@ -53,10 +53,10 @@ public interface IDocVisitor {
     default void fontStyleEnv(FontStyleEnv fontStyleEnv) {
     }
 
-    default void textPar(DocTextPar textPar) {
+    default void textPar(TextPar textPar) {
     }
 
-    default void textRun(DocTextRun textRun) {
+    default void textRun(TextRun textRun) {
     }
 
     default void chars(String s) {

@@ -2,6 +2,8 @@ package net.bodz.bas.doc.word.xwpf;
 
 import java.util.Stack;
 
+import net.bodz.bas.t.stack.TypePredicate;
+
 public abstract class AbstractXwpfNode
         implements
             IXwpfNode {
@@ -23,30 +25,20 @@ public abstract class AbstractXwpfNode
     }
 
     @Override
-    public synchronized Stack<TextStyle> getStyleStack() {
-        if (styleStack == null)
-            styleStack = new Stack<>();
-        return styleStack;
-    }
-
-    public TextStyle beginStyle() {
-        Stack<TextStyle> stack = getStyleStack();
-        TextStyle top = stack.isEmpty() ? null : stack.lastElement();
-        TextStyle style;
-        if (top == null)
-            style = new TextStyle();
-        else
-            style = new TextStyle(top); // clone
-        stack.push(style);
-        return style;
-    }
-
-    public TextStyle endStyle() {
-        Stack<TextStyle> stack = getStyleStack();
-        if (stack.isEmpty())
-            throw new IllegalStateException("stack underflow");
-        TextStyle top = stack.pop();
-        return top;
+    public <R extends IXwpfNode> //
+    R closest(TypePredicate<IXwpfNode, R> predicate) {
+        if (predicate == null)
+            throw new NullPointerException("predicate");
+        IXwpfNode node = this;
+        while (node != null) {
+            if (predicate.test(node)) {
+                @SuppressWarnings("unchecked")
+                R typed = (R) node;
+                return typed;
+            }
+            node = node.getParent();
+        }
+        return null;
     }
 
 }

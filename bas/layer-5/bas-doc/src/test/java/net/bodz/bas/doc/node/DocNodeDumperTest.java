@@ -3,9 +3,8 @@ package net.bodz.bas.doc.node;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.doc.attr.ElementType;
-import net.bodz.bas.doc.node.DocDocument;
-import net.bodz.bas.doc.node.DocWriter;
+import net.bodz.bas.doc.io.DomWriter;
+import net.bodz.bas.doc.property.ElementType;
 import net.bodz.bas.io.Stdio;
 
 public class DocNodeDumperTest
@@ -16,10 +15,10 @@ public class DocNodeDumperTest
     }
 
     public static void main(String[] args) {
-        DocDocument doc = new DocDocument();
-        doc.getTitle().setText("document 1");
+        Document doc = new Document();
+        doc.title.setText("document 1");
 
-        DocWriter out = new DocWriter(doc);
+        DomWriter out = new DomWriter(doc);
         out.section("section 1");
         out.text("section text");
 
@@ -33,6 +32,9 @@ public class DocNodeDumperTest
         out.end(); // section
 
         doc.dump(Stdio.cout);
+
+        String md = doc.toMarkdown();
+        System.out.println(md);
     }
 
 }

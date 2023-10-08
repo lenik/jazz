@@ -1,20 +1,21 @@
 package net.bodz.bas.doc.word.xwpf;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 
 import org.apache.poi.xwpf.usermodel.*;
 
-import net.bodz.bas.doc.attr.ElementType;
-import net.bodz.bas.doc.attr.MeasureLength;
-import net.bodz.bas.doc.attr.SectionLevel;
-import net.bodz.bas.doc.io.IDocumentWriter;
+import net.bodz.bas.doc.io.IDocWriter;
+import net.bodz.bas.doc.property.ElementType;
+import net.bodz.bas.doc.property.MeasureLength;
+import net.bodz.bas.doc.property.PartLevel;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.t.variant.MutableVariant;
 
 public class WordWriter
         implements
-            IDocumentWriter<WordWriter> {
+            IDocWriter<WordWriter> {
 
     static final double baseSizeInPoints = 12; // 12pt default
 
@@ -50,7 +51,7 @@ public class WordWriter
 
     protected XwpfDocNode resolveDocument() {
         IXwpfNode top = stackTop();
-        XwpfDocNode docNode = top.getClosestDocument();
+        XwpfDocNode docNode = top.getDocument();
         if (docNode == null)
             throw new IllegalStateException("no context document");
         return docNode;
@@ -58,7 +59,7 @@ public class WordWriter
 
     protected XwpfParNode resolveParagraph() {
         IXwpfNode top = stackTop();
-        XwpfParNode parNode = top.getClosestParagraph();
+        XwpfParNode parNode = top.closest(XwpfPredicates.PAR);
         if (parNode == null) {
             XWPFParagraph par = resolveDocument().getElement().createParagraph();
             parNode = new XwpfParNode(top, par);
@@ -69,7 +70,7 @@ public class WordWriter
 
     protected XwpfRunNode resolveRun() {
         IXwpfNode top = stackTop();
-        XwpfRunNode runNode = top.getClosestRun();
+        XwpfRunNode runNode = top.closest(XwpfPredicates.RUN);
         if (runNode == null) {
             XWPFRun run = resolveParagraph().getElement().createRun();
             runNode = new XwpfRunNode(top, run);
@@ -80,7 +81,7 @@ public class WordWriter
 
     protected XwpfTableNode resolveTable() {
         IXwpfNode top = stackTop();
-        XwpfTableNode tableNode = top.getClosestTable();
+        XwpfTableNode tableNode = top.closest(XwpfPredicates.TABLE);
         if (tableNode == null)
             throw new IllegalStateException("no context table");
         return tableNode;
@@ -88,7 +89,7 @@ public class WordWriter
 
     protected XwpfTableRowNode resolveTableRow() {
         IXwpfNode top = stackTop();
-        XwpfTableRowNode rowNode = top.getClosestTableRow();
+        XwpfTableRowNode rowNode = top.closest(XwpfPredicates.TABLE_ROW);
         if (rowNode == null) {
             XwpfTableNode tableNode = resolveTable();
             XWPFTable table = tableNode.getElement();
@@ -102,7 +103,7 @@ public class WordWriter
 
     protected XwpfTableCellNode resolveTableCell() {
         IXwpfNode top = stackTop();
-        XwpfTableCellNode cellNode = top.getClosestTableCell();
+        XwpfTableCellNode cellNode = top.closest(XwpfPredicates.TABLE_CELL);
         if (cellNode == null) {
             XwpfTableRowNode rowNode = resolveTableRow();
             XWPFTableRow tableRow = rowNode.getElement();
@@ -157,7 +158,7 @@ public class WordWriter
     }
 
     @Override
-    public WordWriter section(SectionLevel level, Object title) {
+    public WordWriter section(PartLevel level, String title) {
         return null;
     }
 
@@ -173,7 +174,7 @@ public class WordWriter
 
     protected TextStyle beginStyle() {
         XwpfRunNode runNode = resolveRun();
-        TextStyle style = runNode.beginStyle();
+        TextStyle style = null; //runNode.beginStyle();
         return style;
     }
 
@@ -204,7 +205,7 @@ public class WordWriter
     @Override
     public WordWriter table() {
         IXwpfNode top = stackTop();
-        XwpfDocNode document = top.getClosestDocument();
+        XwpfDocNode document = top.getDocument();
         XWPFTable table = document.getElement().createTable();
         XwpfTableNode tableNode = new XwpfTableNode(top, table);
         stack.push(tableNode);
@@ -223,7 +224,7 @@ public class WordWriter
     @Override
     public WordWriter th() {
         td();
-        XwpfTableCellNode cellNode = stackTop().getClosestTableCell();
+        XwpfTableCellNode cellNode = stackTop().closest(XwpfPredicates.TABLE_CELL);
         XWPFTableCell cell = cellNode.getElement();
         cell.addParagraph();
         // TODO
@@ -258,8 +259,8 @@ public class WordWriter
 
     protected WordWriter beginStyle(TextStyle style) {
         IXwpfNode top = stackTop();
-        Stack<TextStyle> styleStack = top.getStyleStack();
-        styleStack.push(style);
+//        Stack<TextStyle> styleStack = top.getStyleStack();
+//        styleStack.push(style);
         return this;
     }
 
@@ -299,8 +300,32 @@ public class WordWriter
     }
 
     @Override
+    public WordWriter data(Object data) {
+        return text(data.toString());
+    }
+
+    @Override
     public WordWriter text(String s) {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public void write(int ch)
+            throws IOException {
+        String s = new String(new int[] { ch }, 0, 1);
+        text(s);
+    }
+
+    @Override
+    public void write(char[] chars, int off, int len)
+            throws IOException {
+        String s = new String(chars, off, len);
+        text(s);
+    }
+
+    @Override
+    public boolean isClosed() {
+        return stack.isEmpty();
     }
 
 }
