@@ -1,21 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--
-
-The Basics-->
+    <!-- The Basics -->
     <groupId>net.bodz.bas</groupId>
     <artifactId>bas-parent</artifactId>
     <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
         <encoding>utf-8</encoding>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     </properties>
-    <!--
-
-Dependency Management-->
+    <!-- Dependency Management -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -114,6 +111,11 @@ Dependency Management-->
                 <version>1.5.2</version>
             </dependency>
             <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>2.9.1</version>
@@ -129,9 +131,9 @@ Dependency Management-->
                 <version>4.01</version>
             </dependency>
             <dependency>
-              <groupId>org.apache.httpcomponents</groupId>
-              <artifactId>httpclient</artifactId>
-              <version>4.5.2</version>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -142,6 +144,22 @@ Dependency Management-->
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j-impl</artifactId>
                 <version>2.18.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>5.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>5.2.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
@@ -178,11 +196,91 @@ Dependency Management-->
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.36</version>
             </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>2.12.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.xfire</groupId>
+                <artifactId>xfire-all</artifactId>
+                <version>1.2.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-plexus</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-ws-security</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-picocontainer</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-xmpp</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-jaxb2</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-jms</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-generator</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-xmlbeans</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-castor</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-annotations</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-jaxb</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-jaxws</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-loom</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.xfire</groupId>
+                        <artifactId>xfire-spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>stax</groupId>
+                        <artifactId>stax-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>xerces</groupId>
+                        <artifactId>xmlParserAPIs</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--
-
-Build Settings-->
+    <!-- Build Settings -->
     <build>
         <pluginManagement>
             <plugins>
@@ -254,13 +352,18 @@ Build Settings-->
                             <configuration>
                                 <createSourcesJar>true</createSourcesJar>
                                 <transformers combine.children="append">
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer"/>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.PluginXmlResourceTransformer"/>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer" />
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.PluginXmlResourceTransformer" />
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                    <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                         <resource>META-INF/programs</resource>
                                     </transformer>
-                                    <transformer implementation="org.kordamp.shade.resources.ServicesResourceTransformer">
+                                    <transformer
+                                        implementation="org.kordamp.shade.resources.ServicesResourceTransformer">
                                         <path>META-INF/features</path>
                                     </transformer>
                                 </transformers>
@@ -389,18 +492,14 @@ Build Settings-->
             </testResource>
         </testResources>
     </build>
-    <!--
-
-More Project Information-->
+    <!-- More Project Information -->
     <name>BAS Parent</name>
     <url>http://bas.bodz.net/</url>
     <organization>
         <name>boDz Software Foundation</name>
         <url>http://www.bodz.net</url>
     </organization>
-    <!--
-
-Environment Settings-->
+    <!-- Environment Settings -->
     <distributionManagement>
         <repository>
             <id>z-m2</id>
@@ -442,7 +541,7 @@ Environment Settings-->
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore/>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>
