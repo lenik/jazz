@@ -29,5 +29,5 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 1 :: C1</name>
+    <name>BAS :: Layer 1 :: Bean</name>
 </project>

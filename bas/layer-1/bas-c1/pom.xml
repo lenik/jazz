@@ -28,7 +28,6 @@
           <version>2.3.1</version>
           <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-api</artifactId>
@@ -44,6 +43,12 @@
             <artifactId>bas-proxy-java</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- 
+        <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-all</artifactId>
+        </dependency>
+         -->
     </dependencies>
     <name>BAS :: Layer 1 :: C1</name>
 </project>
