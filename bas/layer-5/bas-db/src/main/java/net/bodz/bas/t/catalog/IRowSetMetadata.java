@@ -69,6 +69,10 @@ public interface IRowSetMetadata
         return indexOfColumn(name, true);
     }
 
+    /**
+     * @param index
+     *            0-based.
+     */
     IColumnMetadata getColumn(int index);
 
     default IColumnMetadata findColumnByJavaName(String javaName) {
