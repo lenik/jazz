@@ -46,4 +46,8 @@ public interface IHaveRuns
         return getRuns().append(new FontStyleEnv(this));
     }
 
+    default Image addImage() {
+        return getRuns().append(new Image(this));
+    }
+
 }

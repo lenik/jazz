@@ -20,4 +20,6 @@ public interface IPar
 
     HorizAlignment getAlignment();
 
+    void setAlignment(HorizAlignment alignment);
+
 }

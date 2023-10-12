@@ -28,6 +28,10 @@ public class TableCell
         return row;
     }
 
+    public Table getTable() {
+        return row.getTable();
+    }
+
     @Override
     public void buildText(StringBuilder a) {
         int n = pars.size();

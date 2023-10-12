@@ -23,6 +23,10 @@ public class TableRow
         return (Table) super.getParent();
     }
 
+    public Table getTable() {
+        return (Table) super.getParent();
+    }
+
     public IAutoList<TableCell> getCells() {
         return cells;
     }
@@ -51,7 +55,7 @@ public class TableRow
     @Override
     public void setText(String s) {
         cells.clear();
-        TableCell cell = new TableCell(this);
+        TableCell cell = addCell();
         cell.setText(s);
         cells.add(cell);
     }
@@ -67,6 +71,10 @@ public class TableRow
         for (TableCell cell : cells) {
             cell.accept(visitor);
         }
+    }
+
+    public TableCell addCell() {
+        return cells.append();
     }
 
 }

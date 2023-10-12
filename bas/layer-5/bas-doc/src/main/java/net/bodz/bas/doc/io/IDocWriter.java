@@ -1,9 +1,11 @@
 package net.bodz.bas.doc.io;
 
 import net.bodz.bas.doc.property.ElementType;
+import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.property.PartLevel;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.res.IStreamInputSource;
 
 public interface IDocWriter<self_t extends IDocWriter<self_t>>
         extends
@@ -108,7 +110,11 @@ public interface IDocWriter<self_t extends IDocWriter<self_t>>
         return u().data(data).end();
     }
 
-    self_t table();
+    default self_t table() {
+        return table(TableHeaderPosition.TOP);
+    }
+
+    self_t table(TableHeaderPosition headerPosition);
 
     self_t tr();
 
@@ -154,11 +160,31 @@ public interface IDocWriter<self_t extends IDocWriter<self_t>>
 
     self_t hr();
 
+    self_t image(IStreamInputSource source, MeasureLength width, MeasureLength height);
+
+    self_t setAlign(HorizAlignment alignment);
+
+    default self_t left() {
+        return setAlign(HorizAlignment.LEFT);
+    }
+
+    default self_t center() {
+        return setAlign(HorizAlignment.CENTER);
+    }
+
+    default self_t right() {
+        return setAlign(HorizAlignment.RIGHT);
+    }
+
     self_t font(String family, MeasureLength size);
 
-    self_t fontFamily(String family);
+    default self_t fontFamily(String family) {
+        return font(family, null);
+    }
 
-    self_t fontSize(MeasureLength size);
+    default self_t fontSize(MeasureLength size) {
+        return font(null, size);
+    }
 
     self_t color(String color);
 

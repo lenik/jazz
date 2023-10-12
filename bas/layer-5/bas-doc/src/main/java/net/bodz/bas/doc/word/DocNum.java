@@ -44,4 +44,9 @@ public class DocNum {
                 paragraph.setSpacingAfter(spaceAfterExceptLast);
     }
 
+    @Override
+    public String toString() {
+        return numId.toString();
+    }
+
 }

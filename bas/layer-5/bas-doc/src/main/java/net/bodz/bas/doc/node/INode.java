@@ -54,6 +54,19 @@ public interface INode
         return null;
     }
 
+    default <T> T closest(TypePredicate<INode, T> predicate) {
+        INode node = this;
+        while (node != null) {
+            if (predicate.test(node)) {
+                @SuppressWarnings("unchecked")
+                T typed = (T) node;
+                return typed;
+            }
+            node = node.getParent();
+        }
+        return null;
+    }
+
     default <T> List<T> ancestors(TypePredicate<INode, T> predicate) {
         List<T> list = new ArrayList<>();
         INode node = this;

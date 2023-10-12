@@ -44,6 +44,7 @@ public abstract class AbstractDocPar
         return alignment;
     }
 
+    @Override
     public void setAlignment(HorizAlignment alignment) {
         if (alignment == null)
             throw new NullPointerException("alignment");

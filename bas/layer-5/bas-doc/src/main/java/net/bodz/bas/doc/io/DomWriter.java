@@ -4,15 +4,18 @@ import java.io.IOException;
 
 import net.bodz.bas.doc.node.*;
 import net.bodz.bas.doc.property.ElementType;
+import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.property.PartLevel;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.t.stack.ContextStack;
 import net.bodz.bas.t.stack.NodePredicates;
 
 public class DomWriter
         implements
-            IStructDocWriter<DomWriter> {
+            IStructDocWriter<DomWriter>,
+            IDomCreatorImpl {
 
     static class np
             extends NodePredicates {
@@ -20,22 +23,47 @@ public class DomWriter
 
     public final ContextStack<INode> stack = new ContextStack<>();
 
+    private IDataFormat dataFormat = SimpleFormat.INSTANCE;
+
     public DomWriter(Document document) {
         stack.push(document);
     }
 
     @Override
+    public IDataFormat getDataFormat() {
+        return dataFormat;
+    }
+
+    public void setDataFormat(IDataFormat dataFormat) {
+        if (dataFormat == null)
+            throw new NullPointerException("dataFormat");
+        this.dataFormat = dataFormat;
+    }
+
+    @Override
+    public DomWriter data(Object data) {
+        String text = formatData(data);
+        text(text);
+        return this;
+    }
+
+    @Override
+    public INode getContext() {
+        return stack.top();
+    }
+
+    @Override
     public DomWriter begin() {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
-        AbstractRunGroup env = runs.addEnv();
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns env = runs.addEnv();
         stack.push(env);
         return this;
     }
 
     @Override
     public DomWriter begin(String className) {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
-        AbstractRunGroup env = runs.addEnv();
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        RunGroup env = runs.addEnv();
         env.setStyleClass(className);
         return this;
     }
@@ -53,7 +81,7 @@ public class DomWriter
             stack.popAhead(np.IS_PAR);
             break;
         case GENERIC_SECTION:
-            stack.popAhead(np.IS_PART);
+            stack.popAhead(np.PART);
             break;
         case CHAPTER:
             stack.popAhead(np.CHAPTER);
@@ -103,7 +131,7 @@ public class DomWriter
 
     @Override
     public void endAll() {
-        stack.popAhead(np.IS_DOC);
+        stack.popAhead(np.DOC);
     }
 
     @Override
@@ -122,12 +150,12 @@ public class DomWriter
         if (element instanceof INode) {
             INode node = (INode) element;
             if (node.isPar() && top.havePars()) {
-                AbstractParGroup pars = (AbstractParGroup) top;
-                pars.pars.append((IPar) node);
+                IHavePars pars = (IHavePars) top;
+                pars.getPars().append((IPar) node);
             } //
             else if (node.isRun() && top.haveRuns()) {
-                AbstractRunGroup runs = (AbstractRunGroup) top;
-                runs.runs.append((IRun) node);
+                IHaveRuns runs = (IHaveRuns) top;
+                runs.getRuns().append((IRun) node);
             }
         }
         return this;
@@ -140,14 +168,14 @@ public class DomWriter
 
         PartGroup group = null;
 
-        group = stack.popAhead(NodePredicates.sectionGroup(level), null);
+        group = stack.popAhead(NodePredicates.partGroup(level), null);
         if (group == null) {
             // not found? create one
             PartGroup above = null;
             if (level.level > PartLevel.LEVEL_MIN)
-                above = stack.findFromTop(NodePredicates.sectionGroupAbove(level));
+                above = stack.findFromTop(NodePredicates.partGroupAbove(level));
 
-            AbstractParGroup pars = stack.popAhead(np.HAVE_PARS);
+            IHavePars pars = stack.popAhead(np.HAVE_PARS);
             if (above != null)
                 for (PartLevel sl = above.getLevel().getDown(); sl.level < level.level; sl = sl.getDown()) {
                     group = pars.addSectionGroup(sl);
@@ -164,7 +192,7 @@ public class DomWriter
 
     @Override
     public DomWriter list(boolean ordered) {
-        AbstractParGroup pars = stack.popAhead(np.HAVE_PARS);
+        IHavePars pars = stack.popAhead(np.HAVE_PARS);
         ListPar listPar = pars.addListPar(ordered);
         stack.push(listPar);
         return this;
@@ -179,7 +207,7 @@ public class DomWriter
     }
 
     protected FontEnv beginFont() {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
         return stack.push(runs.addFontEnv());
     }
 
@@ -188,7 +216,7 @@ public class DomWriter
         if (runs != null) {
             runs = stack.popAhead(np.HAVE_RUNS);
         } else {
-            AbstractParGroup pars = stack.findFromTop(np.HAVE_PARS);
+            IHavePars pars = stack.findFromTop(np.HAVE_PARS);
             if (pars == null)
                 throw new IllegalStateException();
             TextPar par = pars.addTextPar();
@@ -217,16 +245,17 @@ public class DomWriter
 
     @Override
     public DomWriter p() {
-        AbstractParGroup pars = stack.popAhead(np.HAVE_PARS);
+        IHavePars pars = stack.popAhead(np.HAVE_PARS);
         TextPar textPar = pars.addTextPar();
         stack.push(textPar);
         return this;
     }
 
     @Override
-    public DomWriter table() {
-        AbstractParGroup pars = stack.popAhead(np.HAVE_PARS);
+    public DomWriter table(TableHeaderPosition headerPosition) {
+        IHavePars pars = stack.popAhead(np.HAVE_PARS);
         Table table = pars.addTable();
+        table.setHeaderPosition(headerPosition);
         stack.push(table);
         return this;
     }
@@ -263,8 +292,35 @@ public class DomWriter
     }
 
     @Override
+    public DomWriter image(IStreamInputSource source, MeasureLength width, MeasureLength height) {
+        Image image;
+
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS, null);
+        if (runs == null) {
+            IHavePars pars = stack.popAhead(np.HAVE_PARS, null);
+            if (pars == null)
+                throw new IllegalStateException();
+            image = pars.addImage();
+        } else {
+            image = runs.addImage();
+        }
+
+        image.setSource(source);
+        image.setWidth(width);
+        image.setHeight(height);
+        return this;
+    }
+
+    @Override
+    public DomWriter setAlign(HorizAlignment alignment) {
+        IPar par = stack.popAhead(np.IS_PAR);
+        par.setAlignment(alignment);
+        return this;
+    }
+
+    @Override
     public DomWriter font(String family, MeasureLength size) {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
         FontEnv font = new FontEnv(runs);
         if (family != null)
             font.setFamily(family);
@@ -275,18 +331,8 @@ public class DomWriter
     }
 
     @Override
-    public DomWriter fontFamily(String family) {
-        return font(family, null);
-    }
-
-    @Override
-    public DomWriter fontSize(MeasureLength size) {
-        return font(null, size);
-    }
-
-    @Override
     public DomWriter color(String color) {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
         FontEnv font = new FontEnv(runs);
         font.setColor(color);
         stack.push(font);
@@ -295,7 +341,7 @@ public class DomWriter
 
     @Override
     public DomWriter backgroundColor(String color) {
-        AbstractRunGroup runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
         FontEnv font = new FontEnv(runs);
         font.setBackground(color);
         stack.push(font);
@@ -303,16 +349,19 @@ public class DomWriter
     }
 
     @Override
-    public DomWriter data(Object data) {
-        String s = data == null ? null : data.toString();
-        text(s);
-        return this;
-    }
-
-    @Override
     public DomWriter text(String s) {
         INode top = stack.top();
-        top.setText(s);
+        if (top.haveRuns()) {
+            IHaveRuns runs = (IHaveRuns) top;
+            runs.addTextRun(s);
+        } else if (top.havePars()) {
+            IHavePars pars = (IHavePars) top;
+            TextPar par = pars.addTextPar();
+            stack.push(par);
+            par.addText(s);
+        } else {
+            throw new IllegalStateException();
+        }
         return this;
     }
 

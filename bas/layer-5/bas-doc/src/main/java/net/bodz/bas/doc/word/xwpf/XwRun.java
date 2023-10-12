@@ -4,28 +4,23 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import net.bodz.bas.t.variant.IVariant;
 
-public class XwpfRunNode
-        extends AbstractXwpfNode {
+public class XwRun
+        extends AbstractXwNode {
 
     XWPFRun element;
 
-    public XwpfRunNode(XWPFRun element) {
+    public XwRun(XWPFRun element) {
         this(null, element);
     }
 
-    public XwpfRunNode(IXwpfNode parent, XWPFRun element) {
+    public XwRun(IXwNode parent, XWPFRun element) {
         super(parent);
         this.element = element;
     }
 
     @Override
-    public XwpfNodeType getType() {
-        return XwpfNodeType.RUN;
-    }
-
-    @Override
-    public boolean isRun() {
-        return true;
+    public XwNodeType getType() {
+        return XwNodeType.RUN;
     }
 
     @Override

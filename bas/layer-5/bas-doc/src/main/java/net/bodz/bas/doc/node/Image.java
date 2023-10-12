@@ -1,7 +1,7 @@
 package net.bodz.bas.doc.node;
 
 import net.bodz.bas.doc.property.MeasureLength;
-import net.bodz.bas.io.res.builtin.InputStreamSource;
+import net.bodz.bas.io.res.IStreamInputSource;
 
 public class Image
         extends AbstractDocPar
@@ -9,7 +9,7 @@ public class Image
             IRun {
 
     String href;
-    InputStreamSource data;
+    IStreamInputSource source;
     MeasureLength width;
     MeasureLength height;
     String description;
@@ -51,12 +51,12 @@ public class Image
         this.href = href;
     }
 
-    public InputStreamSource getData() {
-        return data;
+    public IStreamInputSource getSource() {
+        return source;
     }
 
-    public void setData(InputStreamSource data) {
-        this.data = data;
+    public void setSource(IStreamInputSource source) {
+        this.source = source;
     }
 
     public MeasureLength getWidth() {

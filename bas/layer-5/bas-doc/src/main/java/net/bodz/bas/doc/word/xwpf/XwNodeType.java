@@ -1,6 +1,6 @@
 package net.bodz.bas.doc.word.xwpf;
 
-public enum XwpfNodeType {
+public enum XwNodeType {
 
     DOCUMENT,
 
@@ -13,5 +13,7 @@ public enum XwpfNodeType {
     TABLE_ROW,
 
     TABLE_CELL,
+
+    PICTURE,
 
 }

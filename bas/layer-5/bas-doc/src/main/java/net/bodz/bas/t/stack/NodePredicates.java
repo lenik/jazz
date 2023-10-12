@@ -8,27 +8,6 @@ public class NodePredicates
         implements
             IConstants {
 
-    public static <R extends INode> //
-    TypePredicate<INode, R> nodeType(Class<R> nodeType) {
-        return new TypePredicate<INode, R>() {
-
-            @Override
-            public boolean test(INode node) {
-                return nodeType.isInstance(node);
-            }
-
-            @Override
-            public String toString() {
-                return "nodeType:" + nodeType.getName();
-            }
-
-        };
-    }
-
-    public static final TypePredicate<INode, Table> TABLE = nodeType(Table.class);
-    public static final TypePredicate<INode, TableRow> TABLE_ROW = nodeType(TableRow.class);
-    public static final TypePredicate<INode, TableCell> TABLE_CELL = nodeType(TableCell.class);
-
     public static <T, R> TypePredicate<T, R> named(String name, TypePredicate<T, R> impl) {
         return new TypePredicate<T, R>() {
 
@@ -45,30 +24,68 @@ public class NodePredicates
         };
     }
 
-    public static final TypePredicate<INode, Document> IS_DOC = named("isDoc",
+    public static <R extends INode> //
+    TypePredicate<INode, R> nodeClass(Class<R> nodeClass) {
+        return new TypePredicate<INode, R>() {
+
+            @Override
+            public boolean test(INode node) {
+                return nodeClass.isInstance(node);
+            }
+
+            @Override
+            public String toString() {
+                return "nodeClass:" + nodeClass.getName();
+            }
+
+        };
+    }
+
+    public static final TypePredicate<INode, Table> CLASS_TABLE = named("class:Table", nodeClass(Table.class));
+    public static final TypePredicate<INode, TableRow> CLASS_TABLE_ROW = named("class:TableRow",
+            nodeClass(TableRow.class));
+    public static final TypePredicate<INode, TableCell> CLASS_TABLE_CELL = named("class:TableCell",
+            nodeClass(TableCell.class));
+
+    public static final TypePredicate<INode, Document> DOC = named("DOC",
             (INode node) -> node.getType() == NodeType.DOCUMENT);
 
-    public static final TypePredicate<INode, PartGroup> IS_PART_GROUP = named("isPartGroup",
+    public static final TypePredicate<INode, PartGroup> PART_GROUP = named("PART_GROUP",
             (INode node) -> node.getType() == NodeType.PART_GROUP);
 
-    public static final TypePredicate<INode, Part> IS_PART = named("isPart",
+    public static final TypePredicate<INode, Part> PART = named("PART",
             (INode node) -> node.getType() == NodeType.PART);
+
+    public static final TypePredicate<INode, Table> TABLE = named("TABLE",
+            (INode node) -> node.getType() == NodeType.TABLE);
+    public static final TypePredicate<INode, TableRow> TABLE_ROW = named("TABLE_ROW",
+            (INode node) -> node.getType() == NodeType.TABLE_ROW);
+    public static final TypePredicate<INode, TableCell> TABLE_CELL = named("TABLE_CELL",
+            (INode node) -> node.getType() == NodeType.TABLE_CELL);
+
+    public static final TypePredicate<INode, ListItem> LIST_ITEM = named("LIST_ITEM",
+            (INode node) -> node.getType() == NodeType.LIST_ITEM);
+
+    public static final TypePredicate<INode, FontEnv> FONT_ENV = named("FONT_ENV",
+            (INode node) -> node.getType() == NodeType.FONT_ENV);
+    public static final TypePredicate<INode, FontStyleEnv> FONT_STYLE_ENV = named("FONT_STYLE_ENV",
+            (INode node) -> node.getType() == NodeType.FONT_STYLE_ENV);
 
     public static final TypePredicate<INode, IPar> IS_PAR = named("isPar", (INode node) -> node.isPar());
     public static final TypePredicate<INode, IRun> IS_RUN = named("isRun", (INode node) -> node.isRun());
-    public static final TypePredicate<INode, AbstractParGroup> HAVE_PARS = named("havePars",
-            (INode node) -> node.havePars());
-    public static final TypePredicate<INode, AbstractRunGroup> HAVE_RUNS = named("haveRuns",
-            (INode node) -> node.haveRuns());
+    public static final TypePredicate<INode, IHavePars> HAVE_PARS = named("havePars", (INode node) -> node.havePars());
+    public static final TypePredicate<INode, IHaveRuns> HAVE_RUNS = named("haveRuns", (INode node) -> node.haveRuns());
 
-    public static final TypePredicate<INode, Part> CHAPTER = section(PartLevel.CHAPTER);
-    public static final TypePredicate<INode, Part> SECTION = section(PartLevel.SECTION);
-    public static final TypePredicate<INode, Part> SUBSECTION = section(PartLevel.SUBSECTION);
-    public static final TypePredicate<INode, Part> SUBSUBSECTION = section(PartLevel.SUBSUBSECTION);
-    public static final TypePredicate<INode, Part> PARAGRAPH = section(PartLevel.PARAGRAPH);
-    public static final TypePredicate<INode, Part> SUBPARAGRAPH = section(PartLevel.SUBPARAGRAPH);
+//    public static final TypePredicate<INode, ListItem> LIST_ITEM = named("listItem", null);
 
-    public static TypePredicate<INode, Part> section(PartLevel level) {
+    public static final TypePredicate<INode, Part> CHAPTER = part(PartLevel.CHAPTER);
+    public static final TypePredicate<INode, Part> SECTION = part(PartLevel.SECTION);
+    public static final TypePredicate<INode, Part> SUBSECTION = part(PartLevel.SUBSECTION);
+    public static final TypePredicate<INode, Part> SUBSUBSECTION = part(PartLevel.SUBSUBSECTION);
+    public static final TypePredicate<INode, Part> PARAGRAPH = part(PartLevel.PARAGRAPH);
+    public static final TypePredicate<INode, Part> SUBPARAGRAPH = part(PartLevel.SUBPARAGRAPH);
+
+    public static TypePredicate<INode, Part> part(PartLevel level) {
         return new TypePredicate<INode, Part>() {
 
             @Override
@@ -84,13 +101,13 @@ public class NodePredicates
 
             @Override
             public String toString() {
-                return "section:" + level;
+                return "part/" + level;
             }
 
         };
     }
 
-    public static TypePredicate<INode, Part> section(int level) {
+    public static TypePredicate<INode, Part> part(int level) {
         return new TypePredicate<INode, Part>() {
 
             @Override
@@ -106,21 +123,21 @@ public class NodePredicates
 
             @Override
             public String toString() {
-                return "section" + level;
+                return "part" + level;
             }
 
         };
 
     }
 
-    public static final TypePredicate<INode, PartGroup> CHAPTERS = sectionGroup(PartLevel.CHAPTER);
-    public static final TypePredicate<INode, PartGroup> SECTIONS = sectionGroup(PartLevel.SECTION);
-    public static final TypePredicate<INode, PartGroup> SUBSECTIONS = sectionGroup(PartLevel.SUBSECTION);
-    public static final TypePredicate<INode, PartGroup> SUBSUBSECTIONS = sectionGroup(PartLevel.SUBSUBSECTION);
-    public static final TypePredicate<INode, PartGroup> PARAGRAPHS = sectionGroup(PartLevel.PARAGRAPH);
-    public static final TypePredicate<INode, PartGroup> SUBPARAGRAPHS = sectionGroup(PartLevel.SUBPARAGRAPH);
+    public static final TypePredicate<INode, PartGroup> CHAPTERS = partGroup(PartLevel.CHAPTER);
+    public static final TypePredicate<INode, PartGroup> SECTIONS = partGroup(PartLevel.SECTION);
+    public static final TypePredicate<INode, PartGroup> SUBSECTIONS = partGroup(PartLevel.SUBSECTION);
+    public static final TypePredicate<INode, PartGroup> SUBSUBSECTIONS = partGroup(PartLevel.SUBSUBSECTION);
+    public static final TypePredicate<INode, PartGroup> PARAGRAPHS = partGroup(PartLevel.PARAGRAPH);
+    public static final TypePredicate<INode, PartGroup> SUBPARAGRAPHS = partGroup(PartLevel.SUBPARAGRAPH);
 
-    public static TypePredicate<INode, PartGroup> sectionGroup(PartLevel level) {
+    public static TypePredicate<INode, PartGroup> partGroup(PartLevel level) {
         return new TypePredicate<INode, PartGroup>() {
 
             @Override
@@ -135,13 +152,13 @@ public class NodePredicates
 
             @Override
             public String toString() {
-                return "sectionGroup:" + level;
+                return "partGroup/" + level;
             }
 
         };
     }
 
-    public static TypePredicate<INode, PartGroup> sectionGroup(int level) {
+    public static TypePredicate<INode, PartGroup> partGroup(int level) {
         return new TypePredicate<INode, PartGroup>() {
 
             @Override
@@ -156,18 +173,18 @@ public class NodePredicates
 
             @Override
             public String toString() {
-                return "sectionGroup" + level;
+                return "partGroup" + level;
             }
 
         };
 
     }
 
-    public static TypePredicate<INode, PartGroup> sectionGroupAbove(PartLevel level) {
-        return sectionGroupAbove(level.level);
+    public static TypePredicate<INode, PartGroup> partGroupAbove(PartLevel level) {
+        return partGroupAbove(level.level);
     }
 
-    public static TypePredicate<INode, PartGroup> sectionGroupAbove(int level) {
+    public static TypePredicate<INode, PartGroup> partGroupAbove(int level) {
         return new TypePredicate<INode, PartGroup>() {
 
             @Override
@@ -182,7 +199,7 @@ public class NodePredicates
 
             @Override
             public String toString() {
-                return "section<" + level;
+                return "part<" + level;
             }
 
         };
@@ -235,10 +252,5 @@ public class NodePredicates
 
         };
     }
-
-    public static final TypePredicate<INode, FontEnv> FONT_ENV = named("fontEnv",
-            (INode node) -> node.getType() == NodeType.FONT_ENV);
-    public static final TypePredicate<INode, FontStyleEnv> FONT_STYLE_ENV = named("fontStyleEnv",
-            (INode node) -> node.getType() == NodeType.FONT_STYLE_ENV);
 
 }

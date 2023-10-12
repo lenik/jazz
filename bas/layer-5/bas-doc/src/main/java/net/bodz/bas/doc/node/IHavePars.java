@@ -14,12 +14,20 @@ public interface IHavePars
 
     IAutoList<IPar> getPars();
 
+    default TextPar addTextPar() {
+        return getPars().append(new TextPar(this));
+    }
+
     default PartGroup addSectionGroup(PartLevel level) {
         return getPars().append(new PartGroup(this, level));
     }
 
     default PartGroup addSectionGroup(int level) {
         return getPars().append(new PartGroup(this, level));
+    }
+
+    default Table addTable() {
+        return getPars().append(new Table(this));
     }
 
     default ListPar addListPar() {
@@ -30,16 +38,12 @@ public interface IHavePars
         return getPars().append(new ListPar(this, ordered));
     }
 
-    default Table addTable() {
-        return getPars().append(new Table(this));
-    }
-
     default Hr addHr() {
         return getPars().append(new Hr(this));
     }
 
-    default TextPar addTextPar() {
-        return getPars().append(new TextPar(this));
+    default Image addImage() {
+        return getPars().append(new Image(this));
     }
 
 }
