@@ -2,7 +2,7 @@ package net.bodz.lily.entity.manager;
 
 import java.nio.charset.Charset;
 
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageException;
@@ -147,11 +147,11 @@ class ResolveProcess
             }
             return new StringContent(ContentTypes.text_plain, markdown);
 
-        case DOC:
+        // case DOC:
         case DOCX:
             if (docxBuilder == null)
                 throw new IllegalUsageException("doc builder isn't set.");
-            WordprocessingMLPackage wordDoc = docxBuilder.buildWordDoc(resolvedEntity, parameters);
+            XWPFDocument wordDoc = docxBuilder.buildWordDoc(resolvedEntity, parameters);
             FileContent file = WordUtils.toFile(wordDoc, getContentPath().getFileName());
             return file;
 
