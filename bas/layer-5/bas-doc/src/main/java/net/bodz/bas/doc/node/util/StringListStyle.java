@@ -1,8 +1,7 @@
 package net.bodz.bas.doc.node.util;
 
 public class StringListStyle
-        implements
-            IListStyle {
+        extends AbstractListStyle {
 
     final String chars;
 

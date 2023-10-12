@@ -64,8 +64,8 @@ public class XwPredicates {
                     (IXwNode node) -> node.getType() == XwNodeType.TABLE_CELL);
 
     public static final TypePredicate<IXwNode, IXwHavePars> HAVE_PARS//
-            = named("isPars", (IXwNode node) -> node.havePars());
+            = named("havePars", (IXwNode node) -> node.havePars());
     public static final TypePredicate<IXwNode, IXwHaveRuns> HAVE_RUNS//
-            = named("isPars", (IXwNode node) -> node.haveRuns());
+            = named("haveRuns", (IXwNode node) -> node.haveRuns());
 
 }

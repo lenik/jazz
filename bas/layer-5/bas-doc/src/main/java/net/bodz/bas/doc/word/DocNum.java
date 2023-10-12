@@ -10,7 +10,7 @@ public class DocNum {
 
     BigInteger numId;
 
-    Integer spaceAfterExceptLast;
+    Integer spaceAfterExceptLast = 0;
 
     public DocNum(BigInteger numId) {
         this.numId = numId;

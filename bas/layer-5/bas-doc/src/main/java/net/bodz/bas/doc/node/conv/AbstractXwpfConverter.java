@@ -10,6 +10,7 @@ import net.bodz.bas.doc.node.INode;
 import net.bodz.bas.doc.node.util.FullDocVisitor;
 import net.bodz.bas.doc.word.DocNums;
 import net.bodz.bas.doc.word.INumStyles;
+import net.bodz.bas.doc.word.XwNumbering;
 import net.bodz.bas.doc.word.xwpf.IXwNode;
 import net.bodz.bas.doc.word.xwpf.XwPredicates;
 
@@ -21,9 +22,7 @@ public abstract class AbstractXwpfConverter
     protected final XWPFDocument _document;
     protected IXwNode x_ptr;
 
-    DocNums nums;
-//    DocNum bullets1;
-//    DocNum decimals1;
+    XwNumbering x_numbering;
 
     protected static class xp
             extends XwPredicates {
@@ -34,9 +33,10 @@ public abstract class AbstractXwpfConverter
             throw new NullPointerException("_document");
         this._document = _document;
 
-        nums = new DocNums(_document);
+//        nums = new DocNums(_document);
 //        bullets1 = nums.addNum(BULLETS);
 //        decimals1 = nums.addNum(DECIMALS);
+        x_numbering = new XwNumbering(_document);
     }
 
     protected final void scope(Supplier<IXwNode> next, INode... visitNodes) {

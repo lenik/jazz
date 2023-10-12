@@ -1,10 +1,12 @@
 package net.bodz.bas.doc.node;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.doc.node.util.FullDocVisitor;
 import net.bodz.bas.doc.node.util.IListStyle;
-import net.bodz.bas.doc.word.DocNum;
+import net.bodz.bas.err.UnexpectedException;
 
 public class ListPar
         extends AbstractParGroup {
@@ -17,7 +19,7 @@ public class ListPar
 
     int itemCount;
 
-    public DocNum _docNum;
+    public BigInteger _docNum;
 
     public ListPar(INode parent) {
         this(parent, false);
@@ -94,18 +96,27 @@ public class ListPar
     }
 
     public List<IListStyle> getStyleVector() {
+        List<IListStyle> vector = new ArrayList<>();
         accept(new FullDocVisitor() {
             @Override
             public void list(ListPar list) {
-                list.getListStyle();
-            }
-
-            @Override
-            public void listItem(IPar par, int index, int itemIndex) {
-                super.listItem(par, index, itemIndex);
+                if (list.isMultiLevel()) {
+                    int level = list.getLevel();
+                    IListStyle style = list.getListStyle();
+                    if (level < vector.size()) {
+                        // the same level has already set, reuse it.
+                        // vector.set(level, style);
+                    } else if (level == vector.size()) {
+                        vector.add(style);
+                    } else {
+                        throw new UnexpectedException();
+                    }
+                    list.internalAccept(this);
+                }
             }
         });
-        return null;
+        // Collections.reverse(vector);
+        return vector;
     }
 
     public int getStartNumber() {

@@ -34,7 +34,7 @@ public class XwTableCell
     @Override
     public XwPar addPar() {
         XWPFParagraph _par = element.addParagraph();
-        return new XwPar(_par);
+        return new XwPar(this, _par);
     }
 
     @Override

@@ -1,18 +1,22 @@
 package net.bodz.bas.doc.node.conv;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.Assert;
 
 import net.bodz.bas.doc.io.DomWriter;
+import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.doc.node.Document;
+import net.bodz.bas.doc.node.ListPar;
+import net.bodz.bas.doc.node.Table;
 import net.bodz.bas.doc.node.TextPar;
+import net.bodz.bas.doc.node.util.Css3ListStyle;
+import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.word.WordTemplates;
 import net.bodz.bas.io.res.builtin.FileResource;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.ui.css3.property.ListStyleTypeMode;
 
 public class WordConverterTest
         extends Assert {
@@ -49,18 +53,18 @@ public class WordConverterTest
         String path = "/usr/share/backgrounds/mate/nature/Aqua.jpg";
         path = "/xxx/logo.png";
 
-        File image = new File(path);
-        out.print("Left");
-        out.center();
-        out.image(new FileResource(image), //
-                MeasureLength.mm(54.8), //
-                MeasureLength.mm(62.4));
-        out.println("Right");
-
-        out.p("image by URL");
-        out.image(new URLResource("file://" + path), //
-                MeasureLength.mm(54.8), //
-                MeasureLength.mm(62.4));
+//        File image = new File(path);
+//        out.print("Left");
+//        out.center();
+//        out.image(new FileResource(image), //
+//                MeasureLength.millimeters(54.8), //
+//                MeasureLength.millimeters(62.4));
+//        out.println("Right");
+//
+//        out.p("image by URL");
+//        out.image(new URLResource("file://" + path), //
+//                MeasureLength.millimeters(54.8), //
+//                MeasureLength.millimeters(62.4));
 
         out.section("section title: part 2");
         out.print("text: the ");
@@ -80,7 +84,9 @@ public class WordConverterTest
 
         out.chapter("chapter: table");
         out.println("following example shows a table.");
-        out.table();
+        Table table = out.newTable();
+        table.setHeaderPosition(TableHeaderPosition.LEFT);
+        table.setStyleClass("Grid Table 4 Accent 1");
         out.tr();
         out.th("column 1");
         out.th("column 2");
@@ -98,27 +104,28 @@ public class WordConverterTest
 
         out.p("ordered list");
         out.ol();
-        out.item("item 1");
-        out.item("item 2");
-        out.item("item 3");
+        out.item("ol item 1" + blah);
+        out.item("ol item 2");
+        out.item("ol item 3");
         out.end();
 
         out.p("unordered list");
         out.ul();
-        out.item("item 1");
-        out.item("item 2");
-        out.item("item 3");
+        out.item("ul item 1");
+        out.item("ul item 2" + blah);
+        out.item("ul item 3");
         out.end();
 
         out.p("multi level");
-        out.ol();
+        setMultiLevel(out.newOl());
+
         out.item("item 1");
         out.item();
         {
-            out.text("item 2");
-            out.ol();
+            out.text("item 2" + blah);
+            setMultiLevel(out.newOl());
             out.item("item 2.1");
-            out.item("item 2.2");
+            out.item("item 2.2" + blah);
             out.item("item 2.3");
             // out.endList();
             out.endItem();
@@ -126,13 +133,13 @@ public class WordConverterTest
         out.item();
         {
             out.text("item 3");
-            out.ol();
+            setMultiLevel(out.newOl());
             out.item("item 3.1");
             out.item();
             {
                 out.text("item 3.2");
-                out.ol();
-                out.item("item 3.2.1");
+                setMultiLevel(out.newOl());
+                out.item("item 3.2.1" + blah);
                 out.item("item 3.2.2");
                 out.item("item 3.2.3");
                 // out.endList();
@@ -145,7 +152,50 @@ public class WordConverterTest
         out.item("item 4");
         out.end();
 
+        System.out.println(doc);
+
         return doc;
+    }
+
+    static final String blah = //
+            " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
+                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
+                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
+                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
+    ;
+
+    void setMultiLevel(ListPar list) {
+        list.setMultiLevel(true);
+
+        int level = list.getLevel();
+
+        ListStyleTypeMode mode;
+        switch (level) {
+        default:
+        case 0:
+            mode = ListStyleTypeMode.decimal;
+            break;
+        case 1:
+            mode = ListStyleTypeMode.upper_roman;
+            break;
+        case 2:
+            mode = ListStyleTypeMode.lower_latin;
+            break;
+        }
+        Css3ListStyle style = new Css3ListStyle(mode);
+        style.setJustify(HorizAlignment.LEFT);
+
+        double left = 0; // 4 + 10 * level; // indent overall
+        double align = 4; // left-align numbers at this position
+        double hanging = left - align;
+
+        style.setLeft(MeasureLength.millimeters(left));
+        style.setHanging(MeasureLength.millimeters(hanging));
+
+        // double tabStop = left + 14;
+        // style.setTabPosition(MeasureLength.millimeters(tabStop));
+
+        list.setListStyle(style);
     }
 
 }

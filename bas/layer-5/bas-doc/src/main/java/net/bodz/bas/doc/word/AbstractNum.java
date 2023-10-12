@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.xmlbeans.XmlException;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
@@ -24,9 +23,9 @@ public class AbstractNum {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractNum.class);
 
-    static Map<String, XWPFAbstractNum> nameMap = new HashMap<>();
+    static Map<String, CTAbstractNum> nameMap = new HashMap<>();
 
-    public static XWPFAbstractNum getNumStyle(String name) {
+    public static CTAbstractNum getNumStyle(String name) {
         return nameMap.get(name);
     }
 
@@ -58,33 +57,31 @@ public class AbstractNum {
             }
 
             CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
-            XWPFAbstractNum abstractNum = new XWPFAbstractNum(cTAbstractNum);
 
             synchronized (nameMap) {
-                nameMap.put(name, abstractNum);
+                nameMap.put(name, cTAbstractNum);
             }
         }
     }
 
-    public static XWPFAbstractNum parse(String xml)
+    public static CTAbstractNum parse(String xml)
             throws XmlException {
         CTNumbering cTNumbering;
         cTNumbering = CTNumbering.Factory.parse(xml);
 
         CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
-        XWPFAbstractNum abstractNum = new XWPFAbstractNum(cTAbstractNum);
-        return abstractNum;
+        return cTAbstractNum;
     }
 
-    public static XWPFAbstractNum register(String name, String xml)
+    public static CTAbstractNum register(String name, String xml)
             throws XmlException {
-        XWPFAbstractNum numStyle = parse(xml);
+        CTAbstractNum numStyle = parse(xml);
         return register(name, numStyle);
     }
 
-    public static XWPFAbstractNum register(String name, XWPFAbstractNum numStyle) {
+    public static CTAbstractNum register(String name, CTAbstractNum numStyle) {
         synchronized (nameMap) {
-            XWPFAbstractNum prev = nameMap.get(name);
+            CTAbstractNum prev = nameMap.get(name);
             if (prev != null)
                 throw new DuplicatedKeyException(name);
             nameMap.put(name, numStyle);

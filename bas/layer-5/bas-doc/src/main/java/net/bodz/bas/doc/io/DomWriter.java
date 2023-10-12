@@ -53,6 +53,11 @@ public class DomWriter
     }
 
     @Override
+    public void enter(INode node) {
+        stack.push(node);
+    }
+
+    @Override
     public DomWriter begin() {
         IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
         IHaveRuns env = runs.addEnv();
@@ -108,7 +113,7 @@ public class DomWriter
             stack.popAhead(np.OL);
             break;
         case ITEM:
-            stack.popAhead(np.LIST);
+            stack.popAhead(np.LIST_ITEM);
             return this;
         case TABLE:
             stack.popAhead(np.TABLE);
@@ -201,7 +206,7 @@ public class DomWriter
     @Override
     public DomWriter item() {
         ListPar listPar = stack.popAhead(np.LIST);
-        TextPar item = listPar.addItem().addTextPar();
+        ListItem item = listPar.addItem();
         stack.push(item);
         return this;
     }
@@ -356,9 +361,7 @@ public class DomWriter
             runs.addTextRun(s);
         } else if (top.havePars()) {
             IHavePars pars = (IHavePars) top;
-            TextPar par = pars.addTextPar();
-            stack.push(par);
-            par.addText(s);
+            pars.addText(s);
         } else {
             throw new IllegalStateException();
         }
