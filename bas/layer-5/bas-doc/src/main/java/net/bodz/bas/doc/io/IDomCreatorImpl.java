@@ -12,36 +12,47 @@ public interface IDomCreatorImpl
 
     INode getContext();
 
+    void enter(INode node);
+
     @Override
     default Part newPart(PartLevel level, String title) {
         // level...
         PartGroup group = getContext().closest(np.PART_GROUP);
         Part part = group.addPart(title);
+        enter(part);
         return part;
     }
 
     @Override
     default ListPar newList(boolean ordered) {
         IHavePars pars = getContext().closest(np.HAVE_PARS);
-        return pars.addListPar(ordered);
+        ListPar list = pars.addListPar(ordered);
+        enter(list);
+        return list;
     }
 
     @Override
     default ListItem newItem() {
         ListPar list = getContext().closest(np.LIST);
-        return list.addItem();
+        ListItem item = list.addItem();
+        enter(item);
+        return item;
     }
 
     @Override
     default TextPar newP() {
         IHavePars pars = getContext().closest(np.HAVE_PARS);
-        return pars.addTextPar();
+        TextPar textPar = pars.addTextPar();
+        enter(textPar);
+        return textPar;
     }
 
     @Override
     default FontStyleEnv newFontStyle() {
         IHaveRuns parent = getContext().closest(np.HAVE_RUNS);
-        return parent.addFontStyleEnv();
+        FontStyleEnv env = parent.addFontStyleEnv();
+        enter(env);
+        return env;
     }
 
     @Override
@@ -49,19 +60,23 @@ public interface IDomCreatorImpl
         IHavePars pars = getContext().closest(np.HAVE_PARS);
         Table table = pars.addTable();
         table.setHeaderPosition(headerPosition);
+        enter(table);
         return table;
     }
 
     @Override
     default TableRow newTr() {
         Table table = getContext().closest(np.TABLE);
-        return table.addRow();
+        TableRow row = table.addRow();
+        enter(row);
+        return row;
     }
 
     @Override
     default TableCell newTh() {
         TableCell cell = newTd();
         cell.setHeader(true);
+        enter(cell);
         return cell;
     }
 
@@ -69,13 +84,16 @@ public interface IDomCreatorImpl
     default TableCell newTd() {
         TableRow row = getContext().closest(np.TABLE_ROW);
         TableCell cell = row.addCell();
+        enter(cell);
         return cell;
     }
 
     @Override
     default Hr newHr() {
         IHavePars pars = getContext().closest(np.HAVE_PARS);
-        return pars.addHr();
+        Hr hr = pars.addHr();
+        // enter(hr);
+        return hr;
     }
 
     @Override
@@ -96,6 +114,7 @@ public interface IDomCreatorImpl
         image.setSource(source);
         image.setWidth(width);
         image.setHeight(height);
+        // enter(image);
         return image;
     }
 
@@ -105,6 +124,7 @@ public interface IDomCreatorImpl
         FontEnv env = parent.addFontEnv();
         env.setFamily(family);
         env.setSize(size);
+        enter(env);
         return env;
     }
 
