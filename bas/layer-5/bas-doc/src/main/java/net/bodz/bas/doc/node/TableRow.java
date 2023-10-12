@@ -61,16 +61,9 @@ public class TableRow
     }
 
     @Override
-    public void nodeAccept(IDocVisitor visitor) {
-        int index = getRowIndex();
-        visitor.tableRow(this, index);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (TableCell cell : cells) {
-            cell.accept(visitor);
-        }
+    public void accept(IDocVisitor visitor) {
+        int rowIndex = getRowIndex();
+        visitor.tableRow(this, rowIndex);
     }
 
     public TableCell addCell() {

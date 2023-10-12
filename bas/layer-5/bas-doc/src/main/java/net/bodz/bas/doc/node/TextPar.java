@@ -90,14 +90,8 @@ public class TextPar
     }
 
     @Override
-    public void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.textPar(this);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (IRun run : runs)
-            run.accept(visitor);
     }
 
     public MeasureLength getLineSpacing() {

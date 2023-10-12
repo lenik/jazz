@@ -44,31 +44,6 @@ public abstract class AbstractDocNode
         return AutoLists.emptyAutoList();
     }
 
-    @Override
-    public final void accept(IDocVisitor visitor) {
-        visitor.beginNode(this);
-
-        for (String key : attributes.keySet()) {
-            Object val = attributes.get(key);
-            visitor.attribute(key, val);
-        }
-
-        nodeProperties(visitor);
-        nodeAccept(visitor);
-
-        visitor.endNode(this);
-    }
-
-    protected void nodeProperties(IDocVisitor visitor) {
-    }
-
-    protected void nodeAccept(IDocVisitor visitor) {
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-    }
-
     public String getStyleClass() {
         return styleClass;
     }

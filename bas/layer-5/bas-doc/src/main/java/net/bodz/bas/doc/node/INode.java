@@ -155,8 +155,6 @@ public interface INode
 
     void accept(IDocVisitor visitor);
 
-    void internalAccept(IDocVisitor visitor);
-
     default void dump(ICharOut out) {
         dump(TreeOutImpl.from(out));
     }

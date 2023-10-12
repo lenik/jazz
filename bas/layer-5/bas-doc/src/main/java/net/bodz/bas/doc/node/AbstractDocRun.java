@@ -22,11 +22,4 @@ public abstract class AbstractDocRun
         return DocNodeLists.emptyList();
     }
 
-    @Override
-    protected void nodeProperties(IDocVisitor visitor) {
-        // String text = getText();
-        // if (text != null)
-        // visitor.property("text", text);
-    }
-
 }

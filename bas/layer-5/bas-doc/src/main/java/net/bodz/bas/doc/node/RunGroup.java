@@ -12,4 +12,9 @@ public class RunGroup
         return NodeType.RUN_GROUP;
     }
 
+    @Override
+    public void accept(IDocVisitor visitor) {
+        visitor.runGroup(this);
+    }
+
 }

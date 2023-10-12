@@ -38,12 +38,4 @@ public abstract class AbstractParGroup
         addTextPar().addText(s);
     }
 
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-//        visitor.beginChildren();
-        for (IPar par : pars)
-            par.accept(visitor);
-//        visitor.endChildren();
-    }
-
 }

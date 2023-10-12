@@ -1,11 +1,21 @@
 package net.bodz.bas.doc.word.xwpf;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFStyle;
+import org.apache.poi.xwpf.usermodel.XWPFStyles;
+import org.apache.xmlbeans.XmlException;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyles;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STStyleType.Enum;
 
+import net.bodz.bas.doc.word.StyleIds;
+import net.bodz.bas.doc.word.Styles;
+import net.bodz.bas.doc.word.XwNumbering;
 import net.bodz.bas.t.variant.IVariant;
 
 public class XwDocument
@@ -13,15 +23,37 @@ public class XwDocument
         implements
             IXwHavePars {
 
-    XWPFDocument element;
+    XWPFDocument _document;
+
+    public final XwNumbering numbering;
+    public final Styles styles = new Styles();
 
     public XwDocument(XWPFDocument element) {
         this(null, element);
     }
 
-    public XwDocument(IXwNode parent, XWPFDocument element) {
+    public XwDocument(IXwNode parent, XWPFDocument _document) {
         super(parent);
-        this.element = element;
+        this._document = _document;
+
+        numbering = new XwNumbering(_document);
+
+        XWPFStyles _styles = _document.getStyles();
+        try {
+            CTStyles ctStyles = _document.getStyle();
+            for (CTStyle ctStyle : ctStyles.getStyleList()) {
+                String id = ctStyle.getStyleId();
+                XWPFStyle _style = _styles.getStyle(id);
+
+                Enum type = _style.getType();
+                StyleIds styleIds = styles.getStyleIds(type.toString());
+
+                String name = _style.getName();
+                styleIds.add(name, id);
+            }
+        } catch (XmlException | IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -36,7 +68,7 @@ public class XwDocument
 
     @Override
     public XWPFDocument getElement() {
-        return element;
+        return _document;
     }
 
     static final String TRACK_REVISIONS = "trackRevisions";
@@ -45,7 +77,7 @@ public class XwDocument
     public boolean attribute(String name, IVariant value) {
         switch (name) {
         case TRACK_REVISIONS:
-            element.setTrackRevisions(value.getBoolean());
+            _document.setTrackRevisions(value.getBoolean());
             return true;
         }
         return false;
@@ -53,16 +85,16 @@ public class XwDocument
 
     @Override
     public XwPar addPar() {
-        XWPFParagraph _par = element.createParagraph();
+        XWPFParagraph _par = _document.createParagraph();
         return new XwPar(this, _par);
     }
 
     @Override
     public void addPlainText(String text) {
-        List<XWPFParagraph> pars = element.getParagraphs();
+        List<XWPFParagraph> pars = _document.getParagraphs();
         XWPFParagraph lastPar;
         if (pars.isEmpty())
-            lastPar = element.createParagraph();
+            lastPar = _document.createParagraph();
         else
             lastPar = pars.get(pars.size() - 1);
         XWPFRun run = lastPar.createRun();

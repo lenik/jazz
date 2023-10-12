@@ -24,7 +24,7 @@ public class Document
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.document(this);
     }
 
@@ -32,8 +32,7 @@ public class Document
         BCharOut buf = new BCharOut();
         ITreeOut out = buf.indented();
         out.getTextIndention().setIndentSize(4);
-        MarkdownConverter conv = new MarkdownConverter(out);
-        accept(conv);
+        accept(new MarkdownConverter(out));
         return buf.toString();
     }
 

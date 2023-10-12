@@ -3,24 +3,18 @@ package net.bodz.bas.doc.node.conv;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.doc.node.*;
-import net.bodz.bas.doc.node.util.FullDocVisitor;
 import net.bodz.bas.doc.node.util.IListStyle;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.io.ITreeOut;
 
 public class MarkdownConverter
-        extends FullDocVisitor {
+        implements
+            IDocVisitor {
 
     ITreeOut out;
 
     public MarkdownConverter(ITreeOut out) {
         this.out = out;
-    }
-
-    @Override
-    public void endNode(INode node) {
-        if (node.isPar())
-            out.println();
     }
 
     @Override
@@ -30,7 +24,13 @@ public class MarkdownConverter
             out.println("# " + title);
             out.println();
         }
-        doc.internalAccept(this);
+        havePars(doc);
+    }
+
+    @Override
+    public void partGroup(PartGroup partGroup) {
+        for (Part part : partGroup.parts)
+            part.accept(this);
     }
 
     @Override
@@ -40,67 +40,46 @@ public class MarkdownConverter
         String title = part.title.getText();
         out.println(sym + " " + title);
         out.println();
-        part.internalAccept(this);
-    }
-
-    @Override
-    public void hr(Hr hr) {
-        out.println();
-        out.println("----------");
-        out.println();
+        havePars(part);
     }
 
     @Override
     public void list(ListPar list) {
-        list.internalAccept(this);
+        havePars(list);
         out.println();
     }
 
     @Override
-    public void listItem(IPar par, int index, int itemIndex) {
-        if (par.isListItem()) {
-            ListItem item = (ListItem) par;
-            ListPar list = item.getParent();
-            int startNumber = list.getStartNumber();
-            int itemCount = list.getItemCount();
+    public void listItem(ListItem item, int index, int itemIndex) {
+        ListPar list = item.getParent();
+        int startNumber = list.getStartNumber();
+        int itemCount = list.getItemCount();
 
-            IListStyle listStyle = list.getListStyle();
-            String text = listStyle.format(itemIndex + startNumber, itemCount);
-            out.print(text);
+        IListStyle listStyle = list.getListStyle();
+        String text = listStyle.format(itemIndex + startNumber, itemCount);
+        out.print(text);
 
-            if (list.isOrdered())
-                out.print('.');
-            out.print(' ');
-
-            par.internalAccept(this);
-        } else {
-            // if (par.isTextPar())
-            out.print("    "); // indent in
-            par.accept(this);
-        }
-    }
-
-    static String alignPattern(HorizAlignment alignment) {
-        switch (alignment) {
-        case LEFT:
-        default:
-            return "---";
-        case RIGHT:
-            return "--:";
-        case CENTER:
-            return ":-:";
-        case FILL:
-            return "---";
-        }
+        if (list.isOrdered())
+            out.print('.');
+        out.print(' ');
     }
 
     @Override
-    public void tableRow(TableRow row, int index) {
+    public void table(Table table) {
+        for (TableRow row : table.rows)
+            row.accept(this);
+    }
+
+    @Override
+    public void tableRow(TableRow row, int rowIndex) {
         out.print("| ");
-        row.internalAccept(this);
+
+        for (TableCell cell : row.cells)
+            cell.accept(this);
+
         out.println();
 
-        if (index == 0) {
+        if (rowIndex == 0) {
             Table table = row.getParent();
             TableRow topRow = table.rows.get(0);
             int ccMax = table.getMaxColumnCount();
@@ -114,7 +93,7 @@ public class MarkdownConverter
                     TableCell cell = topRow.cells.get(i);
                     alignment = cell.getAlignment();
                 }
-                alignPatterns.append(alignPattern(alignment));
+                alignPatterns.append(MarkdownFn.alignPattern(alignment));
                 alignPatterns.append(" | ");
             }
             out.println(alignPatterns); // md table requires.
@@ -123,30 +102,57 @@ public class MarkdownConverter
 
     @Override
     public void tableCell(TableCell cell, int index) {
-        cell.internalAccept(CELL_CONV);
         out.print(" | ");
+        cell.accept(cellBuilder);
+    }
+
+    @Override
+    public void textBox(TextBox textBox) {
+        havePars(textBox);
+    }
+
+    @Override
+    public void textPar(TextPar textPar) {
+        INode parent = textPar.getParent();
+        if (parent.getType() == NodeType.LIST)
+            out.print("    "); // indent in
+
+        haveRuns(textPar);
+    }
+
+    @Override
+    public void textRun(TextRun textRun) {
+        for (String s : textRun.textList) {
+            out.print(s);
+        }
+    }
+
+    @Override
+    public void runGroup(RunGroup runGroup) {
+        haveRuns(runGroup);
     }
 
     @Override
     public void fontEnv(FontEnv fontEnv) {
-        fontEnv.internalAccept(this);
+        haveRuns(fontEnv);
     }
 
     @Override
     public void fontStyleEnv(FontStyleEnv fontStyleEnv) {
-        StringBuilder mod = new StringBuilder();
-        if (fontStyleEnv.isBold())
-            mod.append("**");
-        if (fontStyleEnv.isItalic())
-            mod.append("*");
-        if (fontStyleEnv.isStrikeline())
-            mod.append("~~");
-        if (fontStyleEnv.isUnderline())
-            mod.append("_");
-        out.print(mod);
-        fontStyleEnv.internalAccept(this);
-        mod.reverse();
-        out.print(mod);
+        String mod1 = MarkdownFn.mod(fontStyleEnv, false);
+        out.print(mod1);
+
+        haveRuns(fontStyleEnv);
+
+        String mod2 = MarkdownFn.mod(fontStyleEnv, true);
+        out.print(mod2);
+    }
+
+    @Override
+    public void hr(Hr hr) {
+        out.println();
+        out.println("----------");
+        out.println();
     }
 
     @Override
@@ -156,42 +162,29 @@ public class MarkdownConverter
         out.printf("[%s](%s)\n", description, href);
     }
 
-    @Override
-    public void chars(String s) {
-        out.print(s);
-    }
-
     class CellConv
-            extends FullDocVisitor {
+            extends AbstractDocVisitor {
 
         @Override
         public void fontStyleEnv(FontStyleEnv fontStyleEnv) {
-            StringBuilder mod = new StringBuilder();
-            if (fontStyleEnv.isBold())
-                mod.append("**");
-            if (fontStyleEnv.isItalic())
-                mod.append("*");
-            if (fontStyleEnv.isStrikeline())
-                mod.append("~~");
-            if (fontStyleEnv.isUnderline())
-                mod.append("_");
+            String mod = MarkdownFn.mod(fontStyleEnv, false);
             out.print(mod);
-            fontStyleEnv.internalAccept(this);
-            mod.reverse();
-            out.print(mod);
+            // TODO end...
         }
 
         @Override
-        public void chars(String s) {
-            if (s == null)
-                return;
-            s = s.replace('\n', ' ');
-            s = s.replace("|", "\\|");
-            out.print(s);
+        public void textRun(TextRun textRun) {
+            for (String s : textRun.textList) {
+                if (s == null)
+                    return;
+                s = s.replace('\n', ' ');
+                s = s.replace("|", "\\|");
+                out.print(s);
+            }
         }
 
     }
 
-    CellConv CELL_CONV = new CellConv();
+    IDocVisitor cellBuilder = new CellConv().depth();
 
 }

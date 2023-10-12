@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.doc.node.util.FullDocVisitor;
 import net.bodz.bas.doc.node.util.IListStyle;
 import net.bodz.bas.err.UnexpectedException;
 
@@ -95,28 +94,34 @@ public class ListPar
         this.style = style;
     }
 
-    public List<IListStyle> getStyleVector() {
+    @SuppressWarnings("serial")
+    class ListScanner
+            extends AbstractDocVisitor {
+
         List<IListStyle> vector = new ArrayList<>();
-        accept(new FullDocVisitor() {
-            @Override
-            public void list(ListPar list) {
-                if (list.isMultiLevel()) {
-                    int level = list.getLevel();
-                    IListStyle style = list.getListStyle();
-                    if (level < vector.size()) {
-                        // the same level has already set, reuse it.
-                        // vector.set(level, style);
-                    } else if (level == vector.size()) {
-                        vector.add(style);
-                    } else {
-                        throw new UnexpectedException();
-                    }
-                    list.internalAccept(this);
+
+        @Override
+        public void list(ListPar list) {
+            if (list.isMultiLevel()) {
+                int n = vector.size();
+                int level = list.getLevel();
+                IListStyle style = list.getListStyle();
+                if (level < n) {
+                    // the same level has already set, reuse it.
+                    // vector.set(level, style);
+                } else if (level == n) {
+                    vector.add(style);
+                } else {
+                    throw new UnexpectedException();
                 }
             }
-        });
-        // Collections.reverse(vector);
-        return vector;
+        }
+    }
+
+    public List<IListStyle> getStyleVector() {
+        ListScanner scanner = new ListScanner();
+        accept(scanner.depth());
+        return scanner.vector;
     }
 
     public int getStartNumber() {
@@ -144,21 +149,8 @@ public class ListPar
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.list(this);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        int index = 0;
-        int itemIndex = 0;
-        for (IPar par : pars) {
-            boolean item = par.isListItem();
-            visitor.listItem(par, index, item ? itemIndex : -1);
-            index++;
-            if (item)
-                itemIndex++;
-        }
     }
 
     public ListItem addItem() {

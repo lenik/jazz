@@ -90,7 +90,7 @@ public class FontStyleEnv
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.fontStyleEnv(this);
     }
 
