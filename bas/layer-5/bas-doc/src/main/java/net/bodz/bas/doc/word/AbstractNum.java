@@ -11,19 +11,23 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
 
 import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
+/**
+ * Also, num-style.
+ */
 public class AbstractNum {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractNum.class);
 
-    static Map<String, XWPFAbstractNum> namedNumStyles = new HashMap<>();
+    static Map<String, XWPFAbstractNum> nameMap = new HashMap<>();
 
     public static XWPFAbstractNum getNumStyle(String name) {
-        return namedNumStyles.get(name);
+        return nameMap.get(name);
     }
 
     static {
@@ -56,7 +60,35 @@ public class AbstractNum {
             CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
             XWPFAbstractNum abstractNum = new XWPFAbstractNum(cTAbstractNum);
 
-            namedNumStyles.put(name, abstractNum);
+            synchronized (nameMap) {
+                nameMap.put(name, abstractNum);
+            }
+        }
+    }
+
+    public static XWPFAbstractNum parse(String xml)
+            throws XmlException {
+        CTNumbering cTNumbering;
+        cTNumbering = CTNumbering.Factory.parse(xml);
+
+        CTAbstractNum cTAbstractNum = cTNumbering.getAbstractNumArray(0);
+        XWPFAbstractNum abstractNum = new XWPFAbstractNum(cTAbstractNum);
+        return abstractNum;
+    }
+
+    public static XWPFAbstractNum register(String name, String xml)
+            throws XmlException {
+        XWPFAbstractNum numStyle = parse(xml);
+        return register(name, numStyle);
+    }
+
+    public static XWPFAbstractNum register(String name, XWPFAbstractNum numStyle) {
+        synchronized (nameMap) {
+            XWPFAbstractNum prev = nameMap.get(name);
+            if (prev != null)
+                throw new DuplicatedKeyException(name);
+            nameMap.put(name, numStyle);
+            return numStyle;
         }
     }
 

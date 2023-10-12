@@ -7,9 +7,30 @@ import net.bodz.bas.doc.property.PartLevel;
 
 public abstract class AbstractDocWriter<self_t extends AbstractDocWriter<self_t>>
         implements
-            IDocWriter<self_t> {
+            IDocWriter<self_t>,
+            IAutoFormat {
 
     Stack<ElementType> stack = new Stack<>();
+
+    private IDataFormat dataFormat = SimpleFormat.INSTANCE;
+
+    @Override
+    public IDataFormat getDataFormat() {
+        return dataFormat;
+    }
+
+    public void setDataFormat(IDataFormat dataFormat) {
+        if (dataFormat == null)
+            throw new NullPointerException("dataFormat");
+        this.dataFormat = dataFormat;
+    }
+
+    @Override
+    public self_t data(Object data) {
+        String text = formatData(data);
+        text(text);
+        return self();
+    }
 
     protected void push(ElementType elementType) {
         stack.push(elementType);

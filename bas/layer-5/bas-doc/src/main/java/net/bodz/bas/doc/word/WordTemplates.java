@@ -8,15 +8,11 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 public class WordTemplates {
 
-    public static final String NORMAL = "Normal.dotm";
-    public static final String NORMAL_PRE = "NormalPre.dotm";
+    public static final String NORMAL = "MedColor.docx";
+//    public static final String NORMAL = "Normal.dotx";
 
     public static XWPFDocument getNormal() {
         return getTemplate(NORMAL);
-    }
-
-    public static XWPFDocument getNormalPre() {
-        return getTemplate(NORMAL_PRE);
     }
 
     public static XWPFDocument getTemplate(String name) {

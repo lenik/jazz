@@ -47,11 +47,11 @@ public class MeasureLength {
 
     static final double DEFAULT_PPI = 96; // Microsoft 96, Mac 72
 
-    public double getPoints(double baseSizeInPoints) {
-        return getPoints(baseSizeInPoints, DEFAULT_PPI);
+    public double toPoints(double baseSizeInPoints) {
+        return toPoints(baseSizeInPoints, DEFAULT_PPI);
     }
 
-    public double getPoints(double baseSizeInPoints, double ppi) {
+    public double toPoints(double baseSizeInPoints, double ppi) {
         return this.unit.toPoints(length, baseSizeInPoints, ppi);
     }
 
@@ -88,23 +88,41 @@ public class MeasureLength {
         }
     }
 
-    // scale factor can be 1.2 (CSS2), 1.3, 1.5 (CSS).
+    public static MeasureLength points(double val) {
+        return new MeasureLength(val, MeasureUnit.POINT);
+    }
 
-    /** @see https://weboverhauls.github.io/conversion-table/ */
-    public static final MeasureLength X_SMALL = percent(62.5, "x-small");
-    public static final MeasureLength SMALL = percent(81.0, "small");
-    public static final MeasureLength MEDIUM = percent(100.0, "medium");
-    public static final MeasureLength LARGE = percent(112.5, "large");
-    public static final MeasureLength X_LARGE = percent(150.0, "x-large");
-    public static final MeasureLength XX_LARGE = percent(200.0, "xx-large");
+    public static MeasureLength pixels(double val) {
+        return new MeasureLength(val, MeasureUnit.PIXEL);
+    }
 
-    // get from Google Chrome
-    public static final MeasureLength SMALLER = percent(83.0, "smaller");
-    public static final MeasureLength LARGER = percent(120.0, "larger");
+    public static MeasureLength mm(double val) {
+        return new MeasureLength(val, MeasureUnit.MM);
+    }
+
+    public static MeasureLength cm(double val) {
+        return new MeasureLength(val, MeasureUnit.CM);
+    }
+
+    public static final MeasureLength ZERO = points(0);
 
     static Map<String, MeasureLength> nameMap = new HashMap<>();
 
-    static MeasureLength percent(double percent, String... names) {
+    // scale factor can be 1.2 (CSS2), 1.3, 1.5 (CSS).
+
+    /** @see https://weboverhauls.github.io/conversion-table/ */
+    public static final MeasureLength X_SMALL = _percent(62.5, "x-small");
+    public static final MeasureLength SMALL = _percent(81.0, "small");
+    public static final MeasureLength MEDIUM = _percent(100.0, "medium");
+    public static final MeasureLength LARGE = _percent(112.5, "large");
+    public static final MeasureLength X_LARGE = _percent(150.0, "x-large");
+    public static final MeasureLength XX_LARGE = _percent(200.0, "xx-large");
+
+    // get from Google Chrome
+    public static final MeasureLength SMALLER = _percent(83.0, "smaller");
+    public static final MeasureLength LARGER = _percent(120.0, "larger");
+
+    private static MeasureLength _percent(double percent, String... names) {
         MeasureLength len = new MeasureLength(MeasureUnit.PERCENT, percent);
         for (String name : names)
             nameMap.put(name, len);

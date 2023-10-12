@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.bodz.bas.doc.node.util.FullDocVisitor;
 import net.bodz.bas.doc.node.util.IListStyle;
+import net.bodz.bas.doc.word.DocNum;
 
 public class ListPar
         extends AbstractParGroup {
@@ -15,6 +16,8 @@ public class ListPar
     int startNumber;
 
     int itemCount;
+
+    public DocNum _docNum;
 
     public ListPar(INode parent) {
         this(parent, false);
@@ -56,7 +59,7 @@ public class ListPar
     }
 
     /**
-     * Get multi-level depth.
+     * Get multi-level depth. root-level have level 0.
      *
      * for single-level lists, returns 0.
      */
@@ -69,7 +72,7 @@ public class ListPar
                     return parentList.getLevel() + 1;
             }
         }
-        return 1;
+        return 0;
     }
 
     public boolean isOrdered() {

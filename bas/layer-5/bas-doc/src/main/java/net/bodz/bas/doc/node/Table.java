@@ -1,5 +1,6 @@
 package net.bodz.bas.doc.node;
 
+import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.t.list.AutoList;
 import net.bodz.bas.t.list.IAutoList;
 
@@ -8,6 +9,11 @@ public class Table
 
     public static final String END_OF_ROW = "\n";
     public static final String CELL_SEP = "\t";
+
+    public static final TableHeaderPosition defaultHeaderPosition //
+            = TableHeaderPosition.TOP;
+
+    TableHeaderPosition headerPosition = defaultHeaderPosition;
 
     public final IAutoList<TableRow> rows = new AutoList<>(() -> new TableRow(this));
 
@@ -25,6 +31,10 @@ public class Table
         return rows;
     }
 
+    public int getRowCount() {
+        return rows.size();
+    }
+
     public int getMaxColumnCount() {
         int max = 0;
         for (TableRow row : rows) {
@@ -33,6 +43,14 @@ public class Table
                 max = n;
         }
         return max;
+    }
+
+    public TableHeaderPosition getHeaderPosition() {
+        return headerPosition;
+    }
+
+    public void setHeaderPosition(TableHeaderPosition headerPosition) {
+        this.headerPosition = headerPosition;
     }
 
     @Override
@@ -58,6 +76,10 @@ public class Table
     public void internalAccept(IDocVisitor visitor) {
         for (TableRow row : rows)
             row.accept(visitor);
+    }
+
+    public TableRow addRow() {
+        return rows.append();
     }
 
 }

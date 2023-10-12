@@ -4,32 +4,32 @@ import java.util.Stack;
 
 import net.bodz.bas.t.stack.TypePredicate;
 
-public abstract class AbstractXwpfNode
+public abstract class AbstractXwNode
         implements
-            IXwpfNode {
+            IXwNode {
 
-    final IXwpfNode parent;
+    final IXwNode parent;
     Stack<TextStyle> styleStack;
 
-    public AbstractXwpfNode() {
+    public AbstractXwNode() {
         this(null);
     }
 
-    public AbstractXwpfNode(IXwpfNode parent) {
+    public AbstractXwNode(IXwNode parent) {
         this.parent = parent;
     }
 
     @Override
-    public IXwpfNode getParent() {
+    public IXwNode getParent() {
         return parent;
     }
 
     @Override
-    public <R extends IXwpfNode> //
-    R closest(TypePredicate<IXwpfNode, R> predicate) {
+    public <R extends IXwNode> //
+    R closest(TypePredicate<IXwNode, R> predicate) {
         if (predicate == null)
             throw new NullPointerException("predicate");
-        IXwpfNode node = this;
+        IXwNode node = this;
         while (node != null) {
             if (predicate.test(node)) {
                 @SuppressWarnings("unchecked")
