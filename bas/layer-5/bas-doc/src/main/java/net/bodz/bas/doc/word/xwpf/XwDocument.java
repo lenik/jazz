@@ -54,7 +54,7 @@ public class XwDocument
     @Override
     public XwPar addPar() {
         XWPFParagraph _par = element.createParagraph();
-        return new XwPar(_par);
+        return new XwPar(this, _par);
     }
 
     @Override

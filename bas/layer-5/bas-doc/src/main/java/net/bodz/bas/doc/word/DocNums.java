@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.poi.xwpf.usermodel.XWPFAbstractNum;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFNumbering;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 
 public class DocNums {
 
@@ -25,11 +26,14 @@ public class DocNums {
     public synchronized BigInteger getNumStyleId(String name) {
         BigInteger numStyleId = numStyleIds.get(name);
         if (numStyleId == null) {
-            XWPFAbstractNum numStyle = AbstractNum.getNumStyle(name);
+            CTAbstractNum numStyle = AbstractNum.getNumStyle(name);
             if (numStyle == null)
                 throw new IllegalArgumentException("undefined num-style name: " + name);
 
-            numStyleId = numbering.addAbstractNum(numStyle);
+            XWPFAbstractNum absNum = new XWPFAbstractNum(numStyle, numbering);
+
+            numStyleId = numbering.addAbstractNum(absNum);
+            System.out.printf("style %s -> id %s\n", name, numStyleId);
             numStyleIds.put(name, numStyleId);
         }
         return numStyleId;

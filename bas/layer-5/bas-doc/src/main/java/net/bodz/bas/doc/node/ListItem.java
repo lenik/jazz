@@ -34,6 +34,12 @@ public class ListItem
         return getList().getLevel();
     }
 
+    public boolean isLast() {
+        int itemCount = getList().getItemCount();
+        int itemIndex = getItemIndex();
+        return itemIndex == itemCount - 1;
+    }
+
     public String getMLNumber() {
         List<ListItem> chain = ancestors(NodePredicates.LIST_ITEM);
         int n = chain.size();

@@ -5,8 +5,7 @@ import net.bodz.bas.ui.css3.property.ListStyleTypeMode;
 import net.bodz.bas.ui.css3.property.util.Numbering;
 
 public class Css3ListStyle
-        implements
-            IListStyle {
+        extends AbstractListStyle {
 
     final ListStyleTypeMode mode;
 
@@ -18,6 +17,15 @@ public class Css3ListStyle
 
     public static Css3ListStyle valueOf(ListStyleTypeMode mode) {
         return new Css3ListStyle(mode);
+    }
+
+    @Override
+    public boolean isCss3() {
+        return true;
+    }
+
+    public ListStyleTypeMode getMode() {
+        return mode;
     }
 
     @Override

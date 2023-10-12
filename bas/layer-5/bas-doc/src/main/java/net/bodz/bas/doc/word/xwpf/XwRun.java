@@ -9,11 +9,7 @@ public class XwRun
 
     XWPFRun element;
 
-    public XwRun(XWPFRun element) {
-        this(null, element);
-    }
-
-    public XwRun(IXwNode parent, XWPFRun element) {
+    public XwRun(XwPar parent, XWPFRun element) {
         super(parent);
         this.element = element;
     }
@@ -21,6 +17,11 @@ public class XwRun
     @Override
     public XwNodeType getType() {
         return XwNodeType.RUN;
+    }
+
+    @Override
+    public XwPar getParent() {
+        return (XwPar) super.getParent();
     }
 
     @Override

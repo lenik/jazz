@@ -45,7 +45,16 @@ public class MeasureLength {
         this.length = length;
     }
 
+    public MeasureLength negate() {
+        return new MeasureLength(-length, unit);
+    }
+
+    static final double BASE_SIZE_DEFAULT = -1000;
     static final double DEFAULT_PPI = 96; // Microsoft 96, Mac 72
+
+    public double toPoints() {
+        return toPoints(BASE_SIZE_DEFAULT);
+    }
 
     public double toPoints(double baseSizeInPoints) {
         return toPoints(baseSizeInPoints, DEFAULT_PPI);
@@ -53,6 +62,75 @@ public class MeasureLength {
 
     public double toPoints(double baseSizeInPoints, double ppi) {
         return this.unit.toPoints(length, baseSizeInPoints, ppi);
+    }
+
+    public double toTwips() {
+        return toTwips(BASE_SIZE_DEFAULT);
+    }
+
+    public double toTwips(double baseSizeInTwips) {
+        return toTwips(baseSizeInTwips, DEFAULT_PPI);
+    }
+
+    public double toTwips(double baseSizeInTwips, double ppi) {
+        return this.unit.toTwips(length, baseSizeInTwips, ppi);
+    }
+
+    public double toCentimeters() {
+        return toCentimeters(BASE_SIZE_DEFAULT);
+    }
+
+    public double toCentimeters(double baseSizeInCentimeters) {
+        return toCentimeters(baseSizeInCentimeters, DEFAULT_PPI);
+    }
+
+    public double toCentimeters(double baseSizeInCentimeters, double ppi) {
+        return this.unit.toCentimeters(length, baseSizeInCentimeters, ppi);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(length);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        MeasureLength other = (MeasureLength) obj;
+        if (Double.doubleToLongBits(length) != Double.doubleToLongBits(other.length))
+            return false;
+        if (unit != other.unit)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        String num = String.format("%.6f", length);
+        int len = num.length();
+        int end = len;
+        for (int pos = len - 1; pos >= 0; pos--) {
+            if (num.charAt(pos) == '0')
+                end--;
+            else
+                break;
+        }
+        if (num.charAt(end - 1) == '.')
+            end--;
+        num = num.substring(0, end);
+
+        return num + unit.suffix;
     }
 
     public static MeasureLength parse(String s) {
@@ -88,6 +166,10 @@ public class MeasureLength {
         }
     }
 
+    public static MeasureLength twips(double val) {
+        return new MeasureLength(val, MeasureUnit.TWIP);
+    }
+
     public static MeasureLength points(double val) {
         return new MeasureLength(val, MeasureUnit.POINT);
     }
@@ -96,12 +178,12 @@ public class MeasureLength {
         return new MeasureLength(val, MeasureUnit.PIXEL);
     }
 
-    public static MeasureLength mm(double val) {
-        return new MeasureLength(val, MeasureUnit.MM);
+    public static MeasureLength millimeters(double val) {
+        return new MeasureLength(val, MeasureUnit.MILLIMETER);
     }
 
-    public static MeasureLength cm(double val) {
-        return new MeasureLength(val, MeasureUnit.CM);
+    public static MeasureLength centimeters(double val) {
+        return new MeasureLength(val, MeasureUnit.CENTIMETER);
     }
 
     public static final MeasureLength ZERO = points(0);

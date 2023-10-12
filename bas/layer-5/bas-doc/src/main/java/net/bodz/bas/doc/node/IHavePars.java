@@ -14,6 +14,19 @@ public interface IHavePars
 
     IAutoList<IPar> getPars();
 
+    default TextRun addText(String s) {
+        IPar lastPar = getPars().getLast();
+
+        TextPar textPar;
+        if (lastPar == null || !lastPar.isTextPar())
+            textPar = addTextPar();
+        else
+            textPar = (TextPar) lastPar;
+
+        TextRun textRun = textPar.addText(s);
+        return textRun;
+    }
+
     default TextPar addTextPar() {
         return getPars().append(new TextPar(this));
     }

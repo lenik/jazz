@@ -3,9 +3,8 @@ package net.bodz.bas.doc.node.conv;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 import org.apache.poi.common.usermodel.PictureType;
@@ -14,17 +13,18 @@ import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.apache.xmlbeans.XmlException;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyle;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTStyles;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STStyleType.Enum;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.c.object.ObjectInfo;
+import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.doc.node.*;
 import net.bodz.bas.doc.node.Document;
+import net.bodz.bas.doc.node.util.IListStyle;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.word.DocNum;
+import net.bodz.bas.doc.word.StyleIds;
+import net.bodz.bas.doc.word.Styles;
 import net.bodz.bas.doc.word.xwpf.*;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.FileResource;
@@ -33,35 +33,30 @@ import net.bodz.bas.t.stack.NodePredicates;
 public class WordConverter
         extends AbstractXwpfConverter {
 
-    Map<String, String> styleMap = new HashMap<>();
-    Map<String, String> styleLcMap = new HashMap<>();
-
     boolean convertParToBreak;
     int convertParIndex = 0;
+
+    Styles styles = new Styles();
 
     public WordConverter(XWPFDocument _document) {
         super(_document);
 
-        XWPFStyles styles = _document.getStyles();
+        XWPFStyles _styles = _document.getStyles();
         try {
             CTStyles ctStyles = _document.getStyle();
             for (CTStyle ctStyle : ctStyles.getStyleList()) {
-                String styleId = ctStyle.getStyleId();
-                XWPFStyle style = styles.getStyle(styleId);
-                String styleName = style.getName();
-                styleMap.put(styleName, styleId);
-                styleLcMap.put(styleName, styleId);
+                String id = ctStyle.getStyleId();
+                XWPFStyle _style = _styles.getStyle(id);
+
+                Enum type = _style.getType();
+                StyleIds styleIds = styles.getStyleIds(type.toString());
+
+                String name = _style.getName();
+                styleIds.add(name, id);
             }
         } catch (XmlException | IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-    }
-
-    String getStyleId(String name) {
-        String id = styleMap.get(name);
-        if (id == null)
-            id = styleLcMap.get(name.toLowerCase());
-        return id != null ? id : name;
     }
 
     void ensure(Predicate<IXwNode> predicate) {
@@ -94,7 +89,7 @@ public class WordConverter
 
         String headerStyleId = part.title.getStyleClass();
         if (headerStyleId == null) {
-            headerStyleId = getStyleId("heading " + part.getLevel().level);
+            headerStyleId = styles.parStyles.get("heading " + part.getLevel().level);
         }
         headerPar.setStyle(headerStyleId);
 
@@ -128,7 +123,7 @@ public class WordConverter
 
             String styleName = textPar.getStyleClass();
             if (styleName != null) {
-                String styleId = getStyleId(styleName);
+                String styleId = styles.parStyles.get(styleName);
                 _par.setStyle(styleId);
             }
 
@@ -160,8 +155,27 @@ public class WordConverter
             int columnCount = table.getMaxColumnCount();
             int rowCount = table.getRowCount();
             XWPFTable _table = _document.createTable(rowCount, columnCount);
-            XwTable x = new XwTable(_table);
-            return x;
+
+            String styleName = table.getStyleClass();
+            if (styleName != null) {
+                String styleId = styles.tableStyles.get(styleName);
+                _table.setStyleID(styleId);
+            }
+
+            if (table.getHeaderPosition() != TableHeaderPosition.TOP) {
+                CTTbl tbl = _table.getCTTbl();
+                CTTblPr pr = tbl.getTblPr();
+                CTTblLook look = pr.addNewTblLook();
+                look.setFirstRow("0");
+                look.setFirstColumn("0");
+                look.setLastRow("0");
+                look.setLastColumn("0");
+                look.setNoHBand("1");
+                look.setNoVBand("0");
+            }
+
+            XwTable x_table = new XwTable(_table);
+            return x_table;
         }, table);
     }
 
@@ -209,19 +223,22 @@ public class WordConverter
     }
 
     @Override
-    public void list(ListPar list) {
+    public void list(ListPar _list) {
         scope(() -> {
+            ListPar list = _list;
             if (list.isMultiLevel()) {
                 if (list.getLevel() == 0) {
-                    list._docNum = nums.addNum(DECIMALS);
+                    List<IListStyle> vec = list.getStyleVector();
+                    list._docNum = x_numbering.compile(vec);
                 } else {
-                    list._docNum = list.getRootLevel()._docNum;
+                    ListPar root = list.getRootLevel();
+                    list._docNum = root._docNum;
                 }
             } else {
-                list._docNum = nums.addNum(DECIMALS);
+                list._docNum = x_numbering.compile(list.getListStyle());
             }
             return x_ptr;
-        }, list);
+        }, _list);
     }
 
     @Override
@@ -230,9 +247,7 @@ public class WordConverter
             ListItem item = (ListItem) par;
             ListPar listPar = item.getParent();
             int level = item.getListLevel();
-            DocNum _docNum = listPar._docNum;
-            System.out.printf("List %s[%d] - docnum %s\n", //
-                    ObjectInfo.getSimpleId(listPar), itemIndex, _docNum);
+            BigInteger _docNum = listPar._docNum;
 
             boolean bakC = convertParToBreak;
             int bakI = convertParIndex;
@@ -243,7 +258,8 @@ public class WordConverter
                 IXwHavePars pars = x_ptr.closest(xp.HAVE_PARS);
                 XwPar x_par = pars.addPar();
                 XWPFParagraph _par = x_par.getElement();
-                _docNum.apply(_par, level);
+                DocNum docNum = new DocNum(_docNum);
+                docNum.apply(_par, level, level == 0 && item.isLast());
                 return x_par;
             }, item);
 
@@ -270,8 +286,8 @@ public class WordConverter
             x_runs = x_par;
         } else if (x_ptr.isRun()) {
             XwRun x_run = (XwRun) x_ptr;
-            XWPFParagraph _par = (XWPFParagraph) x_run.getElement().getParent();
-            x_runs = new XwPar(_par);
+            XwPar x_parent = x_run.getParent();
+            x_runs = x_parent;
         } else
             throw new IllegalStateException();
 

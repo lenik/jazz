@@ -10,12 +10,14 @@ public class XwPar
 
     XWPFParagraph element;
 
-    public XwPar(XWPFParagraph element) {
-        this(null, element);
-    }
+//    public XwPar(XWPFParagraph element) {
+//        this(null, element);
+//    }
 
     public XwPar(IXwNode parent, XWPFParagraph element) {
         super(parent);
+        if (parent == null)
+            throw new NullPointerException("parent");
         this.element = element;
     }
 
@@ -32,7 +34,7 @@ public class XwPar
     @Override
     public XwRun addRun() {
         XWPFRun _run = element.createRun();
-        return new XwRun(_run);
+        return new XwRun(this, _run);
     }
 
     @Override
