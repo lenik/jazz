@@ -64,6 +64,7 @@ public interface IDomCreator
     default FontStyleEnv newU() {
         FontStyleEnv env = newFontStyle();
         env.setUnderline(true);
+
         return env;
     }
 
