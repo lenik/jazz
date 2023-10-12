@@ -1,6 +1,6 @@
 package net.bodz.lily.entity.format;
 
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -8,7 +8,7 @@ import net.bodz.lily.entity.manager.ResolvedEntity;
 
 public interface IWordDocBuilder {
 
-    WordprocessingMLPackage buildWordDoc(ResolvedEntity resolvedEntity, IVariantMap<String> q)
+    XWPFDocument buildWordDoc(ResolvedEntity resolvedEntity, IVariantMap<String> q)
             throws FormatException;
 
 }

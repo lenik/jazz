@@ -1,7 +1,9 @@
 package net.bodz.lily.entity.format;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
@@ -18,6 +20,21 @@ public class WordUtils {
 
         String fileName = defaultFileName;
         String title = wordDoc.getTitle();
+        if (title != null && !title.trim().isEmpty()) {
+            Split name_ext = Split.nameExtension(defaultFileName);
+            String extension = name_ext.b;
+            fileName = String.format("%s.%s", title.trim(), extension);
+        }
+        return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
+    }
+
+    public static FileContent toFile(XWPFDocument wordDoc, String defaultFileName)
+            throws IOException {
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
+        wordDoc.write(buf);
+
+        String fileName = defaultFileName;
+        String title = wordDoc.getProperties().getCoreProperties().getTitle();
         if (title != null && !title.trim().isEmpty()) {
             Split name_ext = Split.nameExtension(defaultFileName);
             String extension = name_ext.b;

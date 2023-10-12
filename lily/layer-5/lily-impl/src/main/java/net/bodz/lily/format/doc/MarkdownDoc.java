@@ -10,6 +10,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.io.Stdio;
 
 import com.vladsch.flexmark.docx.converter.DocxRenderer;
 import com.vladsch.flexmark.ext.emoji.EmojiExtension;
@@ -103,6 +104,9 @@ public class MarkdownDoc
     public void writeObject(WordprocessingMLPackage pack)
             throws FormatException {
         Document document = getDocument();
+
+        new FlexDocDump(Stdio.cout.indented()).dump(document);
+
         try {
             DocxRenderer renderer = DocxRenderer.builder(options).build();
             renderer.render(document, pack);
