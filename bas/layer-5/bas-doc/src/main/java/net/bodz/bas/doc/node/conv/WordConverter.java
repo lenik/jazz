@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.apache.poi.common.usermodel.PictureType;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlException;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STStyleType.Enum;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblLook;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.doc.io.TableHeaderPosition;
@@ -23,56 +24,52 @@ import net.bodz.bas.doc.node.Document;
 import net.bodz.bas.doc.node.util.IListStyle;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.word.DocNum;
-import net.bodz.bas.doc.word.StyleIds;
-import net.bodz.bas.doc.word.Styles;
+import net.bodz.bas.doc.word.INumStyles;
 import net.bodz.bas.doc.word.xwpf.*;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.t.stack.ContextStack;
 import net.bodz.bas.t.stack.NodePredicates;
 
 public class WordConverter
-        extends AbstractXwpfConverter {
+        extends AbstractDocVisitor
+        implements
+            INumStyles {
 
-    boolean convertParToBreak;
-    int convertParIndex = 0;
-
-    Styles styles = new Styles();
-
-    public WordConverter(XWPFDocument _document) {
-        super(_document);
-
-        XWPFStyles _styles = _document.getStyles();
-        try {
-            CTStyles ctStyles = _document.getStyle();
-            for (CTStyle ctStyle : ctStyles.getStyleList()) {
-                String id = ctStyle.getStyleId();
-                XWPFStyle _style = _styles.getStyle(id);
-
-                Enum type = _style.getType();
-                StyleIds styleIds = styles.getStyleIds(type.toString());
-
-                String name = _style.getName();
-                styleIds.add(name, id);
-            }
-        } catch (XmlException | IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    protected static class xp
+            extends XwPredicates {
     }
 
-    void ensure(Predicate<IXwNode> predicate) {
-        if (!predicate.test(x_ptr))
-            throw new IllegalStateException(predicate.toString());
+    ContextStack<IXwNode> stack = new ContextStack<>();
+    XwDocument x_doc;
+    XWPFDocument _document;
+
+    ContextStack<TextParHandler> textParHandlerStack = new ContextStack<>();
+
+    public WordConverter(XWPFDocument _doc) {
+        this(new XwDocument(_doc));
+    }
+
+    public WordConverter(IXwNode stackTop) {
+        stack.push(stackTop);
     }
 
     @Override
     public void document(Document doc) {
+        IXwNode top = stack.top();
+        this.x_doc = (XwDocument) top;
+        this._document = x_doc.getElement();
+
         String title = doc.title.getText();
         if (!Nullables.isEmpty(title)) {
             _document.getProperties().getCoreProperties().setTitle(title);
         }
-        scope(() -> {
-            return new XwDocument(_document);
-        }, doc);
+        super.document(doc);
+    }
+
+    @Override
+    public void partGroup(PartGroup partGroup) {
+        super.partGroup(partGroup);
     }
 
     @Override
@@ -89,107 +86,94 @@ public class WordConverter
 
         String headerStyleId = part.title.getStyleClass();
         if (headerStyleId == null) {
-            headerStyleId = styles.parStyles.get("heading " + part.getLevel().level);
+            headerStyleId = x_doc.styles.parStyles.get("heading " + part.getLevel().level);
         }
         headerPar.setStyle(headerStyleId);
-
         headerPar.createRun().setText(title);
 
-        part.internalAccept(this);
+        super.part(part, index);
     }
 
     @Override
-    public void textPar(TextPar textPar) {
-        if (convertParToBreak) {
-            XwPar x_par = x_ptr.closest(xp.PAR);
-            if (x_par == null)
-                throw new NullPointerException("x_par");
-            XWPFParagraph _par = x_par.getElement();
-            if (convertParIndex++ != 0)
-                _par.createRun().addBreak();
-            scope(() -> {
-                return x_par;
-            }, textPar);
-            return;
-        }
-
-        IXwHavePars x_pars = x_ptr.closest(xp.HAVE_PARS);
-        if (x_pars == null)
-            throw new IllegalStateException("no context pars");
-
-        scope(() -> {
-            XwPar x_par = x_pars.addPar();
-            XWPFParagraph _par = x_par.getElement();
-
-            String styleName = textPar.getStyleClass();
-            if (styleName != null) {
-                String styleId = styles.parStyles.get(styleName);
-                _par.setStyle(styleId);
+    public void list(ListPar list) {
+        if (list.isMultiLevel()) {
+            if (list.getLevel() == 0) {
+                List<IListStyle> vec = list.getStyleVector();
+                list._docNum = x_doc.numbering.compile(vec);
+            } else {
+                ListPar root = list.getRootLevel();
+                list._docNum = root._docNum;
             }
-
-            ParagraphAlignment parAlign = XwUtils.convert(textPar.getAlignment());
-            _par.setAlignment(parAlign);
-
-            return x_par;
-        }, textPar);
+        } else {
+            list._docNum = x_doc.numbering.compile(list.getListStyle());
+        }
+        super.list(list);
     }
 
     @Override
-    public void textRun(TextRun textRun) {
-        XwRun x_run = x_ptr.closest(xp.RUN);
-        if (x_run == null) {
-            IXwHaveRuns x_runs = x_ptr.closest(xp.HAVE_RUNS);
-            if (x_runs == null) {
-                IXwHavePars x_pars = x_ptr.closest(xp.HAVE_PARS);
-                x_runs = x_pars.addPar();
-            }
-            x_run = x_runs.addRun();
-        }
-        XwRun x = x_run;
-        scope(() -> x, textRun);
+    public void listItem(ListItem item, int index, int itemIndex) {
+        ListPar listPar = item.getParent();
+        int level = item.getListLevel();
+        BigInteger _docNum = listPar._docNum;
+
+        IXwNode top = stack.top();
+        IXwHavePars pars = top.closest(xp.HAVE_PARS);
+        XwPar x_par = pars.addPar();
+        XWPFParagraph _par = x_par.getElement();
+        DocNum docNum = new DocNum(_docNum);
+        docNum.apply(_par, level, level == 0 && item.isLast());
+
+        stack.push(x_par);
+        textParHandlerStack.push(new ItemTextParHandler());
+        super.listItem(item, index, itemIndex);
+        textParHandlerStack.pop();
+        stack.pop();
     }
 
     @Override
     public void table(Table table) {
-        scope(() -> {
-            int columnCount = table.getMaxColumnCount();
-            int rowCount = table.getRowCount();
-            XWPFTable _table = _document.createTable(rowCount, columnCount);
+        int columnCount = table.getMaxColumnCount();
+        int rowCount = table.getRowCount();
+        XWPFTable _table = _document.createTable(rowCount, columnCount);
 
-            String styleName = table.getStyleClass();
-            if (styleName != null) {
-                String styleId = styles.tableStyles.get(styleName);
-                _table.setStyleID(styleId);
-            }
+        String styleName = table.getStyleClass();
+        if (styleName != null) {
+            String styleId = x_doc.styles.tableStyles.get(styleName);
+            _table.setStyleID(styleId);
+        }
 
-            if (table.getHeaderPosition() != TableHeaderPosition.TOP) {
-                CTTbl tbl = _table.getCTTbl();
-                CTTblPr pr = tbl.getTblPr();
-                CTTblLook look = pr.addNewTblLook();
-                look.setFirstRow("0");
-                look.setFirstColumn("0");
-                look.setLastRow("0");
-                look.setLastColumn("0");
-                look.setNoHBand("1");
-                look.setNoVBand("0");
-            }
+        if (table.getHeaderPosition() != TableHeaderPosition.TOP) {
+            CTTbl tbl = _table.getCTTbl();
+            CTTblPr pr = tbl.getTblPr();
+            CTTblLook look = pr.addNewTblLook();
+            look.setFirstRow("0");
+            look.setFirstColumn("0");
+            look.setLastRow("0");
+            look.setLastColumn("0");
+            look.setNoHBand("1");
+            look.setNoVBand("0");
+        }
 
-            XwTable x_table = new XwTable(_table);
-            return x_table;
-        }, table);
+        XwTable x_table = new XwTable(_table);
+        stack.push(x_table);
+        super.table(table);
+        stack.pop();
     }
 
     @Override
     public void tableRow(TableRow row, int index) {
+        IXwNode top = stack.top();
         Table table = row.getParent();
-        XwTable x_table = x_ptr.closest(xp.TABLE);
+        XwTable x_table = top.closest(xp.TABLE);
 
-        scope(() -> {
-            // XwTableRow x_row = x_table.addRow();
-            XWPFTable _table = x_table.getElement();
-            XWPFTableRow _row = _table.getRow(index);
-            return new XwTableRow(_row);
-        }, row);
+        // XwTableRow x_row = x_table.addRow();
+        XWPFTable _table = x_table.getElement();
+        XWPFTableRow _row = _table.getRow(index);
+        XwTableRow x_row = new XwTableRow(_row);
+
+        stack.push(x_row);
+        super.tableRow(row, index);
+        stack.pop();
 
         if (index == 0) {
             TableRow topRow = table.rows.get(0);
@@ -210,7 +194,8 @@ public class WordConverter
 
     @Override
     public void tableCell(TableCell cell, int index) {
-        XwTableRow x_row = x_ptr.closest(xp.TABLE_ROW);
+        IXwNode top = stack.top();
+        XwTableRow x_row = top.closest(xp.TABLE_ROW);
         if (x_row == null)
             throw new IllegalStateException("without x_row");
 
@@ -219,73 +204,112 @@ public class WordConverter
         XwTableCell x_cell = new XwTableCell(_cell);
 
         x_cell.addPlainText(cell.getText());
-        // scope(() -> x_cell, cell);
+
+        stack.push(x_cell);
+        super.tableCell(cell, index);
+        stack.pop();
     }
 
     @Override
-    public void list(ListPar _list) {
-        scope(() -> {
-            ListPar list = _list;
-            if (list.isMultiLevel()) {
-                if (list.getLevel() == 0) {
-                    List<IListStyle> vec = list.getStyleVector();
-                    list._docNum = x_numbering.compile(vec);
-                } else {
-                    ListPar root = list.getRootLevel();
-                    list._docNum = root._docNum;
-                }
-            } else {
-                list._docNum = x_numbering.compile(list.getListStyle());
+    public void textBox(TextBox textBox) {
+        super.textBox(textBox);
+    }
+
+    @Override
+    public void textPar(TextPar textPar) {
+        if (!textParHandlerStack.isEmpty()) {
+            textParHandlerStack.top().textPar(textPar);
+            return;
+        }
+
+        IXwNode top = stack.top();
+
+        IXwHavePars x_pars = top.closest(xp.HAVE_PARS);
+        if (x_pars == null)
+            throw new IllegalStateException("no context pars: " + top);
+
+        XwPar x_par = x_pars.addPar();
+        XWPFParagraph _par = x_par.getElement();
+
+        String styleName = textPar.getStyleClass();
+        if (styleName != null) {
+            String styleId = x_doc.styles.parStyles.get(styleName);
+            _par.setStyle(styleId);
+        }
+
+        ParagraphAlignment parAlign = XwUtils.convert(textPar.getAlignment());
+        _par.setAlignment(parAlign);
+
+        stack.push(x_par);
+        super.textPar(textPar);
+        stack.pop();
+    }
+
+    class ItemTextParHandler
+            implements
+                TextParHandler {
+
+        int parIndex;
+
+        @Override
+        public void textPar(TextPar textPar) {
+            IXwNode top = stack.top();
+            XwPar x_par = top.closest(xp.PAR);
+            if (x_par == null)
+                throw new NullPointerException("x_par");
+            XWPFParagraph _par = x_par.getElement();
+
+            if (parIndex++ != 0)
+                _par.createRun().addBreak();
+
+            stack.push(x_par);
+            haveRuns(textPar);
+            stack.pop();
+        }
+    }
+
+    @Override
+    public void runGroup(RunGroup runGroup) {
+        super.runGroup(runGroup);
+    }
+
+    @Override
+    public void textRun(TextRun textRun) {
+        IXwNode top = stack.top();
+        XwRun x_run = top.closest(xp.RUN);
+        if (x_run == null) {
+            IXwHaveRuns x_runs = top.closest(xp.HAVE_RUNS);
+            if (x_runs == null) {
+                IXwHavePars x_pars = top.closest(xp.HAVE_PARS);
+                x_runs = x_pars.addPar();
             }
-            return x_ptr;
-        }, _list);
-    }
-
-    @Override
-    public void listItem(IPar par, int index, int itemIndex) {
-        if (par.isListItem()) {
-            ListItem item = (ListItem) par;
-            ListPar listPar = item.getParent();
-            int level = item.getListLevel();
-            BigInteger _docNum = listPar._docNum;
-
-            boolean bakC = convertParToBreak;
-            int bakI = convertParIndex;
-            convertParToBreak = true;
-            convertParIndex = 0;
-
-            scope(() -> {
-                IXwHavePars pars = x_ptr.closest(xp.HAVE_PARS);
-                XwPar x_par = pars.addPar();
-                XWPFParagraph _par = x_par.getElement();
-                DocNum docNum = new DocNum(_docNum);
-                docNum.apply(_par, level, level == 0 && item.isLast());
-                return x_par;
-            }, item);
-
-            convertParToBreak = bakC;
-            convertParIndex = bakI;
-        } else {
-            par.accept(this);
+            x_run = x_runs.addRun();
+        }
+        for (String s : textRun.textList) {
+            if (s == null || s.isEmpty())
+                return;
+            XWPFRun _run = x_run.getElement();
+            XwUtils.addPlainText(_run, s);
         }
     }
 
     @Override
     public void fontEnv(FontEnv fontEnv) {
-        fontEnv.internalAccept(this);
+        super.fontEnv(fontEnv);
     }
 
     @Override
     public void fontStyleEnv(FontStyleEnv fontStyleEnv) {
+        IXwNode top = stack.top();
         IXwHaveRuns x_runs;
-        if (x_ptr.haveRuns())
-            x_runs = (IXwHaveRuns) x_ptr;
-        else if (x_ptr.havePars()) {
-            IXwHavePars x_pars = (IXwHavePars) x_ptr;
+        if (top.haveRuns())
+            x_runs = (IXwHaveRuns) top;
+        else if (top.havePars()) {
+            IXwHavePars x_pars = (IXwHavePars) top;
             XwPar x_par = x_pars.addPar();
             x_runs = x_par;
-        } else if (x_ptr.isRun()) {
-            XwRun x_run = (XwRun) x_ptr;
+        } else if (top.isRun()) {
+            XwRun x_run = (XwRun) top;
             XwPar x_parent = x_run.getParent();
             x_runs = x_parent;
         } else
@@ -303,7 +327,7 @@ public class WordConverter
             strikeline |= node.isStrikeline();
         }
 
-        IXwNode bak = x_ptr;
+        IXwNode bak = top;
         for (IRun run : fontStyleEnv.runs) {
             XwRun x_run = x_runs.addRun();
             XWPFRun _run = x_run.getElement();
@@ -313,28 +337,11 @@ public class WordConverter
             if (underline)
                 _run.setUnderline(UnderlinePatterns.SINGLE);
 
-            x_ptr = x_run;
+            top = x_run;
             run.accept(this);
         }
-        x_ptr = bak;
-    }
-
-    @Override
-    public void chars(String s) {
-        if (s == null || s.isEmpty())
-            return;
-
-        if (x_ptr.isRun()) {
-            XwRun x_run = (XwRun) x_ptr;
-            XWPFRun _run = x_run.getElement();
-            XwUtils.addPlainText(_run, s);
-        } else if (x_ptr.isPar()) {
-            XwPar x_par = (XwPar) x_ptr;
-            XWPFParagraph _par = x_par.getElement();
-            XwUtils.addPlainText(_par, s);
-        } else {
-            throw new IllegalStateException();
-        }
+        top = bak;
+        super.fontStyleEnv(fontStyleEnv);
     }
 
     @Override
@@ -345,6 +352,8 @@ public class WordConverter
 
     @Override
     public void image(Image image) {
+        IXwNode top = stack.top();
+
         // String href = image.getHref();
         // String description = image.getDescription();
         File imageFile = null;
@@ -357,9 +366,9 @@ public class WordConverter
 //        IXwHavePars x_pars = x_ptr.closest(xp.HAVE_PARS);
 //        if (x_pars == null)
 //            throw new IllegalStateException("no context pars.");
-        IXwHaveRuns x_runs = x_ptr.closest(xp.HAVE_RUNS);
+        IXwHaveRuns x_runs = top.closest(xp.HAVE_RUNS);
         if (x_runs == null) {
-            IXwHavePars pars = x_ptr.closest(xp.HAVE_PARS);
+            IXwHavePars pars = top.closest(xp.HAVE_PARS);
             XwPar par = pars.addPar();
             x_runs = par;
         }

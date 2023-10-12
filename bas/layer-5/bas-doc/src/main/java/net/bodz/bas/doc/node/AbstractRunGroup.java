@@ -25,10 +25,4 @@ public abstract class AbstractRunGroup
         return runs;
     }
 
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (IRun run : runs)
-            run.accept(visitor);
-    }
-
 }

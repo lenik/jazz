@@ -59,14 +59,8 @@ public class TextRun
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.textRun(this);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (String s : textList)
-            visitor.chars(s);
     }
 
 }

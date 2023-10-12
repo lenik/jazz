@@ -20,7 +20,7 @@ public class TextBox
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.textBox(this);
     }
 

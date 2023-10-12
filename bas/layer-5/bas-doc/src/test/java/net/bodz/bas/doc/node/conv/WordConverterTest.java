@@ -8,6 +8,7 @@ import org.junit.Assert;
 import net.bodz.bas.doc.io.DomWriter;
 import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.doc.node.Document;
+import net.bodz.bas.doc.node.IDocVisitor;
 import net.bodz.bas.doc.node.ListPar;
 import net.bodz.bas.doc.node.Table;
 import net.bodz.bas.doc.node.TextPar;
@@ -25,8 +26,10 @@ public class WordConverterTest
             throws Exception {
         WordConverterTest test = new WordConverterTest();
         Document doc = test.buildDoc();
+        System.out.print(doc);
+
         XWPFDocument _doc = WordTemplates.getNormal();
-        WordConverter conv = new WordConverter(_doc);
+        IDocVisitor conv = new WordConverter(_doc);
         doc.accept(conv);
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -151,9 +154,6 @@ public class WordConverterTest
         }
         out.item("item 4");
         out.end();
-
-        System.out.println(doc);
-
         return doc;
     }
 

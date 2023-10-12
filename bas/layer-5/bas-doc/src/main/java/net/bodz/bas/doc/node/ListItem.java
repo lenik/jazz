@@ -60,7 +60,7 @@ public class ListItem
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         int index = getChildIndex();
         int itemIndex = getItemIndex();
         visitor.listItem(this, index, itemIndex);

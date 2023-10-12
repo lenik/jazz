@@ -48,7 +48,7 @@ public class FontEnv
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.fontEnv(this);
     }
 

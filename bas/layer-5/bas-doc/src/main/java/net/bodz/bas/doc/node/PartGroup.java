@@ -52,14 +52,8 @@ public class PartGroup
     }
 
     @Override
-    protected void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.partGroup(this);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (Part part : parts)
-            part.accept(visitor);
     }
 
     public Part addPart(String title) {

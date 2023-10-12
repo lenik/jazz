@@ -51,9 +51,4 @@ public abstract class AbstractDocPar
         this.alignment = alignment;
     }
 
-    @Override
-    protected void nodeProperties(IDocVisitor visitor) {
-        visitor.property("alignment", alignment);
-    }
-
 }

@@ -68,14 +68,8 @@ public class Table
     }
 
     @Override
-    public void nodeAccept(IDocVisitor visitor) {
+    public void accept(IDocVisitor visitor) {
         visitor.table(this);
-    }
-
-    @Override
-    public void internalAccept(IDocVisitor visitor) {
-        for (TableRow row : rows)
-            row.accept(visitor);
     }
 
     public TableRow addRow() {

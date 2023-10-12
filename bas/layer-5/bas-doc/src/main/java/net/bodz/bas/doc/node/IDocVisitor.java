@@ -1,65 +1,59 @@
 package net.bodz.bas.doc.node;
 
+import net.bodz.bas.doc.node.util.DepthVisitor;
+
 public interface IDocVisitor {
 
-    default void beginNode(INode node) {
+    void document(Document doc);
+
+    void partGroup(PartGroup partGroup);
+
+    void part(Part part, int index);
+
+    void list(ListPar list);
+
+    // void listChild(IPar par, int index, int itemIndex);
+
+    void listItem(ListItem item, int childIndex, int itemIndex);
+
+    void table(Table table);
+
+    void tableRow(TableRow row, int index);
+
+    void tableCell(TableCell cell, int index);
+
+    void textBox(TextBox textBox);
+
+    void textPar(TextPar textPar);
+
+    void textRun(TextRun textRun);
+
+    void runGroup(RunGroup runGroup);
+
+    void fontEnv(FontEnv fontEnv);
+
+    void fontStyleEnv(FontStyleEnv fontStyleEnv);
+
+    void hr(Hr hr);
+
+    void image(Image image);
+
+    default void havePars(IHavePars havePars) {
+        for (IPar par : havePars.getPars())
+            par.accept(this);
     }
 
-    default void endNode(INode node) {
+    default void haveRuns(IHaveRuns haveRuns) {
+        for (IRun run : haveRuns.getRuns())
+            run.accept(this);
     }
 
-    default void attribute(String name, Object value) {
+    default IDocVisitor depth() {
+        return new DepthVisitor(this);
     }
 
-    default void property(String name, Object value) {
-    }
-
-    default void document(Document doc) {
-    }
-
-    default void hr(Hr hr) {
-    }
-
-    default void image(Image image) {
-    }
-
-    default void partGroup(PartGroup partGroup) {
-    }
-
-    default void part(Part part, int index) {
-    }
-
-    default void list(ListPar list) {
-    }
-
-    default void listItem(IPar par, int index, int itemIndex) {
-    }
-
-    default void textBox(TextBox textBox) {
-    }
-
-    default void table(Table table) {
-    }
-
-    default void tableRow(TableRow row, int index) {
-    }
-
-    default void tableCell(TableCell cell, int index) {
-    }
-
-    default void fontEnv(FontEnv fontEnv) {
-    }
-
-    default void fontStyleEnv(FontStyleEnv fontStyleEnv) {
-    }
-
-    default void textPar(TextPar textPar) {
-    }
-
-    default void textRun(TextRun textRun) {
-    }
-
-    default void chars(String s) {
+    default IDocVisitor depth(int maxDepth) {
+        return new DepthVisitor(this, maxDepth);
     }
 
 }
