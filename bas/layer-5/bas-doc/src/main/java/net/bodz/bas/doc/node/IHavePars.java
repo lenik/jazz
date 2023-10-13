@@ -14,15 +14,30 @@ public interface IHavePars
 
     IAutoList<IPar> getPars();
 
-    default TextRun addText(String s) {
+    default TextPar getTextParToAppend() {
         IPar lastPar = getPars().getLast();
-
-        TextPar textPar;
-        if (lastPar == null || !lastPar.isTextPar())
-            textPar = addTextPar();
+        if (lastPar != null && lastPar.isTextPar())
+            return (TextPar) lastPar;
         else
-            textPar = (TextPar) lastPar;
+            return addTextPar();
+    }
 
+    default boolean isSimple() {
+        IAutoList<IPar> pars = getPars();
+        if (pars.isEmpty())
+            return true;
+        if (pars.size() == 1) {
+            IPar par = pars.get(0);
+            if (par.isTextPar()) {
+                TextPar textPar = (TextPar) par;
+                return textPar.isSimpleText();
+            }
+        }
+        return false;
+    }
+
+    default TextRun addText(String s) {
+        TextPar textPar = getTextParToAppend();
         TextRun textRun = textPar.addText(s);
         return textRun;
     }

@@ -1,6 +1,5 @@
 package net.bodz.bas.doc.node;
 
-import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.t.list.AutoList;
 import net.bodz.bas.t.list.IAutoList;
 
@@ -10,12 +9,14 @@ public class Table
     public static final String END_OF_ROW = "\n";
     public static final String CELL_SEP = "\t";
 
-    public static final TableHeaderPosition defaultHeaderPosition //
-            = TableHeaderPosition.TOP;
-
-    TableHeaderPosition headerPosition = defaultHeaderPosition;
-
     public final IAutoList<TableRow> rows = new AutoList<>(() -> new TableRow(this));
+
+    public int firstRows;
+    public int lastRows;
+    public int firstColumns;
+    public int lastColumns;
+    public boolean hBands;
+    public boolean vBands;
 
     public Table(INode parent) {
         super(parent);
@@ -43,14 +44,6 @@ public class Table
                 max = n;
         }
         return max;
-    }
-
-    public TableHeaderPosition getHeaderPosition() {
-        return headerPosition;
-    }
-
-    public void setHeaderPosition(TableHeaderPosition headerPosition) {
-        this.headerPosition = headerPosition;
     }
 
     @Override

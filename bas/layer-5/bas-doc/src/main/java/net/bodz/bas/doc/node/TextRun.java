@@ -45,8 +45,9 @@ public class TextRun
         addText(s);
     }
 
-    public void addText(String s) {
+    public TextRun addText(String s) {
         textList.add(s);
+        return this;
     }
 
     public void clearText() {

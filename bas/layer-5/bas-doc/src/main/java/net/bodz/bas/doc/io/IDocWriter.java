@@ -111,10 +111,10 @@ public interface IDocWriter<self_t extends IDocWriter<self_t>>
     }
 
     default self_t table() {
-        return table(TableHeaderPosition.TOP);
+        return table(0, 0);
     }
 
-    self_t table(TableHeaderPosition headerPosition);
+    self_t table(int headRows, int headColumns);
 
     self_t tr();
 

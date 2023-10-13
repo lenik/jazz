@@ -11,6 +11,8 @@ public interface IXwHavePars
 
     XwPar addPar();
 
+    XwPar getParToAppend();
+
     void addPlainText(String text);
 
 }

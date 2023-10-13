@@ -93,10 +93,10 @@ public interface IDomCreator
     }
 
     default Table newTable() {
-        return newTable(TableHeaderPosition.TOP);
+        return newTable(0, 0);
     }
 
-    Table newTable(TableHeaderPosition headerPosition);
+    Table newTable(int headRows, int headColumns);
 
     TableRow newTr();
 

@@ -33,6 +33,12 @@ public class DocNodeDumper
         case PART:
             Part section = (Part) node;
             typeName += "/" + section.getLevel();
+            break;
+        case TABLE_CELL:
+            TableCell cell = (TableCell) node;
+            if (cell.isHeader())
+                typeName += "/h";
+            break;
         default:
         }
 
@@ -63,15 +69,19 @@ public class DocNodeDumper
                 case TypeId.BOOLEAN:
                     if (((Boolean) value).booleanValue() == false)
                         return;
+                    break;
                 case TypeId.INTEGER:
                     if (((Integer) value).intValue() == 0)
                         return;
+                    break;
                 case TypeId.LONG:
                     if (((Long) value).longValue() == 0L)
                         return;
+                    break;
                 case TypeId.DOUBLE:
                     if (((Double) value).doubleValue() == 0.0)
                         return;
+                    break;
                 }
             }
             out.println("\\" + name + ": " + value);
@@ -136,24 +146,14 @@ public class DocNodeDumper
     @Override
     public void tableCell(TableCell cell, int index) {
         beginNode(cell);
-
-        boolean simple = false;
-        if (cell.pars.size() == 1) {
-            // shortcut for simple text: don't create pars.
-            IPar par = cell.pars.get(0);
-            if (par.isTextPar()) {
-                TextPar textPar = (TextPar) par;
-                if (textPar.isSimpleText()) {
-                    String text = textPar.getText();
-                    if (text != null)
-                        text = text.trim();
-                    chars(text);
-                    simple = true;
-                }
-            }
-        }
-        if (!simple)
+        if (cell.isSimple()) {
+            String text = cell.getText();
+            if (text != null)
+                text = text.trim();
+            chars(text);
+        } else {
             super.tableCell(cell, index);
+        }
         endNode(cell);
     }
 
@@ -190,17 +190,25 @@ public class DocNodeDumper
     }
 
     @Override
-    public void fontEnv(FontEnv fontEnv) {
-        beginNode(fontEnv);
-        super.fontEnv(fontEnv);
-        endNode(fontEnv);
+    public void fontEnv(FontEnv env) {
+        beginNode(env);
+        property("family", env.getFamily());
+        property("size", env.getSize());
+
+        super.fontEnv(env);
+        endNode(env);
     }
 
     @Override
-    public void fontStyleEnv(FontStyleEnv fontStyleEnv) {
-        beginNode(fontStyleEnv);
-        super.fontStyleEnv(fontStyleEnv);
-        endNode(fontStyleEnv);
+    public void fontStyleEnv(FontStyleEnv env) {
+        beginNode(env);
+        property("bold", env.isBold());
+        property("italic", env.isItalic());
+        property("underline", env.isUnderline());
+        property("strikeline", env.isStrikeline());
+
+        super.fontStyleEnv(env);
+        endNode(env);
     }
 
     public void chars(String s) {
@@ -222,7 +230,7 @@ public class DocNodeDumper
     public void image(Image image) {
         beginNode(image);
         super.image(image);
-        beginNode(image);
+        endNode(image);
     }
 
 }

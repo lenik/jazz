@@ -18,7 +18,6 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblLook;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
 
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.doc.node.*;
 import net.bodz.bas.doc.node.Document;
 import net.bodz.bas.doc.node.util.IListStyle;
@@ -28,6 +27,8 @@ import net.bodz.bas.doc.word.INumStyles;
 import net.bodz.bas.doc.word.xwpf.*;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.stack.ContextStack;
 import net.bodz.bas.t.stack.NodePredicates;
 
@@ -35,6 +36,8 @@ public class WordConverter
         extends AbstractDocVisitor
         implements
             INumStyles {
+
+    static final Logger logger = LoggerFactory.getLogger(WordConverter.xp.class);
 
     protected static class xp
             extends XwPredicates {
@@ -139,20 +142,21 @@ public class WordConverter
         String styleName = table.getStyleClass();
         if (styleName != null) {
             String styleId = x_doc.styles.tableStyles.get(styleName);
-            _table.setStyleID(styleId);
+            if (styleId == null)
+                logger.error("Invalid table style name: " + styleName);
+            else
+                _table.setStyleID(styleId);
         }
 
-        if (table.getHeaderPosition() != TableHeaderPosition.TOP) {
-            CTTbl tbl = _table.getCTTbl();
-            CTTblPr pr = tbl.getTblPr();
-            CTTblLook look = pr.addNewTblLook();
-            look.setFirstRow("0");
-            look.setFirstColumn("0");
-            look.setLastRow("0");
-            look.setLastColumn("0");
-            look.setNoHBand("1");
-            look.setNoVBand("0");
-        }
+        CTTbl tbl = _table.getCTTbl();
+        CTTblPr pr = tbl.getTblPr();
+        CTTblLook look = pr.addNewTblLook();
+        look.setFirstRow(table.firstRows > 0);
+        look.setFirstColumn(table.firstColumns > 0);
+        look.setLastRow(table.lastRows > 0);
+        look.setLastColumn(table.lastColumns > 0);
+        look.setNoHBand(!table.hBands);
+        look.setNoVBand(!table.vBands);
 
         XwTable x_table = new XwTable(_table);
         stack.push(x_table);
@@ -203,7 +207,12 @@ public class WordConverter
         XWPFTableCell _cell = _row.getCell(index);
         XwTableCell x_cell = new XwTableCell(_cell);
 
-        x_cell.addPlainText(cell.getText());
+        if (cell.isHeader()) {
+            XwPar x_par = x_cell.getParToAppend();
+            XwRun x_run = x_par.getRunToAppend();
+            XWPFRun _run = x_run.getElement();
+            _run.setBold(true);
+        }
 
         stack.push(x_cell);
         super.tableCell(cell, index);
@@ -218,7 +227,7 @@ public class WordConverter
     @Override
     public void textPar(TextPar textPar) {
         if (!textParHandlerStack.isEmpty()) {
-            textParHandlerStack.top().textPar(textPar);
+            textParHandlerStack.top().handleTextPar(textPar);
             return;
         }
 
@@ -228,7 +237,11 @@ public class WordConverter
         if (x_pars == null)
             throw new IllegalStateException("no context pars: " + top);
 
-        XwPar x_par = x_pars.addPar();
+        XwPar x_par;
+        if (top.getType() == XwNodeType.TABLE_CELL && textPar.getChildIndex() == 0)
+            x_par = x_pars.getParToAppend();
+        else
+            x_par = x_pars.addPar();
         XWPFParagraph _par = x_par.getElement();
 
         String styleName = textPar.getStyleClass();
@@ -252,7 +265,7 @@ public class WordConverter
         int parIndex;
 
         @Override
-        public void textPar(TextPar textPar) {
+        public void handleTextPar(TextPar textPar) {
             IXwNode top = stack.top();
             XwPar x_par = top.closest(xp.PAR);
             if (x_par == null)
@@ -327,7 +340,6 @@ public class WordConverter
             strikeline |= node.isStrikeline();
         }
 
-        IXwNode bak = top;
         for (IRun run : fontStyleEnv.runs) {
             XwRun x_run = x_runs.addRun();
             XWPFRun _run = x_run.getElement();
@@ -337,11 +349,10 @@ public class WordConverter
             if (underline)
                 _run.setUnderline(UnderlinePatterns.SINGLE);
 
-            top = x_run;
+            stack.push(x_run);
             run.accept(this);
+            stack.pop();
         }
-        top = bak;
-        super.fontStyleEnv(fontStyleEnv);
     }
 
     @Override

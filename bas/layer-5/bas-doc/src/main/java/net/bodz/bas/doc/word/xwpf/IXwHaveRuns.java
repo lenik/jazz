@@ -11,6 +11,8 @@ public interface IXwHaveRuns
 
     XwRun addRun();
 
+    XwRun getRunToAppend();
+
     void addPlainText(String text);
 
 }

@@ -56,10 +56,15 @@ public interface IDomCreatorImpl
     }
 
     @Override
-    default Table newTable(TableHeaderPosition headerPosition) {
+    default Table newTable(int headRows, int headColumns) {
         IHavePars pars = getContext().closest(np.HAVE_PARS);
         Table table = pars.addTable();
-        table.setHeaderPosition(headerPosition);
+        table.firstRows = headRows;
+        table.firstColumns = headColumns;
+        if (headRows > 0)
+            table.hBands = true;
+        else if (headColumns > 0)
+            table.vBands = true;
         enter(table);
         return table;
     }
