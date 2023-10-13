@@ -13,6 +13,22 @@ public interface IHaveRuns
 
     DocNodeList<IRun> getRuns();
 
+    default TextRun addTextRun() {
+        TextRun run = new TextRun(this);
+        return getRuns().append(run);
+    }
+
+    default TextRun getTextRunToAppend() {
+        DocNodeList<IRun> runs = getRuns();
+        if (runs.isEmpty())
+            return addTextRun();
+        IRun lastRun = runs.get(runs.size());
+        if (lastRun.getType() == NodeType.TEXT_RUN)
+            return (TextRun) lastRun;
+        else
+            return addTextRun();
+    }
+
     @Override
     default void buildText(StringBuilder a) {
         for (IRun run : getRuns())
@@ -22,16 +38,16 @@ public interface IHaveRuns
     @Override
     default void setText(String s) {
         getRuns().clear();
-        addTextRun(s);
+        addText(s);
     }
 
     default TextRun setTextRun(String s) {
         getRuns().clear();
-        return addTextRun(s);
+        return addText(s);
     }
 
-    default TextRun addTextRun(String s) {
-        return getRuns().append(new TextRun(this, s));
+    default TextRun addText(String s) {
+        return getTextRunToAppend().addText(s);
     }
 
     default RunGroup addEnv() {

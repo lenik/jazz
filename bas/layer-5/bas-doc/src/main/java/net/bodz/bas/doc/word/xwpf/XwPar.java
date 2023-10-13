@@ -1,5 +1,7 @@
 package net.bodz.bas.doc.word.xwpf;
 
+import java.util.List;
+
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
@@ -35,6 +37,15 @@ public class XwPar
     public XwRun addRun() {
         XWPFRun _run = element.createRun();
         return new XwRun(this, _run);
+    }
+
+    @Override
+    public XwRun getRunToAppend() {
+        List<XWPFRun> runs = element.getRuns();
+        if (runs.isEmpty())
+            return addRun();
+        XWPFRun lastRun = runs.get(0);
+        return new XwRun(this, lastRun);
     }
 
     @Override

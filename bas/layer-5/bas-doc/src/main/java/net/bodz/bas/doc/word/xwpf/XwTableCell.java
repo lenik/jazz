@@ -10,7 +10,7 @@ public class XwTableCell
         implements
             IXwHavePars {
 
-    XWPFTableCell element;
+    XWPFTableCell cell;
 
     public XwTableCell(XWPFTableCell element) {
         this(null, element);
@@ -18,7 +18,7 @@ public class XwTableCell
 
     public XwTableCell(IXwNode parent, XWPFTableCell element) {
         super(parent);
-        this.element = element;
+        this.cell = element;
     }
 
     @Override
@@ -28,21 +28,30 @@ public class XwTableCell
 
     @Override
     public XWPFTableCell getElement() {
-        return element;
+        return cell;
     }
 
     @Override
     public XwPar addPar() {
-        XWPFParagraph _par = element.addParagraph();
+        XWPFParagraph _par = cell.addParagraph();
         return new XwPar(this, _par);
     }
 
     @Override
+    public XwPar getParToAppend() {
+        List<XWPFParagraph> pars = cell.getParagraphs();
+        if (pars.isEmpty())
+            return addPar();
+        XWPFParagraph lastPar = pars.get(pars.size() - 1);
+        return new XwPar(this, lastPar);
+    }
+
+    @Override
     public void addPlainText(String text) {
-        List<XWPFParagraph> pars = element.getParagraphs();
+        List<XWPFParagraph> pars = cell.getParagraphs();
         XWPFParagraph lastPar;
         if (pars.isEmpty())
-            lastPar = element.addParagraph();
+            lastPar = cell.addParagraph();
         else
             lastPar = pars.get(pars.size() - 1);
 

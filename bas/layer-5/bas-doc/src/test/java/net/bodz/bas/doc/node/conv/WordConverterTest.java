@@ -1,14 +1,15 @@
 package net.bodz.bas.doc.node.conv;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.function.BiPredicate;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.Assert;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.doc.io.DomWriter;
-import net.bodz.bas.doc.io.TableHeaderPosition;
 import net.bodz.bas.doc.node.Document;
-import net.bodz.bas.doc.node.IDocVisitor;
 import net.bodz.bas.doc.node.ListPar;
 import net.bodz.bas.doc.node.Table;
 import net.bodz.bas.doc.node.TextPar;
@@ -17,31 +18,54 @@ import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.word.WordTemplates;
 import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.ui.css3.property.ListStyleTypeMode;
 
 public class WordConverterTest
         extends Assert {
 
-    public static void main(String[] args)
-            throws Exception {
-        WordConverterTest test = new WordConverterTest();
-        Document doc = test.buildDoc();
-        System.out.print(doc);
+    DomWriter out;
+    boolean dumpDoc = true;
 
-        XWPFDocument _doc = WordTemplates.getNormal();
-        IDocVisitor conv = new WordConverter(_doc);
-        doc.accept(conv);
+    String template = WordTemplates.NORMAL;
+    String savePath = "/xxx/testconv.docx";
+
+    String blah = Strings.repeat(3, " blah");
+
+    String imagePath;
+    String tableTop;
+    String tableLeft;
+    int tableRows = 3;
+    int tableCols = 3;
+    boolean addLists = true;
+    {
+        imagePath = "/usr/share/backgrounds/mate/nature/Aqua.jpg";
+        // imagePath = "/xxx/logo.png";
+        tableTop = "Grid Table 4 Accent 1";
+        tableLeft = "Grid Table 5 Dark Accent 1";
+    }
+
+    void play()
+            throws Exception {
+        Document doc = buildDoc();
+        if (dumpDoc)
+            System.out.print(doc);
+
+        XWPFDocument _doc = WordTemplates.createFromTemplate(template);
+        WordConverter converter = new WordConverter(_doc);
+        doc.accept(converter);
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         _doc.write(buf);
-        FileResource target = new FileResource("/xxx/testconv.docx");
+
+        FileResource target = new FileResource(savePath);
         target.write().write(buf.toByteArray());
     }
 
     Document buildDoc()
             throws Exception {
         Document doc = new Document();
-        DomWriter out = new DomWriter(doc);
+        out = new DomWriter(doc);
         out.p();
         out.text("chapter title: hello");
         TextPar titlePar = (TextPar) out.stack.top();
@@ -53,31 +77,31 @@ public class WordConverterTest
         out.p("text: the first part of the hello chapter. ");
         out.p("text: the second part of the hello chapter. ");
 
-        String path = "/usr/share/backgrounds/mate/nature/Aqua.jpg";
-        path = "/xxx/logo.png";
+        if (imagePath != null) {
+            File image = new File(imagePath);
+            out.print("Left");
+            out.center();
+            out.image(new FileResource(image), //
+                    MeasureLength.millimeters(54.8), //
+                    MeasureLength.millimeters(62.4));
+            out.println("Right");
 
-//        File image = new File(path);
-//        out.print("Left");
-//        out.center();
-//        out.image(new FileResource(image), //
-//                MeasureLength.millimeters(54.8), //
-//                MeasureLength.millimeters(62.4));
-//        out.println("Right");
-//
-//        out.p("image by URL");
-//        out.image(new URLResource("file://" + path), //
-//                MeasureLength.millimeters(54.8), //
-//                MeasureLength.millimeters(62.4));
+            out.p("image by URL");
+            out.image(new URLResource("file://" + imagePath), //
+                    MeasureLength.millimeters(54.8), //
+                    MeasureLength.millimeters(62.4));
+        }
 
         out.section("section title: part 2");
+
         out.print("text: the ");
-        out.i("first(italic) ");
+        out.i("<i>first</i> ");
         out.print("part of ");
 
         out.b();
-        out.print("the(bold) ");
-        out.i("hello(b+i) ");
-        out.print("chapter(bold). ");
+        out.print("<b>the ");
+        out.i("<i>hello</i> ");
+        out.print("chapter.</b> ");
         out.end(); // b
 
         out.println();
@@ -85,24 +109,41 @@ public class WordConverterTest
         out.println("text: end of the part 2.");
         out.hr();
 
-        out.chapter("chapter: table");
-        out.println("following example shows a table.");
-        Table table = out.newTable();
-        table.setHeaderPosition(TableHeaderPosition.LEFT);
-        table.setStyleClass("Grid Table 4 Accent 1");
-        out.tr();
-        out.th("column 1");
-        out.th("column 2");
-        out.tr();
-        out.td("cell 1,1");
-        out.td("cell 1,2");
-        out.td("cell 1,3");
-        out.tr();
-        out.td("cell 2,1");
-        out.td("cell 2,2");
-        out.td("cell 2,3");
-        out.endTable();
+        if (tableTop != null)
+            buildTable(tableTop, tableRows, tableCols, 1, 0, (Integer row, Integer col) -> row == 0);
+        if (tableLeft != null)
+            buildTable(tableLeft, tableRows, tableCols, 0, 1, (Integer row, Integer col) -> col == 0);
 
+        if (addLists) {
+            buildLists();
+        }
+
+        return doc;
+    }
+
+    void buildTable(String style, int rows, int cols, int firstRows, int firstColumns,
+            BiPredicate<Integer, Integer> headerf) {
+        String tableSpec = String.format("table %d rows, %d cols (header %d rows, %d cols)", //
+                rows, cols, firstRows, firstColumns);
+        out.chapter("chapter: " + tableSpec);
+        out.println("following example shows a " + tableSpec);
+        Table table = out.newTable(firstRows, firstColumns);
+        table.setStyleClass(style);
+        for (int row = 0; row < rows; row++) {
+            out.tr();
+            for (int col = 0; col < cols; col++) {
+                String content = String.format("Cell %d,%d", row, col);
+                boolean header = headerf.test(row, col);
+                if (header)
+                    out.th(content);
+                else
+                    out.td(content);
+            }
+        }
+        out.endTable();
+    }
+
+    void buildLists() {
         out.chapter("chapter: list");
 
         out.p("ordered list");
@@ -154,15 +195,7 @@ public class WordConverterTest
         }
         out.item("item 4");
         out.end();
-        return doc;
     }
-
-    static final String blah = //
-            " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
-                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
-                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
-                    + " blah blah blah blah blah blah blah blah blah blah blah blah blah blah"//
-    ;
 
     void setMultiLevel(ListPar list) {
         list.setMultiLevel(true);
@@ -196,6 +229,12 @@ public class WordConverterTest
         // style.setTabPosition(MeasureLength.millimeters(tabStop));
 
         list.setListStyle(style);
+    }
+
+    public static void main(String[] args)
+            throws Exception {
+        WordConverterTest test = new WordConverterTest();
+        test.play();
     }
 
 }

@@ -10,11 +10,11 @@ public class WordTemplates {
 
     public static final String NORMAL = "Normal.dotx";
 
-    public static XWPFDocument getNormal() {
-        return getTemplate(NORMAL);
+    public static XWPFDocument createNormal() {
+        return createFromTemplate(NORMAL);
     }
 
-    public static XWPFDocument getTemplate(String name) {
+    public static XWPFDocument createFromTemplate(String name) {
         URL resource = WordTemplates.class.getResource(name);
         if (resource == null) {
             throw new IllegalArgumentException("bad template name: " + name);

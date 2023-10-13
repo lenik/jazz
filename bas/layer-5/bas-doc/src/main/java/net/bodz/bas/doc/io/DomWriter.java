@@ -257,10 +257,15 @@ public class DomWriter
     }
 
     @Override
-    public DomWriter table(TableHeaderPosition headerPosition) {
+    public DomWriter table(int headRows, int headColumns) {
         IHavePars pars = stack.popAhead(np.HAVE_PARS);
         Table table = pars.addTable();
-        table.setHeaderPosition(headerPosition);
+        table.firstRows = headRows;
+        table.firstColumns = headColumns;
+        if (headRows > 0)
+            table.hBands = true;
+        else if (headColumns > 0)
+            table.vBands = true;
         stack.push(table);
         return this;
     }
@@ -358,7 +363,7 @@ public class DomWriter
         INode top = stack.top();
         if (top.haveRuns()) {
             IHaveRuns runs = (IHaveRuns) top;
-            runs.addTextRun(s);
+            runs.addText(s);
         } else if (top.havePars()) {
             IHavePars pars = (IHavePars) top;
             pars.addText(s);

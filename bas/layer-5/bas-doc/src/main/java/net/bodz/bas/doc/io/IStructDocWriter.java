@@ -67,6 +67,10 @@ public interface IStructDocWriter<self_t extends IStructDocWriter<self_t>>
         return table();
     }
 
+    default self_t beginTable(int headRows, int headColumns) {
+        return table(headRows, headColumns);
+    }
+
     default self_t endTable() {
         return end(ElementType.TABLE);
     }

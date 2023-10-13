@@ -90,6 +90,15 @@ public class XwDocument
     }
 
     @Override
+    public XwPar getParToAppend() {
+        List<XWPFParagraph> pars = _document.getParagraphs();
+        if (pars.isEmpty())
+            return addPar();
+        XWPFParagraph lastPar = pars.get(pars.size() - 1);
+        return new XwPar(this, lastPar);
+    }
+
+    @Override
     public void addPlainText(String text) {
         List<XWPFParagraph> pars = _document.getParagraphs();
         XWPFParagraph lastPar;
