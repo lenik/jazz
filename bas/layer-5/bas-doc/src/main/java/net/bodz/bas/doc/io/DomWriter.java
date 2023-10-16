@@ -361,7 +361,10 @@ public class DomWriter
     @Override
     public DomWriter text(String s) {
         INode top = stack.top();
-        if (top.haveRuns()) {
+        if (top.getType() == NodeType.TEXT_RUN) {
+            TextRun run = (TextRun) top;
+            run.addText(s);
+        } else if (top.haveRuns()) { // *env
             IHaveRuns runs = (IHaveRuns) top;
             runs.addText(s);
         } else if (top.havePars()) {

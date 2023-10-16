@@ -22,7 +22,7 @@ public interface IHaveRuns
         DocNodeList<IRun> runs = getRuns();
         if (runs.isEmpty())
             return addTextRun();
-        IRun lastRun = runs.get(runs.size());
+        IRun lastRun = runs.get(runs.size() - 1);
         if (lastRun.getType() == NodeType.TEXT_RUN)
             return (TextRun) lastRun;
         else
