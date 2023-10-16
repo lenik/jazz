@@ -9,6 +9,9 @@ public class TableRow
     int spanCount;
     public final IAutoList<TableCell> cells = new AutoList<>(() -> new TableCell(this));
 
+    public boolean borderTop;
+    public boolean borderBottom;
+
     public TableRow(Table parent) {
         super(parent);
     }

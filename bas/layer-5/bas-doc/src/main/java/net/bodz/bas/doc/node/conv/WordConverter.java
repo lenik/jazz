@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.poi.common.usermodel.PictureType;
+import org.apache.poi.ooxml.POIXMLProperties.CoreProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.util.Units;
@@ -60,9 +61,17 @@ public class WordConverter
         this._document = x_doc.getElement();
 
         String title = doc.title.getText();
-        if (!Nullables.isEmpty(title)) {
-            _document.getProperties().getCoreProperties().setTitle(title);
-        }
+        String author = doc.author.getText();
+        String editor = doc.editor.getText();
+
+        CoreProperties corePr = _document.getProperties().getCoreProperties();
+        if (!Nullables.isEmpty(title))
+            corePr.setTitle(title);
+        if (!Nullables.isEmpty(author))
+            corePr.setCreator(author);
+        if (!Nullables.isEmpty(editor))
+            corePr.setLastModifiedByUser(editor);
+
         super.document(doc);
     }
 
