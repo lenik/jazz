@@ -11,11 +11,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPageSz;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTbl;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblLook;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblPr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.doc.node.*;
@@ -149,8 +145,8 @@ public class WordConverter
         }
 
         CTTbl tbl = _table.getCTTbl();
-        CTTblPr pr = tbl.getTblPr();
-        CTTblLook look = pr.addNewTblLook();
+        CTTblPr tblPr = tbl.getTblPr();
+        CTTblLook look = tblPr.addNewTblLook();
         look.setFirstRow(table.firstRows > 0);
         look.setFirstColumn(table.firstColumns > 0);
         look.setLastRow(table.lastRows > 0);
@@ -158,10 +154,30 @@ public class WordConverter
         look.setNoHBand(!table.hBands);
         look.setNoVBand(!table.vBands);
 
+        if (styleName != null) {
+            tblPr.unsetTblBorders();
+            CTTblBorders borders = tblPr.getTblBorders();
+            if (borders == null)
+                borders = tblPr.addNewTblBorders();
+            borderSingleAuto(borders.addNewTop(), 0, 0);
+            borderSingleAuto(borders.addNewLeft(), 0, 0);
+            borderSingleAuto(borders.addNewBottom(), 0, 0);
+            borderSingleAuto(borders.addNewRight(), 0, 0);
+            borderSingleAuto(borders.addNewInsideH(), 0, 0);
+            borderSingleAuto(borders.addNewInsideV(), 0, 0);
+        }
+
         XwTable x_table = new XwTable(_table);
         stack.push(x_table);
         super.table(table);
         stack.pop();
+    }
+
+    void borderSingleAuto(CTBorder border, int size, int space) {
+        border.setVal(STBorder.SINGLE);
+        border.setSz(BigInteger.valueOf(size));
+        border.setSpace(BigInteger.valueOf(space));
+        border.setColor("auto");
     }
 
     @Override

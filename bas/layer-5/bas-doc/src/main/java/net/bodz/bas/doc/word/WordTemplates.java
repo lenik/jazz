@@ -19,6 +19,10 @@ public class WordTemplates {
         if (resource == null) {
             throw new IllegalArgumentException("bad template name: " + name);
         }
+        return createFromTemplate(resource);
+    }
+
+    public static XWPFDocument createFromTemplate(URL resource) {
         try (InputStream in = resource.openStream()) {
             XWPFDocument document = new XWPFDocument(in);
             return document;
