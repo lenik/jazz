@@ -8,6 +8,7 @@ public class Image
         implements
             IRun {
 
+    String name;
     String href;
     IStreamInputSource source;
     MeasureLength width;
@@ -41,6 +42,14 @@ public class Image
     @Override
     public void setText(String s) {
         description = s;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getHref() {

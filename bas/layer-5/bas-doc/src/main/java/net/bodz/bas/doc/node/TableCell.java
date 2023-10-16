@@ -9,6 +9,9 @@ public class TableCell
     int rowSpan = 1;
     int columnSpan = 1;
 
+    public boolean borderLeft;
+    public boolean borderRight;
+
     public TableCell(TableRow row) {
         super(row);
         this.row = row;

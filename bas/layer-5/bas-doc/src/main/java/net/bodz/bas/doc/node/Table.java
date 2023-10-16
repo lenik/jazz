@@ -36,6 +36,15 @@ public class Table
         return rows.size();
     }
 
+    public RowPosition getRowPosition(int rowIndex) {
+        if (rowIndex < firstRows)
+            return RowPosition.TOP;
+        else if (rowIndex >= getRowCount() - lastRows)
+            return RowPosition.BOTTOM;
+        else
+            return RowPosition.BODY;
+    }
+
     public int getMaxColumnCount() {
         int max = 0;
         for (TableRow row : rows) {

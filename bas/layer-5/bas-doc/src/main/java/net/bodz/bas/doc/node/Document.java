@@ -8,6 +8,8 @@ public class Document
         extends AbstractParGroup {
 
     public final TextPar title = new TextPar(this);
+    public final TextPar author = new TextPar(this);
+    public final TextPar editor = new TextPar(this);
 
     public Document() {
         super(null);
