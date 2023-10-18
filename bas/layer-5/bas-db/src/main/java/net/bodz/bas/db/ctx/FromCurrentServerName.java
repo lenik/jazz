@@ -5,10 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class FromCurrentServerName
         implements

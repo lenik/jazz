@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.IllegalUsageException;
@@ -14,6 +12,8 @@ import net.bodz.bas.site.config.VhostResourceMappings;
 import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @see VhostResourceMappings#siteFilesAlias

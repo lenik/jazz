@@ -3,11 +3,11 @@ package net.bodz.bas.servlet.man;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
-
 import net.bodz.bas.c.javax.servlet.http.AbstractHttpSessionListener;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSessionEvent;
 
 public class SessionRegistry
         extends AbstractHttpSessionListener {

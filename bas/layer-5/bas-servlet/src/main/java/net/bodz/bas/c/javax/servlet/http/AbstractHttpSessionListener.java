@@ -1,6 +1,6 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionEvent;
 
 public abstract class AbstractHttpSessionListener
         implements IHttpSessionListener {

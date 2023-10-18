@@ -3,9 +3,9 @@ package net.bodz.bas.c.javax.servlet.http;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSessionContext;
 
 @SuppressWarnings("deprecation")
 public class MutableHttpSession

@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -16,6 +12,10 @@ import net.bodz.bas.std.rfc.http.ContentDisposition;
 import net.bodz.bas.std.rfc.http.ContentRange;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class ResourceTransferer {
 

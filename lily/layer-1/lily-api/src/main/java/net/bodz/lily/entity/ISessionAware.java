@@ -1,6 +1,6 @@
 package net.bodz.lily.entity;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 public interface ISessionAware {
 

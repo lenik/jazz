@@ -1,9 +1,9 @@
 package net.bodz.bas.repr.req;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.err.ParseException;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HttpSnapRequestProcessor
         implements

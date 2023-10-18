@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import net.bodz.bas.db.ctx.DataContext;
@@ -17,6 +16,8 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @ExcludedFromIndex
 public class PostgresBackedVhostResolver

@@ -1,6 +1,6 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.ServletRequestAttributeEvent;
+import jakarta.servlet.ServletRequestAttributeEvent;
 
 public abstract class AbstractServletRequestAttributeListener
         implements IServletRequestAttributeListener {

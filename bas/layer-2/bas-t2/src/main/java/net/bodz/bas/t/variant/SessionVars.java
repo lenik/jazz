@@ -2,9 +2,9 @@ package net.bodz.bas.t.variant;
 
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.t.iterator.Iterators;
+
+import jakarta.servlet.http.HttpSession;
 
 public class SessionVars
         extends AbstractVariantMap<String> {

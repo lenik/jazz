@@ -5,8 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.JazzBasProject;
 import net.bodz.bas.c.string.StringId;
 import net.bodz.bas.i18n.LocaleVars;
@@ -29,6 +27,8 @@ import net.bodz.bas.t.project.IJazzProject;
 import net.bodz.bas.t.project.JazzProjects;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public abstract class BasicSite
         extends AbstractXjdocContent

@@ -2,12 +2,12 @@ package net.bodz.bas.repr.req;
 
 import java.util.ServiceLoader;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @IndexedType
 public interface IHttpRequestProcessor {

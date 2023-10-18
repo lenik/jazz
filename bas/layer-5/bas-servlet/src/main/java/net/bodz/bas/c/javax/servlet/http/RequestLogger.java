@@ -1,11 +1,11 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletRequestEvent;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class RequestLogger
         extends AbstractServletRequestListener {

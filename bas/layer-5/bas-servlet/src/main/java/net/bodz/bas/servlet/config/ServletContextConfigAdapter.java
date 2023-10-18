@@ -2,10 +2,10 @@ package net.bodz.bas.servlet.config;
 
 import java.util.List;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
 import net.bodz.bas.c.javax.servlet.http.*;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 public class ServletContextConfigAdapter
         implements ServletContextListener, //

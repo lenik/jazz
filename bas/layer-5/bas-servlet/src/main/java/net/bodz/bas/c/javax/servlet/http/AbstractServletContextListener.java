@@ -1,6 +1,6 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextEvent;
 
 public abstract class AbstractServletContextListener
         implements IServletContextListener {

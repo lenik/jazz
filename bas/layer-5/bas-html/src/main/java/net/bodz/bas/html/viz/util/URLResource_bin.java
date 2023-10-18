@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.io.res.IStreamResource;
@@ -20,6 +17,9 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class URLResource_bin
         extends AbstractHttpViewBuilder<URLResource> {

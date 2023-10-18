@@ -1,6 +1,6 @@
 package net.bodz.bas.site.vhost;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class BasVhostResolver
         implements

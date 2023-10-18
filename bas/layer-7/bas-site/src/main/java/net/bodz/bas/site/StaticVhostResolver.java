@@ -1,10 +1,10 @@
 package net.bodz.bas.site;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHostResolver;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @ExcludedFromIndex
 public abstract class StaticVhostResolver

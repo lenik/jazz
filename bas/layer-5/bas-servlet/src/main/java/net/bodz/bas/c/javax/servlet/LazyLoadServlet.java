@@ -2,13 +2,13 @@ package net.bodz.bas.c.javax.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.servlet.HttpServlet;
+
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 
 public class LazyLoadServlet
         extends HttpServlet {

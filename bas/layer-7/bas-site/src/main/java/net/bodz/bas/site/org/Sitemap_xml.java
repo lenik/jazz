@@ -3,8 +3,6 @@ package net.bodz.bas.site.org;
 import java.io.IOException;
 import java.util.Map.Entry;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.c.java.util.Calendars;
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.io.IHtmlOut;
@@ -15,6 +13,8 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.ui.dom1.IUiRef;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class Sitemap_xml
         extends AbstractHtmlViewBuilder<Sitemap>

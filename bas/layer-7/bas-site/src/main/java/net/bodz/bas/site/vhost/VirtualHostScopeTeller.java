@@ -1,10 +1,10 @@
 package net.bodz.bas.site.vhost;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class VirtualHostScopeTeller
         extends AbstractScopeTeller {

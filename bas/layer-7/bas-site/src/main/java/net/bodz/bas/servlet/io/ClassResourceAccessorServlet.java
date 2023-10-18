@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.servlet.ResourceTransferer;
 import net.bodz.bas.std.rfc.http.ICacheControl;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class ClassResourceAccessorServlet
         extends AbstractFileAccessServlet {

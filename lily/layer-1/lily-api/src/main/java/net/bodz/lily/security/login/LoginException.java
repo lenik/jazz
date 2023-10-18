@@ -1,6 +1,6 @@
 package net.bodz.lily.security.login;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 public class LoginException
         extends ServletException {

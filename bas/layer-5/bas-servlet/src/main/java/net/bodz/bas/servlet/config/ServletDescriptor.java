@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.Servlet;
+import jakarta.servlet.Servlet;
 
 public class ServletDescriptor
         extends AbstractPluginDescriptor {

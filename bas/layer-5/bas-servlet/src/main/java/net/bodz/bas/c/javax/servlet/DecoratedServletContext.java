@@ -8,10 +8,11 @@ import java.util.EventListener;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.*;
-import javax.servlet.descriptor.JspConfigDescriptor;
-
 import net.bodz.bas.t.model.AbstractDecorator;
+
+import jakarta.servlet.*;
+import jakarta.servlet.ServletRegistration.Dynamic;
+import jakarta.servlet.descriptor.JspConfigDescriptor;
 
 public class DecoratedServletContext
         extends AbstractDecorator<ServletContext>
@@ -292,6 +293,43 @@ public class DecoratedServletContext
     @Override
     public String getVirtualServerName() {
         return getWrapped().getVirtualServerName();
+    }
+
+    // Servlet 4.0
+
+    @Override
+    public Dynamic addJspFile(String servletName, String jspFile) {
+        return getWrapped().addJspFile(servletName, jspFile);
+    }
+
+    @Override
+    public int getSessionTimeout() {
+        return getWrapped().getSessionTimeout();
+    }
+
+    @Override
+    public void setSessionTimeout(int sessionTimeout) {
+        getWrapped().setSessionTimeout(sessionTimeout);
+    }
+
+    @Override
+    public String getRequestCharacterEncoding() {
+        return getWrapped().getRequestCharacterEncoding();
+    }
+
+    @Override
+    public void setRequestCharacterEncoding(String encoding) {
+        getWrapped().setRequestCharacterEncoding(encoding);
+    }
+
+    @Override
+    public String getResponseCharacterEncoding() {
+        return getWrapped().getResponseCharacterEncoding();
+    }
+
+    @Override
+    public void setResponseCharacterEncoding(String encoding) {
+        getWrapped().setResponseCharacterEncoding(encoding);
     }
 
 }

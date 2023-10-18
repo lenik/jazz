@@ -1,10 +1,10 @@
 package net.bodz.bas.servlet;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.rtx.IQueryable;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public abstract class AbstractHttpViewContext
         implements
