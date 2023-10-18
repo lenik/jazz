@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.util.DurationFormat;
+import net.bodz.bas.util.JavaLang;
 
 public abstract class AbstractMapperProxy
         implements
@@ -17,6 +19,10 @@ public abstract class AbstractMapperProxy
 
     Class<?> mapperClass;
     MapperHelper<?, ?> helper;
+
+    boolean timing = true;
+    boolean showCallInfo = true;
+    int maxLen = 30;
 
     public <mapper_t extends IGenericMapper<T, M>, T, M> //
     AbstractMapperProxy(Class<?> mapperClass) {
@@ -39,5 +45,33 @@ public abstract class AbstractMapperProxy
 
     protected abstract Object invokeMapperMethod(Object obj, Method method, Object[] args)
             throws Throwable;
+
+    void showDuration(long d, Method method, Object[] args) {
+        String duration = DurationFormat.formatNanoDuration(d);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("time: ");
+        sb.append(duration);
+
+        if (showCallInfo) {
+            sb.append(" in ");
+            sb.append(mapperClass.getSimpleName());
+            sb.append(".");
+            sb.append(method.getName());
+            sb.append("(");
+            if (args != null)
+                for (int i = 0; i < args.length; i++) {
+                    if (i != 0)
+                        sb.append(", ");
+                    Object o = args[i];
+                    String s = JavaLang.toJavaLiteral(o, maxLen);
+                    sb.append('"');
+                    sb.append(s);
+                    sb.append('"');
+                }
+            sb.append(")");
+        }
+        logger.info(sb);
+    }
 
 }
