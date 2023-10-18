@@ -3,9 +3,6 @@ package net.bodz.lily.entity.manager;
 import java.io.File;
 import java.net.URL;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
@@ -23,6 +20,9 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @ForEntityType(IId.class)
 public class AttachmentResolveCommand

@@ -2,12 +2,12 @@ package net.bodz.bas.site.file;
 
 import java.io.IOException;
 
-import javax.servlet.http.Part;
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+
+import jakarta.servlet.http.Part;
 
 public class UploadedFileInfo
         extends ItemFile {

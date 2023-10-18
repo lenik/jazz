@@ -3,9 +3,6 @@ package net.bodz.bas.pdf.viz;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.log.Logger;
@@ -16,6 +13,9 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.bas.tex.dom.TeXCompiler;
 import net.bodz.bas.ui.dom1.IUiRef;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 
 public abstract class TeXPdfViewBuilder<T>
         extends AbstractPdfViewBuilder<T> {

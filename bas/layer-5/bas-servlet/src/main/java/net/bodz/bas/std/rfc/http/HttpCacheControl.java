@@ -2,10 +2,10 @@ package net.bodz.bas.std.rfc.http;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.c.string.TokensBuilder;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HttpCacheControl
         implements HttpHeaderNames, IDateFormatConsts {

@@ -3,12 +3,12 @@ package net.bodz.bas.html.viz;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.html.dom.HtmlHeadData;
 import net.bodz.bas.html.dom.IHtmlHeadData;
 import net.bodz.bas.servlet.DefaultHttpViewContext;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class DefaultHtmlViewContext
         extends DefaultHttpViewContext

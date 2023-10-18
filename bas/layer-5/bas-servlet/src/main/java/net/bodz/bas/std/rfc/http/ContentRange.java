@@ -3,7 +3,7 @@ package net.bodz.bas.std.rfc.http;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class ContentRange
         implements Serializable {

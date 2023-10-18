@@ -1,11 +1,11 @@
 package net.bodz.bas.servlet.ctx;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 import net.bodz.bas.meta.decl.Priority;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @ExcludedFromIndex
 public class RequestScopeTeller

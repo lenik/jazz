@@ -1,8 +1,8 @@
 package net.bodz.bas.site.vhost;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @ExcludedFromIndex
 public class DedicatedVhostResolver

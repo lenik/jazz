@@ -1,9 +1,9 @@
 package net.bodz.bas.servlet.ctx;
 
-import javax.servlet.ServletContext;
-
 import net.bodz.bas.ctx.scope.AbstractScopeTeller;
 import net.bodz.bas.ctx.scope.IScopeInstance;
+
+import jakarta.servlet.ServletContext;
 
 public class ServletContextScopeTeller
         extends AbstractScopeTeller {

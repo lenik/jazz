@@ -12,11 +12,11 @@ import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.repr.form.IFormDecl;
+import net.bodz.bas.repr.form.IFormProperty;
 import net.bodz.bas.repr.form.PropertyCategory;
 import net.bodz.bas.repr.form.PropertyFilters;
 import net.bodz.bas.repr.form.PropertyGroup;
-import net.bodz.bas.repr.form.IFormProperty;
-import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.ui.dom1.IUiRef;
 

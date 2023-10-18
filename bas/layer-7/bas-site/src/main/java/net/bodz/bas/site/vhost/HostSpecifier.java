@@ -1,8 +1,8 @@
 package net.bodz.bas.site.vhost;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.bodz.bas.c.object.Nullables;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class HostSpecifier {
 

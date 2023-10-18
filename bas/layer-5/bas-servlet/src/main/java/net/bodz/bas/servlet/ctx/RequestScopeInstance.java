@@ -2,11 +2,11 @@ package net.bodz.bas.servlet.ctx;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.MutableScopeInstance;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class RequestScopeInstance
         extends MutableScopeInstance {

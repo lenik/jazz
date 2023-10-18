@@ -7,9 +7,9 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.*;
-
 import net.bodz.bas.t.model.AbstractDecorator;
+
+import jakarta.servlet.*;
 
 public class DecoratedServletRequest
         extends AbstractDecorator<ServletRequest>

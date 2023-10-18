@@ -3,12 +3,12 @@ package net.bodz.bas.servlet;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.ctx.util.IFramedMap;
 import net.bodz.bas.ctx.util.StrictFramedMap;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class DefaultHttpViewContext
         extends AbstractHttpViewContext

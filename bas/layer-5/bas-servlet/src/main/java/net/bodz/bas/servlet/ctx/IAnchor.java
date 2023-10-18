@@ -1,6 +1,6 @@
 package net.bodz.bas.servlet.ctx;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * A relative path abstraction.

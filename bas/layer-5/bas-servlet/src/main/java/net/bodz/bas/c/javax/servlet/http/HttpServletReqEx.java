@@ -4,11 +4,11 @@ import java.util.Enumeration;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.model.IWrapper;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 public class HttpServletReqEx
         extends HttpServletRequestWrapper

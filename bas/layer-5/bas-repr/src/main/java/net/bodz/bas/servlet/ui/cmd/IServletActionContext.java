@@ -1,11 +1,11 @@
 package net.bodz.bas.servlet.ui.cmd;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.ui.model.action.IActionContext;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public interface IServletActionContext
         extends IActionContext {

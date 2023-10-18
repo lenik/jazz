@@ -3,14 +3,14 @@ package net.bodz.bas.repr.req;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariantMap;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class DefaultViewOfRequest
         implements

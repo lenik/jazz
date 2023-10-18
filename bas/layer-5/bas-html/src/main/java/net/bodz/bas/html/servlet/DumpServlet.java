@@ -5,12 +5,12 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public abstract class DumpServlet
-        extends javax.servlet.http.HttpServlet {
+        extends jakarta.servlet.http.HttpServlet {
 
     private static final long serialVersionUID = 1L;
 

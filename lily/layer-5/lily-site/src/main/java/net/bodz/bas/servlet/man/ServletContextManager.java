@@ -1,8 +1,5 @@
 package net.bodz.bas.servlet.man;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandler.Context;
@@ -18,6 +15,9 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.servlet.persist.AppFileFormat;
 import net.bodz.bas.t.variant.IVariantMap;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ServletContextManager
         implements IPathDispatchable {

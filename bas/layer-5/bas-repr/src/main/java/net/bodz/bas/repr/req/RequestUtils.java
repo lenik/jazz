@@ -1,13 +1,13 @@
 package net.bodz.bas.repr.req;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.c.javax.servlet.http.HttpServletReqEx;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class RequestUtils {
 

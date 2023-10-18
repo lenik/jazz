@@ -1,6 +1,6 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.ServletContextAttributeEvent;
+import jakarta.servlet.ServletContextAttributeEvent;
 
 public abstract class AbstractServletContextAttributeListener
         implements IServletContextAttributeListener {

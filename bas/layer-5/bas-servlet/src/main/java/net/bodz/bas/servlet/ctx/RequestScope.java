@@ -5,11 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Scope;
-import javax.servlet.http.HttpServletRequest;
 
 import net.bodz.bas.ctx.ScopeType;
 import net.bodz.bas.ctx.scope.ScopeIdClass;
 import net.bodz.bas.ctx.scope.ScopeTeller;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -7,18 +7,18 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class ServletDiag {
 

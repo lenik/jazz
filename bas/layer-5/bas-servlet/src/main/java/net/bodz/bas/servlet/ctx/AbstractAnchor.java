@@ -1,6 +1,6 @@
 package net.bodz.bas.servlet.ctx;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public abstract class AbstractAnchor
         implements

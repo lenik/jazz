@@ -1,6 +1,6 @@
 package net.bodz.bas.c.javax.servlet.http;
 
-import javax.servlet.http.HttpSessionBindingEvent;
+import jakarta.servlet.http.HttpSessionBindingEvent;
 
 public abstract class AbstractHttpSessionBindingListener
         implements IHttpSessionBindingListener {

@@ -1,8 +1,5 @@
 package net.bodz.lily.entity.manager;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.repr.path.DefaultTokenProcessor;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -11,6 +8,9 @@ import net.bodz.bas.rtx.IAttributed;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.typer.std.MutableAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class MutableEntityCommandContext_Legacy
         extends DefaultTokenProcessor
