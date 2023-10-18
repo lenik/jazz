@@ -22,17 +22,20 @@ public class HikariDataSourceProvider
         if (options == null)
             throw new NullPointerException("options");
 
-        HikariDataSource dataSource = new HikariDataSource();
-        // dataSource.setDriverClass(args.getType().getDriverClassName());
-        dataSource.setJdbcUrl(options.getConnectionUrl());
-        dataSource.setDataSourceProperties(options.getProperties());
-        dataSource.setUsername(options.getUserName());
-        dataSource.setPassword(options.getPassword());
-        dataSource.setConnectionTimeout(60 * 1000L); // 1 min
-        dataSource.setMaximumPoolSize(options.getPoolSize());
-        // dataSource.setMaxLifetime(300 * 1000); // 5 min
+        HikariDataSource hikari = new HikariDataSource();
+        // hikari.setDriverClass(args.getType().getDriverClassName());
+        hikari.setAllowPoolSuspension(true);
+        hikari.setRegisterMbeans(true);
+        hikari.setJdbcUrl(options.getConnectionUrl());
+        hikari.setDataSourceProperties(options.getProperties());
+        hikari.setUsername(options.getUserName());
+        hikari.setPassword(options.getPassword());
+        hikari.setConnectionTimeout(60 * 1000L); // 1 min
+        hikari.setMaximumPoolSize(options.getPoolSize());
+        hikari.setMaxLifetime(300 * 1000); // 5 min
+        // hikari.setConnectionTimeout(250);
 
-        P6DataSource p6 = new P6DataSource(dataSource);
+        P6DataSource p6 = new P6DataSource(hikari);
         this.dataSource = p6;
     }
 
