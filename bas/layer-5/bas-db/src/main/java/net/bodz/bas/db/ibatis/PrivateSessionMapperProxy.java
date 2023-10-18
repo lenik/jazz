@@ -26,8 +26,12 @@ public class PrivateSessionMapperProxy
             throws Throwable {
         Object result;
         SqlSession session = sqlSessionFactory.openSession();
+        long begin = -1;
         try {
             Object proxy = session.getMapper(mapperClass);
+
+            begin = System.nanoTime();
+
             result = method.invoke(proxy, args);
             session.commit();
         } catch (InvocationTargetException e) {
@@ -37,6 +41,11 @@ public class PrivateSessionMapperProxy
             throw te;
         } finally {
             session.close();
+
+            if (timing && begin != -1) {
+                long d = System.nanoTime() - begin;
+                showDuration(d, method, args);
+            }
         }
         return result;
     }

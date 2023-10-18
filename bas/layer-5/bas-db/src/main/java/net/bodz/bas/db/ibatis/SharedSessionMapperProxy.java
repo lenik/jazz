@@ -25,13 +25,23 @@ public class SharedSessionMapperProxy
         Object result;
 
         Object proxy = session.getMapper(mapperClass);
-        result = method.invoke(proxy, args);
 
-        if (method.isAnnotationPresent(Commit.class)) {
-            session.commit();
-            // session.clearCache();
+        long begin = System.nanoTime();
+
+        try {
+            result = method.invoke(proxy, args);
+
+            if (method.isAnnotationPresent(Commit.class)) {
+                session.commit();
+                // session.clearCache();
+            }
+        } finally {
+            if (timing && begin != -1) {
+                long d = System.nanoTime() - begin;
+                showDuration(d, method, args);
+            }
         }
-
         return result;
     }
+
 }
