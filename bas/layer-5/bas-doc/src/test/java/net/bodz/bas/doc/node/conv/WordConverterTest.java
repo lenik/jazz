@@ -12,6 +12,7 @@ import net.bodz.bas.doc.io.DomWriter;
 import net.bodz.bas.doc.node.Document;
 import net.bodz.bas.doc.node.ListPar;
 import net.bodz.bas.doc.node.Table;
+import net.bodz.bas.doc.node.TableCell;
 import net.bodz.bas.doc.node.TextPar;
 import net.bodz.bas.doc.node.util.Css3ListStyle;
 import net.bodz.bas.doc.property.HorizAlignment;
@@ -35,8 +36,10 @@ public class WordConverterTest
     String imagePath;
     String tableTop;
     String tableLeft;
-    int tableRows = 3;
-    int tableCols = 3;
+    int tableRows = 4;
+    int tableCols = 5;
+    boolean mergeSomeCells = true;
+
     boolean addLists = true;
     {
         imagePath = "/usr/share/backgrounds/mate/nature/Aqua.jpg";
@@ -109,10 +112,17 @@ public class WordConverterTest
         out.println("text: end of the part 2.");
         out.hr();
 
-        if (tableTop != null)
-            buildTable(tableTop, tableRows, tableCols, 1, 0, (Integer row, Integer col) -> row == 0);
-        if (tableLeft != null)
-            buildTable(tableLeft, tableRows, tableCols, 0, 1, (Integer row, Integer col) -> col == 0);
+        if (tableTop != null) {
+            Table table = buildTable(tableTop, tableRows, tableCols, 1, 0, (Integer row, Integer col) -> row == 0);
+            if (mergeSomeCells)
+                mergeSomeCells(table);
+        }
+
+        if (tableLeft != null) {
+            Table table = buildTable(tableLeft, tableRows, tableCols, 0, 1, (Integer row, Integer col) -> col == 0);
+            if (mergeSomeCells)
+                mergeSomeCells(table);
+        }
 
         if (addLists) {
             buildLists();
@@ -121,7 +131,7 @@ public class WordConverterTest
         return doc;
     }
 
-    void buildTable(String style, int rows, int cols, int firstRows, int firstColumns,
+    Table buildTable(String style, int rows, int cols, int firstRows, int firstColumns,
             BiPredicate<Integer, Integer> headerf) {
         String tableSpec = String.format("table %d rows, %d cols (header %d rows, %d cols)", //
                 rows, cols, firstRows, firstColumns);
@@ -141,6 +151,22 @@ public class WordConverterTest
             }
         }
         out.endTable();
+        return table;
+    }
+
+    void mergeSomeCells(Table table) {
+        TableCell b0 = table.getCell(0, 1);
+        b0.setColumnSpan(2);
+
+        TableCell a1 = table.getCell(1, 0);
+        a1.setRowSpan(3);
+
+        TableCell c1 = table.getCell(1, 1);
+        c1.setRowSpan(2);
+        c1.setColumnSpan(3);
+
+        TableCell e0 = table.getCell(0, 4);
+        e0.setRowSpan(3);
     }
 
     void buildLists() {

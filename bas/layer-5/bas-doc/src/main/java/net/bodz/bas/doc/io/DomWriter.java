@@ -278,6 +278,38 @@ public class DomWriter
         return this;
     }
 
+    DomWriter _tr(boolean header, Object... cells) {
+        tr();
+        for (Object cell : cells)
+            if (header)
+                th(cell);
+            else
+                td(cell);
+        TableRow row = (TableRow) stack.top();
+        row.expandLastColumn();
+        return end();
+    }
+
+    @Override
+    public DomWriter trHead(Object... cells) {
+        return _tr(true, cells);
+    }
+
+    @Override
+    public DomWriter trHead(String... cells) {
+        return _tr(true, (Object[]) cells);
+    }
+
+    @Override
+    public DomWriter tr(Object... cells) {
+        return _tr(false, cells);
+    }
+
+    @Override
+    public DomWriter tr(String... cells) {
+        return _tr(false, (Object[]) cells);
+    }
+
     @Override
     public DomWriter th() {
         TableRow row = stack.popAhead(np.TABLE_ROW);

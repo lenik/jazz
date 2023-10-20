@@ -6,8 +6,9 @@ public class TableCell
     final TableRow row;
 
     boolean header;
-    int rowSpan = 1;
     int columnSpan = 1;
+    int rowSpan = 1;
+    public TableCell mergedTo;
 
     public boolean borderLeft;
     public boolean borderRight;
@@ -62,20 +63,20 @@ public class TableCell
         this.header = header;
     }
 
-    public int getRowSpan() {
-        return rowSpan;
-    }
-
-    public void setRowSpan(int rowSpan) {
-        this.rowSpan = rowSpan;
-    }
-
     public int getColumnSpan() {
         return columnSpan;
     }
 
     public void setColumnSpan(int columnSpan) {
         this.columnSpan = columnSpan;
+    }
+
+    public int getRowSpan() {
+        return rowSpan;
+    }
+
+    public void setRowSpan(int rowSpan) {
+        this.rowSpan = rowSpan;
     }
 
     @Override
