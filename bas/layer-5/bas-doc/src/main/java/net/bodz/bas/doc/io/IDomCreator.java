@@ -107,6 +107,7 @@ public interface IDomCreator
             cell.setHeader(true);
             cell.setText(formatData(data));
         }
+        row.expandLastColumn();
         return row;
     }
 

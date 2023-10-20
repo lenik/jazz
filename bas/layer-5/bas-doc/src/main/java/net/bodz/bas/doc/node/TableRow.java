@@ -34,6 +34,11 @@ public class TableRow
         return cells;
     }
 
+    public TableCell getCell(int columnIndex) {
+        TableCell cell = cells.get(columnIndex);
+        return cell;
+    }
+
     @Override
     public IAutoList<TableCell> getChildren() {
         return cells;
@@ -71,6 +76,40 @@ public class TableRow
 
     public TableCell addCell() {
         return cells.append();
+    }
+
+    public void expandLastColumn() {
+        Table table = this.getTable();
+        int maxColumnCount = table.getMaxColumnCount();
+
+        int nActual = cells.size();
+        TableCell lastCell = this.cells.get(nActual - 1);
+        int nEmpty = maxColumnCount - nActual;
+        lastCell.setColumnSpan(nEmpty + 1);
+    }
+
+    public synchronized void updateHMerge() {
+        int n = cells.size();
+        int mergeMore = 0;
+        TableCell orig = null;
+        for (int c = 0; c < n; c++) {
+            TableCell cell = cells.get(c);
+            if (mergeMore > 0) {
+                cell.mergedTo = orig;
+                mergeMore--;
+            } else {
+                if (cell.mergedTo != null) // v-orig
+                    cell = cell.mergedTo;
+                int span = cell.getColumnSpan();
+                if (span > 1) {
+                    orig = cell;
+                    mergeMore = span - 1;
+                } else {
+                    // orig = null;
+                    // mergeMore = 0;
+                }
+            }
+        }
     }
 
 }

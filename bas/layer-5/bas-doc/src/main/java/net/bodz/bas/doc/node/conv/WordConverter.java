@@ -176,6 +176,8 @@ public class WordConverter
             borderSingleAuto(borders.addNewInsideV(), 0, 0);
         }
 
+        table.updateCellMerges();
+
         XwTable x_table = new XwTable(_table);
         stack.push(x_table);
         super.table(table);
@@ -198,11 +200,22 @@ public class WordConverter
         // XwTableRow x_row = x_table.addRow();
         XWPFTable _table = x_table.getElement();
         XWPFTableRow _row = _table.getRow(index);
+
+        CTRow ctRow = _row.getCtRow();
+        CTTrPr trPr = ctRow.isSetTrPr() ? ctRow.getTrPr() : ctRow.addNewTrPr();
+
+        if (table.getRowPosition(index) != RowPosition.BODY)
+            trPr.addNewTblHeader();
+
         XwTableRow x_row = new XwTableRow(_row);
 
         stack.push(x_row);
         super.tableRow(row, index);
         stack.pop();
+
+        int nCell = _row.getTableCells().size();
+        while (x_row.cptr < nCell)
+            _row.removeCell(--nCell);
 
         if (index == 0) {
             TableRow topRow = table.rows.get(0);
@@ -228,8 +241,16 @@ public class WordConverter
         if (x_row == null)
             throw new IllegalStateException("without x_row");
 
+        TableCell orig = cell.mergedTo;
+        if (orig == null)
+            orig = cell;
+        else if (orig.getChildIndex() != index) {
+            // covered by colspan
+            return;
+        }
+
         XWPFTableRow _row = x_row.getElement();
-        XWPFTableCell _cell = _row.getCell(index);
+        XWPFTableCell _cell = _row.getCell(x_row.cptr++);
         XwTableCell x_cell = new XwTableCell(_cell);
 
         if (cell.isHeader()) {
@@ -237,6 +258,25 @@ public class WordConverter
             XwRun x_run = x_par.getRunToAppend();
             XWPFRun _run = x_run.getElement();
             _run.setBold(true);
+        }
+
+        CTTc tc = _cell.getCTTc();
+        CTTcPr pr = tc.isSetTcPr() ? tc.getTcPr() : tc.addNewTcPr();
+
+        int colSpan = orig.getColumnSpan();
+        if (colSpan > 1) {
+            CTDecimalNumber gridSpan = pr.addNewGridSpan();
+            gridSpan.setVal(BigInteger.valueOf(colSpan));
+        }
+
+        if (cell.getRow() != orig.getRow())
+            pr.addNewVMerge();
+        else {
+            int rowSpan = cell.getRowSpan();
+            if (rowSpan > 1) {
+                CTVMerge vMerge = pr.addNewVMerge();
+                vMerge.setVal(STMerge.RESTART);
+            }
         }
 
         stack.push(x_cell);

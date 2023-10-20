@@ -55,6 +55,22 @@ public class Table
         return max;
     }
 
+    /**
+     * @throws IndexOutOfBoundsException
+     */
+    public TableRow getRow(int rowIndex) {
+        return rows.get(rowIndex);
+    }
+
+    /**
+     * @throws IndexOutOfBoundsException
+     */
+    public TableCell getCell(int rowIndex, int columnIndex) {
+        TableRow row = getRow(rowIndex);
+        TableCell cell = row.getCell(columnIndex);
+        return cell;
+    }
+
     @Override
     public void buildText(StringBuilder a) {
         for (TableRow row : rows) {
@@ -76,6 +92,60 @@ public class Table
 
     public TableRow addRow() {
         return rows.append();
+    }
+
+    public synchronized void updateCellMerges() {
+        int maxColumnCount = getMaxColumnCount();
+        for (int c = 0; c < maxColumnCount; c++)
+            updateVMerge(c);
+        updateHMerge();
+    }
+
+    synchronized void updateHMerge() {
+        for (TableRow row : rows)
+            row.updateHMerge();
+    }
+
+    synchronized void updateVMerge(int columnIndex) {
+        int n = rows.size();
+        int mergeMore = 0;
+        TableCell orig = null;
+        for (int r = 0; r < n; r++) {
+            TableRow row = rows.get(r);
+            int cc = row.getChildCount();
+            if (columnIndex >= cc)
+                continue;
+            TableCell cell = row.cells.get(columnIndex);
+            if (mergeMore > 0) {
+                cell.mergedTo = orig;
+                mergeMore--;
+            } else {
+                int span = cell.getRowSpan();
+                if (span > 1) {
+                    mergeMore = span - 1;
+                    orig = cell;
+                } else {
+                    // mergeMore = 0;
+                    // orig = null;
+                }
+            }
+        }
+    }
+
+    public void dumpMerges() {
+        int h = rows.size();
+        for (int y = 0; y < h; y++) {
+            TableRow row = rows.get(y);
+            int w = row.cells.size();
+            System.out.print("    ");
+            for (int x = 0; x < w; x++) {
+                TableCell cell = row.cells.get(x);
+                char type = cell.mergedTo == null ? 'o' : '_';
+                System.out.print(type);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 }

@@ -7,6 +7,7 @@ public class XwTableRow
         extends AbstractXwNode {
 
     XWPFTableRow element;
+    public int cptr;
 
     public XwTableRow(XWPFTableRow element) {
         this(null, element);
