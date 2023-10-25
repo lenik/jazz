@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 
 public class NullVariantMap<K>
@@ -231,6 +232,26 @@ public class NullVariantMap<K>
 
     @Override
     public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter format, K key, LocalDate defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key) {
+        return null;
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key, LocalDate defaultValue) {
         return defaultValue;
     }
 

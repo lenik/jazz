@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.t.model.AbstractDecorator;
@@ -256,6 +257,26 @@ public class DecoratedVariantMap<K>
     @Override
     public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
         return getWrapped().getDateTime(format, key, defaultValue);
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter format, K key) {
+        return getWrapped().getLocalDate(format, key);
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter format, K key, LocalDate defaultValue) {
+        return getWrapped().getLocalDate(format, key, defaultValue);
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key) {
+        return getWrapped().getLocalDate(key);
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key, LocalDate defaultValue) {
+        return getWrapped().getLocalDate(key, defaultValue);
     }
 
     @Override

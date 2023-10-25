@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.c.object.Enums;
@@ -305,6 +306,56 @@ public abstract class AutoConvVariantMap<K>
         DateTimeVarConverter conv = new DateTimeVarConverter(formatter);
         try {
             return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        LocalDateVarConverter conv = new LocalDateVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public LocalDate getLocalDate(DateTimeFormatter formatter, K key, LocalDate defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+
+        LocalDateVarConverter conv = new LocalDateVarConverter(formatter);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return LocalDateVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalDate getLocalDate(K key, LocalDate defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+//            if (containsKey(key))
+//                return null;
+//            else
+            return defaultValue;
+        try {
+            return LocalDateVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

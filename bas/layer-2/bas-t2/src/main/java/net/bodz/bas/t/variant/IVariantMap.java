@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 
 public interface IVariantMap<K>
@@ -20,16 +21,16 @@ public interface IVariantMap<K>
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
-     *         the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element
+     *         in the array. If the array is empty, returns <code>null</code>, too.
      */
     Object getScalar(K key);
 
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
-     *         the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element
+     *         in the array. If the array is empty, returns <code>null</code>, too.
      *
      *         If there is no entry for the key, defaultValue is returned.
      */
@@ -116,6 +117,14 @@ public interface IVariantMap<K>
     DateTime getDateTime(DateTimeFormatter format, K key);
 
     DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue);
+
+    LocalDate getLocalDate(DateTimeFormatter format, K key);
+
+    LocalDate getLocalDate(DateTimeFormatter format, K key, LocalDate defaultValue);
+
+    LocalDate getLocalDate(K key);
+
+    LocalDate getLocalDate(K key, LocalDate defaultValue);
 
     File getFile(K key);
 
