@@ -3,6 +3,7 @@ package net.bodz.bas.doc.io;
 import java.io.IOException;
 
 import net.bodz.bas.doc.node.*;
+import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.doc.property.ElementType;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
@@ -328,6 +329,12 @@ public class DomWriter
     }
 
     @Override
+    public DomWriter breakFill(BreakerType breakType) {
+        stack.popAhead(np.HAVE_RUNS).addBreak(breakType);
+        return this;
+    }
+
+    @Override
     public DomWriter hr() {
         stack.popAhead(np.HAVE_PARS).addHr();
         return this;
@@ -363,7 +370,7 @@ public class DomWriter
     @Override
     public DomWriter font(String family, MeasureLength size) {
         IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
-        FontEnv font = new FontEnv(runs);
+        FontEnv font = runs.addFontEnv();
         if (family != null)
             font.setFamily(family);
         if (size != null)
@@ -373,18 +380,19 @@ public class DomWriter
     }
 
     @Override
-    public DomWriter color(String color) {
+    public DomWriter color(Color color) {
+        // stack.popAhead(np.IS_RUN);
         IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
-        FontEnv font = new FontEnv(runs);
+        FontEnv font = runs.addFontEnv();
         font.setColor(color);
         stack.push(font);
         return this;
     }
 
     @Override
-    public DomWriter backgroundColor(String color) {
+    public DomWriter backgroundColor(Color color) {
         IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
-        FontEnv font = new FontEnv(runs);
+        FontEnv font = runs.addFontEnv();
         font.setBackground(color);
         stack.push(font);
         return this;

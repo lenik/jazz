@@ -3,6 +3,7 @@ package net.bodz.bas.doc.node;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.list.AutoLists;
 import net.bodz.bas.t.list.IListEx;
@@ -15,8 +16,8 @@ public abstract class AbstractDocNode
     final Map<String, Object> attributes = new HashMap<>();
 
     String styleClass;
-    String color;
-    String background;
+    Color color;
+    Color background;
     // String border;
 
     public AbstractDocNode(INode parent) {
@@ -52,19 +53,19 @@ public abstract class AbstractDocNode
         this.styleClass = styleClass;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
-    public String getBackground() {
+    public Color getBackground() {
         return background;
     }
 
-    public void setBackground(String background) {
+    public void setBackground(Color background) {
         this.background = background;
     }
 

@@ -1,5 +1,7 @@
 package net.bodz.bas.doc.io;
 
+import net.bodz.bas.doc.node.BreakerType;
+import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.doc.property.ElementType;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
@@ -158,6 +160,8 @@ public interface IDocWriter<self_t extends IDocWriter<self_t>>
         return td().data(data).end();
     }
 
+    self_t breakFill(BreakerType breakType);
+
     self_t hr();
 
     self_t image(IStreamInputSource source, MeasureLength width, MeasureLength height);
@@ -186,9 +190,9 @@ public interface IDocWriter<self_t extends IDocWriter<self_t>>
         return font(null, size);
     }
 
-    self_t color(String color);
+    self_t color(Color color);
 
-    self_t backgroundColor(String color);
+    self_t backgroundColor(Color color);
 
     self_t data(Object data);
 

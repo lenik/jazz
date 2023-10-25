@@ -25,6 +25,7 @@ public enum NodeType {
     FONT_ENV,
     FONT_STYLE_ENV,
 
+    BREAKER,
     HR,
     IMAGE,
 

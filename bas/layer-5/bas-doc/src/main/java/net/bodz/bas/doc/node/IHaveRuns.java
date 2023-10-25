@@ -62,6 +62,10 @@ public interface IHaveRuns
         return getRuns().append(new FontStyleEnv(this));
     }
 
+    default Breaker addBreak(BreakerType breakType) {
+        return getRuns().append(new Breaker(this, breakType));
+    }
+
     default Image addImage() {
         return getRuns().append(new Image(this));
     }

@@ -67,6 +67,9 @@ public interface INode
         return null;
     }
 
+    /**
+     * @return ancestor nodes from leaf to root.
+     */
     default <T> List<T> ancestors(TypePredicate<INode, T> predicate) {
         List<T> list = new ArrayList<>();
         INode node = this;

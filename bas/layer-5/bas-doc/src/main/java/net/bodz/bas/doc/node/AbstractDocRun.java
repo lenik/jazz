@@ -2,6 +2,7 @@ package net.bodz.bas.doc.node;
 
 import net.bodz.bas.doc.node.util.DocNodeLists;
 import net.bodz.bas.doc.node.util.IDocNodeList;
+import net.bodz.bas.doc.property.Color;
 
 public abstract class AbstractDocRun
         extends AbstractDocNode
@@ -20,6 +21,12 @@ public abstract class AbstractDocRun
     @Override
     public IDocNodeList<? extends INode> getChildren() {
         return DocNodeLists.emptyList();
+    }
+
+    Color highlight;
+
+    public Color getHighlight() {
+        return highlight;
     }
 
 }
