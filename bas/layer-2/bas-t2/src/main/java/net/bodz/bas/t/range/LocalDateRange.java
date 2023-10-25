@@ -168,6 +168,16 @@ public class LocalDateRange
         return this;
     }
 
+    @Override
+    public void setFrom(LocalDate from) {
+        super.setFrom(from);
+    }
+
+    @Override
+    public void setTo(LocalDate to) {
+        super.setTo(to);
+    }
+
     public LocalDate getMin() {
         return start;
     }
