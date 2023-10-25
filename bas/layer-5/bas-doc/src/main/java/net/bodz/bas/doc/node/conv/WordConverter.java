@@ -18,7 +18,9 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.doc.node.*;
 import net.bodz.bas.doc.node.Document;
 import net.bodz.bas.doc.node.util.IListStyle;
+import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.doc.property.HorizAlignment;
+import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.word.DocNum;
 import net.bodz.bas.doc.word.INumStyles;
 import net.bodz.bas.doc.word.xwpf.*;
@@ -363,17 +365,84 @@ public class WordConverter
             }
             x_run = x_runs.addRun();
         }
+
+        XWPFRun _run = x_run.getElement();
+
+        Color color = textRun.getColor();
+        if (color != null)
+            _run.setColor(color.getRgbCode());
+
+        CTR r = _run.getCTR();
+
+        Color background = textRun.getBackground();
+        if (background != null) {
+            CTRPr rPr = r.isSetRPr() ? r.getRPr() : r.addNewRPr();
+            CTShd cTShd = rPr.addNewShd();
+            cTShd.setVal(STShd.CLEAR);
+            // cTShd.setColor("auto");
+            cTShd.setFill(background.getRgbCode());
+        }
+
+        Color highlightColor = textRun.getHighlight();
+        if (highlightColor != null) {
+            CTRPr rPr = r.isSetRPr() ? r.getRPr() : r.addNewRPr();
+            CTHighlight highlight = rPr.addNewHighlight();
+            STHighlightColor.Enum val = STHighlightColor.Enum.forString(highlightColor.getRgbCode());
+            highlight.setVal(val);
+        }
+
         for (String s : textRun.textList) {
             if (s == null || s.isEmpty())
                 return;
-            XWPFRun _run = x_run.getElement();
             XwUtils.addPlainText(_run, s);
         }
     }
 
     @Override
     public void fontEnv(FontEnv fontEnv) {
-        super.fontEnv(fontEnv);
+        IXwNode top = stack.top();
+        IXwHaveRuns x_runs;
+        if (top.haveRuns())
+            x_runs = (IXwHaveRuns) top;
+        else if (top.havePars()) {
+            IXwHavePars x_pars = (IXwHavePars) top;
+            XwPar x_par = x_pars.addPar();
+            x_runs = x_par;
+        } else if (top.isRun()) {
+            XwRun x_run = (XwRun) top;
+            XwPar x_parent = x_run.getParent();
+            x_runs = x_parent;
+        } else
+            throw new IllegalStateException();
+
+        List<FontEnv> chain = fontEnv.ancestors(NodePredicates.FONT_ENV);
+        String fFamily = null;
+        MeasureLength fSize = null;
+        for (FontEnv node : chain) {
+            if (fFamily == null) {
+                String family = node.getFamily();
+                if (family != null)
+                    fFamily = family;
+            }
+
+            if (fSize == null) {
+                MeasureLength size = node.getSize();
+                if (size != null)
+                    fSize = size;
+            }
+        }
+
+        for (IRun run : fontEnv.runs) {
+            XwRun x_run = x_runs.addRun();
+            XWPFRun _run = x_run.getElement();
+            if (fFamily != null)
+                _run.setFontFamily(fFamily);
+            if (fSize != null)
+                _run.setFontSize(fSize.toTwips());
+            stack.push(x_run);
+            run.accept(this);
+            stack.pop();
+        }
     }
 
     @Override
@@ -417,6 +486,44 @@ public class WordConverter
             stack.push(x_run);
             run.accept(this);
             stack.pop();
+        }
+    }
+
+    @Override
+    public void breaker(Breaker breaker) {
+        IXwNode top = stack.top();
+        XwRun x_run = top.closest(xp.RUN);
+        if (x_run == null) {
+            IXwHaveRuns runs = top.closest(xp.HAVE_RUNS);
+            if (runs != null)
+                x_run = runs.addRun();
+            else {
+                IXwHavePars pars = top.closest(xp.HAVE_PARS);
+                x_run = pars.addPar().addRun();
+            }
+        }
+        XWPFRun _run = x_run.getElement();
+
+        switch (breaker.getBreakType()) {
+        case PAR:
+            IXwHavePars pars = stack.popAhead(xp.HAVE_PARS);
+            XwPar par = pars.addPar();
+            stack.push(par);
+            break;
+
+        case LINE:
+            _run.addBreak(BreakType.TEXT_WRAPPING);
+            break;
+
+        case COLUMN:
+            _run.addBreak(BreakType.COLUMN);
+            break;
+
+        case PAGE:
+//        case EVEN_PAGE:
+//        case ODD_PAGE:
+            _run.addBreak(BreakType.PAGE);
+            break;
         }
     }
 

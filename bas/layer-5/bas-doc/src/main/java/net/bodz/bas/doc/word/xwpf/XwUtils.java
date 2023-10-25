@@ -1,7 +1,6 @@
 package net.bodz.bas.doc.word.xwpf;
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -27,10 +26,15 @@ public class XwUtils {
             return;
         }
 
-        StringTokenizer lines = new StringTokenizer(s, "\n");
+        int start = 0;
+        int len = s.length();
         int n = 0;
-        while (lines.hasMoreTokens()) {
-            String line = lines.nextToken();
+        while (start < len) {
+            int eol = s.indexOf('\n', start);
+            if (eol == -1)
+                eol = len;
+            String line = s.substring(start, eol);
+            start = eol + 1;
             if (n++ != 0)
                 run.addBreak();
             run.setText(line);

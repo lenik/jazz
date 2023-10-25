@@ -167,6 +167,10 @@ public class AbstractDocVisitor
     }
 
     @Override
+    public void breaker(Breaker breaker) {
+    }
+
+    @Override
     public void hr(Hr hr) {
     }
 

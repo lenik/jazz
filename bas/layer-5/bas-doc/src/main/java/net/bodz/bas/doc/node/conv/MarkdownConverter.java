@@ -149,6 +149,27 @@ public class MarkdownConverter
     }
 
     @Override
+    public void breaker(Breaker breaker) {
+        switch (breaker.getBreakType()) {
+        case PAR:
+            out.println();
+        case LINE:
+            out.println();
+            break;
+        case COLUMN: // unsupported.
+            out.println();
+            out.println();
+            break;
+        case PAGE: // not supported.
+//        case EVEN_PAGE:
+//        case ODD_PAGE:
+            out.println("* * *");
+            out.println();
+            break;
+        }
+    }
+
+    @Override
     public void hr(Hr hr) {
         out.println();
         out.println("----------");

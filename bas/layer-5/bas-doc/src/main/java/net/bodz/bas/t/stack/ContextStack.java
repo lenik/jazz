@@ -225,8 +225,11 @@ public class ContextStack<E>
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (E node : stack)
-            sb.append(node + "\n");
+        int i = 0;
+        for (E node : stack) {
+            sb.append("[" + i + "] " + node + "\n");
+            i++;
+        }
         return sb.toString();
     }
 
