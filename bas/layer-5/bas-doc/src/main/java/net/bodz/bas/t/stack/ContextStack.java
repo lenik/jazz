@@ -146,34 +146,13 @@ public class ContextStack<E>
     }
 
     @Override
-    public <R extends E> R popBefore(TypePredicate<E, R> predicate, R defaultVal) {
-        int offset = offsetFromTop(predicate);
-        if (offset == -1)
-            return defaultVal;
-        @SuppressWarnings("unchecked")
-        R bot = (R) pop(offset); // if offset=0, pop nothing.
-        return bot;
-    }
-
-    @Override
-    public <R extends E> R popAhead(TypePredicate<E, R> predicate, R defaultVal) {
+    public <R extends E> R popFor(TypePredicate<E, R> predicate, R defaultVal) {
         int offset = offsetFromTop(predicate);
         if (offset == -1)
             return defaultVal;
         pop(offset);
         @SuppressWarnings("unchecked")
         R top = (R) top();
-        return top;
-    }
-
-    @Override
-    public <R extends E> R popTo(TypePredicate<E, R> predicate, R defaultVal) {
-        int offset = offsetFromTop(predicate);
-        if (offset == -1)
-            return defaultVal;
-        pop(offset);
-        @SuppressWarnings("unchecked")
-        R top = (R) pop();
         return top;
     }
 
@@ -225,10 +204,10 @@ public class ContextStack<E>
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        int i = 0;
-        for (E node : stack) {
+        int n = stack.size();
+        for (int i = n - 1; i >= 0; i--) {
+            E node = stack.get(i);
             sb.append("[" + i + "] " + node + "\n");
-            i++;
         }
         return sb.toString();
     }
