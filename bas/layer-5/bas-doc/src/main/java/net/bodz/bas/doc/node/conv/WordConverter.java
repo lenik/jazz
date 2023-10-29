@@ -56,6 +56,22 @@ public class WordConverter
         stack.push(stackTop);
     }
 
+    XwPar getParToAppend() {
+        IXwNode top = stack.top();
+        if (top.havePars()) {
+
+        }
+        return null;
+    }
+
+    XwRun getRunToAppend() {
+        IXwNode top = stack.top();
+        if (top.haveRuns()) {
+            IHaveRuns runs = (IHaveRuns) top;
+        }
+        return null;
+    }
+
     @Override
     public void document(Document doc) {
         IXwNode top = stack.top();
@@ -506,7 +522,7 @@ public class WordConverter
 
         switch (breaker.getBreakType()) {
         case PAR:
-            IXwHavePars pars = stack.popAhead(xp.HAVE_PARS);
+            IXwHavePars pars = stack.popFor(xp.HAVE_PARS);
             XwPar par = pars.addPar();
             stack.push(par);
             break;
