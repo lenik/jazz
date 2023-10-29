@@ -63,19 +63,7 @@ public interface IContextStack<E> {
      *
      * @return <code>null</code> if no matching found.
      */
-    <R extends E> R popBefore(TypePredicate<E, R> predicate, R defaultVal);
-
-    /**
-     * pop-before with look-ahead(1).
-     *
-     * @return <code>null</code> if no matching found.
-     */
-    <R extends E> R popAhead(TypePredicate<E, R> predicate, R defaultVal);
-
-    /**
-     * @return <code>null</code> if no matching found.
-     */
-    <R extends E> R popTo(TypePredicate<E, R> predicate, R defaultVal);
+    <R extends E> R popFor(TypePredicate<E, R> predicate, R defaultVal);
 
     /**
      * pop-before with look-ahead(1).
@@ -83,32 +71,8 @@ public interface IContextStack<E> {
      * @throws NoSuchElementException
      *             if no matching found.
      */
-    default <R extends E> R popBefore(TypePredicate<E, R> predicate) {
-        R element = popBefore(predicate, null);
-        if (element == null)
-            throw new NoSuchElementException(predicate.toString());
-        return element;
-    }
-
-    /**
-     * pop-before with look-ahead(1).
-     *
-     * @throws NoSuchElementException
-     *             if no matching found.
-     */
-    default <R extends E> R popAhead(TypePredicate<E, R> predicate) {
-        R element = popAhead(predicate, null);
-        if (element == null)
-            throw new NoSuchElementException(predicate.toString());
-        return element;
-    }
-
-    /**
-     * @throws NoSuchElementException
-     *             if no matching found.
-     */
-    default <R extends E> R popTo(TypePredicate<E, R> predicate) {
-        R element = popTo(predicate, null);
+    default <R extends E> R popFor(TypePredicate<E, R> predicate) {
+        R element = popFor(predicate, null);
         if (element == null)
             throw new NoSuchElementException(predicate.toString());
         return element;
