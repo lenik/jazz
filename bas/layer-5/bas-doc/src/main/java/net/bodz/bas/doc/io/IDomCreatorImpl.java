@@ -12,6 +12,10 @@ public interface IDomCreatorImpl
 
     INode getContext();
 
+    IHavePars makePars();
+
+    IHaveRuns makeRuns();
+
     void enter(INode node);
 
     @Override
@@ -25,7 +29,7 @@ public interface IDomCreatorImpl
 
     @Override
     default ListPar newList(boolean ordered) {
-        IHavePars pars = getContext().closest(np.HAVE_PARS);
+        IHavePars pars = makePars();
         ListPar list = pars.addListPar(ordered);
         enter(list);
         return list;
@@ -41,7 +45,7 @@ public interface IDomCreatorImpl
 
     @Override
     default TextPar newP() {
-        IHavePars pars = getContext().closest(np.HAVE_PARS);
+        IHavePars pars = makePars();
         TextPar textPar = pars.addTextPar();
         enter(textPar);
         return textPar;
@@ -57,7 +61,7 @@ public interface IDomCreatorImpl
 
     @Override
     default Table newTable(int headRows, int headColumns) {
-        IHavePars pars = getContext().closest(np.HAVE_PARS);
+        IHavePars pars = makePars();
         Table table = pars.addTable();
         table.firstRows = headRows;
         table.firstColumns = headColumns;
@@ -125,8 +129,8 @@ public interface IDomCreatorImpl
 
     @Override
     default FontEnv newFont(String family, MeasureLength size) {
-        IHaveRuns parent = getContext().closest(np.HAVE_RUNS);
-        FontEnv env = parent.addFontEnv();
+        IHaveRuns runs = makeRuns();
+        FontEnv env = runs.addFontEnv();
         env.setFamily(family);
         env.setSize(size);
         enter(env);

@@ -34,7 +34,7 @@ public interface IDocVisitor {
 
     void fontStyleEnv(FontStyleEnv fontStyleEnv);
 
-    void breaker(Breaker breakFill);
+    void breaker(Breaker breaker);
 
     void hr(Hr hr);
 

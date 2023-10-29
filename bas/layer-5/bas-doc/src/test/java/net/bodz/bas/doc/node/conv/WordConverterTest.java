@@ -17,6 +17,7 @@ import net.bodz.bas.doc.node.TextPar;
 import net.bodz.bas.doc.node.util.Css3ListStyle;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
+import net.bodz.bas.doc.property.RgbColor;
 import net.bodz.bas.doc.word.WordTemplates;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
@@ -70,15 +71,14 @@ public class WordConverterTest
         Document doc = new Document();
         out = new DomWriter(doc);
         out.p();
-        out.text("chapter title: hello");
+        out.text("hello, word conv");
         TextPar titlePar = (TextPar) out.stack.top();
         titlePar.setStyleClass("Title");
         out.end();
 
-        out.chapter("chapter title: hello");
-        out.section("section title: part 1");
-        out.p("text: the first part of the hello chapter. ");
-        out.p("text: the second part of the hello chapter. ");
+        out.chapter("Run-Components");
+        out.section("part 1: picture");
+        out.p("text: the first part of the first chapter. ");
 
         if (imagePath != null) {
             File image = new File(imagePath);
@@ -95,7 +95,7 @@ public class WordConverterTest
                     MeasureLength.millimeters(62.4));
         }
 
-        out.section("section title: part 2");
+        out.section("part 2: text and fonts");
 
         out.print("text: the ");
         out.i("<i>first</i> ");
@@ -107,10 +107,24 @@ public class WordConverterTest
         out.print("chapter.</b> ");
         out.end(); // b
 
-        out.println();
+        out.section("part 3: color and borders");
 
-        out.println("text: end of the part 2.");
+        RgbColor color1 = new RgbColor("77aacc");
+        out.color(color1);
+        out.println("color");
+        out.end(); // color
+
+        out.backgroundColor(color1);
+        out.println("backcolor");
+        out.end(); // color
+
+        out.println("a horizontal line:");
         out.hr();
+
+        out.chapter("Table and Lists");
+
+        if (tableTop != null || tableLeft != null)
+            out.section("Table with r/c header");
 
         if (tableTop != null) {
             Table table = buildTable(tableTop, tableRows, tableCols, 1, 0, (Integer row, Integer col) -> row == 0);
@@ -125,9 +139,9 @@ public class WordConverterTest
         }
 
         if (addLists) {
+            out.section("Lists");
             buildLists();
         }
-
         return doc;
     }
 

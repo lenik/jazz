@@ -10,6 +10,9 @@ import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.property.PartLevel;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.res.IStreamInputSource;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.t.list.IAutoList;
 import net.bodz.bas.t.stack.ContextStack;
 import net.bodz.bas.t.stack.NodePredicates;
 
@@ -21,6 +24,8 @@ public class DomWriter
     static class np
             extends NodePredicates {
     }
+
+    static final Logger logger = LoggerFactory.getLogger(DomWriter.class);
 
     public final ContextStack<INode> stack = new ContextStack<>();
 
@@ -54,13 +59,43 @@ public class DomWriter
     }
 
     @Override
+    public IHavePars makePars() {
+        IHavePars havePars = stack.popFor(np.HAVE_PARS, null);
+        if (havePars != null)
+            return havePars;
+        // stack.popAhead(np.PART);
+        throw new IllegalStateException("no available pars");
+    }
+
+    @Override
+    public IHaveRuns makeRuns() {
+        IHaveRuns haveRuns = stack.popFor(np.HAVE_RUNS, null);
+        if (haveRuns != null)
+            return haveRuns;
+        IHavePars havePars = stack.popFor(np.HAVE_PARS, null);
+        if (havePars != null) {
+            IAutoList<IPar> pars = havePars.getPars();
+            int n = pars.size();
+            if (n != 0) {
+                IPar lastPar = pars.get(n - 1);
+                if (lastPar.haveRuns()) {
+                    return (IHaveRuns) lastPar;
+                }
+            }
+            TextPar textPar = havePars.addTextPar();
+            return textPar;
+        }
+        throw new IllegalStateException("no available runs");
+    }
+
+    @Override
     public void enter(INode node) {
         stack.push(node);
     }
 
     @Override
     public DomWriter begin() {
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popFor(np.HAVE_RUNS);
         IHaveRuns env = runs.addEnv();
         stack.push(env);
         return this;
@@ -68,7 +103,7 @@ public class DomWriter
 
     @Override
     public DomWriter begin(String className) {
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = stack.popFor(np.HAVE_RUNS);
         RunGroup env = runs.addEnv();
         env.setStyleClass(className);
         return this;
@@ -84,49 +119,49 @@ public class DomWriter
     public DomWriter end(ElementType elementType) {
         switch (elementType) {
         case BLOCK:
-            stack.popAhead(np.IS_PAR);
+            stack.popFor(np.IS_PAR);
             break;
         case GENERIC_SECTION:
-            stack.popAhead(np.PART);
+            stack.popFor(np.PART);
             break;
         case CHAPTER:
-            stack.popAhead(np.CHAPTER);
+            stack.popFor(np.CHAPTER);
             break;
         case SECTION:
-            stack.popAhead(np.SECTION);
+            stack.popFor(np.SECTION);
             break;
         case SUBSECTION:
-            stack.popAhead(np.SUBSECTION);
+            stack.popFor(np.SUBSECTION);
             break;
         case SUBSUBSECTION:
-            stack.popAhead(np.SUBSUBSECTION);
+            stack.popFor(np.SUBSUBSECTION);
             break;
         case PARAGRAPH:
-            stack.popAhead(np.PARAGRAPH);
+            stack.popFor(np.PARAGRAPH);
             break;
         case SUBPARAGRAPH:
-            stack.popAhead(np.SUBPARAGRAPH);
+            stack.popFor(np.SUBPARAGRAPH);
             break;
         case UNORDERED_LIST:
-            stack.popAhead(np.UL);
+            stack.popFor(np.UL);
             break;
         case ORDERED_LIST:
-            stack.popAhead(np.OL);
+            stack.popFor(np.OL);
             break;
         case ITEM:
-            stack.popAhead(np.LIST_ITEM);
+            stack.popFor(np.LIST_ITEM);
             return this;
         case TABLE:
-            stack.popAhead(np.TABLE);
+            stack.popFor(np.TABLE);
             break;
         case TR:
-            stack.popAhead(np.TABLE_ROW);
+            stack.popFor(np.TABLE_ROW);
             break;
         case TH:
-            stack.popAhead(np.TABLE_CELL);
+            stack.popFor(np.TABLE_CELL);
             break;
         case TD:
-            stack.popAhead(np.TABLE_CELL);
+            stack.popFor(np.TABLE_CELL);
             break;
         default:
             throw new UnexpectedException();
@@ -137,7 +172,7 @@ public class DomWriter
 
     @Override
     public void endAll() {
-        stack.popAhead(np.DOC);
+        stack.popFor(np.DOC);
     }
 
     @Override
@@ -174,14 +209,14 @@ public class DomWriter
 
         PartGroup group = null;
 
-        group = stack.popAhead(NodePredicates.partGroup(level), null);
+        group = stack.popFor(NodePredicates.partGroup(level), null);
         if (group == null) {
             // not found? create one
             PartGroup above = null;
             if (level.level > PartLevel.LEVEL_MIN)
                 above = stack.findFromTop(NodePredicates.partGroupAbove(level));
 
-            IHavePars pars = stack.popAhead(np.HAVE_PARS);
+            IHavePars pars = stack.popFor(np.HAVE_PARS);
             if (above != null)
                 for (PartLevel sl = above.getLevel().getDown(); sl.level < level.level; sl = sl.getDown()) {
                     group = pars.addSectionGroup(sl);
@@ -198,7 +233,7 @@ public class DomWriter
 
     @Override
     public DomWriter list(boolean ordered) {
-        IHavePars pars = stack.popAhead(np.HAVE_PARS);
+        IHavePars pars = makePars();
         ListPar listPar = pars.addListPar(ordered);
         stack.push(listPar);
         return this;
@@ -206,28 +241,29 @@ public class DomWriter
 
     @Override
     public DomWriter item() {
-        ListPar listPar = stack.popAhead(np.LIST);
+        ListPar listPar = stack.popFor(np.LIST);
         ListItem item = listPar.addItem();
         stack.push(item);
         return this;
     }
 
     protected FontEnv beginFont() {
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = makeRuns();
         return stack.push(runs.addFontEnv());
     }
 
     protected FontStyleEnv beginFontStyle() {
-        IHaveRuns runs = stack.findFromTop(np.HAVE_RUNS);
-        if (runs != null) {
-            runs = stack.popAhead(np.HAVE_RUNS);
-        } else {
-            IHavePars pars = stack.findFromTop(np.HAVE_PARS);
-            if (pars == null)
-                throw new IllegalStateException();
-            TextPar par = pars.addTextPar();
-            runs = par;
-        }
+        IHaveRuns runs = makeRuns();
+//        IHaveRuns runs = stack.findFromTop(np.HAVE_RUNS);
+//        if (runs != null) {
+//            runs = stack.popAhead(np.HAVE_RUNS);
+//        } else {
+//            IHavePars pars = stack.findFromTop(np.HAVE_PARS);
+//            if (pars == null)
+//                throw new IllegalStateException();
+//            TextPar par = pars.addTextPar();
+//            runs = par;
+//        }
         return stack.push(runs.addFontStyleEnv());
     }
 
@@ -251,7 +287,7 @@ public class DomWriter
 
     @Override
     public DomWriter p() {
-        IHavePars pars = stack.popAhead(np.HAVE_PARS);
+        IHavePars pars = makePars();
         TextPar textPar = pars.addTextPar();
         stack.push(textPar);
         return this;
@@ -259,7 +295,7 @@ public class DomWriter
 
     @Override
     public DomWriter table(int headRows, int headColumns) {
-        IHavePars pars = stack.popAhead(np.HAVE_PARS);
+        IHavePars pars = makePars();
         Table table = pars.addTable();
         table.firstRows = headRows;
         table.firstColumns = headColumns;
@@ -273,7 +309,7 @@ public class DomWriter
 
     @Override
     public DomWriter tr() {
-        Table table = stack.popAhead(np.TABLE);
+        Table table = stack.popFor(np.TABLE);
         TableRow row = table.rows.append();
         stack.push(row);
         return this;
@@ -313,7 +349,7 @@ public class DomWriter
 
     @Override
     public DomWriter th() {
-        TableRow row = stack.popAhead(np.TABLE_ROW);
+        TableRow row = stack.popFor(np.TABLE_ROW);
         TableCell cell = row.cells.append();
         cell.setHeader(true);
         stack.push(cell);
@@ -322,7 +358,7 @@ public class DomWriter
 
     @Override
     public DomWriter td() {
-        TableRow row = stack.popAhead(np.TABLE_ROW);
+        TableRow row = stack.popFor(np.TABLE_ROW);
         TableCell cell = row.cells.append();
         stack.push(cell);
         return this;
@@ -330,13 +366,15 @@ public class DomWriter
 
     @Override
     public DomWriter breakFill(BreakerType breakType) {
-        stack.popAhead(np.HAVE_RUNS).addBreak(breakType);
+        IHaveRuns runs = makeRuns();
+        runs.addBreak(breakType);
         return this;
     }
 
     @Override
     public DomWriter hr() {
-        stack.popAhead(np.HAVE_PARS).addHr();
+        IHavePars pars = makePars();
+        pars.addHr();
         return this;
     }
 
@@ -344,9 +382,9 @@ public class DomWriter
     public DomWriter image(IStreamInputSource source, MeasureLength width, MeasureLength height) {
         Image image;
 
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS, null);
+        IHaveRuns runs = stack.popFor(np.HAVE_RUNS, null);
         if (runs == null) {
-            IHavePars pars = stack.popAhead(np.HAVE_PARS, null);
+            IHavePars pars = stack.popFor(np.HAVE_PARS, null);
             if (pars == null)
                 throw new IllegalStateException();
             image = pars.addImage();
@@ -362,14 +400,19 @@ public class DomWriter
 
     @Override
     public DomWriter setAlign(HorizAlignment alignment) {
-        IPar par = stack.popAhead(np.IS_PAR);
-        par.setAlignment(alignment);
+        IPar par = stack.popFor(np.IS_PAR);
+        if (par != null)
+            par.setAlignment(alignment);
+        else {
+            // logger.warn("no context par.");
+            throw new IllegalStateException("no context par");
+        }
         return this;
     }
 
     @Override
     public DomWriter font(String family, MeasureLength size) {
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = makeRuns();
         FontEnv font = runs.addFontEnv();
         if (family != null)
             font.setFamily(family);
@@ -381,8 +424,7 @@ public class DomWriter
 
     @Override
     public DomWriter color(Color color) {
-        // stack.popAhead(np.IS_RUN);
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = makeRuns();
         FontEnv font = runs.addFontEnv();
         font.setColor(color);
         stack.push(font);
@@ -391,7 +433,7 @@ public class DomWriter
 
     @Override
     public DomWriter backgroundColor(Color color) {
-        IHaveRuns runs = stack.popAhead(np.HAVE_RUNS);
+        IHaveRuns runs = makeRuns();
         FontEnv font = runs.addFontEnv();
         font.setBackground(color);
         stack.push(font);
