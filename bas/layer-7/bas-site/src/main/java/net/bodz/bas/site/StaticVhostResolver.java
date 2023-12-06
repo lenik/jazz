@@ -37,6 +37,11 @@ public abstract class StaticVhostResolver
     }
 
     @Override
+    public String getVirtualHostId(HttpServletRequest request) {
+        return "static-any";
+    }
+
+    @Override
     public IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         return lazyCreateVirtualHost();
     }
