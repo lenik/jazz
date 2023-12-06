@@ -2,8 +2,11 @@ package net.bodz.bas.site.vhost;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.ServiceLoader;
 
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.codegen.IndexedTypeLoader;
@@ -49,6 +52,24 @@ public class VirtualHostManager
                 return vhost;
         }
         return null;
+    }
+
+    @Override
+    public String getVirtualHostId(HttpServletRequest request) {
+        Map<String, IVirtualHostResolver> map = new LinkedHashMap<>();
+        String lastId = null;
+        for (IVirtualHostResolver resolver : this) {
+            String id = resolver.getVirtualHostId(request);
+            if (id != null) {
+                IVirtualHostResolver prev = map.get(id);
+                if (prev != null)
+                    throw new DuplicatedKeyException(String.format(//
+                            "Id %s previous registered with resolver %s", //
+                            id, prev));
+            }
+            lastId = id;
+        }
+        return lastId;
     }
 
     @Override

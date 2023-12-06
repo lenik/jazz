@@ -26,11 +26,11 @@ public class FromCurrentVirtualHostName
         if (request == null)
             return null;
 
-        IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
-        if (vhost == null)
+        String vhostName = VirtualHostManager.getInstance().getVirtualHostId(request);
+        if (vhostName == null)
             return null;
 
-        String vhostName = vhost.getName();
+        // String vhostName = vhost.getName();
         int port = request.getServerPort();
 
         List<String> ids = new ArrayList<>();

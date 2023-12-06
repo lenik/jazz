@@ -21,6 +21,11 @@ public class DedicatedVhostResolver
     }
 
     @Override
+    public String getVirtualHostId(HttpServletRequest request) {
+        return "dedicated-any";
+    }
+
+    @Override
     public IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         return vhost;
     }

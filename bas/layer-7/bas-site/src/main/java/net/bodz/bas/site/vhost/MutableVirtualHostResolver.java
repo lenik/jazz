@@ -116,6 +116,11 @@ public class MutableVirtualHostResolver
     }
 
     @Override
+    public String getVirtualHostId(HttpServletRequest request) {
+        return getRequestName(request);
+    }
+
+    @Override
     public synchronized IVirtualHost resolveVirtualHost(HttpServletRequest request) {
         String name = getRequestName(request);
         if (name == null)

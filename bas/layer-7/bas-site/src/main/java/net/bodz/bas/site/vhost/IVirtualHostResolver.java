@@ -12,6 +12,8 @@ public interface IVirtualHostResolver
 
     IVirtualHost getVirtualHost(String id);
 
+    String getVirtualHostId(HttpServletRequest request);
+
     IVirtualHost resolveVirtualHost(HttpServletRequest request);
 
 }
