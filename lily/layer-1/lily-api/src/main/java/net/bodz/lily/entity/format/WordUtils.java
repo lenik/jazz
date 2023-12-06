@@ -7,6 +7,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.tuple.Split;
@@ -28,10 +29,13 @@ public class WordUtils {
         return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
     }
 
-    public static FileContent toFile(XWPFDocument wordDoc, String defaultFileName)
-            throws IOException {
+    public static FileContent toFile(XWPFDocument wordDoc, String defaultFileName) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
-        wordDoc.write(buf);
+        try {
+            wordDoc.write(buf);
+        } catch (IOException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
 
         String fileName = defaultFileName;
         String title = wordDoc.getProperties().getCoreProperties().getTitle();
