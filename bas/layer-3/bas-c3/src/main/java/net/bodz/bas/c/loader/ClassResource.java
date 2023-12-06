@@ -9,7 +9,7 @@ public class ClassResource
 
     /**
      * The class bytes resource of the <code>clazz</code>.
-     * 
+     *
      * @return <code>null</code> if the resource isn't existed.
      */
     public static URLResource getClassBytes(Class<?> clazz) {
@@ -27,6 +27,14 @@ public class ClassResource
      */
     public static URLResource getData(Class<?> clazz, String extension) {
         URL url = getDataURL(clazz, extension);
+        if (url == null)
+            return null;
+        else
+            return new URLResource(url);
+    }
+
+    public static URLResource getResource(Class<?> clazz, String name) {
+        URL url = clazz.getResource(name);
         if (url == null)
             return null;
         else
