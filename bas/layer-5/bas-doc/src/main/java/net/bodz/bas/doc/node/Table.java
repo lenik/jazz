@@ -1,5 +1,6 @@
 package net.bodz.bas.doc.node;
 
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.list.AutoList;
 import net.bodz.bas.t.list.IAutoList;
 
@@ -132,20 +133,20 @@ public class Table
         }
     }
 
-    public void dumpMerges() {
+    public void dumpMerges(IPrintOut out) {
         int h = rows.size();
         for (int y = 0; y < h; y++) {
             TableRow row = rows.get(y);
             int w = row.cells.size();
-            System.out.print("    ");
+            out.print("    ");
             for (int x = 0; x < w; x++) {
                 TableCell cell = row.cells.get(x);
                 char type = cell.mergedTo == null ? 'o' : '_';
-                System.out.print(type);
+                out.print(type);
             }
-            System.out.println();
+            out.println();
         }
-        System.out.println();
+        out.println();
     }
 
 }

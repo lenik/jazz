@@ -14,6 +14,8 @@ import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonDumper;
 import net.bodz.bas.fn.EvalException;
+import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
@@ -46,6 +48,9 @@ public class SimpleJsRunner
      * @option -X --extensions
      */
     boolean extensions = false;
+
+    IPrintOut out = Stdio.cout;
+    IPrintOut err = Stdio.cerr;
 
     public SimpleJsRunner() {
     }
@@ -102,19 +107,19 @@ public class SimpleJsRunner
         if (args.length > 0)
             for (int i = 0; i < args.length; i++) {
                 String arg = args[i];
-                System.out.println("in> " + arg);
+                out.println("in> " + arg);
 
                 String result;
                 try {
                     result = evalPretty(scriptContext, arg, "arg-" + i);
                 } catch (Throwable e) {
-                    System.err.println("error: " + e.getMessage());
+                    err.println("error: " + e.getMessage());
                     logger.error(e, "error: " + e.getMessage());
                     continue;
                 }
 
-                System.out.print("out> " + result);
-                System.out.println();
+                out.print("out> " + result);
+                out.println();
             }
         else {
             InputStreamReader reader = new InputStreamReader(System.in);
@@ -122,7 +127,7 @@ public class SimpleJsRunner
             String line;
             int lineNo = 0;
             while (true) {
-                System.out.print(++lineNo + "> ");
+                out.print(++lineNo + "> ");
                 line = in.readLine();
                 if (line == null)
                     break;
@@ -133,13 +138,13 @@ public class SimpleJsRunner
                 try {
                     result = evalPretty(scriptContext, line, "line-" + lineNo);
                 } catch (Throwable e) {
-                    System.err.println("error: " + e.getMessage());
+                    err.println("error: " + e.getMessage());
                     logger.error(e, "error: " + e.getMessage());
 //                    throw e;
                     continue;
                 }
-                System.out.print(result);
-                System.out.println();
+                out.print(result);
+                out.println();
             }
         }
     }
