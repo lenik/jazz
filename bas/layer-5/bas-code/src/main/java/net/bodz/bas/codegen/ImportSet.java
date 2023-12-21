@@ -196,8 +196,8 @@ class QNameOrder
     public int compareNonNull(String o1, String o2) {
         String p1 = StringPart.beforeLast(o1, ".");
         String p2 = StringPart.beforeLast(o2, ".");
-        if (p1 == null || p2 == null)
-            System.out.println();
+
+        // it's ok if either p1 or p2 is null.
         int cmp = PackageNameOrder.INSTANCE.compare(p1, p2);
         if (cmp != 0)
             return cmp;

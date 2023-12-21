@@ -11,7 +11,9 @@ import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
 
 import jakarta.servlet.ServletContext;
@@ -30,7 +32,7 @@ public class ServletDiag {
 
     /**
      * Dump the request information in the request/response instances.
-     * 
+     *
      * @return Always return <code>null</code>.
      */
     public static <T> T dump(HttpServletRequest req, HttpServletResponse resp)
@@ -47,7 +49,7 @@ public class ServletDiag {
             out.println("attributes: ");
             {
                 out.enter();
-                for (String attrName : sort((Enumeration<String>) req.getAttributeNames())) {
+                for (String attrName : sort(req.getAttributeNames())) {
                     Object attrValue = req.getAttribute(attrName);
                     out.println(attrName + " = " + attrValue);
                 }
@@ -83,7 +85,7 @@ public class ServletDiag {
             out.println("headers: ");
             {
                 out.enter();
-                for (String headerName : Collections.toList((Enumeration<String>) req.getHeaderNames())) {
+                for (String headerName : Collections.toList(req.getHeaderNames())) {
                     out.println(headerName + " = " + req.getHeader(headerName));
                 }
                 out.leave();
@@ -96,7 +98,7 @@ public class ServletDiag {
             out.println("locales: ");
             {
                 out.enter();
-                for (Locale locale : Collections.toList((Enumeration<Locale>) req.getLocales())) {
+                for (Locale locale : Collections.toList(req.getLocales())) {
                     out.println(locale);
                 }
                 out.leave();
@@ -107,7 +109,7 @@ public class ServletDiag {
             out.println("parameters: ");
             {
                 out.enter();
-                for (String paramName : sort((Enumeration<String>) req.getParameterNames())) {
+                for (String paramName : sort(req.getParameterNames())) {
                     Object paramValue = req.getParameter(paramName);
                     out.println(paramName + " = " + paramValue);
                 }
@@ -153,7 +155,7 @@ public class ServletDiag {
             out.println("attributes: ");
             {
                 out.enter();
-                for (String attrName : sort((Enumeration<String>) session.getAttributeNames())) {
+                for (String attrName : sort(session.getAttributeNames())) {
                     Object attrValue = session.getAttribute(attrName);
                     out.println(attrName + " = " + attrValue);
                 }
@@ -174,7 +176,7 @@ public class ServletDiag {
             out.println("attributes: ");
             {
                 out.enter();
-                for (String attrName : sort((Enumeration<String>) context.getAttributeNames())) {
+                for (String attrName : sort(context.getAttributeNames())) {
                     Object attrValue = context.getAttribute(attrName);
                     out.println(attrName + " = " + attrValue);
                 }
@@ -185,7 +187,7 @@ public class ServletDiag {
             out.println("init parameters: ");
             {
                 out.enter();
-                for (String initParamName : sort((Enumeration<String>) context.getInitParameterNames())) {
+                for (String initParamName : sort(context.getInitParameterNames())) {
                     Object initParamValue = context.getInitParameter(initParamName);
                     out.println(initParamName + " = " + initParamValue);
                 }
@@ -205,6 +207,10 @@ public class ServletDiag {
     }
 
     static void dumpProperties(Class<?> type, String var) {
+        dumpProperties(Stdio.cout, type, var);
+    }
+
+    static void dumpProperties(IPrintOut out, Class<?> type, String var) {
         Method[] methods = type.getMethods();
         Arrays.sort(methods, new Comparator<Method>() {
             @Override
@@ -222,9 +228,9 @@ public class ServletDiag {
                 continue;
 
             String propName = Strings.lcfirst(name.substring(3));
-            System.out.println("out.println(\"" + propName + " = \" + " + var + "." + name + "()); ");
+            out.println("out.println(\"" + propName + " = \" + " + var + "." + name + "()); ");
         }
-        System.out.println();
+        out.println();
     }
 
     public static void main(String[] args) {
