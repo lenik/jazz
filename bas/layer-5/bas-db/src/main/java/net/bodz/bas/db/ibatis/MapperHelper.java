@@ -57,11 +57,6 @@ class Dummy<T, M>
     }
 
     @Override
-    public int deleteById(Object id) {
-        return 0;
-    }
-
-    @Override
     public long deleteFor(M mask) {
         return 0;
     }
