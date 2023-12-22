@@ -11,8 +11,11 @@ import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.util.IRandomPicker;
 
-public class TableProfiles {
+public class TableProfiles
+        implements
+            IRandomPicker {
 
     private DataContext context;
 
