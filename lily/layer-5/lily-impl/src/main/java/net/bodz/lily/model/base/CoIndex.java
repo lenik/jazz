@@ -7,7 +7,7 @@ import net.bodz.lily.app.DataApps;
 import net.bodz.lily.app.IDataApplication;
 
 public abstract class CoIndex<T, M extends IVarMapForm>
-        extends AbstractEntityManager<T, M> {
+        extends AbstractEntityController<T, M> {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndex.class);
 

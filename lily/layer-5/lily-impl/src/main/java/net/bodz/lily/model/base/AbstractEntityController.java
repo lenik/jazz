@@ -50,10 +50,10 @@ import net.bodz.lily.security.AccessControl;
 
 @AccessControl
 @VirtualHostScope
-public abstract class AbstractEntityManager<T, M extends IVarMapForm>
+public abstract class AbstractEntityController<T, M extends IVarMapForm>
         extends AbstractCacheControl
         implements
-            IEntityManager,
+            IEntityController,
             IQueryable,
             IPathArrivalFrameAware,
             ICacheControl,
@@ -61,7 +61,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             IDataContextAware,
             ITableSheetBuilder {
 
-    static final Logger logger = LoggerFactory.getLogger(AbstractEntityManager.class);
+    static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
 
     private final Class<T> entityType;
     private final IEntityTypeInfo typeInfo;
@@ -71,7 +71,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
     Map<String, IEntityCommandType> contentNameMap = new HashMap<>();
     List<IEntityCommandType> otherCommands = new ArrayList<>();
 
-    public AbstractEntityManager() {
+    public AbstractEntityController() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
 
         if (aObjectType != null) {
@@ -79,7 +79,7 @@ public abstract class AbstractEntityManager<T, M extends IVarMapForm>
             Class<T> objectType = (Class<T>) aObjectType.value();
             this.entityType = objectType;
         } else {
-            this.entityType = TypeParam.infer1(getClass(), AbstractEntityManager.class, 0);
+            this.entityType = TypeParam.infer1(getClass(), AbstractEntityController.class, 0);
         }
         this.typeInfo = new DefaultEntityTypeInfo(entityType);
         this.hasId = typeInfo.getIdClass() != null;

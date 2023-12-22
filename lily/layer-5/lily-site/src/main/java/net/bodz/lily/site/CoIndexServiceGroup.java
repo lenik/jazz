@@ -21,34 +21,34 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.IEntityManager;
+import net.bodz.lily.model.base.IEntityController;
 
 public class CoIndexServiceGroup
         implements
-            INamingGroup<IEntityManager>,
+            INamingGroup<IEntityController>,
             IPathDispatchable {
 
     static final Logger logger = LoggerFactory.getLogger(CoIndexServiceGroup.class);
 
-    Map<String, IEntityManager> map = new HashMap<>();
+    Map<String, IEntityController> map = new HashMap<>();
 
     public CoIndexServiceGroup(DataContext dataContext) {
         ClassLoader classLoader = ClassLoaders.getRuntimeClassLoader();
         TypeIndex typeIndex = TypeIndex.getInstance(classLoader);
         try {
-            for (Class<? extends IEntityManager> indexClass : typeIndex.list(IEntityManager.class, false)) {
+            for (Class<? extends IEntityController> indexClass : typeIndex.list(IEntityController.class, false)) {
                 String name = indexClass.getSimpleName();
                 if (name.endsWith("Index"))
                     name = name.substring(0, name.length() - 5);
                 // name = Strings.lcfirst(name);
 
-                IEntityManager existing = map.get(name);
+                IEntityController existing = map.get(name);
                 if (existing != null) {
                     logger.errorf("CoIndex name conflicts: %s and %s", existing.getClass(), indexClass);
                     logger.logf("CoIndex skipped: %s", indexClass);
                     continue;
                 }
-                IEntityManager index;
+                IEntityController index;
                 try {
                     index = indexClass.newInstance();
                 } catch (ReflectiveOperationException e) {
@@ -64,7 +64,7 @@ public class CoIndexServiceGroup
     }
 
     @Override
-    public Map<String, ? extends IEntityManager> getNameMap() {
+    public Map<String, ? extends IEntityController> getNameMap() {
         return map;
     }
 

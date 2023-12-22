@@ -22,9 +22,9 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.AbstractEntityManager;
+import net.bodz.lily.model.base.AbstractEntityController;
 import net.bodz.lily.model.base.CoObjectMask;
-import net.bodz.lily.model.base.IEntityManager;
+import net.bodz.lily.model.base.IEntityController;
 
 public class ModuleIndexer
         implements IPathDispatchable {
@@ -71,7 +71,7 @@ public class ModuleIndexer
                 classModule.put(cn, modInfo);
         }
 
-        for (Class<? extends IEntityManager> indexClass : IndexedTypes.list(IEntityManager.class, true))
+        for (Class<? extends IEntityController> indexClass : IndexedTypes.list(IEntityController.class, true))
             addIndexClass(indexClass);
 
         for (Class<? extends IMapper> mapperClass : IndexedTypes.list(IMapper.class, true))
@@ -111,7 +111,7 @@ public class ModuleIndexer
     }
 
     void addIndexClass(Class<?> indexClass) {
-        Class<?>[] pv = TypeParam.infer(indexClass, AbstractEntityManager.class);
+        Class<?>[] pv = TypeParam.infer(indexClass, AbstractEntityController.class);
         Class<?> entityType = pv[0];
         Class<?> maskType = pv[1];
         EntityInfo entity = resolveEntity(entityType, maskType);
