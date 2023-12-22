@@ -30,8 +30,6 @@ public interface ICommonDataOps<T, M> {
 
     int deleteObject(Object obj);
 
-    int deleteById(@Param("id") Object id);
-
     /**
      * @return number of records deleted.
      */
