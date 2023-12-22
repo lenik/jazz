@@ -10,7 +10,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 @IndexedType(includeAbstract = false)
-public interface IEntityManager
+public interface IEntityController
         extends
             IPathDispatchable,
             IDataContextAware {
