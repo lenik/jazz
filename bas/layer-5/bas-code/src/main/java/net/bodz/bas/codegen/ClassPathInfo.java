@@ -16,6 +16,28 @@ public class ClassPathInfo
         this.resourceDir = resourceDir;
     }
 
+    public static ClassPathInfo srcMain(String packageName, String name, File baseDir) {
+        return new ClassPathInfo(packageName, name, baseDir, //
+                "src/main/java", // javaDir
+                "src/main/resources" // resourceDir
+        );
+    }
+
+    public static ClassPathInfo srcTest(String packageName, String name, File baseDir) {
+        return new ClassPathInfo(packageName, name, baseDir, //
+                "src/test/java", // javaDir
+                "src/test/resources" // resourceDir
+        );
+    }
+
+    public ClassPathInfo toSrcTest() {
+        ClassPathInfo o = new ClassPathInfo(packageName, name, baseDir, //
+                "src/test/java", // javaDir
+                "src/test/resources" // resourceDir
+        );
+        return o;
+    }
+
     @Override
     public ClassPathInfo join(String relativeName) {
         return join(relativeName, this.javaDir, this.resourceDir);
