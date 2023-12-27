@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.c.java.nio.Charsets;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 
 public class ResourceListing {
@@ -25,7 +26,7 @@ public class ResourceListing {
      * @return <code>false</code> if canceled.
      */
     public boolean find(IResourceCallback callback) {
-        URLResource res = new URLResource(listingUrl, listingCharset);
+        URLResource res = ResFn.url(listingUrl, listingCharset);
         for (String name : res.read().lines()) {
             if (hasComments) {
                 int sharp = name.indexOf('#');

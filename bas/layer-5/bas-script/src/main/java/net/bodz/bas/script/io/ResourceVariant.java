@@ -13,7 +13,6 @@ import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
 import net.bodz.bas.io.res.builtin.PathResource;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -82,7 +81,7 @@ public class ResourceVariant {
         case PATH:
             return new PathResource(path);
         case URL:
-            return new URLResource(url);
+            return ResFn.url(url);
         case URI:
             // return new URIResource(uri);
             throw new VariantException(ERR_NOT_SUPPORTED);

@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 import net.bodz.bas.c.type.ClassNameComparator;
 import net.bodz.bas.c.type.IndexedTypes;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -48,7 +48,7 @@ public class MapperClassXmls
                     withoutXmls.add(mapperClass);
                 } else {
                     logger.debug("Mapper-Resource: ", resource);
-                    byte[] content = new URLResource(url).to(StreamReading.class).read();
+                    byte[] content = ResFn.url(url).to(StreamReading.class).read();
                     MapperXml xml = new MapperXml();
                     xml.mapperClass = mapperClass;
                     xml.resourceName = resource;

@@ -20,6 +20,7 @@ import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamOutputTarget;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.vfs.*;
 
@@ -172,14 +173,14 @@ public class URLFile
 
     @Override
     protected IStreamInputSource _getInputSource(Charset charset) {
-        URLResource resource = new URLResource(url);
+        URLResource resource = ResFn.url(url);
         resource.setCharset(charset);
         return resource;
     }
 
     @Override
     protected IStreamOutputTarget _getOutputTarget(Charset charset) {
-        URLResource resource = new URLResource(url);
+        URLResource resource = ResFn.url(url);
         resource.setCharset(charset);
         return resource;
     }

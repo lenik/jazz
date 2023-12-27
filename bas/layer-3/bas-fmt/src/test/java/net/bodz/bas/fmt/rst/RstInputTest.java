@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import net.bodz.bas.c.type.ClassResource;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class RstInputTest
@@ -21,7 +21,7 @@ public class RstInputTest
         URL rstData = ClassResource.getDataURL(RstInputTest.class, "rst");
         if (rstData == null)
             throw new NullPointerException("no .rst file.");
-        script = new URLResource(rstData).to(StreamReading.class).readString();
+        script = ResFn.url(rstData).to(StreamReading.class).readString();
     }
 
     @Test

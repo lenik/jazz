@@ -10,7 +10,6 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.ResFn;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
@@ -67,7 +66,7 @@ public abstract class AbstractMultiMapsFormat<K, V>
     }
 
     public AbstractMultiMapsFormat(URL url, String encoding, int flags) {
-        this(new URLResource(url, encoding), flags);
+        this(ResFn.url(url, encoding), flags);
     }
 
     public K getTextKey() {

@@ -12,6 +12,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumbering;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -42,7 +43,7 @@ public class AbstractNum {
                 throw new LoadException("no xml resource for name: " + name);
             String xml;
             try {
-                xml = new URLResource(url).read().readString();
+                xml = ResFn.url(url).read().readString();
             } catch (IOException e) {
                 String msg = String.format("failed to read xml %s: %s", url, e.getMessage());
                 throw new LoadException(msg, e);

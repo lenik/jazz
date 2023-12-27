@@ -2,6 +2,7 @@ package net.bodz.bas.c.loader;
 
 import java.net.URL;
 
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 
 public class ClassResource
@@ -17,7 +18,7 @@ public class ClassResource
         if (url == null)
             return null;
         else
-            return new URLResource(url);
+            return ResFn.url(url);
     }
 
     /**
@@ -30,7 +31,7 @@ public class ClassResource
         if (url == null)
             return null;
         else
-            return new URLResource(url);
+            return ResFn.url(url);
     }
 
     public static URLResource getResource(Class<?> clazz, String name) {
@@ -38,7 +39,7 @@ public class ClassResource
         if (url == null)
             return null;
         else
-            return new URLResource(url);
+            return ResFn.url(url);
     }
 
 }

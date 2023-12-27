@@ -9,7 +9,7 @@ import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.c.type.ClassResource;
 import net.bodz.bas.fmt.textmap.TextMapParser;
 import net.bodz.bas.io.ITreeOut;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.t.set.IMarkset;
 import net.bodz.bas.t.set.Marks;
 
@@ -124,7 +124,7 @@ public class SiteGraphDotBuilder
         Map<String, String> templates = new HashMap<String, String>();
 
         URL url = ClassResource.getDataURL(SiteGraphDotBuilder.class, "tm");
-        for (Entry<String, String> ent : TextMapParser.parse(new URLResource(url))) {
+        for (Entry<String, String> ent : TextMapParser.parse(ResFn.url(url))) {
             templates.put(ent.getKey(), ent.getValue());
         }
         graphAttrsTemplate = templates.get("graph.attrs");
