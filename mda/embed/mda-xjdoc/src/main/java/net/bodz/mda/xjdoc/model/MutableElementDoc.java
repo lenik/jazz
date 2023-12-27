@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.IFlatfForm;
+import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;

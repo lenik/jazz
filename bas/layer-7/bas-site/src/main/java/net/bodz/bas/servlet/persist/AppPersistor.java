@@ -10,7 +10,7 @@ import net.bodz.bas.c.javax.servlet.IAttributes;
 import net.bodz.bas.c.javax.servlet.http.DecoratedHttpSession;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
@@ -67,7 +67,7 @@ public class AppPersistor {
 
     void load(File file, IAttributes attributes)
             throws IOException, ParseException {
-        String json = new FileResource(file).read().readString();
+        String json = ResFn.file(file).read().readString();
         fmt.loadAttributes(json, attributes);
     }
 

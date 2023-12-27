@@ -19,6 +19,7 @@ import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.property.RgbColor;
 import net.bodz.bas.doc.word.WordTemplates;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.ui.css3.property.ListStyleTypeMode;
@@ -62,7 +63,7 @@ public class WordConverterTest
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         _doc.write(buf);
 
-        FileResource target = new FileResource(savePath);
+        FileResource target = ResFn.file(savePath);
         target.write().write(buf.toByteArray());
     }
 
@@ -84,7 +85,7 @@ public class WordConverterTest
             File image = new File(imagePath);
             out.print("Left");
             out.center();
-            out.image(new FileResource(image), //
+            out.image(ResFn.file(image), //
                     MeasureLength.millimeters(54.8), //
                     MeasureLength.millimeters(62.4));
             out.println("Right");

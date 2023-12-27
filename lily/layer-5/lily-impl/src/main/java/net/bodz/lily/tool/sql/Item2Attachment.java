@@ -18,7 +18,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.res.AbstractStreamResource;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -185,7 +185,7 @@ public class Item2Attachment
                 AbstractStreamResource resource;
 
                 if (new File(path).exists()) {
-                    resource = new FileResource(new File(path));
+                    resource = ResFn.file(new File(path));
                 } else {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                     URL classRes = classLoader.getResource(path);

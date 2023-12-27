@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import net.bodz.bas.data.codec.builtin.HexCodec;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.t.file.IPathFields;
@@ -76,7 +76,7 @@ public class LocalVolume
     public String getSHA1(String path)
             throws IOException {
         File file = getLocalFile(path);
-        byte[] sha1 = new FileResource(file).to(StreamReading.class).sha1();
+        byte[] sha1 = ResFn.file(file).to(StreamReading.class).sha1();
         String sha1str = hexCodec.encode(sha1);
         return sha1str;
     }

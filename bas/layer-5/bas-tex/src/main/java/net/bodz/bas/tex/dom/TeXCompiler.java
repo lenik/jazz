@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.log.Logger;
@@ -42,7 +42,7 @@ public class TeXCompiler {
     public byte[] compile(String src)
             throws IOException {
         File texFile = new File(workDir, jobName + ".tex");
-        new FileResource(texFile).to(StreamWriting.class).writeString(src);
+        ResFn.file(texFile).to(StreamWriting.class).writeString(src);
 
         File pdfFile = new File(workDir, jobName + ".pdf");
         pdfFile.delete();
@@ -59,7 +59,7 @@ public class TeXCompiler {
         if (!pdfFile.exists())
             return null;
 
-        byte[] pdf = new FileResource(pdfFile).to(StreamReading.class).read();
+        byte[] pdf = ResFn.file(pdfFile).to(StreamReading.class).read();
 
         if (autoClean) {
             DirectoryStream<Path> dirStream = Files.newDirectoryStream(workDir.toPath(), jobName + ".*");

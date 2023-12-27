@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamLoading;
 
 public class EclipseWorkspace {
@@ -33,7 +33,7 @@ public class EclipseWorkspace {
 
     public void reload()
             throws IOException {
-        Properties prefs = new FileResource(new File(base, PREFS))//
+        Properties prefs = ResFn.file(new File(base, PREFS))//
                 .to(StreamLoading.class).loadProperties();
         cpVars = new HashMap<String, String>();
         for (Object k : prefs.keySet()) {

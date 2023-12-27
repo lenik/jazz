@@ -7,7 +7,7 @@ import java.util.Map;
 
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.t.iterator.immed.AbstractMitorx;
 import net.bodz.bas.t.iterator.immed.Mitorx;
 
@@ -30,7 +30,7 @@ public class TextRecords
     }
 
     public TextRecords(File file, String encoding) {
-        this(new FileResource(file, encoding));
+        this(ResFn.file(file, encoding));
     }
 
     class Iter

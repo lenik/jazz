@@ -3,6 +3,7 @@ package net.bodz.uni.shelj.text;
 import net.bodz.bas.compare.dmp.*;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -80,10 +81,10 @@ public class DiffMergePatch
         if (threshold != null)
             config.Match_Threshold = threshold / 100.0f;
 
-        f0 = new FileResource(args[0]);
-        f1 = new FileResource(args[1]);
-        f2 = args.length >= 3 ? new FileResource(args[2]) : null;
-        f3 = args.length >= 4 ? new FileResource(args[3]) : null;
+        f0 = ResFn.file(args[0]);
+        f1 = ResFn.file(args[1]);
+        f2 = args.length >= 3 ? ResFn.file(args[2]) : null;
+        f3 = args.length >= 4 ? ResFn.file(args[3]) : null;
 
         if (byChars) {
             charsComparator = new CharsComparator(config);

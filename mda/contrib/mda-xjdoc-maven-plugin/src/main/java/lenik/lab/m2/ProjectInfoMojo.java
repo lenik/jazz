@@ -16,7 +16,7 @@ import net.bodz.bas.c.loader.ClassLoaderAnalyzer;
 import net.bodz.bas.c.loader.ClassLoaderNode;
 import net.bodz.bas.c.loader.ClassLoaderTreeFormatter;
 import net.bodz.bas.io.IPrintOut;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 
 /**
  * A project-info plugin rewritten by Lenik.
@@ -127,7 +127,7 @@ public class ProjectInfoMojo
 
         IPrintOut out;
         try {
-            out = new FileResource(file).newPrintOut();
+            out = ResFn.file(file).newPrintOut();
         } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }

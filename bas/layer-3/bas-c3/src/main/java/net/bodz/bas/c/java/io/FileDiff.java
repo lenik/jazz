@@ -10,7 +10,7 @@ import net.bodz.bas.compare.IListComparator;
 import net.bodz.bas.compare.IListCompareResult;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.IStreamInputSourceWrapper;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class FileDiff {
@@ -97,7 +97,7 @@ public class FileDiff {
 
     public static boolean equals(File file1, File file2)
             throws IOException {
-        return equals(new FileResource(file1), new FileResource(file2));
+        return equals(ResFn.file(file1), ResFn.file(file2));
     }
 
     public static IListCompareResult<String, String> compareDiff(IStreamInputSource src1, IStreamInputSource src2,
@@ -125,7 +125,7 @@ public class FileDiff {
     public static IListCompareResult<String, String> compareDiff(File file1, File file2,
             IListComparator<String, String> comparator)
             throws IOException {
-        return compareDiff(new FileResource(file1), new FileResource(file2), comparator);
+        return compareDiff(ResFn.file(file1), ResFn.file(file2), comparator);
     }
 
 }

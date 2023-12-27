@@ -9,9 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import net.bodz.bas.io.res.AbstractStreamResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
 import net.bodz.bas.io.res.builtin.CharArrayResource;
-import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.builtin.PathResource;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.log.Logger;
@@ -78,7 +78,7 @@ public class ResourceVariant {
     public AbstractStreamResource toResource() {
         switch (type) {
         case FILE:
-            return new FileResource(file);
+            return ResFn.file(file);
         case PATH:
             return new PathResource(path);
         case URL:

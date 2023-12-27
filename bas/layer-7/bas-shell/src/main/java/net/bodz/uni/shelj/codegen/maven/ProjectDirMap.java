@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.m2.ArtifactId;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -41,7 +42,7 @@ public class ProjectDirMap {
         this.mapFile = file;
         logger.debug("parse map file " + mapFile);
 
-        FileResource mapFile = new FileResource(file);
+        FileResource mapFile = ResFn.file(file);
         if (!mapFile.getFile().exists())
             return;
 

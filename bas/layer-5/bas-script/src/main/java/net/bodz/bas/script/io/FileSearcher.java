@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 
 import net.bodz.bas.c.java.io.LineReader;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -63,7 +63,7 @@ public class FileSearcher {
         if (!pathFile.isFile())
             return 0;
 
-        LineReader reader = new FileResource(pathFile).newLineReader();
+        LineReader reader = ResFn.file(pathFile).newLineReader();
         String line;
         while ((line = reader.readLine()) != null) {
             String dir = line.trim();

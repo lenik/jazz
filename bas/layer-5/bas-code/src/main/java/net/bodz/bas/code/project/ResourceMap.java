@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.io.res.tools.StreamReading;
 
@@ -33,10 +33,10 @@ public class ResourceMap
 
             if (source.isCharPreferred()) {
                 String content = source.to(StreamReading.class).readString();
-                new FileResource(file).write().writeString(content);
+                ResFn.file(file).write().writeString(content);
             } else {
                 byte[] content = source.to(StreamReading.class).read();
-                new FileResource(file).write().write(content);
+                ResFn.file(file).write().write(content);
             }
         }
     }

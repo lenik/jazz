@@ -18,6 +18,7 @@ import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.DeleteOption;
 import net.bodz.bas.fn.IFilter;
 import net.bodz.bas.io.res.IRandomResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.t.iterator.Iterables;
 import net.bodz.bas.vfs.*;
@@ -133,7 +134,7 @@ public class PojfFile
 
     @Override
     protected IRandomResource _getResource(Charset charset) {
-        FileResource resource = new FileResource(_file);
+        FileResource resource = ResFn.file(_file);
         resource.setCharset(charset);
         return resource;
     }

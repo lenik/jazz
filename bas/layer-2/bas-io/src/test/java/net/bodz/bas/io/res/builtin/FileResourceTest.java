@@ -9,6 +9,7 @@ import org.junit.Test;
 import net.bodz.bas.c.java.io.FileTree;
 import net.bodz.bas.c.java.nio.CreateOption;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamWriting;
 
 public class FileResourceTest
@@ -20,7 +21,7 @@ public class FileResourceTest
         File root = new File("/tmp/mkdirs");
 
         File abcd = new File(root, "a/b/c/d");
-        FileResource res = new FileResource(abcd);
+        FileResource res = ResFn.file(abcd);
 
         StreamWriting writing = res.to(StreamWriting.class);
         writing.setOpenOptions(CreateOption.CREATE_PARENTS);

@@ -17,7 +17,7 @@ import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.res.IStreamOutputTarget;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.OutputStreamTarget;
 import net.bodz.bas.m2.util.MavenProjects;
 import net.bodz.bas.rtx.IOptions;
@@ -187,7 +187,7 @@ public class ClassDocBuilderMojo
                 } else {
                     log.debug("Generate " + classDocFile);
                     classDocFile.getParentFile().mkdirs();
-                    outTarget = new FileResource(classDocFile);
+                    outTarget = ResFn.file(classDocFile);
                 }
                 // outTarget.setCharset("utf-8");
                 try {
