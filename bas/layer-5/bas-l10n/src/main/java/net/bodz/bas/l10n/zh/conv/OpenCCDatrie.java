@@ -7,7 +7,7 @@ import org.junit.Assert;
 
 import net.bodz.bas.fmt.util.FourCC;
 import net.bodz.bas.io.IDataIn;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 
 public class OpenCCDatrie
         extends Assert {
@@ -58,7 +58,7 @@ public class OpenCCDatrie
 
     public void parseOcd(File file)
             throws IOException {
-        IDataIn in = new FileResource(file).newDataInLE();
+        IDataIn in = ResFn.file(file).newDataInLE();
 
         assertEquals(M_OPEN, in.readDword());
         assertEquals(M_CCDA, in.readDword());

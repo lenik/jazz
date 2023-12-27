@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.data.codec.builtin.HexCodec;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
@@ -102,7 +102,7 @@ public class UploadHandler
 
     RenameResult renameToSha1(File file)
             throws IOException {
-        byte[] sha1 = new FileResource(file).to(StreamReading.class).sha1();
+        byte[] sha1 = ResFn.file(file).to(StreamReading.class).sha1();
         String sha1str = hexCodec.encode(sha1);
 
         File dir = file.getParentFile();

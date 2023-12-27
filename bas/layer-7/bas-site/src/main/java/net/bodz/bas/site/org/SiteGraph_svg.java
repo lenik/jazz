@@ -11,6 +11,7 @@ import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.io.res.tools.StreamWriting;
 import net.bodz.bas.repr.viz.ViewBuilderException;
@@ -54,7 +55,7 @@ public class SiteGraph_svg
         dotBuilder.buildGraph(ref.get());
 
         File tempDotFile = File.createTempFile("site", ".dot");
-        FileResource tempDot = new FileResource(tempDotFile);
+        FileResource tempDot = ResFn.file(tempDotFile);
         tempDot.setCharset(Charsets.UTF_8);
         tempDot.to(StreamWriting.class).writeString(dotBuf.toString());
 

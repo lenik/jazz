@@ -13,7 +13,7 @@ import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -114,7 +114,7 @@ public abstract class SourceBuilder<model_t> {
                 File origDir = origCopy.getParentFile();
                 origDir.mkdirs();
 
-                new FileResource(origCopy).write().writeString(textRow);
+                ResFn.file(origCopy).write().writeString(textRow);
             }
         }
 
@@ -123,7 +123,7 @@ public abstract class SourceBuilder<model_t> {
             return false;
 
         logger.info("    save " + displayPath);
-        new FileResource(file).write().writeString(patchedRow);
+        ResFn.file(file).write().writeString(patchedRow);
         return true;
     }
 
@@ -140,7 +140,7 @@ public abstract class SourceBuilder<model_t> {
     private static StringRow readLines(File file) {
         StringRow row = new StringRow();
         if (file.exists()) {
-            for (String line : new FileResource(file).read().lines())
+            for (String line : ResFn.file(file).read().lines())
                 row.append(line);
         }
         return row;

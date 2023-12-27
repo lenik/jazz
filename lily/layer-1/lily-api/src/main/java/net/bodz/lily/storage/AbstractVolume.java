@@ -3,7 +3,7 @@ package net.bodz.lily.storage;
 import java.io.File;
 
 import net.bodz.bas.io.res.IStreamInputSource;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
 
@@ -98,7 +98,7 @@ public abstract class AbstractVolume
         if (file == null)
             return null;
         else
-            return new FileResource(file);
+            return ResFn.file(file);
     }
 
     @Override

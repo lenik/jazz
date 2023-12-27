@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.java.io.FileData;
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.io.res.builtin.FileResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -69,7 +69,7 @@ public class FileContentMap
         if (list == null) {
             list = new ArrayList<String>();
             if (file.exists())
-                for (String line : new FileResource(file).to(StreamReading.class).lines()) {
+                for (String line : ResFn.file(file).to(StreamReading.class).lines()) {
                     list.add(line.trim());
                 }
             this.put(file, list);

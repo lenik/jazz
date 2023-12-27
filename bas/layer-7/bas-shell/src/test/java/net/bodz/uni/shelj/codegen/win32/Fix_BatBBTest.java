@@ -7,7 +7,6 @@ import org.junit.Test;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.io.res.builtin.ByteArrayResource;
 import net.bodz.bas.io.res.builtin.BytesResource;
-import net.bodz.uni.shelj.codegen.win32.Fix_BatBB;
 
 public class Fix_BatBBTest {
 
