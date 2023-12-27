@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 
 public class TrieTestApp
         implements
@@ -48,7 +48,7 @@ public class TrieTestApp
     void run1()
             throws Exception {
         URL res = TrieTestApp.class.getResource("TrieTestApp.1");
-        String source = new URLResource(res).read().readString();
+        String source = ResFn.url(res).read().readString();
         for (Token<Symbol> token : lexer.tokenize(source)) {
             if (token.isSymbol()) {
                 System.out.printf("<%d:%d:%s>", token.line, token.column, token.text);
@@ -61,7 +61,7 @@ public class TrieTestApp
     void run2()
             throws Exception {
         URL res = TrieTestApp.class.getResource("TrieTestApp.1");
-        String source = new URLResource(res).read().readString();
+        String source = ResFn.url(res).read().readString();
         lexer.newParser(source, this).parse();
     }
 

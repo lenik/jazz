@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.repr.meta.RealType;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -70,7 +71,7 @@ public class ClassResourcePathDispatcher
         if (url == null)
             return null;
 
-        URLResource resource = new URLResource(url);
+        URLResource resource = ResFn.url(url);
         return new PathArrival(previous, this, resource, tokens.shiftAll(), "");
     }
 

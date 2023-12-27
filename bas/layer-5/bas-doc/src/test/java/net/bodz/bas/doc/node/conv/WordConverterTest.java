@@ -21,7 +21,6 @@ import net.bodz.bas.doc.property.RgbColor;
 import net.bodz.bas.doc.word.WordTemplates;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.builtin.FileResource;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.ui.css3.property.ListStyleTypeMode;
 
 public class WordConverterTest
@@ -91,7 +90,7 @@ public class WordConverterTest
             out.println("Right");
 
             out.p("image by URL");
-            out.image(new URLResource("file://" + imagePath), //
+            out.image(ResFn.url("file://" + imagePath), //
                     MeasureLength.millimeters(54.8), //
                     MeasureLength.millimeters(62.4));
         }

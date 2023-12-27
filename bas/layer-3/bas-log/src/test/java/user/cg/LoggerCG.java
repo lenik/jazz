@@ -9,7 +9,7 @@ import java.util.List;
 import net.bodz.bas.c.reflect.query.PublicFields;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.LogLevel;
 
@@ -40,13 +40,13 @@ public class LoggerCG {
         URL classAbstractLoggerURL = getClass().getResource("LoggerCG.AbstractLogger");
         URL classSinkBasedLoggerURL = getClass().getResource("LoggerCG.SinkBasedLogger");
 
-        src_ILogger = new URLResource(classILoggerURL)//
+        src_ILogger = ResFn.url(classILoggerURL)//
                 .to(StreamReading.class).readString();
-        src_Logger = new URLResource(classLoggerURL)//
+        src_Logger = ResFn.url(classLoggerURL)//
                 .to(StreamReading.class).readString();
-        src_AbstractLogger = new URLResource(classAbstractLoggerURL)//
+        src_AbstractLogger = ResFn.url(classAbstractLoggerURL)//
                 .to(StreamReading.class).readString();
-        src_SinkBasedLogger = new URLResource(classSinkBasedLoggerURL)//
+        src_SinkBasedLogger = ResFn.url(classSinkBasedLoggerURL)//
                 .to(StreamReading.class).readString();
     }
 

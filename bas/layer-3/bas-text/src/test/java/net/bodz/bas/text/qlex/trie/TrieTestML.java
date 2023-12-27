@@ -7,7 +7,7 @@ import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.StringCharIn;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 
 public class TrieTestML
         implements
@@ -51,7 +51,7 @@ public class TrieTestML
     void run()
             throws Exception {
         URL res = TrieTestApp.class.getResource("TrieTestApp.1");
-        String source = new URLResource(res).read().readString();
+        String source = ResFn.url(res).read().readString();
         in = new StringCharIn(source);
         lexer.newParser(in, this).parse();
     }

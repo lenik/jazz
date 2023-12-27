@@ -12,7 +12,7 @@ import org.junit.Test;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringStat;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class JarStuffTest
@@ -62,7 +62,7 @@ public class JarStuffTest
             throws IOException {
         URL src = project.findSourceURL(JarStuffTest.class);
         if (src != null) {
-            String code = new URLResource(src)//
+            String code = ResFn.url(src)//
                     .to(StreamReading.class).readString();
             assertEquals(1, StringStat.count(code, magic));
         }

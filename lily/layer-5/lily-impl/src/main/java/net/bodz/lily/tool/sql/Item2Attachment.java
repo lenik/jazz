@@ -19,7 +19,6 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.io.res.AbstractStreamResource;
 import net.bodz.bas.io.res.ResFn;
-import net.bodz.bas.io.res.builtin.URLResource;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
@@ -191,7 +190,7 @@ public class Item2Attachment
                     URL classRes = classLoader.getResource(path);
                     if (classRes == null)
                         throw new IllegalArgumentException("Bad resource path: " + path);
-                    resource = new URLResource(classRes);
+                    resource = ResFn.url(classRes);
                 }
 
                 for (String line : resource.read().lines()) {

@@ -45,7 +45,7 @@ public class ResourceMap
         listing.find(new IResourceCallback() {
             @Override
             public boolean resource(String name, URL url) {
-                URLResource resource = new URLResource(url);
+                URLResource resource = ResFn.url(url);
                 put(name, resource);
                 return true;
             }

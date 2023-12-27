@@ -12,7 +12,7 @@ import org.apache.ibatis.session.Configuration;
 import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.IllegalConfigException;
 import net.bodz.bas.err.PackageError;
-import net.bodz.bas.io.res.builtin.URLResource;
+import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
 
 public class IncludeMapperXmlConfigurer
@@ -53,7 +53,7 @@ public class IncludeMapperXmlConfigurer
             throw new IllegalArgumentException(String.format("Bad resource name %s for %s.", name, getClass()));
 
         try {
-            return new URLResource(url).to(StreamReading.class).read();
+            return ResFn.url(url).to(StreamReading.class).read();
         } catch (IOException e) {
             throw new PackageError(String.format("Can't read resource %s for %s.", name, getClass()), e);
         }
