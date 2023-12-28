@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-5</artifactId>
+        <artifactId>layer-3</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-html</artifactId>
+    <artifactId>bas-xml</artifactId>
     <dependencies>
         <dependency>
             <groupId>joda-time</groupId>
@@ -15,24 +15,14 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-repr</artifactId>
+            <artifactId>bas-io</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-servlet</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-tex</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.10.2</version>
+            <groupId>org.jooq</groupId>
+            <artifactId>joox</artifactId>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Html</name>
+    <name>BAS :: Layer 3 :: XML</name>
 </project>
