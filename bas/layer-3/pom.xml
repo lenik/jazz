@@ -23,6 +23,7 @@
         <module>bas-t3</module>
         <module>bas-text</module>
         <module>bas-text-lr</module>
+        <module>bas-xml</module>
     </modules>
     <name>BAS :: Layer 3</name>
 </project>
