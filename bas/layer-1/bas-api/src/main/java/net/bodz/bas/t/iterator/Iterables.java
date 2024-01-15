@@ -1,11 +1,6 @@
 package net.bodz.bas.t.iterator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import net.bodz.bas.err.CreateException;
@@ -98,10 +93,19 @@ public class Iterables {
         return new TransformedIterable<S, T>(iterable, transformer);
     }
 
+    public static <T> Iterable<T> reversed(List<T> list) {
+        return () -> new ReversedListIterator<>(list);
+    }
+
+    public static <T> Iterable<T> reversed(LinkedList<T> linkedList) {
+        return () -> new ReversedLinkedListIterator<>(linkedList);
+    }
+
 }
 
 class CreateIterable<T>
-        implements Iterable<T> {
+        implements
+            Iterable<T> {
 
     final IFactory<? extends Iterator<T>> iteratorCreator;
 
@@ -125,7 +129,8 @@ class CreateIterable<T>
 }
 
 class OtpIteratorIterable<T>
-        implements Iterable<T> {
+        implements
+            Iterable<T> {
 
     private final Iterator<T> iterator;
 
@@ -145,7 +150,8 @@ class OtpIteratorIterable<T>
 }
 
 class OtpEnumWrapper<T>
-        implements Iterable<T> {
+        implements
+            Iterable<T> {
 
     private Enumeration<T> enumeration;
 
@@ -167,7 +173,8 @@ class OtpEnumWrapper<T>
 }
 
 class FilteredIterable<T>
-        implements Iterable<T> {
+        implements
+            Iterable<T> {
 
     final Iterable<? extends T> orig;
     final IFilter<? super T> filter;
@@ -186,7 +193,8 @@ class FilteredIterable<T>
 }
 
 class TransformedIterable<S, T>
-        implements Iterable<T> {
+        implements
+            Iterable<T> {
 
     final Iterable<? extends S> orig;
     final Function<S, T> transformer;
