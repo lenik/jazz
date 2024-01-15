@@ -12,6 +12,7 @@ public class FieldCriteriaBuilder<fin_target, self_t, T> {
     public FieldCriteriaBuilder(String fieldName, fin_target finishTarget, IReceiver<? super FieldCriterion> receiver) {
         this.fieldName = fieldName;
         this.finishTarget = finishTarget;
+        this.receiver = receiver;
     }
 
     @SuppressWarnings("unchecked")

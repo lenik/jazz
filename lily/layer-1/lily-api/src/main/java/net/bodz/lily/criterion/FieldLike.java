@@ -10,4 +10,9 @@ public class FieldLike
         this.pattern = pattern;
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldLike(this);
+    }
+
 }

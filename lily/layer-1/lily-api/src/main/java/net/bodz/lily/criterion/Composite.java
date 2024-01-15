@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.t.criteria.ICriterion;
-
-public class ListCriterion
+public abstract class Composite
         extends Criterion
         implements
-            ICriterion,
             Iterable<ICriterion> {
 
     protected List<ICriterion> list = new ArrayList<>();

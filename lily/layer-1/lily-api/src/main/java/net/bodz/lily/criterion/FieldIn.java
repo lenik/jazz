@@ -23,4 +23,9 @@ public class FieldIn<T>
         this.values = values;
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldIn(this);
+    }
+
 }

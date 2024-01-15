@@ -1,5 +1,7 @@
 package net.bodz.lily.criterion;
 
-public class Criterion {
+public abstract class Criterion
+        implements
+            ICriterion {
 
 }

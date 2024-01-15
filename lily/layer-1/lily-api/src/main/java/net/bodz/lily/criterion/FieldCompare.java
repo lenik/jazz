@@ -16,4 +16,9 @@ public class FieldCompare<T>
         this.value = value;
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldCompare(this);
+    }
+
 }
