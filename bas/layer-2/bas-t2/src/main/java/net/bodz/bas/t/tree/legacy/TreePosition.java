@@ -142,7 +142,7 @@ public class TreePosition<N extends ITreeNode<? extends N>>
                     N nextChild = children.get(top.index);
                     if (pred != null && !pred.eval(nextChild)) {
                         // test failed, move to next sibling
-                        stack.top(new Dim<N>(topNode, ++topIndex));
+                        stack.replaceTop(new Dim<N>(topNode, ++topIndex));
                         continue;
                     } else {
                         if (posBuf != null) { // copy on demand
@@ -150,14 +150,14 @@ public class TreePosition<N extends ITreeNode<? extends N>>
                             posBuf.add(posCopy);
                         }
                         // move to next sibling
-                        stack.top(new Dim<N>(topNode, ++topIndex));
+                        stack.replaceTop(new Dim<N>(topNode, ++topIndex));
                         return nextChild;
                     }
                 }
                 stack.pop();
                 if (!stack.isEmpty()) { // move to next parent
                     top = stack.top();
-                    stack.top(new Dim<N>(top.node, top.index + 1));
+                    stack.replaceTop(new Dim<N>(top.node, top.index + 1));
                 }
             }
             return end();

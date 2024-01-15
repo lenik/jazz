@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.t.iterator.PrefetchedIterator;
 import net.bodz.bas.t.list.ArrayStack;
-import net.bodz.bas.t.list.StackList;
+import net.bodz.bas.t.list.IStack;
 
 public class SpecNodeTopPathIterator<node_t extends ISpecNode<node_t, key_t, ?>, key_t>
         extends PrefetchedIterator<List<key_t>> {
@@ -15,8 +15,8 @@ public class SpecNodeTopPathIterator<node_t extends ISpecNode<node_t, key_t, ?>,
         Iterator<key_t> tops;
     }
 
-    StackList<Frame> stack = new ArrayStack<>();
-    StackList<key_t> prefix = new ArrayStack<>();
+    IStack<Frame> stack = new ArrayStack<>();
+    IStack<key_t> prefix = new ArrayStack<>();
 
     boolean pruneEmptyNode = true;
     boolean childFirst; // or "thisNodeFirst"
@@ -41,7 +41,7 @@ public class SpecNodeTopPathIterator<node_t extends ISpecNode<node_t, key_t, ?>,
                 if (child.isEmptyNode())
                     if (pruneEmptyNode)
                         continue;
-                prefix.top(key);
+                prefix.replaceTop(key);
 
                 if (child.hasTop()) {
                     Frame childFrame = new Frame();

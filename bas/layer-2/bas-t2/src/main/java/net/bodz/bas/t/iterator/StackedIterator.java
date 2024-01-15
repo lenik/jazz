@@ -3,16 +3,17 @@ package net.bodz.bas.t.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.t.list.IStack;
 import net.bodz.bas.t.list.LinkedStack;
-import net.bodz.bas.t.list.StackList;
 
 /**
  * @see NestedIterator
  */
 public class StackedIterator<T>
-        implements Iterator<T> {
+        implements
+            Iterator<T> {
 
-    private StackList<Iterator<? extends T>> stack;
+    private IStack<Iterator<? extends T>> stack;
     private Iterator<? extends T> currentIterator;
     private Iterator<? extends T> lastIterator;
 
@@ -100,7 +101,7 @@ public class StackedIterator<T>
         StringBuilder buf = new StringBuilder((1 + stack.size()) * 100);
         buf.append("Iterators in stack: \n");
         buf.append("  * " + currentIterator.getClass().getSimpleName() + ": " + currentIterator + "\n");
-        for (Iterator<? extends T> iter : stack) {
+        for (Iterator<? extends T> iter : stack.topFirst()) {
             buf.append("    ");
             buf.append(iter.getClass().getSimpleName());
             buf.append(": ");
