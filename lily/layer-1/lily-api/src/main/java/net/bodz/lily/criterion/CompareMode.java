@@ -1,8 +1,12 @@
 package net.bodz.lily.criterion;
 
+import net.bodz.bas.err.UnexpectedException;
+
 public enum CompareMode {
 
     EQUALS,
+
+    NOT_EQUALS,
 
     LESS_THAN,
 
@@ -14,10 +18,31 @@ public enum CompareMode {
 
     ;
 
-    public String getOp() {
+    public CompareMode not() {
+        switch (this) {
+        case EQUALS:
+            return NOT_EQUALS;
+        case NOT_EQUALS:
+            return EQUALS;
+        case LESS_THAN:
+            return GREATER_OR_EQUALS;
+        case LESS_OR_EQUALS:
+            return GREATER_THAN;
+        case GREATER_THAN:
+            return LESS_OR_EQUALS;
+        case GREATER_OR_EQUALS:
+            return LESS_THAN;
+        default:
+            throw new UnexpectedException();
+        }
+    }
+
+    public String getSqlOp() {
         switch (this) {
         case EQUALS:
             return "=";
+        case NOT_EQUALS:
+            return "!=";
         case LESS_THAN:
             return "<";
         case LESS_OR_EQUALS:
@@ -27,14 +52,16 @@ public enum CompareMode {
         case GREATER_OR_EQUALS:
             return ">=";
         default:
-            return "?";
+            throw new UnexpectedException();
         }
     }
 
-    public String getOpName() {
+    public String camelName() {
         switch (this) {
         case EQUALS:
             return "equals";
+        case NOT_EQUALS:
+            return "notEquals";
         case LESS_THAN:
             return "lessThan";
         case LESS_OR_EQUALS:
@@ -44,7 +71,7 @@ public enum CompareMode {
         case GREATER_OR_EQUALS:
             return "greaterOrEquals";
         default:
-            return "?";
+            throw new UnexpectedException();
         }
     }
 

@@ -1,22 +1,27 @@
 package net.bodz.lily.criterion;
 
 import net.bodz.bas.c.org.json.JsonBuffer;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.t.list.IStack;
 
-public interface ICriterion {
+public interface ICriterion
+        extends
+            IJsonForm {
+
+    default boolean isFieldCriterion() {
+        return false;
+    }
 
     void accept(ICriterionVisitor visitor);
 
-    default String toLisp() {
-        StringBuilder buf = new StringBuilder();
-        LispFormatter formatter = new LispFormatter(buf);
-        accept(formatter);
-        return buf.toString();
-    }
+    void jsonIn(JsonVariant in, ITypeInferrer typeInferrer, IStack<String> fieldNameStack)
+            throws ParseException;
 
     default String toJson() {
         JsonBuffer buf = new JsonBuffer();
-        JsonDumper jd = new JsonDumper(buf);
-        accept(jd);
+        accept(new JsonFormatter(buf));
         return buf.toString();
     }
 

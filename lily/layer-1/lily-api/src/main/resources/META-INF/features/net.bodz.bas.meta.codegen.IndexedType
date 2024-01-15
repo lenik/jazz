@@ -3,3 +3,4 @@ net.bodz.lily.entity.manager.RowOpListeners
 net.bodz.lily.security.login.ILoginManagerProvider
 net.bodz.lily.security.login.ILoginResolver
 net.bodz.lily.security.login.ILoginResolverProvider
+net.bodz.lily.test.TestSampleBuilder

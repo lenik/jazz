@@ -8,16 +8,16 @@ public class StringFieldCriteriaBuilder<fin_target>
 
     public StringFieldCriteriaBuilder(String fieldName, fin_target finishTarget,
             IReceiver<? super FieldCriterion> receiver) {
-        super(fieldName, finishTarget, receiver);
+        super(fieldName, String.class, finishTarget, receiver);
     }
 
     public fin_target like(String pattern) {
-        receiver.accept(new FieldLike(fieldName, false, pattern));
+        receiver.receive(new FieldLike(fieldName, false, pattern));
         return finishTarget;
     }
 
     public fin_target notLike(String pattern) {
-        receiver.accept(new FieldLike(fieldName, true, pattern));
+        receiver.receive(new FieldLike(fieldName, true, pattern));
         return finishTarget;
     }
 

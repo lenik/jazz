@@ -7,7 +7,7 @@ public class BooleanFieldCriteriaBuilder<fin_target>
 
     public BooleanFieldCriteriaBuilder(String fieldName, fin_target finishTarget,
             IReceiver<? super FieldCriterion> receiver) {
-        super(fieldName, finishTarget, receiver);
+        super(fieldName, Boolean.class, finishTarget, receiver);
     }
 
 }
