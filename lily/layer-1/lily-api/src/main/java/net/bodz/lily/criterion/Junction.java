@@ -1,10 +1,11 @@
 package net.bodz.lily.criterion;
 
-import net.bodz.bas.t.criteria.ICriterion;
-
 public class Junction
-        extends ListCriterion
-        implements
-            Iterable<ICriterion> {
+        extends Composite {
+
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.junction(this);
+    }
 
 }

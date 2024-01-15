@@ -7,4 +7,9 @@ public class FieldNull
         super(fieldName, not);
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldNull(this);
+    }
+
 }

@@ -16,4 +16,9 @@ public class FieldBetween<T>
         this.max = max;
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldBetween(this);
+    }
+
 }

@@ -10,4 +10,9 @@ public class FieldEquals<T>
         this.value = value;
     }
 
+    @Override
+    public void accept(ICriterionVisitor visitor) {
+        visitor.fieldEquals(this);
+    }
+
 }

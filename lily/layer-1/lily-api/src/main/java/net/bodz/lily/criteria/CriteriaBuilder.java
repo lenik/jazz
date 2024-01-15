@@ -1,58 +1,82 @@
 package net.bodz.lily.criteria;
 
-import java.lang.reflect.Constructor;
-
-import net.bodz.bas.t.criteria.ICriterion;
+import net.bodz.bas.t.list.ArrayStack;
+import net.bodz.bas.t.list.IStack;
+import net.bodz.lily.criterion.Composite;
 import net.bodz.lily.criterion.Disjunction;
+import net.bodz.lily.criterion.ICriterion;
 import net.bodz.lily.criterion.Junction;
+import net.bodz.lily.criterion.Not;
 
-public class CriteriaBuilder<fin_target, end_target, self_t extends CriteriaBuilder<fin_target, end_target, self_t>>
+public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         implements
-            ICriteriaBuilder<end_target, self_t>,
+            ICriteriaBuilder<self_t>,
             IReceiver<ICriterion> {
 
-    Junction root = new Junction();
+    IStack<Composite> stack = new ArrayStack<>();
 
-    fin_target finTarget;
-    fin_target endTarget;
-
-    public CriteriaBuilder(fin_target finTarget, fin_target endTarget) {
-        this.finTarget = finTarget;
-        this.endTarget = endTarget;
+    public CriteriaBuilder() {
+        stack.push(new Junction());
     }
 
-    <FT, ET> self_t newInstance(FT finTarget, ET endTarget) {
-        Class<? extends Object> finClass = finTarget.getClass();
-        Class<? extends Object> endClass = endTarget.getClass();
-        Constructor<?> ctor;
-        try {
-            ctor = getClass().getConstructor(finClass, endClass);
+    @SuppressWarnings("unchecked")
+    private final self_t _this() {
+        return (self_t) this;
+    }
 
-            @SuppressWarnings("unchecked")
-            self_t newInstance = (self_t) ctor.newInstance(finTarget, endTarget);
-            return newInstance;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    @Override
+    public ICriterion get() {
+        return stack.top();
+    }
+
+    Composite defaultCombine() {
+        return new Junction();
+    }
+
+    @Override
+    public self_t not() {
+        Composite top = stack.top();
+        Composite other = defaultCombine();
+        Not not = new Not(other);
+        top.add(not);
+
+        stack.push(other);
+
+        return _this();
     }
 
     @Override
     public self_t or() {
-        Disjunction disj = new Disjunction();
-        root.add(disj);
-        OrCriteriaBuilder or = new OrCriteriaBuilder();
-        self_t newInstance = newInstance(or, this);
-        return newInstance;
+        Composite other = defaultCombine();
+
+        Composite top = stack.top();
+        if (top instanceof Disjunction) {
+            Disjunction disj = (Disjunction) top;
+            disj.add(other);
+        } else {
+            Disjunction disj = new Disjunction();
+            disj.add(top);
+            disj.add(other);
+            Composite restore = defaultCombine();
+            restore.add(disj);
+            stack.replaceTop(restore);
+        }
+
+        stack.push(other);
+
+        return _this();
     }
 
     @Override
     public self_t end() {
-        return endTarget;
+        stack.pop();
+        return _this();
     }
 
     @Override
     public void accept(ICriterion value) {
-        root.add(value);
+        Composite top = stack.top();
+        top.add(value);
     }
 
     @SuppressWarnings("unchecked")

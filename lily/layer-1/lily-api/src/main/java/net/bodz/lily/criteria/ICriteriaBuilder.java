@@ -1,6 +1,10 @@
 package net.bodz.lily.criteria;
 
-public interface ICriteriaBuilder<end_target, self_t extends ICriteriaBuilder<end_target, self_t>> {
+import net.bodz.lily.criterion.ICriterion;
+
+public interface ICriteriaBuilder<self_t extends ICriteriaBuilder<self_t>> {
+
+    ICriterion get();
 
     // self_t and(self_t other);
 
@@ -10,6 +14,6 @@ public interface ICriteriaBuilder<end_target, self_t extends ICriteriaBuilder<en
 
     // self_t begin();
 
-    end_target end();
+    self_t end();
 
 }
