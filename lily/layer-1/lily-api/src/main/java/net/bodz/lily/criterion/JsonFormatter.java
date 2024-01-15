@@ -4,14 +4,14 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.t.list.ArrayStack;
 import net.bodz.bas.t.list.IStack;
 
-public class JsonDumper
+public class JsonFormatter
         implements
             ICriterionVisitor {
 
     IJsonOut out;
     IStack<Boolean> stack = new ArrayStack<>();
 
-    public JsonDumper(IJsonOut out) {
+    public JsonFormatter(IJsonOut out) {
         this.out = out;
     }
 
@@ -19,7 +19,7 @@ public class JsonDumper
     public void not(Not not) {
         out.object();
         out.key("not");
-        not.criterion.accept(this);
+        composite("and", not);
         out.endObject();
     }
 
@@ -32,15 +32,15 @@ public class JsonDumper
         out.object();
         out.key(name);
 
-        boolean fields = true;
+        boolean onlyFields = true;
         for (ICriterion item : composite)
-            if (!(item instanceof FieldCriterion)) {
-                fields = false;
+            if (!item.isFieldCriterion()) {
+                onlyFields = false;
                 break;
             }
 
-        stack.push(fields);
-        if (fields) {
+        stack.push(onlyFields);
+        if (onlyFields) {
             out.object();
             for (ICriterion item : composite) {
                 item.accept(this);
@@ -107,12 +107,7 @@ public class JsonDumper
 
     @Override
     public void fieldCompare(FieldCompare<?> fieldCompare) {
-        field(fieldCompare.mode.getOpName(), fieldCompare, fieldCompare.value);
-    }
-
-    @Override
-    public void fieldEquals(FieldEquals<?> fieldEquals) {
-        field("eq", fieldEquals, fieldEquals.value);
+        field(fieldCompare.mode.camelName(), fieldCompare, fieldCompare.value);
     }
 
     @Override
@@ -129,6 +124,11 @@ public class JsonDumper
     @Override
     public void fieldNull(FieldNull fieldNull) {
         field("null", fieldNull);
+    }
+
+    @Override
+    public void fieldTrue(FieldTrue fieldTrue) {
+        field("true", fieldTrue);
     }
 
 }

@@ -67,6 +67,7 @@ net.bodz.violet.art.ArtifactPhaseSamples
 net.bodz.violet.art.ArtifactSamples
 net.bodz.violet.art.ArtifactTagSamples
 net.bodz.violet.art.ArtifactVoteSamples
+net.bodz.violet.art.Dim3dSamples
 net.bodz.violet.art.UOMSamples
 net.bodz.violet.asset.AssetSamples
 net.bodz.violet.asset.GroupAssetSamples
@@ -137,6 +138,7 @@ net.bodz.violet.shop.ShopTagSamples
 net.bodz.violet.store.OffStoreItemSamples
 net.bodz.violet.store.RegionCategorySamples
 net.bodz.violet.store.RegionLevelSamples
+net.bodz.violet.store.RegionSamples
 net.bodz.violet.store.RegionTagSamples
 net.bodz.violet.store.StoreCategorySamples
 net.bodz.violet.store.StoreItemSamples

@@ -7,39 +7,34 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
 
-public class FieldLike
+public class FieldTrue
         extends FieldCriterion {
 
-    public String pattern;
-
-    public FieldLike() {
+    public FieldTrue() {
     }
 
-    public FieldLike(String fieldName, boolean not, String pattern) {
+    public FieldTrue(String fieldName, boolean not) {
         super(fieldName, not);
-        this.pattern = pattern;
     }
 
     @Override
     public void accept(ICriterionVisitor visitor) {
-        visitor.fieldLike(this);
+        visitor.fieldTrue(this);
     }
 
     @Override
     protected String getDiscriminator() {
-        return Criterions.K_LIKE;
+        return Criterions.K_TRUE;
     }
 
     @Override
     protected void writeValue(IJsonOut out)
             throws IOException, FormatException {
-        out.value(pattern);
     }
 
     @Override
     protected void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
-        pattern = (String) in.getScalarFor(fieldName);
     }
 
 }

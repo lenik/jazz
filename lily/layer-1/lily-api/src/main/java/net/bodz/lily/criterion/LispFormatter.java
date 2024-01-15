@@ -13,7 +13,7 @@ public class LispFormatter
     @Override
     public void not(Not not) {
         sb.append("(not ");
-        not.criterion.accept(this);
+        composite("and", not);
         sb.append(")");
     }
 
@@ -40,7 +40,7 @@ public class LispFormatter
     void field(String op, FieldCriterion field, Object... values) {
         sb.append("(");
         if (field.not)
-            sb.append("!");
+            sb.append("~");
         sb.append(op);
         sb.append(" ");
         sb.append(field.fieldName);
@@ -58,12 +58,7 @@ public class LispFormatter
 
     @Override
     public void fieldCompare(FieldCompare<?> fieldCompare) {
-        field(fieldCompare.mode.getOpName(), fieldCompare, fieldCompare.value);
-    }
-
-    @Override
-    public void fieldEquals(FieldEquals<?> fieldEquals) {
-        field("eq", fieldEquals, fieldEquals.value);
+        field(fieldCompare.mode.camelName(), fieldCompare, fieldCompare.value);
     }
 
     @Override
@@ -80,6 +75,11 @@ public class LispFormatter
     @Override
     public void fieldNull(FieldNull fieldNull) {
         field("null", fieldNull);
+    }
+
+    @Override
+    public void fieldTrue(FieldTrue fieldTrue) {
+        field("true", fieldTrue);
     }
 
 }

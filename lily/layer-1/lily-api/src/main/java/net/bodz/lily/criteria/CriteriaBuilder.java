@@ -1,5 +1,10 @@
 package net.bodz.lily.criteria;
 
+import java.util.List;
+
+import net.bodz.bas.db.ibatis.IGenericMapper;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.t.list.ArrayStack;
 import net.bodz.bas.t.list.IStack;
 import net.bodz.lily.criterion.Composite;
@@ -13,7 +18,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
             ICriteriaBuilder<self_t>,
             IReceiver<ICriterion> {
 
-    IStack<Composite> stack = new ArrayStack<>();
+    protected IStack<Composite> stack = new ArrayStack<>();
 
     public CriteriaBuilder() {
         stack.push(new Junction());
@@ -37,7 +42,8 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     public self_t not() {
         Composite top = stack.top();
         Composite other = defaultCombine();
-        Not not = new Not(other);
+        Not not = new Not();
+        // not.add(other);
         top.add(not);
 
         stack.push(other);
@@ -52,11 +58,11 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         Composite top = stack.top();
         if (top instanceof Disjunction) {
             Disjunction disj = (Disjunction) top;
-            disj.add(other);
+            // disj.add(other);
         } else {
             Disjunction disj = new Disjunction();
             disj.add(top);
-            disj.add(other);
+            // disj.add(other);
             Composite restore = defaultCombine();
             restore.add(disj);
             stack.replaceTop(restore);
@@ -69,24 +75,90 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     @Override
     public self_t end() {
-        stack.pop();
+        Composite other = stack.pop();
+        Composite top = stack.top();
+        if (top instanceof Disjunction) {
+            top.add(other);
+        } else if (top instanceof Junction) { // restore-and
+            ICriterion last = top.getLast();
+            if (last instanceof Composite) {
+                Composite lastComposite = (Composite) last;
+                lastComposite.add(other);
+            } else
+                throw new IllegalUsageError("top.last isn't composite");
+        } else
+            throw new IllegalUsageError("unexpected top type");
         return _this();
     }
 
     @Override
-    public void accept(ICriterion value) {
+    public void receive(ICriterion value) {
         Composite top = stack.top();
         top.add(value);
     }
 
-    @SuppressWarnings("unchecked")
-    protected NumberFieldCriteriaBuilder<self_t> number(String fieldName) {
-        return new NumberFieldCriteriaBuilder<self_t>(fieldName, (self_t) this, this);
+    protected <T extends Number> NumberField<T> number(String fieldName, Class<T> type) {
+        return new NumberField<T>(fieldName, type);
     }
 
-    @SuppressWarnings("unchecked")
-    protected StringFieldCriteriaBuilder<self_t> string(String fieldName) {
-        return new StringFieldCriteriaBuilder<self_t>(fieldName, (self_t) this, this);
+    protected StringField string(String fieldName) {
+        return new StringField(fieldName);
+    }
+
+    protected BooleanField bool(String fieldName) {
+        return new BooleanField(fieldName);
+    }
+
+    protected <T> DateField<T> date(String fieldName, Class<T> type) {
+        return new DateField<T>(fieldName, type);
+    }
+
+    protected class NumberField<T extends Number>
+            extends NumberFieldCriteriaBuilder<self_t, T> {
+
+        @SuppressWarnings("unchecked")
+        public NumberField(String fieldName, Class<T> type) {
+            super(fieldName, type, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
+        }
+
+    }
+
+    protected class StringField
+            extends StringFieldCriteriaBuilder<self_t> {
+
+        @SuppressWarnings("unchecked")
+        public StringField(String fieldName) {
+            super(fieldName, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
+        }
+
+    }
+
+    protected class BooleanField
+            extends BooleanFieldCriteriaBuilder<self_t> {
+
+        @SuppressWarnings("unchecked")
+        public BooleanField(String fieldName) {
+            super(fieldName, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
+        }
+
+    }
+
+    protected class DateField<T>
+            extends DateFieldCriteriaBuilder<self_t, T> {
+
+        @SuppressWarnings("unchecked")
+        public DateField(String fieldName, Class<T> type) {
+            super(fieldName, type, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
+        }
+
+    }
+
+    public <T> List<T> filter(IGenericMapper<T, self_t> mapper) {
+        return filter(mapper, null);
+    }
+
+    public <T> List<T> filter(IGenericMapper<T, self_t> mapper, SelectOptions options) {
+        return mapper.filter(_this(), options);
     }
 
 }

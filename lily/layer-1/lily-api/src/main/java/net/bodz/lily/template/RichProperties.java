@@ -84,7 +84,7 @@ public class RichProperties
         case K_IMAGES:
         case K_VIDEOS:
         case K_PDFS:
-            JsonArray array = j.getArray();
+            JsonArray array = j.getArrayFor(key);
             List<IAttachment> attachments = DefaultAttachment.parseJsonArray(array);
             setAttribute(key, attachments);
             return true;

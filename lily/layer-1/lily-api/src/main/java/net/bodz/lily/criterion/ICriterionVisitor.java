@@ -12,12 +12,12 @@ public interface ICriterionVisitor {
 
     void fieldCompare(FieldCompare<?> fieldCompare);
 
-    void fieldEquals(FieldEquals<?> fieldEquals);
-
     void fieldIn(FieldIn<?> fieldIn);
 
     void fieldLike(FieldLike fieldLike);
 
     void fieldNull(FieldNull fieldNull);
+
+    void fieldTrue(FieldTrue fieldTrue);
 
 }

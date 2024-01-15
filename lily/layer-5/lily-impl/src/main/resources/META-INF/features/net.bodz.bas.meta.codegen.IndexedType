@@ -1,3 +1,2 @@
 net.bodz.lily.model.base.CoObjectIndex
-net.bodz.lily.model.base.IEntityManager
-net.bodz.lily.test.TestSampleBuilder
+net.bodz.lily.model.base.IEntityController
