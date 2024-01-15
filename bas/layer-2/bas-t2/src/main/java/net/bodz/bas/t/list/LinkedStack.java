@@ -4,12 +4,15 @@ import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
 
+import net.bodz.bas.t.iterator.Iterables;
+
 /**
  * Top-first list stack.
  */
 public class LinkedStack<T>
         extends LinkedList<T>
-        implements StackList<T> {
+        implements
+            IStack<T> {
 
     static final long serialVersionUID = 9193050893163832214L;
 
@@ -25,42 +28,34 @@ public class LinkedStack<T>
     public T pop() {
         if (isEmpty())
             throw new EmptyStackException();
-        return removeFirst();
+        return removeLast();
     }
 
     @Override
     public void push(T item) {
-        addFirst(item);
+        addLast(item);
     }
 
+    @Override
     public T top() {
         if (isEmpty())
             throw new EmptyStackException();
-        return getFirst();
+        return getLast();
     }
 
-    public void top(T newTop) {
+    @Override
+    public void replaceTop(T newTop) {
         if (isEmpty())
             throw new EmptyStackException();
-        set(0, newTop);
+        // int lastIndex = size() - 1;
+        // set(lastIndex, newTop);
+        removeLast();
+        addLast(newTop);
     }
 
-    /**
-     * @param index
-     *            0 at the top
-     */
     @Override
-    public T get(int index) {
-        return super.get(index);
-    }
-
-    /**
-     * @param index
-     *            0 at the top
-     */
-    @Override
-    public T set(int index, T element) {
-        return super.set(index, element);
+    public Iterable<T> topFirst() {
+        return Iterables.reversed(this);
     }
 
 }

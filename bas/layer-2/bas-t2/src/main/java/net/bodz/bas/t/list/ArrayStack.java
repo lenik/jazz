@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EmptyStackException;
 
+import net.bodz.bas.t.iterator.Iterables;
+
 /**
  * Top-last list stack.
  */
 public class ArrayStack<T>
         extends ArrayList<T>
-        implements StackList<T> {
+        implements
+            IStack<T> {
 
     private static final long serialVersionUID = 9005024230227614006L;
 
@@ -49,11 +52,16 @@ public class ArrayStack<T>
     }
 
     @Override
-    public void top(T newTop) {
+    public void replaceTop(T newTop) {
         int size = size();
         if (size == 0)
             throw new EmptyStackException();
         set(size - 1, newTop);
+    }
+
+    @Override
+    public Iterable<T> topFirst() {
+        return Iterables.reversed(this);
     }
 
 }
