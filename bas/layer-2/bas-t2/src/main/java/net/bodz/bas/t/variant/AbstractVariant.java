@@ -2,6 +2,11 @@ package net.bodz.bas.t.variant;
 
 import java.lang.reflect.Array;
 
+import org.apache.commons.lang3.NotImplementedException;
+
+import net.bodz.bas.c.type.TypeId;
+import net.bodz.bas.c.type.TypeKind;
+
 public abstract class AbstractVariant
         extends AutoConvVariant {
 
@@ -171,6 +176,62 @@ public abstract class AbstractVariant
             return defaultValue;
         char val = getChar();
         return val;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T convert(Class<? super T> type) {
+        switch (TypeKind.getTypeId(type)) {
+        case TypeId._byte:
+        case TypeId.BYTE:
+            return (T) (Byte) getByte();
+
+        case TypeId._short:
+        case TypeId.SHORT:
+            return (T) (Short) getShort();
+
+        case TypeId._int:
+        case TypeId.INTEGER:
+            return (T) (Integer) getInt();
+
+        case TypeId._long:
+        case TypeId.LONG:
+            return (T) (Long) getLong();
+
+        case TypeId._float:
+        case TypeId.FLOAT:
+            return (T) (Float) getFloat();
+
+        case TypeId._double:
+        case TypeId.DOUBLE:
+            return (T) (Double) getDouble();
+
+        case TypeId.BIG_INTEGER:
+            return (T) getBigInteger();
+
+        case TypeId.BIG_DECIMAL:
+            return (T) getBigDecimal();
+
+        case TypeId._boolean:
+        case TypeId.BOOLEAN:
+            return (T) (Boolean) getBoolean();
+
+        case TypeId._char:
+        case TypeId.CHARACTER:
+            return (T) (Character) getChar();
+
+        case TypeId.STRING:
+            return (T) getString();
+
+        case TypeId.DATE:
+        case TypeId.SQL_DATE:
+            return (T) getDate();
+
+        case TypeId.JODA_DATETIME:
+            throw new NotImplementedException();
+
+        default:
+            return (T) get();
+        }
     }
 
 }
