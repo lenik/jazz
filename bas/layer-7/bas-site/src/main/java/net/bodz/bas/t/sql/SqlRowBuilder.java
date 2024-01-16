@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import net.bodz.bas.db.sql.dialect.ISqlFormat;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 import net.bodz.bas.repr.form.SortOrder;
 
 public class SqlRowBuilder
@@ -18,17 +18,17 @@ public class SqlRowBuilder
     // List<Pair<String, Object>> pairs = new ArrayList<>();
     Map<String, SqlValue> pairs;
 
-    ISqlFormat format;
+    ISqlDialect format;
     boolean prepared;
     boolean named;
 
     String term = ";";
 
-    public SqlRowBuilder(ISqlFormat format) {
+    public SqlRowBuilder(ISqlDialect format) {
         this(format, SortOrder.KEEP);
     }
 
-    public SqlRowBuilder(ISqlFormat format, SortOrder order) {
+    public SqlRowBuilder(ISqlDialect format, SortOrder order) {
         this.format = format;
         pairs = order.newMap();
     }

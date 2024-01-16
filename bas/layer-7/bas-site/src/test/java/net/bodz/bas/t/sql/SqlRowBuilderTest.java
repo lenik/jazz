@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import net.bodz.bas.db.sql.dialect.SqlFormats;
+import net.bodz.bas.db.sql.dialect.SqlDialects;
 
 public class SqlRowBuilderTest {
 
     @Test
     public void testInsertInto() {
-        SqlRowBuilder sb = new SqlRowBuilder(SqlFormats.POSTGRESQL);
+        SqlRowBuilder sb = new SqlRowBuilder(SqlDialects.POSTGRESQL);
         sb.putEntry("name", "foo");
         sb.putEntry("age", 13);
         String sql = sb.insertInto("s.t");
@@ -19,7 +19,7 @@ public class SqlRowBuilderTest {
 
     @Test
     public void testInsertIntoPrepared() {
-        SqlRowBuilder sb = new SqlRowBuilder(SqlFormats.POSTGRESQL);
+        SqlRowBuilder sb = new SqlRowBuilder(SqlDialects.POSTGRESQL);
         sb.prepared();
         sb.putEntry("name", "foo");
         sb.putEntry("age", 13);
@@ -29,7 +29,7 @@ public class SqlRowBuilderTest {
 
     @Test
     public void testInsertIntoNamed() {
-        SqlRowBuilder sb = new SqlRowBuilder(SqlFormats.POSTGRESQL);
+        SqlRowBuilder sb = new SqlRowBuilder(SqlDialects.POSTGRESQL);
         sb.named();
         sb.putEntry("name", "foo");
         sb.putEntry("age", 13);

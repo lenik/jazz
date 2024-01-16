@@ -3,8 +3,8 @@ package net.bodz.bas.db.jdbc;
 import java.util.Map;
 
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
-import net.bodz.bas.db.sql.dialect.ISqlFormat;
-import net.bodz.bas.db.sql.dialect.SqlFormats;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
+import net.bodz.bas.db.sql.dialect.SqlDialects;
 import net.bodz.bas.potato.ref.PropertyRefMap;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.repr.form.SortOrder;
@@ -21,15 +21,15 @@ public class DatabaseType
     private final String hibernateDialect;
     private final String driverClass;
     private final String urlFormat;
-    private final ISqlFormat sqlFormat;
+    private final ISqlDialect sqlDialect;
 
     public DatabaseType(String name, String hibernateDialect, String driverClass, String urlFormat,
-            ISqlFormat sqlFormat) {
+            ISqlDialect sqlFormat) {
         super(name, name, meta);
         this.hibernateDialect = hibernateDialect;
         this.driverClass = driverClass;
         this.urlFormat = urlFormat;
-        this.sqlFormat = sqlFormat;
+        this.sqlDialect = sqlFormat;
     }
 
     public String getHibernateDialect() {
@@ -55,8 +55,8 @@ public class DatabaseType
         return getConnectionUrl(refMap);
     }
 
-    public ISqlFormat getSqlFormat() {
-        return sqlFormat;
+    public ISqlDialect getSqlFormat() {
+        return sqlDialect;
     }
 
     /**
@@ -66,7 +66,7 @@ public class DatabaseType
             "org.hibernate.dialect.H2Dialect", //
             "org.h2.Driver", //
             "jdbc:h2://${rootDir}/${database};DB_CLOSE_ON_EXIT=FALSE", //
-            SqlFormats.DEFAULT);
+            SqlDialects.SQL_2023);
 
     /**
      * HSQL Embedded Database
@@ -75,7 +75,7 @@ public class DatabaseType
             "org.hibernate.dialect.HSQLDialect", //
             "org.hsql.Driver", //
             "jdbc:hsql://${rootDir}/${database}", //
-            SqlFormats.DEFAULT);
+            SqlDialects.SQL_2023);
 
     /**
      * PostgreSQL RDBMS
@@ -84,7 +84,7 @@ public class DatabaseType
             "org.hibernate.dialect.PostgreSQLDialect", //
             "org.postgresql.Driver", //
             "jdbc:postgresql://${server}/${database}", //
-            SqlFormats.POSTGRESQL);
+            SqlDialects.POSTGRESQL);
 
     /**
      * Oracle Enterprise Database
@@ -93,7 +93,7 @@ public class DatabaseType
             "org.hibernate.dialect.OracleDialect", //
             "oracle.jdbc.driver.OracleDriver", //
             "jdbc:oracle://${server}/${database}", //
-            SqlFormats.ORACLE);
+            SqlDialects.ORACLE);
 
     /**
      * Oracle Enterprise Database
@@ -102,7 +102,7 @@ public class DatabaseType
             "org.hibernate.dialect.OracleDialect", //
             "oracle.jdbc.driver.OracleDriver", //
             "jdbc:oracle:thin:@${server}:${database}", //
-            SqlFormats.ORACLE);
+            SqlDialects.ORACLE);
 
     /**
      * MySQL RDBMS
@@ -111,6 +111,6 @@ public class DatabaseType
             "org.hibernate.dialect.MySQLDialect", //
             "org.mysql.Driver", //
             "jdbc:mysql://${server}/${database}", //
-            SqlFormats.MYSQL);
+            SqlDialects.MYSQL);
 
 }

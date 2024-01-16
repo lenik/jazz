@@ -1,6 +1,8 @@
 package net.bodz.bas.t.sql;
 
-import net.bodz.bas.db.sql.dialect.ISqlFormat;
+import java.util.Date;
+
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 
 public enum SqlValueType {
 
@@ -16,11 +18,11 @@ public enum SqlValueType {
 
     ;
 
-    public String toSqlCode(ISqlFormat format, Object value) {
+    public String toSqlCode(ISqlDialect format, Object value) {
         return toSqlCode(format, value, null);
     }
 
-    public String toSqlCode(ISqlFormat format, Object value, String nullStr) {
+    public String toSqlCode(ISqlDialect format, Object value, String nullStr) {
         if (value == null)
             return nullStr;
         switch (this) {
@@ -31,7 +33,7 @@ public enum SqlValueType {
             return format.qString(value.toString());
 
         case DATE:
-            return format.qDate(value);
+            return format.qDate((Date) value);
 
         case NAME:
             String name = (String) value;

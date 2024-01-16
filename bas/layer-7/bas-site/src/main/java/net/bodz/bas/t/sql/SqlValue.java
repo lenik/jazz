@@ -4,7 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import net.bodz.bas.db.sql.dialect.ISqlFormat;
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
 
 public class SqlValue {
 
@@ -18,7 +18,7 @@ public class SqlValue {
         this.value = value;
     }
 
-    public String toSqlCode(ISqlFormat format) {
+    public String toSqlCode(ISqlDialect format) {
         return type.toSqlCode(format, value);
     }
 

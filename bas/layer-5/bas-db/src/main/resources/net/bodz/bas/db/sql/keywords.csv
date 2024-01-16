@@ -1,0 +1,928 @@
+Keyword,SQL-2023,DB2-13,Mimer SQL-11,MySQL-8,Oracle-23c,PostgreSQL-16,SQL Server-2022,Teradata-15
+ABORT,,,,,,,,Teradata
+ABORTSESSION,,,,,,,,Teradata
+ABS,SQL-2023,,,,,,,Teradata
+ABSENT,SQL-2023,,,,,,,
+ABSOLUTE,,,,,,,,Teradata
+ACCESS,,,,,Oracle,,,
+ACCESSIBLE,,,,MySQL,,,,
+ACCESS_LOCK,,,,,,,,Teradata
+ACCOUNT,,,,,,,,Teradata
+ACOS,SQL-2023,,,,,,,Teradata
+ACOSH,,,,,,,,Teradata
+ACTION,,,,,,,,Teradata
+ADD,,DB2,,MySQL,Oracle,,SQL Server,Teradata
+ADD_MONTHS,,,,,,,,Teradata
+ADMIN,,,,,,,,Teradata
+AFTER,,DB2,,,,,,Teradata
+AGGREGATE,,,,,,,,Teradata
+ALIAS,,,,,,,,Teradata
+ALL,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ALLOCATE,SQL-2023,DB2,Mimer,,,,,Teradata
+ALLOW,,DB2,,,,,,
+ALTER,SQL-2023,,Mimer,MySQL,Oracle,,SQL Server,Teradata
+ALTERAND,,DB2,,,,,,
+AMP,,,,,,,,Teradata
+ANALYSE,,,,,,PostgreSQL,,
+ANALYZE,,,,MySQL,,PostgreSQL,,
+AND,SQL-2023,,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ANSIDATE,,,,,,,,Teradata
+ANY,SQL-2023,DB2,Mimer,,Oracle,PostgreSQL,SQL Server,Teradata
+ANY_VALUE,SQL-2023,,,,,,,
+ARE,SQL-2023,,,,,,,Teradata
+ARRAY,SQL-2023,DB2,,,,PostgreSQL,,Teradata
+ARRAY_AGG,SQL-2023,,,,,,,
+ARRAY_EXISTS,,DB2,,,,,,
+ARRAY_MAX_CARDINALITY,SQL-2023,,,,,,,
+AS,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ASC,,,,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ASENSITIVE,SQL-2023,DB2,,MySQL,,,,
+ASIN,SQL-2023,,,,,,,Teradata
+ASINH,,,,,,,,Teradata
+ASSERTION,,,,,,,,Teradata
+ASSOCIATE,,DB2,,,,,,
+ASUTIME,,DB2,,,,,,
+ASYMMETRIC,SQL-2023,,Mimer,,,PostgreSQL,,
+AT,SQL-2023,DB2,Mimer,,,,,Teradata
+ATAN,SQL-2023,,,,,,,Teradata
+ATAN2,,,,,,,,Teradata
+ATANH,,,,,,,,Teradata
+ATOMIC,SQL-2023,,Mimer,,,,,Teradata
+AUDIT,,DB2,,,Oracle,,,
+AUTHORIZATION,SQL-2023,,Mimer,,,PostgreSQL,SQL Server,Teradata
+AUX,,DB2,,,,,,
+AUXILIARY,,DB2,,,,,,
+AVE,,,,,,,,Teradata
+AVERAGE,,,,,,,,Teradata
+AVG,SQL-2023,,,,,,,Teradata
+BACKUP,,,,,,,SQL Server,
+BEFORE,,DB2,,MySQL,,,,Teradata
+BEGIN,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+BEGIN_FRAME,SQL-2023,,,,,,,
+BEGIN_PARTITION,SQL-2023,,,,,,,
+BETWEEN,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+BIGINT,SQL-2023,,,MySQL,,,,
+BINARY,SQL-2023,,,MySQL,,PostgreSQL,,Teradata
+BIT,,,,,,,,Teradata
+BLOB,SQL-2023,,,MySQL,,,,Teradata
+BOOLEAN,SQL-2023,,,,,,,Teradata
+BOTH,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+BREADTH,,,,,,,,Teradata
+BREAK,,,,,,,SQL Server,
+BROWSE,,,,,,,SQL Server,
+BT,,,,,,,,Teradata
+BTRIM,SQL-2023,,,,,,,
+BUFFERPOOL,,DB2,,,,,,
+BULK,,,,,,,SQL Server,
+BUT,,,,,,,,Teradata
+BY,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+BYTE,,,,,,,,Teradata
+BYTEINT,,,,,,,,Teradata
+BYTES,,,,,,,,Teradata
+CALL,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+CALLED,SQL-2023,,Mimer,,,,,
+CAPTURE,,DB2,,,,,,
+CARDINALITY,SQL-2023,,,,,,,
+CASCADE,,,,MySQL,,,SQL Server,Teradata
+CASCADED,SQL-2023,DB2,,,,,,Teradata
+CASE,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CASESPECIFIC,,,,,,,,Teradata
+CASE_N,,,,,,,,Teradata
+CAST,SQL-2023,DB2,Mimer,,,PostgreSQL,,Teradata
+CATALOG,,,,,,,,Teradata
+CCSID,,DB2,,,,,,
+CD,,,,,,,,Teradata
+CEIL,SQL-2023,,,,,,,
+CEILING,SQL-2023,,,,,,,
+CHANGE,,,,MySQL,,,,
+CHAR,SQL-2023,DB2,,MySQL,Oracle,,,Teradata
+CHAR2HEXINT,,,,,,,,Teradata
+CHARACTER,SQL-2023,DB2,,MySQL,,,,Teradata
+CHARACTERS,,,,,,,,Teradata
+CHARACTER_LENGTH,SQL-2023,,,,,,,Teradata
+CHARS,,,,,,,,Teradata
+CHAR_LENGTH,SQL-2023,,,,,,,Teradata
+CHECK,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+CHECKPOINT,,,,,,,SQL Server,Teradata
+CLASS,,,,,,,,Teradata
+CLASSIFIER,SQL-2023,,,,,,,
+CLOB,SQL-2023,,,,,,,Teradata
+CLONE,,DB2,,,,,,
+CLOSE,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+CLUSTER,,DB2,,,Oracle,,,Teradata
+CLUSTERED,,,,,,,SQL Server,
+CM,,,,,,,,Teradata
+COALESCE,SQL-2023,,,,,,SQL Server,Teradata
+COLLATE,SQL-2023,,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+COLLATION,,,,,,PostgreSQL,,Teradata
+COLLECT,SQL-2023,,,,,,,Teradata
+COLLECTION,,DB2,,,,,,
+COLLID,,DB2,,,,,,
+COLUMN,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+COLUMN_VALUE,,,,,Oracle,,,
+COMMENT,,DB2,,,Oracle,,,Teradata
+COMMIT,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+COMPLETION,,,,,,,,Teradata
+COMPRESS,,,,,Oracle,,,Teradata
+COMPUTE,,,,,,,SQL Server,
+CONCAT,,DB2,,,,,,
+CONCURRENTLY,,,,,,PostgreSQL,,
+CONDITION,SQL-2023,DB2,Mimer,MySQL,,,,
+CONNECT,SQL-2023,DB2,Mimer,,Oracle,,,Teradata
+CONNECTION,,DB2,,,,,,Teradata
+CONSTRAINT,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CONSTRAINTS,,,,,,,,Teradata
+CONSTRUCTOR,,,,,,,,Teradata
+CONTAINS,SQL-2023,DB2,,,,,SQL Server,
+CONTAINSTABLE,,,,,,,SQL Server,
+CONTENT,,DB2,,,,,,
+CONTINUE,,DB2,,MySQL,,,SQL Server,Teradata
+CONVERT,SQL-2023,,,MySQL,,,SQL Server,
+CONVERT_TABLE_HEADER,,,,,,,,Teradata
+COPY,SQL-2023,,,,,,,
+CORR,SQL-2023,,,,,,,Teradata
+CORRESPONDING,SQL-2023,,Mimer,,,,,Teradata
+COS,SQL-2023,,,,,,,Teradata
+COSH,SQL-2023,,,,,,,Teradata
+COUNT,SQL-2023,,,,,,,Teradata
+COVAR_POP,SQL-2023,,,,,,,Teradata
+COVAR_SAMP,SQL-2023,,,,,,,Teradata
+CREATE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+CROSS,SQL-2023,,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CS,,,,,,,,Teradata
+CSUM,,,,,,,,Teradata
+CT,,,,,,,,Teradata
+CUBE,SQL-2023,DB2,,MySQL,,,,Teradata
+CUME_DIST,SQL-2023,,,MySQL,,,,
+CURRENT,SQL-2023,DB2,Mimer,,Oracle,,SQL Server,Teradata
+CURRENT_CATALOG,SQL-2023,,,,,PostgreSQL,,
+CURRENT_DATE,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CURRENT_DEFAULT_TRANSFORM_GROUP,SQL-2023,,,,,,,
+CURRENT_LC_CTYPE,,DB2,,,,,,
+CURRENT_PATH,SQL-2023,DB2,Mimer,,,,,Teradata
+CURRENT_ROLE,SQL-2023,,,,,PostgreSQL,,Teradata
+CURRENT_ROW,SQL-2023,,,,,,,
+CURRENT_SCHEMA,SQL-2023,DB2,,,,PostgreSQL,,
+CURRENT_SERVER,,DB2,,,,,,
+CURRENT_TIME,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CURRENT_TIMESTAMP,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CURRENT_TIMEZONE,,DB2,,,,,,
+CURRENT_TRANSFORM_GROUP_FOR_TYPE,SQL-2023,,,,,,,
+CURRENT_USER,SQL-2023,,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+CURRVAL,,DB2,,,,,,
+CURSOR,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+CV,,,,,,,,Teradata
+CYCLE,SQL-2023,,,,,,,Teradata
+DATA,,DB2,,,,,,Teradata
+DATABASE,,DB2,,MySQL,,,SQL Server,Teradata
+DATABASES,,,,MySQL,,,,
+DATABLOCKSIZE,,,,,,,,Teradata
+DATE,SQL-2023,,,,Oracle,,,Teradata
+DATEFORM,,,,,,,,Teradata
+DAY,SQL-2023,DB2,Mimer,,,,,Teradata
+DAYS,,DB2,,,,,,
+DAY_HOUR,,,,MySQL,,,,
+DAY_MICROSECOND,,,,MySQL,,,,
+DAY_MINUTE,,,,MySQL,,,,
+DAY_SECOND,,,,MySQL,,,,
+DBCC,,,,,,,SQL Server,
+DBINFO,,DB2,,,,,,
+DEALLOCATE,SQL-2023,,Mimer,,,,SQL Server,Teradata
+DEC,SQL-2023,,,MySQL,,,,Teradata
+DECFLOAT,SQL-2023,,,,,,,
+DECIMAL,SQL-2023,,,MySQL,Oracle,,,Teradata
+DECLARE,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+DEFAULT,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+DEFERRABLE,,,,,,PostgreSQL,,Teradata
+DEFERRED,,,,,,,,Teradata
+DEFINE,SQL-2023,,,,,,,
+DEGREES,,,,,,,,Teradata
+DEL,,,,,,,,Teradata
+DELAYED,,,,MySQL,,,,
+DELETE,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+DENSE_RANK,SQL-2023,,,MySQL,,,,
+DENY,,,,,,,SQL Server,
+DEPTH,,,,,,,,Teradata
+DEREF,SQL-2023,,,,,,,Teradata
+DESC,,,,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+DESCRIBE,SQL-2023,,Mimer,MySQL,,,,Teradata
+DESCRIPTOR,,DB2,,,,,,Teradata
+DESTROY,,,,,,,,Teradata
+DESTRUCTOR,,,,,,,,Teradata
+DETERMINISTIC,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+DIAGNOSTIC,,,,,,,,Teradata
+DIAGNOSTICS,,,,,,,,Teradata
+DICTIONARY,,,,,,,,Teradata
+DISABLE,,DB2,,,,,,
+DISABLED,,,,,,,,Teradata
+DISALLOW,,DB2,,,,,,
+DISCONNECT,SQL-2023,,Mimer,,,,,Teradata
+DISK,,,,,,,SQL Server,
+DISTINCT,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+DISTINCTROW,,,,MySQL,,,,
+DISTRIBUTED,,,,,,,SQL Server,
+DIV,,,,MySQL,,,,
+DO,SQL/PSM-2016,DB2,Mimer,,,PostgreSQL,,Teradata
+DOCUMENT,,DB2,,,,,,
+DOMAIN,,,,,,,,Teradata
+DOUBLE,SQL-2023,DB2,,MySQL,,,SQL Server,Teradata
+DROP,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+DSSIZE,,DB2,,,,,,
+DUAL,,,,MySQL,,,,Teradata
+DUMP,,,,,,,SQL Server,Teradata
+DYNAMIC,SQL-2023,DB2,,,,,,Teradata
+EACH,SQL-2023,,,MySQL,,,,Teradata
+ECHO,,,,,,,,Teradata
+EDITPROC,,DB2,,,,,,
+ELEMENT,SQL-2023,,,,,,,
+ELSE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ELSEIF,SQL/PSM-2016,DB2,Mimer,MySQL,,,,Teradata
+EMPTY,SQL-2023,,,MySQL,,,,
+ENABLED,,,,,,,,Teradata
+ENCLOSED,,,,MySQL,,,,
+ENCODING,,DB2,,,,,,
+ENCRYPTION,,DB2,,,,,,
+END,SQL-2023,DB2,Mimer,,,PostgreSQL,SQL Server,Teradata
+END-EXEC,SQL-2023,DB2,,,,,,Teradata
+ENDING,,DB2,,,,,,
+END_FRAME,SQL-2023,,,,,,,
+END_PARTITION,SQL-2023,,,,,,,
+EQ,,,,,,,,Teradata
+EQUALS,SQL-2023,,,,,,,Teradata
+ERASE,,DB2,,,,,,
+ERRLVL,,,,,,,SQL Server,
+ERROR,,,,,,,,Teradata
+ERRORFILES,,,,,,,,Teradata
+ERRORTABLES,,,,,,,,Teradata
+ESCAPE,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+ESCAPED,,,,MySQL,,,,
+ET,,,,,,,,Teradata
+EVERY,SQL-2023,,,,,,,Teradata
+EXCEPT,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+EXCEPTION,,DB2,,,,,,Teradata
+EXCLUSIVE,,,,,Oracle,,,
+EXEC,SQL-2023,,,,,,SQL Server,Teradata
+EXECUTE,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+EXISTS,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+EXIT,,DB2,,MySQL,,,SQL Server,Teradata
+EXP,SQL-2023,,,,,,,Teradata
+EXPLAIN,,DB2,,MySQL,,,,Teradata
+EXTERNAL,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+EXTRACT,SQL-2023,,,,,,,Teradata
+FALLBACK,,,,,,,,Teradata
+FALSE,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+FASTEXPORT,,,,,,,,Teradata
+FENCED,,DB2,,,,,,
+FETCH,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+FIELDPROC,,DB2,,,,,,
+FILE,,,,,Oracle,,SQL Server,
+FILLFACTOR,,,,,,,SQL Server,
+FILTER,SQL-2023,,,,,,,
+FINAL,,DB2,,,,,,
+FIRST,,DB2,Mimer,,,,,Teradata
+FIRST_VALUE,SQL-2023,,,MySQL,,,,
+FLOAT,SQL-2023,,,MySQL,Oracle,,,Teradata
+FLOAT4,,,,MySQL,,,,
+FLOAT8,,,,MySQL,,,,
+FLOOR,SQL-2023,,,,,,,
+FOR,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+FORCE,,,,MySQL,,,,
+FOREIGN,SQL-2023,,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+FORMAT,,,,,,,,Teradata
+FOUND,,,,,,,,Teradata
+FRAME_ROW,SQL-2023,,,,,,,
+FREE,SQL-2023,DB2,,,,,,Teradata
+FREESPACE,,,,,,,,Teradata
+FREETEXT,,,,,,,SQL Server,
+FREETEXTTABLE,,,,,,,SQL Server,
+FREEZE,,,,,,PostgreSQL,,
+FROM,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+FULL,SQL-2023,DB2,Mimer,,,PostgreSQL,SQL Server,Teradata
+FULLTEXT,,,,MySQL,,,,
+FUNCTION,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+FUSION,SQL-2023,,,,,,,
+GE,,,,,,,,Teradata
+GENERAL,,,,,,,,Teradata
+GENERATED,,DB2,,MySQL,,,,Teradata
+GET,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+GIVE,,,,,,,,Teradata
+GLOBAL,SQL-2023,DB2,Mimer,,,,,Teradata
+GO,,DB2,,,,,,Teradata
+GOTO,,DB2,,,,,SQL Server,Teradata
+GRANT,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+GRAPHIC,,,,,,,,Teradata
+GREATEST,SQL-2023,,,,,,,
+GROUP,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+GROUPING,SQL-2023,,,MySQL,,,,Teradata
+GROUPS,SQL-2023,,,MySQL,,,,
+GT,,,,,,,,Teradata
+HANDLER,SQL/PSM-2016,DB2,Mimer,,,,,Teradata
+HASH,,,,,,,,Teradata
+HASHAMP,,,,,,,,Teradata
+HASHBAKAMP,,,,,,,,Teradata
+HASHBUCKET,,,,,,,,Teradata
+HASHROW,,,,,,,,Teradata
+HAVING,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+HELP,,,,,,,,Teradata
+HIGH_PRIORITY,,,,MySQL,,,,
+HOLD,SQL-2023,DB2,Mimer,,,,,
+HOLDLOCK,,,,,,,SQL Server,
+HOST,,,,,,,,Teradata
+HOUR,SQL-2023,DB2,Mimer,,,,,Teradata
+HOURS,,DB2,,,,,,
+HOUR_MICROSECOND,,,,MySQL,,,,
+HOUR_MINUTE,,,,MySQL,,,,
+HOUR_SECOND,,,,MySQL,,,,
+IDENTIFIED,,,,,Oracle,,,
+IDENTITY,SQL-2023,,Mimer,,,,SQL Server,Teradata
+IDENTITYCOL,,,,,,,SQL Server,
+IDENTITY_INSERT,,,,,,,SQL Server,
+IF,SQL/PSM-2016,DB2,Mimer,MySQL,,,SQL Server,Teradata
+IGNORE,,,,MySQL,,,,Teradata
+ILIKE,,,,,,PostgreSQL,,
+IMMEDIATE,,DB2,,,Oracle,,,Teradata
+IN,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+INCLUSIVE,,DB2,,,,,,
+INCONSISTENT,,,,,,,,Teradata
+INCREMENT,,,,,Oracle,,,
+INDEX,,DB2,,MySQL,Oracle,,SQL Server,Teradata
+INDICATOR,SQL-2023,,Mimer,,,,,Teradata
+INFILE,,,,MySQL,,,,
+INHERIT,,DB2,,,,,,
+INITIAL,SQL-2023,,,,Oracle,,,
+INITIALIZE,,,,,,,,Teradata
+INITIALLY,,,,,,PostgreSQL,,Teradata
+INITIATE,,,,,,,,Teradata
+INNER,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+INOUT,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+INPUT,,,,,,,,Teradata
+INS,,,,,,,,Teradata
+INSENSITIVE,SQL-2023,DB2,,MySQL,,,,
+INSERT,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+INSTEAD,,,,,,,,Teradata
+INT,SQL-2023,,,MySQL,,,,Teradata
+INT1,,,,MySQL,,,,
+INT2,,,,MySQL,,,,
+INT3,,,,MySQL,,,,
+INT4,,,,MySQL,,,,
+INT8,,,,MySQL,,,,
+INTEGER,SQL-2023,,,MySQL,Oracle,,,Teradata
+INTEGERDATE,,,,,,,,Teradata
+INTERSECT,SQL-2023,DB2,Mimer,,Oracle,PostgreSQL,SQL Server,Teradata
+INTERSECTION,SQL-2023,,,,,,,
+INTERVAL,SQL-2023,,Mimer,MySQL,,,,Teradata
+INTO,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+IO_AFTER_GTIDS,,,,MySQL,,,,
+IO_BEFORE_GTIDS,,,,MySQL,,,,
+IS,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ISNULL,,,,,,PostgreSQL,,
+ISOBID,,DB2,,,,,,
+ISOLATION,,,,,,,,Teradata
+ITERATE,SQL/PSM-2016,DB2,Mimer,MySQL,,,,Teradata
+JAR,,DB2,,,,,,
+JOIN,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+JOURNAL,,,,,,,,Teradata
+JSON,SQL-2023,,,,,,,
+JSON_ARRAY,SQL-2023,,,,,,,
+JSON_ARRAYAGG,SQL-2023,,,,,,,
+JSON_EXISTS,SQL-2023,,,,,,,
+JSON_OBJECT,SQL-2023,,,,,,,
+JSON_OBJECTAGG,SQL-2023,,,,,,,
+JSON_QUERY,SQL-2023,,,,,,,
+JSON_SCALAR,SQL-2023,,,,,,,
+JSON_SERIALIZE,SQL-2023,,,,,,,
+JSON_TABLE,SQL-2023,,,MySQL,,,,
+JSON_TABLE_PRIMITIVE,SQL-2023,,,,,,,
+JSON_VALUE,SQL-2023,,,,,,,
+KEEP,,DB2,,,,,,
+KEY,,DB2,,MySQL,,,SQL Server,Teradata
+KEYS,,,,MySQL,,,,
+KILL,,,,MySQL,,,SQL Server,
+KURTOSIS,,,,,,,,Teradata
+LABEL,,DB2,,,,,,
+LAG,SQL-2023,,,MySQL,,,,
+LANGUAGE,SQL-2023,DB2,Mimer,,,,,Teradata
+LARGE,SQL-2023,,Mimer,,,,,Teradata
+LAST,,DB2,,,,,,Teradata
+LAST_VALUE,SQL-2023,,,MySQL,,,,
+LATERAL,SQL-2023,,,MySQL,,PostgreSQL,,Teradata
+LC_CTYPE,,DB2,,,,,,
+LE,,,,,,,,Teradata
+LEAD,SQL-2023,,,MySQL,,,,
+LEADING,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+LEAST,SQL-2023,,,,,,,
+LEAVE,SQL/PSM-2016,DB2,Mimer,MySQL,,,,Teradata
+LEFT,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+LESS,,,,,,,,Teradata
+LEVEL,,,,,Oracle,,,Teradata
+LIKE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+LIKE_REGEX,SQL-2023,,,,,,,
+LIMIT,,DB2,,MySQL,,PostgreSQL,,Teradata
+LINEAR,,,,MySQL,,,,
+LINENO,,,,,,,SQL Server,
+LINES,,,,MySQL,,,,
+LISTAGG,SQL-2023,,,,,,,
+LN,SQL-2023,,,,,,,Teradata
+LOAD,,,,MySQL,,,SQL Server,
+LOADING,,,,,,,,Teradata
+LOCAL,SQL-2023,DB2,Mimer,,,,,Teradata
+LOCALE,,DB2,,,,,,
+LOCALTIME,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+LOCALTIMESTAMP,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+LOCATOR,,DB2,,,,,,Teradata
+LOCATORS,,DB2,,,,,,
+LOCK,,DB2,,MySQL,Oracle,,,Teradata
+LOCKING,,,,,,,,Teradata
+LOCKMAX,,DB2,,,,,,
+LOCKSIZE,,DB2,,,,,,
+LOG,SQL-2023,,,,,,,Teradata
+LOG10,SQL-2023,,,,,,,
+LOGGING,,,,,,,,Teradata
+LOGON,,,,,,,,Teradata
+LONG,,DB2,,MySQL,Oracle,,,Teradata
+LONGBLOB,,,,MySQL,,,,
+LONGTEXT,,,,MySQL,,,,
+LOOP,SQL/PSM-2016,DB2,Mimer,MySQL,,,,Teradata
+LOWER,SQL-2023,,,,,,,Teradata
+LOW_PRIORITY,,,,MySQL,,,,
+LPAD,SQL-2023,,,,,,,
+LT,,,,,,,,Teradata
+LTRIM,SQL-2023,,,,,,,
+MACRO,,,,,,,,Teradata
+MAINTAINED,,DB2,,,,,,
+MAP,,,,,,,,Teradata
+MASTER_BIND,,,,MySQL,,,,
+MASTER_SSL_VERIFY_SERVER_CERT,,,,MySQL,,,,
+MATCH,SQL-2023,,Mimer,MySQL,,,,Teradata
+MATCHES,SQL-2023,,,,,,,
+MATCH_NUMBER,SQL-2023,,,,,,,
+MATCH_RECOGNIZE,SQL-2023,,,,,,,
+MATERIALIZED,,DB2,,,,,,
+MAVG,,,,,,,,Teradata
+MAX,SQL-2023,,,,,,,Teradata
+MAXEXTENTS,,,,,Oracle,,,
+MAXIMUM,,,,,,,,Teradata
+MAXVALUE,,,,MySQL,,,,
+MCHARACTERS,,,,,,,,Teradata
+MDIFF,,,,,,,,Teradata
+MEDIUMBLOB,,,,MySQL,,,,
+MEDIUMINT,,,,MySQL,,,,
+MEDIUMTEXT,,,,MySQL,,,,
+MEMBER,SQL-2023,,Mimer,,,,,
+MERGE,SQL-2023,,,,,,SQL Server,Teradata
+METHOD,SQL-2023,,Mimer,,,,,
+MICROSECOND,,DB2,,,,,,
+MICROSECONDS,,DB2,,,,,,
+MIDDLEINT,,,,MySQL,,,,
+MIN,SQL-2023,,,,,,,Teradata
+MINDEX,,,,,,,,Teradata
+MINIMUM,,,,,,,,Teradata
+MINUS,,,,,Oracle,,,Teradata
+MINUTE,SQL-2023,DB2,Mimer,,,,,Teradata
+MINUTES,,DB2,,,,,,
+MINUTE_MICROSECOND,,,,MySQL,,,,
+MINUTE_SECOND,,,,MySQL,,,,
+MLINREG,,,,,,,,Teradata
+MLOAD,,,,,,,,Teradata
+MLSLABEL,,,,,Oracle,,,
+MOD,SQL-2023,,,MySQL,,,,Teradata
+MODE,,,,,Oracle,,,Teradata
+MODIFIES,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+MODIFY,,,,,Oracle,,,Teradata
+MODULE,SQL-2023,,Mimer,,,,,Teradata
+MONITOR,,,,,,,,Teradata
+MONRESOURCE,,,,,,,,Teradata
+MONSESSION,,,,,,,,Teradata
+MONTH,SQL-2023,DB2,Mimer,,,,,Teradata
+MONTHS,,DB2,,,,,,
+MSUBSTR,,,,,,,,Teradata
+MSUM,,,,,,,,Teradata
+MULTISET,SQL-2023,,,,,,,Teradata
+NAMED,,,,,,,,Teradata
+NAMES,,,,,,,,Teradata
+NATIONAL,SQL-2023,,Mimer,,,,SQL Server,Teradata
+NATURAL,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+NCHAR,SQL-2023,,,,,,,Teradata
+NCLOB,SQL-2023,,,,,,,Teradata
+NE,,,,,,,,Teradata
+NESTED_TABLE_ID,,,,,Oracle,,,
+NEW,SQL-2023,,Mimer,,,,,Teradata
+NEW_TABLE,,,,,,,,Teradata
+NEXT,,DB2,Mimer,,,,,Teradata
+NEXTVAL,,DB2,,,,,,
+NO,SQL-2023,DB2,Mimer,,,,,Teradata
+NOAUDIT,,,,,Oracle,,,
+NOCHECK,,,,,,,SQL Server,
+NOCOMPRESS,,,,,Oracle,,,
+NONCLUSTERED,,,,,,,SQL Server,
+NONE,SQL-2023,DB2,,,,,,Teradata
+NORMALIZE,SQL-2023,,,,,,,
+NOT,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+NOTNULL,,,,,,PostgreSQL,,
+NOWAIT,,,,,Oracle,,,Teradata
+NO_WRITE_TO_BINLOG,,,,MySQL,,,,
+NTH_VALUE,SQL-2023,,,MySQL,,,,
+NTILE,SQL-2023,,,MySQL,,,,
+NULL,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+NULLIF,SQL-2023,,,,,,SQL Server,Teradata
+NULLIFZERO,,,,,,,,Teradata
+NULLS,,DB2,,,,,,
+NUMBER,,,,,Oracle,,,
+NUMERIC,SQL-2023,,,MySQL,,,,Teradata
+NUMPARTS,,DB2,,,,,,
+OBID,,DB2,,,,,,
+OBJECT,,,,,,,,Teradata
+OBJECTS,,,,,,,,Teradata
+OCCURRENCES_REGEX,SQL-2023,,,,,,,
+OCTET_LENGTH,SQL-2023,,,,,,,Teradata
+OF,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+OFF,,,,,,,SQL Server,Teradata
+OFFLINE,,,,,Oracle,,,
+OFFSET,SQL-2023,DB2,Mimer,,,PostgreSQL,,
+OFFSETS,,,,,,,SQL Server,
+OLD,SQL-2023,DB2,Mimer,,,,,Teradata
+OLD_TABLE,,,,,,,,Teradata
+OMIT,SQL-2023,,,,,,,
+ON,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ONE,SQL-2023,,,,,,,
+ONLINE,,,,,Oracle,,,
+ONLY,SQL-2023,,,,,PostgreSQL,,Teradata
+OPEN,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+OPENDATASOURCE,,,,,,,SQL Server,
+OPENQUERY,,,,,,,SQL Server,
+OPENROWSET,,,,,,,SQL Server,
+OPENXML,,,,,,,SQL Server,
+OPERATION,,,,,,,,Teradata
+OPTIMIZATION,,DB2,,,,,,
+OPTIMIZE,,DB2,,MySQL,,,,
+OPTIMIZER_COSTS,,,,MySQL,,,,
+OPTION,,,,MySQL,Oracle,,SQL Server,Teradata
+OPTIONALLY,,,,MySQL,,,,
+OR,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ORDER,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+ORDINALITY,,,,,,,,Teradata
+ORGANIZATION,,DB2,,,,,,
+OUT,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+OUTER,SQL-2023,DB2,,MySQL,,PostgreSQL,SQL Server,Teradata
+OUTFILE,,,,MySQL,,,,
+OUTPUT,,,,,,,,Teradata
+OVER,SQL-2023,,,MySQL,,,SQL Server,Teradata
+OVERLAPS,SQL-2023,,Mimer,,,PostgreSQL,,Teradata
+OVERLAY,SQL-2023,,,,,,,
+OVERRIDE,,,,,,,,Teradata
+PACKAGE,,DB2,,,,,,
+PAD,,,,,,,,Teradata
+PADDED,,DB2,,,,,,
+PARAMETER,SQL-2023,DB2,Mimer,,,,,Teradata
+PARAMETERS,,,,,,,,Teradata
+PART,,DB2,,,,,,
+PARTIAL,,,,,,,,Teradata
+PARTITION,SQL-2023,DB2,,MySQL,,,,
+PARTITIONED,,DB2,,,,,,
+PARTITIONING,,DB2,,,,,,
+PASSWORD,,,,,,,,Teradata
+PATH,,DB2,,,,,,Teradata
+PATTERN,SQL-2023,,,,,,,
+PCTFREE,,,,,Oracle,,,
+PER,SQL-2023,,,,,,,
+PERCENT,SQL-2023,,,,,,SQL Server,Teradata
+PERCENTILE_CONT,SQL-2023,,,,,,,
+PERCENTILE_DISC,SQL-2023,,,,,,,
+PERCENT_RANK,SQL-2023,,,MySQL,,,,Teradata
+PERIOD,SQL-2023,DB2,,,,,,
+PERM,,,,,,,,Teradata
+PERMANENT,,,,,,,,Teradata
+PIECESIZE,,DB2,,,,,,
+PIVOT,,,,,,,SQL Server,
+PLACING,,,,,,PostgreSQL,,
+PLAN,,DB2,,,,,SQL Server,
+PORTION,SQL-2023,,,,,,,
+POSITION,SQL-2023,,,,,,,Teradata
+POSITION_REGEX,SQL-2023,,,,,,,
+POSTFIX,,,,,,,,Teradata
+POWER,SQL-2023,,,,,,,
+PRECEDES,SQL-2023,,,,,,,
+PRECISION,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+PREFIX,,,,,,,,Teradata
+PREORDER,,,,,,,,Teradata
+PREPARE,SQL-2023,DB2,Mimer,,,,,Teradata
+PRESERVE,,,,,,,,Teradata
+PREVVAL,,DB2,,,,,,
+PRIMARY,SQL-2023,,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+PRINT,,,,,,,SQL Server,
+PRIOR,,DB2,,,Oracle,,,Teradata
+PRIQTY,,DB2,,,,,,
+PRIVATE,,,,,,,,Teradata
+PRIVILEGES,,DB2,,,,,,Teradata
+PROC,,,,,,,SQL Server,
+PROCEDURE,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+PROFILE,,,,,,,,Teradata
+PROGRAM,,DB2,,,,,,
+PROPORTIONAL,,,,,,,,Teradata
+PROTECTION,,,,,,,,Teradata
+PSID,,DB2,,,,,,
+PTF,SQL-2023,,,,,,,
+PUBLIC,,DB2,,,Oracle,,SQL Server,Teradata
+PURGE,,,,MySQL,,,,
+QUALIFIED,,,,,,,,Teradata
+QUALIFY,,,,,,,,Teradata
+QUANTILE,,,,,,,,Teradata
+QUERY,,DB2,,,,,,
+QUERYNO,,DB2,,,,,,
+RADIANS,,,,,,,,Teradata
+RAISERROR,,,,,,,SQL Server,
+RANDOM,,,,,,,,Teradata
+RANGE,SQL-2023,,,MySQL,,,,
+RANGE_N,,,,,,,,Teradata
+RANK,SQL-2023,,,MySQL,,,,Teradata
+RAW,,,,,Oracle,,,
+READ,,,,MySQL,,,SQL Server,Teradata
+READS,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+READTEXT,,,,,,,SQL Server,
+READ_WRITE,,,,MySQL,,,,
+REAL,SQL-2023,,,MySQL,,,,Teradata
+RECONFIGURE,,,,,,,SQL Server,
+RECURSIVE,SQL-2023,,Mimer,MySQL,,,,Teradata
+REF,SQL-2023,,,,,,,Teradata
+REFERENCES,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+REFERENCING,SQL-2023,,Mimer,,,,,Teradata
+REFRESH,,DB2,,,,,,
+REGEXP,,,,MySQL,,,,
+REGR_AVGX,SQL-2023,,,,,,,Teradata
+REGR_AVGY,SQL-2023,,,,,,,Teradata
+REGR_COUNT,SQL-2023,,,,,,,Teradata
+REGR_INTERCEPT,SQL-2023,,,,,,,Teradata
+REGR_R2,SQL-2023,,,,,,,Teradata
+REGR_SLOPE,SQL-2023,,,,,,,Teradata
+REGR_SXX,SQL-2023,,,,,,,Teradata
+REGR_SXY,SQL-2023,,,,,,,Teradata
+REGR_SYY,SQL-2023,,,,,,,Teradata
+RELATIVE,,,,,,,,Teradata
+RELEASE,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+RENAME,,DB2,,MySQL,Oracle,,,Teradata
+REPEAT,SQL/PSM-2016,DB2,Mimer,MySQL,,,,Teradata
+REPLACE,,,,MySQL,,,,Teradata
+REPLICATION,,,,,,,SQL Server,Teradata
+REPOVERRIDE,,,,,,,,Teradata
+REQUEST,,,,,,,,Teradata
+REQUIRE,,,,MySQL,,,,
+RESIGNAL,SQL/PSM-2016,DB2,Mimer,MySQL,,,,
+RESOURCE,,,,,Oracle,,,
+RESTART,,,,,,,,Teradata
+RESTORE,,,,,,,SQL Server,Teradata
+RESTRICT,,DB2,,MySQL,,,SQL Server,Teradata
+RESULT,SQL-2023,DB2,Mimer,,,,,Teradata
+RESULT_SET_LOCATOR,,DB2,,,,,,
+RESUME,,,,,,,,Teradata
+RET,,,,,,,,Teradata
+RETRIEVE,,,,,,,,Teradata
+RETURN,SQL-2023,DB2,Mimer,MySQL,,,SQL Server,Teradata
+RETURNING,,,,,,PostgreSQL,,
+RETURNS,SQL-2023,DB2,Mimer,,,,,Teradata
+REVALIDATE,,,,,,,,Teradata
+REVERT,,,,,,,SQL Server,
+REVOKE,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+RIGHT,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+RIGHTS,,,,,,,,Teradata
+RLIKE,,,,MySQL,,,,
+ROLE,,DB2,,,,,,Teradata
+ROLLBACK,SQL-2023,DB2,Mimer,,,,SQL Server,Teradata
+ROLLFORWARD,,,,,,,,Teradata
+ROLLUP,SQL-2023,DB2,,,,,,Teradata
+ROUND_CEILING,,DB2,,,,,,
+ROUND_DOWN,,DB2,,,,,,
+ROUND_FLOOR,,DB2,,,,,,
+ROUND_HALF_DOWN,,DB2,,,,,,
+ROUND_HALF_EVEN,,DB2,,,,,,
+ROUND_HALF_UP,,DB2,,,,,,
+ROUND_UP,,DB2,,,,,,
+ROUTINE,,,,,,,,Teradata
+ROW,SQL-2023,DB2,Mimer,MySQL,Oracle,,,Teradata
+ROWCOUNT,,,,,,,SQL Server,
+ROWGUIDCOL,,,,,,,SQL Server,
+ROWID,,,,,Oracle,,,Teradata
+ROWNUM,,,,,Oracle,,,
+ROWS,SQL-2023,,Mimer,MySQL,Oracle,,,Teradata
+ROWSET,,DB2,,,,,,
+ROW_NUMBER,SQL-2023,,,MySQL,,,,Teradata
+RPAD,SQL-2023,,,,,,,
+RULE,,,,,,,SQL Server,
+RUN,,DB2,,,,,,
+RUNNING,SQL-2023,,,,,,,
+SAMPLE,,,,,,,,Teradata
+SAMPLEID,,,,,,,,Teradata
+SAVE,,,,,,,SQL Server,
+SAVEPOINT,SQL-2023,DB2,,,,,,Teradata
+SCHEMA,,DB2,,MySQL,,,SQL Server,Teradata
+SCHEMAS,,,,MySQL,,,,
+SCOPE,SQL-2023,,,,,,,Teradata
+SCRATCHPAD,,DB2,,,,,,
+SCROLL,SQL-2023,,Mimer,,,,,Teradata
+SEARCH,SQL-2023,,,,,,,Teradata
+SECOND,SQL-2023,DB2,Mimer,,,,,Teradata
+SECONDS,,DB2,,,,,,
+SECOND_MICROSECOND,,,,MySQL,,,,
+SECQTY,,DB2,,,,,,
+SECTION,,,,,,,,Teradata
+SECURITY,,DB2,,,,,,
+SECURITYAUDIT,,,,,,,SQL Server,
+SEEK,SQL-2023,,,,,,,
+SEL,,,,,,,,Teradata
+SELECT,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+SEMANTICKEYPHRASETABLE,,,,,,,SQL Server,
+SEMANTICSIMILARITYDETAILSTABLE,,,,,,,SQL Server,
+SEMANTICSIMILARITYTABLE,,,,,,,SQL Server,
+SENSITIVE,SQL-2023,DB2,,MySQL,,,,
+SEPARATOR,,,,MySQL,,,,
+SEQUENCE,,DB2,,,,,,Teradata
+SESSION,,,,,Oracle,,,Teradata
+SESSION_USER,SQL-2023,DB2,Mimer,,,PostgreSQL,SQL Server,Teradata
+SET,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+SETRESRATE,,,,,,,,Teradata
+SETS,,,,,,,,Teradata
+SETSESSRATE,,,,,,,,Teradata
+SETUSER,,,,,,,SQL Server,
+SHARE,,,,,Oracle,,,
+SHOW,SQL-2023,,,MySQL,,,,Teradata
+SHUTDOWN,,,,,,,SQL Server,
+SIGNAL,SQL/PSM-2016,DB2,Mimer,MySQL,,,,
+SIMILAR,SQL-2023,,,,,PostgreSQL,,
+SIMPLE,,DB2,,,,,,
+SIN,SQL-2023,,,,,,,Teradata
+SINH,SQL-2023,,,,,,,Teradata
+SIZE,,,,,Oracle,,,Teradata
+SKEW,,,,,,,,Teradata
+SKIP,SQL-2023,,,,,,,
+SMALLINT,SQL-2023,,,MySQL,Oracle,,,Teradata
+SOME,SQL-2023,DB2,Mimer,,,PostgreSQL,SQL Server,Teradata
+SOUNDEX,,,,,,,,Teradata
+SOURCE,,DB2,,,,,,
+SPACE,,,,,,,,Teradata
+SPATIAL,,,,MySQL,,,,
+SPECIFIC,SQL-2023,DB2,Mimer,MySQL,,,,Teradata
+SPECIFICTYPE,SQL-2023,,,,,,,Teradata
+SPOOL,,,,,,,,Teradata
+SQL,SQL-2023,,Mimer,MySQL,,,,Teradata
+SQLEXCEPTION,SQL-2023,,Mimer,MySQL,,,,Teradata
+SQLSTATE,SQL-2023,,Mimer,MySQL,,,,Teradata
+SQLTEXT,,,,,,,,Teradata
+SQLWARNING,SQL-2023,,Mimer,MySQL,,,,Teradata
+SQL_BIG_RESULT,,,,MySQL,,,,
+SQL_CALC_FOUND_ROWS,,,,MySQL,,,,
+SQL_SMALL_RESULT,,,,MySQL,,,,
+SQRT,SQL-2023,,,,,,,Teradata
+SS,,,,,,,,Teradata
+SSL,,,,MySQL,,,,
+STANDARD,,DB2,,,,,,
+START,SQL-2023,,Mimer,,Oracle,,,Teradata
+STARTING,,,,MySQL,,,,
+STARTUP,,,,,,,,Teradata
+STATE,,,,,,,,Teradata
+STATEMENT,,DB2,,,,,,Teradata
+STATIC,SQL-2023,DB2,Mimer,,,,,Teradata
+STATISTICS,,,,,,,SQL Server,Teradata
+STAY,,DB2,,,,,,
+STDDEV_POP,SQL-2023,,,,,,,Teradata
+STDDEV_SAMP,SQL-2023,,,,,,,Teradata
+STEPINFO,,,,,,,,Teradata
+STOGROUP,,DB2,,,,,,
+STORED,,,,MySQL,,,,
+STORES,,DB2,,,,,,
+STRAIGHT_JOIN,,,,MySQL,,,,
+STRING_CS,,,,,,,,Teradata
+STRUCTURE,,,,,,,,Teradata
+STYLE,,DB2,,,,,,
+SUBMULTISET,SQL-2023,,,,,,,
+SUBSCRIBER,,,,,,,,Teradata
+SUBSET,SQL-2023,,,,,,,
+SUBSTR,,,,,,,,Teradata
+SUBSTRING,SQL-2023,,,,,,,Teradata
+SUBSTRING_REGEX,SQL-2023,,,,,,,
+SUCCEEDS,SQL-2023,,,,,,,
+SUCCESSFUL,,,,,Oracle,,,
+SUM,SQL-2023,,,,,,,Teradata
+SUMMARY,,DB2,,,,,,Teradata
+SUSPEND,,,,,,,,Teradata
+SYMMETRIC,SQL-2023,,Mimer,,,PostgreSQL,,
+SYNONYM,,DB2,,,Oracle,,,
+SYSDATE,,DB2,,,Oracle,,,
+SYSTEM,SQL-2023,DB2,,MySQL,,,,
+SYSTEM_TIME,SQL-2023,,,,,,,
+SYSTEM_USER,SQL-2023,,Mimer,,,PostgreSQL,SQL Server,Teradata
+SYSTIMESTAMP,,DB2,,,,,,
+TABLE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+TABLESAMPLE,SQL-2023,,,,,PostgreSQL,SQL Server,
+TABLESPACE,,DB2,,,,,,
+TAN,SQL-2023,,,,,,,Teradata
+TANH,SQL-2023,,,,,,,Teradata
+TBL_CS,,,,,,,,Teradata
+TEMPORARY,,,,,,,,Teradata
+TERMINATE,,,,,,,,Teradata
+TERMINATED,,,,MySQL,,,,
+TEXTSIZE,,,,,,,SQL Server,
+THAN,,,,,,,,Teradata
+THEN,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+THRESHOLD,,,,,,,,Teradata
+TIME,SQL-2023,,,,,,,Teradata
+TIMESTAMP,SQL-2023,,,,,,,Teradata
+TIMEZONE_HOUR,SQL-2023,,Mimer,,,,,Teradata
+TIMEZONE_MINUTE,SQL-2023,,Mimer,,,,,Teradata
+TINYBLOB,,,,MySQL,,,,
+TINYINT,,,,MySQL,,,,
+TINYTEXT,,,,MySQL,,,,
+TITLE,,,,,,,,Teradata
+TO,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+TOP,,,,,,,SQL Server,
+TRACE,,,,,,,,Teradata
+TRAILING,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+TRAN,,,,,,,SQL Server,
+TRANSACTION,,,,,,,SQL Server,Teradata
+TRANSLATE,SQL-2023,,,,,,,Teradata
+TRANSLATE_CHK,,,,,,,,Teradata
+TRANSLATE_REGEX,SQL-2023,,,,,,,
+TRANSLATION,SQL-2023,,,,,,,Teradata
+TREAT,SQL-2023,,Mimer,,,,,Teradata
+TRIGGER,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+TRIM,SQL-2023,,,,,,,Teradata
+TRIM_ARRAY,SQL-2023,,,,,,,
+TRUE,SQL-2023,,Mimer,MySQL,,PostgreSQL,,Teradata
+TRUNCATE,SQL-2023,DB2,,,,,SQL Server,
+TRY_CONVERT,,,,,,,SQL Server,
+TSEQUAL,,,,,,,SQL Server,
+TYPE,,DB2,,,,,,Teradata
+UC,,,,,,,,Teradata
+UESCAPE,SQL-2023,,,,,,,
+UID,,,,,Oracle,,,
+UNDEFINED,,,,,,,,Teradata
+UNDER,,,,,,,,Teradata
+UNDO,,DB2,,MySQL,,,,Teradata
+UNION,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+UNIQUE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+UNKNOWN,SQL-2023,,Mimer,,,,,Teradata
+UNLOCK,,,,MySQL,,,,
+UNNEST,SQL-2023,,,,,,,Teradata
+UNPIVOT,,,,,,,SQL Server,
+UNSIGNED,,,,MySQL,,,,
+UNTIL,SQL/PSM-2016,DB2,Mimer,,,,,Teradata
+UPD,,,,,,,,Teradata
+UPDATE,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+UPDATETEXT,,,,,,,SQL Server,
+UPPER,SQL-2023,,,,,,,Teradata
+UPPERCASE,,,,,,,,Teradata
+USAGE,,,,MySQL,,,,Teradata
+USE,,,,MySQL,,,SQL Server,
+USER,SQL-2023,DB2,Mimer,,Oracle,PostgreSQL,SQL Server,Teradata
+USING,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,,Teradata
+UTC_DATE,,,,MySQL,,,,
+UTC_TIME,,,,MySQL,,,,
+UTC_TIMESTAMP,,,,MySQL,,,,
+VALIDATE,,,,,Oracle,,,
+VALIDPROC,,DB2,,,,,,
+VALUE,SQL-2023,DB2,Mimer,,,,,Teradata
+VALUES,SQL-2023,DB2,Mimer,MySQL,Oracle,,SQL Server,Teradata
+VALUE_OF,SQL-2023,,,,,,,
+VARBINARY,SQL-2023,,,MySQL,,,,
+VARBYTE,,,,,,,,Teradata
+VARCHAR,SQL-2023,,,MySQL,Oracle,,,Teradata
+VARCHAR2,,,,,Oracle,,,
+VARCHARACTER,,,,MySQL,,,,
+VARGRAPHIC,,,,,,,,Teradata
+VARIABLE,,DB2,,,,,,Teradata
+VARIADIC,,,,,,PostgreSQL,,
+VARIANT,,DB2,,,,,,
+VARYING,SQL-2023,,Mimer,MySQL,,,SQL Server,Teradata
+VAR_POP,SQL-2023,,,,,,,Teradata
+VAR_SAMP,SQL-2023,,,,,,,Teradata
+VCAT,,DB2,,,,,,
+VERBOSE,,,,,,PostgreSQL,,
+VERSIONING,SQL-2023,DB2,,,,,,
+VIEW,,DB2,,,Oracle,,SQL Server,Teradata
+VIRTUAL,,,,MySQL,,,,
+VOLATILE,,DB2,,,,,,Teradata
+VOLUMES,,DB2,,,,,,
+WAIT,,,,,,,,Teradata
+WAITFOR,,,,,,,SQL Server,
+WHEN,SQL-2023,DB2,Mimer,MySQL,,PostgreSQL,SQL Server,Teradata
+WHENEVER,SQL-2023,DB2,,,Oracle,,,Teradata
+WHERE,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+WHILE,SQL/PSM-2016,DB2,Mimer,MySQL,,,SQL Server,Teradata
+WIDTH_BUCKET,SQL-2023,,,,,,,Teradata
+WINDOW,SQL-2023,,,MySQL,,PostgreSQL,,
+WITH,SQL-2023,DB2,Mimer,MySQL,Oracle,PostgreSQL,SQL Server,Teradata
+WITHIN,SQL-2023,,,,,,,
+WITHIN_GROUP,,,,,,,SQL Server,
+WITHOUT,SQL-2023,,Mimer,,,,,Teradata
+WLM,,DB2,,,,,,
+WORK,,,,,,,,Teradata
+WRITE,,,,MySQL,,,,Teradata
+WRITETEXT,,,,,,,SQL Server,
+XMLCAST,,DB2,,,,,,
+XMLEXISTS,,DB2,,,,,,
+XMLNAMESPACES,,DB2,,,,,,
+XOR,,,,MySQL,,,,
+YEAR,SQL-2023,DB2,Mimer,,,,,Teradata
+YEARS,,DB2,,,,,,
+YEAR_MONTH,,,,MySQL,,,,
+ZEROFILL,,,,MySQL,,,,
+ZEROIFNULL,,,,,,,,Teradata
+ZONE,,DB2,,,,,,Teradata
