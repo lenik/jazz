@@ -2,12 +2,18 @@ package net.bodz.bas.c.string;
 
 public class StringQuote {
 
+    public static final char singleQuoteChar = '\'';
+    public static final char doubleQuoteChar = '\"';
+    public static final String singleQuote = "\'";
+    public static final String doubleQuote = "\"";
+    static final String javaNullLiteral = "null";
+
     public static String q(String s) {
-        return "\'" + s + "\'";
+        return singleQuoteChar + s + singleQuoteChar;
     }
 
     public static String qq(String s) {
-        return '\"' + s + '\"';
+        return doubleQuoteChar + s + doubleQuoteChar;
     }
 
     public static String q(Object s) {
@@ -27,7 +33,7 @@ public class StringQuote {
 
     public static String qqJavaString(String s) {
         if (s == null)
-            return "null";
+            return javaNullLiteral;
         String java = StringEscape.escapeJava(s);
         return qq(java);
     }
