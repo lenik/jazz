@@ -31,13 +31,20 @@ public interface IMutableRow
     }
 
     default IMutableCell newCell() {
-        MutableCell cell = new MutableCell(this);
+        IRowSetMetadata metadata = getRowSet().getMetadata();
+        MutableCell cell;
+        if (metadata != null) {
+            int columnIndex = getCellCount();
+            cell = new MutableCell(this, columnIndex);
+        } else {
+            cell = new MutableCell(this, Object.class);
+        }
         addCell(cell);
         return cell;
     }
 
     default IMutableCell newCell(int columnIndex) {
-        MutableCell cell = new MutableCell(this);
+        MutableCell cell = new MutableCell(this, columnIndex);
         addCell(columnIndex, cell);
         return cell;
     }

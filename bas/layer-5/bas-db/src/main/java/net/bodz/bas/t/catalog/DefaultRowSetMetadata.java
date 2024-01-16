@@ -92,6 +92,12 @@ public class DefaultRowSetMetadata
             return getColumn(pos);
     }
 
+    public DefaultColumnMetadata newColumn() {
+        DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+        addColumn(column);
+        return column;
+    }
+
     public synchronized void addColumn(IColumnMetadata column) {
         if (column == null)
             throw new NullPointerException("column");
