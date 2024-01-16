@@ -135,6 +135,16 @@ public class CsvRecords
 
             return end();
         }
+
+        @Override
+        protected void finalize()
+                throws Throwable {
+            if (in != null) {
+                in.close();
+                in = null;
+            }
+        }
+
     }
 
     CsvRow push(CsvRow row, StringBuilder sb) {
