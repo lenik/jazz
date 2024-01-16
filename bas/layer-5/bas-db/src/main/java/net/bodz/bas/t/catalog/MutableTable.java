@@ -8,6 +8,7 @@ import java.util.List;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.fmt.xml.xq.IElements;
 import net.bodz.bas.json.JsonArray;
@@ -108,7 +109,7 @@ public class MutableTable
         for (int rowIndex = 0; rowIndex < n; rowIndex++) {
             JsonArray j_row = j_rows.getJsonArray(rowIndex);
             IMutableRow row = newRow();
-            row.readObjectBoxed(j_row, opts);
+            row.jsonIn(JsonVariant.of(j_row), opts);
             rows.add(row);
         }
         this.rows = rows;

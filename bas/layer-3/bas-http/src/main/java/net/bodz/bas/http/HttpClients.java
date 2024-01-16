@@ -11,22 +11,19 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.fork.org.json.JSONException;
 
 public class HttpClients {
 
-    public static JsonObject postJson(String url, String body)
-            throws IOException,
-            ParseException {
+    public static JsonVariant postJson(String url, String body)
+            throws IOException, ParseException {
         return postJson(url, body, "utf-8", "utf-8");
     }
 
-    public static JsonObject postJson(String url, String body, String requestCharset, String fallbackCharset)
-            throws ClientProtocolException,
-            IOException,
-            ParseException {
+    public static JsonVariant postJson(String url, String body, String requestCharset, String fallbackCharset)
+            throws ClientProtocolException, IOException, ParseException {
         HttpClient client = HttpClientConfig.DEFAULT.newClient();
 
         HttpPost httpPost = new HttpPost(url);
@@ -67,8 +64,8 @@ public class HttpClients {
 
         String result = EntityUtils.toString(responseEntity, charset);
         try {
-            JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(result);
-            return jsonObj;
+            JsonVariant jsonVar = JsonFn.parseAny(result);
+            return jsonVar;
         } catch (JSONException e) {
             throw new ParseException(e);
         }

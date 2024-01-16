@@ -9,6 +9,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.AbstractVariantMap;
@@ -73,7 +74,7 @@ public class JsonSection
             if (value instanceof JsonObject) {
                 JsonObject child = (JsonObject) value;
                 JsonSection section = new JsonSection(order);
-                section.jsonIn(child, opts);
+                section.jsonIn(JsonVariant.of(child), opts);
                 value = section;
             }
             map.put(key, value);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -77,18 +78,18 @@ public class RichProperties
     }
 
     @Override
-    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
+    protected boolean parseJsonEntry(String key, JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         switch (key) {
         case K_IMAGES:
         case K_VIDEOS:
         case K_PDFS:
-            JsonArray array = (JsonArray) val;
+            JsonArray array = j.getArray();
             List<IAttachment> attachments = DefaultAttachment.parseJsonArray(array);
             setAttribute(key, attachments);
             return true;
         }
-        return super.parseJsonEntry(key, val, opts);
+        return super.parseJsonEntry(key, j, opts);
     }
 
 }

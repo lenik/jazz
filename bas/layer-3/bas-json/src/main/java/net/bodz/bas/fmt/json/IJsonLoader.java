@@ -1,14 +1,12 @@
 package net.bodz.bas.fmt.json;
 
-import net.bodz.bas.json.JsonObject;
-
 public interface IJsonLoader {
 
     JsonFormOptions getOptions();
 
     void setOptions(JsonFormOptions options);
 
-    void load(Object obj, JsonObject node)
+    void load(Object obj, JsonVariant node)
             throws Exception;
 
 }

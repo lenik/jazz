@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.fork.org.json._JSONArray;
 
 public class JsonArray
@@ -28,12 +29,12 @@ public class JsonArray
         if (index >= length())
             return obj;
 
-        JsonObject node = null;
         Object _node = get(index);
         if (_node == null) // force set to null
             return null;
-        if (_node instanceof JsonObject)
-            node = (JsonObject) _node;
+
+        JsonVariant node = null;
+        node = JsonVariant.of(_node);
 
         if (node != null) {
             if (obj == null) {

@@ -9,6 +9,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
@@ -219,21 +220,16 @@ public class MutableRow
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(JsonVariant in, JsonFormOptions opts)
             throws ParseException {
-    }
-
-    @Override
-    public void readObjectBoxed(Object j_row, JsonFormOptions opts)
-            throws ParseException {
-        JsonArray jv = (JsonArray) j_row;
-        int jn = jv.length();
+        JsonArray jarray = in.getArray();
+        int jn = jarray.length();
 
         int cc = metadata.getColumnCount();
         List<IMutableCell> list = new ArrayList<>(cc);
 
         for (int i = 0; i < cc && i < jn; i++) {
-            Object j_cell_box = jv.get(i);
+            Object j_cell_box = jarray.get(i);
 
             IColumnMetadata column = metadata.getColumn(i);
             Object cellData = column.readColumnJsonValue(j_cell_box);
@@ -242,6 +238,12 @@ public class MutableRow
             cell.setData(cellData);
         }
         this.cells = list;
+    }
+
+    @Override
+    public final void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        jsonIn(JsonVariant.of(o), opts);
     }
 
     @Override

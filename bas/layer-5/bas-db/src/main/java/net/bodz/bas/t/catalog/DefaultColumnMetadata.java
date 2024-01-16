@@ -16,6 +16,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -443,7 +444,7 @@ public class DefaultColumnMetadata
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + javaClass, e);
             }
-            obj.readObjectBoxed(jsonBox, Convention.JSON_STYLE);
+            obj.jsonIn(JsonVariant.of(jsonBox), Convention.JSON_STYLE);
             return obj;
         }
 

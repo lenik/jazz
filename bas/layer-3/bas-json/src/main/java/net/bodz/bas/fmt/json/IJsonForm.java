@@ -11,12 +11,34 @@ import net.bodz.bas.meta.source.SerializableForm;
 public interface IJsonForm {
 
     /**
+     * (Don't override this method.)
+     *
+     * @param json
+     *            <code>null</code> for the null object.
+     */
+    default void jsonIn(JsonVariant in)
+            throws ParseException {
+        jsonIn(in, JsonFormOptions.DEFAULT);
+    }
+
+    /**
+     * (Don't override this method.)
+     *
      * @param json
      *            <code>null</code> for the null object.
      */
     default void jsonIn(JsonObject o)
             throws ParseException {
         jsonIn(o, JsonFormOptions.DEFAULT);
+    }
+
+    /**
+     * @param json
+     *            <code>null</code> for the null object.
+     */
+    default void jsonIn(JsonVariant in, JsonFormOptions opts)
+            throws ParseException {
+        jsonIn(in.getObject(), opts);
     }
 
     /**
@@ -41,16 +63,6 @@ public interface IJsonForm {
      */
     void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException;
-
-    default void readObjectBoxed(Object obj, JsonFormOptions opts)
-            throws ParseException {
-        if (obj instanceof JsonObject) {
-            JsonObject jo = (JsonObject) obj;
-            jsonIn(jo, opts);
-            return;
-        }
-        throw new UnsupportedOperationException("Can't read from non-object json value.");
-    }
 
     /**
      * @param out

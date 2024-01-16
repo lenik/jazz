@@ -1,6 +1,6 @@
 package net.bodz.bas.fmt.json;
 
-public enum JsonVarType {
+public enum JsonVariantType {
 
     OBJECT,
 

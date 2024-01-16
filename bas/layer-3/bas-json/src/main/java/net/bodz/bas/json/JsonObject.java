@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fn.FunctionX;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.t.variant.conv.IVarConverter;
@@ -297,12 +298,11 @@ public class JsonObject
         if (!has(key)) // nothing to change
             return obj;
 
-        JsonObject node = null;
         Object _node = get(key);
         if (_node == null) // force set to null
             return null;
-        if (_node instanceof JsonObject)
-            node = (JsonObject) _node;
+
+        JsonVariant node = JsonVariant.of(_node);
 
         if (node != null) {
             if (obj == null) {
@@ -331,10 +331,9 @@ public class JsonObject
     public <T extends IJsonForm> Set<T> //
             readArrayIntoSet(String key, Set<T> set, SortOrder order, Supplier<T> vals)
                     throws ParseException {
-        return readArrayInto(key, set, (Object jsObj) -> {
-            JsonObject o = (JsonObject) jsObj;
+        return readArrayInto(key, set, (Object jsAny) -> {
             T val = vals.get();
-            val.jsonIn(o, JsonFormOptions.XXX);
+            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
             return val;
         }, () -> order.newSet());
     }
@@ -342,10 +341,9 @@ public class JsonObject
     public <T extends IJsonForm> List<T> //
             readArrayIntoList(String key, List<T> list, Supplier<T> vals)
                     throws ParseException {
-        return readArrayInto(key, list, (Object jsObj) -> {
-            JsonObject o = (JsonObject) jsObj;
+        return readArrayInto(key, list, (Object jsAny) -> {
             T val = vals.get();
-            val.jsonIn(o, JsonFormOptions.XXX);
+            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
             return val;
         }, () -> new ArrayList<>());
     }
@@ -392,10 +390,9 @@ public class JsonObject
     public <T extends IJsonForm> Map<String, T> //
             readIntoMap(String key, Map<String, T> map, SortOrder order, Supplier<T> vals)
                     throws ParseException {
-        return readIntoMap(key, map, (Object jsObj) -> {
-            JsonObject o = (JsonObject) jsObj;
+        return readIntoMap(key, map, (Object jsAny) -> {
             T val = vals.get();
-            val.jsonIn(o, JsonFormOptions.XXX);
+            val.jsonIn(JsonVariant.of(jsAny), JsonFormOptions.XXX);
             return val;
         }, () -> order.newMap());
     }
@@ -403,9 +400,9 @@ public class JsonObject
     public <map_t extends Map<String, val_t>, val_t extends IJsonForm> map_t //
             readIntoJMap(String key, map_t map, Supplier<val_t> factory)
                     throws ParseException {
-        return readIntoMap(key, map, (Object jo) -> {
+        return readIntoMap(key, map, (Object jsAny) -> {
             val_t val = factory.get();
-            val.readObjectBoxed(jo, null);
+            val.jsonIn(JsonVariant.of(jsAny), null);
             return val;
         }, null);
     }

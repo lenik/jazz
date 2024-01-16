@@ -14,6 +14,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
@@ -241,7 +242,7 @@ public abstract class StructRow
             throw new NullPointerException("o");
         if (isJsonInByLoader()) {
             try {
-                new BeanJsonLoader().load(this, o, false);
+                new BeanJsonLoader().load(this, JsonVariant.of(o), false);
             } catch (Exception e) {
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }
