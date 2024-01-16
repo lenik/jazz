@@ -1,6 +1,7 @@
 package net.bodz.bas.fmt.records;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,13 +16,16 @@ import net.bodz.bas.log.LoggerFactory;
 
 public class CsvRow
         extends ArrayList<String>
-        implements IJsonForm {
+        implements
+            IJsonForm {
 
     private static final long serialVersionUID = 1L;
 
     static final Logger logger = LoggerFactory.getLogger(CsvRow.class);
 
-    private Map<String, Integer> fieldNames;
+    private String[] fieldNames;
+    private Map<String, Integer> fieldNameIndex;
+
     private boolean strict = false;
     private String defaultValue;
     private String undefinedValue;
@@ -34,25 +38,41 @@ public class CsvRow
         super(initialCapacity);
     }
 
-    public Map<String, Integer> getFieldNames() {
+    public String[] getFieldNames() {
         return fieldNames;
     }
 
-    public void setFieldNames(Map<String, Integer> fieldNames) {
+    public void setFieldNames(String... fieldNames) {
         this.fieldNames = fieldNames;
     }
 
-    public Map<String, Integer> setFieldNamesFromHeaderRow(CsvRow header) {
-        return setFieldNamesFromHeaderRow(header, 0);
+    @Deprecated
+    public Map<String, Integer> getFieldNameIndex() {
+        return fieldNameIndex;
     }
 
-    public Map<String, Integer> setFieldNamesFromHeaderRow(CsvRow header, int startFieldIndex) {
+    public void setFieldNameIndex(Map<String, Integer> fieldNameIndex) {
+        this.fieldNameIndex = fieldNameIndex;
+    }
+
+    public void headerRow(CsvRow header) {
+        headerRow(header, 0);
+    }
+
+    public void headerRow(CsvRow header, int startFieldIndex) {
         if (header == null)
             throw new NullPointerException("header");
-        fieldNames = new LinkedHashMap<String, Integer>();
-        for (String name : header)
-            fieldNames.put(name, startFieldIndex++);
-        return fieldNames;
+        int n = header.size(); // - startFieldIndex;
+        if (n < 0)
+            n = 0;
+        fieldNames = new String[n];
+        fieldNameIndex = new LinkedHashMap<String, Integer>();
+        int i = startFieldIndex;
+        for (String name : header) {
+            fieldNames[i] = name;
+            fieldNameIndex.put(name, i);
+            i++;
+        }
     }
 
     public String getDefaultValue() {
@@ -123,10 +143,24 @@ public class CsvRow
             return null;
     }
 
+    public Map<String, String> toMap() {
+        if (fieldNames == null)
+            throw new IllegalStateException("fieldNames wasn't set.");
+        Map<String, String> map = new HashMap<>();
+        int nDecl = fieldNames.length;
+        int nDef = Math.min(nDecl, size());
+        for (int i = 0; i < nDef; i++) {
+            String field = fieldNames[i];
+            String cell = get(i);
+            map.put(field, cell);
+        }
+        return map;
+    }
+
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        if (fieldNames == null) {
+        if (fieldNameIndex == null) {
             int index = 0;
             for (Object key : o.keySet()) {
                 String field = (String) key;
@@ -137,7 +171,7 @@ public class CsvRow
         } else {
             for (Object key : o.keySet()) {
                 String field = (String) key;
-                Integer index = fieldNames.get(field);
+                Integer index = fieldNameIndex.get(field);
                 if (index == null) {
                     logger.warn("Invalid field name: " + key);
                     continue;
@@ -152,7 +186,7 @@ public class CsvRow
 
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts) {
-        if (fieldNames == null) {
+        if (fieldNameIndex == null) {
             out.array();
             int n = size();
             for (int i = 0; i < n; i++)
@@ -160,7 +194,7 @@ public class CsvRow
             out.endArray();
         } else {
             out.object();
-            for (Entry<String, Integer> entry : fieldNames.entrySet()) {
+            for (Entry<String, Integer> entry : fieldNameIndex.entrySet()) {
                 String field = entry.getKey();
                 int index = entry.getValue();
                 String value = get(index);
