@@ -14,6 +14,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
@@ -53,7 +54,7 @@ public class JsonMap
             throws ParseException {
         for (String key : o.keySet()) {
             Object val = o.get(key);
-            if (!parseJsonEntry(key, val, opts))
+            if (!parseJsonEntry(key, JsonVariant.of(val), opts))
                 map.put(key, JsonFn.unwrap(val));
         }
     }
@@ -61,7 +62,7 @@ public class JsonMap
     /**
      * @return <code>true</code> if the key is handled.
      */
-    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
+    protected boolean parseJsonEntry(String key, JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         return false;
     }
@@ -112,8 +113,8 @@ public class JsonMap
         map.clear();
         if (json == null)
             return;
-        Object j_val = JsonBuilder.getInstance().parse(json);
-        readObjectBoxed(j_val, opts);
+        JsonVariant jv = JsonFn.parseAny(json);
+        jsonIn(jv, opts);
     }
 
     public JsonValueWrapper getJsonStr()
@@ -129,7 +130,8 @@ public class JsonMap
         Object j_val = form.getWrapped();
         if (j_val == null)
             return;
-        readObjectBoxed(j_val, opts);
+        JsonVariant jv = JsonVariant.of(j_val);
+        jsonIn(jv, opts);
     }
 
     @Override

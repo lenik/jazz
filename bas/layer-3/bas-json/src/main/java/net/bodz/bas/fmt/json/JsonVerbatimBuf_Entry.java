@@ -34,15 +34,6 @@ public class JsonVerbatimBuf_Entry
     }
 
     @Override
-    public void readObjectBoxed(Object obj, JsonFormOptions opts)
-            throws ParseException {
-        if (!(obj instanceof JsonObject))
-            throw new ParseException("not an object: " + obj);
-        JsonObject jo = (JsonObject) obj;
-        jsonIn(jo, opts);
-    }
-
-    @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         String code = buf.toString();

@@ -10,6 +10,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 
@@ -111,7 +112,7 @@ public class ItemFile
         List<ItemFile> items = new ArrayList<ItemFile>();
         for (JsonObject o : JsonFn.<JsonObject> iterate(array)) {
             ItemFile item = new ItemFile();
-            item.jsonIn(o, JsonFormOptions.DEFAULT);
+            item.jsonIn(JsonVariant.of(o), JsonFormOptions.DEFAULT);
             items.add(item);
         }
         return items;

@@ -13,9 +13,15 @@ public abstract class JsonSupport
             IJsonForm {
 
     @Override
+    public void jsonIn(JsonVariant j, JsonFormOptions opts)
+            throws ParseException {
+        new BeanJsonLoader().parse(this, j);
+    }
+
+    @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        new BeanJsonLoader().parse(this, o);
+        jsonIn(JsonVariant.of(o), opts);
     }
 
     @Override

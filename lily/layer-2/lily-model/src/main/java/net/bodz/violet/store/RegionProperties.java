@@ -2,6 +2,7 @@ package net.bodz.violet.store;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.template.RichProperties;
 
 public class RegionProperties
@@ -10,9 +11,9 @@ public class RegionProperties
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
+    protected boolean parseJsonEntry(String key, JsonVariant j, JsonFormOptions opts)
             throws ParseException {
-        return super.parseJsonEntry(key, val, opts);
+        return super.parseJsonEntry(key, j, opts);
     }
 
 }

@@ -18,9 +18,10 @@ import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.AbstractJsonLoader;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.bean.Transient;
@@ -37,14 +38,14 @@ public class BeanJsonLoader
     public void parse(Object obj, String json)
             throws ParseException {
         try {
-            JsonObject node = JsonObjectBuilder.getInstance().parse(json);
+            JsonVariant node = JsonFn.parseAny(json);
             parse(obj, node);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
     }
 
-    public void parse(Object obj, JsonObject node)
+    public void parse(Object obj, JsonVariant node)
             throws ParseException {
         try {
             new BeanJsonLoader().load(obj, node);
@@ -56,12 +57,12 @@ public class BeanJsonLoader
     }
 
     @Override
-    public void load(Object ctx, JsonObject node)
+    public void load(Object ctx, JsonVariant node)
             throws Exception {
         load(ctx, node, false);
     }
 
-    public void load(Object ctx, JsonObject node, boolean overridable)
+    public void load(Object ctx, JsonVariant node, boolean overridable)
             throws Exception {
         if (overridable) {
             if (ctx instanceof IJsonForm) {
@@ -92,10 +93,11 @@ public class BeanJsonLoader
                 continue;
 
             String propertyName = propertyDescriptor.getName();
-            if (!node.has(propertyName))
-                continue;
             if ("class".equals(propertyName))
                 continue;
+            if (node.isObject())
+                if (!node.getObject().has(propertyName))
+                    continue;
 
             Object propertyValue;
             try {
@@ -155,7 +157,7 @@ public class BeanJsonLoader
                         continue;
                 }
 
-                load(obj, jsonObj, true);
+                load(obj, new JsonVariant(jsonObj), true);
 
                 if (create)
                     setter.invoke(ctx, obj);

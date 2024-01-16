@@ -2,6 +2,7 @@ package net.bodz.violet.art;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -77,9 +78,9 @@ public class ArtifactProperties
     }
 
     @Override
-    protected boolean parseJsonEntry(String key, Object val, JsonFormOptions opts)
+    protected boolean parseJsonEntry(String key, JsonVariant j, JsonFormOptions opts)
             throws ParseException {
-        return super.parseJsonEntry(key, val, opts);
+        return super.parseJsonEntry(key, j, opts);
     }
 
 }

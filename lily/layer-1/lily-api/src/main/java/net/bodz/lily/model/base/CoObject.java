@@ -10,6 +10,7 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -470,7 +471,7 @@ public abstract class CoObject
             throw new NullPointerException("o");
         if (isJsonInByLoader()) {
             try {
-                new BeanJsonLoader().load(this, o, false);
+                new BeanJsonLoader().load(this, JsonVariant.of(o), false);
             } catch (Exception e) {
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }

@@ -17,16 +17,17 @@ public class JsonVerbatimBuf_Scalar
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(JsonVariant j, JsonFormOptions opts)
             throws ParseException {
+        String json = j.toJson();
+        buf.setLength(0);
+        buf.append(json);
     }
 
     @Override
-    public void readObjectBoxed(Object obj, JsonFormOptions opts)
+    public final void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        String json = JsonObject.valueToString(obj);
-        buf.setLength(0);
-        buf.append(json);
+        jsonIn(JsonVariant.of(o), opts);
     }
 
     @Override

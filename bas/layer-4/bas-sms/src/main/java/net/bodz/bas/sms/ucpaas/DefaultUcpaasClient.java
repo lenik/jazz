@@ -7,8 +7,8 @@ import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.http.HttpClients;
-import net.bodz.bas.json.JsonObject;
 
 public class DefaultUcpaasClient
         implements
@@ -33,9 +33,9 @@ public class DefaultUcpaasClient
             sendContent.entry("uid", uid);
         }
         sendContent.endObject();
-        JsonObject jo = HttpClients.postJson(url, sendContent.toString());
+        JsonVariant j = HttpClients.postJson(url, sendContent.toString());
         SendSmsResult result = new SendSmsResult();
-        result.jsonIn(jo, JsonFormOptions.DEFAULT);
+        result.jsonIn(j, JsonFormOptions.DEFAULT);
         return result;
     }
 
@@ -54,9 +54,9 @@ public class DefaultUcpaasClient
             js.entry("uid", uid);
         }
         js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        JsonVariant j = HttpClients.postJson(url, js.toString());
         SendSmsBatchResult result = new SendSmsBatchResult();
-        result.jsonIn(jo, jsonOpts);
+        result.jsonIn(j, jsonOpts);
         return result;
     }
 
@@ -74,9 +74,9 @@ public class DefaultUcpaasClient
             js.entry("content", content);
         }
         js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        JsonVariant j = HttpClients.postJson(url, js.toString());
         AddTemplateResult result = new AddTemplateResult();
-        result.jsonIn(jo, jsonOpts);
+        result.jsonIn(j, jsonOpts);
         return result;
     }
 
@@ -93,9 +93,9 @@ public class DefaultUcpaasClient
             js.entry("page_size", page_size);
         }
         js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        JsonVariant j = HttpClients.postJson(url, js.toString());
         GetTemplateResult result = new GetTemplateResult();
-        result.jsonIn(jo, jsonOpts);
+        result.jsonIn(j, jsonOpts);
         return result;
     }
 
@@ -115,9 +115,9 @@ public class DefaultUcpaasClient
             js.entry("content", content);
         }
         js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        JsonVariant j = HttpClients.postJson(url, js.toString());
         EditTemplateResult result = new EditTemplateResult();
-        result.jsonIn(jo, jsonOpts);
+        result.jsonIn(j, jsonOpts);
         return result;
     }
 
@@ -125,16 +125,16 @@ public class DefaultUcpaasClient
     public DeleteTemplateResult deleteTemplate(UcpaasId ucid, String templateId)
             throws IOException, ParseException {
         String url = getUrl("deletesmstemplate");
-        JsonBuffer js = new JsonBuffer();
-        js.object();
+        JsonBuffer jsbuf = new JsonBuffer();
+        jsbuf.object();
         {
-            ucid.jsonOut(js, jsonOpts);
-            js.entry("templateid", templateId);
+            ucid.jsonOut(jsbuf, jsonOpts);
+            jsbuf.entry("templateid", templateId);
         }
-        js.endObject();
-        JsonObject jo = HttpClients.postJson(url, js.toString());
+        jsbuf.endObject();
+        JsonVariant j = HttpClients.postJson(url, jsbuf.toString());
         DeleteTemplateResult result = new DeleteTemplateResult();
-        result.jsonIn(jo, jsonOpts);
+        result.jsonIn(j, jsonOpts);
         return result;
     }
 

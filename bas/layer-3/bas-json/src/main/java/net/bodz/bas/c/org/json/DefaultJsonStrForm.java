@@ -5,8 +5,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
+import net.bodz.bas.fmt.json.JsonVariant;
 
 public class DefaultJsonStrForm
         implements
@@ -34,10 +33,10 @@ public class DefaultJsonStrForm
     public void fromJsonStr(String jsonStr, JsonFormOptions opts)
             throws ParseException {
         if (jsonStr == null) {
-            obj.jsonIn(null, opts);
+            obj.jsonIn((JsonVariant) null, opts);
         } else {
-            JsonObject jsonObj = JsonObjectBuilder.getInstance().parse(jsonStr);
-            obj.jsonIn(jsonObj, opts);
+            JsonVariant jv = JsonFn.parseAny(jsonStr);
+            obj.jsonIn(jv, opts);
         }
     }
 

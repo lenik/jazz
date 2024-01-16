@@ -11,6 +11,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.fmt.json.JsonVerbatimBuf_Scalar;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.BufferedLogger;
@@ -265,7 +266,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
             if (val instanceof JsonObject) {
                 JsonObject node = (JsonObject) val;
                 JsonSection section = new JsonSection();
-                section.jsonIn(node, opts);
+                section.jsonIn(JsonVariant.of(node), opts);
                 setHeader(key, section);
             } else {
                 setHeader(key, val);
@@ -323,7 +324,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
                 throw new ParseException("Can't instantiate data of " + dataTypeName, e);
             }
             JsonObject dataNode = o.getJsonObject("data");
-            data.jsonIn(dataNode, opts);
+            data.jsonIn(JsonVariant.of(dataNode), opts);
             this.data = data;
             return true;
         }

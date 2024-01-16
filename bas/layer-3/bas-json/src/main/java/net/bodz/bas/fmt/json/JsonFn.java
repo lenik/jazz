@@ -28,24 +28,24 @@ public class JsonFn {
 
     public static String DEFAULT_ENCODING = "utf-8";
 
-    public static JsonVar parseAny(String json)
+    public static JsonVariant parseAny(String json)
             throws ParseException {
         if (json == null)
             throw new NullPointerException("json");
         try {
             if (json.startsWith("[")) {
                 JsonArray a = JsonArrayBuilder.getInstance().parse(json);
-                return new JsonVar(JsonVarType.ARRAY, a);
+                return new JsonVariant(JsonVariantType.ARRAY, a);
             }
             if (json.startsWith("{")) {
                 JsonObject o = JsonObjectBuilder.getInstance().parse(json);
-                return new JsonVar(JsonVarType.OBJECT, o);
+                return new JsonVariant(JsonVariantType.OBJECT, o);
             }
 
             String v_json = "[" + json + "]";
             JsonArray jsonArray = JsonArrayBuilder.getInstance().parse(v_json);
             Object val = jsonArray.get(0);
-            return new JsonVar(JsonVarType.SCALAR, val);
+            return new JsonVariant(JsonVariantType.SCALAR, val);
         } catch (JSONException e) {
             throw new ParseException("Failed to parse JSON: " + e.getMessage(), e);
         }
@@ -137,10 +137,10 @@ public class JsonFn {
     public static <T extends IJsonForm> T fromJson(T obj, String json, JsonFormOptions opts)
             throws ParseException {
         if (json == null) // XXX null ?
-            obj.jsonIn(null, opts);
+            obj.jsonIn((JsonVariant) null, opts);
         else {
-            JsonObject jsonObj = parseObject(json);
-            obj.jsonIn(jsonObj, opts);
+            JsonVariant j = JsonFn.parseAny(json);
+            obj.jsonIn(j, opts);
         }
         return obj;
     }
@@ -202,7 +202,7 @@ public class JsonFn {
         return new JsonUnion(array);
     }
 
-    public static <T extends IJsonForm> T readObject(T context, JsonObject node, JsonFormOptions opts)
+    public static <T extends IJsonForm> T readObject(T context, JsonVariant node, JsonFormOptions opts)
             throws ParseException {
         if (node != null)
             context.jsonIn(node, opts);
@@ -260,7 +260,7 @@ public class JsonFn {
         }
         byte[] byteArray = buf.toByteArray();
         String json = new String(byteArray, charset);
-        JsonObject root = JsonFn.parseObject(json);
+        JsonVariant root = JsonFn.parseAny(json);
         JsonFn.readObject(obj, root, opts);
         return obj;
     }

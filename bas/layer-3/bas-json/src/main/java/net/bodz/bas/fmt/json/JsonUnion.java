@@ -25,10 +25,16 @@ public class JsonUnion
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
+    public void jsonIn(JsonVariant j, JsonFormOptions opts)
             throws ParseException {
         for (IJsonForm item : list)
-            item.jsonIn(o, opts);
+            item.jsonIn(j, opts);
+    }
+
+    @Override
+    public final void jsonIn(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        jsonIn(JsonVariant.of(o), opts);
     }
 
     @Override
