@@ -44,6 +44,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-pojo-eg</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-repr-api</artifactId>
             <version>${project.version}</version>
         </dependency>

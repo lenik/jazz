@@ -6,10 +6,10 @@ import net.bodz.bas.db.ws.ICommonDataOps;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
 
 @ExcludedFromIndex
-public interface IGenericMapper<T, M>
+public interface IGenericMapper<T>
         extends
             IMapper,
-            ICommonDataOps<T, M> {
+            ICommonDataOps<T> {
 
     @Commit
     @Flush

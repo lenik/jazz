@@ -153,12 +153,13 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    public <T> List<T> filter(IGenericMapper<T, self_t> mapper) {
-        return filter(mapper, null);
+    public <T> List<T> filter(IGenericMapper<T> mapper) {
+        return filter(mapper, SelectOptions.ALL);
     }
 
-    public <T> List<T> filter(IGenericMapper<T, self_t> mapper, SelectOptions options) {
-        return mapper.filter(_this(), options);
+    public <T> List<T> filter(IGenericMapper<T> mapper, SelectOptions options) {
+        ICriterion criterion = get();
+        return mapper.filter(criterion, options);
     }
 
 }

@@ -5,10 +5,9 @@ import org.junit.Test;
 
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.CoObjectMask;
 
-public abstract class AbstractTableTest<T extends CoEntity<?>, M extends CoObjectMask, mapper_t extends IEntityMapper<T, M>>
-        extends AbstractTableViewTest<T, M, mapper_t> {
+public abstract class AbstractTableTest<T extends CoEntity<?>, mapper_t extends IEntityMapper<T>>
+        extends AbstractTableViewTest<T, mapper_t> {
 
     public abstract T buildSample()
             throws Exception;

@@ -5,17 +5,15 @@ import java.lang.reflect.Type;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 
-public abstract class AbstractTableViewTest<T, M, mapper_t extends IGenericMapper<T, M>>
+public abstract class AbstractTableViewTest<T, mapper_t extends IGenericMapper<T>>
         extends AbstractDaoTest {
 
     protected final Class<T> entityClass;
-    protected final Class<M> maskClass;
     protected final Class<mapper_t> mapperClass;
 
     public AbstractTableViewTest() {
         Type[] typeArgs = TypeParam.getTypeArgs(getClass(), AbstractTableViewTest.class);
         entityClass = TypeParam.bound1(typeArgs[0]);
-        maskClass = TypeParam.bound1(typeArgs[1]);
         mapperClass = TypeParam.bound1(typeArgs[2]);
     }
 
