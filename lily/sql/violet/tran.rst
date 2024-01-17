@@ -1,6 +1,9 @@
 #\import lily.security
 
 column-property {
+    odr:            orderId
+    ou:             orgUnitId
+    saleodr:        salesOrderId
 }
 
 class-map {
@@ -22,16 +25,7 @@ table-name {
 }
 
 table tranodr {
-    column ou {
-        javaName: orgUnit
-    }
-    column saleodr {
-        javaName: salesOrder
-    }
 }
 
 table tranodrl {
-    column odr {
-        javaName: order
-    }
 }

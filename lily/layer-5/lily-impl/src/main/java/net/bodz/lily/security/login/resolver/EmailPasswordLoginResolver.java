@@ -58,7 +58,7 @@ public class EmailPasswordLoginResolver
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretCriteriaBuilder().email(email), SelectOptions.ALL);
+                new UserSecretCriteriaBuilder().email.eq(email).get(), SelectOptions.ALL);
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", email);
 

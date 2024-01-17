@@ -16,10 +16,9 @@ import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
-import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.criterion.ICriterion;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
-import net.bodz.lily.model.base.StructRowCriteriaBuilder;
 
 @ForEntityType(IJsonForm.class)
 public class ListCommand
@@ -52,7 +51,7 @@ class ListProcess
         extends AbstractEntityCommandProcess<ListCommand> {
 
     TableOfPathProps tableData;
-    final StructRowCriteriaBuilder criteria;
+    ICriterion criteria;
     final SelectOptions selectOptions;
 
     int format = JSON;
@@ -64,17 +63,7 @@ class ListProcess
 
     public ListProcess(ListCommand type, IEntityCommandContext context) {
         super(type, context);
-
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
-
-        Class<?> criteriaClass = typeInfo.getCrtieriaClass();
-        try {
-            criteria = (StructRowCriteriaBuilder) criteriaClass.newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalArgumentException(String.format(//
-                    "Can't instantiate criteria: %s", e.getMessage()), e);
-        }
-
         selectOptions = new SelectOptions();
     }
 
@@ -85,7 +74,7 @@ class ListProcess
             this.tableSheetBuilder = tableSheetBuilder;
     }
 
-    public IVarMapForm getCriteria() {
+    public ICriterion getCriteria() {
         return criteria;
     }
 

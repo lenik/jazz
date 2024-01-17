@@ -18,17 +18,17 @@ public abstract class AbstractMapperProxy
     Object proxyThis;
 
     Class<?> mapperClass;
-    MapperHelper<?, ?> helper;
+    MapperHelper<?> helper;
 
     boolean timing = true;
     boolean showCallInfo = true;
     int maxLen = 30;
 
-    public <mapper_t extends IGenericMapper<T, M>, T, M> //
+    public <mapper_t extends IGenericMapper<T>, T> //
     AbstractMapperProxy(Class<?> mapperClass) {
         this.mapperClass = mapperClass;
         Class<?>[] args = TypeParam.infer(mapperClass, IGenericMapper.class);
-        this.helper = new MapperHelper<>(args[0], args[1]);
+        this.helper = new MapperHelper<>(args[0]);
     }
 
     @Override

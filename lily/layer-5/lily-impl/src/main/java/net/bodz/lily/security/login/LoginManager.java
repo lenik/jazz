@@ -8,7 +8,6 @@ import net.bodz.bas.crypto.trans.EpochTransient;
 import net.bodz.bas.crypto.trans.IFlyingSupport;
 import net.bodz.bas.crypto.trans.IFlyingTransient;
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.site.json.IJsonResponse;
@@ -113,7 +112,7 @@ public class LoginManager
 
     String getAnyPassword(int userId) {
         UserSecretMapper secretMapper = dataContext.getMapper(UserSecretMapper.class);
-        List<UserSecret> secrets = secretMapper.filter(new UserSecretCriteriaBuilder().userId(userId), SelectOptions.ALL);
+        List<UserSecret> secrets = secretMapper.filter(new UserSecretCriteriaBuilder().userId.eq(userId).get());
         for (UserSecret secret : secrets) {
             String password = secret.getPassword();
             if (password != null)

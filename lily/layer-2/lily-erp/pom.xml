@@ -24,6 +24,11 @@
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <name>Lily :: Layer 2 :: Lily Erp</name>
 </project>

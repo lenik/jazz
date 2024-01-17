@@ -20,13 +20,13 @@ public class CriteriaBuilderInfo
     }
 
     @Override
-    protected void parse(IType declaredType, ModuleIndexer indexer) {
+    protected void initType(IType declaredType, ModuleIndexer indexer) {
         for (IProperty property : declaredType.getProperties()) {
             String name = property.getName();
-            if (properties.containsKey(name))
-                // overrided by derived class.
+            if (properties.containsKey(name)) // already added.
+                // Don't overrided existing property.
                 continue;
-            addProperty(property);
+            checkToAddProperty(property);
         }
     }
 

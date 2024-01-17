@@ -28,7 +28,7 @@ public class IndexInfo
     }
 
     @Override
-    protected void parse(IType declaredType, ModuleIndexer indexer) {
+    protected void initType(IType declaredType, ModuleIndexer indexer) {
         for (IMethod method : declaredType.getMethods()) {
             methods.put(method.getName(), method);
             // TODO Annotate methods with @BindPath

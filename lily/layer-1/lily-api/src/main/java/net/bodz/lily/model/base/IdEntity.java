@@ -1,5 +1,8 @@
 package net.bodz.lily.model.base;
 
+import net.bodz.lily.entity.IdColumn;
+
+@IdColumn("id")
 public abstract class IdEntity<Id>
         extends CoEntity<Id> {
 

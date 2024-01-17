@@ -56,26 +56,27 @@ public abstract class AbstractTypeInfo {
         return properties;
     }
 
-    Set<Class<? extends Annotation>> includes = new HashSet<>();
-    Set<Class<? extends Annotation>> excludes = new HashSet<>();
+    Set<Class<? extends Annotation>> includeAnnotations = new HashSet<>();
+    Set<Class<? extends Annotation>> excludeAnnotations = new HashSet<>();
     {
-        excludes.add(Redundant.class);
-        excludes.add(Derived.class);
+        excludeAnnotations.add(Redundant.class);
+        excludeAnnotations.add(Derived.class);
     }
 
-    protected void addProperty(IProperty property) {
-        boolean included = false;
-        if (!included)
-            for (Class<? extends Annotation> a : excludes)
-                if (property.isAnnotationPresent(a))
-                    return;
+    int maxDetailLevel = DetailLevel.EXPERT;
+
+    protected void checkToAddProperty(IProperty property) {
+        for (Class<? extends Annotation> a : excludeAnnotations)
+            if (property.isAnnotationPresent(a))
+                return;
 
         DetailLevel aDetailLevel = property.getAnnotation(DetailLevel.class);
         if (aDetailLevel != null) {
             int detailLevel = aDetailLevel.value();
-            if (detailLevel > DetailLevel.EXPERT)
+            if (detailLevel > maxDetailLevel)
                 return;
         }
+
         properties.put(property.getName(), property);
     }
 
@@ -90,13 +91,13 @@ public abstract class AbstractTypeInfo {
             stopClass = parent.declaredClass;
         while (clazz != stopClass) {
             IType type = declares.loadType(clazz);
-            parse(type, indexer);
+            initType(type, indexer);
             clazz = clazz.getSuperclass();
         }
         parsed = true;
     }
 
-    protected abstract void parse(IType declaredType, ModuleIndexer indexer);
+    protected abstract void initType(IType declaredType, ModuleIndexer indexer);
 
     public IJsonResponse getProperties() {
         JsonResult result = new JsonResult();

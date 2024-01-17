@@ -147,7 +147,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         return new DateField<T>(fieldName, type);
     }
 
-    protected class NumberField<T extends Number>
+    public class NumberField<T extends Number>
             extends NumberFieldCriteriaBuilder<self_t, T> {
 
         @SuppressWarnings("unchecked")
@@ -157,7 +157,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class IntegerField
+    public class IntegerField
             extends NumberField<Integer> {
 
         public IntegerField(String fieldName) {
@@ -166,7 +166,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class ByteField
+    public class ByteField
             extends NumberField<Byte> {
 
         public ByteField(String fieldName) {
@@ -175,7 +175,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class ShortField
+    public class ShortField
             extends NumberField<Short> {
 
         public ShortField(String fieldName) {
@@ -184,7 +184,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class LongField
+    public class LongField
             extends NumberField<Long> {
 
         public LongField(String fieldName) {
@@ -193,7 +193,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class FloatField
+    public class FloatField
             extends NumberField<Float> {
 
         public FloatField(String fieldName) {
@@ -202,7 +202,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class DoubleField
+    public class DoubleField
             extends NumberField<Double> {
 
         public DoubleField(String fieldName) {
@@ -211,7 +211,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class BigIntegerField
+    public class BigIntegerField
             extends NumberField<BigInteger> {
 
         public BigIntegerField(String fieldName) {
@@ -220,7 +220,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class BigDecimalField
+    public class BigDecimalField
             extends NumberField<BigDecimal> {
 
         public BigDecimalField(String fieldName) {
@@ -229,7 +229,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class StringField
+    public class StringField
             extends StringFieldCriteriaBuilder<self_t> {
 
         @SuppressWarnings("unchecked")
@@ -239,7 +239,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class BooleanField
+    public class BooleanField
             extends BooleanFieldCriteriaBuilder<self_t> {
 
         @SuppressWarnings("unchecked")
@@ -249,7 +249,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     }
 
-    protected class DateField<T>
+    public class DateField<T>
             extends DateFieldCriteriaBuilder<self_t, T> {
 
         @SuppressWarnings("unchecked")

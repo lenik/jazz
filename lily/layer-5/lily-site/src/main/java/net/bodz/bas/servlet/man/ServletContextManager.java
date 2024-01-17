@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.handler.ContextHandler.Context;
 import net.bodz.bas.c.javax.servlet.DecoratedServletContext;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.c.org.json.JsonWriter;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
@@ -20,7 +21,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class ServletContextManager
-        implements IPathDispatchable {
+        implements
+            IPathDispatchable {
 
     AppFileFormat fmt = new AppFileFormat();
 
@@ -49,7 +51,11 @@ public class ServletContextManager
             } catch (Exception e) {
                 throw new PathDispatchException(e.getMessage(), e);
             }
-            target = out.reconstruct();
+            try {
+                target = out.reconstruct();
+            } catch (ParseException e) {
+                throw new PathDispatchException("failed to parse json: " + e.getMessage(), e);
+            }
             break;
 
         case "stop":

@@ -28,8 +28,8 @@ public class DefaultWebSupport
             throws PersistenceException, IOException {
         IMapperProvider provider = ctx.query(IMapperProvider.class);
         IMapper.fn.getMapperClass(getClass());
-        Class<IEntityMapper<CoObject, ?>> mapperClass = IMapper.fn.getMapperClass(getClass());
-        IEntityMapper<CoObject, ?> mapper = provider.getMapper(mapperClass);
+        Class<IEntityMapper<CoObject>> mapperClass = IMapper.fn.getMapperClass(getClass());
+        IEntityMapper<CoObject> mapper = provider.getMapper(mapperClass);
         if (mapper == null)
             throw new PersistenceException("No mapper for " + getClass());
 

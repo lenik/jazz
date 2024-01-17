@@ -1,10 +1,10 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.Junction;
 
 public class CountCommand
         extends AbstractEntityCommandType {
@@ -35,7 +35,7 @@ public class CountCommand
 class CountProcess
         extends AbstractEntityCommandProcess<CountCommand> {
 
-    IVarMapForm criteria;
+    ICriterion criteria;
 
     public CountProcess(CountCommand type, IEntityCommandContext context) {
         super(type, context);
@@ -52,12 +52,9 @@ class CountProcess
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
         super.readObject(map);
-        try {
-            criteria = (IVarMapForm) typeInfo.getCrtieriaClass().newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalUsageException(e.getMessage(), e);
-        }
-        criteria.readObject(map);
+        Junction j = new Junction();
+        j.readObject(map);
+        this.criteria = j;
     }
 
 }

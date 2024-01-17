@@ -1,6 +1,7 @@
 #\import lily.security
 
 column-property {
+    odr:            orderId
 }
 
 class-map {
@@ -62,7 +63,4 @@ table storeodr {
 }
 
 table storeodrl {
-    column odr {
-        javaName: order
-    }
 }

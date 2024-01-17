@@ -11,16 +11,13 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.lily.dao.IEntityManager;
 import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.model.base.CoObjectMask;
 
 public abstract class AbstractManagerTest<T extends CoEntity<?>, //
-        mask_t extends CoObjectMask, //
-        mapper_t extends IEntityMapper<T, mask_t>, //
-        man_t extends IEntityManager<T, mask_t>>
+        mapper_t extends IEntityMapper<T>, //
+        man_t extends IEntityManager<T>>
         extends AbstractDaoTest {
 
     protected final Class<T> entityClass;
-    protected final Class<mask_t> maskClass;
     protected final Class<mapper_t> mapperClass;
     protected final Class<man_t> managerClass;
 
@@ -30,7 +27,6 @@ public abstract class AbstractManagerTest<T extends CoEntity<?>, //
     public AbstractManagerTest() {
         Type[] typeArgs = TypeParam.getTypeArgs(getClass(), AbstractTableViewTest.class);
         entityClass = TypeParam.bound1(typeArgs[0]);
-        maskClass = TypeParam.bound1(typeArgs[1]);
         mapperClass = TypeParam.bound1(typeArgs[2]);
         managerClass = TypeParam.bound1(typeArgs[3]);
 
