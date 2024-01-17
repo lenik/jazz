@@ -74,6 +74,24 @@ public class JsonVariant {
         return value;
     }
 
+    public JsonObject getObjectFor(String what) {
+        if (type != JsonVariantType.OBJECT)
+            throw new IllegalUsageException("expect Json Object for " + what);
+        return (JsonObject) value;
+    }
+
+    public JsonArray getArrayFor(String what) {
+        if (type != JsonVariantType.ARRAY)
+            throw new IllegalUsageException("expect Json Array for " + what);
+        return (JsonArray) value;
+    }
+
+    public Object getScalarFor(String what) {
+        if (type != JsonVariantType.SCALAR)
+            throw new IllegalUsageException("expect scalar for " + what);
+        return value;
+    }
+
     public Object getValue() {
         return value;
     }
