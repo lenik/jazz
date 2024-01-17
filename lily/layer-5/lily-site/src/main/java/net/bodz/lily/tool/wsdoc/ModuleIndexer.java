@@ -23,7 +23,7 @@ import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.model.base.AbstractEntityController;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 import net.bodz.lily.model.base.IEntityController;
 
 public class ModuleIndexer
@@ -172,7 +172,7 @@ public class ModuleIndexer
         try {
             maskClass = clazz.getClassLoader().loadClass(maskName);
         } catch (ClassNotFoundException e) {
-            maskClass = CoObjectMask.class;
+            maskClass = CoObjectCriteriaBuilder.class;
         }
         entity = resolveEntity(clazz, maskClass);
         entity.parent = loadRec(clazz.getSuperclass());

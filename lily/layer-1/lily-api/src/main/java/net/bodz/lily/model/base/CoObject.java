@@ -45,7 +45,7 @@ import net.bodz.lily.security.login.ILoginListener;
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
-@CriteriaClass(CoObjectMask.class)
+@CriteriaClass(CoObjectCriteriaBuilder.class)
 @IncludeMapperXml
 public abstract class CoObject
         extends StructRow

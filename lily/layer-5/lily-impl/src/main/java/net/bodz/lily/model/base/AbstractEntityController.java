@@ -38,7 +38,6 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.file.ArrayPathFields;
 import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.t.tuple.Split;
-import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
@@ -50,7 +49,7 @@ import net.bodz.lily.security.AccessControl;
 
 @AccessControl
 @VirtualHostScope
-public abstract class AbstractEntityController<T, M extends IVarMapForm>
+public abstract class AbstractEntityController<T>
         extends AbstractCacheControl
         implements
             IEntityController,
@@ -202,10 +201,10 @@ public abstract class AbstractEntityController<T, M extends IVarMapForm>
     }
 
     @SuppressWarnings("unchecked")
-    IEntityMapper<Object, Object> getMapper() {
+    IEntityMapper<Object> getMapper() {
         DataContext dataContext = getDataContext();
         Class<?> mapperClass = getEntityTypeInfo().getMapperClass();
-        return (IEntityMapper<Object, Object>) dataContext.getMapper(mapperClass);
+        return (IEntityMapper<Object>) dataContext.getMapper(mapperClass);
     }
 
     @Override
@@ -283,7 +282,7 @@ public abstract class AbstractEntityController<T, M extends IVarMapForm>
                     Arrays.asList(idvec), e.getMessage()), e);
         }
 
-        IEntityMapper<Object, Object> mapper = getMapper();
+        IEntityMapper<Object> mapper = getMapper();
 
         Object obj;
         try {

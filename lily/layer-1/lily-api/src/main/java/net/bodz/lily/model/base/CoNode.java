@@ -21,7 +21,7 @@ import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@CriteriaClass(CoNodeMask.class)
+@CriteriaClass(CoNodeCriteriaBuilder.class)
 @IncludeMapperXml
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>

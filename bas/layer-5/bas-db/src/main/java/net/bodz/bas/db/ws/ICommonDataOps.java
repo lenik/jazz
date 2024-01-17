@@ -18,7 +18,7 @@ public interface ICommonDataOps<T> {
 
     List<T> all(@Param("opt") SelectOptions opt);
 
-    List<T> filter(@Param("c") ICriterion criterion, @Param("opt") SelectOptions options);
+    List<T> filter(@Param("c") ICriterion criteria, @Param("opt") SelectOptions options);
 
     /**
      * The generated id value will be saved in the object id property.
@@ -32,21 +32,21 @@ public interface ICommonDataOps<T> {
     /**
      * @return number of records deleted.
      */
-    long deleteFor(@Param("c") ICriterion criterion);
+    long deleteFor(@Param("c") ICriterion criteria);
 
-    long count(@Param("c") ICriterion criterion);
+    long count(@Param("c") ICriterion criteria);
 
-    default List<T> filter(@Param("c") ICriterion criterion) {
-        return filter(criterion, SelectOptions.ALL);
+    default List<T> filter(@Param("c") ICriterion criteria) {
+        return filter(criteria, SelectOptions.ALL);
     }
 
-    default <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criterion) {
-        return filterMap(keyf, criterion, SelectOptions.ALL);
+    default <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criteria) {
+        return filterMap(keyf, criteria, SelectOptions.ALL);
     }
 
-    default <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criterion, SelectOptions options) {
+    default <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criteria, SelectOptions options) {
         Map<K, T> map = new HashMap<>();
-        for (T row : filter(criterion, options)) {
+        for (T row : filter(criteria, options)) {
             K k = keyf.apply(row);
             map.put(k, row);
         }

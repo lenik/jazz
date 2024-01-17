@@ -1,5 +1,7 @@
 package net.bodz.lily.criteria;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import net.bodz.bas.db.ibatis.IGenericMapper;
@@ -101,6 +103,38 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         return new NumberField<T>(fieldName, type);
     }
 
+    protected IntegerField integer(String fieldName) {
+        return new IntegerField(fieldName);
+    }
+
+    protected ByteField _byte(String fieldName) {
+        return new ByteField(fieldName);
+    }
+
+    protected ShortField _short(String fieldName) {
+        return new ShortField(fieldName);
+    }
+
+    protected LongField _long(String fieldName) {
+        return new LongField(fieldName);
+    }
+
+    protected FloatField _float(String fieldName) {
+        return new FloatField(fieldName);
+    }
+
+    protected DoubleField _double(String fieldName) {
+        return new DoubleField(fieldName);
+    }
+
+    protected BigIntegerField bigInteger(String fieldName) {
+        return new BigIntegerField(fieldName);
+    }
+
+    protected BigDecimalField bigDecimal(String fieldName) {
+        return new BigDecimalField(fieldName);
+    }
+
     protected StringField string(String fieldName) {
         return new StringField(fieldName);
     }
@@ -119,6 +153,78 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         @SuppressWarnings("unchecked")
         public NumberField(String fieldName, Class<T> type) {
             super(fieldName, type, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
+        }
+
+    }
+
+    protected class IntegerField
+            extends NumberField<Integer> {
+
+        public IntegerField(String fieldName) {
+            super(fieldName, Integer.class);
+        }
+
+    }
+
+    protected class ByteField
+            extends NumberField<Byte> {
+
+        public ByteField(String fieldName) {
+            super(fieldName, Byte.class);
+        }
+
+    }
+
+    protected class ShortField
+            extends NumberField<Short> {
+
+        public ShortField(String fieldName) {
+            super(fieldName, Short.class);
+        }
+
+    }
+
+    protected class LongField
+            extends NumberField<Long> {
+
+        public LongField(String fieldName) {
+            super(fieldName, Long.class);
+        }
+
+    }
+
+    protected class FloatField
+            extends NumberField<Float> {
+
+        public FloatField(String fieldName) {
+            super(fieldName, Float.class);
+        }
+
+    }
+
+    protected class DoubleField
+            extends NumberField<Double> {
+
+        public DoubleField(String fieldName) {
+            super(fieldName, Double.class);
+        }
+
+    }
+
+    protected class BigIntegerField
+            extends NumberField<BigInteger> {
+
+        public BigIntegerField(String fieldName) {
+            super(fieldName, BigInteger.class);
+        }
+
+    }
+
+    protected class BigDecimalField
+            extends NumberField<BigDecimal> {
+
+        public BigDecimalField(String fieldName) {
+            super(fieldName, BigDecimal.class);
         }
 
     }
