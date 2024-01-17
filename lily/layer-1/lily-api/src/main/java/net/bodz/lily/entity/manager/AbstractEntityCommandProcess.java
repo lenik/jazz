@@ -224,19 +224,19 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     }
 
     @SuppressWarnings("unchecked")
-    protected IGenericMapper<Object, Object> getGenericMapper() {
+    protected IGenericMapper<Object> getGenericMapper() {
         Class<?> mapperClass = typeInfo.getMapperClass();
         if (IGenericMapper.class.isAssignableFrom(mapperClass))
             throw new IllegalUsageException("Not an " + IGenericMapper.class);
-        return (IGenericMapper<Object, Object>) dataContext.getMapper(mapperClass);
+        return (IGenericMapper<Object>) dataContext.getMapper(mapperClass);
     }
 
     @SuppressWarnings("unchecked")
-    protected IEntityMapper<Object, Object> getEntityMapper() {
+    protected IEntityMapper<Object> getEntityMapper() {
         Class<?> mapperClass = typeInfo.getMapperClass();
         if (!IEntityMapper.class.isAssignableFrom(mapperClass))
             throw new IllegalUsageException("Not an " + IEntityMapper.class);
-        return (IEntityMapper<Object, Object>) dataContext.getMapper(mapperClass);
+        return (IEntityMapper<Object>) dataContext.getMapper(mapperClass);
     }
 
     @Override

@@ -72,18 +72,6 @@ public abstract class AbstractEntityCommandType
                     return false;
         }
 
-        ForEntityCriteriaType aForEntityCriteriaType = typeClass.getAnnotation(ForEntityCriteriaType.class);
-        if (aForEntityCriteriaType != null) {
-            Class<?> crtieriaClass = typeInfo.getCrtieriaClass();
-            if (crtieriaClass == null) {
-                logger.warn("skipped: " + typeInfo.getEntityClass());
-                return false;
-            }
-            for (Class<?> iface : aForEntityCriteriaType.value())
-                if (!iface.isAssignableFrom(crtieriaClass))
-                    return false;
-        }
-
         return true;
     }
 

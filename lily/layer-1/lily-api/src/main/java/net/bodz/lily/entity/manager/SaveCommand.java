@@ -88,7 +88,7 @@ class SaveProcess
 
         beforeRowOp(event, obj);
 
-        IEntityMapper<Object, Object> mapper = getEntityMapper();
+        IEntityMapper<Object> mapper = getEntityMapper();
         if (createNew) {
             mapper.insert(obj);
             if (obj instanceof IId<?>) {

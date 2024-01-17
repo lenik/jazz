@@ -22,7 +22,6 @@ import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.model.base.StructRowCriteriaBuilder;
 
 @ForEntityType(IJsonForm.class)
-@ForEntityCriteriaType(IVarMapForm.class)
 public class ListCommand
         extends AbstractEntityCommandType {
 
