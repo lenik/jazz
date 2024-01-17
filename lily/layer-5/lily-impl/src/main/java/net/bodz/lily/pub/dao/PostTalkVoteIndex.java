@@ -9,7 +9,7 @@ import net.bodz.lily.pub.PostTalkVote;
 */
 @ObjectType(PostTalkVote.class)
 public class PostTalkVoteIndex
-        extends CoIndex<PostTalkVote, PostTalkVoteMask> {
+        extends CoIndex<PostTalkVote, PostTalkVoteCriteriaBuilder> {
 
     public PostTalkVoteIndex() {
     }

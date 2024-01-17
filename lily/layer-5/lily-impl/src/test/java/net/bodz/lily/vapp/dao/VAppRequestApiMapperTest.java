@@ -5,7 +5,7 @@ import net.bodz.lily.vapp.VAppRequestApi;
 import net.bodz.lily.vapp.VAppRequestApiSamples;
 
 public class VAppRequestApiMapperTest
-        extends AbstractTableTest<VAppRequestApi, VAppRequestApiMask, VAppRequestApiMapper> {
+        extends AbstractTableTest<VAppRequestApi, VAppRequestApiCriteriaBuilder, VAppRequestApiMapper> {
 
     @Override
     public VAppRequestApi buildSample()

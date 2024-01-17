@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabFn;
 
 @ObjectType(FabFn.class)
 public class FabFnIndex
-        extends CoIndex<FabFn, FabFnMask> {
+        extends CoIndex<FabFn, FabFnCriteriaBuilder> {
 
 }

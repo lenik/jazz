@@ -6,7 +6,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class UserBadgeMapperTest
-        extends AbstractTableTest<UserBadge, UserBadgeMask, UserBadgeMapper> {
+        extends AbstractTableTest<UserBadge, UserBadgeCriteriaBuilder, UserBadgeMapper> {
 
     @Override
     public UserBadge buildSample()

@@ -5,6 +5,6 @@ import net.bodz.violet.store.StorePhase;
 
 public interface StorePhaseMapper
         extends
-            IEntityMapper<StorePhase, StorePhaseMask> {
+            IEntityMapper<StorePhase> {
 
 }

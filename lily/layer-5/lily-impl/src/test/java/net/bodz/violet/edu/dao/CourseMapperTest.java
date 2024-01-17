@@ -7,7 +7,7 @@ import net.bodz.violet.edu.Course;
 import net.bodz.violet.edu.CourseSamples;
 
 public class CourseMapperTest
-        extends AbstractTableTest<Course, CourseMask, CourseMapper> {
+        extends AbstractTableTest<Course, CourseCriteriaBuilder, CourseMapper> {
 
     @Override
     public Course buildSample()

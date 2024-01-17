@@ -5,6 +5,6 @@ import net.bodz.violet.plan.DiaryCategory;
 
 public interface DiaryCategoryMapper
         extends
-            IEntityMapper<DiaryCategory, DiaryCategoryMask> {
+            IEntityMapper<DiaryCategory, DiaryCategoryCriteriaBuilder> {
 
 }

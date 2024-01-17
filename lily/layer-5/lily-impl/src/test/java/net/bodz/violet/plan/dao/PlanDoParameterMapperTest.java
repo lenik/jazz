@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanDoParameter;
 import net.bodz.violet.plan.PlanDoParameterSamples;
 
 public class PlanDoParameterMapperTest
-        extends AbstractTableTest<PlanDoParameter, PlanDoParameterMask, PlanDoParameterMapper> {
+        extends AbstractTableTest<PlanDoParameter, PlanDoParameterCriteriaBuilder, PlanDoParameterMapper> {
 
     @Override
     public PlanDoParameter buildSample()

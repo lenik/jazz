@@ -6,7 +6,7 @@ import net.bodz.violet.plan.PlanDoVote;
 import net.bodz.violet.plan.PlanDoVoteSamples;
 
 public class PlanDoVoteMapperTest
-        extends AbstractTableTest<PlanDoVote, PlanDoVoteMask, PlanDoVoteMapper> {
+        extends AbstractTableTest<PlanDoVote, PlanDoVoteCriteriaBuilder, PlanDoVoteMapper> {
 
     @Override
     public PlanDoVote buildSample()

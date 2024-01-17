@@ -6,7 +6,7 @@ import net.bodz.violet.issue.IssueVote;
 import net.bodz.violet.issue.IssueVoteSamples;
 
 public class IssueVoteMapperTest
-        extends AbstractTableTest<IssueVote, IssueVoteMask, IssueVoteMapper> {
+        extends AbstractTableTest<IssueVote, IssueVoteCriteriaBuilder, IssueVoteMapper> {
 
     @Override
     public IssueVote buildSample()

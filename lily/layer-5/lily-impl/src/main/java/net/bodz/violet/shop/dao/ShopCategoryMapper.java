@@ -8,6 +8,6 @@ import net.bodz.violet.shop.ShopCategory;
  */
 public interface ShopCategoryMapper
         extends
-            IEntityMapper<ShopCategory, ShopCategoryMask> {
+            IEntityMapper<ShopCategory, ShopCategoryCriteriaBuilder> {
 
 }

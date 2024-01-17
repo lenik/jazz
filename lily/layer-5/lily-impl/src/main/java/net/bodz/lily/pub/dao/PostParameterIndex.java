@@ -9,7 +9,7 @@ import net.bodz.lily.pub.PostParameter;
 */
 @ObjectType(PostParameter.class)
 public class PostParameterIndex
-        extends CoIndex<PostParameter, PostParameterMask> {
+        extends CoIndex<PostParameter, PostParameterCriteriaBuilder> {
 
     public PostParameterIndex() {
     }

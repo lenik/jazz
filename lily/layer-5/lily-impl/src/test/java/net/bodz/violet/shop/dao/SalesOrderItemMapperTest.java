@@ -6,7 +6,7 @@ import net.bodz.violet.shop.SalesOrderItem;
 import net.bodz.violet.shop.SalesOrderItemSamples;
 
 public class SalesOrderItemMapperTest
-        extends AbstractTableTest<SalesOrderItem, SalesOrderItemMask, SalesOrderItemMapper> {
+        extends AbstractTableTest<SalesOrderItem, SalesOrderItemCriteriaBuilder, SalesOrderItemMapper> {
 
     @Override
     public SalesOrderItem buildSample()

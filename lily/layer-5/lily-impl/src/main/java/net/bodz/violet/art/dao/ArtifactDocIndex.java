@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactDoc;
 */
 @ObjectType(ArtifactDoc.class)
 public class ArtifactDocIndex
-        extends CoIndex<ArtifactDoc, ArtifactDocMask> {
+        extends CoIndex<ArtifactDoc, ArtifactDocCriteriaBuilder> {
 
     public ArtifactDocIndex() {
     }

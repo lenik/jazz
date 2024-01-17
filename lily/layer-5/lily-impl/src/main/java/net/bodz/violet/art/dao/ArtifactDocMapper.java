@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactDoc;
 
 public interface ArtifactDocMapper
         extends
-            IEntityMapper<ArtifactDoc, ArtifactDocMask> {
+            IEntityMapper<ArtifactDoc, ArtifactDocCriteriaBuilder> {
 
 }

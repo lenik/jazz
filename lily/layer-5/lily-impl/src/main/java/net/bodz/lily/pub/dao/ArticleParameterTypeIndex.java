@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleParameterType;
 */
 @ObjectType(ArticleParameterType.class)
 public class ArticleParameterTypeIndex
-        extends CoIndex<ArticleParameterType, ArticleParameterTypeMask> {
+        extends CoIndex<ArticleParameterType, ArticleParameterTypeCriteriaBuilder> {
 
     public ArticleParameterTypeIndex() {
     }

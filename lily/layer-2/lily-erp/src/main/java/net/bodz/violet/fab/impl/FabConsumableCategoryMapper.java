@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabConsumableCategory;
  * @mapper.xml FabConsumableCategoryMapper.xml
  */
 public interface FabConsumableCategoryMapper
-        extends IEntityMapper<FabConsumableCategory, FabConsumableCategoryMask> {
+        extends IEntityMapper<FabConsumableCategory, FabConsumableCategoryCriteriaBuilder> {
 
 }

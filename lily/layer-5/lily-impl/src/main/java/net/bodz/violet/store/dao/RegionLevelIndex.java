@@ -9,7 +9,7 @@ import net.bodz.violet.store.RegionLevel;
 */
 @ObjectType(RegionLevel.class)
 public class RegionLevelIndex
-        extends CoIndex<RegionLevel, RegionLevelMask> {
+        extends CoIndex<RegionLevel, RegionLevelCriteriaBuilder> {
 
     public RegionLevelIndex() {
     }

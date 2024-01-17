@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ExternalSiteMapperTest
-        extends AbstractTableTest<ExternalSite, ExternalSiteMask, ExternalSiteMapper> {
+        extends AbstractTableTest<ExternalSite, ExternalSiteCriteriaBuilder, ExternalSiteMapper> {
 
     @Override
     public ExternalSite buildSample()

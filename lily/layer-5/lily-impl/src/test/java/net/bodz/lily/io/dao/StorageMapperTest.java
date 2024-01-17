@@ -5,7 +5,7 @@ import net.bodz.lily.io.StorageSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class StorageMapperTest
-        extends AbstractTableTest<Storage, StorageMask, StorageMapper> {
+        extends AbstractTableTest<Storage, StorageCriteriaBuilder, StorageMapper> {
 
     @Override
     public Storage buildSample()

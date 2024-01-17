@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabTask;
  * @mapper.xml FabTaskMapper.xml
  */
 public interface FabTaskMapper
-        extends IEntityMapper<FabTask, FabTaskMask> {
+        extends IEntityMapper<FabTask, FabTaskCriteriaBuilder> {
 
 }

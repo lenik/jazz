@@ -7,7 +7,7 @@ import net.bodz.violet.plan.DiaryPhase;
 import net.bodz.violet.plan.DiaryPhaseSamples;
 
 public class DiaryPhaseMapperTest
-        extends AbstractTableTest<DiaryPhase, DiaryPhaseMask, DiaryPhaseMapper> {
+        extends AbstractTableTest<DiaryPhase, DiaryPhaseCriteriaBuilder, DiaryPhaseMapper> {
 
     @Override
     public DiaryPhase buildSample()

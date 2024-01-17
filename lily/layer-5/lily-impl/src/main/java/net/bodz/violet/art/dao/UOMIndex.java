@@ -13,7 +13,7 @@ import net.bodz.violet.art.UOM;
  */
 @ObjectType(UOM.class)
 public class UOMIndex
-        extends CoIndex<UOM, UOMMask> {
+        extends CoIndex<UOM, UOMCriteriaBuilder> {
 
     public UOMIndex() {
     }

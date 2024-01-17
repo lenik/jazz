@@ -7,7 +7,7 @@ import net.bodz.violet.plan.DiaryTag;
 import net.bodz.violet.plan.DiaryTagSamples;
 
 public class DiaryTagMapperTest
-        extends AbstractTableTest<DiaryTag, DiaryTagMask, DiaryTagMapper> {
+        extends AbstractTableTest<DiaryTag, DiaryTagCriteriaBuilder, DiaryTagMapper> {
 
     @Override
     public DiaryTag buildSample()

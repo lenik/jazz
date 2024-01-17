@@ -7,7 +7,7 @@ import net.bodz.violet.issue.IssueParameter;
 import net.bodz.violet.issue.IssueParameterSamples;
 
 public class IssueParameterMapperTest
-        extends AbstractTableTest<IssueParameter, IssueParameterMask, IssueParameterMapper> {
+        extends AbstractTableTest<IssueParameter, IssueParameterCriteriaBuilder, IssueParameterMapper> {
 
     @Override
     public IssueParameter buildSample()

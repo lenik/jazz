@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleVote;
 */
 @ObjectType(ArticleVote.class)
 public class ArticleVoteIndex
-        extends CoIndex<ArticleVote, ArticleVoteMask> {
+        extends CoIndex<ArticleVote, ArticleVoteCriteriaBuilder> {
 
     public ArticleVoteIndex() {
     }

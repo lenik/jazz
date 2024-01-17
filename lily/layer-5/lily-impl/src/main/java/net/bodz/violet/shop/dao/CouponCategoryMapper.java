@@ -7,6 +7,6 @@ import net.bodz.violet.shop.CouponCategory;
  * @mapper.xml CouponCategoryMapper.xml
  */
 public interface CouponCategoryMapper
-        extends IEntityMapper<CouponCategory, CouponCategoryMask> {
+        extends IEntityMapper<CouponCategory, CouponCategoryCriteriaBuilder> {
 
 }

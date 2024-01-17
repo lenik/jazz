@@ -5,6 +5,6 @@ import net.bodz.violet.asset.OrgUnitAsset;
 
 public interface OrgUnitAssetMapper
         extends
-            IEntityMapper<OrgUnitAsset, OrgUnitAssetMask> {
+            IEntityMapper<OrgUnitAsset, OrgUnitAssetCriteriaBuilder> {
 
 }

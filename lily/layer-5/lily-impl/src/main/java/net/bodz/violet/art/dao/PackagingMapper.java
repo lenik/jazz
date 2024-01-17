@@ -7,6 +7,6 @@ import net.bodz.violet.art.Packaging;
  * @mapper.xml PackagingMapper.xml
  */
 public interface PackagingMapper
-        extends IEntityMapper<Packaging, PackagingMask> {
+        extends IEntityMapper<Packaging, PackagingCriteriaBuilder> {
 
 }

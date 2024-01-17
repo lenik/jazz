@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.VApp;
 
 public interface VAppMapper
         extends
-            IEntityMapper<VApp, VAppMask> {
+            IEntityMapper<VApp, VAppCriteriaBuilder> {
 
 }

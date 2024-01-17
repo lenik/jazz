@@ -5,6 +5,6 @@ import net.bodz.violet.edu.Course;
 
 public interface CourseMapper
         extends
-            IEntityMapper<Course, CourseMask> {
+            IEntityMapper<Course, CourseCriteriaBuilder> {
 
 }

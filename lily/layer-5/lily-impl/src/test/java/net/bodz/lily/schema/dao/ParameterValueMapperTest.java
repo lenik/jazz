@@ -5,7 +5,7 @@ import net.bodz.lily.schema.ParameterValueSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ParameterValueMapperTest
-        extends AbstractTableTest<ParameterValue, ParameterValueMask, ParameterValueMapper> {
+        extends AbstractTableTest<ParameterValue, ParameterValueCriteriaBuilder, ParameterValueMapper> {
 
     @Override
     public ParameterValue buildSample()

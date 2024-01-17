@@ -7,7 +7,7 @@ import net.bodz.violet.issue.IssuePhase;
 import net.bodz.violet.issue.IssuePhaseSamples;
 
 public class IssuePhaseMapperTest
-        extends AbstractTableTest<IssuePhase, IssuePhaseMask, IssuePhaseMapper> {
+        extends AbstractTableTest<IssuePhase, IssuePhaseCriteriaBuilder, IssuePhaseMapper> {
 
     @Override
     public IssuePhase buildSample()

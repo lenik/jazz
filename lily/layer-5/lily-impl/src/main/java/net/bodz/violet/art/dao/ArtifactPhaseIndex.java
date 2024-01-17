@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactPhase;
  */
 @ObjectType(ArtifactPhase.class)
 public class ArtifactPhaseIndex
-        extends CoIndex<ArtifactPhase, ArtifactPhaseMask> {
+        extends CoIndex<ArtifactPhase, ArtifactPhaseCriteriaBuilder> {
 
     public ArtifactPhaseIndex() {
     }

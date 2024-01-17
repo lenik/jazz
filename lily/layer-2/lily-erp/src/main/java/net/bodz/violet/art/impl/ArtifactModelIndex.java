@@ -6,6 +6,6 @@ import net.bodz.violet.art.ArtifactModel;
 
 @ObjectType(ArtifactModel.class)
 public class ArtifactModelIndex
-        extends CoIndex<ArtifactModel, ArtifactModelMask> {
+        extends CoIndex<ArtifactModel, ArtifactModelCriteriaBuilder> {
 
 }

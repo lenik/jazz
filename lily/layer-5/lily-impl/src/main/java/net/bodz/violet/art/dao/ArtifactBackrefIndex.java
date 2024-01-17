@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactBackref;
 */
 @ObjectType(ArtifactBackref.class)
 public class ArtifactBackrefIndex
-        extends CoIndex<ArtifactBackref, ArtifactBackrefMask> {
+        extends CoIndex<ArtifactBackref, ArtifactBackrefCriteriaBuilder> {
 
     public ArtifactBackrefIndex() {
     }

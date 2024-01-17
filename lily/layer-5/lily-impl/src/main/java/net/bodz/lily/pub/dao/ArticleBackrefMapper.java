@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleBackref;
 
 public interface ArticleBackrefMapper
         extends
-            IEntityMapper<ArticleBackref, ArticleBackrefMask> {
+            IEntityMapper<ArticleBackref, ArticleBackrefCriteriaBuilder> {
 
 }

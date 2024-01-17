@@ -7,6 +7,6 @@ import net.bodz.violet.art.ArtifactModel;
  * @mapper.xml ArtifactModelMapper.xml
  */
 public interface ArtifactModelMapper
-        extends IEntityMapper<ArtifactModel, ArtifactModelMask> {
+        extends IEntityMapper<ArtifactModel, ArtifactModelCriteriaBuilder> {
 
 }

@@ -7,7 +7,7 @@ import net.bodz.violet.edu.TestQuestionTag;
 import net.bodz.violet.edu.TestQuestionTagSamples;
 
 public class TestQuestionTagMapperTest
-        extends AbstractTableTest<TestQuestionTag, TestQuestionTagMask, TestQuestionTagMapper> {
+        extends AbstractTableTest<TestQuestionTag, TestQuestionTagCriteriaBuilder, TestQuestionTagMapper> {
 
     @Override
     public TestQuestionTag buildSample()

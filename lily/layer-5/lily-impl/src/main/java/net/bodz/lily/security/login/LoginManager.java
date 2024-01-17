@@ -20,7 +20,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.dao.UserSecretMapper;
-import net.bodz.lily.security.dao.UserSecretMask;
+import net.bodz.lily.security.dao.UserSecretCriteriaBuilder;
 import net.bodz.lily.security.login.ILoginResolver.Result;
 import net.bodz.lily.security.login.resolver.EmailPasswordLoginResolver;
 import net.bodz.lily.security.login.resolver.PhoneCheckLoginResolver;
@@ -113,7 +113,7 @@ public class LoginManager
 
     String getAnyPassword(int userId) {
         UserSecretMapper secretMapper = dataContext.getMapper(UserSecretMapper.class);
-        List<UserSecret> secrets = secretMapper.filter(new UserSecretMask().userId(userId), SelectOptions.ALL);
+        List<UserSecret> secrets = secretMapper.filter(new UserSecretCriteriaBuilder().userId(userId), SelectOptions.ALL);
         for (UserSecret secret : secrets) {
             String password = secret.getPassword();
             if (password != null)

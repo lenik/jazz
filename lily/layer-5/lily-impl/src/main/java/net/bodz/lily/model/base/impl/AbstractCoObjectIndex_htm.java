@@ -10,7 +10,7 @@ import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.lily.model.base.CoObject;
 import net.bodz.lily.model.base.CoObjectIndex;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,7 +46,7 @@ public abstract class AbstractCoObjectIndex_htm<T extends CoObjectIndex<E>, E ex
 
         class co {
 
-            public static <M extends CoObjectMask> M initMask(M mask, IHtmlViewContext ctx)
+            public static <M extends CoObjectCriteriaBuilder> M initCriteriaBuilder(M mask, IHtmlViewContext ctx)
                     throws ViewBuilderException {
                 HttpServletRequest request = ctx.getRequest();
                 // HttpSession session = request.getSession();

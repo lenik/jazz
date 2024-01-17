@@ -5,7 +5,7 @@ import net.bodz.lily.schema.FormDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class FormDefMapperTest
-        extends AbstractTableTest<FormDef, FormDefMask, FormDefMapper> {
+        extends AbstractTableTest<FormDef, FormDefCriteriaBuilder, FormDefMapper> {
 
     @Override
     public FormDef buildSample()

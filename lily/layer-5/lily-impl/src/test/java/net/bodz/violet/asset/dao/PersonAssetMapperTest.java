@@ -10,7 +10,7 @@ import net.bodz.violet.asset.PersonAssetSamples;
 import net.bodz.violet.store.dao.RegionMapper;
 
 public class PersonAssetMapperTest
-        extends AbstractTableTest<PersonAsset, PersonAssetMask, PersonAssetMapper> {
+        extends AbstractTableTest<PersonAsset, PersonAssetCriteriaBuilder, PersonAssetMapper> {
 
     @Override
     public PersonAsset buildSample()

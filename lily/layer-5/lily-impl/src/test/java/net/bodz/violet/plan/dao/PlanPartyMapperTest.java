@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanParty;
 import net.bodz.violet.plan.PlanPartySamples;
 
 public class PlanPartyMapperTest
-        extends AbstractTableTest<PlanParty, PlanPartyMask, PlanPartyMapper> {
+        extends AbstractTableTest<PlanParty, PlanPartyCriteriaBuilder, PlanPartyMapper> {
 
     @Override
     public PlanParty buildSample()

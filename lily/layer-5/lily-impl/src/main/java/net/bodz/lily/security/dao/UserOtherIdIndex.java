@@ -9,7 +9,7 @@ import net.bodz.lily.security.UserOtherId;
 */
 @ObjectType(UserOtherId.class)
 public class UserOtherIdIndex
-        extends CoIndex<UserOtherId, UserOtherIdMask> {
+        extends CoIndex<UserOtherId, UserOtherIdCriteriaBuilder> {
 
     public UserOtherIdIndex() {
     }

@@ -7,7 +7,7 @@ import net.bodz.violet.shop.CartItem;
 import net.bodz.violet.shop.CartItemSamples;
 
 public class CartItemMapperTest
-        extends AbstractTableTest<CartItem, CartItemMask, CartItemMapper> {
+        extends AbstractTableTest<CartItem, CartItemCriteriaBuilder, CartItemMapper> {
 
     @Override
     public CartItem buildSample()

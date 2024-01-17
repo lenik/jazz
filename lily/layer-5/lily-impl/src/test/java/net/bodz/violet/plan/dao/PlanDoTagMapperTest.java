@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanDoTag;
 import net.bodz.violet.plan.PlanDoTagSamples;
 
 public class PlanDoTagMapperTest
-        extends AbstractTableTest<PlanDoTag, PlanDoTagMask, PlanDoTagMapper> {
+        extends AbstractTableTest<PlanDoTag, PlanDoTagCriteriaBuilder, PlanDoTagMapper> {
 
     @Override
     public PlanDoTag buildSample()

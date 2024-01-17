@@ -5,6 +5,6 @@ import net.bodz.violet.shop.ShopTag;
 
 public interface ShopTagMapper
         extends
-            IEntityMapper<ShopTag, ShopTagMask> {
+            IEntityMapper<ShopTag, ShopTagCriteriaBuilder> {
 
 }

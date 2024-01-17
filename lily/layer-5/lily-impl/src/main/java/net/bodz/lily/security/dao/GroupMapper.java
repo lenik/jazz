@@ -8,7 +8,7 @@ import net.bodz.lily.security.User;
 
 public interface GroupMapper
         extends
-            IEntityMapper<Group, GroupMask> {
+            IEntityMapper<Group> {
 
     List<Group> forUserId(int userId);
 

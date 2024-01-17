@@ -5,6 +5,6 @@ import net.bodz.lily.security.UserOtherIdType;
 
 public interface UserOtherIdTypeMapper
         extends
-            IEntityMapper<UserOtherIdType, UserOtherIdTypeMask> {
+            IEntityMapper<UserOtherIdType, UserOtherIdTypeCriteriaBuilder> {
 
 }

@@ -9,7 +9,7 @@ import net.bodz.violet.plan.PlanCategory;
 */
 @ObjectType(PlanCategory.class)
 public class PlanCategoryIndex
-        extends CoIndex<PlanCategory, PlanCategoryMask> {
+        extends CoIndex<PlanCategory, PlanCategoryCriteriaBuilder> {
 
     public PlanCategoryIndex() {
     }

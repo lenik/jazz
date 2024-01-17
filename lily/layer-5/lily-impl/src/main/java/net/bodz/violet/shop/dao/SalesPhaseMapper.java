@@ -5,6 +5,6 @@ import net.bodz.violet.shop.SalesPhase;
 
 public interface SalesPhaseMapper
         extends
-            IEntityMapper<SalesPhase, SalesPhaseMask> {
+            IEntityMapper<SalesPhase, SalesPhaseCriteriaBuilder> {
 
 }

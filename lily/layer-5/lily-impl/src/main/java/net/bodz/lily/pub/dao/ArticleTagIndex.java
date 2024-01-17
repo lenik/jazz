@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleTag;
 */
 @ObjectType(ArticleTag.class)
 public class ArticleTagIndex
-        extends CoIndex<ArticleTag, ArticleTagMask> {
+        extends CoIndex<ArticleTag, ArticleTagCriteriaBuilder> {
 
     public ArticleTagIndex() {
     }

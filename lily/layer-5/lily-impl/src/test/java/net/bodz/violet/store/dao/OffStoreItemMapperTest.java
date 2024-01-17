@@ -8,7 +8,7 @@ import net.bodz.violet.store.OffStoreItem;
 import net.bodz.violet.store.OffStoreItemSamples;
 
 public class OffStoreItemMapperTest
-        extends AbstractTableTest<OffStoreItem, OffStoreItemMask, OffStoreItemMapper> {
+        extends AbstractTableTest<OffStoreItem, OffStoreItemCriteriaBuilder, OffStoreItemMapper> {
 
     @Override
     public OffStoreItem buildSample()

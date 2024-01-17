@@ -5,6 +5,6 @@ import net.bodz.violet.store.RegionCategory;
 
 public interface RegionCategoryMapper
         extends
-            IEntityMapper<RegionCategory, RegionCategoryMask> {
+            IEntityMapper<RegionCategory, RegionCategoryCriteriaBuilder> {
 
 }

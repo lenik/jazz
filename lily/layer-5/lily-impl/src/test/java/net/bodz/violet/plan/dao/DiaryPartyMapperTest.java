@@ -8,7 +8,7 @@ import net.bodz.violet.plan.DiaryParty;
 import net.bodz.violet.plan.DiaryPartySamples;
 
 public class DiaryPartyMapperTest
-        extends AbstractTableTest<DiaryParty, DiaryPartyMask, DiaryPartyMapper> {
+        extends AbstractTableTest<DiaryParty, DiaryPartyCriteriaBuilder, DiaryPartyMapper> {
 
     @Override
     public DiaryParty buildSample()

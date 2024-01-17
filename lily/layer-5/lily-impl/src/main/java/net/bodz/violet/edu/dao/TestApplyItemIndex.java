@@ -9,7 +9,7 @@ import net.bodz.violet.edu.TestApplyItem;
 */
 @ObjectType(TestApplyItem.class)
 public class TestApplyItemIndex
-        extends CoIndex<TestApplyItem, TestApplyItemMask> {
+        extends CoIndex<TestApplyItem, TestApplyItemCriteriaBuilder> {
 
     public TestApplyItemIndex() {
     }

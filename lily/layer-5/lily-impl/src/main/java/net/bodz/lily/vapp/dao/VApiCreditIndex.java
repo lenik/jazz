@@ -9,7 +9,7 @@ import net.bodz.lily.vapp.VApiCredit;
 */
 @ObjectType(VApiCredit.class)
 public class VApiCreditIndex
-        extends CoIndex<VApiCredit, VApiCreditMask> {
+        extends CoIndex<VApiCredit, VApiCreditCriteriaBuilder> {
 
     public VApiCreditIndex() {
     }

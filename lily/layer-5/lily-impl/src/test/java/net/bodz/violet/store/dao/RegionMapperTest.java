@@ -9,7 +9,7 @@ import net.bodz.violet.store.Region;
 import net.bodz.violet.store.RegionSamples;
 
 public class RegionMapperTest
-        extends AbstractTableTest<Region, RegionMask, RegionMapper> {
+        extends AbstractTableTest<Region, RegionCriteriaBuilder, RegionMapper> {
 
     @Override
     public Region buildSample()

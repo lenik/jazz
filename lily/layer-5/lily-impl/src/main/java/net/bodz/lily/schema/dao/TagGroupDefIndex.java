@@ -9,7 +9,7 @@ import net.bodz.lily.schema.TagGroupDef;
 */
 @ObjectType(TagGroupDef.class)
 public class TagGroupDefIndex
-        extends CoIndex<TagGroupDef, TagGroupDefMask> {
+        extends CoIndex<TagGroupDef, TagGroupDefCriteriaBuilder> {
 
     public TagGroupDefIndex() {
     }

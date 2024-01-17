@@ -9,7 +9,7 @@ import net.bodz.lily.vapp.VApiLog;
 */
 @ObjectType(VApiLog.class)
 public class VApiLogIndex
-        extends CoIndex<VApiLog, VApiLogMask> {
+        extends CoIndex<VApiLog, VApiLogCriteriaBuilder> {
 
     public VApiLogIndex() {
     }

@@ -5,6 +5,6 @@ import net.bodz.lily.util.Uom;
 
 public interface UomMapper
         extends
-            IEntityMapper<Uom, UomMask> {
+            IEntityMapper<Uom, UomCriteriaBuilder> {
 
 }

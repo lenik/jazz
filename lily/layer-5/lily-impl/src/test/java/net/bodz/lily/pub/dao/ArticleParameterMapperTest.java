@@ -5,7 +5,7 @@ import net.bodz.lily.pub.ArticleParameterSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleParameterMapperTest
-        extends AbstractTableTest<ArticleParameter, ArticleParameterMask, ArticleParameterMapper> {
+        extends AbstractTableTest<ArticleParameter, ArticleParameterCriteriaBuilder, ArticleParameterMapper> {
 
     @Override
     public ArticleParameter buildSample()

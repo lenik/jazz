@@ -5,7 +5,7 @@ import net.bodz.lily.vapp.ApiType;
 import net.bodz.lily.vapp.ApiTypeSamples;
 
 public class ApiTypeMapperTest
-        extends AbstractTableTest<ApiType, ApiTypeMask, ApiTypeMapper> {
+        extends AbstractTableTest<ApiType, ApiTypeCriteriaBuilder, ApiTypeMapper> {
 
     @Override
     public ApiType buildSample()

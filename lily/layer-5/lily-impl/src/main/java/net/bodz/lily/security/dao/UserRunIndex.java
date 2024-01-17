@@ -9,7 +9,7 @@ import net.bodz.lily.security.UserRun;
 */
 @ObjectType(UserRun.class)
 public class UserRunIndex
-        extends CoIndex<UserRun, UserRunMask> {
+        extends CoIndex<UserRun, UserRunCriteriaBuilder> {
 
     public UserRunIndex() {
     }

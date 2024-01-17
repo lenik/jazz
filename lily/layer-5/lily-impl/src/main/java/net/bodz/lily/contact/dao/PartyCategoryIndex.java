@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(PartyCategory.class)
 public class PartyCategoryIndex
-        extends CoIndex<PartyCategory, PartyCategoryMask> {
+        extends CoIndex<PartyCategory, PartyCategoryCriteriaBuilder> {
 
     public PartyCategoryIndex() {
     }

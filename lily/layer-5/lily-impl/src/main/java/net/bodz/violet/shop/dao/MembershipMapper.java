@@ -7,6 +7,6 @@ import net.bodz.violet.shop.Membership;
  * @mapper.xml MembershipMapper.xml
  */
 public interface MembershipMapper
-        extends IEntityMapper<Membership, MembershipMask> {
+        extends IEntityMapper<Membership, MembershipCriteriaBuilder> {
 
 }

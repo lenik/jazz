@@ -8,7 +8,7 @@ import net.bodz.violet.art.ArtifactDoc;
 import net.bodz.violet.art.ArtifactDocSamples;
 
 public class ArtifactDocMapperTest
-        extends AbstractTableTest<ArtifactDoc, ArtifactDocMask, ArtifactDocMapper> {
+        extends AbstractTableTest<ArtifactDoc, ArtifactDocCriteriaBuilder, ArtifactDocMapper> {
 
     @Override
     public ArtifactDoc buildSample()

@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabTrackParty;
 
 @ObjectType(FabTrackParty.class)
 public class FabTrackPartyIndex
-        extends CoIndex<FabTrackParty, FabTrackPartyMask> {
+        extends CoIndex<FabTrackParty, FabTrackPartyCriteriaBuilder> {
 
 }

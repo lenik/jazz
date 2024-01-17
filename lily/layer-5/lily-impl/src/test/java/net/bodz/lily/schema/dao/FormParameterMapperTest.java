@@ -5,7 +5,7 @@ import net.bodz.lily.schema.FormParameterSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class FormParameterMapperTest
-        extends AbstractTableTest<FormParameter, FormParameterMask, FormParameterMapper> {
+        extends AbstractTableTest<FormParameter, FormParameterCriteriaBuilder, FormParameterMapper> {
 
     @Override
     public FormParameter buildSample()

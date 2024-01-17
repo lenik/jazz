@@ -6,6 +6,6 @@ import net.bodz.violet.shop.Cart;
 
 @ObjectType(Cart.class)
 public class CartIndex
-        extends CoIndex<Cart, CartMask> {
+        extends CoIndex<Cart, CartCriteriaBuilder> {
 
 }

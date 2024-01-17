@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestPaper;
 
 public interface TestPaperMapper
         extends
-            IEntityMapper<TestPaper, TestPaperMask> {
+            IEntityMapper<TestPaper, TestPaperCriteriaBuilder> {
 
 }

@@ -8,7 +8,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostMapperTest
-        extends AbstractTableTest<Post, PostMask, PostMapper> {
+        extends AbstractTableTest<Post, PostCriteriaBuilder, PostMapper> {
 
     @Override
     public Post buildSample()

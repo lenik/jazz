@@ -9,7 +9,7 @@ import net.bodz.violet.plan.PlanPhase;
 */
 @ObjectType(PlanPhase.class)
 public class PlanPhaseIndex
-        extends CoIndex<PlanPhase, PlanPhaseMask> {
+        extends CoIndex<PlanPhase, PlanPhaseCriteriaBuilder> {
 
     public PlanPhaseIndex() {
     }

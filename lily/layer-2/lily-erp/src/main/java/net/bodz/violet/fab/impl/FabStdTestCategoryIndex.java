@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabStdTestCategory;
 
 @ObjectType(FabStdTestCategory.class)
 public class FabStdTestCategoryIndex
-        extends CoIndex<FabStdTestCategory, FabStdTestCategoryMask> {
+        extends CoIndex<FabStdTestCategory, FabStdTestCategoryCriteriaBuilder> {
 
 }

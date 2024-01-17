@@ -11,7 +11,7 @@ import net.bodz.violet.shop.SalesOrderItem;
  */
 @ObjectType(SalesOrderItem.class)
 public class SalesOrderItemIndex
-        extends CoIndex<SalesOrderItem, SalesOrderItemMask> {
+        extends CoIndex<SalesOrderItem, SalesOrderItemCriteriaBuilder> {
 
     public SalesOrderItemIndex() {
     }

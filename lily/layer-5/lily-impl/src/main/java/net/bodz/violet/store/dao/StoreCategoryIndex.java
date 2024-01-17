@@ -9,7 +9,7 @@ import net.bodz.violet.store.StoreCategory;
 */
 @ObjectType(StoreCategory.class)
 public class StoreCategoryIndex
-        extends CoCategoryIndex<StoreCategory, StoreCategoryMask> {
+        extends CoCategoryIndex<StoreCategory, StoreCategoryCriteriaBuilder> {
 
     public StoreCategoryIndex() {
     }

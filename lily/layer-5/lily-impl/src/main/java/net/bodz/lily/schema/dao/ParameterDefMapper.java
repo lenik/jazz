@@ -5,6 +5,6 @@ import net.bodz.lily.schema.ParameterDef;
 
 public interface ParameterDefMapper
         extends
-            IEntityMapper<ParameterDef, ParameterDefMask> {
+            IEntityMapper<ParameterDef, ParameterDefCriteriaBuilder> {
 
 }

@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleFav;
 */
 @ObjectType(ArticleFav.class)
 public class ArticleFavIndex
-        extends CoIndex<ArticleFav, ArticleFavMask> {
+        extends CoIndex<ArticleFav, ArticleFavCriteriaBuilder> {
 
     public ArticleFavIndex() {
     }

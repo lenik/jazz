@@ -8,7 +8,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PersonMapperTest
-        extends AbstractTableTest<Person, PersonMask, PersonMapper> {
+        extends AbstractTableTest<Person, PersonCriteriaBuilder, PersonMapper> {
 
     @Override
     public Person buildSample()

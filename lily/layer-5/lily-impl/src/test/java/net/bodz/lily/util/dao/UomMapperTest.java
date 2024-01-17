@@ -5,7 +5,7 @@ import net.bodz.lily.util.Uom;
 import net.bodz.lily.util.UomSamples;
 
 public class UomMapperTest
-        extends AbstractTableTest<Uom, UomMask, UomMapper> {
+        extends AbstractTableTest<Uom, UomCriteriaBuilder, UomMapper> {
 
     @Override
     public Uom buildSample()

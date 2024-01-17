@@ -9,7 +9,7 @@ import net.bodz.violet.edu.Course;
 */
 @ObjectType(Course.class)
 public class CourseIndex
-        extends CoIndex<Course, CourseMask> {
+        extends CoIndex<Course, CourseCriteriaBuilder> {
 
     public CourseIndex() {
     }

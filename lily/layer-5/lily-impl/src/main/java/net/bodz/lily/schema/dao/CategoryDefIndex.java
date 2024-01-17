@@ -9,7 +9,7 @@ import net.bodz.lily.schema.CategoryDef;
 */
 @ObjectType(CategoryDef.class)
 public class CategoryDefIndex
-        extends CoIndex<CategoryDef, CategoryDefMask> {
+        extends CoIndex<CategoryDef, CategoryDefCriteriaBuilder> {
 
     public CategoryDefIndex() {
     }

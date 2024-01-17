@@ -9,7 +9,7 @@ import net.bodz.violet.issue.IssuePhase;
 */
 @ObjectType(IssuePhase.class)
 public class IssuePhaseIndex
-        extends CoIndex<IssuePhase, IssuePhaseMask> {
+        extends CoIndex<IssuePhase, IssuePhaseCriteriaBuilder> {
 
     public IssuePhaseIndex() {
     }

@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactBackref;
 
 public interface ArtifactBackrefMapper
         extends
-            IEntityMapper<ArtifactBackref, ArtifactBackrefMask> {
+            IEntityMapper<ArtifactBackref, ArtifactBackrefCriteriaBuilder> {
 
 }

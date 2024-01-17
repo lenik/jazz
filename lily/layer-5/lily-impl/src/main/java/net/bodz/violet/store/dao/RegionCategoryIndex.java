@@ -9,7 +9,7 @@ import net.bodz.violet.store.RegionCategory;
  */
 @ObjectType(RegionCategory.class)
 public class RegionCategoryIndex
-        extends CoCategoryIndex<RegionCategory, RegionCategoryMask> {
+        extends CoCategoryIndex<RegionCategory, RegionCategoryCriteriaBuilder> {
 
     public RegionCategoryIndex() {
     }

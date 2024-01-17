@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostCategoryMapperTest
-        extends AbstractTableTest<PostCategory, PostCategoryMask, PostCategoryMapper> {
+        extends AbstractTableTest<PostCategory, PostCategoryCriteriaBuilder, PostCategoryMapper> {
 
     @Override
     public PostCategory buildSample()

@@ -11,7 +11,7 @@ import net.bodz.violet.shop.SalesOrder;
 import net.bodz.violet.shop.SalesOrderSamples;
 
 public class SalesOrderMapperTest
-        extends AbstractTableTest<SalesOrder, SalesOrderMask, SalesOrderMapper> {
+        extends AbstractTableTest<SalesOrder, SalesOrderCriteriaBuilder, SalesOrderMapper> {
 
     @Override
     public SalesOrder buildSample()

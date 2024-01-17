@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleBackref;
 */
 @ObjectType(ArticleBackref.class)
 public class ArticleBackrefIndex
-        extends CoIndex<ArticleBackref, ArticleBackrefMask> {
+        extends CoIndex<ArticleBackref, ArticleBackrefCriteriaBuilder> {
 
     public ArticleBackrefIndex() {
     }

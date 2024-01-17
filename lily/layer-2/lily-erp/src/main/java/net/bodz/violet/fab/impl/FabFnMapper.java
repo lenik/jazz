@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabFn;
  * @mapper.xml FabFnMapper.xml
  */
 public interface FabFnMapper
-        extends IEntityMapper<FabFn, FabFnMask> {
+        extends IEntityMapper<FabFn, FabFnCriteriaBuilder> {
 
 }

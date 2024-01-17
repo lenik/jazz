@@ -7,7 +7,7 @@ import net.bodz.violet.issue.IssueTag;
 import net.bodz.violet.issue.IssueTagSamples;
 
 public class IssueTagMapperTest
-        extends AbstractTableTest<IssueTag, IssueTagMask, IssueTagMapper> {
+        extends AbstractTableTest<IssueTag, IssueTagCriteriaBuilder, IssueTagMapper> {
 
     @Override
     public IssueTag buildSample()

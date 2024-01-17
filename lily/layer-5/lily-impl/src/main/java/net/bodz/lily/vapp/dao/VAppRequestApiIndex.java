@@ -9,7 +9,7 @@ import net.bodz.lily.vapp.VAppRequestApi;
 */
 @ObjectType(VAppRequestApi.class)
 public class VAppRequestApiIndex
-        extends CoIndex<VAppRequestApi, VAppRequestApiMask> {
+        extends CoIndex<VAppRequestApi, VAppRequestApiCriteriaBuilder> {
 
     public VAppRequestApiIndex() {
     }

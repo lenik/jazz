@@ -9,7 +9,7 @@ import net.bodz.lily.security.UserType;
 */
 @ObjectType(UserType.class)
 public class UserTypeIndex
-        extends CoIndex<UserType, UserTypeMask> {
+        extends CoIndex<UserType, UserTypeCriteriaBuilder> {
 
     public UserTypeIndex() {
     }

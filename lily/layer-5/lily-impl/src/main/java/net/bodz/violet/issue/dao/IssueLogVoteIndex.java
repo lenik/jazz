@@ -6,6 +6,6 @@ import net.bodz.violet.issue.IssueLogVote;
 
 @ObjectType(IssueLogVote.class)
 public class IssueLogVoteIndex
-        extends CoIndex<IssueLogVote, IssueLogVoteMask> {
+        extends CoIndex<IssueLogVote, IssueLogVoteCriteriaBuilder> {
 
 }

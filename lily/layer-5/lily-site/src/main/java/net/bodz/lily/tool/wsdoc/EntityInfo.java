@@ -28,21 +28,21 @@ public class EntityInfo
 
     ModuleIndexer indexer;
 
-    MaskInfo maskInfo;
+    CriteriaBuilderInfo maskInfo;
     IndexInfo indexInfo;
 
     ReferenceMap refmap = new ReferenceMap();
 
     Set<EntityInfo> dependencies = new LinkedHashSet<>();
 
-    public EntityInfo(Class<?> clazz, MaskInfo maskInfo) {
+    public EntityInfo(Class<?> clazz, CriteriaBuilderInfo maskInfo) {
         super(clazz);
         if (maskInfo == null)
             throw new NullPointerException("maskInfo");
         this.maskInfo = maskInfo;
     }
 
-    public MaskInfo getMaskInfo() {
+    public CriteriaBuilderInfo getCriteriaBuilderInfo() {
         return maskInfo;
     }
 

@@ -7,7 +7,7 @@ import net.bodz.violet.store.RegionCategory;
 import net.bodz.violet.store.RegionCategorySamples;
 
 public class RegionCategoryMapperTest
-        extends AbstractTableTest<RegionCategory, RegionCategoryMask, RegionCategoryMapper> {
+        extends AbstractTableTest<RegionCategory, RegionCategoryCriteriaBuilder, RegionCategoryMapper> {
 
     @Override
     public RegionCategory buildSample()

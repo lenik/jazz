@@ -9,7 +9,7 @@ import net.bodz.violet.store.Region;
 */
 @ObjectType(Region.class)
 public class RegionIndex
-        extends CoIndex<Region, RegionMask> {
+        extends CoIndex<Region, RegionCriteriaBuilder> {
 
     public RegionIndex() {
     }

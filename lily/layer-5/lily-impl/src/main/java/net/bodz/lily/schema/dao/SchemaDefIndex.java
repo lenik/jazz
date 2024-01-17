@@ -9,7 +9,7 @@ import net.bodz.lily.schema.SchemaDef;
 */
 @ObjectType(SchemaDef.class)
 public class SchemaDefIndex
-        extends CoIndex<SchemaDef, SchemaDefMask> {
+        extends CoIndex<SchemaDef, SchemaDefCriteriaBuilder> {
 
     public SchemaDefIndex() {
     }

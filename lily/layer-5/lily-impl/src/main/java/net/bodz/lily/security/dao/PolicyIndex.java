@@ -9,7 +9,7 @@ import net.bodz.lily.security.Policy;
 */
 @ObjectType(Policy.class)
 public class PolicyIndex
-        extends CoIndex<Policy, PolicyMask> {
+        extends CoIndex<Policy, PolicyCriteriaBuilder> {
 
     public PolicyIndex() {
     }

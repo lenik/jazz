@@ -5,6 +5,6 @@ import net.bodz.violet.store.RegionTag;
 
 public interface RegionTagMapper
         extends
-            IEntityMapper<RegionTag, RegionTagMask> {
+            IEntityMapper<RegionTag, RegionTagCriteriaBuilder> {
 
 }

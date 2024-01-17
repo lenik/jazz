@@ -9,7 +9,7 @@ import net.bodz.violet.store.OffStoreItem;
 */
 @ObjectType(OffStoreItem.class)
 public class OffStoreItemIndex
-        extends CoIndex<OffStoreItem, OffStoreItemMask> {
+        extends CoIndex<OffStoreItem, OffStoreItemCriteriaBuilder> {
 
     public OffStoreItemIndex() {
     }

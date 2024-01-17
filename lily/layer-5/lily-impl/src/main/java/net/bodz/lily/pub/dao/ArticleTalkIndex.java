@@ -9,7 +9,7 @@ import net.bodz.lily.pub.ArticleTalk;
 */
 @ObjectType(ArticleTalk.class)
 public class ArticleTalkIndex
-        extends CoIndex<ArticleTalk, ArticleTalkMask> {
+        extends CoIndex<ArticleTalk, ArticleTalkCriteriaBuilder> {
 
     public ArticleTalkIndex() {
     }

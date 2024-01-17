@@ -7,6 +7,6 @@ import net.bodz.violet.issue.IssueLogVote;
  * @mapper.xml IssueLogVoteMapper.xml
  */
 public interface IssueLogVoteMapper
-        extends IEntityMapper<IssueLogVote, IssueLogVoteMask> {
+        extends IEntityMapper<IssueLogVote, IssueLogVoteCriteriaBuilder> {
 
 }

@@ -7,7 +7,7 @@ import net.bodz.violet.tran.TransportPhase;
 import net.bodz.violet.tran.TransportPhaseSamples;
 
 public class TransportPhaseMapperTest
-        extends AbstractTableTest<TransportPhase, TransportPhaseMask, TransportPhaseMapper> {
+        extends AbstractTableTest<TransportPhase, TransportPhaseCriteriaBuilder, TransportPhaseMapper> {
 
     @Override
     public TransportPhase buildSample()

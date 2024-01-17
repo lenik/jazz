@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactPhase;
 
 public interface ArtifactPhaseMapper
         extends
-            IEntityMapper<ArtifactPhase, ArtifactPhaseMask> {
+            IEntityMapper<ArtifactPhase, ArtifactPhaseCriteriaBuilder> {
 
 }

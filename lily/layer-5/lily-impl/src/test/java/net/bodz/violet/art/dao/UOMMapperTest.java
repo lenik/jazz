@@ -5,7 +5,7 @@ import net.bodz.violet.art.UOM;
 import net.bodz.violet.art.UOMSamples;
 
 public class UOMMapperTest
-        extends AbstractTableTest<UOM, UOMMask, UOMMapper> {
+        extends AbstractTableTest<UOM, UOMCriteriaBuilder, UOMMapper> {
 
     @Override
     public UOM buildSample()

@@ -5,7 +5,7 @@ import net.bodz.lily.vapp.VApiCredit;
 import net.bodz.lily.vapp.VApiCreditSamples;
 
 public class VApiCreditMapperTest
-        extends AbstractTableTest<VApiCredit, VApiCreditMask, VApiCreditMapper> {
+        extends AbstractTableTest<VApiCredit, VApiCreditCriteriaBuilder, VApiCreditMapper> {
 
     @Override
     public VApiCredit buildSample()

@@ -13,9 +13,9 @@ import net.bodz.lily.security.UserOtherId;
 import net.bodz.lily.security.UserOtherIdTypes;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.dao.UserMapper;
-import net.bodz.lily.security.dao.UserMask;
+import net.bodz.lily.security.dao.UserCriteriaBuilder;
 import net.bodz.lily.security.dao.UserOtherIdMapper;
-import net.bodz.lily.security.dao.UserOtherIdMask;
+import net.bodz.lily.security.dao.UserOtherIdCriteriaBuilder;
 import net.bodz.lily.security.dao.UserSecretMapper;
 import net.bodz.lily.security.login.LoginManager;
 import net.bodz.lily.security.login.LoginResult;
@@ -40,7 +40,7 @@ public class UserOps_PhoneId
         LoginResult resp = new LoginResult();
         // 1. check if phone is in use
         List<UserOtherId> oids = oidMapper.filter(//
-                new UserOtherIdMask().otherId(phone), SelectOptions.ALL);
+                new UserOtherIdCriteriaBuilder().otherId(phone), SelectOptions.ALL);
         if (!oids.isEmpty())
             return resp.fail("Phone is already used.");
 
@@ -51,7 +51,7 @@ public class UserOps_PhoneId
             String name = "user-" + phone;
             if (dup != 0)
                 name += "-" + dup;
-            List<User> dups = userMapper.filter(new UserMask().name(name), SelectOptions.ALL);
+            List<User> dups = userMapper.filter(new UserCriteriaBuilder().name(name), SelectOptions.ALL);
             if (dups.isEmpty()) {
                 user.setUniqName(name);
                 break;
@@ -81,7 +81,7 @@ public class UserOps_PhoneId
         LoginResult resp = new LoginResult();
         // 1. find the corresponding user
         List<UserOtherId> oids = oidMapper.filter(//
-                new UserOtherIdMask().otherId(phone), SelectOptions.ALL);
+                new UserOtherIdCriteriaBuilder().otherId(phone), SelectOptions.ALL);
         if (oids.isEmpty())
             return resp.fail("Phone number isn't used by any user.");
         if (oids.size() > 1)
@@ -131,7 +131,7 @@ public class UserOps_PhoneId
             return resp;
 
         try {
-            oidMapper.deleteFor(new UserOtherIdMask()//
+            oidMapper.deleteFor(new UserOtherIdCriteriaBuilder()//
                     .user(user).otherId(phone));
         } catch (Exception e) {
             return resp.fail(e, "Failed to delete: " + e.getMessage());
@@ -150,7 +150,7 @@ public class UserOps_PhoneId
     boolean checkInUse(IMutableJsonResponse resp, String phone) {
         // 2. check if the phone is in use.
         List<UserOtherId> oids = oidMapper.filter(//
-                new UserOtherIdMask().otherId(phone), SelectOptions.ALL);
+                new UserOtherIdCriteriaBuilder().otherId(phone), SelectOptions.ALL);
         if (oids.isEmpty())
             return false;
 

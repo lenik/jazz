@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabStdProcessInput;
 
 @ObjectType(FabStdProcessInput.class)
 public class FabStdProcessInputIndex
-        extends CoIndex<FabStdProcessInput, FabStdProcessInputMask> {
+        extends CoIndex<FabStdProcessInput, FabStdProcessInputCriteriaBuilder> {
 
 }

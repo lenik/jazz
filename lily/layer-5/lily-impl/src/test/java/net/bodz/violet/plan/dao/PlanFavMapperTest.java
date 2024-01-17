@@ -6,7 +6,7 @@ import net.bodz.violet.plan.PlanFav;
 import net.bodz.violet.plan.PlanFavSamples;
 
 public class PlanFavMapperTest
-        extends AbstractTableTest<PlanFav, PlanFavMask, PlanFavMapper> {
+        extends AbstractTableTest<PlanFav, PlanFavCriteriaBuilder, PlanFavMapper> {
 
     @Override
     public PlanFav buildSample()

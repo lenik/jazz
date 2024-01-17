@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostFav;
 
 public interface PostFavMapper
         extends
-            IEntityMapper<PostFav, PostFavMask> {
+            IEntityMapper<PostFav, PostFavCriteriaBuilder> {
 
 }

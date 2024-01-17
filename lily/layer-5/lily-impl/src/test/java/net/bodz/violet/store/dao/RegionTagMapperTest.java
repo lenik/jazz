@@ -7,7 +7,7 @@ import net.bodz.violet.store.RegionTag;
 import net.bodz.violet.store.RegionTagSamples;
 
 public class RegionTagMapperTest
-        extends AbstractTableTest<RegionTag, RegionTagMask, RegionTagMapper> {
+        extends AbstractTableTest<RegionTag, RegionTagCriteriaBuilder, RegionTagMapper> {
 
     @Override
     public RegionTag buildSample()

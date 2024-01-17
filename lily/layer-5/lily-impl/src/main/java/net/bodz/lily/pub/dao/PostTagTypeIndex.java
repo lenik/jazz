@@ -9,7 +9,7 @@ import net.bodz.lily.pub.PostTagType;
 */
 @ObjectType(PostTagType.class)
 public class PostTagTypeIndex
-        extends CoIndex<PostTagType, PostTagTypeMask> {
+        extends CoIndex<PostTagType, PostTagTypeCriteriaBuilder> {
 
     public PostTagTypeIndex() {
     }

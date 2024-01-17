@@ -9,7 +9,7 @@ import net.bodz.violet.edu.TestAnswer;
 */
 @ObjectType(TestAnswer.class)
 public class TestAnswerIndex
-        extends CoIndex<TestAnswer, TestAnswerMask> {
+        extends CoIndex<TestAnswer, TestAnswerCriteriaBuilder> {
 
     public TestAnswerIndex() {
     }

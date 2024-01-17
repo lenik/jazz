@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostCategory;
 
 public interface PostCategoryMapper
         extends
-            IEntityMapper<PostCategory, PostCategoryMask> {
+            IEntityMapper<PostCategory, PostCategoryCriteriaBuilder> {
 
 }

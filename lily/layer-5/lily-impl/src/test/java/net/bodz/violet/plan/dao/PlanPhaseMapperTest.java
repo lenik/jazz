@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanPhase;
 import net.bodz.violet.plan.PlanPhaseSamples;
 
 public class PlanPhaseMapperTest
-        extends AbstractTableTest<PlanPhase, PlanPhaseMask, PlanPhaseMapper> {
+        extends AbstractTableTest<PlanPhase, PlanPhaseCriteriaBuilder, PlanPhaseMapper> {
 
     @Override
     public PlanPhase buildSample()

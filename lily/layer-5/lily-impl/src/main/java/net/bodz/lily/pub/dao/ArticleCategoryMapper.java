@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleCategory;
 
 public interface ArticleCategoryMapper
         extends
-            IEntityMapper<ArticleCategory, ArticleCategoryMask> {
+            IEntityMapper<ArticleCategory, ArticleCategoryCriteriaBuilder> {
 
 }

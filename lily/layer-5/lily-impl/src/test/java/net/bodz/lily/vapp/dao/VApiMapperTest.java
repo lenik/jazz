@@ -5,7 +5,7 @@ import net.bodz.lily.vapp.VApi;
 import net.bodz.lily.vapp.VApiSamples;
 
 public class VApiMapperTest
-        extends AbstractTableTest<VApi, VApiMask, VApiMapper> {
+        extends AbstractTableTest<VApi, VApiCriteriaBuilder, VApiMapper> {
 
     @Override
     public VApi buildSample()

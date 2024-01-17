@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabTaskItem;
 
 @ObjectType(FabTaskItem.class)
 public class FabTaskItemIndex
-        extends CoIndex<FabTaskItem, FabTaskItemMask> {
+        extends CoIndex<FabTaskItem, FabTaskItemCriteriaBuilder> {
 
 }

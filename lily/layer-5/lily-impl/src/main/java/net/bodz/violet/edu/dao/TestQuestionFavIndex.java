@@ -9,7 +9,7 @@ import net.bodz.violet.edu.TestQuestionFav;
 */
 @ObjectType(TestQuestionFav.class)
 public class TestQuestionFavIndex
-        extends CoIndex<TestQuestionFav, TestQuestionFavMask> {
+        extends CoIndex<TestQuestionFav, TestQuestionFavCriteriaBuilder> {
 
     public TestQuestionFavIndex() {
     }

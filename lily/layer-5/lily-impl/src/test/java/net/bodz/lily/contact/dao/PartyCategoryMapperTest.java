@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PartyCategoryMapperTest
-        extends AbstractTableTest<PartyCategory, PartyCategoryMask, PartyCategoryMapper> {
+        extends AbstractTableTest<PartyCategory, PartyCategoryCriteriaBuilder, PartyCategoryMapper> {
 
     @Override
     public PartyCategory buildSample()

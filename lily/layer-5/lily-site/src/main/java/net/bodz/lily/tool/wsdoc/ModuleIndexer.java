@@ -43,7 +43,7 @@ public class ModuleIndexer
     private EntityIndex entityIndex = new EntityIndex(this);
 
     private Map<String, EntityInfo> nameEntity = new HashMap<>();
-    private Map<String, MaskInfo> nameMask = new HashMap<>();
+    private Map<String, CriteriaBuilderInfo> nameCriteriaBuilder = new HashMap<>();
 
     // private Map<String, MapperInfo> nameMapper= new HashMap<>();
     // private Map<String, IndexInfo> nameIndex = new HashMap<>();
@@ -84,15 +84,15 @@ public class ModuleIndexer
             if (entity.parent == null)
                 entity.parent = loadRec(entity.declaredClass.getSuperclass());
 
-        for (MaskInfo mask : new ArrayList<>(nameMask.values()))
+        for (CriteriaBuilderInfo mask : new ArrayList<>(nameCriteriaBuilder.values()))
             if (mask.parent == null)
-                mask.parent = loadMaskRec(mask.declaredClass.getSuperclass());
+                mask.parent = loadCriteriaBuilderRec(mask.declaredClass.getSuperclass());
 
         // parse properties
         for (EntityInfo entity : nameEntity.values())
             entity.parseUptoParent(this);
 
-        for (MaskInfo mask : nameMask.values())
+        for (CriteriaBuilderInfo mask : nameCriteriaBuilder.values())
             mask.parseUptoParent(this);
 
         // analyze dependencies
@@ -139,7 +139,7 @@ public class ModuleIndexer
         String fqcn = entityType.getName();
         EntityInfo entity = nameEntity.get(fqcn);
         if (entity == null) {
-            MaskInfo mask = loadMaskRec(maskType);
+            CriteriaBuilderInfo mask = loadCriteriaBuilderRec(maskType);
             if (mask == null)
                 throw new NullPointerException("mask");
 
@@ -167,7 +167,7 @@ public class ModuleIndexer
         if (entity != null)
             return entity;
 
-        String maskName = fqcn + "Mask";
+        String maskName = fqcn + "CriteriaBuilder";
         Class<?> maskClass = null;
         try {
             maskClass = clazz.getClassLoader().loadClass(maskName);
@@ -179,20 +179,20 @@ public class ModuleIndexer
         return entity;
     }
 
-    MaskInfo loadMaskRec(Class<?> maskClass) {
+    CriteriaBuilderInfo loadCriteriaBuilderRec(Class<?> maskClass) {
         if (maskClass == null)
             return null;
         if (maskClass == Object.class)
             return null;
 
         String fqcn = maskClass.getName();
-        MaskInfo mask = nameMask.get(fqcn);
+        CriteriaBuilderInfo mask = nameCriteriaBuilder.get(fqcn);
         if (mask != null)
             return mask;
 
-        mask = new MaskInfo(maskClass);
-        mask.parent = loadMaskRec(maskClass.getSuperclass());
-        nameMask.put(fqcn, mask);
+        mask = new CriteriaBuilderInfo(maskClass);
+        mask.parent = loadCriteriaBuilderRec(maskClass.getSuperclass());
+        nameCriteriaBuilder.put(fqcn, mask);
         return mask;
     }
 

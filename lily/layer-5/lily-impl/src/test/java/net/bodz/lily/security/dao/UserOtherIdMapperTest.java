@@ -5,7 +5,7 @@ import net.bodz.lily.security.UserOtherIdSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class UserOtherIdMapperTest
-        extends AbstractTableTest<UserOtherId, UserOtherIdMask, UserOtherIdMapper> {
+        extends AbstractTableTest<UserOtherId, UserOtherIdCriteriaBuilder, UserOtherIdMapper> {
 
     @Override
     public UserOtherId buildSample()

@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabOrderItem;
 
 @ObjectType(FabOrderItem.class)
 public class FabOrderItemIndex
-        extends CoIndex<FabOrderItem, FabOrderItemMask> {
+        extends CoIndex<FabOrderItem, FabOrderItemCriteriaBuilder> {
 
 }

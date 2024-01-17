@@ -9,7 +9,7 @@ import net.bodz.lily.pub.PostBackref;
 */
 @ObjectType(PostBackref.class)
 public class PostBackrefIndex
-        extends CoIndex<PostBackref, PostBackrefMask> {
+        extends CoIndex<PostBackref, PostBackrefCriteriaBuilder> {
 
     public PostBackrefIndex() {
     }

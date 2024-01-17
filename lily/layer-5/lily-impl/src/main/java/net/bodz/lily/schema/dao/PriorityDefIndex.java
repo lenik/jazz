@@ -6,6 +6,6 @@ import net.bodz.lily.schema.PriorityDef;
 
 @ObjectType(PriorityDef.class)
 public class PriorityDefIndex
-        extends CoIndex<PriorityDef, PriorityDefMask> {
+        extends CoIndex<PriorityDef, PriorityDefCriteriaBuilder> {
 
 }

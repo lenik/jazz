@@ -14,7 +14,7 @@ import net.bodz.lily.security.UserOtherIdType;
  */
 public interface UserMapper
         extends
-            IEntityMapper<User, UserMask> {
+            IEntityMapper<User> {
 
     User selectByName(@Param("name") String name);
 

@@ -5,7 +5,7 @@ import net.bodz.lily.contact.PersonRoleSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PersonRoleMapperTest
-        extends AbstractTableTest<PersonRole, PersonRoleMask, PersonRoleMapper> {
+        extends AbstractTableTest<PersonRole, PersonRoleCriteriaBuilder, PersonRoleMapper> {
 
     @Override
     public PersonRole buildSample()

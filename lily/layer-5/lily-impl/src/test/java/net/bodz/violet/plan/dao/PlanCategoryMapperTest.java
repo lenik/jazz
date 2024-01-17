@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanCategory;
 import net.bodz.violet.plan.PlanCategorySamples;
 
 public class PlanCategoryMapperTest
-        extends AbstractTableTest<PlanCategory, PlanCategoryMask, PlanCategoryMapper> {
+        extends AbstractTableTest<PlanCategory, PlanCategoryCriteriaBuilder, PlanCategoryMapper> {
 
     @Override
     public PlanCategory buildSample()

@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ZoneMapperTest
-        extends AbstractTableTest<Zone, ZoneMask, ZoneMapper> {
+        extends AbstractTableTest<Zone, ZoneCriteriaBuilder, ZoneMapper> {
 
     @Override
     public Zone buildSample()

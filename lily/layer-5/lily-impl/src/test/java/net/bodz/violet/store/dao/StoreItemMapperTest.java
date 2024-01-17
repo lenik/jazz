@@ -8,7 +8,7 @@ import net.bodz.violet.store.StoreItem;
 import net.bodz.violet.store.StoreItemSamples;
 
 public class StoreItemMapperTest
-        extends AbstractTableTest<StoreItem, StoreItemMask, StoreItemMapper> {
+        extends AbstractTableTest<StoreItem, StoreItemCriteriaBuilder, StoreItemMapper> {
 
     @Override
     public StoreItem buildSample()

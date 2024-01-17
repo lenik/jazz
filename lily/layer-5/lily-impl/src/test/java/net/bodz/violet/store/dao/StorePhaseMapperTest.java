@@ -7,7 +7,7 @@ import net.bodz.violet.store.StorePhase;
 import net.bodz.violet.store.StorePhaseSamples;
 
 public class StorePhaseMapperTest
-        extends AbstractTableTest<StorePhase, StorePhaseMask, StorePhaseMapper> {
+        extends AbstractTableTest<StorePhase, StorePhaseMapper> {
 
     @Override
     public StorePhase buildSample()

@@ -5,7 +5,7 @@ import net.bodz.lily.vapp.VApiLog;
 import net.bodz.lily.vapp.VApiLogSamples;
 
 public class VApiLogMapperTest
-        extends AbstractTableTest<VApiLog, VApiLogMask, VApiLogMapper> {
+        extends AbstractTableTest<VApiLog, VApiLogCriteriaBuilder, VApiLogMapper> {
 
     @Override
     public VApiLog buildSample()

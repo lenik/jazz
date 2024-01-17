@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(Storage.class)
 public class StorageIndex
-        extends CoIndex<Storage, StorageMask> {
+        extends CoIndex<Storage, StorageCriteriaBuilder> {
 
     public StorageIndex() {
     }

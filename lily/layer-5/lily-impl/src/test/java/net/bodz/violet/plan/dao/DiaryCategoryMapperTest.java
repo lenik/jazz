@@ -7,7 +7,7 @@ import net.bodz.violet.plan.DiaryCategory;
 import net.bodz.violet.plan.DiaryCategorySamples;
 
 public class DiaryCategoryMapperTest
-        extends AbstractTableTest<DiaryCategory, DiaryCategoryMask, DiaryCategoryMapper> {
+        extends AbstractTableTest<DiaryCategory, DiaryCategoryCriteriaBuilder, DiaryCategoryMapper> {
 
     @Override
     public DiaryCategory buildSample()

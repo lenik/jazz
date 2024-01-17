@@ -9,7 +9,7 @@ import net.bodz.violet.shop.ShopItemCategory;
 */
 @ObjectType(ShopItemCategory.class)
 public class ShopItemCategoryIndex
-        extends CoCategoryIndex<ShopItemCategory, ShopItemCategoryMask> {
+        extends CoCategoryIndex<ShopItemCategory, ShopItemCategoryCriteriaBuilder> {
 
     public ShopItemCategoryIndex() {
     }

@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactParameter;
  */
 @ObjectType(ArtifactParameter.class)
 public class ArtifactParameterIndex
-        extends CoIndex<ArtifactParameter, ArtifactParameterMask> {
+        extends CoIndex<ArtifactParameter, ArtifactParameterCriteriaBuilder> {
 
     public ArtifactParameterIndex() {
     }
