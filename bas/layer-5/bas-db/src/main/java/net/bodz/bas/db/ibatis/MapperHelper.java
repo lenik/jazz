@@ -2,39 +2,28 @@ package net.bodz.bas.db.ibatis;
 
 import java.util.List;
 
-import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.meta.codegen.ExcludedFromIndex;
+import net.bodz.lily.criterion.ICriterion;
 
 @ExcludedFromIndex
-public class MapperHelper<T, M>
-        extends Dummy<T, M> {
+public class MapperHelper<T>
+        extends Dummy<T> {
 
     Class<T> entityType;
-    Class<M> maskType;
 
     public MapperHelper() {
-        maskType = TypeParam.infer1(getClass(), MapperHelper.class, 1);
     }
 
-    public MapperHelper(Class<T> entityType, Class<M> maskType) {
-        this.maskType = maskType;
-    }
-
-    @Override
-    public M mask() {
-        try {
-            return maskType.newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    public MapperHelper(Class<T> entityType) {
+        this.entityType = entityType;
     }
 
 }
 
-class Dummy<T, M>
+class Dummy<T>
         implements
-            IGenericMapper<T, M> {
+            IGenericMapper<T> {
 
     @Override
     public List<T> all(SelectOptions opt) {
@@ -42,7 +31,7 @@ class Dummy<T, M>
     }
 
     @Override
-    public List<T> filter(M mask, SelectOptions opt) {
+    public List<T> filter(ICriterion mask, SelectOptions opt) {
         return null;
     }
 
@@ -57,12 +46,12 @@ class Dummy<T, M>
     }
 
     @Override
-    public long deleteFor(M mask) {
+    public long deleteFor(ICriterion mask) {
         return 0;
     }
 
     @Override
-    public long count(M mask) {
+    public long count(ICriterion mask) {
         return 0;
     }
 

@@ -126,8 +126,8 @@ public abstract class CoObjectIndex<T extends CoObject>
             Long id = Long.parseLong(name);
 
             Class<?> entityClass = getObjectType();
-            Class<IEntityMapper<?, CoObjectCriteriaBuilder>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
-            IEntityMapper<?, CoObjectCriteriaBuilder> mapper = getDataContext().getMapper(mapperClass);
+            Class<IEntityMapper<?>> mapperClass = IMapper.fn.requireMapperClass(entityClass);
+            IEntityMapper<?> mapper = getDataContext().getMapper(mapperClass);
             if (mapper == null)
                 throw new IllegalUsageException("No mapper for " + entityClass);
 

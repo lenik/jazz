@@ -1,6 +1,10 @@
 #\import lily.security
 
 column-property {
+    art:                artifactId
+    model:              modelName
+    validsince:         validSince
+    validuntil:         validUntil
 }
 
 class-map {
@@ -23,6 +27,7 @@ class-map {
 table-name {
     art:                net.bodz.violet.art.Artifact
     artcat:             net.bodz.violet.art.ArtifactCategory
+    artmodel:           net.bodz.violet.art.ArtifactModel
     artparm:            net.bodz.violet.art.ArtifactParameter
     artphase:           net.bodz.violet.art.ArtifactPhase
     arttag:             net.bodz.violet.art.ArtifactTag
@@ -42,8 +47,5 @@ table art {
     }
     column rfid {
         javaName: rfidCode
-    }
-    column model {
-        javaName: modelName
     }
 }

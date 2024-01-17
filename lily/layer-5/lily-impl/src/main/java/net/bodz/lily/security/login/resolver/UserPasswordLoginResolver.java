@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.bodz.bas.crypto.trans.FlyingIndex;
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
@@ -53,7 +52,7 @@ public class UserPasswordLoginResolver
         }
 
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretCriteriaBuilder().userId(user.getId()), SelectOptions.ALL);
+                new UserSecretCriteriaBuilder().userId.eq(user.getId()).get());
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", user);
 

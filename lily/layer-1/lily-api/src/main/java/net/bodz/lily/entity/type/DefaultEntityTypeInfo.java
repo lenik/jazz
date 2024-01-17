@@ -12,12 +12,15 @@ import java.util.List;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
+import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Identifier;
+import net.bodz.lily.model.base.StructRowCriteriaBuilder;
 
 public class DefaultEntityTypeInfo
         implements
@@ -26,7 +29,7 @@ public class DefaultEntityTypeInfo
     Class<?> entityClass;
     Class<?> idClass;
     Class<?> mapperClass;
-//    Class<?> criteriaClass;
+    Class<?> criteriaBuilderClass;
 
     ColumnProperty[] idProperties;
 
@@ -34,7 +37,7 @@ public class DefaultEntityTypeInfo
         this.entityClass = entityClass;
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
-//        criteriaClass = CoObjectCriteriaBuilder.findCriteriaBuilderClass(entityClass);
+        criteriaBuilderClass = StructRowCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
         if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
             BeanInfo beanInfo;
@@ -76,10 +79,21 @@ public class DefaultEntityTypeInfo
         return mapperClass;
     }
 
-//    @Override
-//    public Class<?> getCrtieriaClass() {
-//        return criteriaClass;
-//    }
+    @Override
+    public Class<?> getCrtieriaBuilderClass() {
+        return criteriaBuilderClass;
+    }
+
+    @Override
+    public ICriteriaBuilder<?> newCriteriaBuilder() {
+        if (criteriaBuilderClass == null)
+            throw new NullPointerException("criteriaBuilderClass");
+        try {
+            return (ICriteriaBuilder<?>) criteriaBuilderClass.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new IllegalUsageException("can't instantiate " + criteriaBuilderClass, e);
+        }
+    }
 
     @Override
     public int getIdColumnCount() {

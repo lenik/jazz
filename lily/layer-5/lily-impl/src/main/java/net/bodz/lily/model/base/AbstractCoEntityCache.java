@@ -26,7 +26,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
     DataContext dataContext;
     Class<K> idType;
 
-    IEntityMapper<T, ?> mapper;
+    IEntityMapper<T> mapper;
     int batch = 100;
 
     protected boolean indexUniqName = false;
@@ -43,15 +43,15 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
         this.idType = IdFn._getIdType(entityClass);
     }
 
-    protected IEntityMapper<T, ?> getMapper() {
+    protected IEntityMapper<T> getMapper() {
         if (mapper == null) {
-            Class<IEntityMapper<T, ?>> mapperClass = IMapper.fn.getMapperClass(objectClass);
+            Class<IEntityMapper<T>> mapperClass = IMapper.fn.getMapperClass(objectClass);
             mapper = dataContext.getMapper(mapperClass);
         }
         return mapper;
     }
 
-    public void setMapper(IEntityMapper<T, ?> mapper) {
+    public void setMapper(IEntityMapper<T> mapper) {
         this.mapper = mapper;
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
 
     @Override
     protected void _load() {
-        IEntityMapper<T, ?> mapper = getMapper();
+        IEntityMapper<T> mapper = getMapper();
         int n = 0;
         for (T obj : mapper.all(null)) {
             if (n % batch == 0) {

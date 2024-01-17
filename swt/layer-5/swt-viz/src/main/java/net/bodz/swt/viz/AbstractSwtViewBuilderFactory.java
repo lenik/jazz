@@ -44,11 +44,13 @@ public abstract class AbstractSwtViewBuilderFactory
         return swtClassResolvers;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> ISwtViewBuilder<T> getViewBuilder(Class<? extends T> type, String... features) {
         return (ISwtViewBuilder<T>) super.getViewBuilder(type);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> ISwtViewBuilder<T> getViewBuilder(IUiRef<? extends T> ref, String... features) {
         return (ISwtViewBuilder<T>) super.getViewBuilder(ref);

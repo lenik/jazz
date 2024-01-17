@@ -73,9 +73,9 @@ public class EntityInfo
     }
 
     @Override
-    protected void parse(IType declaredType, ModuleIndexer indexer) {
+    protected void initType(IType declaredType, ModuleIndexer indexer) {
         for (IProperty property : declaredType.getProperties()) {
-            addProperty(property);
+            checkToAddProperty(property);
             parseIfAnyRef(property, indexer);
         }
     }

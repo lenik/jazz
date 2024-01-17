@@ -10,7 +10,13 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.range.LongRange;
-import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
+import net.bodz.bas.t.variant.MutableVariant;
+import net.bodz.lily.criterion.CompareMode;
+import net.bodz.lily.criterion.FieldCompare;
+import net.bodz.lily.criterion.Junction;
+import net.bodz.lily.entity.IdColumn;
+import net.bodz.lily.entity.type.EntityTypes;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.util.IRandomPicker;
 
 public class TableProfiles
@@ -23,23 +29,23 @@ public class TableProfiles
         this.context = context;
     }
 
-    public <entity_t, mask_t extends CoObjectCriteriaBuilder, mapper_t extends IGenericMapper<entity_t, mask_t>> //
+    @Override
+    public <entity_t, mapper_t extends IGenericMapper<entity_t>> //
     entity_t pickAny(Class<mapper_t> mapperClass, String tableName) {
         List<entity_t> some = pickSome(mapperClass, tableName, 1);
         return some.isEmpty() ? null : some.get(0);
     }
 
-    public <entity_t, mask_t extends CoObjectCriteriaBuilder, mapper_t extends IGenericMapper<entity_t, mask_t>> //
+    @Override
+    public <entity_t, mapper_t extends IGenericMapper<entity_t>> //
     List<entity_t> pickSome(Class<mapper_t> mapperClass, String tableName, int limit) {
-        Class<mask_t> maskClass = TypeParam.infer1(mapperClass, IEntityMapper.class, 1);
-
         mapper_t mapper = context.requireMapper(mapperClass);
         ProfileMapper prof = context.requireMapper(ProfileMapper.class);
 
         LongRange range = prof.findIdRange(tableName);
         if (range == null)
             return Collections.emptyList();
-        range.end++; // so exclusive.
+        range.end++; // exclusive.
 
         Random random = new Random();
         long w = range.end - range.start;
@@ -47,19 +53,28 @@ public class TableProfiles
         if (any < 0)
             any += w;
         any += range.start;
+        MutableVariant vAny = new MutableVariant(any);
 
-        mask_t m;
-        try {
-            m = maskClass.newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        Class<entity_t> enitityClass = TypeParam.infer1(mapperClass, IEntityMapper.class, 0);
+
+        IEntityTypeInfo typeInfo = EntityTypes.getTypeInfo(enitityClass);
+        Class<?> idClass = typeInfo.getIdClass();
+
+        // ICriteriaBuilder<?> criteriaBuilder = typeInfo.newCriteriaBuilder();
+
+        IdColumn aIdColumn = enitityClass.getAnnotation(IdColumn.class);
+        String[] idColumns = aIdColumn.value();
+
+        Junction j = new Junction();
+        for (String idColumn : idColumns) {
+            j.add(new FieldCompare<Object>(idColumn, false, //
+                    CompareMode.LESS_THAN, vAny.convert(idClass)));
         }
-//        TODO m.getIdRange().setEnd(any + 1);
 
         SelectOptions opts = new SelectOptions();
         opts.order("id", false);
         opts.page(limit, 0);
-        List<entity_t> list = mapper.filter(m, opts);
+        List<entity_t> list = mapper.filter(j, opts);
         return list;
     }
 

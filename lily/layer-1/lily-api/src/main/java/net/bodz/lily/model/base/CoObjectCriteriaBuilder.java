@@ -21,6 +21,13 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     public final IntegerField ownerGroupId = integer("gid");
     public final IntegerField acl = integer("acl");
 
+    public void query(String text) {
+        String pattern = "%" + text + "%";
+        uniqName.like(pattern);
+        label.like(pattern);
+        description.like(pattern);
+    }
+
     /**
      * XXX mybatis global vars won't work.
      */

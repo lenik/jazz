@@ -1,12 +1,11 @@
 package net.bodz.violet.art;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.CoMomentInterval;
-import net.bodz.lily.t.struct.ValidControl;
+import net.bodz.lily.t.struct.IValidControl;
 
-@IdType(Integer.class)
 public class ArtifactModel
-        extends CoMomentInterval<Integer> {
+        extends _ArtifactModel_stuff
+        implements
+            IValidControl {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,31 +16,11 @@ public class ArtifactModel
         String priceStrategy = "priceStrategy";
     }
 
-    ArtifactModel obsolete;
-
-    Artifact artifact;
     String modelName;
 
-    final ValidControl validControl = new ValidControl();
     final FabCost cost = new FabCost();
 
     public ArtifactModel() {
-    }
-
-    public ArtifactModel getObsolete() {
-        return obsolete;
-    }
-
-    public void setObsolete(ArtifactModel obsolete) {
-        this.obsolete = obsolete;
-    }
-
-    public Artifact getArtifact() {
-        return artifact;
-    }
-
-    public void setArtifact(Artifact artifact) {
-        this.artifact = artifact;
     }
 
     public String getModelName() {
@@ -52,8 +31,14 @@ public class ArtifactModel
         this.modelName = modelName;
     }
 
-    public ValidControl getValidControl() {
-        return validControl;
+    public IValidControl getValidControl() {
+        return this;
+    }
+
+    public void setValidControl(IValidControl validControl) {
+        setValid(validControl.isValid());
+        setValidSince(validControl.getValidSince());
+        setValidUntil(validControl.getValidUntil());
     }
 
     public FabCost getCost() {

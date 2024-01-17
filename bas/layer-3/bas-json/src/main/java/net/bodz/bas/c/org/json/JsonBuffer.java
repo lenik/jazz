@@ -2,9 +2,9 @@ package net.bodz.bas.c.org.json;
 
 import java.io.StringWriter;
 
-import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.json.JsonObjectBuilder;
-import net.bodz.fork.org.json.JSONException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.json.JsonFn;
+import net.bodz.bas.fmt.json.JsonVariant;
 
 /**
  * @see JsonStringer
@@ -28,13 +28,10 @@ public class JsonBuffer
         return sw.toString();
     }
 
-    public JsonObject reconstruct() {
+    public JsonVariant reconstruct()
+            throws ParseException {
         String json = sw.toString();
-        try {
-            return JsonObjectBuilder.getInstance().parse(json);
-        } catch (JSONException e) {
-            throw new RuntimeException("Failed to re-construct " + json, e);
-        }
+        return JsonFn.parseAny(json);
     }
 
 }

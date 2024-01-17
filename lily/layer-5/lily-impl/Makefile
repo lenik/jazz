@@ -120,7 +120,9 @@ dao-lily: predao
 dao-art: predao
 	$(DAOGEN_VIOLET) \
             -p net.bodz.violet.art \
-            art artcat artparm artphase arttag art_backref art_doc art_vote artpack uom
+            art artcat artparm artphase arttag \
+            art_backref art_doc art_vote artpack \
+            uom
 
 dao-asset: predao
 	$(DAOGEN_VIOLET) \

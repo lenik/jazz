@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.type;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.lily.criteria.ICriteriaBuilder;
 
 public interface IEntityTypeInfo {
 
@@ -10,7 +11,9 @@ public interface IEntityTypeInfo {
 
     Class<?> getMapperClass();
 
-//    Class<?> getCrtieriaClass();
+    Class<?> getCrtieriaBuilderClass();
+
+    ICriteriaBuilder<?> newCriteriaBuilder();
 
     int getIdColumnCount();
 
