@@ -5,15 +5,13 @@ import net.bodz.lily.vapp.VAppRequestApi;
 import net.bodz.lily.vapp.VAppRequestApiSamples;
 
 public class VAppRequestApiMapperTest
-        extends AbstractTableTest<VAppRequestApi, VAppRequestApiCriteriaBuilder, VAppRequestApiMapper> {
+        extends AbstractTableTest<VAppRequestApi, VAppRequestApiMapper> {
 
     @Override
     public VAppRequestApi buildSample()
             throws Exception {
         VAppRequestApiSamples a = new VAppRequestApiSamples();
-        a.parent = tables.pickAny(VAppRequestMapper.class, "vappreq");
-        a.api = tables.pickAny(ApiTypeMapper.class, "apitype");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

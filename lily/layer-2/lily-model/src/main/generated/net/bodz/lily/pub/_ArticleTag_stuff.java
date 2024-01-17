@@ -15,6 +15,17 @@ public abstract class _ArticleTag_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "article_tag";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_ARTICLE_ID = "article";
+    public static final String FIELD_TAG_ID = "tag";
+
+    public static final int N_ID = 10;
+    public static final int N_ARTICLE_ID = 19;
+    public static final int N_TAG_ID = 10;
+
     private static final int _ord_ID = 1;
     private static final int _ord_ARTICLE_ID = _ord_ID + 4;
     private static final int _ord_TAG_ID = _ord_ARTICLE_ID + 1;

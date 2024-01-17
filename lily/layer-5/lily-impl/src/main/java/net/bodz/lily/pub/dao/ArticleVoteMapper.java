@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleVote;
 
 public interface ArticleVoteMapper
         extends
-            IEntityMapper<ArticleVote, ArticleVoteCriteriaBuilder> {
+            IEntityMapper<ArticleVote> {
 
 }

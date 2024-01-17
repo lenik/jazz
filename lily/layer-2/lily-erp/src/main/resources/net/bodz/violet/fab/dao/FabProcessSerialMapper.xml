@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.fab.dao.FabProcessSerialMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.fab.FabProcessSerial">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="serial" column="serial" />
+        <result property="procId" column="proc" />
+        <association property="proc" columnPrefix="proc_"
+            javaType="net.bodz.violet.fab.FabProcess" 
+            resultMap="net.bodz.violet.fab.FabProcessMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.proc, 
+            a.serial, 
+            proc.id proc_id, 
+            proc.uid proc_uid, 
+            proc.gid proc_gid, 
+            proc.mode proc_mode, 
+            proc.acl proc_acl, 
+            proc.label proc_label, 
+            proc.description proc_description, 
+            proc.priority proc_priority, 
+            proc.flags proc_flags, 
+            proc."state" proc_state, 
+            proc.creation proc_creation, 
+            proc.lastmod proc_lastmod, 
+            proc."version" proc_version, 
+            proc.t0 proc_t0, 
+            proc.t1 proc_t1, 
+            proc."year" proc_year, 
+            proc.task proc_task, 
+            proc.parent proc_parent, 
+            proc."output" proc_output, 
+            proc.std proc_std, 
+            proc.qty proc_qty, 
+            proc.batch proc_batch, 
+            proc.since proc_since, 
+            proc.deadline proc_deadline, 
+            proc.ntrack proc_ntrack
+        from fabproc_sn a
+            left join fabproc proc on a.proc = proc.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.proc, 
+            a.serial, 
+            proc.id proc_id, 
+            proc.uid proc_uid, 
+            proc.gid proc_gid, 
+            proc.mode proc_mode, 
+            proc.acl proc_acl, 
+            proc.label proc_label, 
+            proc.description proc_description, 
+            proc.priority proc_priority, 
+            proc.flags proc_flags, 
+            proc."state" proc_state, 
+            proc.creation proc_creation, 
+            proc.lastmod proc_lastmod, 
+            proc."version" proc_version, 
+            proc.t0 proc_t0, 
+            proc.t1 proc_t1, 
+            proc."year" proc_year, 
+            proc.task proc_task, 
+            proc.parent proc_parent, 
+            proc."output" proc_output, 
+            proc.std proc_std, 
+            proc.qty proc_qty, 
+            proc.batch proc_batch, 
+            proc.since proc_since, 
+            proc.deadline proc_deadline, 
+            proc.ntrack proc_ntrack
+        from fabproc_sn a
+            left join fabproc proc on a.proc = proc.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabproc_sn(
+            creation,
+            lastmod,
+            "version",
+            proc,
+            serial
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{procId},
+            #{serial}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabproc_sn
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            proc = #{procId},
+            serial = #{serial},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabproc_sn
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabproc_sn
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

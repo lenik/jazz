@@ -5,6 +5,6 @@ import net.bodz.lily.contact.Person;
 
 public interface PersonMapper
         extends
-            IEntityMapper<Person, PersonCriteriaBuilder> {
+            IEntityMapper<Person> {
 
 }

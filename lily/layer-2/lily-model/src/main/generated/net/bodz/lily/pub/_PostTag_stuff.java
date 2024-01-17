@@ -15,6 +15,17 @@ public abstract class _PostTag_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "post_tag";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_POST_ID = "post";
+    public static final String FIELD_TAG_ID = "tag";
+
+    public static final int N_ID = 10;
+    public static final int N_POST_ID = 19;
+    public static final int N_TAG_ID = 10;
+
     private static final int _ord_ID = 1;
     private static final int _ord_POST_ID = _ord_ID + 4;
     private static final int _ord_TAG_ID = _ord_POST_ID + 1;

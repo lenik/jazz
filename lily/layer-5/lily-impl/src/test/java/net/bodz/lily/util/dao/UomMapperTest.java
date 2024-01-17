@@ -5,14 +5,13 @@ import net.bodz.lily.util.Uom;
 import net.bodz.lily.util.UomSamples;
 
 public class UomMapperTest
-        extends AbstractTableTest<Uom, UomCriteriaBuilder, UomMapper> {
+        extends AbstractTableTest<Uom, UomMapper> {
 
     @Override
     public Uom buildSample()
             throws Exception {
         UomSamples a = new UomSamples();
-        a.std = tables.pickAny(UomMapper.class, "uom");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

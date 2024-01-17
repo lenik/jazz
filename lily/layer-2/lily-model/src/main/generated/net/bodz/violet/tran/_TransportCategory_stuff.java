@@ -12,6 +12,9 @@ public abstract class _TransportCategory_stuff<this_t extends _TransportCategory
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "trancat";
+
     public void initNotNulls() {
     }
 

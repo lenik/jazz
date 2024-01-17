@@ -15,7 +15,14 @@ public abstract class _ArtifactDoc_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "art_doc";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_ARTIFACT_ID = "art";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_ARTIFACT_ID = 10;
 
     private static final int _ord_FORM_ARGUMENTS = 19;
     private static final int _ord_ARTIFACT_ID = _ord_FORM_ARGUMENTS + 1;

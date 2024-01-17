@@ -12,6 +12,9 @@ public abstract class _RegionCategory_stuff<this_t extends _RegionCategory_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "regioncat";
+
     public void initNotNulls() {
     }
 

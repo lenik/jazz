@@ -17,6 +17,17 @@ public abstract class _TestPaperItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testpaperl";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_PAPER_ID = "paper";
+    public static final String FIELD_QUESTION_ID = "q";
+    public static final String FIELD_SCORE = "score";
+
+    public static final int N_ID = 19;
+    public static final int N_PAPER_ID = 10;
+    public static final int N_QUESTION_ID = 19;
     public static final int N_SCORE = 6;
 
     private static final int _ord_ID = 1;

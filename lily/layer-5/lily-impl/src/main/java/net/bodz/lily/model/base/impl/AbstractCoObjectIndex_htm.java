@@ -9,8 +9,8 @@ import net.bodz.bas.repr.viz.ViewBuilderException;
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.t.variant.VariantMaps;
 import net.bodz.lily.model.base.CoObject;
-import net.bodz.lily.model.base.CoObjectIndex;
 import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
+import net.bodz.lily.model.base.CoObjectIndex;
 
 import jakarta.servlet.http.HttpServletRequest;
 

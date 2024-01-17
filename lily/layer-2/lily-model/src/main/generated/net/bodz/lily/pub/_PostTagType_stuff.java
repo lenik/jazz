@@ -12,6 +12,9 @@ public abstract class _PostTagType_stuff<this_t extends _PostTagType_stuff<this_
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "posttag";
+
     public void initNotNulls() {
     }
 

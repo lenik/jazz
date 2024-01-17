@@ -5,6 +5,6 @@ import net.bodz.lily.schema.TagGroupDef;
 
 public interface TagGroupDefMapper
         extends
-            IEntityMapper<TagGroupDef, TagGroupDefCriteriaBuilder> {
+            IEntityMapper<TagGroupDef> {
 
 }

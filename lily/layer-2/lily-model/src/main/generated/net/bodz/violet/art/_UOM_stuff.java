@@ -16,15 +16,26 @@ public abstract class _UOM_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "uom";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_PROP = "prop";
+    public static final String FIELD_STANDARD_ID = "std";
+    public static final String FIELD_SCALE = "scale";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_PROP = 30;
-    public static final int N_STD_ID = 10;
+    public static final int N_STANDARD_ID = 10;
+    public static final int N_SCALE = 17;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
     private static final int _ord_PROP = _ord_CODE + 4;
-    private static final int _ord_STD_ID = _ord_PROP + 1;
-    private static final int _ord_SCALE = _ord_STD_ID + 1;
+    private static final int _ord_STANDARD_ID = _ord_PROP + 1;
+    private static final int _ord_SCALE = _ord_STANDARD_ID + 1;
 
     @Id
     @NotNull
@@ -39,9 +50,9 @@ public abstract class _UOM_stuff
     double scale;
 
     /**  */
-    UOM std;
+    UOM standard;
 
-    Integer stdId;
+    Integer standardId;
 
     @Override
     public Integer id() {
@@ -106,28 +117,28 @@ public abstract class _UOM_stuff
      * @label std
      * @constraint foreign key (std) references lily.uom (id)
      */
-    public UOM getStd() {
-        return std;
+    public UOM getStandard() {
+        return standard;
     }
 
     /**
      */
-    public void setStd(UOM value) {
-        this.std = value;
+    public void setStandard(UOM value) {
+        this.standard = value;
     }
 
-    @Ordinal(_ord_STD_ID)
-    @Precision(value = N_STD_ID)
+    @Ordinal(_ord_STANDARD_ID)
+    @Precision(value = N_STANDARD_ID)
     @Column(name = "std", precision = 10)
-    public synchronized Integer getStdId() {
-        if (std != null) {
-            return std.getId();
+    public synchronized Integer getStandardId() {
+        if (standard != null) {
+            return standard.getId();
         }
-        return stdId;
+        return standardId;
     }
 
-    public synchronized void setStdId(Integer value) {
-        this.stdId = value;
+    public synchronized void setStandardId(Integer value) {
+        this.standardId = value;
     }
 
     public void initNotNulls() {

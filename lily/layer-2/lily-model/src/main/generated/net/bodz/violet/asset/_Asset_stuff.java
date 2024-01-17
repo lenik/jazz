@@ -19,6 +19,19 @@ public abstract class _Asset_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "asset";
+
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_BATCH = "batch";
+    public static final String FIELD_USER_ID = "o_user";
+    public static final String FIELD_GROUP_ID = "o_group";
+    public static final String FIELD_ORG_ID = "o_org";
+    public static final String FIELD_ORG_UNIT_ID = "o_orgunit";
+    public static final String FIELD_PERSON_ID = "o_person";
+
+    public static final int N_ARTIFACT_ID = 10;
+    public static final int N_BATCH = 2147483647;
     public static final int N_USER_ID = 10;
     public static final int N_GROUP_ID = 10;
     public static final int N_ORG_ID = 10;

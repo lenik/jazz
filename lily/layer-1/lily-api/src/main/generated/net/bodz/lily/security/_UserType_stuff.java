@@ -18,6 +18,13 @@ public abstract class _UserType_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "usertype";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_DUMMY = "dummy";
+
+    public static final int N_ID = 10;
     public static final int N_DUMMY = 10;
 
     private static final int _ord_ID = 1;

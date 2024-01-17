@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleTag;
 
 public interface ArticleTagMapper
         extends
-            IEntityMapper<ArticleTag, ArticleTagCriteriaBuilder> {
+            IEntityMapper<ArticleTag> {
 
 }

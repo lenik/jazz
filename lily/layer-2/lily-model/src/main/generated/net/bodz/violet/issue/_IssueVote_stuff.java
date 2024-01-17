@@ -14,6 +14,15 @@ public abstract class _IssueVote_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "issue_vote";
+
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_VOTE_SCORE = "votes";
+
+    public static final int N_PARENT_ID = 19;
+    public static final int N_VOTE_SCORE = 10;
+
     private static final int _ord_PARENT_ID = 2;
     private static final int _ord_VOTE_SCORE = _ord_PARENT_ID + 2;
 

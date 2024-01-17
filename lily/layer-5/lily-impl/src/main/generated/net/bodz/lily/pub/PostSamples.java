@@ -1,9 +1,15 @@
 package net.bodz.lily.pub;
 
+import net.bodz.lily.pub.dao.PostCategoryMapper;
+import net.bodz.lily.pub.dao.PostMapper;
 import net.bodz.lily.schema.FormDef;
+import net.bodz.lily.schema.dao.FormDefMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class PostSamples
         extends TestSampleBuilder {
@@ -15,6 +21,7 @@ public class PostSamples
     public PostCategory category;
     public User ownerUser;
 
+    @Override
     public Post build()
             throws Exception {
         Post a = new Post();
@@ -30,6 +37,22 @@ public class PostSamples
         a.setHateCount(44401108);
         a.setMessageCount(1178157599);
         return a;
+    }
+
+    @Override
+    public PostSamples wireAny(IRandomPicker picker) {
+        this.parent = picker.pickAny(PostMapper.class, "post");
+        this.op = picker.pickAny(UserMapper.class, "user");
+        this.form = picker.pickAny(FormDefMapper.class, "_form");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.category = picker.pickAny(PostCategoryMapper.class, "postcat");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        return this;
+    }
+
+    @Override
+    public Post buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

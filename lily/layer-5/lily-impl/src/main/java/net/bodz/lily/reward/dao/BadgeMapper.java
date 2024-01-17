@@ -5,6 +5,6 @@ import net.bodz.lily.reward.Badge;
 
 public interface BadgeMapper
         extends
-            IEntityMapper<Badge, BadgeCriteriaBuilder> {
+            IEntityMapper<Badge> {
 
 }

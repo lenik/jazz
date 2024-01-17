@@ -20,9 +20,27 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "region";
+
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_PATH = "path";
+    public static final String FIELD_PROTO_ID = "proto";
+    public static final String FIELD_HEIGHT = "height";
+    public static final String FIELD_LEVEL_ID = "level";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_TAG_ID = "tag";
+    public static final String FIELD_MATERIAL_ID = "material";
+    public static final String FIELD_FOR_CAT_ID = "for_cat";
+    public static final String FIELD_FOR_ART_ID = "for_art";
+    public static final String FIELD_ARTIFACT_ID = "art";
+
     public static final int N_CODE = 10;
     public static final int N_PATH = 200;
     public static final int N_PROTO_ID = 10;
+    public static final int N_HEIGHT = 10;
+    public static final int N_LEVEL_ID = 10;
+    public static final int N_CATEGORY_ID = 10;
     public static final int N_TAG_ID = 10;
     public static final int N_MATERIAL_ID = 10;
     public static final int N_FOR_CAT_ID = 10;

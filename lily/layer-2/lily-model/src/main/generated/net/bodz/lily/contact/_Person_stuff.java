@@ -14,6 +14,21 @@ public abstract class _Person_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "person";
+
+    public static final String FIELD_ROLE_COUNT = "nrole";
+    public static final String FIELD_EMPLOYEE = "employee";
+    public static final String FIELD_BANK_COUNT = "nbank";
+    public static final String FIELD_GENDER = "gender";
+    public static final String FIELD_HOMELAND = "homeland";
+    public static final String FIELD_PASSPORT = "passport";
+    public static final String FIELD_SSN = "ssn";
+    public static final String FIELD_DLN = "dln";
+
+    public static final int N_ROLE_COUNT = 10;
+    public static final int N_EMPLOYEE = 1;
+    public static final int N_BANK_COUNT = 10;
     public static final int N_GENDER = 1;
     public static final int N_HOMELAND = 10;
     public static final int N_PASSPORT = 20;

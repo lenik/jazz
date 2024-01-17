@@ -16,7 +16,19 @@ public abstract class _PersonRole_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "personrole";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_ORG_ID = "org";
+    public static final String FIELD_ORG_UNIT_ID = "ou";
+    public static final String FIELD_PERSON_ID = "person";
+    public static final String FIELD_ROLE = "role";
+
+    public static final int N_ID = 10;
+    public static final int N_ORG_ID = 10;
     public static final int N_ORG_UNIT_ID = 10;
+    public static final int N_PERSON_ID = 10;
     public static final int N_ROLE = 20;
 
     private static final int _ord_ID = 1;

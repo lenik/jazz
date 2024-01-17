@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleParameter;
 
 public interface ArticleParameterMapper
         extends
-            IEntityMapper<ArticleParameter, ArticleParameterCriteriaBuilder> {
+            IEntityMapper<ArticleParameter> {
 
 }

@@ -20,6 +20,19 @@ public abstract class _UserRun_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "user_run";
+
+    public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_SCORE = "score";
+    public static final String FIELD_LAST_LOGIN_TIME = "lastlog";
+    public static final String FIELD_LAST_LOGIN_I_P = "lastlogip";
+
+    public static final int N_USER_ID = 10;
+    public static final int N_SCORE = 10;
+    public static final int N_LAST_LOGIN_TIME = 35;
+    public static final int N_LAST_LOGIN_I_P = 2147483647;
+
     private static final int _ord_USER_ID = 1;
     private static final int _ord_SCORE = _ord_USER_ID + 10;
     private static final int _ord_LAST_LOGIN_TIME = _ord_SCORE + 1;

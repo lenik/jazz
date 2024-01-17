@@ -16,7 +16,17 @@ public abstract class _ParameterValue_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_parmval";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_PARAMETER_ID = "parm";
+    public static final String FIELD_VAL = "val";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
+    public static final int N_PARAMETER_ID = 10;
     public static final int N_VAL = 2147483647;
 
     private static final int _ord_ID = 1;

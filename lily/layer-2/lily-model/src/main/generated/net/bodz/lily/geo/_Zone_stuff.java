@@ -16,11 +16,28 @@ public abstract class _Zone_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "zone";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_COUNTRY = "country";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_DEPTH = "depth";
+    public static final String FIELD_TEL_CODE = "telcode";
+    public static final String FIELD_POST_CODE = "postcode";
+    public static final String FIELD_DATA = "data";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 10;
+    public static final int N_CATEGORY_ID = 10;
     public static final int N_COUNTRY = 2;
     public static final int N_PARENT_ID = 10;
+    public static final int N_DEPTH = 10;
     public static final int N_TEL_CODE = 10;
     public static final int N_POST_CODE = 10;
+    public static final int N_DATA = 2147483647;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;

@@ -17,6 +17,16 @@ public abstract class _TransportOrderItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "tranodrl";
+
+    public static final String FIELD_ORDER_ID = "odr";
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_QUANTITY = "qty";
+    public static final String FIELD_PRICE = "price";
+    public static final String FIELD_AMOUNT = "amount";
+
+    public static final int N_ORDER_ID = 19;
     public static final int N_ARTIFACT_ID = 10;
     public static final int N_QUANTITY = 20;
     public static final int N_PRICE = 20;

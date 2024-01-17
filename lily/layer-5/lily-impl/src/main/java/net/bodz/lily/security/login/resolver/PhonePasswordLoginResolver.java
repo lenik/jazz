@@ -9,8 +9,8 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.dao.UserOtherIdMapper;
-import net.bodz.lily.security.dao.UserSecretMapper;
 import net.bodz.lily.security.dao.UserSecretCriteriaBuilder;
+import net.bodz.lily.security.dao.UserSecretMapper;
 import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.ISignatureChecker;
 

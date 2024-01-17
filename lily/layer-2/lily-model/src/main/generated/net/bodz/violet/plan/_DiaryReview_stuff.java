@@ -15,7 +15,15 @@ public abstract class _DiaryReview_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "diaryrev";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_DIARY_ID = "diary";
+    public static final String FIELD_PARENT_ID = "parent";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_DIARY_ID = 19;
     public static final int N_PARENT_ID = 19;
 
     private static final int _ord_FORM_ARGUMENTS = 15;

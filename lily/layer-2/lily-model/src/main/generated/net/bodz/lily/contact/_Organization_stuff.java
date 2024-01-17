@@ -14,6 +14,17 @@ public abstract class _Organization_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "org";
+
+    public static final String FIELD_ROLE_COUNT = "nrole";
+    public static final String FIELD_BANK_COUNT = "nbank";
+    public static final String FIELD_SIZE = "size";
+    public static final String FIELD_TAX_ID = "taxid";
+
+    public static final int N_ROLE_COUNT = 10;
+    public static final int N_BANK_COUNT = 10;
+    public static final int N_SIZE = 10;
     public static final int N_TAX_ID = 20;
 
     private static final int _ord_ROLE_COUNT = 28;

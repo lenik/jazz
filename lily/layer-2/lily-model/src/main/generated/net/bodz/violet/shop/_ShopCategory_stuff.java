@@ -12,6 +12,9 @@ public abstract class _ShopCategory_stuff<this_t extends _ShopCategory_stuff<thi
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "shopcat";
+
     public void initNotNulls() {
     }
 

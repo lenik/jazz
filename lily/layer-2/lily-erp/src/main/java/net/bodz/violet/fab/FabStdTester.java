@@ -2,36 +2,10 @@ package net.bodz.violet.fab;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
-
-@Table(name = "fabstdtester")
-@IdType(Integer.class)
+@Table(schema = FabStdTester.SCHEMA_NAME, name = FabStdTester.TABLE_NAME)
 public class FabStdTester
-        extends IdEntity<Integer> {
+        extends _FabStdTester_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    FabStdTesterType type;
-    String commandLine;
-
-    public FabStdTester() {
-    }
-
-    public FabStdTesterType getType() {
-        return type;
-    }
-
-    public void setType(FabStdTesterType type) {
-        this.type = type;
-    }
-
-    public String getCommandLine() {
-        return commandLine;
-    }
-
-    public void setCommandLine(String commandLine) {
-        this.commandLine = commandLine;
-    }
 
 }

@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanDo;
 
 public interface PlanDoMapper
         extends
-            IEntityMapper<PlanDo, PlanDoCriteriaBuilder> {
+            IEntityMapper<PlanDo> {
 
 }

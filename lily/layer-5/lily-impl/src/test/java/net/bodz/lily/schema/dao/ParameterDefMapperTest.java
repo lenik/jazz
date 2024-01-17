@@ -5,14 +5,13 @@ import net.bodz.lily.schema.ParameterDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ParameterDefMapperTest
-        extends AbstractTableTest<ParameterDef, ParameterDefCriteriaBuilder, ParameterDefMapper> {
+        extends AbstractTableTest<ParameterDef, ParameterDefMapper> {
 
     @Override
     public ParameterDef buildSample()
             throws Exception {
         ParameterDefSamples a = new ParameterDefSamples();
-        a.schema = tables.pickAny(SchemaDefMapper.class, "_schema");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

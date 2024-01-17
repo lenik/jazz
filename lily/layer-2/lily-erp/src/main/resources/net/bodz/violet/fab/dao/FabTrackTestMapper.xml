@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.fab.dao.FabTrackTestMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.fab.FabTrackTest">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="valid" column="valid" />
+        <result property="trackId" column="track" />
+        <result property="stdId" column="std" />
+        <association property="track" columnPrefix="track_"
+            javaType="net.bodz.violet.fab.FabTrack" 
+            resultMap="net.bodz.violet.fab.FabTrackMapper.objlist_map" />
+        <association property="std" columnPrefix="std_"
+            javaType="net.bodz.violet.fab.FabStdTest" 
+            resultMap="net.bodz.violet.fab.FabStdTestMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.track, 
+            a.std, 
+            a."valid", 
+            track.id track_id, 
+            track.uid track_uid, 
+            track.gid track_gid, 
+            track.mode track_mode, 
+            track.acl track_acl, 
+            track.label track_label, 
+            track.description track_description, 
+            track.priority track_priority, 
+            track.flags track_flags, 
+            track."state" track_state, 
+            track.creation track_creation, 
+            track.lastmod track_lastmod, 
+            track."version" track_version, 
+            track.t0 track_t0, 
+            track.t1 track_t1, 
+            track."year" track_year, 
+            track.proc track_proc, 
+            track.since track_since, 
+            track.deadline track_deadline, 
+            track.qty_plan track_qty_plan, 
+            track.qty_actual track_qty_actual, 
+            track.qty_valid track_qty_valid, 
+            track.ou track_ou, 
+            std.id std_id, 
+            std.code std_code, 
+            std.uid std_uid, 
+            std.gid std_gid, 
+            std.mode std_mode, 
+            std.acl std_acl, 
+            std.label std_label, 
+            std.description std_description, 
+            std.priority std_priority, 
+            std.flags std_flags, 
+            std."state" std_state, 
+            std.creation std_creation, 
+            std.lastmod std_lastmod, 
+            std."version" std_version, 
+            std.image std_image, 
+            std.imagealt std_imagealt, 
+            std.props std_props, 
+            std.cat std_cat, 
+            std.parent std_parent, 
+            std."depth" std_depth, 
+            std.nref std_nref
+        from fabtrack_test a
+            left join fabtrack track on a.track = track.id
+            left join fabstdtest std on a.std = std.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.track, 
+            a.std, 
+            a."valid", 
+            track.id track_id, 
+            track.uid track_uid, 
+            track.gid track_gid, 
+            track.mode track_mode, 
+            track.acl track_acl, 
+            track.label track_label, 
+            track.description track_description, 
+            track.priority track_priority, 
+            track.flags track_flags, 
+            track."state" track_state, 
+            track.creation track_creation, 
+            track.lastmod track_lastmod, 
+            track."version" track_version, 
+            track.t0 track_t0, 
+            track.t1 track_t1, 
+            track."year" track_year, 
+            track.proc track_proc, 
+            track.since track_since, 
+            track.deadline track_deadline, 
+            track.qty_plan track_qty_plan, 
+            track.qty_actual track_qty_actual, 
+            track.qty_valid track_qty_valid, 
+            track.ou track_ou, 
+            std.id std_id, 
+            std.code std_code, 
+            std.uid std_uid, 
+            std.gid std_gid, 
+            std.mode std_mode, 
+            std.acl std_acl, 
+            std.label std_label, 
+            std.description std_description, 
+            std.priority std_priority, 
+            std.flags std_flags, 
+            std."state" std_state, 
+            std.creation std_creation, 
+            std.lastmod std_lastmod, 
+            std."version" std_version, 
+            std.image std_image, 
+            std.imagealt std_imagealt, 
+            std.props std_props, 
+            std.cat std_cat, 
+            std.parent std_parent, 
+            std."depth" std_depth, 
+            std.nref std_nref
+        from fabtrack_test a
+            left join fabtrack track on a.track = track.id
+            left join fabstdtest std on a.std = std.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabtrack_test(
+            creation,
+            lastmod,
+            "version",
+            track,
+            std,
+            "valid"
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{trackId},
+            #{stdId},
+            #{valid}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabtrack_test
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            track = #{trackId},
+            std = #{stdId},
+            "valid" = #{valid},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabtrack_test
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabtrack_test
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

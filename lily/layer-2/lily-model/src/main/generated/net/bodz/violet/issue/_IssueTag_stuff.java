@@ -12,6 +12,9 @@ public abstract class _IssueTag_stuff<this_t extends _IssueTag_stuff<this_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "issuetag";
+
     public void initNotNulls() {
     }
 

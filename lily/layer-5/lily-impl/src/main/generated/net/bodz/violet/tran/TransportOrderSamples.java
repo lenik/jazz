@@ -3,13 +3,24 @@ package net.bodz.violet.tran;
 import java.math.BigDecimal;
 
 import net.bodz.lily.contact.Organization;
+import net.bodz.lily.contact.dao.OrganizationMapper;
 import net.bodz.lily.geo.Zone;
+import net.bodz.lily.geo.dao.ZoneMapper;
 import net.bodz.lily.schema.FormDef;
+import net.bodz.lily.schema.dao.FormDefMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.shop.SalesOrder;
+import net.bodz.violet.shop.dao.SalesOrderMapper;
 import net.bodz.violet.store.StoreOrder;
+import net.bodz.violet.store.dao.StoreOrderMapper;
+import net.bodz.violet.tran.dao.TransportCategoryMapper;
+import net.bodz.violet.tran.dao.TransportOrderMapper;
+import net.bodz.violet.tran.dao.TransportPhaseMapper;
 
 public class TransportOrderSamples
         extends TestSampleBuilder {
@@ -27,6 +38,7 @@ public class TransportOrderSamples
     public Zone sZone;
     public StoreOrder storeodr;
 
+    @Override
     public TransportOrder build()
             throws Exception {
         TransportOrder a = new TransportOrder();
@@ -60,6 +72,28 @@ public class TransportOrderSamples
         a.setTotalQuantity(new BigDecimal("895237"));
         a.setTotalAmount(new BigDecimal("62"));
         return a;
+    }
+
+    @Override
+    public TransportOrderSamples wireAny(IRandomPicker picker) {
+        this.op = picker.pickAny(UserMapper.class, "user");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.prev = picker.pickAny(TransportOrderMapper.class, "tranodr");
+        this.form = picker.pickAny(FormDefMapper.class, "_form");
+        this.shipper = picker.pickAny(OrganizationMapper.class, "org");
+        this.category = picker.pickAny(TransportCategoryMapper.class, "trancat");
+        this.salesOrder = picker.pickAny(SalesOrderMapper.class, "saleodr");
+        this.phase = picker.pickAny(TransportPhaseMapper.class, "tranphase");
+        this.dZone = picker.pickAny(ZoneMapper.class, "zone");
+        this.sZone = picker.pickAny(ZoneMapper.class, "zone");
+        this.storeodr = picker.pickAny(StoreOrderMapper.class, "storeodr");
+        return this;
+    }
+
+    @Override
+    public TransportOrder buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

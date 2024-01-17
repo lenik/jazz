@@ -1,6 +1,9 @@
 package net.bodz.lily.pub;
 
+import net.bodz.lily.pub.dao.ArticleMapper;
+import net.bodz.lily.pub.dao.ArticleTagTypeMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class ArticleTagSamples
         extends TestSampleBuilder {
@@ -8,6 +11,7 @@ public class ArticleTagSamples
     public ArticleTagType tag;
     public Article article;
 
+    @Override
     public ArticleTag build()
             throws Exception {
         ArticleTag a = new ArticleTag();
@@ -15,6 +19,18 @@ public class ArticleTagSamples
         a.setArticle(article);
         a.setId(1641969268);
         return a;
+    }
+
+    @Override
+    public ArticleTagSamples wireAny(IRandomPicker picker) {
+        this.tag = picker.pickAny(ArticleTagTypeMapper.class, "articletag");
+        this.article = picker.pickAny(ArticleMapper.class, "article");
+        return this;
+    }
+
+    @Override
+    public ArticleTag buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

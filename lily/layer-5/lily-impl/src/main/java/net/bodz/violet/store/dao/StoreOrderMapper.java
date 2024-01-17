@@ -5,6 +5,6 @@ import net.bodz.violet.store.StoreOrder;
 
 public interface StoreOrderMapper
         extends
-            IEntityMapper<StoreOrder, StoreOrderCriteriaBuilder> {
+            IEntityMapper<StoreOrder> {
 
 }

@@ -17,6 +17,16 @@ public abstract class _CartItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "cartitem";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_SHOP_ITEM_ID = "shopitem";
+    public static final String FIELD_PRICE = "price";
+    public static final String FIELD_QUANTITY = "qty";
+
+    public static final int N_ID = 19;
+    public static final int N_SHOP_ITEM_ID = 19;
     public static final int N_PRICE = 20;
     public static final int N_QUANTITY = 20;
 

@@ -16,6 +16,14 @@ public abstract class _SchemaDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_schema";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_DUMMY = "dummy";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_DUMMY = 10;
 

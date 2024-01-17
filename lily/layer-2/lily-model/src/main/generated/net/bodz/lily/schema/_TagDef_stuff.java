@@ -15,6 +15,15 @@ public abstract class _TagDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_tag";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_TAG_GROUP_ID = "tagv";
+
+    public static final int N_ID = 10;
+    public static final int N_TAG_GROUP_ID = 10;
+
     private static final int _ord_ID = 1;
     private static final int _ord_TAG_GROUP_ID = _ord_ID + 9;
 

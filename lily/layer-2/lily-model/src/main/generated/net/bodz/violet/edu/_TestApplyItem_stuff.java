@@ -16,6 +16,20 @@ public abstract class _TestApplyItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testapplyl";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_APPLY_ID = "apply";
+    public static final String FIELD_QUESTION_ID = "q";
+    public static final String FIELD_ANSWER = "ans";
+    public static final String FIELD_ANSTEXT = "anstext";
+    public static final String FIELD_SCORE = "score";
+    public static final String FIELD_WAITTIME = "waittime";
+
+    public static final int N_ID = 19;
+    public static final int N_APPLY_ID = 19;
+    public static final int N_QUESTION_ID = 19;
     public static final int N_ANSWER = 10;
     public static final int N_ANSTEXT = 200;
     public static final int N_SCORE = 17;

@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanFav;
 
 public interface PlanFavMapper
         extends
-            IEntityMapper<PlanFav, PlanFavCriteriaBuilder> {
+            IEntityMapper<PlanFav> {
 
 }

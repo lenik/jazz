@@ -5,6 +5,6 @@ import net.bodz.violet.tran.TransportPhase;
 
 public interface TransportPhaseMapper
         extends
-            IEntityMapper<TransportPhase, TransportPhaseCriteriaBuilder> {
+            IEntityMapper<TransportPhase> {
 
 }

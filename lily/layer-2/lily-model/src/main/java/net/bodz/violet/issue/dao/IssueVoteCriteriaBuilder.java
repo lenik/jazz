@@ -1,6 +1,6 @@
 package net.bodz.violet.issue.dao;
 
 public class IssueVoteCriteriaBuilder
-        extends _IssueVoteCriteriaBuilder_stuff {
+        extends _IssueVoteCriteriaBuilder_stuff<IssueVoteCriteriaBuilder> {
 
 }

@@ -2,46 +2,10 @@ package net.bodz.violet.fab;
 
 import javax.persistence.Table;
 
-import net.bodz.lily.contact.Person;
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
-
-@Table(name = "fabtrack_op")
-@IdType(Long.class)
+@Table(schema = FabTrackParty.SCHEMA_NAME, name = FabTrackParty.TABLE_NAME)
 public class FabTrackParty
-        extends IdEntity<Long> {
+        extends _FabTrackParty_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    FabTrack track;
-    Person person;
-    String role;
-
-    public FabTrackParty() {
-    }
-
-    public FabTrack getTrack() {
-        return track;
-    }
-
-    public void setTrack(FabTrack track) {
-        this.track = track;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
 }

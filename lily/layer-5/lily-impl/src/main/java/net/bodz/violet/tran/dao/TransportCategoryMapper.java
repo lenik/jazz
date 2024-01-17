@@ -5,6 +5,6 @@ import net.bodz.violet.tran.TransportCategory;
 
 public interface TransportCategoryMapper
         extends
-            IEntityMapper<TransportCategory, TransportCategoryCriteriaBuilder> {
+            IEntityMapper<TransportCategory> {
 
 }

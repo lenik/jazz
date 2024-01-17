@@ -7,7 +7,7 @@ import net.bodz.violet.art.Artifact;
 
 public interface ArtifactMapper
         extends
-            IEntityMapper<Artifact, ArtifactCriteriaBuilder> {
+            IEntityMapper<Artifact> {
 
     Artifact selectByRfid(@Param("rfid") String rfidCode);
 

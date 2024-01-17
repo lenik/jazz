@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.VAppCat;
 
 public interface VAppCatMapper
         extends
-            IEntityMapper<VAppCat, VAppCatCriteriaBuilder> {
+            IEntityMapper<VAppCat> {
 
 }

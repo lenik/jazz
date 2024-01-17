@@ -5,6 +5,6 @@ import net.bodz.lily.contact.PartyCategory;
 
 public interface PartyCategoryMapper
         extends
-            IEntityMapper<PartyCategory, PartyCategoryCriteriaBuilder> {
+            IEntityMapper<PartyCategory> {
 
 }

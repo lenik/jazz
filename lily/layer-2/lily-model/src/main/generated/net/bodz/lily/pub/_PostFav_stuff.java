@@ -14,6 +14,13 @@ public abstract class _PostFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "post_fav";
+
+    public static final String FIELD_POST_ID = "post";
+
+    public static final int N_POST_ID = 19;
+
     private static final int _ord_POST_ID = 2;
 
     /**  */

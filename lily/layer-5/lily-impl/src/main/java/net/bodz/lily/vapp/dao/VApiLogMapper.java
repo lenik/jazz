@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.VApiLog;
 
 public interface VApiLogMapper
         extends
-            IEntityMapper<VApiLog, VApiLogCriteriaBuilder> {
+            IEntityMapper<VApiLog> {
 
 }

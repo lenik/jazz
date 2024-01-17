@@ -1,12 +1,14 @@
 package net.bodz.lily.util;
 
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.dao.UomMapper;
 
 public class UomSamples
         extends TestSampleBuilder {
 
     public Uom std;
 
+    @Override
     public Uom build()
             throws Exception {
         Uom a = new Uom();
@@ -16,6 +18,17 @@ public class UomSamples
         a.setProp("");
         a.setScale(0.13506906180262523);
         return a;
+    }
+
+    @Override
+    public UomSamples wireAny(IRandomPicker picker) {
+        this.std = picker.pickAny(UomMapper.class, "uom");
+        return this;
+    }
+
+    @Override
+    public Uom buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

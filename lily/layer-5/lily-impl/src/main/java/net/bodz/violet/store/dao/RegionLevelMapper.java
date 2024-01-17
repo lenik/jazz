@@ -5,6 +5,6 @@ import net.bodz.violet.store.RegionLevel;
 
 public interface RegionLevelMapper
         extends
-            IEntityMapper<RegionLevel, RegionLevelCriteriaBuilder> {
+            IEntityMapper<RegionLevel> {
 
 }

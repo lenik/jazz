@@ -5,13 +5,13 @@ import net.bodz.lily.schema.SchemaDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class SchemaDefMapperTest
-        extends AbstractTableTest<SchemaDef, SchemaDefCriteriaBuilder, SchemaDefMapper> {
+        extends AbstractTableTest<SchemaDef, SchemaDefMapper> {
 
     @Override
     public SchemaDef buildSample()
             throws Exception {
         SchemaDefSamples a = new SchemaDefSamples();
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

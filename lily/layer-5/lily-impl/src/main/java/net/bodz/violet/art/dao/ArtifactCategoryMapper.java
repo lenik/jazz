@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactCategory;
 
 public interface ArtifactCategoryMapper
         extends
-            IEntityMapper<ArtifactCategory, ArtifactCategoryCriteriaBuilder> {
+            IEntityMapper<ArtifactCategory> {
 
 }

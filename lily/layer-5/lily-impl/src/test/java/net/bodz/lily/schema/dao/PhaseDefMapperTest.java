@@ -5,14 +5,13 @@ import net.bodz.lily.schema.PhaseDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PhaseDefMapperTest
-        extends AbstractTableTest<PhaseDef, PhaseDefCriteriaBuilder, PhaseDefMapper> {
+        extends AbstractTableTest<PhaseDef, PhaseDefMapper> {
 
     @Override
     public PhaseDef buildSample()
             throws Exception {
         PhaseDefSamples a = new PhaseDefSamples();
-        a.schema = tables.pickAny(SchemaDefMapper.class, "_schema");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

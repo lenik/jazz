@@ -18,6 +18,22 @@ public abstract class _Artifact_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "art";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_SKU_CODE = "sku";
+    public static final String FIELD_BAR_CODE = "barcode";
+    public static final String FIELD_RFID_CODE = "rfid";
+    public static final String FIELD_MODEL_NAME = "model";
+    public static final String FIELD_PROTO_ID = "proto";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_PHASE_ID = "phase";
+    public static final String FIELD_UOM_ID = "uom";
+    public static final String FIELD_FINISH = "finish";
+    public static final String FIELD_PRICE = "price";
+
+    public static final int N_ID = 10;
     public static final int N_SKU_CODE = 30;
     public static final int N_BAR_CODE = 30;
     public static final int N_RFID_CODE = 30;
@@ -26,6 +42,7 @@ public abstract class _Artifact_stuff
     public static final int N_CATEGORY_ID = 10;
     public static final int N_PHASE_ID = 10;
     public static final int N_UOM_ID = 10;
+    public static final int N_FINISH = 5;
     public static final int N_PRICE = 12;
 
     private static final int _ord_ID = 1;

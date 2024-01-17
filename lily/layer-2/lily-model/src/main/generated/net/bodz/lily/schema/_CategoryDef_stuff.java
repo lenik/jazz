@@ -16,8 +16,22 @@ public abstract class _CategoryDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_cat";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_SCHEMA_ID = "schema";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_DEPTH = "depth";
+    public static final String FIELD_REF_COUNT = "nobj";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
+    public static final int N_SCHEMA_ID = 10;
     public static final int N_PARENT_ID = 10;
+    public static final int N_DEPTH = 10;
+    public static final int N_REF_COUNT = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;

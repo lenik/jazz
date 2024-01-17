@@ -17,6 +17,16 @@ public abstract class _PlanParty_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "plan_party";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_PLAN_ID = "plan";
+    public static final String FIELD_PERSON_ID = "person";
+    public static final String FIELD_ORG_ID = "org";
+
+    public static final int N_ID = 19;
+    public static final int N_PLAN_ID = 19;
     public static final int N_PERSON_ID = 10;
     public static final int N_ORG_ID = 10;
 

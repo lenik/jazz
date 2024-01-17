@@ -16,6 +16,14 @@ public abstract class _ApiType_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "apitype";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_UOM = "uom";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_UOM = 30;
 

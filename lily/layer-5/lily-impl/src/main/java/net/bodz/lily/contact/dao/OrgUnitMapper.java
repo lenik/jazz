@@ -5,6 +5,6 @@ import net.bodz.lily.contact.OrgUnit;
 
 public interface OrgUnitMapper
         extends
-            IEntityMapper<OrgUnit, OrgUnitCriteriaBuilder> {
+            IEntityMapper<OrgUnit> {
 
 }

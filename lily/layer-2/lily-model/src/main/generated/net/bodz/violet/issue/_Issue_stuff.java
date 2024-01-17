@@ -15,7 +15,24 @@ public abstract class _Issue_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "issue";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_PHASE_ID = "phase";
+    public static final String FIELD_READ_COUNT = "nread";
+    public static final String FIELD_VOTE_COUNT = "nvote";
+    public static final String FIELD_NLIKE = "nlike";
+    public static final String FIELD_VALUE = "value";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_CATEGORY_ID = 10;
+    public static final int N_PHASE_ID = 10;
+    public static final int N_READ_COUNT = 10;
+    public static final int N_VOTE_COUNT = 10;
+    public static final int N_NLIKE = 10;
+    public static final int N_VALUE = 17;
 
     private static final int _ord_FORM_ARGUMENTS = 16;
     private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 4;

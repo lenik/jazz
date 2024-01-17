@@ -21,7 +21,26 @@ public abstract class _UserOtherId_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "useroid";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_BEGIN_TIME = "t0";
+    public static final String FIELD_END_TIME = "t1";
+    public static final String FIELD_YEAR = "year";
+    public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_TYPE_ID = "type";
+    public static final String FIELD_OTHER_ID = "oid";
+    public static final String FIELD_AUTH = "auth";
+
+    public static final int N_ID = 10;
+    public static final int N_BEGIN_TIME = 35;
+    public static final int N_END_TIME = 35;
+    public static final int N_YEAR = 10;
+    public static final int N_USER_ID = 10;
+    public static final int N_TYPE_ID = 10;
     public static final int N_OTHER_ID = 100;
+    public static final int N_AUTH = 2147483647;
 
     private static final int _ord_ID = 1;
     private static final int _ord_BEGIN_TIME = _ord_ID + 9;

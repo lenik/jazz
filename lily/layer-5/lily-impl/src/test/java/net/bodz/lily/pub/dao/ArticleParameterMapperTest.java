@@ -5,15 +5,13 @@ import net.bodz.lily.pub.ArticleParameterSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleParameterMapperTest
-        extends AbstractTableTest<ArticleParameter, ArticleParameterCriteriaBuilder, ArticleParameterMapper> {
+        extends AbstractTableTest<ArticleParameter, ArticleParameterMapper> {
 
     @Override
     public ArticleParameter buildSample()
             throws Exception {
         ArticleParameterSamples a = new ArticleParameterSamples();
-        a.article = tables.pickAny(ArticleMapper.class, "article");
-        a.parameter = tables.pickAny(ArticleParameterTypeMapper.class, "articleparm");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

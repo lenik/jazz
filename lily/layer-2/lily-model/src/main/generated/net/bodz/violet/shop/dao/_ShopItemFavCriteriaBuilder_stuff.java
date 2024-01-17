@@ -1,67 +1,14 @@
 package net.bodz.violet.shop.dao;
 
-import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
-public class _ShopItemFavCriteriaBuilder_stuff
-        extends CoObjectCriteriaBuilder {
+public class _ShopItemFavCriteriaBuilder_stuff<self_t extends _ShopItemFavCriteriaBuilder_stuff<self_t>>
+        extends CoObjectCriteriaBuilder<self_t> {
 
-    Long id;
-    LongRange idRange = new LongRange();
+    public final LongField id = _long("id");
 
-    Long shopItemId;
-    LongRange shopItemIdRange = new LongRange();
+    public final LongField shopItemId = _long("shopitem");
 
-    Integer userId;
-    IntegerRange userIdRange = new IntegerRange();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long value) {
-        this.id = value;
-    }
-
-    public LongRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(LongRange range) {
-        this.idRange = range;
-    }
-
-    public Long getShopItemId() {
-        return shopItemId;
-    }
-
-    public void setShopItemId(Long value) {
-        this.shopItemId = value;
-    }
-
-    public LongRange getShopItemIdRange() {
-        return shopItemIdRange;
-    }
-
-    public void setShopItemIdRange(LongRange range) {
-        this.shopItemIdRange = range;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer value) {
-        this.userId = value;
-    }
-
-    public IntegerRange getUserIdRange() {
-        return userIdRange;
-    }
-
-    public void setUserIdRange(IntegerRange range) {
-        this.userIdRange = range;
-    }
+    public final IntegerField userId = integer("\"user\"");
 
 }

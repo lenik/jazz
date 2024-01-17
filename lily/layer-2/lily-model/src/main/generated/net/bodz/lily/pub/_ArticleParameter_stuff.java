@@ -16,6 +16,19 @@ public abstract class _ArticleParameter_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "article_parm";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_ARTICLE_ID = "article";
+    public static final String FIELD_PARAMETER_ID = "parm";
+    public static final String FIELD_IVAL = "ival";
+    public static final String FIELD_FVAL = "fval";
+    public static final String FIELD_SVAL = "sval";
+
+    public static final int N_ID = 10;
+    public static final int N_ARTICLE_ID = 19;
+    public static final int N_PARAMETER_ID = 10;
     public static final int N_IVAL = 10;
     public static final int N_FVAL = 17;
     public static final int N_SVAL = 250;

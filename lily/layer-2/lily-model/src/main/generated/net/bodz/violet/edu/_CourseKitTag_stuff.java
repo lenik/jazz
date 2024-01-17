@@ -12,6 +12,9 @@ public abstract class _CourseKitTag_stuff<this_t extends _CourseKitTag_stuff<thi
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "coursekittag";
+
     public void initNotNulls() {
     }
 

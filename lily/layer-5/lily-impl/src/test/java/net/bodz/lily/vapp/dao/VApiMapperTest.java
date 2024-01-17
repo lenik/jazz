@@ -5,15 +5,13 @@ import net.bodz.lily.vapp.VApi;
 import net.bodz.lily.vapp.VApiSamples;
 
 public class VApiMapperTest
-        extends AbstractTableTest<VApi, VApiCriteriaBuilder, VApiMapper> {
+        extends AbstractTableTest<VApi, VApiMapper> {
 
     @Override
     public VApi buildSample()
             throws Exception {
         VApiSamples a = new VApiSamples();
-        a.api = tables.pickAny(ApiTypeMapper.class, "apitype");
-        a.app = tables.pickAny(VAppMapper.class, "vapp");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

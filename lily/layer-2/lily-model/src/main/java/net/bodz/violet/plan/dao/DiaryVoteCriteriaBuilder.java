@@ -1,6 +1,6 @@
 package net.bodz.violet.plan.dao;
 
 public class DiaryVoteCriteriaBuilder
-        extends _DiaryVoteCriteriaBuilder_stuff {
+        extends _DiaryVoteCriteriaBuilder_stuff<DiaryVoteCriteriaBuilder> {
 
 }

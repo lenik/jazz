@@ -5,6 +5,6 @@ import net.bodz.lily.schema.FormDef;
 
 public interface FormDefMapper
         extends
-            IEntityMapper<FormDef, FormDefCriteriaBuilder> {
+            IEntityMapper<FormDef> {
 
 }

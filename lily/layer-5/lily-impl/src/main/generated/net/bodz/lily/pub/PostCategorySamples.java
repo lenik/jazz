@@ -1,8 +1,12 @@
 package net.bodz.lily.pub;
 
+import net.bodz.lily.pub.dao.PostCategoryMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class PostCategorySamples
         extends TestSampleBuilder {
@@ -11,6 +15,7 @@ public class PostCategorySamples
     public PostCategory parent;
     public Group ownerGroup;
 
+    @Override
     public PostCategory build()
             throws Exception {
         PostCategory a = new PostCategory();
@@ -21,6 +26,19 @@ public class PostCategorySamples
         a.setDepth(360554752);
         a.setRefCount(571495083);
         return a;
+    }
+
+    @Override
+    public PostCategorySamples wireAny(IRandomPicker picker) {
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.parent = picker.pickAny(PostCategoryMapper.class, "postcat");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        return this;
+    }
+
+    @Override
+    public PostCategory buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

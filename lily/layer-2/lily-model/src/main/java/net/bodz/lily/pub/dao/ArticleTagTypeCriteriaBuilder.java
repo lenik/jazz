@@ -1,6 +1,6 @@
 package net.bodz.lily.pub.dao;
 
 public class ArticleTagTypeCriteriaBuilder
-        extends _ArticleTagTypeCriteriaBuilder_stuff {
+        extends _ArticleTagTypeCriteriaBuilder_stuff<ArticleTagTypeCriteriaBuilder> {
 
 }

@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestAnswer;
 
 public interface TestAnswerMapper
         extends
-            IEntityMapper<TestAnswer, TestAnswerCriteriaBuilder> {
+            IEntityMapper<TestAnswer> {
 
 }

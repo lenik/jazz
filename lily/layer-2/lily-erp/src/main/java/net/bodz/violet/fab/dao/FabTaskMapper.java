@@ -1,0 +1,10 @@
+package net.bodz.violet.fab.dao;
+
+import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.violet.fab.FabTask;
+
+public interface FabTaskMapper
+        extends
+            IEntityMapper<FabTask> {
+
+}

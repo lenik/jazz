@@ -5,6 +5,6 @@ import net.bodz.violet.shop.SellPrice;
 
 public interface SellPriceMapper
         extends
-            IEntityMapper<SellPrice, SellPriceCriteriaBuilder> {
+            IEntityMapper<SellPrice> {
 
 }

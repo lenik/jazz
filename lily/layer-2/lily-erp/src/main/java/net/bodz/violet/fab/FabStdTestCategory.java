@@ -1,22 +1,11 @@
 package net.bodz.violet.fab;
 
-import net.bodz.lily.entity.IdType;
-import net.bodz.lily.model.base.IdEntity;
+import javax.persistence.Table;
 
-@IdType(Integer.class)
+@Table(schema = FabStdTestCategory.SCHEMA_NAME, name = FabStdTestCategory.TABLE_NAME)
 public class FabStdTestCategory
-        extends IdEntity<Integer> {
+        extends _FabStdTestCategory_stuff {
 
     private static final long serialVersionUID = 1L;
-
-    public FabStdTestCategory() {
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(128);
-        sb.append(super.toString());
-        return sb.toString();
-    }
 
 }

@@ -5,6 +5,6 @@ import net.bodz.violet.asset.GroupAsset;
 
 public interface GroupAssetMapper
         extends
-            IEntityMapper<GroupAsset, GroupAssetCriteriaBuilder> {
+            IEntityMapper<GroupAsset> {
 
 }

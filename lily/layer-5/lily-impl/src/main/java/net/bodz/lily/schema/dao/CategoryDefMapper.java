@@ -5,6 +5,6 @@ import net.bodz.lily.schema.CategoryDef;
 
 public interface CategoryDefMapper
         extends
-            IEntityMapper<CategoryDef, CategoryDefCriteriaBuilder> {
+            IEntityMapper<CategoryDef> {
 
 }

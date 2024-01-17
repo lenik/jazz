@@ -16,9 +16,20 @@ public abstract class _Uom_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "uom";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_PROP = "prop";
+    public static final String FIELD_STD_ID = "std";
+    public static final String FIELD_SCALE = "scale";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_PROP = 30;
     public static final int N_STD_ID = 10;
+    public static final int N_SCALE = 17;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;

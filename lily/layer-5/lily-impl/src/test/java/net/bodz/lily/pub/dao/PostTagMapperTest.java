@@ -5,15 +5,13 @@ import net.bodz.lily.pub.PostTagSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTagMapperTest
-        extends AbstractTableTest<PostTag, PostTagCriteriaBuilder, PostTagMapper> {
+        extends AbstractTableTest<PostTag, PostTagMapper> {
 
     @Override
     public PostTag buildSample()
             throws Exception {
         PostTagSamples a = new PostTagSamples();
-        a.tag = tables.pickAny(PostTagTypeMapper.class, "posttag");
-        a.post = tables.pickAny(PostMapper.class, "post");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

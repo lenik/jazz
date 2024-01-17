@@ -5,6 +5,6 @@ import net.bodz.lily.security.GroupType;
 
 public interface GroupTypeMapper
         extends
-            IEntityMapper<GroupType, GroupTypeCriteriaBuilder> {
+            IEntityMapper<GroupType> {
 
 }

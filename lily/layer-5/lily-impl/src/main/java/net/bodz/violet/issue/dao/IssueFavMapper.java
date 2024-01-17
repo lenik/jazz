@@ -5,6 +5,6 @@ import net.bodz.violet.issue.IssueFav;
 
 public interface IssueFavMapper
         extends
-            IEntityMapper<IssueFav, IssueFavCriteriaBuilder> {
+            IEntityMapper<IssueFav> {
 
 }

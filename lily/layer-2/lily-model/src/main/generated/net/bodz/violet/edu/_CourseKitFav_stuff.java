@@ -14,6 +14,13 @@ public abstract class _CourseKitFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "coursekit_fav";
+
+    public static final String FIELD_COURSEKIT_ID = "coursekit";
+
+    public static final int N_COURSEKIT_ID = 10;
+
     private static final int _ord_COURSEKIT_ID = 2;
 
     /**  */

@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestQuestionVote;
 
 public interface TestQuestionVoteMapper
         extends
-            IEntityMapper<TestQuestionVote, TestQuestionVoteCriteriaBuilder> {
+            IEntityMapper<TestQuestionVote> {
 
 }

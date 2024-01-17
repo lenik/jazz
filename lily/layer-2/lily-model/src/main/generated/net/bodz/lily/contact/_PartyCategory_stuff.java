@@ -12,6 +12,9 @@ public abstract class _PartyCategory_stuff<this_t extends _PartyCategory_stuff<t
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "partycat";
+
     public void initNotNulls() {
     }
 

@@ -1,10 +1,12 @@
 package net.bodz.lily.reward;
 
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class BadgeSamples
         extends TestSampleBuilder {
 
+    @Override
     public Badge build()
             throws Exception {
         Badge a = new Badge();
@@ -15,6 +17,16 @@ public class BadgeSamples
         a.setTransient_(true);
         a.setIndexed(false);
         return a;
+    }
+
+    @Override
+    public BadgeSamples wireAny(IRandomPicker picker) {
+        return this;
+    }
+
+    @Override
+    public Badge buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

@@ -16,6 +16,17 @@ public abstract class _VApi_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "vapi";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_APP_ID = "app";
+    public static final String FIELD_API_ID = "api";
+    public static final String FIELD_CALLBACK = "callback";
+
+    public static final int N_ID = 19;
+    public static final int N_APP_ID = 10;
+    public static final int N_API_ID = 10;
     public static final int N_CALLBACK = 200;
 
     private static final int _ord_ID = 1;

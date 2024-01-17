@@ -5,6 +5,6 @@ import net.bodz.violet.store.StoreCategory;
 
 public interface StoreCategoryMapper
         extends
-            IEntityMapper<StoreCategory, StoreCategoryCriteriaBuilder> {
+            IEntityMapper<StoreCategory> {
 
 }

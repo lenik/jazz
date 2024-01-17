@@ -18,9 +18,22 @@ public abstract class _DiaryParty_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "diary_party";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_DIARY_ID = "diary";
+    public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_PERSON_ID = "person";
+    public static final String FIELD_ORG_ID = "org";
+    public static final String FIELD_VALUE = "value";
+
+    public static final int N_ID = 19;
+    public static final int N_DIARY_ID = 19;
     public static final int N_USER_ID = 10;
     public static final int N_PERSON_ID = 10;
     public static final int N_ORG_ID = 10;
+    public static final int N_VALUE = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_DIARY_ID = _ord_ID + 3;

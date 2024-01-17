@@ -1,6 +1,10 @@
 package net.bodz.lily.security;
 
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
+import net.bodz.lily.security.dao.UserTypeMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class UserSamples
         extends TestSampleBuilder {
@@ -17,6 +21,19 @@ public class UserSamples
         a.setReferer(referer);
         a.setType(type);
         return a;
+    }
+
+    @Override
+    public UserSamples wireAny(IRandomPicker picker) {
+        this.primaryGroup = picker.pickAny(GroupMapper.class, "group");
+        this.referer = picker.pickAny(UserMapper.class, "user");
+        this.type = picker.pickAny(UserTypeMapper.class, "usertype");
+        return this;
+    }
+
+    @Override
+    public User buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

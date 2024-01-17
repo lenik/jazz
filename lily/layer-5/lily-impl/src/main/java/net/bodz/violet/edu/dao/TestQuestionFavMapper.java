@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestQuestionFav;
 
 public interface TestQuestionFavMapper
         extends
-            IEntityMapper<TestQuestionFav, TestQuestionFavCriteriaBuilder> {
+            IEntityMapper<TestQuestionFav> {
 
 }

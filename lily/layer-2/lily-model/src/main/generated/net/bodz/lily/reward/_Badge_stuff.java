@@ -16,7 +16,24 @@ public abstract class _Badge_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "badge";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_EXPR = "expr";
+    public static final String FIELD_VAL = "val";
+    public static final String FIELD_LEVELS = "levels";
+    public static final String FIELD_DESCEND = "descend";
+    public static final String FIELD_TRANSIENT = "transient";
+    public static final String FIELD_INDEXED = "indexed";
+
+    public static final int N_ID = 10;
     public static final int N_EXPR = 255;
+    public static final int N_VAL = 10;
+    public static final int N_LEVELS = 10;
+    public static final int N_DESCEND = 1;
+    public static final int N_TRANSIENT = 1;
+    public static final int N_INDEXED = 1;
 
     private static final int _ord_ID = 1;
     private static final int _ord_EXPR = _ord_ID + 9;

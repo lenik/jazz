@@ -16,8 +16,22 @@ public abstract class _ExternalSite_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "extsite";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_DEPTH = "depth";
+    public static final String FIELD_URLFMT = "urlfmt";
+    public static final String FIELD_BONUS = "bonus";
+    public static final String FIELD_COUNT = "count";
+
+    public static final int N_ID = 10;
     public static final int N_PARENT_ID = 10;
+    public static final int N_DEPTH = 10;
     public static final int N_URLFMT = 200;
+    public static final int N_BONUS = 10;
+    public static final int N_COUNT = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_PARENT_ID = 15;

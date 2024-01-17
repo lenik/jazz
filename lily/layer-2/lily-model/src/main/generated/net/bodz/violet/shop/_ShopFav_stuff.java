@@ -14,6 +14,13 @@ public abstract class _ShopFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "shop_fav";
+
+    public static final String FIELD_SHOP_ID = "shop";
+
+    public static final int N_SHOP_ID = 10;
+
     private static final int _ord_SHOP_ID = 2;
 
     /**  */

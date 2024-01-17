@@ -1,9 +1,14 @@
 package net.bodz.lily.pub;
 
+import net.bodz.lily.pub.dao.ArticleCategoryMapper;
 import net.bodz.lily.schema.FormDef;
+import net.bodz.lily.schema.dao.FormDefMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class ArticleSamples
         extends TestSampleBuilder {
@@ -14,6 +19,7 @@ public class ArticleSamples
     public User ownerUser;
     public FormDef form;
 
+    @Override
     public Article build()
             throws Exception {
         Article a = new Article();
@@ -28,6 +34,21 @@ public class ArticleSamples
         a.setHateCount(1755254178);
         a.setMessageCount(1233524803);
         return a;
+    }
+
+    @Override
+    public ArticleSamples wireAny(IRandomPicker picker) {
+        this.op = picker.pickAny(UserMapper.class, "user");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.category = picker.pickAny(ArticleCategoryMapper.class, "articlecat");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.form = picker.pickAny(FormDefMapper.class, "_form");
+        return this;
+    }
+
+    @Override
+    public Article buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

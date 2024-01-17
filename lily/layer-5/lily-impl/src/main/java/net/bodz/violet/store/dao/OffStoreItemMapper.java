@@ -5,6 +5,6 @@ import net.bodz.violet.store.OffStoreItem;
 
 public interface OffStoreItemMapper
         extends
-            IEntityMapper<OffStoreItem, OffStoreItemCriteriaBuilder> {
+            IEntityMapper<OffStoreItem> {
 
 }

@@ -5,16 +5,13 @@ import net.bodz.lily.contact.PersonRoleSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PersonRoleMapperTest
-        extends AbstractTableTest<PersonRole, PersonRoleCriteriaBuilder, PersonRoleMapper> {
+        extends AbstractTableTest<PersonRole, PersonRoleMapper> {
 
     @Override
     public PersonRole buildSample()
             throws Exception {
         PersonRoleSamples a = new PersonRoleSamples();
-        a.orgUnit = tables.pickAny(OrgUnitMapper.class, "orgunit");
-        a.person = tables.pickAny(PersonMapper.class, "person");
-        a.org = tables.pickAny(OrganizationMapper.class, "org");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

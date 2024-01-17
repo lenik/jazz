@@ -2,11 +2,20 @@ package net.bodz.violet.store;
 
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.art.Artifact;
 import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.Dim3d;
 import net.bodz.violet.art.Dim3dSamples;
+import net.bodz.violet.art.dao.ArtifactCategoryMapper;
+import net.bodz.violet.art.dao.ArtifactMapper;
+import net.bodz.violet.store.dao.RegionCategoryMapper;
+import net.bodz.violet.store.dao.RegionLevelMapper;
+import net.bodz.violet.store.dao.RegionMapper;
+import net.bodz.violet.store.dao.RegionTagMapper;
 
 public class RegionSamples
         extends TestSampleBuilder {
@@ -26,6 +35,7 @@ public class RegionSamples
     public Dim3d bbox;
     public Dim3d position;
 
+    @Override
     public Region build()
             throws Exception {
         Region a = new Region();
@@ -46,6 +56,29 @@ public class RegionSamples
         a.setBbox(new Dim3dSamples().build());
         a.setPosition(new Dim3dSamples().build());
         return a;
+    }
+
+    @Override
+    public RegionSamples wireAny(IRandomPicker picker) {
+        this.forCat = picker.pickAny(ArtifactCategoryMapper.class, "artcat");
+        this.proto = picker.pickAny(RegionMapper.class, "region");
+        this.tag = picker.pickAny(RegionTagMapper.class, "regiontag");
+        this.category = picker.pickAny(RegionCategoryMapper.class, "regioncat");
+        this.parent = picker.pickAny(RegionMapper.class, "region");
+        this.level = picker.pickAny(RegionLevelMapper.class, "regionlevel");
+        this.artifact = picker.pickAny(ArtifactMapper.class, "art");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.material = picker.pickAny(ArtifactMapper.class, "art");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.forArt = picker.pickAny(ArtifactMapper.class, "art");
+        this.bbox = new Dim3dSamples().build();
+        this.position = new Dim3dSamples().build();
+        return this;
+    }
+
+    @Override
+    public Region buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

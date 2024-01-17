@@ -26,16 +26,46 @@ public abstract class _StoreOrder_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "storeodr";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_BEGIN_TIME = "t0";
+    public static final String FIELD_END_TIME = "t1";
+    public static final String FIELD_YEAR = "year";
+    public static final String FIELD_SUBJECT = "subject";
+    public static final String FIELD_OP_ID = "op";
+    public static final String FIELD_RAW_TEXT = "text";
+    public static final String FIELD_FORM_ID = "form";
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_PHASE_ID = "phase";
+    public static final String FIELD_PREV_ID = "prev";
+    public static final String FIELD_PLAN_ID = "plan";
+    public static final String FIELD_ORG_ID = "org";
+    public static final String FIELD_ORG_UNIT_ID = "ou";
+    public static final String FIELD_PERSON_ID = "person";
+    public static final String FIELD_LENGTH = "length";
+    public static final String FIELD_TOTAL_QUANTITY = "sum_qty";
+    public static final String FIELD_TOTAL_AMOUNT = "sum_amount";
+
+    public static final int N_ID = 19;
+    public static final int N_BEGIN_TIME = 35;
+    public static final int N_END_TIME = 35;
+    public static final int N_YEAR = 10;
     public static final int N_SUBJECT = 200;
     public static final int N_OP_ID = 10;
     public static final int N_RAW_TEXT = 2147483647;
     public static final int N_FORM_ID = 10;
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_CATEGORY_ID = 10;
+    public static final int N_PHASE_ID = 10;
     public static final int N_PREV_ID = 19;
     public static final int N_PLAN_ID = 19;
     public static final int N_ORG_ID = 10;
     public static final int N_ORG_UNIT_ID = 10;
     public static final int N_PERSON_ID = 10;
+    public static final int N_LENGTH = 10;
     public static final int N_TOTAL_QUANTITY = 20;
     public static final int N_TOTAL_AMOUNT = 20;
 

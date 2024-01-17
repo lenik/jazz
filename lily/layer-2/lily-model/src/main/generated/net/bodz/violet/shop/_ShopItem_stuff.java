@@ -17,8 +17,20 @@ public abstract class _ShopItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "shopitem";
+
+    public static final String FIELD_SHOP_ID = "shop";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_BATCH = "batch";
+    public static final String FIELD_PRICE = "price";
+    public static final String FIELD_QUANTITY = "qty";
+
     public static final int N_SHOP_ID = 10;
     public static final int N_CATEGORY_ID = 10;
+    public static final int N_ARTIFACT_ID = 10;
+    public static final int N_BATCH = 2147483647;
     public static final int N_PRICE = 20;
     public static final int N_QUANTITY = 20;
 

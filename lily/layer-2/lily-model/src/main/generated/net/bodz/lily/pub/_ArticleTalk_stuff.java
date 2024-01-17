@@ -18,7 +18,14 @@ public abstract class _ArticleTalk_stuff<this_t extends _ArticleTalk_stuff<this_
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "article_msg";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_ARTICLE_ID = "article";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_ARTICLE_ID = 19;
 
     private static final int _ord_FORM_ARGUMENTS = 15;
     private static final int _ord_ARTICLE_ID = _ord_FORM_ARGUMENTS + 1;

@@ -2,7 +2,11 @@ package net.bodz.violet.plan;
 
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.plan.dao.DiaryCategoryMapper;
 
 public class DiaryCategorySamples
         extends TestSampleBuilder {
@@ -11,6 +15,7 @@ public class DiaryCategorySamples
     public Group ownerGroup;
     public User ownerUser;
 
+    @Override
     public DiaryCategory build()
             throws Exception {
         DiaryCategory a = new DiaryCategory();
@@ -18,6 +23,19 @@ public class DiaryCategorySamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         return a;
+    }
+
+    @Override
+    public DiaryCategorySamples wireAny(IRandomPicker picker) {
+        this.parent = picker.pickAny(DiaryCategoryMapper.class, "diarycat");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        return this;
+    }
+
+    @Override
+    public DiaryCategory buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

@@ -2,7 +2,11 @@ package net.bodz.violet.art;
 
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.art.dao.ArtifactCategoryMapper;
 
 public class ArtifactCategorySamples
         extends TestSampleBuilder {
@@ -11,6 +15,7 @@ public class ArtifactCategorySamples
     public Group ownerGroup;
     public ArtifactCategory parent;
 
+    @Override
     public ArtifactCategory build()
             throws Exception {
         ArtifactCategory a = new ArtifactCategory();
@@ -26,6 +31,19 @@ public class ArtifactCategorySamples
         a.setSerialfmt("Lea&Rlua aakui cuuic, Vjya; wdsdus@nwaiau eosjh");
         a.setCount(753616462);
         return a;
+    }
+
+    @Override
+    public ArtifactCategorySamples wireAny(IRandomPicker picker) {
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.parent = picker.pickAny(ArtifactCategoryMapper.class, "artcat");
+        return this;
+    }
+
+    @Override
+    public ArtifactCategory buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

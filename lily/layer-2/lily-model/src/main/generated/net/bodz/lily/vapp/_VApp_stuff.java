@@ -16,6 +16,16 @@ public abstract class _VApp_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "vapp";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_REQ_ID = "req";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_SECRET = "secret";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_REQ_ID = 10;
     public static final int N_CATEGORY_ID = 10;

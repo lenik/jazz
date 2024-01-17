@@ -16,6 +16,14 @@ public abstract class _UserBadge_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "user_badge";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_BADGE_ID = "badge";
+
+    public static final int N_ID = 10;
     public static final int N_USER_ID = 10;
     public static final int N_BADGE_ID = 10;
 

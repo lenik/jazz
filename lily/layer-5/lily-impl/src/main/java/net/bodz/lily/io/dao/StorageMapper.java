@@ -5,6 +5,6 @@ import net.bodz.lily.io.Storage;
 
 public interface StorageMapper
         extends
-            IEntityMapper<Storage, StorageCriteriaBuilder> {
+            IEntityMapper<Storage> {
 
 }

@@ -15,8 +15,20 @@ public abstract class _PlanDo_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "plando";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_VOTE_COUNT = "nvote";
+    public static final String FIELD_PLAN_ID = "plan";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_CHANGES = "changes";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_VOTE_COUNT = 10;
+    public static final int N_PLAN_ID = 19;
     public static final int N_PARENT_ID = 19;
+    public static final int N_CHANGES = 2147483647;
 
     private static final int _ord_FORM_ARGUMENTS = 16;
     private static final int _ord_VOTE_COUNT = _ord_FORM_ARGUMENTS + 4;

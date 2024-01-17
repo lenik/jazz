@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostTagType;
 
 public interface PostTagTypeMapper
         extends
-            IEntityMapper<PostTagType, PostTagTypeCriteriaBuilder> {
+            IEntityMapper<PostTagType> {
 
 }

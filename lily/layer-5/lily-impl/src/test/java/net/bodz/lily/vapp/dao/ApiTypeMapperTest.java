@@ -5,13 +5,13 @@ import net.bodz.lily.vapp.ApiType;
 import net.bodz.lily.vapp.ApiTypeSamples;
 
 public class ApiTypeMapperTest
-        extends AbstractTableTest<ApiType, ApiTypeCriteriaBuilder, ApiTypeMapper> {
+        extends AbstractTableTest<ApiType, ApiTypeMapper> {
 
     @Override
     public ApiType buildSample()
             throws Exception {
         ApiTypeSamples a = new ApiTypeSamples();
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

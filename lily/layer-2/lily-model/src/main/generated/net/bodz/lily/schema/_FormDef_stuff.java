@@ -16,7 +16,18 @@ public abstract class _FormDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_form";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_SCHEMA_ID = "schema";
+    public static final String FIELD_SUBJECT = "subject";
+    public static final String FIELD_RAW_TEXT = "text";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
+    public static final int N_SCHEMA_ID = 10;
     public static final int N_SUBJECT = 200;
     public static final int N_RAW_TEXT = 2147483647;
 
