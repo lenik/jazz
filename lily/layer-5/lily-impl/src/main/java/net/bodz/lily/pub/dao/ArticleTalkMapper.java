@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleTalk;
 
 public interface ArticleTalkMapper
         extends
-            IEntityMapper<ArticleTalk, ArticleTalkCriteriaBuilder> {
+            IEntityMapper<ArticleTalk> {
 
 }

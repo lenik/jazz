@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostBackref;
 
 public interface PostBackrefMapper
         extends
-            IEntityMapper<PostBackref, PostBackrefCriteriaBuilder> {
+            IEntityMapper<PostBackref> {
 
 }

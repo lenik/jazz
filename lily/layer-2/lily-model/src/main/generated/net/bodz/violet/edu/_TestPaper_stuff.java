@@ -15,6 +15,19 @@ public abstract class _TestPaper_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testpaper";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_COURSE_ID = "course";
+    public static final String FIELD_TIMEOUT = "timeout";
+    public static final String FIELD_TOTALSCORE = "totalscore";
+
+    public static final int N_ID = 10;
+    public static final int N_COURSE_ID = 10;
+    public static final int N_TIMEOUT = 10;
+    public static final int N_TOTALSCORE = 10;
+
     private static final int _ord_ID = 1;
     private static final int _ord_COURSE_ID = 14;
     private static final int _ord_TIMEOUT = _ord_COURSE_ID + 1;

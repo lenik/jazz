@@ -1,9 +1,14 @@
 package net.bodz.violet.edu;
 
 import net.bodz.lily.schema.FormDef;
+import net.bodz.lily.schema.dao.FormDefMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.edu.dao.CourseMapper;
 
 public class TestQuestionSamples
         extends TestSampleBuilder {
@@ -14,6 +19,7 @@ public class TestQuestionSamples
     public User op;
     public User ownerUser;
 
+    @Override
     public TestQuestion build()
             throws Exception {
         TestQuestion a = new TestQuestion();
@@ -29,6 +35,21 @@ public class TestQuestionSamples
         a.setPos(985076002);
         a.setAnswer("Ouoc, sdi uexkc tha ir ug tg ciu_ioijo quu, dia haor eou uee?");
         return a;
+    }
+
+    @Override
+    public TestQuestionSamples wireAny(IRandomPicker picker) {
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.course = picker.pickAny(CourseMapper.class, "course");
+        this.form = picker.pickAny(FormDefMapper.class, "_form");
+        this.op = picker.pickAny(UserMapper.class, "user");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        return this;
+    }
+
+    @Override
+    public TestQuestion buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

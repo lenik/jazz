@@ -15,7 +15,18 @@ public abstract class _ZoneCategory_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "zonecat";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_DEPTH = "depth";
+    public static final String FIELD_REF_COUNT = "nref";
+
+    public static final int N_ID = 10;
     public static final int N_PARENT_ID = 10;
+    public static final int N_DEPTH = 10;
+    public static final int N_REF_COUNT = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_PARENT_ID = 18;

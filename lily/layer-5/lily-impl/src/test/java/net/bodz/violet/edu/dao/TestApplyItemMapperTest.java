@@ -5,15 +5,13 @@ import net.bodz.violet.edu.TestApplyItem;
 import net.bodz.violet.edu.TestApplyItemSamples;
 
 public class TestApplyItemMapperTest
-        extends AbstractTableTest<TestApplyItem, TestApplyItemCriteriaBuilder, TestApplyItemMapper> {
+        extends AbstractTableTest<TestApplyItem, TestApplyItemMapper> {
 
     @Override
     public TestApplyItem buildSample()
             throws Exception {
         TestApplyItemSamples a = new TestApplyItemSamples();
-        a.question = tables.pickAny(TestQuestionMapper.class, "testq");
-        a.apply = tables.pickAny(TestApplyMapper.class, "testapply");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

@@ -16,7 +16,18 @@ public abstract class _PostBackref_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "post_backref";
+
+    public static final String FIELD_POST_ID = "post";
+    public static final String FIELD_SITE_ID = "site";
+    public static final String FIELD_KEY = "key";
+    public static final String FIELD_VALUE = "value";
+
+    public static final int N_POST_ID = 19;
+    public static final int N_SITE_ID = 10;
     public static final int N_KEY = 30;
+    public static final int N_VALUE = 10;
 
     private static final int _ord_POST_ID = 14;
     private static final int _ord_SITE_ID = _ord_POST_ID + 1;

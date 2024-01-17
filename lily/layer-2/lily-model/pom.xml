@@ -29,6 +29,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-shell</artifactId>
+            <version>${bas.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-site</artifactId>
             <version>${bas.version}</version>
             <optional>true</optional>
@@ -42,6 +48,11 @@
             <groupId>net.bodz.lily</groupId>
             <artifactId>lily-api</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>

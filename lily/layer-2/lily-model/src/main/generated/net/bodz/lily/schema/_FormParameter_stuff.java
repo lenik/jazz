@@ -16,6 +16,15 @@ public abstract class _FormParameter_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_formparm";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_FORM_ID = "form";
+    public static final String FIELD_VALUE = "value";
+
+    public static final int N_ID = 10;
+    public static final int N_FORM_ID = 10;
     public static final int N_VALUE = 100;
 
     private static final int _ord_ID = 1;

@@ -5,14 +5,13 @@ import net.bodz.lily.schema.ParameterValueSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ParameterValueMapperTest
-        extends AbstractTableTest<ParameterValue, ParameterValueCriteriaBuilder, ParameterValueMapper> {
+        extends AbstractTableTest<ParameterValue, ParameterValueMapper> {
 
     @Override
     public ParameterValue buildSample()
             throws Exception {
         ParameterValueSamples a = new ParameterValueSamples();
-        a.parameter = tables.pickAny(ParameterDefMapper.class, "_parm");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.fab.dao.FabTaskItemMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.fab.FabTaskItem">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="deadline" column="deadline" />
+        <result property="status" column="status" />
+        <result property="quantity" column="qty" />
+        <result property="batch.jsonStr" column="batch" />
+        <result property="ntrack" column="ntrack" />
+        <result property="taskId" column="task" />
+        <result property="modelId" column="model" />
+        <association property="task" columnPrefix="task_"
+            javaType="net.bodz.violet.fab.FabTask" 
+            resultMap="net.bodz.violet.fab.FabTaskMapper.objlist_map" />
+        <association property="model" columnPrefix="model_"
+            javaType="net.bodz.violet.erp.Artmodel" 
+            resultMap="net.bodz.violet.erp.ArtmodelMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.task, 
+            a.deadline, 
+            a.status, 
+            a.model, 
+            a.qty, 
+            a.batch, 
+            a.ntrack, 
+            task.id task_id, 
+            task.uid task_uid, 
+            task.gid task_gid, 
+            task.mode task_mode, 
+            task.acl task_acl, 
+            task.label task_label, 
+            task.description task_description, 
+            task.priority task_priority, 
+            task.flags task_flags, 
+            task."state" task_state, 
+            task.creation task_creation, 
+            task.lastmod task_lastmod, 
+            task."version" task_version, 
+            task.t0 task_t0, 
+            task.t1 task_t1, 
+            task."year" task_year, 
+            task.odr task_odr, 
+            task.since task_since, 
+            task.deadline task_deadline, 
+            task.nproc task_nproc, 
+            task.ntrack task_ntrack, 
+            model.id model_id, 
+            model.uid model_uid, 
+            model.gid model_gid, 
+            model.mode model_mode, 
+            model.acl model_acl, 
+            model.label model_label, 
+            model.description model_description, 
+            model.priority model_priority, 
+            model.flags model_flags, 
+            model."state" model_state, 
+            model.creation model_creation, 
+            model.lastmod model_lastmod, 
+            model."version" model_version, 
+            model.t0 model_t0, 
+            model.t1 model_t1, 
+            model."year" model_year, 
+            model.props model_props, 
+            model."valid" model_valid, 
+            model.validsince model_validsince, 
+            model.validuntil model_validuntil, 
+            model.obsolete model_obsolete, 
+            model.art model_art, 
+            model.model model_model
+        from fabtaskl a
+            left join fabtask task on a.task = task.id
+            left join artmodel model on a.model = model.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.task, 
+            a.deadline, 
+            a.status, 
+            a.model, 
+            a.qty, 
+            a.batch, 
+            a.ntrack, 
+            task.id task_id, 
+            task.uid task_uid, 
+            task.gid task_gid, 
+            task.mode task_mode, 
+            task.acl task_acl, 
+            task.label task_label, 
+            task.description task_description, 
+            task.priority task_priority, 
+            task.flags task_flags, 
+            task."state" task_state, 
+            task.creation task_creation, 
+            task.lastmod task_lastmod, 
+            task."version" task_version, 
+            task.t0 task_t0, 
+            task.t1 task_t1, 
+            task."year" task_year, 
+            task.odr task_odr, 
+            task.since task_since, 
+            task.deadline task_deadline, 
+            task.nproc task_nproc, 
+            task.ntrack task_ntrack, 
+            model.id model_id, 
+            model.uid model_uid, 
+            model.gid model_gid, 
+            model.mode model_mode, 
+            model.acl model_acl, 
+            model.label model_label, 
+            model.description model_description, 
+            model.priority model_priority, 
+            model.flags model_flags, 
+            model."state" model_state, 
+            model.creation model_creation, 
+            model.lastmod model_lastmod, 
+            model."version" model_version, 
+            model.t0 model_t0, 
+            model.t1 model_t1, 
+            model."year" model_year, 
+            model.props model_props, 
+            model."valid" model_valid, 
+            model.validsince model_validsince, 
+            model.validuntil model_validuntil, 
+            model.obsolete model_obsolete, 
+            model.art model_art, 
+            model.model model_model
+        from fabtaskl a
+            left join fabtask task on a.task = task.id
+            left join artmodel model on a.model = model.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabtaskl(
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            task,
+            deadline,
+            status,
+            model,
+            qty,
+            batch,
+            ntrack
+        ) values(
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{taskId},
+            #{deadline},
+            #{status},
+            #{modelId},
+            #{quantity},
+            #{batch.jsonStr}::jsonb,
+            #{ntrack}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabtaskl
+        <set>
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            task = #{taskId},
+            deadline = #{deadline},
+            status = #{status},
+            model = #{modelId},
+            qty = #{quantity},
+            batch = #{batch.jsonStr}::jsonb,
+            ntrack = #{ntrack},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabtaskl
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabtaskl
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

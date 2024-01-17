@@ -1,9 +1,15 @@
 package net.bodz.violet.issue;
 
 import net.bodz.lily.schema.FormDef;
+import net.bodz.lily.schema.dao.FormDefMapper;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.issue.dao.IssueCategoryMapper;
+import net.bodz.violet.issue.dao.IssuePhaseMapper;
 
 public class IssueSamples
         extends TestSampleBuilder {
@@ -15,6 +21,7 @@ public class IssueSamples
     public IssuePhase phase;
     public FormDef form;
 
+    @Override
     public Issue build()
             throws Exception {
         Issue a = new Issue();
@@ -30,6 +37,22 @@ public class IssueSamples
         a.setNlike(21130334);
         a.setValue(0.7044203450328029);
         return a;
+    }
+
+    @Override
+    public IssueSamples wireAny(IRandomPicker picker) {
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.op = picker.pickAny(UserMapper.class, "user");
+        this.category = picker.pickAny(IssueCategoryMapper.class, "issuecat");
+        this.phase = picker.pickAny(IssuePhaseMapper.class, "issuephase");
+        this.form = picker.pickAny(FormDefMapper.class, "_form");
+        return this;
+    }
+
+    @Override
+    public Issue buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

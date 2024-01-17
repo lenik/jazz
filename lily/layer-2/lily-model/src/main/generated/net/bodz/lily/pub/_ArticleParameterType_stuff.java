@@ -16,6 +16,11 @@ public abstract class _ArticleParameterType_stuff<this_t extends _ArticleParamet
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "articleparm";
+
+    public static final String FIELD_DUMMY = "dummy";
+
     public static final int N_DUMMY = 10;
 
     private static final int _ord_DUMMY = 15;

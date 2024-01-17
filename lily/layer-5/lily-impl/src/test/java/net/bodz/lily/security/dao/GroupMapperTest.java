@@ -5,15 +5,13 @@ import net.bodz.lily.security.GroupSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class GroupMapperTest
-        extends AbstractTableTest<Group, GroupCriteriaBuilder, GroupMapper> {
+        extends AbstractTableTest<Group, GroupMapper> {
 
     @Override
     public Group buildSample()
             throws Exception {
         GroupSamples a = new GroupSamples();
-        a.parent = tables.pickAny(GroupMapper.class, "group");
-        a.type = tables.pickAny(GroupTypeMapper.class, "grouptype");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

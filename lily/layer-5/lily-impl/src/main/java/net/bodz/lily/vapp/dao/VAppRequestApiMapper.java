@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.VAppRequestApi;
 
 public interface VAppRequestApiMapper
         extends
-            IEntityMapper<VAppRequestApi, VAppRequestApiCriteriaBuilder> {
+            IEntityMapper<VAppRequestApi> {
 
 }

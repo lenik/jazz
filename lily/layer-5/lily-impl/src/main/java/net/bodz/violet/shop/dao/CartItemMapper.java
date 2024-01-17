@@ -5,6 +5,6 @@ import net.bodz.violet.shop.CartItem;
 
 public interface CartItemMapper
         extends
-            IEntityMapper<CartItem, CartItemCriteriaBuilder> {
+            IEntityMapper<CartItem> {
 
 }

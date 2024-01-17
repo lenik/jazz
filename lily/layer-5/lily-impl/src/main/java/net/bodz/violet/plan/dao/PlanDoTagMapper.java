@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanDoTag;
 
 public interface PlanDoTagMapper
         extends
-            IEntityMapper<PlanDoTag, PlanDoTagCriteriaBuilder> {
+            IEntityMapper<PlanDoTag> {
 
 }

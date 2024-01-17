@@ -15,6 +15,17 @@ public abstract class _VAppRequestApi_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "vappreq_api";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_API_ID = "api";
+
+    public static final int N_ID = 19;
+    public static final int N_PARENT_ID = 10;
+    public static final int N_API_ID = 10;
+
     private static final int _ord_ID = 1;
     private static final int _ord_PARENT_ID = _ord_ID + 7;
     private static final int _ord_API_ID = _ord_PARENT_ID + 1;

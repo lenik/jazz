@@ -5,6 +5,6 @@ import net.bodz.lily.security.UserRun;
 
 public interface UserRunMapper
         extends
-            IEntityMapper<UserRun, UserRunCriteriaBuilder> {
+            IEntityMapper<UserRun> {
 
 }

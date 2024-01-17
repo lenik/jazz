@@ -5,6 +5,6 @@ import net.bodz.lily.schema.FormParameter;
 
 public interface FormParameterMapper
         extends
-            IEntityMapper<FormParameter, FormParameterCriteriaBuilder> {
+            IEntityMapper<FormParameter> {
 
 }

@@ -16,7 +16,16 @@ public abstract class _PhaseDef_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "_phase";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_SCHEMA_ID = "schema";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
+    public static final int N_SCHEMA_ID = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;

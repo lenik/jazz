@@ -18,6 +18,17 @@ public abstract class _OffStoreItem_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "offstorel";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_BATCH = "batch";
+    public static final String FIELD_QUANTITY = "qty";
+
+    public static final int N_ID = 19;
+    public static final int N_ARTIFACT_ID = 10;
+    public static final int N_BATCH = 2147483647;
     public static final int N_QUANTITY = 20;
 
     private static final int _ord_ID = 1;

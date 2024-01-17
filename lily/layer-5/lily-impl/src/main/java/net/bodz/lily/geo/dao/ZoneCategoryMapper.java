@@ -5,6 +5,6 @@ import net.bodz.lily.geo.ZoneCategory;
 
 public interface ZoneCategoryMapper
         extends
-            IEntityMapper<ZoneCategory, ZoneCategoryCriteriaBuilder> {
+            IEntityMapper<ZoneCategory> {
 
 }

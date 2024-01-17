@@ -15,7 +15,23 @@ public abstract class _TestQuestion_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testq";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_COURSE_ID = "course";
+    public static final String FIELD_FAV_COUNT = "nfav";
+    public static final String FIELD_VOTE_COUNT = "nvote";
+    public static final String FIELD_HATE_COUNT = "nhate";
+    public static final String FIELD_POS = "pos";
+    public static final String FIELD_ANSWER = "answer";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_COURSE_ID = 10;
+    public static final int N_FAV_COUNT = 10;
+    public static final int N_VOTE_COUNT = 10;
+    public static final int N_HATE_COUNT = 10;
+    public static final int N_POS = 10;
     public static final int N_ANSWER = 100;
 
     private static final int _ord_FORM_ARGUMENTS = 16;

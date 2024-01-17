@@ -3,7 +3,11 @@ package net.bodz.violet.shop;
 import java.math.BigDecimal;
 
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.art.Artifact;
+import net.bodz.violet.art.dao.ArtifactMapper;
+import net.bodz.violet.shop.dao.ShopItemCategoryMapper;
+import net.bodz.violet.shop.dao.ShopMapper;
 
 public class ShopItemSamples
         extends TestSampleBuilder {
@@ -12,6 +16,7 @@ public class ShopItemSamples
     public Shop shop;
     public Artifact artifact;
 
+    @Override
     public ShopItem build()
             throws Exception {
         ShopItem a = new ShopItem();
@@ -21,6 +26,19 @@ public class ShopItemSamples
         a.setPrice(new BigDecimal("3.93"));
         a.setQuantity(new BigDecimal(".76"));
         return a;
+    }
+
+    @Override
+    public ShopItemSamples wireAny(IRandomPicker picker) {
+        this.category = picker.pickAny(ShopItemCategoryMapper.class, "shopitemcat");
+        this.shop = picker.pickAny(ShopMapper.class, "shop");
+        this.artifact = picker.pickAny(ArtifactMapper.class, "art");
+        return this;
+    }
+
+    @Override
+    public ShopItem buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

@@ -12,6 +12,9 @@ public abstract class _CourseKitCategory_stuff<this_t extends _CourseKitCategory
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "coursekitcat";
+
     public void initNotNulls() {
     }
 

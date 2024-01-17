@@ -5,6 +5,6 @@ import net.bodz.violet.issue.Issue;
 
 public interface IssueMapper
         extends
-            IEntityMapper<Issue, IssueCriteriaBuilder> {
+            IEntityMapper<Issue> {
 
 }

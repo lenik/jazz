@@ -5,6 +5,6 @@ import net.bodz.violet.issue.IssuePhase;
 
 public interface IssuePhaseMapper
         extends
-            IEntityMapper<IssuePhase, IssuePhaseCriteriaBuilder> {
+            IEntityMapper<IssuePhase> {
 
 }

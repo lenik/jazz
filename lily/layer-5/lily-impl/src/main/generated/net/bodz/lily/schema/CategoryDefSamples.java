@@ -1,6 +1,9 @@
 package net.bodz.lily.schema;
 
+import net.bodz.lily.schema.dao.CategoryDefMapper;
+import net.bodz.lily.schema.dao.SchemaDefMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class CategoryDefSamples
         extends TestSampleBuilder {
@@ -8,6 +11,7 @@ public class CategoryDefSamples
     public SchemaDef schema;
     public CategoryDef parent;
 
+    @Override
     public CategoryDef build()
             throws Exception {
         CategoryDef a = new CategoryDef();
@@ -18,6 +22,18 @@ public class CategoryDefSamples
         a.setDepth(71728980);
         a.setRefCount(37777407);
         return a;
+    }
+
+    @Override
+    public CategoryDefSamples wireAny(IRandomPicker picker) {
+        this.schema = picker.pickAny(SchemaDefMapper.class, "_schema");
+        this.parent = picker.pickAny(CategoryDefMapper.class, "_cat");
+        return this;
+    }
+
+    @Override
+    public CategoryDef buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

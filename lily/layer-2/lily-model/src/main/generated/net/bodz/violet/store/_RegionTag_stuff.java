@@ -12,6 +12,9 @@ public abstract class _RegionTag_stuff<this_t extends _RegionTag_stuff<this_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "regiontag";
+
     public void initNotNulls() {
     }
 

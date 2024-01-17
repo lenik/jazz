@@ -14,6 +14,13 @@ public abstract class _IssueFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "issue_fav";
+
+    public static final String FIELD_ISSUE_ID = "issue";
+
+    public static final int N_ISSUE_ID = 19;
+
     private static final int _ord_ISSUE_ID = 2;
 
     /**  */

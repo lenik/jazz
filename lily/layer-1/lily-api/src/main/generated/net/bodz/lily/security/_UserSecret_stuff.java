@@ -19,6 +19,17 @@ public abstract class _UserSecret_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "usersec";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_PASSWORD = "passwd";
+    public static final String FIELD_QUESTION = "question";
+    public static final String FIELD_ANSWER = "answer";
+
+    public static final int N_ID = 10;
+    public static final int N_USER_ID = 10;
     public static final int N_PASSWORD = 40;
     public static final int N_QUESTION = 100;
     public static final int N_ANSWER = 30;

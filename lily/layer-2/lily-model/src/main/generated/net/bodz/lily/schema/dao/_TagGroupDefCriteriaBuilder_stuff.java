@@ -1,165 +1,18 @@
 package net.bodz.lily.schema.dao;
 
-import java.sql.Timestamp;
-
-import net.bodz.bas.t.range.DateTimeRange;
-import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
-public class _TagGroupDefCriteriaBuilder_stuff
-        extends CoObjectCriteriaBuilder {
+public class _TagGroupDefCriteriaBuilder_stuff<self_t extends _TagGroupDefCriteriaBuilder_stuff<self_t>>
+        extends CoObjectCriteriaBuilder<self_t> {
 
-    Integer id;
-    IntegerRange idRange = new IntegerRange();
+    public final IntegerField id = integer("id");
 
-    String code;
-    String codePattern;
+    public final StringField code = string("code");
 
-    Integer priority;
-    IntegerRange priorityRange = new IntegerRange();
+    public final IntegerField schemaId = integer("\"schema\"");
 
-    Timestamp creationDate;
-    DateTimeRange creationDateRange = new DateTimeRange();
+    public final BooleanField forTopic = bool("topic");
 
-    Timestamp lastModifiedDate;
-    DateTimeRange lastModifiedDateRange = new DateTimeRange();
-
-    Integer version;
-    IntegerRange versionRange = new IntegerRange();
-
-    Integer schemaId;
-    IntegerRange schemaIdRange = new IntegerRange();
-
-    Boolean forTopic;
-
-    Boolean forReply;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer value) {
-        this.id = value;
-    }
-
-    public IntegerRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(IntegerRange range) {
-        this.idRange = range;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String value) {
-        this.code = value;
-    }
-
-    public String getCodePattern() {
-        return codePattern;
-    }
-
-    public void setCodePattern(String value) {
-        this.codePattern = value;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer value) {
-        this.priority = value;
-    }
-
-    public IntegerRange getPriorityRange() {
-        return priorityRange;
-    }
-
-    public void setPriorityRange(IntegerRange range) {
-        this.priorityRange = range;
-    }
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Timestamp value) {
-        this.creationDate = value;
-    }
-
-    public DateTimeRange getCreationDateRange() {
-        return creationDateRange;
-    }
-
-    public void setCreationDateRange(DateTimeRange range) {
-        this.creationDateRange = range;
-    }
-
-    public Timestamp getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Timestamp value) {
-        this.lastModifiedDate = value;
-    }
-
-    public DateTimeRange getLastModifiedDateRange() {
-        return lastModifiedDateRange;
-    }
-
-    public void setLastModifiedDateRange(DateTimeRange range) {
-        this.lastModifiedDateRange = range;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer value) {
-        this.version = value;
-    }
-
-    public IntegerRange getVersionRange() {
-        return versionRange;
-    }
-
-    public void setVersionRange(IntegerRange range) {
-        this.versionRange = range;
-    }
-
-    public Integer getSchemaId() {
-        return schemaId;
-    }
-
-    public void setSchemaId(Integer value) {
-        this.schemaId = value;
-    }
-
-    public IntegerRange getSchemaIdRange() {
-        return schemaIdRange;
-    }
-
-    public void setSchemaIdRange(IntegerRange range) {
-        this.schemaIdRange = range;
-    }
-
-    public Boolean getForTopic() {
-        return forTopic;
-    }
-
-    public void setForTopic(Boolean value) {
-        this.forTopic = value;
-    }
-
-    public Boolean getForReply() {
-        return forReply;
-    }
-
-    public void setForReply(Boolean value) {
-        this.forReply = value;
-    }
+    public final BooleanField forReply = bool("reply");
 
 }

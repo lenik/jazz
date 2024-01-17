@@ -12,6 +12,9 @@ public abstract class _ArticleTagType_stuff<this_t extends _ArticleTagType_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "articletag";
+
     public void initNotNulls() {
     }
 

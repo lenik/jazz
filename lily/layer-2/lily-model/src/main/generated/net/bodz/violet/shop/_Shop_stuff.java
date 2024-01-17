@@ -16,6 +16,14 @@ public abstract class _Shop_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "shop";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_HYDM = "hydm";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
     public static final int N_HYDM = 10;
 

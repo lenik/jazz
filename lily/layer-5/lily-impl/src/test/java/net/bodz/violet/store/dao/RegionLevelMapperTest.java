@@ -5,13 +5,13 @@ import net.bodz.violet.store.RegionLevel;
 import net.bodz.violet.store.RegionLevelSamples;
 
 public class RegionLevelMapperTest
-        extends AbstractTableTest<RegionLevel, RegionLevelCriteriaBuilder, RegionLevelMapper> {
+        extends AbstractTableTest<RegionLevel, RegionLevelMapper> {
 
     @Override
     public RegionLevel buildSample()
             throws Exception {
         RegionLevelSamples a = new RegionLevelSamples();
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

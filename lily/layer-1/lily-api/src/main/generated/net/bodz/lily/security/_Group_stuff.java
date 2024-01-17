@@ -16,6 +16,13 @@ public abstract class _Group_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "group";
+
+    public static final String FIELD_TYPE_ID = "type";
+    public static final String FIELD_PARENT_ID = "parent";
+
+    public static final int N_TYPE_ID = 10;
     public static final int N_PARENT_ID = 10;
 
     private static final int _ord_TYPE_ID = 3;

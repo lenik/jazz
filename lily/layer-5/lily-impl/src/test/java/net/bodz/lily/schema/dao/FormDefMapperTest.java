@@ -5,14 +5,13 @@ import net.bodz.lily.schema.FormDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class FormDefMapperTest
-        extends AbstractTableTest<FormDef, FormDefCriteriaBuilder, FormDefMapper> {
+        extends AbstractTableTest<FormDef, FormDefMapper> {
 
     @Override
     public FormDef buildSample()
             throws Exception {
         FormDefSamples a = new FormDefSamples();
-        a.schema = tables.pickAny(SchemaDefMapper.class, "_schema");
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

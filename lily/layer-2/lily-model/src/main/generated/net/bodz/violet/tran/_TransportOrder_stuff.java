@@ -21,24 +21,66 @@ public abstract class _TransportOrder_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "tranodr";
+
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_PHASE_ID = "phase";
+    public static final String FIELD_PREV_ID = "prev";
+    public static final String FIELD_SALES_ORDER_ID = "saleodr";
+    public static final String FIELD_STOREODR_ID = "storeodr";
+    public static final String FIELD_SHIPPER_ID = "shipper";
+    public static final String FIELD_S_ALIAS = "s_alias";
+    public static final String FIELD_S_CTPROPS = "s_ctprops";
+    public static final String FIELD_S_ADDRESS1 = "s_address1";
+    public static final String FIELD_S_ADDRESS2 = "s_address2";
+    public static final String FIELD_S_ZONE_ID = "s_zone";
+    public static final String FIELD_S_TEL = "s_tel";
+    public static final String FIELD_S_TELOK = "s_telok";
+    public static final String FIELD_S_EMAIL = "s_email";
+    public static final String FIELD_S_EMAILOK = "s_emailok";
+    public static final String FIELD_D_ALIAS = "d_alias";
+    public static final String FIELD_D_CTPROPS = "d_ctprops";
+    public static final String FIELD_D_ADDRESS1 = "d_address1";
+    public static final String FIELD_D_ADDRESS2 = "d_address2";
+    public static final String FIELD_D_ZONE_ID = "d_zone";
+    public static final String FIELD_D_TEL = "d_tel";
+    public static final String FIELD_D_TELOK = "d_telok";
+    public static final String FIELD_D_EMAIL = "d_email";
+    public static final String FIELD_D_EMAILOK = "d_emailok";
+    public static final String FIELD_SHIPCOST = "shipcost";
+    public static final String FIELD_LENGTH = "length";
+    public static final String FIELD_TOTAL_QUANTITY = "sum_qty";
+    public static final String FIELD_TOTAL_AMOUNT = "sum_amount";
+
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_CATEGORY_ID = 10;
+    public static final int N_PHASE_ID = 10;
     public static final int N_PREV_ID = 19;
     public static final int N_SALES_ORDER_ID = 19;
     public static final int N_STOREODR_ID = 19;
     public static final int N_SHIPPER_ID = 10;
     public static final int N_S_ALIAS = 32;
+    public static final int N_S_CTPROPS = 2147483647;
     public static final int N_S_ADDRESS1 = 80;
     public static final int N_S_ADDRESS2 = 80;
     public static final int N_S_ZONE_ID = 10;
     public static final int N_S_TEL = 20;
+    public static final int N_S_TELOK = 1;
     public static final int N_S_EMAIL = 30;
+    public static final int N_S_EMAILOK = 1;
     public static final int N_D_ALIAS = 32;
+    public static final int N_D_CTPROPS = 2147483647;
     public static final int N_D_ADDRESS1 = 80;
     public static final int N_D_ADDRESS2 = 80;
     public static final int N_D_ZONE_ID = 10;
     public static final int N_D_TEL = 20;
+    public static final int N_D_TELOK = 1;
     public static final int N_D_EMAIL = 30;
+    public static final int N_D_EMAILOK = 1;
     public static final int N_SHIPCOST = 20;
+    public static final int N_LENGTH = 10;
     public static final int N_TOTAL_QUANTITY = 20;
     public static final int N_TOTAL_AMOUNT = 20;
 

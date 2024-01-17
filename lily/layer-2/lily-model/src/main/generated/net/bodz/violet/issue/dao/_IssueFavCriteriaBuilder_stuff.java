@@ -1,67 +1,14 @@
 package net.bodz.violet.issue.dao;
 
-import net.bodz.bas.t.range.IntegerRange;
-import net.bodz.bas.t.range.LongRange;
 import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
-public class _IssueFavCriteriaBuilder_stuff
-        extends CoObjectCriteriaBuilder {
+public class _IssueFavCriteriaBuilder_stuff<self_t extends _IssueFavCriteriaBuilder_stuff<self_t>>
+        extends CoObjectCriteriaBuilder<self_t> {
 
-    Long id;
-    LongRange idRange = new LongRange();
+    public final LongField id = _long("id");
 
-    Long issueId;
-    LongRange issueIdRange = new LongRange();
+    public final LongField issueId = _long("issue");
 
-    Integer userId;
-    IntegerRange userIdRange = new IntegerRange();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long value) {
-        this.id = value;
-    }
-
-    public LongRange getIdRange() {
-        return idRange;
-    }
-
-    public void setIdRange(LongRange range) {
-        this.idRange = range;
-    }
-
-    public Long getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(Long value) {
-        this.issueId = value;
-    }
-
-    public LongRange getIssueIdRange() {
-        return issueIdRange;
-    }
-
-    public void setIssueIdRange(LongRange range) {
-        this.issueIdRange = range;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer value) {
-        this.userId = value;
-    }
-
-    public IntegerRange getUserIdRange() {
-        return userIdRange;
-    }
-
-    public void setUserIdRange(IntegerRange range) {
-        this.userIdRange = range;
-    }
+    public final IntegerField userId = integer("\"user\"");
 
 }

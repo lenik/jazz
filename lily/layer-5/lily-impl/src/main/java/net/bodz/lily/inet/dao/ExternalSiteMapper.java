@@ -5,6 +5,6 @@ import net.bodz.lily.inet.ExternalSite;
 
 public interface ExternalSiteMapper
         extends
-            IEntityMapper<ExternalSite, ExternalSiteCriteriaBuilder> {
+            IEntityMapper<ExternalSite> {
 
 }

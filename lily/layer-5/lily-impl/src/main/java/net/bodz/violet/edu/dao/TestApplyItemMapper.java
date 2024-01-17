@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestApplyItem;
 
 public interface TestApplyItemMapper
         extends
-            IEntityMapper<TestApplyItem, TestApplyItemCriteriaBuilder> {
+            IEntityMapper<TestApplyItem> {
 
 }

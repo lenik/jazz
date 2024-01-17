@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostVote;
 
 public interface PostVoteMapper
         extends
-            IEntityMapper<PostVote, PostVoteCriteriaBuilder> {
+            IEntityMapper<PostVote> {
 
 }

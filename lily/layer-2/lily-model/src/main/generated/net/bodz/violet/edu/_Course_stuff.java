@@ -15,7 +15,24 @@ public abstract class _Course_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "course";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CATEGORY_ID = "cat";
+    public static final String FIELD_FAV_COUNT = "nfav";
+    public static final String FIELD_VOTE_COUNT = "nvote";
+    public static final String FIELD_HATE_COUNT = "nhate";
+    public static final String FIELD_CREDIT = "credit";
+    public static final String FIELD_PLUGINS = "plugins";
+
+    public static final int N_ID = 10;
     public static final int N_CATEGORY_ID = 10;
+    public static final int N_FAV_COUNT = 10;
+    public static final int N_VOTE_COUNT = 10;
+    public static final int N_HATE_COUNT = 10;
+    public static final int N_CREDIT = 10;
+    public static final int N_PLUGINS = 2147483647;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CATEGORY_ID = 15;

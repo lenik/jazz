@@ -1,12 +1,15 @@
 package net.bodz.lily.security;
 
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
 
 public class UserSecretSamples
         extends TestSampleBuilder {
 
     public User user;
 
+    @Override
     public UserSecret build()
             throws Exception {
         UserSecret a = new UserSecret();
@@ -16,6 +19,17 @@ public class UserSecretSamples
         a.setQuestion("b yno@idwuu p_swpke iuuu sitaz; icu.");
         a.setAnswer("gobu, ju uoeu Ecinn.");
         return a;
+    }
+
+    @Override
+    public UserSecretSamples wireAny(IRandomPicker picker) {
+        this.user = picker.pickAny(UserMapper.class, "user");
+        return this;
+    }
+
+    @Override
+    public UserSecret buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

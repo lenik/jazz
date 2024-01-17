@@ -9,6 +9,9 @@ public abstract class _PlanPhase_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "planphase";
+
     public void initNotNulls() {
     }
 

@@ -14,6 +14,13 @@ public abstract class _ArticleFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "article_fav";
+
+    public static final String FIELD_ARTICLE_ID = "article";
+
+    public static final int N_ARTICLE_ID = 19;
+
     private static final int _ord_ARTICLE_ID = 2;
 
     /**  */

@@ -1,6 +1,6 @@
 package net.bodz.lily.pub.dao;
 
 public class ArticleVoteCriteriaBuilder
-        extends _ArticleVoteCriteriaBuilder_stuff {
+        extends _ArticleVoteCriteriaBuilder_stuff<ArticleVoteCriteriaBuilder> {
 
 }

@@ -14,6 +14,13 @@ public abstract class _TestQuestionFav_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testq_fav";
+
+    public static final String FIELD_TESTQ_ID = "testq";
+
+    public static final int N_TESTQ_ID = 19;
+
     private static final int _ord_TESTQ_ID = 2;
 
     /**  */

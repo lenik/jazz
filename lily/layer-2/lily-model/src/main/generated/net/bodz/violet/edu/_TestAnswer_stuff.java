@@ -15,6 +15,17 @@ public abstract class _TestAnswer_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testans";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_QUESTION_ID = "q";
+    public static final String FIELD_VALID = "valid";
+
+    public static final int N_ID = 19;
+    public static final int N_QUESTION_ID = 19;
+    public static final int N_VALID = 1;
+
     private static final int _ord_ID = 1;
     private static final int _ord_QUESTION_ID = _ord_ID + 10;
     private static final int _ord_VALID = _ord_QUESTION_ID + 1;

@@ -5,13 +5,13 @@ import net.bodz.lily.security.UserOtherIdTypeSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class UserOtherIdTypeMapperTest
-        extends AbstractTableTest<UserOtherIdType, UserOtherIdTypeCriteriaBuilder, UserOtherIdTypeMapper> {
+        extends AbstractTableTest<UserOtherIdType, UserOtherIdTypeMapper> {
 
     @Override
     public UserOtherIdType buildSample()
             throws Exception {
         UserOtherIdTypeSamples a = new UserOtherIdTypeSamples();
-        return a.build();
+        return a.buildWired(tables);
     }
 
 }

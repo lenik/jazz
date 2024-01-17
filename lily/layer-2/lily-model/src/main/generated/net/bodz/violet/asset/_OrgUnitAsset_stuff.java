@@ -15,6 +15,17 @@ public abstract class _OrgUnitAsset_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "asset_ou";
+
+    public static final String FIELD_OWNER_ID = "owner";
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_BATCH = "batch";
+
+    public static final int N_OWNER_ID = 10;
+    public static final int N_ARTIFACT_ID = 10;
+    public static final int N_BATCH = 2147483647;
+
     private static final int _ord_OWNER_ID = 15;
     private static final int _ord_ARTIFACT_ID = _ord_OWNER_ID + 1;
     private static final int _ord_BATCH = _ord_ARTIFACT_ID + 2;

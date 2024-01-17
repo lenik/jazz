@@ -16,6 +16,17 @@ public abstract class _VApiLog_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "vapi_log";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_APP_ID = "app";
+    public static final String FIELD_API_ID = "api";
+    public static final String FIELD_MESSAGE = "message";
+    public static final String FIELD_ERR = "err";
+
+    public static final int N_ID = 19;
+    public static final int N_APP_ID = 10;
     public static final int N_API_ID = 10;
     public static final int N_MESSAGE = 2147483647;
     public static final int N_ERR = 2147483647;

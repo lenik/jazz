@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanCategory;
 
 public interface PlanCategoryMapper
         extends
-            IEntityMapper<PlanCategory, PlanCategoryCriteriaBuilder> {
+            IEntityMapper<PlanCategory> {
 
 }

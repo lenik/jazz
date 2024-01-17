@@ -5,6 +5,6 @@ import net.bodz.violet.issue.IssueCategory;
 
 public interface IssueCategoryMapper
         extends
-            IEntityMapper<IssueCategory, IssueCategoryCriteriaBuilder> {
+            IEntityMapper<IssueCategory> {
 
 }

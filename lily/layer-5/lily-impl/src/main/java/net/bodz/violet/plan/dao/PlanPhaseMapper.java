@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanPhase;
 
 public interface PlanPhaseMapper
         extends
-            IEntityMapper<PlanPhase, PlanPhaseCriteriaBuilder> {
+            IEntityMapper<PlanPhase> {
 
 }

@@ -20,7 +20,26 @@ public abstract class _VAppRequest_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "vappreq";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_BEGIN_TIME = "t0";
+    public static final String FIELD_END_TIME = "t1";
+    public static final String FIELD_YEAR = "year";
+    public static final String FIELD_SUBJECT = "subject";
+    public static final String FIELD_OP_ID = "op";
+    public static final String FIELD_RAW_TEXT = "text";
+    public static final String FIELD_FORM_ID = "form";
+    public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_DUMMY = "dummy";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 30;
+    public static final int N_BEGIN_TIME = 35;
+    public static final int N_END_TIME = 35;
+    public static final int N_YEAR = 10;
     public static final int N_SUBJECT = 200;
     public static final int N_OP_ID = 10;
     public static final int N_RAW_TEXT = 2147483647;

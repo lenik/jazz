@@ -12,6 +12,9 @@ public abstract class _TestQuestionTag_stuff<this_t extends _TestQuestionTag_stu
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testqtag";
+
     public void initNotNulls() {
     }
 

@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestQuestionTalk;
 
 public interface TestQuestionTalkMapper
         extends
-            IEntityMapper<TestQuestionTalk, TestQuestionTalkCriteriaBuilder> {
+            IEntityMapper<TestQuestionTalk> {
 
 }

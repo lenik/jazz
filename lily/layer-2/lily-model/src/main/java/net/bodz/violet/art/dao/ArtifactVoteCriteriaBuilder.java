@@ -1,6 +1,6 @@
 package net.bodz.violet.art.dao;
 
 public class ArtifactVoteCriteriaBuilder
-        extends _ArtifactVoteCriteriaBuilder_stuff {
+        extends _ArtifactVoteCriteriaBuilder_stuff<ArtifactVoteCriteriaBuilder> {
 
 }

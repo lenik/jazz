@@ -2,7 +2,11 @@ package net.bodz.violet.edu;
 
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.GroupMapper;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.edu.dao.CourseCategoryMapper;
 
 public class CourseSamples
         extends TestSampleBuilder {
@@ -11,6 +15,7 @@ public class CourseSamples
     public Group ownerGroup;
     public CourseCategory category;
 
+    @Override
     public Course build()
             throws Exception {
         Course a = new Course();
@@ -23,6 +28,19 @@ public class CourseSamples
         a.setHateCount(1475018156);
         a.setCredit(2032094729);
         return a;
+    }
+
+    @Override
+    public CourseSamples wireAny(IRandomPicker picker) {
+        this.ownerUser = picker.pickAny(UserMapper.class, "user");
+        this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.category = picker.pickAny(CourseCategoryMapper.class, "coursecat");
+        return this;
+    }
+
+    @Override
+    public Course buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

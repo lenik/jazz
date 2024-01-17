@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactParameter;
 
 public interface ArtifactParameterMapper
         extends
-            IEntityMapper<ArtifactParameter, ArtifactParameterCriteriaBuilder> {
+            IEntityMapper<ArtifactParameter> {
 
 }

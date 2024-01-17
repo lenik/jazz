@@ -19,7 +19,17 @@ public abstract class _SellPrice_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "art_price";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_ARTIFACT_ID = "art";
+    public static final String FIELD_PRICE = "price";
+
+    public static final int N_ID = 10;
     public static final int N_CODE = 20;
+    public static final int N_ARTIFACT_ID = 10;
     public static final int N_PRICE = 12;
 
     private static final int _ord_ID = 1;

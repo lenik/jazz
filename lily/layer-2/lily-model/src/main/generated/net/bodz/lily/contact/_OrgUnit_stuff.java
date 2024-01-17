@@ -13,7 +13,16 @@ public abstract class _OrgUnit_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "orgunit";
+
+    public static final String FIELD_ORG_ID = "org";
+    public static final String FIELD_PARENT_ID = "parent";
+    public static final String FIELD_DEPTH = "depth";
+
+    public static final int N_ORG_ID = 10;
     public static final int N_PARENT_ID = 10;
+    public static final int N_DEPTH = 10;
 
     private static final int _ord_ORG_ID = 24;
     private static final int _ord_PARENT_ID = _ord_ORG_ID + 1;

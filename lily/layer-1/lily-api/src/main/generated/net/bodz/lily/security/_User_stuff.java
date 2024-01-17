@@ -16,6 +16,15 @@ public abstract class _User_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "user";
+
+    public static final String FIELD_TYPE_ID = "type";
+    public static final String FIELD_PRIMARY_GROUP_ID = "gid0";
+    public static final String FIELD_REFERER_ID = "referer";
+
+    public static final int N_TYPE_ID = 10;
+    public static final int N_PRIMARY_GROUP_ID = 10;
     public static final int N_REFERER_ID = 10;
 
     private static final int _ord_TYPE_ID = 2;

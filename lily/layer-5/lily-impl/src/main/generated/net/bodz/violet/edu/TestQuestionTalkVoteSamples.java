@@ -1,7 +1,10 @@
 package net.bodz.violet.edu;
 
 import net.bodz.lily.security.User;
+import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
+import net.bodz.lily.util.IRandomPicker;
+import net.bodz.violet.edu.dao.TestQuestionTalkMapper;
 
 public class TestQuestionTalkVoteSamples
         extends TestSampleBuilder {
@@ -9,6 +12,7 @@ public class TestQuestionTalkVoteSamples
     public User user;
     public TestQuestionTalk parent;
 
+    @Override
     public TestQuestionTalkVote build()
             throws Exception {
         TestQuestionTalkVote a = new TestQuestionTalkVote();
@@ -16,6 +20,18 @@ public class TestQuestionTalkVoteSamples
         a.setParent(parent);
         a.setVoteScore(18358880);
         return a;
+    }
+
+    @Override
+    public TestQuestionTalkVoteSamples wireAny(IRandomPicker picker) {
+        this.user = picker.pickAny(UserMapper.class, "user");
+        this.parent = picker.pickAny(TestQuestionTalkMapper.class, "testq_msg");
+        return this;
+    }
+
+    @Override
+    public TestQuestionTalkVote buildWired(IRandomPicker picker) throws Exception {
+        return wireAny(picker).build();
     }
 
 }

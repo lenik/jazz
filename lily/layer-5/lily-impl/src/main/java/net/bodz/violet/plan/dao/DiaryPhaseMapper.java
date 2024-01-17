@@ -5,6 +5,6 @@ import net.bodz.violet.plan.DiaryPhase;
 
 public interface DiaryPhaseMapper
         extends
-            IEntityMapper<DiaryPhase, DiaryPhaseCriteriaBuilder> {
+            IEntityMapper<DiaryPhase> {
 
 }

@@ -18,6 +18,18 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "artcat";
+
+    public static final String FIELD_CODE = "code";
+    public static final String FIELD_SKUFMT = "skufmt";
+    public static final String FIELD_SKUFMTFULL = "skufmtfull";
+    public static final String FIELD_BARFMT = "barfmt";
+    public static final String FIELD_BARFMTFULL = "barfmtfull";
+    public static final String FIELD_BATCHFMT = "batchfmt";
+    public static final String FIELD_SERIALFMT = "serialfmt";
+    public static final String FIELD_COUNT = "count";
+
     public static final int N_CODE = 20;
     public static final int N_SKUFMT = 100;
     public static final int N_SKUFMTFULL = 100;
@@ -25,6 +37,7 @@ public abstract class _ArtifactCategory_stuff<this_t extends _ArtifactCategory_s
     public static final int N_BARFMTFULL = 100;
     public static final int N_BATCHFMT = 100;
     public static final int N_SERIALFMT = 100;
+    public static final int N_COUNT = 10;
 
     private static final int _ord_CODE = 2;
     private static final int _ord_SKUFMT = 18;

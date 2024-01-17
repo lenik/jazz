@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanDoVote;
 
 public interface PlanDoVoteMapper
         extends
-            IEntityMapper<PlanDoVote, PlanDoVoteCriteriaBuilder> {
+            IEntityMapper<PlanDoVote> {
 
 }

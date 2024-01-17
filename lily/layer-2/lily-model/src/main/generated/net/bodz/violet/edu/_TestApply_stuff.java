@@ -20,6 +20,21 @@ public abstract class _TestApply_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "violet";
+    public static final String TABLE_NAME = "testapply";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_BEGIN_TIME = "t0";
+    public static final String FIELD_END_TIME = "t1";
+    public static final String FIELD_YEAR = "year";
+    public static final String FIELD_PAPER_ID = "paper";
+    public static final String FIELD_PERSON_ID = "person";
+    public static final String FIELD_SCORE = "score";
+
+    public static final int N_ID = 19;
+    public static final int N_BEGIN_TIME = 35;
+    public static final int N_END_TIME = 35;
+    public static final int N_YEAR = 10;
     public static final int N_PAPER_ID = 10;
     public static final int N_PERSON_ID = 10;
     public static final int N_SCORE = 10;

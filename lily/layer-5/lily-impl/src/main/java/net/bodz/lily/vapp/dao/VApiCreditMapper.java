@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.VApiCredit;
 
 public interface VApiCreditMapper
         extends
-            IEntityMapper<VApiCredit, VApiCreditCriteriaBuilder> {
+            IEntityMapper<VApiCredit> {
 
 }

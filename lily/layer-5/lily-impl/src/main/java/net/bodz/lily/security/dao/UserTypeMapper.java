@@ -5,6 +5,6 @@ import net.bodz.lily.security.UserType;
 
 public interface UserTypeMapper
         extends
-            IEntityMapper<UserType, UserTypeCriteriaBuilder> {
+            IEntityMapper<UserType> {
 
 }

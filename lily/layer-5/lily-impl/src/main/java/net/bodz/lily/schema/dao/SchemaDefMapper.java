@@ -5,6 +5,6 @@ import net.bodz.lily.schema.SchemaDef;
 
 public interface SchemaDefMapper
         extends
-            IEntityMapper<SchemaDef, SchemaDefCriteriaBuilder> {
+            IEntityMapper<SchemaDef> {
 
 }

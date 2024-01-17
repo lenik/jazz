@@ -5,6 +5,6 @@ import net.bodz.lily.pub.PostTalk;
 
 public interface PostTalkMapper
         extends
-            IEntityMapper<PostTalk, PostTalkCriteriaBuilder> {
+            IEntityMapper<PostTalk> {
 
 }

@@ -5,6 +5,6 @@ import net.bodz.violet.asset.UserAsset;
 
 public interface UserAssetMapper
         extends
-            IEntityMapper<UserAsset, UserAssetCriteriaBuilder> {
+            IEntityMapper<UserAsset> {
 
 }

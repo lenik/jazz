@@ -15,6 +15,13 @@ public abstract class _Storage_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "storage";
+
+    public static final String FIELD_ID = "id";
+
+    public static final int N_ID = 10;
+
     private static final int _ord_ID = 1;
 
     @Id
