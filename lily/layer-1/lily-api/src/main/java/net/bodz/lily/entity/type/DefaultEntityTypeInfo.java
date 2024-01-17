@@ -18,7 +18,6 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Identifier;
-import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
 public class DefaultEntityTypeInfo
         implements
@@ -27,7 +26,7 @@ public class DefaultEntityTypeInfo
     Class<?> entityClass;
     Class<?> idClass;
     Class<?> mapperClass;
-    Class<?> criteriaClass;
+//    Class<?> criteriaClass;
 
     ColumnProperty[] idProperties;
 
@@ -35,7 +34,7 @@ public class DefaultEntityTypeInfo
         this.entityClass = entityClass;
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
-        criteriaClass = CoObjectCriteriaBuilder.findCriteriaBuilderClass(entityClass);
+//        criteriaClass = CoObjectCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
         if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
             BeanInfo beanInfo;
@@ -77,10 +76,10 @@ public class DefaultEntityTypeInfo
         return mapperClass;
     }
 
-    @Override
-    public Class<?> getCrtieriaClass() {
-        return criteriaClass;
-    }
+//    @Override
+//    public Class<?> getCrtieriaClass() {
+//        return criteriaClass;
+//    }
 
     @Override
     public int getIdColumnCount() {

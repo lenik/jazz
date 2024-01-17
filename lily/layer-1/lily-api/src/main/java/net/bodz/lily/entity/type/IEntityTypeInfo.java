@@ -10,7 +10,7 @@ public interface IEntityTypeInfo {
 
     Class<?> getMapperClass();
 
-    Class<?> getCrtieriaClass();
+//    Class<?> getCrtieriaClass();
 
     int getIdColumnCount();
 
