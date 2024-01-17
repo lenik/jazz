@@ -7,7 +7,6 @@ import net.bodz.bas.bean.api.IBeanInfo;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.bean.api.IntrospectionException;
 import net.bodz.bas.bean.api.Introspectors;
-import net.bodz.bas.t.pojo.eg.Person;
 
 public class FieldTypeInferrer
         implements
@@ -67,25 +66,6 @@ public class FieldTypeInferrer
                 return property;
         }
         return null;
-    }
-
-    static Class<?> testContext = Person.class;
-    static FieldTypeInferrer fti = new FieldTypeInferrer(testContext);
-
-    static void test(String... vec) {
-        Class<?> type = fti.getFieldType(vec);
-        System.out.print(testContext.getSimpleName());
-        for (String a : vec)
-            System.out.print("." + a);
-        System.out.println(" => " + type.getName());
-    }
-
-    public static void main(String[] args) {
-        test("name");
-        test("age");
-        // see Address
-        test("location", "city");
-        test("location", "postCode");
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.lily.criterion;
+package net.bodz.lily.util;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.fmt.json.JsonFn;
@@ -7,6 +7,12 @@ import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.program.skel.BasicCLI;
 import net.bodz.bas.t.pojo.eg.Person;
+import net.bodz.lily.criterion.CriterionJsonParser;
+import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.ICriterionVisitor;
+import net.bodz.lily.criterion.JsonFormatter;
+import net.bodz.lily.criterion.LispFormatter;
+import net.bodz.lily.criterion.SQLFormatter;
 
 /**
  * Re-format criterion in json.
