@@ -1,6 +1,6 @@
 package net.bodz.bas.t.pojo.eg;
 
-import net.bodz.bas.c.object.Nullables;
+import java.util.Objects;
 
 public class Address {
 
@@ -66,21 +66,22 @@ public class Address {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(address, city, country, phoneNumber, postCode);
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Address))
+        if (this == obj)
+            return true;
+        if (obj == null)
             return false;
-        Address a = (Address) obj;
-        if (postCode != a.postCode)
+        if (getClass() != obj.getClass())
             return false;
-        if (!Nullables.equals(address, a.address))
-            return false;
-        if (!Nullables.equals(city, a.city))
-            return false;
-        if (!Nullables.equals(country, a.country))
-            return false;
-        if (!Nullables.equals(phoneNumber, a.phoneNumber))
-            return false;
-        return true;
+        Address other = (Address) obj;
+        return Objects.equals(address, other.address) && Objects.equals(city, other.city)
+                && Objects.equals(country, other.country) && Objects.equals(phoneNumber, other.phoneNumber)
+                && postCode == other.postCode;
     }
 
     @Override
