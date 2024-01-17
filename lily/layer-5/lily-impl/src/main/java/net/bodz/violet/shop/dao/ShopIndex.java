@@ -9,7 +9,7 @@ import net.bodz.violet.shop.Shop;
 */
 @ObjectType(Shop.class)
 public class ShopIndex
-        extends CoIndex<Shop, ShopMask> {
+        extends CoIndex<Shop, ShopCriteriaBuilder> {
 
     public ShopIndex() {
     }

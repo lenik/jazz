@@ -12,7 +12,7 @@ import net.bodz.violet.tran.TransportOrder;
 import net.bodz.violet.tran.TransportOrderSamples;
 
 public class TransportOrderMapperTest
-        extends AbstractTableTest<TransportOrder, TransportOrderMask, TransportOrderMapper> {
+        extends AbstractTableTest<TransportOrder, TransportOrderCriteriaBuilder, TransportOrderMapper> {
 
     @Override
     public TransportOrder buildSample()

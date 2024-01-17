@@ -9,7 +9,7 @@ import net.bodz.lily.security.Group;
 */
 @ObjectType(Group.class)
 public class GroupIndex
-        extends CoIndex<Group, GroupMask> {
+        extends CoIndex<Group, GroupCriteriaBuilder> {
 
     public GroupIndex() {
     }

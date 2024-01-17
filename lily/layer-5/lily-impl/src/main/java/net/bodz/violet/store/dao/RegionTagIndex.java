@@ -9,7 +9,7 @@ import net.bodz.violet.store.RegionTag;
 */
 @ObjectType(RegionTag.class)
 public class RegionTagIndex
-        extends CoIndex<RegionTag, RegionTagMask> {
+        extends CoIndex<RegionTag, RegionTagCriteriaBuilder> {
 
     public RegionTagIndex() {
     }

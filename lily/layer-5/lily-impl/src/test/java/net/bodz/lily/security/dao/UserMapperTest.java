@@ -5,7 +5,7 @@ import net.bodz.lily.security.UserSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class UserMapperTest
-        extends AbstractTableTest<User, UserMask, UserMapper> {
+        extends AbstractTableTest<User, UserCriteriaBuilder, UserMapper> {
 
     @Override
     public User buildSample()

@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleFav;
 
 public interface ArticleFavMapper
         extends
-            IEntityMapper<ArticleFav, ArticleFavMask> {
+            IEntityMapper<ArticleFav, ArticleFavCriteriaBuilder> {
 
 }

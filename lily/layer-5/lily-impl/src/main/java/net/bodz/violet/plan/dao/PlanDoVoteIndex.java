@@ -9,7 +9,7 @@ import net.bodz.violet.plan.PlanDoVote;
 */
 @ObjectType(PlanDoVote.class)
 public class PlanDoVoteIndex
-        extends CoIndex<PlanDoVote, PlanDoVoteMask> {
+        extends CoIndex<PlanDoVote, PlanDoVoteCriteriaBuilder> {
 
     public PlanDoVoteIndex() {
     }

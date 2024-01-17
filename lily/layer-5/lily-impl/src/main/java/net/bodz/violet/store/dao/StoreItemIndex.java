@@ -9,7 +9,7 @@ import net.bodz.violet.store.StoreItem;
 */
 @ObjectType(StoreItem.class)
 public class StoreItemIndex
-        extends CoIndex<StoreItem, StoreItemMask> {
+        extends CoIndex<StoreItem, StoreItemCriteriaBuilder> {
 
     public StoreItemIndex() {
     }

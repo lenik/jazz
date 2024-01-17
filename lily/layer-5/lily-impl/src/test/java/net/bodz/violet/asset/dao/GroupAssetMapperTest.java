@@ -9,7 +9,7 @@ import net.bodz.violet.asset.GroupAssetSamples;
 import net.bodz.violet.store.dao.RegionMapper;
 
 public class GroupAssetMapperTest
-        extends AbstractTableTest<GroupAsset, GroupAssetMask, GroupAssetMapper> {
+        extends AbstractTableTest<GroupAsset, GroupAssetCriteriaBuilder, GroupAssetMapper> {
 
     @Override
     public GroupAsset buildSample()

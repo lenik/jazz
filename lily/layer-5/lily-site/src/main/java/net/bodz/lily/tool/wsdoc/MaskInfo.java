@@ -7,10 +7,10 @@ import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 
-public class MaskInfo
+public class CriteriaBuilderInfo
         extends AbstractTypeInfo {
 
-    public MaskInfo(Class<?> clazz) {
+    public CriteriaBuilderInfo(Class<?> clazz) {
         super(clazz);
     }
 

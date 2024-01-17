@@ -8,7 +8,7 @@ import net.bodz.violet.plan.Plan;
 import net.bodz.violet.plan.PlanSamples;
 
 public class PlanMapperTest
-        extends AbstractTableTest<Plan, PlanMask, PlanMapper> {
+        extends AbstractTableTest<Plan, PlanCriteriaBuilder, PlanMapper> {
 
     @Override
     public Plan buildSample()

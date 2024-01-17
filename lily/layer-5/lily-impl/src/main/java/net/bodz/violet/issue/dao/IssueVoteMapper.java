@@ -5,6 +5,6 @@ import net.bodz.violet.issue.IssueVote;
 
 public interface IssueVoteMapper
         extends
-            IEntityMapper<IssueVote, IssueVoteMask> {
+            IEntityMapper<IssueVote, IssueVoteCriteriaBuilder> {
 
 }

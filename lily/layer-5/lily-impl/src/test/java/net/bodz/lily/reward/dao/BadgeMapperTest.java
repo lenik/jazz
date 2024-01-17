@@ -5,7 +5,7 @@ import net.bodz.lily.reward.BadgeSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class BadgeMapperTest
-        extends AbstractTableTest<Badge, BadgeMask, BadgeMapper> {
+        extends AbstractTableTest<Badge, BadgeCriteriaBuilder, BadgeMapper> {
 
     @Override
     public Badge buildSample()

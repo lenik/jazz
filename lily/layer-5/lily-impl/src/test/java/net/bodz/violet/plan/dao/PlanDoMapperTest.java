@@ -8,7 +8,7 @@ import net.bodz.violet.plan.PlanDo;
 import net.bodz.violet.plan.PlanDoSamples;
 
 public class PlanDoMapperTest
-        extends AbstractTableTest<PlanDo, PlanDoMask, PlanDoMapper> {
+        extends AbstractTableTest<PlanDo, PlanDoCriteriaBuilder, PlanDoMapper> {
 
     @Override
     public PlanDo buildSample()

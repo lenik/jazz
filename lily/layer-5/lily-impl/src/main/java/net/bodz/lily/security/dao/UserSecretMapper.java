@@ -5,6 +5,6 @@ import net.bodz.lily.security.UserSecret;
 
 public interface UserSecretMapper
         extends
-            IEntityMapper<UserSecret, UserSecretMask> {
+            IEntityMapper<UserSecret, UserSecretCriteriaBuilder> {
 
 }

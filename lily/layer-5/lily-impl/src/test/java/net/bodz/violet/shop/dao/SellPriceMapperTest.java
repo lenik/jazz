@@ -8,7 +8,7 @@ import net.bodz.violet.shop.SellPrice;
 import net.bodz.violet.shop.SellPriceSamples;
 
 public class SellPriceMapperTest
-        extends AbstractTableTest<SellPrice, SellPriceMask, SellPriceMapper> {
+        extends AbstractTableTest<SellPrice, SellPriceCriteriaBuilder, SellPriceMapper> {
 
     @Override
     public SellPrice buildSample()

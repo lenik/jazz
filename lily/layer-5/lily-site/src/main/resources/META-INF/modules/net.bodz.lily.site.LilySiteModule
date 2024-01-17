@@ -6,7 +6,7 @@ net.bodz.lily.codegen.doc.EntityIndex
 net.bodz.lily.codegen.doc.EntityInfo
 net.bodz.lily.codegen.doc.EntityNameOrder
 net.bodz.lily.codegen.doc.IndexInfo
-net.bodz.lily.codegen.doc.MaskInfo
+net.bodz.lily.codegen.doc.CriteriaBuilderInfo
 net.bodz.lily.codegen.doc.ModuleDepOrder
 net.bodz.lily.codegen.doc.ModuleIndexer
 net.bodz.lily.codegen.doc.ModuleInfo

@@ -5,7 +5,7 @@ import net.bodz.lily.schema.PhaseDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PhaseDefMapperTest
-        extends AbstractTableTest<PhaseDef, PhaseDefMask, PhaseDefMapper> {
+        extends AbstractTableTest<PhaseDef, PhaseDefCriteriaBuilder, PhaseDefMapper> {
 
     @Override
     public PhaseDef buildSample()

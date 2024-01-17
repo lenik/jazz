@@ -6,7 +6,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostVoteMapperTest
-        extends AbstractTableTest<PostVote, PostVoteMask, PostVoteMapper> {
+        extends AbstractTableTest<PostVote, PostVoteCriteriaBuilder, PostVoteMapper> {
 
     @Override
     public PostVote buildSample()

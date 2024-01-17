@@ -7,7 +7,7 @@ import net.bodz.violet.art.ArtifactTag;
 import net.bodz.violet.art.ArtifactTagSamples;
 
 public class ArtifactTagMapperTest
-        extends AbstractTableTest<ArtifactTag, ArtifactTagMask, ArtifactTagMapper> {
+        extends AbstractTableTest<ArtifactTag, ArtifactTagCriteriaBuilder, ArtifactTagMapper> {
 
     @Override
     public ArtifactTag buildSample()

@@ -5,6 +5,6 @@ import net.bodz.lily.contact.PersonRole;
 
 public interface PersonRoleMapper
         extends
-            IEntityMapper<PersonRole, PersonRoleMask> {
+            IEntityMapper<PersonRole, PersonRoleCriteriaBuilder> {
 
 }

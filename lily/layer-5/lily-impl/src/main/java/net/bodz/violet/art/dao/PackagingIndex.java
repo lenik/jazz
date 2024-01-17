@@ -6,6 +6,6 @@ import net.bodz.violet.art.Packaging;
 
 @ObjectType(Packaging.class)
 public class PackagingIndex
-        extends CoIndex<Packaging, PackagingMask> {
+        extends CoIndex<Packaging, PackagingCriteriaBuilder> {
 
 }

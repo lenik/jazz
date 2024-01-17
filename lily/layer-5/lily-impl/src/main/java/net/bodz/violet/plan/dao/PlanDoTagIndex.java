@@ -9,7 +9,7 @@ import net.bodz.violet.plan.PlanDoTag;
 */
 @ObjectType(PlanDoTag.class)
 public class PlanDoTagIndex
-        extends CoIndex<PlanDoTag, PlanDoTagMask> {
+        extends CoIndex<PlanDoTag, PlanDoTagCriteriaBuilder> {
 
     public PlanDoTagIndex() {
     }

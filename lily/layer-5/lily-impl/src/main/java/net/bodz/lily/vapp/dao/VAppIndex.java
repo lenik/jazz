@@ -9,7 +9,7 @@ import net.bodz.lily.vapp.VApp;
 */
 @ObjectType(VApp.class)
 public class VAppIndex
-        extends CoIndex<VApp, VAppMask> {
+        extends CoIndex<VApp, VAppCriteriaBuilder> {
 
     public VAppIndex() {
     }

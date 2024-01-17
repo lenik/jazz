@@ -9,7 +9,7 @@ import net.bodz.lily.util.Uom;
 */
 @ObjectType(Uom.class)
 public class UomIndex
-        extends CoIndex<Uom, UomMask> {
+        extends CoIndex<Uom, UomCriteriaBuilder> {
 
     public UomIndex() {
     }

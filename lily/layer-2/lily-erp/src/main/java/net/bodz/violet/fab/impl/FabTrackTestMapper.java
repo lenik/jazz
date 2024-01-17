@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabTrackTest;
  * @mapper.xml FabTrackTestMapper.xml
  */
 public interface FabTrackTestMapper
-        extends IEntityMapper<FabTrackTest, FabTrackTestMask> {
+        extends IEntityMapper<FabTrackTest, FabTrackTestCriteriaBuilder> {
 
 }

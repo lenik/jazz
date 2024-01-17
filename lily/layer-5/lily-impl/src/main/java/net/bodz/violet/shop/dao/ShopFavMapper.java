@@ -5,6 +5,6 @@ import net.bodz.violet.shop.ShopFav;
 
 public interface ShopFavMapper
         extends
-            IEntityMapper<ShopFav, ShopFavMask> {
+            IEntityMapper<ShopFav, ShopFavCriteriaBuilder> {
 
 }

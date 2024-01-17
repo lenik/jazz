@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanDoParameter;
 
 public interface PlanDoParameterMapper
         extends
-            IEntityMapper<PlanDoParameter, PlanDoParameterMask> {
+            IEntityMapper<PlanDoParameter, PlanDoParameterCriteriaBuilder> {
 
 }

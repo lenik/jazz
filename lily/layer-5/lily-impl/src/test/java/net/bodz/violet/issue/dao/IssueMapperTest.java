@@ -8,7 +8,7 @@ import net.bodz.violet.issue.Issue;
 import net.bodz.violet.issue.IssueSamples;
 
 public class IssueMapperTest
-        extends AbstractTableTest<Issue, IssueMask, IssueMapper> {
+        extends AbstractTableTest<Issue, IssueCriteriaBuilder, IssueMapper> {
 
     @Override
     public Issue buildSample()

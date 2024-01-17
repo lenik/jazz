@@ -7,7 +7,7 @@ import net.bodz.violet.art.ArtifactPhase;
 import net.bodz.violet.art.ArtifactPhaseSamples;
 
 public class ArtifactPhaseMapperTest
-        extends AbstractTableTest<ArtifactPhase, ArtifactPhaseMask, ArtifactPhaseMapper> {
+        extends AbstractTableTest<ArtifactPhase, ArtifactPhaseCriteriaBuilder, ArtifactPhaseMapper> {
 
     @Override
     public ArtifactPhase buildSample()

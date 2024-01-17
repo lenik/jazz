@@ -6,7 +6,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostFavMapperTest
-        extends AbstractTableTest<PostFav, PostFavMask, PostFavMapper> {
+        extends AbstractTableTest<PostFav, PostFavCriteriaBuilder, PostFavMapper> {
 
     @Override
     public PostFav buildSample()

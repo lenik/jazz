@@ -9,7 +9,7 @@ import net.bodz.lily.pub.Post;
 */
 @ObjectType(Post.class)
 public class PostIndex
-        extends CoIndex<Post, PostMask> {
+        extends CoIndex<Post, PostCriteriaBuilder> {
 
     public PostIndex() {
     }

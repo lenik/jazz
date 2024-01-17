@@ -9,7 +9,7 @@ import net.bodz.lily.schema.FormParameter;
 */
 @ObjectType(FormParameter.class)
 public class FormParameterIndex
-        extends CoIndex<FormParameter, FormParameterMask> {
+        extends CoIndex<FormParameter, FormParameterCriteriaBuilder> {
 
     public FormParameterIndex() {
     }

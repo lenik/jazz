@@ -12,7 +12,7 @@ import net.bodz.violet.plan.DiaryParty;
 
 @ObjectType(Diary.class)
 public class DiaryIndex
-        extends CoMessageIndex<Diary, DiaryMask> {
+        extends CoMessageIndex<Diary, DiaryCriteriaBuilder> {
 
     public static final String SCHEMA = "diary";
 
@@ -24,7 +24,7 @@ public class DiaryIndex
         if (parties != null) {
             DiaryPartyMapper partyMapper = getDataContext().requireMapper(DiaryPartyMapper.class);
 
-            DiaryPartyMask forThisDiary = new DiaryPartyMask();
+            DiaryPartyCriteriaBuilder forThisDiary = new DiaryPartyCriteriaBuilder();
             forThisDiary.setDiaryId(diaryId);
             // partyMapper.deleteFor(forThisDiary);
             Map<Long, DiaryParty> olds = new HashMap<>();

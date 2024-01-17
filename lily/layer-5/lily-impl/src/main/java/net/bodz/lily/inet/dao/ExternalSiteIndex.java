@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(ExternalSite.class)
 public class ExternalSiteIndex
-        extends CoIndex<ExternalSite, ExternalSiteMask> {
+        extends CoIndex<ExternalSite, ExternalSiteCriteriaBuilder> {
 
     public ExternalSiteIndex() {
     }

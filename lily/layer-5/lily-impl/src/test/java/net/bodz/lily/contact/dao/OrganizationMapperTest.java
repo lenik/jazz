@@ -8,7 +8,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class OrganizationMapperTest
-        extends AbstractTableTest<Organization, OrganizationMask, OrganizationMapper> {
+        extends AbstractTableTest<Organization, OrganizationCriteriaBuilder, OrganizationMapper> {
 
     @Override
     public Organization buildSample()

@@ -5,7 +5,7 @@ import net.bodz.violet.edu.TestApplyItem;
 import net.bodz.violet.edu.TestApplyItemSamples;
 
 public class TestApplyItemMapperTest
-        extends AbstractTableTest<TestApplyItem, TestApplyItemMask, TestApplyItemMapper> {
+        extends AbstractTableTest<TestApplyItem, TestApplyItemCriteriaBuilder, TestApplyItemMapper> {
 
     @Override
     public TestApplyItem buildSample()

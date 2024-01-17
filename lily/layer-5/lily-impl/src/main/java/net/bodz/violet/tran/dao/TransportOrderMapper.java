@@ -5,6 +5,6 @@ import net.bodz.violet.tran.TransportOrder;
 
 public interface TransportOrderMapper
         extends
-            IEntityMapper<TransportOrder, TransportOrderMask> {
+            IEntityMapper<TransportOrder, TransportOrderCriteriaBuilder> {
 
 }

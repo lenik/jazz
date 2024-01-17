@@ -12,7 +12,7 @@ import net.bodz.violet.store.StoreOrder;
 import net.bodz.violet.store.StoreOrderSamples;
 
 public class StoreOrderMapperTest
-        extends AbstractTableTest<StoreOrder, StoreOrderMask, StoreOrderMapper> {
+        extends AbstractTableTest<StoreOrder, StoreOrderCriteriaBuilder, StoreOrderMapper> {
 
     @Override
     public StoreOrder buildSample()

@@ -7,7 +7,7 @@ import net.bodz.violet.plan.PlanParameter;
 import net.bodz.violet.plan.PlanParameterSamples;
 
 public class PlanParameterMapperTest
-        extends AbstractTableTest<PlanParameter, PlanParameterMask, PlanParameterMapper> {
+        extends AbstractTableTest<PlanParameter, PlanParameterCriteriaBuilder, PlanParameterMapper> {
 
     @Override
     public PlanParameter buildSample()

@@ -8,7 +8,7 @@ import net.bodz.violet.art.ArtifactBackref;
 import net.bodz.violet.art.ArtifactBackrefSamples;
 
 public class ArtifactBackrefMapperTest
-        extends AbstractTableTest<ArtifactBackref, ArtifactBackrefMask, ArtifactBackrefMapper> {
+        extends AbstractTableTest<ArtifactBackref, ArtifactBackrefCriteriaBuilder, ArtifactBackrefMapper> {
 
     @Override
     public ArtifactBackref buildSample()

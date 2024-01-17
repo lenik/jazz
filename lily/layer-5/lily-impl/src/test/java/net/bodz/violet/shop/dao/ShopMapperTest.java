@@ -7,7 +7,7 @@ import net.bodz.violet.shop.Shop;
 import net.bodz.violet.shop.ShopSamples;
 
 public class ShopMapperTest
-        extends AbstractTableTest<Shop, ShopMask, ShopMapper> {
+        extends AbstractTableTest<Shop, ShopCriteriaBuilder, ShopMapper> {
 
     @Override
     public Shop buildSample()

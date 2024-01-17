@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(Zone.class)
 public class ZoneIndex
-        extends CoIndex<Zone, ZoneMask> {
+        extends CoIndex<Zone, ZoneCriteriaBuilder> {
 
     public ZoneIndex() {
     }

@@ -10,7 +10,7 @@ import net.bodz.violet.asset.OrgAssetSamples;
 import net.bodz.violet.store.dao.RegionMapper;
 
 public class OrgAssetMapperTest
-        extends AbstractTableTest<OrgAsset, OrgAssetMask, OrgAssetMapper> {
+        extends AbstractTableTest<OrgAsset, OrgAssetCriteriaBuilder, OrgAssetMapper> {
 
     @Override
     public OrgAsset buildSample()

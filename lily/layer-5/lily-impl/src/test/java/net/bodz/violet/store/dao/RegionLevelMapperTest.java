@@ -5,7 +5,7 @@ import net.bodz.violet.store.RegionLevel;
 import net.bodz.violet.store.RegionLevelSamples;
 
 public class RegionLevelMapperTest
-        extends AbstractTableTest<RegionLevel, RegionLevelMask, RegionLevelMapper> {
+        extends AbstractTableTest<RegionLevel, RegionLevelCriteriaBuilder, RegionLevelMapper> {
 
     @Override
     public RegionLevel buildSample()

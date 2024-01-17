@@ -9,7 +9,7 @@ import net.bodz.lily.pub.PostFav;
 */
 @ObjectType(PostFav.class)
 public class PostFavIndex
-        extends CoIndex<PostFav, PostFavMask> {
+        extends CoIndex<PostFav, PostFavCriteriaBuilder> {
 
     public PostFavIndex() {
     }

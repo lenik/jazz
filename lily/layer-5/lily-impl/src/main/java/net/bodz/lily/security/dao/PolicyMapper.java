@@ -5,6 +5,6 @@ import net.bodz.lily.security.Policy;
 
 public interface PolicyMapper
         extends
-            IEntityMapper<Policy, PolicyMask> {
+            IEntityMapper<Policy, PolicyCriteriaBuilder> {
 
 }

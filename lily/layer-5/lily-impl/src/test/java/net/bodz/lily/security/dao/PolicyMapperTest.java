@@ -5,7 +5,7 @@ import net.bodz.lily.security.PolicySamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PolicyMapperTest
-        extends AbstractTableTest<Policy, PolicyMask, PolicyMapper> {
+        extends AbstractTableTest<Policy, PolicyCriteriaBuilder, PolicyMapper> {
 
     @Override
     public Policy buildSample()

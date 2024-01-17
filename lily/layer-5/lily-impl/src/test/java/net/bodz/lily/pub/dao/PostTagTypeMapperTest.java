@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTagTypeMapperTest
-        extends AbstractTableTest<PostTagType, PostTagTypeMask, PostTagTypeMapper> {
+        extends AbstractTableTest<PostTagType, PostTagTypeCriteriaBuilder, PostTagTypeMapper> {
 
     @Override
     public PostTagType buildSample()

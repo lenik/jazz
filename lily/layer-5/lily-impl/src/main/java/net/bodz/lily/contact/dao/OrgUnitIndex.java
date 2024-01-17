@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(OrgUnit.class)
 public class OrgUnitIndex
-        extends CoIndex<OrgUnit, OrgUnitMask> {
+        extends CoIndex<OrgUnit, OrgUnitCriteriaBuilder> {
 
     public OrgUnitIndex() {
     }

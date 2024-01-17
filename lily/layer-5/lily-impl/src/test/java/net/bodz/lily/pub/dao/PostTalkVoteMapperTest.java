@@ -6,7 +6,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTalkVoteMapperTest
-        extends AbstractTableTest<PostTalkVote, PostTalkVoteMask, PostTalkVoteMapper> {
+        extends AbstractTableTest<PostTalkVote, PostTalkVoteCriteriaBuilder, PostTalkVoteMapper> {
 
     @Override
     public PostTalkVote buildSample()

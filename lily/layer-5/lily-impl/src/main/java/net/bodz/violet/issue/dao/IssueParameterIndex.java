@@ -9,7 +9,7 @@ import net.bodz.violet.issue.IssueParameter;
 */
 @ObjectType(IssueParameter.class)
 public class IssueParameterIndex
-        extends CoIndex<IssueParameter, IssueParameterMask> {
+        extends CoIndex<IssueParameter, IssueParameterCriteriaBuilder> {
 
     public IssueParameterIndex() {
     }

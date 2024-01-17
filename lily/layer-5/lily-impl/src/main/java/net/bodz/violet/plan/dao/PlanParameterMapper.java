@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanParameter;
 
 public interface PlanParameterMapper
         extends
-            IEntityMapper<PlanParameter, PlanParameterMask> {
+            IEntityMapper<PlanParameter, PlanParameterCriteriaBuilder> {
 
 }

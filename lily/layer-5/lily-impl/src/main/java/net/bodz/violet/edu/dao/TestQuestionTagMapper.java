@@ -5,6 +5,6 @@ import net.bodz.violet.edu.TestQuestionTag;
 
 public interface TestQuestionTagMapper
         extends
-            IEntityMapper<TestQuestionTag, TestQuestionTagMask> {
+            IEntityMapper<TestQuestionTag, TestQuestionTagCriteriaBuilder> {
 
 }

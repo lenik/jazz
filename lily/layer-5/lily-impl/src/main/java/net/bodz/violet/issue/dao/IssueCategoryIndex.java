@@ -9,7 +9,7 @@ import net.bodz.violet.issue.IssueCategory;
 */
 @ObjectType(IssueCategory.class)
 public class IssueCategoryIndex
-        extends CoIndex<IssueCategory, IssueCategoryMask> {
+        extends CoIndex<IssueCategory, IssueCategoryCriteriaBuilder> {
 
     public IssueCategoryIndex() {
     }

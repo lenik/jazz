@@ -9,7 +9,7 @@ import net.bodz.violet.edu.TestPaperItem;
 */
 @ObjectType(TestPaperItem.class)
 public class TestPaperItemIndex
-        extends CoIndex<TestPaperItem, TestPaperItemMask> {
+        extends CoIndex<TestPaperItem, TestPaperItemCriteriaBuilder> {
 
     public TestPaperItemIndex() {
     }

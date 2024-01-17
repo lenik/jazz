@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostParameterTypeMapperTest
-        extends AbstractTableTest<PostParameterType, PostParameterTypeMask, PostParameterTypeMapper> {
+        extends AbstractTableTest<PostParameterType, PostParameterTypeCriteriaBuilder, PostParameterTypeMapper> {
 
     @Override
     public PostParameterType buildSample()

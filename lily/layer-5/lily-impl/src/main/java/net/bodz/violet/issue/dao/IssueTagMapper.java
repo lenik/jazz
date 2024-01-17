@@ -5,6 +5,6 @@ import net.bodz.violet.issue.IssueTag;
 
 public interface IssueTagMapper
         extends
-            IEntityMapper<IssueTag, IssueTagMask> {
+            IEntityMapper<IssueTag, IssueTagCriteriaBuilder> {
 
 }

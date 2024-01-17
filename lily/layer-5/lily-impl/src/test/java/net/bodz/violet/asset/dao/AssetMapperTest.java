@@ -12,7 +12,7 @@ import net.bodz.violet.asset.AssetSamples;
 import net.bodz.violet.store.dao.RegionMapper;
 
 public class AssetMapperTest
-        extends AbstractTableTest<Asset, AssetMask, AssetMapper> {
+        extends AbstractTableTest<Asset, AssetCriteriaBuilder, AssetMapper> {
 
     @Override
     public Asset buildSample()

@@ -5,6 +5,6 @@ import net.bodz.violet.plan.DiaryReview;
 
 public interface DiaryReviewMapper
         extends
-            IEntityMapper<DiaryReview, DiaryReviewMask> {
+            IEntityMapper<DiaryReview, DiaryReviewCriteriaBuilder> {
 
 }

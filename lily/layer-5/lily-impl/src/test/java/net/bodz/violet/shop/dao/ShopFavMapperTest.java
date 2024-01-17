@@ -6,7 +6,7 @@ import net.bodz.violet.shop.ShopFav;
 import net.bodz.violet.shop.ShopFavSamples;
 
 public class ShopFavMapperTest
-        extends AbstractTableTest<ShopFav, ShopFavMask, ShopFavMapper> {
+        extends AbstractTableTest<ShopFav, ShopFavCriteriaBuilder, ShopFavMapper> {
 
     @Override
     public ShopFav buildSample()

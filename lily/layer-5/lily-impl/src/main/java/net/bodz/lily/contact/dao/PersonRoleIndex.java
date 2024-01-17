@@ -9,7 +9,7 @@ import net.bodz.lily.model.base.CoIndex;
 */
 @ObjectType(PersonRole.class)
 public class PersonRoleIndex
-        extends CoIndex<PersonRole, PersonRoleMask> {
+        extends CoIndex<PersonRole, PersonRoleCriteriaBuilder> {
 
     public PersonRoleIndex() {
     }

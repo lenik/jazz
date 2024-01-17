@@ -9,7 +9,7 @@ import net.bodz.violet.tran.TransportPhase;
 */
 @ObjectType(TransportPhase.class)
 public class TransportPhaseIndex
-        extends CoIndex<TransportPhase, TransportPhaseMask> {
+        extends CoIndex<TransportPhase, TransportPhaseCriteriaBuilder> {
 
     public TransportPhaseIndex() {
     }

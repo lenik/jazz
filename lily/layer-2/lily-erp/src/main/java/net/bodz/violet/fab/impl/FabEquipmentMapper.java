@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabEquipment;
  * @mapper.xml FabEquipmentMapper.xml
  */
 public interface FabEquipmentMapper
-        extends IEntityMapper<FabEquipment, FabEquipmentMask> {
+        extends IEntityMapper<FabEquipment, FabEquipmentCriteriaBuilder> {
 
 }

@@ -5,6 +5,6 @@ import net.bodz.lily.schema.PhaseDef;
 
 public interface PhaseDefMapper
         extends
-            IEntityMapper<PhaseDef, PhaseDefMask> {
+            IEntityMapper<PhaseDef, PhaseDefCriteriaBuilder> {
 
 }

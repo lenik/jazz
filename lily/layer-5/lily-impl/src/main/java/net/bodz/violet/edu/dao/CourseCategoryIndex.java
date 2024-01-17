@@ -9,7 +9,7 @@ import net.bodz.violet.edu.CourseCategory;
 */
 @ObjectType(CourseCategory.class)
 public class CourseCategoryIndex
-        extends CoIndex<CourseCategory, CourseCategoryMask> {
+        extends CoIndex<CourseCategory, CourseCategoryCriteriaBuilder> {
 
     public CourseCategoryIndex() {
     }

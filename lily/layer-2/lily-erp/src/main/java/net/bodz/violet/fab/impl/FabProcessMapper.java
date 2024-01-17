@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabProcess;
  * @mapper.xml FabProcessMapper.xml
  */
 public interface FabProcessMapper
-        extends IEntityMapper<FabProcess, FabProcessMask> {
+        extends IEntityMapper<FabProcess, FabProcessCriteriaBuilder> {
 
 }

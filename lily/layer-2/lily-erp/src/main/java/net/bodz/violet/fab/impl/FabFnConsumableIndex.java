@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabFnConsumable;
 
 @ObjectType(FabFnConsumable.class)
 public class FabFnConsumableIndex
-        extends CoIndex<FabFnConsumable, FabFnConsumableMask> {
+        extends CoIndex<FabFnConsumable, FabFnConsumableCriteriaBuilder> {
 
 }

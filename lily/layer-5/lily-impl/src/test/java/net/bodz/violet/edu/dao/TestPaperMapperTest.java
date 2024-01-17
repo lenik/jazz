@@ -7,7 +7,7 @@ import net.bodz.violet.edu.TestPaper;
 import net.bodz.violet.edu.TestPaperSamples;
 
 public class TestPaperMapperTest
-        extends AbstractTableTest<TestPaper, TestPaperMask, TestPaperMapper> {
+        extends AbstractTableTest<TestPaper, TestPaperCriteriaBuilder, TestPaperMapper> {
 
     @Override
     public TestPaper buildSample()

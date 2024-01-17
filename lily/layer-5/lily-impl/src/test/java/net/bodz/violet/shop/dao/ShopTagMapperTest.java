@@ -7,7 +7,7 @@ import net.bodz.violet.shop.ShopTag;
 import net.bodz.violet.shop.ShopTagSamples;
 
 public class ShopTagMapperTest
-        extends AbstractTableTest<ShopTag, ShopTagMask, ShopTagMapper> {
+        extends AbstractTableTest<ShopTag, ShopTagCriteriaBuilder, ShopTagMapper> {
 
     @Override
     public ShopTag buildSample()

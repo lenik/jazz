@@ -6,7 +6,7 @@ import net.bodz.violet.plan.DiaryVote;
 import net.bodz.violet.plan.DiaryVoteSamples;
 
 public class DiaryVoteMapperTest
-        extends AbstractTableTest<DiaryVote, DiaryVoteMask, DiaryVoteMapper> {
+        extends AbstractTableTest<DiaryVote, DiaryVoteCriteriaBuilder, DiaryVoteMapper> {
 
     @Override
     public DiaryVote buildSample()

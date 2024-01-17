@@ -9,7 +9,7 @@ import net.bodz.violet.plan.DiaryParameter;
 */
 @ObjectType(DiaryParameter.class)
 public class DiaryParameterIndex
-        extends CoIndex<DiaryParameter, DiaryParameterMask> {
+        extends CoIndex<DiaryParameter, DiaryParameterCriteriaBuilder> {
 
     public DiaryParameterIndex() {
     }

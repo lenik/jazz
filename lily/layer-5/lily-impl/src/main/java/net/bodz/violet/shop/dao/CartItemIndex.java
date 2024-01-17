@@ -9,7 +9,7 @@ import net.bodz.violet.shop.CartItem;
 */
 @ObjectType(CartItem.class)
 public class CartItemIndex
-        extends CoIndex<CartItem, CartItemMask> {
+        extends CoIndex<CartItem, CartItemCriteriaBuilder> {
 
     public CartItemIndex() {
     }

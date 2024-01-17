@@ -5,6 +5,6 @@ import net.bodz.lily.pub.ArticleTalkVote;
 
 public interface ArticleTalkVoteMapper
         extends
-            IEntityMapper<ArticleTalkVote, ArticleTalkVoteMask> {
+            IEntityMapper<ArticleTalkVote, ArticleTalkVoteCriteriaBuilder> {
 
 }

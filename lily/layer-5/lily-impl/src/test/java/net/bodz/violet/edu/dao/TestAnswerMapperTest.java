@@ -5,7 +5,7 @@ import net.bodz.violet.edu.TestAnswer;
 import net.bodz.violet.edu.TestAnswerSamples;
 
 public class TestAnswerMapperTest
-        extends AbstractTableTest<TestAnswer, TestAnswerMask, TestAnswerMapper> {
+        extends AbstractTableTest<TestAnswer, TestAnswerCriteriaBuilder, TestAnswerMapper> {
 
     @Override
     public TestAnswer buildSample()

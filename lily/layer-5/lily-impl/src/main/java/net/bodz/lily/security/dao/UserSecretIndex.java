@@ -9,7 +9,7 @@ import net.bodz.lily.security.UserSecret;
 */
 @ObjectType(UserSecret.class)
 public class UserSecretIndex
-        extends CoIndex<UserSecret, UserSecretMask> {
+        extends CoIndex<UserSecret, UserSecretCriteriaBuilder> {
 
     public UserSecretIndex() {
     }

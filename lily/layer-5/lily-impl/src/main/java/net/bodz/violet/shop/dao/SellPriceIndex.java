@@ -9,7 +9,7 @@ import net.bodz.violet.shop.SellPrice;
 */
 @ObjectType(SellPrice.class)
 public class SellPriceIndex
-        extends CoIndex<SellPrice, SellPriceMask> {
+        extends CoIndex<SellPrice, SellPriceCriteriaBuilder> {
 
     public SellPriceIndex() {
     }

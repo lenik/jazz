@@ -9,7 +9,7 @@ import net.bodz.lily.vapp.ApiType;
 */
 @ObjectType(ApiType.class)
 public class ApiTypeIndex
-        extends CoIndex<ApiType, ApiTypeMask> {
+        extends CoIndex<ApiType, ApiTypeCriteriaBuilder> {
 
     public ApiTypeIndex() {
     }

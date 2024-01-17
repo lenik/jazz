@@ -7,7 +7,7 @@ import net.bodz.lily.vapp.VApp;
 import net.bodz.lily.vapp.VAppSamples;
 
 public class VAppMapperTest
-        extends AbstractTableTest<VApp, VAppMask, VAppMapper> {
+        extends AbstractTableTest<VApp, VAppCriteriaBuilder, VAppMapper> {
 
     @Override
     public VApp buildSample()

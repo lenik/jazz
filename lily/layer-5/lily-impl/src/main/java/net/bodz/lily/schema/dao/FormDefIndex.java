@@ -9,7 +9,7 @@ import net.bodz.lily.schema.FormDef;
 */
 @ObjectType(FormDef.class)
 public class FormDefIndex
-        extends CoIndex<FormDef, FormDefMask> {
+        extends CoIndex<FormDef, FormDefCriteriaBuilder> {
 
     public FormDefIndex() {
     }

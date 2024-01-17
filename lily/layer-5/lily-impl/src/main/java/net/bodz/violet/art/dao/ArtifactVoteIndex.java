@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactVote;
 */
 @ObjectType(ArtifactVote.class)
 public class ArtifactVoteIndex
-        extends CoIndex<ArtifactVote, ArtifactVoteMask> {
+        extends CoIndex<ArtifactVote, ArtifactVoteCriteriaBuilder> {
 
     public ArtifactVoteIndex() {
     }

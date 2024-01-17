@@ -9,7 +9,7 @@ import net.bodz.violet.asset.OrgAsset;
 */
 @ObjectType(OrgAsset.class)
 public class OrgAssetIndex
-        extends CoIndex<OrgAsset, OrgAssetMask> {
+        extends CoIndex<OrgAsset, OrgAssetCriteriaBuilder> {
 
     public OrgAssetIndex() {
     }

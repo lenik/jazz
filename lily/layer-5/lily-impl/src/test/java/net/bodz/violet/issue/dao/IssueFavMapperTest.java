@@ -6,7 +6,7 @@ import net.bodz.violet.issue.IssueFav;
 import net.bodz.violet.issue.IssueFavSamples;
 
 public class IssueFavMapperTest
-        extends AbstractTableTest<IssueFav, IssueFavMask, IssueFavMapper> {
+        extends AbstractTableTest<IssueFav, IssueFavCriteriaBuilder, IssueFavMapper> {
 
     @Override
     public IssueFav buildSample()

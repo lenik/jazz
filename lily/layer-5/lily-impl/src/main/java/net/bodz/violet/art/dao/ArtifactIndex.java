@@ -22,7 +22,7 @@ import net.bodz.violet.art.Artifact;
  */
 @ObjectType(Artifact.class)
 public class ArtifactIndex
-        extends CoIndex<Artifact, ArtifactMask> {
+        extends CoIndex<Artifact, ArtifactCriteriaBuilder> {
 
     public ArtifactIndex() {
     }

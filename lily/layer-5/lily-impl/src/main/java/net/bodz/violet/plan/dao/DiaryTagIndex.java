@@ -9,7 +9,7 @@ import net.bodz.violet.plan.DiaryTag;
 */
 @ObjectType(DiaryTag.class)
 public class DiaryTagIndex
-        extends CoIndex<DiaryTag, DiaryTagMask> {
+        extends CoIndex<DiaryTag, DiaryTagCriteriaBuilder> {
 
     public DiaryTagIndex() {
     }

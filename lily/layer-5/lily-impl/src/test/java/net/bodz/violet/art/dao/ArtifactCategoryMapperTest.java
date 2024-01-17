@@ -7,7 +7,7 @@ import net.bodz.violet.art.ArtifactCategory;
 import net.bodz.violet.art.ArtifactCategorySamples;
 
 public class ArtifactCategoryMapperTest
-        extends AbstractTableTest<ArtifactCategory, ArtifactCategoryMask, ArtifactCategoryMapper> {
+        extends AbstractTableTest<ArtifactCategory, ArtifactCategoryCriteriaBuilder, ArtifactCategoryMapper> {
 
     @Override
     public ArtifactCategory buildSample()

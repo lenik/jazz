@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTalkMapperTest
-        extends AbstractTableTest<PostTalk, PostTalkMask, PostTalkMapper> {
+        extends AbstractTableTest<PostTalk, PostTalkCriteriaBuilder, PostTalkMapper> {
 
     @Override
     public PostTalk buildSample()

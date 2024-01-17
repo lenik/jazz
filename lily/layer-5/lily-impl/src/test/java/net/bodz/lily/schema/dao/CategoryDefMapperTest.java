@@ -5,7 +5,7 @@ import net.bodz.lily.schema.CategoryDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class CategoryDefMapperTest
-        extends AbstractTableTest<CategoryDef, CategoryDefMask, CategoryDefMapper> {
+        extends AbstractTableTest<CategoryDef, CategoryDefCriteriaBuilder, CategoryDefMapper> {
 
     @Override
     public CategoryDef buildSample()

@@ -6,7 +6,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleVoteMapperTest
-        extends AbstractTableTest<ArticleVote, ArticleVoteMask, ArticleVoteMapper> {
+        extends AbstractTableTest<ArticleVote, ArticleVoteCriteriaBuilder, ArticleVoteMapper> {
 
     @Override
     public ArticleVote buildSample()

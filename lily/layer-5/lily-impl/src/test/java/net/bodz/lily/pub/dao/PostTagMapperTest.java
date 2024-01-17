@@ -5,7 +5,7 @@ import net.bodz.lily.pub.PostTagSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostTagMapperTest
-        extends AbstractTableTest<PostTag, PostTagMask, PostTagMapper> {
+        extends AbstractTableTest<PostTag, PostTagCriteriaBuilder, PostTagMapper> {
 
     @Override
     public PostTag buildSample()

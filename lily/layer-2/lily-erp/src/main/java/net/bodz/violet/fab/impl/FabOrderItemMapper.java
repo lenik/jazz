@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabOrderItem;
  * @mapper.xml FabOrderItemMapper.xml
  */
 public interface FabOrderItemMapper
-        extends IEntityMapper<FabOrderItem, FabOrderItemMask> {
+        extends IEntityMapper<FabOrderItem, FabOrderItemCriteriaBuilder> {
 
 }

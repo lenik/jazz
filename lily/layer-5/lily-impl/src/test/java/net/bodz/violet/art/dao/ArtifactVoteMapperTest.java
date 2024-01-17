@@ -6,7 +6,7 @@ import net.bodz.violet.art.ArtifactVote;
 import net.bodz.violet.art.ArtifactVoteSamples;
 
 public class ArtifactVoteMapperTest
-        extends AbstractTableTest<ArtifactVote, ArtifactVoteMask, ArtifactVoteMapper> {
+        extends AbstractTableTest<ArtifactVote, ArtifactVoteCriteriaBuilder, ArtifactVoteMapper> {
 
     @Override
     public ArtifactVote buildSample()

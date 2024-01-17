@@ -5,7 +5,7 @@ import net.bodz.lily.schema.SchemaDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class SchemaDefMapperTest
-        extends AbstractTableTest<SchemaDef, SchemaDefMask, SchemaDefMapper> {
+        extends AbstractTableTest<SchemaDef, SchemaDefCriteriaBuilder, SchemaDefMapper> {
 
     @Override
     public SchemaDef buildSample()

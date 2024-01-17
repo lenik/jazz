@@ -6,6 +6,6 @@ import net.bodz.violet.shop.CouponCategory;
 
 @ObjectType(CouponCategory.class)
 public class CouponCategoryIndex
-        extends CoIndex<CouponCategory, CouponCategoryMask> {
+        extends CoIndex<CouponCategory, CouponCategoryCriteriaBuilder> {
 
 }

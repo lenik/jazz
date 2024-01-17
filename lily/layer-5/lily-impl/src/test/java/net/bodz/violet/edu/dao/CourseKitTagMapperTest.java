@@ -7,7 +7,7 @@ import net.bodz.violet.edu.CourseKitTag;
 import net.bodz.violet.edu.CourseKitTagSamples;
 
 public class CourseKitTagMapperTest
-        extends AbstractTableTest<CourseKitTag, CourseKitTagMask, CourseKitTagMapper> {
+        extends AbstractTableTest<CourseKitTag, CourseKitTagCriteriaBuilder, CourseKitTagMapper> {
 
     @Override
     public CourseKitTag buildSample()

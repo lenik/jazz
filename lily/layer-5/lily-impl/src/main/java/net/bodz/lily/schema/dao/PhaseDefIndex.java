@@ -9,7 +9,7 @@ import net.bodz.lily.schema.PhaseDef;
 */
 @ObjectType(PhaseDef.class)
 public class PhaseDefIndex
-        extends CoIndex<PhaseDef, PhaseDefMask> {
+        extends CoIndex<PhaseDef, PhaseDefCriteriaBuilder> {
 
     public PhaseDefIndex() {
     }

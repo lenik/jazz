@@ -8,7 +8,7 @@ import net.bodz.violet.edu.TestApply;
 import net.bodz.violet.edu.TestApplySamples;
 
 public class TestApplyMapperTest
-        extends AbstractTableTest<TestApply, TestApplyMask, TestApplyMapper> {
+        extends AbstractTableTest<TestApply, TestApplyCriteriaBuilder, TestApplyMapper> {
 
     @Override
     public TestApply buildSample()

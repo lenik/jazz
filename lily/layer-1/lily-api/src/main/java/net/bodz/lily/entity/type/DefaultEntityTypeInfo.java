@@ -35,7 +35,7 @@ public class DefaultEntityTypeInfo
         this.entityClass = entityClass;
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
-        criteriaClass = CoObjectCriteriaBuilder.findMaskClass(entityClass);
+        criteriaClass = CoObjectCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
         if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
             BeanInfo beanInfo;

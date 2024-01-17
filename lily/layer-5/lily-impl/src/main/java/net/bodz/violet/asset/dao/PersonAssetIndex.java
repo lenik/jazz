@@ -9,7 +9,7 @@ import net.bodz.violet.asset.PersonAsset;
 */
 @ObjectType(PersonAsset.class)
 public class PersonAssetIndex
-        extends CoIndex<PersonAsset, PersonAssetMask> {
+        extends CoIndex<PersonAsset, PersonAssetCriteriaBuilder> {
 
     public PersonAssetIndex() {
     }

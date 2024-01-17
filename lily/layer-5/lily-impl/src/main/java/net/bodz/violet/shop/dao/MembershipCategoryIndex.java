@@ -6,6 +6,6 @@ import net.bodz.violet.shop.MembershipCategory;
 
 @ObjectType(MembershipCategory.class)
 public class MembershipCategoryIndex
-        extends CoIndex<MembershipCategory, MembershipCategoryMask> {
+        extends CoIndex<MembershipCategory, MembershipCategoryCriteriaBuilder> {
 
 }

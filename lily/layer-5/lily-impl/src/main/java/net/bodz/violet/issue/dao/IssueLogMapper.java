@@ -4,6 +4,6 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.violet.issue.IssueLog;
 
 public interface IssueLogMapper
-        extends IEntityMapper<IssueLog, IssueLogMask> {
+        extends IEntityMapper<IssueLog, IssueLogCriteriaBuilder> {
 
 }

@@ -7,7 +7,7 @@ import net.bodz.violet.plan.DiaryParameter;
 import net.bodz.violet.plan.DiaryParameterSamples;
 
 public class DiaryParameterMapperTest
-        extends AbstractTableTest<DiaryParameter, DiaryParameterMask, DiaryParameterMapper> {
+        extends AbstractTableTest<DiaryParameter, DiaryParameterCriteriaBuilder, DiaryParameterMapper> {
 
     @Override
     public DiaryParameter buildSample()

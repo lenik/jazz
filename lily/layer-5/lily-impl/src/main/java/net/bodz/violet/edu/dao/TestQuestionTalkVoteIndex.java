@@ -9,7 +9,7 @@ import net.bodz.violet.edu.TestQuestionTalkVote;
 */
 @ObjectType(TestQuestionTalkVote.class)
 public class TestQuestionTalkVoteIndex
-        extends CoIndex<TestQuestionTalkVote, TestQuestionTalkVoteMask> {
+        extends CoIndex<TestQuestionTalkVote, TestQuestionTalkVoteCriteriaBuilder> {
 
     public TestQuestionTalkVoteIndex() {
     }

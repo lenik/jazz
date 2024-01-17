@@ -5,7 +5,7 @@ import net.bodz.lily.contact.Organization;
 
 public interface OrganizationMapper
         extends
-            IEntityMapper<Organization, OrganizationMask> {
+            IEntityMapper<Organization, OrganizationCriteriaBuilder> {
 
     Organization selectByTaxId(String taxId);
 

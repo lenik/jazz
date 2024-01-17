@@ -8,7 +8,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class PostBackrefMapperTest
-        extends AbstractTableTest<PostBackref, PostBackrefMask, PostBackrefMapper> {
+        extends AbstractTableTest<PostBackref, PostBackrefCriteriaBuilder, PostBackrefMapper> {
 
     @Override
     public PostBackref buildSample()

@@ -7,7 +7,7 @@ import net.bodz.lily.security.dao.UserMapper;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ArticleTagTypeMapperTest
-        extends AbstractTableTest<ArticleTagType, ArticleTagTypeMask, ArticleTagTypeMapper> {
+        extends AbstractTableTest<ArticleTagType, ArticleTagTypeCriteriaBuilder, ArticleTagTypeMapper> {
 
     @Override
     public ArticleTagType buildSample()

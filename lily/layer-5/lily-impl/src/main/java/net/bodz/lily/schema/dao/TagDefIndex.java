@@ -9,7 +9,7 @@ import net.bodz.lily.schema.TagDef;
 */
 @ObjectType(TagDef.class)
 public class TagDefIndex
-        extends CoIndex<TagDef, TagDefMask> {
+        extends CoIndex<TagDef, TagDefCriteriaBuilder> {
 
     public TagDefIndex() {
     }

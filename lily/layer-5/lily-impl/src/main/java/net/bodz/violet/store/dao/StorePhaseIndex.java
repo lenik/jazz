@@ -9,7 +9,7 @@ import net.bodz.violet.store.StorePhase;
 */
 @ObjectType(StorePhase.class)
 public class StorePhaseIndex
-        extends CoIndex<StorePhase, StorePhaseMask> {
+        extends CoIndex<StorePhase, StorePhaseCriteriaBuilder> {
 
     public StorePhaseIndex() {
     }

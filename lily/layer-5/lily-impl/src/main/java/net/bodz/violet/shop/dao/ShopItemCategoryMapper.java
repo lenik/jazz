@@ -5,6 +5,6 @@ import net.bodz.violet.shop.ShopItemCategory;
 
 public interface ShopItemCategoryMapper
         extends
-            IEntityMapper<ShopItemCategory, ShopItemCategoryMask> {
+            IEntityMapper<ShopItemCategory, ShopItemCategoryCriteriaBuilder> {
 
 }

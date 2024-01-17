@@ -7,7 +7,7 @@ import net.bodz.violet.shop.SalesPhase;
 import net.bodz.violet.shop.SalesPhaseSamples;
 
 public class SalesPhaseMapperTest
-        extends AbstractTableTest<SalesPhase, SalesPhaseMask, SalesPhaseMapper> {
+        extends AbstractTableTest<SalesPhase, SalesPhaseCriteriaBuilder, SalesPhaseMapper> {
 
     @Override
     public SalesPhase buildSample()

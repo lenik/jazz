@@ -6,7 +6,7 @@ import net.bodz.violet.tran.TransportOrderItem;
 import net.bodz.violet.tran.TransportOrderItemSamples;
 
 public class TransportOrderItemMapperTest
-        extends AbstractTableTest<TransportOrderItem, TransportOrderItemMask, TransportOrderItemMapper> {
+        extends AbstractTableTest<TransportOrderItem, TransportOrderItemCriteriaBuilder, TransportOrderItemMapper> {
 
     @Override
     public TransportOrderItem buildSample()

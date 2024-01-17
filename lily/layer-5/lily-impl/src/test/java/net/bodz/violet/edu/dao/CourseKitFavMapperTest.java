@@ -6,7 +6,7 @@ import net.bodz.violet.edu.CourseKitFav;
 import net.bodz.violet.edu.CourseKitFavSamples;
 
 public class CourseKitFavMapperTest
-        extends AbstractTableTest<CourseKitFav, CourseKitFavMask, CourseKitFavMapper> {
+        extends AbstractTableTest<CourseKitFav, CourseKitFavCriteriaBuilder, CourseKitFavMapper> {
 
     @Override
     public CourseKitFav buildSample()

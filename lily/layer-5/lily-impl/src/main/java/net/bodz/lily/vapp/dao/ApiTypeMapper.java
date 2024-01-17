@@ -5,6 +5,6 @@ import net.bodz.lily.vapp.ApiType;
 
 public interface ApiTypeMapper
         extends
-            IEntityMapper<ApiType, ApiTypeMask> {
+            IEntityMapper<ApiType, ApiTypeCriteriaBuilder> {
 
 }

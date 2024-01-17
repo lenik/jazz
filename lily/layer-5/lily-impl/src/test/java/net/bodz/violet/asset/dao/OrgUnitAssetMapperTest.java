@@ -10,7 +10,7 @@ import net.bodz.violet.asset.OrgUnitAssetSamples;
 import net.bodz.violet.store.dao.RegionMapper;
 
 public class OrgUnitAssetMapperTest
-        extends AbstractTableTest<OrgUnitAsset, OrgUnitAssetMask, OrgUnitAssetMapper> {
+        extends AbstractTableTest<OrgUnitAsset, OrgUnitAssetCriteriaBuilder, OrgUnitAssetMapper> {
 
     @Override
     public OrgUnitAsset buildSample()

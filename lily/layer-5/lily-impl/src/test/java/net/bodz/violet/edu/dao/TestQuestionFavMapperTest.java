@@ -6,7 +6,7 @@ import net.bodz.violet.edu.TestQuestionFav;
 import net.bodz.violet.edu.TestQuestionFavSamples;
 
 public class TestQuestionFavMapperTest
-        extends AbstractTableTest<TestQuestionFav, TestQuestionFavMask, TestQuestionFavMapper> {
+        extends AbstractTableTest<TestQuestionFav, TestQuestionFavCriteriaBuilder, TestQuestionFavMapper> {
 
     @Override
     public TestQuestionFav buildSample()

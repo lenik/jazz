@@ -6,7 +6,7 @@ import net.bodz.violet.edu.TestQuestionTalkVote;
 import net.bodz.violet.edu.TestQuestionTalkVoteSamples;
 
 public class TestQuestionTalkVoteMapperTest
-        extends AbstractTableTest<TestQuestionTalkVote, TestQuestionTalkVoteMask, TestQuestionTalkVoteMapper> {
+        extends AbstractTableTest<TestQuestionTalkVote, TestQuestionTalkVoteCriteriaBuilder, TestQuestionTalkVoteMapper> {
 
     @Override
     public TestQuestionTalkVote buildSample()

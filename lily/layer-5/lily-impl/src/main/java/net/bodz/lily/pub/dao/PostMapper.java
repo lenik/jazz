@@ -5,6 +5,6 @@ import net.bodz.lily.pub.Post;
 
 public interface PostMapper
         extends
-            IEntityMapper<Post, PostMask> {
+            IEntityMapper<Post, PostCriteriaBuilder> {
 
 }

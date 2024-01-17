@@ -9,7 +9,7 @@ import net.bodz.lily.schema.ParameterDef;
 */
 @ObjectType(ParameterDef.class)
 public class ParameterDefIndex
-        extends CoIndex<ParameterDef, ParameterDefMask> {
+        extends CoIndex<ParameterDef, ParameterDefCriteriaBuilder> {
 
     public ParameterDefIndex() {
     }

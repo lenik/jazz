@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabEquipmentCategory;
 
 @ObjectType(FabEquipmentCategory.class)
 public class FabEquipmentCategoryIndex
-        extends CoIndex<FabEquipmentCategory, FabEquipmentCategoryMask> {
+        extends CoIndex<FabEquipmentCategory, FabEquipmentCategoryCriteriaBuilder> {
 
 }

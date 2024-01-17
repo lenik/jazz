@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabTrackParty;
  * @mapper.xml FabTrackPartyMapper.xml
  */
 public interface FabTrackPartyMapper
-        extends IEntityMapper<FabTrackParty, FabTrackPartyMask> {
+        extends IEntityMapper<FabTrackParty, FabTrackPartyCriteriaBuilder> {
 
 }

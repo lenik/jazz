@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabConsumableCategory;
 
 @ObjectType(FabConsumableCategory.class)
 public class FabConsumableCategoryIndex
-        extends CoIndex<FabConsumableCategory, FabConsumableCategoryMask> {
+        extends CoIndex<FabConsumableCategory, FabConsumableCategoryCriteriaBuilder> {
 
 }

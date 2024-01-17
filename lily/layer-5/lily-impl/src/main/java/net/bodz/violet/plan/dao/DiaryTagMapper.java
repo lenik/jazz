@@ -5,6 +5,6 @@ import net.bodz.violet.plan.DiaryTag;
 
 public interface DiaryTagMapper
         extends
-            IEntityMapper<DiaryTag, DiaryTagMask> {
+            IEntityMapper<DiaryTag, DiaryTagCriteriaBuilder> {
 
 }

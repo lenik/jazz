@@ -8,7 +8,7 @@ import net.bodz.violet.edu.TestQuestion;
 import net.bodz.violet.edu.TestQuestionSamples;
 
 public class TestQuestionMapperTest
-        extends AbstractTableTest<TestQuestion, TestQuestionMask, TestQuestionMapper> {
+        extends AbstractTableTest<TestQuestion, TestQuestionCriteriaBuilder, TestQuestionMapper> {
 
     @Override
     public TestQuestion buildSample()

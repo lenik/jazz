@@ -9,7 +9,7 @@ import net.bodz.violet.art.ArtifactTag;
  */
 @ObjectType(ArtifactTag.class)
 public class ArtifactTagIndex
-        extends CoIndex<ArtifactTag, ArtifactTagMask> {
+        extends CoIndex<ArtifactTag, ArtifactTagCriteriaBuilder> {
 
     public ArtifactTagIndex() {
     }

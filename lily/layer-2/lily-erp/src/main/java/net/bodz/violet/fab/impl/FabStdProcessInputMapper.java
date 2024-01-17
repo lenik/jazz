@@ -7,6 +7,6 @@ import net.bodz.violet.fab.FabStdProcessInput;
  * @mapper.xml FabStdProcessInputMapper.xml
  */
 public interface FabStdProcessInputMapper
-        extends IEntityMapper<FabStdProcessInput, FabStdProcessInputMask> {
+        extends IEntityMapper<FabStdProcessInput, FabStdProcessInputCriteriaBuilder> {
 
 }

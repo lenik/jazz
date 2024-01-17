@@ -9,7 +9,7 @@ import net.bodz.violet.edu.CourseTag;
 */
 @ObjectType(CourseTag.class)
 public class CourseTagIndex
-        extends CoIndex<CourseTag, CourseTagMask> {
+        extends CoIndex<CourseTag, CourseTagCriteriaBuilder> {
 
     public CourseTagIndex() {
     }

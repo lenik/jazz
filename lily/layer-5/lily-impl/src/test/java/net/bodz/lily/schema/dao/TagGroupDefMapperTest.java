@@ -5,7 +5,7 @@ import net.bodz.lily.schema.TagGroupDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class TagGroupDefMapperTest
-        extends AbstractTableTest<TagGroupDef, TagGroupDefMask, TagGroupDefMapper> {
+        extends AbstractTableTest<TagGroupDef, TagGroupDefCriteriaBuilder, TagGroupDefMapper> {
 
     @Override
     public TagGroupDef buildSample()

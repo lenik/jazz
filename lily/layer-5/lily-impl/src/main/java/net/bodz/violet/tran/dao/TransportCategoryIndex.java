@@ -9,7 +9,7 @@ import net.bodz.violet.tran.TransportCategory;
 */
 @ObjectType(TransportCategory.class)
 public class TransportCategoryIndex
-        extends CoIndex<TransportCategory, TransportCategoryMask> {
+        extends CoIndex<TransportCategory, TransportCategoryCriteriaBuilder> {
 
     public TransportCategoryIndex() {
     }

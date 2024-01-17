@@ -10,7 +10,7 @@ import net.bodz.lily.security.User;
 import net.bodz.lily.security.UserSecret;
 import net.bodz.lily.security.dao.UserOtherIdMapper;
 import net.bodz.lily.security.dao.UserSecretMapper;
-import net.bodz.lily.security.dao.UserSecretMask;
+import net.bodz.lily.security.dao.UserSecretCriteriaBuilder;
 import net.bodz.lily.security.login.DataBackedLoginResolver;
 import net.bodz.lily.security.login.ISignatureChecker;
 
@@ -55,7 +55,7 @@ public class PhonePasswordLoginResolver
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretMask().phone(phone), SelectOptions.ALL);
+                new UserSecretCriteriaBuilder().phone(phone), SelectOptions.ALL);
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", phone);
 

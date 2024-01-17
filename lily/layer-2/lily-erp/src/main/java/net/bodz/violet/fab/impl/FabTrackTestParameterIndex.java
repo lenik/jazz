@@ -6,6 +6,6 @@ import net.bodz.violet.fab.FabTrackTestParameter;
 
 @ObjectType(FabTrackTestParameter.class)
 public class FabTrackTestParameterIndex
-        extends CoIndex<FabTrackTestParameter, FabTrackTestParameterMask> {
+        extends CoIndex<FabTrackTestParameter, FabTrackTestParameterCriteriaBuilder> {
 
 }

@@ -5,7 +5,7 @@ import net.bodz.lily.schema.ParameterDefSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class ParameterDefMapperTest
-        extends AbstractTableTest<ParameterDef, ParameterDefMask, ParameterDefMapper> {
+        extends AbstractTableTest<ParameterDef, ParameterDefCriteriaBuilder, ParameterDefMapper> {
 
     @Override
     public ParameterDef buildSample()

@@ -13,7 +13,7 @@ import net.bodz.violet.art.ArtifactCategory;
  */
 @ObjectType(ArtifactCategory.class)
 public class ArtifactCategoryIndex
-        extends CoCategoryIndex<ArtifactCategory, ArtifactCategoryMask> {
+        extends CoCategoryIndex<ArtifactCategory, ArtifactCategoryCriteriaBuilder> {
 
     public ArtifactCategoryIndex() {
     }

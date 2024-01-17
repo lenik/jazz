@@ -5,6 +5,6 @@ import net.bodz.violet.plan.PlanParty;
 
 public interface PlanPartyMapper
         extends
-            IEntityMapper<PlanParty, PlanPartyMask> {
+            IEntityMapper<PlanParty, PlanPartyCriteriaBuilder> {
 
 }

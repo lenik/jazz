@@ -9,7 +9,7 @@ import net.bodz.violet.plan.PlanDoParameter;
 */
 @ObjectType(PlanDoParameter.class)
 public class PlanDoParameterIndex
-        extends CoIndex<PlanDoParameter, PlanDoParameterMask> {
+        extends CoIndex<PlanDoParameter, PlanDoParameterCriteriaBuilder> {
 
     public PlanDoParameterIndex() {
     }

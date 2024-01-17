@@ -9,7 +9,7 @@ import net.bodz.lily.reward.UserBadge;
 */
 @ObjectType(UserBadge.class)
 public class UserBadgeIndex
-        extends CoIndex<UserBadge, UserBadgeMask> {
+        extends CoIndex<UserBadge, UserBadgeCriteriaBuilder> {
 
     public UserBadgeIndex() {
     }

@@ -9,7 +9,7 @@ import net.bodz.violet.plan.DiaryReview;
 */
 @ObjectType(DiaryReview.class)
 public class DiaryReviewIndex
-        extends CoIndex<DiaryReview, DiaryReviewMask> {
+        extends CoIndex<DiaryReview, DiaryReviewCriteriaBuilder> {
 
     public DiaryReviewIndex() {
     }

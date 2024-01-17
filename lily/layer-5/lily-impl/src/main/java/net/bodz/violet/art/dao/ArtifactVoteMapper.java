@@ -5,6 +5,6 @@ import net.bodz.violet.art.ArtifactVote;
 
 public interface ArtifactVoteMapper
         extends
-            IEntityMapper<ArtifactVote, ArtifactVoteMask> {
+            IEntityMapper<ArtifactVote, ArtifactVoteCriteriaBuilder> {
 
 }

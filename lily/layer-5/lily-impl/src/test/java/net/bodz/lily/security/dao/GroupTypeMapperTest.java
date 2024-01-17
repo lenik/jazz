@@ -5,7 +5,7 @@ import net.bodz.lily.security.GroupTypeSamples;
 import net.bodz.lily.test.AbstractTableTest;
 
 public class GroupTypeMapperTest
-        extends AbstractTableTest<GroupType, GroupTypeMask, GroupTypeMapper> {
+        extends AbstractTableTest<GroupType, GroupTypeCriteriaBuilder, GroupTypeMapper> {
 
     @Override
     public GroupType buildSample()
