@@ -19,7 +19,7 @@ import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
-import net.bodz.lily.model.base.StructRowMask;
+import net.bodz.lily.model.base.StructRowCriteriaBuilder;
 
 @ForEntityType(IJsonForm.class)
 @ForEntityCriteriaType(IVarMapForm.class)
@@ -53,7 +53,7 @@ class ListProcess
         extends AbstractEntityCommandProcess<ListCommand> {
 
     TableOfPathProps tableData;
-    final StructRowMask criteria;
+    final StructRowCriteriaBuilder criteria;
     final SelectOptions selectOptions;
 
     int format = JSON;
@@ -70,7 +70,7 @@ class ListProcess
 
         Class<?> criteriaClass = typeInfo.getCrtieriaClass();
         try {
-            criteria = (StructRowMask) criteriaClass.newInstance();
+            criteria = (StructRowCriteriaBuilder) criteriaClass.newInstance();
         } catch (ReflectiveOperationException e) {
             throw new IllegalArgumentException(String.format(//
                     "Can't instantiate criteria: %s", e.getMessage()), e);

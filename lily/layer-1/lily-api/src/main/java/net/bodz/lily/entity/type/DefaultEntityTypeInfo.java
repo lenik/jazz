@@ -18,7 +18,7 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Identifier;
-import net.bodz.lily.model.base.CoObjectMask;
+import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
 public class DefaultEntityTypeInfo
         implements
@@ -35,7 +35,7 @@ public class DefaultEntityTypeInfo
         this.entityClass = entityClass;
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
-        criteriaClass = CoObjectMask.findMaskClass(entityClass);
+        criteriaClass = CoObjectCriteriaBuilder.findMaskClass(entityClass);
 
         if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
             BeanInfo beanInfo;

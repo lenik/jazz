@@ -15,7 +15,7 @@ import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
 @TypeParameters({ TypeParamType.ID_TYPE })
-@CriteriaClass(CoMomentIntervalMask.class)
+@CriteriaClass(CoMomentIntervalCriteriaBuilder.class)
 @IncludeMapperXml
 public abstract class CoMomentInterval<Id>
         extends IdEntity<Id>

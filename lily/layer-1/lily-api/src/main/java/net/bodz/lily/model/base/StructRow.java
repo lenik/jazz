@@ -33,7 +33,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.meta.CriteriaClass;
 
-@CriteriaClass(StructRowMask.class)
+@CriteriaClass(StructRowCriteriaBuilder.class)
 public abstract class StructRow
         implements
             IContent,

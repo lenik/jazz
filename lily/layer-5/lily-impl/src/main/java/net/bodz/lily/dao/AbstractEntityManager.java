@@ -7,11 +7,12 @@ import java.util.function.Function;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.lily.criterion.ICriterion;
 
-public class AbstractEntityManager<T, mask_t, //
-        mapper_t extends IEntityMapper<T, mask_t>>
+public class AbstractEntityManager<T, //
+        mapper_t extends IEntityMapper<T>>
         implements
-            IEntityManager<T, mask_t> {
+            IEntityManager<T> {
 
     protected DataContext dataContext;
     protected mapper_t mapper;
@@ -32,8 +33,8 @@ public class AbstractEntityManager<T, mask_t, //
     }
 
     @Override
-    public List<T> filter(mask_t mask, SelectOptions opt) {
-        return mapper.filter(mask, opt);
+    public List<T> filter(ICriterion criteria, SelectOptions opt) {
+        return mapper.filter(criteria, opt);
     }
 
     @Override
@@ -47,33 +48,33 @@ public class AbstractEntityManager<T, mask_t, //
     }
 
     @Override
-    public long deleteFor(mask_t mask) {
-        return mapper.deleteFor(mask);
+    public long deleteFor(ICriterion criteria) {
+        return mapper.deleteFor(criteria);
     }
 
     @Override
-    public long count(mask_t mask) {
-        return mapper.count(mask);
+    public long count(ICriterion criteria) {
+        return mapper.count(criteria);
+    }
+
+//    @Override
+//    public mask_t mask() {
+//        return mapper.mask();
+//    }
+
+    @Override
+    public List<T> filter(ICriterion criteria) {
+        return mapper.filter(criteria);
     }
 
     @Override
-    public mask_t mask() {
-        return mapper.mask();
+    public <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criteria) {
+        return mapper.filterMap(keyf, criteria);
     }
 
     @Override
-    public List<T> filter(mask_t mask) {
-        return mapper.filter(mask);
-    }
-
-    @Override
-    public <K> Map<K, T> filterMap(Function<T, K> keyf, mask_t mask) {
-        return mapper.filterMap(keyf, mask);
-    }
-
-    @Override
-    public <K> Map<K, T> filterMap(Function<T, K> keyf, mask_t mask, SelectOptions opt) {
-        return mapper.filterMap(keyf, mask, opt);
+    public <K> Map<K, T> filterMap(Function<T, K> keyf, ICriterion criteria, SelectOptions opt) {
+        return mapper.filterMap(keyf, criteria, opt);
     }
 
     @Override

@@ -42,7 +42,7 @@ import net.bodz.lily.template.RichProperties;
  * @label Message
  * @label.zh 消息
  */
-@CriteriaClass(CoMessageMask.class)
+@CriteriaClass(CoMessageCriteriaBuilder.class)
 @IncludeMapperXml
 @TypeParameters({ TypeParamType.ID_TYPE })
 @UploadHint
