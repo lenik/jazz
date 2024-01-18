@@ -69,7 +69,7 @@ public class ListMap_JX<K, V extends IJsonForm>
             List<V> list = get(k1);
             out.array();
             for (V item : list) {
-                item.jsonOut(out, opts, true);
+                item.jsonOutValue(out, opts);
             }
             out.endArray();
         }

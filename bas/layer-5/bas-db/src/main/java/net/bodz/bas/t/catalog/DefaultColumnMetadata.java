@@ -472,7 +472,7 @@ public class DefaultColumnMetadata
 
         if (jsonType) {
             IJsonForm obj = (IJsonForm) value;
-            obj.jsonOut(out, Convention.JSON_STYLE, true);
+            obj.jsonOutValue(out, Convention.JSON_STYLE);
             return;
         }
 

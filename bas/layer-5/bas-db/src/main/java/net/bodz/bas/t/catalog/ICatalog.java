@@ -54,7 +54,7 @@ public interface ICatalog
             throws IOException, FormatException {
         ICatalogMetadata metadata = getMetadata();
         out.key(K_METADATA);
-        metadata.jsonOut(out, opts, true);
+        metadata.jsonOutValue(out, opts);
 
         out.key(K_SCHEMAS);
         out.object();
@@ -65,9 +65,7 @@ public interface ICatalog
                 out.value(null);
                 continue;
             }
-            out.object();
-            schema.jsonOut(out, opts);
-            out.endObject();
+            schema.jsonOutValue(out, opts);
         }
         out.endObject();
     }

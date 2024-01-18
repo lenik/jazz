@@ -96,7 +96,7 @@ public class JsonFn {
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            obj.jsonOut(out, opts, true);
+            obj.jsonOutValue(out, opts);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -115,7 +115,7 @@ public class JsonFn {
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            obj.jsonOut(out, opts, true);
+            obj.jsonOutValue(out, opts);
         } catch (Exception e) {
             return fallback;
         }
@@ -217,7 +217,7 @@ public class JsonFn {
         }
         if (o instanceof IJsonForm) {
             IJsonForm jsVal = (IJsonForm) o;
-            jsVal.jsonOut(out, opts, true);
+            jsVal.jsonOutValue(out, opts);
             return;
         }
         if (o instanceof Collection<?>) {
@@ -285,7 +285,7 @@ public class JsonFn {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             Writer writer = new OutputStreamWriter(fos, encoding);
             IJsonOut out = new JsonWriter(writer);
-            obj.jsonOut(out, opts, true);
+            obj.jsonOutValue(out, opts);
             writer.flush();
         }
     }

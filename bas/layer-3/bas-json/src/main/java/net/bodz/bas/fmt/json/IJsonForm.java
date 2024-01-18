@@ -64,19 +64,17 @@ public interface IJsonForm {
     void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException;
 
-    /**
-     * @param out
-     *            expects a value
-     */
-    default void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
+    default boolean wantObjectContext() {
+        return true;
+    }
+
+    default void jsonOutValue(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        if (scalar) {
+        if (wantObjectContext())
             out.object();
-            jsonOut(out, opts);
+        jsonOut(out);
+        if (wantObjectContext())
             out.endObject();
-        } else {
-            jsonOut(out, opts);
-        }
     }
 
     default boolean isJsonInByLoader() {

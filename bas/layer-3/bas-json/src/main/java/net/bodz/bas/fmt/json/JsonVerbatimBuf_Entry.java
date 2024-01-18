@@ -2,7 +2,6 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
 
@@ -34,22 +33,15 @@ public class JsonVerbatimBuf_Entry
     }
 
     @Override
+    public boolean wantObjectContext() {
+        return true;
+    }
+
+    @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException {
         String code = buf.toString();
         out.verbatim(code);
-    }
-
-    @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
-            throws IOException, FormatException {
-        if (scalar) {
-            out.object();
-            jsonOut(out, opts);
-            out.endObject();
-        } else {
-            jsonOut(out, opts);
-        }
     }
 
 }

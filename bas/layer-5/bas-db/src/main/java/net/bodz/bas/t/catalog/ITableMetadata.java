@@ -121,7 +121,7 @@ public interface ITableMetadata
             out.key(K_FOREIGN_KEYS);
             out.array();
             for (CrossReference ref : foreignKeys.values())
-                ref.jsonOut(out, opts, true);
+                ref.jsonOutValue(out, opts);
             out.endArray();
         }
 

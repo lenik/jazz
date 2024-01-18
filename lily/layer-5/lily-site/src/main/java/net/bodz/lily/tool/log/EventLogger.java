@@ -122,7 +122,7 @@ public class EventLogger
             while (iter.hasNext()) {
                 EventLog log = iter.next();
                 try {
-                    log.jsonOut(jsbuf, JsonFormOptions.DEFAULT, true);
+                    log.jsonOutValue(jsbuf, JsonFormOptions.DEFAULT);
                 } catch (Exception e) {
                     throw new UnexpectedException(e.getMessage(), e);
                 }

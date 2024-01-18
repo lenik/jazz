@@ -367,7 +367,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
                 if (value instanceof IJsonForm) {
                     IJsonForm jsonForm = (IJsonForm) value;
                     out.key(key);
-                    jsonForm.jsonOut(out, opts, true);
+                    jsonForm.jsonOutValue(out, opts);
                 } else {
                     out.entry(key, value);
                     // out.key(key);
