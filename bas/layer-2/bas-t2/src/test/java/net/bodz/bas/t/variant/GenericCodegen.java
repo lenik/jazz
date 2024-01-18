@@ -8,6 +8,12 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -16,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Generated;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.c.m2.MavenPomDir;
 import net.bodz.bas.c.primitive.Primitives;
@@ -32,12 +36,14 @@ public abstract class GenericCodegen {
 
     protected static final String K_PRIMITIVE = "primitive";
     protected static final String K_DEFAULT = "default";
+    protected static final String K_DATE = "date";
     protected static final String K_OTHER = "other";
 
     protected Map<String, List<TypeInfo>> typeGroups = new LinkedHashMap<>();
 
     protected List<TypeInfo> primitiveTypes = new ArrayList<>();
     protected List<TypeInfo> defaultTypes = new ArrayList<>();
+    protected List<TypeInfo> dateTypes = new ArrayList<>();
     protected List<TypeInfo> otherTypes = new ArrayList<>();
 
     List<JavaMethod> methods;
@@ -63,16 +69,25 @@ public abstract class GenericCodegen {
                 URL.class, //
                 null);
 
+        dateTypes = conv(//
+                Date.class, //
+                Instant.class, //
+                ZonedDateTime.class, //
+                OffsetDateTime.class, //
+                LocalDateTime.class, //
+                LocalDate.class, //
+                LocalTime.class, //
+                null);
+
         otherTypes = conv( //
                 Class.class, //
-                Date.class, //
-                DateTime.class, //
                 Path.class, //
                 String.class, //
                 null);
 
         typeGroups.put(K_PRIMITIVE, primitiveTypes);
         typeGroups.put(K_DEFAULT, defaultTypes);
+        typeGroups.put(K_DATE, dateTypes);
         typeGroups.put(K_OTHER, otherTypes);
     }
 
@@ -179,7 +194,7 @@ public abstract class GenericCodegen {
                     break;
                 }
             }
-            if (!generated)
+            if (! generated)
                 continue;
 
             list.add(method);

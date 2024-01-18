@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.joda.time.DateTimeZone;
-
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.predef.Predef;
 import net.bodz.bas.t.predef.PredefMetadata;
@@ -108,14 +106,39 @@ public class QVariantMap<K>
         return getRange(new DoubleRange(), key, defaultValue);
     }
 
-    public DateTimeRange getDateRange(K key, DateTimeRange defaultValue, DateTimeZone timeZone)
+    public InstantRange getInstantRange(K key, InstantRange defaultValue)
             throws ParseException {
-        return getRange(new DateTimeRange(timeZone), key, defaultValue);
+        return getRange(new InstantRange(), key, defaultValue);
+    }
+
+    public ZonedDateTimeRange getZonedDateTimeRange(K key, ZonedDateTimeRange defaultValue)
+            throws ParseException {
+        return getRange(new ZonedDateTimeRange(), key, defaultValue);
+    }
+
+    public OffsetDateTimeRange getOffsetDateTimeRange(K key, OffsetDateTimeRange defaultValue)
+            throws ParseException {
+        return getRange(new OffsetDateTimeRange(), key, defaultValue);
+    }
+
+    public LocalDateTimeRange getLocalDateTimeRange(K key, LocalDateTimeRange defaultValue)
+            throws ParseException {
+        return getRange(new LocalDateTimeRange(), key, defaultValue);
+    }
+
+    public LocalDateRange getLocalDateRange(K key, LocalDateRange defaultValue)
+            throws ParseException {
+        return getRange(new LocalDateRange(), key, defaultValue);
+    }
+
+    public LocalTimeRange getLocalTimeRange(K key, LocalTimeRange defaultValue)
+            throws ParseException {
+        return getRange(new LocalTimeRange(), key, defaultValue);
     }
 
     public <T extends IId<Integer>> T getIntIdRef(K key, T skel) {
         String s = getString(key);
-        if (s != null && !s.isEmpty()) {
+        if (s != null && ! s.isEmpty()) {
             Integer id = getInt(key);
             skel.id(id);
         }
@@ -124,7 +147,7 @@ public class QVariantMap<K>
 
     public <T extends IId<Long>> T getLongIdRef(K key, T skel) {
         String s = getString(key);
-        if (s != null && !s.isEmpty()) {
+        if (s != null && ! s.isEmpty()) {
             Long id = getLong(key);
             skel.id(id);
         }

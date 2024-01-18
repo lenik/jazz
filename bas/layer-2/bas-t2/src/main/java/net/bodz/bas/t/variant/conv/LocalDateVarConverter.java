@@ -1,14 +1,11 @@
 package net.bodz.bas.t.variant.conv;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
-
-import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.t.variant.IVariantConvertContext;
+import net.bodz.bas.t.variant.VariantConvertContexts;
 
 public class LocalDateVarConverter
         extends AbstractVarConverter<LocalDate> {
@@ -25,8 +22,8 @@ public class LocalDateVarConverter
             throws TypeConvertException {
         if (in == null)
             return null;
-        long instant = in.longValue();
-        return new LocalDate(instant);
+        long epochDay = in.longValue();
+        return LocalDate.ofEpochDay(epochDay);
     }
 
     @Override
@@ -34,21 +31,15 @@ public class LocalDateVarConverter
             throws TypeConvertException {
         if (in == null)
             return null;
-        if (formatter == null)
-            try {
-                Calendar calendar = CalendarVarConverter.INSTANCE.fromString(in);
-                TimeZone tz = calendar.getTimeZone();
-                DateTimeZone jodaTz = DateTimeZone.forTimeZone(tz);
-                return new LocalDate(calendar.getTimeInMillis(), jodaTz);
-            } catch (IllegalArgumentException e) {
-                throw new TypeConvertException("Failed to parse date " + in, e);
+        try {
+            if (formatter == null) {
+                IVariantConvertContext context = VariantConvertContexts.getContext();
+                return context.parseLocalDate(in);
+            } else {
+                return LocalDate.parse(in, formatter);
             }
-        else {
-            try {
-                return formatter.parseLocalDate(in);
-            } catch (IllegalArgumentException | UnsupportedOperationException e) {
-                throw new TypeConvertException("Failed to parse date " + in, e);
-            }
+        } catch (Exception e) {
+            throw new TypeConvertException("Failed to parse date " + in, e);
         }
     }
 
@@ -57,23 +48,25 @@ public class LocalDateVarConverter
         if (value == null)
             return null;
         if (formatter == null) {
-            String s = DateTimes.YYYY_MM_DD.print(value);
-            return s;
+            IVariantConvertContext context = VariantConvertContexts.getContext();
+            return context.formatLocalDate(value);
         } else {
-            return formatter.print(value);
+            return formatter.format(value);
         }
     }
 
     @Override
-    public Number toNumber(LocalDate value) {
+    public Integer toNumber(LocalDate value) {
         if (value == null)
             return null;
-        return value.toDateTimeAtStartOfDay().getMillis();
+        return (int) value.toEpochDay();
     }
 
     @Override
     public boolean toBoolean(LocalDate value) {
-        return true;
+        if (value == null)
+            return false;
+        return value.toEpochDay() != 0;
     }
 
     public static final LocalDateVarConverter INSTANCE = new LocalDateVarConverter(null);

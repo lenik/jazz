@@ -2,7 +2,7 @@ package net.bodz.lily.security.dao;
 
 import java.sql.Timestamp;
 
-import net.bodz.bas.t.range.DateTimeRange;
+import net.bodz.bas.t.range.ZonedDateTimeRange;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
 
@@ -16,10 +16,10 @@ public class _PolicyCriteriaBuilder_stuff
     IntegerRange priorityRange = new IntegerRange();
 
     Timestamp creationDate;
-    DateTimeRange creationDateRange = new DateTimeRange();
+    ZonedDateTimeRange creationDateRange = new ZonedDateTimeRange();
 
     Timestamp lastModifiedDate;
-    DateTimeRange lastModifiedDateRange = new DateTimeRange();
+    ZonedDateTimeRange lastModifiedDateRange = new ZonedDateTimeRange();
 
     Integer version;
     IntegerRange versionRange = new IntegerRange();
@@ -82,11 +82,11 @@ public class _PolicyCriteriaBuilder_stuff
         this.creationDate = value;
     }
 
-    public DateTimeRange getCreationDateRange() {
+    public ZonedDateTimeRange getCreationDateRange() {
         return creationDateRange;
     }
 
-    public void setCreationDateRange(DateTimeRange range) {
+    public void setCreationDateRange(ZonedDateTimeRange range) {
         this.creationDateRange = range;
     }
 
@@ -98,11 +98,11 @@ public class _PolicyCriteriaBuilder_stuff
         this.lastModifiedDate = value;
     }
 
-    public DateTimeRange getLastModifiedDateRange() {
+    public ZonedDateTimeRange getLastModifiedDateRange() {
         return lastModifiedDateRange;
     }
 
-    public void setLastModifiedDateRange(DateTimeRange range) {
+    public void setLastModifiedDateRange(ZonedDateTimeRange range) {
         this.lastModifiedDateRange = range;
     }
 

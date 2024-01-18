@@ -2,9 +2,13 @@
 
 column-property {
     art:                artifactId
-    model:              modelName
     validsince:         validSince
     validuntil:         validUntil
+}
+
+column-type {
+    validsince:         java.time.ZonedDateTime
+    validuntil:         java.time.ZonedDateTime
 }
 
 class-map {
@@ -47,5 +51,14 @@ table art {
     }
     column rfid {
         javaName: rfidCode
+    }
+    column model {
+        javaName: modelName
+    }
+}
+
+table artmodel {
+    column model {
+        javaName: modelName
     }
 }

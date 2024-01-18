@@ -2,6 +2,12 @@ package net.bodz.bas.fmt.xml.xq;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -246,6 +252,66 @@ public class NullElement
 
     @Override
     public Date getDate(Date defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public Instant getInstant() {
+        return null;
+    }
+
+    @Override
+    public Instant getInstant(Instant defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime() {
+        return null;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(ZonedDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime() {
+        return null;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(OffsetDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime() {
+        return null;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(LocalDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDate getLocalDate() {
+        return null;
+    }
+
+    @Override
+    public LocalDate getLocalDate(LocalDate defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalTime getLocalTime() {
+        return null;
+    }
+
+    @Override
+    public LocalTime getLocalTime(LocalTime defaultValue) {
         return defaultValue;
     }
 

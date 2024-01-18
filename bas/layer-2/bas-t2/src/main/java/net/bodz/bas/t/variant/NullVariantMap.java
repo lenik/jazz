@@ -4,11 +4,14 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
 
 public class NullVariantMap<K>
         extends NullLookupMap<K, Object>
@@ -226,12 +229,82 @@ public class NullVariantMap<K>
     }
 
     @Override
-    public DateTime getDateTime(DateTimeFormatter format, K key) {
+    public Instant getInstant(DateTimeFormatter format, K key) {
         return null;
     }
 
     @Override
-    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
+    public Instant getInstant(DateTimeFormatter format, K key, Instant defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public Instant getInstant(K key) {
+        return null;
+    }
+
+    @Override
+    public Instant getInstant(K key, Instant defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key, ZonedDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key) {
+        return null;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key, ZonedDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key, OffsetDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key) {
+        return null;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key, OffsetDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter format, K key, LocalDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key) {
+        return null;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key, LocalDateTime defaultValue) {
         return defaultValue;
     }
 
@@ -252,6 +325,26 @@ public class NullVariantMap<K>
 
     @Override
     public LocalDate getLocalDate(K key, LocalDate defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter format, K key) {
+        return null;
+    }
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter format, K key, LocalTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key) {
+        return null;
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key, LocalTime defaultValue) {
         return defaultValue;
     }
 

@@ -2,6 +2,12 @@ package net.bodz.bas.t.variant;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 class NullVariant
@@ -20,7 +26,7 @@ class NullVariant
 
     @Override
     public Object get(Object defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -30,7 +36,7 @@ class NullVariant
 
     @Override
     public Object getScalar(Object defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -40,7 +46,7 @@ class NullVariant
 
     @Override
     public Object[] getArray(Object[] defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -49,8 +55,8 @@ class NullVariant
     }
 
     @Override
-    public String getString(String defaultString) {
-        return null;
+    public String getString(String defaultValue) {
+        return defaultValue;
     }
 
     @Override
@@ -60,7 +66,7 @@ class NullVariant
 
     @Override
     public String[] getStringArray(String[] defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -70,12 +76,12 @@ class NullVariant
 
     @Override
     public byte getByte(byte defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Byte getByte(Byte defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -85,12 +91,12 @@ class NullVariant
 
     @Override
     public short getShort(short defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Short getShort(Short defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -100,12 +106,12 @@ class NullVariant
 
     @Override
     public int getInt(int defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Integer getInt(Integer defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -115,12 +121,12 @@ class NullVariant
 
     @Override
     public long getLong(long defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Long getLong(Long defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -130,12 +136,12 @@ class NullVariant
 
     @Override
     public float getFloat(float defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Float getFloat(Float defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -145,12 +151,12 @@ class NullVariant
 
     @Override
     public double getDouble(double defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Double getDouble(Double defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -160,12 +166,12 @@ class NullVariant
 
     @Override
     public boolean getBoolean(boolean defaultValue) {
-        return false;
+        return defaultValue;
     }
 
     @Override
     public Boolean getBoolean(Boolean defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -175,12 +181,12 @@ class NullVariant
 
     @Override
     public char getChar(char defaultValue) {
-        return 0;
+        return defaultValue;
     }
 
     @Override
     public Character getChar(Character defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -190,7 +196,7 @@ class NullVariant
 
     @Override
     public BigInteger getBigInteger(BigInteger defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -200,7 +206,7 @@ class NullVariant
 
     @Override
     public BigDecimal getBigDecimal(BigDecimal defaultValue) {
-        return null;
+        return defaultValue;
     }
 
     @Override
@@ -210,7 +216,67 @@ class NullVariant
 
     @Override
     public Date getDate(Date defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public Instant getInstant() {
         return null;
+    }
+
+    @Override
+    public Instant getInstant(Instant defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime() {
+        return null;
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(ZonedDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime() {
+        return null;
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(OffsetDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime() {
+        return null;
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(LocalDateTime defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalDate getLocalDate() {
+        return null;
+    }
+
+    @Override
+    public LocalDate getLocalDate(LocalDate defaultValue) {
+        return defaultValue;
+    }
+
+    @Override
+    public LocalTime getLocalTime() {
+        return null;
+    }
+
+    @Override
+    public LocalTime getLocalTime(LocalTime defaultValue) {
+        return defaultValue;
     }
 
     @Override
@@ -220,7 +286,7 @@ class NullVariant
 
     @Override
     public <T extends Enum<T>> T getEnum(Class<T> enumType, T defaultValue) {
-        return null;
+        return defaultValue;
     }
 
 }

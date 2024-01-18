@@ -2,6 +2,12 @@ package net.bodz.bas.t.variant;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import net.bodz.bas.err.TypeConvertException;
@@ -221,6 +227,114 @@ public abstract class AutoConvVariant
             return defaultValue;
         try {
             return DateVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public Instant getInstant() {
+        Object value = getScalar();
+        return InstantVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public Instant getInstant(Instant defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return InstantVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime() {
+        Object value = getScalar();
+        return ZonedDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(ZonedDateTime defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return ZonedDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime() {
+        Object value = getScalar();
+        return OffsetDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(OffsetDateTime defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return OffsetDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime() {
+        Object value = getScalar();
+        return LocalDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(LocalDateTime defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return LocalDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalDate getLocalDate() {
+        Object value = getScalar();
+        return LocalDateVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalDate getLocalDate(LocalDate defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return LocalDateVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalTime getLocalTime() {
+        Object value = getScalar();
+        return LocalTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalTime getLocalTime(LocalTime defaultValue) {
+        Object value = getScalar();
+        if (value == null)
+            return defaultValue;
+        try {
+            return LocalTimeVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

@@ -9,11 +9,6 @@
     <artifactId>bas-doc</artifactId>
     <dependencies>
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-repr</artifactId>
             <version>${project.version}</version>

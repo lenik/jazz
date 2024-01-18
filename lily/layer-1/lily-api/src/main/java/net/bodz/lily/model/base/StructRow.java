@@ -3,9 +3,8 @@ package net.bodz.lily.model.base;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.time.ZonedDateTime;
 import java.util.Map;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
@@ -45,8 +44,8 @@ public abstract class StructRow
     private static final long serialVersionUID = 1L;
 
     // V = creation, lastmod, version
-    private DateTime creationDate = new DateTime();
-    private DateTime lastModifiedDate = creationDate;
+    private ZonedDateTime creationDate = ZonedDateTime.now();
+    private ZonedDateTime lastModifiedDate = creationDate;
     private int version;
 
     public StructRow() {
@@ -64,11 +63,11 @@ public abstract class StructRow
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Priority(-100 + 0)
-    public DateTime getCreationDate() {
+    public ZonedDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(DateTime creationDate) {
+    public void setCreationDate(ZonedDateTime creationDate) {
         if (creationDate == null)
             throw new NullPointerException("creationDate");
         this.creationDate = creationDate;
@@ -79,11 +78,11 @@ public abstract class StructRow
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
     public long getCreationTime() {
-        return creationDate.getMillis();
+        return creationDate.toInstant().toEpochMilli();
     }
 
     public void touch() {
-        lastModifiedDate = new DateTime();
+        lastModifiedDate = ZonedDateTime.now();
         if (creationDate == null)
             creationDate = lastModifiedDate;
     }
@@ -97,11 +96,11 @@ public abstract class StructRow
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     @Priority(-100 + 1)
-    public DateTime getLastModifiedDate() {
+    public ZonedDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(DateTime lastModified) {
+    public void setLastModifiedDate(ZonedDateTime lastModified) {
         if (lastModified == null)
             throw new NullPointerException("lastModified");
         this.lastModifiedDate = lastModified;
@@ -112,7 +111,7 @@ public abstract class StructRow
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
     public long getLastModified() {
-        return lastModifiedDate.getMillis();
+        return lastModifiedDate.toInstant().toEpochMilli();
     }
 
     /** ⇱ Implementation Of {@link ICacheControl}. */
@@ -226,7 +225,7 @@ public abstract class StructRow
                         overrided_jsonIn = false;
                     }
             }
-        return !overrided_jsonIn;
+        return ! overrided_jsonIn;
     }
 
     protected boolean isJsonInOverrided(Class<?> clazz) {
@@ -247,8 +246,8 @@ public abstract class StructRow
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }
         } else {
-            creationDate = o.getDateTime("creationDate", creationDate);
-            lastModifiedDate = o.getDateTime("lastModifiedDate", lastModifiedDate);
+            creationDate = o.getZonedDateTime("creationDate", creationDate);
+            lastModifiedDate = o.getZonedDateTime("lastModifiedDate", lastModifiedDate);
             version = o.getInt("version", version);
         }
     }
@@ -267,7 +266,7 @@ public abstract class StructRow
                         overrided_jsonOut = false;
                     }
             }
-        return !overrided_jsonOut;
+        return ! overrided_jsonOut;
     }
 
     protected boolean isJsonOutOverrided(Class<?> clazz) {

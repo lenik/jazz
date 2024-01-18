@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.joda.time.Period;
-
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -24,11 +22,11 @@ public class CalendarPeriod
     int minutes;
     int seconds;
 
-    public Period toPeriod() {
-        if (workDays)
-            throw new UnsupportedOperationException("workDays isn't supported.");
-        return new Period(years, months, weeks, days, hours, minutes, seconds, 0);
-    }
+//    public Period toPeriod() {
+//        if (workDays)
+//            throw new UnsupportedOperationException("workDays isn't supported.");
+//        return new Period(years, months, weeks, days, hours, minutes, seconds, 0);
+//    }
 
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)

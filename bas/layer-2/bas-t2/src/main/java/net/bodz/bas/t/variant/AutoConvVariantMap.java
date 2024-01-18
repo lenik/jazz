@@ -4,11 +4,14 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.err.TypeConvertException;
@@ -284,32 +287,214 @@ public abstract class AutoConvVariantMap<K>
             return defaultValue;
         }
     }
+//
+//    @Override
+//    public DateTime getDateTime(DateTimeFormatter formatter, K key) {
+//        Object value = getScalar(key);
+//        if (value == null)
+//            return null;
+//        InstantVarConverter conv = new InstantVarConverter(formatter);
+//        return conv.from(value);
+//    }
+//
+//    @Override
+//    public DateTime getDateTime(DateTimeFormatter formatter, K key, DateTime defaultValue) {
+//        Object value = getScalar(key);
+//        if (value == null)
+////            if (containsKey(key))
+////                return null;
+////            else
+//            return defaultValue;
+//
+//        InstantVarConverter conv = new InstantVarConverter(formatter);
+//        try {
+//            return conv.from(value);
+//        } catch (TypeConvertException e) {
+//            return defaultValue;
+//        }
+//    }
+
+    // Instant
 
     @Override
-    public DateTime getDateTime(DateTimeFormatter formatter, K key) {
+    public Instant getInstant(DateTimeFormatter formatter, K key) {
         Object value = getScalar(key);
         if (value == null)
             return null;
-        DateTimeVarConverter conv = new DateTimeVarConverter(formatter);
+        InstantVarConverter conv = new InstantVarConverter(formatter);
         return conv.from(value);
     }
 
     @Override
-    public DateTime getDateTime(DateTimeFormatter formatter, K key, DateTime defaultValue) {
+    public Instant getInstant(DateTimeFormatter formatter, K key, Instant defaultValue) {
         Object value = getScalar(key);
         if (value == null)
-//            if (containsKey(key))
-//                return null;
-//            else
             return defaultValue;
-
-        DateTimeVarConverter conv = new DateTimeVarConverter(formatter);
+        InstantVarConverter conv = new InstantVarConverter(formatter);
         try {
             return conv.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }
     }
+
+    @Override
+    public Instant getInstant(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return InstantVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public Instant getInstant(K key, Instant defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        try {
+            return InstantVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    // ZonedDateTime
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        ZonedDateTimeVarConverter conv = new ZonedDateTimeVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter formatter, K key, ZonedDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        ZonedDateTimeVarConverter conv = new ZonedDateTimeVarConverter(formatter);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return ZonedDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key, ZonedDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        try {
+            return ZonedDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    // OffsetDateTime
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        OffsetDateTimeVarConverter conv = new OffsetDateTimeVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter formatter, K key, OffsetDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        OffsetDateTimeVarConverter conv = new OffsetDateTimeVarConverter(formatter);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return OffsetDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key, OffsetDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        try {
+            return OffsetDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    // LocalDateTime
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        LocalDateTimeVarConverter conv = new LocalDateTimeVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter formatter, K key, LocalDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        LocalDateTimeVarConverter conv = new LocalDateTimeVarConverter(formatter);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return LocalDateTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key, LocalDateTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        try {
+            return LocalDateTimeVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    // LocalDate
 
     @Override
     public LocalDate getLocalDate(DateTimeFormatter formatter, K key) {
@@ -324,11 +509,7 @@ public abstract class AutoConvVariantMap<K>
     public LocalDate getLocalDate(DateTimeFormatter formatter, K key, LocalDate defaultValue) {
         Object value = getScalar(key);
         if (value == null)
-//            if (containsKey(key))
-//                return null;
-//            else
             return defaultValue;
-
         LocalDateVarConverter conv = new LocalDateVarConverter(formatter);
         try {
             return conv.from(value);
@@ -350,12 +531,54 @@ public abstract class AutoConvVariantMap<K>
     public LocalDate getLocalDate(K key, LocalDate defaultValue) {
         Object value = getScalar(key);
         if (value == null)
-//            if (containsKey(key))
-//                return null;
-//            else
             return defaultValue;
         try {
             return LocalDateVarConverter.INSTANCE.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    // LocalTime
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter formatter, K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        LocalTimeVarConverter conv = new LocalTimeVarConverter(formatter);
+        return conv.from(value);
+    }
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter formatter, K key, LocalTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        LocalTimeVarConverter conv = new LocalTimeVarConverter(formatter);
+        try {
+            return conv.from(value);
+        } catch (TypeConvertException e) {
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key) {
+        Object value = getScalar(key);
+        if (value == null)
+            return null;
+        else
+            return LocalTimeVarConverter.INSTANCE.from(value);
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key, LocalTime defaultValue) {
+        Object value = getScalar(key);
+        if (value == null)
+            return defaultValue;
+        try {
+            return LocalTimeVarConverter.INSTANCE.from(value);
         } catch (TypeConvertException e) {
             return defaultValue;
         }

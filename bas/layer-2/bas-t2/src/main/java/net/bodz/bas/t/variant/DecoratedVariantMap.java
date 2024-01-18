@@ -4,12 +4,15 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Set;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
 
 import net.bodz.bas.t.model.AbstractDecorator;
 
@@ -249,15 +252,105 @@ public class DecoratedVariantMap<K>
         return getWrapped().getDate(format, key, defaultValue);
     }
 
+//    @Override
+//    public DateTime getDateTime(DateTimeFormatter format, K key) {
+//        return getWrapped().getDateTime(format, key);
+//    }
+//
+//    @Override
+//    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
+//        return getWrapped().getDateTime(format, key, defaultValue);
+//    }
+
+    // Instant
+
     @Override
-    public DateTime getDateTime(DateTimeFormatter format, K key) {
-        return getWrapped().getDateTime(format, key);
+    public Instant getInstant(DateTimeFormatter format, K key) {
+        return getWrapped().getInstant(format, key);
     }
 
     @Override
-    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
-        return getWrapped().getDateTime(format, key, defaultValue);
+    public Instant getInstant(DateTimeFormatter format, K key, Instant defaultValue) {
+        return getWrapped().getInstant(format, key, defaultValue);
     }
+
+    @Override
+    public Instant getInstant(K key) {
+        return getWrapped().getInstant(key);
+    }
+
+    @Override
+    public Instant getInstant(K key, Instant defaultValue) {
+        return getWrapped().getInstant(key, defaultValue);
+    }
+
+    // ZonedDateTime
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key) {
+        return getWrapped().getZonedDateTime(format, key);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key, ZonedDateTime defaultValue) {
+        return getWrapped().getZonedDateTime(format, key, defaultValue);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key) {
+        return getWrapped().getZonedDateTime(key);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(K key, ZonedDateTime defaultValue) {
+        return getWrapped().getZonedDateTime(key, defaultValue);
+    }
+
+    // OffsetDateTime
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key) {
+        return getWrapped().getOffsetDateTime(format, key);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key, OffsetDateTime defaultValue) {
+        return getWrapped().getOffsetDateTime(format, key, defaultValue);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key) {
+        return getWrapped().getOffsetDateTime(key);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(K key, OffsetDateTime defaultValue) {
+        return getWrapped().getOffsetDateTime(key, defaultValue);
+    }
+
+    // LocalDateTime
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter format, K key) {
+        return getWrapped().getLocalDateTime(format, key);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(DateTimeFormatter format, K key, LocalDateTime defaultValue) {
+        return getWrapped().getLocalDateTime(format, key, defaultValue);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key) {
+        return getWrapped().getLocalDateTime(key);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(K key, LocalDateTime defaultValue) {
+        return getWrapped().getLocalDateTime(key, defaultValue);
+    }
+
+    // LocalDate
 
     @Override
     public LocalDate getLocalDate(DateTimeFormatter format, K key) {
@@ -277,6 +370,28 @@ public class DecoratedVariantMap<K>
     @Override
     public LocalDate getLocalDate(K key, LocalDate defaultValue) {
         return getWrapped().getLocalDate(key, defaultValue);
+    }
+
+    // LocalTime
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter format, K key) {
+        return getWrapped().getLocalTime(format, key);
+    }
+
+    @Override
+    public LocalTime getLocalTime(DateTimeFormatter format, K key, LocalTime defaultValue) {
+        return getWrapped().getLocalTime(format, key, defaultValue);
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key) {
+        return getWrapped().getLocalTime(key);
+    }
+
+    @Override
+    public LocalTime getLocalTime(K key, LocalTime defaultValue) {
+        return getWrapped().getLocalTime(key, defaultValue);
     }
 
     @Override

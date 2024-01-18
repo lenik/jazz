@@ -10,15 +10,20 @@ import java.net.URL;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.t.variant.IVariantConvertContext;
+import net.bodz.bas.t.variant.VariantConvertContexts;
 
 public class StringFn {
 
@@ -371,22 +376,160 @@ public class StringFn {
         }
     }
 
-    public static DateTime parseDateTime(String s)
+//    public static DateTime parseDateTime(String s)
+//            throws ParseException {
+//        if (s == null)
+//            return null;
+//        try {
+//            return ISODateTimeFormat.dateTime().parseDateTime(s);
+//        } catch (Exception e) {
+//            throw new ParseException("error parse " + s, e);
+//        }
+//    }
+//
+//    public static DateTime parseDateTime(String s, DateTime fallback) {
+//        if (s == null)
+//            return fallback;
+//        try {
+//            return ISODateTimeFormat.dateTime().parseDateTime(s);
+//        } catch (Exception e) {
+//            return fallback;
+//        }
+//    }
+
+    public static Instant parseInstant(String s)
             throws ParseException {
         if (s == null)
             return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
         try {
-            return ISODateTimeFormat.dateTime().parseDateTime(s);
+            return context.parseInstant(s);
         } catch (Exception e) {
             throw new ParseException("error parse " + s, e);
         }
     }
 
-    public static DateTime parseDateTime(String s, DateTime fallback) {
+    public static Instant parseInstant(String s, Instant fallback) {
         if (s == null)
             return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
         try {
-            return ISODateTimeFormat.dateTime().parseDateTime(s);
+            return context.parseInstant(s);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public static ZonedDateTime parseZonedDateTime(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseZonedDateTime(s);
+        } catch (Exception e) {
+            throw new ParseException("error parse " + s, e);
+        }
+    }
+
+    public static ZonedDateTime parseZonedDateTime(String s, ZonedDateTime fallback) {
+        if (s == null)
+            return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseZonedDateTime(s);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public static OffsetDateTime parseOffsetDateTime(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseOffsetDateTime(s);
+        } catch (Exception e) {
+            throw new ParseException("error parse " + s, e);
+        }
+    }
+
+    public static OffsetDateTime parseOffsetDateTime(String s, OffsetDateTime fallback) {
+        if (s == null)
+            return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseOffsetDateTime(s);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public static LocalDateTime parseLocalDateTime(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalDateTime(s);
+        } catch (Exception e) {
+            throw new ParseException("error parse " + s, e);
+        }
+    }
+
+    public static LocalDateTime parseLocalDateTime(String s, LocalDateTime fallback) {
+        if (s == null)
+            return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalDateTime(s);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public static LocalDate parseLocalDate(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalDate(s);
+        } catch (Exception e) {
+            throw new ParseException("error parse " + s, e);
+        }
+    }
+
+    public static LocalDate parseLocalDate(String s, LocalDate fallback) {
+        if (s == null)
+            return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalDate(s);
+        } catch (Exception e) {
+            return fallback;
+        }
+    }
+
+    public static LocalTime parseLocalTime(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalTime(s);
+        } catch (Exception e) {
+            throw new ParseException("error parse " + s, e);
+        }
+    }
+
+    public static LocalTime parseLocalTime(String s, LocalTime fallback) {
+        if (s == null)
+            return fallback;
+        IVariantConvertContext context = VariantConvertContexts.getContext();
+        try {
+            return context.parseLocalTime(s);
         } catch (Exception e) {
             return fallback;
         }

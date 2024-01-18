@@ -1,8 +1,8 @@
 package net.bodz.lily.security;
 
-import javax.persistence.Table;
+import java.time.ZonedDateTime;
 
-import org.joda.time.DateTime;
+import javax.persistence.Table;
 
 import net.bodz.bas.meta.decl.Redundant;
 
@@ -21,7 +21,7 @@ public class UserRun
     }
 
     @Redundant
-    public DateTime getActiveTime() {
+    public ZonedDateTime getActiveTime() {
         return super.getLastModifiedDate();
     }
 

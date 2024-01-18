@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
 public interface ISqlDialect {
@@ -40,24 +41,16 @@ public interface ISqlDialect {
 
     // java.time
 
-    String qLocalDate(LocalDate localDate);
-
-    String qLocalTime(LocalTime localTime);
-
-    String qLocalDateTime(LocalDateTime localDateTime);
+    String qInstant(Instant instant);
 
     String qZonedDateTime(ZonedDateTime zonedDateTime);
 
-    String qInstant(Instant instant);
+    String qOffsetDateTime(OffsetDateTime zonedDateTime);
 
-    // joda.time
+    String qLocalDateTime(LocalDateTime localDateTime);
 
-    String qLocalDateTime(org.joda.time.LocalDateTime localDateTime);
+    String qLocalDate(LocalDate localDate);
 
-    String qLocalDate(org.joda.time.LocalDate localDate);
-
-    String qLocalTime(org.joda.time.LocalTime localTime);
-
-    String qDateTime(org.joda.time.DateTime dateTime);
+    String qLocalTime(LocalTime localTime);
 
 }

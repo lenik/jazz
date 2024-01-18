@@ -11,9 +11,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.joda.time.base.AbstractDateTime;
-import org.joda.time.format.ISODateTimeFormat;
-
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -469,10 +466,10 @@ public abstract class AbstractJsonDumper<self_t>
             String dateStr = Dates.ISO8601.format(localTime);
             return dateStr;
 
-        case TypeId.JODA_DATETIME:
-            AbstractDateTime jodaDateTime = (AbstractDateTime) obj;
-            String jodaDateStr = ISODateTimeFormat.dateTime().print(jodaDateTime);
-            return jodaDateStr;
+//        case TypeId.JODA_DATETIME:
+//            AbstractDateTime jodaDateTime = (AbstractDateTime) obj;
+//            String jodaDateStr = ISODateTimeFormat.dateTime().print(jodaDateTime);
+//            return jodaDateStr;
         }
         return null;
     }

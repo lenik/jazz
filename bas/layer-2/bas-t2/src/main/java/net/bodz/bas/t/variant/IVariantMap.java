@@ -4,11 +4,14 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormatter;
 
 public interface IVariantMap<K>
         extends
@@ -21,16 +24,16 @@ public interface IVariantMap<K>
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element
-     *         in the array. If the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
+     *         the array is empty, returns <code>null</code>, too.
      */
     Object getScalar(K key);
 
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element
-     *         in the array. If the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
+     *         the array is empty, returns <code>null</code>, too.
      *
      *         If there is no entry for the key, defaultValue is returned.
      */
@@ -114,9 +117,51 @@ public interface IVariantMap<K>
 
     Date getDate(K key, Date defaultValue);
 
-    DateTime getDateTime(DateTimeFormatter format, K key);
+//    DateTime getDateTime(DateTimeFormatter format, K key);
+//
+//    DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue);
 
-    DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue);
+    // Instant
+
+    Instant getInstant(DateTimeFormatter format, K key);
+
+    Instant getInstant(DateTimeFormatter format, K key, Instant defaultValue);
+
+    Instant getInstant(K key);
+
+    Instant getInstant(K key, Instant defaultValue);
+
+    // ZonedDateTime
+
+    ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key);
+
+    ZonedDateTime getZonedDateTime(DateTimeFormatter format, K key, ZonedDateTime defaultValue);
+
+    ZonedDateTime getZonedDateTime(K key);
+
+    ZonedDateTime getZonedDateTime(K key, ZonedDateTime defaultValue);
+
+    // OffsetDateTime
+
+    OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key);
+
+    OffsetDateTime getOffsetDateTime(DateTimeFormatter format, K key, OffsetDateTime defaultValue);
+
+    OffsetDateTime getOffsetDateTime(K key);
+
+    OffsetDateTime getOffsetDateTime(K key, OffsetDateTime defaultValue);
+
+    // LocalDateTime
+
+    LocalDateTime getLocalDateTime(DateTimeFormatter format, K key);
+
+    LocalDateTime getLocalDateTime(DateTimeFormatter format, K key, LocalDateTime defaultValue);
+
+    LocalDateTime getLocalDateTime(K key);
+
+    LocalDateTime getLocalDateTime(K key, LocalDateTime defaultValue);
+
+    // LocalDate
 
     LocalDate getLocalDate(DateTimeFormatter format, K key);
 
@@ -125,6 +170,16 @@ public interface IVariantMap<K>
     LocalDate getLocalDate(K key);
 
     LocalDate getLocalDate(K key, LocalDate defaultValue);
+
+    // LocalTime
+
+    LocalTime getLocalTime(DateTimeFormatter format, K key);
+
+    LocalTime getLocalTime(DateTimeFormatter format, K key, LocalTime defaultValue);
+
+    LocalTime getLocalTime(K key);
+
+    LocalTime getLocalTime(K key, LocalTime defaultValue);
 
     File getFile(K key);
 

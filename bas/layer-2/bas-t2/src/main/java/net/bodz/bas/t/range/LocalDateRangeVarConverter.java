@@ -1,13 +1,12 @@
 package net.bodz.bas.t.range;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 
 public class LocalDateRangeVarConverter
-        extends AbstractRangeVarConverter<LocalDateRange, LocalDate> {
+        extends AbstractTemporalRangeVarConverter<LocalDateRange, LocalDate> {
 
     public LocalDateRangeVarConverter() {
         super(LocalDateRange.class);
@@ -29,19 +28,19 @@ public class LocalDateRangeVarConverter
             throws TypeConvertException {
         if (in == null)
             return null;
-        long instant = in.longValue();
-        DateTime dateTime = new DateTime(instant);
-        return new DateTimeRange().point(dateTime).toLocalDateRange();
+        long epochDay = in.longValue();
+        LocalDate point = LocalDate.ofEpochDay(epochDay);
+        return new LocalDateRange().point(point);
     }
 
     @Override
     public Number toNumber(LocalDateRange value) {
         if (value == null)
             return null;
-        DateTime dateTime = value.toDateTimeRange().getPointValue();
-        if (dateTime == null)
+        LocalDate point = value.getPointValue();
+        if (point == null)
             return null;
-        return dateTime.getMillis();
+        return point.toEpochDay();
     }
 
     @Override

@@ -4,7 +4,6 @@ net.bodz.bas.html.viz.builtin.BigDecimal_htm
 net.bodz.bas.html.viz.builtin.Boolean_htm
 net.bodz.bas.html.viz.builtin.Byte_htm
 net.bodz.bas.html.viz.builtin.Class_htm
-net.bodz.bas.html.viz.builtin.DateTime_htm
 net.bodz.bas.html.viz.builtin.Date_htm
 net.bodz.bas.html.viz.builtin.Double_htm
 net.bodz.bas.html.viz.builtin.Float_htm
@@ -22,6 +21,7 @@ net.bodz.bas.html.viz.builtin.State_htm
 net.bodz.bas.html.viz.builtin.String_htm
 net.bodz.bas.html.viz.builtin.Throwable_htm
 net.bodz.bas.html.viz.builtin.TimeZone_htm
+net.bodz.bas.html.viz.builtin.ZonedDateTime_htm
 net.bodz.bas.html.viz.util.DefaultForm_htm
 net.bodz.bas.html.viz.util.Invocation_txt
 net.bodz.bas.html.viz.util.ObjectDump_htm

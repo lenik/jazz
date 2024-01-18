@@ -1,6 +1,6 @@
 package net.bodz.lily.model.base;
 
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
@@ -24,8 +24,8 @@ public abstract class CoMomentInterval<Id>
 
     private static final long serialVersionUID = 1L;
 
-    private DateTime beginTime;
-    private DateTime endTime;
+    private ZonedDateTime beginTime;
+    private ZonedDateTime endTime;
     private int year;
 
     public CoMomentInterval() {
@@ -43,12 +43,12 @@ public abstract class CoMomentInterval<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public DateTime getBeginTime() {
+    public ZonedDateTime getBeginTime() {
         return beginTime;
     }
 
     @Override
-    public void setBeginTime(DateTime beginTime) {
+    public void setBeginTime(ZonedDateTime beginTime) {
         this.beginTime = beginTime;
     }
 
@@ -63,12 +63,12 @@ public abstract class CoMomentInterval<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public DateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
     @Override
-    public void setEndTime(DateTime endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -78,15 +78,15 @@ public abstract class CoMomentInterval<Id>
     @Deprecated
     @Derived
     @OfGroup(StdGroup.Schedule.class)
-    public final DateTime getBeginDate() {
+    public final ZonedDateTime getBeginDate() {
         return getBeginTime();
     }
 
     /**
-     * @see #setBeginTime(DateTime)
+     * @see #setBeginTime(ZonedDateTime)
      */
     @Deprecated
-    public final void setBeginDate(DateTime beginDate) {
+    public final void setBeginDate(ZonedDateTime beginDate) {
         setBeginTime(beginDate);
     }
 
@@ -96,15 +96,15 @@ public abstract class CoMomentInterval<Id>
     @Deprecated
     @Derived
     @OfGroup(StdGroup.Schedule.class)
-    public final DateTime getEndDate() {
+    public final ZonedDateTime getEndDate() {
         return getEndTime();
     }
 
     /**
-     * @see #setEndTime(DateTime)
+     * @see #setEndTime(ZonedDateTime)
      */
     @Deprecated
-    public final void setEndDate(DateTime endDate) {
+    public final void setEndDate(ZonedDateTime endDate) {
         setEndTime(endDate);
     }
 
@@ -121,8 +121,8 @@ public abstract class CoMomentInterval<Id>
             throws ParseException {
         super.jsonIn(o, opts);
 
-        beginTime = o.getDateTime("beginTime", beginTime);
-        endTime = o.getDateTime("endTime", endTime);
+        beginTime = o.getZonedDateTime("beginTime", beginTime);
+        endTime = o.getZonedDateTime("endTime", endTime);
     }
 
 }

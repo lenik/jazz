@@ -5,13 +5,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.db.sql.SQLLangs;
@@ -107,7 +104,8 @@ public abstract class AbstractSqlDialect
     DateTimeSpec timeSpec = dateTimeSpec("HH:mm:ss");
 
     DateTimeSpec dateTimeSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS");
-    DateTimeSpec dateTimeWithTimeZoneSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS zzz");
+    DateTimeSpec dateTimeWithZoneIdSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS zzz");
+    DateTimeSpec dateTimeWithZoneOffsetSpec = dateTimeSpec("yyyy-MM-dd HH:mm:ss.SSS zzz");
 
     @Override
     public final String qDate(Date date) {
@@ -132,16 +130,23 @@ public abstract class AbstractSqlDialect
     }
 
     @Override
-    public String qLocalDate(LocalDate localDate) {
-        DateTimeSpec spec = dateSpec;
-        String str = spec.format(localDate);
+    public String qInstant(Instant instant) {
+        DateTimeSpec spec = dateTimeSpec;
+        String str = spec.format(instant);
         return toDate(str, spec.sqlSpec);
     }
 
     @Override
-    public String qLocalTime(LocalTime localTime) {
-        DateTimeSpec spec = timeSpec;
-        String str = spec.format(localTime);
+    public String qZonedDateTime(ZonedDateTime zonedDateTime) {
+        DateTimeSpec spec = dateTimeWithZoneIdSpec;
+        String str = spec.format(zonedDateTime);
+        return toDate(str, spec.sqlSpec);
+    }
+
+    @Override
+    public String qOffsetDateTime(OffsetDateTime offsetDateTime) {
+        DateTimeSpec spec = dateTimeWithZoneOffsetSpec;
+        String str = spec.format(offsetDateTime);
         return toDate(str, spec.sqlSpec);
     }
 
@@ -153,74 +158,17 @@ public abstract class AbstractSqlDialect
     }
 
     @Override
-    public String qZonedDateTime(ZonedDateTime zonedDateTime) {
-        DateTimeSpec spec = dateTimeWithTimeZoneSpec;
-        String str = spec.format(zonedDateTime);
+    public String qLocalDate(LocalDate localDate) {
+        DateTimeSpec spec = dateSpec;
+        String str = spec.format(localDate);
         return toDate(str, spec.sqlSpec);
     }
 
     @Override
-    public String qInstant(Instant instant) {
-        DateTimeSpec spec = dateTimeSpec;
-        String str = spec.format(instant);
+    public String qLocalTime(LocalTime localTime) {
+        DateTimeSpec spec = timeSpec;
+        String str = spec.format(localTime);
         return toDate(str, spec.sqlSpec);
-    }
-
-    private static int milliToNanoConst = 1000000;
-
-    @Override
-    public String qLocalDateTime(org.joda.time.LocalDateTime localDateTime) {
-        LocalDateTime j = null;
-        if (localDateTime != null) {
-            j = LocalDateTime.of(//
-                    localDateTime.getYear(), //
-                    localDateTime.getMonthOfYear(), //
-                    localDateTime.getDayOfMonth(), //
-                    localDateTime.getHourOfDay(), //
-                    localDateTime.getMinuteOfHour(), //
-                    localDateTime.getSecondOfMinute(), //
-                    localDateTime.getMillisOfSecond() * milliToNanoConst);
-        }
-        return qLocalDateTime(j);
-    }
-
-    @Override
-    public String qLocalDate(org.joda.time.LocalDate localDate) {
-        LocalDate j = null;
-        if (localDate != null) {
-            j = LocalDate.of(//
-                    localDate.getYear(), //
-                    localDate.getMonthOfYear(), //
-                    localDate.getDayOfMonth());
-        }
-        return qLocalDate(j);
-    }
-
-    @Override
-    public String qLocalTime(org.joda.time.LocalTime localTime) {
-        LocalTime j = null;
-        if (localTime != null) {
-            j = LocalTime.of(//
-                    localTime.getHourOfDay(), //
-                    localTime.getMinuteOfHour(), //
-                    localTime.getSecondOfMinute(), //
-                    localTime.getMillisOfSecond() * milliToNanoConst);
-        }
-        return qLocalTime(j);
-    }
-
-    @Override
-    public String qDateTime(DateTime dateTime) {
-        ZonedDateTime j = null;
-        if (dateTime != null) {
-            Instant instant = Instant.ofEpochSecond(dateTime.toDate().getTime());
-            ZoneId zone = null;
-            DateTimeZone dateTimeZone = dateTime.getZone();
-            if (dateTimeZone != null)
-                zone = ZoneId.of(dateTimeZone.getID());
-            j = ZonedDateTime.ofInstant(instant, zone);
-        }
-        return qZonedDateTime(j);
     }
 
 }

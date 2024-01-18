@@ -1,15 +1,15 @@
 package net.bodz.lily.entity;
 
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 public interface IMomentInterval {
 
-    DateTime getBeginTime();
+    ZonedDateTime getBeginTime();
 
-    void setBeginTime(DateTime beginTime);
+    void setBeginTime(ZonedDateTime beginTime);
 
-    DateTime getEndTime();
+    ZonedDateTime getEndTime();
 
-    void setEndTime(DateTime endTime);
+    void setEndTime(ZonedDateTime endTime);
 
 }

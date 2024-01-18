@@ -1,6 +1,6 @@
 package net.bodz.lily.t.base;
 
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.lily.model.base.CoMomentIntervalCriteriaBuilder;
 
@@ -14,7 +14,7 @@ public abstract class CoMessageCriteriaBuilder<self_t extends CoMessageCriteriaB
 
     // public final IntegerField tagId = integer("tag");
 
-    public final DateField<DateTime> mailDate = date("t0", DateTime.class);
+    public final DateField<ZonedDateTime> mailDate = date("t0");
 
     public final IntegerField voteCount = integer("nvote");
     public final IntegerField likerCount = integer("nlike");

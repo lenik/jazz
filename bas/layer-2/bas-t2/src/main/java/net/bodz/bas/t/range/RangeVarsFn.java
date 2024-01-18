@@ -52,9 +52,9 @@ public class RangeVarsFn {
         return getFrom(map, key, new DoubleRange(), defaultValue);
     }
 
-    public static DateTimeRange getFrom(IVariantMap<String> map, String key, DateTimeRange defaultValue)
+    public static ZonedDateTimeRange getFrom(IVariantMap<String> map, String key, ZonedDateTimeRange defaultValue)
             throws ParseException {
-        return getFrom(map, key, new DateTimeRange(), defaultValue);
+        return getFrom(map, key, new ZonedDateTimeRange(), defaultValue);
     }
 
 }

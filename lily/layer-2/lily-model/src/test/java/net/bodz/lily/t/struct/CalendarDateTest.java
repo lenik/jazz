@@ -1,6 +1,8 @@
 package net.bodz.lily.t.struct;
 
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,13 +23,13 @@ public class CalendarDateTest
             throws ParseException {
         CalendarDate wed = new CalendarDate();
         wed.setAsString("--w-3 ::");
-        DateTime time = new DateTime();
+        ZonedDateTime time = ZonedDateTime.now();
         for (int i = 0; i < 100; i++) {
-            DateTime future = wed.alignFrom(time);
+            ZonedDateTime future = wed.alignFrom(time);
             time = future.plusDays(1);
 
-            int week = future.getWeekOfWeekyear();
-            int weekDay = future.getDayOfWeek();
+            int week = future.get(ChronoField.ALIGNED_DAY_OF_WEEK_IN_YEAR);
+            int weekDay = future.getDayOfWeek().getValue();
 
             System.out.println(future + " Week " + week + "/" + weekDay);
         }

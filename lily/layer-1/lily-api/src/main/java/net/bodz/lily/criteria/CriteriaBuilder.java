@@ -2,6 +2,7 @@ package net.bodz.lily.criteria;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import net.bodz.bas.db.ibatis.IGenericMapper;
@@ -142,6 +143,10 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     protected BooleanField bool(String fieldName) {
         return new BooleanField(fieldName);
+    }
+
+    protected DateField<ZonedDateTime> date(String fieldName) {
+        return new DateField<ZonedDateTime>(fieldName, ZonedDateTime.class);
     }
 
     protected <T> DateField<T> date(String fieldName, Class<T> type) {

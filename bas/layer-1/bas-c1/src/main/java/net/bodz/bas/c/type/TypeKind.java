@@ -2,16 +2,19 @@ package net.bodz.bas.c.type;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.*;
-
-import org.joda.time.DateTime;
-import org.joda.time.MutableDateTime;
 
 public class TypeKind {
 
     /**
      * Normal class type is a type which is not primitive, interface, or array.
-     * 
+     *
      * @return <code>true</code> For normal class.
      */
     public static boolean isNormalClass(Class<?> type) {
@@ -118,11 +121,17 @@ public class TypeKind {
         typeIdMap.put(Deprecated.class, TypeId.DEPRECATED);
         typeIdMap.put(Override.class, TypeId.OVERRIDE);
         typeIdMap.put(SuppressWarnings.class, TypeId.SUPPRESS_WARNINGS);
+
         typeIdMap.put(Date.class, TypeId.DATE);
         typeIdMap.put(java.sql.Date.class, TypeId.SQL_DATE);
-        typeIdMap.put(DateTime.class, TypeId.JODA_DATETIME);
-        typeIdMap.put(MutableDateTime.class, TypeId.JODA_DATETIME);
         typeIdMap.put(Calendar.class, TypeId.CALENDAR);
+
+        typeIdMap.put(Instant.class, TypeId.INSTANT);
+        typeIdMap.put(ZonedDateTime.class, TypeId.ZONED_DATE_TIME);
+        typeIdMap.put(OffsetDateTime.class, TypeId.OFFSET_DATE_TIME);
+        typeIdMap.put(LocalDateTime.class, TypeId.LOCAL_DATE_TIME);
+        typeIdMap.put(LocalDate.class, TypeId.LOCAL_DATE);
+        typeIdMap.put(LocalTime.class, TypeId.LOCAL_TIME);
     }
 
     public static int getTypeId(Class<?> clazz) {

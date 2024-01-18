@@ -1,8 +1,9 @@
 package net.bodz.lily.t.struct;
 
 import java.io.IOException;
-
-import org.joda.time.DateTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -12,24 +13,25 @@ import net.bodz.bas.json.JsonObject;
 public abstract class AbstractUserClickRecord
         extends MixinStruct {
 
-    DateTime time;
+    ZonedDateTime time;
 
-    public DateTime getTime() {
+    public ZonedDateTime getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(ZonedDateTime time) {
         this.time = time;
     }
 
     public void setTime(long time) {
-        this.time = new DateTime(time);
+        Instant instant = Instant.ofEpochMilli(time);
+        this.time = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        time = o.getDateTime("time", time);
+        time = o.getZonedDateTime("time", time);
     }
 
     @Override

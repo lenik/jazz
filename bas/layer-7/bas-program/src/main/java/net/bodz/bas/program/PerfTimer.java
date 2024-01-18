@@ -2,14 +2,7 @@ package net.bodz.bas.program;
 
 import java.text.DateFormat;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-
-import org.joda.time.Interval;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
-import org.joda.time.format.PeriodFormat;
-import org.joda.time.format.PeriodFormatter;
 
 public class PerfTimer {
 
@@ -52,22 +45,6 @@ public class PerfTimer {
         long duration = measure();
         String str = dateFormat.format(duration);
         return str;
-    }
-
-    public String period() {
-        return period(null, null);
-    }
-
-    public synchronized String period(PeriodType periodType, Locale locale) {
-        long now = System.currentTimeMillis();
-        Interval interval = new Interval(last, now);
-        last = now;
-        Period period = interval.toPeriod(periodType);
-
-        if (locale == null)
-            locale = Locale.getDefault(); // TODO context?
-        PeriodFormatter formatter = PeriodFormat.wordBased(locale);
-        return formatter.print(period);
     }
 
     private static PerfTimer instance = new PerfTimer();
