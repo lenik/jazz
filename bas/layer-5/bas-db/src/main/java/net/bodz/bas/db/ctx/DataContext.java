@@ -189,7 +189,7 @@ public class DataContext
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         out.key("options");
-        options.jsonOut(out, opts, true);
+        options.jsonOutValue(out, opts);
         out.entry("attributes", attributes);
     }
 

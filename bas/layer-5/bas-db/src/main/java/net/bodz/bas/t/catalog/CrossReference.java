@@ -329,10 +329,10 @@ public class CrossReference
             throw new NullPointerException("parentKey");
 
         out.key(K_FOREIGN_KEY);
-        foreignKey.jsonOut(out, opts, true);
+        foreignKey.jsonOutValue(out, opts);
 
         out.key(K_PARENT_KEY);
-        parentKey.jsonOut(out, opts, true);
+        parentKey.jsonOutValue(out, opts);
 
         out.entry(K_CONSTRAINT_NAME, constraintName);
         out.entry(K_PRIMARY_KEY_NAME, primaryKeyName);

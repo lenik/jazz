@@ -229,7 +229,7 @@ public class TableOfPathProps
                 boolean objectFormat = rowFormat.equals(ROW_OBJECT);
                 if (defaultAll && objectFormat) {
                     if (item instanceof IJsonForm) {
-                        ((IJsonForm) item).jsonOut(out, opts, true);
+                        ((IJsonForm) item).jsonOutValue(out, opts);
                         continue;
                     }
                 }

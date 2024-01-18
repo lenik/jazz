@@ -65,9 +65,7 @@ public interface ICatalogMetadata
                 out.value(null);
                 continue;
             }
-            out.object();
-            schema.jsonOut(out, opts);
-            out.endObject();
+            schema.jsonOutValue(out, opts);
         }
         out.endObject();
     }

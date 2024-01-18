@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -117,26 +116,22 @@ public class JsonWrapper
     }
 
     @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts)
-            throws IOException, FormatException {
-        throw new IllegalUsageException("expect scalar mode");
+    public boolean wantObjectContext() {
+        return false;
     }
 
     @Override
-    public void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
+    public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        if (scalar) {
-            if (key != null) {
-                out.object();
-                out.key(key);
-            }
+        if (key != null) {
+            out.object();
+            out.key(key);
+        }
 
-            JsonFn.writeObject(out, obj, opts);
+        JsonFn.writeObject(out, obj, opts);
 
-            if (key != null)
-                out.endObject();
-        } else
-            jsonOut(out, opts);
+        if (key != null)
+            out.endObject();
     }
 
     public static JsonWrapper wrap(Object obj) {

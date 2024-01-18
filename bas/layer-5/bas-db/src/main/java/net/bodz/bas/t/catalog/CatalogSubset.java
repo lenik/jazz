@@ -127,7 +127,7 @@ public class CatalogSubset
         out.entry("catalogName", catalogName);
         if (anySchema != null) {
             out.key("anySchema");
-            anySchema.jsonOut(out, opts, true);
+            anySchema.jsonOutValue(out, opts);
         }
         if (schemas == ALL_SCHEMAS)
             out.entry("allSchemas", true);

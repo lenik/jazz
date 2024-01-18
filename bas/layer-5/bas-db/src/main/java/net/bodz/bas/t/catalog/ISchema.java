@@ -68,7 +68,7 @@ public interface ISchema
             throws IOException, FormatException {
         ISchemaMetadata metadata = getMetadata();
         out.key(K_METADATA);
-        metadata.jsonOut(out, opts, true);
+        metadata.jsonOutValue(out, opts);
 
         out.key(K_TABLES);
         out.object();
@@ -77,11 +77,9 @@ public interface ISchema
             ITable table = getTable(key);
             if (table == null) {
                 out.value(null);
-                continue;
+            } else {
+                table.jsonOutValue(out, opts);
             }
-            out.object();
-            table.jsonOut(out, opts);
-            out.endObject();
         }
         out.endObject();
     }

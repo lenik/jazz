@@ -47,12 +47,12 @@ public interface ITable
             getId().jsonOut(out, opts);
         } else {
             out.key(K_METADATA);
-            metadata.jsonOut(out, opts, true);
+            metadata.jsonOutValue(out, opts);
         }
         out.key(K_ROWS);
         out.array();
         for (IRow row : this)
-            row.jsonOut(out, opts, true);
+            row.jsonOutValue(out, opts);
         out.endArray();
     }
 

@@ -400,21 +400,24 @@ public abstract class AbstractJsonDumper<self_t>
         return true;
     }
 
-    protected boolean dumpJsonSerializable(boolean scalar, IJsonForm jser, int depth)
+    protected boolean dumpJsonSerializable(boolean asValue, IJsonForm jsonForm, int depth)
             throws IOException, FormatException {
         if (depth <= 0)
             return false;
 
         try {
-            Method writeObject = jser.getClass().getMethod(METHOD_WRITE, IJsonOut.class, JsonFormOptions.class);
-            DefaultDump aDefaultDump = writeObject.getDeclaredAnnotation(DefaultDump.class);
+            Method jsonOutFn = jsonForm.getClass().getMethod(METHOD_WRITE, IJsonOut.class, JsonFormOptions.class);
+            DefaultDump aDefaultDump = jsonOutFn.getDeclaredAnnotation(DefaultDump.class);
             if (aDefaultDump != null)
                 return false;
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
 
-        jser.jsonOut(out, opts, scalar);
+        if (asValue)
+            jsonForm.jsonOutValue(out, opts);
+        else
+            jsonForm.jsonOut(out, opts);
         return true;
     }
 

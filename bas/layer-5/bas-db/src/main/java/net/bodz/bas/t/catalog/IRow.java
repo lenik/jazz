@@ -124,6 +124,7 @@ public interface IRow
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
+        out.array();
         IRowSetMetadata metadata = getRowSet().getMetadata();
         int cc = metadata.getColumnCount();
         for (int i = 0; i < cc; i++) {
@@ -131,14 +132,12 @@ public interface IRow
             Object cell = i < cc ? getCellData(i) : null;
             column.writeColumnInJson(out, cell);
         }
+        out.endArray();
     }
 
     @Override
-    default void jsonOut(IJsonOut out, JsonFormOptions opts, boolean scalar)
-            throws IOException, FormatException {
-        out.array();
-        jsonOut(out, opts);
-        out.endArray();
+    default boolean wantObjectContext() {
+        return false;
     }
 
     @Override
