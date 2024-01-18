@@ -41,7 +41,7 @@ public class FieldTypeInferrer
             IPropertyDescriptor property = getProperty(beanInfo, fieldName);
             if (property == null)
                 if (errorCheck)
-                    throw new IllegalArgumentException("no property " + fieldName + " in " + prefix + ".");
+                    throw new IllegalArgumentException("no property " + fieldName + " in " + prefix + ": " + context);
                 else
                     return null;
 

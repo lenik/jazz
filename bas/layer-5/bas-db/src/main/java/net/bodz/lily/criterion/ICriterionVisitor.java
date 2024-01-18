@@ -16,8 +16,4 @@ public interface ICriterionVisitor {
 
     void fieldLike(FieldLike fieldLike);
 
-    void fieldNull(FieldNull fieldNull);
-
-    void fieldTrue(FieldTrue fieldTrue);
-
 }

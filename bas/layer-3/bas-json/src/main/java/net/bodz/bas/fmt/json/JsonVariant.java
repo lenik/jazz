@@ -163,4 +163,9 @@ public class JsonVariant {
         }
     }
 
+    @Override
+    public String toString() {
+        return type + ": " + value;
+    }
+
 }

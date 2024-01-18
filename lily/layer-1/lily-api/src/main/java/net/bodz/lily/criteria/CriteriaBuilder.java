@@ -57,7 +57,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     public self_t or() {
         Composite other = defaultCombine();
 
-        Composite top = stack.top();
+        ICriterion top = stack.top(); // .reduce();
         if (top instanceof Disjunction) {
             Disjunction disj = (Disjunction) top;
             // disj.add(other);
@@ -77,7 +77,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
 
     @Override
     public self_t end() {
-        Composite other = stack.pop();
+        ICriterion other = stack.pop(); // .reduce();
         Composite top = stack.top();
         if (top instanceof Disjunction) {
             top.add(other);
@@ -90,6 +90,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
                 throw new IllegalUsageError("top.last isn't composite");
         } else
             throw new IllegalUsageError("unexpected top type");
+        // stack.replaceTop(top.reduce());
         return _this();
     }
 

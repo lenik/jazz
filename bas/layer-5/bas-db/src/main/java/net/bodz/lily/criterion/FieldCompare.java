@@ -3,6 +3,7 @@ package net.bodz.lily.criterion;
 import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -18,19 +19,41 @@ public class FieldCompare<T>
     public FieldCompare() {
     }
 
-    public FieldCompare(String fieldName, boolean not, CompareMode mode, T value) {
-        super(fieldName, not);
+    public FieldCompare(String fieldName, boolean yes, CompareMode mode, T value) {
+        super(fieldName, yes);
         if (mode == null)
             throw new NullPointerException("mode");
-        if (value == null)
-            throw new NullPointerException("value");
         this.mode = mode;
         this.value = value;
     }
 
     @Override
+    public FieldCriterion clone() {
+        return new FieldCompare<T>(fieldName, yes, mode, value);
+    }
+
+    @Override
     public void accept(ICriterionVisitor visitor) {
         visitor.fieldCompare(this);
+    }
+
+    @Override
+    protected boolean isFieldCompare() {
+        return true;
+    }
+
+    @Override
+    protected boolean isFieldEquals() {
+        return (mode == CompareMode.EQUALS) || (mode == CompareMode.NOT_EQUALS);
+    }
+
+    @Override
+    protected boolean isEqualsOrNot() {
+        if (mode == CompareMode.EQUALS)
+            return yes;
+        if (mode == CompareMode.NOT_EQUALS)
+            return ! yes;
+        throw new IllegalUsageException();
     }
 
     @Override
@@ -46,7 +69,7 @@ public class FieldCompare<T>
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void readValue(JsonVariant in, Class<?> fieldType)
+    public void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
 
         this.valueType = (Class<T>) fieldType;

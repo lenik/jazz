@@ -18,14 +18,19 @@ public class FieldBetween<T>
     public FieldBetween() {
     }
 
-    public FieldBetween(String fieldName, boolean not, T min, T max) {
-        super(fieldName, not);
+    public FieldBetween(String fieldName, boolean yes, T min, T max) {
+        super(fieldName, yes);
         if (min == null)
             throw new NullPointerException("min");
         if (max == null)
             throw new NullPointerException("max");
         this.min = min;
         this.max = max;
+    }
+
+    @Override
+    public FieldCriterion clone() {
+        return new FieldBetween<T>(fieldName, yes, min, max);
     }
 
     @Override
@@ -49,7 +54,7 @@ public class FieldBetween<T>
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void readValue(JsonVariant in, Class<?> fieldType)
+    public void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
         JsonArray a = in.getArrayFor(fieldName);
         if (a.length() != 2)

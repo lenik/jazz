@@ -25,6 +25,11 @@ public abstract class Criterion
     }
 
     @Override
+    public boolean wantObjectContext() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();
         LispFormatter formatter = new LispFormatter(buf);

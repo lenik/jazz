@@ -15,9 +15,14 @@ public class FieldLike
     public FieldLike() {
     }
 
-    public FieldLike(String fieldName, boolean not, String pattern) {
-        super(fieldName, not);
+    public FieldLike(String fieldName, boolean yes, String pattern) {
+        super(fieldName, yes);
         this.pattern = pattern;
+    }
+
+    @Override
+    public FieldCriterion clone() {
+        return new FieldLike(pattern, yes, pattern);
     }
 
     @Override
@@ -37,7 +42,7 @@ public class FieldLike
     }
 
     @Override
-    protected void readValue(JsonVariant in, Class<?> fieldType)
+    public void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
         pattern = (String) in.getScalarFor(fieldName);
     }
