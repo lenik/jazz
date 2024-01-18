@@ -287,7 +287,7 @@ public class CrossReference
     /**
      */
     public IColumnMetadata findParentColumn(String foreignColumnName) {
-        if (!resolveParentColumns())
+        if (! resolveParentColumns())
             throw new IllegalUsageException("Can't determine parent columns.");
 
         for (int keySeq = 0; keySeq < foreignColumns.length; keySeq++) {
@@ -412,7 +412,7 @@ public class CrossReference
         while (true) {
             ColumnEntry pair = new ColumnEntry(row);
             pairs.add(pair);
-            if (!iterator.hasNext())
+            if (! iterator.hasNext())
                 break;
             iterator.next();
         }

@@ -467,7 +467,7 @@ public class DefaultColumnMetadata
             return;
         }
 
-        if (!javaClass.isInstance(value))
+        if (! javaClass.isInstance(value))
             throw new IllegalArgumentException("Not an instance of " + javaClass);
 
         if (jsonType) {
@@ -513,7 +513,7 @@ public class DefaultColumnMetadata
     public void writeColumnInXml(IXmlOutput out, Object value)
             throws XMLStreamException, FormatException {
         if (value != null) {
-            if (!javaClass.isInstance(value))
+            if (! javaClass.isInstance(value))
                 throw new IllegalArgumentException("Not an instance of " + javaClass);
 
             if (xmlType) {
@@ -541,7 +541,7 @@ public class DefaultColumnMetadata
 
         // this.setIndex(columnIndex - 1);
         this.setName(name);
-        if (!Nullables.equals(name, label))
+        if (! Nullables.equals(name, label))
             this.setLabel(label);
 
         try {

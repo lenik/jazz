@@ -138,7 +138,7 @@ public class DataHub
         out.enterln("Default context ids: ");
         for (IDefaultContextIdsResolver resolver : defaultContextIdsResolver.getResolvers()) {
             Collection<String> ids = resolver.resolveContextIds(level);
-            if (ids != null && !ids.isEmpty()) {
+            if (ids != null && ! ids.isEmpty()) {
                 out.printf("%s: %s\n", resolver.getClass().getName(), ids);
             }
         }

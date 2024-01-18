@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi.expr;
 
 public interface IOrderedExpr
-        extends IExpression {
+        extends
+            IExpression {
 
     IBoolExpr lessThan(IOrderedExpr o);
 

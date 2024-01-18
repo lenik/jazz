@@ -81,7 +81,7 @@ public class Order {
         sb.append('"');
         sb.append(column);
         sb.append('"');
-        if (!ascending) {
+        if (! ascending) {
             sb.append(" desc");
         }
         return sb.toString();

@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi.expr;
 
 public interface IStringExpr
-        extends IOrderedExpr {
+        extends
+            IOrderedExpr {
 
     IStringExpr concat(IStringExpr o);
 

@@ -132,17 +132,17 @@ public class ColumnOid
     }
 
     public boolean contains(ColumnOid o) {
-        if (!table.contains(o.table))
+        if (! table.contains(o.table))
             return false;
-        if (!NamePattern.matches(columnName, o.columnName))
+        if (! NamePattern.matches(columnName, o.columnName))
             return false;
         return true;
     }
 
     public boolean containsIgnoreCase(ColumnOid o) {
-        if (!table.containsIgnoreCase(o.table))
+        if (! table.containsIgnoreCase(o.table))
             return false;
-        if (!NamePattern.matchesIgnoreCase(columnName, o.columnName))
+        if (! NamePattern.matchesIgnoreCase(columnName, o.columnName))
             return false;
         return true;
     }

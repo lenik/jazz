@@ -29,7 +29,7 @@ public class FromCurrentServerIP
             return null;
 
         String ipAddr = request.getServerName();
-        if (!(IP4_PATTERN.matcher(ipAddr).matches() //
+        if (! (IP4_PATTERN.matcher(ipAddr).matches() //
                 || IP6_PATTERN.matcher(ipAddr).matches()))
             return null;
 

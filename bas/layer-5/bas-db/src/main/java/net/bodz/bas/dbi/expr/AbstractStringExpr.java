@@ -2,7 +2,8 @@ package net.bodz.bas.dbi.expr;
 
 public abstract class AbstractStringExpr
         extends AbstractOrderedExpr
-        implements IStringExpr {
+        implements
+            IStringExpr {
 
     @Override
     public IStringExpr concat(IStringExpr o) {

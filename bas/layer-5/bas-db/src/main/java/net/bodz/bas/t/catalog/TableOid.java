@@ -133,21 +133,21 @@ public class TableOid
     }
 
     public boolean contains(TableOid o) {
-        if (!NamePattern.matches(catalogName, o.catalogName))
+        if (! NamePattern.matches(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matches(schemaName, o.schemaName))
+        if (! NamePattern.matches(schemaName, o.schemaName))
             return false;
-        if (!NamePattern.matches(tableName, o.tableName))
+        if (! NamePattern.matches(tableName, o.tableName))
             return false;
         return true;
     }
 
     public boolean containsIgnoreCase(TableOid o) {
-        if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
+        if (! NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
+        if (! NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
             return false;
-        if (!NamePattern.matchesIgnoreCase(tableName, o.tableName))
+        if (! NamePattern.matchesIgnoreCase(tableName, o.tableName))
             return false;
         return true;
     }

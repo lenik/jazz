@@ -19,7 +19,8 @@ import net.bodz.bas.log.LoggerFactory;
  * Eagerly load the mapper xml here, to support xml patches.
  */
 public class MapperClassXmls
-        implements IMapperXmlProvider {
+        implements
+            IMapperXmlProvider {
 
     static final Logger logger = LoggerFactory.getLogger(MapperClassXmls.class);
 

@@ -381,7 +381,7 @@ public class DefaultTableMetadata
                     oid.catalogName, oid.schemaName, oid.tableName);
             ListMap<TableOid, CrossReference> foreignMap = CrossReference.convertToForeignMap(rs);
             assert foreignMap.size() <= 1;
-            if (!foreignMap.isEmpty()) {
+            if (! foreignMap.isEmpty()) {
                 List<CrossReference> parentList = foreignMap.values().iterator().next();
                 for (CrossReference crossRef : parentList)
                     metaDataHandler.crossReference(this, crossRef);

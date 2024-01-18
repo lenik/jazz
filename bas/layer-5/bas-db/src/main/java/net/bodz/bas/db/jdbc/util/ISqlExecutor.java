@@ -9,7 +9,8 @@ import net.bodz.bas.t.variant.IVariant;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public interface ISqlExecutor
-        extends Statement {
+        extends
+            Statement {
 
     Connection getConnection();
 

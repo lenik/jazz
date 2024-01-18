@@ -2,7 +2,8 @@ package net.bodz.bas.dbi.expr;
 
 public abstract class AbstractNumericExpr
         extends AbstractOrderedExpr
-        implements INumericExpr {
+        implements
+            INumericExpr {
 
     @Override
     public INumericExpr plus(INumericExpr o) {

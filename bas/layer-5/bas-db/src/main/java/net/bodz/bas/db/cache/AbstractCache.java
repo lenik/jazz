@@ -153,7 +153,7 @@ public abstract class AbstractCache<K, T> {
 
         boolean added = keyMap.containsKey(key);
 
-        if (!Nullables.equals(key, key2) || obj != obj2) {
+        if (! Nullables.equals(key, key2) || obj != obj2) {
             if (added) {
                 unwireAndRemove(key, obj);
                 added = false;
@@ -162,7 +162,7 @@ public abstract class AbstractCache<K, T> {
             obj = obj2;
         }
 
-        if (!added)
+        if (! added)
             addAndWire(key, obj);
         return entry;
     }

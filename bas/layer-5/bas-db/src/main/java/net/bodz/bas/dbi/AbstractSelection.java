@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi;
 
 public abstract class AbstractSelection<T, K>
-        implements ISelection<T, K> {
+        implements
+            ISelection<T, K> {
 
     private IRepository<T, K> repository;
 

@@ -14,7 +14,8 @@ import net.bodz.bas.t.variant.MutableVariantMap;
 
 public abstract class AbstractSqlExecutor
         extends DecoratedStatement
-        implements ISqlExecutor {
+        implements
+            ISqlExecutor {
 
     private static final long serialVersionUID = 1L;
 
@@ -137,7 +138,7 @@ public abstract class AbstractSqlExecutor
         IVariantMap<Object> vmap = row(sql, row);
         if (vmap == null)
             return null;
-        if (!vmap.containsKey(column))
+        if (! vmap.containsKey(column))
             return null;
         Object val = vmap.get(column);
         return MutableVariant.wrap(val);
@@ -149,7 +150,7 @@ public abstract class AbstractSqlExecutor
         IVariantMap<Object> vmap = row(sql, row);
         if (vmap == null)
             return null;
-        if (!vmap.containsKey(columnName))
+        if (! vmap.containsKey(columnName))
             return null;
         Object val = vmap.get(columnName);
         return MutableVariant.wrap(val);

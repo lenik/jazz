@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi.expr;
 
 public interface IBoolExpr
-        extends IExpression {
+        extends
+            IExpression {
 
     IBoolExpr not();
 
@@ -13,7 +14,8 @@ public interface IBoolExpr
 
 class Not
         extends AbstractExpression
-        implements IBoolExpr {
+        implements
+            IBoolExpr {
 
     IBoolExpr expr;
 

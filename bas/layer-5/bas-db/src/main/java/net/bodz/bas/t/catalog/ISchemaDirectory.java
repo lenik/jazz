@@ -12,7 +12,7 @@ public interface ISchemaDirectory {
     boolean isValidSchemaId(SchemaOid id);
 
     default void checkSchemaId(SchemaOid id) {
-        if (!isValidSchemaId(id))
+        if (! isValidSchemaId(id))
             throw new IllegalArgumentException("Invalid schema id: " + id);
     }
 

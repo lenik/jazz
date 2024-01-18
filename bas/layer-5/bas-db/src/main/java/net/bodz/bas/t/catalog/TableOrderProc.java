@@ -49,7 +49,7 @@ public class TableOrderProc {
     void deepFirst(ITableMetadata table) {
         if (table == null)
             throw new NullPointerException("table");
-        if (!markSet.add(table))
+        if (! markSet.add(table))
             return;
         for (TableOid parentName : table.getParentTableNames()) {
             ITableMetadata parent;

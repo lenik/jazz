@@ -36,7 +36,7 @@ public class RepeatPrefixNames {
 
             String head = split.a;
             String tail = split.b;
-            if (!tail.startsWith(head))
+            if (! tail.startsWith(head))
                 return s;
 
             int headLen = head.length();
