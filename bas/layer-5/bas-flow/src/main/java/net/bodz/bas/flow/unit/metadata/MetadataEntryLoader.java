@@ -17,7 +17,7 @@ public abstract class MetadataEntryLoader<T>
         if (aMetadataClass != null) {
             Class<?> metaClass = aMetadataClass.value();
             try {
-                meta = (T) metaClass.newInstance();
+                meta = (T) metaClass.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new LazyLoadException("Can't create instance for MetaClass: " + metaClass, e);
             }

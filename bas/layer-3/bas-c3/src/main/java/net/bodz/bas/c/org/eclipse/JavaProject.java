@@ -10,10 +10,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.jar.Manifest;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileRelation;
@@ -47,16 +49,12 @@ public class JavaProject
 
         if (classpathFile.exists())
             try {
-                XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-
-                ClasspathFileContentHandler handler = new ClasspathFileContentHandler(this);
-                xmlReader.setContentHandler(handler);
-
+                SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
                 InputSource inputSource = new InputSource(FileURL.toURL(classpathFile).toString());
-
-                xmlReader.parse(inputSource);
-            } catch (SAXException e) {
-                throw new ParseException(e);
+                ClasspathFileContentHandler handler = new ClasspathFileContentHandler(this);
+                parser.parse(inputSource, handler);
+            } catch (SAXException | ParserConfigurationException e) {
+                throw new ParseException(e.getMessage(), e);
             }
 
         if (manifestFile.exists()) {

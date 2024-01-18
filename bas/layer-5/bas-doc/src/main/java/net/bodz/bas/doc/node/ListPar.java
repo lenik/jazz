@@ -94,7 +94,6 @@ public class ListPar
         this.style = style;
     }
 
-    @SuppressWarnings("serial")
     class ListScanner
             extends AbstractDocVisitor {
 

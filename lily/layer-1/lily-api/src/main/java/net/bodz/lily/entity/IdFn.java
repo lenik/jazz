@@ -54,7 +54,7 @@ public class IdFn {
         if (objectType == null)
             throw new NullPointerException("type");
         try {
-            T instance = objectType.newInstance();
+            T instance = objectType.getConstructor().newInstance();
             instance.id(id);
             return instance;
         } catch (ReflectiveOperationException e) {

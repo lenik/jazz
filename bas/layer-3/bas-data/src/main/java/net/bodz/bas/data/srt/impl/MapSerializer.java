@@ -44,7 +44,7 @@ public class MapSerializer
             if (!Map.class.isAssignableFrom(mapType))
                 throw new SerializeException("Not a map type: " + mapType);
             @SuppressWarnings("unchecked")
-            Map<Object, Object> instance = (Map<Object, Object>) mapType.newInstance();
+            Map<Object, Object> instance = (Map<Object, Object>) mapType.getConstructor().newInstance();
             map = instance;
         } catch (ReflectiveOperationException e) {
             throw new SerializeException(e.getMessage(), e);

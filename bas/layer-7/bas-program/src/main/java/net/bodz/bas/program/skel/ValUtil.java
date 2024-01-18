@@ -11,7 +11,7 @@ class ValUtil {
 
     @SuppressWarnings("unchecked")
     public static <T> T addmulti(Class<?> type, T fieldobj, Object val)
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException, IllegalAccessException {
         if (type.isArray())
             return Arrays.concat(type, fieldobj, val);
         if (fieldobj == null) {
@@ -29,10 +29,10 @@ class ValUtil {
                 else if (Map.class.isAssignableFrom(type))
                     type = HashMap.class;
                 else
-                    throw new IllegalUsageError("don\'t know how to create new instance of abstract class/interface "
-                            + type);
+                    throw new IllegalUsageError(
+                            "don\'t know how to create new instance of abstract class/interface " + type);
             }
-            fieldobj = (T) type.newInstance();
+            fieldobj = (T) type.getConstructor().newInstance();
         }
         if (fieldobj instanceof Collection) {
             ((Collection<Object>) fieldobj).add(val);

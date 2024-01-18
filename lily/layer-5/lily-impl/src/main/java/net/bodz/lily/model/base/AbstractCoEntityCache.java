@@ -191,7 +191,7 @@ public abstract class AbstractCoEntityCache<T extends CoEntity<K>, K>
 
     protected T create() {
         try {
-            return objectClass.newInstance();
+            return objectClass.getConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
             throw new CreateException(String.format(//
                     "Can't instantiate %s: %s", objectClass, e.getMessage()), e);

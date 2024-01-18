@@ -13,10 +13,8 @@ public class VisualTypes {
         Class<?> vtClass = registeredTypes.get(dataType);
         VisualType vt;
         try {
-            vt = (VisualType) vtClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+            vt = (VisualType) vtClass.getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
         return vt;
@@ -33,10 +31,8 @@ public class VisualTypes {
     public static void register(Class<?> visualTypeClass) {
         VisualType queryInst;
         try {
-            queryInst = (VisualType) visualTypeClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+            queryInst = (VisualType) visualTypeClass.getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
         register(queryInst);
@@ -57,10 +53,8 @@ public class VisualTypes {
     public static void unregister(Class<?> visualTypeClass) {
         VisualType queryInst;
         try {
-            queryInst = (VisualType) visualTypeClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+            queryInst = (VisualType) visualTypeClass.getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
         unregister(queryInst);

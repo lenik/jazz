@@ -53,7 +53,7 @@ public class LazyLoadServlet
         if (HttpServlet.class.isAssignableFrom(servletClass))
             throw new IllegalUsageException("Not an http-servlet class: " + servletClass);
 
-        servlet = (HttpServlet) servletClass.newInstance();
+        servlet = (HttpServlet) servletClass.getConstructor().newInstance();
 
         servlet.init(getServletConfig());
         return servlet;

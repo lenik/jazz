@@ -120,7 +120,7 @@ public class ReflectRstHandler
             }
         } else {
             try {
-                value = (IRstForm) type.newInstance(); // args ...
+                value = (IRstForm) type.getConstructor().newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
                 throw new ElementHandlerException("failed to instantiate " + type, e);
             }

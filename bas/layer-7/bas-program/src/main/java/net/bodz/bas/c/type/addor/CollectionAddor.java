@@ -21,7 +21,7 @@ public class CollectionAddor
         Collection<Object> collection;
         if (prev == null)
             try {
-                collection = (Collection<Object>) createType.newInstance();
+                collection = (Collection<Object>) createType.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new IllegalUsageException("Failed to instantiate createType: " + createType, e);
             }

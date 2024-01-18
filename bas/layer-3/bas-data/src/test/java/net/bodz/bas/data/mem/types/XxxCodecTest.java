@@ -25,7 +25,7 @@ public class XxxCodecTest
         IMemory mem = new ArrayMemory(memv);
         Type type;
         try {
-            type = typeClass.newInstance();
+            type = typeClass.getConstructor().newInstance();
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {

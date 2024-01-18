@@ -22,7 +22,7 @@ public class Instantiator<T>
     public T _create(Class<?>[] argTypes, Object... args)
             throws CreateException {
         try {
-            T instance = clazz.newInstance();
+            T instance = clazz.getConstructor().newInstance();
             return instance;
         } catch (ReflectiveOperationException e) {
             throw new CreateException(e.getMessage(), e);

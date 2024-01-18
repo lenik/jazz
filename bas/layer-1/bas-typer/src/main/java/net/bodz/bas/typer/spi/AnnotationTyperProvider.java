@@ -29,11 +29,9 @@ public class AnnotationTyperProvider
         assert typerFamilyClass != null;
 
         try {
-            IQueryable queryable = typerFamilyClass.newInstance();
+            IQueryable queryable = typerFamilyClass.getConstructor().newInstance();
             return queryable.query(typerClass);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }

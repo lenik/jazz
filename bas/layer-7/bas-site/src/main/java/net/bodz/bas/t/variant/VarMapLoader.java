@@ -98,7 +98,7 @@ public class VarMapLoader {
             if (!autoCreate)
                 return;
             try {
-                pVal = pClass.newInstance();
+                pVal = pClass.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("Failed to auto create: " + e.getMessage(), e);
             }
@@ -160,7 +160,7 @@ public class VarMapLoader {
                         return;
                     }
                     try {
-                        lval = ltype.newInstance();
+                        lval = ltype.getConstructor().newInstance();
                     } catch (ReflectiveOperationException e) {
                         throw new LoaderException("Failed to auto create: " + e.getMessage(), e);
                     }
@@ -227,7 +227,7 @@ public class VarMapLoader {
         Class<?> concreteType = concreteTypes.get(generic);
         if (concreteType != null)
             try {
-                return (Collection<Object>) concreteType.newInstance();
+                return (Collection<Object>) concreteType.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }

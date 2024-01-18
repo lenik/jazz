@@ -317,7 +317,7 @@ public class AbstractJsonResponse<self_t extends IMutableJsonResponse>
             try {
                 Class<?> dataType = Class.forName(dataTypeName);
                 if (IJsonForm.class.isAssignableFrom(dataType))
-                    data = (IJsonForm) dataType.newInstance();
+                    data = (IJsonForm) dataType.getConstructor().newInstance();
                 else
                     throw new ParseException("Unsupported data type: " + dataTypeName);
             } catch (ReflectiveOperationException e) {

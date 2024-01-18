@@ -33,7 +33,7 @@ public class ScriptingInstantiator
         try {
             Class<?> clazz = Class.forName(name, true, loader);
             if (argTypes == null)
-                return clazz.newInstance();
+                return clazz.getConstructor().newInstance();
             else {
                 Constructor<?> ctor = clazz.getConstructor(argTypes);
                 return ctor.newInstance(args);

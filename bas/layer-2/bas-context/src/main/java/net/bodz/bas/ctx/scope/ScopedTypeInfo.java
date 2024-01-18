@@ -59,7 +59,7 @@ public class ScopedTypeInfo<T> {
         try {
             // if (debug)
             objectType.getConstructor();
-            return objectType.newInstance();
+            return objectType.getConstructor().newInstance();
         } catch (NoSuchMethodException e) {
             throw new IllegalUsageException("No default constructor on " + objectType);
         }

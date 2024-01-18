@@ -57,7 +57,7 @@ public class TagLibraryLoader {
             try {
                 @SuppressWarnings("unchecked")
                 Class<? extends ITagLibrary> taglibClass = (Class<? extends ITagLibrary>) Class.forName(name);
-                taglib = taglibClass.newInstance();
+                taglib = taglibClass.getConstructor().newInstance();
             } catch (ClassNotFoundException e) {
                 return null;
             } catch (ReflectiveOperationException e) {
