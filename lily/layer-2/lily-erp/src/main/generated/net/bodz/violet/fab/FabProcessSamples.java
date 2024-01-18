@@ -1,7 +1,10 @@
 package net.bodz.violet.fab;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
+import net.bodz.bas.c.java.util.DateTimes;
+import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.dao.GroupMapper;
@@ -28,10 +31,18 @@ public class FabProcessSamples
     public FabProcess build()
             throws Exception {
         FabProcess a = new FabProcess();
+        a.setStandard(standard);
+        a.setOwnerUser(ownerUser);
+        a.setParent(parent);
+        a.setOutput(output);
+        a.setOwnerGroup(ownerGroup);
+        a.setTask(task);
         a.setId(3769431772802184892L);
-        a.setYear(1501112555);
-        a.setQuantity(new BigDecimal("8337941"));
-        a.setTrackCount(872550144);
+        a.setBeginTime(ZonedDateTime.parse("2024-01-11 13:14:26", DateTimes.D10T8));
+        a.setEndTime(ZonedDateTime.parse("2023-12-14 10:01:27", DateTimes.D10T8));
+        a.setYear(1490317106);
+        a.setQuantity(new BigDecimal("794135720883938031.70"));
+        a.setTrackCount(1955095956);
         return a;
     }
 

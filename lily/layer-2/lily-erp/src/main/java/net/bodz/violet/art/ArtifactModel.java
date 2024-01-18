@@ -23,10 +23,12 @@ public class ArtifactModel
     public ArtifactModel() {
     }
 
+    @Override
     public String getModelName() {
         return modelName;
     }
 
+    @Override
     public void setModelName(String modelName) {
         this.modelName = modelName;
     }

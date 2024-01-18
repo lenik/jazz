@@ -37,7 +37,6 @@ public class OrganizationSamples
         this.category = picker.pickAny(PartyCategoryMapper.class, "partycat");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
-        this.contact = new ContactSamples().build();
         return this;
     }
 

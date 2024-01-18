@@ -21,6 +21,10 @@ public class FabStdTestSamples
     public FabStdTest build()
             throws Exception {
         FabStdTest a = new FabStdTest();
+        a.setOwnerUser(ownerUser);
+        a.setCategory(category);
+        a.setOwnerGroup(ownerGroup);
+        a.setParent(parent);
         a.setId(1636779479);
         a.setCode("Otku apaj o moe sze.");
         a.setDepth(1095746246);

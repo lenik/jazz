@@ -181,7 +181,6 @@ dao-violet: predao
 	$(DAOGEN_VIOLET) \
             -p net.bodz.violet.other \
             art artcat artparm artphase arttag art_backref art_doc art_vote artpack uom \
-            net.bodz.violet.asset.AbstractAsset \
             asset asset_group asset_org asset_ou asset_person asset_user \
             course coursecat coursetag course_fav coursekit coursekitcat coursekittag coursekit_fav \
             testq testans testqtag testq_fav testq_vote testq_msg testq_msg_vote \

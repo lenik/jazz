@@ -1,10 +1,9 @@
 package net.bodz.violet.edu;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
-import org.joda.time.DateTime;
-
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.contact.dao.PersonMapper;
 import net.bodz.lily.security.Group;
@@ -32,10 +31,10 @@ public class TestApplySamples
         a.setPaper(paper);
         a.setOwnerUser(ownerUser);
         a.setId(4876527568694728934L);
-        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2023-12-12T18:07:26.928+0800").getTime()));
-        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2024-01-01T10:08:53.010+0800").getTime()));
-        a.setYear(635596291);
-        a.setScore(new BigDecimal("967710.74"));
+        a.setBeginTime(ZonedDateTime.parse("2023-12-12 13:07:26", DateTimes.D10T8));
+        a.setEndTime(ZonedDateTime.parse("2023-12-25 03:26:43", DateTimes.D10T8));
+        a.setYear(1243013733);
+        a.setScore(new BigDecimal("71"));
         return a;
     }
 

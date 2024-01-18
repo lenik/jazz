@@ -1,12 +1,12 @@
 package net.bodz.violet.fab;
 
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.validate.NotNull;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -23,8 +23,8 @@ public abstract class _FabStdProcess_stuff
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_VALID = "valid";
-    public static final String FIELD_VALIDSINCE = "validsince";
-    public static final String FIELD_VALIDUNTIL = "validuntil";
+    public static final String FIELD_VALID_SINCE = "validsince";
+    public static final String FIELD_VALID_UNTIL = "validuntil";
     public static final String FIELD_OUTPUT_ID = "output";
     public static final String FIELD_FUNCTION_ID = "fn";
     public static final String FIELD_DURATION = "duration";
@@ -33,8 +33,8 @@ public abstract class _FabStdProcess_stuff
 
     public static final int N_ID = 10;
     public static final int N_VALID = 1;
-    public static final int N_VALIDSINCE = 35;
-    public static final int N_VALIDUNTIL = 35;
+    public static final int N_VALID_SINCE = 35;
+    public static final int N_VALID_UNTIL = 35;
     public static final int N_OUTPUT_ID = 10;
     public static final int N_FUNCTION_ID = 10;
     public static final int N_DURATION = 10;
@@ -43,9 +43,9 @@ public abstract class _FabStdProcess_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_VALID = 14;
-    private static final int _ord_VALIDSINCE = _ord_VALID + 1;
-    private static final int _ord_VALIDUNTIL = _ord_VALIDSINCE + 1;
-    private static final int _ord_OUTPUT_ID = _ord_VALIDUNTIL + 2;
+    private static final int _ord_VALID_SINCE = _ord_VALID + 1;
+    private static final int _ord_VALID_UNTIL = _ord_VALID_SINCE + 1;
+    private static final int _ord_OUTPUT_ID = _ord_VALID_UNTIL + 2;
     private static final int _ord_FUNCTION_ID = _ord_OUTPUT_ID + 1;
     private static final int _ord_DURATION = _ord_FUNCTION_ID + 1;
     private static final int _ord_STRICT = _ord_DURATION + 1;
@@ -58,9 +58,9 @@ public abstract class _FabStdProcess_stuff
     @NotNull
     boolean valid;
 
-    Timestamp validsince;
+    ZonedDateTime validSince;
 
-    Timestamp validuntil;
+    ZonedDateTime validUntil;
 
     @NotNull
     int duration;
@@ -118,26 +118,26 @@ public abstract class _FabStdProcess_stuff
         this.valid = value;
     }
 
-    @Ordinal(_ord_VALIDSINCE)
+    @Ordinal(_ord_VALID_SINCE)
     @Precision(value = 35, scale = 6)
     @Column(name = "validsince", precision = 35, scale = 6)
-    public Timestamp getValidsince() {
-        return validsince;
+    public ZonedDateTime getValidSince() {
+        return validSince;
     }
 
-    public void setValidsince(Timestamp value) {
-        this.validsince = value;
+    public void setValidSince(ZonedDateTime value) {
+        this.validSince = value;
     }
 
-    @Ordinal(_ord_VALIDUNTIL)
+    @Ordinal(_ord_VALID_UNTIL)
     @Precision(value = 35, scale = 6)
     @Column(name = "validuntil", precision = 35, scale = 6)
-    public Timestamp getValiduntil() {
-        return validuntil;
+    public ZonedDateTime getValidUntil() {
+        return validUntil;
     }
 
-    public void setValiduntil(Timestamp value) {
-        this.validuntil = value;
+    public void setValidUntil(ZonedDateTime value) {
+        this.validUntil = value;
     }
 
     @Ordinal(_ord_DURATION)
@@ -183,8 +183,6 @@ public abstract class _FabStdProcess_stuff
     @Column(name = "output", nullable = false, precision = 10)
     public synchronized int getOutputId() {
         if (output != null) {
-            if (output.getId() == null)
-                return 0;
             return output.getId();
         }
         return outputId;

@@ -38,7 +38,6 @@ public class OrgUnitSamples
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.parent = picker.pickAny(OrgUnitMapper.class, "orgunit");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
-        this.contact = new ContactSamples().build();
         return this;
     }
 

@@ -1,15 +1,13 @@
 package net.bodz.violet.art;
 
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 
-import org.joda.time.DateTime;
-
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -28,41 +26,41 @@ public abstract class _ArtifactModel_stuff
     public static final String FIELD_END_TIME = "t1";
     public static final String FIELD_YEAR = "year";
     public static final String FIELD_VALID = "valid";
-    public static final String FIELD_VALIDSINCE = "validsince";
-    public static final String FIELD_VALIDUNTIL = "validuntil";
+    public static final String FIELD_VALID_SINCE = "validsince";
+    public static final String FIELD_VALID_UNTIL = "validuntil";
     public static final String FIELD_OBSOLETE_ID = "obsolete";
     public static final String FIELD_ARTIFACT_ID = "art";
-    public static final String FIELD_MODEL = "model";
+    public static final String FIELD_MODEL_NAME = "model";
 
     public static final int N_ID = 10;
     public static final int N_BEGIN_TIME = 35;
     public static final int N_END_TIME = 35;
     public static final int N_YEAR = 10;
     public static final int N_VALID = 1;
-    public static final int N_VALIDSINCE = 35;
-    public static final int N_VALIDUNTIL = 35;
+    public static final int N_VALID_SINCE = 35;
+    public static final int N_VALID_UNTIL = 35;
     public static final int N_OBSOLETE_ID = 10;
     public static final int N_ARTIFACT_ID = 10;
-    public static final int N_MODEL = 40;
+    public static final int N_MODEL_NAME = 40;
 
     private static final int _ord_ID = 1;
     private static final int _ord_BEGIN_TIME = 14;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
     private static final int _ord_VALID = _ord_YEAR + 2;
-    private static final int _ord_VALIDSINCE = _ord_VALID + 1;
-    private static final int _ord_VALIDUNTIL = _ord_VALIDSINCE + 1;
-    private static final int _ord_OBSOLETE_ID = _ord_VALIDUNTIL + 1;
+    private static final int _ord_VALID_SINCE = _ord_VALID + 1;
+    private static final int _ord_VALID_UNTIL = _ord_VALID_SINCE + 1;
+    private static final int _ord_OBSOLETE_ID = _ord_VALID_UNTIL + 1;
     private static final int _ord_ARTIFACT_ID = _ord_OBSOLETE_ID + 1;
-    private static final int _ord_MODEL = _ord_ARTIFACT_ID + 1;
+    private static final int _ord_MODEL_NAME = _ord_ARTIFACT_ID + 1;
 
     @Id
     @NotNull
     int id;
 
-    DateTime beginTime;
+    ZonedDateTime beginTime;
 
-    DateTime endTime;
+    ZonedDateTime endTime;
 
     @NotNull
     int year;
@@ -70,11 +68,11 @@ public abstract class _ArtifactModel_stuff
     @NotNull
     boolean valid;
 
-    Timestamp validsince;
+    ZonedDateTime validSince;
 
-    Timestamp validuntil;
+    ZonedDateTime validUntil;
 
-    String model;
+    String modelName;
 
     /**  */
     ArtifactModel obsolete;
@@ -113,22 +111,22 @@ public abstract class _ArtifactModel_stuff
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t0", precision = 35, scale = 6)
-    public DateTime getBeginTime() {
+    public ZonedDateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(DateTime value) {
+    public void setBeginTime(ZonedDateTime value) {
         this.beginTime = value;
     }
 
     @Ordinal(_ord_END_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t1", precision = 35, scale = 6)
-    public DateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(DateTime value) {
+    public void setEndTime(ZonedDateTime value) {
         this.endTime = value;
     }
 
@@ -154,38 +152,38 @@ public abstract class _ArtifactModel_stuff
         this.valid = value;
     }
 
-    @Ordinal(_ord_VALIDSINCE)
+    @Ordinal(_ord_VALID_SINCE)
     @Precision(value = 35, scale = 6)
     @Column(name = "validsince", precision = 35, scale = 6)
-    public Timestamp getValidsince() {
-        return validsince;
+    public ZonedDateTime getValidSince() {
+        return validSince;
     }
 
-    public void setValidsince(Timestamp value) {
-        this.validsince = value;
+    public void setValidSince(ZonedDateTime value) {
+        this.validSince = value;
     }
 
-    @Ordinal(_ord_VALIDUNTIL)
+    @Ordinal(_ord_VALID_UNTIL)
     @Precision(value = 35, scale = 6)
     @Column(name = "validuntil", precision = 35, scale = 6)
-    public Timestamp getValiduntil() {
-        return validuntil;
+    public ZonedDateTime getValidUntil() {
+        return validUntil;
     }
 
-    public void setValiduntil(Timestamp value) {
-        this.validuntil = value;
+    public void setValidUntil(ZonedDateTime value) {
+        this.validUntil = value;
     }
 
-    @Ordinal(_ord_MODEL)
-    @Precision(value = N_MODEL)
-    @TextInput(maxLength = N_MODEL)
-    @Column(name = "model", length = N_MODEL)
-    public String getModel() {
-        return model;
+    @Ordinal(_ord_MODEL_NAME)
+    @Precision(value = N_MODEL_NAME)
+    @TextInput(maxLength = N_MODEL_NAME)
+    @Column(name = "model", length = N_MODEL_NAME)
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setModel(String value) {
-        this.model = value;
+    public void setModelName(String value) {
+        this.modelName = value;
     }
 
     /**

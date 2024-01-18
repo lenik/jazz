@@ -41,7 +41,6 @@ public class PersonSamples
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.category = picker.pickAny(PartyCategoryMapper.class, "partycat");
-        this.contact = new ContactSamples().build();
         return this;
     }
 

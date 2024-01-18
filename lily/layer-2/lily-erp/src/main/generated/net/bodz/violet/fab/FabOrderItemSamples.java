@@ -1,7 +1,9 @@
 package net.bodz.violet.fab;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.art.Artifact;
@@ -18,15 +20,19 @@ public class FabOrderItemSamples
     public FabOrderItem build()
             throws Exception {
         FabOrderItem a = new FabOrderItem();
+        a.setArtifact(artifact);
+        a.setOrder(order);
         a.setId(1681387801011514965L);
-        a.setYear(126740905);
-        a.setResale(true);
+        a.setBeginTime(ZonedDateTime.parse("2023-12-30 10:44:01", DateTimes.D10T8));
+        a.setEndTime(ZonedDateTime.parse("2023-12-30 13:47:39", DateTimes.D10T8));
+        a.setYear(855797600);
+        a.setResale(false);
         a.setAltLabel("yd_qu@qoe tces");
         a.setAltSpec("e ekflhvi@ucn ute af th. o ru, ueo@ul. iq'sv oj, eyi am#bulpz eugya ax!");
         a.setAltUom("y jali iuihs_ete*Ab. j. Araxo");
-        a.setQuantity(new BigDecimal("245883495"));
-        a.setPrice(new BigDecimal("40129839149"));
-        a.setAmount(new BigDecimal("7857276203"));
+        a.setQuantity(new BigDecimal("5883495884012.83"));
+        a.setPrice(new BigDecimal("1491807.57"));
+        a.setAmount(new BigDecimal("762"));
         a.setNotes("st? x; pq, juueh-rp*ja, uuxp");
         return a;
     }
