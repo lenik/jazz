@@ -244,13 +244,13 @@ public class DefaultSchemaMetadata
     @Override
     public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
+            if (! pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return Collections.emptyList();
         }
         List<ITableMetadata> list = new ArrayList<>();
         for (ITableMetadata table : getTables()) {
             if (pattern != null)
-                if (!pattern.contains(table.getId(), ignoreCase))
+                if (! pattern.contains(table.getId(), ignoreCase))
                     continue;
             list.add(table);
         }
@@ -355,13 +355,13 @@ public class DefaultSchemaMetadata
     @Override
     public List<IViewMetadata> findViews(TableOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!pattern.toSchemaId().contains(this.getId(), ignoreCase))
+            if (! pattern.toSchemaId().contains(this.getId(), ignoreCase))
                 return Collections.emptyList();
         }
         List<IViewMetadata> list = new ArrayList<>();
         for (IViewMetadata view : viewMap.values()) {
             if (pattern != null)
-                if (!pattern.contains(view.getId(), ignoreCase))
+                if (! pattern.contains(view.getId(), ignoreCase))
                     continue;
             list.add(view);
         }

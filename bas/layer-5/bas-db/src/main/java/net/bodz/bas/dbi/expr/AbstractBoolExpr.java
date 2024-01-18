@@ -2,7 +2,8 @@ package net.bodz.bas.dbi.expr;
 
 public abstract class AbstractBoolExpr
         extends AbstractExpression
-        implements IBoolExpr {
+        implements
+            IBoolExpr {
 
     @Override
     public IBoolExpr not() {

@@ -31,7 +31,8 @@ public class ResultRowIterator
 }
 
 class ResultRows
-        implements Iterable<ResultRow> {
+        implements
+            Iterable<ResultRow> {
 
     ResultSet rs;
 

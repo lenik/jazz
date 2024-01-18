@@ -96,7 +96,7 @@ public interface IRow
             throw new IllegalUsageException("No table metadata.");
         int index = parent.indexOfColumn(name);
         if (index == -1)
-            if (!optional)
+            if (! optional)
                 throw new NoSuchKeyException(name);
         return index;
     }

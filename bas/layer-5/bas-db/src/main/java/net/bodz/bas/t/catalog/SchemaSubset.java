@@ -39,9 +39,9 @@ public class SchemaSubset
     public boolean isEmpty() {
         if (all)
             return false;
-        if (!names.isEmpty())
+        if (! names.isEmpty())
             return false;
-        if (!patterns.isEmpty())
+        if (! patterns.isEmpty())
             return false;
         return true;
     }

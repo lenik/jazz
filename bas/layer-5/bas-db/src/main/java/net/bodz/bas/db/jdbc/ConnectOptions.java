@@ -316,7 +316,7 @@ public class ConnectOptions
         out.entry(K_DATABASE, database);
         out.entry(K_USERNAME, userName);
         out.entry(K_PASSWORD, password);
-        if (properties != null && !properties.isEmpty()) {
+        if (properties != null && ! properties.isEmpty()) {
             out.key(K_PROPERTIES);
             out.object();
             for (String name : properties.stringPropertyNames()) {
@@ -371,7 +371,7 @@ public class ConnectOptions
         out.element(K_DATABASE, database);
         out.element(K_USERNAME, userName);
         out.element(K_PASSWORD, password);
-        if (properties != null && !properties.isEmpty()) {
+        if (properties != null && ! properties.isEmpty()) {
             out.beginElement(K_PROPERTIES);
             for (String name : properties.stringPropertyNames()) {
                 String val = properties.getProperty(name);

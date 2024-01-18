@@ -32,10 +32,10 @@ public class CatalogSubset
     }
 
     public boolean isEmpty() {
-        if (!anySchema.isEmpty())
+        if (! anySchema.isEmpty())
             return false;
         if (schemas != null)
-            if (!schemas.isEmpty())
+            if (! schemas.isEmpty())
                 return false;
         return true;
     }
@@ -65,10 +65,10 @@ public class CatalogSubset
             return ContainingType.FULL;
 
         SchemaSubset subset = schemas.get(schemaName);
-        if (subset != null && !subset.isEmpty())
+        if (subset != null && ! subset.isEmpty())
             return ContainingType.FULL;
 
-        if (!anySchema.isEmpty())
+        if (! anySchema.isEmpty())
             return ContainingType.PARTIAL;
 
         return ContainingType.NONE;

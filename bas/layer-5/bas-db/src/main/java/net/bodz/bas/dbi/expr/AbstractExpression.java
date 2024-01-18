@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi.expr;
 
 public abstract class AbstractExpression
-        implements IExpression {
+        implements
+            IExpression {
 
     @Override
     public IBoolExpr eq(IExpression o) {

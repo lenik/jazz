@@ -20,7 +20,7 @@ public class UserLocalDataContextProvider
     public static File getDefaultFolder() {
         File dataDir = SysProps.dataDir;
         File optionsDir = new File(dataDir, "bas-db/connectOptions");
-        if (!optionsDir.exists()) {
+        if (! optionsDir.exists()) {
             logger.info("create directory " + optionsDir);
             optionsDir.mkdirs();
         }

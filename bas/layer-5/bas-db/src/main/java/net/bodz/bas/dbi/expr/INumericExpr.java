@@ -1,7 +1,8 @@
 package net.bodz.bas.dbi.expr;
 
 public interface INumericExpr
-        extends IOrderedExpr {
+        extends
+            IOrderedExpr {
 
     INumericExpr plus(INumericExpr o);
 

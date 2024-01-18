@@ -39,7 +39,7 @@ public class DurationFormat {
 
         if (yes || ms > 0) {
             sb.append(ms);
-            if (!yes)
+            if (! yes)
                 // sb.append("ms");
                 showMs = true;
             // sb.append(".");

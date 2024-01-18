@@ -7,7 +7,8 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IIbatisConfigurer
-        extends IPriority {
+        extends
+            IPriority {
 
     int PRIORITY_HIGH = -1;
     int PRIORITY_MEDIUM = 0;

@@ -144,8 +144,8 @@ public final class TableKey
 
     /**
      * @param opt
-     *            When column position is unknown, return -1 if <code>opt</code> is
-     *            <code>false</code>, or raise {@link NoSuchKeyException} exception.
+     *            When column position is unknown, return -1 if <code>opt</code> is <code>false</code>, or raise
+     *            {@link NoSuchKeyException} exception.
      * @throws NoSuchKeyException
      */
     public int[] resolvePosition(ITableMetadata table, boolean opt) {
@@ -154,7 +154,7 @@ public final class TableKey
             String name = columnNames[i];
             // IColumnMetadata column = table.getColumn(name);
             int pos = table.indexOfColumn(name);
-            if (pos == -1 && !opt)
+            if (pos == -1 && ! opt)
                 throw new NoSuchKeyException(name);
             posv[i] = pos;
         }

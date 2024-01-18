@@ -235,7 +235,7 @@ public class DefaultCatalogMetadata
 
     @Override
     public boolean removeTable(TableOid oid) {
-        if (!isValidTableId(oid))
+        if (! isValidTableId(oid))
             return false;
         IMutableSchemaMetadata schema = (IMutableSchemaMetadata) getSchema(oid.schemaName);
         if (schema == null)
@@ -279,13 +279,13 @@ public class DefaultCatalogMetadata
     @Override
     public SchemaList findSchemas(SchemaOid pattern, boolean ignoreCase) {
         if (pattern != null) {
-            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
+            if (! NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return SchemaList.empty();
         }
         SchemaList schemaList = new SchemaList();
         for (ISchemaMetadata schema : this) {
             if (pattern != null)
-                if (!pattern.contains(schema.getId(), ignoreCase))
+                if (! pattern.contains(schema.getId(), ignoreCase))
                     continue;
             schemaList.add(schema);
         }
@@ -296,7 +296,7 @@ public class DefaultCatalogMetadata
     public List<ITableMetadata> findTables(TableOid pattern, boolean ignoreCase) {
         SchemaOid schemaPattern = null;
         if (pattern != null) {
-            if (!NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
+            if (! NamePattern.matches(name, pattern.getCatalogName(), ignoreCase))
                 return Collections.emptyList();
             schemaPattern = pattern.toSchemaId();
         }
@@ -304,7 +304,7 @@ public class DefaultCatalogMetadata
         List<ITableMetadata> tableList = new ArrayList<>();
         for (ISchemaMetadata schema : this) {
             if (pattern != null)
-                if (!schemaPattern.contains(schema.getId(), ignoreCase))
+                if (! schemaPattern.contains(schema.getId(), ignoreCase))
                     continue;
             List<ITableMetadata> part = schema.findTables(pattern, ignoreCase);
             tableList.addAll(part);

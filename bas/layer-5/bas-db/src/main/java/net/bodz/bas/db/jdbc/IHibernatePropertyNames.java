@@ -3,7 +3,8 @@ package net.bodz.bas.db.jdbc;
 import net.bodz.bas.sugar.IConstants;
 
 public interface IHibernatePropertyNames
-        extends IConstants {
+        extends
+            IConstants {
 
     /**
      * <strong>Hibernate JDBC Properties</strong>
@@ -64,8 +65,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * The classname of a Hibernate org.hibernate.dialect.Dialect which allows Hibernate to generate
-     * SQL optimized for a particular relational database.
+     * The classname of a Hibernate org.hibernate.dialect.Dialect which allows Hibernate to generate SQL optimized for a
+     * particular relational database.
      * 
      * @example full.classname.of.Dialect
      */
@@ -74,8 +75,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Write all SQL statements to console. This is an alternative to setting the log category
-     * org.hibernate.SQL to debug.
+     * Write all SQL statements to console. This is an alternative to setting the log category org.hibernate.SQL to
+     * debug.
      * 
      * @example true | false
      */
@@ -91,8 +92,7 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Qualify unqualified table names with the given schema/tablespace in generated SQL. e.g.
-     * SCHEMA_NAME
+     * Qualify unqualified table names with the given schema/tablespace in generated SQL. e.g. SCHEMA_NAME
      */
     String defaultSchemaKey = "hibernate.default_schema";
 
@@ -106,8 +106,7 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * The org.hibernate.SessionFactory will be automatically bound to this name in JNDI after it
-     * has been created.
+     * The org.hibernate.SessionFactory will be automatically bound to this name in JNDI after it has been created.
      * 
      * @example jndi/composite/name
      */
@@ -116,8 +115,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Sets a maximum "depth" for the outer join fetch tree for single-ended associations
-     * (one-to-one, many-to-one). A 0 disables default outer join fetching.
+     * Sets a maximum "depth" for the outer join fetch tree for single-ended associations (one-to-one, many-to-one). A 0
+     * disables default outer join fetching.
      * 
      * @example recommended values between 0 and 3
      */
@@ -126,49 +125,44 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Sets a default size for Hibernate batch fetching of associations. e.g. recommended values 4,
-     * 8, 16
+     * Sets a default size for Hibernate batch fetching of associations. e.g. recommended values 4, 8, 16
      */
     String defaultBatchFetchSizeKey = "hibernate.default_batch_fetch_size";
 
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Sets a default mode for entity representation for all sessions opened from this
-     * SessionFactory
+     * Sets a default mode for entity representation for all sessions opened from this SessionFactory
      */
     String defaultEntityModeKey = "hibernate.default_entity_mode";
 
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * Forces Hibernate to order SQL updates by the primary key value of the items being updated.
-     * This will result in fewer transaction deadlocks in highly concurrent systems. e.g. true |
-     * false
+     * Forces Hibernate to order SQL updates by the primary key value of the items being updated. This will result in
+     * fewer transaction deadlocks in highly concurrent systems. e.g. true | false
      */
     String orderUpdatesKey = "hibernate.order_updates";
 
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * If enabled, Hibernate will collect statistics useful for performance tuning. e.g. true |
-     * false
+     * If enabled, Hibernate will collect statistics useful for performance tuning. e.g. true | false
      */
     String generateStatisticsKey = "hibernate.generate_statistics";
 
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * If enabled, generated identifier properties will be reset to default values when objects are
-     * deleted. e.g. true | false
+     * If enabled, generated identifier properties will be reset to default values when objects are deleted. e.g. true |
+     * false
      */
     String useIdentifierRollbackKey = "hibernate.use_identifier_rollback";
 
     /**
      * <strong>Hibernate Configuration Properties</strong>
      * 
-     * If turned on, Hibernate will generate comments inside the SQL, for easier debugging, defaults
-     * to false.
+     * If turned on, Hibernate will generate comments inside the SQL, for easier debugging, defaults to false.
      * 
      * @example true | false
      */
@@ -184,17 +178,15 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * A non-zero value enables use of JDBC2 batch updates by Hibernate. e.g. recommended values
-     * between 5 and 30
+     * A non-zero value enables use of JDBC2 batch updates by Hibernate. e.g. recommended values between 5 and 30
      */
     String jdbcBatchSizeKey = "hibernate.jdbc.batch_size";
 
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Set this property to true if your JDBC driver returns correct row counts from executeBatch().
-     * Iit is usually safe to turn this option on. Hibernate will then use batched DML for
-     * automatically versioned data. Defaults to false.
+     * Set this property to true if your JDBC driver returns correct row counts from executeBatch(). Iit is usually safe
+     * to turn this option on. Hibernate will then use batched DML for automatically versioned data. Defaults to false.
      * 
      * @example true | false
      */
@@ -203,8 +195,7 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Select a custom org.hibernate.jdbc.Batcher. Most applications will not need this
-     * configuration property.
+     * Select a custom org.hibernate.jdbc.Batcher. Most applications will not need this configuration property.
      * 
      * @example classname.of.BatcherFactory
      */
@@ -213,17 +204,15 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Enables use of JDBC2 scrollable resultsets by Hibernate. This property is only necessary when
-     * using user-supplied JDBC connections. Hibernate uses connection metadata otherwise. e.g. true
-     * | false
+     * Enables use of JDBC2 scrollable resultsets by Hibernate. This property is only necessary when using user-supplied
+     * JDBC connections. Hibernate uses connection metadata otherwise. e.g. true | false
      */
     String jdbcUseScrollableResultsetKey = "hibernate.jdbc.use_scrollable_resultset";
 
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Use streams when writing/reading binary or serializable types to/from JDBC. *system-level
-     * property*
+     * Use streams when writing/reading binary or serializable types to/from JDBC. *system-level property*
      * 
      * @example true | false
      */
@@ -232,10 +221,9 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Enables use of JDBC3 PreparedStatement.getGeneratedKeys() to retrieve natively generated keys
-     * after insert. Requires JDBC3+ driver and JRE1.4+, set to false if your driver has problems
-     * with the Hibernate identifier generators. By default, it tries to determine the driver
-     * capabilities using connection metadata.
+     * Enables use of JDBC3 PreparedStatement.getGeneratedKeys() to retrieve natively generated keys after insert.
+     * Requires JDBC3+ driver and JRE1.4+, set to false if your driver has problems with the Hibernate identifier
+     * generators. By default, it tries to determine the driver capabilities using connection metadata.
      * 
      * @example true|false
      */
@@ -244,8 +232,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * The classname of a custom org.hibernate.connection.ConnectionProvider which provides JDBC
-     * connections to Hibernate.
+     * The classname of a custom org.hibernate.connection.ConnectionProvider which provides JDBC connections to
+     * Hibernate.
      * 
      * @example classname.of.ConnectionProvider
      */
@@ -254,9 +242,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Sets the JDBC transaction isolation level. Check java.sql.Connection for meaningful values,
-     * but note that most databases do not support all isolation levels and some define additional,
-     * non-standard isolations.
+     * Sets the JDBC transaction isolation level. Check java.sql.Connection for meaningful values, but note that most
+     * databases do not support all isolation levels and some define additional, non-standard isolations.
      * 
      * @example 1, 2, 4, 8
      */
@@ -272,12 +259,11 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate JDBC and Connection Properties</strong>
      * 
-     * Specifies when Hibernate should release JDBC connections. By default, a JDBC connection is
-     * held until the session is explicitly closed or disconnected. For an application server JTA
-     * datasource, use after_statement to aggressively release connections after every JDBC call.
-     * For a non-JTA connection, it often makes sense to release the connection at the end of each
-     * transaction, by using after_transaction. auto will choose after_statement for the JTA and CMT
-     * transaction strategies and after_transaction for the JDBC transaction strategy.
+     * Specifies when Hibernate should release JDBC connections. By default, a JDBC connection is held until the session
+     * is explicitly closed or disconnected. For an application server JTA datasource, use after_statement to
+     * aggressively release connections after every JDBC call. For a non-JTA connection, it often makes sense to release
+     * the connection at the end of each transaction, by using after_transaction. auto will choose after_statement for
+     * the JTA and CMT transaction strategies and after_transaction for the JDBC transaction strategy.
      * 
      * @example auto (default) | on_close | after_transaction | after_statement
      */
@@ -309,9 +295,9 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Cache Properties</strong>
      * 
-     * Optimizes second-level cache operation to minimize writes, at the cost of more frequent
-     * reads. This setting is most useful for clustered caches and, in Hibernate3, is enabled by
-     * default for clustered cache implementations. e.g. true|false
+     * Optimizes second-level cache operation to minimize writes, at the cost of more frequent reads. This setting is
+     * most useful for clustered caches and, in Hibernate3, is enabled by default for clustered cache implementations.
+     * e.g. true|false
      */
     String cacheUseMinimalPutsKey = "hibernate.cache.use_minimal_puts";
 
@@ -325,8 +311,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Cache Properties</strong>
      * 
-     * Can be used to completely disable the second level cache, which is enabled by default for
-     * classes which specify a <cache> mapping.
+     * Can be used to completely disable the second level cache, which is enabled by default for classes which specify a
+     * <cache> mapping.
      * 
      * @example true|false
      */
@@ -351,16 +337,14 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Cache Properties</strong>
      * 
-     * Forces Hibernate to store data in the second-level cache in a more human-friendly format.
-     * e.g. true|false
+     * Forces Hibernate to store data in the second-level cache in a more human-friendly format. e.g. true|false
      */
     String cacheUseStructuredEntriesKey = "hibernate.cache.use_structured_entries";
 
     /**
      * <strong>Hibernate Transaction Properties</strong>
      * 
-     * The classname of a TransactionFactory to use with Hibernate Transaction API (defaults to
-     * JDBCTransactionFactory).
+     * The classname of a TransactionFactory to use with Hibernate Transaction API (defaults to JDBCTransactionFactory).
      * 
      * @example classname.of.TransactionFactory
      */
@@ -369,8 +353,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Transaction Properties</strong>
      * 
-     * The classname of a TransactionManagerLookup. It is required when JVM-level caching is enabled
-     * or when using hilo generator in a JTA environment.
+     * The classname of a TransactionManagerLookup. It is required when JVM-level caching is enabled or when using hilo
+     * generator in a JTA environment.
      * 
      * @example classname.of.TransactionManagerLookup
      */
@@ -379,9 +363,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Transaction Properties</strong>
      * 
-     * If enabled, the session will be automatically flushed during the before completion phase of
-     * the transaction. Built-in and automatic session context management is preferred, see Section
-     * 2.5, “Contextual sessions”.
+     * If enabled, the session will be automatically flushed during the before completion phase of the transaction.
+     * Built-in and automatic session context management is preferred, see Section 2.5, “Contextual sessions”.
      * 
      * @example true | false
      */
@@ -390,9 +373,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Hibernate Transaction Properties</strong>
      * 
-     * If enabled, the session will be automatically closed during the after completion phase of the
-     * transaction. Built-in and automatic session context management is preferred, see Section 2.5,
-     * “Contextual sessions”.
+     * If enabled, the session will be automatically closed during the after completion phase of the transaction.
+     * Built-in and automatic session context management is preferred, see Section 2.5, “Contextual sessions”.
      * 
      * @example true | false
      */
@@ -401,8 +383,8 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Miscellaneous Properties</strong>
      * 
-     * Supply a custom strategy for the scoping of the "current" Session. See Section 2.5,
-     * “Contextual sessions” for more information about the built-in strategies.
+     * Supply a custom strategy for the scoping of the "current" Session. See Section 2.5, “Contextual sessions” for
+     * more information about the built-in strategies.
      * 
      * @example jta | thread | managed | custom.Class
      */
@@ -411,25 +393,24 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Miscellaneous Properties</strong>
      * 
-     * Chooses the HQL parser implementation. e.g. org.hibernate.hql.ast.ASTQueryTranslatorFactory
-     * or org.hibernate.hql.classic.ClassicQueryTranslatorFactory
+     * Chooses the HQL parser implementation. e.g. org.hibernate.hql.ast.ASTQueryTranslatorFactory or
+     * org.hibernate.hql.classic.ClassicQueryTranslatorFactory
      */
     String queryFactoryClassKey = "hibernate.query.factory_class";
 
     /**
      * <strong>Miscellaneous Properties</strong>
      * 
-     * Is used to map from tokens in Hibernate queries to SQL tokens (tokens might be function or
-     * literal names, for example). e.g. hqlLiteral=SQL_LITERAL, hqlFunction=SQLFUNC
+     * Is used to map from tokens in Hibernate queries to SQL tokens (tokens might be function or literal names, for
+     * example). e.g. hqlLiteral=SQL_LITERAL, hqlFunction=SQLFUNC
      */
     String querySubstitutionsKey = "hibernate.query.substitutions";
 
     /**
      * <strong>Miscellaneous Properties</strong>
      * 
-     * Automatically validates or exports schema DDL to the database when the SessionFactory is
-     * created. With create-drop, the database schema will be dropped when the SessionFactory is
-     * closed explicitly.
+     * Automatically validates or exports schema DDL to the database when the SessionFactory is created. With
+     * create-drop, the database schema will be dropped when the SessionFactory is closed explicitly.
      * 
      * @example validate | update | create | create-drop
      */
@@ -438,9 +419,9 @@ public interface IHibernatePropertyNames
     /**
      * <strong>Miscellaneous Properties</strong>
      * 
-     * Enables the use of CGLIB instead of runtime reflection (System-level property). Reflection
-     * can sometimes be useful when troubleshooting. Hibernate always requires CGLIB even if you
-     * turn off the optimizer. You cannot set this property in hibernate.cfg.xml.
+     * Enables the use of CGLIB instead of runtime reflection (System-level property). Reflection can sometimes be
+     * useful when troubleshooting. Hibernate always requires CGLIB even if you turn off the optimizer. You cannot set
+     * this property in hibernate.cfg.xml.
      * 
      * @example true | false
      */

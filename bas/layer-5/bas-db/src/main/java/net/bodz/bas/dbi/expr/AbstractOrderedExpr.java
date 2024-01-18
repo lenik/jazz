@@ -2,7 +2,8 @@ package net.bodz.bas.dbi.expr;
 
 public abstract class AbstractOrderedExpr
         extends AbstractExpression
-        implements IOrderedExpr {
+        implements
+            IOrderedExpr {
 
     @Override
     public IBoolExpr lessThan(IOrderedExpr o) {

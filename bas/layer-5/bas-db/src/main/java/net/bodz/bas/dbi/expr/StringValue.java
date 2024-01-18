@@ -2,7 +2,8 @@ package net.bodz.bas.dbi.expr;
 
 public class StringValue
         extends AbstractStringExpr
-        implements IStringExpr {
+        implements
+            IStringExpr {
 
     String s;
 

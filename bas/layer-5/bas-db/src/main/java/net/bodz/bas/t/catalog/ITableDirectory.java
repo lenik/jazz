@@ -20,7 +20,7 @@ public interface ITableDirectory {
     boolean isValidIdOf(String catalogName);
 
     default void checkTableId(TableOid oid) {
-        if (!isValidTableId(oid))
+        if (! isValidTableId(oid))
             throw new IllegalArgumentException("Invalid table id: " + oid);
     }
 

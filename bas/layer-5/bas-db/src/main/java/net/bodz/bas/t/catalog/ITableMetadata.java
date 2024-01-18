@@ -117,7 +117,7 @@ public interface ITableMetadata
         }
 
         Map<String, CrossReference> foreignKeys = getForeignKeys();
-        if (!foreignKeys.isEmpty()) {
+        if (! foreignKeys.isEmpty()) {
             out.key(K_FOREIGN_KEYS);
             out.array();
             for (CrossReference ref : foreignKeys.values())
@@ -150,7 +150,7 @@ public interface ITableMetadata
         }
 
         Map<String, CrossReference> foreignKeys = getForeignKeys();
-        if (!foreignKeys.isEmpty()) {
+        if (! foreignKeys.isEmpty()) {
             out.beginElement(K_FOREIGN_KEYS);
             for (CrossReference ref : foreignKeys.values()) {
                 out.beginElement(K_CROSS_REF);

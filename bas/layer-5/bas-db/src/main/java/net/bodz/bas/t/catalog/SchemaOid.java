@@ -49,17 +49,17 @@ public class SchemaOid
     }
 
     public boolean contains(SchemaOid o) {
-        if (!NamePattern.matches(catalogName, o.catalogName))
+        if (! NamePattern.matches(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matches(schemaName, o.schemaName))
+        if (! NamePattern.matches(schemaName, o.schemaName))
             return false;
         return true;
     }
 
     public boolean containsIgnoreCase(SchemaOid o) {
-        if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
+        if (! NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
+        if (! NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
             return false;
         return true;
     }
@@ -72,17 +72,17 @@ public class SchemaOid
     }
 
     public boolean contains(TableOid o) {
-        if (!NamePattern.matches(catalogName, o.catalogName))
+        if (! NamePattern.matches(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matches(schemaName, o.schemaName))
+        if (! NamePattern.matches(schemaName, o.schemaName))
             return false;
         return true;
     }
 
     public boolean containsIgnoreCase(TableOid o) {
-        if (!NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
+        if (! NamePattern.matchesIgnoreCase(catalogName, o.catalogName))
             return false;
-        if (!NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
+        if (! NamePattern.matchesIgnoreCase(schemaName, o.schemaName))
             return false;
         return true;
     }

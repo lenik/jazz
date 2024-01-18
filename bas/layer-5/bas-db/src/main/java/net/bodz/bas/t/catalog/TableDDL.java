@@ -44,7 +44,7 @@ public class TableDDL {
         int paramIndex = 0;
         for (int columnIndex = 0; columnIndex < cc; columnIndex++) {
             if (templateRow != null) {
-                if (!templateRow.isSet(columnIndex))
+                if (! templateRow.isSet(columnIndex))
                     continue;
                 Object val = templateRow.getCellData(columnIndex);
                 if (val == null)

@@ -5,7 +5,8 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 public class ResultRow
-        implements Iterable<ResultCell> {
+        implements
+            Iterable<ResultCell> {
 
     ResultSet rs;
 

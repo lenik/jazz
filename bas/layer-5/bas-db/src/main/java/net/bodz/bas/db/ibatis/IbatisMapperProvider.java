@@ -124,7 +124,7 @@ public class IbatisMapperProvider
             return false; // already loaded.
 
         byte[] patched = BinaryReplacer.getIndexed().transform(xml.content);
-        if (!Arrays.equals(xml.content, patched))
+        if (! Arrays.equals(xml.content, patched))
             logger.info("Patched: " + fqcn);
 
         XMLMapperBuilder xmlParser = new XMLMapperBuilder(//
@@ -154,7 +154,7 @@ public class IbatisMapperProvider
 
     @Override
     public <M> M getMapper(Class<M> mapperClass, boolean batch) {
-        if (!hasMapper(mapperClass))
+        if (! hasMapper(mapperClass))
             return null;
         SqlSession session = null;
         if (batch)
@@ -164,7 +164,7 @@ public class IbatisMapperProvider
 
     public <T> T getMapper(Class<T> mapperClass, SqlSession session) {
         try {
-            if (!hasMapper(mapperClass))
+            if (! hasMapper(mapperClass))
                 return null;
         } catch (Exception e) {
             throw new LoadException(//
@@ -175,7 +175,7 @@ public class IbatisMapperProvider
 
     <T> T instantiateMapper(Class<T> mapperClass, SqlSession session) {
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
-        if (!sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
+        if (! sqlSessionFactory.getConfiguration().hasMapper(mapperClass))
             return null;
 
         AbstractMapperProxy handler;
