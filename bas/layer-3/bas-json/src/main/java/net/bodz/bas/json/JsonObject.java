@@ -1,5 +1,11 @@
 package net.bodz.bas.json;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -7,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -38,7 +42,7 @@ public class JsonObject
 
     public Object get(String key, Object defaultValue)
             throws JSONException {
-        if (!super.has(key))
+        if (! super.has(key))
             return defaultValue;
         Object val = super.get(key);
         if (val == _JSONObject.NULL)
@@ -49,7 +53,7 @@ public class JsonObject
     }
 
     public byte[] getByteArray(String key, byte[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Byte> list = getBytes(key, null);
         byte[] v = new byte[list.size()];
@@ -59,7 +63,7 @@ public class JsonObject
     }
 
     public short[] getShortArray(String key, short[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Short> list = getShorts(key, null);
         short[] v = new short[list.size()];
@@ -69,7 +73,7 @@ public class JsonObject
     }
 
     public int[] getIntArray(String key, int[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Integer> list = getInts(key, null);
         int[] v = new int[list.size()];
@@ -79,7 +83,7 @@ public class JsonObject
     }
 
     public long[] getLongArray(String key, long[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Long> list = getLongs(key, null);
         long[] v = new long[list.size()];
@@ -89,7 +93,7 @@ public class JsonObject
     }
 
     public float[] getFloatArray(String key, float[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Float> list = getFloats(key, null);
         float[] v = new float[list.size()];
@@ -99,7 +103,7 @@ public class JsonObject
     }
 
     public double[] getDoubleArray(String key, double[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Double> list = getDoubles(key, null);
         double[] v = new double[list.size()];
@@ -109,7 +113,7 @@ public class JsonObject
     }
 
     public boolean[] getBooleanArray(String key, boolean[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Boolean> list = getBooleans(key, null);
         boolean[] v = new boolean[list.size()];
@@ -119,7 +123,7 @@ public class JsonObject
     }
 
     public char[] getCharArray(String key, char[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<Character> list = getChars(key, null);
         char[] v = new char[list.size()];
@@ -130,7 +134,7 @@ public class JsonObject
 
     @Override
     public String[] getStringArray(String key, String[] defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         List<String> list = getStrings(key, null);
         String[] v = new String[list.size()];
@@ -254,7 +258,7 @@ public class JsonObject
     }
 
     public <T> T getVar(Class<T> type, String key, T defaultValue) {
-        if (!has(key))
+        if (! has(key))
             return defaultValue;
         Object val = get(key);
         IVarConverter<Object> converter = VarConverters.getConverter(type);
@@ -280,12 +284,64 @@ public class JsonObject
         return getVar(Date.class, key, defaultValue);
     }
 
-    public DateTime getDateTime(String key) {
-        return getDateTime(key, null);
+    @Override
+    public Instant getInstant(String key) {
+        return getInstant(key, null);
     }
 
-    public DateTime getDateTime(String key, DateTime defaultValue) {
-        return getVar(DateTime.class, key, defaultValue);
+    @Override
+    public Instant getInstant(String key, Instant defaultValue) {
+        return getVar(Instant.class, key, defaultValue);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(String key) {
+        return getZonedDateTime(key, null);
+    }
+
+    @Override
+    public ZonedDateTime getZonedDateTime(String key, ZonedDateTime defaultValue) {
+        return getVar(ZonedDateTime.class, key, defaultValue);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(String key) {
+        return getOffsetDateTime(key, null);
+    }
+
+    @Override
+    public OffsetDateTime getOffsetDateTime(String key, OffsetDateTime defaultValue) {
+        return getVar(OffsetDateTime.class, key, defaultValue);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(String key) {
+        return getLocalDateTime(key, null);
+    }
+
+    @Override
+    public LocalDateTime getLocalDateTime(String key, LocalDateTime defaultValue) {
+        return getVar(LocalDateTime.class, key, defaultValue);
+    }
+
+    @Override
+    public LocalDate getLocalDate(String key) {
+        return getLocalDate(key, null);
+    }
+
+    @Override
+    public LocalDate getLocalDate(String key, LocalDate defaultValue) {
+        return getVar(LocalDate.class, key, defaultValue);
+    }
+
+    @Override
+    public LocalTime getLocalTime(String key) {
+        return getLocalTime(key, null);
+    }
+
+    @Override
+    public LocalTime getLocalTime(String key, LocalTime defaultValue) {
+        return getVar(LocalTime.class, key, defaultValue);
     }
 
     public <T extends IJsonForm> T readInto(String key, T obj)
@@ -295,7 +351,7 @@ public class JsonObject
 
     public <T extends IJsonForm> T readInto(String key, T obj, T newObj)
             throws ParseException {
-        if (!has(key)) // nothing to change
+        if (! has(key)) // nothing to change
             return obj;
 
         Object _node = get(key);
@@ -352,7 +408,7 @@ public class JsonObject
             readArrayInto(String key, C collection, FunctionX<Object, T, ParseException> conv,
                     Supplier<C> collectionSupplier)
                     throws ParseException {
-        if (!has(key)) // nothing to change
+        if (! has(key)) // nothing to change
             return collection;
 
         Object _node = get(key);
@@ -417,7 +473,7 @@ public class JsonObject
             readIntoMap(String key, map_t map, FunctionX<Object, val_t, ParseException> js2Val,
                     Supplier<map_t> mapSupplier)
                     throws ParseException {
-        if (!has(key)) // nothing to change
+        if (! has(key)) // nothing to change
             return map;
 
         Object _node = get(key);

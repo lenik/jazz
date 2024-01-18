@@ -1,13 +1,12 @@
 package net.bodz.lily.t.struct;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringArray;
@@ -23,7 +22,8 @@ import net.bodz.bas.log.LoggerFactory;
  */
 public final class CalendarDate
         extends MixinStruct
-        implements IFieldVector {
+        implements
+            IFieldVector {
 
     public static final int NO_YEAR = 0;
     public static final int NO_MONTH = 0;
@@ -44,13 +44,14 @@ public final class CalendarDate
     short hour = NO_HOUR;
     short minute = NO_MINUTE;
     short second = NO_SECOND;
-    DateTimeZone timeZone; // null for local-tz
+    int nanoSecond;
+    ZoneId timeZone; // null for local-tz
 
     public CalendarDate() {
-        this(DateTimeZone.getDefault());
+        this(ZoneId.systemDefault());
     }
 
-    public CalendarDate(DateTimeZone tz) {
+    public CalendarDate(ZoneId tz) {
         if (tz == null)
             throw new NullPointerException("tz");
         this.timeZone = tz;
@@ -58,10 +59,10 @@ public final class CalendarDate
 
     public CalendarDate(short year, short month, short day, short week, short weekDay, short hour, short minute,
             short second) {
-        this(DateTimeZone.getDefault(), year, month, day, week, weekDay, hour, minute, second);
+        this(ZoneId.systemDefault(), year, month, day, week, weekDay, hour, minute, second);
     }
 
-    public CalendarDate(DateTimeZone tz, short year, short month, short day, short week, short weekDay, short hour,
+    public CalendarDate(ZoneId tz, short year, short month, short day, short week, short weekDay, short hour,
             short minute, short second) {
         this(tz);
         this.year = year;
@@ -138,17 +139,17 @@ public final class CalendarDate
         this.second = second;
     }
 
-    public DateTime toDateTime() {
-        DateTime t = new DateTime(year, month, day, hour, minute, second, timeZone);
+    public ZonedDateTime toZonedDateTime() {
+        ZonedDateTime t = ZonedDateTime.of(year, month, day, hour, minute, second, 0, timeZone);
         return t;
     }
 
     public LocalDateTime toLocalDateTime() {
-        LocalDateTime t = new LocalDateTime(year, month, day, hour, minute, second);
+        LocalDateTime t = LocalDateTime.of(year, month, day, hour, minute, second);
         return t;
     }
 
-    public DateTime alignFrom(DateTime from) {
+    public ZonedDateTime alignFrom(ZonedDateTime from) {
         TimeVec fromVec = new TimeVec(from);
         int[] point = fromVec.fields;
 
@@ -192,16 +193,16 @@ public final class CalendarDate
         }
 
         RangeResolver resolver = new RangeResolver(fields, fromVec.fields, lastSpecField);
-        DateTime start = resolver.start(0, false);
+        ZonedDateTime start = resolver.start(0, false);
         System.out.println("nconvert: " + resolver.nconvert);
         return start;
     }
 
-    public DateTime alignFrom2(DateTime from) {
+    public ZonedDateTime alignFrom2(ZonedDateTime from) {
         TimeVec vector = new TimeVec(from);
         TimeVec pattern = toVector();
         vector.future(pattern.fields);
-        return vector.toDateTime();
+        return vector.toZonedDateTime();
     }
 
     @Override
@@ -287,7 +288,7 @@ public final class CalendarDate
             timeSpec = tmp;
         }
 
-        if (!Nullables.isEmpty(dateSpec)) {
+        if (! Nullables.isEmpty(dateSpec)) {
             try {
                 parseDateSpec(dateSpec);
             } catch (ParseException e) {
@@ -301,7 +302,7 @@ public final class CalendarDate
             weekDay = NO_WEEKDAY;
         }
 
-        if (!Nullables.isEmpty(timeSpec)) {
+        if (! Nullables.isEmpty(timeSpec)) {
             try {
                 parseTimeSpec(timeSpec);
             } catch (ParseException e) {
@@ -401,10 +402,11 @@ interface IFieldVector {
 }
 
 class TimeVec
-        implements IFieldVector {
+        implements
+            IFieldVector {
 
     final int[] fields = new int[8];
-    final DateTimeZone timeZone;
+    final ZoneId timeZone;
 
     // backward map
     static final int[] bmap = new int[] { -1, // year
@@ -417,36 +419,37 @@ class TimeVec
             FIELD_MINUTE, // second
     };
 
-    public TimeVec(DateTimeZone zone) {
+    public TimeVec(ZoneId zone) {
         this.timeZone = zone;
         for (int i = 0; i < fields.length; i++)
             fields[i] = -1;
     }
 
-    public TimeVec(DateTime dateTime) {
+    public TimeVec(ZonedDateTime dateTime) {
         this.timeZone = dateTime.getZone();
         setFields(dateTime);
     }
 
-    public void setFields(DateTime dateTime) {
-        fields[FIELD_YEAR] = dateTime.get(DateTimeFieldType.year());
-        fields[FIELD_MONTH] = dateTime.get(DateTimeFieldType.monthOfYear());
-        fields[FIELD_DAY] = dateTime.get(DateTimeFieldType.dayOfMonth());
-        fields[FIELD_WEEK] = dateTime.get(DateTimeFieldType.weekOfWeekyear());
-        fields[FIELD_WEEKDAY] = dateTime.get(DateTimeFieldType.dayOfWeek());
-        fields[FIELD_HOUR] = dateTime.get(DateTimeFieldType.hourOfDay());
-        fields[FIELD_MINUTE] = dateTime.get(DateTimeFieldType.minuteOfHour());
-        fields[FIELD_SECOND] = dateTime.get(DateTimeFieldType.secondOfMinute());
+    public void setFields(ZonedDateTime zoneDateTime) {
+        fields[FIELD_YEAR] = zoneDateTime.get(ChronoField.YEAR);
+        fields[FIELD_MONTH] = zoneDateTime.get(ChronoField.MONTH_OF_YEAR);
+        fields[FIELD_DAY] = zoneDateTime.get(ChronoField.DAY_OF_MONTH);
+        fields[FIELD_WEEK] = zoneDateTime.get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+        fields[FIELD_WEEKDAY] = zoneDateTime.get(ChronoField.DAY_OF_WEEK);
+        fields[FIELD_HOUR] = zoneDateTime.get(ChronoField.HOUR_OF_DAY);
+        fields[FIELD_MINUTE] = zoneDateTime.get(ChronoField.MINUTE_OF_HOUR);
+        fields[FIELD_SECOND] = zoneDateTime.get(ChronoField.SECOND_OF_MINUTE);
     }
 
-    public DateTime toDateTime() {
-        DateTime dateTime = new DateTime(//
+    public ZonedDateTime toZonedDateTime() {
+        ZonedDateTime dateTime = ZonedDateTime.of(//
                 fields[FIELD_YEAR], //
                 fields[FIELD_MONTH], //
                 fields[FIELD_DAY], //
                 fields[FIELD_HOUR], //
                 fields[FIELD_MINUTE], //
                 fields[FIELD_SECOND], //
+                0, //
                 timeZone);
         return dateTime;
     }
@@ -466,8 +469,8 @@ class TimeVec
             }
         }
 
-        DateTime base = toDateTime();
-        DateTime future = base;
+        ZonedDateTime base = toZonedDateTime();
+        ZonedDateTime future = base;
         if (firstBeforeField != -1) { // any before-than field was found.
             switch (firstBeforeField) {
             case FIELD_YEAR:
@@ -542,12 +545,13 @@ class Field {
 }
 
 class RangeResolver
-        implements IFieldVector {
+        implements
+            IFieldVector {
 
     Field[] fields;
     int n;
     int[] point;
-    DateTimeZone timeZone;
+    ZoneId timeZone;
     int nconvert;
 
     public RangeResolver(Field[] fields, int[] point, int r) {
@@ -556,7 +560,7 @@ class RangeResolver
         this.point = point;
     }
 
-    DateTime start(int i, boolean restart) {
+    ZonedDateTime start(int i, boolean restart) {
         if (i >= n)
             return convert();
 
@@ -569,14 +573,14 @@ class RangeResolver
         if (i == FIELD_DAY) {
             int year = fields[FIELD_YEAR].value;
             int month = fields[FIELD_MONTH].value;
-            DateTime dt = new DateTime(year, month, 1, 0, 0, 0);
+            ZonedDateTime dt = ZonedDateTime.of(year, month, 1, 0, 0, 0, 0, ZoneId.systemDefault());
             dt = dt.plusMonths(1).minusDays(1);
             int monthSize = dt.getDayOfMonth();
             max = monthSize;
         }
         for (int val = start; val <= max; val++) {
             push(i, val);
-            DateTime t = start(i + 1, restart || val > start);
+            ZonedDateTime t = start(i + 1, restart || val > start);
             pop(i);
             if (t != null)
                 return t;
@@ -604,28 +608,29 @@ class RangeResolver
                 vec[0], vec[1], vec[2], vec[3], vec[4], vec[5], vec[6], vec[7]).toString();
     };
 
-    DateTime convert() {
+    ZonedDateTime convert() {
         System.out.println(" -- " + this);
         nconvert++;
-        DateTime dateTime = new DateTime( //
+        ZonedDateTime zonedDateTime = ZonedDateTime.of( //
                 fields[FIELD_YEAR].value, //
                 fields[FIELD_MONTH].value, //
                 fields[FIELD_DAY].value, //
                 fields[FIELD_HOUR].value, //
                 fields[FIELD_MINUTE].value, //
                 fields[FIELD_SECOND].value, //
+                0, // nano
                 timeZone);
 
         int week = fields[FIELD_WEEK].value;
         int weekDay = fields[FIELD_WEEKDAY].value;
         if (week != -1) {
-            if (week != dateTime.getWeekOfWeekyear())
+            if (week != zonedDateTime.get(ChronoField.ALIGNED_WEEK_OF_YEAR))
                 return null;
         }
         if (weekDay != -1) {
-            if (weekDay != dateTime.getDayOfWeek())
+            if (weekDay != zonedDateTime.getDayOfWeek().getValue())
                 return null;
         }
-        return dateTime;
+        return zonedDateTime;
     }
 }

@@ -104,10 +104,12 @@ public class StringFnCodegen
                         line = line.replace("File", info.type.getSimpleName());
                         break;
 
-                    default:
+                    case K_DATE:
                         line = line.replace("Date", info.type.getSimpleName());
                         line = line.replace("date", Strings.lcfirst(info.type.getSimpleName()));
                         break;
+
+                    default:
                     }
                     System.out.println(line);
                 }

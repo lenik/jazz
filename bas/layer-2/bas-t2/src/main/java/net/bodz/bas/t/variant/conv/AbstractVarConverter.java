@@ -3,15 +3,16 @@ package net.bodz.bas.t.variant.conv;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.TypeConvertException;
@@ -47,10 +48,10 @@ public abstract class AbstractVarConverter<T>
         tomap.put(String.class, new ToStringTr());
         tomap.put(BigInteger.class, new ToBigIntegerTr());
         tomap.put(BigDecimal.class, new ToBigDecimalTr());
-        tomap.put(Calendar.class, new ToCalendarTr());
-        tomap.put(Date.class, new ToDateTr());
-        tomap.put(java.sql.Date.class, new ToSqlDateTr());
-        tomap.put(DateTime.class, new ToDateTimeTr());
+        tomap.put(Instant.class, new ToInstantTr());
+        tomap.put(LocalDateTime.class, new ToLocalDateTimeTr());
+        tomap.put(LocalDate.class, new ToLocalDateTr());
+        tomap.put(LocalTime.class, new ToLocalTimeTr());
 
         extensions = VarConverterExtensions.getExtensions(type);
         Iterator<IVarConverterExtension<T>> it = extensions.iterator();
@@ -59,12 +60,12 @@ public abstract class AbstractVarConverter<T>
 
             Map<Class<?>, Function<Object, T>> fm = ext.getFromMap();
             for (Class<?> t : fm.keySet())
-                if (!frommap.containsKey(t))
+                if (! frommap.containsKey(t))
                     frommap.put(t, fm.get(t));
 
             Map<Class<?>, Function<T, Object>> tm = ext.getToMap();
             for (Class<?> t : tm.keySet())
-                if (!tomap.containsKey(t))
+                if (! tomap.containsKey(t))
                     tomap.put(t, tm.get(t));
         }
     }
@@ -251,23 +252,27 @@ public abstract class AbstractVarConverter<T>
     }
 
     @Override
-    public Calendar toCalendar(T value) {
-        return CalendarVarConverter.INSTANCE.from(value);
+    public Instant toInstant(T value) {
+        long epochMilli = toLong(value);
+        return Instant.ofEpochMilli(epochMilli);
     }
 
     @Override
-    public Date toDate(T value) {
-        return DateVarConverter.INSTANCE.from(value);
+    public LocalDateTime toLocalDateTime(T value) {
+        Instant instant = toInstant(value);
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
     @Override
-    public java.sql.Date toSqlDate(T value) {
-        return SqlDateVarConverter.INSTANCE.from(value);
+    public LocalDate toLocalDate(T value) {
+        Instant instant = toInstant(value);
+        return LocalDate.ofInstant(instant, ZoneId.systemDefault());
     }
 
     @Override
-    public DateTime toDateTime(T value) {
-        return DateTimeVarConverter.INSTANCE.from(value);
+    public LocalTime toLocalTime(T value) {
+        Instant instant = toInstant(value);
+        return LocalTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
     class CastTr
@@ -414,39 +419,39 @@ public abstract class AbstractVarConverter<T>
         }
     }
 
-    class ToCalendarTr
+    class ToInstantTr
             implements
-                Function<T, Calendar> {
+                Function<T, Instant> {
         @Override
-        public Calendar apply(T input) {
-            return toCalendar(input);
+        public Instant apply(T input) {
+            return toInstant(input);
         }
     }
 
-    class ToDateTr
+    class ToLocalDateTimeTr
             implements
-                Function<T, Date> {
+                Function<T, LocalDateTime> {
         @Override
-        public Date apply(T input) {
-            return toDate(input);
+        public LocalDateTime apply(T input) {
+            return toLocalDateTime(input);
         }
     }
 
-    class ToDateTimeTr
+    class ToLocalDateTr
             implements
-                Function<T, DateTime> {
+                Function<T, LocalDate> {
         @Override
-        public DateTime apply(T input) {
-            return toDateTime(input);
+        public LocalDate apply(T input) {
+            return toLocalDate(input);
         }
     }
 
-    class ToSqlDateTr
+    class ToLocalTimeTr
             implements
-                Function<T, java.sql.Date> {
+                Function<T, LocalTime> {
         @Override
-        public java.sql.Date apply(T input) {
-            return toSqlDate(input);
+        public LocalTime apply(T input) {
+            return toLocalTime(input);
         }
     }
 

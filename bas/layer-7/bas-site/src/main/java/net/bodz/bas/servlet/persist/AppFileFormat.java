@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.time.Instant;
 import java.util.Map;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.javax.servlet.AttributesIterable;
@@ -60,7 +59,7 @@ public class AppFileFormat {
             out.endObject();
         }
 
-        String timestamp = DateTimes.ISO8601.print(new DateTime());
+        String timestamp = DateTimes.ISO8601.format(Instant.now());
         out.entry("timestamp", timestamp);
 
         out.key("attributes");
@@ -98,8 +97,8 @@ public class AppFileFormat {
         version.getInt("minor");
 
         String timestamp = in.getString("timestamp");
-        DateTime time = DateTimes.ISO8601.parseDateTime(timestamp);
-        assert time != null;
+        Instant instant = Instant.from(DateTimes.ISO8601.parse(timestamp));
+        assert instant != null;
 
         JsonObject attrs = in.getJsonObject("attributes");
         for (String name : attrs.keySet()) {

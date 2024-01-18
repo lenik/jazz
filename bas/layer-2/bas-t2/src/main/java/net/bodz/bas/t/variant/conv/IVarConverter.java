@@ -2,10 +2,10 @@ package net.bodz.bas.t.variant.conv;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.joda.time.DateTime;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -13,7 +13,8 @@ import net.bodz.bas.t.order.IPriority;
 
 @IndexedType
 public interface IVarConverter<T>
-        extends IPriority {
+        extends
+            IPriority {
 
     Class<T> getType();
 
@@ -32,6 +33,8 @@ public interface IVarConverter<T>
 
     T fromString(String in)
             throws TypeConvertException;
+
+    // T fromInstant()
 
     T fromByteArray(byte[] in);
 
@@ -64,12 +67,12 @@ public interface IVarConverter<T>
 
     BigDecimal toBigDecimal(T value);
 
-    Calendar toCalendar(T value);
+    Instant toInstant(T value);
 
-    Date toDate(T value);
+    LocalDateTime toLocalDateTime(T value);
 
-    java.sql.Date toSqlDate(T value);
+    LocalDate toLocalDate(T value);
 
-    DateTime toDateTime(T value);
+    LocalTime toLocalTime(T value);
 
 }

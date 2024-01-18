@@ -1,6 +1,6 @@
 package net.bodz.lily.model.base;
 
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.lily.criteria.DateFieldCriteriaBuilder;
 import net.bodz.lily.criteria.NumberExprCriteriaBuilder;
@@ -8,11 +8,11 @@ import net.bodz.lily.criteria.NumberExprCriteriaBuilder;
 public class CoMomentIntervalCriteriaBuilder<self_t extends CoMomentIntervalCriteriaBuilder<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 
-    public final DateField<DateTime> beginTime = date("t0", DateTime.class);
-    public final DateField<DateTime> endTime = date("t1", DateTime.class);
+    public final DateField<ZonedDateTime> beginTime = date("t0", ZonedDateTime.class);
+    public final DateField<ZonedDateTime> endTime = date("t1", ZonedDateTime.class);
 
-    public final NumberExprCriteriaBuilder<DateFieldCriteriaBuilder<self_t, DateTime>> year = beginTime.year;
-    public final DateField<DateTime> date = beginTime;
+    public final NumberExprCriteriaBuilder<DateFieldCriteriaBuilder<self_t, ZonedDateTime>> year = beginTime.year;
+    public final DateField<ZonedDateTime> date = beginTime;
 
     public void noDate() {
         beginTime.isNull();

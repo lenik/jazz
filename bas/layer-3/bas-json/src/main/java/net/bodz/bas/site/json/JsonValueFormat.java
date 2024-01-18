@@ -2,8 +2,8 @@ package net.bodz.bas.site.json;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-
-import org.joda.time.DateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -28,14 +28,19 @@ public class JsonValueFormat {
             SimpleDateFormat sdf = new SimpleDateFormat(fmt);
             return sdf.format(val);
 
-        case TypeId.JODA_DATETIME:
-            DateTime dateTime = (DateTime) val;
-            return dateTime.toString(fmt);
+        case TypeId.INSTANT:
+        case TypeId.ZONED_DATE_TIME:
+        case TypeId.OFFSET_DATE_TIME:
+        case TypeId.LOCAL_DATE_TIME:
+        case TypeId.LOCAL_DATE:
+        case TypeId.LOCAL_TIME:
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(fmt);
+            return formatter.format((TemporalAccessor) val);
         }
 
         if (val instanceof Number) {
-            DecimalFormat dfmt = new DecimalFormat(fmt);
-            return dfmt.format(val);
+            DecimalFormat decimalFormat = new DecimalFormat(fmt);
+            return decimalFormat.format(val);
         }
 
         // non-primitives.

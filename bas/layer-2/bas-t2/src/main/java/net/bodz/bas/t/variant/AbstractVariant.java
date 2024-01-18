@@ -2,8 +2,6 @@ package net.bodz.bas.t.variant;
 
 import java.lang.reflect.Array;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 
@@ -34,7 +32,7 @@ public abstract class AbstractVariant
         Object value = get();
         if (value == null)
             return defaultValue;
-        if (!value.getClass().isArray())
+        if (! value.getClass().isArray())
             return value;
         int length = Array.getLength(value);
         if (length == 0)
@@ -178,7 +176,7 @@ public abstract class AbstractVariant
         return val;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     public <T> T convert(Class<? super T> type) {
         switch (TypeKind.getTypeId(type)) {
         case TypeId._byte:
@@ -225,9 +223,27 @@ public abstract class AbstractVariant
         case TypeId.DATE:
         case TypeId.SQL_DATE:
             return (T) getDate();
+//
+//        case TypeId.JODA_DATETIME:
+//            throw new NotImplementedException();
 
-        case TypeId.JODA_DATETIME:
-            throw new NotImplementedException();
+        case TypeId.INSTANT:
+            return (T) getInstant();
+
+        case TypeId.ZONED_DATE_TIME:
+            return (T) getZonedDateTime();
+
+        case TypeId.OFFSET_DATE_TIME:
+            return (T) getOffsetDateTime();
+
+        case TypeId.LOCAL_DATE_TIME:
+            return (T) getLocalDateTime();
+
+        case TypeId.LOCAL_DATE:
+            return (T) getLocalDate();
+
+        case TypeId.LOCAL_TIME:
+            return (T) getLocalTime();
 
         default:
             return (T) get();

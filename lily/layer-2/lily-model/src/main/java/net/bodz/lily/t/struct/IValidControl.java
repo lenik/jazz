@@ -1,8 +1,7 @@
 package net.bodz.lily.t.struct;
 
 import java.io.IOException;
-
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -19,20 +18,20 @@ public interface IValidControl
 
     void setValid(boolean valid);
 
-    DateTime getValidSince();
+    ZonedDateTime getValidSince();
 
-    void setValidSince(DateTime since);
+    void setValidSince(ZonedDateTime since);
 
-    DateTime getValidUntil();
+    ZonedDateTime getValidUntil();
 
-    void setValidUntil(DateTime until);
+    void setValidUntil(ZonedDateTime until);
 
     @Override
     default void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         setValid(o.getBoolean("valid", false));
-        setValidSince(o.getDateTime("validSince"));
-        setValidUntil(o.getDateTime("validUntil"));
+        setValidSince(o.getZonedDateTime("validSince"));
+        setValidUntil(o.getZonedDateTime("validUntil"));
     }
 
     @Override

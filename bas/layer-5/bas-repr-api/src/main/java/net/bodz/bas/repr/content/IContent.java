@@ -9,7 +9,7 @@ public interface IContent
             IPriority {
 
     /**
-     * Get the creation time in milliseconds.
+     * Get the creation time in epoch milli.
      */
     long getCreationTime();
 

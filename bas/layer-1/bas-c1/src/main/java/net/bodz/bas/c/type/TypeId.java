@@ -2,7 +2,7 @@ package net.bodz.bas.c.type;
 
 /**
  * Keep the id compatible with eclipse jdt TypeIds.
- * 
+ *
  * @see TypeKind#getTypeId(Class)
  */
 public interface TypeId {
@@ -50,10 +50,21 @@ public interface TypeId {
     int BIG_INTEGER = 50;
     int BIG_DECIMAL = 51;
 
+    @Deprecated
     int DATE = 1000;
+    @Deprecated
     int SQL_DATE = 1001;
-    int JODA_DATETIME = 1002;
+//    int JODA_DATETIME = 1002;
+    @Deprecated
     int CALENDAR = 1010;
+
+    int INSTANT = 1020;
+    int OFFSET_DATE_TIME = 1021;
+    int ZONED_DATE_TIME = 1022;
+    int LOCAL_DATE_TIME = 1023;
+    int LOCAL_DATE = 1024;
+    int LOCAL_TIME = 1025;
+    int OFFSET_TIME = 1026;
 
     int Z_PREDEF = 2000;
 

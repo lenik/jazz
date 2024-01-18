@@ -21,8 +21,8 @@ column-property {
 }
 
 column-type {
-    t0:                 org.joda.time.DateTime
-    t1:                 org.joda.time.DateTime
+    t0:                 java.time.ZonedDateTime
+    t1:                 java.time.ZonedDateTime
 }
 
 key-columns {

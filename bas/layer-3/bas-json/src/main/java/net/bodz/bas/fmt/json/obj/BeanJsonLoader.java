@@ -96,7 +96,7 @@ public class BeanJsonLoader
             if ("class".equals(propertyName))
                 continue;
             if (node.isObject())
-                if (!node.getObject().has(propertyName))
+                if (! node.getObject().has(propertyName))
                     continue;
 
             Object propertyValue;
@@ -206,10 +206,25 @@ public class BeanJsonLoader
                 return jsonVar.getBigInteger();
             case TypeId.BIG_DECIMAL:
                 return jsonVar.getBigDecimal();
+
             case TypeId.DATE:
                 return jsonVar.getDate();
             case TypeId.SQL_DATE:
                 return new java.sql.Date(jsonVar.getDate().getTime());
+
+            case TypeId.INSTANT:
+                return jsonVar.getInstant();
+            case TypeId.ZONED_DATE_TIME:
+                return jsonVar.getZonedDateTime();
+            case TypeId.OFFSET_DATE_TIME:
+                return jsonVar.getOffsetDateTime();
+            case TypeId.LOCAL_DATE_TIME:
+                return jsonVar.getLocalDateTime();
+            case TypeId.LOCAL_DATE:
+                return jsonVar.getLocalDate();
+            case TypeId.LOCAL_TIME:
+                return jsonVar.getLocalTime();
+
             case TypeId.STRING:
                 return jsonVar.toString();
             }

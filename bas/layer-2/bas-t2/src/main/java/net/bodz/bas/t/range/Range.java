@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import net.bodz.bas.err.ParseException;
 
-public abstract class Range<self_t, val_t>
+public abstract class Range<This, val_t>
         implements
             Serializable {
 
@@ -39,6 +39,11 @@ public abstract class Range<self_t, val_t>
         this.end = end;
     }
 
+    @SuppressWarnings("unchecked")
+    protected final This _this() {
+        return (This) this;
+    }
+
     public boolean isPoint() {
         return startInclusive && endInclusive && start == end && start != null;
     }
@@ -54,9 +59,9 @@ public abstract class Range<self_t, val_t>
     }
 
     @SuppressWarnings("unchecked")
-    public self_t point(val_t val) {
+    public This point(val_t val) {
         setPointValue(val);
-        return (self_t) this;
+        return (This) this;
     }
 
     public boolean isUnspecified() {
@@ -92,7 +97,7 @@ public abstract class Range<self_t, val_t>
     }
 
     public boolean isHasStartExcl() {
-        return start != null && !startInclusive;
+        return start != null && ! startInclusive;
     }
 
     public boolean isHasEndIncl() {
@@ -100,7 +105,7 @@ public abstract class Range<self_t, val_t>
     }
 
     public boolean isHasEndExcl() {
-        return end != null && !endInclusive;
+        return end != null && ! endInclusive;
     }
 
     public boolean hasStart(boolean inclusive) {
@@ -143,11 +148,11 @@ public abstract class Range<self_t, val_t>
     }
 
     public boolean isStartExclusive() {
-        return !startInclusive;
+        return ! startInclusive;
     }
 
     public void setStartExclusive(boolean startExclusive) {
-        this.startInclusive = !startExclusive;
+        this.startInclusive = ! startExclusive;
     }
 
     public boolean isEndInclusive() {
@@ -159,11 +164,11 @@ public abstract class Range<self_t, val_t>
     }
 
     public boolean isEndExclusive() {
-        return !endInclusive;
+        return ! endInclusive;
     }
 
     public void setEndExclusive(boolean endExclusive) {
-        this.endInclusive = !endExclusive;
+        this.endInclusive = ! endExclusive;
     }
 
     public val_t getFrom() {
@@ -202,8 +207,7 @@ public abstract class Range<self_t, val_t>
 
     /**
      * @param to
-     *            Set to be right-open for <code>null</code> to. The same as if <code>to</code> is
-     *            too large.
+     *            Set to be right-open for <code>null</code> to. The same as if <code>to</code> is too large.
      */
     public void setTo(val_t to) {
         this.end = to;
@@ -211,7 +215,7 @@ public abstract class Range<self_t, val_t>
     }
 
     @SuppressWarnings("unchecked")
-    public self_t parse(String s)
+    public This parse(String s)
             throws ParseException {
         s = s.trim();
 
@@ -229,7 +233,7 @@ public abstract class Range<self_t, val_t>
         default:
             val_t point = parseValue(s);
             setPointValue(point);
-            return (self_t) this;
+            return (This) this;
         }
 
         char endType = s.charAt(s.length() - 1);
@@ -252,11 +256,11 @@ public abstract class Range<self_t, val_t>
         String part2 = s.substring(comma + 1, s.length() - 1).trim();
         this.start = null;
         this.end = null;
-        if (!part1.isEmpty())
+        if (! part1.isEmpty())
             this.start = parseValue(part1);
-        if (!part2.isEmpty())
+        if (! part2.isEmpty())
             this.end = parseValue(part2);
-        return (self_t) this;
+        return (This) this;
     }
 
     public val_t parseValue(String s)
@@ -306,9 +310,9 @@ public abstract class Range<self_t, val_t>
     }
 
     public boolean contains(Range<?, val_t> o) {
-        if (!contains(o.start))
+        if (! contains(o.start))
             return false;
-        if (!contains(o.end))
+        if (! contains(o.end))
             return false;
         return true;
     }
@@ -394,7 +398,7 @@ public abstract class Range<self_t, val_t>
         if (start == null) {
             if (other.start != null)
                 return false;
-        } else if (!start.equals(other.start))
+        } else if (! start.equals(other.start))
             return false;
         if (startInclusive != other.startInclusive)
             return false;
@@ -402,7 +406,7 @@ public abstract class Range<self_t, val_t>
         if (end == null) {
             if (other.end != null)
                 return false;
-        } else if (!end.equals(other.end))
+        } else if (! end.equals(other.end))
             return false;
         if (endInclusive != other.endInclusive)
             return false;

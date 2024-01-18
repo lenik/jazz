@@ -3,6 +3,12 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public interface IVariant {
@@ -16,16 +22,16 @@ public interface IVariant {
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element
-     *         in the array. If the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
+     *         the array is empty, returns <code>null</code>, too.
      */
     Object getScalar();
 
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element
-     *         in the array. If the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
+     *         the array is empty, returns <code>null</code>, too.
      *
      *         If there is no entry for the key, defaultValue is returned.
      */
@@ -37,7 +43,7 @@ public interface IVariant {
 
     String getString();
 
-    String getString(String defaultString);
+    String getString(String defaultValue);
 
     String[] getStringArray();
 
@@ -104,6 +110,30 @@ public interface IVariant {
     Date getDate();
 
     Date getDate(Date defaultValue);
+
+    Instant getInstant();
+
+    Instant getInstant(Instant defaultValue);
+
+    ZonedDateTime getZonedDateTime();
+
+    ZonedDateTime getZonedDateTime(ZonedDateTime defaultValue);
+
+    OffsetDateTime getOffsetDateTime();
+
+    OffsetDateTime getOffsetDateTime(OffsetDateTime defaultValue);
+
+    LocalDateTime getLocalDateTime();
+
+    LocalDateTime getLocalDateTime(LocalDateTime defaultValue);
+
+    LocalDate getLocalDate();
+
+    LocalDate getLocalDate(LocalDate defaultValue);
+
+    LocalTime getLocalTime();
+
+    LocalTime getLocalTime(LocalTime defaultValue);
 
     <T extends Enum<T>> T getEnum(Class<T> enumType);
 

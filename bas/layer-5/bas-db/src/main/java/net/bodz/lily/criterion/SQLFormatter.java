@@ -3,10 +3,13 @@ package net.bodz.lily.criterion;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.regex.Matcher;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.c.java.util.regex.IPartProcessor;
 import net.bodz.bas.c.java.util.regex.TextPreps;
@@ -158,13 +161,26 @@ public class SQLFormatter
         case TypeId.STRING:
             return dialect.qString((String) value);
 
-        case TypeId.DATE:
-            return dialect.qDate((Date) value);
-        case TypeId.SQL_DATE:
-            return dialect.qDate((java.sql.Date) value);
+//        case TypeId.DATE:
+//            return dialect.qDate((Date) value);
+//        case TypeId.SQL_DATE:
+//            return dialect.qDate((java.sql.Date) value);
 
-        case TypeId.JODA_DATETIME:
-            return dialect.qDateTime((DateTime) value);
+//        case TypeId.JODA_DATETIME:
+//            return dialect.qDateTime((DateTime) value);
+
+        case TypeId.INSTANT:
+            return dialect.qInstant((Instant) value);
+        case TypeId.ZONED_DATE_TIME:
+            return dialect.qZonedDateTime((ZonedDateTime) value);
+        case TypeId.OFFSET_DATE_TIME:
+            return dialect.qOffsetDateTime((OffsetDateTime) value);
+        case TypeId.LOCAL_DATE_TIME:
+            return dialect.qLocalDateTime((LocalDateTime) value);
+        case TypeId.LOCAL_DATE:
+            return dialect.qLocalDate((LocalDate) value);
+        case TypeId.LOCAL_TIME:
+            return dialect.qLocalTime((LocalTime) value);
 
         default:
             return dialect.qString(value.toString());
