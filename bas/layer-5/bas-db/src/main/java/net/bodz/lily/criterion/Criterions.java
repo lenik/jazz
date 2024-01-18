@@ -17,8 +17,6 @@ public class Criterions {
     static final String K_GREATER_OR_EQUALS = "greaterOrEquals";
     static final String K_IN = "in";
     static final String K_LIKE = "like";
-    static final String K_NULL = "null";
-    static final String K_TRUE = "true";
 
     static final Map<String, ICriterionCreator> map = new HashMap<>();
     static {
@@ -34,8 +32,6 @@ public class Criterions {
         map.put(K_GREATER_OR_EQUALS, () -> newCompare(CompareMode.GREATER_OR_EQUALS));
         map.put(K_IN, () -> new FieldIn<Object>());
         map.put(K_LIKE, () -> new FieldLike());
-        map.put(K_NULL, () -> new FieldNull());
-        map.put(K_TRUE, () -> new FieldTrue());
     }
 
     static FieldCompare<Object> newCompare(CompareMode mode) {

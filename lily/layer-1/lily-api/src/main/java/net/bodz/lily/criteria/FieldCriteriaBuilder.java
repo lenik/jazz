@@ -1,6 +1,10 @@
 package net.bodz.lily.criteria;
 
-import net.bodz.lily.criterion.*;
+import net.bodz.lily.criterion.CompareMode;
+import net.bodz.lily.criterion.FieldBetween;
+import net.bodz.lily.criterion.FieldCompare;
+import net.bodz.lily.criterion.FieldCriterion;
+import net.bodz.lily.criterion.FieldIn;
 
 public class FieldCriteriaBuilder<fin_target, self_t, T> {
 
@@ -24,74 +28,72 @@ public class FieldCriteriaBuilder<fin_target, self_t, T> {
     }
 
     public final fin_target isNull() {
-        receiver.receive(new FieldNull(fieldName, true));
-        return finishTarget;
+        return eq(null);
     }
 
     public final fin_target isNotNull() {
-        receiver.receive(new FieldNull(fieldName, false));
-        return finishTarget;
+        return notEq(null);
     }
 
+    @SuppressWarnings("unchecked")
     public final fin_target isTrue() {
-        receiver.receive(new FieldTrue(fieldName, false));
-        return finishTarget;
+        return eq((T) Boolean.TRUE);
     }
 
+    @SuppressWarnings("unchecked")
     public final fin_target isFalse() {
-        receiver.receive(new FieldTrue(fieldName, true));
-        return finishTarget;
+        return eq((T) Boolean.FALSE);
     }
 
     public final fin_target eq(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.EQUALS, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.EQUALS, value));
         return finishTarget;
     }
 
     public final fin_target notEq(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.NOT_EQUALS, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.NOT_EQUALS, value));
         return finishTarget;
     }
 
     public fin_target lessThan(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.LESS_THAN, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.LESS_THAN, value));
         return finishTarget;
     }
 
     public fin_target lessOrEquals(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.LESS_OR_EQUALS, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.LESS_OR_EQUALS, value));
         return finishTarget;
     }
 
     public fin_target greaterThan(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.GREATER_THAN, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.GREATER_THAN, value));
         return finishTarget;
     }
 
     public fin_target greaterOrEquals(T value) {
-        receiver.receive(new FieldCompare<T>(fieldName, false, CompareMode.GREATER_OR_EQUALS, value));
+        receiver.receive(new FieldCompare<T>(fieldName, true, CompareMode.GREATER_OR_EQUALS, value));
         return finishTarget;
     }
 
     public fin_target between(T min, T max) {
-        receiver.receive(new FieldBetween<T>(fieldName, false, min, max));
+        receiver.receive(new FieldBetween<T>(fieldName, true, min, max));
         return finishTarget;
     }
 
     public fin_target notBetween(T min, T max) {
-        receiver.receive(new FieldBetween<T>(fieldName, true, min, max));
+        receiver.receive(new FieldBetween<T>(fieldName, false, min, max));
         return finishTarget;
     }
 
     @SafeVarargs
     public final fin_target in(T... values) {
-        receiver.receive(new FieldIn<T>(fieldName, false, values));
+        receiver.receive(new FieldIn<T>(fieldName, true, values));
         return finishTarget;
     }
 
     @SafeVarargs
     public final fin_target notIn(T... values) {
-        receiver.receive(new FieldIn<T>(fieldName, true, values));
+        receiver.receive(new FieldIn<T>(fieldName, false, values));
         return finishTarget;
     }
 

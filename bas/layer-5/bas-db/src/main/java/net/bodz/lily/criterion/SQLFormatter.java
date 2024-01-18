@@ -64,8 +64,8 @@ public class SQLFormatter
     }
 
     @Override
-    public void disjunction(Disjunction junction) {
-        composite("or", junction);
+    public void disjunction(Disjunction disjunction) {
+        composite("or", disjunction);
     }
 
     void field(String op, FieldCriterion field, Object value) {
@@ -100,14 +100,14 @@ public class SQLFormatter
 
     @Override
     public void fieldBetween(FieldBetween<?> fieldBetween) {
-        fieldv(fieldBetween.not ? "not between" : "between", //
+        fieldv(fieldBetween.yes ? "between" : "not between", //
                 fieldBetween, "and", fieldBetween.min, fieldBetween.max);
     }
 
     @Override
     public void fieldCompare(FieldCompare<?> fieldCompare) {
         CompareMode mode = fieldCompare.mode;
-        if (fieldCompare.not)
+        if (! fieldCompare.yes)
             mode = mode.not();
         String sqlOp = mode.getSqlOp();
         field(sqlOp, fieldCompare, fieldCompare.value);
@@ -116,28 +116,14 @@ public class SQLFormatter
     @Override
     public void fieldIn(FieldIn<?> fieldIn) {
         Object[] vals = fieldIn.values.toArray();
-        fieldv(fieldIn.not ? "not in" : "in", //
+        fieldv(fieldIn.yes ? "in" : "not in", //
                 fieldIn, "(", ", ", ")", vals);
     }
 
     @Override
     public void fieldLike(FieldLike fieldLike) {
-        field(fieldLike.not ? "not like" : "like", //
+        field(fieldLike.yes ? "like" : "not like", //
                 fieldLike, fieldLike.pattern);
-    }
-
-    @Override
-    public void fieldNull(FieldNull fieldNull) {
-        field(fieldNull.not ? "is not" : "is", //
-                fieldNull, (Object) null);
-    }
-
-    @Override
-    public void fieldTrue(FieldTrue fieldTrue) {
-        String qName = dialect.qNameSmart(fieldTrue.fieldName);
-        if (fieldTrue.not)
-            sb.append("not ");
-        sb.append(qName);
     }
 
     String toSql(Object value) {

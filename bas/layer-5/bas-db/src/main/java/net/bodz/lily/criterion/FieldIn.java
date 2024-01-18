@@ -22,18 +22,23 @@ public class FieldIn<T>
     }
 
     @SafeVarargs
-    public FieldIn(String fieldName, boolean not, T... values) {
-        super(fieldName, not);
+    public FieldIn(String fieldName, boolean yes, T... values) {
+        super(fieldName, yes);
         if (values == null)
             throw new NullPointerException("values");
         this.values = Arrays.asList(values);
     }
 
-    public FieldIn(String fieldName, boolean not, Collection<T> values) {
-        super(fieldName, not);
+    public FieldIn(String fieldName, boolean yes, Collection<T> values) {
+        super(fieldName, yes);
         if (values == null)
             throw new NullPointerException("values");
         this.values = values;
+    }
+
+    @Override
+    public FieldCriterion clone() {
+        return new FieldIn<>(fieldName, yes, values);
     }
 
     @Override
@@ -58,7 +63,7 @@ public class FieldIn<T>
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void readValue(JsonVariant in, Class<?> fieldType)
+    public void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
         values.clear();
 

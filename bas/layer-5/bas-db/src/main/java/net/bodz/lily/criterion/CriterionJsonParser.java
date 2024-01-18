@@ -26,31 +26,42 @@ public class CriterionJsonParser {
 
         if (in.isArray()) {
             Composite c = defaultComposite.create();
-            c.jsonIn(in);
+            c.jsonIn(in, typeInferrer, stack);
             return c;
         }
 
         JsonObject o = in.getObject();
-        switch (o.keySet().size()) {
-        case 0:
+        if (o.isEmpty())
             throw new IllegalArgumentException("The json object can't be empty.");
-        }
 
         String firstKey = o.keys().next();
         JsonVariant firstVal = JsonVariant.of(o.get(firstKey));
 
-        boolean negated = firstKey.startsWith("~");
-        if (negated)
+        if (o.keySet().size() == 1) {
+            if (Disjunction.K_OR.equals(firstKey)) {
+                Disjunction disj = new Disjunction();
+                disj.jsonIn(in, typeInferrer, stack);
+                return disj;
+            }
+            if (Not.K_NOT.equals(firstKey)) {
+                Not not = new Not();
+                not.jsonIn(in, typeInferrer, stack);
+                return not;
+            }
+        }
+
+        boolean firstNegated = firstKey.startsWith("~");
+        if (firstNegated)
             firstKey = firstKey.substring(1);
 
         ICriterion criterion = Criterions.create(firstKey);
         if (criterion != null) {
-            if (negated) {
+            if (firstNegated) {
                 if (criterion instanceof FieldCriterion) {
                     FieldCriterion f = (FieldCriterion) criterion;
-                    f.not = true;
+                    f.yes = false;
                 } else {
-                    throw new UnsupportedOperationException();
+                    throw new ParseException("negate key used on non-FieldCriterion");
                 }
             }
 
@@ -58,7 +69,6 @@ public class CriterionJsonParser {
             return criterion;
         }
 
-        assert negated == false;
         // key[]: field names
         Composite composite = defaultComposite.create();
         composite.jsonIn(in, typeInferrer, stack);
