@@ -1,7 +1,6 @@
 package net.bodz.violet.store;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.test.TestSampleBuilder;
@@ -26,7 +25,6 @@ public class StoreOrderItemSamples
         a.setOrder(order);
         a.setRegion(region);
         a.setSerial(1878756156148454194L);
-        a.setExpire(new Timestamp(Dates.ISO8601Z.parse("2024-01-16T04:04:27.553+0800").getTime()));
         a.setQuantity(new BigDecimal("99551921320068543.85"));
         a.setPrice(new BigDecimal("6"));
         a.setAmount(new BigDecimal("47495.16"));

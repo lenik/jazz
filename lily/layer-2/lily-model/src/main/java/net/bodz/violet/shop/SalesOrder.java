@@ -1,10 +1,9 @@
 package net.bodz.violet.shop;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Table;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -43,14 +42,14 @@ public class SalesOrder
     @DetailLevel(DetailLevel.HIDDEN)
     @Derived
     @Override
-    public DateTime getBeginTime() {
+    public ZonedDateTime getBeginTime() {
         return super.getBeginTime();
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Derived
     @Override
-    public DateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return super.getEndTime();
     }
 
@@ -58,11 +57,11 @@ public class SalesOrder
      * 下单时间
      */
     @OfGroup(StdGroup.Schedule.class)
-    public DateTime getOrderTime() {
+    public ZonedDateTime getOrderTime() {
         return super.getBeginTime();
     }
 
-    public void setOrderTime(DateTime orderTime) {
+    public void setOrderTime(ZonedDateTime orderTime) {
         super.setBeginTime(orderTime);
     }
 
@@ -70,11 +69,11 @@ public class SalesOrder
      * 交货期限
      */
     @OfGroup(StdGroup.Schedule.class)
-    public DateTime getDeadline() {
+    public ZonedDateTime getDeadline() {
         return super.getEndTime();
     }
 
-    public void setDeadline(DateTime deadline) {
+    public void setDeadline(ZonedDateTime deadline) {
         super.setEndTime(deadline);
     }
 

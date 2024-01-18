@@ -71,8 +71,6 @@ public class RegionSamples
         this.material = picker.pickAny(ArtifactMapper.class, "art");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.forArt = picker.pickAny(ArtifactMapper.class, "art");
-        this.bbox = new Dim3dSamples().build();
-        this.position = new Dim3dSamples().build();
         return this;
     }
 

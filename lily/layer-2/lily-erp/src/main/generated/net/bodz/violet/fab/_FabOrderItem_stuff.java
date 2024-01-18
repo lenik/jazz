@@ -1,15 +1,14 @@
 package net.bodz.violet.fab;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 
-import org.joda.time.DateTime;
-
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -73,9 +72,9 @@ public abstract class _FabOrderItem_stuff
     @NotNull
     long id;
 
-    DateTime beginTime;
+    ZonedDateTime beginTime;
 
-    DateTime endTime;
+    ZonedDateTime endTime;
 
     @NotNull
     int year;
@@ -139,22 +138,22 @@ public abstract class _FabOrderItem_stuff
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t0", precision = 35, scale = 6)
-    public DateTime getBeginTime() {
+    public ZonedDateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(DateTime value) {
+    public void setBeginTime(ZonedDateTime value) {
         this.beginTime = value;
     }
 
     @Ordinal(_ord_END_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t1", precision = 35, scale = 6)
-    public DateTime getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(DateTime value) {
+    public void setEndTime(ZonedDateTime value) {
         this.endTime = value;
     }
 

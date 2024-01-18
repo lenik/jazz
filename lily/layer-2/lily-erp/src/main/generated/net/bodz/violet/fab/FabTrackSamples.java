@@ -1,10 +1,9 @@
 package net.bodz.violet.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
-import org.joda.time.DateTime;
-
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.contact.OrgUnit;
 import net.bodz.lily.contact.dao.OrgUnitMapper;
@@ -33,11 +32,9 @@ public class FabTrackSamples
         a.setOwnerUser(ownerUser);
         a.setProcess(process);
         a.setId(2961489878358405846L);
-        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2024-01-22T18:48:46.633+0800").getTime()));
-        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2024-01-01T01:09:08.371+0800").getTime()));
+        a.setBeginTime(ZonedDateTime.parse("2024-01-22 19:48:46", DateTimes.D10T8));
+        a.setEndTime(ZonedDateTime.parse("2024-01-16 03:55:32", DateTimes.D10T8));
         a.setYear(1499594658);
-        a.setSince(new Timestamp(Dates.ISO8601Z.parse("2024-01-19T11:36:19.345+0800").getTime()));
-        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2023-12-30T09:59:22.505+0800").getTime()));
         a.setPlannedQuantity(new BigDecimal("26140200.60"));
         a.setActualQuantity(new BigDecimal("6356564309547732"));
         a.setValidQuantity(new BigDecimal("8085073"));

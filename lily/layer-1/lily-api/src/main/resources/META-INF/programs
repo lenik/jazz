@@ -1,1 +1,2 @@
 main criterion = net.bodz.lily.criterion.CriterionJson
+main criterion = net.bodz.lily.util.CriterionJson

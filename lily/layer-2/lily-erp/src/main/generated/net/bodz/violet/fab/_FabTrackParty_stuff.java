@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.contact.Person;
 import net.bodz.lily.entity.IdType;

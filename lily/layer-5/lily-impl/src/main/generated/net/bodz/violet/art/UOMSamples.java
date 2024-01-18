@@ -7,7 +7,7 @@ import net.bodz.violet.art.dao.UOMMapper;
 public class UOMSamples
         extends TestSampleBuilder {
 
-    public UOM std;
+    public UOM standard;
 
     @Override
     public UOM build()
@@ -15,14 +15,14 @@ public class UOMSamples
         UOM a = new UOM();
         a.setId(513285121);
         a.setCode("Ap-ihnd.");
-        a.setProperty("");
+        a.setProp("");
         a.setScale(0.13506906180262523);
         return a;
     }
 
     @Override
     public UOMSamples wireAny(IRandomPicker picker) {
-        this.std = picker.pickAny(UOMMapper.class, "uom");
+        this.standard = picker.pickAny(UOMMapper.class, "uom");
         return this;
     }
 

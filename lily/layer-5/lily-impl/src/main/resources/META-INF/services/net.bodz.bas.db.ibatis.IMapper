@@ -1,4 +1,3 @@
-net.bodz.lily.contact.dao.ContactMapper
 net.bodz.lily.contact.dao.OrgUnitMapper
 net.bodz.lily.contact.dao.OrganizationMapper
 net.bodz.lily.contact.dao.PartyCategoryMapper
@@ -38,20 +37,17 @@ net.bodz.lily.schema.dao.FormParameterMapper
 net.bodz.lily.schema.dao.ParameterDefMapper
 net.bodz.lily.schema.dao.ParameterValueMapper
 net.bodz.lily.schema.dao.PhaseDefMapper
-net.bodz.lily.schema.dao.PriorityDefMapper
 net.bodz.lily.schema.dao.SchemaDefMapper
 net.bodz.lily.schema.dao.TagDefMapper
 net.bodz.lily.schema.dao.TagGroupDefMapper
 net.bodz.lily.security.dao.GroupMapper
 net.bodz.lily.security.dao.GroupTypeMapper
-net.bodz.lily.security.dao.PolicyMapper
 net.bodz.lily.security.dao.UserMapper
 net.bodz.lily.security.dao.UserOtherIdMapper
 net.bodz.lily.security.dao.UserOtherIdTypeMapper
 net.bodz.lily.security.dao.UserRunMapper
 net.bodz.lily.security.dao.UserSecretMapper
 net.bodz.lily.security.dao.UserTypeMapper
-net.bodz.lily.t.mail.MailMapper
 net.bodz.lily.util.dao.UomMapper
 net.bodz.lily.util.mapper.ProfileMapper
 net.bodz.lily.vapp.dao.ApiTypeMapper
@@ -70,7 +66,6 @@ net.bodz.violet.art.dao.ArtifactParameterMapper
 net.bodz.violet.art.dao.ArtifactPhaseMapper
 net.bodz.violet.art.dao.ArtifactTagMapper
 net.bodz.violet.art.dao.ArtifactVoteMapper
-net.bodz.violet.art.dao.PackagingMapper
 net.bodz.violet.art.dao.UOMMapper
 net.bodz.violet.asset.dao.AssetMapper
 net.bodz.violet.asset.dao.GroupAssetMapper
@@ -99,8 +94,6 @@ net.bodz.violet.edu.dao.TestQuestionTalkVoteMapper
 net.bodz.violet.edu.dao.TestQuestionVoteMapper
 net.bodz.violet.issue.dao.IssueCategoryMapper
 net.bodz.violet.issue.dao.IssueFavMapper
-net.bodz.violet.issue.dao.IssueLogMapper
-net.bodz.violet.issue.dao.IssueLogVoteMapper
 net.bodz.violet.issue.dao.IssueMapper
 net.bodz.violet.issue.dao.IssueParameterMapper
 net.bodz.violet.issue.dao.IssuePhaseMapper
@@ -128,11 +121,6 @@ net.bodz.violet.plan.dao.PlanPhaseMapper
 net.bodz.violet.plan.dao.PlanTagMapper
 net.bodz.violet.plan.dao.PlanVoteMapper
 net.bodz.violet.shop.dao.CartItemMapper
-net.bodz.violet.shop.dao.CartMapper
-net.bodz.violet.shop.dao.CouponCategoryMapper
-net.bodz.violet.shop.dao.CouponMapper
-net.bodz.violet.shop.dao.MembershipCategoryMapper
-net.bodz.violet.shop.dao.MembershipMapper
 net.bodz.violet.shop.dao.SalesCategoryMapper
 net.bodz.violet.shop.dao.SalesOrderItemMapper
 net.bodz.violet.shop.dao.SalesOrderMapper

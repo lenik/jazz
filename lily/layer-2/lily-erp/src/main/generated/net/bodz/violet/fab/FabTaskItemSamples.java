@@ -1,10 +1,9 @@
 package net.bodz.violet.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
-import org.joda.time.DateTime;
-
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
@@ -25,10 +24,9 @@ public class FabTaskItemSamples
         a.setTask(task);
         a.setModel(model);
         a.setId(9043012724999244598L);
-        a.setBeginTime(new DateTime(Dates.ISO8601Z.parse("2024-01-19T09:42:13.389+0800").getTime()));
-        a.setEndTime(new DateTime(Dates.ISO8601Z.parse("2023-12-17T11:35:03.274+0800").getTime()));
+        a.setBeginTime(ZonedDateTime.parse("2024-01-19 03:42:13", DateTimes.D10T8));
+        a.setEndTime(ZonedDateTime.parse("2024-01-15 15:56:38", DateTimes.D10T8));
         a.setYear(340671280);
-        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2024-01-13T04:10:23.736+0800").getTime()));
         a.setStatus("uieom zuwlgu gmie&ruu&voair vii efv@qba xpik, ukreot; uy");
         a.setQuantity(new BigDecimal("3420"));
         a.setTrackCount(671027086);

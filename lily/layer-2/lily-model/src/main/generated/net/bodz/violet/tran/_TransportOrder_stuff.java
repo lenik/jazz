@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.contact.Organization;
 import net.bodz.lily.entity.IdType;

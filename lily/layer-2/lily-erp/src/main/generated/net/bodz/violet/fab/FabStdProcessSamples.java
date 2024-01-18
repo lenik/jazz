@@ -1,5 +1,8 @@
 package net.bodz.violet.fab;
 
+import java.time.ZonedDateTime;
+
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.security.Group;
 import net.bodz.lily.security.User;
 import net.bodz.lily.security.dao.GroupMapper;
@@ -24,8 +27,15 @@ public class FabStdProcessSamples
     public FabStdProcess build()
             throws Exception {
         FabStdProcess a = new FabStdProcess();
+        a.setOwnerGroup(ownerGroup);
+        a.setOwnerUser(ownerUser);
+        a.setOutput(output);
+        a.setTest(test);
+        a.setFunction(function);
         a.setId(165373854);
         a.setValid(true);
+        a.setValidSince(ZonedDateTime.parse("2023-12-23 09:39:36", DateTimes.D10T8));
+        a.setValidUntil(ZonedDateTime.parse("2024-01-24 15:12:58", DateTimes.D10T8));
         a.setDuration(1399266125);
         a.setStrict(false);
         return a;

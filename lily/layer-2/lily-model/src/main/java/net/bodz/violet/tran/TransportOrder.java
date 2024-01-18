@@ -1,10 +1,9 @@
 package net.bodz.violet.tran;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import javax.persistence.Table;
-
-import org.joda.time.DateTime;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -39,11 +38,11 @@ public class TransportOrder
      */
     @Priority(5)
     @OfGroup({ LilyGroups.Transportation.class })
-    public DateTime getShipDate() {
+    public ZonedDateTime getShipDate() {
         return super.getBeginTime();
     }
 
-    public void setShipDate(DateTime shipDate) {
+    public void setShipDate(ZonedDateTime shipDate) {
         super.setBeginTime(shipDate);
     }
 
@@ -52,11 +51,11 @@ public class TransportOrder
      */
     @Priority(6)
     @OfGroup({ LilyGroups.Transportation.class })
-    public DateTime getArrivedDate() {
+    public ZonedDateTime getArrivedDate() {
         return super.getEndTime();
     }
 
-    public void setArrivedDate(DateTime arrivedDate) {
+    public void setArrivedDate(ZonedDateTime arrivedDate) {
         super.setEndTime(arrivedDate);
     }
 

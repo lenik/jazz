@@ -33,6 +33,14 @@ public class FabOrderSamples
     public FabOrder build()
             throws Exception {
         FabOrder a = new FabOrder();
+        a.setOwnerGroup(ownerGroup);
+        a.setClerk(clerk);
+        a.setForm(form);
+        a.setPlan(plan);
+        a.setCustomOrg(customOrg);
+        a.setOwnerUser(ownerUser);
+        a.setCustom(custom);
+        a.setOp(op);
         a.setFormArguments("rquua; gc_le eeqaavo, uuziu p Ujgobk Tjyaou#zeuesyi. gu#oepip, au cjio. orra. s ikoa, iaa ibeyq Hflfa rc; xau. gqzc*qcgie#xarp Yauow#Zcx uel, nvd. Umquixqa? Uvapo, ife, siabuaw_uxa#ix'oua Geeu. xre, otam! ayeuu; abq alih yqa, ieiltue! vm o#akmkra#itq*qr*qaubdnq g&A ue; Ats&adit si, uuju giamyo smo@bt eumya");
         a.setNitem(913862815);
         a.setTotalQuantity(new BigDecimal("8736"));

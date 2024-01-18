@@ -1,8 +1,7 @@
 package net.bodz.violet.asset;
 
 import java.math.BigDecimal;
-
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoMomentInterval;
@@ -23,7 +22,7 @@ public abstract class AbstractAsset
     // Batch complex
     BigDecimal quantity = BigDecimal.ZERO;
     Long serial;
-    DateTime expire;
+    ZonedDateTime expire;
 
     public AbstractAsset() {
     }
@@ -60,11 +59,11 @@ public abstract class AbstractAsset
         this.serial = serial;
     }
 
-    public DateTime getExpire() {
+    public ZonedDateTime getExpire() {
         return expire;
     }
 
-    public void setExpire(DateTime expire) {
+    public void setExpire(ZonedDateTime expire) {
         this.expire = expire;
     }
 
