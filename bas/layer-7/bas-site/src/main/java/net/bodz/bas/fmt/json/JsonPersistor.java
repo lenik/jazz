@@ -146,7 +146,7 @@ public class JsonPersistor {
 
         Object obj;
         try {
-            obj = type.newInstance();
+            obj = type.getConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
             throw new ParseException(String.format(//
                     "Failed to instantiate %s: %s", type, e.getMessage()), e);

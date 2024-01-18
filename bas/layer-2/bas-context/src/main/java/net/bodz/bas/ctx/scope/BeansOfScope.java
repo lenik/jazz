@@ -38,7 +38,7 @@ public class BeansOfScope {
             // scopeInstance.getIdentity();
             // ScopeIdClass.fn.from();
             try {
-                obj = clazz.newInstance();
+                obj = clazz.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new LazyLoadException(e.getMessage(), e);
             }

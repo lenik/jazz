@@ -22,7 +22,7 @@ public class MapAddor
         Map<Object, Object> map;
         if (prev == null)
             try {
-                map = (Map<Object, Object>) createType.newInstance();
+                map = (Map<Object, Object>) createType.getConstructor().newInstance();
             } catch (ReflectiveOperationException e) {
                 throw new IllegalUsageException("Failed to instantiate createType: " + createType, e);
             }

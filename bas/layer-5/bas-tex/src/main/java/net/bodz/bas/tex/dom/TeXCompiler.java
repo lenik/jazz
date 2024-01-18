@@ -83,7 +83,6 @@ public class TeXCompiler {
     @Override
     protected void finalize()
             throws Throwable {
-        super.finalize();
         clean();
     }
 

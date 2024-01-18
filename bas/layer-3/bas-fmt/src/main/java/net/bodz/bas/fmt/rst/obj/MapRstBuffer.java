@@ -61,11 +61,9 @@ public class MapRstBuffer<K, V>
 
     protected V create(K key, String[] args) {
         try {
-            V value = valueType.newInstance();
+            V value = valueType.getConstructor().newInstance();
             return value;
-        } catch (InstantiationException e) {
-            throw new ElementHandlerException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+        } catch (ReflectiveOperationException e) {
             throw new ElementHandlerException(e.getMessage(), e);
         }
     }

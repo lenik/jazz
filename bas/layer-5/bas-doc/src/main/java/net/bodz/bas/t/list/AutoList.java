@@ -17,9 +17,9 @@ public class AutoList<E>
             throw new NullPointerException("elementClass");
         factory = () -> {
             try {
-                E instance = elementClass.newInstance();
+                E instance = elementClass.getConstructor().newInstance();
                 return instance;
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
         };

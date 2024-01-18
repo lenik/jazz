@@ -502,10 +502,10 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     @SuppressWarnings("unchecked")
     public self_t copyNodeOnly() {
         try {
-            self_t copy = (self_t) getClass().newInstance();
+            self_t copy = (self_t) getClass().getConstructor().newInstance();
             copy.assignNodeOnly((self_t) this);
             return copy;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -556,7 +556,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
         self_t dup;
         try {
-            dup = (self_t) getClass().newInstance();
+            dup = (self_t) getClass().getConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
             throw new LoadException(e.getMessage(), e);
         }

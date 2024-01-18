@@ -50,7 +50,7 @@ public class CoIndexServiceGroup
                 }
                 IEntityController index;
                 try {
-                    index = indexClass.newInstance();
+                    index = indexClass.getConstructor().newInstance();
                 } catch (ReflectiveOperationException e) {
                     logger.error(e, "Failed to instantiate " + indexClass);
                     continue;

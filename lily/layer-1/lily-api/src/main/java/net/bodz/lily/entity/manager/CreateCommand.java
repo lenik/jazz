@@ -108,9 +108,9 @@ class CreateProcess
     }
 
     protected Object create()
-            throws InstantiationException, IllegalAccessException {
+            throws ReflectiveOperationException {
         Class<?> clazz = typeInfo.getEntityClass();
-        IId<?> instance = (IId<?>) clazz.newInstance();
+        IId<?> instance = (IId<?>) clazz.getConstructor().newInstance();
         return instance;
     }
 

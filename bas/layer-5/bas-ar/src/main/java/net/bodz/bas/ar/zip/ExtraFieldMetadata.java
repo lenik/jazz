@@ -8,7 +8,7 @@ public class ExtraFieldMetadata {
 
     public ExtraField newInstance() {
         try {
-            return type.newInstance();
+            return type.getConstructor().newInstance();
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

@@ -24,7 +24,7 @@ public class RangeParser<range_t extends Range<?, val_t>, val_t>
     range_t newRange()
             throws ParseException {
         try {
-            return rangeType.newInstance();
+            return rangeType.getConstructor().newInstance();
         } catch (Exception e) {
             throw new ParseException("Can't instantiate " + rangeType, e);
         }

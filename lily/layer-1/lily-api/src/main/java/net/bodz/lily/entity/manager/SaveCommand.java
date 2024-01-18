@@ -65,7 +65,7 @@ class SaveProcess
         // 1. Prepare the object to be saved
         Object obj;
         if (createNew) {
-            obj = typeInfo.getEntityClass().newInstance();
+            obj = typeInfo.getEntityClass().getConstructor().newInstance();
         } else {
             obj = getEntityMapper().select(id);
             if (obj == null)

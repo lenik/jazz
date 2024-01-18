@@ -38,7 +38,7 @@ public class Main
                 loadedContext = runner.load(programClass);
             else {
                 if (instance == null)
-                    instance = programClass.newInstance();
+                    instance = programClass.getConstructor().newInstance();
                 loadedContext = runner.load(instance);
             }
 

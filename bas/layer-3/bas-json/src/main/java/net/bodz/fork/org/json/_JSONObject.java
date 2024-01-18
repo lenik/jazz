@@ -86,6 +86,7 @@ import net.bodz.bas.t.variant.AbstractVariantMap;
  * @author JSON.org
  * @version 2016-08-15
  */
+@SuppressWarnings("unused")
 public class _JSONObject
         extends AbstractVariantMap<String> {
 
@@ -429,6 +430,7 @@ public class _JSONObject
      *
      * @return A keySet.
      */
+    @Override
     public Set<String> keySet() {
         return this.map.keySet();
     }

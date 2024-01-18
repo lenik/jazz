@@ -129,7 +129,7 @@ public class BeanXmlLoader
             }
         } else {
             try {
-                value = (IXmlForm) type.newInstance(); // args ...
+                value = (IXmlForm) type.getConstructor().newInstance(); // args ...
             } catch (ReflectiveOperationException e) {
                 throw new LoaderException("failed to instantiate " + type, e);
             }

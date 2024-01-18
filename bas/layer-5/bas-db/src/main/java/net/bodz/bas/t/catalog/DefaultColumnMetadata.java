@@ -490,7 +490,7 @@ public class DefaultColumnMetadata
         if (xmlType) {
             IXmlForm obj;
             try {
-                obj = (IXmlForm) javaClass.newInstance();
+                obj = (IXmlForm) javaClass.getConstructor().newInstance();
             } catch (Exception e) {
                 throw new ParseException("Failed to instantiate " + javaClass, e);
             }

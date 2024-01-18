@@ -97,14 +97,14 @@ public class JsonObjectBuilder {
     /**
      * Construct a _JSONObject from a source JSON text string. This is the most commonly used _JSONObject constructor.
      *
+     * Notice: Preferred to use {@link JsonFn#parseAny(String)}.
+     *
      * @param source
      *            A string beginning with <code>{</code>&nbsp;<small>(left brace)</small> and ending with <code>}</code>
      *            &nbsp;<small>(right brace)</small>.
      * @exception JSONException
      *                If there is a syntax error in the source string or a duplicated key.
-     * @deprecated Preferred to use {@link JsonFn#parseAny(String)}.
      */
-    @Deprecated
     public JsonObject parse(String source)
             throws JSONException {
         return parse(new JSONTokener(source));

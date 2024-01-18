@@ -32,7 +32,7 @@ public class IndexedLoginResolverProvider
                     Constructor<? extends ILoginResolver> ctor = type.getConstructor(DataContext.class);
                     instance = ctor.newInstance(dataContext);
                 } else {
-                    instance = type.newInstance();
+                    instance = type.getConstructor().newInstance();
                 }
             } catch (ReflectiveOperationException e) {
                 throw new LoadException(e.getMessage(), e);

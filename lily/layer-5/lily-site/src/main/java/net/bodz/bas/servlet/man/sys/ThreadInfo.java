@@ -37,7 +37,7 @@ public class ThreadInfo {
         return group == null ? null : new ThreadGroupInfo(group);
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     public int getStackFrameCount() {
         try {
             return thread.countStackFrames();
