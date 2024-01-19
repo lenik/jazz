@@ -1,11 +1,14 @@
 package net.bodz.lily.criterion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
+import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.io.ITreeOut;
 
 public class FieldLike
         extends FieldCriterion {
@@ -45,6 +48,18 @@ public class FieldLike
     public void readValue(JsonVariant in, Class<?> fieldType)
             throws ParseException {
         pattern = (String) in.getScalarFor(fieldName);
+    }
+
+    @Override
+    public void parseObject(BufferedReader in)
+            throws ParseException, IOException {
+    }
+
+    @Override
+    public void printObject(ITreeOut out)
+            throws IOException {
+        String qPattern = StringQuote.qqJavaString(pattern);
+        out.print(qPattern);
     }
 
 }

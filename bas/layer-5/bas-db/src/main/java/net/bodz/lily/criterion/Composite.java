@@ -1,26 +1,34 @@
 package net.bodz.lily.criterion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.list.IStack;
+import net.bodz.bas.t.variant.IVarMapForm;
+import net.bodz.bas.t.variant.IVariantMap;
 
 public abstract class Composite
         extends Criterion
         implements
-            Iterable<ICriterion> {
+            Iterable<ICriterion>,
+            IVarMapForm {
 
     protected List<ICriterion> list = new ArrayList<>();
 
@@ -191,6 +199,59 @@ public abstract class Composite
 
     public void clear() {
         list.clear();
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        for (String key : map.keySet()) {
+            String val = map.getString(key);
+            boolean negate = key.startsWith("~");
+            if (negate)
+                key = key.substring(1);
+
+            int colon = key.indexOf(':');
+            String opName = null;
+            if (colon != -1) {
+                opName = key.substring(colon + 1);
+                key = key.substring(0, colon);
+            } else {
+                opName = Criterions.K_EQUALS;
+            }
+
+            if (opName.startsWith("~")) {
+                negate = ! negate;
+                opName = opName.substring(1);
+            }
+
+            ICriterion criterion = Criterions.create(opName);
+            BufferedReader in = new BufferedReader(new StringReader(val));
+            try {
+                criterion.parseObject(in);
+            } catch (Exception e) {
+                throw new ParseException("failed to parse " + key + ": " + e.getMessage(), e);
+            }
+
+            add(criterion);
+        }
+    }
+
+    @Override
+    public void parseObject(BufferedReader in)
+            throws ParseException, IOException {
+    }
+
+    @Override
+    public void printObject(ITreeOut out)
+            throws IOException {
+        StringBuilder buf = new StringBuilder();
+        accept(new LispFormatter(buf));
+        String lisp = buf.toString();
+        out.print(lisp);
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
     }
 
 }

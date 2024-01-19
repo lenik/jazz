@@ -2,7 +2,7 @@ package net.bodz.lily.model.base;
 
 import java.time.ZonedDateTime;
 
-import net.bodz.lily.criteria.DateFieldCriteriaBuilder;
+import net.bodz.lily.criteria.DateFieldCriterionBuilder;
 import net.bodz.lily.criteria.NumberExprCriteriaBuilder;
 
 public class CoMomentIntervalCriteriaBuilder<self_t extends CoMomentIntervalCriteriaBuilder<self_t>>
@@ -11,7 +11,7 @@ public class CoMomentIntervalCriteriaBuilder<self_t extends CoMomentIntervalCrit
     public final DateField<ZonedDateTime> beginTime = date("t0", ZonedDateTime.class);
     public final DateField<ZonedDateTime> endTime = date("t1", ZonedDateTime.class);
 
-    public final NumberExprCriteriaBuilder<DateFieldCriteriaBuilder<self_t, ZonedDateTime>> year = beginTime.year;
+    public final NumberExprCriteriaBuilder<DateFieldCriterionBuilder<self_t, ZonedDateTime>> year = beginTime.year;
     public final DateField<ZonedDateTime> date = beginTime;
 
     public void noDate() {

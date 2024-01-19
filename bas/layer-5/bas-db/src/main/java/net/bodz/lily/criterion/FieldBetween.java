@@ -1,11 +1,13 @@
 package net.bodz.lily.criterion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.json.JsonArray;
 
 public class FieldBetween<T>
@@ -64,6 +66,21 @@ public class FieldBetween<T>
 
         min = convert(valueType, a.get(0));
         max = convert(valueType, a.get(1));
+    }
+
+    @Override
+    public void parseObject(BufferedReader in)
+            throws ParseException, IOException {
+    }
+
+    @Override
+    public void printObject(ITreeOut out)
+            throws IOException {
+        out.print("(");
+        out.print(min);
+        out.print(", ");
+        out.print(max);
+        out.print(")");
     }
 
 }
