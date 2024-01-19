@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.model.base.CoEntity;
@@ -19,8 +19,20 @@ public abstract class _Policy_stuff
 
     private static final long serialVersionUID = 1L;
 
+    public static final String SCHEMA_NAME = "lily";
+    public static final String TABLE_NAME = "policy";
+
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_CONTROL_CLASS = "cclass";
+    public static final String FIELD_METHOD_NAME = "method";
+    public static final String FIELD_ALLOW_BITS = "allow";
+    public static final String FIELD_DENY_BITS = "deny";
+
+    public static final int N_ID = 10;
     public static final int N_CONTROL_CLASS = 80;
     public static final int N_METHOD_NAME = 80;
+    public static final int N_ALLOW_BITS = 10;
+    public static final int N_DENY_BITS = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_CONTROL_CLASS = 12;

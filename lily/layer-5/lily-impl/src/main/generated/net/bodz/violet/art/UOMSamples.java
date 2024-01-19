@@ -15,7 +15,7 @@ public class UOMSamples
         UOM a = new UOM();
         a.setId(513285121);
         a.setCode("Ap-ihnd.");
-        a.setProp("");
+        a.setProperty("");
         a.setScale(0.13506906180262523);
         return a;
     }

@@ -51,7 +51,7 @@ dao-base: predao
 dao-account: predao
 	$(DAOGEN_LILY0) \
             -p net.bodz.lily.security \
-            usertype grouptype user usercat useroid useroidtype usersec user_run group
+            usertype grouptype user usercat useroid useroidtype usersec user_run group policy
 
 dao-contact: predao
 	$(DAOGEN_LILY) \
@@ -88,11 +88,6 @@ dao-util: predao
             -O $(modeldir) \
             -p net.bodz.lily.util \
             uom
-
-dao-security: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.util \
-            user usercat useroid usersec user_run group policy
 
 dao-vapp: predao
 	$(DAOGEN_LILY) \
