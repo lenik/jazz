@@ -1,24 +1,15 @@
 package net.bodz.bas.c.string;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
-import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.BCharOut;
-import net.bodz.bas.io.ICharOut;
+import net.bodz.bas.err.ParseException;
 
-public interface ITextForm {
+public interface ITextForm
+        extends
+            ITextPrintForm {
 
-    void writeObject(ICharOut out)
-            throws IOException;
-
-    default String toText() {
-        BCharOut buf = new BCharOut();
-        try {
-            writeObject(buf);
-        } catch (IOException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
-        return buf.toString();
-    }
+    void parseObject(BufferedReader in)
+            throws ParseException, IOException;
 
 }

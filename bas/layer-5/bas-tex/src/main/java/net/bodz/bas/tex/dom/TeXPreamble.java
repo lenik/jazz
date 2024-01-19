@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.c.string.IIndentedForm;
+import net.bodz.bas.c.string.ITextPrintForm;
 import net.bodz.bas.io.ITreeOut;
 
 public class TeXPreamble
         implements
-            IIndentedForm {
+            ITextPrintForm {
 
     DocumentClass documentClass;
     Map<String, UsePackage> usePackages;
@@ -30,7 +30,7 @@ public class TeXPreamble
     }
 
     @Override
-    public void writeObject(ITreeOut out)
+    public void printObject(ITreeOut out)
             throws IOException {
         out.println(documentClass);
         out.println();
