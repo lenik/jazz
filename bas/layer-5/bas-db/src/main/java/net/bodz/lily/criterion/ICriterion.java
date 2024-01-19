@@ -1,5 +1,6 @@
 package net.bodz.lily.criterion;
 
+import net.bodz.bas.c.string.ITextForm;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -7,7 +8,8 @@ import net.bodz.bas.t.list.IStack;
 
 public interface ICriterion
         extends
-            IJsonForm {
+            IJsonForm,
+            ITextForm {
 
     default boolean isFieldCriterion() {
         return false;

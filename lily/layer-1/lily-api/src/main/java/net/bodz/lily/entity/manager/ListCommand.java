@@ -18,6 +18,7 @@ import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.Junction;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
 
 @ForEntityType(IJsonForm.class)
@@ -51,7 +52,7 @@ class ListProcess
         extends AbstractEntityCommandProcess<ListCommand> {
 
     TableOfPathProps tableData;
-    ICriterion criteria;
+    Junction criteria;
     final SelectOptions selectOptions;
 
     int format = JSON;

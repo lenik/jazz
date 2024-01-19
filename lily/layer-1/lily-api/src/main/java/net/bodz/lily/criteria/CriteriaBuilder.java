@@ -1,25 +1,28 @@
 package net.bodz.lily.criteria;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.list.ArrayStack;
 import net.bodz.bas.t.list.IStack;
+import net.bodz.bas.t.variant.IVarMapForm;
+import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.Composite;
 import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.ICriterion;
 import net.bodz.lily.criterion.Junction;
 import net.bodz.lily.criterion.Not;
 
-public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
+public class CriteriaBuilder<This>
+        extends AbstractCriteriaBuilder<This>
         implements
-            ICriteriaBuilder<self_t>,
-            IReceiver<ICriterion> {
+            ICriteriaBuilder<This>,
+            IVarMapForm {
 
     protected IStack<Composite> stack = new ArrayStack<>();
 
@@ -28,8 +31,8 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     }
 
     @SuppressWarnings("unchecked")
-    private final self_t _this() {
-        return (self_t) this;
+    private final This _this() {
+        return (This) this;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     }
 
     @Override
-    public self_t not() {
+    public This not() {
         Composite top = stack.top();
         Composite other = defaultCombine();
         Not not = new Not();
@@ -55,7 +58,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     }
 
     @Override
-    public self_t or() {
+    public This or() {
         Composite other = defaultCombine();
 
         ICriterion top = stack.top(); // .reduce();
@@ -77,7 +80,7 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     }
 
     @Override
-    public self_t end() {
+    public This end() {
         ICriterion other = stack.pop(); // .reduce();
         Composite top = stack.top();
         if (top instanceof Disjunction) {
@@ -101,170 +104,6 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
         top.add(value);
     }
 
-    protected <T extends Number> NumberField<T> number(String fieldName, Class<T> type) {
-        return new NumberField<T>(fieldName, type);
-    }
-
-    protected IntegerField integer(String fieldName) {
-        return new IntegerField(fieldName);
-    }
-
-    protected ByteField _byte(String fieldName) {
-        return new ByteField(fieldName);
-    }
-
-    protected ShortField _short(String fieldName) {
-        return new ShortField(fieldName);
-    }
-
-    protected LongField _long(String fieldName) {
-        return new LongField(fieldName);
-    }
-
-    protected FloatField _float(String fieldName) {
-        return new FloatField(fieldName);
-    }
-
-    protected DoubleField _double(String fieldName) {
-        return new DoubleField(fieldName);
-    }
-
-    protected BigIntegerField bigInteger(String fieldName) {
-        return new BigIntegerField(fieldName);
-    }
-
-    protected BigDecimalField bigDecimal(String fieldName) {
-        return new BigDecimalField(fieldName);
-    }
-
-    protected StringField string(String fieldName) {
-        return new StringField(fieldName);
-    }
-
-    protected BooleanField bool(String fieldName) {
-        return new BooleanField(fieldName);
-    }
-
-    protected DateField<ZonedDateTime> date(String fieldName) {
-        return new DateField<ZonedDateTime>(fieldName, ZonedDateTime.class);
-    }
-
-    protected <T> DateField<T> date(String fieldName, Class<T> type) {
-        return new DateField<T>(fieldName, type);
-    }
-
-    public class NumberField<T extends Number>
-            extends NumberFieldCriteriaBuilder<self_t, T> {
-
-        @SuppressWarnings("unchecked")
-        public NumberField(String fieldName, Class<T> type) {
-            super(fieldName, type, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
-        }
-
-    }
-
-    public class IntegerField
-            extends NumberField<Integer> {
-
-        public IntegerField(String fieldName) {
-            super(fieldName, Integer.class);
-        }
-
-    }
-
-    public class ByteField
-            extends NumberField<Byte> {
-
-        public ByteField(String fieldName) {
-            super(fieldName, Byte.class);
-        }
-
-    }
-
-    public class ShortField
-            extends NumberField<Short> {
-
-        public ShortField(String fieldName) {
-            super(fieldName, Short.class);
-        }
-
-    }
-
-    public class LongField
-            extends NumberField<Long> {
-
-        public LongField(String fieldName) {
-            super(fieldName, Long.class);
-        }
-
-    }
-
-    public class FloatField
-            extends NumberField<Float> {
-
-        public FloatField(String fieldName) {
-            super(fieldName, Float.class);
-        }
-
-    }
-
-    public class DoubleField
-            extends NumberField<Double> {
-
-        public DoubleField(String fieldName) {
-            super(fieldName, Double.class);
-        }
-
-    }
-
-    public class BigIntegerField
-            extends NumberField<BigInteger> {
-
-        public BigIntegerField(String fieldName) {
-            super(fieldName, BigInteger.class);
-        }
-
-    }
-
-    public class BigDecimalField
-            extends NumberField<BigDecimal> {
-
-        public BigDecimalField(String fieldName) {
-            super(fieldName, BigDecimal.class);
-        }
-
-    }
-
-    public class StringField
-            extends StringFieldCriteriaBuilder<self_t> {
-
-        @SuppressWarnings("unchecked")
-        public StringField(String fieldName) {
-            super(fieldName, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
-        }
-
-    }
-
-    public class BooleanField
-            extends BooleanFieldCriteriaBuilder<self_t> {
-
-        @SuppressWarnings("unchecked")
-        public BooleanField(String fieldName) {
-            super(fieldName, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
-        }
-
-    }
-
-    public class DateField<T>
-            extends DateFieldCriteriaBuilder<self_t, T> {
-
-        @SuppressWarnings("unchecked")
-        public DateField(String fieldName, Class<T> type) {
-            super(fieldName, type, (self_t) CriteriaBuilder.this, CriteriaBuilder.this);
-        }
-
-    }
-
     public <T> List<T> filter(IGenericMapper<T> mapper) {
         return filter(mapper, SelectOptions.ALL);
     }
@@ -272,6 +111,19 @@ public class CriteriaBuilder<self_t extends CriteriaBuilder<self_t>>
     public <T> List<T> filter(IGenericMapper<T> mapper, SelectOptions options) {
         ICriterion criterion = get();
         return mapper.filter(criterion, options);
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        stack.clear();
+        Composite composite = defaultCombine();
+        composite.readObject(map);
+        stack.push(composite);
+    }
+
+    @Override
+    public void writeObject(Map<String, Object> map) {
     }
 
 }

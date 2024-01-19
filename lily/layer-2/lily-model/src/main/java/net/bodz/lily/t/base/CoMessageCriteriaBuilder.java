@@ -14,7 +14,7 @@ public abstract class CoMessageCriteriaBuilder<self_t extends CoMessageCriteriaB
 
     // public final IntegerField tagId = integer("tag");
 
-    public final DateField<ZonedDateTime> mailDate = date("t0");
+    public final DateField<ZonedDateTime> mailDate = zonedDateTime("t0");
 
     public final IntegerField voteCount = integer("nvote");
     public final IntegerField likerCount = integer("nlike");

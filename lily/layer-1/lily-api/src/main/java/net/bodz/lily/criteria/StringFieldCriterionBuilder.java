@@ -1,13 +1,13 @@
 package net.bodz.lily.criteria;
 
-import net.bodz.lily.criterion.FieldCriterion;
 import net.bodz.lily.criterion.FieldLike;
+import net.bodz.lily.criterion.ICriterion;
 
-public class StringFieldCriteriaBuilder<fin_target>
-        extends FieldCriteriaBuilder<fin_target, StringFieldCriteriaBuilder<fin_target>, String> {
+public class StringFieldCriterionBuilder<fin_target>
+        extends FieldCriterionBuilder<fin_target, StringFieldCriterionBuilder<fin_target>, String> {
 
-    public StringFieldCriteriaBuilder(String fieldName, fin_target finishTarget,
-            IReceiver<? super FieldCriterion> receiver) {
+    public StringFieldCriterionBuilder(String fieldName, fin_target finishTarget,
+            IReceiver<? super ICriterion> receiver) {
         super(fieldName, String.class, finishTarget, receiver);
     }
 

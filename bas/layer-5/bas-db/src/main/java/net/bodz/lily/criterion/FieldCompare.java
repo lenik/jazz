@@ -1,5 +1,6 @@
 package net.bodz.lily.criterion;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
@@ -7,6 +8,7 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.io.ITreeOut;
 
 public class FieldCompare<T>
         extends FieldCriterion {
@@ -76,6 +78,19 @@ public class FieldCompare<T>
 
         Object val = in.getScalarFor(fieldName);
         this.value = convert(valueType, val);
+    }
+
+    @Override
+    public void parseObject(BufferedReader in)
+            throws ParseException, IOException {
+    }
+
+    @Override
+    public void printObject(ITreeOut out)
+            throws IOException {
+        out.print(getDiscriminator());
+        out.print(" ");
+        out.print(value);
     }
 
 }
