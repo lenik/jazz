@@ -42,6 +42,7 @@ net.bodz.lily.schema.dao.TagDefMapper
 net.bodz.lily.schema.dao.TagGroupDefMapper
 net.bodz.lily.security.dao.GroupMapper
 net.bodz.lily.security.dao.GroupTypeMapper
+net.bodz.lily.security.dao.PolicyMapper
 net.bodz.lily.security.dao.UserMapper
 net.bodz.lily.security.dao.UserOtherIdMapper
 net.bodz.lily.security.dao.UserOtherIdTypeMapper
