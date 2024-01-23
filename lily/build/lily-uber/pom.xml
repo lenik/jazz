@@ -21,48 +21,36 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-graph</artifactId>
+            <artifactId>basic-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-graph</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-impl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-impl</artifactId>
+            <artifactId>basic-dao</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>basic-types</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>basic-types</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-erp</artifactId>
+            <artifactId>fab-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-erp</artifactId>
+            <artifactId>fab-dao</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
@@ -75,18 +63,6 @@
         <dependency>
             <groupId>net.bodz.lily</groupId>
             <artifactId>lily-site</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-skel</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-skel</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>

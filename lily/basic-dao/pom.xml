@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.lily</groupId>
-        <artifactId>layer-5</artifactId>
+        <artifactId>project</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>lily-impl</artifactId>
+    <artifactId>basic-dao</artifactId>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>basic-types</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

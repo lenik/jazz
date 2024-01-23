@@ -9,12 +9,12 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-model</artifactId>
+            <artifactId>basic-types</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-impl</artifactId>
+            <artifactId>basic-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

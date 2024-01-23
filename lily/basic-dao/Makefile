@@ -21,8 +21,8 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-apidir=../../layer-1/lily-api
-modeldir=../../layer-2/lily-model
+apidir=../lily-api
+typesdir=../basic-types
 
 DAOGEN = daogen $(DAOFLAGS)
 
@@ -31,13 +31,13 @@ DAOGEN_LILY0 = $(DAOGEN) \
     -c sql/out/lily.rst
 
 DAOGEN_LILY = $(DAOGEN) \
-    -H $(modeldir) \
+    -H $(typesdir) \
     -c sql/out/lily.rst
 
 #    -H ../../layer-2/lily-model 
 
 DAOGEN_VIOLET = $(DAOGEN) \
-    -H $(modeldir) \
+    -H $(typesdir) \
     -c sql/out/violet.rst
 
 predao:
@@ -85,7 +85,7 @@ dao-reward: predao
 
 dao-util: predao
 	$(DAOGEN_LILY) \
-            -O $(modeldir) \
+            -O $(typesdir) \
             -p net.bodz.lily.util \
             uom
 
