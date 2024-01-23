@@ -1,6 +1,6 @@
 package net.bodz.lily.template;
 
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
@@ -8,7 +8,7 @@ import net.bodz.lily.model.base.CoNode;
 
 @CriteriaClass(CoCategoryCriteriaBuilder.class)
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
-@UploadHint
+@HaveAttachments
 public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>
         extends CoNode<self_t, Id> {
 

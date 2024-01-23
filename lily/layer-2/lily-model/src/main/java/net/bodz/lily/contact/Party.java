@@ -7,10 +7,10 @@ import net.bodz.bas.c.java.util.TimeZones;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
@@ -23,7 +23,7 @@ import net.bodz.lily.model.base.IdEntity;
  * 参与方
  */
 @IdType(Integer.class)
-@UploadHint
+@HaveAttachments
 public abstract class Party
         extends IdEntity<Integer>
         implements

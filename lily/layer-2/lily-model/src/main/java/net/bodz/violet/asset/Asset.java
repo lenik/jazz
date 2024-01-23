@@ -2,9 +2,9 @@ package net.bodz.violet.asset;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 
-@UploadHint
+@HaveAttachments
 @Table(schema = "violet", name = "asset")
 public class Asset
         extends _Asset_stuff {

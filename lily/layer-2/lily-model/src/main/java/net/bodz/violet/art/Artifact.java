@@ -7,15 +7,15 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.rtx.IAttributed;
-import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.repr.EntGroup;
 
 /**
  * 物品
  */
-@UploadHint
+@HaveAttachments
 @Table(schema = "violet", name = "art")
 public class Artifact
         extends _Artifact_stuff

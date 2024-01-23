@@ -2,13 +2,13 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 
 
 /**
  * 区域级别
  */
-@UploadHint
+@HaveAttachments
 @Table(schema = "violet", name = "regionlevel")
 public class RegionLevel
         extends _RegionLevel_stuff<RegionLevel> {

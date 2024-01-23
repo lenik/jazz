@@ -7,12 +7,12 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.site.json.JsonArrayList;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
-@UploadHint
+@HaveAttachments
 @Table(schema = "violet", name = "diary")
 public class Diary
         extends _Diary_stuff {

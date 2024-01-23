@@ -1,10 +1,10 @@
 package net.bodz.lily.security;
 
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.TextInput;
-import net.bodz.bas.site.file.UploadHint;
 import net.bodz.lily.model.base.IdEntity;
 
-@UploadHint
+@HaveAttachments
 public abstract class CoPrincipal
         extends IdEntity<Integer> {
 

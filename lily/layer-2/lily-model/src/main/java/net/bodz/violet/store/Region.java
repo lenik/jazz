@@ -2,13 +2,13 @@ package net.bodz.violet.store;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.violet.art.Dim3d;
 
 /**
  * 存放区域
  */
-@UploadHint
+@HaveAttachments
 @Table(schema = "violet", name = "region")
 public class Region
         extends _Region_stuff<Region> {

@@ -14,13 +14,13 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.meta.FormInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.bas.site.file.UploadHint;
 import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
@@ -45,7 +45,7 @@ import net.bodz.lily.template.RichProperties;
 @CriteriaClass(CoMessageCriteriaBuilder.class)
 @IncludeMapperXml
 @TypeParameters({ TypeParamType.ID_TYPE })
-@UploadHint
+@HaveAttachments
 public abstract class CoMessage<Id>
         extends CoMomentInterval<Id>
         implements
