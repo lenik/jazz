@@ -1,4 +1,4 @@
-package net.bodz.bas.site.file;
+package net.bodz.bas.meta.res;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -15,8 +15,14 @@ import net.bodz.bas.meta.codegen.PublishDir;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface UploadHint {
+public @interface HaveAttachments {
 
-    String[] schemas() default {};
+    String dirNaming() default ""; // "${primary-key[0]}/${primary-key[1]}/...";
+
+    String uploadLocation() default "";
+
+    long maxSize() default 0;
+
+    String sharedDict() default "";
 
 }

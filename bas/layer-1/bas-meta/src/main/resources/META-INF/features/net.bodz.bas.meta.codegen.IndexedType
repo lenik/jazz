@@ -6,4 +6,4 @@ net.bodz.bas.meta.build.ProgramName
 net.bodz.bas.meta.codegen.IndexedType
 net.bodz.bas.meta.decl.Replacement
 net.bodz.bas.meta.meta.PatchType
-net.bodz.bas.site.file.UploadHint
+net.bodz.bas.meta.res.HaveAttachments

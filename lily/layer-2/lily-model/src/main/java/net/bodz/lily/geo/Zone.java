@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.site.file.UploadHint;
+import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
@@ -12,7 +12,7 @@ import net.bodz.lily.entity.attachment.IHaveAttachments;
 import net.bodz.lily.t.struct.GeoLocation;
 import net.bodz.lily.template.RichProperties;
 
-@UploadHint
+@HaveAttachments
 @Table(schema = "lily", name = "zone")
 public class Zone
         extends _Zone_stuff
