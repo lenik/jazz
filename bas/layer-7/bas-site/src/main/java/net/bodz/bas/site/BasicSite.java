@@ -1,5 +1,6 @@
 package net.bodz.bas.site;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -14,9 +15,12 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.repr.path.ServiceTargetException;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.servlet.ctx.CurrentHttpService;
+import net.bodz.bas.servlet.ctx.IAnchor;
+import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.org.ICrawlable;
 import net.bodz.bas.site.org.SiteGraph;
 import net.bodz.bas.site.org.Sitemap;
@@ -37,7 +41,11 @@ public abstract class BasicSite
             ICrawlable,
             ISiteRoot {
 
-    public static final String PATH_UPLOAD = "upload";
+    public static final String K_ROBOTS = "robots.txt";
+    public static final String K_SERVICES = "serviceMap";
+    public static final String K_SET_LOCALE = "intl";
+    public static final String K_SITEMAP = "sitemap.xml";
+    public static final String K_UPLOAD = "upload";
 
     private IQueryable queryContext;
     private MutableAttributes attributes = new MutableAttributes();
@@ -165,34 +173,54 @@ public abstract class BasicSite
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        HttpServletRequest request = CurrentHttpService.getRequest();
+
         String token = tokens.peek();
 
         if (serviceMap != null) {
-            Object target = serviceMap.get(token);
-            if (target != null)
-                return PathArrival.shift(previous, this, target, tokens);
+            Object service = serviceMap.get(token);
+            if (service != null)
+                return PathArrival.shift(previous, this, service, tokens);
         }
 
+        Object target = null;
         switch (token) {
-        case "sitemap.xml":
-            return PathArrival.shift(previous, this, getSitemap(), tokens);
-
-        case "serviceMap":
-            return PathArrival.shift(previous, this, serviceMap, tokens);
-
-        case "robots.txt":
+        case K_SITEMAP:
+            target = getSitemap();
             break;
 
-        case "intl":
+        case K_SERVICES:
+            target = serviceMap;
+            break;
+
+        case K_ROBOTS:
+            break;
+
+        case K_SET_LOCALE:
             String lang = tokens.peekAt(1);
             if (lang != null) {
-                HttpServletRequest request = CurrentHttpService.getRequest();
                 Locale locale = Locale.forLanguageTag(lang); // non-null.
                 request.setAttribute(LocaleVars.LOCALE.getName(), locale);
                 return PathArrival.shift(2, previous, this, this, tokens);
             }
             break;
+
+        case K_UPLOAD:
+            DefaultSiteDirs siteDirs = DefaultSiteDirs.getInstance();
+            File localDir = siteDirs.getUploadDir(request);
+            IAnchor anchor = siteDirs.getUploadedAnchor(request);
+            UploadHandler uploadHandler = new UploadHandler(localDir, anchor);
+            try {
+                target = uploadHandler.handlePostRequest(request);
+            } catch (Exception e) {
+                throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
+            }
+            break;
         }
+
+        if (target != null)
+            return PathArrival.shift(previous, this, target, tokens);
+
         return null;
     }
 

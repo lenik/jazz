@@ -11,6 +11,7 @@ import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.LoginManagerWs;
+import net.bodz.lily.tool.log.EventLogger;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
 
 public abstract class LilyStartSite
@@ -19,6 +20,7 @@ public abstract class LilyStartSite
     static final Logger logger = LoggerFactory.getLogger(LilyStartSite.class);
 
     public static final String PATH_SYSMAN = "sysmgr";
+    public static final String PATH_EVENT_LOGS = "logger";
 
 //    protected ILoginManager loginManager;
 
@@ -42,6 +44,7 @@ public abstract class LilyStartSite
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+
         String token = tokens.peek();
         if (token == null)
             return null;
@@ -50,6 +53,10 @@ public abstract class LilyStartSite
         switch (token) {
         case PATH_SYSMAN:
             target = new SysManager();
+            break;
+
+        case PATH_EVENT_LOGS:
+            target = EventLogger.getInstance();
             break;
         }
 
