@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.lily</groupId>
-        <artifactId>layer-2</artifactId>
+        <artifactId>project</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>lily-model</artifactId>
+    <artifactId>basic-types</artifactId>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
