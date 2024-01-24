@@ -26,6 +26,9 @@
         <module>basic-dao</module>
         <module>basic-types</module>
         <module>basic-ws</module>
+        <module>violet-types</module>
+        <module>violet-dao</module>
+        <module>violet-ws</module>
         <module>fab-types</module>
         <module>fab-dao</module>
         <module>fab-ws</module>
