@@ -6,9 +6,9 @@ import net.bodz.bas.db.test.DatabaseTester;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.io.impl.TreeOutImpl;
-import net.bodz.lily.security.Group;
-import net.bodz.lily.security.User;
-import net.bodz.lily.security.dao.UserMapper;
+import net.bodz.lily.schema.account.Group;
+import net.bodz.lily.schema.account.User;
+import net.bodz.lily.schema.account.dao.UserMapper;
 
 public class UserPlayer
         extends DatabaseTester {

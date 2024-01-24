@@ -5,7 +5,7 @@ column-property {
 }
 
 class-map {
-    net.bodz.violet.asset.AbstractAsset: \
+    net.bodz.violet.schema.asset.AbstractAsset: \
         asset, \
         asset_group, \
         asset_org, \
@@ -15,12 +15,12 @@ class-map {
 }
 
 table-name {
-    asset:              net.bodz.violet.asset.Asset
-    asset_group:        net.bodz.violet.asset.GroupAsset
-    asset_org:          net.bodz.violet.asset.OrgAsset
-    asset_ou:           net.bodz.violet.asset.OrgUnitAsset
-    asset_person:       net.bodz.violet.asset.PersonAsset
-    asset_user:         net.bodz.violet.asset.UserAsset
+    asset:              net.bodz.violet.schema.asset.Asset
+    asset_group:        net.bodz.violet.schema.asset.GroupAsset
+    asset_org:          net.bodz.violet.schema.asset.OrgAsset
+    asset_ou:           net.bodz.violet.schema.asset.OrgUnitAsset
+    asset_person:       net.bodz.violet.schema.asset.PersonAsset
+    asset_user:         net.bodz.violet.schema.asset.UserAsset
 }
 
 table asset {

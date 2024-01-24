@@ -29,10 +29,12 @@
         <module>violet-types</module>
         <module>violet-dao</module>
         <module>violet-ws</module>
+        <module>violet-server</module>
         <module>fab-types</module>
         <module>fab-dao</module>
         <module>fab-ws</module>
         <module>lily-site</module>
+        <module>lily-tools</module>
         <module>build</module>
     </modules>
     <properties>

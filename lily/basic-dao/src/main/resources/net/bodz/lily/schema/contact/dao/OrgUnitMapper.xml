@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.contact.dao.OrgUnitMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.contact.OrgUnit">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="contact.rename" column="alias" />
+        <result property="contact.properties.jsonStr" column="ctprops" />
+        <result property="contact.address1" column="address1" />
+        <result property="contact.address2" column="address2" />
+        <result property="contact.tel" column="tel" />
+        <result property="contact.telValidated" column="telok" />
+        <result property="contact.email" column="email" />
+        <result property="contact.emailValidated" column="emailok" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="depth" column="depth" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="contact.zoneId" column="zone" />
+        <result property="orgId" column="org" />
+        <result property="parentId" column="parent" />
+        <association property="org" columnPrefix="org_"
+            javaType="net.bodz.lily.schema.contact.Organization" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.lily.schema.contact.OrgUnit" 
+            resultMap="objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="contact.zone" columnPrefix="zone_"
+            javaType="net.bodz.lily.schema.geo.Zone" 
+            resultMap="net.bodz.lily.schema.geo.dao.ZoneMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.alias, 
+            a.ctprops, 
+            a.address1, 
+            a.address2, 
+            a."zone", 
+            a.tel, 
+            a.telok, 
+            a.email, 
+            a.emailok, 
+            a.props, 
+            a.org, 
+            a.parent, 
+            a."depth", 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.alias parent_alias, 
+            parent.ctprops parent_ctprops, 
+            parent.address1 parent_address1, 
+            parent.address2 parent_address2, 
+            parent."zone" parent_zone, 
+            parent.tel parent_tel, 
+            parent.telok parent_telok, 
+            parent.email parent_email, 
+            parent.emailok parent_emailok, 
+            parent.props parent_props, 
+            parent.org parent_org, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            "zone".id zone_id, 
+            "zone".code zone_code, 
+            "zone".uid zone_uid, 
+            "zone".gid zone_gid, 
+            "zone".mode zone_mode, 
+            "zone".acl zone_acl, 
+            "zone".label zone_label, 
+            "zone".description zone_description, 
+            "zone".priority zone_priority, 
+            "zone".flags zone_flags, 
+            "zone"."state" zone_state, 
+            "zone".creation zone_creation, 
+            "zone".lastmod zone_lastmod, 
+            "zone"."version" zone_version, 
+            "zone".cat zone_cat, 
+            "zone".country zone_country, 
+            "zone".parent zone_parent, 
+            "zone"."depth" zone_depth, 
+            "zone".telcode zone_telcode, 
+            "zone".postcode zone_postcode, 
+            "zone".props zone_props, 
+            "zone"."data" zone_data
+        from orgunit a
+            left join org org on a.org = org.id
+            left join "group" ownerGroup on a.gid = ownerGroup.id
+            left join orgunit parent on a.parent = parent.id
+            left join "user" ownerUser on a.uid = ownerUser.id
+            left join "zone" "zone" on a."zone" = "zone".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.alias, 
+            a.ctprops, 
+            a.address1, 
+            a.address2, 
+            a."zone", 
+            a.tel, 
+            a.telok, 
+            a.email, 
+            a.emailok, 
+            a.props, 
+            a.org, 
+            a.parent, 
+            a."depth", 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            parent.id parent_id, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.alias parent_alias, 
+            parent.ctprops parent_ctprops, 
+            parent.address1 parent_address1, 
+            parent.address2 parent_address2, 
+            parent."zone" parent_zone, 
+            parent.tel parent_tel, 
+            parent.telok parent_telok, 
+            parent.email parent_email, 
+            parent.emailok parent_emailok, 
+            parent.props parent_props, 
+            parent.org parent_org, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            "zone".id zone_id, 
+            "zone".code zone_code, 
+            "zone".uid zone_uid, 
+            "zone".gid zone_gid, 
+            "zone".mode zone_mode, 
+            "zone".acl zone_acl, 
+            "zone".label zone_label, 
+            "zone".description zone_description, 
+            "zone".priority zone_priority, 
+            "zone".flags zone_flags, 
+            "zone"."state" zone_state, 
+            "zone".creation zone_creation, 
+            "zone".lastmod zone_lastmod, 
+            "zone"."version" zone_version, 
+            "zone".cat zone_cat, 
+            "zone".country zone_country, 
+            "zone".parent zone_parent, 
+            "zone"."depth" zone_depth, 
+            "zone".telcode zone_telcode, 
+            "zone".postcode zone_postcode, 
+            "zone".props zone_props, 
+            "zone"."data" zone_data
+        from orgunit a
+            left join org org on a.org = org.id
+            left join "group" ownerGroup on a.gid = ownerGroup.id
+            left join orgunit parent on a.parent = parent.id
+            left join "user" ownerUser on a.uid = ownerUser.id
+            left join "zone" "zone" on a."zone" = "zone".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into orgunit(
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            alias,
+            ctprops,
+            address1,
+            address2,
+            "zone",
+            tel,
+            telok,
+            email,
+            emailok,
+            props,
+            org,
+            parent,
+            "depth"
+        ) values(
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{contact.rename},
+            #{contact.properties.jsonStr}::jsonb,
+            #{contact.address1},
+            #{contact.address2},
+            #{contact.zoneId},
+            #{contact.tel},
+            #{contact.telValidated},
+            #{contact.email},
+            #{contact.emailValidated},
+            #{properties.jsonStr}::jsonb,
+            #{orgId},
+            #{parentId},
+            #{depth}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update orgunit
+        <set>
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            alias = #{contact.rename},
+            ctprops = #{contact.properties.jsonStr}::jsonb,
+            address1 = #{contact.address1},
+            address2 = #{contact.address2},
+            "zone" = #{contact.zoneId},
+            tel = #{contact.tel},
+            telok = #{contact.telValidated},
+            email = #{contact.email},
+            emailok = #{contact.emailValidated},
+            props = #{properties.jsonStr}::jsonb,
+            org = #{orgId},
+            parent = #{parentId},
+            "depth" = #{depth},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from orgunit
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from orgunit
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

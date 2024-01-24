@@ -20,7 +20,7 @@ key-columns {
 }
 
 table-name {
-    policy:             net.bodz.lily.security.Policy
+    policy:             net.bodz.lily.schema.account.Policy
 }
 
 table policy {

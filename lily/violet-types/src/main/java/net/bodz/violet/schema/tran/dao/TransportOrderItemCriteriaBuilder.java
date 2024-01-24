@@ -1,0 +1,6 @@
+package net.bodz.violet.schema.tran.dao;
+
+public class TransportOrderItemCriteriaBuilder
+        extends _TransportOrderItemCriteriaBuilder_stuff<TransportOrderItemCriteriaBuilder> {
+
+}

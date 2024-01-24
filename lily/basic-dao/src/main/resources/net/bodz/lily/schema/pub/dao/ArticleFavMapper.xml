@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.pub.dao.ArticleFavMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.pub.ArticleFav">
+        <id property="id" column="id" />
+        <result property="articleId" column="article" />
+        <result property="userId" column="user" />
+        <association property="article" columnPrefix="article_"
+            javaType="net.bodz.lily.schema.pub.Article" 
+            resultMap="net.bodz.lily.schema.pub.dao.ArticleMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.article, 
+            a."user", 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from article_fav a
+            left join article article on a.article = article.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.article, 
+            a."user", 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            "user".person user_person
+        from article_fav a
+            left join article article on a.article = article.id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.articleId != null">and a.article = #{m.articleId}</if>
+        <if test="m.articleIdRange!= null">
+            <if test="m.articleIdRange.hasStartIncl">and a.article >= #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasStartExcl">and a.article > #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
+            <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
+        </if>
+        <if test="m.userId != null">and a."user" = #{m.userId}</if>
+        <if test="m.userIdRange!= null">
+            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
+            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
+            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into article_fav(
+            article,
+            "user"
+        ) values(
+            #{articleId},
+            #{userId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update article_fav
+        <set>
+            article = #{articleId},
+            "user" = #{userId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from article_fav
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from article_fav
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

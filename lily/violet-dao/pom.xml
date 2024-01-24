@@ -7,6 +7,22 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>violet-dao</artifactId>
-    <dependencies />
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>basic-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>violet-types</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
     <name>Violet :: DAO</name>
 </project>

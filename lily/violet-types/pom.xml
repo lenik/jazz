@@ -7,6 +7,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>violet-types</artifactId>
-    <dependencies />
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>basic-types</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <name>Violet :: Types</name>
 </project>

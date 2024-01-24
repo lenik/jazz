@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.plan.dao.DiaryPartyMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.plan.DiaryParty">
+        <id property="id" column="id" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="value" column="value" />
+        <result property="diaryId" column="diary" />
+        <result property="userId" column="user" />
+        <result property="personId" column="person" />
+        <result property="orgId" column="org" />
+        <association property="person" columnPrefix="person_"
+            javaType="net.bodz.lily.schema.contact.Person" 
+            resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
+        <association property="org" columnPrefix="org_"
+            javaType="net.bodz.lily.schema.contact.Organization" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="diary" columnPrefix="diary_"
+            javaType="net.bodz.violet.schema.plan.Diary" 
+            resultMap="net.bodz.violet.schema.plan.dao.DiaryMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.diary, 
+            a."user", 
+            a.person, 
+            a.org, 
+            a."value", 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value
+        from diary_party a
+            left join lily.person person on a.person = person.id
+            left join lily.org org on a.org = org.id
+            left join lily."user" "user" on a."user" = "user".id
+            left join diary diary on a.diary = diary.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.diary, 
+            a."user", 
+            a.person, 
+            a.org, 
+            a."value", 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value
+        from diary_party a
+            left join lily.person person on a.person = person.id
+            left join lily.org org on a.org = org.id
+            left join lily."user" "user" on a."user" = "user".id
+            left join diary diary on a.diary = diary.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into diary_party(
+            label,
+            description,
+            diary,
+            "user",
+            person,
+            org,
+            "value"
+        ) values(
+            #{label},
+            #{description},
+            #{diaryId},
+            #{userId},
+            #{personId},
+            #{orgId},
+            #{value}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update diary_party
+        <set>
+            label = #{label},
+            description = #{description},
+            diary = #{diaryId},
+            "user" = #{userId},
+            person = #{personId},
+            org = #{orgId},
+            "value" = #{value},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from diary_party
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from diary_party
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

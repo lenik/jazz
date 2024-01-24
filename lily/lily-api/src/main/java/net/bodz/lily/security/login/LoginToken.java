@@ -16,8 +16,9 @@ import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.vhost.CurrentVirtualHost;
 import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.typer.std.MutableAttributes;
-import net.bodz.lily.security.User;
-import net.bodz.lily.security.UserSecret;
+import net.bodz.lily.security.IUser;
+import net.bodz.lily.security.IUserSecret;
+import net.bodz.lily.security.Users;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -39,15 +40,15 @@ public class LoginToken
     long id;
     long expireDate;
 
-    User user;
-    UserSecret secret;
+    IUser user;
+    IUserSecret secret;
 
     private long transaction;
 
     private LoginToken() {
     }
 
-    LoginToken(ILoginTokenManager manager, long id, User user) {
+    LoginToken(ILoginTokenManager manager, long id, IUser user) {
         if (user == null)
             throw new NullPointerException("user");
         this.id = id;
@@ -68,7 +69,7 @@ public class LoginToken
         return expireDate;
     }
 
-    public User getUser() {
+    public IUser getUser() {
         return user;
     }
 
@@ -258,7 +259,7 @@ public class LoginToken
 
         JsonObject _user = o.getJsonObject("user");
         if (_user != null) {
-            User user = new User();
+            IUser user = Users.newUser();
             user.jsonIn(o, opts);
             this.user = user;
         }
@@ -275,7 +276,7 @@ public class LoginToken
         out.object();
         {
             out.entry("id", user.id());
-            out.entry("name", user.getName());
+            out.entry("name", user.getUniqName());
             out.entry("fullName", user.getFullName());
             out.endObject();
         }

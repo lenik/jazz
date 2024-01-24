@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.fab.dao.FabStdProcessMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabStdProcess">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="valid" column="valid" />
+        <result property="validSince" column="validsince" />
+        <result property="validUntil" column="validuntil" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="duration" column="duration" />
+        <result property="strict" column="strict" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="outputId" column="output" />
+        <result property="functionId" column="fn" />
+        <result property="testId" column="test" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="output" columnPrefix="output_"
+            javaType="net.bodz.violet.schema.art.ArtifactModel" 
+            resultMap="net.bodz.violet.schema.art.dao.ArtifactModelMapper.objlist_map" />
+        <association property="test" columnPrefix="test_"
+            javaType="net.bodz.violet.schema.fab.FabStdTest" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabStdTestMapper.objlist_map" />
+        <association property="function" columnPrefix="fn_"
+            javaType="net.bodz.violet.schema.fab.FabFn" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabFnMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a."valid", 
+            a.validsince, 
+            a.validuntil, 
+            a.props, 
+            a."output", 
+            a.fn, 
+            a.duration, 
+            a.strict, 
+            a.test, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            "output".id output_id, 
+            "output".uid output_uid, 
+            "output".gid output_gid, 
+            "output".mode output_mode, 
+            "output".acl output_acl, 
+            "output".label output_label, 
+            "output".description output_description, 
+            "output".priority output_priority, 
+            "output".flags output_flags, 
+            "output"."state" output_state, 
+            "output".creation output_creation, 
+            "output".lastmod output_lastmod, 
+            "output"."version" output_version, 
+            "output".t0 output_t0, 
+            "output".t1 output_t1, 
+            "output"."year" output_year, 
+            "output".props output_props, 
+            "output"."valid" output_valid, 
+            "output".validsince output_validsince, 
+            "output".validuntil output_validuntil, 
+            "output".obsolete output_obsolete, 
+            "output".art output_art, 
+            "output".model output_model, 
+            test.id test_id, 
+            test.code test_code, 
+            test.uid test_uid, 
+            test.gid test_gid, 
+            test.mode test_mode, 
+            test.acl test_acl, 
+            test.label test_label, 
+            test.description test_description, 
+            test.priority test_priority, 
+            test.flags test_flags, 
+            test."state" test_state, 
+            test.creation test_creation, 
+            test.lastmod test_lastmod, 
+            test."version" test_version, 
+            test.image test_image, 
+            test.imagealt test_imagealt, 
+            test.props test_props, 
+            test.cat test_cat, 
+            test.parent test_parent, 
+            test."depth" test_depth, 
+            test.nref test_nref, 
+            fn.id fn_id, 
+            fn.code fn_code, 
+            fn.uid fn_uid, 
+            fn.gid fn_gid, 
+            fn.mode fn_mode, 
+            fn.acl fn_acl, 
+            fn.label fn_label, 
+            fn.description fn_description, 
+            fn.priority fn_priority, 
+            fn.flags fn_flags, 
+            fn."state" fn_state, 
+            fn.creation fn_creation, 
+            fn.lastmod fn_lastmod, 
+            fn."version" fn_version, 
+            fn.image fn_image, 
+            fn.imagealt fn_imagealt, 
+            fn.props fn_props, 
+            fn.parent fn_parent, 
+            fn."depth" fn_depth, 
+            fn.nref fn_nref
+        from fabstdproc a
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join artmodel "output" on a."output" = "output".id
+            left join fabstdtest test on a.test = test.id
+            left join fabfn fn on a.fn = fn.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a."valid", 
+            a.validsince, 
+            a.validuntil, 
+            a.props, 
+            a."output", 
+            a.fn, 
+            a.duration, 
+            a.strict, 
+            a.test, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            "output".id output_id, 
+            "output".uid output_uid, 
+            "output".gid output_gid, 
+            "output".mode output_mode, 
+            "output".acl output_acl, 
+            "output".label output_label, 
+            "output".description output_description, 
+            "output".priority output_priority, 
+            "output".flags output_flags, 
+            "output"."state" output_state, 
+            "output".creation output_creation, 
+            "output".lastmod output_lastmod, 
+            "output"."version" output_version, 
+            "output".t0 output_t0, 
+            "output".t1 output_t1, 
+            "output"."year" output_year, 
+            "output".props output_props, 
+            "output"."valid" output_valid, 
+            "output".validsince output_validsince, 
+            "output".validuntil output_validuntil, 
+            "output".obsolete output_obsolete, 
+            "output".art output_art, 
+            "output".model output_model, 
+            test.id test_id, 
+            test.code test_code, 
+            test.uid test_uid, 
+            test.gid test_gid, 
+            test.mode test_mode, 
+            test.acl test_acl, 
+            test.label test_label, 
+            test.description test_description, 
+            test.priority test_priority, 
+            test.flags test_flags, 
+            test."state" test_state, 
+            test.creation test_creation, 
+            test.lastmod test_lastmod, 
+            test."version" test_version, 
+            test.image test_image, 
+            test.imagealt test_imagealt, 
+            test.props test_props, 
+            test.cat test_cat, 
+            test.parent test_parent, 
+            test."depth" test_depth, 
+            test.nref test_nref, 
+            fn.id fn_id, 
+            fn.code fn_code, 
+            fn.uid fn_uid, 
+            fn.gid fn_gid, 
+            fn.mode fn_mode, 
+            fn.acl fn_acl, 
+            fn.label fn_label, 
+            fn.description fn_description, 
+            fn.priority fn_priority, 
+            fn.flags fn_flags, 
+            fn."state" fn_state, 
+            fn.creation fn_creation, 
+            fn.lastmod fn_lastmod, 
+            fn."version" fn_version, 
+            fn.image fn_image, 
+            fn.imagealt fn_imagealt, 
+            fn.props fn_props, 
+            fn.parent fn_parent, 
+            fn."depth" fn_depth, 
+            fn.nref fn_nref
+        from fabstdproc a
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join artmodel "output" on a."output" = "output".id
+            left join fabstdtest test on a.test = test.id
+            left join fabfn fn on a.fn = fn.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabstdproc(
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            "valid",
+            validsince,
+            validuntil,
+            props,
+            "output",
+            fn,
+            duration,
+            strict,
+            test
+        ) values(
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{valid},
+            #{validSince},
+            #{validUntil},
+            #{properties.jsonStr}::jsonb,
+            #{outputId},
+            #{functionId},
+            #{duration},
+            #{strict},
+            #{testId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabstdproc
+        <set>
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            "valid" = #{valid},
+            validsince = #{validSince},
+            validuntil = #{validUntil},
+            props = #{properties.jsonStr}::jsonb,
+            "output" = #{outputId},
+            fn = #{functionId},
+            duration = #{duration},
+            strict = #{strict},
+            test = #{testId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabstdproc
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabstdproc
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

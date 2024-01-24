@@ -25,8 +25,8 @@ import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.HttpPayload;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.security.User;
+import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.security.IUser;
 
 public class EventLogger
         implements
@@ -48,7 +48,7 @@ public class EventLogger
         return logs;
     }
 
-    public EventLog log(User user)
+    public EventLog log(IUser user)
             throws IOException {
         flush();
         EventLog item = new EventLog(user);
@@ -56,7 +56,7 @@ public class EventLogger
         return item;
     }
 
-    public EventLog log(User user, CoEntity<? extends Number> entity, String message)
+    public EventLog log(IUser user, CoEntity<? extends Number> entity, String message)
             throws IOException {
         flush();
         EventLog item = new EventLog(user, entity, message, null);

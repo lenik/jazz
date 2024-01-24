@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.fab.dao.FabTrackMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabTrack">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="since" column="since" />
+        <result property="deadline" column="deadline" />
+        <result property="plannedQuantity" column="qty_plan" />
+        <result property="actualQuantity" column="qty_actual" />
+        <result property="validQuantity" column="qty_valid" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="processId" column="proc" />
+        <result property="orgUnitId" column="ou" />
+        <association property="orgUnit" columnPrefix="ou_"
+            javaType="net.bodz.lily.schema.contact.OrgUnit" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrgUnitMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="process" columnPrefix="proc_"
+            javaType="net.bodz.violet.schema.fab.FabProcess" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabProcessMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.proc, 
+            a.since, 
+            a.deadline, 
+            a.qty_plan, 
+            a.qty_actual, 
+            a.qty_valid, 
+            a.ou, 
+            ou.id ou_id, 
+            ou.uid ou_uid, 
+            ou.gid ou_gid, 
+            ou.mode ou_mode, 
+            ou.acl ou_acl, 
+            ou.label ou_label, 
+            ou.description ou_description, 
+            ou.priority ou_priority, 
+            ou.flags ou_flags, 
+            ou."state" ou_state, 
+            ou.creation ou_creation, 
+            ou.lastmod ou_lastmod, 
+            ou."version" ou_version, 
+            ou.alias ou_alias, 
+            ou.ctprops ou_ctprops, 
+            ou.address1 ou_address1, 
+            ou.address2 ou_address2, 
+            ou."zone" ou_zone, 
+            ou.tel ou_tel, 
+            ou.telok ou_telok, 
+            ou.email ou_email, 
+            ou.emailok ou_emailok, 
+            ou.props ou_props, 
+            ou.org ou_org, 
+            ou.parent ou_parent, 
+            ou."depth" ou_depth, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            proc.id proc_id, 
+            proc.uid proc_uid, 
+            proc.gid proc_gid, 
+            proc.mode proc_mode, 
+            proc.acl proc_acl, 
+            proc.label proc_label, 
+            proc.description proc_description, 
+            proc.priority proc_priority, 
+            proc.flags proc_flags, 
+            proc."state" proc_state, 
+            proc.creation proc_creation, 
+            proc.lastmod proc_lastmod, 
+            proc."version" proc_version, 
+            proc.t0 proc_t0, 
+            proc.t1 proc_t1, 
+            proc."year" proc_year, 
+            proc.task proc_task, 
+            proc.parent proc_parent, 
+            proc."output" proc_output, 
+            proc.std proc_std, 
+            proc.qty proc_qty, 
+            proc.batch proc_batch, 
+            proc.since proc_since, 
+            proc.deadline proc_deadline, 
+            proc.ntrack proc_ntrack
+        from fabtrack a
+            left join lily.orgunit ou on a.ou = ou.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join fabproc proc on a.proc = proc.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.proc, 
+            a.since, 
+            a.deadline, 
+            a.qty_plan, 
+            a.qty_actual, 
+            a.qty_valid, 
+            a.ou, 
+            ou.id ou_id, 
+            ou.uid ou_uid, 
+            ou.gid ou_gid, 
+            ou.mode ou_mode, 
+            ou.acl ou_acl, 
+            ou.label ou_label, 
+            ou.description ou_description, 
+            ou.priority ou_priority, 
+            ou.flags ou_flags, 
+            ou."state" ou_state, 
+            ou.creation ou_creation, 
+            ou.lastmod ou_lastmod, 
+            ou."version" ou_version, 
+            ou.alias ou_alias, 
+            ou.ctprops ou_ctprops, 
+            ou.address1 ou_address1, 
+            ou.address2 ou_address2, 
+            ou."zone" ou_zone, 
+            ou.tel ou_tel, 
+            ou.telok ou_telok, 
+            ou.email ou_email, 
+            ou.emailok ou_emailok, 
+            ou.props ou_props, 
+            ou.org ou_org, 
+            ou.parent ou_parent, 
+            ou."depth" ou_depth, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            proc.id proc_id, 
+            proc.uid proc_uid, 
+            proc.gid proc_gid, 
+            proc.mode proc_mode, 
+            proc.acl proc_acl, 
+            proc.label proc_label, 
+            proc.description proc_description, 
+            proc.priority proc_priority, 
+            proc.flags proc_flags, 
+            proc."state" proc_state, 
+            proc.creation proc_creation, 
+            proc.lastmod proc_lastmod, 
+            proc."version" proc_version, 
+            proc.t0 proc_t0, 
+            proc.t1 proc_t1, 
+            proc."year" proc_year, 
+            proc.task proc_task, 
+            proc.parent proc_parent, 
+            proc."output" proc_output, 
+            proc.std proc_std, 
+            proc.qty proc_qty, 
+            proc.batch proc_batch, 
+            proc.since proc_since, 
+            proc.deadline proc_deadline, 
+            proc.ntrack proc_ntrack
+        from fabtrack a
+            left join lily.orgunit ou on a.ou = ou.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join fabproc proc on a.proc = proc.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabtrack(
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            proc,
+            since,
+            deadline,
+            qty_plan,
+            qty_actual,
+            qty_valid,
+            ou
+        ) values(
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{processId},
+            #{since},
+            #{deadline},
+            #{plannedQuantity},
+            #{actualQuantity},
+            #{validQuantity},
+            #{orgUnitId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabtrack
+        <set>
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            proc = #{processId},
+            since = #{since},
+            deadline = #{deadline},
+            qty_plan = #{plannedQuantity},
+            qty_actual = #{actualQuantity},
+            qty_valid = #{validQuantity},
+            ou = #{orgUnitId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabtrack
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabtrack
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

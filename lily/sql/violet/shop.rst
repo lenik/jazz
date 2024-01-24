@@ -7,47 +7,47 @@ column-property {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         shopcat, \
         shopitemcat, \
         couponcat, \
         shopmemcat, \
         salecat
-    net.bodz.lily.template.CoPhase: \
+    net.bodz.lily.concrete.CoPhase: \
         salephase
-    net.bodz.lily.template.CoTag: \
+    net.bodz.lily.concrete.CoTag: \
         shoptag
-    net.bodz.lily.template.FavRecord: \
+    net.bodz.lily.concrete.FavRecord: \
         shop_fav, \
         shopitem_fav
-    net.bodz.lily.model.base.CoMomentInterval: \
+    net.bodz.lily.concrete.CoMomentInterval: \
         shopitem
 }
 
 table-name {
-    shop:               net.bodz.violet.shop.Shop
-    shopcat:            net.bodz.violet.shop.ShopCategory
-    shoptag:            net.bodz.violet.shop.ShopTag
-    shop_fav:           net.bodz.violet.shop.ShopFav
+    shop:               net.bodz.violet.schema.shop.Shop
+    shopcat:            net.bodz.violet.schema.shop.ShopCategory
+    shoptag:            net.bodz.violet.schema.shop.ShopTag
+    shop_fav:           net.bodz.violet.schema.shop.ShopFav
     
-    shopitem:           net.bodz.violet.shop.ShopItem
-    shopitemcat:        net.bodz.violet.shop.ShopItemCategory
-    shopitem_fav:       net.bodz.violet.shop.ShopItemFav
+    shopitem:           net.bodz.violet.schema.shop.ShopItem
+    shopitemcat:        net.bodz.violet.schema.shop.ShopItemCategory
+    shopitem_fav:       net.bodz.violet.schema.shop.ShopItemFav
 
-    shopmem:            net.bodz.violet.shop.Membership
-    shopmemcat:         net.bodz.violet.shop.MembershipCategory
+    shopmem:            net.bodz.violet.schema.shop.Membership
+    shopmemcat:         net.bodz.violet.schema.shop.MembershipCategory
     
-    art_price:          net.bodz.violet.shop.SellPrice
-    coupon:             net.bodz.violet.shop.Coupon
-    couponcat:          net.bodz.violet.shop.CouponCategory
+    art_price:          net.bodz.violet.schema.shop.SellPrice
+    coupon:             net.bodz.violet.schema.shop.Coupon
+    couponcat:          net.bodz.violet.schema.shop.CouponCategory
     
-    cart:               net.bodz.violet.shop.Cart
-    cartitem:           net.bodz.violet.shop.CartItem
+    cart:               net.bodz.violet.schema.shop.Cart
+    cartitem:           net.bodz.violet.schema.shop.CartItem
     
-    salecat:            net.bodz.violet.shop.SalesCategory
-    salephase:          net.bodz.violet.shop.SalesPhase
-    saleodr:            net.bodz.violet.shop.SalesOrder
-    saleodrl:           net.bodz.violet.shop.SalesOrderItem
+    salecat:            net.bodz.violet.schema.shop.SalesCategory
+    salephase:          net.bodz.violet.schema.shop.SalesPhase
+    saleodr:            net.bodz.violet.schema.shop.SalesOrder
+    saleodrl:           net.bodz.violet.schema.shop.SalesOrderItem
 }
 
 table shop {

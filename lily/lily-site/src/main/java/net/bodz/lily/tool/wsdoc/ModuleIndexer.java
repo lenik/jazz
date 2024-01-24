@@ -22,9 +22,9 @@ import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.AbstractEntityController;
-import net.bodz.lily.model.base.CoObjectCriteriaBuilder;
-import net.bodz.lily.model.base.IEntityController;
+import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.ws.AbstractEntityController;
+import net.bodz.lily.entity.ws.IEntityController;
 
 public class ModuleIndexer
         implements IPathDispatchable {

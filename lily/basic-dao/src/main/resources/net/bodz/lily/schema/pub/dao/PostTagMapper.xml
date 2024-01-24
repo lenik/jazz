@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.pub.dao.PostTagMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.pub.PostTag">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="postId" column="post" />
+        <result property="tagId" column="tag" />
+        <association property="tag" columnPrefix="tag_"
+            javaType="net.bodz.lily.schema.pub.PostTagType" 
+            resultMap="net.bodz.lily.schema.pub.dao.PostTagTypeMapper.objlist_map" />
+        <association property="post" columnPrefix="post_"
+            javaType="net.bodz.lily.schema.pub.Post" 
+            resultMap="net.bodz.lily.schema.pub.dao.PostMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.post, 
+            a.tag, 
+            tag.id tag_id, 
+            tag.uid tag_uid, 
+            tag.gid tag_gid, 
+            tag.mode tag_mode, 
+            tag.acl tag_acl, 
+            tag.code tag_code, 
+            tag.label tag_label, 
+            tag.description tag_description, 
+            tag.priority tag_priority, 
+            tag.flags tag_flags, 
+            tag."state" tag_state, 
+            tag.creation tag_creation, 
+            tag.lastmod tag_lastmod, 
+            tag."version" tag_version, 
+            tag.parent tag_parent, 
+            tag."depth" tag_depth, 
+            tag.nref tag_nref, 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins
+        from post_tag a
+            left join posttag tag on a.tag = tag.id
+            left join post post on a.post = post.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.post, 
+            a.tag, 
+            tag.id tag_id, 
+            tag.uid tag_uid, 
+            tag.gid tag_gid, 
+            tag.mode tag_mode, 
+            tag.acl tag_acl, 
+            tag.code tag_code, 
+            tag.label tag_label, 
+            tag.description tag_description, 
+            tag.priority tag_priority, 
+            tag.flags tag_flags, 
+            tag."state" tag_state, 
+            tag.creation tag_creation, 
+            tag.lastmod tag_lastmod, 
+            tag."version" tag_version, 
+            tag.parent tag_parent, 
+            tag."depth" tag_depth, 
+            tag.nref tag_nref, 
+            post.id post_id, 
+            post.uid post_uid, 
+            post.gid post_gid, 
+            post.mode post_mode, 
+            post.acl post_acl, 
+            post.priority post_priority, 
+            post.flags post_flags, 
+            post."state" post_state, 
+            post.creation post_creation, 
+            post.lastmod post_lastmod, 
+            post."version" post_version, 
+            post.t0 post_t0, 
+            post.t1 post_t1, 
+            post."year" post_year, 
+            post.subject post_subject, 
+            post.op post_op, 
+            post.text post_text, 
+            post.form post_form, 
+            post.formargs post_formargs, 
+            post.parent post_parent, 
+            post.cat post_cat, 
+            post.nfav post_nfav, 
+            post.nvote post_nvote, 
+            post.nhate post_nhate, 
+            post.nmsg post_nmsg, 
+            post.plugins post_plugins
+        from post_tag a
+            left join posttag tag on a.tag = tag.id
+            left join post post on a.post = post.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.postId != null">and a.post = #{m.postId}</if>
+        <if test="m.postIdRange!= null">
+            <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasStartExcl">and a.post > #{m.postIdRange.start}</if>
+            <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
+            <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
+        </if>
+        <if test="m.tagId != null">and a.tag = #{m.tagId}</if>
+        <if test="m.tagIdRange!= null">
+            <if test="m.tagIdRange.hasStartIncl">and a.tag >= #{m.tagIdRange.start}</if>
+            <if test="m.tagIdRange.hasStartExcl">and a.tag > #{m.tagIdRange.start}</if>
+            <if test="m.tagIdRange.hasEndIncl">and a.tag &lt;= #{m.tagIdRange.end}</if>
+            <if test="m.tagIdRange.hasEndExcl">and a.tag &lt; #{m.tagIdRange.end}</if>
+        </if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into post_tag(
+            creation,
+            lastmod,
+            "version",
+            post,
+            tag
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{postId},
+            #{tagId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update post_tag
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            post = #{postId},
+            tag = #{tagId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from post_tag
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from post_tag
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

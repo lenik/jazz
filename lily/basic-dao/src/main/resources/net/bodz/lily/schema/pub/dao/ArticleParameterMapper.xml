@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.pub.dao.ArticleParameterMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.pub.ArticleParameter">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="ival" column="ival" />
+        <result property="fval" column="fval" />
+        <result property="sval" column="sval" />
+        <result property="articleId" column="article" />
+        <result property="parameterId" column="parm" />
+        <association property="article" columnPrefix="article_"
+            javaType="net.bodz.lily.schema.pub.Article" 
+            resultMap="net.bodz.lily.schema.pub.dao.ArticleMapper.objlist_map" />
+        <association property="parameter" columnPrefix="parm_"
+            javaType="net.bodz.lily.schema.pub.ArticleParameterType" 
+            resultMap="net.bodz.lily.schema.pub.dao.ArticleParameterTypeMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.article, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm."name" parm_name, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm.dummy parm_dummy
+        from article_parm a
+            left join article article on a.article = article.id
+            left join articleparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.article, 
+            a.parm, 
+            a.ival, 
+            a.fval, 
+            a.sval, 
+            article.id article_id, 
+            article.uid article_uid, 
+            article.gid article_gid, 
+            article.mode article_mode, 
+            article.acl article_acl, 
+            article.label article_label, 
+            article.description article_description, 
+            article.priority article_priority, 
+            article.flags article_flags, 
+            article."state" article_state, 
+            article.creation article_creation, 
+            article.lastmod article_lastmod, 
+            article."version" article_version, 
+            article.t0 article_t0, 
+            article.t1 article_t1, 
+            article."year" article_year, 
+            article.subject article_subject, 
+            article.op article_op, 
+            article.text article_text, 
+            article.form article_form, 
+            article.formargs article_formargs, 
+            article.cat article_cat, 
+            article.props article_props, 
+            article.nfav article_nfav, 
+            article.nvote article_nvote, 
+            article.nhate article_nhate, 
+            article.nmsg article_nmsg, 
+            article.plugins article_plugins, 
+            parm.id parm_id, 
+            parm.uid parm_uid, 
+            parm.gid parm_gid, 
+            parm.mode parm_mode, 
+            parm.acl parm_acl, 
+            parm."name" parm_name, 
+            parm.label parm_label, 
+            parm.description parm_description, 
+            parm.priority parm_priority, 
+            parm.flags parm_flags, 
+            parm."state" parm_state, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm.dummy parm_dummy
+        from article_parm a
+            left join article article on a.article = article.id
+            left join articleparm parm on a.parm = parm.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        <if test="m.id != null">and a.id = #{m.id}</if>
+        <if test="m.idRange!= null">
+            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
+            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
+            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
+            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
+        </if>
+        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
+        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
+        <if test="m.version != null">and a."version" = #{m.version}</if>
+        <if test="m.versionRange!= null">
+            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
+            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
+            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
+        </if>
+        <if test="m.articleId != null">and a.article = #{m.articleId}</if>
+        <if test="m.articleIdRange!= null">
+            <if test="m.articleIdRange.hasStartIncl">and a.article >= #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasStartExcl">and a.article > #{m.articleIdRange.start}</if>
+            <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
+            <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
+        </if>
+        <if test="m.parameter != null">and a.parm = #{m.parameter}</if>
+        <if test="m.parameterRange!= null">
+            <if test="m.parameterRange.hasStartIncl">and a.parm >= #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasStartExcl">and a.parm > #{m.parameterRange.start}</if>
+            <if test="m.parameterRange.hasEndIncl">and a.parm &lt;= #{m.parameterRange.end}</if>
+            <if test="m.parameterRange.hasEndExcl">and a.parm &lt; #{m.parameterRange.end}</if>
+        </if>
+        <if test="m.ival != null">and a.ival = #{m.ival}</if>
+        <if test="m.ivalRange!= null">
+            <if test="m.ivalRange.hasStartIncl">and a.ival >= #{m.ivalRange.start}</if>
+            <if test="m.ivalRange.hasStartExcl">and a.ival > #{m.ivalRange.start}</if>
+            <if test="m.ivalRange.hasEndIncl">and a.ival &lt;= #{m.ivalRange.end}</if>
+            <if test="m.ivalRange.hasEndExcl">and a.ival &lt; #{m.ivalRange.end}</if>
+        </if>
+        <if test="m.fval != null">and a.fval = #{m.fval}</if>
+        <if test="m.fvalRange!= null">
+            <if test="m.fvalRange.hasStartIncl">and a.fval >= #{m.fvalRange.start}</if>
+            <if test="m.fvalRange.hasStartExcl">and a.fval > #{m.fvalRange.start}</if>
+            <if test="m.fvalRange.hasEndIncl">and a.fval &lt;= #{m.fvalRange.end}</if>
+            <if test="m.fvalRange.hasEndExcl">and a.fval &lt; #{m.fvalRange.end}</if>
+        </if>
+        <if test="m.sval != null">and a.sval = #{m.sval}</if>
+        <if test="m.svalPattern != null">and a.sval like '${m.svalPattern}'</if>
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into article_parm(
+            creation,
+            lastmod,
+            "version",
+            article,
+            parm,
+            ival,
+            fval,
+            sval
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{articleId},
+            #{parameter},
+            #{ival},
+            #{fval},
+            #{sval}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update article_parm
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            article = #{articleId},
+            parm = #{parameter},
+            ival = #{ival},
+            fval = #{fval},
+            sval = #{sval},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from article_parm
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from article_parm
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

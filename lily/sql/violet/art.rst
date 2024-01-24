@@ -12,34 +12,34 @@ column-type {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         artcat
-    net.bodz.lily.template.CoParameter: \
+    net.bodz.lily.concrete.CoParameter: \
         artparm
-    net.bodz.lily.template.CoPhase: \
+    net.bodz.lily.concrete.CoPhase: \
         artphase
-    net.bodz.lily.template.CoTag: \
+    net.bodz.lily.concrete.CoTag: \
         arttag
-    net.bodz.lily.template.BackrefRecord: \
+    net.bodz.lily.concrete.BackrefRecord: \
         art_backref
-    net.bodz.lily.template.DocRecord: \
+    net.bodz.lily.concrete.DocRecord: \
         art_doc
-    net.bodz.lily.template.VoteRecord: \
+    net.bodz.lily.concrete.VoteRecord: \
         art_vote
 }
 
 table-name {
-    art:                net.bodz.violet.art.Artifact
-    artcat:             net.bodz.violet.art.ArtifactCategory
-    artmodel:           net.bodz.violet.art.ArtifactModel
-    artparm:            net.bodz.violet.art.ArtifactParameter
-    artphase:           net.bodz.violet.art.ArtifactPhase
-    arttag:             net.bodz.violet.art.ArtifactTag
-    art_backref:        net.bodz.violet.art.ArtifactBackref
-    art_doc:            net.bodz.violet.art.ArtifactDoc
-    art_vote:           net.bodz.violet.art.ArtifactVote
-    artpack:            net.bodz.violet.art.Packaging
-    uom:                net.bodz.violet.art.UOM
+    art:                net.bodz.violet.schema.art.Artifact
+    artcat:             net.bodz.violet.schema.art.ArtifactCategory
+    artmodel:           net.bodz.violet.schema.art.ArtifactModel
+    artparm:            net.bodz.violet.schema.art.ArtifactParameter
+    artphase:           net.bodz.violet.schema.art.ArtifactPhase
+    arttag:             net.bodz.violet.schema.art.ArtifactTag
+    art_backref:        net.bodz.violet.schema.art.ArtifactBackref
+    art_doc:            net.bodz.violet.schema.art.ArtifactDoc
+    art_vote:           net.bodz.violet.schema.art.ArtifactVote
+    artpack:            net.bodz.violet.schema.art.Packaging
+    uom:                net.bodz.violet.schema.art.UOM
 }
 
 table art {
@@ -62,3 +62,13 @@ table artmodel {
         javaName: modelName
     }
 }
+
+table uom {
+    column std {
+        javaName: standard
+    }
+    column prop {
+        javaName: property
+    }
+}
+

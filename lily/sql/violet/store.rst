@@ -5,34 +5,34 @@ column-property {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         regioncat, \
         storecat
-    net.bodz.lily.model.base.CoNode: \
+    net.bodz.lily.concrete.CoNode: \
         region
-    net.bodz.lily.model.base.CoCode: \
+    net.bodz.lily.concrete.CoCode: \
         regionlevel
-    net.bodz.lily.template.CoTag: \
+    net.bodz.lily.concrete.CoTag: \
         regiontag
-    net.bodz.lily.template.CoPhase: \
+    net.bodz.lily.concrete.CoPhase: \
         storephase
-    net.bodz.lily.model.base.CoMomentInterval: \
+    net.bodz.lily.concrete.CoMomentInterval: \
         storeodrl
 }
 
 table-name {
-    region:             net.bodz.violet.store.Region
-    regioncat:          net.bodz.violet.store.RegionCategory
-    regiontag:          net.bodz.violet.store.RegionTag
-    regionlevel:        net.bodz.violet.store.RegionLevel
+    region:             net.bodz.violet.schema.store.Region
+    regioncat:          net.bodz.violet.schema.store.RegionCategory
+    regiontag:          net.bodz.violet.schema.store.RegionTag
+    regionlevel:        net.bodz.violet.schema.store.RegionLevel
 
-    storecat:           net.bodz.violet.store.StoreCategory
-    storephase:         net.bodz.violet.store.StorePhase
-    storel:             net.bodz.violet.store.StoreItem
-    offstorel:          net.bodz.violet.store.OffStoreItem
+    storecat:           net.bodz.violet.schema.store.StoreCategory
+    storephase:         net.bodz.violet.schema.store.StorePhase
+    storel:             net.bodz.violet.schema.store.StoreItem
+    offstorel:          net.bodz.violet.schema.store.OffStoreItem
 
-    storeodr:           net.bodz.violet.store.StoreOrder
-    storeodrl:          net.bodz.violet.store.StoreOrderItem
+    storeodr:           net.bodz.violet.schema.store.StoreOrder
+    storeodrl:          net.bodz.violet.schema.store.StoreOrderItem
 }
 
 table region {

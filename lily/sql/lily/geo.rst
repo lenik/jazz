@@ -1,8 +1,13 @@
 #\import lily.security
 
+column-property {
+    lng:                longitude
+    lat:                latitude
+}
+
 table-name {
-    zone:               net.bodz.lily.geo.Zone
-    zonecat:            net.bodz.lily.geo.ZoneCategory
+    zone:               net.bodz.lily.schema.geo.Zone
+    zonecat:            net.bodz.lily.schema.geo.ZoneCategory
 }
 
 table zone {

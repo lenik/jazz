@@ -1,5 +1,5 @@
 #\import lily.account
 
 table-name {
-    extsite:            net.bodz.lily.inet.ExternalSite
+    extsite:            net.bodz.lily.schema.inet.ExternalSite
 }

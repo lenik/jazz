@@ -21,22 +21,18 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-apidir=../../layer-1/lily-api
-modeldir=../../layer-2/lily-model
-impldir=../../layer-5/lily-impl
+typesdir=../fab-types
 
-DAOGEN = daogen $(DAOFLAGS)
-
-DAOGEN_ERP = $(DAOGEN) \
-    -H . \
-    -c $(impldir)/sql/out/violet.rst
+DAOGEN = daogen $(DAOFLAGS) \
+    -H $(typesdir) \
+    -c ../sql/out/fab.rst \
+    -p net.bodz.other.schema
 
 predao:
-	cd ../../sql; make -B
+	cd ../sql; make -B
 
-dao-erp: predao
-	$(DAOGEN_ERP) \
-            -p net.bodz.violet.erp \
+dao: predao
+	$(DAOGEN) \
             artmodel \
             fabfn fabodrl fabodr \
             fabproc_sn fabproc fabstdproc_in fabstdproc \

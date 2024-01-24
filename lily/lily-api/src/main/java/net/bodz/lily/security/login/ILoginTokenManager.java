@@ -1,10 +1,10 @@
 package net.bodz.lily.security.login;
 
-import net.bodz.lily.security.User;
+import net.bodz.lily.security.IUser;
 
 public interface ILoginTokenManager {
 
-    LoginToken newToken(User user);
+    LoginToken newToken(IUser user);
 
     LoginToken getToken(long id);
 

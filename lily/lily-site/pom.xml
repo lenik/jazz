@@ -2,19 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.lily</groupId>
-        <artifactId>layer-5</artifactId>
+        <artifactId>project</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>lily-site</artifactId>
     <dependencies>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>basic-types</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.lily</groupId>
-            <artifactId>basic-dao</artifactId>
+            <artifactId>lily-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -23,5 +18,5 @@
             <version>${bas.version}</version>
         </dependency>
     </dependencies>
-    <name>Lily :: Layer 5 :: Lily Site</name>
+    <name>Lily :: Site</name>
 </project>

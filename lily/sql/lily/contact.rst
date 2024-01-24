@@ -8,20 +8,20 @@ column-property {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         partycat
-    net.bodz.lily.contact.Party: \
+    net.bodz.lily.schema.contact.Party: \
         org, \
         orgunit, \
         person
 }
 
 table-name {
-    org:                net.bodz.lily.contact.Organization
-    orgunit:            net.bodz.lily.contact.OrgUnit
-    partycat:           net.bodz.lily.contact.PartyCategory
-    person:             net.bodz.lily.contact.Person
-    personrole:         net.bodz.lily.contact.PersonRole
+    org:                net.bodz.lily.schema.contact.Organization
+    orgunit:            net.bodz.lily.schema.contact.OrgUnit
+    partycat:           net.bodz.lily.schema.contact.PartyCategory
+    person:             net.bodz.lily.schema.contact.Person
+    personrole:         net.bodz.lily.schema.contact.PersonRole
 }
 
 table person {

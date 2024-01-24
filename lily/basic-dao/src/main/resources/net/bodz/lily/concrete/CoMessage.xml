@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+
+    <resultMap id="MAP_ALL" type="net.bodz.lily.concrete.CoMessage" extends="co.MAP_ALL">
+        <result property="properties.jsonStr" column="props" />
+
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="formArgs" column="args" />
+        <result property="clickInfo.voteUps" column="nvote" />
+        <result property="clickInfo.pinCount" column="nlike" />
+        <result property="clickInfo.readCount" column="nread" />
+
+        <association property="op" javaType="net.bodz.lily.schema.account.User">
+            <id property="id" column="op" />
+            <result property="name" column="op_name" />
+            <result property="label" column="op_label" />
+        </association>
+    </resultMap>
+
+    <sql id="setU">
+        op = #{op.id},
+    </sql>
+
+    <sql id="setCP">
+        cat = #{category.id},
+        phase = #{phase.id},
+    </sql>
+
+    <sql id="setM">
+        subject = #{subject},
+        text = #{text},
+    </sql>
+
+    <sql id="setUM">
+        <include refid="message.setU" />
+        <include refid="message.setM" />
+    </sql>
+
+    <sql id="set1u">
+        <include refid="co.setUSA" />
+        <include refid="mi.setT" />
+        <include refid="message.setU" />
+    </sql>
+
+    <sql id="set1">
+        <include refid="co.setUSA" />
+        <include refid="mi.setT" />
+        <include refid="message.setUM" />
+    </sql>
+    
+    <sql id="filter-op">
+        <if test="m.opId != null">and a.op = #{m.opId}</if>
+        <if test="m.noOp">and a.op is null</if>
+    </sql>
+
+    <sql id="filter-clickInfo">
+        <if test="m.voteCountRange != null">
+            <if test="m.voteCountRange.hasStartIncl">and a.nvote >= #{m.voteCountRange.start}</if>
+            <if test="m.voteCountRange.hasStartExcl">and a.nvote > #{m.voteCountRange.start}</if>
+            <if test="m.voteCountRange.hasEndIncl">and a.nvote &lt;= #{m.voteCountRange.end}</if>
+            <if test="m.voteCountRange.hasEndExcl">and a.nvote &lt; #{m.voteCountRange.end}</if>
+        </if>
+        <if test="m.likerCountRange != null">
+            <if test="m.likerCountRange.hasStartIncl">and a.nlike >= #{m.likerCountRange.start}</if>
+            <if test="m.likerCountRange.hasStartExcl">and a.nlike > #{m.likerCountRange.start}</if>
+            <if test="m.likerCountRange.hasEndIncl">and a.nlike &lt;= #{m.likerCountRange.end}</if>
+            <if test="m.likerCountRange.hasEndExcl">and a.nlike &lt; #{m.likerCountRange.end}</if>
+        </if>
+        <if test="m.readCountRange != null">
+            <if test="m.readCountRange.hasStartIncl">and a.nread >= #{m.readCountRange.start}</if>
+            <if test="m.readCountRange.hasStartExcl">and a.nread > #{m.readCountRange.start}</if>
+            <if test="m.readCountRange.hasEndIncl">and a.nread &lt;= #{m.readCountRange.end}</if>
+            <if test="m.readCountRange.hasEndExcl">and a.nread &lt; #{m.readCountRange.end}</if>
+        </if>
+    </sql>
+
+    <sql id="filter-tag">
+        <if test="m.tagId != null">and x.tag = #{m.tagId}</if>
+        <if test="m.noTag">and x.tag is null</if>
+    </sql>
+
+    <sql id="filter-all">
+        <include refid="message.filter-op" />
+        <include refid="message.filter-clickInfo" />
+        <include refid="message.filter-tag" />
+    </sql>
+
+</mapper>

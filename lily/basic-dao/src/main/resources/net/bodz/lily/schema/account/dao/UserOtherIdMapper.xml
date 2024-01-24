@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.account.dao.UserOtherIdMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.account.UserOtherId">
+        <id property="id" column="id" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="otherId" column="oid" />
+        <result property="auth.jsonStr" column="auth" />
+        <result property="userId" column="user" />
+        <result property="typeId" column="type" />
+        <association property="type" columnPrefix="type_"
+            javaType="net.bodz.lily.schema.account.UserOtherIdType" 
+            resultMap="net.bodz.lily.schema.account.dao.UserOtherIdTypeMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.props, 
+            a."user", 
+            a."type", 
+            a.oid, 
+            a.auth, 
+            "type".id type_id, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".dummy type_dummy, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from useroid a
+            left join useroidtype "type" on a."type" = "type".id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.props, 
+            a."user", 
+            a."type", 
+            a.oid, 
+            a.auth, 
+            "type".id type_id, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".dummy type_dummy, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from useroid a
+            left join useroidtype "type" on a."type" = "type".id
+            left join "user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into useroid(
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            props,
+            "user",
+            "type",
+            oid,
+            auth
+        ) values(
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{properties.jsonStr}::jsonb,
+            #{userId},
+            #{typeId},
+            #{otherId},
+            #{auth.jsonStr}::jsonb
+        );
+    ]]></insert>
+
+    <update id="update">
+        update useroid
+        <set>
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            props = #{properties.jsonStr}::jsonb,
+            "user" = #{userId},
+            "type" = #{typeId},
+            oid = #{otherId},
+            auth = #{auth.jsonStr}::jsonb,
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from useroid
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from useroid
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -7,6 +7,22 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>basic-ws</artifactId>
-    <dependencies />
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-site</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-sms</artifactId>
+            <version>${bas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>basic-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <name>Lily :: Basic :: Web Server</name>
 </project>

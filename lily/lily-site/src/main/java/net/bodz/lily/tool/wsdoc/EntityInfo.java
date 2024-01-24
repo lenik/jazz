@@ -16,7 +16,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.model.base.CoObject;
+import net.bodz.lily.concrete.CoObject;
 
 /**
  * @see ModuleInfo
