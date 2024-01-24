@@ -52,7 +52,7 @@ public class TypeParam {
 
     /**
      * Recursive get the first concrete type bound of the type (or type variable).
-     * 
+     *
      * @return Non-<code>null</code> first concrete type bound.
      * @throws Error
      *             If failed to get the type bound.
@@ -70,7 +70,7 @@ public class TypeParam {
         if (type instanceof ParameterizedType)
             type = ((ParameterizedType) type).getRawType();
 
-        if (!(type instanceof Class<?>))
+        if (! (type instanceof Class<?>))
             throw new Error("Failed to get type bound: " + type);
 
         @SuppressWarnings("unchecked")
@@ -140,15 +140,15 @@ public class TypeParam {
     }
 
     /**
-     * This is the same as {@link #mapTypeArgsRec(Class, Class, Type[])} with <code>argv</code> set
-     * to <code>clazz.getTypeParameters()</code>.
+     * This is the same as {@link #mapTypeArgsRec(Class, Class, Type[])} with <code>argv</code> set to
+     * <code>clazz.getTypeParameters()</code>.
      */
     public static Type[] getTypeArgs(Class<?> clazz, Class<?> interesting) {
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (interesting == null)
             throw new NullPointerException("interesting");
-        if (!interesting.isAssignableFrom(clazz))
+        if (! interesting.isAssignableFrom(clazz))
             throw new IllegalUsageException(clazz + " is-not-a " + interesting);
 
         clazz = TypeHack.skipProxies(clazz); // OPT: why should proxy be skipped?
@@ -162,21 +162,21 @@ public class TypeParam {
 
     /**
      * Traverse and search interested base class (<code>interesting</code>) with-in the start class
-     * (<code>clazz</code>), and map the type parameters (<code>argv</code>) to be the parameters
-     * for the interesting base.
-     * 
+     * (<code>clazz</code>), and map the type parameters (<code>argv</code>) to be the parameters for the interesting
+     * base.
+     *
      * <p>
      * If interesting base is not generic, an empty array is immediately returned.
-     * 
+     *
      * <p>
-     * If the interesting isn't an interface, no generic interface is looked into. This maybe
-     * slightly more efficient then query interesting interface.
-     * 
+     * If the interesting isn't an interface, no generic interface is looked into. This maybe slightly more efficient
+     * then query interesting interface.
+     *
      * @param clazz
      *            Start class to traverse.
      * @param interesting
-     *            The interesting class or interface. An empty array is immediately returned if
-     *            interesting base isn't generic.
+     *            The interesting class or interface. An empty array is immediately returned if interesting base isn't
+     *            generic.
      * @param argv
      *            The type parameters which would be suitable for the interesting base.
      * @return Non-<code>null</code> actual parameters for the interesting base.
@@ -205,7 +205,7 @@ public class TypeParam {
                     ifaceRaw = (Class<?>) iface;
                 }
 
-                if (!interesting.isAssignableFrom(ifaceRaw))
+                if (! interesting.isAssignableFrom(ifaceRaw))
                     continue;
 
                 Type[] actualv = EMPTY;
@@ -250,7 +250,7 @@ public class TypeParam {
                         try {
                             mapped[i] = argv[j];
                         } catch (IndexOutOfBoundsException e) {
-                            System.out.println(1);
+                            throw new IllegalArgumentException("argv insufficient array size");
                         }
                         continue V;
                     }

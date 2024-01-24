@@ -73,8 +73,6 @@ public class ReflectType_declared
                             fieldDoc = FieldDoc.n_a(classDoc, field.getName());
                     }
 
-                    if (clazz.getName().contains("fcp17"))
-                        System.out.print(1);
                     FieldProperty reflectProperty = new FieldProperty(this, field, fieldDoc);
                     propertyMap.addProperty(reflectProperty);
                 }
