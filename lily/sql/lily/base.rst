@@ -49,16 +49,16 @@ key-columns {
 }
 
 table-name {
-    _cat:               net.bodz.lily.schema.CategoryDef
-    _form:              net.bodz.lily.schema.FormDef
-    _formparm:          net.bodz.lily.schema.FormParameter
-    _parm:              net.bodz.lily.schema.ParameterDef
-    _parmval:           net.bodz.lily.schema.ParameterValue
-    _phase:             net.bodz.lily.schema.PhaseDef
-    _priority:          net.bodz.lily.schema.PriorityDef
-    _schema:            net.bodz.lily.schema.SchemaDef
-    _tag:               net.bodz.lily.schema.TagDef
-    _tagv:              net.bodz.lily.schema.TagGroupDef
+    _cat:               net.bodz.lily.schema.meta.CategoryDef
+    _form:              net.bodz.lily.schema.meta.FormDef
+    _formparm:          net.bodz.lily.schema.meta.FormParameter
+    _parm:              net.bodz.lily.schema.meta.ParameterDef
+    _parmval:           net.bodz.lily.schema.meta.ParameterValue
+    _phase:             net.bodz.lily.schema.meta.PhaseDef
+    _priority:          net.bodz.lily.schema.meta.PriorityDef
+    _schema:            net.bodz.lily.schema.meta.SchemaDef
+    _tag:               net.bodz.lily.schema.meta.TagDef
+    _tagv:              net.bodz.lily.schema.meta.TagGroupDef
 }
 
 table _tagv {

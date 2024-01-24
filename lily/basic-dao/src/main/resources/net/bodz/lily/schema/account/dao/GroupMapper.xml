@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.lily.schema.account.dao.GroupMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.account.Group">
+        <id property="id" column="id" />
+        <result property="uniqName" column="name" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="typeId" column="type" />
+        <result property="parentId" column="parent" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="objlist_map" />
+        <association property="type" columnPrefix="type_"
+            javaType="net.bodz.lily.schema.account.GroupType" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupTypeMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a."name", 
+            a."type", 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.parent, 
+            parent.id parent_id, 
+            parent."name" parent_name, 
+            parent."type" parent_type, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.props parent_props, 
+            parent.parent parent_parent, 
+            "type".id type_id, 
+            "type"."name" type_name, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".props type_props, 
+            "type".dummy type_dummy
+        from group a
+            left join "group" parent on a.parent = parent.id
+            left join grouptype "type" on a."type" = "type".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a."name", 
+            a."type", 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.parent, 
+            parent.id parent_id, 
+            parent."name" parent_name, 
+            parent."type" parent_type, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.props parent_props, 
+            parent.parent parent_parent, 
+            "type".id type_id, 
+            "type"."name" type_name, 
+            "type".label type_label, 
+            "type".description type_description, 
+            "type".priority type_priority, 
+            "type".flags type_flags, 
+            "type"."state" type_state, 
+            "type".creation type_creation, 
+            "type".lastmod type_lastmod, 
+            "type"."version" type_version, 
+            "type".props type_props, 
+            "type".dummy type_dummy
+        from group a
+            left join "group" parent on a.parent = parent.id
+            left join grouptype "type" on a."type" = "type".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into "group"(
+            "name",
+            "type",
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            props,
+            parent
+        ) values(
+            #{uniqName},
+            #{typeId},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{properties.jsonStr}::jsonb,
+            #{parentId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update "group"
+        <set>
+            "name" = #{uniqName},
+            "type" = #{typeId},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            props = #{properties.jsonStr}::jsonb,
+            parent = #{parentId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from "group"
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from group
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

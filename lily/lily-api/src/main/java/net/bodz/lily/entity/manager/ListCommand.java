@@ -146,6 +146,7 @@ class ListProcess
             throws LoaderException, ParseException {
         super.readObject(map);
         tableData.readObject(map);
+        criteria = new Junction();
         criteria.readObject(map);
         selectOptions.readObject(map);
     }

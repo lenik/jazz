@@ -21,6 +21,30 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-site</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-site</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-tools</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>lily-tools</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
             <artifactId>basic-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -45,6 +69,54 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
+            <artifactId>basic-ws</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>basic-ws</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-dao</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-types</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-types</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-ws</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>violet-ws</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
             <artifactId>fab-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -57,12 +129,24 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-site</artifactId>
+            <artifactId>fab-types</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.lily</groupId>
-            <artifactId>lily-site</artifactId>
+            <artifactId>fab-types</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>fab-ws</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.lily</groupId>
+            <artifactId>fab-ws</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.shop.dao.ShopItemCategoryMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.shop.ShopItemCategory">
+        <id property="id" column="id" />
+        <result property="uniqName" column="name" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="image" column="image" />
+        <result property="imageAlt" column="imagealt" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="depth" column="depth" />
+        <result property="refCount" column="nref" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="parentId" column="parent" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.violet.schema.shop.ShopItemCategory" 
+            resultMap="objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a."name", 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.image, 
+            a.imagealt, 
+            a.props, 
+            a.parent, 
+            a."depth", 
+            a.nref, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            parent.id parent_id, 
+            parent."name" parent_name, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.image parent_image, 
+            parent.imagealt parent_imagealt, 
+            parent.props parent_props, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            parent.nref parent_nref
+        from shopitemcat a
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join shopitemcat parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a."name", 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.image, 
+            a.imagealt, 
+            a.props, 
+            a.parent, 
+            a."depth", 
+            a.nref, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            parent.id parent_id, 
+            parent."name" parent_name, 
+            parent.uid parent_uid, 
+            parent.gid parent_gid, 
+            parent.mode parent_mode, 
+            parent.acl parent_acl, 
+            parent.label parent_label, 
+            parent.description parent_description, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.image parent_image, 
+            parent.imagealt parent_imagealt, 
+            parent.props parent_props, 
+            parent.parent parent_parent, 
+            parent."depth" parent_depth, 
+            parent.nref parent_nref
+        from shopitemcat a
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join shopitemcat parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into shopitemcat(
+            "name",
+            uid,
+            gid,
+            mode,
+            acl,
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            image,
+            imagealt,
+            props,
+            parent,
+            "depth",
+            nref
+        ) values(
+            #{uniqName},
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{image},
+            #{imageAlt},
+            #{properties.jsonStr}::jsonb,
+            #{parentId},
+            #{depth},
+            #{refCount}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update shopitemcat
+        <set>
+            "name" = #{uniqName},
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            image = #{image},
+            imagealt = #{imageAlt},
+            props = #{properties.jsonStr}::jsonb,
+            parent = #{parentId},
+            "depth" = #{depth},
+            nref = #{refCount},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from shopitemcat
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from shopitemcat
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

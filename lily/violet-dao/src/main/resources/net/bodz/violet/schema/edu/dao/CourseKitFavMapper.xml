@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.edu.dao.CourseKitFavMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.edu.CourseKitFav">
+        <id property="id" column="id" />
+        <result property="coursekitId" column="coursekit" />
+        <result property="userId" column="user" />
+        <association property="coursekit" columnPrefix="coursekit_"
+            javaType="net.bodz.violet.schema.edu.CourseKit" 
+            resultMap="net.bodz.violet.schema.edu.dao.CourseKitMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.coursekit, 
+            a."user", 
+            coursekit.id coursekit_id, 
+            coursekit.uid coursekit_uid, 
+            coursekit.gid coursekit_gid, 
+            coursekit.mode coursekit_mode, 
+            coursekit.acl coursekit_acl, 
+            coursekit.label coursekit_label, 
+            coursekit.description coursekit_description, 
+            coursekit.priority coursekit_priority, 
+            coursekit.flags coursekit_flags, 
+            coursekit."state" coursekit_state, 
+            coursekit.creation coursekit_creation, 
+            coursekit.lastmod coursekit_lastmod, 
+            coursekit."version" coursekit_version, 
+            coursekit.cat coursekit_cat, 
+            coursekit.course coursekit_course, 
+            coursekit.props coursekit_props, 
+            coursekit.nfav coursekit_nfav, 
+            coursekit.nvote coursekit_nvote, 
+            coursekit.nhate coursekit_nhate, 
+            coursekit.dummy coursekit_dummy, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from coursekit_fav a
+            left join coursekit coursekit on a.coursekit = coursekit.id
+            left join lily."user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.coursekit, 
+            a."user", 
+            coursekit.id coursekit_id, 
+            coursekit.uid coursekit_uid, 
+            coursekit.gid coursekit_gid, 
+            coursekit.mode coursekit_mode, 
+            coursekit.acl coursekit_acl, 
+            coursekit.label coursekit_label, 
+            coursekit.description coursekit_description, 
+            coursekit.priority coursekit_priority, 
+            coursekit.flags coursekit_flags, 
+            coursekit."state" coursekit_state, 
+            coursekit.creation coursekit_creation, 
+            coursekit.lastmod coursekit_lastmod, 
+            coursekit."version" coursekit_version, 
+            coursekit.cat coursekit_cat, 
+            coursekit.course coursekit_course, 
+            coursekit.props coursekit_props, 
+            coursekit.nfav coursekit_nfav, 
+            coursekit.nvote coursekit_nvote, 
+            coursekit.nhate coursekit_nhate, 
+            coursekit.dummy coursekit_dummy, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from coursekit_fav a
+            left join coursekit coursekit on a.coursekit = coursekit.id
+            left join lily."user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into coursekit_fav(
+            coursekit,
+            "user"
+        ) values(
+            #{coursekitId},
+            #{userId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update coursekit_fav
+        <set>
+            coursekit = #{coursekitId},
+            "user" = #{userId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from coursekit_fav
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from coursekit_fav
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

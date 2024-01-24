@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.plan.dao.DiaryMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.plan.Diary">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="formArguments" column="formargs" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="value" column="value" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="categoryId" column="cat" />
+        <result property="phaseId" column="phase" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.meta.FormDef" 
+            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="phase" columnPrefix="phase_"
+            javaType="net.bodz.violet.schema.plan.DiaryPhase" 
+            resultMap="net.bodz.violet.schema.plan.dao.DiaryPhaseMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="category" columnPrefix="category_"
+            javaType="net.bodz.violet.schema.plan.DiaryCategory" 
+            resultMap="net.bodz.violet.schema.plan.dao.DiaryCategoryMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.props, 
+            a.cat, 
+            a.phase, 
+            a."value", 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            phase.id phase_id, 
+            phase.uid phase_uid, 
+            phase.gid phase_gid, 
+            phase.mode phase_mode, 
+            phase.acl phase_acl, 
+            phase.code phase_code, 
+            phase.label phase_label, 
+            phase.description phase_description, 
+            phase.priority phase_priority, 
+            phase.flags phase_flags, 
+            phase."state" phase_state, 
+            phase.creation phase_creation, 
+            phase.lastmod phase_lastmod, 
+            phase."version" phase_version, 
+            phase.nref phase_nref, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref
+        from diary a
+            left join lily._form form on a.form = form.id
+            left join lily."user" op on a.op = op.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join diaryphase phase on a.phase = phase.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join diarycat category on a.cat = category.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.props, 
+            a.cat, 
+            a.phase, 
+            a."value", 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            phase.id phase_id, 
+            phase.uid phase_uid, 
+            phase.gid phase_gid, 
+            phase.mode phase_mode, 
+            phase.acl phase_acl, 
+            phase.code phase_code, 
+            phase.label phase_label, 
+            phase.description phase_description, 
+            phase.priority phase_priority, 
+            phase.flags phase_flags, 
+            phase."state" phase_state, 
+            phase.creation phase_creation, 
+            phase.lastmod phase_lastmod, 
+            phase."version" phase_version, 
+            phase.nref phase_nref, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref
+        from diary a
+            left join lily._form form on a.form = form.id
+            left join lily."user" op on a.op = op.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join diaryphase phase on a.phase = phase.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join diarycat category on a.cat = category.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into diary(
+            uid,
+            gid,
+            mode,
+            acl,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            formargs,
+            props,
+            cat,
+            phase,
+            "value"
+        ) values(
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{formArguments},
+            #{properties.jsonStr}::jsonb,
+            #{categoryId},
+            #{phaseId},
+            #{value}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update diary
+        <set>
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            formargs = #{formArguments},
+            props = #{properties.jsonStr}::jsonb,
+            cat = #{categoryId},
+            phase = #{phaseId},
+            "value" = #{value},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from diary
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from diary
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

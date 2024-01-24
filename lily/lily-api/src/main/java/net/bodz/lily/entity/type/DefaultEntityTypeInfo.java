@@ -17,10 +17,10 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
+import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Identifier;
-import net.bodz.lily.model.base.StructRowCriteriaBuilder;
 
 public class DefaultEntityTypeInfo
         implements

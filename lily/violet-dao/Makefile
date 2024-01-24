@@ -21,55 +21,47 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-apidir=../lily-api
-typesdir=../basic-types
+typesdir=../violet-types
 
-DAOGEN = daogen $(DAOFLAGS)
-
-DAOGEN_VIOLET = $(DAOGEN) \
+DAOGEN = daogen $(DAOFLAGS) \
     -H $(typesdir) \
-    -c sql/out/violet.rst
+    -c ../sql/out/violet.rst \
+    -p net.bodz.other.schema
 
 predao:
-	cd sql; make -B
+	cd ../sql; make -B
 
 dao-art: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.art \
+	$(DAOGEN) \
             art artcat artparm artphase arttag \
             art_backref art_doc art_vote artpack \
             uom
 
 dao-asset: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.asset \
+	$(DAOGEN) \
             net.bodz.violet.asset.AbstractAsset \
             asset asset_group asset_org asset_ou asset_person asset_user
 
 dao-edu: predao
-	$(DAOGEN_VIOLET) \
-        -p net.bodz.violet.edu \
+	$(DAOGEN) \
             course coursecat coursetag course_fav coursekit coursekitcat coursekittag coursekit_fav \
             testq testans testqtag testq_fav testq_vote testq_msg testq_msg_vote \
             testpaper testpaperl testapply testapplyl
 
 dao-issue: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.issue \
+	$(DAOGEN) \
             issue issuecat issueparm issuephase issuetag issue_fav issue_vote \
             issuelog issuelog_vote
 
 dao-plan: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.issue \
+	$(DAOGEN) \
             diary diarycat diaryparm diaryphase diarytag diary_party diary_vote \
             diaryrev diaryrev_vote \
             plan plancat planparm planphase plantag plan_fav plan_party plan_vote \
             plando plandoparm plandotag plando_vote
 
 dao-shop: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.issue \
+	$(DAOGEN) \
             shop shopcat shoptag shop_fav \
             shopitem shopitemcat shopitem_fav \
             shopmem shopmemcat \
@@ -78,24 +70,20 @@ dao-shop: predao
             salecat salephase saleodr saleodrl
 
 dao-store: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.issue \
+	$(DAOGEN) \
             region regioncat regiontag regionlevel \
             storecat storephase storel offstorel storeodr storeodrl
 
 dao-tran: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.issue \
+	$(DAOGEN) \
             trancat tranphase tranodr tranodrl
 
-dao-violet-glob: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.other \
+dao-glob: predao
+	$(DAOGEN) \
             -T violet.*
 
-dao-violet: predao
-	$(DAOGEN_VIOLET) \
-            -p net.bodz.violet.other \
+dao: predao
+	$(DAOGEN) \
             art artcat artparm artphase arttag art_backref art_doc art_vote artpack uom \
             asset asset_group asset_org asset_ou asset_person asset_user \
             course coursecat coursetag course_fav coursekit coursekitcat coursekittag coursekit_fav \

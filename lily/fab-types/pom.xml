@@ -7,6 +7,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>fab-types</artifactId>
-    <dependencies />
-    <name>Violet :: Fabrication :: Types</name>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>violet-types</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    <name>Violet :: Fab :: Types</name>
 </project>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.shop.dao.ShopItemMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.shop.ShopItem">
+        <id property="id" column="id" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="batch.jsonStr" column="batch" />
+        <result property="price" column="price" />
+        <result property="quantity" column="qty" />
+        <result property="shopId" column="shop" />
+        <result property="categoryId" column="cat" />
+        <result property="artifactId" column="art" />
+        <association property="category" columnPrefix="category_"
+            javaType="net.bodz.violet.schema.shop.ShopItemCategory" 
+            resultMap="net.bodz.violet.schema.shop.dao.ShopItemCategoryMapper.objlist_map" />
+        <association property="shop" columnPrefix="shop_"
+            javaType="net.bodz.violet.schema.shop.Shop" 
+            resultMap="net.bodz.violet.schema.shop.dao.ShopMapper.objlist_map" />
+        <association property="artifact" columnPrefix="art_"
+            javaType="net.bodz.violet.schema.art.Artifact" 
+            resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.shop, 
+            a.cat, 
+            a.art, 
+            a.batch, 
+            a.price, 
+            a.qty, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            shop.id shop_id, 
+            shop.uid shop_uid, 
+            shop.gid shop_gid, 
+            shop.mode shop_mode, 
+            shop.acl shop_acl, 
+            shop.label shop_label, 
+            shop.description shop_description, 
+            shop.priority shop_priority, 
+            shop.flags shop_flags, 
+            shop."state" shop_state, 
+            shop.creation shop_creation, 
+            shop.lastmod shop_lastmod, 
+            shop."version" shop_version, 
+            shop.code shop_code, 
+            shop.props shop_props, 
+            shop.hydm shop_hydm, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price
+        from shopitem a
+            left join shopitemcat category on a.cat = category.id
+            left join shop shop on a.shop = shop.id
+            left join art art on a.art = art.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.label, 
+            a.description, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.shop, 
+            a.cat, 
+            a.art, 
+            a.batch, 
+            a.price, 
+            a.qty, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            shop.id shop_id, 
+            shop.uid shop_uid, 
+            shop.gid shop_gid, 
+            shop.mode shop_mode, 
+            shop.acl shop_acl, 
+            shop.label shop_label, 
+            shop.description shop_description, 
+            shop.priority shop_priority, 
+            shop.flags shop_flags, 
+            shop."state" shop_state, 
+            shop.creation shop_creation, 
+            shop.lastmod shop_lastmod, 
+            shop."version" shop_version, 
+            shop.code shop_code, 
+            shop.props shop_props, 
+            shop.hydm shop_hydm, 
+            art.id art_id, 
+            art.sku art_sku, 
+            art.barcode art_barcode, 
+            art.rfid art_rfid, 
+            art.uid art_uid, 
+            art.gid art_gid, 
+            art.mode art_mode, 
+            art.acl art_acl, 
+            art.label art_label, 
+            art.description art_description, 
+            art.priority art_priority, 
+            art.flags art_flags, 
+            art."state" art_state, 
+            art.creation art_creation, 
+            art.lastmod art_lastmod, 
+            art."version" art_version, 
+            art.model art_model, 
+            art.proto art_proto, 
+            art.cat art_cat, 
+            art.phase art_phase, 
+            art.uom art_uom, 
+            art.props art_props, 
+            art.finish art_finish, 
+            art.price art_price
+        from shopitem a
+            left join shopitemcat category on a.cat = category.id
+            left join shop shop on a.shop = shop.id
+            left join art art on a.art = art.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into shopitem(
+            label,
+            description,
+            priority,
+            flags,
+            "state",
+            t0,
+            t1,
+            "year",
+            creation,
+            lastmod,
+            "version",
+            props,
+            shop,
+            cat,
+            art,
+            batch,
+            price,
+            qty
+        ) values(
+            #{label},
+            #{description},
+            #{priority},
+            #{flags},
+            #{state},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{properties.jsonStr}::jsonb,
+            #{shopId},
+            #{categoryId},
+            #{artifactId},
+            #{batch.jsonStr}::jsonb,
+            #{price},
+            #{quantity}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update shopitem
+        <set>
+            label = #{label},
+            description = #{description},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            props = #{properties.jsonStr}::jsonb,
+            shop = #{shopId},
+            cat = #{categoryId},
+            art = #{artifactId},
+            batch = #{batch.jsonStr}::jsonb,
+            price = #{price},
+            qty = #{quantity},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from shopitem
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from shopitem
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

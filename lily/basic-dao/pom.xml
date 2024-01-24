@@ -29,16 +29,6 @@
             <version>${bas.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-site</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-sms</artifactId>
-            <version>${bas.version}</version>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.lily</groupId>
             <artifactId>basic-types</artifactId>
             <version>${project.version}</version>
@@ -49,5 +39,5 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    <name>Lily :: Layer 2 :: Lily Impl</name>
+    <name>Lily :: Basic :: DAO</name>
 </project>

@@ -18,11 +18,11 @@ column-property {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         fabstdtestcat
-    net.bodz.lily.t.base.CoMessage: \
+    net.bodz.lily.concrete.CoMessage: \
         fabodr
-    net.bodz.lily.model.base.CoMomentInterval: \
+    net.bodz.lily.concrete.CoMomentInterval: \
         fabodrl \
         fabproc \
         fabtask \
@@ -31,23 +31,23 @@ class-map {
 }
 
 table-name {
-    fabfn:              net.bodz.violet.fab.FabFn
-    fabodr:             net.bodz.violet.fab.FabOrder
-    fabodrl:            net.bodz.violet.fab.FabOrderItem
-    fabproc:            net.bodz.violet.fab.FabProcess
-    fabproc_sn:         net.bodz.violet.fab.FabProcessSerial
-    fabstdproc:         net.bodz.violet.fab.FabStdProcess
-    fabstdproc_in:      net.bodz.violet.fab.FabStdProcessInput
-    fabstdtestcat:      net.bodz.violet.fab.FabStdTestCategory
-    fabstdtest:         net.bodz.violet.fab.FabStdTest
-    fabstdtest_parm:    net.bodz.violet.fab.FabStdTestParameter
-    fabstdtester:       net.bodz.violet.fab.FabStdTester
-    fabtask:            net.bodz.violet.fab.FabTask
-    fabtaskl:           net.bodz.violet.fab.FabTaskItem
-    fabtrack:           net.bodz.violet.fab.FabTrack
-    fabtrack_op:        net.bodz.violet.fab.FabTrackParty
-    fabtrack_test:      net.bodz.violet.fab.FabTrackTest
-    fabtrack_test_parm: net.bodz.violet.fab.FabTrackTestParameter
+    fabfn:              net.bodz.violet.schema.fab.FabFn
+    fabodr:             net.bodz.violet.schema.fab.FabOrder
+    fabodrl:            net.bodz.violet.schema.fab.FabOrderItem
+    fabproc:            net.bodz.violet.schema.fab.FabProcess
+    fabproc_sn:         net.bodz.violet.schema.fab.FabProcessSerial
+    fabstdproc:         net.bodz.violet.schema.fab.FabStdProcess
+    fabstdproc_in:      net.bodz.violet.schema.fab.FabStdProcessInput
+    fabstdtestcat:      net.bodz.violet.schema.fab.FabStdTestCategory
+    fabstdtest:         net.bodz.violet.schema.fab.FabStdTest
+    fabstdtest_parm:    net.bodz.violet.schema.fab.FabStdTestParameter
+    fabstdtester:       net.bodz.violet.schema.fab.FabStdTester
+    fabtask:            net.bodz.violet.schema.fab.FabTask
+    fabtaskl:           net.bodz.violet.schema.fab.FabTaskItem
+    fabtrack:           net.bodz.violet.schema.fab.FabTrack
+    fabtrack_op:        net.bodz.violet.schema.fab.FabTrackParty
+    fabtrack_test:      net.bodz.violet.schema.fab.FabTrackTest
+    fabtrack_test_parm: net.bodz.violet.schema.fab.FabTrackTestParameter
 }
 
 table fabodr {

@@ -6,48 +6,48 @@ column-property {
 }
 
 class-map {
-    net.bodz.lily.template.CoCategory: \
+    net.bodz.lily.concrete.CoCategory: \
         coursecat, \
         coursekitcat
-    net.bodz.lily.template.CoTag: \
+    net.bodz.lily.concrete.CoTag: \
         coursetag, \
         coursekittag, \
         testqtag
-    net.bodz.lily.template.FavRecord: \
+    net.bodz.lily.concrete.FavRecord: \
         course_fav, \
         coursekit_fav, \
         testq_fav
-    net.bodz.lily.template.VoteRecord: \
+    net.bodz.lily.concrete.VoteRecord: \
         testq_vote, \
         testq_msg_vote
-    net.bodz.lily.t.base.CoMessage: \
+    net.bodz.lily.concrete.CoMessage: \
         testq
 }
 
 table-name {
-    course:             net.bodz.violet.edu.Course
-    coursecat:          net.bodz.violet.edu.CourseCategory
-    coursetag:          net.bodz.violet.edu.CourseTag
-    course_fav:         net.bodz.violet.edu.CourseFav
+    course:             net.bodz.violet.schema.edu.Course
+    coursecat:          net.bodz.violet.schema.edu.CourseCategory
+    coursetag:          net.bodz.violet.schema.edu.CourseTag
+    course_fav:         net.bodz.violet.schema.edu.CourseFav
 
-    coursekit:          net.bodz.violet.edu.CourseKit
-    coursekitcat:       net.bodz.violet.edu.CourseKitCategory
-    coursekittag:       net.bodz.violet.edu.CourseKitTag
-    coursekit_fav:      net.bodz.violet.edu.CourseKitFav
+    coursekit:          net.bodz.violet.schema.edu.CourseKit
+    coursekitcat:       net.bodz.violet.schema.edu.CourseKitCategory
+    coursekittag:       net.bodz.violet.schema.edu.CourseKitTag
+    coursekit_fav:      net.bodz.violet.schema.edu.CourseKitFav
 
-    testq:              net.bodz.violet.edu.TestQuestion
-    testans:            net.bodz.violet.edu.TestAnswer
-    testqtag:           net.bodz.violet.edu.TestQuestionTag
-    testq_fav:          net.bodz.violet.edu.TestQuestionFav
-    testq_vote:         net.bodz.violet.edu.TestQuestionVote
-    testq_msg:          net.bodz.violet.edu.TestQuestionTalk
-    testq_msg_vote:     net.bodz.violet.edu.TestQuestionTalkVote
+    testq:              net.bodz.violet.schema.edu.TestQuestion
+    testans:            net.bodz.violet.schema.edu.TestAnswer
+    testqtag:           net.bodz.violet.schema.edu.TestQuestionTag
+    testq_fav:          net.bodz.violet.schema.edu.TestQuestionFav
+    testq_vote:         net.bodz.violet.schema.edu.TestQuestionVote
+    testq_msg:          net.bodz.violet.schema.edu.TestQuestionTalk
+    testq_msg_vote:     net.bodz.violet.schema.edu.TestQuestionTalkVote
     
-    testpaper:          net.bodz.violet.edu.TestPaper
-    testpaperl:         net.bodz.violet.edu.TestPaperItem
+    testpaper:          net.bodz.violet.schema.edu.TestPaper
+    testpaperl:         net.bodz.violet.schema.edu.TestPaperItem
 
-    testapply:          net.bodz.violet.edu.TestApply
-    testapplyl:         net.bodz.violet.edu.TestApplyItem
+    testapply:          net.bodz.violet.schema.edu.TestApply
+    testapplyl:         net.bodz.violet.schema.edu.TestApplyItem
 }
 
 table course {

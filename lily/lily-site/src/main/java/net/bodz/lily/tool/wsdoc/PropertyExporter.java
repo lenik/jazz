@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.bodz.bas.c.org.json.JsonWriter;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.lily.model.base.CoObject;
+import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.util.mapper.DataListFields;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 

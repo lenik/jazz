@@ -8,7 +8,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.meta.codegen.IndexedType;
 import net.bodz.bas.site.json.AbstractJsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.security.User;
+import net.bodz.lily.security.IUser;
 
 @IndexedType
 public interface ILoginResolver {
@@ -24,25 +24,25 @@ public interface ILoginResolver {
             extends AbstractJsonResponse<Result> {
 
         // Integer userId;
-        User user;
+        IUser user;
 
         public Result() {
         }
 
-        public Result(User user) {
+        public Result(IUser user) {
             this(user, OK, null);
         }
 
-        public Result(User user, int statusCode, String message) {
+        public Result(IUser user, int statusCode, String message) {
             super(statusCode, message, null);
             this.user = user;
         }
 
-        public User getUser() {
+        public IUser getUser() {
             return user;
         }
 
-        public void setUser(User user) {
+        public void setUser(IUser user) {
             this.user = user;
         }
 

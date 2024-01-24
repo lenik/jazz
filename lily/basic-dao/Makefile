@@ -21,84 +21,53 @@ run-daemon:
 debug:
 	main -d LilyTestd
 
-apidir=../lily-api
 typesdir=../basic-types
 
-DAOGEN = daogen $(DAOFLAGS)
-
-DAOGEN_LILY0 = $(DAOGEN) \
-    -H $(apidir) \
-    -c sql/out/lily.rst
-
-DAOGEN_LILY = $(DAOGEN) \
+DAOGEN = daogen $(DAOFLAGS) \
     -H $(typesdir) \
-    -c sql/out/lily.rst
-
-#    -H ../../layer-2/lily-model 
+    -p net.bodz.other.schema \
+    -c ../sql/out/lily.rst
 
 predao:
-	cd sql; make -B
+	cd ../sql; make -B
 
 dao-base: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.schema \
-            _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
+	$(DAOGEN) _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
 
 dao-account: predao
-	$(DAOGEN_LILY0) \
-            -p net.bodz.lily.security \
-            usertype grouptype user usercat useroid useroidtype usersec user_run group policy
+	$(DAOGEN) usertype grouptype user usercat useroid useroidtype usersec user_run group policy
 
 dao-contact: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.contact \
-            org orgunit partycat person personrole
+	$(DAOGEN) org orgunit partycat person personrole
 
 dao-geo: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.geo \
-            zone zonecat
+	$(DAOGEN) zone zonecat
 
 dao-inet: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.inet \
-            extsite
+	$(DAOGEN) extsite
 
 dao-io: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.io \
-            storage
+	$(DAOGEN) storage
 
 dao-pub: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.pub \
-            article* post*
+	$(DAOGEN) article* post*
 
 dao-reward: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.reward \
-            badge user_badge
+	$(DAOGEN) badge user_badge
 
 dao-util: predao
-	$(DAOGEN_LILY) \
-            -O $(typesdir) \
-            -p net.bodz.lily.util \
-            uom
+	$(DAOGEN) uom
 
 dao-vapp: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.vapp \
-            apitype vapi vapi_credit vapi_log vapp vappcat vappreq vappreq_api
+	$(DAOGEN) apitype vapi vapi_credit vapi_log vapp vappcat vappreq vappreq_api
 
 dao-lily-glob: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.other \
-            -T lily.*
+	$(DAOGEN) -T lily.*
 
-dao-lily: predao
-	$(DAOGEN_LILY) \
-            -p net.bodz.lily.schema \
+dao: predao
+	$(DAOGEN) \
             _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock \
+	    usertype grouptype user usercat useroid useroidtype usersec user_run group policy \
             org orgunit partycat person personrole \
             zone zonecat \
             extsite \

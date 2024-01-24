@@ -50,14 +50,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
         </dependency>
     </dependencies>
-    <name>Lily :: Layer 2 :: Lily Model</name>
+    <name>Lily :: Basic :: Types</name>
 </project>

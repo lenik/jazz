@@ -11,8 +11,10 @@ import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.site.json.JsonVarMap;
-import net.bodz.lily.model.base.CoEntity;
-import net.bodz.lily.security.User;
+import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.security.IMutableUser;
+import net.bodz.lily.security.IUser;
+import net.bodz.lily.security.Users;
 
 public class EventLog
         implements
@@ -22,7 +24,7 @@ public class EventLog
     private static final long serialVersionUID = 1L;
 
     long time;
-    User user;
+    IUser user;
     Class<?> entity;
     long id;
     String message;
@@ -31,12 +33,12 @@ public class EventLog
     public EventLog() {
     }
 
-    public EventLog(User user) {
+    public EventLog(IUser user) {
         this.time = System.currentTimeMillis();
         this.user = user;
     }
 
-    public EventLog(User user, CoEntity<? extends Number> entity, String message, Throwable exception) {
+    public EventLog(IUser user, CoEntity<? extends Number> entity, String message, Throwable exception) {
         this.time = System.currentTimeMillis();
         this.user = user;
         this.entity = entity.getClass();
@@ -50,7 +52,7 @@ public class EventLog
         return this;
     }
 
-    public EventLog user(User user) {
+    public EventLog user(IUser user) {
         this.user = user;
         return this;
     }
@@ -84,11 +86,11 @@ public class EventLog
         this.time = time;
     }
 
-    public User getUser() {
+    public IUser getIUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setIUser(IUser user) {
         this.user = user;
     }
 
@@ -137,7 +139,7 @@ public class EventLog
         if (o.has("user")) {
             JsonObject $user = o.getJsonObject("user");
             map = new JsonVarMap($user);
-            User user = new User();
+            IMutableUser user = Users.newUser();
             user.id(map.getInt("id"));
             user.setUniqName(map.getString("name"));
             user.setFullName(map.getString("fullName"));

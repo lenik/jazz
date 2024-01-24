@@ -1,9 +1,9 @@
 package net.bodz.lily.security.login;
 
-import net.bodz.lily.security.User;
+import net.bodz.lily.security.IUser;
 
 public interface ILoginAware {
 
-    void setLoginContext(User loginUser);
+    void setLoginContext(IUser loginUser);
 
 }

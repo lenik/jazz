@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.edu.dao.TestQuestionTalkVoteMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.edu.TestQuestionTalkVote">
+        <id property="id" column="id" />
+        <result property="voteScore" column="votes" />
+        <result property="parentId" column="parent" />
+        <result property="userId" column="user" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.violet.schema.edu.TestQuestionTalk" 
+            resultMap="net.bodz.violet.schema.edu.dao.TestQuestionTalkMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.parent, 
+            a."user", 
+            a.votes, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.q parent_q, 
+            parent.parent parent_parent
+        from testq_msg_vote a
+            left join lily."user" "user" on a."user" = "user".id
+            left join testq_msg parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.parent, 
+            a."user", 
+            a.votes, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.q parent_q, 
+            parent.parent parent_parent
+        from testq_msg_vote a
+            left join lily."user" "user" on a."user" = "user".id
+            left join testq_msg parent on a.parent = parent.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into testq_msg_vote(
+            parent,
+            "user",
+            votes
+        ) values(
+            #{parentId},
+            #{userId},
+            #{voteScore}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update testq_msg_vote
+        <set>
+            parent = #{parentId},
+            "user" = #{userId},
+            votes = #{voteScore},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from testq_msg_vote
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from testq_msg_vote
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

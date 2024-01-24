@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.fab.dao.FabTrackTestParameterMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabTrackTestParameter">
+        <id property="id" column="id" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="actual" column="actual" />
+        <result property="valid" column="valid" />
+        <result property="testId" column="test" />
+        <result property="parameterId" column="parm" />
+        <result property="testerId" column="tester" />
+        <association property="parameter" columnPrefix="parm_"
+            javaType="net.bodz.violet.schema.fab.FabStdTestParameter" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabStdTestParameterMapper.objlist_map" />
+        <association property="tester" columnPrefix="tester_"
+            javaType="net.bodz.violet.schema.fab.FabStdTester" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabStdTesterMapper.objlist_map" />
+        <association property="test" columnPrefix="test_"
+            javaType="net.bodz.violet.schema.fab.FabTrackTest" 
+            resultMap="net.bodz.violet.schema.fab.dao.FabTrackTestMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.test, 
+            a.parm, 
+            a.tester, 
+            a.actual, 
+            a."valid", 
+            parm.id parm_id, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm.test parm_test, 
+            parm.required parm_required, 
+            parm.props parm_props, 
+            parm.expected parm_expected, 
+            tester.id tester_id, 
+            tester.uid tester_uid, 
+            tester.gid tester_gid, 
+            tester.mode tester_mode, 
+            tester.acl tester_acl, 
+            tester.label tester_label, 
+            tester.description tester_description, 
+            tester.priority tester_priority, 
+            tester.flags tester_flags, 
+            tester."state" tester_state, 
+            tester.creation tester_creation, 
+            tester.lastmod tester_lastmod, 
+            tester."version" tester_version, 
+            tester.cmdline tester_cmdline, 
+            test.id test_id, 
+            test.creation test_creation, 
+            test.lastmod test_lastmod, 
+            test."version" test_version, 
+            test.track test_track, 
+            test.std test_std, 
+            test."valid" test_valid
+        from fabtrack_test_parm a
+            left join fabstdtest_parm parm on a.parm = parm.id
+            left join fabstdtester tester on a.tester = tester.id
+            left join fabtrack_test test on a.test = test.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.test, 
+            a.parm, 
+            a.tester, 
+            a.actual, 
+            a."valid", 
+            parm.id parm_id, 
+            parm.creation parm_creation, 
+            parm.lastmod parm_lastmod, 
+            parm."version" parm_version, 
+            parm.test parm_test, 
+            parm.required parm_required, 
+            parm.props parm_props, 
+            parm.expected parm_expected, 
+            tester.id tester_id, 
+            tester.uid tester_uid, 
+            tester.gid tester_gid, 
+            tester.mode tester_mode, 
+            tester.acl tester_acl, 
+            tester.label tester_label, 
+            tester.description tester_description, 
+            tester.priority tester_priority, 
+            tester.flags tester_flags, 
+            tester."state" tester_state, 
+            tester.creation tester_creation, 
+            tester.lastmod tester_lastmod, 
+            tester."version" tester_version, 
+            tester.cmdline tester_cmdline, 
+            test.id test_id, 
+            test.creation test_creation, 
+            test.lastmod test_lastmod, 
+            test."version" test_version, 
+            test.track test_track, 
+            test.std test_std, 
+            test."valid" test_valid
+        from fabtrack_test_parm a
+            left join fabstdtest_parm parm on a.parm = parm.id
+            left join fabstdtester tester on a.tester = tester.id
+            left join fabtrack_test test on a.test = test.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into fabtrack_test_parm(
+            creation,
+            lastmod,
+            "version",
+            test,
+            parm,
+            tester,
+            actual,
+            "valid"
+        ) values(
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{testId},
+            #{parameterId},
+            #{testerId},
+            #{actual},
+            #{valid}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update fabtrack_test_parm
+        <set>
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            test = #{testId},
+            parm = #{parameterId},
+            tester = #{testerId},
+            actual = #{actual},
+            "valid" = #{valid},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from fabtrack_test_parm
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from fabtrack_test_parm
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

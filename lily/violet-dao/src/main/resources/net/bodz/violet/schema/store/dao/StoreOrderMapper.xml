@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.store.dao.StoreOrderMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.store.StoreOrder">
+        <id property="id" column="id" />
+        <result property="accessMode" column="mode" />
+        <result property="acl" column="acl" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="formArguments" column="formargs" />
+        <result property="length" column="length" />
+        <result property="totalQuantity" column="sum_qty" />
+        <result property="totalAmount" column="sum_amount" />
+        <result property="ownerUserId" column="uid" />
+        <result property="ownerGroupId" column="gid" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="categoryId" column="cat" />
+        <result property="phaseId" column="phase" />
+        <result property="prevId" column="prev" />
+        <result property="planId" column="plan" />
+        <result property="orgId" column="org" />
+        <result property="orgUnitId" column="ou" />
+        <result property="personId" column="person" />
+        <association property="person" columnPrefix="person_"
+            javaType="net.bodz.lily.schema.contact.Person" 
+            resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
+        <association property="plan" columnPrefix="plan_"
+            javaType="net.bodz.violet.schema.plan.Plan" 
+            resultMap="net.bodz.violet.schema.plan.dao.PlanMapper.objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            javaType="net.bodz.lily.schema.account.Group" 
+            resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
+        <association property="phase" columnPrefix="phase_"
+            javaType="net.bodz.violet.schema.store.StorePhase" 
+            resultMap="net.bodz.violet.schema.store.dao.StorePhaseMapper.objlist_map" />
+        <association property="category" columnPrefix="category_"
+            javaType="net.bodz.violet.schema.store.StoreCategory" 
+            resultMap="net.bodz.violet.schema.store.dao.StoreCategoryMapper.objlist_map" />
+        <association property="ownerUser" columnPrefix="ownerUser_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="prev" columnPrefix="prev_"
+            javaType="net.bodz.violet.schema.store.StoreOrder" 
+            resultMap="objlist_map" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.meta.FormDef" 
+            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
+        <association property="org" columnPrefix="org_"
+            javaType="net.bodz.lily.schema.contact.Organization" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
+        <association property="orgUnit" columnPrefix="ou_"
+            javaType="net.bodz.lily.schema.contact.OrgUnit" 
+            resultMap="net.bodz.lily.schema.contact.dao.OrgUnitMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.cat, 
+            a.phase, 
+            a.prev, 
+            a.plan, 
+            a.org, 
+            a.ou, 
+            a.person, 
+            a."length", 
+            a.sum_qty, 
+            a.sum_amount, 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            plan.id plan_id, 
+            plan.uid plan_uid, 
+            plan.gid plan_gid, 
+            plan.mode plan_mode, 
+            plan.acl plan_acl, 
+            plan.priority plan_priority, 
+            plan.flags plan_flags, 
+            plan."state" plan_state, 
+            plan.t0 plan_t0, 
+            plan.t1 plan_t1, 
+            plan."year" plan_year, 
+            plan.subject plan_subject, 
+            plan.op plan_op, 
+            plan.text plan_text, 
+            plan.form plan_form, 
+            plan.formargs plan_formargs, 
+            plan.creation plan_creation, 
+            plan.lastmod plan_lastmod, 
+            plan."version" plan_version, 
+            plan.cat plan_cat, 
+            plan.phase plan_phase, 
+            plan.nread plan_nread, 
+            plan.nvote plan_nvote, 
+            plan.nlike plan_nlike, 
+            plan."value" plan_value, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            phase.id phase_id, 
+            phase.uid phase_uid, 
+            phase.gid phase_gid, 
+            phase.mode phase_mode, 
+            phase.acl phase_acl, 
+            phase.code phase_code, 
+            phase.label phase_label, 
+            phase.description phase_description, 
+            phase.priority phase_priority, 
+            phase.flags phase_flags, 
+            phase."state" phase_state, 
+            phase.creation phase_creation, 
+            phase.lastmod phase_lastmod, 
+            phase."version" phase_version, 
+            phase.nref phase_nref, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            prev.id prev_id, 
+            prev.uid prev_uid, 
+            prev.gid prev_gid, 
+            prev.mode prev_mode, 
+            prev.acl prev_acl, 
+            prev.priority prev_priority, 
+            prev.flags prev_flags, 
+            prev."state" prev_state, 
+            prev.creation prev_creation, 
+            prev.lastmod prev_lastmod, 
+            prev."version" prev_version, 
+            prev.t0 prev_t0, 
+            prev.t1 prev_t1, 
+            prev."year" prev_year, 
+            prev.subject prev_subject, 
+            prev.op prev_op, 
+            prev.text prev_text, 
+            prev.form prev_form, 
+            prev.formargs prev_formargs, 
+            prev.cat prev_cat, 
+            prev.phase prev_phase, 
+            prev.prev prev_prev, 
+            prev.plan prev_plan, 
+            prev.org prev_org, 
+            prev.ou prev_ou, 
+            prev.person prev_person, 
+            prev."length" prev_length, 
+            prev.sum_qty prev_sum_qty, 
+            prev.sum_amount prev_sum_amount, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            ou.id ou_id, 
+            ou.uid ou_uid, 
+            ou.gid ou_gid, 
+            ou.mode ou_mode, 
+            ou.acl ou_acl, 
+            ou.label ou_label, 
+            ou.description ou_description, 
+            ou.priority ou_priority, 
+            ou.flags ou_flags, 
+            ou."state" ou_state, 
+            ou.creation ou_creation, 
+            ou.lastmod ou_lastmod, 
+            ou."version" ou_version, 
+            ou.alias ou_alias, 
+            ou.ctprops ou_ctprops, 
+            ou.address1 ou_address1, 
+            ou.address2 ou_address2, 
+            ou."zone" ou_zone, 
+            ou.tel ou_tel, 
+            ou.telok ou_telok, 
+            ou.email ou_email, 
+            ou.emailok ou_emailok, 
+            ou.props ou_props, 
+            ou.org ou_org, 
+            ou.parent ou_parent, 
+            ou."depth" ou_depth
+        from storeodr a
+            left join lily.person person on a.person = person.id
+            left join plan plan on a.plan = plan.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join storephase phase on a.phase = phase.id
+            left join storecat category on a.cat = category.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join storeodr prev on a.prev = prev.id
+            left join lily."user" op on a.op = op.id
+            left join lily._form form on a.form = form.id
+            left join lily.org org on a.org = org.id
+            left join lily.orgunit ou on a.ou = ou.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.uid, 
+            a.gid, 
+            a.mode, 
+            a.acl, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.cat, 
+            a.phase, 
+            a.prev, 
+            a.plan, 
+            a.org, 
+            a.ou, 
+            a.person, 
+            a."length", 
+            a.sum_qty, 
+            a.sum_amount, 
+            person.id person_id, 
+            person.uid person_uid, 
+            person.gid person_gid, 
+            person.mode person_mode, 
+            person.acl person_acl, 
+            person.label person_label, 
+            person.description person_description, 
+            person.priority person_priority, 
+            person.flags person_flags, 
+            person."state" person_state, 
+            person.creation person_creation, 
+            person.lastmod person_lastmod, 
+            person."version" person_version, 
+            person.alias person_alias, 
+            person.ctprops person_ctprops, 
+            person.address1 person_address1, 
+            person.address2 person_address2, 
+            person."zone" person_zone, 
+            person.tel person_tel, 
+            person.telok person_telok, 
+            person.email person_email, 
+            person.emailok person_emailok, 
+            person.props person_props, 
+            person.cat person_cat, 
+            person.birthday person_birthday, 
+            person.locale person_locale, 
+            person.timezone person_timezone, 
+            person.nrole person_nrole, 
+            person.customer person_customer, 
+            person.supplier person_supplier, 
+            person.employee person_employee, 
+            person.subject person_subject, 
+            person.nbank person_nbank, 
+            person.gender person_gender, 
+            person.homeland person_homeland, 
+            person.passport person_passport, 
+            person.ssn person_ssn, 
+            person.dln person_dln, 
+            plan.id plan_id, 
+            plan.uid plan_uid, 
+            plan.gid plan_gid, 
+            plan.mode plan_mode, 
+            plan.acl plan_acl, 
+            plan.priority plan_priority, 
+            plan.flags plan_flags, 
+            plan."state" plan_state, 
+            plan.t0 plan_t0, 
+            plan.t1 plan_t1, 
+            plan."year" plan_year, 
+            plan.subject plan_subject, 
+            plan.op plan_op, 
+            plan.text plan_text, 
+            plan.form plan_form, 
+            plan.formargs plan_formargs, 
+            plan.creation plan_creation, 
+            plan.lastmod plan_lastmod, 
+            plan."version" plan_version, 
+            plan.cat plan_cat, 
+            plan.phase plan_phase, 
+            plan.nread plan_nread, 
+            plan.nvote plan_nvote, 
+            plan.nlike plan_nlike, 
+            plan."value" plan_value, 
+            ownerGroup.id ownerGroup_id, 
+            ownerGroup."name" ownerGroup_name, 
+            ownerGroup."type" ownerGroup_type, 
+            ownerGroup.label ownerGroup_label, 
+            ownerGroup.description ownerGroup_description, 
+            ownerGroup.priority ownerGroup_priority, 
+            ownerGroup.flags ownerGroup_flags, 
+            ownerGroup."state" ownerGroup_state, 
+            ownerGroup.creation ownerGroup_creation, 
+            ownerGroup.lastmod ownerGroup_lastmod, 
+            ownerGroup."version" ownerGroup_version, 
+            ownerGroup.props ownerGroup_props, 
+            ownerGroup.parent ownerGroup_parent, 
+            phase.id phase_id, 
+            phase.uid phase_uid, 
+            phase.gid phase_gid, 
+            phase.mode phase_mode, 
+            phase.acl phase_acl, 
+            phase.code phase_code, 
+            phase.label phase_label, 
+            phase.description phase_description, 
+            phase.priority phase_priority, 
+            phase.flags phase_flags, 
+            phase."state" phase_state, 
+            phase.creation phase_creation, 
+            phase.lastmod phase_lastmod, 
+            phase."version" phase_version, 
+            phase.nref phase_nref, 
+            category.id category_id, 
+            category."name" category_name, 
+            category.uid category_uid, 
+            category.gid category_gid, 
+            category.mode category_mode, 
+            category.acl category_acl, 
+            category.label category_label, 
+            category.description category_description, 
+            category.priority category_priority, 
+            category.flags category_flags, 
+            category."state" category_state, 
+            category.creation category_creation, 
+            category.lastmod category_lastmod, 
+            category."version" category_version, 
+            category.image category_image, 
+            category.imagealt category_imagealt, 
+            category.props category_props, 
+            category.parent category_parent, 
+            category."depth" category_depth, 
+            category.nref category_nref, 
+            ownerUser.id ownerUser_id, 
+            ownerUser."type" ownerUser_type, 
+            ownerUser."name" ownerUser_name, 
+            ownerUser.label ownerUser_label, 
+            ownerUser.description ownerUser_description, 
+            ownerUser.priority ownerUser_priority, 
+            ownerUser.flags ownerUser_flags, 
+            ownerUser."state" ownerUser_state, 
+            ownerUser.creation ownerUser_creation, 
+            ownerUser.lastmod ownerUser_lastmod, 
+            ownerUser."version" ownerUser_version, 
+            ownerUser.props ownerUser_props, 
+            ownerUser.gid0 ownerUser_gid0, 
+            ownerUser.referer ownerUser_referer, 
+            prev.id prev_id, 
+            prev.uid prev_uid, 
+            prev.gid prev_gid, 
+            prev.mode prev_mode, 
+            prev.acl prev_acl, 
+            prev.priority prev_priority, 
+            prev.flags prev_flags, 
+            prev."state" prev_state, 
+            prev.creation prev_creation, 
+            prev.lastmod prev_lastmod, 
+            prev."version" prev_version, 
+            prev.t0 prev_t0, 
+            prev.t1 prev_t1, 
+            prev."year" prev_year, 
+            prev.subject prev_subject, 
+            prev.op prev_op, 
+            prev.text prev_text, 
+            prev.form prev_form, 
+            prev.formargs prev_formargs, 
+            prev.cat prev_cat, 
+            prev.phase prev_phase, 
+            prev.prev prev_prev, 
+            prev.plan prev_plan, 
+            prev.org prev_org, 
+            prev.ou prev_ou, 
+            prev.person prev_person, 
+            prev."length" prev_length, 
+            prev.sum_qty prev_sum_qty, 
+            prev.sum_amount prev_sum_amount, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text, 
+            org.id org_id, 
+            org.uid org_uid, 
+            org.gid org_gid, 
+            org.mode org_mode, 
+            org.acl org_acl, 
+            org.label org_label, 
+            org.description org_description, 
+            org.priority org_priority, 
+            org.flags org_flags, 
+            org."state" org_state, 
+            org.creation org_creation, 
+            org.lastmod org_lastmod, 
+            org."version" org_version, 
+            org.alias org_alias, 
+            org.ctprops org_ctprops, 
+            org.address1 org_address1, 
+            org.address2 org_address2, 
+            org."zone" org_zone, 
+            org.tel org_tel, 
+            org.telok org_telok, 
+            org.email org_email, 
+            org.emailok org_emailok, 
+            org.props org_props, 
+            org.cat org_cat, 
+            org.birthday org_birthday, 
+            org.locale org_locale, 
+            org.timezone org_timezone, 
+            org.nrole org_nrole, 
+            org.supplier org_supplier, 
+            org.customer org_customer, 
+            org.subject org_subject, 
+            org.nbank org_nbank, 
+            org."size" org_size, 
+            org.taxid org_taxid, 
+            ou.id ou_id, 
+            ou.uid ou_uid, 
+            ou.gid ou_gid, 
+            ou.mode ou_mode, 
+            ou.acl ou_acl, 
+            ou.label ou_label, 
+            ou.description ou_description, 
+            ou.priority ou_priority, 
+            ou.flags ou_flags, 
+            ou."state" ou_state, 
+            ou.creation ou_creation, 
+            ou.lastmod ou_lastmod, 
+            ou."version" ou_version, 
+            ou.alias ou_alias, 
+            ou.ctprops ou_ctprops, 
+            ou.address1 ou_address1, 
+            ou.address2 ou_address2, 
+            ou."zone" ou_zone, 
+            ou.tel ou_tel, 
+            ou.telok ou_telok, 
+            ou.email ou_email, 
+            ou.emailok ou_emailok, 
+            ou.props ou_props, 
+            ou.org ou_org, 
+            ou.parent ou_parent, 
+            ou."depth" ou_depth
+        from storeodr a
+            left join lily.person person on a.person = person.id
+            left join plan plan on a.plan = plan.id
+            left join lily."group" ownerGroup on a.gid = ownerGroup.id
+            left join storephase phase on a.phase = phase.id
+            left join storecat category on a.cat = category.id
+            left join lily."user" ownerUser on a.uid = ownerUser.id
+            left join storeodr prev on a.prev = prev.id
+            left join lily."user" op on a.op = op.id
+            left join lily._form form on a.form = form.id
+            left join lily.org org on a.org = org.id
+            left join lily.orgunit ou on a.ou = ou.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into storeodr(
+            uid,
+            gid,
+            mode,
+            acl,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            formargs,
+            cat,
+            phase,
+            prev,
+            plan,
+            org,
+            ou,
+            person,
+            "length",
+            sum_qty,
+            sum_amount
+        ) values(
+            #{ownerUserId},
+            #{ownerGroupId},
+            #{accessMode},
+            #{acl},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{formArguments},
+            #{categoryId},
+            #{phaseId},
+            #{prevId},
+            #{planId},
+            #{orgId},
+            #{orgUnitId},
+            #{personId},
+            #{length},
+            #{totalQuantity},
+            #{totalAmount}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update storeodr
+        <set>
+            uid = #{ownerUserId},
+            gid = #{ownerGroupId},
+            mode = #{accessMode},
+            acl = #{acl},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            formargs = #{formArguments},
+            cat = #{categoryId},
+            phase = #{phaseId},
+            prev = #{prevId},
+            plan = #{planId},
+            org = #{orgId},
+            ou = #{orgUnitId},
+            person = #{personId},
+            "length" = #{length},
+            sum_qty = #{totalQuantity},
+            sum_amount = #{totalAmount},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from storeodr
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from storeodr
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.plan.dao.DiaryReviewMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.plan.DiaryReview">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="beginTime" column="t0" />
+        <result property="endTime" column="t1" />
+        <result property="year" column="year" />
+        <result property="subject" column="subject" />
+        <result property="rawText" column="text" />
+        <result property="formArguments" column="formargs" />
+        <result property="opId" column="op" />
+        <result property="formId" column="form" />
+        <result property="diaryId" column="diary" />
+        <result property="parentId" column="parent" />
+        <association property="op" columnPrefix="op_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="diary" columnPrefix="diary_"
+            javaType="net.bodz.violet.schema.plan.Diary" 
+            resultMap="net.bodz.violet.schema.plan.dao.DiaryMapper.objlist_map" />
+        <association property="parent" columnPrefix="parent_"
+            javaType="net.bodz.violet.schema.plan.DiaryReview" 
+            resultMap="objlist_map" />
+        <association property="form" columnPrefix="form_"
+            javaType="net.bodz.lily.schema.meta.FormDef" 
+            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.diary, 
+            a.parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.diary parent_diary, 
+            parent.parent parent_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text
+        from diaryrev a
+            left join lily."user" op on a.op = op.id
+            left join diary diary on a.diary = diary.id
+            left join diaryrev parent on a.parent = parent.id
+            left join lily._form form on a.form = form.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.t0, 
+            a.t1, 
+            a."year", 
+            a.subject, 
+            a.op, 
+            a.text, 
+            a.form, 
+            a.formargs, 
+            a.diary, 
+            a.parent, 
+            op.id op_id, 
+            op."type" op_type, 
+            op."name" op_name, 
+            op.label op_label, 
+            op.description op_description, 
+            op.priority op_priority, 
+            op.flags op_flags, 
+            op."state" op_state, 
+            op.creation op_creation, 
+            op.lastmod op_lastmod, 
+            op."version" op_version, 
+            op.props op_props, 
+            op.gid0 op_gid0, 
+            op.referer op_referer, 
+            diary.id diary_id, 
+            diary.uid diary_uid, 
+            diary.gid diary_gid, 
+            diary.mode diary_mode, 
+            diary.acl diary_acl, 
+            diary.priority diary_priority, 
+            diary.flags diary_flags, 
+            diary."state" diary_state, 
+            diary.creation diary_creation, 
+            diary.lastmod diary_lastmod, 
+            diary."version" diary_version, 
+            diary.t0 diary_t0, 
+            diary.t1 diary_t1, 
+            diary."year" diary_year, 
+            diary.subject diary_subject, 
+            diary.op diary_op, 
+            diary.text diary_text, 
+            diary.form diary_form, 
+            diary.formargs diary_formargs, 
+            diary.props diary_props, 
+            diary.cat diary_cat, 
+            diary.phase diary_phase, 
+            diary."value" diary_value, 
+            parent.id parent_id, 
+            parent.priority parent_priority, 
+            parent.flags parent_flags, 
+            parent."state" parent_state, 
+            parent.creation parent_creation, 
+            parent.lastmod parent_lastmod, 
+            parent."version" parent_version, 
+            parent.t0 parent_t0, 
+            parent.t1 parent_t1, 
+            parent."year" parent_year, 
+            parent.subject parent_subject, 
+            parent.op parent_op, 
+            parent.text parent_text, 
+            parent.form parent_form, 
+            parent.formargs parent_formargs, 
+            parent.diary parent_diary, 
+            parent.parent parent_parent, 
+            form.id form_id, 
+            form.code form_code, 
+            form.label form_label, 
+            form.description form_description, 
+            form.priority form_priority, 
+            form.flags form_flags, 
+            form."state" form_state, 
+            form.creation form_creation, 
+            form.lastmod form_lastmod, 
+            form."version" form_version, 
+            form."schema" form_schema, 
+            form.subject form_subject, 
+            form.text form_text
+        from diaryrev a
+            left join lily."user" op on a.op = op.id
+            left join diary diary on a.diary = diary.id
+            left join diaryrev parent on a.parent = parent.id
+            left join lily._form form on a.form = form.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into diaryrev(
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            t0,
+            t1,
+            "year",
+            subject,
+            op,
+            text,
+            form,
+            formargs,
+            diary,
+            parent
+        ) values(
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{beginTime},
+            #{endTime},
+            #{year},
+            #{subject},
+            #{opId},
+            #{rawText},
+            #{formId},
+            #{formArguments},
+            #{diaryId},
+            #{parentId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update diaryrev
+        <set>
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            t0 = #{beginTime},
+            t1 = #{endTime},
+            "year" = #{year},
+            subject = #{subject},
+            op = #{opId},
+            text = #{rawText},
+            form = #{formId},
+            formargs = #{formArguments},
+            diary = #{diaryId},
+            parent = #{parentId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from diaryrev
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from diaryrev
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -12,9 +12,6 @@ create schema if not exists "${1=violet}";
 -------- Violet :: Issue --------
 --\import violet.issue
 
--------- Violet :: Fabrication --------
---\import violet.fab
-
 -------- Violet :: Store --------
 --\import violet.store
 

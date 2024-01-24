@@ -11,7 +11,7 @@ import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.object.ICloneable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.model.base.RequestHandlerException;
+import net.bodz.lily.entity.ws.RequestHandlerException;
 
 @ForEntityType(IJsonForm.class)
 public class CreateCommand

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.shop.dao.ShopItemFavMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.shop.ShopItemFav">
+        <id property="id" column="id" />
+        <result property="shopItemId" column="shopitem" />
+        <result property="userId" column="user" />
+        <association property="shopItem" columnPrefix="shopitem_"
+            javaType="net.bodz.violet.schema.shop.ShopItem" 
+            resultMap="net.bodz.violet.schema.shop.dao.ShopItemMapper.objlist_map" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.shopitem, 
+            a."user", 
+            shopitem.id shopitem_id, 
+            shopitem.label shopitem_label, 
+            shopitem.description shopitem_description, 
+            shopitem.priority shopitem_priority, 
+            shopitem.flags shopitem_flags, 
+            shopitem."state" shopitem_state, 
+            shopitem.t0 shopitem_t0, 
+            shopitem.t1 shopitem_t1, 
+            shopitem."year" shopitem_year, 
+            shopitem.creation shopitem_creation, 
+            shopitem.lastmod shopitem_lastmod, 
+            shopitem."version" shopitem_version, 
+            shopitem.props shopitem_props, 
+            shopitem.shop shopitem_shop, 
+            shopitem.cat shopitem_cat, 
+            shopitem.art shopitem_art, 
+            shopitem.batch shopitem_batch, 
+            shopitem.price shopitem_price, 
+            shopitem.qty shopitem_qty, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from shopitem_fav a
+            left join shopitem shopitem on a.shopitem = shopitem.id
+            left join lily."user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.shopitem, 
+            a."user", 
+            shopitem.id shopitem_id, 
+            shopitem.label shopitem_label, 
+            shopitem.description shopitem_description, 
+            shopitem.priority shopitem_priority, 
+            shopitem.flags shopitem_flags, 
+            shopitem."state" shopitem_state, 
+            shopitem.t0 shopitem_t0, 
+            shopitem.t1 shopitem_t1, 
+            shopitem."year" shopitem_year, 
+            shopitem.creation shopitem_creation, 
+            shopitem.lastmod shopitem_lastmod, 
+            shopitem."version" shopitem_version, 
+            shopitem.props shopitem_props, 
+            shopitem.shop shopitem_shop, 
+            shopitem.cat shopitem_cat, 
+            shopitem.art shopitem_art, 
+            shopitem.batch shopitem_batch, 
+            shopitem.price shopitem_price, 
+            shopitem.qty shopitem_qty, 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer
+        from shopitem_fav a
+            left join shopitem shopitem on a.shopitem = shopitem.id
+            left join lily."user" "user" on a."user" = "user".id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into shopitem_fav(
+            shopitem,
+            "user"
+        ) values(
+            #{shopItemId},
+            #{userId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update shopitem_fav
+        <set>
+            shopitem = #{shopItemId},
+            "user" = #{userId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from shopitem_fav
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from shopitem_fav
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

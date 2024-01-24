@@ -7,6 +7,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>violet-ws</artifactId>
-    <dependencies />
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>basic-ws</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>violet-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <name>Violet :: Web Service</name>
 </project>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.edu.dao.TestPaperItemMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.edu.TestPaperItem">
+        <id property="id" column="id" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModifiedDate" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="properties.jsonStr" column="props" />
+        <result property="score" column="score" />
+        <result property="paperId" column="paper" />
+        <result property="questionId" column="q" />
+        <association property="question" columnPrefix="q_"
+            javaType="net.bodz.violet.schema.edu.TestQuestion" 
+            resultMap="net.bodz.violet.schema.edu.dao.TestQuestionMapper.objlist_map" />
+        <association property="paper" columnPrefix="paper_"
+            javaType="net.bodz.violet.schema.edu.TestPaper" 
+            resultMap="net.bodz.violet.schema.edu.dao.TestPaperMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.paper, 
+            a.q, 
+            a.score, 
+            q.id q_id, 
+            q.uid q_uid, 
+            q.gid q_gid, 
+            q.mode q_mode, 
+            q.acl q_acl, 
+            q.priority q_priority, 
+            q.flags q_flags, 
+            q."state" q_state, 
+            q.creation q_creation, 
+            q.lastmod q_lastmod, 
+            q."version" q_version, 
+            q.subject q_subject, 
+            q.op q_op, 
+            q.text q_text, 
+            q.form q_form, 
+            q.formargs q_formargs, 
+            q.course q_course, 
+            q.props q_props, 
+            q.nfav q_nfav, 
+            q.nvote q_nvote, 
+            q.nhate q_nhate, 
+            q.pos q_pos, 
+            q.answer q_answer, 
+            paper.id paper_id, 
+            paper.uid paper_uid, 
+            paper.gid paper_gid, 
+            paper.mode paper_mode, 
+            paper.acl paper_acl, 
+            paper.label paper_label, 
+            paper.description paper_description, 
+            paper.priority paper_priority, 
+            paper.flags paper_flags, 
+            paper."state" paper_state, 
+            paper.creation paper_creation, 
+            paper.lastmod paper_lastmod, 
+            paper."version" paper_version, 
+            paper.course paper_course, 
+            paper.timeout paper_timeout, 
+            paper.totalscore paper_totalscore
+        from testpaperl a
+            left join testq q on a.q = q.id
+            left join testpaper paper on a.paper = paper.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a.props, 
+            a.paper, 
+            a.q, 
+            a.score, 
+            q.id q_id, 
+            q.uid q_uid, 
+            q.gid q_gid, 
+            q.mode q_mode, 
+            q.acl q_acl, 
+            q.priority q_priority, 
+            q.flags q_flags, 
+            q."state" q_state, 
+            q.creation q_creation, 
+            q.lastmod q_lastmod, 
+            q."version" q_version, 
+            q.subject q_subject, 
+            q.op q_op, 
+            q.text q_text, 
+            q.form q_form, 
+            q.formargs q_formargs, 
+            q.course q_course, 
+            q.props q_props, 
+            q.nfav q_nfav, 
+            q.nvote q_nvote, 
+            q.nhate q_nhate, 
+            q.pos q_pos, 
+            q.answer q_answer, 
+            paper.id paper_id, 
+            paper.uid paper_uid, 
+            paper.gid paper_gid, 
+            paper.mode paper_mode, 
+            paper.acl paper_acl, 
+            paper.label paper_label, 
+            paper.description paper_description, 
+            paper.priority paper_priority, 
+            paper.flags paper_flags, 
+            paper."state" paper_state, 
+            paper.creation paper_creation, 
+            paper.lastmod paper_lastmod, 
+            paper."version" paper_version, 
+            paper.course paper_course, 
+            paper.timeout paper_timeout, 
+            paper.totalscore paper_totalscore
+        from testpaperl a
+            left join testq q on a.q = q.id
+            left join testpaper paper on a.paper = paper.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into testpaperl(
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            props,
+            paper,
+            q,
+            score
+        ) values(
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModifiedDate},
+            #{version},
+            #{properties.jsonStr}::jsonb,
+            #{paperId},
+            #{questionId},
+            #{score}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update testpaperl
+        <set>
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModifiedDate},
+            "version" = #{version},
+            props = #{properties.jsonStr}::jsonb,
+            paper = #{paperId},
+            q = #{questionId},
+            score = #{score},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from testpaperl
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from testpaperl
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

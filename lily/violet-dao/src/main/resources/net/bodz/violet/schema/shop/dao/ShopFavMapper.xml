@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.bodz.violet.schema.shop.dao.ShopFavMapper">
+
+    <resultMap id="objlist_map" type="net.bodz.violet.schema.shop.ShopFav">
+        <id property="id" column="id" />
+        <result property="shopId" column="shop" />
+        <result property="userId" column="user" />
+        <association property="user" columnPrefix="user_"
+            javaType="net.bodz.lily.schema.account.User" 
+            resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
+        <association property="shop" columnPrefix="shop_"
+            javaType="net.bodz.violet.schema.shop.Shop" 
+            resultMap="net.bodz.violet.schema.shop.dao.ShopMapper.objlist_map" />
+    </resultMap>
+
+    <sql id="objlist_sql"><![CDATA[
+        select
+            a.id, 
+            a.shop, 
+            a."user", 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            shop.id shop_id, 
+            shop.uid shop_uid, 
+            shop.gid shop_gid, 
+            shop.mode shop_mode, 
+            shop.acl shop_acl, 
+            shop.label shop_label, 
+            shop.description shop_description, 
+            shop.priority shop_priority, 
+            shop.flags shop_flags, 
+            shop."state" shop_state, 
+            shop.creation shop_creation, 
+            shop.lastmod shop_lastmod, 
+            shop."version" shop_version, 
+            shop.code shop_code, 
+            shop.props shop_props, 
+            shop.hydm shop_hydm
+        from shop_fav a
+            left join lily."user" "user" on a."user" = "user".id
+            left join shop shop on a.shop = shop.id
+        ]]>
+    </sql>
+
+    <sql id="objedit_sql"><![CDATA[
+        select
+            a.id, 
+            a.shop, 
+            a."user", 
+            "user".id user_id, 
+            "user"."type" user_type, 
+            "user"."name" user_name, 
+            "user".label user_label, 
+            "user".description user_description, 
+            "user".priority user_priority, 
+            "user".flags user_flags, 
+            "user"."state" user_state, 
+            "user".creation user_creation, 
+            "user".lastmod user_lastmod, 
+            "user"."version" user_version, 
+            "user".props user_props, 
+            "user".gid0 user_gid0, 
+            "user".referer user_referer, 
+            shop.id shop_id, 
+            shop.uid shop_uid, 
+            shop.gid shop_gid, 
+            shop.mode shop_mode, 
+            shop.acl shop_acl, 
+            shop.label shop_label, 
+            shop.description shop_description, 
+            shop.priority shop_priority, 
+            shop.flags shop_flags, 
+            shop."state" shop_state, 
+            shop.creation shop_creation, 
+            shop.lastmod shop_lastmod, 
+            shop."version" shop_version, 
+            shop.code shop_code, 
+            shop.props shop_props, 
+            shop.hydm shop_hydm
+        from shop_fav a
+            left join lily."user" "user" on a."user" = "user".id
+            left join shop shop on a.shop = shop.id
+        ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
+    </sql>
+
+    <select id="all" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <include refid="co.opts" />
+    </select>
+
+    <select id="filter" resultMap="objlist_map">
+        <include refid="objlist_sql" />
+        <where>
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+
+    <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+        insert into shop_fav(
+            shop,
+            "user"
+        ) values(
+            #{shopId},
+            #{userId}
+        );
+    ]]></insert>
+
+    <update id="update">
+        update shop_fav
+        <set>
+            shop = #{shopId},
+            "user" = #{userId},
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from shop_fav
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+
+    <select id="count" resultType="long">
+        select count(*) "rows" from shop_fav
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
+    </select>
+
+</mapper>

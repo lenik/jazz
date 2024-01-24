@@ -60,6 +60,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
         </dependency>
@@ -68,7 +72,7 @@
             <artifactId>poi-ooxml</artifactId>
         </dependency>
     </dependencies>
-    <name>Lily :: Layer 1 :: Lily Api</name>
+    <name>Lily :: Api</name>
     <properties>
         <flexmark.version>0.64.8</flexmark.version>
     </properties>
