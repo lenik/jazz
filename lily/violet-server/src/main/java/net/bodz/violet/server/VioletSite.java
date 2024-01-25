@@ -5,9 +5,7 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
-import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.org.ICrawlable;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -16,8 +14,6 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.site.LilyStartSite;
 import net.bodz.lily.site.module.MapperService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @label OA Site Frame
@@ -69,17 +65,7 @@ public class VioletSite
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        HttpServletRequest request = CurrentHttpService.getRequest();
-
-        Object target = null;
-        String token = tokens.peek();
-        if (token == null)
-            return null;
-
-        if (target != null)
-            return PathArrival.shift(previous, this, target, tokens);
-        else
-            return super.dispatch(previous, tokens, q);
+        return super.dispatch(previous, tokens, q);
     }
 
     /** ⇱ Implementation Of {@link ICrawlable}. */
