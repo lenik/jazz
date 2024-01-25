@@ -37,4 +37,14 @@ public abstract class Criterion
         return buf.toString();
     }
 
+    public String getSqlCondition() {
+        StringBuilder buf = new StringBuilder();
+        SQLFormatter formatter = new SQLFormatter(buf);
+        accept(formatter);
+        String sql = buf.toString();
+        if (sql.equals("()"))
+            return "";
+        return sql;
+    }
+
 }
