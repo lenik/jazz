@@ -50,13 +50,10 @@ public interface TypeId {
     int BIG_INTEGER = 50;
     int BIG_DECIMAL = 51;
 
-    @Deprecated
     int DATE = 1000;
-    @Deprecated
     int SQL_DATE = 1001;
-//    int JODA_DATETIME = 1002;
-    @Deprecated
-    int CALENDAR = 1010;
+    int CALENDAR = 1002;
+//    int JODA_DATETIME = 1010;
 
     int INSTANT = 1020;
     int OFFSET_DATE_TIME = 1021;
