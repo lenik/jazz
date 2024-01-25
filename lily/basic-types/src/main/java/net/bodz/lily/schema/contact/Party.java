@@ -1,9 +1,14 @@
 package net.bodz.lily.schema.contact;
 
 import java.sql.Date;
-import java.util.*;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
-import net.bodz.bas.c.java.util.TimeZones;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -42,7 +47,7 @@ public abstract class Party
 
     private Date birthday;
     private Locale locale = Locale.SIMPLIFIED_CHINESE;
-    private TimeZone timeZone = TimeZones.TZ_SHANGHAI;
+    private ZoneId zoneId = ZoneId.systemDefault();
 
     private boolean peer;
     private boolean customer;
@@ -123,14 +128,14 @@ public abstract class Party
      */
     @OfGroup(StdGroup.Settings.class)
     @TextInput(maxLength = N_TIMEZONEID)
-    public TimeZone getTimeZone() {
-        return timeZone;
+    public ZoneId getTimeZone() {
+        return zoneId;
     }
 
-    public void setTimeZone(TimeZone timeZone) {
+    public void setTimeZone(ZoneId timeZone) {
         if (timeZone == null)
             throw new NullPointerException("timeZone");
-        this.timeZone = timeZone;
+        this.zoneId = timeZone;
     }
 
     /**
@@ -139,13 +144,13 @@ public abstract class Party
     @OfGroup(StdGroup.Settings.class)
     @Derived
     public String getTimeZoneId() {
-        return timeZone.getID();
+        return zoneId.getId();
     }
 
     public void setTimeZoneId(String timeZoneId) {
         if (timeZoneId == null)
             throw new NullPointerException("timeZoneId");
-        timeZone = TimeZone.getTimeZone(timeZoneId);
+        zoneId = ZoneId.of(timeZoneId);
     }
 
     /**

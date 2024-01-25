@@ -18,6 +18,7 @@ net.bodz.bas.db.ibatis.type.ShortArrayTypeHandler
 net.bodz.bas.db.ibatis.type.StateTypeHandler
 net.bodz.bas.db.ibatis.type.StringArrayTypeHandler
 net.bodz.bas.db.ibatis.type.UUIDTypeHandler
+net.bodz.bas.db.ibatis.type.ZoneIdTypeHandler
 net.bodz.bas.db.ibatis.type.ZonedDateTimeTypeHandler
 net.bodz.bas.db.ibatis.type._BooleanArrayTypeHandler
 net.bodz.bas.db.ibatis.type._DoubleArrayTypeHandler
