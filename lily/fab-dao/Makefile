@@ -1,5 +1,7 @@
 include coolmake/m2proj.mf
 
+DBNAME=fab
+
 remotehost = localhost
 remotedir = lily-erp
 
