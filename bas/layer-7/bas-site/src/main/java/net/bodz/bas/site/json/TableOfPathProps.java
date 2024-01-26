@@ -37,25 +37,40 @@ public class TableOfPathProps
             IJsonForm,
             IXmlForm {
 
+    public static final String Q_FOR_DATATABLE = "dt";
+
+    public static final String Q_COLUMNS = "columns";
+    public static final String Q_FORMATS = "formats";
+
     /**
      * Specify the row format
      */
-    public static final String K_ROW = "row";
+    public static final String Q_ROW_FORMAT = "row";
     public static final String ROW_ARRAY = "array";
     public static final String ROW_OBJECT = "object";// default
 
+    public static final String K_ROW_COUNT = "rowCount";
+
+    public static final String Q_WANT_TOTAL_COUNT = "counting";
     public static final String K_TOTAL_COUNT = "totalCount";
+
+    public static final String Q_SEQ = "seq";
+
+    boolean forDataTable;
 
     Class<?> objectType;
     boolean defaultAll;
     Map<String, PropertyChain> pathAccessorMap = new LinkedHashMap<>();
+
+    String rowFormat = ROW_ARRAY;
     Map<String, String> formats = new HashMap<String, String>();
+
     List<?> list;
 
     boolean wantTotalCount;
     Long totalCount;
 
-    String rowFormat = ROW_ARRAY;
+    Long seq;
 
     public TableOfPathProps(Class<?> objectType) {
         this.objectType = objectType;
@@ -174,7 +189,9 @@ public class TableOfPathProps
     @Override
     public void readObject(IVariantMap<String> map)
             throws LoaderException {
-        String columns = map.getString("columns");
+        forDataTable = map.getBoolean(Q_FOR_DATATABLE, forDataTable);
+
+        String columns = map.getString(Q_COLUMNS);
         if (columns == null)
             // throw new IllegalArgumentException("Expected request parameter columns.");
             columns = "*";
@@ -184,12 +201,14 @@ public class TableOfPathProps
             throw new IllegalArgumentException("Invalid columns specified: \"" + columns + "\": " + e.getMessage(), e);
         }
 
-        String formats = map.getString("formats");
+        String formats = map.getString(Q_FORMATS);
         if (formats != null)
             parseFormats(formats);
 
-        rowFormat = map.getString("row", rowFormat);
-        wantTotalCount = map.getBoolean("counting", wantTotalCount);
+        rowFormat = map.getString(Q_ROW_FORMAT, rowFormat);
+        wantTotalCount = map.getBoolean(Q_WANT_TOTAL_COUNT, wantTotalCount);
+
+        seq = map.getLong(Q_SEQ, seq);
     }
 
     @Override
@@ -212,14 +231,21 @@ public class TableOfPathProps
             out.key("columns");
             {
                 out.array();
-                for (String col : pathAccessorMap.keySet())
+                for (String col : pathAccessorMap.keySet()) {
+                    if (forDataTable) {
+                        out.object();
+                        out.key("title");
+                    }
                     out.value(col);
+                    if (forDataTable)
+                        out.endObject();
+                }
                 out.endArray();
             }
         }
 
         // selection row count, can be less than table row count.
-        out.entry("rowCount", list.size());
+        out.entry(K_ROW_COUNT, list.size());
 
         out.key("rows");
         {
@@ -248,6 +274,7 @@ public class TableOfPathProps
         }
 
         out.entryNotNull(K_TOTAL_COUNT, totalCount);
+        out.entryNotNull(Q_SEQ, seq);
     }
 
     void writeRowAsArray(IJsonOut out, List<String> columns, List<?> row, JsonFormOptions opts)
