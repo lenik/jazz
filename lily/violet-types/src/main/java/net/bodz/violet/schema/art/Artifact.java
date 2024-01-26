@@ -25,12 +25,15 @@ public class Artifact
     private static final long serialVersionUID = 1L;
 
     private Set<ArtifactTag> tags = new HashSet<>();
-    private UOM uom = new UOM(UOMs.PIECE);
-    private String uomProperty = "数量";
     private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
+    private String uomProperty = "数量";
     private int decimalDigits = 2;
 
     private ArtifactProperties properties;
+
+    {
+        uom = new UOM(UOMs.PIECE);
+    }
 
     /**
      * 单位转换表

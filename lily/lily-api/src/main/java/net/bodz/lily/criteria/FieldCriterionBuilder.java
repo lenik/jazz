@@ -17,6 +17,10 @@ public class FieldCriterionBuilder<fin_target, This, T>
         this.type = type;
     }
 
+    public Class<T> getValueType() {
+        return type;
+    }
+
     @SuppressWarnings("unchecked")
     protected NumberExprCriteriaBuilder<This> number(String expr) {
         return new NumberExprCriteriaBuilder<This>(expr, (This) this, receiver);

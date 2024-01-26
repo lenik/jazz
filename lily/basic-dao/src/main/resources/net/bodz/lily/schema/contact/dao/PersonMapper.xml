@@ -449,7 +449,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from person
+        select count(*) "rows" from person a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

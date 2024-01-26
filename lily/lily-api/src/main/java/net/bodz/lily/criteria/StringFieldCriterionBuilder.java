@@ -12,12 +12,12 @@ public class StringFieldCriterionBuilder<fin_target>
     }
 
     public fin_target like(String pattern) {
-        receiver.receive(new FieldLike(fieldName, false, pattern));
+        receiver.receive(new FieldLike(fieldName, true, pattern));
         return finishTarget;
     }
 
     public fin_target notLike(String pattern) {
-        receiver.receive(new FieldLike(fieldName, true, pattern));
+        receiver.receive(new FieldLike(fieldName, false, pattern));
         return finishTarget;
     }
 
