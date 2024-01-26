@@ -220,12 +220,11 @@ public abstract class Composite
 
             int colon = key.indexOf(':');
             String opName = null;
-            if (colon != -1) {
-                opName = key.substring(colon + 1);
-                key = key.substring(0, colon);
-            } else {
-                opName = Criterions.K_EQUALS;
-            }
+            if (colon == -1) // :eq is required in query string.
+                continue;
+
+            opName = key.substring(colon + 1);
+            key = key.substring(0, colon);
 
             if (opName.startsWith("~")) {
                 negate = ! negate;
@@ -233,6 +232,9 @@ public abstract class Composite
             }
 
             ICriterion criterion = Criterions.create(opName);
+            if (criterion == null) // skip unknown op.
+                continue;
+
             BufferedReader in = new BufferedReader(new StringReader(val));
             try {
                 criterion.parseObject(in);
