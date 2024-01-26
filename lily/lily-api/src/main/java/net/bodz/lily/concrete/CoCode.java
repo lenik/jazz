@@ -1,6 +1,9 @@
 package net.bodz.lily.concrete;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.site.viz.input.Tagsinput;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.meta.TypeParamType;
@@ -10,9 +13,15 @@ import net.bodz.lily.meta.TypeParameters;
 @TypeParameters({ TypeParamType.THIS_REC })
 @IdType(Integer.class)
 public abstract class CoCode<self_t extends CoCode<self_t>>
-        extends CoNode<self_t, Integer> {
+        extends CoNode<self_t, Integer>
+        implements
+            IUniqueNamed {
 
     private static final long serialVersionUID = 1L;
+
+    public static final int N_CODE = 30;
+
+    String code;
 
     public CoCode() {
         super();
@@ -28,15 +37,25 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
      * @label Code
      * @label.zh 代码
      */
-    @TextInput(maxLength = N_UNIQ_NAME)
+    @Precision(value = N_CODE)
+    @Column(name = "code", nullable = true, precision = N_CODE)
+    @TextInput(maxLength = N_CODE)
     public String getCode() {
-        // reuse the member var.
-        return getUniqName();
+        return code;
     }
 
     public void setCode(String code) {
-        // reuse the member var.
-        setUniqName(code);
+        this.code = code;
+    }
+
+    @Override
+    public String getUniqueName() {
+        return getCode();
+    }
+
+    @Override
+    public void setUniqueName(String name) {
+        setCode(name);
     }
 
 }

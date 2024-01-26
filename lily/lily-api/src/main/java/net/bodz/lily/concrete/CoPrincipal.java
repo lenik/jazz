@@ -5,13 +5,16 @@ import net.bodz.bas.repr.form.meta.TextInput;
 
 @HaveAttachments
 public abstract class CoPrincipal
-        extends IdEntity<Integer> {
+        extends IdEntity<Integer>
+        implements
+            IUniqueNamed {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_LOGIN_NAME = 30;
     public static final int N_FULL_NAME = 40;
 
+    String name;
     CoPrincipalProperties properties;
 
     /**
@@ -19,13 +22,21 @@ public abstract class CoPrincipal
      * @label.zh 登录名
      */
     public String getName() {
-        // reuse the member var
-        return super.getUniqName();
+        return name;
     }
 
     public void setName(String name) {
-        // reuse the member var
-        super.setUniqName(name);
+        this.name = name;
+    }
+
+    @Override
+    public String getUniqueName() {
+        return getName();
+    }
+
+    @Override
+    public void setUniqueName(String name) {
+        setName(name);
     }
 
     /**

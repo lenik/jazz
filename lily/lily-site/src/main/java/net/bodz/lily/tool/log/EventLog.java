@@ -166,7 +166,7 @@ public class EventLog
             out.key("user");
             out.object();
             out.entry("id", user.id());
-            out.entry("name", user.getUniqName());
+            out.entry("name", user.getName());
             out.entry("fullName", user.getFullName());
             out.endObject();
         }

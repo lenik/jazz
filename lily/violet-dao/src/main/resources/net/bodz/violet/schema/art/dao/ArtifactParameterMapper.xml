@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
-        <result property="uniqName" column="name" />
+        <result property="name" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -173,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{ownerGroupId},
             #{accessMode},
             #{acl},
-            #{uniqName},
+            #{name},
             #{label},
             #{description},
             #{priority},
@@ -193,7 +193,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             gid = #{ownerGroupId},
             mode = #{accessMode},
             acl = #{acl},
-            "name" = #{uniqName},
+            "name" = #{name},
             label = #{label},
             description = #{description},
             priority = #{priority},

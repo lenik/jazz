@@ -58,13 +58,10 @@ public abstract class CoObject
 
     private static final long serialVersionUID = 1L;
 
-    public static final int N_UNIQ_NAME = 20;
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
     public static final int N_COMMENT = 200;
     public static final int N_IMAGE = 100;
-
-    private String uniqName;
 
     // U, U1 = label, description
     private String label;
@@ -103,27 +100,6 @@ public abstract class CoObject
     public abstract Object id();
 
     public abstract void id_(Serializable id);
-
-    /**
-     * <p lang="en">
-     * An optional unique code name, which can be specified and alternated by user.
-     *
-     * <p lang="zh">
-     * 类似于 id，唯一名不可重复。和 id 不同的是，唯一名是可以自行指定的，可以包含数字、字母，且可以更改。
-     *
-     * @label Unique Name
-     * @label.zh 唯一名
-     * @placeholder 输入唯一名…
-     */
-    @Priority(1)
-    @TextInput(maxLength = N_UNIQ_NAME)
-    public String getUniqName() {
-        return uniqName;
-    }
-
-    public void setUniqName(String uniqName) {
-        this.uniqName = uniqName;
-    }
 
     /**
      * <p lang="en">
@@ -227,12 +203,8 @@ public abstract class CoObject
         Object id = id();
         if (id == null)
             return "new";
-        String name = getUniqName();
         StringBuilder sb = new StringBuilder(80);
-        if (name != null)
-            sb.append(name);
-        else
-            sb.append(id);
+        sb.append(id);
         sb.append(" - ");
         sb.append(getLabel());
         return sb.toString();
@@ -477,7 +449,6 @@ public abstract class CoObject
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }
         } else {
-            uniqName = o.getString("codeName", uniqName);
             label = o.getString("label", label);
             description = o.getString("description", description);
             comment = o.getString("comment", comment);
@@ -503,8 +474,6 @@ public abstract class CoObject
     }
 
     public boolean partialEquals(CoObject o) {
-        if (! Nullables.equals(uniqName, o.uniqName))
-            return false;
         if (! Nullables.equals(label, o.label))
             return false;
         if (! Nullables.equals(description, o.description))
@@ -523,7 +492,6 @@ public abstract class CoObject
 
     public void assign(CoObject o) {
         super.assign(o);
-        uniqName = o.uniqName;
         label = o.label;
         description = o.description;
         comment = o.comment;

@@ -126,7 +126,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     }
 
     public boolean hasChild() {
-        return children != null && !children.isEmpty();
+        return children != null && ! children.isEmpty();
     }
 
     /**
@@ -344,14 +344,14 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 
         StringBuilder buf = new StringBuilder();
 
-        if (!isLast())
+        if (! isLast())
             buf.append(" -| "); // _|-_
         else
             buf.append(" -` "); // _`-_
 
         self_t node = parent;
         while (node != null) {
-            if (!node.isLast())
+            if (! node.isLast())
                 buf.append("  | "); // _|__
             else
                 buf.append("    "); // ____
@@ -373,9 +373,9 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     @Derived
     public String getNodeLabel() {
         StringBuilder sb = new StringBuilder();
-        String name = getUniqName();
-        if (name != null) {
-            sb.append(name);
+        Object id = id();
+        if (id != null) {
+            sb.append(id);
             sb.append(":");
         }
 
@@ -404,12 +404,12 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     protected void checkNode(boolean child, self_t node) {
         if (child) {
             Class<?> parentType = getClass();
-            if (!parentType.isInstance(node))
+            if (! parentType.isInstance(node))
                 throw new IllegalArgumentException(
                         "Inconsistent node type: parent=" + parentType + ", child=" + node.getClass());
         } else {
             Class<?> parentType = node.getClass();
-            if (!parentType.isInstance(this))
+            if (! parentType.isInstance(this))
                 throw new IllegalArgumentException(
                         "Inconsistent node type: parent=" + parentType + ", child=" + getClass());
         }
@@ -463,13 +463,13 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     public boolean accept(ICoNodeVisitor<? super self_t> visitor) {
         @SuppressWarnings("unchecked")
         self_t self = (self_t) this;
-        if (!visitor.beginNode(self))
+        if (! visitor.beginNode(self))
             return false;
 
-        if (!children.isEmpty())
+        if (! children.isEmpty())
             if (visitor.beginChildren(self)) {
                 for (self_t child : getChildren())
-                    if (!child.accept(visitor))
+                    if (! child.accept(visitor))
                         break;
                 visitor.endChildren(self);
             }

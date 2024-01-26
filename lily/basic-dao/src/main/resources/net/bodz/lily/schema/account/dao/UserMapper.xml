@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.account.User">
         <id property="id" column="id" />
-        <result property="uniqName" column="name" />
+        <result property="name" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -195,7 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             referer
         ) values(
             #{typeId},
-            #{uniqName},
+            #{name},
             #{label},
             #{description},
             #{priority},
@@ -214,7 +214,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update "user"
         <set>
             "type" = #{typeId},
-            "name" = #{uniqName},
+            "name" = #{name},
             label = #{label},
             description = #{description},
             priority = #{priority},
