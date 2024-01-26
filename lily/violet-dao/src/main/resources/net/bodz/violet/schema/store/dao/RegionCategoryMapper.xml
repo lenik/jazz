@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.violet.schema.store.RegionCategory">
         <id property="id" column="id" />
-        <result property="uniqName" column="name" />
+        <result property="name" column="name" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <result property="label" column="label" />
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "depth",
             nref
         ) values(
-            #{uniqName},
+            #{name},
             #{ownerUserId},
             #{ownerGroupId},
             #{accessMode},
@@ -259,7 +259,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update regioncat
         <set>
-            "name" = #{uniqName},
+            "name" = #{name},
             uid = #{ownerUserId},
             gid = #{ownerGroupId},
             mode = #{accessMode},

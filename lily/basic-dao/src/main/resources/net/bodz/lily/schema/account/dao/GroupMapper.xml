@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.account.Group">
         <id property="id" column="id" />
-        <result property="uniqName" column="name" />
+        <result property="name" column="name" />
         <result property="label" column="label" />
         <result property="description" column="description" />
         <result property="priority" column="priority" />
@@ -157,7 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             props,
             parent
         ) values(
-            #{uniqName},
+            #{name},
             #{typeId},
             #{label},
             #{description},
@@ -175,7 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update "group"
         <set>
-            "name" = #{uniqName},
+            "name" = #{name},
             "type" = #{typeId},
             label = #{label},
             description = #{description},

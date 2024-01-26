@@ -8,7 +8,7 @@ public interface IGroup
 
     Integer id();
 
-    String getUniqName();
+    String getName();
 
     String getFullName();
 

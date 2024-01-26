@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <resultMap id="objlist_map" type="net.bodz.lily.schema.pub.ArticleCategory">
         <id property="id" column="id" />
-        <result property="uniqName" column="name" />
+        <result property="name" column="name" />
         <result property="accessMode" column="mode" />
         <result property="acl" column="acl" />
         <result property="label" column="label" />
@@ -198,8 +198,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
             <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
         </if>
-        <if test="m.uniqName != null">and a."name" = #{m.uniqName}</if>
-        <if test="m.uniqNamePattern != null">and a."name" like '${m.uniqNamePattern}'</if>
+        <if test="m.name != null">and a."name" = #{m.name}</if>
+        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
         <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
         <if test="m.ownerUserIdRange!= null">
             <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
@@ -332,7 +332,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "depth",
             nref
         ) values(
-            #{uniqName},
+            #{name},
             #{ownerUserId},
             #{ownerGroupId},
             #{accessMode},
@@ -357,7 +357,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="update">
         update articlecat
         <set>
-            "name" = #{uniqName},
+            "name" = #{name},
             uid = #{ownerUserId},
             gid = #{ownerGroupId},
             mode = #{accessMode},

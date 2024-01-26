@@ -8,7 +8,7 @@ public interface IUser
 
     Integer id();
 
-    String getUniqName();
+    String getName();
 
     String getFullName();
 

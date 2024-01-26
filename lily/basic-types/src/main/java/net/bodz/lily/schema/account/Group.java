@@ -51,7 +51,7 @@ public class Group
 
     public Group(int id, String name, String fullName) {
         id(id);
-        setUniqName(name);
+        setName(name);
         setFullName(fullName);
     }
 

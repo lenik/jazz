@@ -39,7 +39,7 @@ public class GroupPlayer
 
     static void dump(Group group) {
         ITreeOut out = TreeOutImpl.from(Stdio.cout);
-        out.println(group.id() + ": " + group.getUniqName() + ": " + group.getLabel());
+        out.println(group.id() + ": " + group.getName() + ": " + group.getLabel());
 
         out.enter();
         for (User u : group.getUsers())

@@ -53,7 +53,7 @@ public class UserOps_PhoneId
                 name += "-" + dup;
             List<User> dups = userMapper.filter(new UserCriteriaBuilder().name.eq(name).get(), SelectOptions.ALL);
             if (dups.isEmpty()) {
-                user.setUniqName(name);
+                user.setName(name);
                 break;
             }
             dup++;
@@ -156,7 +156,7 @@ public class UserOps_PhoneId
 
         UserOtherId oid = oids.get(0);
         resp.fail("Phone number is already in use: user = %s.", //
-                oid.getUser().getUniqName());
+                oid.getUser().getName());
         return true;
     }
 
