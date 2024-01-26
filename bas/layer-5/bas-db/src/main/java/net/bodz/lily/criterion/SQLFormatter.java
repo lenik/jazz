@@ -16,17 +16,17 @@ import net.bodz.bas.c.java.util.regex.TextPreps;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.db.sql.dialect.ISqlDialect;
-import net.bodz.bas.db.sql.dialect.SqlDialects;
 
 public class SQLFormatter
         implements
             ICriterionVisitor {
 
     StringBuilder sb = new StringBuilder();
-    ISqlDialect dialect = SqlDialects.POSTGRESQL;
+    ISqlDialect dialect;
 
-    public SQLFormatter(StringBuilder sb) {
+    public SQLFormatter(StringBuilder sb, ISqlDialect dialect) {
         this.sb = sb;
+        this.dialect = dialect;
     }
 
     @Override

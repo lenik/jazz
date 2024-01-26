@@ -2,6 +2,7 @@ package net.bodz.lily.criteria;
 
 import java.math.BigDecimal;
 
+import net.bodz.bas.db.sql.dialect.SqlDialects;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.io.BCharOut;
@@ -42,7 +43,7 @@ public class FooCriteriaBuilder
                 .greaterThan(8).girl.isTrue();
 
         StringBuilder sb = new StringBuilder();
-        b.get().accept(new SQLFormatter(sb));
+        b.get().accept(new SQLFormatter(sb, SqlDialects.POSTGRESQL));
         // System.out.println(sb);
 
         BCharOut buf = new BCharOut();
