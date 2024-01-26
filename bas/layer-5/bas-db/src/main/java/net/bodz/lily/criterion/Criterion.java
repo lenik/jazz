@@ -1,5 +1,7 @@
 package net.bodz.lily.criterion;
 
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
+import net.bodz.bas.db.sql.dialect.SqlDialects;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -38,9 +40,18 @@ public abstract class Criterion
     }
 
     public String getSqlCondition() {
+        // thread-context?
+        return getSqlCondition(SqlDialects.POSTGRESQL);
+    }
+
+    public String getSqlCondition(ISqlDialect dialect) {
+        ICriterion node = reduce();
+        if (node == null)
+            return "";
+
         StringBuilder buf = new StringBuilder();
-        SQLFormatter formatter = new SQLFormatter(buf);
-        accept(formatter);
+        SQLFormatter formatter = new SQLFormatter(buf, dialect);
+        node.accept(formatter);
         String sql = buf.toString();
         if (sql.equals("()"))
             return "";

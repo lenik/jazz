@@ -1,5 +1,7 @@
 package net.bodz.lily.util;
 
+import net.bodz.bas.db.sql.dialect.ISqlDialect;
+import net.bodz.bas.db.sql.dialect.SqlDialects;
 import net.bodz.bas.fmt.json.JsonFn;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.io.res.ResFn;
@@ -20,6 +22,13 @@ public class CriterionJson
         extends BasicCLI {
 
     Format format = Format.JSON;
+
+    /**
+     * Specify the SQL dialect to use.
+     *
+     * @option -d --dialect =DIALECT
+     */
+    ISqlDialect dialect = SqlDialects.POSTGRESQL;
 
     /**
      * Specify the context class.
@@ -65,7 +74,7 @@ public class CriterionJson
                 break;
 
             case SQL_WHERE:
-                formatter = new SQLFormatter(buf);
+                formatter = new SQLFormatter(buf, dialect);
                 break;
 
             case JSON:
