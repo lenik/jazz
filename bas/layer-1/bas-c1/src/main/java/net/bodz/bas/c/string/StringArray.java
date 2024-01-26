@@ -13,10 +13,17 @@ import net.bodz.bas.t.pojo.Pair;
 
 public class StringArray {
 
+    public static String[] of(Object... args) {
+        String[] sv = new String[args.length];
+        for (int i = 0; i < args.length; i++)
+            sv[i] = args[i] == null ? null : args[i].toString();
+        return sv;
+    }
+
     public static String join(String separator, Object array) {
         if (array == null)
             throw new NullPointerException("array");
-        if (!array.getClass().isArray())
+        if (! array.getClass().isArray())
             throw new IllegalArgumentException("Not an array: " + array.getClass());
         StringBuilder buffer = null;
         int len = Array.getLength(array);
@@ -257,7 +264,7 @@ public class StringArray {
         while (start < len) {
             if (index == limit - 1) {
                 s = s.substring(start);
-                assert !s.isEmpty();
+                assert ! s.isEmpty();
                 list.add(s);
                 break;
             }
