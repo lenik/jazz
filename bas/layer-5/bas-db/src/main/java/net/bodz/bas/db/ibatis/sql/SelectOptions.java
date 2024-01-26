@@ -10,6 +10,13 @@ public class SelectOptions
         implements
             IVarMapForm {
 
+    public static final String K_OFFSET = "page.offset";
+    public static final String K_LIMIT = "page.limit";
+    public static final String K_PAGE_INDEX = "page.index";
+    public static final String K_PAGE_NUMBER = "page.number";
+    public static final String K_PAGE_SIZE = "page.size";
+    public static final String K_ORDERS = "order";
+
     private Pagination page;
     private Orders orders;
 
@@ -58,9 +65,17 @@ public class SelectOptions
 
     @Override
     public void readObject(IVariantMap<String> map) {
-        Long _pageIndex = map.getLong("page.index");
-        Long _pageNumber = map.getLong("page.number");
-        Integer _pageSize = map.getInt("page.size");
+        page = null;
+
+        Long offset = map.getLong(K_OFFSET);
+        Long limit = map.getLong(K_LIMIT);
+        if (offset != null && limit != null) {
+            page = new Pagination(limit, offset);
+        }
+
+        Long _pageIndex = map.getLong(K_PAGE_INDEX);
+        Long _pageNumber = map.getLong(K_PAGE_NUMBER);
+        Integer _pageSize = map.getInt(K_PAGE_SIZE);
 
         if (_pageIndex != null || _pageNumber != null || _pageSize != null) {
             page = new Pagination();
@@ -73,11 +88,9 @@ public class SelectOptions
 
             if (_pageNumber != null)
                 page.setPageNumber(_pageNumber.longValue());
-        } else {
-            page = null;
         }
 
-        String orderBy = map.getString("order-by");
+        String orderBy = map.getString(K_ORDERS);
         if (orderBy != null)
             orders = Orders.parse(orderBy);
     }
