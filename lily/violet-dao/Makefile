@@ -1,5 +1,7 @@
 include coolmake/m2proj.mf
 
+DBNAME = violet
+
 remotehost = localhost
 remotedir = lily-impl
 
