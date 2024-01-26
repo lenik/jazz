@@ -47,7 +47,7 @@ public abstract class Party
 
     private Date birthday;
     private Locale locale = Locale.SIMPLIFIED_CHINESE;
-    private ZoneId zoneId = ZoneId.systemDefault();
+    private ZoneId timeZoneId = ZoneId.systemDefault();
 
     private boolean peer;
     private boolean customer;
@@ -74,6 +74,9 @@ public abstract class Party
     }
 
     public Integer getCategoryId() {
+        if (category != null) {
+            return category.getId();
+        }
         return categoryId;
     }
 
@@ -129,13 +132,13 @@ public abstract class Party
     @OfGroup(StdGroup.Settings.class)
     @TextInput(maxLength = N_TIMEZONEID)
     public ZoneId getTimeZone() {
-        return zoneId;
+        return timeZoneId;
     }
 
     public void setTimeZone(ZoneId timeZone) {
         if (timeZone == null)
             throw new NullPointerException("timeZone");
-        this.zoneId = timeZone;
+        this.timeZoneId = timeZone;
     }
 
     /**
@@ -144,13 +147,13 @@ public abstract class Party
     @OfGroup(StdGroup.Settings.class)
     @Derived
     public String getTimeZoneId() {
-        return zoneId.getId();
+        return timeZoneId.getId();
     }
 
     public void setTimeZoneId(String timeZoneId) {
         if (timeZoneId == null)
             throw new NullPointerException("timeZoneId");
-        zoneId = ZoneId.of(timeZoneId);
+        this.timeZoneId = ZoneId.of(timeZoneId);
     }
 
     /**
