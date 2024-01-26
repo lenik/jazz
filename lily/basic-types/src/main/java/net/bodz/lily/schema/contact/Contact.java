@@ -7,8 +7,6 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.i18n.geo.GeoZone;
-import net.bodz.bas.i18n.geo.GeoZones;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -17,6 +15,7 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.repr.EntGroup;
+import net.bodz.lily.schema.geo.Zone;
 
 /**
  * 联系方式
@@ -53,7 +52,7 @@ public class Contact
     private String rename;
     private String usage;
 
-    private GeoZone zone;
+    private Zone zone;
     private Integer zoneId;
 
     private String country = "cn";
@@ -153,27 +152,16 @@ public class Contact
      */
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(EntGroup.Position.class)
-    public GeoZone getZone() {
+    public Zone getZone() {
         return zone;
     }
 
-    public void setZone(GeoZone zone) {
+    public void setZone(Zone zone) {
         this.zone = zone;
     }
 
-    @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup(EntGroup.Position.class)
-    @Derived
-    public String getZoneCode() {
-        return zone == null ? null : zone.buildCode();
-    }
-
-    public void setZoneCode(String code) {
-        this.zone = GeoZones.getChinaRegion(code);
-    }
-
     public Integer getZoneId() {
-        return zoneId;
+        return zone != null ? (Integer) zone.getId() : zoneId;
     }
 
     public void setZoneId(Integer zoneId) {
@@ -445,7 +433,7 @@ public class Contact
     public String getFullAddress() {
         StringBuilder sb = new StringBuilder(80);
         if (zone != null) {
-            String zhString = zone.toZhString();
+            String zhString = zone.geo.getGeoZone().toZhString();
             sb.append(zhString);
             sb.append(" ");
         }
@@ -477,7 +465,7 @@ public class Contact
         StringBuilder sb = new StringBuilder();
         for (String tel : tels)
             if (tel != null)
-                if (!tel.isEmpty()) {
+                if (! tel.isEmpty()) {
                     if (sb.length() != 0)
                         sb.append(", ");
                     sb.append(tel);
