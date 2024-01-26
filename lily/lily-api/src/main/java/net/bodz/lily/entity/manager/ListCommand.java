@@ -17,8 +17,7 @@ import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.criterion.ICriterion;
-import net.bodz.lily.criterion.Junction;
+import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
 
 @ForEntityType(IJsonForm.class)
@@ -52,8 +51,11 @@ class ListProcess
         extends AbstractEntityCommandProcess<ListCommand> {
 
     TableOfPathProps tableData;
-    Junction criteria;
+    CoObjectCriteriaBuilder<?> mask;
+    // Junction criteria;
+
     final SelectOptions selectOptions;
+    int seq;
 
     int format = JSON;
     static final int JSON = 0;
@@ -66,6 +68,13 @@ class ListProcess
         super(type, context);
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
         selectOptions = new SelectOptions();
+
+        Class<?> crtieriaBuilderClass = context.getTypeInfo().getCrtieriaBuilderClass();
+        try {
+            mask = (CoObjectCriteriaBuilder<?>) crtieriaBuilderClass.getConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalUsageException("can't instantiate criteria builder " + crtieriaBuilderClass, e);
+        }
     }
 
     @Override
@@ -73,10 +82,6 @@ class ListProcess
         ITableSheetBuilder tableSheetBuilder = context.query(ITableSheetBuilder.class);
         if (tableSheetBuilder != null)
             this.tableSheetBuilder = tableSheetBuilder;
-    }
-
-    public ICriterion getCriteria() {
-        return criteria;
     }
 
     public SelectOptions getSelectOptions() {
@@ -111,25 +116,32 @@ class ListProcess
         tableData.setList(dataList);
 
         if (tableData.isWantTotalCount()) {
-            long totalCount = getEntityMapper().count(criteria);
+            long totalCount = getEntityMapper().count(mask.get());
             tableData.setTotalCount(totalCount);
         }
 
-        if (format == JSON)
+        switch (format) {
+        case JSON:
             return tableData;
 
-        if (tableSheetBuilder == null)
-            throw new IllegalUsageException("sheet builder isn't set.");
-        Workbook workbook = WorkbookFactory.create(format == XSSF);
-        tableSheetBuilder.buildTableSheet(tableData, workbook, parameters);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
-        workbook.write(buf);
+        case HSSF:
+        case XSSF:
+            if (tableSheetBuilder == null)
+                throw new IllegalUsageException("sheet builder isn't set.");
+            Workbook workbook = WorkbookFactory.create(format == XSSF);
+            tableSheetBuilder.buildTableSheet(tableData, workbook, parameters);
+            ByteArrayOutputStream buf = new ByteArrayOutputStream(30000);
+            workbook.write(buf);
 
-        int activeSheetIndex = workbook.getActiveSheetIndex();
-        String sheetName = workbook.getSheetName(activeSheetIndex);
-        String fileName = sheetName + (format == XSSF ? ".xlsx" : ".xls");
+            int activeSheetIndex = workbook.getActiveSheetIndex();
+            String sheetName = workbook.getSheetName(activeSheetIndex);
+            String fileName = sheetName + (format == XSSF ? ".xlsx" : ".xls");
 
-        return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
+            return new FileContent(fileName, ContentTypes.application_vnd_ms_excel, buf.toByteArray());
+
+        default:
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -138,7 +150,7 @@ class ListProcess
     }
 
     protected List<Object> buildDataList() {
-        return getEntityMapper().filter(criteria, selectOptions);
+        return getEntityMapper().filter(mask.get(), selectOptions);
     }
 
     @Override
@@ -146,9 +158,8 @@ class ListProcess
             throws LoaderException, ParseException {
         super.readObject(map);
         tableData.readObject(map);
-        criteria = new Junction();
-        criteria.readObject(map);
         selectOptions.readObject(map);
+        mask.readObject(map);
     }
 
 }
