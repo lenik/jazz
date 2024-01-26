@@ -24,16 +24,28 @@ public class Order {
     public static Order parse(String s) {
         if (s == null)
             return null;
-        // s=s.trim();
+        s = s.trim();
+
+        // ~field, -field: descending
+        if (s.startsWith("~") || s.startsWith("-")) {
+            String column = s.substring(1);
+            return new Order(column, false);
+        }
+
+        // field+: ascending
         if (s.endsWith("+")) {
             String column = s.substring(0, s.length() - 1);
             return new Order(column, true);
         }
+
+        // field-: ascending
         if (s.endsWith("-")) {
             String column = s.substring(0, s.length() - 1);
             return new Order(column, false);
         }
-        StringTokenizer tokens = new StringTokenizer(s, " \t\n\r");
+
+        // field asc (or) field desc
+        StringTokenizer tokens = new StringTokenizer(s, ",\t\n\r");
         String column = tokens.nextToken();
         if (column == null) // assert false
             return null;
@@ -43,10 +55,12 @@ public class Order {
 
         boolean asc = true;
         switch (mod.toLowerCase()) {
+        case "a":
         case "asc":
         case "ascend":
             asc = true;
             break;
+        case "d":
         case "desc":
         case "descend":
             asc = false;
