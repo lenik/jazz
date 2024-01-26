@@ -1,5 +1,11 @@
 package net.bodz.lily.concrete;
 
+import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.MutableVariant;
+import net.bodz.lily.criteria.NumberFieldCriterionBuilder;
 import net.bodz.lily.security.login.LoginToken;
 
 /**
@@ -8,9 +14,8 @@ import net.bodz.lily.security.login.LoginToken;
 public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self_t>>
         extends StructRowCriteriaBuilder<self_t> {
 
-    public final StringField uniqName = string("name");
-    public final StringField label = string("label");
-    public final StringField description = string("description");
+    public final StringField label = string("a.label");
+    public final StringField description = string("a.description");
 
 //    String queryText;
 
@@ -21,11 +26,30 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     public final IntegerField ownerGroupId = integer("gid");
     public final IntegerField acl = integer("acl");
 
+    public NumberFieldCriterionBuilder<?, ?> getIdField() {
+        return null;
+    }
+
     public void query(String text) {
+        if (text == null || text.isEmpty())
+            return;
         String pattern = "%" + text + "%";
-        uniqName.like(pattern);
-        label.like(pattern);
-        description.like(pattern);
+        or().label.like(pattern).end();
+        or().description.like(pattern).end();
+
+        MutableVariant textVar = MutableVariant.wrap(text);
+        if (StringPred.isDecimal(text)) {
+            @SuppressWarnings("unchecked")
+            NumberFieldCriterionBuilder<?, Number> idField = //
+                    (NumberFieldCriterionBuilder<?, Number>) getIdField();
+            if (idField != null) {
+                Class<?> valueType = idField.getValueType();
+                Number id = (Number) textVar.convert(valueType);
+                or();
+                idField.eq(id);
+                end();
+            }
+        }
     }
 
     /**
@@ -34,6 +58,16 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     public LoginToken getLoginToken() {
         LoginToken token = LoginToken.fromRequest();
         return token;
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        super.readObject(map);
+
+        String searchText = map.getString("search-text");
+        if (searchText != null && ! searchText.isEmpty())
+            query(searchText);
     }
 
 }
