@@ -34,11 +34,19 @@ public abstract class Composite
 
     @Override
     public ICriterion reduce() {
-        switch (size()) {
+        List<ICriterion> rlist = new ArrayList<>();
+        for (ICriterion item : list) {
+            ICriterion reduced = item.reduce();
+            if (reduced != null)
+                rlist.add(reduced);
+        }
+        list = rlist;
+
+        switch (list.size()) {
         case 0:
             return null;
         case 1:
-            return get(0);
+            return list.get(0);
         }
         return this;
     }
