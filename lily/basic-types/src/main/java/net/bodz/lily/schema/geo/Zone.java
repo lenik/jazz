@@ -26,7 +26,7 @@ public class Zone
 
     private RichProperties properties = new RichProperties();
 
-    private final GeoLocation geo = new GeoLocation();
+    public final GeoLocation geo = new GeoLocation();
     private String fullPath = "";
 
     @Override
