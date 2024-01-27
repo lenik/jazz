@@ -3,9 +3,11 @@ package net.bodz.violet.server;
 import java.util.Locale;
 
 import net.bodz.bas.httpd.BasHttpd;
+import net.bodz.bas.meta.build.ProgramName;
 import net.bodz.bas.servlet.config.ServletContextConfig;
 import net.bodz.bas.xml.dom.XmlFormatter;
 
+@ProgramName("violetd")
 public class VioletServer
         extends BasHttpd {
 
