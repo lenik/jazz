@@ -9,6 +9,8 @@ public class _ArticleParameterTypeCriteriaBuilder_stuff<self_t extends _ArticleP
 
     public final IntegerField accessMode = integer("mode");
 
+    public final StringField name = string("\"name\"");
+
     public final IntegerField dummy = integer("dummy");
 
 }

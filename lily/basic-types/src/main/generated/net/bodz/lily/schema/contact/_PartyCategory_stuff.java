@@ -20,24 +20,24 @@ public abstract class _PartyCategory_stuff<this_t extends _PartyCategory_stuff<t
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "partycat";
 
-    public static final String FIELD_UNIQ_NAME = "name";
+    public static final String FIELD_NAME = "name";
 
-    public static final int N_UNIQ_NAME = 30;
+    public static final int N_NAME = 30;
 
-    private static final int _ord_UNIQ_NAME = 2;
+    private static final int _ord_NAME = 2;
 
-    String uniqName;
+    String name;
 
-    @Ordinal(_ord_UNIQ_NAME)
-    @Precision(value = N_UNIQ_NAME)
-    @TextInput(maxLength = N_UNIQ_NAME)
-    @Column(name = "name", length = N_UNIQ_NAME)
-    public String getUniqName() {
-        return uniqName;
+    @Ordinal(_ord_NAME)
+    @Precision(value = N_NAME)
+    @TextInput(maxLength = N_NAME)
+    @Column(name = "name", length = N_NAME)
+    public String getName() {
+        return name;
     }
 
-    public void setUniqName(String value) {
-        this.uniqName = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     public void initNotNulls() {

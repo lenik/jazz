@@ -23,6 +23,7 @@ public class VAppCatSamples
         a.setOwnerUser(ownerUser);
         a.setParent(parent);
         a.setId(1191060333);
+        a.setName("Ywis fjdoi, Fwh.");
         a.setDepth(1976022062);
         a.setRefCount(1067875411);
         return a;

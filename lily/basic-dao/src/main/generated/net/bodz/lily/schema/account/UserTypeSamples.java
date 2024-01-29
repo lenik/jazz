@@ -11,6 +11,7 @@ public class UserTypeSamples
             throws Exception {
         UserType a = new UserType();
         a.setId(159598079);
+        a.setName("Ft");
         a.setDummy(2052539962);
         return a;
     }

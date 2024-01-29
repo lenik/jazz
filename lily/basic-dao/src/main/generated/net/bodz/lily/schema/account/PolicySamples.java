@@ -11,8 +11,9 @@ public class PolicySamples
             throws Exception {
         Policy a = new Policy();
         a.setId(1470210804);
-        a.setControlClass("Eev lkjp_yaeicme, uuey hivzojd imco, onde, vzig ke&be@eeqooq.");
-        a.setMethodName("ufo'ioruoa, xqoc. mutu ulo, phue, lqd, ekcva ubuab jsdo vajejo.");
+        a.setName("Eev lk.");
+        a.setControlClass("Yaeicme, uuey hivzojd imco, ond");
+        a.setMethodName("");
         a.setAllowBits(1498033901);
         a.setDenyBits(317561887);
         return a;

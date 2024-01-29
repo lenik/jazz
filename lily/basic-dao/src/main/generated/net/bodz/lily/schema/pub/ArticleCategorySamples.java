@@ -23,6 +23,7 @@ public class ArticleCategorySamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         a.setId(1337570833);
+        a.setName("h");
         a.setDepth(1900074261);
         a.setRefCount(741430112);
         return a;

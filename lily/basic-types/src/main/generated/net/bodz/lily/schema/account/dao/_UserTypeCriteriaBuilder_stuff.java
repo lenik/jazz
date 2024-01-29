@@ -7,6 +7,9 @@ public class _UserTypeCriteriaBuilder_stuff<self_t extends _UserTypeCriteriaBuil
 
     public final IntegerField id = integer("id");
 
+    /** The user type name */
+    public final StringField name = string("\"name\"");
+
     public final IntegerField dummy = integer("dummy");
 
 }

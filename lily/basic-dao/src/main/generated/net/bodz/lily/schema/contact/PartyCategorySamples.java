@@ -22,7 +22,7 @@ public class PartyCategorySamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setParent(parent);
-        a.setUniqName("u, heciouz");
+        a.setName("u, heciouz");
         return a;
     }
 

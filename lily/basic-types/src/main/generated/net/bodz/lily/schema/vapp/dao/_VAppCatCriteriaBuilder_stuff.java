@@ -7,6 +7,8 @@ public class _VAppCatCriteriaBuilder_stuff<self_t extends _VAppCatCriteriaBuilde
 
     public final IntegerField id = integer("id");
 
+    public final StringField name = string("\"name\"");
+
     public final IntegerField ownerUserId = integer("uid");
 
     public final IntegerField accessMode = integer("mode");

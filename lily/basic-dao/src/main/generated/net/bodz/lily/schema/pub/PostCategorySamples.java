@@ -23,6 +23,7 @@ public class PostCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setId(953371837);
+        a.setName("Bm&Ei ejum zv;");
         a.setDepth(360554752);
         a.setRefCount(571495083);
         return a;

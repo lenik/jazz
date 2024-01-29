@@ -23,6 +23,7 @@ public class ZoneCategorySamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         a.setId(1687097473);
+        a.setName("Rboa*diu.");
         a.setDepth(387711147);
         a.setRefCount(173348754);
         return a;
