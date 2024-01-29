@@ -10,6 +10,8 @@ column-property {
 class-map {
     net.bodz.lily.concrete.CoCategory: \
         partycat
+    net.bodz.lily.concrete.CoTag: \
+        persontag
     net.bodz.lily.schema.contact.Party: \
         org, \
         orgunit, \
@@ -22,6 +24,8 @@ table-name {
     partycat:           net.bodz.lily.schema.contact.PartyCategory
     person:             net.bodz.lily.schema.contact.Person
     personrole:         net.bodz.lily.schema.contact.PersonRole
+    persontag:          net.bodz.lily.schema.contact.PersonTagType
+    person_tag:         net.bodz.lily.schema.contact.PersonTag
 }
 
 table person {

@@ -7,7 +7,7 @@ import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 
-    public final IntegerField id = integer("a.id");
+    public final IntegerField id = integer("id");
 
     public final IntegerField ownerUserId = integer("uid");
 
@@ -16,6 +16,10 @@ public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_
     public final IntegerField categoryId = integer("cat");
 
     public final DateField<Date> birthday = date("birthday", Date.class);
+
+    public final IntegerField fatherId = integer("father");
+
+    public final IntegerField motherId = integer("mother");
 
     public final StringField langTag = string("locale");
 

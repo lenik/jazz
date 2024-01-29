@@ -17,6 +17,8 @@ public abstract class _Person_stuff
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "person";
 
+    public static final String FIELD_FATHER_ID = "father";
+    public static final String FIELD_MOTHER_ID = "mother";
     public static final String FIELD_ROLE_COUNT = "nrole";
     public static final String FIELD_EMPLOYEE = "employee";
     public static final String FIELD_BANK_COUNT = "nbank";
@@ -26,6 +28,8 @@ public abstract class _Person_stuff
     public static final String FIELD_SSN = "ssn";
     public static final String FIELD_DLN = "dln";
 
+    public static final int N_FATHER_ID = 10;
+    public static final int N_MOTHER_ID = 10;
     public static final int N_ROLE_COUNT = 10;
     public static final int N_EMPLOYEE = 1;
     public static final int N_BANK_COUNT = 10;
@@ -35,7 +39,9 @@ public abstract class _Person_stuff
     public static final int N_SSN = 20;
     public static final int N_DLN = 20;
 
-    private static final int _ord_ROLE_COUNT = 28;
+    private static final int _ord_FATHER_ID = 26;
+    private static final int _ord_MOTHER_ID = _ord_FATHER_ID + 1;
+    private static final int _ord_ROLE_COUNT = _ord_MOTHER_ID + 3;
     private static final int _ord_EMPLOYEE = _ord_ROLE_COUNT + 3;
     private static final int _ord_BANK_COUNT = _ord_EMPLOYEE + 2;
     private static final int _ord_GENDER = _ord_BANK_COUNT + 1;
@@ -62,6 +68,16 @@ public abstract class _Person_stuff
     String ssn;
 
     String dln;
+
+    /**  */
+    Person mother;
+
+    Integer motherId;
+
+    /**  */
+    Person father;
+
+    Integer fatherId;
 
     @Ordinal(_ord_ROLE_COUNT)
     @Precision(value = 10)
@@ -154,6 +170,64 @@ public abstract class _Person_stuff
 
     public void setDln(String value) {
         this.dln = value;
+    }
+
+    /**
+     *
+     * @label mother
+     * @constraint foreign key (mother) references lily.person (id)
+     */
+    public Person getMother() {
+        return mother;
+    }
+
+    /**
+     */
+    public void setMother(Person value) {
+        this.mother = value;
+    }
+
+    @Ordinal(_ord_MOTHER_ID)
+    @Precision(value = N_MOTHER_ID)
+    @Column(name = "mother", precision = 10)
+    public synchronized Integer getMotherId() {
+        if (mother != null) {
+            return mother.getId();
+        }
+        return motherId;
+    }
+
+    public synchronized void setMotherId(Integer value) {
+        this.motherId = value;
+    }
+
+    /**
+     *
+     * @label father
+     * @constraint foreign key (father) references lily.person (id)
+     */
+    public Person getFather() {
+        return father;
+    }
+
+    /**
+     */
+    public void setFather(Person value) {
+        this.father = value;
+    }
+
+    @Ordinal(_ord_FATHER_ID)
+    @Precision(value = N_FATHER_ID)
+    @Column(name = "father", precision = 10)
+    public synchronized Integer getFatherId() {
+        if (father != null) {
+            return father.getId();
+        }
+        return fatherId;
+    }
+
+    public synchronized void setFatherId(Integer value) {
+        this.fatherId = value;
     }
 
     public void initNotNulls() {
