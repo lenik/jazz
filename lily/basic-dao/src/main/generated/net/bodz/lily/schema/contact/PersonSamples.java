@@ -5,13 +5,16 @@ import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
 import net.bodz.lily.schema.account.dao.UserMapper;
 import net.bodz.lily.schema.contact.dao.PartyCategoryMapper;
+import net.bodz.lily.schema.contact.dao.PersonMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 
 public class PersonSamples
         extends TestSampleBuilder {
 
+    public Person mother;
     public Group ownerGroup;
+    public Person father;
     public User ownerUser;
     public PartyCategory category;
 
@@ -21,7 +24,9 @@ public class PersonSamples
     public Person build()
             throws Exception {
         Person a = new Person();
+        a.setMother(mother);
         a.setOwnerGroup(ownerGroup);
+        a.setFather(father);
         a.setOwnerUser(ownerUser);
         a.setCategory(category);
         a.setRoleCount(36144224);
@@ -38,7 +43,9 @@ public class PersonSamples
 
     @Override
     public PersonSamples wireAny(IRandomPicker picker) {
+        this.mother = picker.pickAny(PersonMapper.class, "person");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
+        this.father = picker.pickAny(PersonMapper.class, "person");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.category = picker.pickAny(PartyCategoryMapper.class, "partycat");
         return this;

@@ -16,6 +16,11 @@
             references partycat on update cascade,
 
         birthday    date,
+        father      int
+            references person on update cascade,
+        mother      int
+            references person on update cascade,
+
         locale      varchar(10) not null default 'zh-cn',
         timezone    varchar(40),
 
@@ -49,6 +54,9 @@
     create index person_priority    on person(priority);
     create index person_state       on person(state);
     create index person_uid_acl     on person(uid, acl);
+
+--\mixin lily.template.a-tag person
+--\mixin lily.template.a-tags person int label
 
     alter table "user"
         add column person int
