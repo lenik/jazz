@@ -11,6 +11,7 @@ public class GroupTypeSamples
             throws Exception {
         GroupType a = new GroupType();
         a.setId(1588076486);
+        a.setName("Onmc. kagt e aptfb.");
         a.setDummy(1800975705);
         return a;
     }

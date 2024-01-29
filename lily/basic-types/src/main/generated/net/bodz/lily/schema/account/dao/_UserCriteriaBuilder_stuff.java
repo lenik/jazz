@@ -12,4 +12,6 @@ public class _UserCriteriaBuilder_stuff<self_t extends _UserCriteriaBuilder_stuf
     /** The referer user (used for promotion) */
     public final IntegerField refererId = integer("referer");
 
+    public final IntegerField personId = integer("person");
+
 }

@@ -7,6 +7,7 @@ import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoPrincipal;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.schema.contact.Person;
 
 /**
  * User Account
@@ -23,14 +24,22 @@ public abstract class _User_stuff
     public static final String FIELD_TYPE_ID = "type";
     public static final String FIELD_PRIMARY_GROUP_ID = "gid0";
     public static final String FIELD_REFERER_ID = "referer";
+    public static final String FIELD_PERSON_ID = "person";
 
     public static final int N_TYPE_ID = 10;
     public static final int N_PRIMARY_GROUP_ID = 10;
     public static final int N_REFERER_ID = 10;
+    public static final int N_PERSON_ID = 10;
 
     private static final int _ord_TYPE_ID = 2;
     private static final int _ord_PRIMARY_GROUP_ID = 13;
     private static final int _ord_REFERER_ID = _ord_PRIMARY_GROUP_ID + 1;
+    private static final int _ord_PERSON_ID = _ord_REFERER_ID + 1;
+
+    /**  */
+    Person person;
+
+    Integer personId;
 
     /** The primary user group, the default value of ownerGroup. */
     @NotNull
@@ -53,6 +62,35 @@ public abstract class _User_stuff
     /** User type like system-user, normal-user, etc. */
     @NotNull
     int typeId;
+
+    /**
+     *
+     * @label person
+     * @constraint foreign key (person) references lily.person (id)
+     */
+    public Person getPerson() {
+        return person;
+    }
+
+    /**
+     */
+    public void setPerson(Person value) {
+        this.person = value;
+    }
+
+    @Ordinal(_ord_PERSON_ID)
+    @Precision(value = N_PERSON_ID)
+    @Column(name = "person", precision = 10)
+    public synchronized Integer getPersonId() {
+        if (person != null) {
+            return person.getId();
+        }
+        return personId;
+    }
+
+    public synchronized void setPersonId(Integer value) {
+        this.personId = value;
+    }
 
     /**
      * The primary user group, the default value of ownerGroup.

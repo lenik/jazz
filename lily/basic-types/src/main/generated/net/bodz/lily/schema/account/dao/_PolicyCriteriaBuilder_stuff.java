@@ -7,6 +7,9 @@ public class _PolicyCriteriaBuilder_stuff<self_t extends _PolicyCriteriaBuilder_
 
     public final IntegerField id = integer("id");
 
+    /** The policy name (unique) */
+    public final StringField name = string("\"name\"");
+
     /** The control class */
     public final StringField controlClass = string("cclass");
 

@@ -9,6 +9,8 @@ public class _FormParameterCriteriaBuilder_stuff<self_t extends _FormParameterCr
 
     public final IntegerField formId = integer("form");
 
+    public final StringField name = string("\"name\"");
+
     public final StringField value = string("\"value\"");
 
 }

@@ -7,6 +7,8 @@ public class _ArticleCategoryCriteriaBuilder_stuff<self_t extends _ArticleCatego
 
     public final IntegerField id = integer("id");
 
+    public final StringField name = string("\"name\"");
+
     public final IntegerField ownerUserId = integer("uid");
 
     public final IntegerField accessMode = integer("mode");

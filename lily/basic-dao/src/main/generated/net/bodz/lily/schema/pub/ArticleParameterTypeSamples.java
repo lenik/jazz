@@ -19,6 +19,7 @@ public class ArticleParameterTypeSamples
         ArticleParameterType a = new ArticleParameterType();
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("Lb; du-p, U uxea.");
         a.setDummy(1237522762);
         return a;
     }

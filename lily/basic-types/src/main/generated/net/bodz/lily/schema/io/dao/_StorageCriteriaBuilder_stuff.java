@@ -7,5 +7,6 @@ public class _StorageCriteriaBuilder_stuff<self_t extends _StorageCriteriaBuilde
 
     public final IntegerField id = integer("id");
 
+    public final StringField name = string("\"name\"");
 
 }

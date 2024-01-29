@@ -7,6 +7,9 @@ public class _GroupTypeCriteriaBuilder_stuff<self_t extends _GroupTypeCriteriaBu
 
     public final IntegerField id = integer("id");
 
+    /** Group type name (unique) */
+    public final StringField name = string("\"name\"");
+
     public final IntegerField dummy = integer("dummy");
 
 }

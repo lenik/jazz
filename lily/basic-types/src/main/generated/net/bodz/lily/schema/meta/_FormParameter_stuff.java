@@ -21,19 +21,24 @@ public abstract class _FormParameter_stuff
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_FORM_ID = "form";
+    public static final String FIELD_NAME = "name";
     public static final String FIELD_VALUE = "value";
 
     public static final int N_ID = 10;
     public static final int N_FORM_ID = 10;
+    public static final int N_NAME = 30;
     public static final int N_VALUE = 100;
 
     private static final int _ord_ID = 1;
     private static final int _ord_FORM_ID = _ord_ID + 1;
-    private static final int _ord_VALUE = _ord_FORM_ID + 2;
+    private static final int _ord_NAME = _ord_FORM_ID + 1;
+    private static final int _ord_VALUE = _ord_NAME + 1;
 
     @Id
     @NotNull
     int id;
+
+    String name;
 
     String value;
 
@@ -64,6 +69,18 @@ public abstract class _FormParameter_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_NAME)
+    @Precision(value = N_NAME)
+    @TextInput(maxLength = N_NAME)
+    @Column(name = "name", length = N_NAME)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        this.name = value;
     }
 
     @Ordinal(_ord_VALUE)

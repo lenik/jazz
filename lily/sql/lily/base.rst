@@ -4,7 +4,6 @@ column-property {
     props:              properties
     t0:                 beginTime
     t1:                 endTime
-    name:               uniqName
     imagealt:           imageAlt
     nref:               refCount
     formargs:           formArguments

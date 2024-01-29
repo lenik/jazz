@@ -19,6 +19,7 @@ public class PostParameterTypeSamples
         PostParameterType a = new PostParameterType();
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("Gj hjuu! butaolx#ubui?");
         a.setDummy(329238087);
         return a;
     }
