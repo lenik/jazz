@@ -1,7 +1,7 @@
 package net.bodz.bas.codegen;
 
 @FunctionalInterface
-public interface ImportSetVisitor {
+public interface JavaImportsVisitor {
 
     int item(String name, boolean excluded);
 
