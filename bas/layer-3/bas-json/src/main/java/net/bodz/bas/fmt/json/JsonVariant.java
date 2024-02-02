@@ -69,7 +69,7 @@ public class JsonVariant {
     }
 
     public Object getScalar() {
-        if (type != JsonVariantType.ARRAY)
+        if (type != JsonVariantType.SCALAR)
             throw new IllegalUsageException("expect scalar.");
         return value;
     }
@@ -92,11 +92,11 @@ public class JsonVariant {
         return value;
     }
 
-    public Object getValue() {
+    public Object getAny() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setAny(Object value) {
         this.value = value;
         if (value instanceof JsonObject)
             type = JsonVariantType.OBJECT;
@@ -106,13 +106,28 @@ public class JsonVariant {
             type = JsonVariantType.SCALAR;
     }
 
-    public void setValue(JsonVariantType type, Object value) {
+    public void setAny(JsonVariantType type, Object value) {
         if (type == null)
             throw new NullPointerException("type'");
         if (value == null)
             throw new NullPointerException("value");
         this.type = type;
         this.value = value;
+    }
+
+    @Deprecated
+    public Object getValue() {
+        return getAny();
+    }
+
+    @Deprecated
+    public void setValue(Object value) {
+        setAny(value);
+    }
+
+    @Deprecated
+    public void setValue(JsonVariantType type, Object value) {
+        setAny(type, value);
     }
 
     public JsonVariant get(String key) {
