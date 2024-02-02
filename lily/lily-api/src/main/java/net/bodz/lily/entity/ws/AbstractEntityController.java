@@ -230,7 +230,7 @@ public abstract class AbstractEntityController<T>
 
             token = tokens.peek();
             if (token == null)
-                command = contentNameMap.get(ResolveCommand.NAME);
+                command = contentNameMap.get(FetchCommand.NAME);
             else
                 command = contentNameMap.get(token);
 

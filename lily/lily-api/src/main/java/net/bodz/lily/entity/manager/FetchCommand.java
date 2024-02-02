@@ -23,13 +23,13 @@ import net.bodz.lily.entity.format.IWordDocBuilder;
 import net.bodz.lily.entity.format.WordUtils;
 
 @ForEntityType(IId.class)
-public class ResolveCommand
+public class FetchCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "resolve";
-    public static final String[] NAMES = { NAME, "load", "get" };
+    public static final String NAME = "fetch";
+    public static final String[] NAMES = { NAME };
 
-    public ResolveCommand() {
+    public FetchCommand() {
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ResolveCommand
 }
 
 class ResolveProcess
-        extends AbstractEntityCommandProcess<ResolveCommand> {
+        extends AbstractEntityCommandProcess<FetchCommand> {
 
     JsonFormOptions jsonFormOptions;
 
@@ -70,7 +70,7 @@ class ResolveProcess
     IMarkdownBuilder markdownBuilder;
     IWordDocBuilder docxBuilder;
 
-    public ResolveProcess(ResolveCommand type, IEntityCommandContext context) {
+    public ResolveProcess(FetchCommand type, IEntityCommandContext context) {
         super(type, context);
     }
 

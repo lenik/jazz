@@ -6,10 +6,11 @@ public class BaseCommands
     public BaseCommands() {
         addCommand(new CountCommand());
         addCommand(new ListCommand());
-        addCommand(new ResolveCommand());
+        addCommand(new FetchCommand());
 
-        addCommand(new CreateCommand());
+        addCommand(new GetDefaultCommand());
         addCommand(new SaveCommand());
+        addCommand(new SaveContentCommand());
 
         addCommand(new DeleteCommand());
 
