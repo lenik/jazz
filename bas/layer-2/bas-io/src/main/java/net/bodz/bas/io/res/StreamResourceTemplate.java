@@ -14,6 +14,8 @@ import net.bodz.bas.io.adapter.ByteInInputStream;
 import net.bodz.bas.io.adapter.ByteOutOutputStream;
 import net.bodz.bas.io.adapter.CharInReader;
 import net.bodz.bas.io.adapter.CharOutWriter;
+import net.bodz.bas.io.bit.BitInImpl;
+import net.bodz.bas.io.bit.IBitIn;
 import net.bodz.bas.io.data.DataInImplBE;
 import net.bodz.bas.io.data.DataInImplLE;
 import net.bodz.bas.io.data.DataOutImplBE;
@@ -111,6 +113,20 @@ public abstract class StreamResourceTemplate {
     }
 
     // input
+
+    protected IBitIn _newBitIn(OpenOption... options)
+            throws IOException {
+        IByteIn byteIn = newByteIn(options);
+        return BitInImpl.from(byteIn);
+    }
+
+    public final IBitIn newBitIn(OpenOption... options)
+            throws IOException {
+        beforeOpenInput(options);
+        IBitIn in = _newBitIn(options);
+        afterOpenInput(in);
+        return in;
+    }
 
     // IByteIn
 
