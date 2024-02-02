@@ -10,7 +10,7 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
-public class ImportSet
+public class JavaImports
         extends TreeSet<String> {
 
     private static final long serialVersionUID = 1L;
@@ -19,15 +19,15 @@ public class ImportSet
     Set<String> excludePackages = new HashSet<>();
     Set<String> excludeClassNames = new HashSet<>();
 
-    public ImportSet(String packageName) {
+    public JavaImports(String packageName) {
         this(packageName, QNameOrder.INSTANCE);
     }
 
-    public ImportSet(String packageName, List<String> order) {
+    public JavaImports(String packageName, List<String> order) {
         this(packageName, new QNameOrder(new PackageNameOrder(order)));
     }
 
-    public ImportSet(String packageName, QNameOrder order) {
+    public JavaImports(String packageName, QNameOrder order) {
         super(order);
         this.order = order;
 
@@ -127,7 +127,7 @@ public class ImportSet
         return name(val.getClass()) + "." + val.name();
     }
 
-    public int accept(ImportSetVisitor visitor) {
+    public int accept(JavaImportsVisitor visitor) {
         PackageOrderList orderList = order.getPackageOrder().getOrderList();
 
         int lastSector = -1;
@@ -158,7 +158,7 @@ public class ImportSet
     }
 
     public int dump(IPrintOut out) {
-        return accept(new ImportSetVisitor() {
+        return accept(new JavaImportsVisitor() {
             @Override
             public int item(String name, boolean excluded) {
                 if (excluded) {
