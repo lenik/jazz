@@ -29,6 +29,10 @@ public class BitInImpl
         this.block = new byte[blockSize];
     }
 
+    public static BitInImpl from(IByteIn in) {
+        return new BitInImpl(in);
+    }
+
     @Override
     public int readBit()
             throws IOException {

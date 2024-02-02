@@ -1,9 +1,12 @@
 package net.bodz.bas.io.bit;
 
+import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
 
-public interface IBitIn {
+public interface IBitIn
+        extends
+            Closeable {
 
     /**
      * @return 0 or 1 if read succeeded, or -1 if EOF reached.
@@ -40,6 +43,7 @@ public interface IBitIn {
 
     void dropToByte();
 
+    @Override
     void close()
             throws IOException;
 
