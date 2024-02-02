@@ -14,10 +14,10 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.ws.RequestHandlerException;
 
 @ForEntityType(IJsonForm.class)
-public class CreateCommand
+public class GetDefaultCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "create";
+    public static final String NAME = "default";
     public static final String[] NAMES = { NAME, "new" };
 
     @Override
@@ -38,7 +38,7 @@ public class CreateCommand
 }
 
 class CreateProcess
-        extends AbstractEntityCommandProcess<CreateCommand> {
+        extends AbstractEntityCommandProcess<GetDefaultCommand> {
 
     final boolean cloneable;
     final boolean resetable;
@@ -46,7 +46,7 @@ class CreateProcess
     Object templateId;
     JsonFormOptions jsonFormOptions;
 
-    public CreateProcess(CreateCommand type, IEntityCommandContext context) {
+    public CreateProcess(GetDefaultCommand type, IEntityCommandContext context) {
         super(type, context);
 
         Class<?> entityClass = context.getTypeInfo().getEntityClass();
