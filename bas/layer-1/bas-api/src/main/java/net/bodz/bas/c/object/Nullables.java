@@ -83,6 +83,17 @@ public class Nullables {
         return cmp;
     }
 
+    public static <T extends Comparable<? super T>> int compareNullLast(T c1, T c2) {
+        if (c1 == c2)
+            return 0;
+        if (c1 == null)
+            return 1;
+        if (c2 == null)
+            return -1;
+        int cmp = c1.compareTo(c2);
+        return cmp;
+    }
+
     public static <T extends Comparable<? super T>> T min(T o1, T o2) {
         if (o1 == null || o2 == null)
             return null;
