@@ -106,10 +106,10 @@ public class BeanJsonLoader
                 logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 continue;
             }
-            Object jsonVal = node.get(propertyName);
+            JsonVariant jsonVar = node.get(propertyName);
 
             try {
-                if (jsonVal == null) {
+                if (jsonVar == null) {
                     if (setter == null)
                         logger.warn("Set null on read-only property: " + propertyDescriptor);
                     else
@@ -117,25 +117,23 @@ public class BeanJsonLoader
                     continue;
                 }
 
-                Object value = convert(propertyClass, propertyValue, jsonVal);
+                Object value = convert(propertyClass, propertyValue, jsonVar);
                 if (value != NonTerm) {
                     if (setter != null)
                         setter.invoke(ctx, new Object[] { value });
                     continue;
                 }
 
-                JsonObject jsonObj;
-                if (jsonVal instanceof JsonObject)
-                    jsonObj = (JsonObject) jsonVal;
-                else
+                if (! jsonVar.isObject())
                     continue;
+                JsonObject jsonObj = jsonVar.getObject();
 
                 Object obj = propertyValue;
                 boolean create = setter != null;
                 Constructor<?> ctor0 = null;
                 if (create) {
                     if (Modifier.isAbstract(propertyClass.getModifiers())) {
-                        logger.error("Can't create abstract type for property " + propertyName);
+                        logger.errorf("skipped: instantiate property %s of abstract %s", propertyName, propertyClass);
                         continue;
                     }
                     try {
@@ -149,7 +147,7 @@ public class BeanJsonLoader
                     try {
                         obj = ctor0.newInstance();
                     } catch (ReflectiveOperationException e) {
-                        logger.error(e, "Failed to instantiate " + propertyClass + ": " + e.getMessage());
+                        logger.errorf(e, "skipped: error instantiate property %s of %s", propertyName, propertyClass);
                         continue;
                     }
                 else {
@@ -160,10 +158,14 @@ public class BeanJsonLoader
                 load(obj, new JsonVariant(jsonObj), true);
 
                 if (create)
-                    setter.invoke(ctx, obj);
-            } catch (ReflectiveOperationException e) {
-                logger.error(e, "Failed to invoke setter: " + e.getMessage());
-                continue;
+                    try {
+                        setter.invoke(ctx, obj);
+                    } catch (ReflectiveOperationException e) {
+                        logger.error(e, "skipped: invoke setter on property %s", propertyName);
+                        continue;
+                    }
+            } catch (Exception e) {
+                throw new LoadException("failed to load property " + propertyName + ": " + e.getMessage(), e);
             }
         }
     }
@@ -173,70 +175,71 @@ public class BeanJsonLoader
 
     static final Object NonTerm = new NonTerm();
 
-    Object convert(Class<?> type, Object orig, Object jsonVal)
+    Object convert(Class<?> type, Object orig, JsonVariant jsonVar)
             throws ReflectiveOperationException, ParseException {
-        MutableVariant jsonVar = MutableVariant.wrap(jsonVal);
+        MutableVariant variant = MutableVariant.wrap(jsonVar.getAny());
         {
             switch (TypeKind.getTypeId(type)) {
             case TypeId._char:
             case TypeId.CHARACTER:
-                return jsonVar.getChar();
+                return variant.getChar();
             case TypeId._byte:
             case TypeId.BYTE:
-                return jsonVar.getByte();
+                return variant.getByte();
             case TypeId._short:
             case TypeId.SHORT:
-                return jsonVar.getShort();
+                return variant.getShort();
             case TypeId._int:
             case TypeId.INTEGER:
-                return jsonVar.getInt();
+                return variant.getInt();
             case TypeId._long:
             case TypeId.LONG:
-                return jsonVar.getLong();
+                return variant.getLong();
             case TypeId._float:
             case TypeId.FLOAT:
-                return jsonVar.getFloat();
+                return variant.getFloat();
             case TypeId._double:
             case TypeId.DOUBLE:
-                return jsonVar.getDouble();
+                return variant.getDouble();
             case TypeId._boolean:
             case TypeId.BOOLEAN:
-                return jsonVar.getBoolean();
+                return variant.getBoolean();
             case TypeId.BIG_INTEGER:
-                return jsonVar.getBigInteger();
+                return variant.getBigInteger();
             case TypeId.BIG_DECIMAL:
-                return jsonVar.getBigDecimal();
+                return variant.getBigDecimal();
 
             case TypeId.DATE:
-                return jsonVar.getDate();
+                return variant.getDate();
             case TypeId.SQL_DATE:
-                return new java.sql.Date(jsonVar.getDate().getTime());
+                return new java.sql.Date(variant.getDate().getTime());
 
             case TypeId.INSTANT:
-                return jsonVar.getInstant();
+                return variant.getInstant();
             case TypeId.ZONED_DATE_TIME:
-                return jsonVar.getZonedDateTime();
+                return variant.getZonedDateTime();
             case TypeId.OFFSET_DATE_TIME:
-                return jsonVar.getOffsetDateTime();
+                return variant.getOffsetDateTime();
             case TypeId.LOCAL_DATE_TIME:
-                return jsonVar.getLocalDateTime();
+                return variant.getLocalDateTime();
             case TypeId.LOCAL_DATE:
-                return jsonVar.getLocalDate();
+                return variant.getLocalDate();
             case TypeId.LOCAL_TIME:
-                return jsonVar.getLocalTime();
+                return variant.getLocalTime();
 
             case TypeId.STRING:
-                return jsonVar.toString();
+                return variant.toString();
             }
         }
 
         if (type.isArray()) {
             Class<?> ctype = type.getComponentType();
-            JsonArray jsonArray = (JsonArray) jsonVal;
+            JsonArray jsonArray = jsonVar.getArray();
             int len = jsonArray.length();
             Object array = Array.newInstance(ctype, len);
             for (int i = 0; i < len; i++) {
-                Object item = convert(ctype, null, jsonArray.get(i));
+                JsonVariant itemVar = JsonVariant.of(jsonArray.get(i));
+                Object item = convert(ctype, null, itemVar);
                 Array.set(array, i, item);
             }
             return array;
@@ -263,10 +266,11 @@ public class BeanJsonLoader
                     coll = new LinkedBlockingDeque<Object>();
             }
             if (coll != null) {
-                JsonArray jsonArray = (JsonArray) jsonVal;
+                JsonArray jsonArray = jsonVar.getArray();
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
-                    Object item = convert(ctype, null, jsonArray.get(i));
+                    JsonVariant itemVar = JsonVariant.of(jsonArray.get(i));
+                    Object item = convert(ctype, null, itemVar);
                     coll.add(item);
                 }
                 return coll;
@@ -289,10 +293,10 @@ public class BeanJsonLoader
                     map = new HashMap<String, Object>();
                 }
                 if (map != null) {
-                    JsonObject jsonMap = (JsonObject) jsonVal;
+                    JsonObject jsonMap = jsonVar.getObject();
                     for (String key : jsonMap.keySet()) {
-                        Object jsonItemVal = jsonMap.get(key);
-                        Object item = convert(vtype, null, jsonItemVal);
+                        JsonVariant itemVar = JsonVariant.of(jsonMap.get(key));
+                        Object item = convert(vtype, null, itemVar);
                         map.put(key, item);
                     }
                     return map;
@@ -300,8 +304,9 @@ public class BeanJsonLoader
             } while (false);
         }
 
-        if (jsonVal.getClass() == String.class) {
-            String str = (String) jsonVal;
+        Object any = jsonVar.getAny();
+        if (any.getClass() == String.class) {
+            String str = (String) any;
             IParser<?> parser = Typers.getTyper(type, IParser.class);
             if (parser != null) {
                 return parser.parse(str);
