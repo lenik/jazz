@@ -111,7 +111,9 @@ libauto
 libtool
 ltmain.sh
 missing
+node_modules/
 nohup.out
+pnpm-lock.yaml
 postinst
 prerm
 rpmbuild/

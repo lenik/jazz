@@ -111,7 +111,9 @@ libauto                                 # coolauto
 libtool                                 # libtool
 ltmain.sh                               # libtool
 missing                                 # autoreconf -i
+node_modules/                           # npm
 nohup.out                               # nohup CMDLINE...
+pnpm-lock.yaml                          # npm
 postinst                                # postinst.in
 prerm                                   # prerm.in
 rpmbuild/                               # coolrpm

@@ -1,0 +1,41 @@
+{
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
+    "include": [
+        "env.d.ts",
+        "src/**/*",
+        "src/**/*.vue"
+    ],
+    "exclude": [
+        "src/**/__tests__/*"
+    ],
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "dist",
+        "declaration": true,
+        "composite": true,
+        "noEmit": true,
+        "baseUrl": "./packages",
+        "paths": {
+            "@basic/*": [
+                "basic/src/*"
+            ],
+            "@violet/*": [
+                "violet/src/*"
+            ],
+            "@fab/*": [
+                "fab/src/*"
+            ],
+        },
+        "references": [
+            {
+                "path": "basic"
+            },
+            {
+                "path": "violet"
+            },
+            {
+                "path": "fab"
+            }
+        ]
+    }
+}
