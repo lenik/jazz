@@ -9,7 +9,8 @@ import net.bodz.bas.sugar.Tooling;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public class NullElementDoc
-        implements IElementDoc {
+        implements
+            IElementDoc {
 
     @Override
     public <T> T to(Class<T> clazz) {
@@ -66,7 +67,7 @@ public class NullElementDoc
 
     @Override
     public iString getTextTag(String tagName) {
-        return null;
+        return iString.NULL;
     }
 
 }

@@ -10,14 +10,15 @@ import net.bodz.bas.meta.bean.DetailLevel;
  */
 public class SemiMutableElement
         extends AbstractElement
-        implements Serializable {
+        implements
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private iString label;
-    private iString description;
-    private iString helpDoc;
+    private iString label = iString.NULL;
+    private iString description = iString.NULL;
+    private iString helpDoc = iString.NULL;
     private int detailLevel = DetailLevel.NORMAL;
     private int modifiers;
     private int priority;
