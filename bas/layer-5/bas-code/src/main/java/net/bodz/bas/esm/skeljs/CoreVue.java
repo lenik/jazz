@@ -17,6 +17,13 @@ public class CoreVue
         public final EsmName Dialog = defaultExport("Dialog");
     }
 
+    @SourcePath("src/ui/FieldRow.vue")
+    public class FieldRow
+            extends Source {
+        public final EsmName FieldRow = defaultExport("FieldRow");
+    }
+
     public final Dialog Dialog = new Dialog();
+    public final FieldRow FieldRow = new FieldRow();
 
 }

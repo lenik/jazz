@@ -97,10 +97,17 @@ public class EsmSource
     }
 
     public String getFullPath() {
-        String fullPath = module.name;
-        if (this.path != null)
-            fullPath += "/" + this.path;
-        return fullPath;
+        if (module == null || module.name == null) {
+            if (path == null)
+                throw new IllegalUsageException("either module or path must be specified.");
+            return path;
+        }
+
+        if (path == null)
+            // import the main file specified in the package.json.
+            return module.name;
+
+        return module.name + "/" + path;
     }
 
     @Override
