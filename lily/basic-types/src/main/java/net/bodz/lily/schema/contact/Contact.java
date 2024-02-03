@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -433,9 +434,12 @@ public class Contact
     public String getFullAddress() {
         StringBuilder sb = new StringBuilder(80);
         if (zone != null) {
-            String zhString = zone.geo.getGeoZone().toZhString();
-            sb.append(zhString);
-            sb.append(" ");
+            GeoZone geoZone = zone.geo.getGeoZone();
+            if (geoZone != null) {
+                String zhString = geoZone.toZhString();
+                sb.append(zhString);
+                sb.append(" ");
+            }
         }
         if (address1 != null) {
             sb.append(address1);
