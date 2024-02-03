@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
@@ -26,7 +27,7 @@ public class MethodDoc
 
     public static MethodDoc n_a(IClassDoc classDoc, MethodId methodId) {
         MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-        methodDoc.setTag(LABEL, iString.fn.conv(methodId));
+        methodDoc.setTag(LABEL, StrFn.conv(methodId));
         return methodDoc;
     }
 

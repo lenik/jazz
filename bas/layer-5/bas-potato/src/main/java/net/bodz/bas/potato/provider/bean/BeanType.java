@@ -9,7 +9,7 @@ import net.bodz.bas.bean.api.IEventSetDescriptor;
 import net.bodz.bas.bean.api.IMethodDescriptor;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
@@ -90,7 +90,7 @@ public class BeanType
                     if (propertyDoc == null) {
                         propertyDoc = MethodDoc.n_a(classDoc, new MethodId(getter != null ? getter : setter));
                         String hname = StringId.HYPHEN.breakCamel(name);
-                        propertyDoc.setTag(IElementDoc.LABEL, iString.fn.wrap(hname));
+                        propertyDoc.setTag(IElementDoc.LABEL, StrFn.wrap(hname));
                     }
                 }
 

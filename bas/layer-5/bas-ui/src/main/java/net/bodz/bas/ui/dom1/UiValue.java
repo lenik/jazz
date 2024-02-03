@@ -1,6 +1,6 @@
 package net.bodz.bas.ui.dom1;
 
-import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.potato.ref.ValueEntry;
 import net.bodz.bas.ui.style.IUiElementStyleDeclaration;
 
@@ -44,7 +44,7 @@ public class UiValue<T>
 
     public static <T> UiValue<T> wrap(Class<T> valueType, T obj) {
         MutableUiElement element = new MutableUiElement();
-        element.setLabel(iString.fn.wrap("noname"));
+        element.setLabel(StrFn.wrap("noname"));
         return new UiValue<T>(element, valueType, obj);
     }
 

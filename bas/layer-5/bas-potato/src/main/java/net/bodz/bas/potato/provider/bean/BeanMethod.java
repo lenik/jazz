@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.provider.bean;
 
 import net.bodz.bas.bean.api.IMethodDescriptor;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -23,13 +24,13 @@ public class BeanMethod
     @Override
     public iString getLabel() {
         String displayName = methodDescriptor.getDisplayName();
-        return iString.fn.wrap(displayName);
+        return StrFn.wrap(displayName);
     }
 
     @Override
     public iString getDescription() {
         String shortDescription = methodDescriptor.getShortDescription();
-        return iString.fn.wrap(shortDescription);
+        return StrFn.wrap(shortDescription);
     }
 
     // IPotatoParameter[] getParameters() {

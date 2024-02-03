@@ -3,6 +3,7 @@ package net.bodz.mda.xjdoc.model;
 import java.io.IOException;
 
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 
@@ -23,7 +24,7 @@ public class FieldDoc
 
     public static FieldDoc n_a(IClassDoc classDoc, String name) {
         FieldDoc fieldDoc = new FieldDoc(classDoc, name);
-        fieldDoc.setTag(LABEL, iString.fn.wrap(name));
+        fieldDoc.setTag(LABEL, StrFn.wrap(name));
         // fieldDoc.setDescription(iString.fn.val(name));
         return fieldDoc;
     }

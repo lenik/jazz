@@ -10,6 +10,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfForm;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
@@ -268,13 +269,13 @@ public class MutableElementDoc
         StringBuilder sb = new StringBuilder();
 
         iString label = getTextTag(LABEL);
-        if (!iString.fn.isEmpty(label)) {
+        if (!StrFn.isEmpty(label)) {
             sb.append(label);
             sb.append(": ");
         }
 
         iString description = getTextTag(DESCRIPTION);
-        if (!iString.fn.isEmpty(description))
+        if (!StrFn.isEmpty(description))
             sb.append(description);
 
         return sb.toString();

@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.err.ReadOnlyException;
-import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom1.IElement;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.potato.PotatoTypes;
@@ -74,7 +74,7 @@ public class ValueEntry<T>
 
     public static <T> ValueEntry<T> wrap(Class<T> valueType, T obj) {
         MutableElement element = new MutableElement();
-        element.setLabel(iString.fn.wrap("noname"));
+        element.setLabel(StrFn.wrap("noname"));
         return new ValueEntry<T>(element, valueType, obj);
     }
 
