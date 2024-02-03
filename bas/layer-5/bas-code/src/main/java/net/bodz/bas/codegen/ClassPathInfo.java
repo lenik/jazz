@@ -3,42 +3,132 @@ package net.bodz.bas.codegen;
 import java.io.File;
 
 public class ClassPathInfo
-        extends QualifiedName {
+        implements
+            IClassPathInfo {
 
-    final File baseDir;
-    final String javaDir;
-    final String resourceDir;
+    public final QualifiedName qName;
+    public final String packageName;
+    public final String name;
+    public final String fullName;
 
-    public ClassPathInfo(String packageName, String name, File baseDir, String javaDir, String resourceDir) {
-        super(packageName, name);
+    public final File baseDir;
+
+    public final String javaDir;
+    public final String testJavaDir;
+
+    public final String resourceDir;
+    public final String testResourceDir;
+
+    public final String scriptDir;
+    public final String testScriptDir;
+
+    public ClassPathInfo(QualifiedName qName, File baseDir, String javaDir, String testJavaDir, String resourceDir,
+            String testResourceDir, String scriptDir, String testScriptDir) {
+        this.qName = qName;
+        this.packageName = qName.packageName;
+        this.name = qName.name;
+        this.fullName = qName.getFullName();
+
         this.baseDir = baseDir;
+
         this.javaDir = javaDir;
         this.resourceDir = resourceDir;
+        this.scriptDir = scriptDir;
+
+        this.testJavaDir = testJavaDir;
+        this.testResourceDir = testResourceDir;
+        this.testScriptDir = testScriptDir;
     }
 
-    public static ClassPathInfo srcMain(String packageName, String name, File baseDir) {
-        return new ClassPathInfo(packageName, name, baseDir, //
-                "src/main/java", // javaDir
-                "src/main/resources" // resourceDir
-        );
+    public static class Builder {
+
+        QualifiedName qName;
+        File baseDir;
+        String javaDir;
+        String testJavaDir;
+        String resourceDir;
+        String testResourceDir;
+        String scriptDir;
+        String testScriptDir;
+
+        public Builder qName(QualifiedName qName) {
+            this.qName = qName;
+            return this;
+        }
+
+        public Builder qName(String packageName, String name) {
+            this.qName = new QualifiedName(packageName, name);
+            return this;
+        }
+
+        public Builder baseDir(File baseDir) {
+            this.baseDir = baseDir;
+            return this;
+        }
+
+        public Builder javaDir(String javaDir) {
+            this.javaDir = javaDir;
+            return this;
+        }
+
+        public Builder testJavaDir(String testJavaDir) {
+            this.testJavaDir = testJavaDir;
+            return this;
+        }
+
+        public Builder resourceDir(String resourceDir) {
+            this.resourceDir = resourceDir;
+            return this;
+        }
+
+        public Builder testResourceDir(String testResourceDir) {
+            this.testResourceDir = testResourceDir;
+            return this;
+        }
+
+        public Builder scriptDir(String scriptDir) {
+            this.scriptDir = scriptDir;
+            return this;
+        }
+
+        public Builder testScriptDir(String testScriptDir) {
+            this.testScriptDir = testScriptDir;
+            return this;
+        }
+
+        public Builder maven(File baseDir) {
+            this.baseDir = baseDir;
+            this.javaDir = "src/main/java";
+            this.resourceDir = "src/main/resources";
+            this.testJavaDir = "src/test/java";
+            this.testResourceDir = "src/test/resources";
+            this.scriptDir = null;
+            this.testScriptDir = null;
+            return this;
+        }
+
+        public Builder npm(File packageDir) {
+            this.baseDir = packageDir;
+            this.javaDir = null;
+            this.resourceDir = null;
+            this.testJavaDir = null;
+            this.testResourceDir = null;
+            this.scriptDir = "src";
+            this.testScriptDir = "test";
+            return this;
+        }
+
+        public ClassPathInfo build() {
+            ClassPathInfo o = new ClassPathInfo(//
+                    qName, baseDir, //
+                    javaDir, testJavaDir, //
+                    resourceDir, testResourceDir, //
+                    scriptDir, testScriptDir);
+            return o;
+        }
+
     }
 
-    public static ClassPathInfo srcTest(String packageName, String name, File baseDir) {
-        return new ClassPathInfo(packageName, name, baseDir, //
-                "src/test/java", // javaDir
-                "src/test/resources" // resourceDir
-        );
-    }
-
-    public ClassPathInfo toSrcTest() {
-        ClassPathInfo o = new ClassPathInfo(packageName, name, baseDir, //
-                "src/test/java", // javaDir
-                "src/test/resources" // resourceDir
-        );
-        return o;
-    }
-
-    @Override
     public ClassPathInfo join(String relativeName) {
         return join(relativeName, this.javaDir, this.resourceDir);
     }
@@ -48,29 +138,78 @@ public class ClassPathInfo
     }
 
     public ClassPathInfo join(String relativeName, String javaDir, String resourceDir) {
-        QualifiedName qName = super.join(relativeName);
-        return new ClassPathInfo(qName.packageName, qName.name, baseDir, javaDir, resourceDir);
+        QualifiedName qName = this.qName.join(relativeName);
+        ClassPathInfo o = new ClassPathInfo(//
+                qName, baseDir, //
+                javaDir, testJavaDir, //
+                resourceDir, testResourceDir, //
+                scriptDir, testScriptDir);
+        return o;
     }
 
-    public File toFile(String extension) {
+    @Override
+    public File getPreferredDir(String extension, boolean test) {
         File parent;
-        if ("java".equals(extension))
-            parent = new File(baseDir, javaDir);
-        else
-            parent = new File(baseDir, resourceDir);
-        return super.toFile(parent, extension);
+        switch (extension) {
+        case "java":
+            parent = new File(baseDir, test ? testJavaDir : javaDir);
+            break;
+
+        case "ts":
+        case "vue":
+            parent = new File(baseDir, test ? testScriptDir : scriptDir);
+            break;
+
+        default:
+            parent = new File(baseDir, test ? testResourceDir : resourceDir);
+        }
+        return parent;
     }
 
+    @Override
+    public File getPreferredFile(String extension, boolean test) {
+        File parent = getPreferredDir(extension, test);
+        return qName.toFile(parent, extension);
+    }
+
+    @Override
+    public QualifiedName getQName() {
+        return qName;
+    }
+
+    @Override
     public File getBaseDir() {
         return baseDir;
     }
 
+    @Override
     public String getJavaDir() {
         return javaDir;
     }
 
+    @Override
     public String getResourceDir() {
         return resourceDir;
+    }
+
+    @Override
+    public String getTestJavaDir() {
+        return testJavaDir;
+    }
+
+    @Override
+    public String getTestResourceDir() {
+        return testResourceDir;
+    }
+
+    @Override
+    public String getScriptDir() {
+        return scriptDir;
+    }
+
+    @Override
+    public String getTestScriptDir() {
+        return scriptDir;
     }
 
 }
