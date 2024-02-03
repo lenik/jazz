@@ -80,7 +80,7 @@ public class MutablePotatoElement
             return labelOverride;
         if (xjdoc != null)
             return xjdoc.getTextTag(IElementDoc.LABEL);
-        return null;
+        return iString.NULL;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MutablePotatoElement
             return descriptionOverride;
         if (xjdoc != null)
             return xjdoc.getTextTag(IElementDoc.DESCRIPTION);
-        return null;
+        return iString.NULL;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MutablePotatoElement
             return helpDocOverride;
         if (xjdoc != null)
             return xjdoc.getText();
-        return null;
+        return iString.NULL;
     }
 
     @Override

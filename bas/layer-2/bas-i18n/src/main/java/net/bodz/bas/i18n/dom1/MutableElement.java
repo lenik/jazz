@@ -6,14 +6,16 @@ import net.bodz.bas.i18n.dom.iString;
 
 public class MutableElement
         extends AbstractElement
-        implements IMutableElement, Serializable {
+        implements
+            IMutableElement,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private iString label;
-    private iString description;
-    private iString helpDoc;
+    private iString label = iString.NULL;
+    private iString description = iString.NULL;
+    private iString helpDoc = iString.NULL;
     private int detailLevel;
     private int modifiers;
     private int priority;
@@ -83,6 +85,7 @@ public class MutableElement
         return priority;
     }
 
+    @Override
     public void setPriority(int priority) {
         this.priority = priority;
     }

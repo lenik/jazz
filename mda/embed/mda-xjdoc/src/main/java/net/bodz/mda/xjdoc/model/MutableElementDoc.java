@@ -10,8 +10,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfForm;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
-import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.MultiLangStrings;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.sugar.Tooling;
@@ -20,7 +20,9 @@ import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 import net.bodz.mda.xjdoc.tagtype.ITagType;
 
 public class MutableElementDoc
-        implements IElementDoc, IFlatfForm {
+        implements
+            IElementDoc,
+            IFlatfForm {
 
     ITagLibrary tagLibrary;
     iString text = iString.NULL;
@@ -61,7 +63,10 @@ public class MutableElementDoc
     public <T> T getTag(String tagName, Class<T> tagValueType) {
         Object _value = tagMap.get(tagName);
         if (_value == null)
-            return null;
+            if (tagValueType == iString.class)
+                return tagValueType.cast(iString.NULL);
+            else
+                return null;
         T value = tagValueType.cast(_value);
         return value;
     }
@@ -190,7 +195,8 @@ public class MutableElementDoc
     }
 
     protected class SectionHandler
-            implements ISectionHandler {
+            implements
+                ISectionHandler {
 
         final ITagLibrary taglib;
         final IOptions options;
@@ -269,13 +275,13 @@ public class MutableElementDoc
         StringBuilder sb = new StringBuilder();
 
         iString label = getTextTag(LABEL);
-        if (!StrFn.isEmpty(label)) {
+        if (! StrFn.isEmpty(label)) {
             sb.append(label);
             sb.append(": ");
         }
 
         iString description = getTextTag(DESCRIPTION);
-        if (!StrFn.isEmpty(description))
+        if (! StrFn.isEmpty(description))
             sb.append(description);
 
         return sb.toString();

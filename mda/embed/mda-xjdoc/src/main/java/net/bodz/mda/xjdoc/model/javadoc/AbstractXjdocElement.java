@@ -14,7 +14,8 @@ import net.bodz.mda.xjdoc.model.IElementDoc;
 
 public abstract class AbstractXjdocElement
         // extends AbstractElement
-        implements IXjdocElement {
+        implements
+            IXjdocElement {
 
     transient XjdocCache _cache;
 
@@ -102,6 +103,8 @@ public abstract class AbstractXjdocElement
     }
 
     protected void setLabel(iString label) {
+        if (label == null)
+            throw new NullPointerException("label");
         _fillCache().label = label;
     }
 
@@ -114,6 +117,8 @@ public abstract class AbstractXjdocElement
     }
 
     protected void setDescription(iString description) {
+        if (description == null)
+            throw new NullPointerException("description");
         _fillCache().description = description;
     }
 
@@ -126,6 +131,8 @@ public abstract class AbstractXjdocElement
     }
 
     protected void setHelpDoc(iString helpDoc) {
+        if (helpDoc == null)
+            throw new NullPointerException("helpDoc");
         _fillCache().helpDoc = helpDoc;
     }
 

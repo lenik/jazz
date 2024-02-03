@@ -8,9 +8,9 @@ public class XjdocCache {
 
     public IElementDoc xjdoc;
 
-    public iString label;
-    public iString description;
-    public iString helpDoc;
+    public iString label = iString.NULL;
+    public iString description = iString.NULL;
+    public iString helpDoc = iString.NULL;
 
     public int priority = 0;
     public int detailLevel = DetailLevel.NORMAL;
