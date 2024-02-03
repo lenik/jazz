@@ -78,6 +78,14 @@ public class StringEscape {
         return StringEscapeUtils.unescapeJava(s);
     }
 
+    public static String escapeXmlAttr(String s) {
+        return s.replace("&", "&amp;") //
+                .replace("<", "&lt;")//
+                .replace(">", "&gt;")//
+                .replace("\"", "&quot;")//
+                .replace("'", "&apos;");//
+    }
+
     /**
      * @see org.apache.commons.lang.StringEscapeUtils#escapeSql(String)
      */
