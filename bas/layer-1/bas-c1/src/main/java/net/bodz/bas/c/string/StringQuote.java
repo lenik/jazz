@@ -38,6 +38,20 @@ public class StringQuote {
         return qq(java);
     }
 
+    public static String qXmlAttr(String s) {
+        if (s == null)
+            return null;
+        String xmlAttr = StringEscape.escapeXmlAttr(s);
+        return q(xmlAttr);
+    }
+
+    public static String qqXmlAttr(String s) {
+        if (s == null)
+            return null;
+        String xmlAttr = StringEscape.escapeXmlAttr(s);
+        return qq(xmlAttr);
+    }
+
     public static String qDoubleQ(String s) {
         String dblq = StringEscape.doubleQ(s);
         return q(dblq);
