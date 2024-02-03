@@ -8,6 +8,7 @@ import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.flatf.IFlatfOutput;
 import net.bodz.bas.fmt.flatf.ISectionHandler;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.mda.xjdoc.Xjdocs;
@@ -37,7 +38,7 @@ public class ClassDoc
         ClassDoc classDoc = new ClassDoc(Xjdocs.getDefaultTagLibrary(), fqcn);
         classDoc.setTag(LABEL, NO_LABEL);
         // classDoc.setDescription(iString.fn.val(fqcn));
-        classDoc.setText(iString.fn.wrap(fqcn));
+        classDoc.setText(StrFn.wrap(fqcn));
         return classDoc;
     }
 

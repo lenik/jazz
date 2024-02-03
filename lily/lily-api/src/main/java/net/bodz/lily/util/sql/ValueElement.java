@@ -5,7 +5,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom1.MutableElement;
 import net.bodz.bas.json.JsonObject;
 
@@ -43,7 +43,7 @@ public class ValueElement
                 String str = o.getString(name);
                 switch (name) {
                 case "label":
-                    setLabel(iString.fn.wrap(str));
+                    setLabel(StrFn.wrap(str));
                     break;
                 case "data":
                     value = parseValue(str);

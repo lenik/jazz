@@ -1,6 +1,7 @@
 package net.bodz.bas.potato.ref;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.rtx.IQueryable;
@@ -123,7 +124,7 @@ public class PropertyRefEntry<T>
         sb.append(value);
 
         iString description = property.getDescription();
-        if (!iString.fn.isEmpty(description)) {
+        if (!StrFn.isEmpty(description)) {
             sb.append("  /* ");
             sb.append(description);
             sb.append(" */");

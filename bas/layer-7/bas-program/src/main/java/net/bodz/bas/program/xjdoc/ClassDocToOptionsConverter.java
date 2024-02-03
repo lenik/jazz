@@ -19,6 +19,7 @@ import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanProperty;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
@@ -235,7 +236,7 @@ public class ClassDocToOptionsConverter
             group = new MutableOptionGroup(parent, clazz);
 
         // In flatten-mode: override parent's name/description/docs.
-        iString _name = iString.fn.conv(classDoc.getTag("name"));
+        iString _name = StrFn.conv(classDoc.getTag("name"));
         if (_name != null)
             group.setLabel(_name);
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.fmt.textmap.TextMapFormat;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.meta.build.ProgramName;
@@ -35,7 +36,7 @@ public class Xjdoc2TextMap
         for (Entry<String, Object> entry : doc.getTagMap().entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            map.put(key, iString.fn.conv(value));
+            map.put(key, StrFn.conv(value));
         }
 
         iString text = doc.getText();

@@ -10,6 +10,7 @@ import java.util.List;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom1.IMutableElement;
 import net.bodz.bas.meta.bean.DetailLevel;
@@ -398,7 +399,7 @@ public class MutableFormProperty
             this.inputMask = s.isEmpty() ? null : s;
 
             s = aFormInput.placeholder();
-            this.placeholder = iString.fn.wrap(s.isEmpty() ? null : s);
+            this.placeholder = StrFn.wrap(s.isEmpty() ? null : s);
 
             this.nullConvertion = aFormInput.nullconv();
         }
