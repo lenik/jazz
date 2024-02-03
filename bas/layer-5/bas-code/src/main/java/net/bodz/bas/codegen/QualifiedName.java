@@ -58,6 +58,10 @@ public class QualifiedName {
             return name + "." + extension;
     }
 
+    public String getLocalPath() {
+        return getLocalPath(null);
+    }
+
     public String getLocalPath(String extension) {
         String baseName = getBaseName(extension);
         if (packageName == null)

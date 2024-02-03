@@ -2,6 +2,7 @@ package net.bodz.bas.esm;
 
 import net.bodz.bas.esm.base.Esm_datatables;
 import net.bodz.bas.esm.base.Esm_jQuery;
+import net.bodz.bas.esm.base.Esm_moment;
 import net.bodz.bas.esm.base.Esm_vue;
 import net.bodz.bas.esm.skeljs.Core;
 import net.bodz.bas.esm.skeljs.CoreVue;
@@ -21,6 +22,7 @@ public interface EsmModules {
 
     Esm_jQuery jQuery = new Esm_jQuery(PRIORITY_BASE);
     Esm_vue vue = new Esm_vue(PRIORITY_BASE);
+    Esm_moment moment = new Esm_moment(PRIORITY_BASE);
 
     Esm_datatables datatables = new Esm_datatables(PRIORITY_DATATABLES);
 

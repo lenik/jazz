@@ -55,8 +55,21 @@ public class Dba
 
     }
 
+    @SourcePath("src/ui/lily/defaults")
+    public class UiLilyDefaults
+            extends Source {
+
+        public final EsmName getDefaultCommands = name("getDefaultCommands");
+        public final EsmName getDefaultCommand = name("getDefaultCommand");
+        public final EsmName getDefaultStatuses = name("getDefaultStatuses");
+        public final EsmName getDefaultStatus = name("getDefaultStatus");
+        public final EsmName getDefaultFieldRowProps = name("getDefaultFieldRowProps");
+
+    }
+
     public final LilyConcrete concrete = new LilyConcrete();
     public final LilyEntity entity = new LilyEntity();
     public final UiTableTypes tableTypes = new UiTableTypes();
+    public final UiLilyDefaults defaults = new UiLilyDefaults();
 
 }

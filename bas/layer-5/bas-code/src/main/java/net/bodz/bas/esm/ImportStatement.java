@@ -23,8 +23,18 @@ public class ImportStatement {
     public int printOutTypeScriptForNewFrom(IPrintOut out, EsmSource source) {
         int lines = 0;
         if (from != source) {
-            if (from != null)
+            int fromPriority = -1;
+            if (from != null) {
+                fromPriority = from.module.priority;
                 lines += printOutTypeScript(out);
+            }
+
+            if (fromPriority != -1 && source != null) {
+                int nextPriority = source.module.priority;
+                if (nextPriority != fromPriority)
+                    out.println(); // group separator
+            }
+
             initFrom(source);
         }
         return lines;
@@ -36,7 +46,7 @@ public class ImportStatement {
         int lines = 0;
 
         if (defaultAlias != null) {
-            out.println("import " + defaultAlias + " from " + pathQuoted);
+            out.printf("import %s from %s;\n", defaultAlias, pathQuoted);
             lines++;
         }
 
@@ -44,7 +54,8 @@ public class ImportStatement {
             out.print("import ");
             printNames(out, names);
             out.print(" from ");
-            out.println(pathQuoted);
+            out.print(pathQuoted);
+            out.println(";");
             lines++;
         }
 
@@ -52,7 +63,8 @@ public class ImportStatement {
             out.print("import type ");
             printNames(out, typeNames);
             out.print(" from ");
-            out.println(pathQuoted);
+            out.print(pathQuoted);
+            out.println(";");
             lines++;
         }
         return lines;
@@ -65,13 +77,13 @@ public class ImportStatement {
             if (i != 0)
                 out.print(", ");
             EsmName name = list.get(i);
-            if (name.alias != null) {
-                out.print(name.alias);
-                if (name.name != null)
-                    out.print(" = ");
-            }
             if (name.name != null)
                 out.print(name.name);
+            if (name.alias != null) {
+                if (name.name != null)
+                    out.print(" as ");
+                out.print(name.alias);
+            }
         }
         out.print(" }");
     }
