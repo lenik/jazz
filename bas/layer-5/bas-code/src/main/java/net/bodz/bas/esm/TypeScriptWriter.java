@@ -1,12 +1,16 @@
 package net.bodz.bas.esm;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.codegen.IImportNaming;
 import net.bodz.bas.codegen.QualifiedName;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.DecoratedTreeOut;
 import net.bodz.bas.io.ITreeOut;
 
 public class TypeScriptWriter
-        extends DecoratedTreeOut {
+        extends DecoratedTreeOut
+        implements
+            IImportNaming {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,9 +42,12 @@ public class TypeScriptWriter
 
     EsmSource localSource(QualifiedName qName, String extension, QualifiedName context) {
         String path = qName.getLocalPath(extension);
+        if (path == null)
+            throw new IllegalUsageException("null path of qName");
         String contextPath = context.getLocalPath();
+
         String href = FilePath.getRelativePath(path, contextPath);
-        if (! (href.startsWith("../") || href.startsWith("./")))
+        if (!(href.startsWith("../") || href.startsWith("./")))
             href = "./" + href;
 
         EsmSource source;
@@ -51,22 +58,34 @@ public class TypeScriptWriter
         return source;
     }
 
-    public String localName(QualifiedName qName) {
-        return localName(qName, contextQName);
+    public String localName(Class<?> clazz) {
+        return localName(clazz.getName());
     }
 
-    public String localName(QualifiedName qName, QualifiedName context) {
-        EsmName esmName = localSource(qName, null, context).name(qName.name);
+    public String localName(String qName) {
+        if (qName == null)
+            throw new NullPointerException("qName");
+        return localName(QualifiedName.parse(qName));
+    }
+
+    public String localName(QualifiedName qName) {
+        EsmName esmName = localSource(qName, null, contextQName).name(qName.name);
         return name(esmName);
     }
 
     public String localVue(QualifiedName qName) {
-        return localVue(qName, contextQName);
+        EsmName alias = localSource(qName, "vue", contextQName).defaultExport(qName.name);
+        return name(alias);
     }
 
-    public String localVue(QualifiedName qName, QualifiedName context) {
-        EsmName alias = localSource(qName, "vue", context).defaultExport(qName.name);
-        return name(alias);
+    @Override
+    public String importName(String name) {
+        return localName(name);
+    }
+
+    @Override
+    public String importName(QualifiedName name) {
+        return localName(name);
     }
 
 }
