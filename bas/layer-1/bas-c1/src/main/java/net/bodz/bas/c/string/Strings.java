@@ -113,7 +113,7 @@ public class Strings {
             boolean isLetter = Character.isLetter(c);
             if (boundary && isLetter)
                 c = Character.toUpperCase(c);
-            boundary = !isLetter;
+            boundary = ! isLetter;
             buf.append(c);
         }
         return buf.toString();
@@ -213,6 +213,40 @@ public class Strings {
             begin = end + 1;
             currentIndex++;
         }
+    }
+
+    public static String leadingSpace(String s) {
+        int end = s.length();
+        while (end > 0) {
+            char ch = s.charAt(end - 1);
+            if (ch == '\n' || ch == '\r')
+                end--;
+            else
+                break;
+        }
+        for (int i = 0; i < end; i++) {
+            char ch = s.charAt(i);
+            if (! Character.isWhitespace(ch))
+                return s.substring(0, i);
+        }
+        return s.substring(0, end);
+    }
+
+    public static String trailingSpace(String s) {
+        int end = s.length();
+        while (end > 0) {
+            char ch = s.charAt(end - 1);
+            if (ch == '\n' || ch == '\r')
+                end--;
+            else
+                break;
+        }
+        for (int i = end - 1; i >= 0; i++) {
+            char ch = s.charAt(i);
+            if (! Character.isWhitespace(ch))
+                return s.substring(i + 1, end);
+        }
+        return s.substring(0, end);
     }
 
 }
