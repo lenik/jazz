@@ -66,7 +66,7 @@ public class QualifiedName {
             return packageName.replace(".", FS) + FS + baseName;
     }
 
-    public File toDir(File baseDir) {
+    public File getPackageDir(File baseDir) {
         if (baseDir == null)
             return new File(getDirName());
         else
@@ -74,7 +74,7 @@ public class QualifiedName {
     }
 
     public File toFile(File baseDir, String extension) {
-        return new File(toDir(baseDir), getBaseName(extension));
+        return new File(getPackageDir(baseDir), getBaseName(extension));
     }
 
     @Override
