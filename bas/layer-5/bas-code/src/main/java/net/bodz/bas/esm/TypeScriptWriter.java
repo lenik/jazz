@@ -40,14 +40,14 @@ public class TypeScriptWriter
         return im.name(name);
     }
 
-    EsmSource localSource(QualifiedName qName, String extension, QualifiedName context) {
+    public EsmSource localSource(QualifiedName qName, String extension, QualifiedName context) {
         String path = qName.getLocalPath(extension);
         if (path == null)
             throw new IllegalUsageException("null path of qName");
         String contextPath = context.getLocalPath();
 
         String href = FilePath.getRelativePath(path, contextPath);
-        if (!(href.startsWith("../") || href.startsWith("./")))
+        if (! (href.startsWith("../") || href.startsWith("./")))
             href = "./" + href;
 
         EsmSource source;

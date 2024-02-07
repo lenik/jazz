@@ -35,9 +35,16 @@ public class DbaVue
         public final EsmName EntityChooseDialog = defaultExport("EntityChooseDialog");
     }
 
+    @SourcePath("src/ui/input/RefEditor.vue")
+    public class RefEditor
+            extends Source {
+        public final EsmName RefEditor = defaultExport("RefEditor");
+    }
+
     public final DataTable DataTable = new DataTable();
     public final DataAdmin DataAdmin = new DataAdmin();
     public final LilyAdmin LilyAdmin = new LilyAdmin();
     public final EntityChooseDialog EntityChooseDiaog = new EntityChooseDialog();
+    public final RefEditor RefEditor = new RefEditor();
 
 }
