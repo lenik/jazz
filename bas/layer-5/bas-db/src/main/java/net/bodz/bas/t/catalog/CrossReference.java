@@ -25,10 +25,12 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
 import net.bodz.bas.t.map.JKMap;
+import net.bodz.bas.t.order.IOrdinal;
 
 public class CrossReference
         implements
             IMutableJavaName,
+            IOrdinal,
             IJsonForm,
             IXmlForm,
             Serializable {
@@ -297,6 +299,12 @@ public class CrossReference
             }
         }
         throw new IllegalArgumentException("no matching foreign column " + foreignColumnName);
+    }
+
+    @Override
+    public int getOrdinal() {
+        assert foreignColumns.length != 0;
+        return foreignColumns[0].getOrdinal();
     }
 
     @Override
