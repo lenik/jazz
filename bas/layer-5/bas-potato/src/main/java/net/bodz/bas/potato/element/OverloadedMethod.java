@@ -41,7 +41,7 @@ public class OverloadedMethod
         if (n > 1) {
             if (checkNames)
                 for (int i = 1; i < n; i++)
-                    if (!methods.get(i).getName().equals(name))
+                    if (! methods.get(i).getName().equals(name))
                         throw new IllegalUsageException("Methods with different names.");
 
             for (int i = 1; i < n; i++) {
