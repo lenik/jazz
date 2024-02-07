@@ -53,6 +53,7 @@ public interface TypeId {
     int DATE = 1000;
     int SQL_DATE = 1001;
     int CALENDAR = 1002;
+    int TIMESTAMP = 1003;
 //    int JODA_DATETIME = 1010;
 
     int INSTANT = 1020;

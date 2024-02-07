@@ -2,6 +2,7 @@ package net.bodz.bas.c.type;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -125,6 +126,7 @@ public class TypeKind {
         typeIdMap.put(Date.class, TypeId.DATE);
         typeIdMap.put(java.sql.Date.class, TypeId.SQL_DATE);
         typeIdMap.put(Calendar.class, TypeId.CALENDAR);
+        typeIdMap.put(Timestamp.class, TypeId.TIMESTAMP);
 
         typeIdMap.put(Instant.class, TypeId.INSTANT);
         typeIdMap.put(ZonedDateTime.class, TypeId.ZONED_DATE_TIME);

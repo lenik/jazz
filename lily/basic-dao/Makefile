@@ -42,6 +42,9 @@ dao-account: predao
 dao-contact: predao
 	$(DAOGEN) org orgunit partycat person personrole persontag person_tag
 
+dao-person: predao
+	$(DAOGEN) person
+
 dao-geo: predao
 	$(DAOGEN) zone zonecat
 
