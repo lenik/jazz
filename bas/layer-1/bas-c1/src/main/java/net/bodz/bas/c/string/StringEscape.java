@@ -86,6 +86,14 @@ public class StringEscape {
                 .replace("'", "&apos;");//
     }
 
+    public static String escapeXmlText(String s) {
+        return s.replace("&", "&amp;") //
+                .replace("<", "&lt;")//
+                .replace(">", "&gt;")//
+                .replace("\"", "&quot;")//
+                .replace("'", "&apos;");//
+    }
+
     /**
      * @see org.apache.commons.lang.StringEscapeUtils#escapeSql(String)
      */
