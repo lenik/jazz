@@ -571,7 +571,7 @@ public class DefaultColumnMetadata
     public void readObject(ResultSet rs)
             throws SQLException {
         name = rs.getString("COLUMN_NAME");
-        label = name;
+        // label = name;
 
         int sqlTypeInt = rs.getInt("DATA_TYPE");
         sqlTypeName = rs.getString("TYPE_NAME");
