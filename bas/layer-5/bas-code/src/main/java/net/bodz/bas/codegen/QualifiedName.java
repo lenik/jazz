@@ -8,8 +8,8 @@ import net.bodz.bas.t.tuple.Split;
 
 public class QualifiedName {
 
-    public String packageName;
-    public String name;
+    public final String packageName;
+    public final String name;
 
     static final String CWD = ".";
     static final String FS = SysProps.fileSep;
@@ -17,6 +17,10 @@ public class QualifiedName {
     public QualifiedName(String packageName, String name) {
         this.packageName = packageName;
         this.name = name;
+    }
+
+    public static QualifiedName of(Class<?> clazz) {
+        return new QualifiedName(clazz.getPackageName(), clazz.getSimpleName());
     }
 
     public static QualifiedName parse(String fullName) {
@@ -35,6 +39,14 @@ public class QualifiedName {
             else
                 pkg += "." + split.a;
         return new QualifiedName(pkg, split.b);
+    }
+
+    public QualifiedName packageName(String packageName) {
+        return new QualifiedName(packageName, name);
+    }
+
+    public QualifiedName name(String name) {
+        return new QualifiedName(packageName, name);
     }
 
     public String getFullName() {
