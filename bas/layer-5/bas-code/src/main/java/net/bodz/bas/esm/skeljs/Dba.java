@@ -15,12 +15,12 @@ public class Dba
     public class LilyConcrete
             extends Source {
 
-        public final EsmName CoObjectType = name("CoObjectType");
-        public final EsmName CoObject = name("CoObject");
-        public final EsmName CoMessageType = name("CoMessageType");
-        public final EsmName CoMessage = name("CoMessage");
-        public final EsmName IdEntityType = name("IdEntityType");
-        public final EsmName IdEntity = name("IdEntity");
+        public final EsmName CoObjectType = _class("CoObjectType");
+        public final EsmName CoObject = _class("CoObject");
+        public final EsmName CoMessageType = _class("CoMessageType");
+        public final EsmName CoMessage = _class("CoMessage");
+        public final EsmName IdEntityType = _class("IdEntityType");
+        public final EsmName IdEntity = _class("IdEntity");
 
     }
 
@@ -28,14 +28,14 @@ public class Dba
     public class LilyEntity
             extends Source {
 
-        public final EsmName integer = typeName("integer");
-        public final EsmName _long = typeName("long");
+        public final EsmName integer = type("integer");
+        public final EsmName _long = type("long");
 
-        public final EsmName IEntityType = name("IEntityType");
-        public final EsmName EntityType = name("EntityType");
-        public final EsmName EntityPropertyMap = name("EntityPropertyMap");
-        public final EsmName IEntityProperty = name("IEntityProperty");
-        public final EsmName EntityProperty = name("EntityProperty");
+        public final EsmName IEntityType = _interface("IEntityType");
+        public final EsmName EntityType = _class("EntityType");
+        public final EsmName EntityPropertyMap = _interface("EntityPropertyMap");
+        public final EsmName IEntityProperty = _interface("IEntityProperty");
+        public final EsmName EntityProperty = _class("EntityProperty");
 
         public final EsmName primaryKey = name("primaryKey");
         public final EsmName property = name("property");
@@ -46,12 +46,12 @@ public class Dba
     public class UiTableTypes
             extends Source {
 
-        public final EsmName SetupDataFunc = typeName("SetupDataFunc");
-        public final EsmName OnAppliedFunc = typeName("OnAppliedFunc");
-        public final EsmName ConfigFn = typeName("ConfigFn");
-        public final EsmName TextMap = name("TextMap");
-        public final EsmName ColumnType = name("ColumnType");
-        public final EsmName Selection = name("Selection");
+        public final EsmName SetupDataFunc = type("SetupDataFunc");
+        public final EsmName OnAppliedFunc = type("OnAppliedFunc");
+        public final EsmName ConfigFn = type("ConfigFn");
+        public final EsmName TextMap = _interface("TextMap");
+        public final EsmName ColumnType = _interface("ColumnType");
+        public final EsmName Selection = _class("Selection");
 
     }
 

@@ -69,7 +69,7 @@ public class TypeScriptWriter
     }
 
     public String localName(QualifiedName qName) {
-        EsmName esmName = localSource(qName, null, contextQName).name(qName.name);
+        EsmName esmName = localSource(qName, null, contextQName)._class(qName.name);
         return name(esmName);
     }
 
