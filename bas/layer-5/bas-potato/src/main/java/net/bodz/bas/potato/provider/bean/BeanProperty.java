@@ -27,8 +27,7 @@ public class BeanProperty
 
     /**
      * @throws NullPointerException
-     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
-     *             <code>null</code>.
+     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is <code>null</code>.
      */
     public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc) {
         this(beanType, propertyDescriptor, doc, xetter(propertyDescriptor));
@@ -93,6 +92,17 @@ public class BeanProperty
         }
 
         throw new NotImplementedException();
+    }
+
+    @Override
+    public Class<?> getDeclaringClass() {
+        Method getter = propertyDescriptor.getReadMethod();
+        if (getter != null)
+            return getter.getDeclaringClass();
+        Method setter = propertyDescriptor.getWriteMethod();
+        if (setter != null)
+            return setter.getDeclaringClass();
+        throw new UnexpectedException();
     }
 
     public Method getReadMethod() {

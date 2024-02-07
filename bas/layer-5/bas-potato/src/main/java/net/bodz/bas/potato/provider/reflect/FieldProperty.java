@@ -60,6 +60,11 @@ public class FieldProperty
     }
 
     @Override
+    public Class<?> getDeclaringClass() {
+        return field.getDeclaringClass();
+    }
+
+    @Override
     public boolean isReadable() {
         // int modifiers = field.getModifiers();
         // if (Modifier.isPrivate(modifiers))

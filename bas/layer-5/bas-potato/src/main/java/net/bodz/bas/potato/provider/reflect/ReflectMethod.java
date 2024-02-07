@@ -44,6 +44,11 @@ public class ReflectMethod
     }
 
     @Override
+    public Class<?> getDeclaringClass() {
+        return method.getDeclaringClass();
+    }
+
+    @Override
     public Class<?> getReturnType() {
         return method.getReturnType();
     }

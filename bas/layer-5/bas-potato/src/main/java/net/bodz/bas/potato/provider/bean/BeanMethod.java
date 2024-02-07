@@ -33,6 +33,11 @@ public class BeanMethod
         return StrFn.wrap(shortDescription);
     }
 
+    @Override
+    public Class<?> getDeclaringClass() {
+        return methodDescriptor.getMethod().getDeclaringClass();
+    }
+
     // IPotatoParameter[] getParameters() {
     // ParameterDescriptor[] parameterDescriptors = methodDescriptor.getParameterDescriptors();
     // }
