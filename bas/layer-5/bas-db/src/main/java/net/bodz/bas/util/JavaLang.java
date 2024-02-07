@@ -58,6 +58,7 @@ public class JavaLang {
         case TypeId.DATE:
         case TypeId.SQL_DATE:
         case TypeId.CALENDAR:
+        case TypeId.TIMESTAMP:
             String s = o.toString();
             return StringQuote.qqJavaString(s);
 
