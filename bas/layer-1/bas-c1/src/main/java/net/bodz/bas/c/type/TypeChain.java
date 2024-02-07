@@ -13,7 +13,7 @@ import net.bodz.bas.t.iterator.PrefetchedIterator;
 
 public class TypeChain {
 
-    public static Class<?>[] listSuperLast(Class<?> clazz) {
+    public static Class<?>[] supersToRoot(Class<?> clazz) {
         List<Class<?>> list = new ArrayList<Class<?>>();
         while (clazz != null) {
             list.add(clazz);
@@ -22,8 +22,8 @@ public class TypeChain {
         return list.toArray(new Class<?>[0]);
     }
 
-    public static Class<?>[] listSuperFirst(Class<?> clazz) {
-        Class<?>[] list = listSuperLast(clazz);
+    public static Class<?>[] supersFromRoot(Class<?> clazz) {
+        Class<?>[] list = supersToRoot(clazz);
         Arrays.<Class<?>> reverse(list);
         return list;
     }
@@ -95,7 +95,7 @@ class AncestorIterator
     AncestorIterator(Class<?> start, List<Class<?>> deferred) {
         this(start);
 
-        if (deferred != null && !deferred.isEmpty()) {
+        if (deferred != null && ! deferred.isEmpty()) {
             this.deferredQueue = deferred;
             for (Class<?> ex : deferred)
                 markSet.add(ex);
@@ -138,7 +138,8 @@ class AncestorIterator
 }
 
 class ImpliedTypes
-        implements Iterable<Class<?>> {
+        implements
+            Iterable<Class<?>> {
 
     private final Class<?> type;
     private Set<Class<?>> all;
@@ -159,7 +160,7 @@ class ImpliedTypes
     }
 
     void traverse(Class<?> type) {
-        if (!all.add(type)) // already added
+        if (! all.add(type)) // already added
             return;
 
         if (type.isInterface())

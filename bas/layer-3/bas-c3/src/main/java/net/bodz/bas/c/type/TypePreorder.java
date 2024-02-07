@@ -10,8 +10,8 @@ public class TypePreorder
         if (o1.equals(o2))
             return EQUALS;
 
-        Class<?>[] v1 = TypeChain.listSuperFirst(o1);
-        Class<?>[] v2 = TypeChain.listSuperFirst(o2);
+        Class<?>[] v1 = TypeChain.supersFromRoot(o1);
+        Class<?>[] v2 = TypeChain.supersFromRoot(o2);
         int min = Math.min(v1.length, v2.length);
         for (int i = 0; i < min; i++) {
             Class<?> a = v1[i];
