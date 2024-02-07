@@ -11,6 +11,7 @@ public class Esm_vue
     }
 
     public final EsmName computed = main.name("computed");
+    public final EsmName Ref = main.type("ref");
     public final EsmName ref = main.name("ref");
     public final EsmName onMounted = main.name("onMounted");
 

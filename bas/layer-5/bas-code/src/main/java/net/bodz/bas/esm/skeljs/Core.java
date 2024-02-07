@@ -15,16 +15,16 @@ public class Core
     public class LoggingApi
             extends Source {
 
-        public final EsmName LogLevel = typeName("LogLevel");
-        public final EsmName Exception = name("Exception");
-        public final EsmName StackTrackElement = name("StackTrackElement");
-        public final EsmName LogEntry = name("LogEntry");
+        public final EsmName LogLevel = type("LogLevel");
+        public final EsmName Exception = _interface("Exception");
+        public final EsmName StackTrackElement = _interface("StackTrackElement");
+        public final EsmName LogEntry = _interface("LogEntry");
         public final EsmName levelIcon = name("levelIcon");
         public final EsmName simpleName = name("simpleName");
         public final EsmName typeLabel = name("typeLabel");
         public final EsmName causes = name("causes");
         public final EsmName parseException = name("parseException");
-        public final EsmName Logger = name("Logger");
+        public final EsmName Logger = _interface("Logger");
 
     }
 
@@ -33,27 +33,27 @@ public class Core
             extends Source {
 
         public final EsmName bool = name("bool");
-        public final EsmName UiGroupItem = name("UiGroupItem");
-        public final EsmName UiComponent = name("UiComponent");
-        public final EsmName NameSet = typeName("NameSet");
-        public final EsmName Selector = name("Selector");
+        public final EsmName UiGroupItem = _interface("UiGroupItem");
+        public final EsmName UiComponent = _interface("UiComponent");
+        public final EsmName NameSet = _interface("NameSet");
+        public final EsmName Selector = _interface("Selector");
         public final EsmName select = name("select");
-        public final EsmName UiGroup = name("UiGroup");
-        public final EsmName UiGroupMap = name("UiGroupMap");
+        public final EsmName UiGroup = _interface("UiGroup");
+        public final EsmName UiGroupMap = _interface("UiGroupMap");
         public final EsmName group = name("group");
-        public final EsmName DialogAction = typeName("DialogAction");
-        public final EsmName EventHandler = typeName("EventHandler");
-        public final EsmName Href = typeName("Href");
-        public final EsmName Command = name("Command");
-        public final EsmName DialogSelectCallback = name("DialogSelectCallback");
-        public final EsmName AsyncDialogSelectCallback = name("AsyncDialogSelectCallback");
-        public final EsmName CommandBehavior = name("CommandBehavior");
+        public final EsmName DialogAction = type("DialogAction");
+        public final EsmName EventHandler = type("EventHandler");
+        public final EsmName Href = type("Href");
+        public final EsmName Command = _interface("Command");
+        public final EsmName DialogSelectCallback = type("DialogSelectCallback");
+        public final EsmName AsyncDialogSelectCallback = type("AsyncDialogSelectCallback");
+        public final EsmName CommandBehavior = _interface("CommandBehavior");
         public final EsmName getDialogCmds = name("getDialogCmds");
-        public final EsmName IValidateResult = name("IValidateResult");
-        public final EsmName ValidateResult = name("ValidateResult");
-        public final EsmName Validator = typeName("Validator");
-        public final EsmName MessageFunc = typeName("MessageFunc");
-        public final EsmName Status = name("Status");
+        public final EsmName IValidateResult = _interface("IValidateResult");
+        public final EsmName ValidateResult = _interface("ValidateResult");
+        public final EsmName Validator = type("Validator");
+        public final EsmName MessageFunc = type("MessageFunc");
+        public final EsmName Status = _interface("Status");
 
     }
 
@@ -61,9 +61,9 @@ public class Core
     public class VarMap
             extends Source {
 
-        public final EsmName INameMap = name("INameMap");
-        public final EsmName INamedStrings = name("INamedStrings");
-        public final EsmName VarMap = name("VarMap");
+        public final EsmName INameMap = _interface("INameMap");
+        public final EsmName INamedStrings = _interface("INamedStrings");
+        public final EsmName VarMap = _interface("VarMap");
 
     }
 

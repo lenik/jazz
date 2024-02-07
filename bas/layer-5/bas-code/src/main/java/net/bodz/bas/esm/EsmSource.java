@@ -65,18 +65,22 @@ public class EsmSource
         return new EsmName(this, name, alias);
     }
 
-    public EsmName typeName(String name) {
+    public EsmName type(String name) {
         if (name == null)
             throw new NullPointerException("name");
         return new EsmName(this, name, null, true);
     }
 
-    public EsmName typeName(String name, String alias) {
+    public EsmName _interface(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        if (alias == null)
-            throw new NullPointerException("alias");
-        return new EsmName(this, name, alias, true);
+        return new EsmName(this, name, null, true);
+    }
+
+    public EsmName _class(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        return new EsmName(this, name, null, true);
     }
 
     @Override
