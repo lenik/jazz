@@ -174,7 +174,6 @@ public abstract class _Person_stuff
 
     /**
      *
-     * @label mother
      * @constraint foreign key (mother) references lily.person (id)
      */
     public Person getMother() {
@@ -203,7 +202,6 @@ public abstract class _Person_stuff
 
     /**
      *
-     * @label father
      * @constraint foreign key (father) references lily.person (id)
      */
     public Person getFather() {

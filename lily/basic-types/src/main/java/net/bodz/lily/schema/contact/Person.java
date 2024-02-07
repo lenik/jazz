@@ -8,4 +8,8 @@ public class Person
 
     private static final long serialVersionUID = 1L;
 
+    public String getHello() {
+        return "world";
+    }
+
 }
