@@ -6,7 +6,7 @@ public class PackageMap<T>
     private static final long serialVersionUID = 1L;
 
     public PackageMap() {
-        super(PackageNamePreorder.getInstance());
+        super(PackageNamePreorder.INSTANCE);
     }
 
 }

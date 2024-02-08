@@ -31,10 +31,6 @@ public class StartswithPreorder
         return o1.equals(o2) ? EQUALS : UNKNOWN;
     }
 
-    static final StartswithPreorder instance = new StartswithPreorder();
-
-    public static StartswithPreorder getInstance() {
-        return instance;
-    }
+    public static final StartswithPreorder INSTANCE = new StartswithPreorder();
 
 }

@@ -7,7 +7,7 @@ public class PackageScopeInstance
         extends PreorderScopeInstance<String> {
 
     public PackageScopeInstance(String packageName) {
-        super(PackageNamePreorder.getInstance(), packageName);
+        super(PackageNamePreorder.INSTANCE, packageName);
     }
 
     public static PackageScopeInstance forName(String packageName) {

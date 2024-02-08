@@ -6,7 +6,7 @@ public class PrefixMap<V>
     private static final long serialVersionUID = 1L;
 
     public PrefixMap() {
-        super(StartswithPreorder.getInstance());
+        super(StartswithPreorder.INSTANCE);
     }
 
 }
