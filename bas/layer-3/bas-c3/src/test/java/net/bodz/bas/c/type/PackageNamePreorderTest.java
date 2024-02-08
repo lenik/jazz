@@ -9,7 +9,7 @@ import net.bodz.bas.t.preorder.PackageNamePreorder;
 public class PackageNamePreorderTest
         extends Assert {
 
-    PackageNamePreorder preorder = PackageNamePreorder.getInstance();
+    PackageNamePreorder preorder = PackageNamePreorder.INSTANCE;
 
     @Test
     public void testSamples()

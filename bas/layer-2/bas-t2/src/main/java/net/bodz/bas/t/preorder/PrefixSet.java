@@ -6,7 +6,7 @@ public class PrefixSet
     private static final long serialVersionUID = 1L;
 
     public PrefixSet() {
-        super(StartswithPreorder.getInstance());
+        super(StartswithPreorder.INSTANCE);
     }
 
 }

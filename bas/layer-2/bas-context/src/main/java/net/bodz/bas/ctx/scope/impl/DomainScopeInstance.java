@@ -6,7 +6,7 @@ public class DomainScopeInstance
         extends PreorderScopeInstance<String> {
 
     public DomainScopeInstance(String domainName) {
-        super(DomainNamePreorder.getInstance(), domainName);
+        super(DomainNamePreorder.INSTANCE, domainName);
     }
 
     public static DomainScopeInstance getInstance(String domainName) {

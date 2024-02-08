@@ -6,7 +6,7 @@ import org.junit.Test;
 public class DomainNamePreorderTest
         extends Assert {
 
-    DomainNamePreorder preorder = DomainNamePreorder.getInstance();
+    DomainNamePreorder preorder = DomainNamePreorder.INSTANCE;
 
     @Test
     public void testSamples()

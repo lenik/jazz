@@ -34,10 +34,6 @@ public class DomainNamePreorder
         return UNKNOWN;
     }
 
-    static final DomainNamePreorder instance = new DomainNamePreorder();
-
-    public static DomainNamePreorder getInstance() {
-        return instance;
-    }
+    public static final DomainNamePreorder INSTANCE = new DomainNamePreorder();
 
 }

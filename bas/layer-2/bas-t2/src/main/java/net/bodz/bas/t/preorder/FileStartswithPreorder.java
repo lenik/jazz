@@ -43,10 +43,7 @@ public class FileStartswithPreorder
         return UNKNOWN;
     }
 
-    static final FileStartswithPreorder instance = new FileStartswithPreorder();
+    public static final FileStartswithPreorder INSTANCE = new FileStartswithPreorder();
 
-    public static FileStartswithPreorder getInstance() {
-        return instance;
-    }
 
 }

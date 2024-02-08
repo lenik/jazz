@@ -34,10 +34,6 @@ public class PackageNamePreorder
         return UNKNOWN;
     }
 
-    static final PackageNamePreorder instance = new PackageNamePreorder();
-
-    public static PackageNamePreorder getInstance() {
-        return instance;
-    }
+    public static final PackageNamePreorder INSTANCE = new PackageNamePreorder();
 
 }
