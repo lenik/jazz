@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.io.IPrintOut;
 
 public class EsmImports
@@ -22,6 +23,16 @@ public class EsmImports
     public EsmImports(EsmSource source, Comparator<EsmName> order) {
         super(order);
         excludeSources.add(source);
+    }
+
+    public static EsmImports forLocal(QualifiedName qName) {
+        return forLocal(qName, null);
+    }
+
+    public static EsmImports forLocal(QualifiedName qName, String extension) {
+        String localPath = qName.getLocalPath(extension);
+        EsmSource source = EsmModule.local(0).source(localPath);
+        return new EsmImports(source);
     }
 
     public void excludeModule(EsmModule module) {
