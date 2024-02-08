@@ -1,5 +1,7 @@
 package net.bodz.bas.esm;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class EsmModule
@@ -18,13 +20,42 @@ public class EsmModule
         this.name = name;
     }
 
+    public static EsmModule local(int priority) {
+        return new EsmModule(null, priority);
+    }
+
     @Override
     public EsmScopeType getType() {
         return EsmScopeType.MODULE;
     }
 
+    Map<String, EsmSource> map = new HashMap<>();
+
+    public <S extends EsmSource> S add(S source) {
+        map.put(source.path, source);
+        return source;
+    }
+
     public EsmSource source(String path) {
-        return new EsmSource(this, path);
+        EsmSource source = map.get(path);
+        if (source == null) {
+            source = new EsmSource(this, path);
+            // map.put(path, source);
+        }
+        return source;
+    }
+
+    public EsmName vue(String path) {
+        EsmSource source = source(path);
+
+        int lastSlash = path.lastIndexOf("/");
+        String base = lastSlash == -1 ? path : path.substring(lastSlash + 1);
+        if (! base.endsWith(".vue"))
+            throw new IllegalArgumentException("path should have extension .vue");
+
+        String name = base.substring(0, base.length() - 4);
+        EsmName esmName = source.defaultExport(name);
+        return esmName;
     }
 
     protected abstract class Source

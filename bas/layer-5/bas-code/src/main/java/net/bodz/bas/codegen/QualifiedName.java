@@ -3,7 +3,10 @@ package net.bodz.bas.codegen;
 import java.io.File;
 import java.util.Objects;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.system.SysProps;
+import net.bodz.bas.t.preorder.AbstractPreorder;
+import net.bodz.bas.t.preorder.PackageNamePreorder;
 import net.bodz.bas.t.tuple.Split;
 
 public class QualifiedName {
@@ -113,6 +116,34 @@ public class QualifiedName {
     @Override
     public String toString() {
         return getFullName();
+    }
+
+    public static final Preorder PREORDER = new Preorder();
+
+    static class Preorder
+            extends AbstractPreorder<QualifiedName> {
+
+        static PackageNamePreorder packageNamePreorder = PackageNamePreorder.INSTANCE;
+
+        @Override
+        public int precompare(QualifiedName o1, QualifiedName o2) {
+            String p1 = o1.packageName;
+            String p2 = o2.packageName;
+            int cmp = packageNamePreorder.precompare(p1, p2);
+            if (cmp != 0)
+                return cmp;
+            cmp = Nullables.compare(o1.name, o2.name);
+            return cmp;
+        }
+
+        @Override
+        public QualifiedName getPreceding(QualifiedName o) {
+            if (o.packageName == null || o.packageName.isEmpty())
+                return null;
+            else
+                return QualifiedName.parse(o.packageName);
+        }
+
     }
 
 }
