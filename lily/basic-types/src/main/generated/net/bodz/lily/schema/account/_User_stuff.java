@@ -65,7 +65,6 @@ public abstract class _User_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
     public Person getPerson() {
@@ -95,7 +94,6 @@ public abstract class _User_stuff
     /**
      * The primary user group, the default value of ownerGroup.
      *
-     * @label gid0
      * @constraint foreign key (gid0) references lily.group (id)
      */
     @NotNull
@@ -135,7 +133,6 @@ public abstract class _User_stuff
     /**
      * The referer user (used for promotion)
      *
-     * @label referer
      * @constraint foreign key (referer) references lily.user (id)
      */
     public User getReferer() {
@@ -172,7 +169,6 @@ public abstract class _User_stuff
     /**
      * User type like system-user, normal-user, etc.
      *
-     * @label type
      * @constraint foreign key (type) references lily.usertype (id)
      */
     @NotNull

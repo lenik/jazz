@@ -1,10 +1,10 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
 
-import type { Person } from "./Person";
+import { onMounted, ref } from "vue";
 
 import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
 
+import type { Person } from "./Person";
 import PersonEditor from "./PersonEditor.vue";
 
 export interface Props {

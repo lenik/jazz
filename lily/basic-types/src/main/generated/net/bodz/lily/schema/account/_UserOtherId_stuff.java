@@ -179,7 +179,6 @@ public abstract class _UserOtherId_stuff
     /**
      * Type of Open ID
      *
-     * @label type
      * @constraint foreign key (type) references lily.useroidtype (id)
      */
     @NotNull
@@ -217,7 +216,6 @@ public abstract class _UserOtherId_stuff
     /**
      * The declaring user
      *
-     * @label user
      * @constraint foreign key (user) references lily.user (id)
      */
     @NotNull

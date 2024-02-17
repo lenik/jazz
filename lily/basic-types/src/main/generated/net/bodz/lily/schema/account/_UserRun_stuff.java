@@ -114,7 +114,6 @@ public abstract class _UserRun_stuff
     /**
      * The user
      *
-     * @label user
      * @constraint foreign key (user) references lily.user (id)
      */
     @NotNull

@@ -20,6 +20,7 @@ public class UserSamples
     public User build()
             throws Exception {
         User a = new User();
+        a.setPerson(person);
         a.setPrimaryGroup(primaryGroup);
         a.setReferer(referer);
         a.setType(type);
