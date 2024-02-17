@@ -13,7 +13,7 @@ public class ImportStatement {
     public List<EsmName> typeNames = new ArrayList<>();
     public EsmSource from;
 
-    boolean debug = false; //true;
+    boolean debug = false; // true;
 
     public void initFrom(EsmSource source) {
         this.from = source;
@@ -84,18 +84,39 @@ public class ImportStatement {
 
     void printNames(IPrintOut out, List<EsmName> list) {
         int n = list.size();
-        out.print("{ ");
+        int pos = 0;
+        int wilds = 0;
         for (int i = 0; i < n; i++) {
-            if (i != 0)
-                out.print(", ");
             EsmName name = list.get(i);
+            if (name.isWildcard() && name.alias != null) {
+                if (pos++ != 0)
+                    out.print(", ");
+                out.print("* as ");
+                out.print(name.alias);
+                wilds++;
+            }
+        }
+
+        if (n == wilds)
+            return;
+
+        if (pos != 0)
+            out.print(", ");
+
+        out.print("{ ");
+        pos = 0;
+        for (int i = 0; i < n; i++) {
+            EsmName name = list.get(i);
+            if (name.isWildcard())
+                continue;
+            if (pos++ != 0)
+                out.print(", ");
             if (name.name != null)
                 out.print(name.name);
-            if (name.alias != null) {
-                if (name.name != null)
-                    out.print(" as ");
+            if (name.name != null && name.alias != null)
+                out.print(" as ");
+            if (name.alias != null)
                 out.print(name.alias);
-            }
         }
         out.print(" }");
     }
