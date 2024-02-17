@@ -10,6 +10,11 @@ public interface IVirtualHostResolver
         extends
             IPriority {
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     IVirtualHost getVirtualHost(String id);
 
     String getVirtualHostId(HttpServletRequest request);

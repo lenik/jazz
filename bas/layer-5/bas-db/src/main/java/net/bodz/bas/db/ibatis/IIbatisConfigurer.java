@@ -14,6 +14,11 @@ public interface IIbatisConfigurer
     int PRIORITY_MEDIUM = 0;
     int PRIORITY_LOW = 1;
 
+    @Override
+    default int getPriority() {
+        return PRIORITY_MEDIUM;
+    }
+
     void configure(Configuration config);
 
 }

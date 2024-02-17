@@ -8,6 +8,11 @@ public interface ILoginManagerProvider
         extends
             IPriority {
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     ILoginManager getLoginManager();
 
 }

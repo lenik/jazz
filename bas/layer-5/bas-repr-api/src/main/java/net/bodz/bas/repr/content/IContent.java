@@ -8,6 +8,11 @@ public interface IContent
             ICacheControl,
             IPriority {
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     /**
      * Get the creation time in epoch milli.
      */
