@@ -18,36 +18,44 @@ public class TypeParam {
             return null;
     }
 
-    public static Type[] getOriginPV(Type type) {
+    public static ParameterizedType genericBase(Type type) {
         if (type == null)
             throw new NullPointerException("type");
 
-        if (type instanceof ParameterizedType) {
-            ParameterizedType ptype = (ParameterizedType) type;
-            return ptype.getActualTypeArguments();
-        }
+        if (type instanceof ParameterizedType)
+            return (ParameterizedType) type;
 
         if (type instanceof Class<?>) {
             Class<?> clazz = (Class<?>) type;
             Type superclass = clazz.getGenericSuperclass();
             if (superclass == null)
                 return null;
-            return getOriginPV(superclass);
+            return genericBase(superclass);
         }
 
-        throw new IllegalUsageException("Not a generic type");
+        // throw new IllegalUsageException("Not a generic type");
+        return null;
     }
 
-    public static Class<?>[] getOriginPVClass(Type type) {
-        Type[] pv = getOriginPV(type);
-        if (pv == null)
+    // static Type[] EMPTY_BOUNDS = {};
+
+    public static Class<?>[] genericBaseBounds(Type type) {
+        if (type == null)
+            throw new NullPointerException("type");
+        ParameterizedType base = genericBase(type);
+        if (base == null)
             return null;
 
-        Class<?>[] pvClasses = new Class<?>[pv.length];
-        for (int i = 0; i < pv.length; i++)
-            pvClasses[i] = bound1(pv[i]);
+        Type[] args = base.getActualTypeArguments();
+        return bounds(args);
+    }
 
-        return pvClasses;
+    public static Class<?>[] bounds(Type... typeArgs) {
+        Class<?>[] bounds = new Class<?>[typeArgs.length];
+        for (int i = 0; i < typeArgs.length; i++) {
+            bounds[i] = bound1(typeArgs[i]);
+        }
+        return bounds;
     }
 
     /**
@@ -70,7 +78,7 @@ public class TypeParam {
         if (type instanceof ParameterizedType)
             type = ((ParameterizedType) type).getRawType();
 
-        if (! (type instanceof Class<?>))
+        if (!(type instanceof Class<?>))
             throw new Error("Failed to get type bound: " + type);
 
         @SuppressWarnings("unchecked")
@@ -140,15 +148,15 @@ public class TypeParam {
     }
 
     /**
-     * This is the same as {@link #mapTypeArgsRec(Class, Class, Type[])} with <code>argv</code> set to
-     * <code>clazz.getTypeParameters()</code>.
+     * This is the same as {@link #mapTypeArgsRec(Class, Class, Type[])} with <code>argv</code> set
+     * to <code>clazz.getTypeParameters()</code>.
      */
     public static Type[] getTypeArgs(Class<?> clazz, Class<?> interesting) {
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (interesting == null)
             throw new NullPointerException("interesting");
-        if (! interesting.isAssignableFrom(clazz))
+        if (!interesting.isAssignableFrom(clazz))
             throw new IllegalUsageException(clazz + " is-not-a " + interesting);
 
         clazz = TypeHack.skipProxies(clazz); // OPT: why should proxy be skipped?
@@ -162,21 +170,21 @@ public class TypeParam {
 
     /**
      * Traverse and search interested base class (<code>interesting</code>) with-in the start class
-     * (<code>clazz</code>), and map the type parameters (<code>argv</code>) to be the parameters for the interesting
-     * base.
+     * (<code>clazz</code>), and map the type parameters (<code>argv</code>) to be the parameters
+     * for the interesting base.
      *
      * <p>
      * If interesting base is not generic, an empty array is immediately returned.
      *
      * <p>
-     * If the interesting isn't an interface, no generic interface is looked into. This maybe slightly more efficient
-     * then query interesting interface.
+     * If the interesting isn't an interface, no generic interface is looked into. This maybe
+     * slightly more efficient then query interesting interface.
      *
      * @param clazz
      *            Start class to traverse.
      * @param interesting
-     *            The interesting class or interface. An empty array is immediately returned if interesting base isn't
-     *            generic.
+     *            The interesting class or interface. An empty array is immediately returned if
+     *            interesting base isn't generic.
      * @param argv
      *            The type parameters which would be suitable for the interesting base.
      * @return Non-<code>null</code> actual parameters for the interesting base.
@@ -205,7 +213,7 @@ public class TypeParam {
                     ifaceRaw = (Class<?>) iface;
                 }
 
-                if (! interesting.isAssignableFrom(ifaceRaw))
+                if (!interesting.isAssignableFrom(ifaceRaw))
                     continue;
 
                 Type[] actualv = EMPTY;

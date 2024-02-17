@@ -61,4 +61,12 @@ public class TypeParamTest
         System.out.println(genericType);
     }
 
+    @Test
+    public void testGenericBaseBounds()
+            throws Exception {
+        Field field = TypeParamTest.class.getDeclaredField("strList");
+        Class<?>[] bounds = TypeParam.genericBaseBounds(field.getGenericType());
+        assertArrayEquals(new Object[] { String.class }, bounds);
+    }
+
 }
