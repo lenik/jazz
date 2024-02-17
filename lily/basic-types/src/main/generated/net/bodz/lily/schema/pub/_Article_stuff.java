@@ -132,7 +132,6 @@ public abstract class _Article_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references lily.articlecat (id)
      */
     public ArticleCategory getCategory() {

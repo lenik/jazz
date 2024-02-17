@@ -122,7 +122,6 @@ public abstract class _PostParameter_stuff
 
     /**
      *
-     * @label post
      * @constraint foreign key (post) references lily.post (id)
      */
     @NotNull
@@ -154,7 +153,6 @@ public abstract class _PostParameter_stuff
 
     /**
      *
-     * @label parm
      * @constraint foreign key (parm) references lily.postparm (id)
      */
     @NotNull

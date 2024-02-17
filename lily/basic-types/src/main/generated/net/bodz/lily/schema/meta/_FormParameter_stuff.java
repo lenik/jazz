@@ -97,7 +97,6 @@ public abstract class _FormParameter_stuff
 
     /**
      *
-     * @label form
      * @constraint foreign key (form) references lily._form (id)
      */
     @NotNull

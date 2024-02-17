@@ -98,7 +98,6 @@ public abstract class _PersonRole_stuff
 
     /**
      *
-     * @label ou
      * @constraint foreign key (ou) references lily.orgunit (id)
      */
     public OrgUnit getOrgUnit() {
@@ -127,7 +126,6 @@ public abstract class _PersonRole_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
     @NotNull
@@ -159,7 +157,6 @@ public abstract class _PersonRole_stuff
 
     /**
      *
-     * @label org
      * @constraint foreign key (org) references lily.org (id)
      */
     @NotNull

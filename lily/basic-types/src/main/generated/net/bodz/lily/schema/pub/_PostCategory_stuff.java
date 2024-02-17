@@ -112,7 +112,6 @@ public abstract class _PostCategory_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.postcat (id)
      */
     public PostCategory getParent() {

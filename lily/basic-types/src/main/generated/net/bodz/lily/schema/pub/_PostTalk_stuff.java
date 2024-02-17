@@ -53,7 +53,6 @@ public abstract class _PostTalk_stuff<this_t extends _PostTalk_stuff<this_t>>
 
     /**
      *
-     * @label post
      * @constraint foreign key (post) references lily.post (id)
      */
     @NotNull

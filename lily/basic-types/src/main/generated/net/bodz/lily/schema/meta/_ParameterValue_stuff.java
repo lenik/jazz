@@ -99,7 +99,6 @@ public abstract class _ParameterValue_stuff
 
     /**
      *
-     * @label parm
      * @constraint foreign key (parm) references lily._parm (id)
      */
     @NotNull

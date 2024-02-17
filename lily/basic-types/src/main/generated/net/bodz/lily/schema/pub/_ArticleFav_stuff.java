@@ -32,7 +32,6 @@ public abstract class _ArticleFav_stuff
 
     /**
      *
-     * @label article
      * @constraint foreign key (article) references lily.article (id)
      */
     @NotNull

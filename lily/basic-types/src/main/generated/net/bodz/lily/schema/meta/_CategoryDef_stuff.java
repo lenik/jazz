@@ -122,7 +122,6 @@ public abstract class _CategoryDef_stuff
 
     /**
      *
-     * @label schema
      * @constraint foreign key (schema) references lily._schema (id)
      */
     @NotNull
@@ -152,7 +151,6 @@ public abstract class _CategoryDef_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily._cat (id)
      */
     public CategoryDef getParent() {

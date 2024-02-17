@@ -72,7 +72,6 @@ public abstract class _ArticleTag_stuff
 
     /**
      *
-     * @label tag
      * @constraint foreign key (tag) references lily.articletag (id)
      */
     @NotNull
@@ -104,7 +103,6 @@ public abstract class _ArticleTag_stuff
 
     /**
      *
-     * @label article
      * @constraint foreign key (article) references lily.article (id)
      */
     @NotNull

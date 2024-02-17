@@ -80,7 +80,6 @@ public abstract class _PhaseDef_stuff
 
     /**
      *
-     * @label schema
      * @constraint foreign key (schema) references lily._schema (id)
      */
     @NotNull

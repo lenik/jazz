@@ -72,7 +72,6 @@ public abstract class _PersonTag_stuff
 
     /**
      *
-     * @label tag
      * @constraint foreign key (tag) references lily.persontag (id)
      */
     @NotNull
@@ -104,7 +103,6 @@ public abstract class _PersonTag_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
     @NotNull

@@ -53,7 +53,6 @@ public abstract class _ArticleTalk_stuff<this_t extends _ArticleTalk_stuff<this_
 
     /**
      *
-     * @label article
      * @constraint foreign key (article) references lily.article (id)
      */
     @NotNull

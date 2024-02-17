@@ -210,7 +210,6 @@ public abstract class _VAppRequest_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label op
      * @constraint foreign key (op) references lily.user (id)
      */
     public User getOp() {
@@ -240,7 +239,6 @@ public abstract class _VAppRequest_stuff
 
     /**
      *
-     * @label form
      * @constraint foreign key (form) references lily._form (id)
      */
     public FormDef getForm() {

@@ -56,7 +56,6 @@ public abstract class _OrgUnit_stuff
 
     /**
      *
-     * @label org
      * @constraint foreign key (org) references lily.org (id)
      */
     @NotNull
@@ -88,7 +87,6 @@ public abstract class _OrgUnit_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.orgunit (id)
      */
     public OrgUnit getParent() {

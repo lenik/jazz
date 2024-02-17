@@ -72,7 +72,6 @@ public abstract class _PostTag_stuff
 
     /**
      *
-     * @label tag
      * @constraint foreign key (tag) references lily.posttag (id)
      */
     @NotNull
@@ -104,7 +103,6 @@ public abstract class _PostTag_stuff
 
     /**
      *
-     * @label post
      * @constraint foreign key (post) references lily.post (id)
      */
     @NotNull

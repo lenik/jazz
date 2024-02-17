@@ -78,7 +78,6 @@ public abstract class _ArticleBackref_stuff
 
     /**
      *
-     * @label article
      * @constraint foreign key (article) references lily.article (id)
      */
     @NotNull
@@ -110,7 +109,6 @@ public abstract class _ArticleBackref_stuff
 
     /**
      *
-     * @label site
      * @constraint foreign key (site) references lily.extsite (id)
      */
     @NotNull

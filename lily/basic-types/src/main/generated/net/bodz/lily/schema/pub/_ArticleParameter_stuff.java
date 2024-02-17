@@ -122,7 +122,6 @@ public abstract class _ArticleParameter_stuff
 
     /**
      *
-     * @label article
      * @constraint foreign key (article) references lily.article (id)
      */
     @NotNull
@@ -154,7 +153,6 @@ public abstract class _ArticleParameter_stuff
 
     /**
      *
-     * @label parm
      * @constraint foreign key (parm) references lily.articleparm (id)
      */
     @NotNull

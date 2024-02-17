@@ -112,7 +112,6 @@ public abstract class _ZoneCategory_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.zonecat (id)
      */
     public ZoneCategory getParent() {
