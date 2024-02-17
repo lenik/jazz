@@ -76,6 +76,17 @@ public class EsmModule
         return source;
     }
 
+    public EsmName _class(String path) {
+        EsmSource source = source(path);
+
+        int lastSlash = path.lastIndexOf("/");
+        String base = lastSlash == -1 ? path : path.substring(lastSlash + 1);
+
+        String name = base.substring(0, base.length() - 4);
+        EsmName esmName = source._class(name);
+        return esmName;
+    }
+
     public EsmName vue(String path) {
         EsmSource source = source(path);
 
