@@ -1,6 +1,7 @@
 package net.bodz.bas.esm;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.preorder.PackageMap;
@@ -10,10 +11,36 @@ public class EsmPackageMap
 
     private static final long serialVersionUID = 1L;
 
+    EsmModule contextModule;
     int localPriority;
-    int localVuePriority;
 
-    public EsmPackageMap() {
+    EsmPackageMap() {
+    }
+
+    public static class Builder {
+
+        EsmModule contextModule;
+        Integer localPriority;
+
+        public Builder contextModule(EsmModule contextModule) {
+            this.contextModule = contextModule;
+            return this;
+        }
+
+        public Builder localPriority(int localPriority) {
+            this.localPriority = localPriority;
+            return this;
+        }
+
+        public EsmPackageMap build() {
+            EsmPackageMap o = new EsmPackageMap();
+            if (this.contextModule != null)
+                o.contextModule = this.contextModule;
+            if (this.localPriority != null)
+                o.localPriority = this.localPriority;
+            return o;
+        }
+
     }
 
     public void addModule(String packageName, EsmModule module) {
@@ -24,8 +51,9 @@ public class EsmPackageMap
         put(packageName, module);
     }
 
-    public EsmModule findModule(String packageName) {
-        EsmModule module = meet(packageName);
+    public EsmModule findModule(QualifiedName qName) {
+        String fullName = qName.getFullName();
+        EsmModule module = meet(fullName);
         return module;
     }
 
@@ -38,20 +66,17 @@ public class EsmPackageMap
         if (path == null)
             throw new IllegalUsageException("null path of qName");
 
-        EsmModule module = findModule(qName.packageName);
-        if (module != null)
+        EsmModule module = findModule(qName);
+        if (module != null && ! Nullables.equals(contextModule, module)) {
             return module.source(path);
+        }
 
         String contextPath = context.getLocalPath();
         String href = FilePath.getRelativePath(path, contextPath);
         if (! (href.startsWith("../") || href.startsWith("./")))
             href = "./" + href;
 
-        EsmSource source;
-        if ("vue".equals(extension))
-            source = EsmModule.local(localVuePriority).source(href);
-        else
-            source = EsmModule.local(localPriority).source(href);
+        EsmSource source = EsmModule.local(localPriority).source(href);
         return source;
     }
 

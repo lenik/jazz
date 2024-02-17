@@ -44,6 +44,8 @@ public class EsmImports
     }
 
     public String name(EsmName name) {
+        if (name == null)
+            throw new NullPointerException("name");
         add(name);
         if (name.alias != null)
             return name.alias;

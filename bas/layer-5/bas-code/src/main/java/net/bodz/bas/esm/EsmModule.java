@@ -7,21 +7,47 @@ import java.util.Objects;
 public class EsmModule
         extends EsmScope {
 
+    public static final String LOCAL_NAME = null;
+
     public final String name;
+    public final String baseDir;
+    public final String basePath;
 
     public final EsmSource main = new EsmSource(this, null);
 
+    Map<String, EsmSource> map = new HashMap<>();
+
     public EsmModule(String name) {
-        this(name, 0);
+        this(name, null, 0);
     }
 
     public EsmModule(String name, int priority) {
+        this(name, null, priority);
+    }
+
+    public EsmModule(String name, String baseDir) {
+        this(name, baseDir, 0);
+    }
+
+    public EsmModule(String name, String baseDir, int priority) {
         super(priority);
         this.name = name;
+        this.baseDir = baseDir;
+
+        if (name == null)
+            this.basePath = baseDir;
+        else if (baseDir == null)
+            this.basePath = name;
+        else
+            this.basePath = name + "/" + baseDir;
     }
 
     public static EsmModule local(int priority) {
-        return new EsmModule(null, priority);
+        return new EsmModule(LOCAL_NAME, null, priority);
+    }
+
+    public static EsmModule local(String baseDir, int priority) {
+        return new EsmModule(LOCAL_NAME, baseDir, priority);
     }
 
     @Override
@@ -29,10 +55,15 @@ public class EsmModule
         return EsmScopeType.MODULE;
     }
 
-    Map<String, EsmSource> map = new HashMap<>();
+    public String join(String path) {
+        if (baseDir == null)
+            return path;
+        else
+            return baseDir + "/" + path;
+    }
 
     public <S extends EsmSource> S add(S source) {
-        map.put(source.path, source);
+        map.put(source.localPath, source);
         return source;
     }
 
@@ -73,7 +104,7 @@ public class EsmModule
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, baseDir);
     }
 
     @Override
@@ -82,15 +113,25 @@ public class EsmModule
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
         EsmModule other = (EsmModule) obj;
-        return Objects.equals(name, other.name);
+        return Objects.equals(name, other.name) //
+                && Objects.equals(baseDir, other.baseDir) //
+        ;
     }
 
     @Override
     public String toString() {
-        return name;
+        StringBuilder sb = new StringBuilder();
+        if (name == null)
+            sb.append("<local>");
+        else
+            sb.append(name);
+        if (baseDir != null) {
+            sb.append("[");
+            sb.append(baseDir);
+            sb.append("]");
+        }
+        return sb.toString();
     }
 
 }

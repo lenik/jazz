@@ -16,7 +16,7 @@ public class EsmSourceComparator
         if (cmp != 0)
             return cmp;
 
-        cmp = Nullables.compare(o1.path, o2.path);
+        cmp = Nullables.compare(o1.localPath, o2.localPath);
         if (cmp != 0)
             return cmp;
 

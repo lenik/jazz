@@ -15,6 +15,11 @@ public abstract class EsmScope
         this.priority = priority;
     }
 
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
     public abstract EsmScopeType getType();
 
 }
