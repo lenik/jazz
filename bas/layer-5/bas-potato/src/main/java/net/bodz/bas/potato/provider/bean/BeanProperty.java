@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import net.bodz.bas.bean.api.IPropertyDescriptor;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
@@ -27,7 +26,8 @@ public class BeanProperty
 
     /**
      * @throws NullPointerException
-     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is <code>null</code>.
+     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
+     *             <code>null</code>.
      */
     public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc) {
         this(beanType, propertyDescriptor, doc, xetter(propertyDescriptor));
@@ -90,8 +90,7 @@ public class BeanProperty
             } else
                 throw new UnexpectedException();
         }
-
-        throw new NotImplementedException();
+        return type;
     }
 
     @Override
