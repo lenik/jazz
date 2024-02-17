@@ -42,6 +42,10 @@ public class TypeScriptWriter
         return im.name(name);
     }
 
+    public EsmSource findSource(QualifiedName qName, String extension) {
+        return packageMap.findSource(qName, extension, contextQName);
+    }
+
     @Override
     public String importName(String qName) {
         if (qName == null)
@@ -51,7 +55,7 @@ public class TypeScriptWriter
 
     @Override
     public String importName(QualifiedName qName) {
-        EsmSource source = packageMap.findSource(qName, null, contextQName);
+        EsmSource source = findSource(qName, null);
         if (source == null) // reserved name, don't import.
             return qName.getFullName();
         EsmName esmName = source._class(qName.name);
@@ -59,7 +63,7 @@ public class TypeScriptWriter
     }
 
     public String importVue(QualifiedName qName) {
-        EsmSource source = packageMap.findSource(qName, "vue", contextQName);
+        EsmSource source = findSource(qName, "vue");
         if (source == null)
             throw new IllegalUsageException("vue name can't be reserved word: " + qName);
         EsmName alias = source.defaultExport(qName.name);

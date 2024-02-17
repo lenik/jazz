@@ -67,6 +67,10 @@ public class EsmSource
         return new EsmName(this, name, alias);
     }
 
+    public EsmName wildcardAs(String alias) {
+        return name(EsmName.ALL_NAMES, alias);
+    }
+
     public EsmName type(String name) {
         if (name == null)
             throw new NullPointerException("name");
@@ -76,13 +80,15 @@ public class EsmSource
     public EsmName _interface(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        return new EsmName(this, name, null, true);
+        boolean type = false;
+        return new EsmName(this, name, null, type);
     }
 
     public EsmName _class(String name) {
         if (name == null)
             throw new NullPointerException("name");
-        return new EsmName(this, name, null, true);
+        boolean type = false;
+        return new EsmName(this, name, null, type);
     }
 
     @Override

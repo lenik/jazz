@@ -52,6 +52,10 @@ public class QualifiedName {
         return new QualifiedName(packageName, name);
     }
 
+    public QualifiedName nameAdd(String add) {
+        return new QualifiedName(packageName, name + add);
+    }
+
     public String getFullName() {
         if (packageName == null)
             return name;

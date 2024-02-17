@@ -43,6 +43,10 @@ public class EsmName
         return type;
     }
 
+    public boolean isWildcard() {
+        return name != null && name.equals(ALL_NAMES);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(alias, name, source, type);
