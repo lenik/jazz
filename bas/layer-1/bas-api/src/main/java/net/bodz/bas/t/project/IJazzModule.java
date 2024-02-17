@@ -15,6 +15,11 @@ public interface IJazzModule
     int PRIORITY_PROJECT = 100;
     int PRIORITY_WEBAPP = 1000;
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     String getName();
 
     IJazzProject getProject();

@@ -14,6 +14,11 @@ public interface ILog4jConfigurer
         extends
             IPriority {
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     void setupBuilder(ConfigurationBuilder<? extends Configuration> builder);
 
     default void initLog4j(Configuration config) {

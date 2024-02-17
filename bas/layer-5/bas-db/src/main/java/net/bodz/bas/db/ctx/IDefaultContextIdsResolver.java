@@ -15,6 +15,11 @@ public interface IDefaultContextIdsResolver
     int PRIORITY_SERVER_IP = 300;
     int PRIORITY_PROJECT = 400;
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     /**
      * Level is 0-based.
      */

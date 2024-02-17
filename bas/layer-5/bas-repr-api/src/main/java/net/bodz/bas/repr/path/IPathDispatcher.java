@@ -16,6 +16,11 @@ public interface IPathDispatcher
         extends
             IPriority {
 
+    @Override
+    default int getPriority() {
+        return 0;
+    }
+
     /**
      * Resolve the tokens with-in the context object.
      *
@@ -32,7 +37,7 @@ public interface IPathDispatcher
         TokenQueue tokens = new TokenQueue(path);
         PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = dispatch(start, startObject, tokens, q);
-        if (!tokens.isEmpty())
+        if (! tokens.isEmpty())
             throw new IncompleteDispatchException(tokens.toString());
         return result;
     }
