@@ -8,7 +8,7 @@ public class EsmSource
         extends EsmScope {
 
     public final EsmModule module;
-    public final String path;
+    public final String localPath;
 
     public final EsmName __bare = new EsmName(this, null, null, false);
 
@@ -23,7 +23,8 @@ public class EsmSource
             throw new NullPointerException("module");
 
         this.module = module;
-        this.path = path;
+        this.localPath = path;
+//        this.fullPath = localPath == null ? null : module.join(localPath);
     }
 
     public EsmSource(EsmModule module, int priority) {
@@ -37,7 +38,8 @@ public class EsmSource
             throw new IllegalUsageException();
 
         this.module = module;
-        this.path = aPath.value();
+        this.localPath = aPath.value();
+//        this.fullPath = module.join(localPath);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class EsmSource
 
     @Override
     public int hashCode() {
-        return Objects.hash(module, path);
+        return Objects.hash(module, localPath);
     }
 
     @Override
@@ -97,21 +99,21 @@ public class EsmSource
         if (getClass() != obj.getClass())
             return false;
         EsmSource other = (EsmSource) obj;
-        return Objects.equals(module, other.module) && Objects.equals(path, other.path);
+        return Objects.equals(module, other.module) && Objects.equals(localPath, other.localPath);
     }
 
     public String getFullPath() {
-        if (module == null || module.name == null) {
-            if (path == null)
+        if (module.name == null) {
+            if (localPath == null)
                 throw new IllegalUsageException("either module or path must be specified.");
-            return path;
+            return localPath;
         }
 
-        if (path == null)
+        if (localPath == null)
             // import the main file specified in the package.json.
-            return module.name;
+            return module.basePath;
 
-        return module.name + "/" + path;
+        return module.basePath + "/" + localPath;
     }
 
     @Override
@@ -120,9 +122,9 @@ public class EsmSource
         if (module != null)
             sb.append(module);
 
-        if (path != null)
-            sb.append(" / ");
-        sb.append(path);
+        if (localPath != null)
+            sb.append(" :: ");
+        sb.append(localPath);
 
         return sb.toString();
     }

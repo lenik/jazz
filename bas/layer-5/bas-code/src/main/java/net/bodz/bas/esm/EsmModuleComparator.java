@@ -1,5 +1,6 @@
 package net.bodz.bas.esm;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 public class EsmModuleComparator
@@ -11,7 +12,7 @@ public class EsmModuleComparator
         if (cmp != 0)
             return cmp;
 
-        cmp = o1.name.compareTo(o2.name);
+        cmp = Nullables.compare(o1.name, o2.name);
         if (cmp != 0)
             return cmp;
 

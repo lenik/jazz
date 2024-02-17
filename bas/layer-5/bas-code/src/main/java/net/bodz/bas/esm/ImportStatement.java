@@ -13,6 +13,8 @@ public class ImportStatement {
     public List<EsmName> typeNames = new ArrayList<>();
     public EsmSource from;
 
+    boolean debug = false; //true;
+
     public void initFrom(EsmSource source) {
         this.from = source;
         defaultAlias = null;
@@ -23,16 +25,19 @@ public class ImportStatement {
     public int printOutTypeScriptForNewFrom(IPrintOut out, EsmSource source) {
         int lines = 0;
         if (from != source) {
-            int fromPriority = -1;
+            int lastPriority = -10000;
             if (from != null) {
-                fromPriority = from.module.priority;
+                lastPriority = from.module.priority;
                 lines += printOutTypeScript(out);
             }
 
-            if (fromPriority != -1 && source != null) {
+            if (lastPriority != -1 && source != null) {
                 int nextPriority = source.module.priority;
-                if (nextPriority != fromPriority)
+                int sepDiv = 100;
+                if (nextPriority / sepDiv != lastPriority / sepDiv) {
                     out.println(); // group separator
+                    lastPriority = nextPriority;
+                }
             }
 
             initFrom(source);
@@ -45,13 +50,19 @@ public class ImportStatement {
         String pathQuoted = StringQuote.qqJavaString(path);
         int lines = 0;
 
+        String _import = "import";
+        if (debug)
+            _import = String.format("/* %d */ import", from.module.getPriority());
+
         if (defaultAlias != null) {
-            out.printf("import %s from %s;\n", defaultAlias, pathQuoted);
+            out.printf(_import);
+            out.printf(" %s from %s;\n", defaultAlias, pathQuoted);
             lines++;
         }
 
         if (! names.isEmpty()) {
-            out.print("import ");
+            out.print(_import);
+            out.print(" ");
             printNames(out, names);
             out.print(" from ");
             out.print(pathQuoted);
@@ -60,7 +71,8 @@ public class ImportStatement {
         }
 
         if (! typeNames.isEmpty()) {
-            out.print("import type ");
+            out.print(_import);
+            out.print(" type ");
             printNames(out, typeNames);
             out.print(" from ");
             out.print(pathQuoted);
