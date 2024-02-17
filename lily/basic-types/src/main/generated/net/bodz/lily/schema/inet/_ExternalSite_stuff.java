@@ -129,7 +129,6 @@ public abstract class _ExternalSite_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.extsite (id)
      */
     public ExternalSite getParent() {

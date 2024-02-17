@@ -49,7 +49,6 @@ public abstract class _PostTalkVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.post_msg (id)
      */
     @NotNull

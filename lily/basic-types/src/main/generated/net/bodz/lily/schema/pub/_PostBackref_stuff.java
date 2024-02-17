@@ -78,7 +78,6 @@ public abstract class _PostBackref_stuff
 
     /**
      *
-     * @label post
      * @constraint foreign key (post) references lily.post (id)
      */
     @NotNull
@@ -110,7 +109,6 @@ public abstract class _PostBackref_stuff
 
     /**
      *
-     * @label site
      * @constraint foreign key (site) references lily.extsite (id)
      */
     @NotNull

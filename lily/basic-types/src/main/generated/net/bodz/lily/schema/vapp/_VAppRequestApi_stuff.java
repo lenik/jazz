@@ -72,7 +72,6 @@ public abstract class _VAppRequestApi_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.vappreq (id)
      */
     @NotNull
@@ -102,7 +101,6 @@ public abstract class _VAppRequestApi_stuff
 
     /**
      *
-     * @label api
      * @constraint foreign key (api) references lily.apitype (id)
      */
     @NotNull

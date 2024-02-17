@@ -105,7 +105,6 @@ public abstract class _VApiLog_stuff
 
     /**
      *
-     * @label api
      * @constraint foreign key (api) references lily.apitype (id)
      */
     public ApiType getApi() {
@@ -134,7 +133,6 @@ public abstract class _VApiLog_stuff
 
     /**
      *
-     * @label app
      * @constraint foreign key (app) references lily.vapp (id)
      */
     @NotNull

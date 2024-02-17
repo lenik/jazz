@@ -32,7 +32,6 @@ public abstract class _PostFav_stuff
 
     /**
      *
-     * @label post
      * @constraint foreign key (post) references lily.post (id)
      */
     @NotNull

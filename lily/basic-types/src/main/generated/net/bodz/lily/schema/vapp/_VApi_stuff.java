@@ -90,7 +90,6 @@ public abstract class _VApi_stuff
 
     /**
      *
-     * @label api
      * @constraint foreign key (api) references lily.apitype (id)
      */
     @NotNull
@@ -120,7 +119,6 @@ public abstract class _VApi_stuff
 
     /**
      *
-     * @label app
      * @constraint foreign key (app) references lily.vapp (id)
      */
     @NotNull

@@ -49,7 +49,6 @@ public abstract class _PostVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.post (id)
      */
     @NotNull

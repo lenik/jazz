@@ -112,7 +112,6 @@ public abstract class _VAppCat_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.vappcat (id)
      */
     public VAppCat getParent() {

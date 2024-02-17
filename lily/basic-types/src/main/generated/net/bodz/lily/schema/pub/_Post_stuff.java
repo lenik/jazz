@@ -140,7 +140,6 @@ public abstract class _Post_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.post (id)
      */
     public Post getParent() {
@@ -169,7 +168,6 @@ public abstract class _Post_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references lily.postcat (id)
      */
     public PostCategory getCategory() {

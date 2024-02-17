@@ -114,7 +114,6 @@ public abstract class _FormDef_stuff
 
     /**
      *
-     * @label schema
      * @constraint foreign key (schema) references lily._schema (id)
      */
     @NotNull

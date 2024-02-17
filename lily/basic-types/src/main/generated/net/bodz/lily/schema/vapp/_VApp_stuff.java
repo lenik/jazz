@@ -105,7 +105,6 @@ public abstract class _VApp_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references lily.vappcat (id)
      */
     public VAppCat getCategory() {
@@ -134,7 +133,6 @@ public abstract class _VApp_stuff
 
     /**
      *
-     * @label req
      * @constraint foreign key (req) references lily.vappreq (id)
      */
     public VAppRequest getReq() {

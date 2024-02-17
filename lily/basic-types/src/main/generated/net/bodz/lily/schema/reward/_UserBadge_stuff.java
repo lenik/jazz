@@ -69,7 +69,6 @@ public abstract class _UserBadge_stuff
 
     /**
      *
-     * @label badge
      * @constraint foreign key (badge) references lily.badge (id)
      */
     public Badge getBadge() {
@@ -100,7 +99,6 @@ public abstract class _UserBadge_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label user
      * @constraint foreign key (user) references lily.user (id)
      */
     public User getUser() {

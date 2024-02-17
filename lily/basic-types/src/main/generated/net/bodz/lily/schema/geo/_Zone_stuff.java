@@ -172,7 +172,6 @@ public abstract class _Zone_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.zone (id)
      */
     public Zone getParent() {
@@ -201,7 +200,6 @@ public abstract class _Zone_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references lily.zonecat (id)
      */
     @NotNull

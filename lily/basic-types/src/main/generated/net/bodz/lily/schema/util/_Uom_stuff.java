@@ -114,7 +114,6 @@ public abstract class _Uom_stuff
 
     /**
      *
-     * @label std
      * @constraint foreign key (std) references lily.uom (id)
      */
     public Uom getStd() {

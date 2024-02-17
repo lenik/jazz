@@ -49,7 +49,6 @@ public abstract class _ArticleTalkVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.article_msg (id)
      */
     @NotNull

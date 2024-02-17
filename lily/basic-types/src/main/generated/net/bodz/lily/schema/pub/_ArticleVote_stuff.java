@@ -49,7 +49,6 @@ public abstract class _ArticleVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references lily.article (id)
      */
     @NotNull

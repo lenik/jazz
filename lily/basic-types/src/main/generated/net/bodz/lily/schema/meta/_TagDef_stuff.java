@@ -62,7 +62,6 @@ public abstract class _TagDef_stuff
 
     /**
      *
-     * @label tagv
      * @constraint foreign key (tagv) references lily._tagv (id)
      */
     @NotNull
