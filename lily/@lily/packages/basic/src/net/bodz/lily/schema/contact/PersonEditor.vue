@@ -1,17 +1,16 @@
 <script lang="ts">
+
 import { onMounted } from "vue";
-
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-
-import type { Person } from "./Person";
 
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import GroupChooseDialog from "../../../../../GroupChooseDialog.vue";
-import PartyCategoryChooseDialog from "../../../../../PartyCategoryChooseDialog.vue";
-import PersonChooseDialog from "../../../../../PersonChooseDialog.vue";
-import UserChooseDialog from "../../../../../UserChooseDialog.vue";
+import GroupChooseDialog from "../account/GroupChooseDialog.vue";
+import UserChooseDialog from "../account/UserChooseDialog.vue";
+import PartyCategoryChooseDialog from "./PartyCategoryChooseDialog.vue";
+import type { Person } from "./Person";
+import PersonChooseDialog from "./PersonChooseDialog.vue";
 
 export interface Props {
 }

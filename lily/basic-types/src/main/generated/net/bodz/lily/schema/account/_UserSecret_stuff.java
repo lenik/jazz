@@ -142,7 +142,6 @@ public abstract class _UserSecret_stuff
     /**
      * The declaring user
      *
-     * @label user
      * @constraint foreign key (user) references lily.user (id)
      */
     @NotNull

@@ -1,8 +1,8 @@
 <script lang="ts">
+
 import { onMounted } from "vue";
 
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-
 import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
 
 export interface Props {

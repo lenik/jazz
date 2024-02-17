@@ -1,5 +1,6 @@
-import { property } from "@skeljs/dba/src/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/lily/entity";
+
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
 import type { PartyType } from "./PartyType";
 import { * as validators } from "./PersonValidators";

@@ -1,4 +1,5 @@
-import type { integer } from "@skeljs/dba/src/lily/entity";
+
+import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
 
 import type { Party } from "./Party";
 import type { Person } from "./Person";
