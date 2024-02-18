@@ -12,10 +12,11 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ISchemaMetadata
         extends
-            IJavaName,
+            IJavaType,
             ITableDirectory,
             IViewDirectory,
             ICrossRefAnalyzer,
@@ -23,7 +24,7 @@ public interface ISchemaMetadata
             IXmlForm,
             IJDBCMetaDataSupport {
 
-    String K_JAVA_NAME = "javaName";
+    String K_JAVA_TYPE = "javaType";
     String K_TABLES = "tables";
     String K_TABLE = "table";
     String K_VIEWS = "views";
@@ -70,9 +71,9 @@ public interface ISchemaMetadata
             throws IOException, FormatException {
         getId().jsonOut(out, opts);
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.entry(K_JAVA_NAME, javaName);
+        QualifiedName javaType = getJavaType();
+        if (javaType != null)
+            out.entry(K_JAVA_TYPE, javaType.getFullName());
 
         out.key(K_TABLES);
         out.object();
@@ -110,9 +111,9 @@ public interface ISchemaMetadata
             throws XMLStreamException, FormatException {
         getId().writeObject(out);
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.attribute(K_JAVA_NAME, javaName);
+        QualifiedName javaType = getJavaType();
+        if (javaType != null)
+            out.attribute(K_JAVA_TYPE, javaType.getFullName());
 
         out.beginElement(K_TABLES);
         for (String key : getTableMap().keySet()) {

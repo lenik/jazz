@@ -152,16 +152,6 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public String getJavaPackage() {
-        return null;
-    }
-
-    @Override
-    public void setJavaPackage(String javaPackage) {
-        // do nothing
-    }
-
-    @Override
     public String getLabel() {
         return label;
     }

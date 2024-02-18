@@ -5,7 +5,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 public interface IMutableCatalogMetadata
         extends
             ICatalogMetadata,
-            IMutableJavaName {
+            IMutableJavaType {
 
     /**
      * @throws DuplicatedKeyException
