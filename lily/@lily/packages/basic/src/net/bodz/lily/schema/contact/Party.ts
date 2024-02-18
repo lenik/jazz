@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 
-import { integer } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { integer } from '@skeljs/core/src/lang/type';
 import { IdEntity } from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
 
 import { Contact } from "./Contact";
