@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -73,6 +75,7 @@ public abstract class Party
         this.category = category;
     }
 
+    @Column(name = "cat")
     public Integer getCategoryId() {
         if (category != null) {
             return category.getId();
@@ -88,6 +91,7 @@ public abstract class Party
      * 生日
      */
     @Priority(100)
+    @Column(name = "birthday")
     public Date getBirthday() {
         return birthday;
     }
@@ -116,6 +120,7 @@ public abstract class Party
     @OfGroup(StdGroup.Settings.class)
     @TextInput(maxLength = N_LANGTAG)
     @Derived
+    @Column(name = "langtag", precision = N_LANGTAG)
     public String getLangTag() {
         return locale.toLanguageTag();
     }
@@ -146,6 +151,7 @@ public abstract class Party
      */
     @OfGroup(StdGroup.Settings.class)
     @Derived
+    @Column(name = "tz", precision = N_TIMEZONEID)
     public String getTimeZoneId() {
         return timeZoneId.getId();
     }
@@ -207,6 +213,7 @@ public abstract class Party
      */
     @Priority(300)
     @TextInput(maxLength = N_SUBJECT)
+    @Column(name = "subject", precision = N_SUBJECT)
     public String getSubject() {
         return subject;
     }
@@ -267,6 +274,7 @@ public abstract class Party
      */
     @Priority(400)
     @TextInput(maxLength = N_BANK)
+    @Column(name = "bank", precision = N_BANK)
     public String getBank() {
         return bank;
     }
@@ -282,6 +290,7 @@ public abstract class Party
      */
     @Priority(401)
     @TextInput(maxLength = N_ACCOUNT)
+    @Column(name = "account", precision = N_ACCOUNT)
     public String getAccount() {
         return account;
     }
@@ -309,6 +318,7 @@ public abstract class Party
         return sb.toString();
     }
 
+    @Column(name = "props")
     @Override
     public PartyProperties getProperties() {
         return properties;
