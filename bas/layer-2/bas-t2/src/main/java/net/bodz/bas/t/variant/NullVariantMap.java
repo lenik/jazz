@@ -13,6 +13,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import net.bodz.bas.t.tuple.QualifiedName;
+
 public class NullVariantMap<K>
         extends NullLookupMap<K, Object>
         implements
@@ -206,6 +208,16 @@ public class NullVariantMap<K>
     @Override
     public BigDecimal getBigDecimal(K key, BigDecimal defaultValue) {
         return defaultValue;
+    }
+
+    @Override
+    public QualifiedName getQName(K key) {
+        return null;
+    }
+
+    @Override
+    public QualifiedName getQName(K key, QualifiedName defaultQName) {
+        return defaultQName;
     }
 
     @Override

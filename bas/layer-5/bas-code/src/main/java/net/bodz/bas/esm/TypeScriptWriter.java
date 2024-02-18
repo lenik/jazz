@@ -1,11 +1,11 @@
 package net.bodz.bas.esm;
 
 import net.bodz.bas.codegen.IImportNaming;
-import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.DecoratedTreeOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class TypeScriptWriter
         extends DecoratedTreeOut

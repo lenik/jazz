@@ -1,7 +1,7 @@
 package net.bodz.bas.esm;
 
-import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.t.preorder.PreorderTreeMap;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class QualifiedNameMap<T>
         extends PreorderTreeMap<QualifiedName, T> {

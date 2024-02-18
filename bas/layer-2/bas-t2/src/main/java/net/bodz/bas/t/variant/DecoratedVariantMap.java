@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Set;
 
 import net.bodz.bas.t.model.AbstractDecorator;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DecoratedVariantMap<K>
         extends AbstractDecorator<IVariantMap<K>>
@@ -230,6 +231,16 @@ public class DecoratedVariantMap<K>
     @Override
     public BigDecimal getBigDecimal(K key, BigDecimal defaultValue) {
         return getWrapped().getBigDecimal(key, defaultValue);
+    }
+
+    @Override
+    public QualifiedName getQName(K key) {
+        return getWrapped().getQName(key);
+    }
+
+    @Override
+    public QualifiedName getQName(K key, QualifiedName defaultQName) {
+        return getWrapped().getQName(key, defaultQName);
     }
 
     @Override

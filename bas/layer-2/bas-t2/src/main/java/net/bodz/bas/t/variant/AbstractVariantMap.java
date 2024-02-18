@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 
 import net.bodz.bas.c.object.Enums;
 import net.bodz.bas.c.string.StringPred;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public abstract class AbstractVariantMap<K>
         extends AutoConvVariantMap<K> {
@@ -32,7 +33,7 @@ public abstract class AbstractVariantMap<K>
         Object value = get(key);
         if (value == null)
             return containsKey(key) ? null : defaultValue;
-        if (!value.getClass().isArray())
+        if (! value.getClass().isArray())
             return value;
         int length = Array.getLength(value);
         if (length == 0)
@@ -69,6 +70,20 @@ public abstract class AbstractVariantMap<K>
         if (value == null)
             return containsKey(key) ? null : defaultString;
         return value.toString();
+    }
+
+    @Override
+    public QualifiedName getQName(K key) {
+        String value = getString(key);
+        return value == null ? null : QualifiedName.parse(value);
+    }
+
+    @Override
+    public QualifiedName getQName(K key, QualifiedName defaultQName) {
+        String value = getString(key);
+        if (value == null)
+            return containsKey(key) ? null : defaultQName;
+        return QualifiedName.parse(value);
     }
 
     @Override

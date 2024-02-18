@@ -1,4 +1,4 @@
-package net.bodz.bas.codegen;
+package net.bodz.bas.t.tuple;
 
 import java.io.File;
 import java.util.Objects;
@@ -7,7 +7,6 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.t.preorder.AbstractPreorder;
 import net.bodz.bas.t.preorder.PackageNamePreorder;
-import net.bodz.bas.t.tuple.Split;
 
 public class QualifiedName {
 

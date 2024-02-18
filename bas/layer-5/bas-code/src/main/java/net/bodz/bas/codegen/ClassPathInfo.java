@@ -2,6 +2,8 @@ package net.bodz.bas.codegen;
 
 import java.io.File;
 
+import net.bodz.bas.t.tuple.QualifiedName;
+
 public class ClassPathInfo
         implements
             IClassPathInfo {
