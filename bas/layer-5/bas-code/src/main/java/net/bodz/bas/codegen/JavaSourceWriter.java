@@ -2,6 +2,7 @@ package net.bodz.bas.codegen;
 
 import net.bodz.bas.io.DecoratedTreeOut;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class JavaSourceWriter
         extends DecoratedTreeOut

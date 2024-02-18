@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class JavaImports
         extends TreeSet<String> {

@@ -2,9 +2,9 @@ package net.bodz.bas.esm;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
-import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.t.preorder.PackageMap;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class EsmPackageMap
         extends PackageMap<EsmModule> {

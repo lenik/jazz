@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.codegen.QualifiedName;
 import net.bodz.bas.io.IPrintOut;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class EsmImports
         extends TreeSet<EsmName> {
