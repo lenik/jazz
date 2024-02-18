@@ -55,6 +55,14 @@ public class QualifiedName {
         return new QualifiedName(packageName, name + add);
     }
 
+    public String getHead() {
+        if (packageName != null) {
+            int dot = packageName.indexOf('.');
+            return dot == -1 ? packageName : packageName.substring(0, dot);
+        }
+        return name;
+    }
+
     public String getFullName() {
         if (packageName == null)
             return name;
