@@ -27,7 +27,7 @@ public class DefaultSchemaMetadata
 
     SchemaOid schemaId = new SchemaOid();
     String contextCatalogName;
-    QualifiedName javaType;
+    QualifiedName qName;
 
     String label;
     String description;
@@ -66,19 +66,19 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public QualifiedName getJavaType() {
-        return javaType;
+    public QualifiedName getJavaQName() {
+        return qName;
     }
 
     @Override
-    public void setJavaType(QualifiedName javaType) {
-        this.javaType = javaType;
+    public void setJavaQName(QualifiedName qName) {
+        this.qName = qName;
     }
 
     @Override
     public String getJavaPackage() {
-        if (javaType != null)
-            return javaType.packageName;
+        if (qName != null)
+            return qName.packageName;
         if (parent != null)
             return parent.getJavaPackage();
         return null;
@@ -400,7 +400,7 @@ public class DefaultSchemaMetadata
             throws ParseException {
         getId().jsonIn(o, opts);
 
-        setJavaType(o.getString(K_JAVA_TYPE));
+        setJavaQName(o.getString(K_Q_NAME));
 
         JsonObject jm = o.getJsonObject(K_TABLES);
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
@@ -426,7 +426,7 @@ public class DefaultSchemaMetadata
     @Override
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
-        setJavaType(x_metadata.a(K_JAVA_TYPE).getString());
+        setJavaQName(x_metadata.a(K_Q_NAME).getString());
 
         IElement x_tables = x_metadata.selectByTag(K_TABLES).first();
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();

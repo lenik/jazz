@@ -26,10 +26,11 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
 import net.bodz.bas.t.map.JKMap;
 import net.bodz.bas.t.order.IOrdinal;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class CrossReference
         implements
-            IMutableJavaName,
+            IMutableJavaQName,
             IOrdinal,
             IJsonForm,
             IXmlForm,
@@ -45,8 +46,7 @@ public class CrossReference
     public static final String K_DELETE_RULE = "deleteRule";
     public static final String K_DEFERRABILITY = "deferrability";
 
-    String javaPackage; // not used.
-    String javaName;
+    QualifiedName javaQName;
     String label;
     String description;
 
@@ -87,17 +87,17 @@ public class CrossReference
         this.setParentTable(parentTable);
         this.setParentColumns(parentColumns);
 
-        this.setJavaName(parentTable.getJavaType().name);
+        this.setJavaQName(parentTable.getJavaType().name);
     }
 
     @Override
-    public String getJavaName() {
-        return javaName;
+    public QualifiedName getJavaQName() {
+        return javaQName;
     }
 
     @Override
-    public void setJavaName(String javaName) {
-        this.javaName = javaName;
+    public void setJavaQName(QualifiedName javaQName) {
+        this.javaQName = javaQName;
     }
 
     public String getLabel() {

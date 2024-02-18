@@ -16,17 +16,18 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.order.IOrdinal;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface IColumnMetadata
         extends
-            IJavaName,
+            IJavaQName,
             IOrdinal,
             IJsonForm,
             IXmlForm {
 
     public static final String K_ORDINAL_POSITION = "ordinal";
     public static final String K_NAME = "name";
-    public static final String K_JAVA_NAME = "javaName";
+    public static final String K_Q_NAME = "javaName";
     public static final String K_LABEL = "label";
     public static final String K_DESCRIPTION = "description";
     public static final String K_TYPE = "type";
@@ -73,10 +74,10 @@ public interface IColumnMetadata
     String getName();
 
     default boolean isCompositeProperty() {
-        String property = getJavaName();
+        QualifiedName property = getJavaQName();
         if (property == null)
             return false;
-        return property.indexOf('.') != -1;
+        return property.packageName != null;
     }
 
     String getLabel();
@@ -167,7 +168,7 @@ public interface IColumnMetadata
         out.entry(K_ORDINAL_POSITION, getOrdinal());
         out.entry(K_NAME, getName());
 
-        out.entryNotNull(K_JAVA_NAME, getJavaName());
+        out.entryNotNull(K_Q_NAME, getJavaQName());
         out.entryNotNull(K_LABEL, getLabel());
         out.entryNotNull(K_DESCRIPTION, getDescription());
 
@@ -202,7 +203,7 @@ public interface IColumnMetadata
         out.attribute(K_ORDINAL_POSITION, getOrdinal());
         out.attribute(K_NAME, getName());
 
-        out.attributeNotNull(K_JAVA_NAME, getJavaName());
+        out.attributeNotNull(K_Q_NAME, getJavaQName());
         out.attributeNotNull(K_LABEL, getLabel());
         out.attributeNotNull(K_DESCRIPTION, getDescription());
 

@@ -22,13 +22,14 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.t.tuple.QualifiedName;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IParser;
 
 public class DefaultColumnMetadata
         implements
             IColumnMetadata,
-            IMutableJavaName {
+            IMutableJavaQName {
 
     IRowSetMetadata parent;
     TableOid parentOid;
@@ -37,7 +38,7 @@ public class DefaultColumnMetadata
 
     ColumnOid oid;
     String name;
-    String javaName;
+    QualifiedName javaQName;
 
     String label;
     String description; // comment..
@@ -142,13 +143,13 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public String getJavaName() {
-        return javaName;
+    public QualifiedName getJavaQName() {
+        return javaQName;
     }
 
     @Override
-    public void setJavaName(String javaName) {
-        this.javaName = javaName;
+    public void setJavaQName(QualifiedName qName) {
+        this.javaQName = qName;
     }
 
     @Override
@@ -599,7 +600,7 @@ public class DefaultColumnMetadata
             throws ParseException {
 //        index = o.getInt("index", -1);
         name = o.getString(K_NAME);
-        javaName = o.getString(K_JAVA_NAME);
+        setJavaQName(o.getString(K_Q_NAME));
 
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);
@@ -639,7 +640,7 @@ public class DefaultColumnMetadata
             throws ParseException, LoaderException {
 //        index = o.a("index").getInt(-1);
         name = o.a(K_NAME).getString();
-        javaName = o.a(K_JAVA_NAME).getString();
+        setJavaQName(o.a(K_Q_NAME).getString());
         label = o.a(K_LABEL).getString();
         description = o.a(K_DESCRIPTION).getString();
 
