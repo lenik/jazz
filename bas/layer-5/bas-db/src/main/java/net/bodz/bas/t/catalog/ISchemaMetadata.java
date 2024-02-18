@@ -16,7 +16,7 @@ import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ISchemaMetadata
         extends
-            IJavaType,
+            IJavaQName,
             ITableDirectory,
             IViewDirectory,
             ICrossRefAnalyzer,
@@ -24,7 +24,7 @@ public interface ISchemaMetadata
             IXmlForm,
             IJDBCMetaDataSupport {
 
-    String K_JAVA_TYPE = "javaType";
+    String K_Q_NAME = "qName";
     String K_TABLES = "tables";
     String K_TABLE = "table";
     String K_VIEWS = "views";
@@ -71,9 +71,9 @@ public interface ISchemaMetadata
             throws IOException, FormatException {
         getId().jsonOut(out, opts);
 
-        QualifiedName javaType = getJavaType();
-        if (javaType != null)
-            out.entry(K_JAVA_TYPE, javaType.getFullName());
+        QualifiedName qName = getJavaQName();
+        if (qName != null)
+            out.entry(K_Q_NAME, qName.getFullName());
 
         out.key(K_TABLES);
         out.object();
@@ -111,9 +111,9 @@ public interface ISchemaMetadata
             throws XMLStreamException, FormatException {
         getId().writeObject(out);
 
-        QualifiedName javaType = getJavaType();
-        if (javaType != null)
-            out.attribute(K_JAVA_TYPE, javaType.getFullName());
+        QualifiedName qName = getJavaQName();
+        if (qName != null)
+            out.attribute(K_Q_NAME, qName.getFullName());
 
         out.beginElement(K_TABLES);
         for (String key : getTableMap().keySet()) {

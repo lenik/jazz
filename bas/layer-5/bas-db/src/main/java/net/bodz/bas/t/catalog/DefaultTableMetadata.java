@@ -85,7 +85,7 @@ public class DefaultTableMetadata
         if (javaType != null)
             return javaType.packageName;
         if (parent != null)
-            return parent.getJavaType().packageName;
+            return parent.getJavaQName().getFullName();
         return null;
     }
 //
