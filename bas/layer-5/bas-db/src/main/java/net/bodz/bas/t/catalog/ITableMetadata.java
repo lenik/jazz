@@ -18,13 +18,13 @@ import net.bodz.bas.potato.element.IType;
 public interface ITableMetadata
         extends
             IRowSetMetadata,
-            IJavaName,
+            IJavaType,
             IJDBCMetaDataSupport {
 
     String K_TABLE_TYPE = "tableType";
     String K_DESCRIPTION = "description";
 
-    String K_JAVA_NAME = "javaName";
+    String K_JAVA_TYPE = "javaType";
     String K_BASE_TYPE = "baseType";
     String K_EXCLUDED = "excluded";
 
@@ -37,7 +37,7 @@ public interface ITableMetadata
     TableType getTableType();
 
     default Phrase nam() {
-        return Phrase.dual(getName(), getJavaName());
+        return Phrase.dual(getName(), getJavaType().name);
     }
 
     default String getName() {
@@ -63,7 +63,7 @@ public interface ITableMetadata
     }
 
     default String getEntityTypeName() {
-        return getJavaQName();
+        return getJavaType().getFullName();
     }
 
     TableKey getPrimaryKey();
@@ -102,7 +102,7 @@ public interface ITableMetadata
 
         out.entry(K_TABLE_TYPE, getTableType());
 
-        out.entryNotNull(K_JAVA_NAME, getJavaName());
+        out.entryNotNull(K_JAVA_TYPE, getJavaType().getFullName());
         out.entryNotNull(K_BASE_TYPE, getBaseTypeName());
         out.entryTrue(K_EXCLUDED, isExcluded());
 
@@ -134,7 +134,7 @@ public interface ITableMetadata
 
         out.attribute(K_TABLE_TYPE, getTableType());
 
-        out.attributeNotNull(K_JAVA_NAME, getJavaName());
+        out.attributeNotNull(K_JAVA_TYPE, getJavaType().getFullName());
         out.attributeNotNull(K_BASE_TYPE, getBaseTypeName());
         out.attributeTrue(K_EXCLUDED, isExcluded());
 

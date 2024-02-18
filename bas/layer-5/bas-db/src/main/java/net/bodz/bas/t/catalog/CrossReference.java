@@ -87,18 +87,7 @@ public class CrossReference
         this.setParentTable(parentTable);
         this.setParentColumns(parentColumns);
 
-        this.setJavaPackage(parentTable.getJavaPackage());
-        this.setJavaName(parentTable.getJavaName());
-    }
-
-    @Override
-    public String getJavaPackage() {
-        return javaPackage;
-    }
-
-    @Override
-    public void setJavaPackage(String javaPackage) {
-        this.javaPackage = javaPackage;
+        this.setJavaName(parentTable.getJavaType().name);
     }
 
     @Override

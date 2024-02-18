@@ -25,18 +25,18 @@ import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultTableMetadata
         extends DefaultRowSetMetadata
         implements
             ITableMetadata,
-            IMutableJavaName {
+            IMutableJavaType {
 
     static final Logger logger = LoggerFactory.getLogger(DefaultTableMetadata.class);
 
     TableOid oid = new TableOid();
-    String javaName;
-    String javaPackage;
+    QualifiedName javaType;
     Class<?> entityClass;
     IType entityType;
 
@@ -71,28 +71,28 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public String getJavaName() {
-        return javaName;
+    public QualifiedName getJavaType() {
+        return javaType;
     }
 
     @Override
-    public void setJavaName(String javaName) {
-        this.javaName = javaName;
+    public void setJavaType(QualifiedName javaType) {
+        this.javaType = javaType;
     }
 
     @Override
     public String getJavaPackage() {
-        if (javaPackage != null)
-            return javaPackage;
+        if (javaType != null)
+            return javaType.packageName;
         if (parent != null)
-            return parent.getJavaQName();
+            return parent.getJavaType().packageName;
         return null;
     }
-
-    @Override
-    public void setJavaPackage(String javaPackage) {
-        this.javaPackage = javaPackage;
-    }
+//
+//    @Override
+//    public void setJavaPackage(String javaPackage) {
+//        this.javaPackage = javaPackage;
+//    }
 
     @Override
     public String getBaseTypeName() {
@@ -207,7 +207,7 @@ public class DefaultTableMetadata
 
         oid.jsonIn(o, opts);
 
-        javaName = o.getString(K_JAVA_NAME);
+        setJavaType(o.getString(K_JAVA_TYPE));
         baseTypeName = o.getString(K_BASE_TYPE);
 
         tableType = o.getEnum(TableType.class, K_TABLE_TYPE, getDefaultTableType());
@@ -241,7 +241,7 @@ public class DefaultTableMetadata
 
         oid.readObject(x_table);
 
-        javaName = x_table.a(K_JAVA_NAME).getString();
+        setJavaType(x_table.a(K_JAVA_TYPE).getString());
         baseTypeName = x_table.a(K_BASE_TYPE).getString();
 
         tableType = x_table.a(K_TABLE_TYPE)//

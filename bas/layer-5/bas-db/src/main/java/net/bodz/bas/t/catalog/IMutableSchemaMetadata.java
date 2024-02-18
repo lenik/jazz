@@ -5,7 +5,7 @@ import net.bodz.bas.err.DuplicatedKeyException;
 public interface IMutableSchemaMetadata
         extends
             ISchemaMetadata,
-            IMutableJavaName {
+            IMutableJavaType {
 
     void setParent(ICatalogMetadata parent);
 

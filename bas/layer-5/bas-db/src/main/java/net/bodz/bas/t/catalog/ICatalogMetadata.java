@@ -11,11 +11,12 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ICatalogMetadata
         extends
             Iterable<ISchemaMetadata>,
-            IJavaName,
+            IJavaType,
             ISchemaDirectory,
             ITableDirectory,
             ICrossRefAnalyzer,
@@ -24,7 +25,7 @@ public interface ICatalogMetadata
             IJDBCMetaDataSupport {
 
     String K_NAME = "name";
-    String K_JAVA_NAME = "javaName";
+    String K_JAVA_TYPE = "javaType";
     String K_SCHEMAS = "schemas";
     String K_SCHEMA = "schema";
 
@@ -52,9 +53,9 @@ public interface ICatalogMetadata
             throws IOException, FormatException {
         out.entry(K_NAME, getName());
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.entry(K_JAVA_NAME, javaName);
+        QualifiedName javaType = getJavaType();
+        if (javaType != null)
+            out.entry(K_JAVA_TYPE, javaType.getFullName());
 
         out.key(K_SCHEMAS);
         out.object();
@@ -75,9 +76,9 @@ public interface ICatalogMetadata
             throws XMLStreamException, FormatException {
         out.attribute(K_NAME, getName());
 
-        String javaName = getJavaName();
-        if (javaName != null)
-            out.attribute(K_JAVA_NAME, javaName);
+        QualifiedName javaType = getJavaType();
+        if (javaType != null)
+            out.attribute(K_JAVA_TYPE, javaType.getFullName());
 
         out.beginElement(K_SCHEMAS);
         for (String key : getSchemas().keySet()) {

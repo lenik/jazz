@@ -14,6 +14,7 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.Stdio;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultCatalogMetadata
         implements
@@ -22,8 +23,7 @@ public class DefaultCatalogMetadata
     static final String ANY_SCHEMA_NAME = "?";
 
     String name;
-    String javaName;
-    String javaPackage;
+    QualifiedName javaType;
 
     String label;
     String description;
@@ -45,23 +45,13 @@ public class DefaultCatalogMetadata
     }
 
     @Override
-    public String getJavaName() {
-        return javaName;
+    public QualifiedName getJavaType() {
+        return javaType;
     }
 
     @Override
-    public void setJavaName(String javaName) {
-        this.javaName = javaName;
-    }
-
-    @Override
-    public String getJavaPackage() {
-        return javaPackage;
-    }
-
-    @Override
-    public void setJavaPackage(String javaPackage) {
-        this.javaPackage = javaPackage;
+    public void setJavaType(QualifiedName javaType) {
+        this.javaType = javaType;
     }
 
     @Override
@@ -345,7 +335,7 @@ public class DefaultCatalogMetadata
             throws ParseException {
         name = o.getString(K_NAME);
 
-        javaName = o.getString(K_JAVA_NAME);
+        setJavaType(o.getString(K_JAVA_TYPE));
 
         JsonObject jm = o.getJsonObject(K_SCHEMAS);
         Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();
@@ -362,7 +352,7 @@ public class DefaultCatalogMetadata
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
         name = x_metadata.a(K_NAME).getString();
-        javaName = x_metadata.a(K_JAVA_NAME).getString();
+        setJavaType(x_metadata.a(K_JAVA_TYPE).getString());
 
         IElement x_schemas = x_metadata.selectByTag(K_SCHEMAS).first();
         Map<String, ISchemaMetadata> schemas = new LinkedHashMap<>();

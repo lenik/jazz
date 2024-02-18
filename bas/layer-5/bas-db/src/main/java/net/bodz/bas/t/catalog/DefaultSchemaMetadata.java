@@ -17,6 +17,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.map.ListMap;
+import net.bodz.bas.t.tuple.QualifiedName;
 
 public class DefaultSchemaMetadata
         implements
@@ -26,8 +27,7 @@ public class DefaultSchemaMetadata
 
     SchemaOid schemaId = new SchemaOid();
     String contextCatalogName;
-    String javaName;
-    String javaPackage;
+    QualifiedName javaType;
 
     String label;
     String description;
@@ -66,28 +66,28 @@ public class DefaultSchemaMetadata
     }
 
     @Override
-    public String getJavaName() {
-        return javaName;
+    public QualifiedName getJavaType() {
+        return javaType;
     }
 
     @Override
-    public void setJavaName(String javaName) {
-        this.javaName = javaName;
+    public void setJavaType(QualifiedName javaType) {
+        this.javaType = javaType;
     }
 
     @Override
     public String getJavaPackage() {
-        if (javaPackage != null)
-            return javaPackage;
+        if (javaType != null)
+            return javaType.packageName;
         if (parent != null)
-            return parent.getJavaQName();
+            return parent.getJavaPackage();
         return null;
     }
 
-    @Override
-    public void setJavaPackage(String javaPackage) {
-        this.javaPackage = javaPackage;
-    }
+//    @Override
+//    public void setJavaPackage(String javaPackage) {
+//        this.javaPackage = javaPackage;
+//    }
 
     @Override
     public boolean isValidTableId(TableOid tableName) {
@@ -400,7 +400,7 @@ public class DefaultSchemaMetadata
             throws ParseException {
         getId().jsonIn(o, opts);
 
-        javaName = o.getString(K_JAVA_NAME);
+        setJavaType(o.getString(K_JAVA_TYPE));
 
         JsonObject jm = o.getJsonObject(K_TABLES);
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
@@ -426,7 +426,7 @@ public class DefaultSchemaMetadata
     @Override
     public void readObject(IElement x_metadata)
             throws ParseException, LoaderException {
-        javaName = x_metadata.a(K_JAVA_NAME).getString();
+        setJavaType(x_metadata.a(K_JAVA_TYPE).getString());
 
         IElement x_tables = x_metadata.selectByTag(K_TABLES).first();
         Map<String, ITableMetadata> tables = new LinkedHashMap<>();
