@@ -8,8 +8,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class TypeKind {
 
@@ -134,6 +141,7 @@ public class TypeKind {
         typeIdMap.put(LocalDateTime.class, TypeId.LOCAL_DATE_TIME);
         typeIdMap.put(LocalDate.class, TypeId.LOCAL_DATE);
         typeIdMap.put(LocalTime.class, TypeId.LOCAL_TIME);
+        typeIdMap.put(OffsetTime.class, TypeId.OFFSET_TIME);
     }
 
     public static int getTypeId(Class<?> clazz) {
