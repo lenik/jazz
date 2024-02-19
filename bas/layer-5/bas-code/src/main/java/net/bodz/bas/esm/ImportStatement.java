@@ -35,7 +35,8 @@ public class ImportStatement {
                 int nextPriority = source.module.priority;
                 int sepDiv = 100;
                 if (nextPriority / sepDiv != lastPriority / sepDiv) {
-                    out.println(); // group separator
+                    if (lastPriority >= 0)
+                        out.println(); // group separator
                     lastPriority = nextPriority;
                 }
             }
