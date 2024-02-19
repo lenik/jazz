@@ -7,10 +7,12 @@ import net.bodz.bas.err.IllegalUsageException;
 public class EsmSource
         extends EsmScope {
 
+    public static final String PATH_BARE = null;
+
     public final EsmModule module;
     public final String localPath;
 
-    public final EsmName __bare = new EsmName(this, null, null, false);
+    public final EsmName __bare = new EsmName(this, PATH_BARE, null, false);
 
     public EsmSource(EsmModule module, String path) {
         this(module, path, 0);
@@ -24,7 +26,6 @@ public class EsmSource
 
         this.module = module;
         this.localPath = path;
-//        this.fullPath = localPath == null ? null : module.join(localPath);
     }
 
     public EsmSource(EsmModule module, int priority) {
@@ -45,6 +46,35 @@ public class EsmSource
     @Override
     public EsmScopeType getType() {
         return EsmScopeType.SOURCE;
+    }
+
+    public String getLocalPath() {
+        return localPath;
+    }
+
+    public String getBaseName() {
+        if (localPath == null)
+            return null;
+        int lastSlash = localPath.lastIndexOf('/');
+        if (lastSlash == -1)
+            return localPath;
+        else
+            return localPath.substring(lastSlash + 1);
+    }
+
+    public String getExtension() {
+        String baseName = getBaseName();
+        if (baseName == null)
+            return null;
+        int lastDot = baseName.lastIndexOf('.');
+        if (lastDot == -1)
+            return null;
+        else
+            return baseName.substring(lastDot + 1);
+    }
+
+    public boolean isVue() {
+        return "vue".equals(getExtension());
     }
 
     public EsmName defaultExport(String alias) {

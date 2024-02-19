@@ -54,10 +54,14 @@ public class EsmImports
         return "";
     }
 
-    public int dump(IPrintOut out) {
+    public int dump(IPrintOut out, Boolean vue) {
         int lines = 0;
         ImportStatement buf = new ImportStatement();
         for (EsmName name : this) {
+            if (vue != null)
+                if (name.source.isVue() != vue)
+                    continue;
+
             lines += buf.printOutTypeScriptForNewFrom(out, name.source);
             if (name.isDefaultExport())
                 buf.defaultAlias = name.alias;
