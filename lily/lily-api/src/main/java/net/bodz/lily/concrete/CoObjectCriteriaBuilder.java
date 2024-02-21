@@ -1,5 +1,7 @@
 package net.bodz.lily.concrete;
 
+import java.time.ZonedDateTime;
+
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -25,6 +27,10 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     public final IntegerField ownerId = integer("uid");
     public final IntegerField ownerGroupId = integer("gid");
     public final IntegerField acl = integer("acl");
+
+    public final DateField<ZonedDateTime> creationDate = date("creation", ZonedDateTime.class);
+    public final DateField<ZonedDateTime> lastModifiedDate = date("lastmod", ZonedDateTime.class);
+    public final DiscreteField<Object> properties = discrete("props", Object.class);
 
     public NumberFieldCriterionBuilder<?, ?> getIdField() {
         return null;

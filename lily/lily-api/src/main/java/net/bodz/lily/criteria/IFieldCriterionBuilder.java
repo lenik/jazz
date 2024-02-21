@@ -1,24 +1,14 @@
 package net.bodz.lily.criteria;
 
-import java.util.Collection;
-
 import net.bodz.lily.criterion.ICriterion;
 
 public interface IFieldCriterionBuilder<T>
         extends
-            ICriterionBuilder {
-
-    ICriterion makeIsNull();
-
-    ICriterion makeIsNotNull();
+            IDiscreteFieldCriterionBuilder<T> {
 
     ICriterion makeIsTrue();
 
     ICriterion makeIsFalse();
-
-    ICriterion makeEq(T value);
-
-    ICriterion makeNotEq(T value);
 
     ICriterion makeLessThan(T value);
 
@@ -31,10 +21,6 @@ public interface IFieldCriterionBuilder<T>
     ICriterion makeBetween(T min, T max);
 
     ICriterion makeNotBetween(T min, T max);
-
-    ICriterion makeIn(Collection<T> values);
-
-    ICriterion makeNotIn(Collection<T> values);
 
     ICriterion makeInside(T start, T end, boolean includeEnd);
 
