@@ -1,6 +1,5 @@
 package net.bodz.bas.esm;
 
-import net.bodz.bas.codegen.IImportNaming;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.DecoratedTreeOut;
@@ -10,7 +9,7 @@ import net.bodz.bas.t.tuple.QualifiedName;
 public class TypeScriptWriter
         extends DecoratedTreeOut
         implements
-            IImportNaming {
+            IImportTsNaming {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,10 +46,23 @@ public class TypeScriptWriter
     }
 
     @Override
+    public String importName(EsmName name) {
+        return name(name);
+    }
+
+    @Override
     public String importName(String qName) {
         if (qName == null)
             throw new NullPointerException("qName");
         return importName(QualifiedName.parse(qName));
+    }
+
+    public String importDefaultAs(QualifiedName qName) {
+        EsmSource source = findSource(qName, null);
+        if (source == null) // reserved name, don't import.
+            return qName.getFullName();
+        EsmName esmName = source.defaultExport(qName.name);
+        return name(esmName);
     }
 
     @Override
