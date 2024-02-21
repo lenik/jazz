@@ -25,7 +25,7 @@ public class GenderTypeHandler
             throws SQLException {
         String s = rs.getString(columnName);
         if (s == null)
-            return Gender.UNKNOWN;
+            return null;
         else
             return Gender.meta.ofKey(s.charAt(0));
     }
@@ -35,7 +35,7 @@ public class GenderTypeHandler
             throws SQLException {
         String s = rs.getString(columnIndex);
         if (s == null)
-            return Gender.UNKNOWN;
+            return null;
         else
             return Gender.meta.ofKey(s.charAt(0));
     }
@@ -45,7 +45,7 @@ public class GenderTypeHandler
             throws SQLException {
         String s = cs.getString(columnIndex);
         if (s == null)
-            return Gender.UNKNOWN;
+            return null;
         else
             return Gender.meta.ofKey(s.charAt(0));
     }

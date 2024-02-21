@@ -42,6 +42,9 @@
         nbank       int not null default 0,
 
         gender      char,
+        pronoun     varchar(30),
+        sexual_orient varchar(30),
+
         homeland    varchar(10),
         passport    varchar(20),
 
