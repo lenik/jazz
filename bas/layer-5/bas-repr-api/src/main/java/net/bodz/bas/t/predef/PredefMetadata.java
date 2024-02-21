@@ -1,5 +1,7 @@
 package net.bodz.bas.t.predef;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 import net.bodz.bas.c.type.TypeParam;
@@ -175,6 +177,27 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         if (metadata == null)
             classLocalMap.put(type, metadata = new PredefMetadata<E, K>(type, keyType));
         return metadata;
+    }
+
+    boolean indexed;
+
+    public synchronized void indexFields() {
+        if (indexed)
+            return;
+        for (Field field : itemClass.getDeclaredFields()) {
+            int modifiers = field.getModifiers();
+            if (field.getType() != itemClass)
+                continue;
+            if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {
+                try {
+                    Predef<?, ?> value = (Predef<?, ?>) field.get(null);
+                    value._fieldName = field.getName();
+                } catch (ReflectiveOperationException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        }
+        indexed = true;
     }
 
 }
