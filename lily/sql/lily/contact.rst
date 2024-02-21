@@ -32,6 +32,12 @@ table person {
     column alias {
         javaName: contact.rename
     }
+    column gender {
+        javaType: net.bodz.lily.schema.contact.Gender
+    }
+    column sexual_orient {
+        javaName: sexualOrientation
+    }
     column ctprops {
         javaName: contact.properties
     }
