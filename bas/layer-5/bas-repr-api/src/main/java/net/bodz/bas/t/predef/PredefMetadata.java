@@ -45,7 +45,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
         int level = -1;
         Class<?> c = itemClass;
-        while (!c.equals(stopClass)) {
+        while (! c.equals(stopClass)) {
             c = c.getSuperclass();
             if (c == null)
                 throw new IllegalArgumentException("Not a subclass of Symbol: " + itemClass);
@@ -123,7 +123,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     public synchronized void addValue(E value) {
         if (value == null)
             throw new NullPointerException("value");
-        if (!value.getClass().equals(itemClass))
+        if (! value.getClass().equals(itemClass))
             throw new IllegalArgumentException("Value is not a " + itemClass.getName());
 
         K key = value.getKey();
@@ -162,6 +162,11 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
     private static Map<Class<?>, PredefMetadata<?, ?>> classLocalMap;
     static {
         classLocalMap = new HashMap<Class<?>, PredefMetadata<?, ?>>();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static PredefMetadata<?, ?> _forClass(Class<?> type) {
+        return forClass((Class) type);
     }
 
     public static <E extends Predef<?, K>, K extends Comparable<K>> //
