@@ -91,3 +91,6 @@ del-samples: predao
 del-exporters: predao
 	find -name *Exporter.java -print -delete
 
+code-web:
+	d=$$(readlink -f .); p=$${d%/*}; code -n "$$p/@lily"
+
