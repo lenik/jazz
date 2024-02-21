@@ -478,4 +478,18 @@ public abstract class AbstractCriteriaBuilder<This>
 
     }
 
+    public class DiscreteField<T>
+            extends DiscreteFieldCriterionBuilder<This, DiscreteField<T>, T> {
+
+        @SuppressWarnings("unchecked")
+        public DiscreteField(String fieldName, Class<T> type) {
+            super(fieldName, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
+        }
+
+    }
+
+    protected <T> DiscreteField<T> discrete(String fieldName, Class<T> type) {
+        return new DiscreteField<T>(fieldName, type);
+    }
+
 }
