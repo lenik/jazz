@@ -56,7 +56,7 @@ public class PredefTypers<T extends Predef<T, K>, K extends Comparable<K>>
             values = new ArrayList<T>(metadata.getValues());
         }
 
-        int index = prng.nextInt() % values.size();
+        int index = prng.nextInt(values.size());
         return values.get(index);
     }
 
