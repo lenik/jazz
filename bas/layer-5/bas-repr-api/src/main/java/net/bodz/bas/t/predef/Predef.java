@@ -12,13 +12,17 @@ import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 @Stop
 public abstract class Predef<self_t extends Predef<self_t, K>, K extends Comparable<K>>
         extends XjdocObject
-        implements Serializable, Comparable<self_t> {
+        implements
+            Serializable,
+            Comparable<self_t> {
 
     private static final long serialVersionUID = 1L;
 
     protected PredefMetadata<self_t, K> metadata;
     protected final K key;
     protected final String name;
+
+    String _fieldName;
 
     public Predef(K key, String name) {
         this(key, name, null);
@@ -73,6 +77,12 @@ public abstract class Predef<self_t extends Predef<self_t, K>, K extends Compara
     self_t readResolve()
             throws ObjectStreamException {
         return getMetadata().ofKey(key);
+    }
+
+    public String getFieldName() {
+        if (_fieldName == null)
+            metadata.indexFields();
+        return _fieldName;
     }
 
 }

@@ -51,9 +51,12 @@ public interface TypeId {
     int BIG_DECIMAL = 51;
 
     int DATE = 1000;
-    int SQL_DATE = 1001;
-    int CALENDAR = 1002;
-    int TIMESTAMP = 1003;
+    int CALENDAR = 1001;
+
+    int SQL_DATE = 1003;
+    int SQL_TIME = 1004;
+    int TIMESTAMP = 1005;
+
 //    int JODA_DATETIME = 1010;
 
     int INSTANT = 1020;
