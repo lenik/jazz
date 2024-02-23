@@ -38,3 +38,5 @@ export class Contact extends IdEntity<integer> {
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default Contact;
