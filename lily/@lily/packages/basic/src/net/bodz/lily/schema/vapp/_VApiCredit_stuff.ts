@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import ApiType from "./ApiType";
 import VApp from "./VApp";
-import _VApiCredit_stuff_Type from "./_VApiCredit_stuff_Type";
+import _VApiCredit_stuff_TypeInfo from "./_VApiCredit_stuff_TypeInfo";
 
 export class _VApiCredit_stuff extends CoEntity<integer> {
-    static TYPE = new _VApiCredit_stuff_Type();
+    static TYPE = new _VApiCredit_stuff_TypeInfo();
 
     id: integer;
     credit: BigInteger;

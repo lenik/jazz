@@ -5,10 +5,10 @@ import Person from "../contact/Person";
 import Group from "./Group";
 import User from "./User";
 import UserType from "./UserType";
-import _User_stuff_Type from "./_User_stuff_Type";
+import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class _User_stuff extends CoPrincipal {
-    static TYPE = new _User_stuff_Type();
+    static TYPE = new _User_stuff_TypeInfo();
 
 
     person?: Person;

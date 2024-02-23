@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import Post from "./Post";
 import PostTagType from "./PostTagType";
-import _PostTag_stuff_Type from "./_PostTag_stuff_Type";
+import _PostTag_stuff_TypeInfo from "./_PostTag_stuff_TypeInfo";
 
 export class _PostTag_stuff extends CoEntity<integer> {
-    static TYPE = new _PostTag_stuff_Type();
+    static TYPE = new _PostTag_stuff_TypeInfo();
 
     id: integer;
 

@@ -1,10 +1,10 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 
 import Party from "./Party";
-import _Organization_stuff_Type from "./_Organization_stuff_Type";
+import _Organization_stuff_TypeInfo from "./_Organization_stuff_TypeInfo";
 
 export class _Organization_stuff extends Party {
-    static TYPE = new _Organization_stuff_Type();
+    static TYPE = new _Organization_stuff_TypeInfo();
 
     properties?: any;
     roleCount: integer;

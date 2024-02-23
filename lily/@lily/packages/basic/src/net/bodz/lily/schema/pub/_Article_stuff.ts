@@ -2,10 +2,10 @@ import type { integer, long } from "@skeljs/core/src/lang/type";
 import CoMessage from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessage";
 
 import ArticleCategory from "./ArticleCategory";
-import _Article_stuff_Type from "./_Article_stuff_Type";
+import _Article_stuff_TypeInfo from "./_Article_stuff_TypeInfo";
 
 export class _Article_stuff extends CoMessage<long> {
-    static TYPE = new _Article_stuff_Type();
+    static TYPE = new _Article_stuff_TypeInfo();
 
     formArguments?: string;
     favCount: integer;

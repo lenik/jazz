@@ -3,10 +3,10 @@ import BackrefRecord from "@skeljs/dba/src/net/bodz/lily/concrete/BackrefRecord"
 
 import ExternalSite from "../inet/ExternalSite";
 import Post from "./Post";
-import _PostBackref_stuff_Type from "./_PostBackref_stuff_Type";
+import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
 export class _PostBackref_stuff extends BackrefRecord {
-    static TYPE = new _PostBackref_stuff_Type();
+    static TYPE = new _PostBackref_stuff_TypeInfo();
 
     key?: string;
     value: integer;

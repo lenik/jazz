@@ -4,10 +4,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 import OrgUnit from "./OrgUnit";
 import Organization from "./Organization";
 import Person from "./Person";
-import _PersonRole_stuff_Type from "./_PersonRole_stuff_Type";
+import _PersonRole_stuff_TypeInfo from "./_PersonRole_stuff_TypeInfo";
 
 export class _PersonRole_stuff extends CoEntity<integer> {
-    static TYPE = new _PersonRole_stuff_Type();
+    static TYPE = new _PersonRole_stuff_TypeInfo();
 
     id: integer;
     role?: string;

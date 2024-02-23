@@ -1,9 +1,9 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import _CategoryDef_stuffValidators from "./_CategoryDef_stuffValidators";
+import _CategoryDef_stuff_Validators from "./_CategoryDef_stuff_Validators";
 
-export class CategoryDefValidators extends _CategoryDef_stuffValidators {
+export class CategoryDefValidators extends _CategoryDef_stuff_Validators {
 
 }
 

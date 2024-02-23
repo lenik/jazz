@@ -3,10 +3,10 @@ import CoMessage from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessage";
 
 import Post from "./Post";
 import PostCategory from "./PostCategory";
-import _Post_stuff_Type from "./_Post_stuff_Type";
+import _Post_stuff_TypeInfo from "./_Post_stuff_TypeInfo";
 
 export class _Post_stuff extends CoMessage<long> {
-    static TYPE = new _Post_stuff_Type();
+    static TYPE = new _Post_stuff_TypeInfo();
 
     formArguments?: string;
     favCount: integer;

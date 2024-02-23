@@ -3,10 +3,10 @@ import CoPrincipal from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipal";
 
 import Group from "./Group";
 import GroupType from "./GroupType";
-import _Group_stuff_Type from "./_Group_stuff_Type";
+import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
 
 export class _Group_stuff extends CoPrincipal {
-    static TYPE = new _Group_stuff_Type();
+    static TYPE = new _Group_stuff_TypeInfo();
 
 
     parent?: Group;

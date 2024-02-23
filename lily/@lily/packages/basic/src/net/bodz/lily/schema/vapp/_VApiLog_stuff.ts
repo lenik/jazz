@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import ApiType from "./ApiType";
 import VApp from "./VApp";
-import _VApiLog_stuff_Type from "./_VApiLog_stuff_Type";
+import _VApiLog_stuff_TypeInfo from "./_VApiLog_stuff_TypeInfo";
 
 export class _VApiLog_stuff extends CoEntity<long> {
-    static TYPE = new _VApiLog_stuff_Type();
+    static TYPE = new _VApiLog_stuff_TypeInfo();
 
     id: long;
     message?: string;

@@ -1,8 +1,8 @@
 import _VApiLog_stuff from "./_VApiLog_stuff";
-import { _VApiLog_stuff_Type } from "./_VApiLog_stuff_Type";
+import { _VApiLog_stuffTypeInfo } from "./_VApiLog_stuffTypeInfo";
 
 export class VApiLog extends _VApiLog_stuff {
-    static TYPE = new _VApiLog_stuff_Type();
+    static TYPE = new _VApiLog_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);

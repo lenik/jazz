@@ -2,10 +2,10 @@ import type { integer } from "@skeljs/core/src/lang/type";
 import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import TagGroupDef from "./TagGroupDef";
-import _TagDef_stuff_Type from "./_TagDef_stuff_Type";
+import _TagDef_stuff_TypeInfo from "./_TagDef_stuff_TypeInfo";
 
 export class _TagDef_stuff extends CoEntity<integer> {
-    static TYPE = new _TagDef_stuff_Type();
+    static TYPE = new _TagDef_stuff_TypeInfo();
 
     id: integer;
 

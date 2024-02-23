@@ -1,10 +1,10 @@
 import { Group } from "./Group";
 import { User } from "./User";
 import _Group_stuff from "./_Group_stuff";
-import { _Group_stuff_Type } from "./_Group_stuff_Type";
+import { _Group_stuffTypeInfo } from "./_Group_stuffTypeInfo";
 
 export class Group extends _Group_stuff {
-    static TYPE = new _Group_stuff_Type();
+    static TYPE = new _Group_stuffTypeInfo();
 
     children?: Group[]
     users?: User[]

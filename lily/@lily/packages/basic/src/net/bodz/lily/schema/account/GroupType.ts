@@ -1,8 +1,8 @@
 import _GroupType_stuff from "./_GroupType_stuff";
-import { _GroupType_stuff_Type } from "./_GroupType_stuff_Type";
+import { _GroupType_stuffTypeInfo } from "./_GroupType_stuffTypeInfo";
 
 export class GroupType extends _GroupType_stuff {
-    static TYPE = new _GroupType_stuff_Type();
+    static TYPE = new _GroupType_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);
