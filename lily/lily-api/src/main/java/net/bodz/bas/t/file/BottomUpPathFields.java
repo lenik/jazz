@@ -198,8 +198,7 @@ public class BottomUpPathFields
     }
 
     @Override
-    public void jsonIn(JsonObject o, JsonFormOptions opts)
-            throws ParseException {
+    public void jsonIn(JsonObject o, JsonFormOptions opts) {
         String path = o.getString(K_PATH);
         if (path != null) {
             setPath(path);

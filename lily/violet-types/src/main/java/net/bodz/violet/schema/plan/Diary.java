@@ -21,16 +21,6 @@ public class Diary
 
     List<DiaryParty> parties;
 
-    @Override
-    protected DiaryProperties createProperties() {
-        return new DiaryProperties();
-    }
-
-    @Override
-    public DiaryProperties getProperties() {
-        return (DiaryProperties) super.getProperties();
-    }
-
     public List<DiaryParty> getParties() {
         return parties;
     }

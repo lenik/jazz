@@ -1,8 +1,6 @@
 package net.bodz.lily.concrete;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 
@@ -12,6 +10,7 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -29,10 +28,10 @@ import net.bodz.lily.concrete.util.HtmlTextObject;
 import net.bodz.lily.concrete.util.TextObject;
 import net.bodz.lily.concrete.util.UserClickInfo;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
-import net.bodz.lily.entity.attachment.IAttachment;
+import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.entity.attachment.util.IImagesInProps;
+import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
@@ -53,7 +52,8 @@ public abstract class CoMessage<Id>
         implements
             IPriority,
             IId<Id>,
-            IHaveAttachments {
+            IImagesInProps,
+            IVideosInProps {
 
     private static final long serialVersionUID = 1L;
 
@@ -66,10 +66,10 @@ public abstract class CoMessage<Id>
     private ParameterMap parameters;
     private UserClickInfo clickInfo;
 
-    private Date sentTime;
-    private Date receivedTime;
+    private ZonedDateTime sentTime;
+    private ZonedDateTime receivedTime;
 
-    private RichProperties properties = createProperties();
+    JsonVariant properties;
 
     public CoMessage() {
     }
@@ -226,11 +226,11 @@ public abstract class CoMessage<Id>
      */
     @OfGroup(StdGroup.Status.class)
     @DetailLevel(DetailLevel.EXPERT)
-    public Date getSentTime() {
+    public ZonedDateTime getSentTime() {
         return sentTime;
     }
 
-    public void setSentTime(Date sentTime) {
+    public void setSentTime(ZonedDateTime sentTime) {
         this.sentTime = sentTime;
     }
 
@@ -242,52 +242,29 @@ public abstract class CoMessage<Id>
      */
     @OfGroup(StdGroup.Status.class)
     @DetailLevel(DetailLevel.EXPERT)
-    public Date getReceivedTime() {
+    public ZonedDateTime getReceivedTime() {
         return receivedTime;
     }
 
-    public void setReceivedTime(Date receivedTime) {
+    public void setReceivedTime(ZonedDateTime receivedTime) {
         this.receivedTime = receivedTime;
     }
 
-    protected RichProperties createProperties() {
-        return new RichProperties();
-    }
-
     @Override
-    public RichProperties getProperties() {
+    public JsonVariant getProperties() {
         return properties;
     }
 
-    public void setProperties(RichProperties properties) {
+    @Override
+    public void setProperties(JsonVariant properties) {
         this.properties = properties;
     }
 
+    static final String[] attachmentGroupKeys = { K_IMAGES, K_VIDEOS };
+
     @Override
     public IAttachmentListing listAttachments() {
-        return new IAttachmentListing() {
-
-            @Override
-            public Collection<String> getAttachmentCategories() {
-                return Arrays.asList(IMAGE, VIDEO);
-            }
-
-            @Override
-            public Collection<IAttachment> getAttachments(String category) {
-                switch (category) {
-                case IMAGE:
-                    return getProperties().getImages();
-                case VIDEO:
-                    return getProperties().getVideos();
-                }
-                return null;
-            }
-
-            @Override
-            public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
-            }
-
-        };
+        return new AttachmentListingInProps(this, attachmentGroupKeys);
     }
 
     @Override
@@ -310,8 +287,8 @@ public abstract class CoMessage<Id>
         // parameters;
         // clickInfo;
 
-        sentTime = o.getDate("sentTime", sentTime);
-        receivedTime = o.getDate("receivedTime", receivedTime);
+        sentTime = o.getZonedDateTime("sentTime", sentTime);
+        receivedTime = o.getZonedDateTime("receivedTime", receivedTime);
     }
 
     @Override

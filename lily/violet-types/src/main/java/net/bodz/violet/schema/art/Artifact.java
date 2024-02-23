@@ -7,9 +7,16 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.OfGroup;
-import net.bodz.bas.rtx.IAttributed;
+import net.bodz.lily.concrete.IAttrInProps;
+import net.bodz.lily.entity.attachment.AttachmentListingInProps;
+import net.bodz.lily.entity.attachment.IAttachmentListing;
+import net.bodz.lily.entity.attachment.util.IDocInProps;
+import net.bodz.lily.entity.attachment.util.IImagesInProps;
+import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.repr.EntGroup;
 
 /**
@@ -20,7 +27,10 @@ import net.bodz.lily.repr.EntGroup;
 public class Artifact
         extends _Artifact_stuff
         implements
-            IAttributed {
+            IImagesInProps,
+            IVideosInProps,
+            IDocInProps,
+            IAttrInProps {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,7 +39,7 @@ public class Artifact
     private String uomProperty = "数量";
     private int decimalDigits = 2;
 
-    private ArtifactProperties properties;
+    private JsonVariant properties;
 
     {
         uom = new UOM(UOMs.PIECE);
@@ -50,24 +60,35 @@ public class Artifact
     }
 
     @Override
-    public ArtifactProperties getProperties() {
+    public JsonVariant getProperties() {
         return properties;
     }
 
     @Override
-    public <T> T getAttribute(String name, T defaultValue) {
-        if (properties == null)
-            return null;
-        else
-            return properties.getAttribute(name, defaultValue);
+    public void setProperties(JsonVariant properties) {
+        this.properties = properties;
     }
 
+    @Transient
+    public IArtifactExtras getExtras() {
+        return new IArtifactExtrasInProps() {
+            @Override
+            public void setProperties(JsonVariant properties) {
+                Artifact.this.setProperties(properties);
+            }
+
+            @Override
+            public JsonVariant getProperties() {
+                return Artifact.this.getProperties();
+            }
+        };
+    }
+
+    static final String[] attachmentGroupKeys = { K_IMAGES, K_VIDEOS, K_DOCS };
+
     @Override
-    public void setAttribute(String name, Object value) {
-        if (properties == null)
-            return;
-        else
-            properties.setAttribute(name, value);
+    public IAttachmentListing listAttachments() {
+        return new AttachmentListingInProps(this, attachmentGroupKeys);
     }
 
 }

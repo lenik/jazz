@@ -10,15 +10,9 @@ public interface IAttachmentListing
         extends
             IAttachmentPathChangeListener {
 
-    String IMAGE = "image";
-    String VIDEO = "video";
-    String DOCUMENT = "document";
+    String[] getAttachmentGroupKeys();
 
-    default Collection<String> getAttachmentCategories() {
-        return Arrays.asList(IMAGE);
-    }
-
-    Collection<IAttachment> getAttachments(String category);
+    Collection<IAttachment> getAttachmentGroup(String groupKey);
 
     default Iterable<IAttachment> getAttachments() {
         return () -> new AttachmentIterator(this);
@@ -51,21 +45,22 @@ class AttachmentIterator
         extends PrefetchedIterator<IAttachment> {
 
     IAttachmentListing listing;
-    Iterator<String> categoryIterator;
+    Iterator<String> groupKeyIterator;
     Iterator<IAttachment> attachmentIterator;
 
     public AttachmentIterator(IAttachmentListing listing) {
         this.listing = listing;
-        this.categoryIterator = listing.getAttachmentCategories().iterator();
+        String[] keys = listing.getAttachmentGroupKeys();
+        this.groupKeyIterator = Arrays.asList(keys).iterator();
     }
 
     @Override
     protected IAttachment fetch() {
         if (attachmentIterator == null) {
-            if (!categoryIterator.hasNext())
+            if (! groupKeyIterator.hasNext())
                 return end();
-            String category = categoryIterator.next();
-            attachmentIterator = listing.getAttachments(category).iterator();
+            String category = groupKeyIterator.next();
+            attachmentIterator = listing.getAttachmentGroup(category).iterator();
         }
         if (attachmentIterator.hasNext())
             return attachmentIterator.next();
