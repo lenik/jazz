@@ -42,5 +42,6 @@ table user_run {
     }
     column lastlogip {
         javaName: lastLoginIP
+        javaType: java.net.InetAddress
     }
 }
