@@ -18,6 +18,7 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
 
     public final StringField label = string("a.label");
     public final StringField description = string("a.description");
+    public final StringField icon = string("a.icon");
 
 //    String queryText;
 

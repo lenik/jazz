@@ -8,6 +8,7 @@ import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -29,7 +30,6 @@ import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateJsonFn;
 import net.bodz.bas.repr.state.StdStates;
-import net.bodz.bas.site.json.JsonMap;
 import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -60,17 +60,12 @@ public abstract class CoObject
 
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
-    public static final int N_COMMENT = 200;
-    public static final int N_IMAGE = 100;
+    public static final int N_ICON = 30;
 
     // U, U1 = label, description
     private String label;
     private String description;
-
-    // U2
-    private String comment;
-    private String image;
-    private String imageAlt;
+    private String icon;
 
     // F
     private int flags = 0;
@@ -100,6 +95,28 @@ public abstract class CoObject
     public abstract Object id();
 
     public abstract void id_(Serializable id);
+
+    /**
+     * <p lang="en">
+     * Icon name.
+     *
+     * <p lang="zh">
+     * 图标。用skeljs-Icon的格式指定的图标符号。
+     *
+     * @label Icon
+     * @label.zh 图标
+     * @placeholder 输入skeljs兼容的图标符号
+     */
+    @FormInput(nullconv = NullConvertion.NONE)
+    @Priority(20)
+    @TextInput(maxLength = N_ICON)
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     /**
      * <p lang="en">
@@ -142,60 +159,6 @@ public abstract class CoObject
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * @label Comment
-     * @label.zh 注释
-     * @placeholder 输入注释…
-     */
-    @DetailLevel(DetailLevel.DETAIL2)
-    @Priority(800)
-    @TextInput(maxLength = N_COMMENT)
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    /**
-     * @label Image
-     * @label.zh 图像
-     * @placeholder 输入图像的名称…
-     * @deprecated See #
-     */
-    @Deprecated
-    @OfGroup(StdGroup.Visual.class)
-    @TextInput(maxLength = N_IMAGE)
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    /**
-     * @label Image Alternate
-     * @label.zh 图像描述
-     * @placeholder 输入图像的替代描述…
-     * @deprecated See #
-     */
-    @Deprecated
-    @OfGroup(StdGroup.Visual.class)
-    @TextInput(maxLength = N_IMAGE)
-    public String getImageAlt() {
-        return imageAlt;
-    }
-
-    public void setImageAlt(String imageAlt) {
-        this.imageAlt = imageAlt;
     }
 
     @Override
@@ -250,12 +213,20 @@ public abstract class CoObject
         this.flags = flags;
     }
 
+    protected final JsonVariant createProperties() {
+        return null;
+    }
+
     /**
      * 自定义属性
      */
     @DetailLevel(DetailLevel.EXPERT2)
-    public JsonMap getProperties() {
-        return JsonMap.empty();
+    public JsonVariant getProperties() {
+        return null;
+    }
+
+    public void setProperties(JsonVariant properties) {
+        throw new ReadOnlyException();
     }
 
     /** ⇱ Implementation Of {@link IStated}. */
@@ -415,9 +386,8 @@ public abstract class CoObject
 
         JsonVarMap propsMap = (JsonVarMap) map.get("properties");
         if (propsMap != null) {
-            JsonMap properties = this.getProperties();
-            if (properties != null) // null if not supported.
-                properties.jsonIn(propsMap.getWrapped(), JsonFormOptions.DEFAULT);
+            JsonObject wrapped = propsMap.getWrapped();
+            setProperties(JsonVariant.of(wrapped));
         }
     }
 
@@ -451,8 +421,6 @@ public abstract class CoObject
         } else {
             label = o.getString("label", label);
             description = o.getString("description", description);
-            comment = o.getString("comment", comment);
-            image = o.getString("image", image);
 
             flags = o.getInt("flags", flags);
             priority = o.getInt("priority", priority);
@@ -463,7 +431,8 @@ public abstract class CoObject
             acl = o.getInt("acl", acl);
             accessMode = o.getInt("accessMode", accessMode);
 
-            o.readInto("properties", getProperties());
+            JsonObject props = o.getJsonObject("properties");
+            setProperties(JsonVariant.of(props));
         }
     }
 
@@ -478,10 +447,6 @@ public abstract class CoObject
             return false;
         if (! Nullables.equals(description, o.description))
             return false;
-        if (! Nullables.equals(comment, o.comment))
-            return false;
-        if (! Nullables.equals(image, o.image))
-            return false;
 
         if (flags != o.flags || priority != o.priority || state != o.state)
             return false;
@@ -494,8 +459,6 @@ public abstract class CoObject
         super.assign(o);
         label = o.label;
         description = o.description;
-        comment = o.comment;
-        image = o.image;
         flags = o.flags;
         priority = o.priority;
         state = o.state;
@@ -505,7 +468,6 @@ public abstract class CoObject
         ownerGroupId = o.ownerGroupId;
         acl = o.acl;
         accessMode = o.accessMode;
-        this.getImage();
     }
 
 }

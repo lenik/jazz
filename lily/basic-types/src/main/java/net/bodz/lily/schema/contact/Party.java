@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -24,7 +25,7 @@ import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.entity.attachment.util.IImagesInProps;
 
 /**
  * 参与方
@@ -34,7 +35,7 @@ import net.bodz.lily.entity.attachment.IHaveAttachments;
 public abstract class Party
         extends IdEntity<Integer>
         implements
-            IHaveAttachments {
+            IImagesInProps {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,7 +63,7 @@ public abstract class Party
     private String bank;
     private String account;
 
-    private PartyProperties properties = new PartyProperties();
+    private JsonVariant properties;
 
     /**
      * 分类
@@ -318,11 +319,17 @@ public abstract class Party
         return sb.toString();
     }
 
-    @Column(name = "props")
     @Override
-    public PartyProperties getProperties() {
+    public JsonVariant getProperties() {
         return properties;
     }
+
+    @Override
+    public void setProperties(JsonVariant properties) {
+        this.properties = properties;
+    }
+
+    static String[] attachmentGroupKeys = { K_IMAGES };
 
     @Override
     public IAttachmentListing listAttachments() {
@@ -335,12 +342,13 @@ public abstract class Party
             }
 
             @Override
-            public Collection<IAttachment> getAttachments(String category) {
-                switch (category) {
-                case IMAGE:
-                    return properties.getImages();
-                }
-                return null;
+            public String[] getAttachmentGroupKeys() {
+                return attachmentGroupKeys;
+            }
+
+            @Override
+            public Collection<IAttachment> getAttachmentGroup(String groupKey) {
+                return Party.this.getAttachmentGroup(groupKey);
             }
 
         };

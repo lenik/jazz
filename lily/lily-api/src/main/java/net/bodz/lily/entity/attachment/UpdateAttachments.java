@@ -75,8 +75,8 @@ public class UpdateAttachments
             IVolume volume = app.getVolume(idRef.getClass());
 
             IAttachmentListing listing = owner.listAttachments();
-            for (String category : listing.getAttachmentCategories()) {
-                for (IAttachment attachment : listing.getAttachments(category)) {
+            for (String category : listing.getAttachmentGroupKeys()) {
+                for (IAttachment attachment : listing.getAttachmentGroup(category)) {
 //                    renameSubDirToId(volume, attachment, idStr);
                 }
             }

@@ -1,5 +1,6 @@
 package net.bodz.lily.concrete;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.TextInput;
 
@@ -15,7 +16,7 @@ public abstract class CoPrincipal
     public static final int N_FULL_NAME = 40;
 
     String name;
-    CoPrincipalProperties properties;
+    JsonVariant properties;
 
     /**
      * @label Login Name
@@ -53,23 +54,13 @@ public abstract class CoPrincipal
     }
 
     @Override
-    public CoPrincipalProperties getProperties() {
-        if (properties == null) {
-            synchronized (this) {
-                if (properties == null) {
-                    properties = createProperties();
-                }
-            }
-        }
+    public JsonVariant getProperties() {
         return properties;
     }
 
-    public void setProperties(CoPrincipalProperties properties) {
+    @Override
+    public void setProperties(JsonVariant properties) {
         this.properties = properties;
-    }
-
-    public CoPrincipalProperties createProperties() {
-        return new CoPrincipalProperties();
     }
 
 }

@@ -22,6 +22,7 @@ column-property {
 column-type {
     t0:                 java.time.ZonedDateTime
     t1:                 java.time.ZonedDateTime
+    props:              net.bodz.bas.fmt.json.JsonVariant
 }
 
 key-columns {
