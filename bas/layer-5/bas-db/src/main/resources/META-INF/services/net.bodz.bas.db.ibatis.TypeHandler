@@ -7,6 +7,8 @@ net.bodz.bas.db.ibatis.type.DoubleArrayTypeHandler
 net.bodz.bas.db.ibatis.type.FloatArrayTypeHandler
 net.bodz.bas.db.ibatis.type.InstantTypeHandler
 net.bodz.bas.db.ibatis.type.IntArrayTypeHandler
+net.bodz.bas.db.ibatis.type.JsonMapTypeHandler
+net.bodz.bas.db.ibatis.type.JsonVariantTypeHandler
 net.bodz.bas.db.ibatis.type.LocalDateTimeTypeHandler
 net.bodz.bas.db.ibatis.type.LocalDateTypeHandler
 net.bodz.bas.db.ibatis.type.LocalTimeTypeHandler

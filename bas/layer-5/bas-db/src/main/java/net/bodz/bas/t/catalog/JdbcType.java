@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.object.Unknown;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -37,10 +39,10 @@ public enum JdbcType {
     VARBINARY(Types.VARBINARY, byte[].class),
     LONGVARBINARY(Types.LONGVARBINARY, byte[].class),
 
-    NULL(Types.NULL, Object.class),
-    OTHER(Types.OTHER, Object.class),
-    JAVA_OBJECT(Types.JAVA_OBJECT, Object.class),
-    DISTINCT(Types.DISTINCT, Object.class),
+    NULL(Types.NULL, Unknown.class),
+    OTHER(Types.OTHER, Unknown.class),
+    JAVA_OBJECT(Types.JAVA_OBJECT, Unknown.class),
+    DISTINCT(Types.DISTINCT, Unknown.class),
 
     STRUCT(Types.STRUCT, Struct.class),
     ARRAY(Types.ARRAY, java.sql.Array.class),
@@ -49,7 +51,7 @@ public enum JdbcType {
     CLOB(Types.CLOB, Clob.class),
 
     REF(Types.REF, Ref.class),
-    DATALINK(Types.DATALINK, Object.class),
+    DATALINK(Types.DATALINK, Unknown.class),
 
     BOOLEAN(Types.BOOLEAN, Boolean.class),
     ROWID(Types.ROWID, RowId.class),
@@ -61,7 +63,7 @@ public enum JdbcType {
     NCLOB(Types.NCLOB, Clob.class),
     SQLXML(Types.SQLXML, SQLXML.class),
 
-    REF_CURSOR(Types.REF_CURSOR, Object.class),
+    REF_CURSOR(Types.REF_CURSOR, Unknown.class),
     TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE, Time.class),
     TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE, Timestamp.class),
 
@@ -143,6 +145,9 @@ public enum JdbcType {
         case DISTINCT:
             return getPreferredDistinctType(sqlTypeName, nullable, signed, precision, scale);
 
+        case OTHER:
+            return getPreferredOtherType(sqlTypeName, nullable, signed, precision, scale);
+
         default:
             return defaultType;
         }
@@ -155,7 +160,10 @@ public enum JdbcType {
         Boolean signed = column.getSigned();
         int precision = column.getPrecision();
         int scale = column.getScale();
-        return jdbcType.getPreferredType(sqlTypeName, nullable, signed, precision, scale);
+        Class<?> type = jdbcType.getPreferredType(sqlTypeName, nullable, signed, precision, scale);
+        if (type == Unknown.class)
+            System.out.println("unknown");
+        return type;
     }
 
     static Map<String, String> postgresqlMap = new HashMap<>();
@@ -205,6 +213,18 @@ public enum JdbcType {
         }
         logger.warn("unsupported distinct type: " + sqlTypeName);
         return String.class;
+    }
+
+    public Class<?> getPreferredOtherType(String sqlTypeName, Boolean nullable, Boolean signed, int precision,
+            int scale) {
+        switch (sqlTypeName) {
+        case "json":
+        case "jsonb":
+            return JsonVariant.class;
+
+        default:
+            return Unknown.class;
+        }
     }
 
     private static Map<Integer, JdbcType> sqlTypeMap = new HashMap<>();
