@@ -25,7 +25,7 @@ class NullVariant
     }
 
     @Override
-    public Object get(Object defaultValue) {
+    public <T> T get(T defaultValue) {
         return defaultValue;
     }
 

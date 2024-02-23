@@ -12,7 +12,15 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.TypeInfo;
+import org.w3c.dom.UserDataHandler;
 
 import net.bodz.bas.t.variant.IVariant;
 
@@ -61,7 +69,7 @@ public class NullElement
     }
 
     @Override
-    public Object get(Object defaultValue) {
+    public <T> T get(T defaultValue) {
         return defaultValue;
     }
 

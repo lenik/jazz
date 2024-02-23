@@ -14,12 +14,13 @@ public abstract class AbstractVariant
         return String.format(format, args);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Object get(Object defaultValue) {
+    public <T> T get(T defaultValue) {
         Object value = getScalar();
         if (value == null)
             return defaultValue;
-        return value;
+        return (T) value;
     }
 
     @Override
@@ -176,7 +177,7 @@ public abstract class AbstractVariant
         return val;
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings({ "unchecked" })
     public <T> T convert(Class<? super T> type) {
         switch (TypeKind.getTypeId(type)) {
         case TypeId._byte:
