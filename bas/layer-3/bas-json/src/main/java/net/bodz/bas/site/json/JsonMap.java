@@ -54,7 +54,7 @@ public class JsonMap
             throws ParseException {
         for (String key : o.keySet()) {
             Object val = o.get(key);
-            if (!parseJsonEntry(key, JsonVariant.of(val), opts))
+            if (! parseJsonEntry(key, JsonVariant.of(val), opts))
                 map.put(key, JsonFn.unwrap(val));
         }
     }
@@ -102,6 +102,19 @@ public class JsonMap
         map.put(name, value);
     }
 
+    public JsonVariant getJsonVar()
+            throws FormatException {
+        return JsonFn.toJsonVar(this);
+    }
+
+    public void setJsonVar(JsonVariant jv)
+            throws ParseException {
+        map.clear();
+        if (jv == null)
+            return;
+        jsonIn(jv, opts);
+    }
+
     public String getJson()
             throws FormatException {
         String json = JsonFn.toJson(this, opts);
@@ -117,6 +130,7 @@ public class JsonMap
         jsonIn(jv, opts);
     }
 
+    @Deprecated
     public JsonValueWrapper getJsonStr()
             throws FormatException {
         String json = JsonFn.toJson(this, opts);
@@ -124,6 +138,7 @@ public class JsonMap
         return new JsonValueWrapper(j_val);
     }
 
+    @Deprecated
     public synchronized void setJsonStr(JsonValueWrapper form)
             throws ParseException {
         map.clear();
@@ -141,7 +156,7 @@ public class JsonMap
         if ((Class<?>) obj.class != JsonMap.class)
             return false;
         JsonMap o = (JsonMap) obj;
-        if (!Nullables.equals(map, o.map))
+        if (! Nullables.equals(map, o.map))
             return false;
         return true;
     }
