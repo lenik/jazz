@@ -12,6 +12,8 @@ net.bodz.lily.schema.contact.ws.OrganizationIndex
 net.bodz.lily.schema.contact.ws.PartyCategoryIndex
 net.bodz.lily.schema.contact.ws.PersonIndex
 net.bodz.lily.schema.contact.ws.PersonRoleIndex
+net.bodz.lily.schema.contact.ws.PersonTagIndex
+net.bodz.lily.schema.contact.ws.PersonTagTypeIndex
 net.bodz.lily.schema.geo.ws.ZoneCategoryIndex
 net.bodz.lily.schema.geo.ws.ZoneIndex
 net.bodz.lily.schema.inet.ws.ExternalSiteIndex
