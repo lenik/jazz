@@ -45,6 +45,18 @@ public class TypeScriptWriter
         return packageMap.findSource(qName, extension, contextQName);
     }
 
+    public String importDefaultAs(Class<?> clazz) {
+        return importDefaultAs(QualifiedName.of(clazz));
+    }
+
+    public String importDefaultAs(QualifiedName qName) {
+        EsmSource source = findSource(qName, null);
+        if (source == null) // reserved name, don't import.
+            return qName.getFullName();
+        EsmName esmName = source.defaultExport(qName.name);
+        return name(esmName);
+    }
+
     @Override
     public String importName(EsmName name) {
         return name(name);
@@ -55,14 +67,6 @@ public class TypeScriptWriter
         if (qName == null)
             throw new NullPointerException("qName");
         return importName(QualifiedName.parse(qName));
-    }
-
-    public String importDefaultAs(QualifiedName qName) {
-        EsmSource source = findSource(qName, null);
-        if (source == null) // reserved name, don't import.
-            return qName.getFullName();
-        EsmName esmName = source.defaultExport(qName.name);
-        return name(esmName);
     }
 
     @Override
