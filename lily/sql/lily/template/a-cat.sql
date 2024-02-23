@@ -6,9 +6,6 @@
 --\mixin lily.mixin.Name
 --\mixin lily.mixin.Acl_rw-r--r--
 --\mixin lily.mixin.LabelExVer
-        
-        image       varchar(200),
-        imagealt    varchar(80),
 
 --\mixin lily.mixin.Props
     -- bonus
