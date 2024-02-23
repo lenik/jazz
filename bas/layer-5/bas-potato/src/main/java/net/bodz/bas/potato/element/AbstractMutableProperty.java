@@ -9,8 +9,8 @@ public abstract class AbstractMutableProperty
         implements
             IProperty {
 
-    private Class<?> propertyType = Object.class;
-    private Type propertyGenericType = Object.class;
+    private Class<?> propertyType;
+    private Type propertyGenericType;
     private boolean readable = true;
     private boolean writable = true;
     private boolean propertyChangeSource;
