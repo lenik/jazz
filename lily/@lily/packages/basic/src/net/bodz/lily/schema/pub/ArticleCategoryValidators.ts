@@ -1,19 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ArticleCategory_stuffValidators from "./_ArticleCategory_stuffValidators";
 
-import type { ArticleCategory } from "./ArticleCategory";
+export class ArticleCategoryValidators extends _ArticleCategory_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_name(val: string) {
-}
-
-export function validate_depth(val: int) {
-}
-
-export function validate_refCount(val: int) {
-}
-
-export function validate_parent(val: ArticleCategory) {
-}
+export default ArticleCategoryValidators;

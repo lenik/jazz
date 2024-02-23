@@ -1,25 +1,32 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import ArticleChooseDialog from "./ArticleChooseDialog.vue";
-import type { ArticleTag } from "./ArticleTag";
-import ArticleTagTypeChooseDialog from "./ArticleTagTypeChooseDialog.vue";
+import ArticleTag from "./ArticleTag";
+import _ArticleTag_stuff from "./_ArticleTag_stuff";
 
+export const title = "Editor view of: Article tag";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import ArticleChooseDialog from "./ArticleChooseDialog.vue";
+import ArticleTagTypeChooseDialog from "./ArticleTagTypeChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<ArticleTag>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,11 +58,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -66,22 +71,16 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._ArticleTag_stuff">
+        <FieldGroup :type="_ArticleTag_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.article" v-model="model.article">
-                <RefEditor :dialog="articleChooseDialog" v-model="model.articleId" v-model:id="model.articleId" />
+                <RefEditor :dialog="articleChooseDialog" v-model="model.article" v-model:id="model.articleId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.tag" v-model="model.tag">
-                <RefEditor :dialog="articleTagTypeChooseDialog" v-model="model.tagId" v-model:id="model.tagId" />
+                <RefEditor :dialog="articleTagTypeChooseDialog" v-model="model.tag" v-model:id="model.tagId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.ArticleTag">
         </FieldGroup>
     </div>
     <ArticleChooseDialog ref="articleChooseDialog" />

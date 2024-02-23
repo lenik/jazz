@@ -1,26 +1,34 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
+import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import VAppRequest from "./VAppRequest";
+import _VAppRequest_stuff from "./_VAppRequest_stuff";
+
+export const title = "Editor view of: V app request";
+export interface Props {
+}
+
+</script>
+
+<script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
 import GroupChooseDialog from "../account/GroupChooseDialog.vue";
 import UserChooseDialog from "../account/UserChooseDialog.vue";
 import FormDefChooseDialog from "../meta/FormDefChooseDialog.vue";
-import type { VAppRequest } from "./VAppRequest";
 
-export interface Props {
-}
-</script>
-
-<script setup lang="ts">
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<VAppRequest>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -53,11 +61,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -68,7 +74,7 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.accessMode" v-model="model.accessMode">
                 <input type="number" v-model="model.accessMode" />
             </FieldRow>
@@ -84,27 +90,28 @@ onMounted(() => {
             <FieldRow v-bind="fieldRowProps" :property="meta.state" v-model="model.state">
                 <input type="number" v-model="model.state" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.ownerUser" v-model="model.ownerUser">
-                <RefEditor :dialog="userChooseDialog" v-model="model.ownerUserId" v-model:id="model.ownerUserId" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.ownerGroup" v-model="model.ownerGroup">
-                <RefEditor :dialog="groupChooseDialog" v-model="model.ownerGroupId" v-model:id="model.ownerGroupId" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.vapp._VAppRequest_stuff">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.code" v-model="model.code">
-                <input type="text" v-model="model.code" />
-            </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
                 <input type="text" v-model="model.label" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
                 <input type="text" v-model="model.description" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
+                <input type="text" v-model="model.icon" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.ownerUser" v-model="model.ownerUser">
+                <RefEditor :dialog="userChooseDialog" v-model="model.ownerUser" v-model:id="model.ownerUserId" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.ownerGroup" v-model="model.ownerGroup">
+                <RefEditor :dialog="groupChooseDialog" v-model="model.ownerGroup" v-model:id="model.ownerGroupId" />
+            </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_VAppRequest_stuff.TYPE">
+            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.code" v-model="model.code">
+                <input type="text" v-model="model.code" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
                 <input type="date" v-model="model.beginTime" />
@@ -128,13 +135,11 @@ onMounted(() => {
                 <input type="number" v-model="model.dummy" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.op" v-model="model.op">
-                <RefEditor :dialog="userChooseDialog" v-model="model.opId" v-model:id="model.opId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.op" v-model:id="model.opId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.form" v-model="model.form">
-                <RefEditor :dialog="formDefChooseDialog" v-model="model.formId" v-model:id="model.formId" />
+                <RefEditor :dialog="formDefChooseDialog" v-model="model.form" v-model:id="model.formId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.vapp.VAppRequest">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

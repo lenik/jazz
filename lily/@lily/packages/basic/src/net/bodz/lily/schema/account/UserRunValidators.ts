@@ -1,17 +1,16 @@
+import { Moment } from "moment";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { Object } from "../../../../../java/lang/Object";
-import type { User } from "./User";
+import _UserRun_stuffValidators from "./_UserRun_stuffValidators";
 
-export function validate_score(val: int) {
+export class UserRunValidators extends _UserRun_stuffValidators {
+    validateActiveTime(val: Moment) {
+    }
+    validateStateText(val: string) {
+    }
+
 }
 
-export function validate_lastLoginTime(val: Date) {
-}
-
-export function validate_lastLoginIP(val: Object) {
-}
-
-export function validate_user(val: User) {
-}
+export default UserRunValidators;

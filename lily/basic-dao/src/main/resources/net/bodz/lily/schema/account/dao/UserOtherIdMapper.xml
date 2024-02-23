@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -17,9 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="otherId" column="oid" />
-        <result property="auth.jsonStr" column="auth" />
+        <result property="auth" column="auth" />
         <result property="userId" column="user" />
         <result property="typeId" column="type" />
         <association property="type" columnPrefix="type_"
@@ -35,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -52,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".id type_id, 
             "type".label type_label, 
             "type".description type_description, 
+            "type".icon type_icon, 
             "type".priority type_priority, 
             "type".flags type_flags, 
             "type"."state" type_state, 
@@ -64,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -72,7 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from useroid a
             left join useroidtype "type" on a."type" = "type".id
             left join "user" "user" on a."user" = "user".id
@@ -84,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -101,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "type".id type_id, 
             "type".label type_label, 
             "type".description type_description, 
+            "type".icon type_icon, 
             "type".priority type_priority, 
             "type".flags type_flags, 
             "type"."state" type_state, 
@@ -113,6 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -121,7 +129,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from useroid a
             left join useroidtype "type" on a."type" = "type".id
             left join "user" "user" on a."user" = "user".id
@@ -156,6 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into useroid(
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -173,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) values(
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -195,6 +206,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <set>
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -223,7 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from useroid
+        select count(*) "rows" from useroid a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.pub.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
 
 public class _ArticleCriteriaBuilder_stuff<self_t extends _ArticleCriteriaBuilder_stuff<self_t>>
@@ -21,5 +22,6 @@ public class _ArticleCriteriaBuilder_stuff<self_t extends _ArticleCriteriaBuilde
 
     public final IntegerField messageCount = integer("nmsg");
 
+    public final DiscreteField<JsonVariant> plugins = discrete("plugins", JsonVariant.class);
 
 }

@@ -1,10 +1,10 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { TypeParamType } from "../../meta/TypeParamType";
+import _ArticleTalk_stuffValidators from "./_ArticleTalk_stuffValidators";
 
-import type { Article } from "./Article";
+export class ArticleTalkValidators extends _ArticleTalk_stuffValidators {
 
-export function validate_formArguments(val: string) {
 }
 
-export function validate_article(val: Article) {
-}
+export default ArticleTalkValidators;

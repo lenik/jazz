@@ -1,19 +1,17 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { long } from "@skeljs/dba/src/net/bodz/lily/entity";
+import Article from "./Article";
+import ArticleTagType from "./ArticleTagType";
+import _ArticleTag_stuff_Type from "./_ArticleTag_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { Article } from "./Article";
-import type { ArticleTagType } from "./ArticleTagType";
-import type { _ArticleTag_stuff_Type } from "./_ArticleTag_stuff_Type";
-
-export class _ArticleTag_stuff extends CoEntity<Integer> {
+export class _ArticleTag_stuff extends CoEntity<integer> {
     static TYPE = new _ArticleTag_stuff_Type();
 
-    id: int;
+    id: integer;
 
     tag: ArticleTagType;
-    tagId: int;
+    tagId: integer;
 
     article: Article;
     articleId: long;
@@ -22,3 +20,5 @@ export class _ArticleTag_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _ArticleTag_stuff;

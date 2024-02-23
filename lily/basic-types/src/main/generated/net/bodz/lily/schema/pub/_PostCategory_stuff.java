@@ -33,7 +33,7 @@ public abstract class _PostCategory_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_NAME = _ord_ID + 1;
-    private static final int _ord_PARENT_ID = 18;
+    private static final int _ord_PARENT_ID = 17;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_REF_COUNT = _ord_DEPTH + 1;
 

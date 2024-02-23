@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -48,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -63,24 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.formId != null">and a.form = #{m.formId}</if>
-        <if test="m.formIdRange!= null">
-            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
-            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
-            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
-            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
-        </if>
-        <if test="m.name != null">and a."name" = #{m.name}</if>
-        <if test="m.namePattern != null">and a."name" like '${m.namePattern}'</if>
-        <if test="m.value != null">and a."value" = #{m.value}</if>
-        <if test="m.valuePattern != null">and a."value" like '${m.valuePattern}'</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -135,7 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from _formparm
+        select count(*) "rows" from _formparm a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="creationDate" column="creation" />
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="callback" column="callback" />
         <result property="appId" column="app" />
         <result property="apiId" column="api" />
@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api.id api_id, 
             api.label api_label, 
             api.description api_description, 
+            api.icon api_icon, 
             api.priority api_priority, 
             api.flags api_flags, 
             api."state" api_state, 
@@ -50,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app.acl app_acl, 
             app.label app_label, 
             app.description app_description, 
+            app.icon app_icon, 
             app.priority app_priority, 
             app.flags app_flags, 
             app."state" app_state, 
@@ -80,6 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api.id api_id, 
             api.label api_label, 
             api.description api_description, 
+            api.icon api_icon, 
             api.priority api_priority, 
             api.flags api_flags, 
             api."state" api_state, 
@@ -96,6 +99,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app.acl app_acl, 
             app.label app_label, 
             app.description app_description, 
+            app.icon app_icon, 
             app.priority app_priority, 
             app.flags app_flags, 
             app."state" app_state, 
@@ -114,39 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.properties != null">and a.props = #{m.properties}</if>
-        <if test="m.appId != null">and a.app = #{m.appId}</if>
-        <if test="m.appIdRange!= null">
-            <if test="m.appIdRange.hasStartIncl">and a.app >= #{m.appIdRange.start}</if>
-            <if test="m.appIdRange.hasStartExcl">and a.app > #{m.appIdRange.start}</if>
-            <if test="m.appIdRange.hasEndIncl">and a.app &lt;= #{m.appIdRange.end}</if>
-            <if test="m.appIdRange.hasEndExcl">and a.app &lt; #{m.appIdRange.end}</if>
-        </if>
-        <if test="m.apiId != null">and a.api = #{m.apiId}</if>
-        <if test="m.apiIdRange!= null">
-            <if test="m.apiIdRange.hasStartIncl">and a.api >= #{m.apiIdRange.start}</if>
-            <if test="m.apiIdRange.hasStartExcl">and a.api > #{m.apiIdRange.start}</if>
-            <if test="m.apiIdRange.hasEndIncl">and a.api &lt;= #{m.apiIdRange.end}</if>
-            <if test="m.apiIdRange.hasEndExcl">and a.api &lt; #{m.apiIdRange.end}</if>
-        </if>
-        <if test="m.callback != null">and a.callback = #{m.callback}</if>
-        <if test="m.callbackPattern != null">and a.callback like '${m.callbackPattern}'</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -213,7 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from vapi
+        select count(*) "rows" from vapi a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

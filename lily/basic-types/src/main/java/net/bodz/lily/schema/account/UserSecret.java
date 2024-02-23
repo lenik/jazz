@@ -4,7 +4,7 @@ import javax.persistence.Table;
 
 import net.bodz.lily.security.IUserSecret;
 
-@Table(schema = "lily", name = "usersec")
+@Table(schema = UserSecret.SCHEMA_NAME, name = UserSecret.TABLE_NAME)
 public class UserSecret
         extends _UserSecret_stuff
         implements

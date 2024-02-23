@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             article.acl article_acl, 
             article.label article_label, 
             article.description article_description, 
+            article.icon article_icon, 
             article.priority article_priority, 
             article.flags article_flags, 
             article."state" article_state, 
@@ -94,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -110,6 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             article.acl article_acl, 
             article.label article_label, 
             article.description article_description, 
+            article.icon article_icon, 
             article.priority article_priority, 
             article.flags article_flags, 
             article."state" article_state, 
@@ -138,36 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.articleId != null">and a.article = #{m.articleId}</if>
-        <if test="m.articleIdRange!= null">
-            <if test="m.articleIdRange.hasStartIncl">and a.article >= #{m.articleIdRange.start}</if>
-            <if test="m.articleIdRange.hasStartExcl">and a.article > #{m.articleIdRange.start}</if>
-            <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
-            <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
-        </if>
-        <if test="m.tagId != null">and a.tag = #{m.tagId}</if>
-        <if test="m.tagIdRange!= null">
-            <if test="m.tagIdRange.hasStartIncl">and a.tag >= #{m.tagIdRange.start}</if>
-            <if test="m.tagIdRange.hasStartExcl">and a.tag > #{m.tagIdRange.start}</if>
-            <if test="m.tagIdRange.hasEndIncl">and a.tag &lt;= #{m.tagIdRange.end}</if>
-            <if test="m.tagIdRange.hasEndExcl">and a.tag &lt; #{m.tagIdRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -228,7 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from article_tag
+        select count(*) "rows" from article_tag a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

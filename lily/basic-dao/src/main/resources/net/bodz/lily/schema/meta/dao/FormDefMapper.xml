@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -29,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -42,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "schema".code schema_code, 
             "schema".label schema_label, 
             "schema".description schema_description, 
+            "schema".icon schema_icon, 
             "schema".priority schema_priority, 
             "schema".flags schema_flags, 
             "schema"."state" schema_state, 
@@ -60,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -73,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "schema".code schema_code, 
             "schema".label schema_label, 
             "schema".description schema_description, 
+            "schema".icon schema_icon, 
             "schema".priority schema_priority, 
             "schema".flags schema_flags, 
             "schema"."state" schema_state, 
@@ -86,60 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.code != null">and a.code = #{m.code}</if>
-        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
-        <if test="m.label != null">and a.label = #{m.label}</if>
-        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
-        <if test="m.description != null">and a.description = #{m.description}</if>
-        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
-        <if test="m.priority != null">and a.priority = #{m.priority}</if>
-        <if test="m.priorityRange!= null">
-            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
-            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
-        </if>
-        <if test="m.flags != null">and a.flags = #{m.flags}</if>
-        <if test="m.flagsRange!= null">
-            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
-            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
-        </if>
-        <if test="m.state != null">and a."state" = #{m.state}</if>
-        <if test="m.stateRange!= null">
-            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
-            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.schemaId != null">and a."schema" = #{m.schemaId}</if>
-        <if test="m.schemaIdRange!= null">
-            <if test="m.schemaIdRange.hasStartIncl">and a."schema" >= #{m.schemaIdRange.start}</if>
-            <if test="m.schemaIdRange.hasStartExcl">and a."schema" > #{m.schemaIdRange.start}</if>
-            <if test="m.schemaIdRange.hasEndIncl">and a."schema" &lt;= #{m.schemaIdRange.end}</if>
-            <if test="m.schemaIdRange.hasEndExcl">and a."schema" &lt; #{m.schemaIdRange.end}</if>
-        </if>
-        <if test="m.subject != null">and a.subject = #{m.subject}</if>
-        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
-        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
-        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -167,6 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -180,6 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{code},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -198,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code = #{code},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -221,151 +176,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from _form
+        select count(*) "rows" from _form a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-
-    <update id="delete_xrefs">
-        alter table lily._formparm drop constraint _formparm_form_fkey;
-        alter table lily.article drop constraint article_form_fkey;
-        alter table lily.article_msg drop constraint article_msg_form_fkey;
-        alter table lily.post drop constraint post_form_fkey;
-        alter table lily.post_msg drop constraint post_msg_form_fkey;
-        alter table lily.vappreq drop constraint vappreq_form_fkey;
-        alter table violet.art_doc drop constraint art_doc_form_fkey;
-        alter table violet.diary drop constraint diary_form_fkey;
-        alter table violet.diaryrev drop constraint diaryrev_form_fkey;
-        alter table violet.fabodr drop constraint fabodr_form_fkey;
-        alter table violet.issue drop constraint issue_form_fkey;
-        alter table violet.issuel drop constraint issuel_form_fkey;
-        alter table violet.plan drop constraint plan_form_fkey;
-        alter table violet.plando drop constraint plando_form_fkey;
-        alter table violet.saleodr drop constraint saleodr_form_fkey;
-        alter table violet.storeodr drop constraint storeodr_form_fkey;
-        alter table violet.testq drop constraint testq_form_fkey;
-        alter table violet.testq_msg drop constraint testq_msg_form_fkey;
-        alter table violet.tranodr drop constraint tranodr_form_fkey;
-    </update>
-
-    <update id="create_xrefs">
-        alter table lily._formparm
-            add constraint _formparm_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.article
-            add constraint article_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table lily.article_msg
-            add constraint article_msg_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table lily.post
-            add constraint post_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table lily.post_msg
-            add constraint post_msg_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table lily.vappreq
-            add constraint vappreq_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.art_doc
-            add constraint art_doc_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.diary
-            add constraint diary_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.diaryrev
-            add constraint diaryrev_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.fabodr
-            add constraint fabodr_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.issue
-            add constraint issue_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.issuel
-            add constraint issuel_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.plan
-            add constraint plan_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.plando
-            add constraint plando_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.saleodr
-            add constraint saleodr_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.storeodr
-            add constraint storeodr_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.testq
-            add constraint testq_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.testq_msg
-            add constraint testq_msg_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table violet.tranodr
-            add constraint tranodr_form_fkey foreign key (form)
-            references lily._form (id)
-            on update cascade
-            on delete set null
-            ;
-    </update>
 
 </mapper>

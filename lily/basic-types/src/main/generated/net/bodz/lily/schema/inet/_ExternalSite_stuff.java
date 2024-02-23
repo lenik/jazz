@@ -34,7 +34,7 @@ public abstract class _ExternalSite_stuff
     public static final int N_COUNT = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_PARENT_ID = 15;
+    private static final int _ord_PARENT_ID = 16;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_URLFMT = _ord_DEPTH + 1;
     private static final int _ord_BONUS = _ord_URLFMT + 1;

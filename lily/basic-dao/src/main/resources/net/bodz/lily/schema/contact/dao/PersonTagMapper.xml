@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="tagId" column="tag" />
         <association property="tag" columnPrefix="tag_"
             javaType="net.bodz.lily.schema.contact.PersonTagType" 
-            resultMap="net.bodz.lily.schema.contact.PersonTagTypeMapper.objlist_map" />
+            resultMap="net.bodz.lily.schema.contact.dao.PersonTagTypeMapper.objlist_map" />
         <association property="person" columnPrefix="person_"
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -80,6 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -106,6 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -122,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -151,6 +157,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -223,7 +231,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from person_tag
+        select count(*) "rows" from person_tag a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

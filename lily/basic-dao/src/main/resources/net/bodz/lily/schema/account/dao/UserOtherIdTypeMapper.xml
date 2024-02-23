@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -22,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -38,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -77,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into useroidtype(
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -87,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) values(
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -102,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <set>
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -123,7 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from useroidtype
+        select count(*) "rows" from useroidtype a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

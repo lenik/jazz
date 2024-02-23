@@ -1,8 +1,10 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { TypeParamType } from "../../meta/TypeParamType";
+import _PostParameterType_stuffValidators from "./_PostParameterType_stuffValidators";
 
-export function validate_name(val: string) {
+export class PostParameterTypeValidators extends _PostParameterType_stuffValidators {
+
 }
 
-export function validate_dummy(val: integer) {
-}
+export default PostParameterTypeValidators;

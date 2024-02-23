@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             article.acl article_acl, 
             article.label article_label, 
             article.description article_description, 
+            article.icon article_icon, 
             article.priority article_priority, 
             article.flags article_flags, 
             article."state" article_state, 
@@ -54,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -82,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             article.acl article_acl, 
             article.label article_label, 
             article.description article_description, 
+            article.icon article_icon, 
             article.priority article_priority, 
             article.flags article_flags, 
             article."state" article_state, 
@@ -108,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -125,27 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.articleId != null">and a.article = #{m.articleId}</if>
-        <if test="m.articleIdRange!= null">
-            <if test="m.articleIdRange.hasStartIncl">and a.article >= #{m.articleIdRange.start}</if>
-            <if test="m.articleIdRange.hasStartExcl">and a.article > #{m.articleIdRange.start}</if>
-            <if test="m.articleIdRange.hasEndIncl">and a.article &lt;= #{m.articleIdRange.end}</if>
-            <if test="m.articleIdRange.hasEndExcl">and a.article &lt; #{m.articleIdRange.end}</if>
-        </if>
-        <if test="m.userId != null">and a."user" = #{m.userId}</if>
-        <if test="m.userIdRange!= null">
-            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
-            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -197,7 +181,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from article_fav
+        select count(*) "rows" from article_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

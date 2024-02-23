@@ -1,10 +1,9 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ArticleTalkVote_stuffValidators from "./_ArticleTalkVote_stuffValidators";
 
-import type { ArticleTalk } from "./ArticleTalk";
+export class ArticleTalkVoteValidators extends _ArticleTalkVote_stuffValidators {
 
-export function validate_voteScore(val: int) {
 }
 
-export function validate_parent(val: ArticleTalk) {
-}
+export default ArticleTalkVoteValidators;

@@ -2,7 +2,7 @@ package net.bodz.lily.schema.meta;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "_formparm")
+@Table(schema = FormParameter.SCHEMA_NAME, name = FormParameter.TABLE_NAME)
 public class FormParameter
         extends _FormParameter_stuff {
 

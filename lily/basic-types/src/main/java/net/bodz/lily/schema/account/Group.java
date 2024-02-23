@@ -26,7 +26,7 @@ import net.bodz.lily.security.IGroup;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
-@Table(schema = "lily", name = "group")
+@Table(schema = Group.SCHEMA_NAME, name = Group.TABLE_NAME)
 public class Group
         extends _Group_stuff
         implements

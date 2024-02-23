@@ -1,26 +1,36 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoCode from "@skeljs/dba/src/net/bodz/lily/concrete/CoCode";
+import CoNode from "@skeljs/dba/src/net/bodz/lily/concrete/CoNode";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import GroupChooseDialog from "../account/GroupChooseDialog.vue";
-import UserChooseDialog from "../account/UserChooseDialog.vue";
-import type { ArticleTagType } from "./ArticleTagType";
-import ArticleTagTypeChooseDialog from "./ArticleTagTypeChooseDialog.vue";
+import ArticleTagType from "./ArticleTagType";
 
+export const title = "Editor view of: Article tag type";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import GroupChooseDialog from "../account/GroupChooseDialog.vue";
+import UserChooseDialog from "../account/UserChooseDialog.vue";
+import ArticleTagTypeChooseDialog from "./ArticleTagTypeChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<ArticleTagType>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -53,11 +63,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -68,12 +76,21 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.accessMode" v-model="model.accessMode">
                 <input type="number" v-model="model.accessMode" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.acl" v-model="model.acl">
                 <input type="number" v-model="model.acl" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
+                <input type="text" v-model="model.label" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
+                <input type="text" v-model="model.description" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
+                <input type="text" v-model="model.icon" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
                 <input type="number" v-model="model.priority" />
@@ -85,20 +102,18 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.ownerUser" v-model="model.ownerUser">
-                <RefEditor :dialog="userChooseDialog" v-model="model.ownerUserId" v-model:id="model.ownerUserId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.ownerUser" v-model:id="model.ownerUserId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.ownerGroup" v-model="model.ownerGroup">
-                <RefEditor :dialog="groupChooseDialog" v-model="model.ownerGroupId" v-model:id="model.ownerGroupId" />
+                <RefEditor :dialog="groupChooseDialog" v-model="model.ownerGroup" v-model:id="model.ownerGroupId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.IdEntity">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoNode">
+        <FieldGroup :type="CoNode.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.depth" v-model="model.depth">
                 <input type="number" v-model="model.depth" />
             </FieldRow>
@@ -106,25 +121,13 @@ onMounted(() => {
                 <input type="number" v-model="model.refCount" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.parent" v-model="model.parent">
-                <RefEditor :dialog="articleTagTypeChooseDialog" v-model="model.parentId" v-model:id="model.parentId" />
+                <RefEditor :dialog="articleTagTypeChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoCode">
+        <FieldGroup :type="CoCode.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.code" v-model="model.code">
                 <input type="text" v-model="model.code" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoTag">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._ArticleTagType_stuff">
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.ArticleTagType">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

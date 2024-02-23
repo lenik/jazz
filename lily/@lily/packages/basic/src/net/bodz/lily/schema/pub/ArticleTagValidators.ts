@@ -1,14 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ArticleTag_stuffValidators from "./_ArticleTag_stuffValidators";
 
-import type { Article } from "./Article";
-import type { ArticleTagType } from "./ArticleTagType";
+export class ArticleTagValidators extends _ArticleTag_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_tag(val: ArticleTagType) {
-}
-
-export function validate_article(val: Article) {
-}
+export default ArticleTagValidators;

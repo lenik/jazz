@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "posttag")
+@Table(schema = PostTagType.SCHEMA_NAME, name = PostTagType.TABLE_NAME)
 public class PostTagType
         extends _PostTagType_stuff<PostTagType> {
 

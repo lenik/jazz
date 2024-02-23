@@ -1,28 +1,28 @@
+import type { long } from "@skeljs/core/src/lang/type";
+import FavRecordType from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecordType";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { FavRecordType } from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecordType";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Article } from "./Article";
+import ArticleFavValidators from "./ArticleFavValidators";
 
 export class _ArticleFav_stuff_Type extends FavRecordType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "article_fav";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "article_fav";
 
     name = "net.bodz.lily.schema.pub.ArticleFav"
     icon = "fa-tag"
 
-    static const FIELD_ARTICLE_ID = "article";
+    static FIELD_ARTICLE_ID = "article";
 
-    static const N_ARTICLE_ID = 19;
+    static N_ARTICLE_ID = 19;
+
+    static validators = new ArticleFavValidators();
 
     static declaredProperty: EntityPropertyMap = {
 
-        article: property({ type: "net.bodz.lily.schema.pub.Article", nullable: false, validator: validators.validate_article }),
-        articleId: property({ type: "long", nullable: false, precision: 19, validator: validators.validate_articleId }),
+        article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
+        articleId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
@@ -31,3 +31,5 @@ export class _ArticleFav_stuff_Type extends FavRecordType {
     }
 
 }
+
+export default _ArticleFav_stuff_Type;

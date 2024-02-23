@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "postparm")
+@Table(schema = PostParameterType.SCHEMA_NAME, name = PostParameterType.TABLE_NAME)
 public class PostParameterType
         extends _PostParameterType_stuff<PostParameterType> {
 

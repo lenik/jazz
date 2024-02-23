@@ -1,7 +1,9 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ArticleFav_stuffValidators from "./_ArticleFav_stuffValidators";
 
-import type { Article } from "./Article";
+export class ArticleFavValidators extends _ArticleFav_stuffValidators {
 
-export function validate_article(val: Article) {
 }
+
+export default ArticleFavValidators;

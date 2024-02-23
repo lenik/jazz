@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { UserBadge } from "./UserBadge";
-import UserBadgeEditor from "./UserBadgeEditor.vue";
+import UserBadge from "./UserBadge";
 
+export const title = "Admin view of: User badge";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import UserBadgeEditor from "./UserBadgeEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = UserBadge.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -47,6 +52,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

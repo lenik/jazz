@@ -1,5 +1,11 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { TypeParamType } from "../../meta/TypeParamType";
+import _PartyCategory_stuffValidators from "./_PartyCategory_stuffValidators";
 
-export function validate_name(val: string) {
+export class PartyCategoryValidators extends _PartyCategory_stuffValidators {
+
 }
+
+export default PartyCategoryValidators;

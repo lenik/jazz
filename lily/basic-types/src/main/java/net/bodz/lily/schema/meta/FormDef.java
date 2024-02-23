@@ -2,7 +2,7 @@ package net.bodz.lily.schema.meta;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "_form")
+@Table(schema = FormDef.SCHEMA_NAME, name = FormDef.TABLE_NAME)
 public class FormDef
         extends _FormDef_stuff {
 

@@ -1,17 +1,20 @@
 <script lang="ts">
-
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer, long } from "@skeljs/core/src/lang/type";
 
-import type { PostTalkVote } from "./PostTalkVote";
-import PostTalkVoteEditor from "./PostTalkVoteEditor.vue";
+import PostTalkVote from "./PostTalkVote";
 
+export const title = "Admin view of: Post talk vote";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import PostTalkVoteEditor from "./PostTalkVoteEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +24,7 @@ const type = PostTalkVote.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -45,6 +49,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

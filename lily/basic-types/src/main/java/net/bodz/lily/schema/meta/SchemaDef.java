@@ -8,7 +8,7 @@ import javax.persistence.Table;
  * @label Schema
  * @label.zh.cn 方案
  */
-@Table(schema = "lily", name = "_schema")
+@Table(schema = SchemaDef.SCHEMA_NAME, name = SchemaDef.TABLE_NAME)
 public class SchemaDef
         extends _SchemaDef_stuff {
 

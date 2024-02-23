@@ -1,23 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _CategoryDef_stuffValidators from "./_CategoryDef_stuffValidators";
 
-import type { CategoryDef } from "./CategoryDef";
-import type { SchemaDef } from "./SchemaDef";
+export class CategoryDefValidators extends _CategoryDef_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_depth(val: int) {
-}
-
-export function validate_refCount(val: int) {
-}
-
-export function validate_schema(val: SchemaDef) {
-}
-
-export function validate_parent(val: CategoryDef) {
-}
+export default CategoryDefValidators;

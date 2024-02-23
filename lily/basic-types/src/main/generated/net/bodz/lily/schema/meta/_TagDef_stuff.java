@@ -25,7 +25,7 @@ public abstract class _TagDef_stuff
     public static final int N_TAG_GROUP_ID = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_TAG_GROUP_ID = _ord_ID + 9;
+    private static final int _ord_TAG_GROUP_ID = _ord_ID + 10;
 
     @Id
     @NotNull

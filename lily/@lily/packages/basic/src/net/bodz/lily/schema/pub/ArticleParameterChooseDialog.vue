@@ -1,16 +1,22 @@
 <script lang="ts">
+import { Moment } from "moment";
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
+import type { double, integer } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
 
+import { ArticleParameter } from "./ArticleParameter";
+
+export const title = "Choose dialog for: Article parameter";
 export interface Props {
     modal?: boolean | string
 }
+
 </script>
 
 <script setup lang="ts">
+import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+
 const model = defineModel();
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,13 +36,13 @@ function open(callback?: DialogSelectCallback) {
     entityChooseDialog.value?.open(callback);
 }
 
-%s(() => {
-onMounted
+onMounted(() => {
 });
+
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Person.TYPE" :modal="modal">
+    <EntityChooseDialog ref="entityChooseDialog" :type="ArticleParameter.TYPE" :modal="modal">
         <th data-type="integer" data-field="id">Id</th>
         <th data-type="Moment" data-field="creationDate">Creation Date</th>
         <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
@@ -44,7 +50,7 @@ onMounted
         <th data-type="string" data-format="label" data-field="article">Article</th>
         <th data-type="string" data-format="label" data-field="parameter">Parameter</th>
         <th data-type="integer" data-field="ival">Ival</th>
-        <th data-type="number" data-field="fval">Fval</th>
+        <th data-type="double" data-field="fval">Fval</th>
         <th data-type="string" data-field="sval">Sval</th>
     </EntityChooseDialog>
 </template>

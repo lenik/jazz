@@ -1,36 +1,34 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import GroupTypeValidators from "./GroupTypeValidators";
 
 export class _GroupType_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "grouptype";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "grouptype";
 
     name = "net.bodz.lily.schema.account.GroupType"
     icon = "fa-tag"
     description = "Group Type"
 
-    static const FIELD_ID = "id";
-    static const FIELD_NAME = "name";
-    static const FIELD_DUMMY = "dummy";
+    static FIELD_ID = "id";
+    static FIELD_NAME = "name";
+    static FIELD_DUMMY = "dummy";
 
-    static const N_ID = 10;
-    static const N_NAME = 20;
-    static const N_DUMMY = 10;
+    static N_ID = 10;
+    static N_NAME = 20;
+    static N_DUMMY = 10;
+
+    static validators = new GroupTypeValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 20, 
             description: "Group type name (unique)", 
-            validator: validators.validate_name }),
-        dummy: property({ type: "integer", precision: 10, validator: validators.validate_dummy }),
+            validator: this.validators.validateName }),
+        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {
@@ -39,3 +37,5 @@ export class _GroupType_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _GroupType_stuff_Type;

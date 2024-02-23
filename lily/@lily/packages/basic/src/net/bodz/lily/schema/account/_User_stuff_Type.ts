@@ -1,57 +1,57 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoPrincipalType from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalType";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoPrincipalType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalType";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Person } from "../contact/Person";
+import { Group } from "./Group";
+import { User } from "./User";
+import { UserType } from "./UserType";
+import UserValidators from "./UserValidators";
 
 export class _User_stuff_Type extends CoPrincipalType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "user";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "user";
 
     name = "net.bodz.lily.schema.account.User"
     icon = "fa-tag"
     label = "User (Account)"
     description = "User Account"
 
-    static const FIELD_TYPE_ID = "type";
-    static const FIELD_PRIMARY_GROUP_ID = "gid0";
-    static const FIELD_REFERER_ID = "referer";
-    static const FIELD_PERSON_ID = "person";
+    static FIELD_TYPE_ID = "type";
+    static FIELD_PRIMARY_GROUP_ID = "gid0";
+    static FIELD_REFERER_ID = "referer";
+    static FIELD_PERSON_ID = "person";
 
-    static const N_TYPE_ID = 10;
-    static const N_PRIMARY_GROUP_ID = 10;
-    static const N_REFERER_ID = 10;
-    static const N_PERSON_ID = 10;
+    static N_TYPE_ID = 10;
+    static N_PRIMARY_GROUP_ID = 10;
+    static N_REFERER_ID = 10;
+    static N_PERSON_ID = 10;
+
+    static validators = new UserValidators();
 
     static declaredProperty: EntityPropertyMap = {
 
-        person: property({ type: "net.bodz.lily.schema.contact.Person", validator: validators.validate_person }),
-        personId: property({ type: "integer", precision: 10, validator: validators.validate_personId }),
+        person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+        personId: property({ type: "integer", precision: 10 }),
 
-        primaryGroup: property({ type: "net.bodz.lily.schema.account.Group", nullable: false, 
+        primaryGroup: property({ type: Group.TYPE, nullable: false, 
             description: "The primary user group, the default value of ownerGroup.", 
-            validator: validators.validate_primaryGroup }),
-        primaryGroupId: property({ type: "int", nullable: false, precision: 10, 
-            description: "The primary user group, the default value of ownerGroup.", 
-            validator: validators.validate_primaryGroupId }),
+            validator: this.validators.validatePrimaryGroup }),
+        primaryGroupId: property({ type: "integer", nullable: false, precision: 10, 
+            description: "The primary user group, the default value of ownerGroup." }),
 
-        referer: property({ type: "net.bodz.lily.schema.account.User", 
+        referer: property({ type: User.TYPE, 
             description: "The referer user (used for promotion)", 
-            validator: validators.validate_referer }),
+            validator: this.validators.validateReferer }),
         refererId: property({ type: "integer", precision: 10, 
-            description: "The referer user (used for promotion)", 
-            validator: validators.validate_refererId }),
+            description: "The referer user (used for promotion)" }),
 
-        type: property({ type: "net.bodz.lily.schema.account.UserType", nullable: false, 
+        type: property({ type: UserType.TYPE, nullable: false, 
             description: "User type like system-user, normal-user, etc.", 
-            validator: validators.validate_type }),
-        typeId: property({ type: "int", nullable: false, precision: 10, 
-            description: "User type like system-user, normal-user, etc.", 
-            validator: validators.validate_typeId }),
+            validator: this.validators.validateType }),
+        typeId: property({ type: "integer", nullable: false, precision: 10, 
+            description: "User type like system-user, normal-user, etc." }),
     }
 
     constructor() {
@@ -60,3 +60,5 @@ export class _User_stuff_Type extends CoPrincipalType {
     }
 
 }
+
+export default _User_stuff_Type;

@@ -1,9 +1,9 @@
+import { Moment } from "moment";
 
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { * as validators } from "./PersonValidators";
-import type { _UserRun_stuff_Type } from "./_UserRun_stuff_Type";
+import UserRunValidators from "./UserRunValidators";
+import _UserRun_stuff_Type from "./_UserRun_stuff_Type";
 
 // Type Info
 
@@ -13,9 +13,11 @@ export class UserRunType extends _UserRun_stuff_Type {
     icon = "fa-tag"
     description = "User Activity Log"
 
+    static validators = new UserRunValidators();
+
     static declaredProperty: EntityPropertyMap = {
-        activeTime: property({ type: "Moment", validator: validators.validate_activeTime }),
-        stateText: property({ type: "string", validator: validators.validate_stateText }),
+        activeTime: property({ type: "Moment", validator: this.validators.validateActiveTime }),
+        stateText: property({ type: "string", validator: this.validators.validateStateText }),
     }
 
     constructor() {
@@ -24,3 +26,5 @@ export class UserRunType extends _UserRun_stuff_Type {
     }
 
 }
+
+export default UserRun;

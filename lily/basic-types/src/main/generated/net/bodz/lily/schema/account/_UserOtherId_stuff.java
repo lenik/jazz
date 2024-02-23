@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -43,7 +44,7 @@ public abstract class _UserOtherId_stuff
     public static final int N_AUTH = 2147483647;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_BEGIN_TIME = _ord_ID + 9;
+    private static final int _ord_BEGIN_TIME = _ord_ID + 10;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
     private static final int _ord_USER_ID = _ord_YEAR + 2;
@@ -67,7 +68,7 @@ public abstract class _UserOtherId_stuff
     String otherId;
 
     /** The authentication data */
-    Object auth;
+    JsonVariant auth;
 
     /** Type of Open ID */
     @NotNull
@@ -165,14 +166,14 @@ public abstract class _UserOtherId_stuff
     @Ordinal(_ord_AUTH)
     @Precision(value = 2147483647)
     @Column(name = "auth", precision = 2147483647)
-    public Object getAuth() {
+    public JsonVariant getAuth() {
         return auth;
     }
 
     /**
      * The authentication data
      */
-    public void setAuth(Object value) {
+    public void setAuth(JsonVariant value) {
         this.auth = value;
     }
 

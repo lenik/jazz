@@ -2,6 +2,7 @@ package net.bodz.lily.schema.contact;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -17,38 +18,49 @@ public abstract class _Person_stuff
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "person";
 
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_FATHER_ID = "father";
     public static final String FIELD_MOTHER_ID = "mother";
     public static final String FIELD_ROLE_COUNT = "nrole";
     public static final String FIELD_EMPLOYEE = "employee";
     public static final String FIELD_BANK_COUNT = "nbank";
     public static final String FIELD_GENDER = "gender";
+    public static final String FIELD_PRONOUN = "pronoun";
+    public static final String FIELD_SEXUAL_ORIENTATION = "sexual_orient";
     public static final String FIELD_HOMELAND = "homeland";
     public static final String FIELD_PASSPORT = "passport";
     public static final String FIELD_SSN = "ssn";
     public static final String FIELD_DLN = "dln";
 
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_FATHER_ID = 10;
     public static final int N_MOTHER_ID = 10;
     public static final int N_ROLE_COUNT = 10;
     public static final int N_EMPLOYEE = 1;
     public static final int N_BANK_COUNT = 10;
     public static final int N_GENDER = 1;
+    public static final int N_PRONOUN = 30;
+    public static final int N_SEXUAL_ORIENTATION = 30;
     public static final int N_HOMELAND = 10;
     public static final int N_PASSPORT = 20;
     public static final int N_SSN = 20;
     public static final int N_DLN = 20;
 
-    private static final int _ord_FATHER_ID = 26;
+    private static final int _ord_PROPERTIES = 24;
+    private static final int _ord_FATHER_ID = _ord_PROPERTIES + 3;
     private static final int _ord_MOTHER_ID = _ord_FATHER_ID + 1;
     private static final int _ord_ROLE_COUNT = _ord_MOTHER_ID + 3;
     private static final int _ord_EMPLOYEE = _ord_ROLE_COUNT + 3;
     private static final int _ord_BANK_COUNT = _ord_EMPLOYEE + 2;
     private static final int _ord_GENDER = _ord_BANK_COUNT + 1;
-    private static final int _ord_HOMELAND = _ord_GENDER + 1;
+    private static final int _ord_PRONOUN = _ord_GENDER + 1;
+    private static final int _ord_SEXUAL_ORIENTATION = _ord_PRONOUN + 1;
+    private static final int _ord_HOMELAND = _ord_SEXUAL_ORIENTATION + 1;
     private static final int _ord_PASSPORT = _ord_HOMELAND + 1;
     private static final int _ord_SSN = _ord_PASSPORT + 1;
     private static final int _ord_DLN = _ord_SSN + 1;
+
+    JsonVariant properties;
 
     @NotNull
     int roleCount;
@@ -59,7 +71,11 @@ public abstract class _Person_stuff
     @NotNull
     int bankCount;
 
-    String gender;
+    Gender gender;
+
+    String pronoun;
+
+    String sexualOrientation;
 
     String homeland;
 
@@ -78,6 +94,17 @@ public abstract class _Person_stuff
     Person father;
 
     Integer fatherId;
+
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
+    }
 
     @Ordinal(_ord_ROLE_COUNT)
     @Precision(value = 10)
@@ -113,15 +140,38 @@ public abstract class _Person_stuff
     }
 
     @Ordinal(_ord_GENDER)
-    @Precision(value = N_GENDER)
-    @TextInput(maxLength = N_GENDER)
-    @Column(name = "gender", length = N_GENDER)
-    public String getGender() {
+    @Precision(value = 1)
+    @Column(name = "gender", precision = 1)
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String value) {
+    public void setGender(Gender value) {
         this.gender = value;
+    }
+
+    @Ordinal(_ord_PRONOUN)
+    @Precision(value = N_PRONOUN)
+    @TextInput(maxLength = N_PRONOUN)
+    @Column(name = "pronoun", length = N_PRONOUN)
+    public String getPronoun() {
+        return pronoun;
+    }
+
+    public void setPronoun(String value) {
+        this.pronoun = value;
+    }
+
+    @Ordinal(_ord_SEXUAL_ORIENTATION)
+    @Precision(value = N_SEXUAL_ORIENTATION)
+    @TextInput(maxLength = N_SEXUAL_ORIENTATION)
+    @Column(name = "sexual_orient", length = N_SEXUAL_ORIENTATION)
+    public String getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    public void setSexualOrientation(String value) {
+        this.sexualOrientation = value;
     }
 
     @Ordinal(_ord_HOMELAND)

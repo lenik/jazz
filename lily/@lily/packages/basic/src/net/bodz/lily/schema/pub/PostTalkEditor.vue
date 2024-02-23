@@ -1,27 +1,39 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoMessage from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessage";
+import CoMomentInterval from "@skeljs/dba/src/net/bodz/lily/concrete/CoMomentInterval";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import CoTalk from "@skeljs/dba/src/net/bodz/lily/concrete/CoTalk";
+import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
+import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import PostTalk from "./PostTalk";
+import _PostTalk_stuff from "./_PostTalk_stuff";
+
+export const title = "Editor view of: Post talk";
+export interface Props {
+}
+
+</script>
+
+<script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
-import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
 import UserChooseDialog from "../account/UserChooseDialog.vue";
 import FormDefChooseDialog from "../meta/FormDefChooseDialog.vue";
 import PostChooseDialog from "./PostChooseDialog.vue";
-import type { PostTalk } from "./PostTalk";
 import PostTalkChooseDialog from "./PostTalkChooseDialog.vue";
 
-export interface Props {
-}
-</script>
-
-<script setup lang="ts">
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<PostTalk>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -55,11 +67,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -70,7 +80,7 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
                 <input type="number" v-model="model.priority" />
             </FieldRow>
@@ -81,14 +91,12 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.IdEntity">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoMomentInterval">
+        <FieldGroup :type="CoMomentInterval.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
                 <input type="date" v-model="model.beginTime" />
             </FieldRow>
@@ -99,7 +107,7 @@ onMounted(() => {
                 <input type="number" v-model="model.year" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoMessage">
+        <FieldGroup :type="CoMessage.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.subject" v-model="model.subject">
                 <input type="text" v-model="model.subject" />
             </FieldRow>
@@ -107,26 +115,24 @@ onMounted(() => {
                 <input type="text" v-model="model.rawText" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.op" v-model="model.op">
-                <RefEditor :dialog="userChooseDialog" v-model="model.opId" v-model:id="model.opId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.op" v-model:id="model.opId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.form" v-model="model.form">
-                <RefEditor :dialog="formDefChooseDialog" v-model="model.formId" v-model:id="model.formId" />
+                <RefEditor :dialog="formDefChooseDialog" v-model="model.form" v-model:id="model.formId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoTalk">
+        <FieldGroup :type="CoTalk.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.parent" v-model="model.parent">
-                <RefEditor :dialog="postTalkChooseDialog" v-model="model.parentId" v-model:id="model.parentId" />
+                <RefEditor :dialog="postTalkChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._PostTalk_stuff">
+        <FieldGroup :type="_PostTalk_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.formArguments" v-model="model.formArguments">
                 <input type="text" v-model="model.formArguments" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.post" v-model="model.post">
-                <RefEditor :dialog="postChooseDialog" v-model="model.postId" v-model:id="model.postId" />
+                <RefEditor :dialog="postChooseDialog" v-model="model.post" v-model:id="model.postId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.PostTalk">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

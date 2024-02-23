@@ -1,11 +1,15 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { Group } from "./Group";
+import { User } from "./User";
+import _Group_stuffValidators from "./_Group_stuffValidators";
 
-import type { Group } from "./Group";
-import type { GroupType } from "./GroupType";
+export class GroupValidators extends _Group_stuffValidators {
+    validateChildren(val: Group[]) {
+    }
+    validateUsers(val: User[]) {
+    }
 
-export function validate_parent(val: Group) {
 }
 
-export function validate_type(val: GroupType) {
-}
+export default GroupValidators;

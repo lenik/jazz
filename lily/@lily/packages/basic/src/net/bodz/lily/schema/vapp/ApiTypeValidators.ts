@@ -1,11 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ApiType_stuffValidators from "./_ApiType_stuffValidators";
 
-export function validate_id(val: int) {
+export class ApiTypeValidators extends _ApiType_stuffValidators {
+
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_uom(val: string) {
-}
+export default ApiTypeValidators;

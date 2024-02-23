@@ -1,24 +1,25 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
+import ApiType from "./ApiType";
+import VApp from "./VApp";
+import _VApiCredit_stuff_Type from "./_VApiCredit_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { ApiType } from "./ApiType";
-import type { VApp } from "./VApp";
-import type { _VApiCredit_stuff_Type } from "./_VApiCredit_stuff_Type";
-
-export class _VApiCredit_stuff extends CoEntity<Integer> {
+export class _VApiCredit_stuff extends CoEntity<integer> {
     static TYPE = new _VApiCredit_stuff_Type();
 
-    id: int;
+    id: integer;
     credit: BigInteger;
 
     api: ApiType;
-    apiId: int;
+    apiId: integer;
 
     app: VApp;
-    appId: int;
+    appId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _VApiCredit_stuff;

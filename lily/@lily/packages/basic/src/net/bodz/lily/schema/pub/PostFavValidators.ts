@@ -1,7 +1,9 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PostFav_stuffValidators from "./_PostFav_stuffValidators";
 
-import type { Post } from "./Post";
+export class PostFavValidators extends _PostFav_stuffValidators {
 
-export function validate_post(val: Post) {
 }
+
+export default PostFavValidators;

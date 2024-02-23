@@ -11,6 +11,8 @@ public class _BadgeCriteriaBuilder_stuff<self_t extends _BadgeCriteriaBuilder_st
 
     public final IntegerField val = integer("val");
 
+    public final DiscreteField<int[]> levels = discrete("levels", int[].class);
+
     public final BooleanField descend = bool("descend");
 
     public final BooleanField transient_ = bool("transient");

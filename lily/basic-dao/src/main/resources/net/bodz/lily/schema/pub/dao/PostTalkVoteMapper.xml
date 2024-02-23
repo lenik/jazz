@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -72,6 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -106,34 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
-        <if test="m.parentIdRange!= null">
-            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
-            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
-            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
-            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
-        </if>
-        <if test="m.userId != null">and a."user" = #{m.userId}</if>
-        <if test="m.userIdRange!= null">
-            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
-            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
-        </if>
-        <if test="m.voteScore != null">and a.votes = #{m.voteScore}</if>
-        <if test="m.voteScoreRange!= null">
-            <if test="m.voteScoreRange.hasStartIncl">and a.votes >= #{m.voteScoreRange.start}</if>
-            <if test="m.voteScoreRange.hasStartExcl">and a.votes > #{m.voteScoreRange.start}</if>
-            <if test="m.voteScoreRange.hasEndIncl">and a.votes &lt;= #{m.voteScoreRange.end}</if>
-            <if test="m.voteScoreRange.hasEndExcl">and a.votes &lt; #{m.voteScoreRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -188,7 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from post_msg_vote
+        select count(*) "rows" from post_msg_vote a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

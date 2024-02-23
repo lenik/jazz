@@ -1,8 +1,7 @@
+import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _PostFav_stuff_Type } from "./_PostFav_stuff_Type";
+import PostFavValidators from "./PostFavValidators";
+import _PostFav_stuff_Type from "./_PostFav_stuff_Type";
 
 // Type Info
 
@@ -10,6 +9,8 @@ export class PostFavType extends _PostFav_stuff_Type {
 
     name = "net.bodz.lily.schema.pub.PostFav"
     icon = "fa-tag"
+
+    static validators = new PostFavValidators();
 
     static declaredProperty: EntityPropertyMap = {
     }
@@ -20,3 +21,5 @@ export class PostFavType extends _PostFav_stuff_Type {
     }
 
 }
+
+export default PostFav;

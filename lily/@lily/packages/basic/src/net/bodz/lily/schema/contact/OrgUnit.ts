@@ -1,17 +1,18 @@
-
-import type { List } from "../../../../../java/util/List";
-import type { Contact } from "./Contact";
-import { * as validators } from "./PersonValidators";
-import type { _OrgUnit_stuff } from "./_OrgUnit_stuff";
+import { Contact } from "./Contact";
+import { PersonRole } from "./PersonRole";
+import _OrgUnit_stuff from "./_OrgUnit_stuff";
+import { _OrgUnit_stuff_Type } from "./_OrgUnit_stuff_Type";
 
 export class OrgUnit extends _OrgUnit_stuff {
-    static TYPE = new OrgUnitType();
+    static TYPE = new _OrgUnit_stuff_Type();
 
     contact?: Contact
-    staff?: List
+    staff?: PersonRole[]
 
     constructor(o: any) {
         super(o);
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default OrgUnit;

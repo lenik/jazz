@@ -8,7 +8,7 @@ import javax.persistence.Table;
  * @label Tag Group
  * @label.zh 标签组
  */
-@Table(schema = "lily", name = "_tagv")
+@Table(schema = TagGroupDef.SCHEMA_NAME, name = TagGroupDef.TABLE_NAME)
 public class TagGroupDef
         extends _TagGroupDef_stuff {
 

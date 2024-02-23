@@ -1,17 +1,9 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PostBackref_stuffValidators from "./_PostBackref_stuffValidators";
 
-import type { ExternalSite } from "../inet/ExternalSite";
-import type { Post } from "./Post";
+export class PostBackrefValidators extends _PostBackref_stuffValidators {
 
-export function validate_key(val: string) {
 }
 
-export function validate_value(val: int) {
-}
-
-export function validate_post(val: Post) {
-}
-
-export function validate_site(val: ExternalSite) {
-}
+export default PostBackrefValidators;

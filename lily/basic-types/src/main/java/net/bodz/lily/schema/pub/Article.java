@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "article")
+@Table(schema = Article.SCHEMA_NAME, name = Article.TABLE_NAME)
 public class Article
         extends _Article_stuff {
 

@@ -1,14 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PersonTag_stuffValidators from "./_PersonTag_stuffValidators";
 
-import type { Person } from "./Person";
-import type { PersonTagType } from "./PersonTagType";
+export class PersonTagValidators extends _PersonTag_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_tag(val: PersonTagType) {
-}
-
-export function validate_person(val: Person) {
-}
+export default PersonTagValidators;

@@ -1,47 +1,45 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { User } from "./User";
+import UserRunValidators from "./UserRunValidators";
 
 export class _UserRun_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "user_run";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "user_run";
 
     name = "net.bodz.lily.schema.account.UserRun"
     icon = "fa-tag"
     description = "User Activity Log"
 
-    static const FIELD_USER_ID = "user";
-    static const FIELD_SCORE = "score";
-    static const FIELD_LAST_LOGIN_TIME = "lastlog";
-    static const FIELD_LAST_LOGIN_I_P = "lastlogip";
+    static FIELD_USER_ID = "user";
+    static FIELD_SCORE = "score";
+    static FIELD_LAST_LOGIN_TIME = "lastlog";
+    static FIELD_LAST_LOGIN_I_P = "lastlogip";
 
-    static const N_USER_ID = 10;
-    static const N_SCORE = 10;
-    static const N_LAST_LOGIN_TIME = 35;
-    static const N_LAST_LOGIN_I_P = 2147483647;
+    static N_USER_ID = 10;
+    static N_SCORE = 10;
+    static N_LAST_LOGIN_TIME = 35;
+    static N_LAST_LOGIN_I_P = 2147483647;
+
+    static validators = new UserRunValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        score: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_score }),
+        score: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateScore }),
         lastLoginTime: property({ type: "Date", precision: 35, scale: 6, 
             description: "Last time of login", 
-            validator: validators.validate_lastLoginTime }),
-        lastLoginIP: property({ type: "java.lang.Object", 
+            validator: this.validators.validateLastLoginTime }),
+        lastLoginIP: property({ type: "string", 
             description: "The source IP of last login", 
-            validator: validators.validate_lastLoginIP }),
+            validator: this.validators.validateLastLoginIP }),
 
-        user: property({ type: "net.bodz.lily.schema.account.User", nullable: false, 
+        user: property({ type: User.TYPE, nullable: false, 
             description: "The user", 
-            validator: validators.validate_user }),
-        userId: primaryKey({ type: "int", nullable: false, precision: 10, 
-            description: "The user", 
-            validator: validators.validate_userId }),
+            validator: this.validators.validateUser }),
+        userId: primaryKey({ type: "integer", nullable: false, precision: 10, 
+            description: "The user" }),
     }
 
     constructor() {
@@ -50,3 +48,5 @@ export class _UserRun_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _UserRun_stuff_Type;

@@ -30,8 +30,8 @@ public class VAppRequestSamples
         a.setOwnerUser(ownerUser);
         a.setId(1589193509);
         a.setCode("uepmr iuar?");
-        a.setBeginTime(ZonedDateTime.parse("2024-01-09 04:09:41", DateTimes.D10T8));
-        a.setEndTime(ZonedDateTime.parse("2024-01-14 16:25:33", DateTimes.D10T8));
+        a.setBeginTime(ZonedDateTime.parse("2024-01-09T04:09:41.779 +0800", DateTimes.ISO8601));
+        a.setEndTime(ZonedDateTime.parse("2024-01-14T16:25:33.031 -0600", DateTimes.ISO8601));
         a.setYear(1461252675);
         a.setSubject("nporl eua. iou f, vioe got oon qouea&lorvau re uzu xiu xhozi ueea.");
         a.setRawText("Pbokv Uey-yvi? csa iuao ou");

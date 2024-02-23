@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "article_backref")
+@Table(schema = ArticleBackref.SCHEMA_NAME, name = ArticleBackref.TABLE_NAME)
 public class ArticleBackref
         extends _ArticleBackref_stuff {
 

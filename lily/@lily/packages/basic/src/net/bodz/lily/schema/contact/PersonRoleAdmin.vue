@@ -1,17 +1,20 @@
 <script lang="ts">
-
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { PersonRole } from "./PersonRole";
-import PersonRoleEditor from "./PersonRoleEditor.vue";
+import PersonRole from "./PersonRole";
 
+export const title = "Admin view of: Person role";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import PersonRoleEditor from "./PersonRoleEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +24,7 @@ const type = PersonRole.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -47,6 +51,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

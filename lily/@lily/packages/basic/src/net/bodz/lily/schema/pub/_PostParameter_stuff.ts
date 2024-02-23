@@ -1,27 +1,27 @@
+import type { double, integer, long } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer, long } from "@skeljs/dba/src/net/bodz/lily/entity";
+import Post from "./Post";
+import PostParameterType from "./PostParameterType";
+import _PostParameter_stuff_Type from "./_PostParameter_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { Post } from "./Post";
-import type { PostParameterType } from "./PostParameterType";
-import type { _PostParameter_stuff_Type } from "./_PostParameter_stuff_Type";
-
-export class _PostParameter_stuff extends CoEntity<Integer> {
+export class _PostParameter_stuff extends CoEntity<integer> {
     static TYPE = new _PostParameter_stuff_Type();
 
-    id: int;
+    id: integer;
     ival?: integer;
-    fval?: number;
+    fval?: double;
     sval?: string;
 
     post: Post;
     postId: long;
 
     parameter: PostParameterType;
-    parameterId: int;
+    parameterId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _PostParameter_stuff;

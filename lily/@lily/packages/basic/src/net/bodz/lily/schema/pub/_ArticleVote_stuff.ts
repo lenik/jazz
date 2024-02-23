@@ -1,14 +1,13 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import VoteRecord from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecord";
 
-import type { VoteRecord } from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecord";
-import type { long } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Article } from "./Article";
-import type { _ArticleVote_stuff_Type } from "./_ArticleVote_stuff_Type";
+import Article from "./Article";
+import _ArticleVote_stuff_Type from "./_ArticleVote_stuff_Type";
 
 export class _ArticleVote_stuff extends VoteRecord {
     static TYPE = new _ArticleVote_stuff_Type();
 
-    voteScore: int;
+    voteScore: integer;
 
     parent: Article;
     parentId: long;
@@ -17,3 +16,5 @@ export class _ArticleVote_stuff extends VoteRecord {
         super(o);
     }
 }
+
+export default _ArticleVote_stuff;

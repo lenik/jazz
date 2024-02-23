@@ -33,7 +33,7 @@ public abstract class _Uom_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
-    private static final int _ord_PROP = _ord_CODE + 4;
+    private static final int _ord_PROP = _ord_CODE + 5;
     private static final int _ord_STD_ID = _ord_PROP + 1;
     private static final int _ord_SCALE = _ord_STD_ID + 1;
 

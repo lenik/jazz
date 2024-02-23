@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { SchemaDef } from "./SchemaDef";
-import SchemaDefEditor from "./SchemaDefEditor.vue";
+import SchemaDef from "./SchemaDef";
 
+export const title = "Admin view of: Schema def";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import SchemaDefEditor from "./SchemaDefEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -22,6 +26,7 @@ const selection = ref<any>({});
 onMounted(() => {
 });
 
+
 </script>
 
 <template>
@@ -31,9 +36,10 @@ onMounted(() => {
             <th data-type="string" data-field="code">Code</th>
             <th data-type="string" data-field="label">Label</th>
             <th data-type="string" data-field="description">Description</th>
+            <th data-type="string" data-field="icon">Icon</th>
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="net.bodz.bas.repr.state.State" data-field="state">State</th>
+            <th data-type="string" data-field="state">State</th>
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
@@ -52,6 +58,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

@@ -16,6 +16,7 @@ public class BadgeSamples
         a.setDescend(true);
         a.setTransient_(true);
         a.setIndexed(false);
+        a.setImage("Wdra juduil&L vuol Sxbeggu");
         return a;
     }
 

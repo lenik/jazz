@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="voteCount" column="nvote" />
         <result property="hateCount" column="nhate" />
         <result property="messageCount" column="nmsg" />
-        <result property="plugins.jsonStr" column="plugins" />
+        <result property="plugins" column="plugins" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
         <result property="opId" column="op" />
@@ -110,6 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -124,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -138,6 +140,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -154,14 +157,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -171,6 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -250,6 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -264,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -278,6 +283,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -294,14 +300,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -311,6 +316,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -332,143 +338,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
-        <if test="m.ownerUserIdRange!= null">
-            <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
-            <if test="m.ownerUserIdRange.hasStartExcl">and a.uid > #{m.ownerUserIdRange.start}</if>
-            <if test="m.ownerUserIdRange.hasEndIncl">and a.uid &lt;= #{m.ownerUserIdRange.end}</if>
-            <if test="m.ownerUserIdRange.hasEndExcl">and a.uid &lt; #{m.ownerUserIdRange.end}</if>
-        </if>
-        <if test="m.ownerGroupId != null">and a.gid = #{m.ownerGroupId}</if>
-        <if test="m.ownerGroupIdRange!= null">
-            <if test="m.ownerGroupIdRange.hasStartIncl">and a.gid >= #{m.ownerGroupIdRange.start}</if>
-            <if test="m.ownerGroupIdRange.hasStartExcl">and a.gid > #{m.ownerGroupIdRange.start}</if>
-            <if test="m.ownerGroupIdRange.hasEndIncl">and a.gid &lt;= #{m.ownerGroupIdRange.end}</if>
-            <if test="m.ownerGroupIdRange.hasEndExcl">and a.gid &lt; #{m.ownerGroupIdRange.end}</if>
-        </if>
-        <if test="m.accessMode != null">and a.mode = #{m.accessMode}</if>
-        <if test="m.accessModeRange!= null">
-            <if test="m.accessModeRange.hasStartIncl">and a.mode >= #{m.accessModeRange.start}</if>
-            <if test="m.accessModeRange.hasStartExcl">and a.mode > #{m.accessModeRange.start}</if>
-            <if test="m.accessModeRange.hasEndIncl">and a.mode &lt;= #{m.accessModeRange.end}</if>
-            <if test="m.accessModeRange.hasEndExcl">and a.mode &lt; #{m.accessModeRange.end}</if>
-        </if>
-        <if test="m.acl != null">and a.acl = #{m.acl}</if>
-        <if test="m.aclRange!= null">
-            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
-            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
-            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
-            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
-        </if>
-        <if test="m.priority != null">and a.priority = #{m.priority}</if>
-        <if test="m.priorityRange!= null">
-            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
-            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
-        </if>
-        <if test="m.flags != null">and a.flags = #{m.flags}</if>
-        <if test="m.flagsRange!= null">
-            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
-            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
-        </if>
-        <if test="m.state != null">and a."state" = #{m.state}</if>
-        <if test="m.stateRange!= null">
-            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
-            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.beginTime != null">and a.t0 = #{m.beginTime}</if>
-        <if test="m.endTime != null">and a.t1 = #{m.endTime}</if>
-        <if test="m.year != null">and a."year" = #{m.year}</if>
-        <if test="m.yearRange!= null">
-            <if test="m.yearRange.hasStartIncl">and a."year" >= #{m.yearRange.start}</if>
-            <if test="m.yearRange.hasStartExcl">and a."year" > #{m.yearRange.start}</if>
-            <if test="m.yearRange.hasEndIncl">and a."year" &lt;= #{m.yearRange.end}</if>
-            <if test="m.yearRange.hasEndExcl">and a."year" &lt; #{m.yearRange.end}</if>
-        </if>
-        <if test="m.subject != null">and a.subject = #{m.subject}</if>
-        <if test="m.subjectPattern != null">and a.subject like '${m.subjectPattern}'</if>
-        <if test="m.opId != null">and a.op = #{m.opId}</if>
-        <if test="m.opIdRange!= null">
-            <if test="m.opIdRange.hasStartIncl">and a.op >= #{m.opIdRange.start}</if>
-            <if test="m.opIdRange.hasStartExcl">and a.op > #{m.opIdRange.start}</if>
-            <if test="m.opIdRange.hasEndIncl">and a.op &lt;= #{m.opIdRange.end}</if>
-            <if test="m.opIdRange.hasEndExcl">and a.op &lt; #{m.opIdRange.end}</if>
-        </if>
-        <if test="m.rawText != null">and a.text = #{m.rawText}</if>
-        <if test="m.rawTextPattern != null">and a.text like '${m.rawTextPattern}'</if>
-        <if test="m.formId != null">and a.form = #{m.formId}</if>
-        <if test="m.formIdRange!= null">
-            <if test="m.formIdRange.hasStartIncl">and a.form >= #{m.formIdRange.start}</if>
-            <if test="m.formIdRange.hasStartExcl">and a.form > #{m.formIdRange.start}</if>
-            <if test="m.formIdRange.hasEndIncl">and a.form &lt;= #{m.formIdRange.end}</if>
-            <if test="m.formIdRange.hasEndExcl">and a.form &lt; #{m.formIdRange.end}</if>
-        </if>
-        <if test="m.formArguments != null">and a.formargs = #{m.formArguments}</if>
-        <if test="m.formArgumentsPattern != null">and a.formargs like '${m.formArgumentsPattern}'</if>
-        <if test="m.parentId != null">and a.parent = #{m.parentId}</if>
-        <if test="m.parentIdRange!= null">
-            <if test="m.parentIdRange.hasStartIncl">and a.parent >= #{m.parentIdRange.start}</if>
-            <if test="m.parentIdRange.hasStartExcl">and a.parent > #{m.parentIdRange.start}</if>
-            <if test="m.parentIdRange.hasEndIncl">and a.parent &lt;= #{m.parentIdRange.end}</if>
-            <if test="m.parentIdRange.hasEndExcl">and a.parent &lt; #{m.parentIdRange.end}</if>
-        </if>
-        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
-        <if test="m.categoryIdRange!= null">
-            <if test="m.categoryIdRange.hasStartIncl">and a.cat >= #{m.categoryIdRange.start}</if>
-            <if test="m.categoryIdRange.hasStartExcl">and a.cat > #{m.categoryIdRange.start}</if>
-            <if test="m.categoryIdRange.hasEndIncl">and a.cat &lt;= #{m.categoryIdRange.end}</if>
-            <if test="m.categoryIdRange.hasEndExcl">and a.cat &lt; #{m.categoryIdRange.end}</if>
-        </if>
-        <if test="m.favCount != null">and a.nfav = #{m.favCount}</if>
-        <if test="m.favCountRange!= null">
-            <if test="m.favCountRange.hasStartIncl">and a.nfav >= #{m.favCountRange.start}</if>
-            <if test="m.favCountRange.hasStartExcl">and a.nfav > #{m.favCountRange.start}</if>
-            <if test="m.favCountRange.hasEndIncl">and a.nfav &lt;= #{m.favCountRange.end}</if>
-            <if test="m.favCountRange.hasEndExcl">and a.nfav &lt; #{m.favCountRange.end}</if>
-        </if>
-        <if test="m.voteCount != null">and a.nvote = #{m.voteCount}</if>
-        <if test="m.voteCountRange!= null">
-            <if test="m.voteCountRange.hasStartIncl">and a.nvote >= #{m.voteCountRange.start}</if>
-            <if test="m.voteCountRange.hasStartExcl">and a.nvote > #{m.voteCountRange.start}</if>
-            <if test="m.voteCountRange.hasEndIncl">and a.nvote &lt;= #{m.voteCountRange.end}</if>
-            <if test="m.voteCountRange.hasEndExcl">and a.nvote &lt; #{m.voteCountRange.end}</if>
-        </if>
-        <if test="m.hateCount != null">and a.nhate = #{m.hateCount}</if>
-        <if test="m.hateCountRange!= null">
-            <if test="m.hateCountRange.hasStartIncl">and a.nhate >= #{m.hateCountRange.start}</if>
-            <if test="m.hateCountRange.hasStartExcl">and a.nhate > #{m.hateCountRange.start}</if>
-            <if test="m.hateCountRange.hasEndIncl">and a.nhate &lt;= #{m.hateCountRange.end}</if>
-            <if test="m.hateCountRange.hasEndExcl">and a.nhate &lt; #{m.hateCountRange.end}</if>
-        </if>
-        <if test="m.messageCount != null">and a.nmsg = #{m.messageCount}</if>
-        <if test="m.messageCountRange!= null">
-            <if test="m.messageCountRange.hasStartIncl">and a.nmsg >= #{m.messageCountRange.start}</if>
-            <if test="m.messageCountRange.hasStartExcl">and a.nmsg > #{m.messageCountRange.start}</if>
-            <if test="m.messageCountRange.hasEndIncl">and a.nmsg &lt;= #{m.messageCountRange.end}</if>
-            <if test="m.messageCountRange.hasEndExcl">and a.nmsg &lt; #{m.messageCountRange.end}</if>
-        </if>
-        <if test="m.plugins != null">and a.plugins = #{m.plugins}</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -589,67 +459,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from post
+        select count(*) "rows" from post a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-
-    <update id="delete_xrefs">
-        alter table lily.post drop constraint post_parent_fkey;
-        alter table lily.post_backref drop constraint post_backref_post_fkey;
-        alter table lily.post_fav drop constraint post_fav_post_fkey;
-        alter table lily.post_msg drop constraint post_msg_post_fkey;
-        alter table lily.post_parm drop constraint post_parm_post_fkey;
-        alter table lily.post_tag drop constraint post_tag_post_fkey;
-        alter table lily.post_vote drop constraint post_vote_parent_fkey;
-    </update>
-
-    <update id="create_xrefs">
-        alter table lily.post
-            add constraint post_parent_fkey foreign key (parent)
-            references lily.post (id)
-            on update cascade
-            on delete set null
-            ;
-        alter table lily.post_backref
-            add constraint post_backref_post_fkey foreign key (post)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.post_fav
-            add constraint post_fav_post_fkey foreign key (post)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.post_msg
-            add constraint post_msg_post_fkey foreign key (post)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.post_parm
-            add constraint post_parm_post_fkey foreign key (post)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.post_tag
-            add constraint post_tag_post_fkey foreign key (post)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.post_vote
-            add constraint post_vote_parent_fkey foreign key (parent)
-            references lily.post (id)
-            on update cascade
-            on delete cascade
-            ;
-    </update>
 
 </mapper>

@@ -42,7 +42,7 @@ const stat = {
             <SiteBar title='Lily tests' />
         </template>
         <template #project-info>
-            <ProjectInfo :stat="stat" label="Lily Test Apps" description="Test applications of lily::basuc. ">
+            <ProjectInfo :stat="stat" label="Lily Test Apps" description="Test applications of lily::basic. ">
             </ProjectInfo>
         </template>
         <router-view></router-view>

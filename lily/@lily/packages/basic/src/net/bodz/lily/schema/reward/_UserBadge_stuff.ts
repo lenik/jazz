@@ -1,16 +1,14 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import User from "../account/User";
+import Badge from "./Badge";
+import _UserBadge_stuff_Type from "./_UserBadge_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { User } from "../account/User";
-import type { Badge } from "./Badge";
-import type { _UserBadge_stuff_Type } from "./_UserBadge_stuff_Type";
-
-export class _UserBadge_stuff extends CoEntity<Integer> {
+export class _UserBadge_stuff extends CoEntity<integer> {
     static TYPE = new _UserBadge_stuff_Type();
 
-    id: int;
+    id: integer;
 
     badge?: Badge;
     badgeId?: integer;
@@ -22,3 +20,5 @@ export class _UserBadge_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _UserBadge_stuff;

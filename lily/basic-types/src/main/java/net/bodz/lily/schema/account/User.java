@@ -29,7 +29,7 @@ import net.bodz.lily.security.IUser;
  * @see <a href="http://www.williamlong.info/archives/2937.html">个人密码安全策略</a>
  * @see <a href="http://wenku.baidu.com/view/e8638601eff9aef8941e065e.html">用户名大全</a>
  */
-@Table(schema = "lily", name = "user")
+@Table(schema = User.SCHEMA_NAME, name = User.TABLE_NAME)
 public class User
         extends _User_stuff
         implements

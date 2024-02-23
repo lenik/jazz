@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -17,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
         <result property="code" column="code" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="secret" column="secret" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -65,14 +67,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -82,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -95,6 +97,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -119,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             req.code req_code, 
             req.label req_label, 
             req.description req_description, 
+            req.icon req_icon, 
             req.t0 req_t0, 
             req.t1 req_t1, 
             req."year" req_year, 
@@ -145,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -164,14 +169,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -181,6 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -194,6 +199,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -218,6 +224,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             req.code req_code, 
             req.label req_label, 
             req.description req_description, 
+            req.icon req_icon, 
             req.t0 req_t0, 
             req.t1 req_t1, 
             req."year" req_year, 
@@ -236,94 +243,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.ownerUserId != null">and a.uid = #{m.ownerUserId}</if>
-        <if test="m.ownerUserIdRange!= null">
-            <if test="m.ownerUserIdRange.hasStartIncl">and a.uid >= #{m.ownerUserIdRange.start}</if>
-            <if test="m.ownerUserIdRange.hasStartExcl">and a.uid > #{m.ownerUserIdRange.start}</if>
-            <if test="m.ownerUserIdRange.hasEndIncl">and a.uid &lt;= #{m.ownerUserIdRange.end}</if>
-            <if test="m.ownerUserIdRange.hasEndExcl">and a.uid &lt; #{m.ownerUserIdRange.end}</if>
-        </if>
-        <if test="m.ownerGroupId != null">and a.gid = #{m.ownerGroupId}</if>
-        <if test="m.ownerGroupIdRange!= null">
-            <if test="m.ownerGroupIdRange.hasStartIncl">and a.gid >= #{m.ownerGroupIdRange.start}</if>
-            <if test="m.ownerGroupIdRange.hasStartExcl">and a.gid > #{m.ownerGroupIdRange.start}</if>
-            <if test="m.ownerGroupIdRange.hasEndIncl">and a.gid &lt;= #{m.ownerGroupIdRange.end}</if>
-            <if test="m.ownerGroupIdRange.hasEndExcl">and a.gid &lt; #{m.ownerGroupIdRange.end}</if>
-        </if>
-        <if test="m.accessMode != null">and a.mode = #{m.accessMode}</if>
-        <if test="m.accessModeRange!= null">
-            <if test="m.accessModeRange.hasStartIncl">and a.mode >= #{m.accessModeRange.start}</if>
-            <if test="m.accessModeRange.hasStartExcl">and a.mode > #{m.accessModeRange.start}</if>
-            <if test="m.accessModeRange.hasEndIncl">and a.mode &lt;= #{m.accessModeRange.end}</if>
-            <if test="m.accessModeRange.hasEndExcl">and a.mode &lt; #{m.accessModeRange.end}</if>
-        </if>
-        <if test="m.acl != null">and a.acl = #{m.acl}</if>
-        <if test="m.aclRange!= null">
-            <if test="m.aclRange.hasStartIncl">and a.acl >= #{m.aclRange.start}</if>
-            <if test="m.aclRange.hasStartExcl">and a.acl > #{m.aclRange.start}</if>
-            <if test="m.aclRange.hasEndIncl">and a.acl &lt;= #{m.aclRange.end}</if>
-            <if test="m.aclRange.hasEndExcl">and a.acl &lt; #{m.aclRange.end}</if>
-        </if>
-        <if test="m.label != null">and a.label = #{m.label}</if>
-        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
-        <if test="m.description != null">and a.description = #{m.description}</if>
-        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
-        <if test="m.priority != null">and a.priority = #{m.priority}</if>
-        <if test="m.priorityRange!= null">
-            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
-            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
-        </if>
-        <if test="m.flags != null">and a.flags = #{m.flags}</if>
-        <if test="m.flagsRange!= null">
-            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
-            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
-        </if>
-        <if test="m.state != null">and a."state" = #{m.state}</if>
-        <if test="m.stateRange!= null">
-            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
-            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.code != null">and a.code = #{m.code}</if>
-        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
-        <if test="m.properties != null">and a.props = #{m.properties}</if>
-        <if test="m.reqId != null">and a.req = #{m.reqId}</if>
-        <if test="m.reqIdRange!= null">
-            <if test="m.reqIdRange.hasStartIncl">and a.req >= #{m.reqIdRange.start}</if>
-            <if test="m.reqIdRange.hasStartExcl">and a.req > #{m.reqIdRange.start}</if>
-            <if test="m.reqIdRange.hasEndIncl">and a.req &lt;= #{m.reqIdRange.end}</if>
-            <if test="m.reqIdRange.hasEndExcl">and a.req &lt; #{m.reqIdRange.end}</if>
-        </if>
-        <if test="m.categoryId != null">and a.cat = #{m.categoryId}</if>
-        <if test="m.categoryIdRange!= null">
-            <if test="m.categoryIdRange.hasStartIncl">and a.cat >= #{m.categoryIdRange.start}</if>
-            <if test="m.categoryIdRange.hasStartExcl">and a.cat > #{m.categoryIdRange.start}</if>
-            <if test="m.categoryIdRange.hasEndIncl">and a.cat &lt;= #{m.categoryIdRange.end}</if>
-            <if test="m.categoryIdRange.hasEndExcl">and a.cat &lt; #{m.categoryIdRange.end}</if>
-        </if>
-        <if test="m.secret != null">and a.secret = #{m.secret}</if>
-        <if test="m.secretPattern != null">and a.secret like '${m.secretPattern}'</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -354,6 +274,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -372,6 +293,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -395,6 +317,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -420,37 +343,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from vapp
+        select count(*) "rows" from vapp a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-
-    <update id="delete_xrefs">
-        alter table lily.vapi drop constraint vapi_app_fkey;
-        alter table lily.vapi_credit drop constraint vapi_credit_app_fkey;
-        alter table lily.vapi_log drop constraint vapi_log_app_fkey;
-    </update>
-
-    <update id="create_xrefs">
-        alter table lily.vapi
-            add constraint vapi_app_fkey foreign key (app)
-            references lily.vapp (id)
-            on update cascade
-            on delete cascade
-            ;
-        alter table lily.vapi_credit
-            add constraint vapi_credit_app_fkey foreign key (app)
-            references lily.vapp (id)
-            on update cascade
-            ;
-        alter table lily.vapi_log
-            add constraint vapi_log_app_fkey foreign key (app)
-            references lily.vapp (id)
-            on update cascade
-            ;
-    </update>
 
 </mapper>

@@ -2,7 +2,7 @@ package net.bodz.lily.schema.vapp;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "vappcat")
+@Table(schema = VAppCat.SCHEMA_NAME, name = VAppCat.TABLE_NAME)
 public class VAppCat
         extends _VAppCat_stuff {
 

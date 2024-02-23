@@ -26,6 +26,7 @@ public abstract class _Badge_stuff
     public static final String FIELD_DESCEND = "descend";
     public static final String FIELD_TRANSIENT = "transient";
     public static final String FIELD_INDEXED = "indexed";
+    public static final String FIELD_IMAGE = "image";
 
     public static final int N_ID = 10;
     public static final int N_EXPR = 255;
@@ -34,14 +35,16 @@ public abstract class _Badge_stuff
     public static final int N_DESCEND = 1;
     public static final int N_TRANSIENT = 1;
     public static final int N_INDEXED = 1;
+    public static final int N_IMAGE = 30;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_EXPR = _ord_ID + 9;
+    private static final int _ord_EXPR = _ord_ID + 10;
     private static final int _ord_VAL = _ord_EXPR + 1;
     private static final int _ord_LEVELS = _ord_VAL + 1;
     private static final int _ord_DESCEND = _ord_LEVELS + 1;
     private static final int _ord_TRANSIENT = _ord_DESCEND + 1;
     private static final int _ord_INDEXED = _ord_TRANSIENT + 1;
+    private static final int _ord_IMAGE = _ord_INDEXED + 1;
 
     @Id
     @NotNull
@@ -62,6 +65,8 @@ public abstract class _Badge_stuff
 
     @NotNull
     boolean indexed;
+
+    String image;
 
     @Override
     public Integer id() {
@@ -150,6 +155,18 @@ public abstract class _Badge_stuff
 
     public void setIndexed(boolean value) {
         this.indexed = value;
+    }
+
+    @Ordinal(_ord_IMAGE)
+    @Precision(value = N_IMAGE)
+    @TextInput(maxLength = N_IMAGE)
+    @Column(name = "image", length = N_IMAGE)
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String value) {
+        this.image = value;
     }
 
     public void initNotNulls() {

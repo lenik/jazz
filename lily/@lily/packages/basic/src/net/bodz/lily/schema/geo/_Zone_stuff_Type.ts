@@ -1,55 +1,55 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Zone } from "./Zone";
+import { ZoneCategory } from "./ZoneCategory";
+import ZoneValidators from "./ZoneValidators";
 
 export class _Zone_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "zone";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "zone";
 
     name = "net.bodz.lily.schema.geo.Zone"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_CODE = "code";
-    static const FIELD_CATEGORY_ID = "cat";
-    static const FIELD_COUNTRY = "country";
-    static const FIELD_PARENT_ID = "parent";
-    static const FIELD_DEPTH = "depth";
-    static const FIELD_TEL_CODE = "telcode";
-    static const FIELD_POST_CODE = "postcode";
-    static const FIELD_DATA = "data";
+    static FIELD_ID = "id";
+    static FIELD_CODE = "code";
+    static FIELD_CATEGORY_ID = "cat";
+    static FIELD_COUNTRY = "country";
+    static FIELD_PARENT_ID = "parent";
+    static FIELD_DEPTH = "depth";
+    static FIELD_TEL_CODE = "telcode";
+    static FIELD_POST_CODE = "postcode";
+    static FIELD_DATA = "data";
 
-    static const N_ID = 10;
-    static const N_CODE = 10;
-    static const N_CATEGORY_ID = 10;
-    static const N_COUNTRY = 2;
-    static const N_PARENT_ID = 10;
-    static const N_DEPTH = 10;
-    static const N_TEL_CODE = 10;
-    static const N_POST_CODE = 10;
-    static const N_DATA = 2147483647;
+    static N_ID = 10;
+    static N_CODE = 10;
+    static N_CATEGORY_ID = 10;
+    static N_COUNTRY = 2;
+    static N_PARENT_ID = 10;
+    static N_DEPTH = 10;
+    static N_TEL_CODE = 10;
+    static N_POST_CODE = 10;
+    static N_DATA = 2147483647;
+
+    static validators = new ZoneValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        code: property({ type: "string", precision: 10, validator: validators.validate_code }),
-        country: property({ type: "string", precision: 2, validator: validators.validate_country }),
-        depth: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_depth }),
-        telCode: property({ type: "string", precision: 10, validator: validators.validate_telCode }),
-        postCode: property({ type: "string", precision: 10, validator: validators.validate_postCode }),
-        data: property({ type: "java.lang.Object", validator: validators.validate_data }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: "string", precision: 10, validator: this.validators.validateCode }),
+        country: property({ type: "string", precision: 2, validator: this.validators.validateCountry }),
+        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        telCode: property({ type: "string", precision: 10, validator: this.validators.validateTelCode }),
+        postCode: property({ type: "string", precision: 10, validator: this.validators.validatePostCode }),
+        data: property({ type: "any", validator: this.validators.validateData }),
 
-        parent: property({ type: "net.bodz.lily.schema.geo.Zone", validator: validators.validate_parent }),
-        parentId: property({ type: "integer", precision: 10, validator: validators.validate_parentId }),
+        parent: property({ type: Zone.TYPE, validator: this.validators.validateParent }),
+        parentId: property({ type: "integer", precision: 10 }),
 
-        category: property({ type: "net.bodz.lily.schema.geo.ZoneCategory", nullable: false, validator: validators.validate_category }),
-        categoryId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_categoryId }),
+        category: property({ type: ZoneCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+        categoryId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -58,3 +58,5 @@ export class _Zone_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _Zone_stuff_Type;

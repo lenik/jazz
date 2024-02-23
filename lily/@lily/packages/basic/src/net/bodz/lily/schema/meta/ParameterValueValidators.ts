@@ -1,16 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ParameterValue_stuffValidators from "./_ParameterValue_stuffValidators";
 
-import type { ParameterDef } from "./ParameterDef";
+export class ParameterValueValidators extends _ParameterValue_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_val(val: string) {
-}
-
-export function validate_parameter(val: ParameterDef) {
-}
+export default ParameterValueValidators;

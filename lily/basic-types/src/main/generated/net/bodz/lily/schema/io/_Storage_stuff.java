@@ -26,7 +26,7 @@ public abstract class _Storage_stuff
     public static final int N_NAME = 30;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_NAME = _ord_ID + 10;
+    private static final int _ord_NAME = 12;
 
     @Id
     @NotNull

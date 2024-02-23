@@ -1,15 +1,13 @@
+import type { double, integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import Uom from "./Uom";
+import _Uom_stuff_Type from "./_Uom_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { Uom } from "./Uom";
-import type { _Uom_stuff_Type } from "./_Uom_stuff_Type";
-
-export class _Uom_stuff extends CoEntity<Integer> {
+export class _Uom_stuff extends CoEntity<integer> {
     static TYPE = new _Uom_stuff_Type();
 
-    id: int;
+    id: integer;
     code?: string;
     prop: string;
     scale: double;
@@ -21,3 +19,5 @@ export class _Uom_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _Uom_stuff;

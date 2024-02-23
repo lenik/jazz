@@ -1,30 +1,29 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoParameterType from "@skeljs/dba/src/net/bodz/lily/concrete/CoParameterType";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoParameterType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoParameterType";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { TypeParamType } from "../../meta/TypeParamType";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { TypeParamType } from "../../meta/TypeParamType";
+import PostParameterTypeValidators from "./PostParameterTypeValidators";
 
 export class _PostParameterType_stuff_Type extends CoParameterType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "postparm";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "postparm";
 
     name = "net.bodz.lily.schema.pub.PostParameterType"
     icon = "fa-tag"
 
-    static const FIELD_NAME = "name";
-    static const FIELD_DUMMY = "dummy";
+    static FIELD_NAME = "name";
+    static FIELD_DUMMY = "dummy";
 
-    static const N_NAME = 30;
-    static const N_DUMMY = 10;
+    static N_NAME = 30;
+    static N_DUMMY = 10;
+
+    static validators = new PostParameterTypeValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        name: property({ type: "string", precision: 30, validator: validators.validate_name }),
-        dummy: property({ type: "integer", precision: 10, validator: validators.validate_dummy }),
+        name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
+        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {
@@ -33,3 +32,5 @@ export class _PostParameterType_stuff_Type extends CoParameterType {
     }
 
 }
+
+export default _PostParameterType_stuff_Type;

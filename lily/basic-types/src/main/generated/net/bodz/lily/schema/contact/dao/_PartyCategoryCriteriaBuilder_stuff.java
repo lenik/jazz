@@ -11,10 +11,6 @@ public class _PartyCategoryCriteriaBuilder_stuff<self_t extends _PartyCategoryCr
 
     public final IntegerField accessMode = integer("mode");
 
-    public final StringField image = string("image");
-
-    public final StringField imageAlt = string("imagealt");
-
     public final IntegerField refCount = integer("nref");
 
 }

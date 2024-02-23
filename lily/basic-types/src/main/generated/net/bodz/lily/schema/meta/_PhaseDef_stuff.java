@@ -29,7 +29,7 @@ public abstract class _PhaseDef_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
-    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 10;
 
     @Id
     @NotNull

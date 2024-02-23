@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             badge.id badge_id, 
             badge.label badge_label, 
             badge.description badge_description, 
+            badge.icon badge_icon, 
             badge.priority badge_priority, 
             badge.flags badge_flags, 
             badge."state" badge_state, 
@@ -48,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -75,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             badge.id badge_id, 
             badge.label badge_label, 
             badge.description badge_description, 
+            badge.icon badge_icon, 
             badge.priority badge_priority, 
             badge.flags badge_flags, 
             badge."state" badge_state, 
@@ -93,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -110,36 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.userId != null">and a."user" = #{m.userId}</if>
-        <if test="m.userIdRange!= null">
-            <if test="m.userIdRange.hasStartIncl">and a."user" >= #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasStartExcl">and a."user" > #{m.userIdRange.start}</if>
-            <if test="m.userIdRange.hasEndIncl">and a."user" &lt;= #{m.userIdRange.end}</if>
-            <if test="m.userIdRange.hasEndExcl">and a."user" &lt; #{m.userIdRange.end}</if>
-        </if>
-        <if test="m.badgeId != null">and a.badge = #{m.badgeId}</if>
-        <if test="m.badgeIdRange!= null">
-            <if test="m.badgeIdRange.hasStartIncl">and a.badge >= #{m.badgeIdRange.start}</if>
-            <if test="m.badgeIdRange.hasStartExcl">and a.badge > #{m.badgeIdRange.start}</if>
-            <if test="m.badgeIdRange.hasEndIncl">and a.badge &lt;= #{m.badgeIdRange.end}</if>
-            <if test="m.badgeIdRange.hasEndExcl">and a.badge &lt; #{m.badgeIdRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -200,7 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from user_badge
+        select count(*) "rows" from user_badge a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

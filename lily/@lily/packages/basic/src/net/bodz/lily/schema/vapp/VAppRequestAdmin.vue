@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { VAppRequest } from "./VAppRequest";
-import VAppRequestEditor from "./VAppRequestEditor.vue";
+import VAppRequest from "./VAppRequest";
 
+export const title = "Admin view of: V app request";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import VAppRequestEditor from "./VAppRequestEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = VAppRequest.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -34,13 +39,14 @@ onMounted(() => {
             <th data-type="integer" data-field="acl">Acl</th>
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="net.bodz.bas.repr.state.State" data-field="state">State</th>
+            <th data-type="string" data-field="state">State</th>
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
             <th data-type="string" data-field="code">Code</th>
             <th data-type="string" data-field="label">Label</th>
             <th data-type="string" data-field="description">Description</th>
+            <th data-type="string" data-field="icon">Icon</th>
             <th data-type="Moment" data-field="beginTime">Begin Time</th>
             <th data-type="Moment" data-field="endTime">End Time</th>
             <th data-type="integer" data-field="year">Year</th>
@@ -64,6 +70,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

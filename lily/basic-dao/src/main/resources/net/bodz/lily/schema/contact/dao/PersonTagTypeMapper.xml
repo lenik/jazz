@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
         <association property="parent" columnPrefix="parent_"
             javaType="net.bodz.lily.schema.contact.PersonTagType" 
-            resultMap="net.bodz.lily.schema.contact.PersonTagTypeMapper.objlist_map" />
+            resultMap="objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -57,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -72,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -88,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.code parent_code, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -114,6 +119,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -128,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -143,6 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -159,6 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.code parent_code, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -208,6 +217,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -225,6 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{code},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -247,6 +258,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code = #{code},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -270,7 +282,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from persontag
+        select count(*) "rows" from persontag a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

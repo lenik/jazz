@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "article_parm")
+@Table(schema = ArticleParameter.SCHEMA_NAME, name = ArticleParameter.TABLE_NAME)
 public class ArticleParameter
         extends _ArticleParameter_stuff {
 

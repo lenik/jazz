@@ -1,16 +1,14 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import VAppCat from "./VAppCat";
+import VAppRequest from "./VAppRequest";
+import _VApp_stuff_Type from "./_VApp_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { VAppCat } from "./VAppCat";
-import type { VAppRequest } from "./VAppRequest";
-import type { _VApp_stuff_Type } from "./_VApp_stuff_Type";
-
-export class _VApp_stuff extends CoEntity<Integer> {
+export class _VApp_stuff extends CoEntity<integer> {
     static TYPE = new _VApp_stuff_Type();
 
-    id: int;
+    id: integer;
     code?: string;
     secret: string;
 
@@ -24,3 +22,5 @@ export class _VApp_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _VApp_stuff;

@@ -1,37 +1,37 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Post } from "./Post";
+import { PostTagType } from "./PostTagType";
+import PostTagValidators from "./PostTagValidators";
 
 export class _PostTag_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "post_tag";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "post_tag";
 
     name = "net.bodz.lily.schema.pub.PostTag"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_POST_ID = "post";
-    static const FIELD_TAG_ID = "tag";
+    static FIELD_ID = "id";
+    static FIELD_POST_ID = "post";
+    static FIELD_TAG_ID = "tag";
 
-    static const N_ID = 10;
-    static const N_POST_ID = 19;
-    static const N_TAG_ID = 10;
+    static N_ID = 10;
+    static N_POST_ID = 19;
+    static N_TAG_ID = 10;
+
+    static validators = new PostTagValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: "net.bodz.lily.schema.pub.PostTagType", nullable: false, validator: validators.validate_tag }),
-        tagId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_tagId }),
+        tag: property({ type: PostTagType.TYPE, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        post: property({ type: "net.bodz.lily.schema.pub.Post", nullable: false, validator: validators.validate_post }),
-        postId: property({ type: "long", nullable: false, precision: 19, validator: validators.validate_postId }),
+        post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+        postId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
@@ -40,3 +40,5 @@ export class _PostTag_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _PostTag_stuff_Type;

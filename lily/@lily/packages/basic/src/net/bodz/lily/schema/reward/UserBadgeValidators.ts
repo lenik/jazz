@@ -1,14 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _UserBadge_stuffValidators from "./_UserBadge_stuffValidators";
 
-import type { User } from "../account/User";
-import type { Badge } from "./Badge";
+export class UserBadgeValidators extends _UserBadge_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_badge(val: Badge) {
-}
-
-export function validate_user(val: User) {
-}
+export default UserBadgeValidators;

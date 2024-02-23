@@ -12,6 +12,8 @@ net.bodz.lily.schema.contact.dao.OrganizationMapper
 net.bodz.lily.schema.contact.dao.PartyCategoryMapper
 net.bodz.lily.schema.contact.dao.PersonMapper
 net.bodz.lily.schema.contact.dao.PersonRoleMapper
+net.bodz.lily.schema.contact.dao.PersonTagMapper
+net.bodz.lily.schema.contact.dao.PersonTagTypeMapper
 net.bodz.lily.schema.geo.dao.ZoneCategoryMapper
 net.bodz.lily.schema.geo.dao.ZoneMapper
 net.bodz.lily.schema.inet.dao.ExternalSiteMapper

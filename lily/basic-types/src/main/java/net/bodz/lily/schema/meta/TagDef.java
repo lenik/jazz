@@ -6,7 +6,7 @@ import javax.persistence.Table;
  * @label Tag
  * @label.zh.cn 标签
  */
-@Table(schema = "lily", name = "_tag")
+@Table(schema = TagDef.SCHEMA_NAME, name = TagDef.TABLE_NAME)
 public class TagDef
         extends _TagDef_stuff {
 

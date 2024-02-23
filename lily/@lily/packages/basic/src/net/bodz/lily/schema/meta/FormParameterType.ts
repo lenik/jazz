@@ -1,8 +1,7 @@
+import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _FormParameter_stuff_Type } from "./_FormParameter_stuff_Type";
+import FormParameterValidators from "./FormParameterValidators";
+import _FormParameter_stuff_Type from "./_FormParameter_stuff_Type";
 
 // Type Info
 
@@ -10,6 +9,8 @@ export class FormParameterType extends _FormParameter_stuff_Type {
 
     name = "net.bodz.lily.schema.meta.FormParameter"
     icon = "fa-tag"
+
+    static validators = new FormParameterValidators();
 
     static declaredProperty: EntityPropertyMap = {
     }
@@ -20,3 +21,5 @@ export class FormParameterType extends _FormParameter_stuff_Type {
     }
 
 }
+
+export default FormParameter;

@@ -1,14 +1,9 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _Organization_stuffValidators from "./_Organization_stuffValidators";
 
-export function validate_roleCount(val: int) {
+export class OrganizationValidators extends _Organization_stuffValidators {
+
 }
 
-export function validate_bankCount(val: int) {
-}
-
-export function validate_size(val: int) {
-}
-
-export function validate_taxId(val: string) {
-}
+export default OrganizationValidators;

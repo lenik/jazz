@@ -28,7 +28,7 @@ public abstract class _UserOtherIdType_stuff
     public static final int N_DUMMY = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_DUMMY = _ord_ID + 9;
+    private static final int _ord_DUMMY = _ord_ID + 10;
 
     @Id
     @NotNull

@@ -1,17 +1,20 @@
 <script lang="ts">
-
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { long } from "@skeljs/core/src/lang/type";
 
-import type { PostFav } from "./PostFav";
-import PostFavEditor from "./PostFavEditor.vue";
+import PostFav from "./PostFav";
 
+export const title = "Admin view of: Post fav";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import PostFavEditor from "./PostFavEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +24,7 @@ const type = PostFav.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -44,6 +48,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

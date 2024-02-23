@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { ArticleTag } from "./ArticleTag";
-import ArticleTagEditor from "./ArticleTagEditor.vue";
+import ArticleTag from "./ArticleTag";
 
+export const title = "Admin view of: Article tag";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import ArticleTagEditor from "./ArticleTagEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = ArticleTag.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -47,6 +52,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

@@ -1,19 +1,24 @@
-
-import type { List } from "../../../../../java/util/List";
-import { * as validators } from "./PersonValidators";
-import type { _SchemaDef_stuff } from "./_SchemaDef_stuff";
+import { CategoryDef } from "./CategoryDef";
+import { ParameterDef } from "./ParameterDef";
+import { PhaseDef } from "./PhaseDef";
+import { PriorityDef } from "./PriorityDef";
+import { TagGroupDef } from "./TagGroupDef";
+import _SchemaDef_stuff from "./_SchemaDef_stuff";
+import { _SchemaDef_stuff_Type } from "./_SchemaDef_stuff_Type";
 
 export class SchemaDef extends _SchemaDef_stuff {
-    static TYPE = new SchemaDefType();
+    static TYPE = new _SchemaDef_stuff_Type();
 
-    categories?: List
-    parameters?: List
-    phases?: List
-    priorities?: List
-    tagGroups?: List
+    categories?: CategoryDef[]
+    parameters?: ParameterDef[]
+    phases?: PhaseDef[]
+    priorities?: PriorityDef[]
+    tagGroups?: TagGroupDef[]
 
     constructor(o: any) {
         super(o);
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default SchemaDef;

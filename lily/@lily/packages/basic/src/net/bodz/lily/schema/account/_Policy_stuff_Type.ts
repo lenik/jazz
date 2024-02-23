@@ -1,53 +1,51 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import PolicyValidators from "./PolicyValidators";
 
 export class _Policy_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "policy";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "policy";
 
     name = "net.bodz.lily.schema.account.Policy"
     icon = "fa-tag"
     description = "Security Policy"
 
-    static const FIELD_ID = "id";
-    static const FIELD_NAME = "name";
-    static const FIELD_CONTROL_CLASS = "cclass";
-    static const FIELD_METHOD_NAME = "method";
-    static const FIELD_ALLOW_BITS = "allow";
-    static const FIELD_DENY_BITS = "deny";
+    static FIELD_ID = "id";
+    static FIELD_NAME = "name";
+    static FIELD_CONTROL_CLASS = "cclass";
+    static FIELD_METHOD_NAME = "method";
+    static FIELD_ALLOW_BITS = "allow";
+    static FIELD_DENY_BITS = "deny";
 
-    static const N_ID = 10;
-    static const N_NAME = 30;
-    static const N_CONTROL_CLASS = 80;
-    static const N_METHOD_NAME = 80;
-    static const N_ALLOW_BITS = 10;
-    static const N_DENY_BITS = 10;
+    static N_ID = 10;
+    static N_NAME = 30;
+    static N_CONTROL_CLASS = 80;
+    static N_METHOD_NAME = 80;
+    static N_ALLOW_BITS = 10;
+    static N_DENY_BITS = 10;
+
+    static validators = new PolicyValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 30, 
             description: "The policy name (unique)", 
-            validator: validators.validate_name }),
+            validator: this.validators.validateName }),
         controlClass: property({ type: "string", nullable: false, precision: 80, 
             description: "The control class", 
-            validator: validators.validate_controlClass }),
+            validator: this.validators.validateControlClass }),
         methodName: property({ type: "string", precision: 80, 
             description: "The method name", 
-            validator: validators.validate_methodName }),
-        allowBits: property({ type: "int", nullable: false, precision: 10, 
+            validator: this.validators.validateMethodName }),
+        allowBits: property({ type: "integer", nullable: false, precision: 10, 
             description: "allow", 
-            validator: validators.validate_allowBits }),
-        denyBits: property({ type: "int", nullable: false, precision: 10, 
+            validator: this.validators.validateAllowBits }),
+        denyBits: property({ type: "integer", nullable: false, precision: 10, 
             description: "deny", 
-            validator: validators.validate_denyBits }),
+            validator: this.validators.validateDenyBits }),
     }
 
     constructor() {
@@ -56,3 +54,5 @@ export class _Policy_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _Policy_stuff_Type;

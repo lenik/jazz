@@ -1,10 +1,9 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoPrincipal from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipal";
 
-import type { CoPrincipal } from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipal";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Group } from "./Group";
-import type { GroupType } from "./GroupType";
-import type { _Group_stuff_Type } from "./_Group_stuff_Type";
+import Group from "./Group";
+import GroupType from "./GroupType";
+import _Group_stuff_Type from "./_Group_stuff_Type";
 
 export class _Group_stuff extends CoPrincipal {
     static TYPE = new _Group_stuff_Type();
@@ -14,9 +13,11 @@ export class _Group_stuff extends CoPrincipal {
     parentId?: integer;
 
     type: GroupType;
-    typeId: int;
+    typeId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _Group_stuff;

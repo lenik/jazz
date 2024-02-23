@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 import net.bodz.bas.meta.decl.Redundant;
 
-@Table(schema = "lily", name = "user_run")
+@Table(schema = UserRun.SCHEMA_NAME, name = UserRun.TABLE_NAME)
 public class UserRun
         extends _UserRun_stuff {
 
