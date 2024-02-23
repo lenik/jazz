@@ -1,10 +1,10 @@
 import { Moment } from "moment";
 
 import _UserRun_stuff from "./_UserRun_stuff";
-import { _UserRun_stuff_Type } from "./_UserRun_stuff_Type";
+import { _UserRun_stuffTypeInfo } from "./_UserRun_stuffTypeInfo";
 
 export class UserRun extends _UserRun_stuff {
-    static TYPE = new _UserRun_stuff_Type();
+    static TYPE = new _UserRun_stuffTypeInfo();
 
     activeTime?: Moment
     stateText?: string

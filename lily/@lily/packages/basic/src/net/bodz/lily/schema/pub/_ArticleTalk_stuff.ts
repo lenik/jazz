@@ -3,10 +3,10 @@ import CoTalk from "@skeljs/dba/src/net/bodz/lily/concrete/CoTalk";
 
 import { TypeParamType } from "../../meta/TypeParamType";
 import Article from "./Article";
-import _ArticleTalk_stuff_Type from "./_ArticleTalk_stuff_Type";
+import _ArticleTalk_stuff_TypeInfo from "./_ArticleTalk_stuff_TypeInfo";
 
 export class _ArticleTalk_stuff<this_t> extends CoTalk<this_t> {
-    static TYPE = new _ArticleTalk_stuff_Type();
+    static TYPE = new _ArticleTalk_stuff_TypeInfo();
 
     formArguments?: string;
 

@@ -5,10 +5,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import User from "./User";
 import UserOtherIdType from "./UserOtherIdType";
-import _UserOtherId_stuff_Type from "./_UserOtherId_stuff_Type";
+import _UserOtherId_stuff_TypeInfo from "./_UserOtherId_stuff_TypeInfo";
 
 export class _UserOtherId_stuff extends CoEntity<integer> {
-    static TYPE = new _UserOtherId_stuff_Type();
+    static TYPE = new _UserOtherId_stuff_TypeInfo();
 
     id: integer;
     beginTime?: Moment;

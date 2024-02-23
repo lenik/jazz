@@ -1,8 +1,8 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import _PostTalkVote_stuffValidators from "./_PostTalkVote_stuffValidators";
+import _PostTalkVote_stuff_Validators from "./_PostTalkVote_stuff_Validators";
 
-export class PostTalkVoteValidators extends _PostTalkVote_stuffValidators {
+export class PostTalkVoteValidators extends _PostTalkVote_stuff_Validators {
 
 }
 

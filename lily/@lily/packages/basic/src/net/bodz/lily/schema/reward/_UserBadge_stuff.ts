@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import User from "../account/User";
 import Badge from "./Badge";
-import _UserBadge_stuff_Type from "./_UserBadge_stuff_Type";
+import _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
 export class _UserBadge_stuff extends CoEntity<integer> {
-    static TYPE = new _UserBadge_stuff_Type();
+    static TYPE = new _UserBadge_stuff_TypeInfo();
 
     id: integer;
 

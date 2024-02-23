@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import ApiType from "./ApiType";
 import VAppRequest from "./VAppRequest";
-import _VAppRequestApi_stuff_Type from "./_VAppRequestApi_stuff_Type";
+import _VAppRequestApi_stuff_TypeInfo from "./_VAppRequestApi_stuff_TypeInfo";
 
 export class _VAppRequestApi_stuff extends CoEntity<long> {
-    static TYPE = new _VAppRequestApi_stuff_Type();
+    static TYPE = new _VAppRequestApi_stuff_TypeInfo();
 
     id: long;
 

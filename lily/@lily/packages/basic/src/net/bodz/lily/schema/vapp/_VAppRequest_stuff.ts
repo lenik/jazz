@@ -5,10 +5,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import User from "../account/User";
 import FormDef from "../meta/FormDef";
-import _VAppRequest_stuff_Type from "./_VAppRequest_stuff_Type";
+import _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";
 
 export class _VAppRequest_stuff extends CoEntity<integer> {
-    static TYPE = new _VAppRequest_stuff_Type();
+    static TYPE = new _VAppRequest_stuff_TypeInfo();
 
     id: integer;
     code?: string;

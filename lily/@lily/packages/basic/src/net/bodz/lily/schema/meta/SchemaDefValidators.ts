@@ -6,9 +6,9 @@ import { ParameterDef } from "./ParameterDef";
 import { PhaseDef } from "./PhaseDef";
 import { PriorityDef } from "./PriorityDef";
 import { TagGroupDef } from "./TagGroupDef";
-import _SchemaDef_stuffValidators from "./_SchemaDef_stuffValidators";
+import _SchemaDef_stuff_Validators from "./_SchemaDef_stuff_Validators";
 
-export class SchemaDefValidators extends _SchemaDef_stuffValidators {
+export class SchemaDefValidators extends _SchemaDef_stuff_Validators {
     validateCategories(val: CategoryDef[]) {
     }
     validateParameters(val: ParameterDef[]) {

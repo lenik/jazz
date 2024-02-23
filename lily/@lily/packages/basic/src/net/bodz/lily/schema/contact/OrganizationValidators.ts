@@ -1,8 +1,8 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import _Organization_stuffValidators from "./_Organization_stuffValidators";
+import _Organization_stuff_Validators from "./_Organization_stuff_Validators";
 
-export class OrganizationValidators extends _Organization_stuffValidators {
+export class OrganizationValidators extends _Organization_stuff_Validators {
 
 }
 

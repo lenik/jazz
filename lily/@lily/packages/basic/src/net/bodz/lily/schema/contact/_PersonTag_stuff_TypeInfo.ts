@@ -1,0 +1,42 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+
+import _PersonTag_stuff_Validators from "./_PersonTag_stuff_Validators";
+
+export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
+
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "person_tag";
+
+    name = "net.bodz.lily.schema.contact.PersonTag"
+    icon = "fa-tag"
+
+    static FIELD_ID = "id";
+    static FIELD_PERSON_ID = "person";
+    static FIELD_TAG_ID = "tag";
+
+    static N_ID = 10;
+    static N_PERSON_ID = 10;
+    static N_TAG_ID = 10;
+
+    static validators = new _PersonTag_stuff_Validators();
+
+    static declaredProperty: EntityPropertyMap = {
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+
+        tag: property({ type: net.bodz.lily.schema.contact.PersonTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: "integer", nullable: false, precision: 10 }),
+
+        person: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
+        personId: property({ type: "integer", nullable: false, precision: 10 }),
+    }
+
+    constructor() {
+        super();
+        this.declare(_PersonTag_stuff_TypeInfo.declaredProperty);
+    }
+
+}
+
+export default _PersonTag_stuff_TypeInfo;

@@ -1,8 +1,8 @@
 import _ArticleTalk_stuff from "./_ArticleTalk_stuff";
-import { _ArticleTalk_stuff_Type } from "./_ArticleTalk_stuff_Type";
+import { _ArticleTalk_stuffTypeInfo } from "./_ArticleTalk_stuffTypeInfo";
 
 export class ArticleTalk extends _ArticleTalk_stuff<ArticleTalk> {
-    static TYPE = new _ArticleTalk_stuff_Type();
+    static TYPE = new _ArticleTalk_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);

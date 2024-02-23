@@ -2,10 +2,10 @@ import type { long } from "@skeljs/core/src/lang/type";
 import FavRecord from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecord";
 
 import Post from "./Post";
-import _PostFav_stuff_Type from "./_PostFav_stuff_Type";
+import _PostFav_stuff_TypeInfo from "./_PostFav_stuff_TypeInfo";
 
 export class _PostFav_stuff extends FavRecord {
-    static TYPE = new _PostFav_stuff_Type();
+    static TYPE = new _PostFav_stuff_TypeInfo();
 
 
     post: Post;

@@ -2,10 +2,10 @@ import type { integer, long } from "@skeljs/core/src/lang/type";
 import VoteRecord from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecord";
 
 import ArticleTalk from "./ArticleTalk";
-import _ArticleTalkVote_stuff_Type from "./_ArticleTalkVote_stuff_Type";
+import _ArticleTalkVote_stuff_TypeInfo from "./_ArticleTalkVote_stuff_TypeInfo";
 
 export class _ArticleTalkVote_stuff extends VoteRecord {
-    static TYPE = new _ArticleTalkVote_stuff_Type();
+    static TYPE = new _ArticleTalkVote_stuff_TypeInfo();
 
     voteScore: integer;
 

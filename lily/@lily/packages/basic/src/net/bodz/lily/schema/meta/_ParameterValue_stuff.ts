@@ -2,10 +2,10 @@ import type { integer } from "@skeljs/core/src/lang/type";
 import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import ParameterDef from "./ParameterDef";
-import _ParameterValue_stuff_Type from "./_ParameterValue_stuff_Type";
+import _ParameterValue_stuff_TypeInfo from "./_ParameterValue_stuff_TypeInfo";
 
 export class _ParameterValue_stuff extends CoEntity<integer> {
-    static TYPE = new _ParameterValue_stuff_Type();
+    static TYPE = new _ParameterValue_stuff_TypeInfo();
 
     id: integer;
     code?: string;

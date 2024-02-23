@@ -1,8 +1,8 @@
 import _ExternalSite_stuff from "./_ExternalSite_stuff";
-import { _ExternalSite_stuff_Type } from "./_ExternalSite_stuff_Type";
+import { _ExternalSite_stuffTypeInfo } from "./_ExternalSite_stuffTypeInfo";
 
 export class ExternalSite extends _ExternalSite_stuff {
-    static TYPE = new _ExternalSite_stuff_Type();
+    static TYPE = new _ExternalSite_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);

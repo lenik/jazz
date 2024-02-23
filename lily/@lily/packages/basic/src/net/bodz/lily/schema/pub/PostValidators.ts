@@ -1,9 +1,9 @@
 import type { long } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import _Post_stuffValidators from "./_Post_stuffValidators";
+import _Post_stuff_Validators from "./_Post_stuff_Validators";
 
-export class PostValidators extends _Post_stuffValidators {
+export class PostValidators extends _Post_stuff_Validators {
 
 }
 

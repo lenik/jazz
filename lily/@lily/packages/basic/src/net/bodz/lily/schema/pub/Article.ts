@@ -1,8 +1,8 @@
 import _Article_stuff from "./_Article_stuff";
-import { _Article_stuff_Type } from "./_Article_stuff_Type";
+import { _Article_stuffTypeInfo } from "./_Article_stuffTypeInfo";
 
 export class Article extends _Article_stuff {
-    static TYPE = new _Article_stuff_Type();
+    static TYPE = new _Article_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);

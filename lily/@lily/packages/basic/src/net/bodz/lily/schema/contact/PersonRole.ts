@@ -1,8 +1,8 @@
 import _PersonRole_stuff from "./_PersonRole_stuff";
-import { _PersonRole_stuff_Type } from "./_PersonRole_stuff_Type";
+import { _PersonRole_stuffTypeInfo } from "./_PersonRole_stuffTypeInfo";
 
 export class PersonRole extends _PersonRole_stuff {
-    static TYPE = new _PersonRole_stuff_Type();
+    static TYPE = new _PersonRole_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);

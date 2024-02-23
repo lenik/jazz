@@ -3,10 +3,10 @@ import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
 import Post from "./Post";
 import PostParameterType from "./PostParameterType";
-import _PostParameter_stuff_Type from "./_PostParameter_stuff_Type";
+import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
 export class _PostParameter_stuff extends CoEntity<integer> {
-    static TYPE = new _PostParameter_stuff_Type();
+    static TYPE = new _PostParameter_stuff_TypeInfo();
 
     id: integer;
     ival?: integer;

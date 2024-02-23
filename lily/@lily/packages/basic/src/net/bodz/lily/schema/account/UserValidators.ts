@@ -5,9 +5,9 @@ import { Group } from "./Group";
 import { UserOtherId } from "./UserOtherId";
 import { UserRun } from "./UserRun";
 import { UserSecret } from "./UserSecret";
-import _User_stuffValidators from "./_User_stuffValidators";
+import _User_stuff_Validators from "./_User_stuff_Validators";
 
-export class UserValidators extends _User_stuffValidators {
+export class UserValidators extends _User_stuff_Validators {
     validateGroupIds(val: integer[]) {
     }
     validateGroups(val: Group[]) {

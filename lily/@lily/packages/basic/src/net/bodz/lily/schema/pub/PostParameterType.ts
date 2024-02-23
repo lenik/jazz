@@ -1,8 +1,8 @@
 import _PostParameterType_stuff from "./_PostParameterType_stuff";
-import { _PostParameterType_stuff_Type } from "./_PostParameterType_stuff_Type";
+import { _PostParameterType_stuffTypeInfo } from "./_PostParameterType_stuffTypeInfo";
 
 export class PostParameterType extends _PostParameterType_stuff<PostParameterType> {
-    static TYPE = new _PostParameterType_stuff_Type();
+    static TYPE = new _PostParameterType_stuffTypeInfo();
 
     constructor(o: any) {
         super(o);
