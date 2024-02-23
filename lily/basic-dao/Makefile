@@ -1,6 +1,7 @@
 include coolmake/m2proj.mf
 
 DBNAME=lily
+SHELL=/bin/bash
 
 remotehost = localhost
 remotedir = lily-impl
@@ -93,4 +94,8 @@ del-exporters: predao
 
 code-web:
 	d=$$(readlink -f .); p=$${d%/*}; code -n "$$p/@lily"
+
+inserts:
+	. pgcmds; \
+	   psql -d $(DBNAME) -1 < <( for ((i=0; i < 1000; i++)); do cat test/person.ddl; done )
 

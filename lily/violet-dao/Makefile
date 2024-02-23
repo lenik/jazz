@@ -116,3 +116,8 @@ del-samples: predao
 del-exporters: predao
 	find -name *Exporter.java -print -delete
 
+
+inserts:
+	. pgcmds; \
+          psql -d $(DBNAME) -1 < <( for ((i=0; i < 1000; i++)); do cat ../basic-dao/test/person.ddl; done )
+
