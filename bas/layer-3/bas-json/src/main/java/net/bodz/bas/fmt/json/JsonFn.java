@@ -122,6 +122,15 @@ public class JsonFn {
         return buf.toString();
     }
 
+    public static JsonVariant toJsonVar(IJsonForm obj) {
+        try {
+            String json = toJson(obj, JsonFormOptions.DEFAULT);
+            return parseAny(json);
+        } catch (ParseException | FormatException e) {
+            throw new IllegalArgumentException("error convert: " + e.getMessage(), e);
+        }
+    }
+
     public static JsonObject toJsonObject(IJsonForm obj)
             throws FormatException, ParseException {
         String json = toJson(obj, JsonFormOptions.DEFAULT);
