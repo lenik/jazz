@@ -1,7 +1,7 @@
 import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import { IdEntityType } from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityType';
 
-export abstract class PartyType extends IdEntityType<number> {
+export class PartyType extends IdEntityType {
 
     static declaredProperty: EntityPropertyMap = {
         category: property({ type: 'any' }),
@@ -29,3 +29,4 @@ export abstract class PartyType extends IdEntityType<number> {
     }
 }
 
+export default PartyType;

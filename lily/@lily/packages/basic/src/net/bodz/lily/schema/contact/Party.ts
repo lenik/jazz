@@ -3,9 +3,11 @@ import { Moment } from 'moment';
 import { integer } from '@skeljs/core/src/lang/type';
 import { IdEntity } from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
 
-import { Contact } from "./Contact";
+import PartyType from "./PartyType";
+import Contact from "./Contact";
 
 export abstract class Party extends IdEntity<integer> {
+    static TYPE = new PartyType();
 
     category?: any
     birthday?: Moment
@@ -30,3 +32,5 @@ export abstract class Party extends IdEntity<integer> {
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default Party;
