@@ -17,21 +17,21 @@ public interface IVariant {
 
     Object get();
 
-    Object get(Object defaultValue);
+    <T> T get(T defaultValue);
 
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
-     *         the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element
+     *         in the array. If the array is empty, returns <code>null</code>, too.
      */
     Object getScalar();
 
     /**
      * Get the value as a scalar.
      *
-     * @return If the value is non-array, the value is returned. Otherwise, return the first element in the array. If
-     *         the array is empty, returns <code>null</code>, too.
+     * @return If the value is non-array, the value is returned. Otherwise, return the first element
+     *         in the array. If the array is empty, returns <code>null</code>, too.
      *
      *         If there is no entry for the key, defaultValue is returned.
      */
