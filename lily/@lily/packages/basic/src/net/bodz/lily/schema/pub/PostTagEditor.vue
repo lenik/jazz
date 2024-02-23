@@ -1,25 +1,32 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import PostChooseDialog from "./PostChooseDialog.vue";
-import type { PostTag } from "./PostTag";
-import PostTagTypeChooseDialog from "./PostTagTypeChooseDialog.vue";
+import PostTag from "./PostTag";
+import _PostTag_stuff from "./_PostTag_stuff";
 
+export const title = "Editor view of: Post tag";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import PostChooseDialog from "./PostChooseDialog.vue";
+import PostTagTypeChooseDialog from "./PostTagTypeChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<PostTag>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,11 +58,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -66,22 +71,16 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._PostTag_stuff">
+        <FieldGroup :type="_PostTag_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.post" v-model="model.post">
-                <RefEditor :dialog="postChooseDialog" v-model="model.postId" v-model:id="model.postId" />
+                <RefEditor :dialog="postChooseDialog" v-model="model.post" v-model:id="model.postId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.tag" v-model="model.tag">
-                <RefEditor :dialog="postTagTypeChooseDialog" v-model="model.tagId" v-model:id="model.tagId" />
+                <RefEditor :dialog="postTagTypeChooseDialog" v-model="model.tag" v-model:id="model.tagId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.PostTag">
         </FieldGroup>
     </div>
     <PostChooseDialog ref="postChooseDialog" />

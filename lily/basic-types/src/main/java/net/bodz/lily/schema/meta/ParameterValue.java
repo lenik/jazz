@@ -2,7 +2,7 @@ package net.bodz.lily.schema.meta;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "_parmval")
+@Table(schema = ParameterValue.SCHEMA_NAME, name = ParameterValue.TABLE_NAME)
 public class ParameterValue
         extends _ParameterValue_stuff {
 

@@ -2,7 +2,7 @@ package net.bodz.lily.schema.util;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "uom")
+@Table(schema = Uom.SCHEMA_NAME, name = Uom.TABLE_NAME)
 public class Uom
         extends _Uom_stuff {
 

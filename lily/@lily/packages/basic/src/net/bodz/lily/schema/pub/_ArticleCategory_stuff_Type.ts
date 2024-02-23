@@ -1,41 +1,40 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { ArticleCategory } from "./ArticleCategory";
+import ArticleCategoryValidators from "./ArticleCategoryValidators";
 
 export class _ArticleCategory_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "articlecat";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "articlecat";
 
     name = "net.bodz.lily.schema.pub.ArticleCategory"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_NAME = "name";
-    static const FIELD_PARENT_ID = "parent";
-    static const FIELD_DEPTH = "depth";
-    static const FIELD_REF_COUNT = "nref";
+    static FIELD_ID = "id";
+    static FIELD_NAME = "name";
+    static FIELD_PARENT_ID = "parent";
+    static FIELD_DEPTH = "depth";
+    static FIELD_REF_COUNT = "nref";
 
-    static const N_ID = 10;
-    static const N_NAME = 30;
-    static const N_PARENT_ID = 10;
-    static const N_DEPTH = 10;
-    static const N_REF_COUNT = 10;
+    static N_ID = 10;
+    static N_NAME = 30;
+    static N_PARENT_ID = 10;
+    static N_DEPTH = 10;
+    static N_REF_COUNT = 10;
+
+    static validators = new ArticleCategoryValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        name: property({ type: "string", precision: 30, validator: validators.validate_name }),
-        depth: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_depth }),
-        refCount: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_refCount }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
+        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        refCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
-        parent: property({ type: "net.bodz.lily.schema.pub.ArticleCategory", validator: validators.validate_parent }),
-        parentId: property({ type: "integer", precision: 10, validator: validators.validate_parentId }),
+        parent: property({ type: ArticleCategory.TYPE, validator: this.validators.validateParent }),
+        parentId: property({ type: "integer", precision: 10 }),
     }
 
     constructor() {
@@ -44,3 +43,5 @@ export class _ArticleCategory_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _ArticleCategory_stuff_Type;

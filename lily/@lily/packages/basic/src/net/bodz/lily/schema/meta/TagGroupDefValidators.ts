@@ -1,19 +1,15 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { TagDef } from "./TagDef";
+import _TagGroupDef_stuffValidators from "./_TagGroupDef_stuffValidators";
 
-import type { SchemaDef } from "./SchemaDef";
+export class TagGroupDefValidators extends _TagGroupDef_stuffValidators {
+    validateOrtho(val: boolean) {
+    }
+    validateTags(val: TagDef[]) {
+    }
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_forTopic(val: boolean) {
-}
-
-export function validate_forReply(val: boolean) {
-}
-
-export function validate_schema(val: SchemaDef) {
-}
+export default TagGroupDefValidators;

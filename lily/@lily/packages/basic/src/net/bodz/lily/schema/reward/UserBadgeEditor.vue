@@ -1,25 +1,32 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import UserChooseDialog from "../account/UserChooseDialog.vue";
-import BadgeChooseDialog from "./BadgeChooseDialog.vue";
-import type { UserBadge } from "./UserBadge";
+import UserBadge from "./UserBadge";
+import _UserBadge_stuff from "./_UserBadge_stuff";
 
+export const title = "Editor view of: User badge";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import UserChooseDialog from "../account/UserChooseDialog.vue";
+import BadgeChooseDialog from "./BadgeChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<UserBadge>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,11 +58,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -66,22 +71,16 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.reward._UserBadge_stuff">
+        <FieldGroup :type="_UserBadge_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
-                <RefEditor :dialog="userChooseDialog" v-model="model.userId" v-model:id="model.userId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.badge" v-model="model.badge">
-                <RefEditor :dialog="badgeChooseDialog" v-model="model.badgeId" v-model:id="model.badgeId" />
+                <RefEditor :dialog="badgeChooseDialog" v-model="model.badge" v-model:id="model.badgeId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.reward.UserBadge">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

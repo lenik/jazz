@@ -1,22 +1,29 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import type { UserOtherIdType } from "./UserOtherIdType";
+import UserOtherIdType from "./UserOtherIdType";
+import _UserOtherIdType_stuff from "./_UserOtherIdType_stuff";
 
+export const title = "Editor view of: User other id type";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<UserOtherIdType>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -46,11 +53,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -61,7 +66,16 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
+            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
+                <input type="text" v-model="model.label" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
+                <input type="text" v-model="model.description" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
+                <input type="text" v-model="model.icon" />
+            </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
                 <input type="number" v-model="model.priority" />
             </FieldRow>
@@ -72,23 +86,13 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.account._UserOtherIdType_stuff">
+        <FieldGroup :type="_UserOtherIdType_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.dummy" v-model="model.dummy">
                 <input type="number" v-model="model.dummy" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.account.UserOtherIdType">
         </FieldGroup>
     </div>
 </template>

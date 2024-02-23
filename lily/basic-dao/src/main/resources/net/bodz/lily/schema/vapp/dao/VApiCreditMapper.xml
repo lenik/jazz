@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api.id api_id, 
             api.label api_label, 
             api.description api_description, 
+            api.icon api_icon, 
             api.priority api_priority, 
             api.flags api_flags, 
             api."state" api_state, 
@@ -54,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app.acl app_acl, 
             app.label app_label, 
             app.description app_description, 
+            app.icon app_icon, 
             app.priority app_priority, 
             app.flags app_flags, 
             app."state" app_state, 
@@ -86,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             api.id api_id, 
             api.label api_label, 
             api.description api_description, 
+            api.icon api_icon, 
             api.priority api_priority, 
             api.flags api_flags, 
             api."state" api_state, 
@@ -102,6 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             app.acl app_acl, 
             app.label app_label, 
             app.description app_description, 
+            app.icon app_icon, 
             app.priority app_priority, 
             app.flags app_flags, 
             app."state" app_state, 
@@ -120,64 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.priority != null">and a.priority = #{m.priority}</if>
-        <if test="m.priorityRange!= null">
-            <if test="m.priorityRange.hasStartIncl">and a.priority >= #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasStartExcl">and a.priority > #{m.priorityRange.start}</if>
-            <if test="m.priorityRange.hasEndIncl">and a.priority &lt;= #{m.priorityRange.end}</if>
-            <if test="m.priorityRange.hasEndExcl">and a.priority &lt; #{m.priorityRange.end}</if>
-        </if>
-        <if test="m.flags != null">and a.flags = #{m.flags}</if>
-        <if test="m.flagsRange!= null">
-            <if test="m.flagsRange.hasStartIncl">and a.flags >= #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasStartExcl">and a.flags > #{m.flagsRange.start}</if>
-            <if test="m.flagsRange.hasEndIncl">and a.flags &lt;= #{m.flagsRange.end}</if>
-            <if test="m.flagsRange.hasEndExcl">and a.flags &lt; #{m.flagsRange.end}</if>
-        </if>
-        <if test="m.state != null">and a."state" = #{m.state}</if>
-        <if test="m.stateRange!= null">
-            <if test="m.stateRange.hasStartIncl">and a."state" >= #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasStartExcl">and a."state" > #{m.stateRange.start}</if>
-            <if test="m.stateRange.hasEndIncl">and a."state" &lt;= #{m.stateRange.end}</if>
-            <if test="m.stateRange.hasEndExcl">and a."state" &lt; #{m.stateRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.appId != null">and a.app = #{m.appId}</if>
-        <if test="m.appIdRange!= null">
-            <if test="m.appIdRange.hasStartIncl">and a.app >= #{m.appIdRange.start}</if>
-            <if test="m.appIdRange.hasStartExcl">and a.app > #{m.appIdRange.start}</if>
-            <if test="m.appIdRange.hasEndIncl">and a.app &lt;= #{m.appIdRange.end}</if>
-            <if test="m.appIdRange.hasEndExcl">and a.app &lt; #{m.appIdRange.end}</if>
-        </if>
-        <if test="m.apiId != null">and a.api = #{m.apiId}</if>
-        <if test="m.apiIdRange!= null">
-            <if test="m.apiIdRange.hasStartIncl">and a.api >= #{m.apiIdRange.start}</if>
-            <if test="m.apiIdRange.hasStartExcl">and a.api > #{m.apiIdRange.start}</if>
-            <if test="m.apiIdRange.hasEndIncl">and a.api &lt;= #{m.apiIdRange.end}</if>
-            <if test="m.apiIdRange.hasEndExcl">and a.api &lt; #{m.apiIdRange.end}</if>
-        </if>
-        <if test="m.credit != null">and a.credit = #{m.credit}</if>
-        <if test="m.creditRange!= null">
-            <if test="m.creditRange.hasStartIncl">and a.credit >= #{m.creditRange.start}</if>
-            <if test="m.creditRange.hasStartExcl">and a.credit > #{m.creditRange.start}</if>
-            <if test="m.creditRange.hasEndIncl">and a.credit &lt;= #{m.creditRange.end}</if>
-            <if test="m.creditRange.hasEndExcl">and a.credit &lt; #{m.creditRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -250,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from vapi_credit
+        select count(*) "rows" from vapi_credit a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

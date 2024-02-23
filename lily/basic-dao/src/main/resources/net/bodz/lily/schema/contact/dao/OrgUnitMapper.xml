@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
@@ -17,14 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lastModifiedDate" column="lastmod" />
         <result property="version" column="version" />
         <result property="contact.rename" column="alias" />
-        <result property="contact.properties.jsonStr" column="ctprops" />
+        <result property="contact.properties" column="ctprops" />
         <result property="contact.address1" column="address1" />
         <result property="contact.address2" column="address2" />
         <result property="contact.tel" column="tel" />
         <result property="contact.telValidated" column="telok" />
         <result property="contact.email" column="email" />
         <result property="contact.emailValidated" column="emailok" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="depth" column="depth" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -57,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -83,6 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -115,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -130,6 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -154,6 +159,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -163,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             "zone".id zone_id, 
             "zone".code zone_code, 
             "zone".uid zone_uid, 
@@ -171,6 +178,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".acl zone_acl, 
             "zone".label zone_label, 
             "zone".description zone_description, 
+            "zone".icon zone_icon, 
             "zone".priority zone_priority, 
             "zone".flags zone_flags, 
             "zone"."state" zone_state, 
@@ -203,6 +211,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -229,6 +238,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -261,6 +271,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -276,6 +287,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -300,6 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -309,6 +322,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             "zone".id zone_id, 
             "zone".code zone_code, 
             "zone".uid zone_uid, 
@@ -317,6 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "zone".acl zone_acl, 
             "zone".label zone_label, 
             "zone".description zone_description, 
+            "zone".icon zone_icon, 
             "zone".priority zone_priority, 
             "zone".flags zone_flags, 
             "zone"."state" zone_state, 
@@ -372,6 +387,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -398,6 +414,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
@@ -429,6 +446,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
@@ -462,7 +480,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from orgunit
+        select count(*) "rows" from orgunit a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

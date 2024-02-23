@@ -1,19 +1,18 @@
+import CoTagType from "@skeljs/dba/src/net/bodz/lily/concrete/CoTagType";
+import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoTagType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoTagType";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { TypeParamType } from "../../meta/TypeParamType";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { TypeParamType } from "../../meta/TypeParamType";
+import PersonTagTypeValidators from "./PersonTagTypeValidators";
 
 export class _PersonTagType_stuff_Type extends CoTagType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "persontag";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "persontag";
 
     name = "net.bodz.lily.schema.contact.PersonTagType"
     icon = "fa-tag"
+
+    static validators = new PersonTagTypeValidators();
 
     static declaredProperty: EntityPropertyMap = {
     }
@@ -24,3 +23,5 @@ export class _PersonTagType_stuff_Type extends CoTagType {
     }
 
 }
+
+export default _PersonTagType_stuff_Type;

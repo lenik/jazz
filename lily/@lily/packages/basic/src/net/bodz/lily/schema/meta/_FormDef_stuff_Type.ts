@@ -1,41 +1,40 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import FormDefValidators from "./FormDefValidators";
+import { SchemaDef } from "./SchemaDef";
 
 export class _FormDef_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "_form";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "_form";
 
     name = "net.bodz.lily.schema.meta.FormDef"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_CODE = "code";
-    static const FIELD_SCHEMA_ID = "schema";
-    static const FIELD_SUBJECT = "subject";
-    static const FIELD_RAW_TEXT = "text";
+    static FIELD_ID = "id";
+    static FIELD_CODE = "code";
+    static FIELD_SCHEMA_ID = "schema";
+    static FIELD_SUBJECT = "subject";
+    static FIELD_RAW_TEXT = "text";
 
-    static const N_ID = 10;
-    static const N_CODE = 30;
-    static const N_SCHEMA_ID = 10;
-    static const N_SUBJECT = 200;
-    static const N_RAW_TEXT = 2147483647;
+    static N_ID = 10;
+    static N_CODE = 30;
+    static N_SCHEMA_ID = 10;
+    static N_SUBJECT = 200;
+    static N_RAW_TEXT = 2147483647;
+
+    static validators = new FormDefValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        code: property({ type: "string", precision: 30, validator: validators.validate_code }),
-        subject: property({ type: "string", precision: 200, validator: validators.validate_subject }),
-        rawText: property({ type: "string", validator: validators.validate_rawText }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
+        subject: property({ type: "string", precision: 200, validator: this.validators.validateSubject }),
+        rawText: property({ type: "string", validator: this.validators.validateRawText }),
 
-        schema: property({ type: "net.bodz.lily.schema.meta.SchemaDef", nullable: false, validator: validators.validate_schema }),
-        schemaId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_schemaId }),
+        schema: property({ type: SchemaDef.TYPE, nullable: false, validator: this.validators.validateSchema }),
+        schemaId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -44,3 +43,5 @@ export class _FormDef_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _FormDef_stuff_Type;

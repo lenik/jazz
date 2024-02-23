@@ -29,7 +29,7 @@ public abstract class _ArticleBackref_stuff
     public static final int N_KEY = 30;
     public static final int N_VALUE = 10;
 
-    private static final int _ord_ARTICLE_ID = 14;
+    private static final int _ord_ARTICLE_ID = 15;
     private static final int _ord_SITE_ID = _ord_ARTICLE_ID + 1;
     private static final int _ord_KEY = _ord_SITE_ID + 1;
     private static final int _ord_VALUE = _ord_KEY + 1;

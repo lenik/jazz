@@ -35,7 +35,7 @@ public abstract class _CategoryDef_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
-    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 10;
     private static final int _ord_PARENT_ID = _ord_SCHEMA_ID + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
     private static final int _ord_REF_COUNT = _ord_DEPTH + 2;

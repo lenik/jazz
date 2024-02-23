@@ -1,24 +1,24 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { long } from "@skeljs/dba/src/net/bodz/lily/entity";
+import ApiType from "./ApiType";
+import VAppRequest from "./VAppRequest";
+import _VAppRequestApi_stuff_Type from "./_VAppRequestApi_stuff_Type";
 
-import type { Long } from "../../../../../java/lang/Long";
-import type { ApiType } from "./ApiType";
-import type { VAppRequest } from "./VAppRequest";
-import type { _VAppRequestApi_stuff_Type } from "./_VAppRequestApi_stuff_Type";
-
-export class _VAppRequestApi_stuff extends CoEntity<Long> {
+export class _VAppRequestApi_stuff extends CoEntity<long> {
     static TYPE = new _VAppRequestApi_stuff_Type();
 
     id: long;
 
     parent: VAppRequest;
-    parentId: int;
+    parentId: integer;
 
     api: ApiType;
-    apiId: int;
+    apiId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _VAppRequestApi_stuff;

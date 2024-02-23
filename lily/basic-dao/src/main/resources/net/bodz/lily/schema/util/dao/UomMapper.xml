@@ -9,7 +9,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code" column="code" />
         <result property="label" column="label" />
         <result property="description" column="description" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="icon" column="icon" />
+        <result property="properties" column="props" />
         <result property="prop" column="prop" />
         <result property="scale" column="scale" />
         <result property="stdId" column="std" />
@@ -24,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.props, 
             a.prop, 
             a.std, 
@@ -32,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.code std_code, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.props std_props, 
             std.prop std_prop, 
             std.std std_std, 
@@ -47,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.code, 
             a.label, 
             a.description, 
+            a.icon, 
             a.props, 
             a.prop, 
             a.std, 
@@ -55,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.code std_code, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.props std_props, 
             std.prop std_prop, 
             std.std std_std, 
@@ -65,36 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.code != null">and a.code = #{m.code}</if>
-        <if test="m.codePattern != null">and a.code like '${m.codePattern}'</if>
-        <if test="m.label != null">and a.label = #{m.label}</if>
-        <if test="m.labelPattern != null">and a.label like '${m.labelPattern}'</if>
-        <if test="m.description != null">and a.description = #{m.description}</if>
-        <if test="m.descriptionPattern != null">and a.description like '${m.descriptionPattern}'</if>
-        <if test="m.properties != null">and a.props = #{m.properties}</if>
-        <if test="m.prop != null">and a.prop = #{m.prop}</if>
-        <if test="m.propPattern != null">and a.prop like '${m.propPattern}'</if>
-        <if test="m.stdId != null">and a.std = #{m.stdId}</if>
-        <if test="m.stdIdRange!= null">
-            <if test="m.stdIdRange.hasStartIncl">and a.std >= #{m.stdIdRange.start}</if>
-            <if test="m.stdIdRange.hasStartExcl">and a.std > #{m.stdIdRange.start}</if>
-            <if test="m.stdIdRange.hasEndIncl">and a.std &lt;= #{m.stdIdRange.end}</if>
-            <if test="m.stdIdRange.hasEndExcl">and a.std &lt; #{m.stdIdRange.end}</if>
-        </if>
-        <if test="m.scale != null">and a."scale" = #{m.scale}</if>
-        <if test="m.scaleRange!= null">
-            <if test="m.scaleRange.hasStartIncl">and a."scale" >= #{m.scaleRange.start}</if>
-            <if test="m.scaleRange.hasStartExcl">and a."scale" > #{m.scaleRange.start}</if>
-            <if test="m.scaleRange.hasEndIncl">and a."scale" &lt;= #{m.scaleRange.end}</if>
-            <if test="m.scaleRange.hasEndExcl">and a."scale" &lt; #{m.scaleRange.end}</if>
-        </if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -122,6 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code,
             label,
             description,
+            icon,
             props,
             prop,
             std,
@@ -130,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{code},
             #{label},
             #{description},
+            #{icon},
             #{properties.jsonStr}::jsonb,
             #{prop},
             #{stdId},
@@ -143,6 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             code = #{code},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             props = #{properties.jsonStr}::jsonb,
             prop = #{prop},
             std = #{stdId},
@@ -161,30 +140,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from uom
+        select count(*) "rows" from uom a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
             </if>
         </where>
     </select>
-
-    <update id="delete_xrefs">
-        alter table lily.uom drop constraint uom_std_fkey;
-        alter table violet.art drop constraint art_uom_fkey;
-    </update>
-
-    <update id="create_xrefs">
-        alter table lily.uom
-            add constraint uom_std_fkey foreign key (std)
-            references lily.uom (id)
-            on update cascade
-            ;
-        alter table violet.art
-            add constraint art_uom_fkey foreign key (uom)
-            references lily.uom (id)
-            on update cascade
-            ;
-    </update>
 
 </mapper>

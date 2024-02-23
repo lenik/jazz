@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { Group } from "./Group";
-import GroupEditor from "./GroupEditor.vue";
+import Group from "./Group";
 
+export const title = "Admin view of: Group";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import GroupEditor from "./GroupEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = Group.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -32,13 +37,14 @@ onMounted(() => {
             <th data-type="string" data-format="label" data-field="type">Group type like normal-group, role-group, etc.</th>
             <th data-type="string" data-field="label">Label</th>
             <th data-type="string" data-field="description">Description</th>
+            <th data-type="string" data-field="icon">Icon</th>
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="net.bodz.bas.repr.state.State" data-field="state">State</th>
+            <th data-type="string" data-field="state">State</th>
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
-            <th data-type="net.bodz.lily.concrete.CoPrincipalProperties" data-field="properties">Properties</th>
+            <th data-type="any" data-field="properties">Properties</th>
             <th data-type="string" data-format="label" data-field="parent">The parent group. must be acyclic</th>
         </template>
         <template #preview>
@@ -54,6 +60,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

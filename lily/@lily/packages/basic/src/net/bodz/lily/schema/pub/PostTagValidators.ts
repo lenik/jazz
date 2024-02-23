@@ -1,14 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PostTag_stuffValidators from "./_PostTag_stuffValidators";
 
-import type { Post } from "./Post";
-import type { PostTagType } from "./PostTagType";
+export class PostTagValidators extends _PostTag_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_tag(val: PostTagType) {
-}
-
-export function validate_post(val: Post) {
-}
+export default PostTagValidators;

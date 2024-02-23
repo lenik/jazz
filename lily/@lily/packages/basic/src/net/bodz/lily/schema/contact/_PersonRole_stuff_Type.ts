@@ -1,45 +1,46 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { OrgUnit } from "./OrgUnit";
+import { Organization } from "./Organization";
+import { Person } from "./Person";
+import PersonRoleValidators from "./PersonRoleValidators";
 
 export class _PersonRole_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "personrole";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "personrole";
 
     name = "net.bodz.lily.schema.contact.PersonRole"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_ORG_ID = "org";
-    static const FIELD_ORG_UNIT_ID = "ou";
-    static const FIELD_PERSON_ID = "person";
-    static const FIELD_ROLE = "role";
+    static FIELD_ID = "id";
+    static FIELD_ORG_ID = "org";
+    static FIELD_ORG_UNIT_ID = "ou";
+    static FIELD_PERSON_ID = "person";
+    static FIELD_ROLE = "role";
 
-    static const N_ID = 10;
-    static const N_ORG_ID = 10;
-    static const N_ORG_UNIT_ID = 10;
-    static const N_PERSON_ID = 10;
-    static const N_ROLE = 20;
+    static N_ID = 10;
+    static N_ORG_ID = 10;
+    static N_ORG_UNIT_ID = 10;
+    static N_PERSON_ID = 10;
+    static N_ROLE = 20;
+
+    static validators = new PersonRoleValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        role: property({ type: "string", precision: 20, validator: validators.validate_role }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        role: property({ type: "string", precision: 20, validator: this.validators.validateRole }),
 
-        orgUnit: property({ type: "net.bodz.lily.schema.contact.OrgUnit", validator: validators.validate_orgUnit }),
-        orgUnitId: property({ type: "integer", precision: 10, validator: validators.validate_orgUnitId }),
+        orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
+        orgUnitId: property({ type: "integer", precision: 10 }),
 
-        person: property({ type: "net.bodz.lily.schema.contact.Person", nullable: false, validator: validators.validate_person }),
-        personId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_personId }),
+        person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+        personId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        org: property({ type: "net.bodz.lily.schema.contact.Organization", nullable: false, validator: validators.validate_org }),
-        orgId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_orgId }),
+        org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+        orgId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -48,3 +49,5 @@ export class _PersonRole_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _PersonRole_stuff_Type;

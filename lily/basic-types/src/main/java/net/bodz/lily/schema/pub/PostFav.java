@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "post_fav")
+@Table(schema = PostFav.SCHEMA_NAME, name = PostFav.TABLE_NAME)
 public class PostFav
         extends _PostFav_stuff {
 

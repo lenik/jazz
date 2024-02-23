@@ -1,23 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _Badge_stuffValidators from "./_Badge_stuffValidators";
 
-export function validate_id(val: int) {
+export class BadgeValidators extends _Badge_stuffValidators {
+
 }
 
-export function validate_expr(val: string) {
-}
-
-export function validate_val(val: int) {
-}
-
-export function validate_levels(val: int[]) {
-}
-
-export function validate_descend(val: boolean) {
-}
-
-export function validate_transient_(val: boolean) {
-}
-
-export function validate_indexed(val: boolean) {
-}
+export default BadgeValidators;

@@ -2,6 +2,7 @@ package net.bodz.lily.schema.contact;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
@@ -16,17 +17,22 @@ public abstract class _OrgUnit_stuff
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "orgunit";
 
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_ORG_ID = "org";
     public static final String FIELD_PARENT_ID = "parent";
     public static final String FIELD_DEPTH = "depth";
 
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_ORG_ID = 10;
     public static final int N_PARENT_ID = 10;
     public static final int N_DEPTH = 10;
 
-    private static final int _ord_ORG_ID = 24;
+    private static final int _ord_PROPERTIES = 24;
+    private static final int _ord_ORG_ID = _ord_PROPERTIES + 1;
     private static final int _ord_PARENT_ID = _ord_ORG_ID + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
+
+    JsonVariant properties;
 
     @NotNull
     int depth;
@@ -42,6 +48,17 @@ public abstract class _OrgUnit_stuff
     OrgUnit parent;
 
     Integer parentId;
+
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
+    }
 
     @Ordinal(_ord_DEPTH)
     @Precision(value = 10)

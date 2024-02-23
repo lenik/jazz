@@ -1,40 +1,40 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { User } from "../account/User";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import User from "../account/User";
+import { User } from "../account/User";
+import { Badge } from "./Badge";
+import UserBadgeValidators from "./UserBadgeValidators";
 
 export class _UserBadge_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "user_badge";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "user_badge";
 
     name = "net.bodz.lily.schema.reward.UserBadge"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_USER_ID = "user";
-    static const FIELD_BADGE_ID = "badge";
+    static FIELD_ID = "id";
+    static FIELD_USER_ID = "user";
+    static FIELD_BADGE_ID = "badge";
 
-    static const N_ID = 10;
-    static const N_USER_ID = 10;
-    static const N_BADGE_ID = 10;
+    static N_ID = 10;
+    static N_USER_ID = 10;
+    static N_BADGE_ID = 10;
+
+    static validators = new UserBadgeValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        badge: property({ type: "net.bodz.lily.schema.reward.Badge", validator: validators.validate_badge }),
-        badgeId: property({ type: "integer", precision: 10, validator: validators.validate_badgeId }),
+        badge: property({ type: Badge.TYPE, validator: this.validators.validateBadge }),
+        badgeId: property({ type: "integer", precision: 10 }),
 
-        user: property({ type: "net.bodz.lily.schema.account.User", 
+        user: property({ type: User.TYPE, inheritsDoc: true, 
             description: "User Account", 
-            validator: validators.validate_user }),
-        userId: property({ type: "integer", precision: 10, validator: validators.validate_userId }),
+            validator: this.validators.validateUser }),
+        userId: property({ type: "integer", precision: 10 }),
     }
 
     constructor() {
@@ -43,3 +43,5 @@ export class _UserBadge_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _UserBadge_stuff_Type;

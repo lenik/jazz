@@ -1,16 +1,21 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
+import type { double, integer } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
 
+import { Uom } from "./Uom";
+
+export const title = "Choose dialog for: Uom";
 export interface Props {
     modal?: boolean | string
 }
+
 </script>
 
 <script setup lang="ts">
+import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+
 const model = defineModel();
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,21 +35,22 @@ function open(callback?: DialogSelectCallback) {
     entityChooseDialog.value?.open(callback);
 }
 
-%s(() => {
-onMounted
+onMounted(() => {
 });
+
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Person.TYPE" :modal="modal">
+    <EntityChooseDialog ref="entityChooseDialog" :type="Uom.TYPE" :modal="modal">
         <th data-type="integer" data-field="id">Id</th>
         <th data-type="string" data-field="code">Code</th>
         <th data-type="string" data-field="label">Label</th>
         <th data-type="string" data-field="description">Description</th>
-        <th data-type="net.bodz.bas.site.json.JsonMap" data-field="properties">Properties</th>
+        <th data-type="string" data-field="icon">Icon</th>
+        <th data-type="any" data-field="properties">Properties</th>
         <th data-type="string" data-field="prop">Prop</th>
         <th data-type="string" data-format="label" data-field="std">Std</th>
-        <th data-type="number" data-field="scale">Scale</th>
+        <th data-type="double" data-field="scale">Scale</th>
     </EntityChooseDialog>
 </template>
 

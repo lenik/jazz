@@ -32,11 +32,13 @@ public class PersonSamples
         a.setRoleCount(36144224);
         a.setEmployee(true);
         a.setBankCount(141150881);
-        a.setGender("p");
-        a.setHomeland("Qmy;");
-        a.setPassport("Jue");
-        a.setSsn("Oeuy maenlu eaoaj!");
-        a.setDln("Etui ro au oegra.");
+        a.setGender(Gender.HRTM);
+        a.setPronoun("urqcne; owie! dp iq");
+        a.setSexualOrientation("yxf*uf iezhoq'lgni upa");
+        a.setHomeland("Etuia");
+        a.setPassport("oryo oeg ai");
+        a.setSsn("Egi. wu, Dsa?");
+        a.setDln("u_Eaoioud ne");
         a.setContact(new ContactSamples().build());
         return a;
     }

@@ -1,19 +1,17 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import ExternalSite from "./ExternalSite";
+import _ExternalSite_stuff_Type from "./_ExternalSite_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { ExternalSite } from "./ExternalSite";
-import type { _ExternalSite_stuff_Type } from "./_ExternalSite_stuff_Type";
-
-export class _ExternalSite_stuff extends CoEntity<Integer> {
+export class _ExternalSite_stuff extends CoEntity<integer> {
     static TYPE = new _ExternalSite_stuff_Type();
 
-    id: int;
-    depth: int;
+    id: integer;
+    depth: integer;
     urlfmt?: string;
-    bonus: int;
-    count: int;
+    bonus: integer;
+    count: integer;
 
     parent?: ExternalSite;
     parentId?: integer;
@@ -22,3 +20,5 @@ export class _ExternalSite_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _ExternalSite_stuff;

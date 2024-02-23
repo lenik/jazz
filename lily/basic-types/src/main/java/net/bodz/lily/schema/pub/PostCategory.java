@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "postcat")
+@Table(schema = PostCategory.SCHEMA_NAME, name = PostCategory.TABLE_NAME)
 public class PostCategory
         extends _PostCategory_stuff {
 

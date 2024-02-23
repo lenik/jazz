@@ -1,22 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _ExternalSite_stuffValidators from "./_ExternalSite_stuffValidators";
 
-import type { ExternalSite } from "./ExternalSite";
+export class ExternalSiteValidators extends _ExternalSite_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_depth(val: int) {
-}
-
-export function validate_urlfmt(val: string) {
-}
-
-export function validate_bonus(val: int) {
-}
-
-export function validate_count(val: int) {
-}
-
-export function validate_parent(val: ExternalSite) {
-}
+export default ExternalSiteValidators;

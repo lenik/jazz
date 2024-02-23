@@ -1,17 +1,19 @@
+import type { char, integer } from "@skeljs/core/src/lang/type";
 
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Party } from "./Party";
-import type { Person } from "./Person";
-import type { _Person_stuff_Type } from "./_Person_stuff_Type";
+import Party from "./Party";
+import Person from "./Person";
+import _Person_stuff_Type from "./_Person_stuff_Type";
 
 export class _Person_stuff extends Party {
     static TYPE = new _Person_stuff_Type();
 
-    roleCount: int;
+    properties?: any;
+    roleCount: integer;
     employee: boolean;
-    bankCount: int;
-    gender?: string;
+    bankCount: integer;
+    gender?: char;
+    pronoun?: string;
+    sexualOrientation?: string;
     homeland?: string;
     passport?: string;
     ssn?: string;
@@ -27,3 +29,5 @@ export class _Person_stuff extends Party {
         super(o);
     }
 }
+
+export default _Person_stuff;

@@ -1,43 +1,42 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoPrincipalType from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalType";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoPrincipalType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalType";
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Group } from "./Group";
+import { GroupType } from "./GroupType";
+import GroupValidators from "./GroupValidators";
 
 export class _Group_stuff_Type extends CoPrincipalType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "group";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "group";
 
     name = "net.bodz.lily.schema.account.Group"
     icon = "fa-tag"
     label = "Group (Role)"
     description = "User Group"
 
-    static const FIELD_TYPE_ID = "type";
-    static const FIELD_PARENT_ID = "parent";
+    static FIELD_TYPE_ID = "type";
+    static FIELD_PARENT_ID = "parent";
 
-    static const N_TYPE_ID = 10;
-    static const N_PARENT_ID = 10;
+    static N_TYPE_ID = 10;
+    static N_PARENT_ID = 10;
+
+    static validators = new GroupValidators();
 
     static declaredProperty: EntityPropertyMap = {
 
-        parent: property({ type: "net.bodz.lily.schema.account.Group", 
+        parent: property({ type: Group.TYPE, 
             description: "The parent group. must be acyclic", 
-            validator: validators.validate_parent }),
+            validator: this.validators.validateParent }),
         parentId: property({ type: "integer", precision: 10, 
-            description: "The parent group. must be acyclic", 
-            validator: validators.validate_parentId }),
+            description: "The parent group. must be acyclic" }),
 
-        type: property({ type: "net.bodz.lily.schema.account.GroupType", nullable: false, 
+        type: property({ type: GroupType.TYPE, nullable: false, 
             description: "Group type like normal-group, role-group, etc.", 
-            validator: validators.validate_type }),
-        typeId: property({ type: "int", nullable: false, precision: 10, 
-            description: "Group type like normal-group, role-group, etc.", 
-            validator: validators.validate_typeId }),
+            validator: this.validators.validateType }),
+        typeId: property({ type: "integer", nullable: false, precision: 10, 
+            description: "Group type like normal-group, role-group, etc." }),
     }
 
     constructor() {
@@ -46,3 +45,5 @@ export class _Group_stuff_Type extends CoPrincipalType {
     }
 
 }
+
+export default _Group_stuff_Type;

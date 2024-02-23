@@ -1,16 +1,20 @@
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { Party } from "./Party";
-import type { _Organization_stuff_Type } from "./_Organization_stuff_Type";
+import Party from "./Party";
+import _Organization_stuff_Type from "./_Organization_stuff_Type";
 
 export class _Organization_stuff extends Party {
     static TYPE = new _Organization_stuff_Type();
 
-    roleCount: int;
-    bankCount: int;
-    size: int;
+    properties?: any;
+    roleCount: integer;
+    bankCount: integer;
+    size: integer;
     taxId?: string;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _Organization_stuff;

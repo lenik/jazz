@@ -1,17 +1,10 @@
+import type { long } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _VApi_stuffValidators from "./_VApi_stuffValidators";
 
-import type { ApiType } from "./ApiType";
-import type { VApp } from "./VApp";
+export class VApiValidators extends _VApi_stuffValidators {
 
-export function validate_id(val: long) {
 }
 
-export function validate_callback(val: string) {
-}
-
-export function validate_api(val: ApiType) {
-}
-
-export function validate_app(val: VApp) {
-}
+export default VApiValidators;

@@ -1,29 +1,29 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import OrgUnit from "./OrgUnit";
+import Organization from "./Organization";
+import Person from "./Person";
+import _PersonRole_stuff_Type from "./_PersonRole_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { OrgUnit } from "./OrgUnit";
-import type { Organization } from "./Organization";
-import type { Person } from "./Person";
-import type { _PersonRole_stuff_Type } from "./_PersonRole_stuff_Type";
-
-export class _PersonRole_stuff extends CoEntity<Integer> {
+export class _PersonRole_stuff extends CoEntity<integer> {
     static TYPE = new _PersonRole_stuff_Type();
 
-    id: int;
+    id: integer;
     role?: string;
 
     orgUnit?: OrgUnit;
     orgUnitId?: integer;
 
     person: Person;
-    personId: int;
+    personId: integer;
 
     org: Organization;
-    orgId: int;
+    orgId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _PersonRole_stuff;

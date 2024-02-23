@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { ExternalSite } from "./ExternalSite";
-import ExternalSiteEditor from "./ExternalSiteEditor.vue";
+import ExternalSite from "./ExternalSite";
 
+export const title = "Admin view of: External site";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import ExternalSiteEditor from "./ExternalSiteEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = ExternalSite.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -34,13 +39,14 @@ onMounted(() => {
             <th data-type="integer" data-field="acl">Acl</th>
             <th data-type="string" data-field="label">Label</th>
             <th data-type="string" data-field="description">Description</th>
+            <th data-type="string" data-field="icon">Icon</th>
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="net.bodz.bas.repr.state.State" data-field="state">State</th>
+            <th data-type="string" data-field="state">State</th>
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
-            <th data-type="net.bodz.bas.site.json.JsonMap" data-field="properties">Properties</th>
+            <th data-type="any" data-field="properties">Properties</th>
             <th data-type="string" data-format="label" data-field="parent">Parent</th>
             <th data-type="integer" data-field="depth">Depth</th>
             <th data-type="string" data-field="urlfmt">Urlfmt</th>
@@ -60,6 +66,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

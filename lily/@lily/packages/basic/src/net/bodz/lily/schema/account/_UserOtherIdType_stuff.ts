@@ -1,17 +1,17 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import _UserOtherIdType_stuff_Type from "./_UserOtherIdType_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { _UserOtherIdType_stuff_Type } from "./_UserOtherIdType_stuff_Type";
-
-export class _UserOtherIdType_stuff extends CoEntity<Integer> {
+export class _UserOtherIdType_stuff extends CoEntity<integer> {
     static TYPE = new _UserOtherIdType_stuff_Type();
 
-    id: int;
+    id: integer;
     dummy?: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _UserOtherIdType_stuff;

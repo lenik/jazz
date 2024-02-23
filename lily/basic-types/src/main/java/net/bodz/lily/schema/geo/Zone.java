@@ -13,7 +13,7 @@ import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IImagesInProps;
 
 @HaveAttachments
-@Table(schema = "lily", name = "zone")
+@Table(schema = Zone.SCHEMA_NAME, name = Zone.TABLE_NAME)
 public class Zone
         extends _Zone_stuff
         implements

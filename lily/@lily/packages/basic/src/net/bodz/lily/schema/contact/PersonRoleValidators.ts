@@ -1,21 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PersonRole_stuffValidators from "./_PersonRole_stuffValidators";
 
-import type { OrgUnit } from "./OrgUnit";
-import type { Organization } from "./Organization";
-import type { Person } from "./Person";
+export class PersonRoleValidators extends _PersonRole_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_role(val: string) {
-}
-
-export function validate_orgUnit(val: OrgUnit) {
-}
-
-export function validate_person(val: Person) {
-}
-
-export function validate_org(val: Organization) {
-}
+export default PersonRoleValidators;

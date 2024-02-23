@@ -1,14 +1,15 @@
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { Contact } from "./Contact";
+import { PersonRole } from "./PersonRole";
+import _OrgUnit_stuffValidators from "./_OrgUnit_stuffValidators";
 
-import type { OrgUnit } from "./OrgUnit";
-import type { Organization } from "./Organization";
+export class OrgUnitValidators extends _OrgUnit_stuffValidators {
+    validateContact(val: Contact) {
+    }
+    validateStaff(val: PersonRole[]) {
+    }
 
-export function validate_depth(val: int) {
 }
 
-export function validate_org(val: Organization) {
-}
-
-export function validate_parent(val: OrgUnit) {
-}
+export default OrgUnitValidators;

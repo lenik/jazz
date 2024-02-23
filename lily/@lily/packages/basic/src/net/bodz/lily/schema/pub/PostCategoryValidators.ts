@@ -1,19 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PostCategory_stuffValidators from "./_PostCategory_stuffValidators";
 
-import type { PostCategory } from "./PostCategory";
+export class PostCategoryValidators extends _PostCategory_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_name(val: string) {
-}
-
-export function validate_depth(val: int) {
-}
-
-export function validate_refCount(val: int) {
-}
-
-export function validate_parent(val: PostCategory) {
-}
+export default PostCategoryValidators;

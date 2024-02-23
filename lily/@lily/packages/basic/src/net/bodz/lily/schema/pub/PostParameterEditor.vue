@@ -1,25 +1,32 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { double, integer } from "@skeljs/core/src/lang/type";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import PostChooseDialog from "./PostChooseDialog.vue";
-import type { PostParameter } from "./PostParameter";
-import PostParameterTypeChooseDialog from "./PostParameterTypeChooseDialog.vue";
+import PostParameter from "./PostParameter";
+import _PostParameter_stuff from "./_PostParameter_stuff";
 
+export const title = "Editor view of: Post parameter";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import PostChooseDialog from "./PostChooseDialog.vue";
+import PostParameterTypeChooseDialog from "./PostParameterTypeChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<PostParameter>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,11 +58,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -66,11 +71,7 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._PostParameter_stuff">
+        <FieldGroup :type="_PostParameter_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
@@ -78,19 +79,16 @@ onMounted(() => {
                 <input type="number" v-model="model.ival" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.fval" v-model="model.fval">
-                <input type="number" v-model="model.fval" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.sval" v-model="model.sval">
                 <input type="text" v-model="model.sval" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.post" v-model="model.post">
-                <RefEditor :dialog="postChooseDialog" v-model="model.postId" v-model:id="model.postId" />
+                <RefEditor :dialog="postChooseDialog" v-model="model.post" v-model:id="model.postId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.parameter" v-model="model.parameter">
-                <RefEditor :dialog="postParameterTypeChooseDialog" v-model="model.parameterId" v-model:id="model.parameterId" />
+                <RefEditor :dialog="postParameterTypeChooseDialog" v-model="model.parameter" v-model:id="model.parameterId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.PostParameter">
         </FieldGroup>
     </div>
     <PostChooseDialog ref="postChooseDialog" />

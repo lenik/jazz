@@ -1,33 +1,17 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
+import { GeoLocation } from "@skeljs/dba/src/net/bodz/lily/concrete/util/GeoLocation";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _Zone_stuffValidators from "./_Zone_stuffValidators";
 
-import type { Object } from "../../../../../java/lang/Object";
-import type { Zone } from "./Zone";
-import type { ZoneCategory } from "./ZoneCategory";
+export class ZoneValidators extends _Zone_stuffValidators {
+    validateFullPath(val: string) {
+    }
+    validateGeo(val: GeoLocation) {
+    }
+    validateProperties(val: any) {
+    }
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_country(val: string) {
-}
-
-export function validate_depth(val: int) {
-}
-
-export function validate_telCode(val: string) {
-}
-
-export function validate_postCode(val: string) {
-}
-
-export function validate_data(val: Object) {
-}
-
-export function validate_parent(val: Zone) {
-}
-
-export function validate_category(val: ZoneCategory) {
-}
+export default ZoneValidators;

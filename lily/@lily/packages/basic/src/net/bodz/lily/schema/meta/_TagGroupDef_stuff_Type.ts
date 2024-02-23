@@ -1,42 +1,41 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { SchemaDef } from "./SchemaDef";
+import TagGroupDefValidators from "./TagGroupDefValidators";
 
 export class _TagGroupDef_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "_tagv";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "_tagv";
 
     name = "net.bodz.lily.schema.meta.TagGroupDef"
     icon = "fa-tag"
     label = "Tag Group"
 
-    static const FIELD_ID = "id";
-    static const FIELD_CODE = "code";
-    static const FIELD_SCHEMA_ID = "schema";
-    static const FIELD_FOR_TOPIC = "topic";
-    static const FIELD_FOR_REPLY = "reply";
+    static FIELD_ID = "id";
+    static FIELD_CODE = "code";
+    static FIELD_SCHEMA_ID = "schema";
+    static FIELD_FOR_TOPIC = "topic";
+    static FIELD_FOR_REPLY = "reply";
 
-    static const N_ID = 10;
-    static const N_CODE = 30;
-    static const N_SCHEMA_ID = 10;
-    static const N_FOR_TOPIC = 1;
-    static const N_FOR_REPLY = 1;
+    static N_ID = 10;
+    static N_CODE = 30;
+    static N_SCHEMA_ID = 10;
+    static N_FOR_TOPIC = 1;
+    static N_FOR_REPLY = 1;
+
+    static validators = new TagGroupDefValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        code: property({ type: "string", precision: 30, validator: validators.validate_code }),
-        forTopic: property({ type: "boolean", nullable: false, precision: 1, validator: validators.validate_forTopic }),
-        forReply: property({ type: "boolean", nullable: false, precision: 1, validator: validators.validate_forReply }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
+        forTopic: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForTopic }),
+        forReply: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForReply }),
 
-        schema: property({ type: "net.bodz.lily.schema.meta.SchemaDef", nullable: false, validator: validators.validate_schema }),
-        schemaId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_schemaId }),
+        schema: property({ type: SchemaDef.TYPE, nullable: false, validator: this.validators.validateSchema }),
+        schemaId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -45,3 +44,5 @@ export class _TagGroupDef_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _TagGroupDef_stuff_Type;

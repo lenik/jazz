@@ -1,14 +1,12 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import _UserType_stuff_Type from "./_UserType_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { _UserType_stuff_Type } from "./_UserType_stuff_Type";
-
-export class _UserType_stuff extends CoEntity<Integer> {
+export class _UserType_stuff extends CoEntity<integer> {
     static TYPE = new _UserType_stuff_Type();
 
-    id: int;
+    id: integer;
     name?: string;
     dummy?: integer;
 
@@ -16,3 +14,5 @@ export class _UserType_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _UserType_stuff;

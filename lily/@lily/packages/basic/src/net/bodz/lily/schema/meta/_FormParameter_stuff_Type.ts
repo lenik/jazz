@@ -1,38 +1,37 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { FormDef } from "./FormDef";
+import FormParameterValidators from "./FormParameterValidators";
 
 export class _FormParameter_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "_formparm";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "_formparm";
 
     name = "net.bodz.lily.schema.meta.FormParameter"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_FORM_ID = "form";
-    static const FIELD_NAME = "name";
-    static const FIELD_VALUE = "value";
+    static FIELD_ID = "id";
+    static FIELD_FORM_ID = "form";
+    static FIELD_NAME = "name";
+    static FIELD_VALUE = "value";
 
-    static const N_ID = 10;
-    static const N_FORM_ID = 10;
-    static const N_NAME = 30;
-    static const N_VALUE = 100;
+    static N_ID = 10;
+    static N_FORM_ID = 10;
+    static N_NAME = 30;
+    static N_VALUE = 100;
+
+    static validators = new FormParameterValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        name: property({ type: "string", precision: 30, validator: validators.validate_name }),
-        value: property({ type: "string", precision: 100, validator: validators.validate_value }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
+        value: property({ type: "string", precision: 100, validator: this.validators.validateValue }),
 
-        form: property({ type: "net.bodz.lily.schema.meta.FormDef", nullable: false, validator: validators.validate_form }),
-        formId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_formId }),
+        form: property({ type: FormDef.TYPE, nullable: false, validator: this.validators.validateForm }),
+        formId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -41,3 +40,5 @@ export class _FormParameter_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _FormParameter_stuff_Type;

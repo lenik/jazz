@@ -1,25 +1,33 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import ApiTypeChooseDialog from "./ApiTypeChooseDialog.vue";
-import type { VAppRequestApi } from "./VAppRequestApi";
-import VAppRequestChooseDialog from "./VAppRequestChooseDialog.vue";
+import VAppRequestApi from "./VAppRequestApi";
+import _VAppRequestApi_stuff from "./_VAppRequestApi_stuff";
 
+export const title = "Editor view of: V app request api";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import ApiTypeChooseDialog from "./ApiTypeChooseDialog.vue";
+import VAppRequestChooseDialog from "./VAppRequestChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<VAppRequestApi>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,11 +59,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -66,7 +72,7 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
                 <input type="number" v-model="model.priority" />
             </FieldRow>
@@ -77,20 +83,16 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.vapp._VAppRequestApi_stuff">
+        <FieldGroup :type="_VAppRequestApi_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.parent" v-model="model.parent">
-                <RefEditor :dialog="vAppRequestChooseDialog" v-model="model.parentId" v-model:id="model.parentId" />
+                <RefEditor :dialog="vAppRequestChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.api" v-model="model.api">
-                <RefEditor :dialog="apiTypeChooseDialog" v-model="model.apiId" v-model:id="model.apiId" />
+                <RefEditor :dialog="apiTypeChooseDialog" v-model="model.api" v-model:id="model.apiId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.vapp.VAppRequestApi">
         </FieldGroup>
     </div>
     <VAppRequestChooseDialog ref="vAppRequestChooseDialog" />

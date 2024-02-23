@@ -27,7 +27,7 @@ public abstract class _PostParameterType_stuff<this_t extends _PostParameterType
     public static final int N_DUMMY = 10;
 
     private static final int _ord_NAME = 6;
-    private static final int _ord_DUMMY = _ord_NAME + 9;
+    private static final int _ord_DUMMY = _ord_NAME + 10;
 
     String name;
 

@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { double, integer } from "@skeljs/core/src/lang/type";
 
-import type { ArticleParameter } from "./ArticleParameter";
-import ArticleParameterEditor from "./ArticleParameterEditor.vue";
+import ArticleParameter from "./ArticleParameter";
 
+export const title = "Admin view of: Article parameter";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import ArticleParameterEditor from "./ArticleParameterEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = ArticleParameter.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -34,7 +39,7 @@ onMounted(() => {
             <th data-type="string" data-format="label" data-field="article">Article</th>
             <th data-type="string" data-format="label" data-field="parameter">Parameter</th>
             <th data-type="integer" data-field="ival">Ival</th>
-            <th data-type="number" data-field="fval">Fval</th>
+            <th data-type="double" data-field="fval">Fval</th>
             <th data-type="string" data-field="sval">Sval</th>
         </template>
         <template #preview>
@@ -50,6 +55,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

@@ -12,6 +12,8 @@ net.bodz.lily.schema.contact.OrganizationSamples
 net.bodz.lily.schema.contact.PartyCategorySamples
 net.bodz.lily.schema.contact.PersonRoleSamples
 net.bodz.lily.schema.contact.PersonSamples
+net.bodz.lily.schema.contact.PersonTagSamples
+net.bodz.lily.schema.contact.PersonTagTypeSamples
 net.bodz.lily.schema.geo.ZoneCategorySamples
 net.bodz.lily.schema.geo.ZoneSamples
 net.bodz.lily.schema.inet.ExternalSiteSamples

@@ -13,10 +13,6 @@ public class _ArticleCategoryCriteriaBuilder_stuff<self_t extends _ArticleCatego
 
     public final IntegerField accessMode = integer("mode");
 
-    public final StringField image = string("image");
-
-    public final StringField imageAlt = string("imagealt");
-
     public final IntegerField parentId = integer("parent");
 
     public final IntegerField depth = integer("\"depth\"");

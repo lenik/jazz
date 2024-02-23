@@ -1,8 +1,7 @@
+import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _PartyCategory_stuff_Type } from "./_PartyCategory_stuff_Type";
+import PartyCategoryValidators from "./PartyCategoryValidators";
+import _PartyCategory_stuff_Type from "./_PartyCategory_stuff_Type";
 
 // Type Info
 
@@ -10,6 +9,8 @@ export class PartyCategoryType extends _PartyCategory_stuff_Type {
 
     name = "net.bodz.lily.schema.contact.PartyCategory"
     icon = "fa-tag"
+
+    static validators = new PartyCategoryValidators();
 
     static declaredProperty: EntityPropertyMap = {
     }
@@ -20,3 +21,5 @@ export class PartyCategoryType extends _PartyCategory_stuff_Type {
     }
 
 }
+
+export default PartyCategory;

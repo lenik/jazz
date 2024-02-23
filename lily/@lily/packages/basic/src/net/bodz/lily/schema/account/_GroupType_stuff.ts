@@ -1,14 +1,12 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import _GroupType_stuff_Type from "./_GroupType_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { _GroupType_stuff_Type } from "./_GroupType_stuff_Type";
-
-export class _GroupType_stuff extends CoEntity<Integer> {
+export class _GroupType_stuff extends CoEntity<integer> {
     static TYPE = new _GroupType_stuff_Type();
 
-    id: int;
+    id: integer;
     name?: string;
     dummy?: integer;
 
@@ -16,3 +14,5 @@ export class _GroupType_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _GroupType_stuff;

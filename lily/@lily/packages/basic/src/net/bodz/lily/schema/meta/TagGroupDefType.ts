@@ -1,9 +1,8 @@
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _TagGroupDef_stuff_Type } from "./_TagGroupDef_stuff_Type";
+import { List } from "../../../../../java/util/List";
+import TagGroupDefValidators from "./TagGroupDefValidators";
+import _TagGroupDef_stuff_Type from "./_TagGroupDef_stuff_Type";
 
 // Type Info
 
@@ -13,9 +12,11 @@ export class TagGroupDefType extends _TagGroupDef_stuff_Type {
     icon = "fa-tag"
     label = "Tag Group"
 
+    static validators = new TagGroupDefValidators();
+
     static declaredProperty: EntityPropertyMap = {
-        ortho: property({ type: "boolean", nullable: false, validator: validators.validate_ortho }),
-        tags: property({ type: "java.util.List", validator: validators.validate_tags }),
+        ortho: property({ type: "boolean", nullable: false, validator: this.validators.validateOrtho }),
+        tags: property({ type: "List", validator: this.validators.validateTags }),
     }
 
     constructor() {
@@ -24,3 +25,5 @@ export class TagGroupDefType extends _TagGroupDef_stuff_Type {
     }
 
 }
+
+export default TagGroupDef;

@@ -1,19 +1,32 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import { Group } from "./Group";
+import { UserOtherId } from "./UserOtherId";
+import { UserRun } from "./UserRun";
+import { UserSecret } from "./UserSecret";
+import _User_stuffValidators from "./_User_stuffValidators";
 
-import type { Person } from "../contact/Person";
-import type { Group } from "./Group";
-import type { User } from "./User";
-import type { UserType } from "./UserType";
+export class UserValidators extends _User_stuffValidators {
+    validateGroupIds(val: integer[]) {
+    }
+    validateGroups(val: Group[]) {
+    }
+    validateIds(val: UserOtherId[]) {
+    }
+    validateOtherIds(val: UserOtherId[]) {
+    }
+    validateRegisterIP(val: string) {
+    }
+    validateRunningState(val: UserRun) {
+    }
+    validateSecret(val: UserSecret) {
+    }
+    validateSecrets(val: UserSecret[]) {
+    }
+    validateSuperUser(val: boolean) {
+    }
 
-export function validate_person(val: Person) {
 }
 
-export function validate_primaryGroup(val: Group) {
-}
-
-export function validate_referer(val: User) {
-}
-
-export function validate_type(val: UserType) {
-}
+export default UserValidators;

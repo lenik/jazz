@@ -1,5 +1,7 @@
 package net.bodz.lily.schema.vapp.dao;
 
+import java.sql.Timestamp;
+
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 
 public class _VAppRequestCriteriaBuilder_stuff<self_t extends _VAppRequestCriteriaBuilder_stuff<self_t>>
@@ -12,6 +14,10 @@ public class _VAppRequestCriteriaBuilder_stuff<self_t extends _VAppRequestCriter
     public final IntegerField accessMode = integer("mode");
 
     public final StringField code = string("code");
+
+    public final DateField<Timestamp> beginTime = date("t0", Timestamp.class);
+
+    public final DateField<Timestamp> endTime = date("t1", Timestamp.class);
 
     public final IntegerField year = integer("\"year\"");
 

@@ -1,31 +1,30 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import Zone from "./Zone";
+import ZoneCategory from "./ZoneCategory";
+import _Zone_stuff_Type from "./_Zone_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { Object } from "../../../../../java/lang/Object";
-import type { Zone } from "./Zone";
-import type { ZoneCategory } from "./ZoneCategory";
-import type { _Zone_stuff_Type } from "./_Zone_stuff_Type";
-
-export class _Zone_stuff extends CoEntity<Integer> {
+export class _Zone_stuff extends CoEntity<integer> {
     static TYPE = new _Zone_stuff_Type();
 
-    id: int;
+    id: integer;
     code?: string;
     country?: string;
-    depth: int;
+    depth: integer;
     telCode?: string;
     postCode?: string;
-    data?: Object;
+    data?: any;
 
     parent?: Zone;
     parentId?: integer;
 
     category: ZoneCategory;
-    categoryId: int;
+    categoryId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _Zone_stuff;

@@ -1,8 +1,7 @@
+import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _PostTalk_stuff_Type } from "./_PostTalk_stuff_Type";
+import PostTalkValidators from "./PostTalkValidators";
+import _PostTalk_stuff_Type from "./_PostTalk_stuff_Type";
 
 // Type Info
 
@@ -10,6 +9,8 @@ export class PostTalkType extends _PostTalk_stuff_Type {
 
     name = "net.bodz.lily.schema.pub.PostTalk"
     icon = "fa-tag"
+
+    static validators = new PostTalkValidators();
 
     static declaredProperty: EntityPropertyMap = {
     }
@@ -20,3 +21,5 @@ export class PostTalkType extends _PostTalk_stuff_Type {
     }
 
 }
+
+export default PostTalk;

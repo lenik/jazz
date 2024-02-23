@@ -3,6 +3,7 @@ package net.bodz.lily.schema.geo;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -41,7 +42,7 @@ public abstract class _Zone_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
-    private static final int _ord_CATEGORY_ID = 15;
+    private static final int _ord_CATEGORY_ID = 16;
     private static final int _ord_COUNTRY = _ord_CATEGORY_ID + 1;
     private static final int _ord_PARENT_ID = _ord_COUNTRY + 1;
     private static final int _ord_DEPTH = _ord_PARENT_ID + 1;
@@ -64,7 +65,7 @@ public abstract class _Zone_stuff
 
     String postCode;
 
-    Object data;
+    JsonVariant data;
 
     /**  */
     Zone parent;
@@ -162,11 +163,11 @@ public abstract class _Zone_stuff
     @Ordinal(_ord_DATA)
     @Precision(value = 2147483647)
     @Column(name = "data", precision = 2147483647)
-    public Object getData() {
+    public JsonVariant getData() {
         return data;
     }
 
-    public void setData(Object value) {
+    public void setData(JsonVariant value) {
         this.data = value;
     }
 

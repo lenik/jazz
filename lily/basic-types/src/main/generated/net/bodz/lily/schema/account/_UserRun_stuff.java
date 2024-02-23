@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.account;
 
+import java.net.InetAddress;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ public abstract class _UserRun_stuff
     public static final int N_LAST_LOGIN_I_P = 2147483647;
 
     private static final int _ord_USER_ID = 1;
-    private static final int _ord_SCORE = _ord_USER_ID + 10;
+    private static final int _ord_SCORE = 12;
     private static final int _ord_LAST_LOGIN_TIME = _ord_SCORE + 1;
     private static final int _ord_LAST_LOGIN_I_P = _ord_LAST_LOGIN_TIME + 1;
 
@@ -45,7 +46,7 @@ public abstract class _UserRun_stuff
     Timestamp lastLoginTime;
 
     /** The source IP of last login */
-    Object lastLoginIP;
+    InetAddress lastLoginIP;
 
     /** The user */
     @NotNull
@@ -100,14 +101,14 @@ public abstract class _UserRun_stuff
     @Ordinal(_ord_LAST_LOGIN_I_P)
     @Precision(value = 2147483647)
     @Column(name = "lastlogip", precision = 2147483647)
-    public Object getLastLoginIP() {
+    public InetAddress getLastLoginIP() {
         return lastLoginIP;
     }
 
     /**
      * The source IP of last login
      */
-    public void setLastLoginIP(Object value) {
+    public void setLastLoginIP(InetAddress value) {
         this.lastLoginIP = value;
     }
 

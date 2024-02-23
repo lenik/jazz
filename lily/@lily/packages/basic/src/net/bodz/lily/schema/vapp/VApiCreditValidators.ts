@@ -1,17 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _VApiCredit_stuffValidators from "./_VApiCredit_stuffValidators";
 
-import type { ApiType } from "./ApiType";
-import type { VApp } from "./VApp";
+export class VApiCreditValidators extends _VApiCredit_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_credit(val: BigInteger) {
-}
-
-export function validate_api(val: ApiType) {
-}
-
-export function validate_app(val: VApp) {
-}
+export default VApiCreditValidators;

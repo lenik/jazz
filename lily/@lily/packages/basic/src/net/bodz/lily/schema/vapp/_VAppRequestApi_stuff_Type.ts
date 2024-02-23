@@ -1,37 +1,37 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Long } from "../../../../../java/lang/Long";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { ApiType } from "./ApiType";
+import { VAppRequest } from "./VAppRequest";
+import VAppRequestApiValidators from "./VAppRequestApiValidators";
 
 export class _VAppRequestApi_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "vappreq_api";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "vappreq_api";
 
     name = "net.bodz.lily.schema.vapp.VAppRequestApi"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_PARENT_ID = "parent";
-    static const FIELD_API_ID = "api";
+    static FIELD_ID = "id";
+    static FIELD_PARENT_ID = "parent";
+    static FIELD_API_ID = "api";
 
-    static const N_ID = 19;
-    static const N_PARENT_ID = 10;
-    static const N_API_ID = 10;
+    static N_ID = 19;
+    static N_PARENT_ID = 10;
+    static N_API_ID = 10;
+
+    static validators = new VAppRequestApiValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "long", nullable: false, precision: 19, validator: validators.validate_id }),
+        id: primaryKey({ type: "long", nullable: false, precision: 19, validator: this.validators.validateId }),
 
-        parent: property({ type: "net.bodz.lily.schema.vapp.VAppRequest", nullable: false, validator: validators.validate_parent }),
-        parentId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_parentId }),
+        parent: property({ type: VAppRequest.TYPE, nullable: false, validator: this.validators.validateParent }),
+        parentId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        api: property({ type: "net.bodz.lily.schema.vapp.ApiType", nullable: false, validator: validators.validate_api }),
-        apiId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_apiId }),
+        api: property({ type: ApiType.TYPE, nullable: false, validator: this.validators.validateApi }),
+        apiId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -40,3 +40,5 @@ export class _VAppRequestApi_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _VAppRequestApi_stuff_Type;

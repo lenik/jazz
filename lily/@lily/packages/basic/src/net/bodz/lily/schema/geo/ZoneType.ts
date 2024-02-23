@@ -1,9 +1,8 @@
+import { GeoLocation } from "@skeljs/dba/src/net/bodz/lily/concrete/util/GeoLocation";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _Zone_stuff_Type } from "./_Zone_stuff_Type";
+import ZoneValidators from "./ZoneValidators";
+import _Zone_stuff_Type from "./_Zone_stuff_Type";
 
 // Type Info
 
@@ -12,10 +11,12 @@ export class ZoneType extends _Zone_stuff_Type {
     name = "net.bodz.lily.schema.geo.Zone"
     icon = "fa-tag"
 
+    static validators = new ZoneValidators();
+
     static declaredProperty: EntityPropertyMap = {
-        fullPath: property({ type: "string", validator: validators.validate_fullPath }),
-        geo: property({ type: "net.bodz.lily.concrete.util.GeoLocation", validator: validators.validate_geo }),
-        properties: property({ type: "net.bodz.lily.concrete.RichProperties", validator: validators.validate_properties }),
+        fullPath: property({ type: "string", validator: this.validators.validateFullPath }),
+        geo: property({ type: "GeoLocation", validator: this.validators.validateGeo }),
+        properties: property({ type: "any", validator: this.validators.validateProperties }),
     }
 
     constructor() {
@@ -24,3 +25,5 @@ export class ZoneType extends _Zone_stuff_Type {
     }
 
 }
+
+export default Zone;

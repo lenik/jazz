@@ -1,37 +1,37 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Person } from "./Person";
+import { PersonTagType } from "./PersonTagType";
+import PersonTagValidators from "./PersonTagValidators";
 
 export class _PersonTag_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "person_tag";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "person_tag";
 
     name = "net.bodz.lily.schema.contact.PersonTag"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_PERSON_ID = "person";
-    static const FIELD_TAG_ID = "tag";
+    static FIELD_ID = "id";
+    static FIELD_PERSON_ID = "person";
+    static FIELD_TAG_ID = "tag";
 
-    static const N_ID = 10;
-    static const N_PERSON_ID = 10;
-    static const N_TAG_ID = 10;
+    static N_ID = 10;
+    static N_PERSON_ID = 10;
+    static N_TAG_ID = 10;
+
+    static validators = new PersonTagValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: "net.bodz.lily.schema.contact.PersonTagType", nullable: false, validator: validators.validate_tag }),
-        tagId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_tagId }),
+        tag: property({ type: PersonTagType.TYPE, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        person: property({ type: "net.bodz.lily.schema.contact.Person", nullable: false, validator: validators.validate_person }),
-        personId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_personId }),
+        person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+        personId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
@@ -40,3 +40,5 @@ export class _PersonTag_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _PersonTag_stuff_Type;

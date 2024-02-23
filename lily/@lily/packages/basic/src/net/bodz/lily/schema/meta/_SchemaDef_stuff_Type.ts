@@ -1,34 +1,32 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import SchemaDefValidators from "./SchemaDefValidators";
 
 export class _SchemaDef_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "_schema";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "_schema";
 
     name = "net.bodz.lily.schema.meta.SchemaDef"
     icon = "fa-tag"
     label = "Schema"
 
-    static const FIELD_ID = "id";
-    static const FIELD_CODE = "code";
-    static const FIELD_DUMMY = "dummy";
+    static FIELD_ID = "id";
+    static FIELD_CODE = "code";
+    static FIELD_DUMMY = "dummy";
 
-    static const N_ID = 10;
-    static const N_CODE = 30;
-    static const N_DUMMY = 10;
+    static N_ID = 10;
+    static N_CODE = 30;
+    static N_DUMMY = 10;
+
+    static validators = new SchemaDefValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
-        code: property({ type: "string", precision: 30, validator: validators.validate_code }),
-        dummy: property({ type: "integer", precision: 10, validator: validators.validate_dummy }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
+        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {
@@ -37,3 +35,5 @@ export class _SchemaDef_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _SchemaDef_stuff_Type;

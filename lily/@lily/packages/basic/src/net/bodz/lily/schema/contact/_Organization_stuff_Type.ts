@@ -1,35 +1,37 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { PartyType } from "./PartyType";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import OrganizationValidators from "./OrganizationValidators";
+import PartyType from "./PartyType";
 
 export class _Organization_stuff_Type extends PartyType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "org";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "org";
 
     name = "net.bodz.lily.schema.contact.Organization"
     icon = "fa-tag"
 
-    static const FIELD_ROLE_COUNT = "nrole";
-    static const FIELD_BANK_COUNT = "nbank";
-    static const FIELD_SIZE = "size";
-    static const FIELD_TAX_ID = "taxid";
+    static FIELD_PROPERTIES = "props";
+    static FIELD_ROLE_COUNT = "nrole";
+    static FIELD_BANK_COUNT = "nbank";
+    static FIELD_SIZE = "size";
+    static FIELD_TAX_ID = "taxid";
 
-    static const N_ROLE_COUNT = 10;
-    static const N_BANK_COUNT = 10;
-    static const N_SIZE = 10;
-    static const N_TAX_ID = 20;
+    static N_PROPERTIES = 2147483647;
+    static N_ROLE_COUNT = 10;
+    static N_BANK_COUNT = 10;
+    static N_SIZE = 10;
+    static N_TAX_ID = 20;
+
+    static validators = new OrganizationValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        roleCount: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_roleCount }),
-        bankCount: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_bankCount }),
-        size: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_size }),
-        taxId: property({ type: "string", precision: 20, validator: validators.validate_taxId }),
+        properties: property({ type: "any", validator: this.validators.validateProperties }),
+        roleCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
+        bankCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateBankCount }),
+        size: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateSize }),
+        taxId: property({ type: "string", precision: 20, validator: this.validators.validateTaxId }),
     }
 
     constructor() {
@@ -38,3 +40,5 @@ export class _Organization_stuff_Type extends PartyType {
     }
 
 }
+
+export default _Organization_stuff_Type;

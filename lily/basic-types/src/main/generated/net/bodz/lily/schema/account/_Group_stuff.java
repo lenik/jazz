@@ -27,7 +27,7 @@ public abstract class _Group_stuff
     public static final int N_PARENT_ID = 10;
 
     private static final int _ord_TYPE_ID = 3;
-    private static final int _ord_PARENT_ID = _ord_TYPE_ID + 10;
+    private static final int _ord_PARENT_ID = 14;
 
     /** The parent group. must be acyclic */
     Group parent;

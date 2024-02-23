@@ -2,7 +2,7 @@ package net.bodz.lily.schema.account;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "useroid")
+@Table(schema = UserOtherId.SCHEMA_NAME, name = UserOtherId.TABLE_NAME)
 public class UserOtherId
         extends _UserOtherId_stuff {
 

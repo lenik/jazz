@@ -32,7 +32,7 @@ public abstract class _User_stuff
     public static final int N_PERSON_ID = 10;
 
     private static final int _ord_TYPE_ID = 2;
-    private static final int _ord_PRIMARY_GROUP_ID = 13;
+    private static final int _ord_PRIMARY_GROUP_ID = 14;
     private static final int _ord_REFERER_ID = _ord_PRIMARY_GROUP_ID + 1;
     private static final int _ord_PERSON_ID = _ord_REFERER_ID + 1;
 

@@ -2,6 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -59,7 +60,7 @@ public abstract class _Post_stuff
     @NotNull
     int messageCount;
 
-    Object plugins;
+    JsonVariant plugins;
 
     /**  */
     Post parent;
@@ -130,11 +131,11 @@ public abstract class _Post_stuff
     @Ordinal(_ord_PLUGINS)
     @Precision(value = 2147483647)
     @Column(name = "plugins", precision = 2147483647)
-    public Object getPlugins() {
+    public JsonVariant getPlugins() {
         return plugins;
     }
 
-    public void setPlugins(Object value) {
+    public void setPlugins(JsonVariant value) {
         this.plugins = value;
     }
 

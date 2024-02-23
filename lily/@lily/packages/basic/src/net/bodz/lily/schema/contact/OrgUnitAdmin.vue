@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { OrgUnit } from "./OrgUnit";
-import OrgUnitEditor from "./OrgUnitEditor.vue";
+import OrgUnit from "./OrgUnit";
 
+export const title = "Admin view of: Org unit";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import OrgUnitEditor from "./OrgUnitEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -21,6 +25,7 @@ const type = OrgUnit.TYPE;
 const selection = ref<any>({});
 onMounted(() => {
 });
+
 
 </script>
 
@@ -34,13 +39,14 @@ onMounted(() => {
             <th data-type="integer" data-field="acl">Acl</th>
             <th data-type="string" data-field="label">Label</th>
             <th data-type="string" data-field="description">Description</th>
+            <th data-type="string" data-field="icon">Icon</th>
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="net.bodz.bas.repr.state.State" data-field="state">State</th>
+            <th data-type="string" data-field="state">State</th>
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
-            <th data-type="net.bodz.lily.schema.contact.PartyProperties" data-field="properties">Properties</th>
+            <th data-type="any" data-field="properties">Properties</th>
             <th data-type="string" data-format="label" data-field="org">Org</th>
             <th data-type="string" data-format="label" data-field="parent">Parent</th>
             <th data-type="integer" data-field="depth">Depth</th>
@@ -58,6 +64,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

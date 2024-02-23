@@ -1,20 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _VApp_stuffValidators from "./_VApp_stuffValidators";
 
-import type { VAppCat } from "./VAppCat";
-import type { VAppRequest } from "./VAppRequest";
+export class VAppValidators extends _VApp_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_secret(val: string) {
-}
-
-export function validate_category(val: VAppCat) {
-}
-
-export function validate_req(val: VAppRequest) {
-}
+export default VAppValidators;

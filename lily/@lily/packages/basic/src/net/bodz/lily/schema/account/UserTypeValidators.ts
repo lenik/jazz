@@ -1,11 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _UserType_stuffValidators from "./_UserType_stuffValidators";
 
-export function validate_id(val: int) {
+export class UserTypeValidators extends _UserType_stuffValidators {
+
 }
 
-export function validate_name(val: string) {
-}
-
-export function validate_dummy(val: integer) {
-}
+export default UserTypeValidators;

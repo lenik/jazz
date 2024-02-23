@@ -1,17 +1,21 @@
 <script lang="ts">
-
+import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
-import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { UserSecret } from "./UserSecret";
-import UserSecretEditor from "./UserSecretEditor.vue";
+import UserSecret from "./UserSecret";
 
+export const title = "Admin view of: User secret";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import UserSecretEditor from "./UserSecretEditor.vue";
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -22,6 +26,7 @@ const selection = ref<any>({});
 onMounted(() => {
 });
 
+
 </script>
 
 <template>
@@ -31,7 +36,7 @@ onMounted(() => {
             <th data-type="Moment" data-field="creationDate">Creation Date</th>
             <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
-            <th data-type="net.bodz.bas.site.json.JsonMap" data-field="properties">Properties</th>
+            <th data-type="any" data-field="properties">Properties</th>
             <th data-type="string" data-format="label" data-field="user">The declaring user</th>
             <th data-type="string" data-field="password">Password data</th>
             <th data-type="string" data-field="question">Protection question</th>
@@ -50,6 +55,7 @@ onMounted(() => {
 <style lang="scss"></style>
 
 <style scoped lang="scss">
-.lily-admin {}
+.lily-admin {
+    padding: 0;
 }
 </style>

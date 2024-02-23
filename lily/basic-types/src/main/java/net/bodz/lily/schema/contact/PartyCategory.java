@@ -2,7 +2,7 @@ package net.bodz.lily.schema.contact;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "partycat")
+@Table(schema = PartyCategory.SCHEMA_NAME, name = PartyCategory.TABLE_NAME)
 public class PartyCategory
         extends _PartyCategory_stuff<PartyCategory> {
 

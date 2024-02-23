@@ -1,19 +1,20 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
+import TagGroupDef from "./TagGroupDef";
+import _TagDef_stuff_Type from "./_TagDef_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { TagGroupDef } from "./TagGroupDef";
-import type { _TagDef_stuff_Type } from "./_TagDef_stuff_Type";
-
-export class _TagDef_stuff extends CoEntity<Integer> {
+export class _TagDef_stuff extends CoEntity<integer> {
     static TYPE = new _TagDef_stuff_Type();
 
-    id: int;
+    id: integer;
 
     tagGroup: TagGroupDef;
-    tagGroupId: int;
+    tagGroupId: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _TagDef_stuff;

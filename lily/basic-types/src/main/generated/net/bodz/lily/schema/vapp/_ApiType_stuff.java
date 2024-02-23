@@ -28,7 +28,7 @@ public abstract class _ApiType_stuff
     public static final int N_UOM = 30;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_CODE = _ord_ID + 9;
+    private static final int _ord_CODE = _ord_ID + 10;
     private static final int _ord_UOM = _ord_CODE + 2;
 
     @Id

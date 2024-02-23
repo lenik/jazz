@@ -32,7 +32,7 @@ public abstract class _VApiLog_stuff
     public static final int N_ERR = 2147483647;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_APP_ID = _ord_ID + 9;
+    private static final int _ord_APP_ID = _ord_ID + 10;
     private static final int _ord_API_ID = _ord_APP_ID + 1;
     private static final int _ord_MESSAGE = _ord_API_ID + 1;
     private static final int _ord_ERR = _ord_MESSAGE + 1;

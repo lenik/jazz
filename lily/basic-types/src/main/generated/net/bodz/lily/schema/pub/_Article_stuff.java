@@ -2,6 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -34,7 +35,7 @@ public abstract class _Article_stuff
     public static final int N_MESSAGE_COUNT = 10;
     public static final int N_PLUGINS = 2147483647;
 
-    private static final int _ord_FORM_ARGUMENTS = 21;
+    private static final int _ord_FORM_ARGUMENTS = 22;
     private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 1;
     private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 2;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
@@ -56,7 +57,7 @@ public abstract class _Article_stuff
     @NotNull
     int messageCount;
 
-    Object plugins;
+    JsonVariant plugins;
 
     /**  */
     ArticleCategory category;
@@ -122,11 +123,11 @@ public abstract class _Article_stuff
     @Ordinal(_ord_PLUGINS)
     @Precision(value = 2147483647)
     @Column(name = "plugins", precision = 2147483647)
-    public Object getPlugins() {
+    public JsonVariant getPlugins() {
         return plugins;
     }
 
-    public void setPlugins(Object value) {
+    public void setPlugins(JsonVariant value) {
         this.plugins = value;
     }
 

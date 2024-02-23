@@ -39,6 +39,10 @@ public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_
 
     public final StringField gender = string("gender");
 
+    public final StringField pronoun = string("pronoun");
+
+    public final StringField sexualOrientation = string("sexual_orient");
+
     public final StringField homeland = string("homeland");
 
     public final StringField passport = string("passport");

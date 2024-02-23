@@ -6,7 +6,7 @@ import javax.persistence.Table;
 /**
  * @see Zone
  */
-@Table(schema = "lily", name = "zonecat")
+@Table(schema = ZoneCategory.SCHEMA_NAME, name = ZoneCategory.TABLE_NAME)
 public class ZoneCategory
         extends _ZoneCategory_stuff {
 

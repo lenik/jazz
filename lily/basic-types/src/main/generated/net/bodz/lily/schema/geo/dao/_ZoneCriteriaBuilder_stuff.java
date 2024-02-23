@@ -1,5 +1,6 @@
 package net.bodz.lily.schema.geo.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 
 public class _ZoneCriteriaBuilder_stuff<self_t extends _ZoneCriteriaBuilder_stuff<self_t>>
@@ -25,5 +26,6 @@ public class _ZoneCriteriaBuilder_stuff<self_t extends _ZoneCriteriaBuilder_stuf
 
     public final StringField postCode = string("postcode");
 
+    public final DiscreteField<JsonVariant> data = discrete("\"data\"", JsonVariant.class);
 
 }

@@ -1,19 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _Uom_stuffValidators from "./_Uom_stuffValidators";
 
-import type { Uom } from "./Uom";
+export class UomValidators extends _Uom_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_prop(val: string) {
-}
-
-export function validate_scale(val: double) {
-}
-
-export function validate_std(val: Uom) {
-}
+export default UomValidators;

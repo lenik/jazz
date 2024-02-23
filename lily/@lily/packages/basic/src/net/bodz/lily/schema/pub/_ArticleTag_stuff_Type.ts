@@ -1,37 +1,37 @@
+import type { integer, long } from "@skeljs/core/src/lang/type";
+import CoEntityType from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import type { CoEntityType } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityType";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { Integer } from "../../../../../java/lang/Integer";
-import { * as validators } from "./PersonValidators";
-
-// Type Info
+import { Article } from "./Article";
+import { ArticleTagType } from "./ArticleTagType";
+import ArticleTagValidators from "./ArticleTagValidators";
 
 export class _ArticleTag_stuff_Type extends CoEntityType {
 
-    static const SCHEMA_NAME = "lily";
-    static const TABLE_NAME = "article_tag";
+    static SCHEMA_NAME = "lily";
+    static TABLE_NAME = "article_tag";
 
     name = "net.bodz.lily.schema.pub.ArticleTag"
     icon = "fa-tag"
 
-    static const FIELD_ID = "id";
-    static const FIELD_ARTICLE_ID = "article";
-    static const FIELD_TAG_ID = "tag";
+    static FIELD_ID = "id";
+    static FIELD_ARTICLE_ID = "article";
+    static FIELD_TAG_ID = "tag";
 
-    static const N_ID = 10;
-    static const N_ARTICLE_ID = 19;
-    static const N_TAG_ID = 10;
+    static N_ID = 10;
+    static N_ARTICLE_ID = 19;
+    static N_TAG_ID = 10;
+
+    static validators = new ArticleTagValidators();
 
     static declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: validators.validate_id }),
+        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: "net.bodz.lily.schema.pub.ArticleTagType", nullable: false, validator: validators.validate_tag }),
-        tagId: property({ type: "int", nullable: false, precision: 10, validator: validators.validate_tagId }),
+        tag: property({ type: ArticleTagType.TYPE, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        article: property({ type: "net.bodz.lily.schema.pub.Article", nullable: false, validator: validators.validate_article }),
-        articleId: property({ type: "long", nullable: false, precision: 19, validator: validators.validate_articleId }),
+        article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
+        articleId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
@@ -40,3 +40,5 @@ export class _ArticleTag_stuff_Type extends CoEntityType {
     }
 
 }
+
+export default _ArticleTag_stuff_Type;

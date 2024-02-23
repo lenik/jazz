@@ -1,20 +1,21 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
+import _Policy_stuff_Type from "./_Policy_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { _Policy_stuff_Type } from "./_Policy_stuff_Type";
-
-export class _Policy_stuff extends CoEntity<Integer> {
+export class _Policy_stuff extends CoEntity<integer> {
     static TYPE = new _Policy_stuff_Type();
 
-    id: int;
+    id: integer;
     name?: string;
     controlClass: string;
     methodName?: string;
-    allowBits: int;
-    denyBits: int;
+    allowBits: integer;
+    denyBits: integer;
 
     constructor(o: any) {
         super(o);
     }
 }
+
+export default _Policy_stuff;

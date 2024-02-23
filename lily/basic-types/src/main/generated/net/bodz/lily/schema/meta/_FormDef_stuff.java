@@ -33,7 +33,7 @@ public abstract class _FormDef_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_CODE = _ord_ID + 1;
-    private static final int _ord_SCHEMA_ID = _ord_CODE + 9;
+    private static final int _ord_SCHEMA_ID = _ord_CODE + 10;
     private static final int _ord_SUBJECT = _ord_SCHEMA_ID + 1;
     private static final int _ord_RAW_TEXT = _ord_SUBJECT + 1;
 

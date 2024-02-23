@@ -2,7 +2,7 @@ package net.bodz.lily.schema.pub;
 
 import javax.persistence.Table;
 
-@Table(schema = "lily", name = "post_msg")
+@Table(schema = PostTalk.SCHEMA_NAME, name = PostTalk.TABLE_NAME)
 public class PostTalk
         extends _PostTalk_stuff<PostTalk> {
 

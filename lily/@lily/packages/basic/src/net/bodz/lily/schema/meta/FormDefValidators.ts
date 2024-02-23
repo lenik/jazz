@@ -1,19 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _FormDef_stuffValidators from "./_FormDef_stuffValidators";
 
-import type { SchemaDef } from "./SchemaDef";
+export class FormDefValidators extends _FormDef_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_subject(val: string) {
-}
-
-export function validate_rawText(val: string) {
-}
-
-export function validate_schema(val: SchemaDef) {
-}
+export default FormDefValidators;

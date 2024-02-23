@@ -1,24 +1,32 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
+import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import UserChooseDialog from "./UserChooseDialog.vue";
-import type { UserRun } from "./UserRun";
+import UserRun from "./UserRun";
+import _UserRun_stuff from "./_UserRun_stuff";
 
+export const title = "Editor view of: User run";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import UserChooseDialog from "./UserChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<UserRun>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -49,11 +57,9 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
+        <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
                 <input type="date" v-model="model.creationDate" />
             </FieldRow>
@@ -64,7 +70,16 @@ onMounted(() => {
                 <input type="number" v-model="model.version" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
+        <FieldGroup :type="CoObject.TYPE">
+            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
+                <input type="text" v-model="model.label" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
+                <input type="text" v-model="model.description" />
+            </FieldRow>
+            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
+                <input type="text" v-model="model.icon" />
+            </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
                 <input type="number" v-model="model.priority" />
             </FieldRow>
@@ -75,17 +90,10 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
+                <textarea class="json-editor" v-model="model.properties" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.account._UserRun_stuff">
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
-            </FieldRow>
+        <FieldGroup :type="_UserRun_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.score" v-model="model.score">
                 <input type="number" v-model="model.score" />
             </FieldRow>
@@ -93,12 +101,11 @@ onMounted(() => {
                 <input type="date" v-model="model.lastLoginTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastLoginIP" v-model="model.lastLoginIP">
+                <input type="text" v-model="model.lastLoginIP" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
-                <RefEditor :dialog="userChooseDialog" v-model="model.userId" v-model:id="model.userId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.account.UserRun">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

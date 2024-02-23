@@ -1,23 +1,23 @@
+import type { integer } from "@skeljs/core/src/lang/type";
 
-import type { InetAddress } from "../../../../../java/net/InetAddress";
-import type { List } from "../../../../../java/util/List";
-import type { Set } from "../../../../../java/util/Set";
-import { * as validators } from "./PersonValidators";
-import type { UserRun } from "./UserRun";
-import type { UserSecret } from "./UserSecret";
-import type { _User_stuff } from "./_User_stuff";
+import { Group } from "./Group";
+import { UserOtherId } from "./UserOtherId";
+import { UserRun } from "./UserRun";
+import { UserSecret } from "./UserSecret";
+import _User_stuff from "./_User_stuff";
+import { _User_stuff_Type } from "./_User_stuff_Type";
 
 export class User extends _User_stuff {
-    static TYPE = new UserType();
+    static TYPE = new _User_stuff_Type();
 
-    groupIds?: Set
-    groups?: List
-    ids?: List
-    otherIds?: List
-    registerIP?: InetAddress
+    groupIds?: integer[]
+    groups?: Group[]
+    ids?: UserOtherId[]
+    otherIds?: UserOtherId[]
+    registerIP?: string
     runningState?: UserRun
     secret?: UserSecret
-    secrets?: List
+    secrets?: UserSecret[]
     superUser: boolean
 
     constructor(o: any) {
@@ -25,3 +25,5 @@ export class User extends _User_stuff {
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default User;

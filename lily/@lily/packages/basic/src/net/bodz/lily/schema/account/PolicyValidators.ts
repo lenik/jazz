@@ -1,20 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _Policy_stuffValidators from "./_Policy_stuffValidators";
 
-export function validate_id(val: int) {
+export class PolicyValidators extends _Policy_stuffValidators {
+
 }
 
-export function validate_name(val: string) {
-}
-
-export function validate_controlClass(val: string) {
-}
-
-export function validate_methodName(val: string) {
-}
-
-export function validate_allowBits(val: int) {
-}
-
-export function validate_denyBits(val: int) {
-}
+export default PolicyValidators;

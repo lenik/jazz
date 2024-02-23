@@ -1,9 +1,8 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoParameter from "@skeljs/dba/src/net/bodz/lily/concrete/CoParameter";
 
-import type { CoParameter } from "@skeljs/dba/src/net/bodz/lily/concrete/CoParameter";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import type { TypeParamType } from "../../meta/TypeParamType";
-import type { _PostParameterType_stuff_Type } from "./_PostParameterType_stuff_Type";
+import { TypeParamType } from "../../meta/TypeParamType";
+import _PostParameterType_stuff_Type from "./_PostParameterType_stuff_Type";
 
 export class _PostParameterType_stuff<this_t> extends CoParameter<this_t> {
     static TYPE = new _PostParameterType_stuff_Type();
@@ -15,3 +14,5 @@ export class _PostParameterType_stuff<this_t> extends CoParameter<this_t> {
         super(o);
     }
 }
+
+export default _PostParameterType_stuff;

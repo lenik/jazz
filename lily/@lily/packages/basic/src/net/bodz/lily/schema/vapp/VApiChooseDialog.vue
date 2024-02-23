@@ -1,16 +1,22 @@
 <script lang="ts">
+import { Moment } from "moment";
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
+import type { integer, long } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
 
+import { VApi } from "./VApi";
+
+export const title = "Choose dialog for: V api";
 export interface Props {
     modal?: boolean | string
 }
+
 </script>
 
 <script setup lang="ts">
+import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+
 const model = defineModel();
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,18 +36,18 @@ function open(callback?: DialogSelectCallback) {
     entityChooseDialog.value?.open(callback);
 }
 
-%s(() => {
-onMounted
+onMounted(() => {
 });
+
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Person.TYPE" :modal="modal">
+    <EntityChooseDialog ref="entityChooseDialog" :type="VApi.TYPE" :modal="modal">
         <th data-type="long" data-field="id">Id</th>
         <th data-type="Moment" data-field="creationDate">Creation Date</th>
         <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
         <th data-type="integer" data-field="version">Version</th>
-        <th data-type="net.bodz.bas.site.json.JsonMap" data-field="properties">Properties</th>
+        <th data-type="any" data-field="properties">Properties</th>
         <th data-type="string" data-format="label" data-field="app">App</th>
         <th data-type="string" data-format="label" data-field="api">Api</th>
         <th data-type="string" data-field="callback">Callback</th>

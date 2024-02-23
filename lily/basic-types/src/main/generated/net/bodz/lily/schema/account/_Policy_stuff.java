@@ -38,7 +38,7 @@ public abstract class _Policy_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_NAME = _ord_ID + 1;
-    private static final int _ord_CONTROL_CLASS = _ord_NAME + 10;
+    private static final int _ord_CONTROL_CLASS = 13;
     private static final int _ord_METHOD_NAME = _ord_CONTROL_CLASS + 1;
     private static final int _ord_ALLOW_BITS = _ord_METHOD_NAME + 1;
     private static final int _ord_DENY_BITS = _ord_ALLOW_BITS + 1;

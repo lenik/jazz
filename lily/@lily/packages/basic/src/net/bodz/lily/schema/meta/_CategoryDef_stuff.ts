@@ -1,22 +1,20 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import CategoryDef from "./CategoryDef";
+import SchemaDef from "./SchemaDef";
+import _CategoryDef_stuff_Type from "./_CategoryDef_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { CategoryDef } from "./CategoryDef";
-import type { SchemaDef } from "./SchemaDef";
-import type { _CategoryDef_stuff_Type } from "./_CategoryDef_stuff_Type";
-
-export class _CategoryDef_stuff extends CoEntity<Integer> {
+export class _CategoryDef_stuff extends CoEntity<integer> {
     static TYPE = new _CategoryDef_stuff_Type();
 
-    id: int;
+    id: integer;
     code?: string;
-    depth: int;
-    refCount: int;
+    depth: integer;
+    refCount: integer;
 
     schema: SchemaDef;
-    schemaId: int;
+    schemaId: integer;
 
     parent?: CategoryDef;
     parentId?: integer;
@@ -25,3 +23,5 @@ export class _CategoryDef_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _CategoryDef_stuff;

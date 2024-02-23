@@ -1,9 +1,8 @@
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { property } from "@skeljs/dba/src/net/bodz/lily/entity";
-import type { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
-
-import { * as validators } from "./PersonValidators";
-import type { _SchemaDef_stuff_Type } from "./_SchemaDef_stuff_Type";
+import { List } from "../../../../../java/util/List";
+import SchemaDefValidators from "./SchemaDefValidators";
+import _SchemaDef_stuff_Type from "./_SchemaDef_stuff_Type";
 
 // Type Info
 
@@ -13,12 +12,14 @@ export class SchemaDefType extends _SchemaDef_stuff_Type {
     icon = "fa-tag"
     label = "Schema"
 
+    static validators = new SchemaDefValidators();
+
     static declaredProperty: EntityPropertyMap = {
-        categories: property({ type: "java.util.List", validator: validators.validate_categories }),
-        parameters: property({ type: "java.util.List", validator: validators.validate_parameters }),
-        phases: property({ type: "java.util.List", validator: validators.validate_phases }),
-        priorities: property({ type: "java.util.List", validator: validators.validate_priorities }),
-        tagGroups: property({ type: "java.util.List", validator: validators.validate_tagGroups }),
+        categories: property({ type: "List", validator: this.validators.validateCategories }),
+        parameters: property({ type: "List", validator: this.validators.validateParameters }),
+        phases: property({ type: "List", validator: this.validators.validatePhases }),
+        priorities: property({ type: "List", validator: this.validators.validatePriorities }),
+        tagGroups: property({ type: "List", validator: this.validators.validateTagGroups }),
     }
 
     constructor() {
@@ -27,3 +28,5 @@ export class SchemaDefType extends _SchemaDef_stuff_Type {
     }
 
 }
+
+export default SchemaDef;

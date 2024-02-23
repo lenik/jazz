@@ -32,7 +32,7 @@ public abstract class _GroupType_stuff
 
     private static final int _ord_ID = 1;
     private static final int _ord_NAME = _ord_ID + 1;
-    private static final int _ord_DUMMY = _ord_NAME + 10;
+    private static final int _ord_DUMMY = 13;
 
     @Id
     @NotNull

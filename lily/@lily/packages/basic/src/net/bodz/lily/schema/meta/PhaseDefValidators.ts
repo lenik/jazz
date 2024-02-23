@@ -1,13 +1,10 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type { ValidateResult } from "@skeljs/core/src/ui/types";
+import _PhaseDef_stuffValidators from "./_PhaseDef_stuffValidators";
 
-import type { SchemaDef } from "./SchemaDef";
+export class PhaseDefValidators extends _PhaseDef_stuffValidators {
 
-export function validate_id(val: int) {
 }
 
-export function validate_code(val: string) {
-}
-
-export function validate_schema(val: SchemaDef) {
-}
+export default PhaseDefValidators;

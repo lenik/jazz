@@ -1,18 +1,16 @@
+import type { integer } from "@skeljs/core/src/lang/type";
+import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import type { CoEntity } from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
-import type { integer } from "@skeljs/dba/src/net/bodz/lily/entity";
+import ArticleCategory from "./ArticleCategory";
+import _ArticleCategory_stuff_Type from "./_ArticleCategory_stuff_Type";
 
-import type { Integer } from "../../../../../java/lang/Integer";
-import type { ArticleCategory } from "./ArticleCategory";
-import type { _ArticleCategory_stuff_Type } from "./_ArticleCategory_stuff_Type";
-
-export class _ArticleCategory_stuff extends CoEntity<Integer> {
+export class _ArticleCategory_stuff extends CoEntity<integer> {
     static TYPE = new _ArticleCategory_stuff_Type();
 
-    id: int;
+    id: integer;
     name?: string;
-    depth: int;
-    refCount: int;
+    depth: integer;
+    refCount: integer;
 
     parent?: ArticleCategory;
     parentId?: integer;
@@ -21,3 +19,5 @@ export class _ArticleCategory_stuff extends CoEntity<Integer> {
         super(o);
     }
 }
+
+export default _ArticleCategory_stuff;

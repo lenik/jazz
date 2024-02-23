@@ -1,25 +1,33 @@
 <script lang="ts">
+import { onMounted, ref } from "vue";
 
-import { onMounted } from "vue";
-
-import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import type { long } from "@skeljs/core/src/lang/type";
+import FavRecord from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecord";
+import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import UserChooseDialog from "../account/UserChooseDialog.vue";
-import PostChooseDialog from "./PostChooseDialog.vue";
-import type { PostFav } from "./PostFav";
+import PostFav from "./PostFav";
+import _PostFav_stuff from "./_PostFav_stuff";
 
+export const title = "Editor view of: Post fav";
 export interface Props {
 }
+
 </script>
 
 <script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+
+import UserChooseDialog from "../account/UserChooseDialog.vue";
+import PostChooseDialog from "./PostChooseDialog.vue";
+
 defineOptions({
     inheritAttrs: false
 });
 
-const model = defineModel<%s>();Person
+const model = defineModel<PostFav>();
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -51,32 +59,22 @@ onMounted(() => {
 
 </script>
 
-</script>
-
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup decl="net.bodz.lily.concrete.StructRow">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoObject">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.CoEntity">
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.IdEntity">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.concrete.FavRecord">
+        <FieldGroup :type="FavRecord.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
-                <RefEditor :dialog="userChooseDialog" v-model="model.userId" v-model:id="model.userId" />
+                <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub._PostFav_stuff">
+        <FieldGroup :type="_PostFav_stuff.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.post" v-model="model.post">
-                <RefEditor :dialog="postChooseDialog" v-model="model.postId" v-model:id="model.postId" />
+                <RefEditor :dialog="postChooseDialog" v-model="model.post" v-model:id="model.postId" />
             </FieldRow>
-        </FieldGroup>
-        <FieldGroup decl="net.bodz.lily.schema.pub.PostFav">
         </FieldGroup>
     </div>
     <UserChooseDialog ref="userChooseDialog" />

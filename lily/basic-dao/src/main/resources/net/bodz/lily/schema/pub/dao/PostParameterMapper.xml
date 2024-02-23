@@ -67,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm."name" parm_name, 
             parm.label parm_label, 
             parm.description parm_description, 
+            parm.icon parm_icon, 
             parm.priority parm_priority, 
             parm.flags parm_flags, 
             parm."state" parm_state, 
@@ -125,6 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parm."name" parm_name, 
             parm.label parm_label, 
             parm.description parm_description, 
+            parm.icon parm_icon, 
             parm.priority parm_priority, 
             parm.flags parm_flags, 
             parm."state" parm_state, 
@@ -139,52 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <sql id="filtconds">
-        <if test="m.id != null">and a.id = #{m.id}</if>
-        <if test="m.idRange!= null">
-            <if test="m.idRange.hasStartIncl">and a.id >= #{m.idRange.start}</if>
-            <if test="m.idRange.hasStartExcl">and a.id > #{m.idRange.start}</if>
-            <if test="m.idRange.hasEndIncl">and a.id &lt;= #{m.idRange.end}</if>
-            <if test="m.idRange.hasEndExcl">and a.id &lt; #{m.idRange.end}</if>
-        </if>
-        <if test="m.creationDate != null">and a.creation = #{m.creationDate}</if>
-        <if test="m.lastModifiedDate != null">and a.lastmod = #{m.lastModifiedDate}</if>
-        <if test="m.version != null">and a."version" = #{m.version}</if>
-        <if test="m.versionRange!= null">
-            <if test="m.versionRange.hasStartIncl">and a."version" >= #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasStartExcl">and a."version" > #{m.versionRange.start}</if>
-            <if test="m.versionRange.hasEndIncl">and a."version" &lt;= #{m.versionRange.end}</if>
-            <if test="m.versionRange.hasEndExcl">and a."version" &lt; #{m.versionRange.end}</if>
-        </if>
-        <if test="m.postId != null">and a.post = #{m.postId}</if>
-        <if test="m.postIdRange!= null">
-            <if test="m.postIdRange.hasStartIncl">and a.post >= #{m.postIdRange.start}</if>
-            <if test="m.postIdRange.hasStartExcl">and a.post > #{m.postIdRange.start}</if>
-            <if test="m.postIdRange.hasEndIncl">and a.post &lt;= #{m.postIdRange.end}</if>
-            <if test="m.postIdRange.hasEndExcl">and a.post &lt; #{m.postIdRange.end}</if>
-        </if>
-        <if test="m.parameter != null">and a.parm = #{m.parameter}</if>
-        <if test="m.parameterRange!= null">
-            <if test="m.parameterRange.hasStartIncl">and a.parm >= #{m.parameterRange.start}</if>
-            <if test="m.parameterRange.hasStartExcl">and a.parm > #{m.parameterRange.start}</if>
-            <if test="m.parameterRange.hasEndIncl">and a.parm &lt;= #{m.parameterRange.end}</if>
-            <if test="m.parameterRange.hasEndExcl">and a.parm &lt; #{m.parameterRange.end}</if>
-        </if>
-        <if test="m.ival != null">and a.ival = #{m.ival}</if>
-        <if test="m.ivalRange!= null">
-            <if test="m.ivalRange.hasStartIncl">and a.ival >= #{m.ivalRange.start}</if>
-            <if test="m.ivalRange.hasStartExcl">and a.ival > #{m.ivalRange.start}</if>
-            <if test="m.ivalRange.hasEndIncl">and a.ival &lt;= #{m.ivalRange.end}</if>
-            <if test="m.ivalRange.hasEndExcl">and a.ival &lt; #{m.ivalRange.end}</if>
-        </if>
-        <if test="m.fval != null">and a.fval = #{m.fval}</if>
-        <if test="m.fvalRange!= null">
-            <if test="m.fvalRange.hasStartIncl">and a.fval >= #{m.fvalRange.start}</if>
-            <if test="m.fvalRange.hasStartExcl">and a.fval > #{m.fvalRange.start}</if>
-            <if test="m.fvalRange.hasEndIncl">and a.fval &lt;= #{m.fvalRange.end}</if>
-            <if test="m.fvalRange.hasEndExcl">and a.fval &lt; #{m.fvalRange.end}</if>
-        </if>
-        <if test="m.sval != null">and a.sval = #{m.sval}</if>
-        <if test="m.svalPattern != null">and a.sval like '${m.svalPattern}'</if>
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
@@ -222,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{postId},
-            #{parameter},
+            #{parameterId},
             #{ival},
             #{fval},
             #{sval}
@@ -236,7 +193,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             post = #{postId},
-            parm = #{parameter},
+            parm = #{parameterId},
             ival = #{ival},
             fval = #{fval},
             sval = #{sval},
@@ -254,7 +211,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from post_parm
+        select count(*) "rows" from post_parm a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />
