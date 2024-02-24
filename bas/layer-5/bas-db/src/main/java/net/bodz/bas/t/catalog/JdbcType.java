@@ -2,6 +2,7 @@ package net.bodz.bas.t.catalog;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -221,6 +222,9 @@ public enum JdbcType {
         case "json":
         case "jsonb":
             return JsonVariant.class;
+
+        case "inet":
+            return InetAddress.class;
 
         default:
             return Unknown.class;
