@@ -1,5 +1,5 @@
 import { long } from '@skeljs/core/src/lang/type';
-import IdEntity from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
+import IdEntity from './IdEntity';
 import BackrefRecordTypeInfo from './BackrefRecordTypeInfo';
 
 export abstract class BackrefRecord<This> extends IdEntity<long> {

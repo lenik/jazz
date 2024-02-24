@@ -1,4 +1,4 @@
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import CoPrincipalValidators from './CoPrincipalValidators';
 
@@ -9,7 +9,7 @@ export class CoPrincipalTypeInfo extends CoObjectTypeInfo {
     label = "Concrete Principal"
     description = "Access control entity."
 
-    validators = new CoPrincipalValidators();
+    validators = new CoPrincipalValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         name: property({ type: 'string', precision: 30, }),

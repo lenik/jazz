@@ -9,7 +9,7 @@ export class CoTalkTypeInfo extends CoMessageTypeInfo {
     label = "Concrete Talk"
     description = "Replied messages."
 
-    validators = new CoTalkValidators();
+    validators = new CoTalkValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         parent: property({ type: 'any', icon: "far-tree", }),

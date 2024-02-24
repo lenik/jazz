@@ -1,9 +1,20 @@
-import { } from '@skeljs/dba/src/net/bodz/lily/entity';
-import IdEntityValidators from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityValidators';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import IdEntityValidators from './IdEntityValidators';
+import User from '../schema/account/User';
+import VoteRecordTypeInfo from './VoteRecordTypeInfo';
 
 export class VoteRecordValidators extends IdEntityValidators {
 
-    validateUser(val: any) { }
+    constructor(type: VoteRecordTypeInfo) {
+        super(type);
+    }
+
+    get type(): VoteRecordTypeInfo {
+        return this._type as VoteRecordTypeInfo;
+    }
+
+    validateUser(val: User) { }
+
     validateVoteCount(val: number) { }
 
 }

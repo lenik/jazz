@@ -1,5 +1,5 @@
 import { long } from '@skeljs/core/src/lang/type';
-import IdEntity from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
+import IdEntity from './IdEntity';
 import FavRecordTypeInfo from './FavRecordTypeInfo';
 
 export abstract class FavRecord<This> extends IdEntity<long> {

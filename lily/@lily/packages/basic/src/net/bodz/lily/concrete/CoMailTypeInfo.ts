@@ -1,7 +1,7 @@
 import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMailValidators from './CoMailValidators';
-import User from '../account/User';
+import User from '../schema/account/User';
 
 export class CoMailTypeInfo extends CoMessageTypeInfo {
 
@@ -10,7 +10,7 @@ export class CoMailTypeInfo extends CoMessageTypeInfo {
     label = "Concrete Mail"
     description = "Mail like message, includes recipients, timing, rich text content."
 
-    validators = new CoMailValidators();
+    validators = new CoMailValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         recipient: property({ type: User, icon: "far-user", }),

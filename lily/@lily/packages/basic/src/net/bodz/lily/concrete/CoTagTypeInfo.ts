@@ -1,4 +1,4 @@
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoTagValidators from './CoTagValidators';
 
@@ -9,7 +9,7 @@ export class CoTagTypeInfo extends CoCodeTypeInfo {
     label = "Concrete Tag Type"
     description = "Definition of a tag type."
 
-    validators = new CoTagValidators();
+    validators = new CoTagValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         // id: primaryKey({ type: 'number', precision: 20, })

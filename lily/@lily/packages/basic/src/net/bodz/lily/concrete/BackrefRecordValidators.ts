@@ -1,10 +1,20 @@
-import { } from '@skeljs/dba/src/net/bodz/lily/entity';
-import IdEntityValidators from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityValidators';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import IdEntityValidators from './IdEntityValidators';
+import BackrefRecordTypeInfo from './BackrefRecordTypeInfo';
 
 export class BackrefRecordValidators extends IdEntityValidators {
 
+    constructor(type: BackrefRecordTypeInfo) {
+        super(type);
+    }
+
+    get type(): BackrefRecordTypeInfo {
+        return this._type as BackrefRecordTypeInfo;
+    }
+
     validateUser(val: any) { }
-    validateVoteCount(val: number) { }
+
+    validateSite(val: string) { }
 
 }
 

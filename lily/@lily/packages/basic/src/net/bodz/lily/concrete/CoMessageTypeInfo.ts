@@ -1,5 +1,5 @@
 import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
-import CoMomentIntervalTypeInfo from '@skeljs/dba/src/net/bodz/lily/concrete/CoMomentIntervalTypeInfo';
+import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
 import FormDef from '../schema/meta/FormDef';
@@ -11,7 +11,7 @@ export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
     label = "Concrete Message"
     description = "Mail like message, includes timing, rich text content."
 
-    validators = new CoMessageValidators();
+    validators = new CoMessageValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         op: property({ type: User, icon: "far-user", }),

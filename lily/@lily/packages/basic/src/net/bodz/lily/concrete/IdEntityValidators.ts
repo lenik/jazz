@@ -1,8 +1,12 @@
 
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
 import { CoObjectValidators } from './CoObjectValidators';
 
 export class IdEntityValidators extends CoObjectValidators {
+
+    constructor(type: IEntityType) {
+        super(type);
+    }
 
     validateId(val: any) {
     }

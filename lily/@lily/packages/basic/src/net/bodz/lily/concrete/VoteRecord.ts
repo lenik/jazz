@@ -1,11 +1,12 @@
 import { long } from '@skeljs/core/src/lang/type';
-import IdEntity from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
+import IdEntity from './IdEntity';
 import VoteRecordTypeInfo from './VoteRecordTypeInfo';
+import User from '../schema/account/User';
 
 export abstract class VoteRecord<This> extends IdEntity<long> {
     static TYPE = new VoteRecordTypeInfo();
     
-    user: any
+    user: User
     voteCount: long
     
     constructor(o: any) {

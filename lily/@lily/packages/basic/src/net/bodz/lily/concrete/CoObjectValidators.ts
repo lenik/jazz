@@ -1,8 +1,17 @@
 import { integer } from '@skeljs/core/src/lang/type';
-
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
 import StructRowValidators from './StructRowValidators';
+import CoObjectTypeInfo from './CoObjectTypeInfo';
 
 export class CoObjectValidators extends StructRowValidators {
+
+    constructor(type: CoObjectTypeInfo) {
+        super(type);
+    }
+
+    get type(): CoObjectTypeInfo {
+        return this._type as CoObjectTypeInfo;
+    }
 
     validateLabel(val: string) {
 

@@ -1,7 +1,9 @@
 
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoObjectValidators from './CoObjectValidators';
 import StructRowTypeInfo from './StructRowTypeInfo';
+import Group from '../schema/account/Group';
+import User from '../schema/account/User';
 
 export class CoObjectTypeInfo extends StructRowTypeInfo {
 
@@ -10,7 +12,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
     label = "Concrete Object"
     description = "A concrete object is a physical object that can be perceived through the senses, such as touch or sight. Examples of concrete objects include a table, a chair, a book, a car, or a tree. These objects have a tangible presence and can be easily identified and described."
 
-    validators = new CoObjectValidators();
+    validators = new CoObjectValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         id: property({ type: 'number', icon: 'far-key' }),
@@ -25,8 +27,8 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
         priority: property({ type: 'integer', icon: 'far-lightbulb' }),
         state: property({ type: 'string', icon: 'far-heart' }),
 
-        ownerUser: property({ type: 'any', icon: 'far-user' }),
-        ownerGroup: property({ type: 'any', icon: 'far-users' }),
+        ownerUser: property({ type: User.TYPE, icon: 'far-user' }),
+        ownerGroup: property({ type: Group.TYPE, icon: 'far-users' }),
 
         acl: property({ type: 'integer', icon: 'far-user-lock' }),
         accessMode: property({ type: 'integer', icon: 'far-key' }),
