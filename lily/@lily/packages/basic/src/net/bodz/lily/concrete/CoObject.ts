@@ -5,6 +5,8 @@ import { integer } from '@skeljs/core/src/lang/type';
 
 import StructRow from './StructRow';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
+import User from '../schema/account/User';
+import Group from '../schema/account/Group';
 
 export abstract class CoObject extends StructRow {
     static TYPE = new CoObjectTypeInfo();
@@ -23,9 +25,9 @@ export abstract class CoObject extends StructRow {
 
     // access control
 
-    ownerUser: any
+    ownerUser: User
     ownerUserId: integer
-    ownerGroup: any
+    ownerGroup: Group
     owenrGroupId: integer
     acl: integer
     accessMode: integer

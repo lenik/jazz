@@ -1,5 +1,5 @@
 
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoNodeValidators from './CoNodeValidators';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 
@@ -10,7 +10,7 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
     label = "Concrete Node"
     description = "A node can have parent, hence multiple nodes forms a tree."
 
-    validators = new CoNodeValidators();
+    validators = new CoNodeValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         parent: property({ type: 'any', icon: "far-tree" }),

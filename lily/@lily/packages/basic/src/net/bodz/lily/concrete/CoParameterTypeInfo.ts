@@ -1,5 +1,5 @@
 
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoParameterValidators from './CoParameterValidators';
 
@@ -10,7 +10,7 @@ export class CoParameterTypeInfo extends CoCodeTypeInfo {
     label = "Concrete Parameter"
     description = "Definition of a parameter type."
 
-    validators = new CoParameterValidators();
+    validators = new CoParameterValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         // id: primaryKey({ type: 'number', precision: 20, })

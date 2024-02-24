@@ -9,7 +9,7 @@ export class DocRecordTypeInfo extends CoMessageTypeInfo {
     label = "Doc Record"
     description = "Doc records."
 
-    validators = new DocRecordValidators();
+    validators = new DocRecordValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         read: property({ type: 'boolean', icon: "far-eye", }),

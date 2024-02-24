@@ -1,20 +1,29 @@
 import { integer } from '@skeljs/core/src/lang/type';
-import { EntityPropertyMap } from '../entity';
-import { IdEntityValidators } from './IdEntityValidators';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import IdEntityValidators from './IdEntityValidators';
+import CoNodeTypeInfo from './CoNodeTypeInfo';
 
 export class CoNodeValidators extends IdEntityValidators {
 
-        validateParent(val: integer) {
+    constructor(type: CoNodeTypeInfo) {
+        super(type);
+    }
 
-        }
+    get type(): CoNodeTypeInfo {
+        return this._type as CoNodeTypeInfo;
+    }
 
-        validateRefCount(val: integer) {
+    validateParent(val: integer) {
 
-        }
+    }
 
-        validateDepth(val: integer) {
+    validateRefCount(val: integer) {
 
-        }
+    }
+
+    validateDepth(val: integer) {
+
+    }
 
 }
 

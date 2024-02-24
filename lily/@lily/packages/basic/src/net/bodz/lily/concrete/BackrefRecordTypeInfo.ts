@@ -1,6 +1,7 @@
 import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
-import IdEntityTypeInfo from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityTypeInfo';
+import IdEntityTypeInfo from './IdEntityTypeInfo';
 import BackrefRecordValidators from './BackrefRecordValidators';
+import User from '../schema/account/User';
 
 export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 
@@ -9,11 +10,17 @@ export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
     label = "Backref Record"
     description = "Shared link to external sites."
 
-    validators = new BackrefRecordValidators();
+    validators = new BackrefRecordValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        user: property({ type: "any", icon: "far-user" }),
-        site: property({ type: "string", precision: 100, icon: "far-link" }),
+        user: property({
+            type: User.TYPE, icon: "far-user",
+            validator: this.validators.validateUser
+        }),
+        site: property({
+            type: "string", precision: 100, icon: "far-link",
+            validator: this.validators.validateSite
+        }),
     };
 
     constructor() {

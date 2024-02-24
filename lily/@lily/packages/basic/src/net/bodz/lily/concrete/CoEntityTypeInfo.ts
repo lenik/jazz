@@ -1,4 +1,4 @@
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoEntityValidators from './CoEntityValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 
@@ -9,7 +9,7 @@ export class CoEntityTypeInfo extends CoObjectTypeInfo {
     label = "Concrete Entity"
     description = "An entity always has an identity."
 
-    validators = new CoEntityValidators();
+    validators = new CoEntityValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         // id: primaryKey({ type: 'number', precision: 20, })

@@ -1,4 +1,4 @@
-import { EntityPropertyMap, primaryKey, property } from '../entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoPhaseValidators from './CoPhaseValidators';
 
@@ -9,7 +9,7 @@ export class CoPhaseTypeInfo extends CoCodeTypeInfo {
     label = "Concrete Phase"
     description = "Definition of a phase type."
 
-    validators = new CoPhaseValidators();
+    validators = new CoPhaseValidators(this);
 
     declaredProperty: EntityPropertyMap = {
         // id: primaryKey({ type: 'number', precision: 20, })
