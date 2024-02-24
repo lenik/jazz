@@ -1,7 +1,7 @@
-import { EntityPropertyMap, property } from "@skeljs/dba/src/lily/entity";
-import { IdEntityType } from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityType';
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import IdEntityTypeInfo from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntityTypeInfo';
 
-export class ContactType extends IdEntityType<number> {
+export class ContactTypeInfo extends IdEntityTypeInfo {
 
     name = "net.bodz.lily.schema.contact.Contact"
     icon = "fa-address-card"
@@ -39,6 +39,8 @@ export class ContactType extends IdEntityType<number> {
 
     constructor() {
         super();
-        this.declare(ContactType.declaredProperty);
+        this.declare(ContactTypeInfo.declaredProperty);
     }
 }
+
+export default ContactTypeInfo;

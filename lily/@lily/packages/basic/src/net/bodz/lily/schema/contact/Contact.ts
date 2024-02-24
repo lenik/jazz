@@ -1,10 +1,10 @@
-import { integer } from "@skeljs/dba/src/lily/entity";
+import { integer } from "@skeljs/core/src/lang/type";
 import { IdEntity } from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
 
-import { ContactType } from "./ContactType";
+import ContactTypeInfo from "./ContactTypeInfo";
 
 export class Contact extends IdEntity<integer> {
-    static TYPE = new ContactType();
+    static TYPE = new ContactTypeInfo();
 
     org: any
     orgUnit: any
