@@ -30,17 +30,27 @@ public class QualifiedName {
         return new QualifiedName(split.a, split.b);
     }
 
-    public QualifiedName join(String relativeName) {
-        if (relativeName == null)
+    public QualifiedName append(String suffix) {
+        if (suffix == null)
+            throw new NullPointerException("suffix");
+        String fullName = getFullName() + suffix;
+        return QualifiedName.parse(fullName);
+    }
+
+    public QualifiedName child(String childQName) {
+        if (childQName == null)
             throw new NullPointerException("relativeName");
-        Split split = Split.packageName(relativeName);
+        int lastDot = childQName.lastIndexOf('.');
         String pkg = packageName;
-        if (split.a != null)
+        String childPackage = lastDot == -1 ? null : childQName.substring(0, lastDot);
+        String childName = lastDot == -1 ? childQName : childQName.substring(lastDot + 1);
+        if (childPackage != null) {
             if (pkg == null)
-                pkg = split.a;
+                pkg = childPackage;
             else
-                pkg += "." + split.a;
-        return new QualifiedName(pkg, split.b);
+                pkg += "." + childPackage;
+        }
+        return new QualifiedName(pkg, childName);
     }
 
     public QualifiedName packageName(String packageName) {
