@@ -52,6 +52,16 @@ public class EsmSource
         return localPath;
     }
 
+    public boolean isBare() {
+        return localPath == PATH_BARE;
+    }
+
+    public boolean isRelativePath() {
+        if (isBare())
+            return false;
+        return localPath.startsWith("./") || localPath.startsWith("../");
+    }
+
     public String getBaseName() {
         if (localPath == null)
             return null;
@@ -132,10 +142,26 @@ public class EsmSource
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
-            return false;
         EsmSource other = (EsmSource) obj;
         return Objects.equals(module, other.module) && Objects.equals(localPath, other.localPath);
+    }
+
+    public boolean relativeEquals(EsmSource o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        EsmSource other = o;
+        if (! Objects.equals(module, other.module))
+            return false;
+
+        if (localPath == null)
+            return other.localPath == null;
+
+        if (other.isRelativePath())
+            return PathUtils.matchRelative(localPath, other.localPath);
+        else
+            return Objects.equals(localPath, other.localPath);
     }
 
     public String getFullPath() {

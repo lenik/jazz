@@ -8,10 +8,9 @@ import java.util.TreeSet;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.t.tuple.QualifiedName;
 
-public class EsmImports
-        extends TreeSet<EsmName> {
+public class EsmImports {
 
-    private static final long serialVersionUID = 1L;
+    final Set<EsmName> names;
 
     Set<EsmModule> excludeModules = new HashSet<>();
     Set<EsmSource> excludeSources = new HashSet<>();
@@ -21,7 +20,20 @@ public class EsmImports
     }
 
     public EsmImports(EsmSource source, Comparator<EsmName> order) {
-        super(order);
+        names = new TreeSet<>(order);
+        if (source != null)
+            excludeSources.add(source);
+    }
+
+    public void exclude(EsmModule module) {
+        if (module == null)
+            throw new NullPointerException("module");
+        excludeModules.add(module);
+    }
+
+    public void exclude(EsmSource source) {
+        if (source == null)
+            throw new NullPointerException("source");
         excludeSources.add(source);
     }
 
@@ -46,7 +58,24 @@ public class EsmImports
     public String name(EsmName name) {
         if (name == null)
             throw new NullPointerException("name");
-        add(name);
+
+        boolean excluded = false;
+        excluded |= excludeSources.contains(name.source);
+
+        if (name.source.isRelativePath()) {
+            for (EsmSource exclude : excludeSources)
+                if (exclude.relativeEquals(name.source)) {
+                    excluded = true;
+                    break;
+                }
+        }
+
+        if (name.source.module != null)
+            excluded |= excludeModules.contains(name.source.module);
+
+        if (! excluded)
+            names.add(name);
+
         if (name.alias != null)
             return name.alias;
         if (name.name != null)
@@ -57,7 +86,7 @@ public class EsmImports
     public int dump(IPrintOut out, Boolean vue) {
         int lines = 0;
         ImportStatement buf = new ImportStatement();
-        for (EsmName name : this) {
+        for (EsmName name : names) {
             if (vue != null)
                 if (name.source.isVue() != vue)
                     continue;
@@ -72,6 +101,11 @@ public class EsmImports
         }
         lines += buf.printOutTypeScriptForNewFrom(out, null);
         return lines;
+    }
+
+    @Override
+    public String toString() {
+        return names.toString();
     }
 
 }

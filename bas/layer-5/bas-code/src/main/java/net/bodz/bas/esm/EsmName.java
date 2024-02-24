@@ -2,7 +2,7 @@ package net.bodz.bas.esm;
 
 import java.util.Objects;
 
-public class EsmName
+public final class EsmName
         extends EsmScope {
 
     public static final String DEFAULT_EXPORT_NAME = null;
@@ -57,8 +57,6 @@ public class EsmName
         if (this == obj)
             return true;
         if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
             return false;
         EsmName other = (EsmName) obj;
         return Objects.equals(alias, other.alias) && Objects.equals(name, other.name)
