@@ -45,15 +45,12 @@ public class TypeScriptWriter
         return packageMap.findSource(qName, extension, contextQName);
     }
 
-    public String importDefaultAs(Class<?> clazz) {
-        return importDefaultAs(QualifiedName.of(clazz));
-    }
-
-    public String importDefaultAs(QualifiedName qName) {
+    @Override
+    public String importDefaultAs(QualifiedName qName, String alias) {
         EsmSource source = findSource(qName, null);
         if (source == null) // reserved name, don't import.
             return qName.getFullName();
-        EsmName esmName = source.defaultExport(qName.name);
+        EsmName esmName = source.defaultExport(alias);
         return name(esmName);
     }
 
