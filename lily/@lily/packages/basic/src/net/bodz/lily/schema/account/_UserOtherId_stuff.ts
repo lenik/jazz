@@ -1,18 +1,17 @@
-import { Moment } from "moment";
-
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import User from "./User";
-import UserOtherIdType from "./UserOtherIdType";
+import CoEntity from "../../concrete/CoEntity";
+import type User from "./User";
+import type UserOtherIdType from "./UserOtherIdType";
 import _UserOtherId_stuff_TypeInfo from "./_UserOtherId_stuff_TypeInfo";
 
 export class _UserOtherId_stuff extends CoEntity<integer> {
     static TYPE = new _UserOtherId_stuff_TypeInfo();
 
     id: integer;
-    beginTime?: Moment;
-    endTime?: Moment;
+    beginTime?: ZonedDateTime;
+    endTime?: ZonedDateTime;
     year: integer;
     otherId: string;
     auth?: any;

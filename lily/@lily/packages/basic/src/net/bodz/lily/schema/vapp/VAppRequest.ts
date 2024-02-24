@@ -1,8 +1,8 @@
+import VAppRequestTypeInfo from "./VAppRequestTypeInfo";
 import _VAppRequest_stuff from "./_VAppRequest_stuff";
-import { _VAppRequest_stuffTypeInfo } from "./_VAppRequest_stuffTypeInfo";
 
 export class VAppRequest extends _VAppRequest_stuff {
-    static TYPE = new _VAppRequest_stuffTypeInfo();
+    static TYPE = new VAppRequestTypeInfo();
 
     constructor(o: any) {
         super(o);

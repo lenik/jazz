@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import CoObject from "../../concrete/CoObject";
+import StructRow from "../../concrete/StructRow";
 import VAppCat from "./VAppCat";
 import _VAppCat_stuff from "./_VAppCat_stuff";
 

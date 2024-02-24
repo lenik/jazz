@@ -1,6 +1,6 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
+import CoEntity from "../../concrete/CoEntity";
 import _Badge_stuff_TypeInfo from "./_Badge_stuff_TypeInfo";
 
 export class _Badge_stuff extends CoEntity<integer> {
@@ -9,7 +9,7 @@ export class _Badge_stuff extends CoEntity<integer> {
     id: integer;
     expr?: string;
     val: integer;
-    levels?: int[];
+    levels?: integer[];
     descend: boolean;
     transient_: boolean;
     indexed: boolean;

@@ -1,6 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
+import OrganizationTypeInfo from "./OrganizationTypeInfo";
 import PartyTypeInfo from "./PartyTypeInfo";
 import _OrgUnit_stuff_Validators from "./_OrgUnit_stuff_Validators";
 
@@ -22,22 +24,22 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
     static N_PARENT_ID = 10;
     static N_DEPTH = 10;
 
-    static validators = new _OrgUnit_stuff_Validators();
+    validators = new _OrgUnit_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         properties: property({ type: "any", validator: this.validators.validateProperties }),
         depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
 
-        org: property({ type: net.bodz.lily.schema.contact.OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
+        org: property({ type: OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
         orgId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        parent: property({ type: net.bodz.lily.schema.contact.OrgUnitTypeInfo, validator: this.validators.validateParent }),
+        parent: property({ type: OrgUnitTypeInfo, validator: this.validators.validateParent }),
         parentId: property({ type: "integer", precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_OrgUnit_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

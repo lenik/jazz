@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
 
 import PostTag from "./PostTag";
@@ -33,8 +33,8 @@ onMounted(() => {
     <LilyAdmin ref="admin" :type="type" v-model="selection">
         <template #columns>
             <th data-type="integer" data-field="id">Id</th>
-            <th data-type="Moment" data-field="creationDate">Creation Date</th>
-            <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
             <th data-type="string" data-format="label" data-field="post">Post</th>
             <th data-type="string" data-format="label" data-field="tag">Tag</th>

@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import ExternalSite from "./ExternalSite";
+import CoEntity from "../../concrete/CoEntity";
+import type ExternalSite from "./ExternalSite";
 import _ExternalSite_stuff_TypeInfo from "./_ExternalSite_stuff_TypeInfo";
 
 export class _ExternalSite_stuff extends CoEntity<integer> {

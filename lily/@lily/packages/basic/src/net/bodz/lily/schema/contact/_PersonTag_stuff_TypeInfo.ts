@@ -1,7 +1,9 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import PersonTagTypeTypeInfo from "./PersonTagTypeTypeInfo";
+import PersonTypeInfo from "./PersonTypeInfo";
 import _PersonTag_stuff_Validators from "./_PersonTag_stuff_Validators";
 
 export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -20,21 +22,21 @@ export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_PERSON_ID = 10;
     static N_TAG_ID = 10;
 
-    static validators = new _PersonTag_stuff_Validators();
+    validators = new _PersonTag_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: net.bodz.lily.schema.contact.PersonTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
+        tag: property({ type: PersonTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
         tagId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        person: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
+        person: property({ type: PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
         personId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_PersonTag_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

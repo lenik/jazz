@@ -1,7 +1,11 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoPrincipalTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalTypeInfo";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
+import PersonTypeInfo from "../contact/PersonTypeInfo";
+import GroupTypeInfo from "./GroupTypeInfo";
+import UserTypeInfo from "./UserTypeInfo";
+import UserTypeTypeInfo from "./UserTypeTypeInfo";
 import _User_stuff_Validators from "./_User_stuff_Validators";
 
 export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
@@ -24,26 +28,26 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static N_REFERER_ID = 10;
     static N_PERSON_ID = 10;
 
-    static validators = new _User_stuff_Validators();
+    validators = new _User_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
 
-        person: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, validator: this.validators.validatePerson }),
+        person: property({ type: PersonTypeInfo, validator: this.validators.validatePerson }),
         personId: property({ type: "integer", precision: 10 }),
 
-        primaryGroup: property({ type: net.bodz.lily.schema.account.GroupTypeInfo, nullable: false, 
+        primaryGroup: property({ type: GroupTypeInfo, nullable: false, 
             description: "The primary user group, the default value of ownerGroup.", 
             validator: this.validators.validatePrimaryGroup }),
         primaryGroupId: property({ type: "integer", nullable: false, precision: 10, 
             description: "The primary user group, the default value of ownerGroup." }),
 
-        referer: property({ type: net.bodz.lily.schema.account.UserTypeInfo, 
+        referer: property({ type: UserTypeInfo, 
             description: "The referer user (used for promotion)", 
             validator: this.validators.validateReferer }),
         refererId: property({ type: "integer", precision: 10, 
             description: "The referer user (used for promotion)" }),
 
-        type: property({ type: net.bodz.lily.schema.account.UserTypeTypeInfo, nullable: false, 
+        type: property({ type: UserTypeTypeInfo, nullable: false, 
             description: "User type like system-user, normal-user, etc.", 
             validator: this.validators.validateType }),
         typeId: property({ type: "integer", nullable: false, precision: 10, 
@@ -52,7 +56,7 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     constructor() {
         super();
-        this.declare(_User_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

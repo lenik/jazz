@@ -1,10 +1,9 @@
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
-import { List } from "../../../../../java/util/List";
+import Group from "./Group";
 import GroupValidators from "./GroupValidators";
+import User from "./User";
 import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
-
-// Type Info
 
 export class GroupTypeInfo extends _Group_stuff_TypeInfo {
 
@@ -13,18 +12,18 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
     label = "Group (Role)"
     description = "User Group"
 
-    static validators = new GroupValidators();
+    validators = new GroupValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
-        children: property({ type: "List", validator: this.validators.validateChildren }),
-        users: property({ type: "List", validator: this.validators.validateUsers }),
+    declaredProperty: EntityPropertyMap = {
+        children: property({ type: "Group[]", validator: this.validators.validateChildren }),
+        users: property({ type: "User[]", validator: this.validators.validateUsers }),
     }
 
     constructor() {
         super();
-        this.declare(GroupTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default Group;
+export default GroupTypeInfo;

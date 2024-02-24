@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _Badge_stuff_Validators from "./_Badge_stuff_Validators";
 
 export class _Badge_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -30,13 +30,13 @@ export class _Badge_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_INDEXED = 1;
     static N_IMAGE = 30;
 
-    static validators = new _Badge_stuff_Validators();
+    validators = new _Badge_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         expr: property({ type: "string", precision: 255, validator: this.validators.validateExpr }),
         val: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVal }),
-        levels: property({ type: "int[]", precision: 10, validator: this.validators.validateLevels }),
+        levels: property({ type: "integer[]", precision: 10, validator: this.validators.validateLevels }),
         descend: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateDescend }),
         transient_: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateTransient_ }),
         indexed: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateIndexed }),
@@ -45,7 +45,7 @@ export class _Badge_stuff_TypeInfo extends CoEntityTypeInfo {
 
     constructor() {
         super();
-        this.declare(_Badge_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

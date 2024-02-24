@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import ZoneCategoryValidators from "./ZoneCategoryValidators";
 import _ZoneCategory_stuff_TypeInfo from "./_ZoneCategory_stuff_TypeInfo";
 
-// Type Info
-
 export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.geo.ZoneCategory"
     icon = "fa-tag"
 
-    static validators = new ZoneCategoryValidators();
+    validators = new ZoneCategoryValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(ZoneCategoryTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default ZoneCategory;
+export default ZoneCategoryTypeInfo;

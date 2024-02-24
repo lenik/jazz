@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
@@ -44,8 +44,8 @@ onMounted(() => {
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="UserBadge.TYPE" :modal="modal">
         <th data-type="integer" data-field="id">Id</th>
-        <th data-type="Moment" data-field="creationDate">Creation Date</th>
-        <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
+        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
         <th data-type="integer" data-field="version">Version</th>
         <th data-type="string" data-format="label" data-field="user">User</th>
         <th data-type="string" data-format="label" data-field="badge">Badge</th>

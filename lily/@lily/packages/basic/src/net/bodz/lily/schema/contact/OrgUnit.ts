@@ -1,10 +1,10 @@
-import { Contact } from "./Contact";
-import { PersonRole } from "./PersonRole";
+import Contact from "./Contact";
+import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
+import PersonRole from "./PersonRole";
 import _OrgUnit_stuff from "./_OrgUnit_stuff";
-import { _OrgUnit_stuffTypeInfo } from "./_OrgUnit_stuffTypeInfo";
 
 export class OrgUnit extends _OrgUnit_stuff {
-    static TYPE = new _OrgUnit_stuffTypeInfo();
+    static TYPE = new OrgUnitTypeInfo();
 
     contact?: Contact
     staff?: PersonRole[]

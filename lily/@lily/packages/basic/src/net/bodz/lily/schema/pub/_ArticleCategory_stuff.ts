@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import ArticleCategory from "./ArticleCategory";
+import CoEntity from "../../concrete/CoEntity";
+import type ArticleCategory from "./ArticleCategory";
 import _ArticleCategory_stuff_TypeInfo from "./_ArticleCategory_stuff_TypeInfo";
 
 export class _ArticleCategory_stuff extends CoEntity<integer> {

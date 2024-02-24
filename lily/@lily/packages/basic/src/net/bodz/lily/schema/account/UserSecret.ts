@@ -1,8 +1,8 @@
+import UserSecretTypeInfo from "./UserSecretTypeInfo";
 import _UserSecret_stuff from "./_UserSecret_stuff";
-import { _UserSecret_stuffTypeInfo } from "./_UserSecret_stuffTypeInfo";
 
 export class UserSecret extends _UserSecret_stuff {
-    static TYPE = new _UserSecret_stuffTypeInfo();
+    static TYPE = new UserSecretTypeInfo();
 
     constructor(o: any) {
         super(o);

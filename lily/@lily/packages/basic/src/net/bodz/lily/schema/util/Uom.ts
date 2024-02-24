@@ -1,8 +1,8 @@
+import UomTypeInfo from "./UomTypeInfo";
 import _Uom_stuff from "./_Uom_stuff";
-import { _Uom_stuffTypeInfo } from "./_Uom_stuffTypeInfo";
 
 export class Uom extends _Uom_stuff {
-    static TYPE = new _Uom_stuffTypeInfo();
+    static TYPE = new UomTypeInfo();
 
     constructor(o: any) {
         super(o);

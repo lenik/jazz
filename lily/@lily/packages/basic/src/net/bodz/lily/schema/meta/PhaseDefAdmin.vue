@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
 
 import PhaseDef from "./PhaseDef";
@@ -40,8 +40,8 @@ onMounted(() => {
             <th data-type="integer" data-field="priority">Priority</th>
             <th data-type="integer" data-field="flags">Flags</th>
             <th data-type="string" data-field="state">State</th>
-            <th data-type="Moment" data-field="creationDate">Creation Date</th>
-            <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
             <th data-type="integer" data-field="version">Version</th>
             <th data-type="string" data-format="label" data-field="schema">Schema</th>
         </template>

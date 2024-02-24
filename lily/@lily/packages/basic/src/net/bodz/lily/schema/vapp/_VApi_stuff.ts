@@ -1,8 +1,8 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import ApiType from "./ApiType";
-import VApp from "./VApp";
+import CoEntity from "../../concrete/CoEntity";
+import type ApiType from "./ApiType";
+import type VApp from "./VApp";
 import _VApi_stuff_TypeInfo from "./_VApi_stuff_TypeInfo";
 
 export class _VApi_stuff extends CoEntity<long> {

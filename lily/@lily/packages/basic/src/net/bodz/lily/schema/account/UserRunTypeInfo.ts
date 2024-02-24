@@ -1,11 +1,8 @@
-import { Moment } from "moment";
-
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
 import UserRunValidators from "./UserRunValidators";
 import _UserRun_stuff_TypeInfo from "./_UserRun_stuff_TypeInfo";
-
-// Type Info
 
 export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
 
@@ -13,18 +10,18 @@ export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
     icon = "fa-tag"
     description = "User Activity Log"
 
-    static validators = new UserRunValidators();
+    validators = new UserRunValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
-        activeTime: property({ type: "Moment", validator: this.validators.validateActiveTime }),
+    declaredProperty: EntityPropertyMap = {
+        activeTime: property({ type: "ZonedDateTime", validator: this.validators.validateActiveTime }),
         stateText: property({ type: "string", validator: this.validators.validateStateText }),
     }
 
     constructor() {
         super();
-        this.declare(UserRunTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default UserRun;
+export default UserRunTypeInfo;

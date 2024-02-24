@@ -1,8 +1,8 @@
+import PostTalkTypeInfo from "./PostTalkTypeInfo";
 import _PostTalk_stuff from "./_PostTalk_stuff";
-import { _PostTalk_stuffTypeInfo } from "./_PostTalk_stuffTypeInfo";
 
 export class PostTalk extends _PostTalk_stuff<PostTalk> {
-    static TYPE = new _PostTalk_stuffTypeInfo();
+    static TYPE = new PostTalkTypeInfo();
 
     constructor(o: any) {
         super(o);

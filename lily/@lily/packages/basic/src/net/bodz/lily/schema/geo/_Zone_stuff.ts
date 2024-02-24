@@ -1,8 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Zone from "./Zone";
-import ZoneCategory from "./ZoneCategory";
+import CoEntity from "../../concrete/CoEntity";
+import type Zone from "./Zone";
+import type ZoneCategory from "./ZoneCategory";
 import _Zone_stuff_TypeInfo from "./_Zone_stuff_TypeInfo";
 
 export class _Zone_stuff extends CoEntity<integer> {

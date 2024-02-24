@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 
-import OrgUnit from "./OrgUnit";
-import Organization from "./Organization";
+import type OrgUnit from "./OrgUnit";
+import type Organization from "./Organization";
 import Party from "./Party";
 import _OrgUnit_stuff_TypeInfo from "./_OrgUnit_stuff_TypeInfo";
 

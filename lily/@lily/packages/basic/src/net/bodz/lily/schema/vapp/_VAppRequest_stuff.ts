@@ -1,10 +1,9 @@
-import { Moment } from "moment";
-
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import User from "../account/User";
-import FormDef from "../meta/FormDef";
+import CoEntity from "../../concrete/CoEntity";
+import type User from "../account/User";
+import type FormDef from "../meta/FormDef";
 import _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";
 
 export class _VAppRequest_stuff extends CoEntity<integer> {
@@ -12,8 +11,8 @@ export class _VAppRequest_stuff extends CoEntity<integer> {
 
     id: integer;
     code?: string;
-    beginTime?: Moment;
-    endTime?: Moment;
+    beginTime?: ZonedDateTime;
+    endTime?: ZonedDateTime;
     year: integer;
     subject: string;
     rawText?: string;

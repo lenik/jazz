@@ -2,12 +2,12 @@
 import { onMounted, ref } from "vue";
 
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoNode from "@skeljs/dba/src/net/bodz/lily/concrete/CoNode";
-import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
-import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import CoNode from "../../concrete/CoNode";
+import CoObject from "../../concrete/CoObject";
+import IdEntity from "../../concrete/IdEntity";
+import StructRow from "../../concrete/StructRow";
 import PartyCategory from "./PartyCategory";
 import _PartyCategory_stuff from "./_PartyCategory_stuff";
 

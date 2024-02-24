@@ -1,7 +1,8 @@
 import type { long } from "@skeljs/core/src/lang/type";
-import FavRecordTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import FavRecordTypeInfo from "../../concrete/FavRecordTypeInfo";
+import PostTypeInfo from "./PostTypeInfo";
 import _PostFav_stuff_Validators from "./_PostFav_stuff_Validators";
 
 export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -16,17 +17,17 @@ export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
 
     static N_POST_ID = 19;
 
-    static validators = new _PostFav_stuff_Validators();
+    validators = new _PostFav_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
 
-        post: property({ type: net.bodz.lily.schema.pub.PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
+        post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
         postId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
         super();
-        this.declare(_PostFav_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

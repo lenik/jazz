@@ -1,8 +1,8 @@
+import ParameterValueTypeInfo from "./ParameterValueTypeInfo";
 import _ParameterValue_stuff from "./_ParameterValue_stuff";
-import { _ParameterValue_stuffTypeInfo } from "./_ParameterValue_stuffTypeInfo";
 
 export class ParameterValue extends _ParameterValue_stuff {
-    static TYPE = new _ParameterValue_stuffTypeInfo();
+    static TYPE = new ParameterValueTypeInfo();
 
     constructor(o: any) {
         super(o);

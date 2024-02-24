@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import type { double, integer } from "@skeljs/core/src/lang/type";
-import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import CoObject from "../../concrete/CoObject";
 import Uom from "./Uom";
 import _Uom_stuff from "./_Uom_stuff";
 

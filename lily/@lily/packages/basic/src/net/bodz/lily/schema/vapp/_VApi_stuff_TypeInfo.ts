@@ -1,7 +1,9 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import ApiTypeTypeInfo from "./ApiTypeTypeInfo";
+import VAppTypeInfo from "./VAppTypeInfo";
 import _VApi_stuff_Validators from "./_VApi_stuff_Validators";
 
 export class _VApi_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -22,22 +24,22 @@ export class _VApi_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_API_ID = 10;
     static N_CALLBACK = 200;
 
-    static validators = new _VApi_stuff_Validators();
+    validators = new _VApi_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "long", nullable: false, precision: 19, validator: this.validators.validateId }),
         callback: property({ type: "string", precision: 200, validator: this.validators.validateCallback }),
 
-        api: property({ type: net.bodz.lily.schema.vapp.ApiTypeTypeInfo, nullable: false, validator: this.validators.validateApi }),
+        api: property({ type: ApiTypeTypeInfo, nullable: false, validator: this.validators.validateApi }),
         apiId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        app: property({ type: net.bodz.lily.schema.vapp.VAppTypeInfo, nullable: false, validator: this.validators.validateApp }),
+        app: property({ type: VAppTypeInfo, nullable: false, validator: this.validators.validateApp }),
         appId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_VApi_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,9 +1,19 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import FavRecordValidators from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecordValidators";
 
-import { Article } from "./Article";
+import FavRecordValidators from "../../concrete/FavRecordValidators";
+import type Article from "./Article";
+import type _ArticleFav_stuff_TypeInfo from "./_ArticleFav_stuff_TypeInfo";
 
 export class _ArticleFav_stuff_Validators extends FavRecordValidators {
+
+    constructor(type: _ArticleFav_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _ArticleFav_stuff_TypeInfo;
+    }
+
     validateArticle(val: Article) {
     }
 

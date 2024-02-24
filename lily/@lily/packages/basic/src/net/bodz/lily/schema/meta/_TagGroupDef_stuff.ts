@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import SchemaDef from "./SchemaDef";
+import CoEntity from "../../concrete/CoEntity";
+import type SchemaDef from "./SchemaDef";
 import _TagGroupDef_stuff_TypeInfo from "./_TagGroupDef_stuff_TypeInfo";
 
 export class _TagGroupDef_stuff extends CoEntity<integer> {

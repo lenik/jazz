@@ -1,8 +1,8 @@
+import UserOtherIdTypeInfo from "./UserOtherIdTypeInfo";
 import _UserOtherId_stuff from "./_UserOtherId_stuff";
-import { _UserOtherId_stuffTypeInfo } from "./_UserOtherId_stuffTypeInfo";
 
 export class UserOtherId extends _UserOtherId_stuff {
-    static TYPE = new _UserOtherId_stuffTypeInfo();
+    static TYPE = new UserOtherIdTypeInfo();
 
     constructor(o: any) {
         super(o);

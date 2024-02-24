@@ -1,7 +1,9 @@
 import type { double, integer, long } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import PostParameterTypeTypeInfo from "./PostParameterTypeTypeInfo";
+import PostTypeInfo from "./PostTypeInfo";
 import _PostParameter_stuff_Validators from "./_PostParameter_stuff_Validators";
 
 export class _PostParameter_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -26,24 +28,24 @@ export class _PostParameter_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_FVAL = 17;
     static N_SVAL = 250;
 
-    static validators = new _PostParameter_stuff_Validators();
+    validators = new _PostParameter_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         ival: property({ type: "integer", precision: 10, validator: this.validators.validateIval }),
         fval: property({ type: "double", precision: 17, scale: 17, validator: this.validators.validateFval }),
         sval: property({ type: "string", precision: 250, validator: this.validators.validateSval }),
 
-        post: property({ type: net.bodz.lily.schema.pub.PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
+        post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
         postId: property({ type: "long", nullable: false, precision: 19 }),
 
-        parameter: property({ type: net.bodz.lily.schema.pub.PostParameterTypeTypeInfo, nullable: false, validator: this.validators.validateParameter }),
+        parameter: property({ type: PostParameterTypeTypeInfo, nullable: false, validator: this.validators.validateParameter }),
         parameterId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_PostParameter_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

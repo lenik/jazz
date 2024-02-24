@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import PersonRoleValidators from "./PersonRoleValidators";
 import _PersonRole_stuff_TypeInfo from "./_PersonRole_stuff_TypeInfo";
 
-// Type Info
-
 export class PersonRoleTypeInfo extends _PersonRole_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.contact.PersonRole"
     icon = "fa-tag"
 
-    static validators = new PersonRoleValidators();
+    validators = new PersonRoleValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(PersonRoleTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default PersonRole;
+export default PersonRoleTypeInfo;

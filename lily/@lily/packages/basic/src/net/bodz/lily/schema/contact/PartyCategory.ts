@@ -1,8 +1,8 @@
+import PartyCategoryTypeInfo from "./PartyCategoryTypeInfo";
 import _PartyCategory_stuff from "./_PartyCategory_stuff";
-import { _PartyCategory_stuffTypeInfo } from "./_PartyCategory_stuffTypeInfo";
 
 export class PartyCategory extends _PartyCategory_stuff<PartyCategory> {
-    static TYPE = new _PartyCategory_stuffTypeInfo();
+    static TYPE = new PartyCategoryTypeInfo();
 
     constructor(o: any) {
         super(o);

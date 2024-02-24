@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/type";
-import FavRecord from "@skeljs/dba/src/net/bodz/lily/concrete/FavRecord";
-import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import FavRecord from "../../concrete/FavRecord";
+import IdEntity from "../../concrete/IdEntity";
 import ArticleFav from "./ArticleFav";
 import _ArticleFav_stuff from "./_ArticleFav_stuff";
 

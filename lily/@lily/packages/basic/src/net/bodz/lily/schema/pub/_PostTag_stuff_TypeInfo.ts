@@ -1,7 +1,9 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import PostTagTypeTypeInfo from "./PostTagTypeTypeInfo";
+import PostTypeInfo from "./PostTypeInfo";
 import _PostTag_stuff_Validators from "./_PostTag_stuff_Validators";
 
 export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -20,21 +22,21 @@ export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_POST_ID = 19;
     static N_TAG_ID = 10;
 
-    static validators = new _PostTag_stuff_Validators();
+    validators = new _PostTag_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: net.bodz.lily.schema.pub.PostTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
+        tag: property({ type: PostTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
         tagId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        post: property({ type: net.bodz.lily.schema.pub.PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
+        post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
         postId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
         super();
-        this.declare(_PostTag_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

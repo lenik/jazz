@@ -2,13 +2,13 @@
 import { onMounted, ref } from "vue";
 
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoMessage from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessage";
-import CoMomentInterval from "@skeljs/dba/src/net/bodz/lily/concrete/CoMomentInterval";
-import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
-import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import CoMessage from "../../concrete/CoMessage";
+import CoMomentInterval from "../../concrete/CoMomentInterval";
+import CoObject from "../../concrete/CoObject";
+import IdEntity from "../../concrete/IdEntity";
+import StructRow from "../../concrete/StructRow";
 import Article from "./Article";
 import _Article_stuff from "./_Article_stuff";
 

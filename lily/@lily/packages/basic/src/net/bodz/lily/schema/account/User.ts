@@ -1,14 +1,14 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 
-import { Group } from "./Group";
-import { UserOtherId } from "./UserOtherId";
-import { UserRun } from "./UserRun";
-import { UserSecret } from "./UserSecret";
+import Group from "./Group";
+import UserOtherId from "./UserOtherId";
+import UserRun from "./UserRun";
+import UserSecret from "./UserSecret";
+import UserTypeInfo from "./UserTypeInfo";
 import _User_stuff from "./_User_stuff";
-import { _User_stuffTypeInfo } from "./_User_stuffTypeInfo";
 
 export class User extends _User_stuff {
-    static TYPE = new _User_stuffTypeInfo();
+    static TYPE = new UserTypeInfo();
 
     groupIds?: integer[]
     groups?: Group[]

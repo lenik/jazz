@@ -2,6 +2,7 @@ import type { char, integer } from "@skeljs/core/src/lang/type";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
 import PartyTypeInfo from "./PartyTypeInfo";
+import PersonTypeInfo from "./PersonTypeInfo";
 import _Person_stuff_Validators from "./_Person_stuff_Validators";
 
 export class _Person_stuff_TypeInfo extends PartyTypeInfo {
@@ -40,9 +41,9 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
     static N_SSN = 20;
     static N_DLN = 20;
 
-    static validators = new _Person_stuff_Validators();
+    validators = new _Person_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         properties: property({ type: "any", validator: this.validators.validateProperties }),
         roleCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
         employee: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateEmployee }),
@@ -55,16 +56,16 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
         ssn: property({ type: "string", precision: 20, validator: this.validators.validateSsn }),
         dln: property({ type: "string", precision: 20, validator: this.validators.validateDln }),
 
-        mother: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, validator: this.validators.validateMother }),
+        mother: property({ type: PersonTypeInfo, validator: this.validators.validateMother }),
         motherId: property({ type: "integer", precision: 10 }),
 
-        father: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, validator: this.validators.validateFather }),
+        father: property({ type: PersonTypeInfo, validator: this.validators.validateFather }),
         fatherId: property({ type: "integer", precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_Person_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

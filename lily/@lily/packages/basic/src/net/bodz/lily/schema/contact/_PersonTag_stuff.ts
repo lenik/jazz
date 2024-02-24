@@ -1,8 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Person from "./Person";
-import PersonTagType from "./PersonTagType";
+import CoEntity from "../../concrete/CoEntity";
+import type Person from "./Person";
+import type PersonTagType from "./PersonTagType";
 import _PersonTag_stuff_TypeInfo from "./_PersonTag_stuff_TypeInfo";
 
 export class _PersonTag_stuff extends CoEntity<integer> {

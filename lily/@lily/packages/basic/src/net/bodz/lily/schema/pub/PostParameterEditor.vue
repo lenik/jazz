@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import type { double, integer } from "@skeljs/core/src/lang/type";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import StructRow from "../../concrete/StructRow";
 import PostParameter from "./PostParameter";
 import _PostParameter_stuff from "./_PostParameter_stuff";
 

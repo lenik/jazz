@@ -1,10 +1,9 @@
-import { GeoLocation } from "@skeljs/dba/src/net/bodz/lily/concrete/util/GeoLocation";
-
+import GeoLocation from "../../concrete/util/GeoLocation";
+import ZoneTypeInfo from "./ZoneTypeInfo";
 import _Zone_stuff from "./_Zone_stuff";
-import { _Zone_stuffTypeInfo } from "./_Zone_stuffTypeInfo";
 
 export class Zone extends _Zone_stuff {
-    static TYPE = new _Zone_stuffTypeInfo();
+    static TYPE = new ZoneTypeInfo();
 
     fullPath?: string
     geo?: GeoLocation

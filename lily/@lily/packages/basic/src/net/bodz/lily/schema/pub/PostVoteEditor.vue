@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
-import VoteRecord from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecord";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import IdEntity from "../../concrete/IdEntity";
+import VoteRecord from "../../concrete/VoteRecord";
 import PostVote from "./PostVote";
 import _PostVote_stuff from "./_PostVote_stuff";
 

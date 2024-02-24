@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import PostParameterValidators from "./PostParameterValidators";
 import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
-// Type Info
-
 export class PostParameterTypeInfo extends _PostParameter_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.pub.PostParameter"
     icon = "fa-tag"
 
-    static validators = new PostParameterValidators();
+    validators = new PostParameterValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(PostParameterTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default PostParameter;
+export default PostParameterTypeInfo;

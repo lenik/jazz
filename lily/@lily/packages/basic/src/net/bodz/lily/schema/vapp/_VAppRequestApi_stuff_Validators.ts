@@ -1,11 +1,21 @@
 import type { long } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityValidators";
 
-import { ApiType } from "./ApiType";
-import { VAppRequest } from "./VAppRequest";
+import CoEntityValidators from "../../concrete/CoEntityValidators";
+import type ApiType from "./ApiType";
+import type VAppRequest from "./VAppRequest";
+import type _VAppRequestApi_stuff_TypeInfo from "./_VAppRequestApi_stuff_TypeInfo";
 
 export class _VAppRequestApi_stuff_Validators extends CoEntityValidators {
+
+    constructor(type: _VAppRequestApi_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _VAppRequestApi_stuff_TypeInfo;
+    }
+
     validateId(val: long) {
     }
 

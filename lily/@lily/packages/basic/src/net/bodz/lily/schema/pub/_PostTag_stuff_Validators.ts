@@ -1,11 +1,21 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityValidators";
 
-import { Post } from "./Post";
-import { PostTagType } from "./PostTagType";
+import CoEntityValidators from "../../concrete/CoEntityValidators";
+import type Post from "./Post";
+import type PostTagType from "./PostTagType";
+import type _PostTag_stuff_TypeInfo from "./_PostTag_stuff_TypeInfo";
 
 export class _PostTag_stuff_Validators extends CoEntityValidators {
+
+    constructor(type: _PostTag_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _PostTag_stuff_TypeInfo;
+    }
+
     validateId(val: integer) {
     }
 

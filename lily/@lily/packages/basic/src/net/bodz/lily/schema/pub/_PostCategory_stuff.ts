@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import PostCategory from "./PostCategory";
+import CoEntity from "../../concrete/CoEntity";
+import type PostCategory from "./PostCategory";
 import _PostCategory_stuff_TypeInfo from "./_PostCategory_stuff_TypeInfo";
 
 export class _PostCategory_stuff extends CoEntity<integer> {

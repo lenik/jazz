@@ -1,7 +1,9 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import ZoneCategoryTypeInfo from "./ZoneCategoryTypeInfo";
+import ZoneTypeInfo from "./ZoneTypeInfo";
 import _Zone_stuff_Validators from "./_Zone_stuff_Validators";
 
 export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -32,9 +34,9 @@ export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_POST_CODE = 10;
     static N_DATA = 2147483647;
 
-    static validators = new _Zone_stuff_Validators();
+    validators = new _Zone_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 10, validator: this.validators.validateCode }),
         country: property({ type: "string", precision: 2, validator: this.validators.validateCountry }),
@@ -43,16 +45,16 @@ export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
         postCode: property({ type: "string", precision: 10, validator: this.validators.validatePostCode }),
         data: property({ type: "any", validator: this.validators.validateData }),
 
-        parent: property({ type: net.bodz.lily.schema.geo.ZoneTypeInfo, validator: this.validators.validateParent }),
+        parent: property({ type: ZoneTypeInfo, validator: this.validators.validateParent }),
         parentId: property({ type: "integer", precision: 10 }),
 
-        category: property({ type: net.bodz.lily.schema.geo.ZoneCategoryTypeInfo, nullable: false, validator: this.validators.validateCategory }),
+        category: property({ type: ZoneCategoryTypeInfo, nullable: false, validator: this.validators.validateCategory }),
         categoryId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_Zone_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

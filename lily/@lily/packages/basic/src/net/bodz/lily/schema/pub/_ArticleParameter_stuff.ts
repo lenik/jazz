@@ -1,8 +1,8 @@
 import type { double, integer, long } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Article from "./Article";
-import ArticleParameterType from "./ArticleParameterType";
+import CoEntity from "../../concrete/CoEntity";
+import type Article from "./Article";
+import type ArticleParameterType from "./ArticleParameterType";
 import _ArticleParameter_stuff_TypeInfo from "./_ArticleParameter_stuff_TypeInfo";
 
 export class _ArticleParameter_stuff extends CoEntity<integer> {

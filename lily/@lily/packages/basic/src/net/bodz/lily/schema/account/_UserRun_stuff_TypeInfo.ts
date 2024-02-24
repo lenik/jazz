@@ -1,7 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import UserTypeInfo from "./UserTypeInfo";
 import _UserRun_stuff_Validators from "./_UserRun_stuff_Validators";
 
 export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -23,9 +24,9 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_LAST_LOGIN_TIME = 35;
     static N_LAST_LOGIN_I_P = 2147483647;
 
-    static validators = new _UserRun_stuff_Validators();
+    validators = new _UserRun_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         score: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateScore }),
         lastLoginTime: property({ type: "Date", precision: 35, scale: 6, 
             description: "Last time of login", 
@@ -34,7 +35,7 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
             description: "The source IP of last login", 
             validator: this.validators.validateLastLoginIP }),
 
-        user: property({ type: net.bodz.lily.schema.account.UserTypeInfo, nullable: false, 
+        user: property({ type: UserTypeInfo, nullable: false, 
             description: "The user", 
             validator: this.validators.validateUser }),
         userId: primaryKey({ type: "integer", nullable: false, precision: 10, 
@@ -43,7 +44,7 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
 
     constructor() {
         super();
-        this.declare(_UserRun_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

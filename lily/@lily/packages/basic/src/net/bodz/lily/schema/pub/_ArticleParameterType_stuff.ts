@@ -1,7 +1,6 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoParameter from "@skeljs/dba/src/net/bodz/lily/concrete/CoParameter";
 
-import { TypeParamType } from "../../meta/TypeParamType";
+import CoParameter from "../../concrete/CoParameter";
 import _ArticleParameterType_stuff_TypeInfo from "./_ArticleParameterType_stuff_TypeInfo";
 
 export class _ArticleParameterType_stuff<this_t> extends CoParameter<this_t> {

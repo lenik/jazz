@@ -1,8 +1,8 @@
+import ArticleFavTypeInfo from "./ArticleFavTypeInfo";
 import _ArticleFav_stuff from "./_ArticleFav_stuff";
-import { _ArticleFav_stuffTypeInfo } from "./_ArticleFav_stuffTypeInfo";
 
 export class ArticleFav extends _ArticleFav_stuff {
-    static TYPE = new _ArticleFav_stuffTypeInfo();
+    static TYPE = new ArticleFavTypeInfo();
 
     constructor(o: any) {
         super(o);

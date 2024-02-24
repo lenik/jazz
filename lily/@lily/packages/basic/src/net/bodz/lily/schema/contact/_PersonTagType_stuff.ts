@@ -1,6 +1,4 @@
-import CoTag from "@skeljs/dba/src/net/bodz/lily/concrete/CoTag";
-
-import { TypeParamType } from "../../meta/TypeParamType";
+import CoTag from "../../concrete/CoTag";
 import _PersonTagType_stuff_TypeInfo from "./_PersonTagType_stuff_TypeInfo";
 
 export class _PersonTagType_stuff<this_t> extends CoTag<this_t> {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 export const links = {
-    "Index": "component Index",
+    "": "component Index",
     "Project": "component Project",
     "GroupAdmin": "component GroupAdmin",
     "GroupTypeAdmin": "component GroupTypeAdmin",
