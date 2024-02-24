@@ -1,0 +1,16 @@
+import { long } from '@skeljs/core/src/lang/type';
+import IdEntity from '@skeljs/dba/src/net/bodz/lily/concrete/IdEntity';
+import FavRecordTypeInfo from './FavRecordTypeInfo';
+
+export abstract class FavRecord<This> extends IdEntity<long> {
+    static TYPE = new FavRecordTypeInfo();
+    
+    user: any
+    voteCount: long
+    
+    constructor(o: any) {
+        super(o);
+    }
+}
+
+export default FavRecord;
