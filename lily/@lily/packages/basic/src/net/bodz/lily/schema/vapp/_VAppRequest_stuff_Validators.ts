@@ -1,23 +1,32 @@
-import { Moment } from "moment";
-
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityValidators";
 
-import { User } from "../account/User";
-import { FormDef } from "../meta/FormDef";
+import CoEntityValidators from "../../concrete/CoEntityValidators";
+import type User from "../account/User";
+import type FormDef from "../meta/FormDef";
+import type _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";
 
 export class _VAppRequest_stuff_Validators extends CoEntityValidators {
+
+    constructor(type: _VAppRequest_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _VAppRequest_stuff_TypeInfo;
+    }
+
     validateId(val: integer) {
     }
 
     validateCode(val: string) {
     }
 
-    validateBeginTime(val: Moment) {
+    validateBeginTime(val: ZonedDateTime) {
     }
 
-    validateEndTime(val: Moment) {
+    validateEndTime(val: ZonedDateTime) {
     }
 
     validateYear(val: integer) {

@@ -1,8 +1,8 @@
 import type { double, integer, long } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Post from "./Post";
-import PostParameterType from "./PostParameterType";
+import CoEntity from "../../concrete/CoEntity";
+import type Post from "./Post";
+import type PostParameterType from "./PostParameterType";
 import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
 export class _PostParameter_stuff extends CoEntity<integer> {

@@ -2,12 +2,12 @@
 import { onMounted, ref } from "vue";
 
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoObject from "@skeljs/dba/src/net/bodz/lily/concrete/CoObject";
-import CoPrincipal from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipal";
-import IdEntity from "@skeljs/dba/src/net/bodz/lily/concrete/IdEntity";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import CoObject from "../../concrete/CoObject";
+import CoPrincipal from "../../concrete/CoPrincipal";
+import IdEntity from "../../concrete/IdEntity";
+import StructRow from "../../concrete/StructRow";
 import User from "./User";
 import _User_stuff from "./_User_stuff";
 

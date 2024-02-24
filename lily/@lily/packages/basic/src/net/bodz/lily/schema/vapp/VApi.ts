@@ -1,8 +1,8 @@
+import VApiTypeInfo from "./VApiTypeInfo";
 import _VApi_stuff from "./_VApi_stuff";
-import { _VApi_stuffTypeInfo } from "./_VApi_stuffTypeInfo";
 
 export class VApi extends _VApi_stuff {
-    static TYPE = new _VApi_stuffTypeInfo();
+    static TYPE = new VApiTypeInfo();
 
     constructor(o: any) {
         super(o);

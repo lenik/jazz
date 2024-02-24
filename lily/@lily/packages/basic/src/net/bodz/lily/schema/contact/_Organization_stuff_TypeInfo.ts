@@ -24,9 +24,9 @@ export class _Organization_stuff_TypeInfo extends PartyTypeInfo {
     static N_SIZE = 10;
     static N_TAX_ID = 20;
 
-    static validators = new _Organization_stuff_Validators();
+    validators = new _Organization_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         properties: property({ type: "any", validator: this.validators.validateProperties }),
         roleCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
         bankCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateBankCount }),
@@ -36,7 +36,7 @@ export class _Organization_stuff_TypeInfo extends PartyTypeInfo {
 
     constructor() {
         super();
-        this.declare(_Organization_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

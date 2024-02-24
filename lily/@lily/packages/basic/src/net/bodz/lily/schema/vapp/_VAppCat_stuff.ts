@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import VAppCat from "./VAppCat";
+import CoEntity from "../../concrete/CoEntity";
+import type VAppCat from "./VAppCat";
 import _VAppCat_stuff_TypeInfo from "./_VAppCat_stuff_TypeInfo";
 
 export class _VAppCat_stuff extends CoEntity<integer> {

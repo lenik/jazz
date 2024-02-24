@@ -1,7 +1,7 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import VoteRecord from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecord";
 
-import Article from "./Article";
+import VoteRecord from "../../concrete/VoteRecord";
+import type Article from "./Article";
 import _ArticleVote_stuff_TypeInfo from "./_ArticleVote_stuff_TypeInfo";
 
 export class _ArticleVote_stuff extends VoteRecord {

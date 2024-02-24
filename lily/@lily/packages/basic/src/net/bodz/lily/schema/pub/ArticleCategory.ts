@@ -1,8 +1,8 @@
+import ArticleCategoryTypeInfo from "./ArticleCategoryTypeInfo";
 import _ArticleCategory_stuff from "./_ArticleCategory_stuff";
-import { _ArticleCategory_stuffTypeInfo } from "./_ArticleCategory_stuffTypeInfo";
 
 export class ArticleCategory extends _ArticleCategory_stuff {
-    static TYPE = new _ArticleCategory_stuffTypeInfo();
+    static TYPE = new ArticleCategoryTypeInfo();
 
     constructor(o: any) {
         super(o);

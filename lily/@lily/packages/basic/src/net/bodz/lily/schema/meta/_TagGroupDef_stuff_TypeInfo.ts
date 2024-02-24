@@ -1,7 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import SchemaDefTypeInfo from "./SchemaDefTypeInfo";
 import _TagGroupDef_stuff_Validators from "./_TagGroupDef_stuff_Validators";
 
 export class _TagGroupDef_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -25,21 +26,21 @@ export class _TagGroupDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_FOR_TOPIC = 1;
     static N_FOR_REPLY = 1;
 
-    static validators = new _TagGroupDef_stuff_Validators();
+    validators = new _TagGroupDef_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
         forTopic: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForTopic }),
         forReply: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForReply }),
 
-        schema: property({ type: net.bodz.lily.schema.meta.SchemaDefTypeInfo, nullable: false, validator: this.validators.validateSchema }),
+        schema: property({ type: SchemaDefTypeInfo, nullable: false, validator: this.validators.validateSchema }),
         schemaId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_TagGroupDef_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

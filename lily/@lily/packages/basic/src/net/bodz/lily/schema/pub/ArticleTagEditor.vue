@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import type { integer } from "@skeljs/core/src/lang/type";
-import StructRow from "@skeljs/dba/src/net/bodz/lily/concrete/StructRow";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import StructRow from "../../concrete/StructRow";
 import ArticleTag from "./ArticleTag";
 import _ArticleTag_stuff from "./_ArticleTag_stuff";
 

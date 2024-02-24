@@ -1,8 +1,8 @@
+import VAppCatTypeInfo from "./VAppCatTypeInfo";
 import _VAppCat_stuff from "./_VAppCat_stuff";
-import { _VAppCat_stuffTypeInfo } from "./_VAppCat_stuffTypeInfo";
 
 export class VAppCat extends _VAppCat_stuff {
-    static TYPE = new _VAppCat_stuffTypeInfo();
+    static TYPE = new VAppCatTypeInfo();
 
     constructor(o: any) {
         super(o);

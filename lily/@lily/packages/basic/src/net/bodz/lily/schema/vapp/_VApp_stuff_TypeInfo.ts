@@ -1,7 +1,9 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import VAppCatTypeInfo from "./VAppCatTypeInfo";
+import VAppRequestTypeInfo from "./VAppRequestTypeInfo";
 import _VApp_stuff_Validators from "./_VApp_stuff_Validators";
 
 export class _VApp_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -24,23 +26,23 @@ export class _VApp_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_CATEGORY_ID = 10;
     static N_SECRET = 2147483647;
 
-    static validators = new _VApp_stuff_Validators();
+    validators = new _VApp_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
         secret: property({ type: "string", nullable: false, validator: this.validators.validateSecret }),
 
-        category: property({ type: net.bodz.lily.schema.vapp.VAppCatTypeInfo, validator: this.validators.validateCategory }),
+        category: property({ type: VAppCatTypeInfo, validator: this.validators.validateCategory }),
         categoryId: property({ type: "integer", precision: 10 }),
 
-        req: property({ type: net.bodz.lily.schema.vapp.VAppRequestTypeInfo, validator: this.validators.validateReq }),
+        req: property({ type: VAppRequestTypeInfo, validator: this.validators.validateReq }),
         reqId: property({ type: "integer", precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_VApp_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

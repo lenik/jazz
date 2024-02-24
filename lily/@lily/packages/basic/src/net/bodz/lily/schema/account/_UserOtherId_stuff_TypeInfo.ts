@@ -1,9 +1,10 @@
-import { Moment } from "moment";
-
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import UserOtherIdTypeTypeInfo from "./UserOtherIdTypeTypeInfo";
+import UserTypeInfo from "./UserTypeInfo";
 import _UserOtherId_stuff_Validators from "./_UserOtherId_stuff_Validators";
 
 export class _UserOtherId_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -33,12 +34,12 @@ export class _UserOtherId_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_OTHER_ID = 100;
     static N_AUTH = 2147483647;
 
-    static validators = new _UserOtherId_stuff_Validators();
+    validators = new _UserOtherId_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        beginTime: property({ type: "Moment", precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
-        endTime: property({ type: "Moment", precision: 35, scale: 6, validator: this.validators.validateEndTime }),
+        beginTime: property({ type: "ZonedDateTime", precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
+        endTime: property({ type: "ZonedDateTime", precision: 35, scale: 6, validator: this.validators.validateEndTime }),
         year: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateYear }),
         otherId: property({ type: "string", nullable: false, precision: 100, 
             description: "The identity data", 
@@ -47,13 +48,13 @@ export class _UserOtherId_stuff_TypeInfo extends CoEntityTypeInfo {
             description: "The authentication data", 
             validator: this.validators.validateAuth }),
 
-        type: property({ type: net.bodz.lily.schema.account.UserOtherIdTypeTypeInfo, nullable: false, 
+        type: property({ type: UserOtherIdTypeTypeInfo, nullable: false, 
             description: "Type of Open ID", 
             validator: this.validators.validateType }),
         typeId: property({ type: "integer", nullable: false, precision: 10, 
             description: "Type of Open ID" }),
 
-        user: property({ type: net.bodz.lily.schema.account.UserTypeInfo, nullable: false, 
+        user: property({ type: UserTypeInfo, nullable: false, 
             description: "The declaring user", 
             validator: this.validators.validateUser }),
         userId: property({ type: "integer", nullable: false, precision: 10, 
@@ -62,7 +63,7 @@ export class _UserOtherId_stuff_TypeInfo extends CoEntityTypeInfo {
 
     constructor() {
         super();
-        this.declare(_UserOtherId_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

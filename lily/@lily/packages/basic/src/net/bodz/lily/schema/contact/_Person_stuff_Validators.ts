@@ -2,9 +2,19 @@ import type { char, integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import PartyValidators from "./PartyValidators";
-import { Person } from "./Person";
+import type Person from "./Person";
+import type _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
 
 export class _Person_stuff_Validators extends PartyValidators {
+
+    constructor(type: _Person_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _Person_stuff_TypeInfo;
+    }
+
     validateProperties(val: any) {
     }
 

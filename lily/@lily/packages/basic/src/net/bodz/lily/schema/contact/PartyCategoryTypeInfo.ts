@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import PartyCategoryValidators from "./PartyCategoryValidators";
 import _PartyCategory_stuff_TypeInfo from "./_PartyCategory_stuff_TypeInfo";
 
-// Type Info
-
 export class PartyCategoryTypeInfo extends _PartyCategory_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.contact.PartyCategory"
     icon = "fa-tag"
 
-    static validators = new PartyCategoryValidators();
+    validators = new PartyCategoryValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(PartyCategoryTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default PartyCategory;
+export default PartyCategoryTypeInfo;

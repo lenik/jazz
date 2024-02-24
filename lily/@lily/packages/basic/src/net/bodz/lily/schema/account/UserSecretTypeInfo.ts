@@ -3,24 +3,22 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import UserSecretValidators from "./UserSecretValidators";
 import _UserSecret_stuff_TypeInfo from "./_UserSecret_stuff_TypeInfo";
 
-// Type Info
-
 export class UserSecretTypeInfo extends _UserSecret_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.account.UserSecret"
     icon = "fa-tag"
     description = "User Secret"
 
-    static validators = new UserSecretValidators();
+    validators = new UserSecretValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(UserSecretTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default UserSecret;
+export default UserSecretTypeInfo;

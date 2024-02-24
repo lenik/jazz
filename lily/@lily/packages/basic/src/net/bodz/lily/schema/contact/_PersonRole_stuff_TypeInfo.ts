@@ -1,7 +1,10 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
+import OrganizationTypeInfo from "./OrganizationTypeInfo";
+import PersonTypeInfo from "./PersonTypeInfo";
 import _PersonRole_stuff_Validators from "./_PersonRole_stuff_Validators";
 
 export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -24,25 +27,25 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_PERSON_ID = 10;
     static N_ROLE = 20;
 
-    static validators = new _PersonRole_stuff_Validators();
+    validators = new _PersonRole_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         role: property({ type: "string", precision: 20, validator: this.validators.validateRole }),
 
-        orgUnit: property({ type: net.bodz.lily.schema.contact.OrgUnitTypeInfo, validator: this.validators.validateOrgUnit }),
+        orgUnit: property({ type: OrgUnitTypeInfo, validator: this.validators.validateOrgUnit }),
         orgUnitId: property({ type: "integer", precision: 10 }),
 
-        person: property({ type: net.bodz.lily.schema.contact.PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
+        person: property({ type: PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
         personId: property({ type: "integer", nullable: false, precision: 10 }),
 
-        org: property({ type: net.bodz.lily.schema.contact.OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
+        org: property({ type: OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
         orgId: property({ type: "integer", nullable: false, precision: 10 }),
     }
 
     constructor() {
         super();
-        this.declare(_PersonRole_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

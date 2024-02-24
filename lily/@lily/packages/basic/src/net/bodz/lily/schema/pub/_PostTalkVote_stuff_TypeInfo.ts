@@ -1,7 +1,8 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import VoteRecordTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/VoteRecordTypeInfo";
 import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import VoteRecordTypeInfo from "../../concrete/VoteRecordTypeInfo";
+import PostTalkTypeInfo from "./PostTalkTypeInfo";
 import _PostTalkVote_stuff_Validators from "./_PostTalkVote_stuff_Validators";
 
 export class _PostTalkVote_stuff_TypeInfo extends VoteRecordTypeInfo {
@@ -18,18 +19,18 @@ export class _PostTalkVote_stuff_TypeInfo extends VoteRecordTypeInfo {
     static N_PARENT_ID = 19;
     static N_VOTE_SCORE = 10;
 
-    static validators = new _PostTalkVote_stuff_Validators();
+    validators = new _PostTalkVote_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         voteScore: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
 
-        parent: property({ type: net.bodz.lily.schema.pub.PostTalkTypeInfo, nullable: false, validator: this.validators.validateParent }),
+        parent: property({ type: PostTalkTypeInfo, nullable: false, validator: this.validators.validateParent }),
         parentId: property({ type: "long", nullable: false, precision: 19 }),
     }
 
     constructor() {
         super();
-        this.declare(_PostTalkVote_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

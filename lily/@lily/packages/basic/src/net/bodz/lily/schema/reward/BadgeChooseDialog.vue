@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Moment } from "moment";
 import { onMounted, ref } from "vue";
 
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import type { integer } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
@@ -50,12 +50,12 @@ onMounted(() => {
         <th data-type="integer" data-field="priority">Priority</th>
         <th data-type="integer" data-field="flags">Flags</th>
         <th data-type="string" data-field="state">State</th>
-        <th data-type="Moment" data-field="creationDate">Creation Date</th>
-        <th data-type="Moment" data-field="lastModifiedDate">Last Modified Date</th>
+        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
         <th data-type="integer" data-field="version">Version</th>
         <th data-type="string" data-field="expr">Expr</th>
         <th data-type="integer" data-field="val">Val</th>
-        <th data-type="[I" data-field="levels">Levels</th>
+        <th data-type="integer[]" data-field="levels">Levels</th>
         <th data-type="boolean" data-field="descend">Descend</th>
         <th data-type="boolean" data-field="transient_">Transient_</th>
         <th data-type="boolean" data-field="indexed">Indexed</th>

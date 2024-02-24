@@ -1,10 +1,19 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoTalkValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoTalkValidators";
 
-import { TypeParamType } from "../../meta/TypeParamType";
-import { Article } from "./Article";
+import CoTalkValidators from "../../concrete/CoTalkValidators";
+import type Article from "./Article";
+import type _ArticleTalk_stuff_TypeInfo from "./_ArticleTalk_stuff_TypeInfo";
 
 export class _ArticleTalk_stuff_Validators extends CoTalkValidators {
+
+    constructor(type: _ArticleTalk_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _ArticleTalk_stuff_TypeInfo;
+    }
+
     validateFormArguments(val: string) {
     }
 

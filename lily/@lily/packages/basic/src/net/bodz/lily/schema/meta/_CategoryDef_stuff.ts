@@ -1,8 +1,8 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import CategoryDef from "./CategoryDef";
-import SchemaDef from "./SchemaDef";
+import CoEntity from "../../concrete/CoEntity";
+import type CategoryDef from "./CategoryDef";
+import type SchemaDef from "./SchemaDef";
 import _CategoryDef_stuff_TypeInfo from "./_CategoryDef_stuff_TypeInfo";
 
 export class _CategoryDef_stuff extends CoEntity<integer> {

@@ -1,7 +1,7 @@
 import type { char, integer } from "@skeljs/core/src/lang/type";
 
 import Party from "./Party";
-import Person from "./Person";
+import type Person from "./Person";
 import _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
 
 export class _Person_stuff extends Party {

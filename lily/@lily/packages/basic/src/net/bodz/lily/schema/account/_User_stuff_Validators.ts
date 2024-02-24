@@ -1,12 +1,22 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoPrincipalValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipalValidators";
 
-import { Person } from "../contact/Person";
-import { Group } from "./Group";
-import { User } from "./User";
-import { UserType } from "./UserType";
+import CoPrincipalValidators from "../../concrete/CoPrincipalValidators";
+import type Person from "../contact/Person";
+import type Group from "./Group";
+import type User from "./User";
+import type UserType from "./UserType";
+import type _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class _User_stuff_Validators extends CoPrincipalValidators {
+
+    constructor(type: _User_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _User_stuff_TypeInfo;
+    }
+
     validatePerson(val: Person) {
     }
 

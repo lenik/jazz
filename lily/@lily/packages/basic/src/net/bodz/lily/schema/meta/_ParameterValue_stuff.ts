@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import ParameterDef from "./ParameterDef";
+import CoEntity from "../../concrete/CoEntity";
+import type ParameterDef from "./ParameterDef";
 import _ParameterValue_stuff_TypeInfo from "./_ParameterValue_stuff_TypeInfo";
 
 export class _ParameterValue_stuff extends CoEntity<integer> {

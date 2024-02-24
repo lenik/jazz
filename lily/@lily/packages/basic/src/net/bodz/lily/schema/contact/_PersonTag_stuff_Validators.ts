@@ -1,11 +1,21 @@
 import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityValidators";
 
-import { Person } from "./Person";
-import { PersonTagType } from "./PersonTagType";
+import CoEntityValidators from "../../concrete/CoEntityValidators";
+import type Person from "./Person";
+import type PersonTagType from "./PersonTagType";
+import type _PersonTag_stuff_TypeInfo from "./_PersonTag_stuff_TypeInfo";
 
 export class _PersonTag_stuff_Validators extends CoEntityValidators {
+
+    constructor(type: _PersonTag_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _PersonTag_stuff_TypeInfo;
+    }
+
     validateId(val: integer) {
     }
 

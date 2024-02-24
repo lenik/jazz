@@ -1,8 +1,8 @@
+import ArticleBackrefTypeInfo from "./ArticleBackrefTypeInfo";
 import _ArticleBackref_stuff from "./_ArticleBackref_stuff";
-import { _ArticleBackref_stuffTypeInfo } from "./_ArticleBackref_stuffTypeInfo";
 
 export class ArticleBackref extends _ArticleBackref_stuff {
-    static TYPE = new _ArticleBackref_stuffTypeInfo();
+    static TYPE = new ArticleBackrefTypeInfo();
 
     constructor(o: any) {
         super(o);

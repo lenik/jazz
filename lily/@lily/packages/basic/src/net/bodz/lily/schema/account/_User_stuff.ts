@@ -1,10 +1,10 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoPrincipal from "@skeljs/dba/src/net/bodz/lily/concrete/CoPrincipal";
 
-import Person from "../contact/Person";
-import Group from "./Group";
-import User from "./User";
-import UserType from "./UserType";
+import CoPrincipal from "../../concrete/CoPrincipal";
+import type Person from "../contact/Person";
+import type Group from "./Group";
+import type User from "./User";
+import type UserType from "./UserType";
 import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class _User_stuff extends CoPrincipal {

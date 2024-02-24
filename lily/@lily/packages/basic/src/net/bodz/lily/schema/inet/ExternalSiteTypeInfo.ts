@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import ExternalSiteValidators from "./ExternalSiteValidators";
 import _ExternalSite_stuff_TypeInfo from "./_ExternalSite_stuff_TypeInfo";
 
-// Type Info
-
 export class ExternalSiteTypeInfo extends _ExternalSite_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.inet.ExternalSite"
     icon = "fa-tag"
 
-    static validators = new ExternalSiteValidators();
+    validators = new ExternalSiteValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(ExternalSiteTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default ExternalSite;
+export default ExternalSiteTypeInfo;

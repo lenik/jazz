@@ -1,12 +1,12 @@
-import { Moment } from "moment";
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 
+import UserRunTypeInfo from "./UserRunTypeInfo";
 import _UserRun_stuff from "./_UserRun_stuff";
-import { _UserRun_stuffTypeInfo } from "./_UserRun_stuffTypeInfo";
 
 export class UserRun extends _UserRun_stuff {
-    static TYPE = new _UserRun_stuffTypeInfo();
+    static TYPE = new UserRunTypeInfo();
 
-    activeTime?: Moment
+    activeTime?: ZonedDateTime
     stateText?: string
 
     constructor(o: any) {

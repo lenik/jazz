@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntityTypeInfo from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
 
+import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _UserOtherIdType_stuff_Validators from "./_UserOtherIdType_stuff_Validators";
 
 export class _UserOtherIdType_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -19,16 +19,16 @@ export class _UserOtherIdType_stuff_TypeInfo extends CoEntityTypeInfo {
     static N_ID = 10;
     static N_DUMMY = 10;
 
-    static validators = new _UserOtherIdType_stuff_Validators();
+    validators = new _UserOtherIdType_stuff_Validators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
         id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
         dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {
         super();
-        this.declare(_UserOtherIdType_stuff_TypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }

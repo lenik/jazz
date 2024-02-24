@@ -1,6 +1,6 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
+import CoEntity from "../../concrete/CoEntity";
 import _Storage_stuff_TypeInfo from "./_Storage_stuff_TypeInfo";
 
 export class _Storage_stuff extends CoEntity<integer> {

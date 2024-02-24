@@ -1,7 +1,7 @@
 import type { double, integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Uom from "./Uom";
+import CoEntity from "../../concrete/CoEntity";
+import type Uom from "./Uom";
 import _Uom_stuff_TypeInfo from "./_Uom_stuff_TypeInfo";
 
 export class _Uom_stuff extends CoEntity<integer> {

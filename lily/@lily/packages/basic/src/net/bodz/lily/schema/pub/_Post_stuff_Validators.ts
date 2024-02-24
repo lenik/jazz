@@ -1,11 +1,21 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoMessageValidators from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessageValidators";
 
-import { Post } from "./Post";
-import { PostCategory } from "./PostCategory";
+import CoMessageValidators from "../../concrete/CoMessageValidators";
+import type Post from "./Post";
+import type PostCategory from "./PostCategory";
+import type _Post_stuff_TypeInfo from "./_Post_stuff_TypeInfo";
 
 export class _Post_stuff_Validators extends CoMessageValidators {
+
+    constructor(type: _Post_stuff_TypeInfo) {
+        super(type);
+    }
+
+    get type() {
+        return this._type as _Post_stuff_TypeInfo;
+    }
+
     validateFormArguments(val: string) {
     }
 

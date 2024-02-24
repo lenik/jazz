@@ -1,7 +1,7 @@
 import type { integer } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import FormDef from "./FormDef";
+import CoEntity from "../../concrete/CoEntity";
+import type FormDef from "./FormDef";
 import _FormParameter_stuff_TypeInfo from "./_FormParameter_stuff_TypeInfo";
 
 export class _FormParameter_stuff extends CoEntity<integer> {

@@ -1,8 +1,8 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import BackrefRecord from "@skeljs/dba/src/net/bodz/lily/concrete/BackrefRecord";
 
-import ExternalSite from "../inet/ExternalSite";
-import Post from "./Post";
+import BackrefRecord from "../../concrete/BackrefRecord";
+import type ExternalSite from "../inet/ExternalSite";
+import type Post from "./Post";
 import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
 export class _PostBackref_stuff extends BackrefRecord {

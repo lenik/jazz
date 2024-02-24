@@ -1,8 +1,8 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoMessage from "@skeljs/dba/src/net/bodz/lily/concrete/CoMessage";
 
-import Post from "./Post";
-import PostCategory from "./PostCategory";
+import CoMessage from "../../concrete/CoMessage";
+import type Post from "./Post";
+import type PostCategory from "./PostCategory";
 import _Post_stuff_TypeInfo from "./_Post_stuff_TypeInfo";
 
 export class _Post_stuff extends CoMessage<long> {

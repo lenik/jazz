@@ -1,8 +1,8 @@
+import ArticleParameterTypeTypeInfo from "./ArticleParameterTypeTypeInfo";
 import _ArticleParameterType_stuff from "./_ArticleParameterType_stuff";
-import { _ArticleParameterType_stuffTypeInfo } from "./_ArticleParameterType_stuffTypeInfo";
 
 export class ArticleParameterType extends _ArticleParameterType_stuff<ArticleParameterType> {
-    static TYPE = new _ArticleParameterType_stuffTypeInfo();
+    static TYPE = new ArticleParameterTypeTypeInfo();
 
     constructor(o: any) {
         super(o);

@@ -1,8 +1,8 @@
+import PersonTypeInfo from "./PersonTypeInfo";
 import _Person_stuff from "./_Person_stuff";
-import { _Person_stuffTypeInfo } from "./_Person_stuffTypeInfo";
 
 export class Person extends _Person_stuff {
-    static TYPE = new _Person_stuffTypeInfo();
+    static TYPE = new PersonTypeInfo();
 
     hello?: string
     peers?: string[]

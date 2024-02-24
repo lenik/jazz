@@ -3,23 +3,21 @@ import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
 import PostFavValidators from "./PostFavValidators";
 import _PostFav_stuff_TypeInfo from "./_PostFav_stuff_TypeInfo";
 
-// Type Info
-
 export class PostFavTypeInfo extends _PostFav_stuff_TypeInfo {
 
     name = "net.bodz.lily.schema.pub.PostFav"
     icon = "fa-tag"
 
-    static validators = new PostFavValidators();
+    validators = new PostFavValidators(this);
 
-    static declaredProperty: EntityPropertyMap = {
+    declaredProperty: EntityPropertyMap = {
     }
 
     constructor() {
         super();
-        this.declare(PostFavTypeInfo.declaredProperty);
+        this.declare(this.declaredProperty);
     }
 
 }
 
-export default PostFav;
+export default PostFavTypeInfo;

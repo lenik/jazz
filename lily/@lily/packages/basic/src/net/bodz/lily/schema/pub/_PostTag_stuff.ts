@@ -1,8 +1,8 @@
 import type { integer, long } from "@skeljs/core/src/lang/type";
-import CoEntity from "@skeljs/dba/src/net/bodz/lily/concrete/CoEntity";
 
-import Post from "./Post";
-import PostTagType from "./PostTagType";
+import CoEntity from "../../concrete/CoEntity";
+import type Post from "./Post";
+import type PostTagType from "./PostTagType";
 import _PostTag_stuff_TypeInfo from "./_PostTag_stuff_TypeInfo";
 
 export class _PostTag_stuff extends CoEntity<integer> {

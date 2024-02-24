@@ -1,9 +1,9 @@
-import { TagDef } from "./TagDef";
+import TagDef from "./TagDef";
+import TagGroupDefTypeInfo from "./TagGroupDefTypeInfo";
 import _TagGroupDef_stuff from "./_TagGroupDef_stuff";
-import { _TagGroupDef_stuffTypeInfo } from "./_TagGroupDef_stuffTypeInfo";
 
 export class TagGroupDef extends _TagGroupDef_stuff {
-    static TYPE = new _TagGroupDef_stuffTypeInfo();
+    static TYPE = new TagGroupDefTypeInfo();
 
     ortho: boolean
     tags?: TagDef[]
