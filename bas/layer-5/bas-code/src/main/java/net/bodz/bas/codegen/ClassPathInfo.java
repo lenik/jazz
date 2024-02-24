@@ -131,16 +131,16 @@ public class ClassPathInfo
 
     }
 
-    public ClassPathInfo join(String relativeName) {
-        return join(relativeName, this.javaDir, this.resourceDir);
+    public ClassPathInfo child(String childQName) {
+        return child(childQName, this.javaDir, this.resourceDir);
     }
 
-    public ClassPathInfo join(String relativeName, String javaDir) {
-        return join(relativeName, javaDir, javaDir);
+    public ClassPathInfo child(String childQName, String javaDir) {
+        return child(childQName, javaDir, javaDir);
     }
 
-    public ClassPathInfo join(String relativeName, String javaDir, String resourceDir) {
-        QualifiedName qName = this.qName.join(relativeName);
+    public ClassPathInfo child(String childQName, String javaDir, String resourceDir) {
+        QualifiedName qName = this.qName.child(childQName);
         ClassPathInfo o = new ClassPathInfo(//
                 qName, baseDir, //
                 javaDir, testJavaDir, //
@@ -212,6 +212,11 @@ public class ClassPathInfo
     @Override
     public String getTestScriptDir() {
         return scriptDir;
+    }
+
+    @Override
+    public String toString() {
+        return qName.getFullName() + "(" + baseDir + ")";
     }
 
 }
