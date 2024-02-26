@@ -37,13 +37,4 @@ public class Primitives {
         return primitive == null ? type : primitive;
     }
 
-    public static Class<?> forName(String className)
-            throws ClassNotFoundException {
-        Class<?> clazz = names.get(className);
-        if (clazz != null)
-            return clazz;
-        else
-            return Class.forName(className);
-    }
-
 }
