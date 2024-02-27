@@ -137,6 +137,13 @@ public class EsmSource
         return new EsmName(this, name, null, type);
     }
 
+    public EsmName value(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+        boolean type = false;
+        return new EsmName(this, name, null, type);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(module, localPath);
