@@ -52,6 +52,13 @@ public class EsmSource
         return localPath;
     }
 
+    public EsmSource child(String childName) {
+        if (childName == null)
+            return null;
+        String childPath = this.localPath == null ? childName : (this.localPath + "/" + childName);
+        return new EsmSource(module, childPath, priority);
+    }
+
     public boolean isBare() {
         return localPath == PATH_BARE;
     }
@@ -99,49 +106,45 @@ public class EsmSource
         return new EsmName(this, null, alias, true);
     }
 
-    public EsmName name(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        return new EsmName(this, name);
-    }
-
-    public EsmName name(String name, String alias) {
-        if (name == null)
-            throw new NullPointerException("name");
-        if (alias == null)
-            throw new NullPointerException("alias");
-        return new EsmName(this, name, alias);
-    }
-
     public EsmName wildcardAs(String alias) {
         return name(EsmName.ALL_NAMES, alias);
     }
 
+    public EsmName name(String name) {
+        return name(name, null);
+    }
+
+    public EsmName name(String name, String alias) {
+        return name(name, alias, false);
+    }
+
+    public EsmName name(String name, String alias, boolean type) {
+        if (name == null)
+            throw new NullPointerException("name");
+        EsmSource source = this;
+        int lastSlash = name.lastIndexOf('/');
+        if (lastSlash != -1) {
+            String childSource = name.substring(0, lastSlash);
+            name = name.substring(lastSlash + 1);
+            source = source.child(childSource);
+        }
+        return new EsmName(source, name, alias, type);
+    }
+
     public EsmName type(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        return new EsmName(this, name, null, true);
-    }
-
-    public EsmName _interface(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        boolean type = false;
-        return new EsmName(this, name, null, type);
-    }
-
-    public EsmName _class(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        boolean type = false;
-        return new EsmName(this, name, null, type);
+        return name(name, null, true);
     }
 
     public EsmName value(String name) {
-        if (name == null)
-            throw new NullPointerException("name");
-        boolean type = false;
-        return new EsmName(this, name, null, type);
+        return name(name, null, false);
+    }
+
+    public EsmName _interface(String name) {
+        return value(name);
+    }
+
+    public EsmName _class(String name) {
+        return value(name);
     }
 
     @Override
