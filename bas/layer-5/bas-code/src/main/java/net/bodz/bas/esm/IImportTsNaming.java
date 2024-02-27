@@ -7,6 +7,8 @@ public interface IImportTsNaming
         extends
             IImportNaming {
 
+    EsmName resolveName(QualifiedName qName, String alias, boolean type);
+
     String importName(EsmName name);
 
     default String importDefault(Class<?> clazz) {
