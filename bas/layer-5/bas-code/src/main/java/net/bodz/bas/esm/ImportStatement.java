@@ -8,18 +8,46 @@ import net.bodz.bas.io.IPrintOut;
 
 public class ImportStatement {
 
-    public String defaultAlias;
-    public List<EsmName> names = new ArrayList<>();
-    public List<EsmName> typeNames = new ArrayList<>();
-    public EsmSource from;
+    String defaultAlias;
+    String defaultTypeAlias;
+    List<EsmName> names = new ArrayList<>();
+    List<EsmName> typeNames = new ArrayList<>();
+    EsmSource from;
 
     boolean debug = false; // true;
 
     public void initFrom(EsmSource source) {
-        this.from = source;
         defaultAlias = null;
+        defaultTypeAlias = null;
         names.clear();
         typeNames.clear();
+        this.from = source;
+    }
+
+    public void addName(EsmName name) {
+        if (name.isDefaultExport()) {
+            if (name.isTypeName()) {
+                if (defaultTypeAlias == null)
+                    defaultTypeAlias = name.alias;
+                else if (! defaultTypeAlias.equals(name.alias))
+                    throw new IllegalStateException(String.format(//
+                            "default type name %s is already imported as different alias %s.", //
+                            name.alias, defaultTypeAlias));
+            } else {
+                if (defaultAlias == null)
+                    defaultAlias = name.alias;
+                else if (! defaultAlias.equals(name.alias))
+                    throw new IllegalStateException(String.format(//
+                            "default name %s is already imported as different alias %s.", //
+                            name.alias, defaultAlias));
+            }
+            return;
+        }
+
+        if (name.type)
+            typeNames.add(name);
+        else
+            names.add(name);
     }
 
     public int printOutTypeScriptForNewFrom(IPrintOut out, EsmSource source) {
@@ -55,9 +83,29 @@ public class ImportStatement {
         if (debug)
             _import = String.format("/* %d */ import", from.module.getPriority());
 
+        if (defaultTypeAlias != null && ! defaultTypeAlias.equals(defaultAlias)) {
+            out.printf(_import);
+            out.printf(" type %s from %s;\n", defaultTypeAlias, pathQuoted);
+            lines++;
+        }
         if (defaultAlias != null) {
             out.printf(_import);
             out.printf(" %s from %s;\n", defaultAlias, pathQuoted);
+            lines++;
+        }
+
+        for (EsmName name : names) {
+            // normal imports override type imports, remove duplicates.
+            typeNames.remove(name.typeName());
+        }
+
+        if (! typeNames.isEmpty()) {
+            out.print(_import);
+            out.print(" type ");
+            printNames(out, typeNames);
+            out.print(" from ");
+            out.print(pathQuoted);
+            out.println(";");
             lines++;
         }
 
@@ -65,16 +113,6 @@ public class ImportStatement {
             out.print(_import);
             out.print(" ");
             printNames(out, names);
-            out.print(" from ");
-            out.print(pathQuoted);
-            out.println(";");
-            lines++;
-        }
-
-        if (! typeNames.isEmpty()) {
-            out.print(_import);
-            out.print(" type ");
-            printNames(out, typeNames);
             out.print(" from ");
             out.print(pathQuoted);
             out.println(";");

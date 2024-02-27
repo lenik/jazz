@@ -45,25 +45,37 @@ public class TypeScriptWriter
         return packageMap.findSource(qName, extension, contextQName);
     }
 
-    @Override
-    public String importDefaultAs(QualifiedName qName, String alias) {
+    EsmName resolveName(QualifiedName qName, String alias, boolean type) {
         EsmSource source = findSource(qName, null);
         if (source == null) // reserved name, don't import.
+            return null;
+        EsmName esmName;
+        if (type)
+            esmName = source.defaultTypeExport(alias);
+        else
+            esmName = source.defaultExport(alias);
+        return esmName;
+    }
+
+    @Override
+    public String importDefaultAs(QualifiedName qName, String alias) {
+        EsmName esmName = resolveName(qName, alias, false);
+        if (esmName == null)
             return qName.getFullName();
-        EsmName esmName = source.defaultExport(alias);
         return name(esmName);
+    }
+
+    @Override
+    public String importDefaultTypeAs(QualifiedName qName, String alias) {
+        EsmName esmTypeName = resolveName(qName, alias, true);
+        if (esmTypeName == null)
+            return qName.getFullName();
+        return name(esmTypeName);
     }
 
     @Override
     public String importName(EsmName name) {
         return name(name);
-    }
-
-    @Override
-    public String importName(String qName) {
-        if (qName == null)
-            throw new NullPointerException("qName");
-        return importName(QualifiedName.parse(qName));
     }
 
     @Override

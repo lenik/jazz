@@ -9,26 +9,32 @@ public interface IImportTsNaming
 
     String importName(EsmName name);
 
-    default String importDefaultAs(Class<?> clazz) {
-        return importDefaultAs(QualifiedName.of(clazz));
+    default String importDefault(Class<?> clazz) {
+        return importDefault(QualifiedName.of(clazz));
     }
 
-    default String importDefaultAs(Class<?> clazz, String alias) {
-        return importDefaultAs(QualifiedName.of(clazz), alias);
+    default String importDefault(String fullName) {
+        return importDefault(QualifiedName.parse(fullName));
     }
 
-    default String importDefaultAs(String fullName) {
-        return importDefaultAs(QualifiedName.parse(fullName));
-    }
-
-    default String importDefaultAs(String fullName, String alias) {
-        return importDefaultAs(QualifiedName.parse(fullName), alias);
-    }
-
-    default String importDefaultAs(QualifiedName qName) {
+    default String importDefault(QualifiedName qName) {
         return importDefaultAs(qName, qName.name);
     }
 
     String importDefaultAs(QualifiedName qName, String alias);
+
+    default String importDefaultType(Class<?> clazz) {
+        return importDefaultType(QualifiedName.of(clazz));
+    }
+
+    default String importDefaultType(String fullName) {
+        return importDefaultType(QualifiedName.parse(fullName));
+    }
+
+    default String importDefaultType(QualifiedName qName) {
+        return importDefaultTypeAs(qName, qName.name);
+    }
+
+    String importDefaultTypeAs(QualifiedName qName, String alias);
 
 }

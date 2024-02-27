@@ -43,6 +43,20 @@ public final class EsmName
         return type;
     }
 
+    public EsmName typeName() {
+        if (type == true)
+            return this;
+        else
+            return new EsmName(source, name, alias, true);
+    }
+
+    public EsmName normalName() {
+        if (type == false)
+            return this;
+        else
+            return new EsmName(source, name, alias, false);
+    }
+
     public boolean isWildcard() {
         return name != null && name.equals(ALL_NAMES);
     }
@@ -59,8 +73,10 @@ public final class EsmName
         if (obj == null)
             return false;
         EsmName other = (EsmName) obj;
-        return Objects.equals(alias, other.alias) && Objects.equals(name, other.name)
-                && Objects.equals(source, other.source) && type == other.type;
+        return Objects.equals(alias, other.alias) //
+                && Objects.equals(name, other.name) //
+                && Objects.equals(source, other.source) //
+                && type == other.type;
     }
 
     @Override
