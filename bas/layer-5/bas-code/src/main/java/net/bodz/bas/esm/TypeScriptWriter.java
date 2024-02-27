@@ -45,7 +45,8 @@ public class TypeScriptWriter
         return packageMap.findSource(qName, extension, contextQName);
     }
 
-    EsmName resolveName(QualifiedName qName, String alias, boolean type) {
+    @Override
+    public EsmName resolveName(QualifiedName qName, String alias, boolean type) {
         EsmSource source = findSource(qName, null);
         if (source == null) // reserved name, don't import.
             return null;
