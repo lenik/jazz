@@ -13,9 +13,18 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
     validators = new CoNodeValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        parent: property({ type: 'any', icon: "far-tree" }),
-        refCount: property({ type: 'integer', nullable: false, precision: 19 }),
-        depth: property({ type: 'integer', precision: 19 }),
+        parent: property({
+            type: 'any', icon: "far-tree",
+            validator: this.validators.validateParent
+        }),
+        refCount: property({
+            type: 'integer', nullable: false, precision: 19, icon: "far-link",
+            validator: this.validators.validateRefCount
+        }),
+        depth: property({
+            type: 'integer', precision: 19, icon: "far-layer-group",
+            validator: this.validators.validateDepth
+        }),
     };
 
     constructor() {

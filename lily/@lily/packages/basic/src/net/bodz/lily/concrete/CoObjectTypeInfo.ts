@@ -27,8 +27,8 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
         priority: property({ type: 'integer', icon: 'far-lightbulb' }),
         state: property({ type: 'string', icon: 'far-heart' }),
 
-        ownerUser: property({ type: User.TYPE, icon: 'far-user' }),
-        ownerGroup: property({ type: Group.TYPE, icon: 'far-users' }),
+        ownerUser: property({ type: "User.TYPE", icon: 'far-user' }),
+        ownerGroup: property({ type: "Group.TYPE", icon: 'far-users' }),
 
         acl: property({ type: 'integer', icon: 'far-user-lock' }),
         accessMode: property({ type: 'integer', icon: 'far-key' }),
@@ -37,6 +37,9 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
     constructor() {
         super();
         this.declare(this.declaredProperty);
+
+        import('../schema/account/User').then((a) => this.property.ownerUser.type = a.User.TYPE);
+        import('../schema/account/Group').then((a) => this.property.ownerUser.type = a.Group.TYPE);
     }
 
 }
