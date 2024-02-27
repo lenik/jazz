@@ -93,6 +93,12 @@ public class EsmSource
         return new EsmName(this, null, alias, false);
     }
 
+    public EsmName defaultTypeExport(String alias) {
+        if (alias == null)
+            throw new NullPointerException("alias");
+        return new EsmName(this, null, alias, true);
+    }
+
     public EsmName name(String name) {
         if (name == null)
             throw new NullPointerException("name");

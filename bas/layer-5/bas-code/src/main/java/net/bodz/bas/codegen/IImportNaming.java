@@ -10,6 +10,8 @@ public interface IImportNaming {
 
     String importName(QualifiedName name);
 
-    String importName(String name);
+    default String importName(String fullName) {
+        return importName(QualifiedName.parse(fullName));
+    }
 
 }

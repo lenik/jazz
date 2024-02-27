@@ -76,6 +76,17 @@ public class EsmModule
         return source;
     }
 
+    public EsmName defaultClass(String path) {
+        EsmSource source = source(path);
+
+        int lastSlash = path.lastIndexOf("/");
+        String base = lastSlash == -1 ? path : path.substring(lastSlash + 1);
+
+        String name = base;
+        EsmName esmName = source.defaultExport(name);
+        return esmName;
+    }
+
     public EsmName _class(String path) {
         EsmSource source = source(path);
 

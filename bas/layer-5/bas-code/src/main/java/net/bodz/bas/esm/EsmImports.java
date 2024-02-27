@@ -92,12 +92,7 @@ public class EsmImports {
                     continue;
 
             lines += buf.printOutTypeScriptForNewFrom(out, name.source);
-            if (name.isDefaultExport())
-                buf.defaultAlias = name.alias;
-            else if (name.type)
-                buf.typeNames.add(name);
-            else
-                buf.names.add(name);
+            buf.addName(name);
         }
         lines += buf.printOutTypeScriptForNewFrom(out, null);
         return lines;
