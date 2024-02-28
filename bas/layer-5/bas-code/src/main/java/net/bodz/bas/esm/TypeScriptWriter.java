@@ -50,6 +50,10 @@ public class TypeScriptWriter
         EsmSource source = findSource(qName, null);
         if (source == null) // reserved name, don't import.
             return null;
+
+        if (alias == null)
+            alias = qName.name;
+
         EsmName esmName;
         if (type)
             esmName = source.defaultTypeExport(alias);

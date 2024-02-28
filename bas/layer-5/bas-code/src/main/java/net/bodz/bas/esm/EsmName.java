@@ -39,6 +39,24 @@ public final class EsmName
         return name == null && alias != null;
     }
 
+    public String getActualName() {
+        return getActualName(false);
+    }
+
+    public String getActualName(boolean checkBaseName) {
+        if (alias != null)
+            return alias;
+        if (name != null)
+            return name;
+        if (checkBaseName && source.getBaseName() != null) {
+            String baseName = source.getBaseName();
+            int lastDot = baseName.lastIndexOf('.');
+            String name = lastDot == -1 ? baseName : baseName.substring(0, lastDot);
+            return name;
+        }
+        return null;
+    }
+
     public final boolean isTypeName() {
         return type;
     }
