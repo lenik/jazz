@@ -1,26 +1,32 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 
 import CoEntity from "../../concrete/CoEntity";
 import type Zone from "./Zone";
 import type ZoneCategory from "./ZoneCategory";
 import _Zone_stuff_TypeInfo from "./_Zone_stuff_TypeInfo";
 
-export class _Zone_stuff extends CoEntity<integer> {
-    static TYPE = new _Zone_stuff_TypeInfo();
+export class _Zone_stuff extends CoEntity<int> {
+    static _typeInfo: _Zone_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _Zone_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
+    id: int;
     code?: string;
     country?: string;
-    depth: integer;
+    depth: int;
     telCode?: string;
     postCode?: string;
-    data?: any;
+    data?: JsonVariant;
 
     parent?: Zone;
-    parentId?: integer;
+    parentId?: int;
 
     category: ZoneCategory;
-    categoryId: integer;
+    categoryId: int;
 
     constructor(o: any) {
         super(o);

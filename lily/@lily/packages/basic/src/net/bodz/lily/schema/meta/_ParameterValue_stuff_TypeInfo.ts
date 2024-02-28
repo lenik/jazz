@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import ParameterDefTypeInfo from "./ParameterDefTypeInfo";
+import ParameterDef from "./ParameterDef";
 import _ParameterValue_stuff_Validators from "./_ParameterValue_stuff_Validators";
 
 export class _ParameterValue_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,8 +12,8 @@ export class _ParameterValue_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_parmval";
 
-    name = "net.bodz.lily.schema.meta.ParameterValue"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.meta.ParameterValue"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -26,12 +28,12 @@ export class _ParameterValue_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _ParameterValue_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
-        val: property({ type: "string", nullable: false, validator: this.validators.validateVal }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+        val: property({ type: STRING, nullable: false, validator: this.validators.validateVal }),
 
-        parameter: property({ type: ParameterDefTypeInfo, nullable: false, validator: this.validators.validateParameter }),
-        parameterId: property({ type: "integer", nullable: false, precision: 10 }),
+        parameter: property({ type: ParameterDef.TYPE, nullable: false, validator: this.validators.validateParameter }),
+        parameterId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

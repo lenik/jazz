@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { InetAddress, Timestamp, int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -15,13 +15,13 @@ export class _UserRun_stuff_Validators extends CoEntityValidators {
         return this._type as _UserRun_stuff_TypeInfo;
     }
 
-    validateScore(val: integer) {
+    validateScore(val: int) {
     }
 
-    validateLastLoginTime(val: Date) {
+    validateLastLoginTime(val: Timestamp) {
     }
 
-    validateLastLoginIP(val: string) {
+    validateLastLoginIP(val: InetAddress) {
     }
 
     validateUser(val: User) {

@@ -1,11 +1,14 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
+import ApiType from "./ApiType";
 import { VApiLog } from "./VApiLog";
+import VApp from "./VApp";
 
 export const title = "Choose dialog for: V api log";
 export interface Props {
@@ -29,6 +32,16 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "LONG": LONG,
+    "STRING": STRING,
+    "INT": INT,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "VApp": VApp.TYPE,
+    "ApiType": ApiType.TYPE,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -42,21 +55,21 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="VApiLog.TYPE" :modal="modal">
-        <th data-type="long" data-field="id">Id</th>
-        <th data-type="string" data-field="label">Label</th>
-        <th data-type="string" data-field="description">Description</th>
-        <th data-type="string" data-field="icon">Icon</th>
-        <th data-type="integer" data-field="priority">Priority</th>
-        <th data-type="integer" data-field="flags">Flags</th>
-        <th data-type="string" data-field="state">State</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="VApiLog.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="LONG" data-field="id">Id</th>
+        <th data-type="STRING" data-field="label">Label</th>
+        <th data-type="STRING" data-field="description">Description</th>
+        <th data-type="STRING" data-field="icon">Icon</th>
+        <th data-type="INT" data-field="priority">Priority</th>
+        <th data-type="INT" data-field="flags">Flags</th>
+        <th data-type="DefaultState" data-field="state">State</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-        <th data-type="integer" data-field="version">Version</th>
-        <th data-type="string" data-format="label" data-field="app">App</th>
-        <th data-type="string" data-format="label" data-field="api">Api</th>
-        <th data-type="string" data-field="message">Message</th>
-        <th data-type="string" data-field="err">Err</th>
+        <th data-type="INT" data-field="version">Version</th>
+        <th data-type="VApp" data-format="label" data-field="app">App</th>
+        <th data-type="ApiType" data-format="label" data-field="api">Api</th>
+        <th data-type="STRING" data-field="message">Message</th>
+        <th data-type="STRING" data-field="err">Err</th>
     </EntityChooseDialog>
 </template>
 

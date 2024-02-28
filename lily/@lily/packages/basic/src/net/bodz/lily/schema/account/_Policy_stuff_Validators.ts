@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -14,7 +14,7 @@ export class _Policy_stuff_Validators extends CoEntityValidators {
         return this._type as _Policy_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateName(val: string) {
@@ -26,10 +26,10 @@ export class _Policy_stuff_Validators extends CoEntityValidators {
     validateMethodName(val: string) {
     }
 
-    validateAllowBits(val: integer) {
+    validateAllowBits(val: int) {
     }
 
-    validateDenyBits(val: integer) {
+    validateDenyBits(val: int) {
     }
 
 }

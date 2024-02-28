@@ -1,15 +1,20 @@
-import type { double, integer, long } from "@skeljs/core/src/lang/type";
+import type { double, int, long } from "@skeljs/core/src/lang/basetype";
 
 import CoEntity from "../../concrete/CoEntity";
 import type Article from "./Article";
 import type ArticleParameterType from "./ArticleParameterType";
 import _ArticleParameter_stuff_TypeInfo from "./_ArticleParameter_stuff_TypeInfo";
 
-export class _ArticleParameter_stuff extends CoEntity<integer> {
-    static TYPE = new _ArticleParameter_stuff_TypeInfo();
+export class _ArticleParameter_stuff extends CoEntity<int> {
+    static _typeInfo: _ArticleParameter_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _ArticleParameter_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
-    ival?: integer;
+    id: int;
+    ival?: int;
     fval?: double;
     sval?: string;
 
@@ -17,7 +22,7 @@ export class _ArticleParameter_stuff extends CoEntity<integer> {
     articleId: long;
 
     parameter: ArticleParameterType;
-    parameterId: integer;
+    parameterId: int;
 
     constructor(o: any) {
         super(o);

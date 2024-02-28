@@ -1,8 +1,10 @@
-import type { double, integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import UomTypeInfo from "./UomTypeInfo";
+import Uom from "./Uom";
 import _Uom_stuff_Validators from "./_Uom_stuff_Validators";
 
 export class _Uom_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,8 +12,8 @@ export class _Uom_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "uom";
 
-    name = "net.bodz.lily.schema.util.Uom"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.util.Uom"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -28,13 +30,13 @@ export class _Uom_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _Uom_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
-        prop: property({ type: "string", nullable: false, precision: 30, validator: this.validators.validateProp }),
-        scale: property({ type: "double", nullable: false, precision: 17, scale: 17, validator: this.validators.validateScale }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+        prop: property({ type: STRING, nullable: false, precision: 30, validator: this.validators.validateProp }),
+        scale: property({ type: DOUBLE, nullable: false, precision: 17, scale: 17, validator: this.validators.validateScale }),
 
-        std: property({ type: UomTypeInfo, validator: this.validators.validateStd }),
-        stdId: property({ type: "integer", precision: 10 }),
+        std: property({ type: this, validator: this.validators.validateStd }),
+        stdId: property({ type: INT, precision: 10 }),
     }
 
     constructor() {

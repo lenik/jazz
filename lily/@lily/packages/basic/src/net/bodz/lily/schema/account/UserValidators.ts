@@ -1,6 +1,7 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type List from "../../../../../java/util/List";
 import type Group from "./Group";
 import type UserOtherId from "./UserOtherId";
 import type UserRun from "./UserRun";
@@ -18,19 +19,19 @@ export class UserValidators extends _User_stuff_Validators {
         return this._type as UserTypeInfo;
     }
 
-    validateGroupIds(val: integer[]) {
+    validateGroupIds(val: Set<int>) {
     }
 
-    validateGroups(val: Group[]) {
+    validateGroups(val: List<Group>) {
     }
 
-    validateIds(val: UserOtherId[]) {
+    validateIds(val: List<UserOtherId>) {
     }
 
-    validateOtherIds(val: UserOtherId[]) {
+    validateOtherIds(val: List<UserOtherId>) {
     }
 
-    validateRegisterIP(val: string) {
+    validateRegisterIP(val: InetAddress) {
     }
 
     validateRunningState(val: UserRun) {
@@ -39,7 +40,7 @@ export class UserValidators extends _User_stuff_Validators {
     validateSecret(val: UserSecret) {
     }
 
-    validateSecrets(val: UserSecret[]) {
+    validateSecrets(val: List<UserSecret>) {
     }
 
     validateSuperUser(val: boolean) {

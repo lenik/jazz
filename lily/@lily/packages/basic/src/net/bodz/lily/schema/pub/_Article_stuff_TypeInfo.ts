@@ -1,8 +1,11 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { long } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
-import ArticleCategoryTypeInfo from "./ArticleCategoryTypeInfo";
+import ArticleCategory from "./ArticleCategory";
 import _Article_stuff_Validators from "./_Article_stuff_Validators";
 
 export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -10,8 +13,8 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article";
 
-    name = "net.bodz.lily.schema.pub.Article"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.Article"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_FORM_ARGUMENTS = "formargs";
     static FIELD_CATEGORY_ID = "cat";
@@ -32,15 +35,15 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
     validators = new _Article_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        formArguments: property({ type: "string", validator: this.validators.validateFormArguments }),
-        favCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateFavCount }),
-        voteCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
-        hateCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateHateCount }),
-        messageCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
-        plugins: property({ type: "any", validator: this.validators.validatePlugins }),
+        formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
+        favCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateFavCount }),
+        voteCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
+        hateCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateHateCount }),
+        messageCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
+        plugins: property({ type: JSON_VARIANT, validator: this.validators.validatePlugins }),
 
-        category: property({ type: ArticleCategoryTypeInfo, validator: this.validators.validateCategory }),
-        categoryId: property({ type: "integer", precision: 10 }),
+        category: property({ type: ArticleCategory.TYPE, validator: this.validators.validateCategory }),
+        categoryId: property({ type: INT, precision: 10 }),
     }
 
     constructor() {

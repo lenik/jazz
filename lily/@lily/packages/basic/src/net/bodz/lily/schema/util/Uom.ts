@@ -2,7 +2,13 @@ import UomTypeInfo from "./UomTypeInfo";
 import _Uom_stuff from "./_Uom_stuff";
 
 export class Uom extends _Uom_stuff {
-    static TYPE = new UomTypeInfo();
+    static _typeInfo: UomTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new UomTypeInfo();
+        return this._typeInfo;
+    }
+
 
     constructor(o: any) {
         super(o);

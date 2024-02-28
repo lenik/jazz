@@ -1,9 +1,11 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import PersonTagTypeTypeInfo from "./PersonTagTypeTypeInfo";
-import PersonTypeInfo from "./PersonTypeInfo";
+import Person from "./Person";
+import PersonTagType from "./PersonTagType";
 import _PersonTag_stuff_Validators from "./_PersonTag_stuff_Validators";
 
 export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -11,8 +13,8 @@ export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "person_tag";
 
-    name = "net.bodz.lily.schema.contact.PersonTag"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.PersonTag"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_PERSON_ID = "person";
@@ -25,13 +27,13 @@ export class _PersonTag_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _PersonTag_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: PersonTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
-        tagId: property({ type: "integer", nullable: false, precision: 10 }),
+        tag: property({ type: PersonTagType.TYPE, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: INT, nullable: false, precision: 10 }),
 
-        person: property({ type: PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
-        personId: property({ type: "integer", nullable: false, precision: 10 }),
+        person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+        personId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

@@ -1,5 +1,6 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type List from "../../../../../java/util/List";
 import type Contact from "./Contact";
 import type OrgUnitTypeInfo from "./OrgUnitTypeInfo";
 import type PersonRole from "./PersonRole";
@@ -18,7 +19,7 @@ export class OrgUnitValidators extends _OrgUnit_stuff_Validators {
     validateContact(val: Contact) {
     }
 
-    validateStaff(val: PersonRole[]) {
+    validateStaff(val: List<PersonRole>) {
     }
 
 }

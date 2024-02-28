@@ -1,12 +1,12 @@
-import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 
 import UomValidators from "./UomValidators";
 import _Uom_stuff_TypeInfo from "./_Uom_stuff_TypeInfo";
 
 export class UomTypeInfo extends _Uom_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.util.Uom"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.util.Uom"; }
+    get icon() { return "fa-tag"; }
 
     validators = new UomValidators(this);
 

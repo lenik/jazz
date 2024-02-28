@@ -10,10 +10,10 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 
 export class ContactTypeInfo extends IdEntityTypeInfo {
 
-    name = "net.bodz.lily.schema.contact.Contact"
-    icon = "fa-address-card"
-    label = "Contact Information"
-    description = "A contact record."
+    get name() { return "net.bodz.lily.schema.contact.Contact"; }
+    get icon() { return "fa-address-card"; }
+    get label() { return "Contact Information"; }
+    get description() { return "A contact record."; }
 
     declaredProperty: EntityPropertyMap = {
         org: property({ type: JSON_VARIANT, icon: "fa-build" }),

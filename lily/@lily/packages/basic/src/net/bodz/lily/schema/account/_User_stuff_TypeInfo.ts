@@ -1,11 +1,12 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
-import PersonTypeInfo from "../contact/PersonTypeInfo";
-import GroupTypeInfo from "./GroupTypeInfo";
-import UserTypeInfo from "./UserTypeInfo";
-import UserTypeTypeInfo from "./UserTypeTypeInfo";
+import Person from "../contact/Person";
+import Group from "./Group";
+import User from "./User";
+import UserType from "./UserType";
 import _User_stuff_Validators from "./_User_stuff_Validators";
 
 export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
@@ -13,10 +14,10 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "user";
 
-    name = "net.bodz.lily.schema.account.User"
-    icon = "fa-tag"
-    label = "User (Account)"
-    description = "User Account"
+    get name() { return "net.bodz.lily.schema.account.User"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "User (Account)"; }
+    get description() { return "User Account"; }
 
     static FIELD_TYPE_ID = "type";
     static FIELD_PRIMARY_GROUP_ID = "gid0";
@@ -32,25 +33,25 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
 
-        person: property({ type: PersonTypeInfo, validator: this.validators.validatePerson }),
-        personId: property({ type: "integer", precision: 10 }),
+        person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+        personId: property({ type: INT, precision: 10 }),
 
-        primaryGroup: property({ type: GroupTypeInfo, nullable: false, 
+        primaryGroup: property({ type: Group.TYPE, nullable: false, 
             description: "The primary user group, the default value of ownerGroup.", 
             validator: this.validators.validatePrimaryGroup }),
-        primaryGroupId: property({ type: "integer", nullable: false, precision: 10, 
+        primaryGroupId: property({ type: INT, nullable: false, precision: 10, 
             description: "The primary user group, the default value of ownerGroup." }),
 
-        referer: property({ type: UserTypeInfo, 
+        referer: property({ type: this, 
             description: "The referer user (used for promotion)", 
             validator: this.validators.validateReferer }),
-        refererId: property({ type: "integer", precision: 10, 
+        refererId: property({ type: INT, precision: 10, 
             description: "The referer user (used for promotion)" }),
 
-        type: property({ type: UserTypeTypeInfo, nullable: false, 
+        type: property({ type: UserType.TYPE, nullable: false, 
             description: "User type like system-user, normal-user, etc.", 
             validator: this.validators.validateType }),
-        typeId: property({ type: "integer", nullable: false, precision: 10, 
+        typeId: property({ type: INT, nullable: false, precision: 10, 
             description: "User type like system-user, normal-user, etc." }),
     }
 

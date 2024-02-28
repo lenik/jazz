@@ -1,9 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
-import GroupTypeInfo from "./GroupTypeInfo";
-import GroupTypeTypeInfo from "./GroupTypeTypeInfo";
+import Group from "./Group";
+import GroupType from "./GroupType";
 import _Group_stuff_Validators from "./_Group_stuff_Validators";
 
 export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
@@ -11,10 +12,10 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "group";
 
-    name = "net.bodz.lily.schema.account.Group"
-    icon = "fa-tag"
-    label = "Group (Role)"
-    description = "User Group"
+    get name() { return "net.bodz.lily.schema.account.Group"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Group (Role)"; }
+    get description() { return "User Group"; }
 
     static FIELD_TYPE_ID = "type";
     static FIELD_PARENT_ID = "parent";
@@ -26,16 +27,16 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
 
-        parent: property({ type: GroupTypeInfo, 
+        parent: property({ type: this, 
             description: "The parent group. must be acyclic", 
             validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10, 
+        parentId: property({ type: INT, precision: 10, 
             description: "The parent group. must be acyclic" }),
 
-        type: property({ type: GroupTypeTypeInfo, nullable: false, 
+        type: property({ type: GroupType.TYPE, nullable: false, 
             description: "Group type like normal-group, role-group, etc.", 
             validator: this.validators.validateType }),
-        typeId: property({ type: "integer", nullable: false, precision: 10, 
+        typeId: property({ type: INT, nullable: false, precision: 10, 
             description: "Group type like normal-group, role-group, etc." }),
     }
 

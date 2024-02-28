@@ -1,5 +1,6 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
 
+import List from "../../../../../java/util/List";
 import Group from "./Group";
 import UserOtherId from "./UserOtherId";
 import UserRun from "./UserRun";
@@ -8,16 +9,22 @@ import UserTypeInfo from "./UserTypeInfo";
 import _User_stuff from "./_User_stuff";
 
 export class User extends _User_stuff {
-    static TYPE = new UserTypeInfo();
+    static _typeInfo: UserTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new UserTypeInfo();
+        return this._typeInfo;
+    }
 
-    groupIds?: integer[]
-    groups?: Group[]
-    ids?: UserOtherId[]
-    otherIds?: UserOtherId[]
-    registerIP?: string
+
+    groupIds?: Set<int>
+    groups?: List<Group>
+    ids?: List<UserOtherId>
+    otherIds?: List<UserOtherId>
+    registerIP?: InetAddress
     runningState?: UserRun
     secret?: UserSecret
-    secrets?: UserSecret[]
+    secrets?: List<UserSecret>
     superUser: boolean
 
     constructor(o: any) {

@@ -1,6 +1,7 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type List from "../../../../../java/util/List";
 import type CategoryDef from "./CategoryDef";
 import type ParameterDef from "./ParameterDef";
 import type PhaseDef from "./PhaseDef";
@@ -19,19 +20,19 @@ export class SchemaDefValidators extends _SchemaDef_stuff_Validators {
         return this._type as SchemaDefTypeInfo;
     }
 
-    validateCategories(val: CategoryDef[]) {
+    validateCategories(val: List<CategoryDef>) {
     }
 
-    validateParameters(val: ParameterDef[]) {
+    validateParameters(val: List<ParameterDef>) {
     }
 
-    validatePhases(val: PhaseDef[]) {
+    validatePhases(val: List<PhaseDef>) {
     }
 
-    validatePriorities(val: PriorityDef[]) {
+    validatePriorities(val: List<PriorityDef>) {
     }
 
-    validateTagGroups(val: TagGroupDef[]) {
+    validateTagGroups(val: List<TagGroupDef>) {
     }
 
 }

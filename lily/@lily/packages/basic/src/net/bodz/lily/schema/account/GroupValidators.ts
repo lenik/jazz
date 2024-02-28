@@ -1,5 +1,6 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type List from "../../../../../java/util/List";
 import type Group from "./Group";
 import type GroupTypeInfo from "./GroupTypeInfo";
 import type User from "./User";
@@ -15,10 +16,10 @@ export class GroupValidators extends _Group_stuff_Validators {
         return this._type as GroupTypeInfo;
     }
 
-    validateChildren(val: Group[]) {
+    validateChildren(val: List<Group>) {
     }
 
-    validateUsers(val: User[]) {
+    validateUsers(val: List<User>) {
     }
 
 }

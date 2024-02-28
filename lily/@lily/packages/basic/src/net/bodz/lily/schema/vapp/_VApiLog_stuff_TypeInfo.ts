@@ -1,9 +1,11 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { long } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import ApiTypeTypeInfo from "./ApiTypeTypeInfo";
-import VAppTypeInfo from "./VAppTypeInfo";
+import ApiType from "./ApiType";
+import VApp from "./VApp";
 import _VApiLog_stuff_Validators from "./_VApiLog_stuff_Validators";
 
 export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -11,8 +13,8 @@ export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vapi_log";
 
-    name = "net.bodz.lily.schema.vapp.VApiLog"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.vapp.VApiLog"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_APP_ID = "app";
@@ -29,15 +31,15 @@ export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _VApiLog_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "long", nullable: false, precision: 19, validator: this.validators.validateId }),
-        message: property({ type: "string", validator: this.validators.validateMessage }),
-        err: property({ type: "string", validator: this.validators.validateErr }),
+        id: primaryKey({ type: LONG, nullable: false, precision: 19, validator: this.validators.validateId }),
+        message: property({ type: STRING, validator: this.validators.validateMessage }),
+        err: property({ type: STRING, validator: this.validators.validateErr }),
 
-        api: property({ type: ApiTypeTypeInfo, validator: this.validators.validateApi }),
-        apiId: property({ type: "integer", precision: 10 }),
+        api: property({ type: ApiType.TYPE, validator: this.validators.validateApi }),
+        apiId: property({ type: INT, precision: 10 }),
 
-        app: property({ type: VAppTypeInfo, nullable: false, validator: this.validators.validateApp }),
-        appId: property({ type: "integer", nullable: false, precision: 10 }),
+        app: property({ type: VApp.TYPE, nullable: false, validator: this.validators.validateApp }),
+        appId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

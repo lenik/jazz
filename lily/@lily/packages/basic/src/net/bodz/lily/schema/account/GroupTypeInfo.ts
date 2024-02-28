@@ -1,4 +1,6 @@
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { LIST } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Group from "./Group";
 import GroupValidators from "./GroupValidators";
@@ -7,16 +9,16 @@ import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
 
 export class GroupTypeInfo extends _Group_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.account.Group"
-    icon = "fa-tag"
-    label = "Group (Role)"
-    description = "User Group"
+    get name() { return "net.bodz.lily.schema.account.Group"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Group (Role)"; }
+    get description() { return "User Group"; }
 
     validators = new GroupValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        children: property({ type: "Group[]", validator: this.validators.validateChildren }),
-        users: property({ type: "User[]", validator: this.validators.validateUsers }),
+        children: property({ type: LIST(Group.TYPE), validator: this.validators.validateChildren }),
+        users: property({ type: LIST(User.TYPE), validator: this.validators.validateUsers }),
     }
 
     constructor() {

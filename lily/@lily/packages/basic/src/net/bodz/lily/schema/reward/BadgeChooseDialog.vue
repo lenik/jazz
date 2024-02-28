@@ -1,8 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { ARRAY, BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { Badge } from "./Badge";
@@ -29,6 +30,15 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "ARRAY(INT)": ARRAY(INT),
+    "BOOLEAN": BOOLEAN,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -42,24 +52,24 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Badge.TYPE" :modal="modal">
-        <th data-type="integer" data-field="id">Id</th>
-        <th data-type="string" data-field="label">Label</th>
-        <th data-type="string" data-field="description">Description</th>
-        <th data-type="string" data-field="icon">Icon</th>
-        <th data-type="integer" data-field="priority">Priority</th>
-        <th data-type="integer" data-field="flags">Flags</th>
-        <th data-type="string" data-field="state">State</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="Badge.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="INT" data-field="id">Id</th>
+        <th data-type="STRING" data-field="label">Label</th>
+        <th data-type="STRING" data-field="description">Description</th>
+        <th data-type="STRING" data-field="icon">Icon</th>
+        <th data-type="INT" data-field="priority">Priority</th>
+        <th data-type="INT" data-field="flags">Flags</th>
+        <th data-type="DefaultState" data-field="state">State</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-        <th data-type="integer" data-field="version">Version</th>
-        <th data-type="string" data-field="expr">Expr</th>
-        <th data-type="integer" data-field="val">Val</th>
-        <th data-type="integer[]" data-field="levels">Levels</th>
-        <th data-type="boolean" data-field="descend">Descend</th>
-        <th data-type="boolean" data-field="transient_">Transient_</th>
-        <th data-type="boolean" data-field="indexed">Indexed</th>
-        <th data-type="string" data-field="image">Image</th>
+        <th data-type="INT" data-field="version">Version</th>
+        <th data-type="STRING" data-field="expr">Expr</th>
+        <th data-type="INT" data-field="val">Val</th>
+        <th data-type="ARRAY(INT)" data-field="levels">Levels</th>
+        <th data-type="BOOLEAN" data-field="descend">Descend</th>
+        <th data-type="BOOLEAN" data-field="transient_">Transient_</th>
+        <th data-type="BOOLEAN" data-field="indexed">Indexed</th>
+        <th data-type="STRING" data-field="image">Image</th>
     </EntityChooseDialog>
 </template>
 

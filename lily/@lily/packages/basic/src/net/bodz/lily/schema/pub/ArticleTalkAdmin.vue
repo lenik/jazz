@@ -1,9 +1,13 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
+import User from "../account/User";
+import FormDef from "../meta/FormDef";
+import Article from "./Article";
 import ArticleTalk from "./ArticleTalk";
 
 export const title = "Admin view of: Article talk";
@@ -23,6 +27,19 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = ArticleTalk.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "INT": INT,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "STRING": STRING,
+    "User": User.TYPE,
+    "FormDef": FormDef.TYPE,
+    "Article": Article.TYPE,
+    "ArticleTalk": ArticleTalk.TYPE,
+};
+
 onMounted(() => {
 });
 
@@ -30,25 +47,25 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="long" data-field="id">Id</th>
-            <th data-type="integer" data-field="priority">Priority</th>
-            <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="string" data-field="state">State</th>
+            <th data-type="LONG" data-field="id">Id</th>
+            <th data-type="INT" data-field="priority">Priority</th>
+            <th data-type="INT" data-field="flags">Flags</th>
+            <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
+            <th data-type="INT" data-field="version">Version</th>
             <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
             <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
-            <th data-type="integer" data-field="year">Year</th>
-            <th data-type="string" data-field="subject">Subject</th>
-            <th data-type="string" data-format="label" data-field="op">Op</th>
-            <th data-type="string" data-field="rawText">Raw Text</th>
-            <th data-type="string" data-format="label" data-field="form">Form</th>
-            <th data-type="string" data-field="formArguments">Form Arguments</th>
-            <th data-type="string" data-format="label" data-field="article">Article</th>
-            <th data-type="string" data-format="label" data-field="parent">Parent</th>
+            <th data-type="INT" data-field="year">Year</th>
+            <th data-type="STRING" data-field="subject">Subject</th>
+            <th data-type="User" data-format="label" data-field="op">Op</th>
+            <th data-type="STRING" data-field="rawText">Raw Text</th>
+            <th data-type="FormDef" data-format="label" data-field="form">Form</th>
+            <th data-type="STRING" data-field="formArguments">Form Arguments</th>
+            <th data-type="Article" data-format="label" data-field="article">Article</th>
+            <th data-type="ArticleTalk" data-format="label" data-field="parent">Parent</th>
         </template>
         <template #preview>
             <ArticleTalkEditor class="editor" v-model="selection" />

@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import SchemaDefTypeInfo from "./SchemaDefTypeInfo";
+import SchemaDef from "./SchemaDef";
 import _TagGroupDef_stuff_Validators from "./_TagGroupDef_stuff_Validators";
 
 export class _TagGroupDef_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,9 +12,9 @@ export class _TagGroupDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_tagv";
 
-    name = "net.bodz.lily.schema.meta.TagGroupDef"
-    icon = "fa-tag"
-    label = "Tag Group"
+    get name() { return "net.bodz.lily.schema.meta.TagGroupDef"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Tag Group"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -29,13 +31,13 @@ export class _TagGroupDef_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _TagGroupDef_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
-        forTopic: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForTopic }),
-        forReply: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateForReply }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+        forTopic: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateForTopic }),
+        forReply: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateForReply }),
 
-        schema: property({ type: SchemaDefTypeInfo, nullable: false, validator: this.validators.validateSchema }),
-        schemaId: property({ type: "integer", nullable: false, precision: 10 }),
+        schema: property({ type: SchemaDef.TYPE, nullable: false, validator: this.validators.validateSchema }),
+        schemaId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

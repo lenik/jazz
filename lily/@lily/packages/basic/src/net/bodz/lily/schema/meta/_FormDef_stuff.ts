@@ -1,19 +1,24 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 
 import CoEntity from "../../concrete/CoEntity";
 import type SchemaDef from "./SchemaDef";
 import _FormDef_stuff_TypeInfo from "./_FormDef_stuff_TypeInfo";
 
-export class _FormDef_stuff extends CoEntity<integer> {
-    static TYPE = new _FormDef_stuff_TypeInfo();
+export class _FormDef_stuff extends CoEntity<int> {
+    static _typeInfo: _FormDef_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _FormDef_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
+    id: int;
     code?: string;
     subject?: string;
     rawText?: string;
 
     schema: SchemaDef;
-    schemaId: integer;
+    schemaId: int;
 
     constructor(o: any) {
         super(o);

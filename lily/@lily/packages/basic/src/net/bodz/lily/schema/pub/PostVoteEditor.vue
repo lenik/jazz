@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import IdEntity from "../../concrete/IdEntity";

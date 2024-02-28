@@ -1,29 +1,34 @@
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 
 import CoEntity from "../../concrete/CoEntity";
 import type User from "../account/User";
 import type FormDef from "../meta/FormDef";
 import _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";
 
-export class _VAppRequest_stuff extends CoEntity<integer> {
-    static TYPE = new _VAppRequest_stuff_TypeInfo();
+export class _VAppRequest_stuff extends CoEntity<int> {
+    static _typeInfo: _VAppRequest_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _VAppRequest_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
+    id: int;
     code?: string;
     beginTime?: ZonedDateTime;
     endTime?: ZonedDateTime;
-    year: integer;
+    year: int;
     subject: string;
     rawText?: string;
     formArguments?: string;
-    dummy?: integer;
+    dummy?: int;
 
     op?: User;
-    opId?: integer;
+    opId?: int;
 
     form?: FormDef;
-    formId?: integer;
+    formId?: int;
 
     constructor(o: any) {
         super(o);

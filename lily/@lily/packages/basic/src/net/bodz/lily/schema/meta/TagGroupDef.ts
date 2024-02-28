@@ -1,12 +1,19 @@
+import List from "../../../../../java/util/List";
 import TagDef from "./TagDef";
 import TagGroupDefTypeInfo from "./TagGroupDefTypeInfo";
 import _TagGroupDef_stuff from "./_TagGroupDef_stuff";
 
 export class TagGroupDef extends _TagGroupDef_stuff {
-    static TYPE = new TagGroupDefTypeInfo();
+    static _typeInfo: TagGroupDefTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new TagGroupDefTypeInfo();
+        return this._typeInfo;
+    }
+
 
     ortho: boolean
-    tags?: TagDef[]
+    tags?: List<TagDef>
 
     constructor(o: any) {
         super(o);

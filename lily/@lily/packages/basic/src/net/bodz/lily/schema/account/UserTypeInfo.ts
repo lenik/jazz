@@ -1,5 +1,6 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { BOOLEAN, INET_ADDRESS, INT, LIST, SET } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Group from "./Group";
 import UserOtherId from "./UserOtherId";
@@ -10,23 +11,23 @@ import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class UserTypeInfo extends _User_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.account.User"
-    icon = "fa-tag"
-    label = "User (Account)"
-    description = "User Account"
+    get name() { return "net.bodz.lily.schema.account.User"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "User (Account)"; }
+    get description() { return "User Account"; }
 
     validators = new UserValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        groupIds: property({ type: "integer[]", validator: this.validators.validateGroupIds }),
-        groups: property({ type: "Group[]", validator: this.validators.validateGroups }),
-        ids: property({ type: "UserOtherId[]", validator: this.validators.validateIds }),
-        otherIds: property({ type: "UserOtherId[]", validator: this.validators.validateOtherIds }),
-        registerIP: property({ type: "string", label: "Register IP", validator: this.validators.validateRegisterIP }),
-        runningState: property({ type: "UserRun", validator: this.validators.validateRunningState }),
-        secret: property({ type: "UserSecret", validator: this.validators.validateSecret }),
-        secrets: property({ type: "UserSecret[]", validator: this.validators.validateSecrets }),
-        superUser: property({ type: "boolean", nullable: false, validator: this.validators.validateSuperUser }),
+        groupIds: property({ type: SET(INT), validator: this.validators.validateGroupIds }),
+        groups: property({ type: LIST(Group.TYPE), validator: this.validators.validateGroups }),
+        ids: property({ type: LIST(UserOtherId.TYPE), validator: this.validators.validateIds }),
+        otherIds: property({ type: LIST(UserOtherId.TYPE), validator: this.validators.validateOtherIds }),
+        registerIP: property({ type: INET_ADDRESS, label: "Register IP", validator: this.validators.validateRegisterIP }),
+        runningState: property({ type: UserRun.TYPE, validator: this.validators.validateRunningState }),
+        secret: property({ type: UserSecret.TYPE, validator: this.validators.validateSecret }),
+        secrets: property({ type: LIST(UserSecret.TYPE), validator: this.validators.validateSecrets }),
+        superUser: property({ type: BOOLEAN, nullable: false, validator: this.validators.validateSuperUser }),
     }
 
     constructor() {

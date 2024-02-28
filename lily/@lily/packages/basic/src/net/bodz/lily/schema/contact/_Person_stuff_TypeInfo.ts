@@ -1,8 +1,10 @@
-import type { char, integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { BOOLEAN, CHAR, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import PartyTypeInfo from "./PartyTypeInfo";
-import PersonTypeInfo from "./PersonTypeInfo";
+import Person from "./Person";
 import _Person_stuff_Validators from "./_Person_stuff_Validators";
 
 export class _Person_stuff_TypeInfo extends PartyTypeInfo {
@@ -10,8 +12,8 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "person";
 
-    name = "net.bodz.lily.schema.contact.Person"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.Person"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_PROPERTIES = "props";
     static FIELD_FATHER_ID = "father";
@@ -44,23 +46,23 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
     validators = new _Person_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        properties: property({ type: "any", validator: this.validators.validateProperties }),
-        roleCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
-        employee: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateEmployee }),
-        bankCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateBankCount }),
-        gender: property({ type: "char", precision: 1, validator: this.validators.validateGender }),
-        pronoun: property({ type: "string", precision: 30, validator: this.validators.validatePronoun }),
-        sexualOrientation: property({ type: "string", precision: 30, validator: this.validators.validateSexualOrientation }),
-        homeland: property({ type: "string", precision: 10, validator: this.validators.validateHomeland }),
-        passport: property({ type: "string", precision: 20, validator: this.validators.validatePassport }),
-        ssn: property({ type: "string", precision: 20, validator: this.validators.validateSsn }),
-        dln: property({ type: "string", precision: 20, validator: this.validators.validateDln }),
+        properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+        roleCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
+        employee: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateEmployee }),
+        bankCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateBankCount }),
+        gender: property({ type: CHAR, precision: 1, validator: this.validators.validateGender }),
+        pronoun: property({ type: STRING, precision: 30, validator: this.validators.validatePronoun }),
+        sexualOrientation: property({ type: STRING, precision: 30, validator: this.validators.validateSexualOrientation }),
+        homeland: property({ type: STRING, precision: 10, validator: this.validators.validateHomeland }),
+        passport: property({ type: STRING, precision: 20, validator: this.validators.validatePassport }),
+        ssn: property({ type: STRING, precision: 20, validator: this.validators.validateSsn }),
+        dln: property({ type: STRING, precision: 20, validator: this.validators.validateDln }),
 
-        mother: property({ type: PersonTypeInfo, validator: this.validators.validateMother }),
-        motherId: property({ type: "integer", precision: 10 }),
+        mother: property({ type: this, validator: this.validators.validateMother }),
+        motherId: property({ type: INT, precision: 10 }),
 
-        father: property({ type: PersonTypeInfo, validator: this.validators.validateFather }),
-        fatherId: property({ type: "integer", precision: 10 }),
+        father: property({ type: this, validator: this.validators.validateFather }),
+        fatherId: property({ type: INT, precision: 10 }),
     }
 
     constructor() {

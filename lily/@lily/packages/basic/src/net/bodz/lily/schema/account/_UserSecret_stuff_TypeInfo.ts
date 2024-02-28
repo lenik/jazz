@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import UserTypeInfo from "./UserTypeInfo";
+import User from "./User";
 import _UserSecret_stuff_Validators from "./_UserSecret_stuff_Validators";
 
 export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,9 +12,9 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "usersec";
 
-    name = "net.bodz.lily.schema.account.UserSecret"
-    icon = "fa-tag"
-    description = "User Secret"
+    get name() { return "net.bodz.lily.schema.account.UserSecret"; }
+    get icon() { return "fa-tag"; }
+    get description() { return "User Secret"; }
 
     static FIELD_ID = "id";
     static FIELD_USER_ID = "user";
@@ -29,21 +31,21 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _UserSecret_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        password: property({ type: "string", nullable: false, precision: 40, 
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        password: property({ type: STRING, nullable: false, precision: 40, 
             description: "Password data", 
             validator: this.validators.validatePassword }),
-        question: property({ type: "string", precision: 100, 
+        question: property({ type: STRING, precision: 100, 
             description: "Protection question", 
             validator: this.validators.validateQuestion }),
-        answer: property({ type: "string", precision: 30, 
+        answer: property({ type: STRING, precision: 30, 
             description: "Protection answer", 
             validator: this.validators.validateAnswer }),
 
-        user: property({ type: UserTypeInfo, nullable: false, 
+        user: property({ type: User.TYPE, nullable: false, 
             description: "The declaring user", 
             validator: this.validators.validateUser }),
-        userId: property({ type: "integer", nullable: false, precision: 10, 
+        userId: property({ type: INT, nullable: false, precision: 10, 
             description: "The declaring user" }),
     }
 

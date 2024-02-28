@@ -1,12 +1,12 @@
-import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 
 import PersonTagTypeValidators from "./PersonTagTypeValidators";
 import _PersonTagType_stuff_TypeInfo from "./_PersonTagType_stuff_TypeInfo";
 
 export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.contact.PersonTagType"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.PersonTagType"; }
+    get icon() { return "fa-tag"; }
 
     validators = new PersonTagTypeValidators(this);
 

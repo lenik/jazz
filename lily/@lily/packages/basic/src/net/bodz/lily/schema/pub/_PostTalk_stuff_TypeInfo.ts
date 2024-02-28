@@ -1,8 +1,9 @@
-import type { long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoTalkTypeInfo from "../../concrete/CoTalkTypeInfo";
-import PostTypeInfo from "./PostTypeInfo";
+import Post from "./Post";
 import _PostTalk_stuff_Validators from "./_PostTalk_stuff_Validators";
 
 export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
@@ -10,8 +11,8 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_msg";
 
-    name = "net.bodz.lily.schema.pub.PostTalk"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostTalk"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_FORM_ARGUMENTS = "formargs";
     static FIELD_POST_ID = "post";
@@ -22,10 +23,10 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
     validators = new _PostTalk_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        formArguments: property({ type: "string", validator: this.validators.validateFormArguments }),
+        formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
 
-        post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
-        postId: property({ type: "long", nullable: false, precision: 19 }),
+        post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+        postId: property({ type: LONG, nullable: false, precision: 19 }),
     }
 
     constructor() {

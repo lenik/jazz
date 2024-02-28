@@ -1,10 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { double, integer } from "@skeljs/core/src/lang/type";
 
+import Post from "./Post";
 import PostParameter from "./PostParameter";
+import PostParameterType from "./PostParameterType";
 
 export const title = "Admin view of: Post parameter";
 export interface Props {
@@ -23,6 +25,16 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = PostParameter.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "Post": Post.TYPE,
+    "PostParameterType": PostParameterType.TYPE,
+    "DOUBLE": DOUBLE,
+    "STRING": STRING,
+};
+
 onMounted(() => {
 });
 
@@ -30,17 +42,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
+            <th data-type="INT" data-field="id">Id</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="string" data-format="label" data-field="post">Post</th>
-            <th data-type="string" data-format="label" data-field="parameter">Parameter</th>
-            <th data-type="integer" data-field="ival">Ival</th>
-            <th data-type="double" data-field="fval">Fval</th>
-            <th data-type="string" data-field="sval">Sval</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="Post" data-format="label" data-field="post">Post</th>
+            <th data-type="PostParameterType" data-format="label" data-field="parameter">Parameter</th>
+            <th data-type="INT" data-field="ival">Ival</th>
+            <th data-type="DOUBLE" data-field="fval">Fval</th>
+            <th data-type="STRING" data-field="sval">Sval</th>
         </template>
         <template #preview>
             <PostParameterEditor class="editor" v-model="selection" />

@@ -1,9 +1,11 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 
+import User from "../account/User";
+import Badge from "./Badge";
 import UserBadge from "./UserBadge";
 
 export const title = "Admin view of: User badge";
@@ -23,6 +25,14 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = UserBadge.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "User": User.TYPE,
+    "Badge": Badge.TYPE,
+};
+
 onMounted(() => {
 });
 
@@ -30,14 +40,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
+            <th data-type="INT" data-field="id">Id</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="string" data-format="label" data-field="user">User</th>
-            <th data-type="string" data-format="label" data-field="badge">Badge</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="User" data-format="label" data-field="user">User</th>
+            <th data-type="Badge" data-format="label" data-field="badge">Badge</th>
         </template>
         <template #preview>
             <UserBadgeEditor class="editor" v-model="selection" />

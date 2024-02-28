@@ -1,5 +1,5 @@
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type UserRunTypeInfo from "./UserRunTypeInfo";

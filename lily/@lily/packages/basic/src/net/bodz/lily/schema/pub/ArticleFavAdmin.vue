@@ -1,8 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { long } from "@skeljs/core/src/lang/type";
+import { LONG } from "@skeljs/core/src/lang/baseinfo";
 
+import User from "../account/User";
+import Article from "./Article";
 import ArticleFav from "./ArticleFav";
 
 export const title = "Admin view of: Article fav";
@@ -22,6 +24,13 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = ArticleFav.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "Article": Article.TYPE,
+    "User": User.TYPE,
+};
+
 onMounted(() => {
 });
 
@@ -29,11 +38,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="long" data-field="id">Id</th>
-            <th data-type="string" data-format="label" data-field="article">Article</th>
-            <th data-type="string" data-format="label" data-field="user">User</th>
+            <th data-type="LONG" data-field="id">Id</th>
+            <th data-type="Article" data-format="label" data-field="article">Article</th>
+            <th data-type="User" data-format="label" data-field="user">User</th>
         </template>
         <template #preview>
             <ArticleFavEditor class="editor" v-model="selection" />

@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
-import OrganizationTypeInfo from "./OrganizationTypeInfo";
+import OrgUnit from "./OrgUnit";
+import Organization from "./Organization";
 import PartyTypeInfo from "./PartyTypeInfo";
 import _OrgUnit_stuff_Validators from "./_OrgUnit_stuff_Validators";
 
@@ -11,8 +13,8 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "orgunit";
 
-    name = "net.bodz.lily.schema.contact.OrgUnit"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.OrgUnit"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_PROPERTIES = "props";
     static FIELD_ORG_ID = "org";
@@ -27,14 +29,14 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
     validators = new _OrgUnit_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        properties: property({ type: "any", validator: this.validators.validateProperties }),
-        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+        depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
 
-        org: property({ type: OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
-        orgId: property({ type: "integer", nullable: false, precision: 10 }),
+        org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+        orgId: property({ type: INT, nullable: false, precision: 10 }),
 
-        parent: property({ type: OrgUnitTypeInfo, validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10 }),
+        parent: property({ type: this, validator: this.validators.validateParent }),
+        parentId: property({ type: INT, precision: 10 }),
     }
 
     constructor() {

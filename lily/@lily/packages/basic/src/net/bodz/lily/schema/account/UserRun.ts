@@ -4,7 +4,13 @@ import UserRunTypeInfo from "./UserRunTypeInfo";
 import _UserRun_stuff from "./_UserRun_stuff";
 
 export class UserRun extends _UserRun_stuff {
-    static TYPE = new UserRunTypeInfo();
+    static _typeInfo: UserRunTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new UserRunTypeInfo();
+        return this._typeInfo;
+    }
+
 
     activeTime?: ZonedDateTime
     stateText?: string

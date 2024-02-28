@@ -1,10 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 
+import Post from "./Post";
 import PostTag from "./PostTag";
+import PostTagType from "./PostTagType";
 
 export const title = "Admin view of: Post tag";
 export interface Props {
@@ -23,6 +25,14 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = PostTag.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "Post": Post.TYPE,
+    "PostTagType": PostTagType.TYPE,
+};
+
 onMounted(() => {
 });
 
@@ -30,14 +40,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
+            <th data-type="INT" data-field="id">Id</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="string" data-format="label" data-field="post">Post</th>
-            <th data-type="string" data-format="label" data-field="tag">Tag</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="Post" data-format="label" data-field="post">Post</th>
+            <th data-type="PostTagType" data-format="label" data-field="tag">Tag</th>
         </template>
         <template #preview>
             <PostTagEditor class="editor" v-model="selection" />

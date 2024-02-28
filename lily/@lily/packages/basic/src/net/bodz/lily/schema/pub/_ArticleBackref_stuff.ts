@@ -1,4 +1,4 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
 
 import BackrefRecord from "../../concrete/BackrefRecord";
 import type ExternalSite from "../inet/ExternalSite";
@@ -6,16 +6,21 @@ import type Article from "./Article";
 import _ArticleBackref_stuff_TypeInfo from "./_ArticleBackref_stuff_TypeInfo";
 
 export class _ArticleBackref_stuff extends BackrefRecord {
-    static TYPE = new _ArticleBackref_stuff_TypeInfo();
+    static _typeInfo: _ArticleBackref_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _ArticleBackref_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
     key?: string;
-    value: integer;
+    value: int;
 
     article: Article;
     articleId: long;
 
     site: ExternalSite;
-    siteId: integer;
+    siteId: int;
 
     constructor(o: any) {
         super(o);

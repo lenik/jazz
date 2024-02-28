@@ -1,8 +1,9 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer } from "@skeljs/core/src/lang/type";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 
+import FormDef from "./FormDef";
 import FormParameter from "./FormParameter";
 
 export const title = "Admin view of: Form parameter";
@@ -22,6 +23,13 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = FormParameter.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "FormDef": FormDef.TYPE,
+    "STRING": STRING,
+};
+
 onMounted(() => {
 });
 
@@ -29,12 +37,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
-            <th data-type="string" data-format="label" data-field="form">Form</th>
-            <th data-type="string" data-field="name">Name</th>
-            <th data-type="string" data-field="value">Value</th>
+            <th data-type="INT" data-field="id">Id</th>
+            <th data-type="FormDef" data-format="label" data-field="form">Form</th>
+            <th data-type="STRING" data-field="name">Name</th>
+            <th data-type="STRING" data-field="value">Value</th>
         </template>
         <template #preview>
             <FormParameterEditor class="editor" v-model="selection" />

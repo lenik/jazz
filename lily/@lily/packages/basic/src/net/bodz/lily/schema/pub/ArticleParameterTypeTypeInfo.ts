@@ -1,12 +1,12 @@
-import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 
 import ArticleParameterTypeValidators from "./ArticleParameterTypeValidators";
 import _ArticleParameterType_stuff_TypeInfo from "./_ArticleParameterType_stuff_TypeInfo";
 
 export class ArticleParameterTypeTypeInfo extends _ArticleParameterType_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.pub.ArticleParameterType"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.ArticleParameterType"; }
+    get icon() { return "fa-tag"; }
 
     validators = new ArticleParameterTypeValidators(this);
 

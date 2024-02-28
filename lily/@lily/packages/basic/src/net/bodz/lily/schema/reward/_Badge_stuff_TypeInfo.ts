@@ -1,5 +1,7 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { ARRAY, BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _Badge_stuff_Validators from "./_Badge_stuff_Validators";
@@ -9,8 +11,8 @@ export class _Badge_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "badge";
 
-    name = "net.bodz.lily.schema.reward.Badge"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.reward.Badge"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_EXPR = "expr";
@@ -33,14 +35,14 @@ export class _Badge_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _Badge_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        expr: property({ type: "string", precision: 255, validator: this.validators.validateExpr }),
-        val: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVal }),
-        levels: property({ type: "integer[]", precision: 10, validator: this.validators.validateLevels }),
-        descend: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateDescend }),
-        transient_: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateTransient_ }),
-        indexed: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateIndexed }),
-        image: property({ type: "string", precision: 30, validator: this.validators.validateImage }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        expr: property({ type: STRING, precision: 255, validator: this.validators.validateExpr }),
+        val: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVal }),
+        levels: property({ type: ARRAY(INT), precision: 10, validator: this.validators.validateLevels }),
+        descend: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateDescend }),
+        transient_: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateTransient_ }),
+        indexed: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateIndexed }),
+        image: property({ type: STRING, precision: 30, validator: this.validators.validateImage }),
     }
 
     constructor() {

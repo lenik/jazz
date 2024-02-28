@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -16,16 +16,16 @@ export class _CategoryDef_stuff_Validators extends CoEntityValidators {
         return this._type as _CategoryDef_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateCode(val: string) {
     }
 
-    validateDepth(val: integer) {
+    validateDepth(val: int) {
     }
 
-    validateRefCount(val: integer) {
+    validateRefCount(val: int) {
     }
 
     validateSchema(val: SchemaDef) {

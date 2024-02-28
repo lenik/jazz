@@ -1,7 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { double, integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { double, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import CoObject from "../../concrete/CoObject";
@@ -83,6 +84,7 @@ onMounted(() => {
                 <input type="text" v-model="model.prop" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.scale" v-model="model.scale">
+                <input type="number" v-model="model.scale" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.std" v-model="model.std">
                 <RefEditor :dialog="uomChooseDialog" v-model="model.std" v-model:id="model.stdId" />

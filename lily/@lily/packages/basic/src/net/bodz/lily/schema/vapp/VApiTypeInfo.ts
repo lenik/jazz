@@ -1,12 +1,12 @@
-import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 
 import VApiValidators from "./VApiValidators";
 import _VApi_stuff_TypeInfo from "./_VApi_stuff_TypeInfo";
 
 export class VApiTypeInfo extends _VApi_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.vapp.VApi"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.vapp.VApi"; }
+    get icon() { return "fa-tag"; }
 
     validators = new VApiValidators(this);
 

@@ -1,12 +1,12 @@
-import { EntityPropertyMap } from "@skeljs/dba/src/net/bodz/lily/entity";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 
 import PostTalkValidators from "./PostTalkValidators";
 import _PostTalk_stuff_TypeInfo from "./_PostTalk_stuff_TypeInfo";
 
 export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
 
-    name = "net.bodz.lily.schema.pub.PostTalk"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostTalk"; }
+    get icon() { return "fa-tag"; }
 
     validators = new PostTalkValidators(this);
 

@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import VoteRecordValidators from "../../concrete/VoteRecordValidators";
@@ -15,7 +15,7 @@ export class _PostTalkVote_stuff_Validators extends VoteRecordValidators {
         return this._type as _PostTalkVote_stuff_TypeInfo;
     }
 
-    validateVoteScore(val: integer) {
+    validateVoteScore(val: int) {
     }
 
     validateParent(val: PostTalk) {

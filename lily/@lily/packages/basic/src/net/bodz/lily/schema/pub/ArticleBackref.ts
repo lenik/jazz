@@ -2,7 +2,13 @@ import ArticleBackrefTypeInfo from "./ArticleBackrefTypeInfo";
 import _ArticleBackref_stuff from "./_ArticleBackref_stuff";
 
 export class ArticleBackref extends _ArticleBackref_stuff {
-    static TYPE = new ArticleBackrefTypeInfo();
+    static _typeInfo: ArticleBackrefTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new ArticleBackrefTypeInfo();
+        return this._typeInfo;
+    }
+
 
     constructor(o: any) {
         super(o);

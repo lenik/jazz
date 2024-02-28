@@ -1,10 +1,13 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import CategoryDef from "./CategoryDef";
+import SchemaDef from "./SchemaDef";
 
 export const title = "Admin view of: Category def";
 export interface Props {
@@ -23,6 +26,17 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = CategoryDef.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "SchemaDef": SchemaDef.TYPE,
+    "CategoryDef": CategoryDef.TYPE,
+    "JSON_VARIANT": JSON_VARIANT,
+};
+
 onMounted(() => {
 });
 
@@ -30,24 +44,24 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
-            <th data-type="string" data-field="code">Code</th>
-            <th data-type="string" data-field="label">Label</th>
-            <th data-type="string" data-field="description">Description</th>
-            <th data-type="string" data-field="icon">Icon</th>
-            <th data-type="integer" data-field="priority">Priority</th>
-            <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="string" data-field="state">State</th>
+            <th data-type="INT" data-field="id">Id</th>
+            <th data-type="STRING" data-field="code">Code</th>
+            <th data-type="STRING" data-field="label">Label</th>
+            <th data-type="STRING" data-field="description">Description</th>
+            <th data-type="STRING" data-field="icon">Icon</th>
+            <th data-type="INT" data-field="priority">Priority</th>
+            <th data-type="INT" data-field="flags">Flags</th>
+            <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="string" data-format="label" data-field="schema">Schema</th>
-            <th data-type="string" data-format="label" data-field="parent">Parent</th>
-            <th data-type="integer" data-field="depth">Depth</th>
-            <th data-type="any" data-field="properties">Properties</th>
-            <th data-type="integer" data-field="refCount">Ref Count</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="SchemaDef" data-format="label" data-field="schema">Schema</th>
+            <th data-type="CategoryDef" data-format="label" data-field="parent">Parent</th>
+            <th data-type="INT" data-field="depth">Depth</th>
+            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="INT" data-field="refCount">Ref Count</th>
         </template>
         <template #preview>
             <CategoryDefEditor class="editor" v-model="selection" />

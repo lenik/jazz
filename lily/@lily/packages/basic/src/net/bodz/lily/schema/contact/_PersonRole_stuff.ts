@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 
 import CoEntity from "../../concrete/CoEntity";
 import type OrgUnit from "./OrgUnit";
@@ -6,20 +6,25 @@ import type Organization from "./Organization";
 import type Person from "./Person";
 import _PersonRole_stuff_TypeInfo from "./_PersonRole_stuff_TypeInfo";
 
-export class _PersonRole_stuff extends CoEntity<integer> {
-    static TYPE = new _PersonRole_stuff_TypeInfo();
+export class _PersonRole_stuff extends CoEntity<int> {
+    static _typeInfo: _PersonRole_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _PersonRole_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
+    id: int;
     role?: string;
 
     orgUnit?: OrgUnit;
-    orgUnitId?: integer;
+    orgUnitId?: int;
 
     person: Person;
-    personId: integer;
+    personId: int;
 
     org: Organization;
-    orgId: integer;
+    orgId: int;
 
     constructor(o: any) {
         super(o);

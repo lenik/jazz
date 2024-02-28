@@ -1,9 +1,11 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import PostTagTypeTypeInfo from "./PostTagTypeTypeInfo";
-import PostTypeInfo from "./PostTypeInfo";
+import Post from "./Post";
+import PostTagType from "./PostTagType";
 import _PostTag_stuff_Validators from "./_PostTag_stuff_Validators";
 
 export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -11,8 +13,8 @@ export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_tag";
 
-    name = "net.bodz.lily.schema.pub.PostTag"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostTag"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_POST_ID = "post";
@@ -25,13 +27,13 @@ export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _PostTag_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tag: property({ type: PostTagTypeTypeInfo, nullable: false, validator: this.validators.validateTag }),
-        tagId: property({ type: "integer", nullable: false, precision: 10 }),
+        tag: property({ type: PostTagType.TYPE, nullable: false, validator: this.validators.validateTag }),
+        tagId: property({ type: INT, nullable: false, precision: 10 }),
 
-        post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
-        postId: property({ type: "long", nullable: false, precision: 19 }),
+        post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+        postId: property({ type: LONG, nullable: false, precision: 19 }),
     }
 
     constructor() {

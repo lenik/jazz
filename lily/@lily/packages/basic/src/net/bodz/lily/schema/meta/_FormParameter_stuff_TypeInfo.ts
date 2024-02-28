@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import FormDefTypeInfo from "./FormDefTypeInfo";
+import FormDef from "./FormDef";
 import _FormParameter_stuff_Validators from "./_FormParameter_stuff_Validators";
 
 export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,8 +12,8 @@ export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_formparm";
 
-    name = "net.bodz.lily.schema.meta.FormParameter"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.meta.FormParameter"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_FORM_ID = "form";
@@ -26,12 +28,12 @@ export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _FormParameter_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
-        value: property({ type: "string", precision: 100, validator: this.validators.validateValue }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+        value: property({ type: STRING, precision: 100, validator: this.validators.validateValue }),
 
-        form: property({ type: FormDefTypeInfo, nullable: false, validator: this.validators.validateForm }),
-        formId: property({ type: "integer", nullable: false, precision: 10 }),
+        form: property({ type: FormDef.TYPE, nullable: false, validator: this.validators.validateForm }),
+        formId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

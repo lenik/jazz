@@ -1,8 +1,11 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer } from "@skeljs/core/src/lang/type";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 
+import OrgUnit from "./OrgUnit";
+import Organization from "./Organization";
+import Person from "./Person";
 import PersonRole from "./PersonRole";
 
 export const title = "Admin view of: Person role";
@@ -22,6 +25,15 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = PersonRole.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "Organization": Organization.TYPE,
+    "OrgUnit": OrgUnit.TYPE,
+    "Person": Person.TYPE,
+    "STRING": STRING,
+};
+
 onMounted(() => {
 });
 
@@ -29,14 +41,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
-            <th data-type="string" data-format="label" data-field="org">Org</th>
-            <th data-type="string" data-format="label" data-field="orgUnit">Org Unit</th>
-            <th data-type="string" data-format="label" data-field="person">Person</th>
-            <th data-type="string" data-field="role">Role</th>
-            <th data-type="string" data-field="description">Description</th>
+            <th data-type="INT" data-field="id">Id</th>
+            <th data-type="Organization" data-format="label" data-field="org">Org</th>
+            <th data-type="OrgUnit" data-format="label" data-field="orgUnit">Org Unit</th>
+            <th data-type="Person" data-format="label" data-field="person">Person</th>
+            <th data-type="STRING" data-field="role">Role</th>
+            <th data-type="STRING" data-field="description">Description</th>
         </template>
         <template #preview>
             <PersonRoleEditor class="editor" v-model="selection" />

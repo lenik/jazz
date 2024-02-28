@@ -1,5 +1,7 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _SchemaDef_stuff_Validators from "./_SchemaDef_stuff_Validators";
@@ -9,9 +11,9 @@ export class _SchemaDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_schema";
 
-    name = "net.bodz.lily.schema.meta.SchemaDef"
-    icon = "fa-tag"
-    label = "Schema"
+    get name() { return "net.bodz.lily.schema.meta.SchemaDef"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Schema"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -24,9 +26,9 @@ export class _SchemaDef_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _SchemaDef_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
-        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+        dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {

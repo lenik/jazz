@@ -1,13 +1,18 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
 
 import VoteRecord from "../../concrete/VoteRecord";
 import type Article from "./Article";
 import _ArticleVote_stuff_TypeInfo from "./_ArticleVote_stuff_TypeInfo";
 
 export class _ArticleVote_stuff extends VoteRecord {
-    static TYPE = new _ArticleVote_stuff_TypeInfo();
+    static _typeInfo: _ArticleVote_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _ArticleVote_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    voteScore: integer;
+    voteScore: int;
 
     parent: Article;
     parentId: long;

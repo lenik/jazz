@@ -1,10 +1,12 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
-import OrganizationTypeInfo from "./OrganizationTypeInfo";
-import PersonTypeInfo from "./PersonTypeInfo";
+import OrgUnit from "./OrgUnit";
+import Organization from "./Organization";
+import Person from "./Person";
 import _PersonRole_stuff_Validators from "./_PersonRole_stuff_Validators";
 
 export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -12,8 +14,8 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "personrole";
 
-    name = "net.bodz.lily.schema.contact.PersonRole"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.PersonRole"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_ORG_ID = "org";
@@ -30,17 +32,17 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _PersonRole_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        role: property({ type: "string", precision: 20, validator: this.validators.validateRole }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        role: property({ type: STRING, precision: 20, validator: this.validators.validateRole }),
 
-        orgUnit: property({ type: OrgUnitTypeInfo, validator: this.validators.validateOrgUnit }),
-        orgUnitId: property({ type: "integer", precision: 10 }),
+        orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
+        orgUnitId: property({ type: INT, precision: 10 }),
 
-        person: property({ type: PersonTypeInfo, nullable: false, validator: this.validators.validatePerson }),
-        personId: property({ type: "integer", nullable: false, precision: 10 }),
+        person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+        personId: property({ type: INT, nullable: false, precision: 10 }),
 
-        org: property({ type: OrganizationTypeInfo, nullable: false, validator: this.validators.validateOrg }),
-        orgId: property({ type: "integer", nullable: false, precision: 10 }),
+        org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+        orgId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

@@ -1,23 +1,28 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 
 import CoEntity from "../../concrete/CoEntity";
 import type CategoryDef from "./CategoryDef";
 import type SchemaDef from "./SchemaDef";
 import _CategoryDef_stuff_TypeInfo from "./_CategoryDef_stuff_TypeInfo";
 
-export class _CategoryDef_stuff extends CoEntity<integer> {
-    static TYPE = new _CategoryDef_stuff_TypeInfo();
+export class _CategoryDef_stuff extends CoEntity<int> {
+    static _typeInfo: _CategoryDef_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _CategoryDef_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
-    id: integer;
+    id: int;
     code?: string;
-    depth: integer;
-    refCount: integer;
+    depth: int;
+    refCount: int;
 
     schema: SchemaDef;
-    schemaId: integer;
+    schemaId: int;
 
     parent?: CategoryDef;
-    parentId?: integer;
+    parentId?: int;
 
     constructor(o: any) {
         super(o);

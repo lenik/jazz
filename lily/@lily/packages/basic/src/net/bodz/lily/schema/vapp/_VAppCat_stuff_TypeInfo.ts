@@ -1,8 +1,10 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import VAppCatTypeInfo from "./VAppCatTypeInfo";
+import VAppCat from "./VAppCat";
 import _VAppCat_stuff_Validators from "./_VAppCat_stuff_Validators";
 
 export class _VAppCat_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -10,8 +12,8 @@ export class _VAppCat_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vappcat";
 
-    name = "net.bodz.lily.schema.vapp.VAppCat"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.vapp.VAppCat"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_NAME = "name";
@@ -28,13 +30,13 @@ export class _VAppCat_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _VAppCat_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
-        name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
-        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
-        refCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
+        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+        name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+        depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        refCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
-        parent: property({ type: VAppCatTypeInfo, validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10 }),
+        parent: property({ type: this, validator: this.validators.validateParent }),
+        parentId: property({ type: INT, precision: 10 }),
     }
 
     constructor() {

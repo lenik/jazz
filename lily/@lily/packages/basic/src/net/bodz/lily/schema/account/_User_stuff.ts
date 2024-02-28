@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 
 import CoPrincipal from "../../concrete/CoPrincipal";
 import type Person from "../contact/Person";
@@ -8,20 +8,25 @@ import type UserType from "./UserType";
 import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class _User_stuff extends CoPrincipal {
-    static TYPE = new _User_stuff_TypeInfo();
+    static _typeInfo: _User_stuff_TypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new _User_stuff_TypeInfo();
+        return this._typeInfo;
+    }
 
 
     person?: Person;
-    personId?: integer;
+    personId?: int;
 
     primaryGroup: Group;
-    primaryGroupId: integer;
+    primaryGroupId: int;
 
     referer?: User;
-    refererId?: integer;
+    refererId?: int;
 
     type: UserType;
-    typeId: integer;
+    typeId: int;
 
     constructor(o: any) {
         super(o);

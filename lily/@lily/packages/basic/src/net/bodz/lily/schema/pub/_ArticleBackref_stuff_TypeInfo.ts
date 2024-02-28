@@ -1,9 +1,10 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import BackrefRecordTypeInfo from "../../concrete/BackrefRecordTypeInfo";
-import ExternalSiteTypeInfo from "../inet/ExternalSiteTypeInfo";
-import ArticleTypeInfo from "./ArticleTypeInfo";
+import ExternalSite from "../inet/ExternalSite";
+import Article from "./Article";
 import _ArticleBackref_stuff_Validators from "./_ArticleBackref_stuff_Validators";
 
 export class _ArticleBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
@@ -11,8 +12,8 @@ export class _ArticleBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article_backref";
 
-    name = "net.bodz.lily.schema.pub.ArticleBackref"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.ArticleBackref"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ARTICLE_ID = "article";
     static FIELD_SITE_ID = "site";
@@ -27,14 +28,14 @@ export class _ArticleBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
     validators = new _ArticleBackref_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        key: property({ type: "string", precision: 30, validator: this.validators.validateKey }),
-        value: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateValue }),
+        key: property({ type: STRING, precision: 30, validator: this.validators.validateKey }),
+        value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
 
-        article: property({ type: ArticleTypeInfo, nullable: false, validator: this.validators.validateArticle }),
-        articleId: property({ type: "long", nullable: false, precision: 19 }),
+        article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
+        articleId: property({ type: LONG, nullable: false, precision: 19 }),
 
-        site: property({ type: ExternalSiteTypeInfo, nullable: false, validator: this.validators.validateSite }),
-        siteId: property({ type: "integer", nullable: false, precision: 10 }),
+        site: property({ type: ExternalSite.TYPE, nullable: false, validator: this.validators.validateSite }),
+        siteId: property({ type: INT, nullable: false, precision: 10 }),
     }
 
     constructor() {

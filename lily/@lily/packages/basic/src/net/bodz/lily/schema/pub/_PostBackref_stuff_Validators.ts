@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import BackrefRecordValidators from "../../concrete/BackrefRecordValidators";
@@ -19,7 +19,7 @@ export class _PostBackref_stuff_Validators extends BackrefRecordValidators {
     validateKey(val: string) {
     }
 
-    validateValue(val: integer) {
+    validateValue(val: int) {
     }
 
     validatePost(val: Post) {

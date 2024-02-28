@@ -1,4 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import PartyValidators from "./PartyValidators";
@@ -14,16 +15,16 @@ export class _Organization_stuff_Validators extends PartyValidators {
         return this._type as _Organization_stuff_TypeInfo;
     }
 
-    validateProperties(val: any) {
+    validateProperties(val: JsonVariant) {
     }
 
-    validateRoleCount(val: integer) {
+    validateRoleCount(val: int) {
     }
 
-    validateBankCount(val: integer) {
+    validateBankCount(val: int) {
     }
 
-    validateSize(val: integer) {
+    validateSize(val: int) {
     }
 
     validateTaxId(val: string) {

@@ -2,7 +2,13 @@ import ArticleTalkVoteTypeInfo from "./ArticleTalkVoteTypeInfo";
 import _ArticleTalkVote_stuff from "./_ArticleTalkVote_stuff";
 
 export class ArticleTalkVote extends _ArticleTalkVote_stuff {
-    static TYPE = new ArticleTalkVoteTypeInfo();
+    static _typeInfo: ArticleTalkVoteTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new ArticleTalkVoteTypeInfo();
+        return this._typeInfo;
+    }
+
 
     constructor(o: any) {
         super(o);

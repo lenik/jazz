@@ -2,7 +2,13 @@ import VAppRequestTypeInfo from "./VAppRequestTypeInfo";
 import _VAppRequest_stuff from "./_VAppRequest_stuff";
 
 export class VAppRequest extends _VAppRequest_stuff {
-    static TYPE = new VAppRequestTypeInfo();
+    static _typeInfo: VAppRequestTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new VAppRequestTypeInfo();
+        return this._typeInfo;
+    }
+
 
     constructor(o: any) {
         super(o);

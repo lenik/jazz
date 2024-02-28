@@ -1,9 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
+import ApiType from "./ApiType";
+import VAppRequest from "./VAppRequest";
 import VAppRequestApi from "./VAppRequestApi";
 
 export const title = "Admin view of: V app request api";
@@ -23,6 +26,16 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = VAppRequestApi.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "INT": INT,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "VAppRequest": VAppRequest.TYPE,
+    "ApiType": ApiType.TYPE,
+};
+
 onMounted(() => {
 });
 
@@ -30,17 +43,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="long" data-field="id">Id</th>
-            <th data-type="integer" data-field="priority">Priority</th>
-            <th data-type="integer" data-field="flags">Flags</th>
-            <th data-type="string" data-field="state">State</th>
+            <th data-type="LONG" data-field="id">Id</th>
+            <th data-type="INT" data-field="priority">Priority</th>
+            <th data-type="INT" data-field="flags">Flags</th>
+            <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="string" data-format="label" data-field="parent">Parent</th>
-            <th data-type="string" data-format="label" data-field="api">Api</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="VAppRequest" data-format="label" data-field="parent">Parent</th>
+            <th data-type="ApiType" data-format="label" data-field="api">Api</th>
         </template>
         <template #preview>
             <VAppRequestApiEditor class="editor" v-model="selection" />

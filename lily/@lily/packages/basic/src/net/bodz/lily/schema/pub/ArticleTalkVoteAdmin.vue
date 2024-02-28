@@ -1,8 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 
+import User from "../account/User";
+import ArticleTalk from "./ArticleTalk";
 import ArticleTalkVote from "./ArticleTalkVote";
 
 export const title = "Admin view of: Article talk vote";
@@ -22,6 +24,14 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = ArticleTalkVote.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "ArticleTalk": ArticleTalk.TYPE,
+    "User": User.TYPE,
+    "INT": INT,
+};
+
 onMounted(() => {
 });
 
@@ -29,12 +39,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="long" data-field="id">Id</th>
-            <th data-type="string" data-format="label" data-field="parent">Parent</th>
-            <th data-type="string" data-format="label" data-field="user">User</th>
-            <th data-type="integer" data-field="voteScore">Vote Score</th>
+            <th data-type="LONG" data-field="id">Id</th>
+            <th data-type="ArticleTalk" data-format="label" data-field="parent">Parent</th>
+            <th data-type="User" data-format="label" data-field="user">User</th>
+            <th data-type="INT" data-field="voteScore">Vote Score</th>
         </template>
         <template #preview>
             <ArticleTalkVoteEditor class="editor" v-model="selection" />
