@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import type User from "../account/User";
@@ -12,8 +12,8 @@ export class _UserBadge_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "user_badge";
 
-    name = "net.bodz.lily.schema.reward.UserBadge"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.reward.UserBadge"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_USER_ID = "user";
@@ -26,15 +26,15 @@ export class _UserBadge_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _UserBadge_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
 
         badge: property({ type: BadgeTypeInfo, validator: this.validators.validateBadge }),
-        badgeId: property({ type: "integer", precision: 10 }),
+        badgeId: property({ type: "int", precision: 10 }),
 
         user: property({ type: UserTypeInfo, inheritsDoc: true, 
             description: "User Account", 
             validator: this.validators.validateUser }),
-        userId: property({ type: "integer", precision: 10 }),
+        userId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

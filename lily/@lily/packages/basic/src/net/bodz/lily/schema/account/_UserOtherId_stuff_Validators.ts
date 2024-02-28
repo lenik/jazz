@@ -1,5 +1,6 @@
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -17,7 +18,7 @@ export class _UserOtherId_stuff_Validators extends CoEntityValidators {
         return this._type as _UserOtherId_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateBeginTime(val: ZonedDateTime) {
@@ -26,13 +27,13 @@ export class _UserOtherId_stuff_Validators extends CoEntityValidators {
     validateEndTime(val: ZonedDateTime) {
     }
 
-    validateYear(val: integer) {
+    validateYear(val: int) {
     }
 
     validateOtherId(val: string) {
     }
 
-    validateAuth(val: any) {
+    validateAuth(val: JsonVariant) {
     }
 
     validateType(val: UserOtherIdType) {

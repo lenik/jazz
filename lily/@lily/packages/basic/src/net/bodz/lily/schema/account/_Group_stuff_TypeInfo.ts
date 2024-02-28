@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
 import GroupTypeInfo from "./GroupTypeInfo";
@@ -11,10 +11,10 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "group";
 
-    name = "net.bodz.lily.schema.account.Group"
-    icon = "fa-tag"
-    label = "Group (Role)"
-    description = "User Group"
+    get name() { return "net.bodz.lily.schema.account.Group"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Group (Role)"; }
+    get description() { return "User Group"; }
 
     static FIELD_TYPE_ID = "type";
     static FIELD_PARENT_ID = "parent";
@@ -29,13 +29,13 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
         parent: property({ type: GroupTypeInfo, 
             description: "The parent group. must be acyclic", 
             validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10, 
+        parentId: property({ type: "int", precision: 10, 
             description: "The parent group. must be acyclic" }),
 
         type: property({ type: GroupTypeTypeInfo, nullable: false, 
             description: "Group type like normal-group, role-group, etc.", 
             validator: this.validators.validateType }),
-        typeId: property({ type: "integer", nullable: false, precision: 10, 
+        typeId: property({ type: "int", nullable: false, precision: 10, 
             description: "Group type like normal-group, role-group, etc." }),
     }
 

@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import UserTypeInfo from "./UserTypeInfo";
@@ -10,9 +10,9 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "usersec";
 
-    name = "net.bodz.lily.schema.account.UserSecret"
-    icon = "fa-tag"
-    description = "User Secret"
+    get name() { return "net.bodz.lily.schema.account.UserSecret"; }
+    get icon() { return "fa-tag"; }
+    get description() { return "User Secret"; }
 
     static FIELD_ID = "id";
     static FIELD_USER_ID = "user";
@@ -29,7 +29,7 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _UserSecret_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         password: property({ type: "string", nullable: false, precision: 40, 
             description: "Password data", 
             validator: this.validators.validatePassword }),
@@ -43,7 +43,7 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
         user: property({ type: UserTypeInfo, nullable: false, 
             description: "The declaring user", 
             validator: this.validators.validateUser }),
-        userId: property({ type: "integer", nullable: false, precision: 10, 
+        userId: property({ type: "int", nullable: false, precision: 10, 
             description: "The declaring user" }),
     }
 

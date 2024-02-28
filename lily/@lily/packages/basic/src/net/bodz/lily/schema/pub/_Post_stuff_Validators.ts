@@ -1,4 +1,5 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoMessageValidators from "../../concrete/CoMessageValidators";
@@ -19,19 +20,19 @@ export class _Post_stuff_Validators extends CoMessageValidators {
     validateFormArguments(val: string) {
     }
 
-    validateFavCount(val: integer) {
+    validateFavCount(val: int) {
     }
 
-    validateVoteCount(val: integer) {
+    validateVoteCount(val: int) {
     }
 
-    validateHateCount(val: integer) {
+    validateHateCount(val: int) {
     }
 
-    validateMessageCount(val: integer) {
+    validateMessageCount(val: int) {
     }
 
-    validatePlugins(val: any) {
+    validatePlugins(val: JsonVariant) {
     }
 
     validateParent(val: Post) {

@@ -1,5 +1,5 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import BackrefRecordTypeInfo from "../../concrete/BackrefRecordTypeInfo";
 import ExternalSiteTypeInfo from "../inet/ExternalSiteTypeInfo";
@@ -11,8 +11,8 @@ export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_backref";
 
-    name = "net.bodz.lily.schema.pub.PostBackref"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostBackref"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_POST_ID = "post";
     static FIELD_SITE_ID = "site";
@@ -28,13 +28,13 @@ export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         key: property({ type: "string", precision: 30, validator: this.validators.validateKey }),
-        value: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateValue }),
+        value: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateValue }),
 
         post: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validatePost }),
         postId: property({ type: "long", nullable: false, precision: 19 }),
 
         site: property({ type: ExternalSiteTypeInfo, nullable: false, validator: this.validators.validateSite }),
-        siteId: property({ type: "integer", nullable: false, precision: 10 }),
+        siteId: property({ type: "int", nullable: false, precision: 10 }),
     }
 
     constructor() {

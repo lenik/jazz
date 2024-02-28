@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _Policy_stuff_Validators from "./_Policy_stuff_Validators";
@@ -9,9 +9,9 @@ export class _Policy_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "policy";
 
-    name = "net.bodz.lily.schema.account.Policy"
-    icon = "fa-tag"
-    description = "Security Policy"
+    get name() { return "net.bodz.lily.schema.account.Policy"; }
+    get icon() { return "fa-tag"; }
+    get description() { return "Security Policy"; }
 
     static FIELD_ID = "id";
     static FIELD_NAME = "name";
@@ -30,7 +30,7 @@ export class _Policy_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _Policy_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 30, 
             description: "The policy name (unique)", 
             validator: this.validators.validateName }),
@@ -40,10 +40,10 @@ export class _Policy_stuff_TypeInfo extends CoEntityTypeInfo {
         methodName: property({ type: "string", precision: 80, 
             description: "The method name", 
             validator: this.validators.validateMethodName }),
-        allowBits: property({ type: "integer", nullable: false, precision: 10, 
+        allowBits: property({ type: "int", nullable: false, precision: 10, 
             description: "allow", 
             validator: this.validators.validateAllowBits }),
-        denyBits: property({ type: "integer", nullable: false, precision: 10, 
+        denyBits: property({ type: "int", nullable: false, precision: 10, 
             description: "deny", 
             validator: this.validators.validateDenyBits }),
     }

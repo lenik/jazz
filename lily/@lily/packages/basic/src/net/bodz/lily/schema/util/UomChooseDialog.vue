@@ -1,9 +1,11 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { double, integer } from "@skeljs/core/src/lang/type";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
+import Uom from "./Uom";
 import { Uom } from "./Uom";
 
 export const title = "Choose dialog for: Uom";
@@ -28,6 +30,14 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "JSON_VARIANT": JSON_VARIANT,
+    "Uom": Uom.TYPE,
+    "DOUBLE": DOUBLE,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -41,16 +51,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Uom.TYPE" :modal="modal">
-        <th data-type="integer" data-field="id">Id</th>
-        <th data-type="string" data-field="code">Code</th>
-        <th data-type="string" data-field="label">Label</th>
-        <th data-type="string" data-field="description">Description</th>
-        <th data-type="string" data-field="icon">Icon</th>
-        <th data-type="any" data-field="properties">Properties</th>
-        <th data-type="string" data-field="prop">Prop</th>
-        <th data-type="string" data-format="label" data-field="std">Std</th>
-        <th data-type="double" data-field="scale">Scale</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="Uom.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="INT" data-field="id">Id</th>
+        <th data-type="STRING" data-field="code">Code</th>
+        <th data-type="STRING" data-field="label">Label</th>
+        <th data-type="STRING" data-field="description">Description</th>
+        <th data-type="STRING" data-field="icon">Icon</th>
+        <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+        <th data-type="STRING" data-field="prop">Prop</th>
+        <th data-type="Uom" data-format="label" data-field="std">Std</th>
+        <th data-type="DOUBLE" data-field="scale">Scale</th>
     </EntityChooseDialog>
 </template>
 

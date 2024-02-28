@@ -1,9 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer } from "@skeljs/core/src/lang/type";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
+import OrgUnit from "./OrgUnit";
+import Organization from "./Organization";
+import Person from "./Person";
 import { PersonRole } from "./PersonRole";
 
 export const title = "Choose dialog for: Person role";
@@ -28,6 +31,14 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "INT": INT,
+    "Organization": Organization.TYPE,
+    "OrgUnit": OrgUnit.TYPE,
+    "Person": Person.TYPE,
+    "STRING": STRING,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -41,13 +52,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="PersonRole.TYPE" :modal="modal">
-        <th data-type="integer" data-field="id">Id</th>
-        <th data-type="string" data-format="label" data-field="org">Org</th>
-        <th data-type="string" data-format="label" data-field="orgUnit">Org Unit</th>
-        <th data-type="string" data-format="label" data-field="person">Person</th>
-        <th data-type="string" data-field="role">Role</th>
-        <th data-type="string" data-field="description">Description</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="PersonRole.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="INT" data-field="id">Id</th>
+        <th data-type="Organization" data-format="label" data-field="org">Org</th>
+        <th data-type="OrgUnit" data-format="label" data-field="orgUnit">Org Unit</th>
+        <th data-type="Person" data-format="label" data-field="person">Person</th>
+        <th data-type="STRING" data-field="role">Role</th>
+        <th data-type="STRING" data-field="description">Description</th>
     </EntityChooseDialog>
 </template>
 

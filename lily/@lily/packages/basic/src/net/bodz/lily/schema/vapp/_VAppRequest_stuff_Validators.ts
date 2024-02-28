@@ -1,5 +1,5 @@
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -17,7 +17,7 @@ export class _VAppRequest_stuff_Validators extends CoEntityValidators {
         return this._type as _VAppRequest_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateCode(val: string) {
@@ -29,7 +29,7 @@ export class _VAppRequest_stuff_Validators extends CoEntityValidators {
     validateEndTime(val: ZonedDateTime) {
     }
 
-    validateYear(val: integer) {
+    validateYear(val: int) {
     }
 
     validateSubject(val: string) {
@@ -41,7 +41,7 @@ export class _VAppRequest_stuff_Validators extends CoEntityValidators {
     validateFormArguments(val: string) {
     }
 
-    validateDummy(val: integer) {
+    validateDummy(val: int) {
     }
 
     validateOp(val: User) {

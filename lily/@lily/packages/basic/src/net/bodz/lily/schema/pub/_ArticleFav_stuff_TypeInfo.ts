@@ -1,5 +1,5 @@
-import type { long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import FavRecordTypeInfo from "../../concrete/FavRecordTypeInfo";
 import ArticleTypeInfo from "./ArticleTypeInfo";
@@ -10,8 +10,8 @@ export class _ArticleFav_stuff_TypeInfo extends FavRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article_fav";
 
-    name = "net.bodz.lily.schema.pub.ArticleFav"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.ArticleFav"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ARTICLE_ID = "article";
 

@@ -7,10 +7,10 @@ import Zone from "../geo/Zone";
 
 export class ContactTypeInfo extends IdEntityTypeInfo {
 
-    name = "net.bodz.lily.schema.contact.Contact"
-    icon = "fa-address-card"
-    label = "Contact Information"
-    description = "A contact record."
+    get name() { return "net.bodz.lily.schema.contact.Contact"; }
+    get icon() { return "fa-address-card"; }
+    get label() { return "Contact Information"; }
+    get description() { return "A contact record."; }
 
     declaredProperty: EntityPropertyMap = {
         org: property({ type: Organization.TYPE, icon: "fa-build" }),

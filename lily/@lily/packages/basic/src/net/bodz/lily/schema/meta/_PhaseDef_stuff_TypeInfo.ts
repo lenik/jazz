@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import SchemaDefTypeInfo from "./SchemaDefTypeInfo";
@@ -10,9 +10,9 @@ export class _PhaseDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_phase";
 
-    name = "net.bodz.lily.schema.meta.PhaseDef"
-    icon = "fa-tag"
-    label = "Phase"
+    get name() { return "net.bodz.lily.schema.meta.PhaseDef"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Phase"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -25,11 +25,11 @@ export class _PhaseDef_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _PhaseDef_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
 
         schema: property({ type: SchemaDefTypeInfo, nullable: false, validator: this.validators.validateSchema }),
-        schemaId: property({ type: "integer", nullable: false, precision: 10 }),
+        schemaId: property({ type: "int", nullable: false, precision: 10 }),
     }
 
     constructor() {

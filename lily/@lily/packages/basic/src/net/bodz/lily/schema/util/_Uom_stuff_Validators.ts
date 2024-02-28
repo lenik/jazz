@@ -1,4 +1,4 @@
-import type { double, integer } from "@skeljs/core/src/lang/type";
+import type { double, int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -15,7 +15,7 @@ export class _Uom_stuff_Validators extends CoEntityValidators {
         return this._type as _Uom_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateCode(val: string) {

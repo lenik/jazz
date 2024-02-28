@@ -1,5 +1,5 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import VoteRecordTypeInfo from "../../concrete/VoteRecordTypeInfo";
 import PostTypeInfo from "./PostTypeInfo";
@@ -10,8 +10,8 @@ export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_vote";
 
-    name = "net.bodz.lily.schema.pub.PostVote"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostVote"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_PARENT_ID = "parent";
     static FIELD_VOTE_SCORE = "votes";
@@ -22,7 +22,7 @@ export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
     validators = new _PostVote_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        voteScore: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
+        voteScore: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
 
         parent: property({ type: PostTypeInfo, nullable: false, validator: this.validators.validateParent }),
         parentId: property({ type: "long", nullable: false, precision: 19 }),

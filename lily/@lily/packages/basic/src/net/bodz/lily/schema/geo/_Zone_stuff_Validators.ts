@@ -1,4 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -16,7 +17,7 @@ export class _Zone_stuff_Validators extends CoEntityValidators {
         return this._type as _Zone_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateCode(val: string) {
@@ -25,7 +26,7 @@ export class _Zone_stuff_Validators extends CoEntityValidators {
     validateCountry(val: string) {
     }
 
-    validateDepth(val: integer) {
+    validateDepth(val: int) {
     }
 
     validateTelCode(val: string) {
@@ -34,7 +35,7 @@ export class _Zone_stuff_Validators extends CoEntityValidators {
     validatePostCode(val: string) {
     }
 
-    validateData(val: any) {
+    validateData(val: JsonVariant) {
     }
 
     validateParent(val: Zone) {

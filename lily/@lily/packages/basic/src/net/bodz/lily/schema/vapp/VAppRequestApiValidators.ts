@@ -1,4 +1,4 @@
-import type { long } from "@skeljs/core/src/lang/type";
+import type { long } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type VAppRequestApiTypeInfo from "./VAppRequestApiTypeInfo";

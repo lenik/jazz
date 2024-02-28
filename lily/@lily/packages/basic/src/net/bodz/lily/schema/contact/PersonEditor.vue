@@ -1,12 +1,14 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { char, integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { SQLDate, Timestamp, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import CoObject from "../../concrete/CoObject";
 import IdEntity from "../../concrete/IdEntity";
 import StructRow from "../../concrete/StructRow";
+import type Gender from "./Gender";
 import Party from "./Party";
 import Person from "./Person";
 import _Person_stuff from "./_Person_stuff";
@@ -69,10 +71,8 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <input type="date" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <input type="date" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -120,7 +120,6 @@ onMounted(() => {
         </FieldGroup>
         <FieldGroup :type="Party.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.birthday" v-model="model.birthday">
-                <input type="date" v-model="model.birthday" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.langTag" v-model="model.langTag">
                 <input type="text" v-model="model.langTag" />

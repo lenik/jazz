@@ -1,10 +1,16 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer, long } from "@skeljs/core/src/lang/type";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
+import Object from "../../../../../java/lang/Object";
+import Group from "../account/Group";
+import User from "../account/User";
+import ExternalSite from "../inet/ExternalSite";
+import Article from "./Article";
 import { ArticleBackref } from "./ArticleBackref";
 
 export const title = "Choose dialog for: Article backref";
@@ -29,6 +35,18 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "Object": Object.TYPE,
+    "User": User.TYPE,
+    "Group": Group.TYPE,
+    "INT": INT,
+    "STRING": STRING,
+    "int": int.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "Article": Article.TYPE,
+    "ExternalSite": ExternalSite.TYPE,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -42,25 +60,25 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="ArticleBackref.TYPE" :modal="modal">
-        <th data-type="long" data-field="id">Id</th>
-        <th data-type="string" data-format="label" data-field="ownerUser">Owner User</th>
-        <th data-type="string" data-format="label" data-field="ownerGroup">Owner Group</th>
-        <th data-type="integer" data-field="accessMode">Access Mode</th>
-        <th data-type="integer" data-field="acl">Acl</th>
-        <th data-type="string" data-field="label">Label</th>
-        <th data-type="string" data-field="description">Description</th>
-        <th data-type="string" data-field="icon">Icon</th>
-        <th data-type="integer" data-field="priority">Priority</th>
-        <th data-type="integer" data-field="flags">Flags</th>
-        <th data-type="string" data-field="state">State</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="ArticleBackref.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="Object" data-field="id">Id</th>
+        <th data-type="User" data-format="label" data-field="ownerUser">Owner User</th>
+        <th data-type="Group" data-format="label" data-field="ownerGroup">Owner Group</th>
+        <th data-type="INT" data-field="accessMode">Access Mode</th>
+        <th data-type="INT" data-field="acl">Acl</th>
+        <th data-type="STRING" data-field="label">Label</th>
+        <th data-type="STRING" data-field="description">Description</th>
+        <th data-type="STRING" data-field="icon">Icon</th>
+        <th data-type="INT" data-field="priority">Priority</th>
+        <th data-type="INT" data-field="flags">Flags</th>
+        <th data-type="int" data-field="state">State</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
         <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-        <th data-type="integer" data-field="version">Version</th>
-        <th data-type="string" data-format="label" data-field="article">Article</th>
-        <th data-type="string" data-format="label" data-field="site">Site</th>
-        <th data-type="string" data-field="key">Key</th>
-        <th data-type="integer" data-field="value">Value</th>
+        <th data-type="INT" data-field="version">Version</th>
+        <th data-type="Article" data-format="label" data-field="article">Article</th>
+        <th data-type="ExternalSite" data-format="label" data-field="site">Site</th>
+        <th data-type="STRING" data-field="key">Key</th>
+        <th data-type="INT" data-field="value">Value</th>
     </EntityChooseDialog>
 </template>
 

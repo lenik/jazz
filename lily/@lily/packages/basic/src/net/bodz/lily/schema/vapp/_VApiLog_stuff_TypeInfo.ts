@@ -1,5 +1,5 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import ApiTypeTypeInfo from "./ApiTypeTypeInfo";
@@ -11,8 +11,8 @@ export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vapi_log";
 
-    name = "net.bodz.lily.schema.vapp.VApiLog"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.vapp.VApiLog"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_APP_ID = "app";
@@ -34,10 +34,10 @@ export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
         err: property({ type: "string", validator: this.validators.validateErr }),
 
         api: property({ type: ApiTypeTypeInfo, validator: this.validators.validateApi }),
-        apiId: property({ type: "integer", precision: 10 }),
+        apiId: property({ type: "int", precision: 10 }),
 
         app: property({ type: VAppTypeInfo, nullable: false, validator: this.validators.validateApp }),
-        appId: property({ type: "integer", nullable: false, precision: 10 }),
+        appId: property({ type: "int", nullable: false, precision: 10 }),
     }
 
     constructor() {

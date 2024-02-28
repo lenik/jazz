@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -15,19 +15,19 @@ export class _ExternalSite_stuff_Validators extends CoEntityValidators {
         return this._type as _ExternalSite_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
-    validateDepth(val: integer) {
+    validateDepth(val: int) {
     }
 
     validateUrlfmt(val: string) {
     }
 
-    validateBonus(val: integer) {
+    validateBonus(val: int) {
     }
 
-    validateCount(val: integer) {
+    validateCount(val: int) {
     }
 
     validateParent(val: ExternalSite) {

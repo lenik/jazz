@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoParameterTypeInfo from "../../concrete/CoParameterTypeInfo";
 import _PostParameterType_stuff_Validators from "./_PostParameterType_stuff_Validators";
@@ -9,8 +9,8 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "postparm";
 
-    name = "net.bodz.lily.schema.pub.PostParameterType"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostParameterType"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_NAME = "name";
     static FIELD_DUMMY = "dummy";
@@ -22,7 +22,7 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
-        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
+        dummy: property({ type: "int", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {

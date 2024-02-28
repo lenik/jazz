@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import _GroupType_stuff_Validators from "./_GroupType_stuff_Validators";
@@ -9,9 +9,9 @@ export class _GroupType_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "grouptype";
 
-    name = "net.bodz.lily.schema.account.GroupType"
-    icon = "fa-tag"
-    description = "Group Type"
+    get name() { return "net.bodz.lily.schema.account.GroupType"; }
+    get icon() { return "fa-tag"; }
+    get description() { return "Group Type"; }
 
     static FIELD_ID = "id";
     static FIELD_NAME = "name";
@@ -24,11 +24,11 @@ export class _GroupType_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _GroupType_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 20, 
             description: "Group type name (unique)", 
             validator: this.validators.validateName }),
-        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
+        dummy: property({ type: "int", precision: 10, validator: this.validators.validateDummy }),
     }
 
     constructor() {

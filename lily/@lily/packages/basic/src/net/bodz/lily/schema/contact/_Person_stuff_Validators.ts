@@ -1,6 +1,8 @@
-import type { char, integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type Gender from "./Gender";
 import PartyValidators from "./PartyValidators";
 import type Person from "./Person";
 import type _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
@@ -15,19 +17,19 @@ export class _Person_stuff_Validators extends PartyValidators {
         return this._type as _Person_stuff_TypeInfo;
     }
 
-    validateProperties(val: any) {
+    validateProperties(val: JsonVariant) {
     }
 
-    validateRoleCount(val: integer) {
+    validateRoleCount(val: int) {
     }
 
     validateEmployee(val: boolean) {
     }
 
-    validateBankCount(val: integer) {
+    validateBankCount(val: int) {
     }
 
-    validateGender(val: char) {
+    validateGender(val: Gender) {
     }
 
     validatePronoun(val: string) {

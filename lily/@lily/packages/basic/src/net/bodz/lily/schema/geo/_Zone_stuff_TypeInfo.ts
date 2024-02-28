@@ -1,5 +1,6 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import ZoneCategoryTypeInfo from "./ZoneCategoryTypeInfo";
@@ -11,8 +12,8 @@ export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "zone";
 
-    name = "net.bodz.lily.schema.geo.Zone"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.geo.Zone"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -37,19 +38,19 @@ export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _Zone_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 10, validator: this.validators.validateCode }),
         country: property({ type: "string", precision: 2, validator: this.validators.validateCountry }),
-        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        depth: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateDepth }),
         telCode: property({ type: "string", precision: 10, validator: this.validators.validateTelCode }),
         postCode: property({ type: "string", precision: 10, validator: this.validators.validatePostCode }),
-        data: property({ type: "any", validator: this.validators.validateData }),
+        data: property({ type: "JsonVariant", validator: this.validators.validateData }),
 
         parent: property({ type: ZoneTypeInfo, validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10 }),
+        parentId: property({ type: "int", precision: 10 }),
 
         category: property({ type: ZoneCategoryTypeInfo, nullable: false, validator: this.validators.validateCategory }),
-        categoryId: property({ type: "integer", nullable: false, precision: 10 }),
+        categoryId: property({ type: "int", nullable: false, precision: 10 }),
     }
 
     constructor() {

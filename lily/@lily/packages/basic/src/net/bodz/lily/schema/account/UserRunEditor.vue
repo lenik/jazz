@@ -1,7 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { InetAddress, Timestamp, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import CoObject from "../../concrete/CoObject";
@@ -61,10 +62,8 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <input type="date" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <input type="date" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -98,10 +97,8 @@ onMounted(() => {
                 <input type="number" v-model="model.score" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastLoginTime" v-model="model.lastLoginTime">
-                <input type="date" v-model="model.lastLoginTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastLoginIP" v-model="model.lastLoginIP">
-                <input type="text" v-model="model.lastLoginIP" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
                 <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />

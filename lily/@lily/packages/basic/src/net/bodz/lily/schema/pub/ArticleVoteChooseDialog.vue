@@ -1,9 +1,12 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { integer, long } from "@skeljs/core/src/lang/type";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
+import Object from "../../../../../java/lang/Object";
+import User from "../account/User";
+import Article from "./Article";
 import { ArticleVote } from "./ArticleVote";
 
 export const title = "Choose dialog for: Article vote";
@@ -28,6 +31,13 @@ const emit = defineEmits<{
 
 // property shortcuts
 
+const typeMap = {
+    "Object": Object.TYPE,
+    "Article": Article.TYPE,
+    "User": User.TYPE,
+    "INT": INT,
+};
+
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
 defineExpose({ open });
 
@@ -41,11 +51,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="ArticleVote.TYPE" :modal="modal">
-        <th data-type="long" data-field="id">Id</th>
-        <th data-type="string" data-format="label" data-field="parent">Parent</th>
-        <th data-type="string" data-format="label" data-field="user">User</th>
-        <th data-type="integer" data-field="voteScore">Vote Score</th>
+    <EntityChooseDialog ref="entityChooseDialog" :type="ArticleVote.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="Object" data-field="id">Id</th>
+        <th data-type="Article" data-format="label" data-field="parent">Parent</th>
+        <th data-type="User" data-format="label" data-field="user">User</th>
+        <th data-type="INT" data-field="voteScore">Vote Score</th>
     </EntityChooseDialog>
 </template>
 

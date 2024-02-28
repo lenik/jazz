@@ -1,4 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type OrgUnit from "./OrgUnit";
@@ -16,10 +17,10 @@ export class _OrgUnit_stuff_Validators extends PartyValidators {
         return this._type as _OrgUnit_stuff_TypeInfo;
     }
 
-    validateProperties(val: any) {
+    validateProperties(val: JsonVariant) {
     }
 
-    validateDepth(val: integer) {
+    validateDepth(val: int) {
     }
 
     validateOrg(val: Organization) {

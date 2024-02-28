@@ -1,6 +1,8 @@
-import type { char, integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
+import Gender from "./Gender";
 import PartyTypeInfo from "./PartyTypeInfo";
 import PersonTypeInfo from "./PersonTypeInfo";
 import _Person_stuff_Validators from "./_Person_stuff_Validators";
@@ -10,8 +12,8 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "person";
 
-    name = "net.bodz.lily.schema.contact.Person"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.Person"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_PROPERTIES = "props";
     static FIELD_FATHER_ID = "father";
@@ -44,11 +46,11 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
     validators = new _Person_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        properties: property({ type: "any", validator: this.validators.validateProperties }),
-        roleCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
+        properties: property({ type: "JsonVariant", validator: this.validators.validateProperties }),
+        roleCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
         employee: property({ type: "boolean", nullable: false, precision: 1, validator: this.validators.validateEmployee }),
-        bankCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateBankCount }),
-        gender: property({ type: "char", precision: 1, validator: this.validators.validateGender }),
+        bankCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateBankCount }),
+        gender: property({ type: "Gender", precision: 1, validator: this.validators.validateGender }),
         pronoun: property({ type: "string", precision: 30, validator: this.validators.validatePronoun }),
         sexualOrientation: property({ type: "string", precision: 30, validator: this.validators.validateSexualOrientation }),
         homeland: property({ type: "string", precision: 10, validator: this.validators.validateHomeland }),
@@ -57,10 +59,10 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
         dln: property({ type: "string", precision: 20, validator: this.validators.validateDln }),
 
         mother: property({ type: PersonTypeInfo, validator: this.validators.validateMother }),
-        motherId: property({ type: "integer", precision: 10 }),
+        motherId: property({ type: "int", precision: 10 }),
 
         father: property({ type: PersonTypeInfo, validator: this.validators.validateFather }),
-        fatherId: property({ type: "integer", precision: 10 }),
+        fatherId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

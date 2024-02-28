@@ -1,5 +1,5 @@
-import type { long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoTalkTypeInfo from "../../concrete/CoTalkTypeInfo";
 import PostTypeInfo from "./PostTypeInfo";
@@ -10,8 +10,8 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_msg";
 
-    name = "net.bodz.lily.schema.pub.PostTalk"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.PostTalk"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_FORM_ARGUMENTS = "formargs";
     static FIELD_POST_ID = "post";

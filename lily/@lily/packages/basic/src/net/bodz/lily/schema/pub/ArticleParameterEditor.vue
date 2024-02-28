@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { double, integer } from "@skeljs/core/src/lang/type";
+import type { Timestamp, double, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import StructRow from "../../concrete/StructRow";
@@ -62,10 +62,8 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <input type="date" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <input type="date" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -79,6 +77,7 @@ onMounted(() => {
                 <input type="number" v-model="model.ival" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.fval" v-model="model.fval">
+                <input type="number" v-model="model.fval" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.sval" v-model="model.sval">
                 <input type="text" v-model="model.sval" />

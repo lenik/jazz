@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import FormDefTypeInfo from "./FormDefTypeInfo";
@@ -10,8 +10,8 @@ export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_formparm";
 
-    name = "net.bodz.lily.schema.meta.FormParameter"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.meta.FormParameter"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_FORM_ID = "form";
@@ -26,12 +26,12 @@ export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _FormParameter_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
         value: property({ type: "string", precision: 100, validator: this.validators.validateValue }),
 
         form: property({ type: FormDefTypeInfo, nullable: false, validator: this.validators.validateForm }),
-        formId: property({ type: "integer", nullable: false, precision: 10 }),
+        formId: property({ type: "int", nullable: false, precision: 10 }),
     }
 
     constructor() {

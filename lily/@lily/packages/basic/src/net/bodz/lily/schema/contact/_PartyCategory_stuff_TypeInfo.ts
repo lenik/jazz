@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoCategoryTypeInfo from "../../concrete/CoCategoryTypeInfo";
 import _PartyCategory_stuff_Validators from "./_PartyCategory_stuff_Validators";
@@ -9,8 +9,8 @@ export class _PartyCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "partycat";
 
-    name = "net.bodz.lily.schema.contact.PartyCategory"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.contact.PartyCategory"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_NAME = "name";
 

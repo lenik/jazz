@@ -1,5 +1,6 @@
-import type { integer, long } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { int, long } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
 import ArticleCategoryTypeInfo from "./ArticleCategoryTypeInfo";
@@ -10,8 +11,8 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article";
 
-    name = "net.bodz.lily.schema.pub.Article"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.Article"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_FORM_ARGUMENTS = "formargs";
     static FIELD_CATEGORY_ID = "cat";
@@ -33,14 +34,14 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         formArguments: property({ type: "string", validator: this.validators.validateFormArguments }),
-        favCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateFavCount }),
-        voteCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
-        hateCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateHateCount }),
-        messageCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
-        plugins: property({ type: "any", validator: this.validators.validatePlugins }),
+        favCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateFavCount }),
+        voteCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
+        hateCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateHateCount }),
+        messageCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
+        plugins: property({ type: "JsonVariant", validator: this.validators.validatePlugins }),
 
         category: property({ type: ArticleCategoryTypeInfo, validator: this.validators.validateCategory }),
-        categoryId: property({ type: "integer", precision: 10 }),
+        categoryId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import CategoryDefTypeInfo from "./CategoryDefTypeInfo";
@@ -11,9 +11,9 @@ export class _CategoryDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_cat";
 
-    name = "net.bodz.lily.schema.meta.CategoryDef"
-    icon = "fa-tag"
-    label = "Category"
+    get name() { return "net.bodz.lily.schema.meta.CategoryDef"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Category"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -32,16 +32,16 @@ export class _CategoryDef_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _CategoryDef_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
-        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
-        refCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
+        depth: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        refCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
         schema: property({ type: SchemaDefTypeInfo, nullable: false, validator: this.validators.validateSchema }),
-        schemaId: property({ type: "integer", nullable: false, precision: 10 }),
+        schemaId: property({ type: "int", nullable: false, precision: 10 }),
 
         parent: property({ type: CategoryDefTypeInfo, validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10 }),
+        parentId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

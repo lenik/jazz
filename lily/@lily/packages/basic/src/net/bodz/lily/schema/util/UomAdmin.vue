@@ -1,7 +1,8 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
-import type { double, integer } from "@skeljs/core/src/lang/type";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 
 import Uom from "./Uom";
 
@@ -22,6 +23,15 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = Uom.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "JSON_VARIANT": JSON_VARIANT,
+    "Uom": Uom.TYPE,
+    "DOUBLE": DOUBLE,
+};
+
 onMounted(() => {
 });
 
@@ -29,17 +39,17 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="integer" data-field="id">Id</th>
-            <th data-type="string" data-field="code">Code</th>
-            <th data-type="string" data-field="label">Label</th>
-            <th data-type="string" data-field="description">Description</th>
-            <th data-type="string" data-field="icon">Icon</th>
-            <th data-type="any" data-field="properties">Properties</th>
-            <th data-type="string" data-field="prop">Prop</th>
-            <th data-type="string" data-format="label" data-field="std">Std</th>
-            <th data-type="double" data-field="scale">Scale</th>
+            <th data-type="INT" data-field="id">Id</th>
+            <th data-type="STRING" data-field="code">Code</th>
+            <th data-type="STRING" data-field="label">Label</th>
+            <th data-type="STRING" data-field="description">Description</th>
+            <th data-type="STRING" data-field="icon">Icon</th>
+            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="STRING" data-field="prop">Prop</th>
+            <th data-type="Uom" data-format="label" data-field="std">Std</th>
+            <th data-type="DOUBLE" data-field="scale">Scale</th>
         </template>
         <template #preview>
             <UomEditor class="editor" v-model="selection" />

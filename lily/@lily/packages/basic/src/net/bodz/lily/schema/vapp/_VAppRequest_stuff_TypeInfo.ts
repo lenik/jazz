@@ -1,6 +1,6 @@
+import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import type User from "../account/User";
@@ -13,8 +13,8 @@ export class _VAppRequest_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vappreq";
 
-    name = "net.bodz.lily.schema.vapp.VAppRequest"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.vapp.VAppRequest"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_CODE = "code";
@@ -43,23 +43,23 @@ export class _VAppRequest_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _VAppRequest_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         code: property({ type: "string", precision: 30, validator: this.validators.validateCode }),
         beginTime: property({ type: "ZonedDateTime", precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
         endTime: property({ type: "ZonedDateTime", precision: 35, scale: 6, validator: this.validators.validateEndTime }),
-        year: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateYear }),
+        year: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateYear }),
         subject: property({ type: "string", nullable: false, precision: 200, validator: this.validators.validateSubject }),
         rawText: property({ type: "string", validator: this.validators.validateRawText }),
         formArguments: property({ type: "string", validator: this.validators.validateFormArguments }),
-        dummy: property({ type: "integer", precision: 10, validator: this.validators.validateDummy }),
+        dummy: property({ type: "int", precision: 10, validator: this.validators.validateDummy }),
 
         op: property({ type: UserTypeInfo, inheritsDoc: true, 
             description: "User Account", 
             validator: this.validators.validateOp }),
-        opId: property({ type: "integer", precision: 10 }),
+        opId: property({ type: "int", precision: 10 }),
 
         form: property({ type: FormDefTypeInfo, validator: this.validators.validateForm }),
-        formId: property({ type: "integer", precision: 10 }),
+        formId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

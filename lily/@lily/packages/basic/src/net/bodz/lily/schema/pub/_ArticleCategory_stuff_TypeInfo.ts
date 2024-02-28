@@ -1,5 +1,5 @@
-import type { integer } from "@skeljs/core/src/lang/type";
-import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import { EntityPropertyMap, primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
 import ArticleCategoryTypeInfo from "./ArticleCategoryTypeInfo";
@@ -10,8 +10,8 @@ export class _ArticleCategory_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "articlecat";
 
-    name = "net.bodz.lily.schema.pub.ArticleCategory"
-    icon = "fa-tag"
+    get name() { return "net.bodz.lily.schema.pub.ArticleCategory"; }
+    get icon() { return "fa-tag"; }
 
     static FIELD_ID = "id";
     static FIELD_NAME = "name";
@@ -28,13 +28,13 @@ export class _ArticleCategory_stuff_TypeInfo extends CoEntityTypeInfo {
     validators = new _ArticleCategory_stuff_Validators(this);
 
     declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateId }),
+        id: primaryKey({ type: "int", nullable: false, precision: 10, validator: this.validators.validateId }),
         name: property({ type: "string", precision: 30, validator: this.validators.validateName }),
-        depth: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateDepth }),
-        refCount: property({ type: "integer", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
+        depth: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateDepth }),
+        refCount: property({ type: "int", nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
         parent: property({ type: ArticleCategoryTypeInfo, validator: this.validators.validateParent }),
-        parentId: property({ type: "integer", precision: 10 }),
+        parentId: property({ type: "int", precision: 10 }),
     }
 
     constructor() {

@@ -1,10 +1,13 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import type { integer, long } from "@skeljs/core/src/lang/type";
 
+import ApiType from "./ApiType";
 import VApi from "./VApi";
+import VApp from "./VApp";
 
 export const title = "Admin view of: V api";
 export interface Props {
@@ -23,6 +26,17 @@ const props = withDefaults(defineProps<Props>(), {
 const admin = ref<InstanceType<typeof LilyAdmin>>();
 const type = VApi.TYPE;
 const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "INT": INT,
+    "JSON_VARIANT": JSON_VARIANT,
+    "VApp": VApp.TYPE,
+    "ApiType": ApiType.TYPE,
+    "STRING": STRING,
+};
+
 onMounted(() => {
 });
 
@@ -30,16 +44,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-type="long" data-field="id">Id</th>
+            <th data-type="LONG" data-field="id">Id</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
             <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
-            <th data-type="integer" data-field="version">Version</th>
-            <th data-type="any" data-field="properties">Properties</th>
-            <th data-type="string" data-format="label" data-field="app">App</th>
-            <th data-type="string" data-format="label" data-field="api">Api</th>
-            <th data-type="string" data-field="callback">Callback</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="VApp" data-format="label" data-field="app">App</th>
+            <th data-type="ApiType" data-format="label" data-field="api">Api</th>
+            <th data-type="STRING" data-field="callback">Callback</th>
         </template>
         <template #preview>
             <VApiEditor class="editor" v-model="selection" />

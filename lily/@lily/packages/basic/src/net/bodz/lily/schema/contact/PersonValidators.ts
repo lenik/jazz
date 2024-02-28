@@ -1,5 +1,6 @@
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
+import type List from "../../../../../java/util/List";
 import type PersonTypeInfo from "./PersonTypeInfo";
 import _Person_stuff_Validators from "./_Person_stuff_Validators";
 
@@ -16,7 +17,7 @@ export class PersonValidators extends _Person_stuff_Validators {
     validateHello(val: string) {
     }
 
-    validatePeers(val: string[]) {
+    validatePeers(val: List<string>) {
     }
 
 }

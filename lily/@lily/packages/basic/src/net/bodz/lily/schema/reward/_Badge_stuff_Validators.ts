@@ -1,4 +1,4 @@
-import type { integer } from "@skeljs/core/src/lang/type";
+import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -14,16 +14,16 @@ export class _Badge_stuff_Validators extends CoEntityValidators {
         return this._type as _Badge_stuff_TypeInfo;
     }
 
-    validateId(val: integer) {
+    validateId(val: int) {
     }
 
     validateExpr(val: string) {
     }
 
-    validateVal(val: integer) {
+    validateVal(val: int) {
     }
 
-    validateLevels(val: integer[]) {
+    validateLevels(val: int[]) {
     }
 
     validateDescend(val: boolean) {
