@@ -6,7 +6,7 @@ import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.SortOrder;
 
-public class JsonVariant {
+public final class JsonVariant {
 
     final JsonVariantType type;
     final Object value;

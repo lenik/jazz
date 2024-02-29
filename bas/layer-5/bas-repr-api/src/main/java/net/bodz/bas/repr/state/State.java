@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.bodz.mda.xjdoc.model.javadoc.XjdocObject;
 
-public class State
+public final class State
         // extends Predef<State, Integer>
         extends XjdocObject
         implements Serializable, Comparable<State> {
