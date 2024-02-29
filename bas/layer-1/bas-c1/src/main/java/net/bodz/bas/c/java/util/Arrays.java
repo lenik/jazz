@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.bodz.bas.c.java.util.array.*;
+import net.bodz.bas.c.java.util.array.ArrayWrapper;
+import net.bodz.bas.c.java.util.array.BooleanArrayWrapper;
+import net.bodz.bas.c.java.util.array.ByteArrayWrapper;
+import net.bodz.bas.c.java.util.array.CharArrayWrapper;
+import net.bodz.bas.c.java.util.array.DoubleArrayWrapper;
+import net.bodz.bas.c.java.util.array.FloatArrayWrapper;
+import net.bodz.bas.c.java.util.array.IntArrayWrapper;
+import net.bodz.bas.c.java.util.array.LongArrayWrapper;
 import net.bodz.bas.fn.legacy.Func1;
 import net.bodz.bas.t._int.IntIterable;
 import net.bodz.bas.t._int.IntIterator;
@@ -19,6 +26,13 @@ public class Arrays
     public static <T> Class<T[]> getArrayType(Class<T> componentType) {
         Object array = Array.newInstance(componentType, 0);
         return (Class<T[]>) array.getClass();
+    }
+
+    public static int getDimCount(Class<?> clazz) {
+        if (! clazz.isArray())
+            return 0;
+        Class<?> componentType = clazz.getComponentType();
+        return 1 + getDimCount(componentType);
     }
 
     public static <T> ArrayWrapper<T> wrap(T[] array) {
