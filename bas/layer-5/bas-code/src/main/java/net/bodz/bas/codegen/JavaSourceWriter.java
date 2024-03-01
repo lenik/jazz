@@ -7,7 +7,7 @@ import net.bodz.bas.t.tuple.QualifiedName;
 public class JavaSourceWriter
         extends DecoratedTreeOut
         implements
-            IImportNaming {
+            IJavaImporter {
 
     private static final long serialVersionUID = 1L;
 
