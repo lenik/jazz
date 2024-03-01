@@ -2,7 +2,7 @@ package net.bodz.bas.codegen;
 
 import net.bodz.bas.t.tuple.QualifiedName;
 
-public interface IImportNaming {
+public interface IJavaImporter {
 
     default String importName(Class<?> clazz) {
         return importName(clazz.getName());

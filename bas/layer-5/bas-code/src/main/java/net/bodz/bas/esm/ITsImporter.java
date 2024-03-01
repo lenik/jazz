@@ -1,11 +1,18 @@
 package net.bodz.bas.esm;
 
-import net.bodz.bas.codegen.IImportNaming;
 import net.bodz.bas.t.tuple.QualifiedName;
 
-public interface IImportTsNaming
-        extends
-            IImportNaming {
+public interface ITsImporter {
+
+    default String importName(Class<?> clazz) {
+        return importName(clazz.getName());
+    }
+
+    String importName(QualifiedName name);
+
+    default String importName(String fullName) {
+        return importName(QualifiedName.parse(fullName));
+    }
 
     EsmName resolveName(QualifiedName qName, String alias, boolean type);
 

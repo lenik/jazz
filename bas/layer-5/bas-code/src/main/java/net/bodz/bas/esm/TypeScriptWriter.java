@@ -9,7 +9,7 @@ import net.bodz.bas.t.tuple.QualifiedName;
 public class TypeScriptWriter
         extends DecoratedTreeOut
         implements
-            IImportTsNaming {
+            ITsImporter {
 
     private static final long serialVersionUID = 1L;
 
