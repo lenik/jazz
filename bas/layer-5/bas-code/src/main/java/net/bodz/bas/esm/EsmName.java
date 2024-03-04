@@ -11,7 +11,14 @@ public final class EsmName
     public final EsmSource source;
     public final String name;
     public final String alias;
-    public final boolean type;
+    public final boolean typeOnly;
+
+    public EsmName(String name) {
+        this.source = null;
+        this.name = name;
+        this.alias = null;
+        this.typeOnly = false;
+    }
 
     public EsmName(EsmSource source, String name) {
         this(source, name, null);
@@ -27,7 +34,7 @@ public final class EsmName
         this.source = source;
         this.name = name;
         this.alias = alias;
-        this.type = type;
+        this.typeOnly = type;
     }
 
     @Override
@@ -57,19 +64,19 @@ public final class EsmName
         return null;
     }
 
-    public final boolean isTypeName() {
-        return type;
+    public final boolean isTypeOnly() {
+        return typeOnly;
     }
 
-    public EsmName typeName() {
-        if (type == true)
+    public EsmName toTypeOnly() {
+        if (typeOnly == true)
             return this;
         else
             return new EsmName(source, name, alias, true);
     }
 
-    public EsmName normalName() {
-        if (type == false)
+    public EsmName toValue() {
+        if (typeOnly == false)
             return this;
         else
             return new EsmName(source, name, alias, false);
@@ -81,7 +88,7 @@ public final class EsmName
 
     @Override
     public int hashCode() {
-        return Objects.hash(alias, name, source, type);
+        return Objects.hash(alias, name, source, typeOnly);
     }
 
     @Override
@@ -94,7 +101,7 @@ public final class EsmName
         return Objects.equals(alias, other.alias) //
                 && Objects.equals(name, other.name) //
                 && Objects.equals(source, other.source) //
-                && type == other.type;
+                && typeOnly == other.typeOnly;
     }
 
     @Override
@@ -103,7 +110,7 @@ public final class EsmName
         if (name != null)
             sb.append("{");
 
-        if (type)
+        if (typeOnly)
             sb.append("type ");
         if (alias != null) {
             sb.append(alias);
