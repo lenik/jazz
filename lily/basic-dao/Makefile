@@ -99,3 +99,6 @@ inserts:
 	. pgcmds; \
 	   psql -d $(DBNAME) -1 < <( for ((i=0; i < 1000; i++)); do cat test/person.ddl; done )
 
+predefs:
+	tstool predefs -Oweb/src -p net.bodz.lily
+
