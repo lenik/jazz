@@ -3,6 +3,7 @@ package net.bodz.bas.esm;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.io.IPrintOut;
 
@@ -11,7 +12,7 @@ public class ImportStatement {
     String defaultAlias;
     String defaultTypeAlias;
     List<EsmName> names = new ArrayList<>();
-    List<EsmName> typeNames = new ArrayList<>();
+    List<EsmName> typeOnlyNames = new ArrayList<>();
     EsmSource from;
 
     boolean debug = false; // true;
@@ -20,18 +21,18 @@ public class ImportStatement {
         defaultAlias = null;
         defaultTypeAlias = null;
         names.clear();
-        typeNames.clear();
+        typeOnlyNames.clear();
         this.from = source;
     }
 
     public void addName(EsmName name) {
         if (name.isDefaultExport()) {
-            if (name.isTypeName()) {
+            if (name.isTypeOnly()) {
                 if (defaultTypeAlias == null)
                     defaultTypeAlias = name.alias;
                 else if (! defaultTypeAlias.equals(name.alias))
                     throw new IllegalStateException(String.format(//
-                            "default type name %s is already imported as different alias %s.", //
+                            "default type-only name %s is already imported as different alias %s.", //
                             name.alias, defaultTypeAlias));
             } else {
                 if (defaultAlias == null)
@@ -44,15 +45,15 @@ public class ImportStatement {
             return;
         }
 
-        if (name.type)
-            typeNames.add(name);
+        if (name.typeOnly)
+            typeOnlyNames.add(name);
         else
             names.add(name);
     }
 
     public int printOutTypeScriptForNewFrom(IPrintOut out, EsmSource source) {
         int lines = 0;
-        if (from != source) {
+        if (! Nullables.equals(from, source)) {
             int lastPriority = -10000;
             if (from != null) {
                 lastPriority = from.module.priority;
@@ -96,13 +97,13 @@ public class ImportStatement {
 
         for (EsmName name : names) {
             // normal imports override type imports, remove duplicates.
-            typeNames.remove(name.typeName());
+            typeOnlyNames.remove(name.toTypeOnly());
         }
 
-        if (! typeNames.isEmpty()) {
+        if (! typeOnlyNames.isEmpty()) {
             out.print(_import);
             out.print(" type ");
-            printNames(out, typeNames);
+            printNames(out, typeOnlyNames);
             out.print(" from ");
             out.print(pathQuoted);
             out.println(";");
