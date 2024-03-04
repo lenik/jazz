@@ -37,8 +37,8 @@ public class DefaultTableMetadata
 
     TableOid oid = new TableOid();
     QualifiedName javaType;
-    Class<?> entityClass;
-    IType entityType;
+    Class<?> javaClass;
+    IType potatoType;
 
     String baseTypeName;
     Class<?> baseClass;
@@ -437,34 +437,34 @@ public class DefaultTableMetadata
     }
 
     @Override
-    public Class<?> getEntityClass() {
-        if (entityClass == null) {
-            String className = getEntityTypeName();
+    public Class<?> getJavaClass() {
+        if (javaClass == null) {
+            String className = getJavaType().getFullName();
             if (className == null)
                 return null;
             try {
-                entityClass = Class.forName(className);
+                javaClass = Class.forName(className);
             } catch (ClassNotFoundException e) {
                 return null;
             } catch (NoClassDefFoundError e) {
                 return null;
             }
         }
-        return entityClass;
+        return javaClass;
     }
 
     @Override
-    public IType getEntityType() {
-        if (entityType == null) {
-            Class<?> clazz = getEntityClass();
+    public IType getPotatoType() {
+        if (potatoType == null) {
+            Class<?> clazz = getJavaClass();
             if (clazz != null)
                 try {
-                    entityType = PotatoTypes.getInstance().loadType(clazz);
+                    potatoType = PotatoTypes.getInstance().loadType(clazz);
                 } catch (NoClassDefFoundError e) {
-                    entityType = null;
+                    potatoType = null;
                 }
         }
-        return entityType;
+        return potatoType;
     }
 
     @Override
@@ -497,7 +497,7 @@ public class DefaultTableMetadata
 
     @Override
     public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        IType type = getEntityType();
+        IType type = getPotatoType();
         if (type == null)
             return null;
         else

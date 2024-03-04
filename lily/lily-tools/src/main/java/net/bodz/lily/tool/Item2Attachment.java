@@ -89,7 +89,7 @@ public class Item2Attachment
 
     public void processTable(ITableMetadata table)
             throws IOException, SQLException, ParseException, FormatException {
-        IVolume volume = anyGroup.getVolume(table.getEntityTypeName());
+        IVolume volume = anyGroup.getVolume(table.getJavaType().getFullName());
 
         Statement st = connection.createStatement(//
                 ResultSet.TYPE_FORWARD_ONLY, //
@@ -226,7 +226,7 @@ public class Item2Attachment
 
             @Override
             public SelectMode selectTable(TableOid oid, TableType type) {
-                if (!type.isTable())
+                if (! type.isTable())
                     return SelectMode.SKIP;
                 if (catalogSubset.contains(oid))
                     return SelectMode.INCLUDE;
