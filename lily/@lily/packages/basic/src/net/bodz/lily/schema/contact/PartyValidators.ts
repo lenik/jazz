@@ -1,28 +1,31 @@
 import { Moment } from 'moment-timezone';
-
 import IdEntityValidators from "../../concrete/IdEntityValidators";
-
-import Contact from "./Contact";
+import PartyTypeInfo from './PartyTypeInfo';
 import PartyCategory from "./PartyCategory";
+import Contact from "./Contact";
 
 export class PartyValidators extends IdEntityValidators {
+
+    constructor(type: PartyTypeInfo) {
+        super(type);
+    }
 
     validateCategory(val: PartyCategory) { }
 
     validateBirthday(val: Moment) { }
 
     validateLocale(val: string) { }
-    
+
     validateTimeZoneId(val: string) { }
-    
+
     validateTags(val: string[]) { }
-    
+
     validateSubject(val: string) { }
-    
+
     validateContacts(val: Contact[]) { }
-    
+
     validateBank(val: string) { }
-    
+
     validateAccount(val: string) { }
 
 }
