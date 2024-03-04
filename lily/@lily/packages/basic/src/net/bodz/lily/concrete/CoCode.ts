@@ -1,8 +1,8 @@
-import { integer } from '@skeljs/core/src/lang/type';
+import { int } from '@skeljs/core/src/lang/basetype';
 import CoNode from './CoNode';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 
-export abstract class CoCode<This> extends CoNode<This, integer> {
+export abstract class CoCode<This> extends CoNode<This, int> {
     static TYPE = new CoCodeTypeInfo();
 
     code?: string

@@ -1,4 +1,4 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageValidators from './CoMessageValidators';
 import CoTalkTypeInfo from './CoTalkTypeInfo';
 import CoTalk from './CoTalk';

@@ -1,7 +1,7 @@
-import moment from 'moment';
-import { Moment } from 'moment';
+import moment from "moment-timezone";
+import { Moment } from "moment-timezone";
 
-import { integer } from '@skeljs/core/src/lang/type';
+import { int } from '@skeljs/core/src/lang/basetype';
 
 import StructRow from './StructRow';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
@@ -19,18 +19,18 @@ export abstract class CoObject extends StructRow {
 
     // state
 
-    flags: integer = 0
-    priority: integer = 0
-    state: integer = 0
+    flags: int = 0
+    priority: int = 0
+    state: int = 0
 
     // access control
 
     ownerUser: User
-    ownerUserId: integer
+    ownerUserId: int
     ownerGroup: Group
-    owenrGroupId: integer
-    acl: integer
-    accessMode: integer
+    owenrGroupId: int
+    acl: int
+    accessMode: int
 
     constructor(o: any) {
         super(o);

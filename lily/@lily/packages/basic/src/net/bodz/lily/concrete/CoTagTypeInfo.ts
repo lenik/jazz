@@ -1,13 +1,13 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoTagValidators from './CoTagValidators';
 
 export class CoTagTypeInfo extends CoCodeTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoTagType"
-    icon = "fa-tag"
-    label = "Concrete Tag Type"
-    description = "Definition of a tag type."
+    get name() { return "net.bodz.lily.concrete.CoTagType"; }
+    get icon() { return "fa-tag"; }
+    get label() { return "Concrete Tag Type"; }
+    get description() { return "Definition of a tag type."; }
 
     validators = new CoTagValidators(this);
 

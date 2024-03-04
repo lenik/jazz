@@ -1,14 +1,14 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import VoteRecordValidators from './VoteRecordValidators';
 import User from '../schema/account/User';
 
 export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 
-    name = "net.bodz.lily.concrete.VoteRecordType"
-    icon = "far-arrow-alt-circle-up"
-    label = "Vote Record"
-    description = "Vote up/down events."
+    get name() { return "net.bodz.lily.concrete.VoteRecordType"; }
+    get icon() { return "far-arrow-alt-circle-up"; }
+    get label() { return "Vote Record"; }
+    get description() { return "Vote up/down events."; }
 
     validators = new VoteRecordValidators(this);
 

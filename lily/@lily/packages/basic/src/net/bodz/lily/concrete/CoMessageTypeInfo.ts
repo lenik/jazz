@@ -1,4 +1,4 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
@@ -6,10 +6,10 @@ import FormDef from '../schema/meta/FormDef';
 
 export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoMessage"
-    icon = "fa-envelop"
-    label = "Concrete Message"
-    description = "Mail like message, includes timing, rich text content."
+    get name() { return "net.bodz.lily.concrete.CoMessage"; }
+    get icon() { return "fa-envelop"; }
+    get label() { return "Concrete Message"; }
+    get description() { return "Mail like message, includes timing, rich text content."; }
 
     validators = new CoMessageValidators(this);
 

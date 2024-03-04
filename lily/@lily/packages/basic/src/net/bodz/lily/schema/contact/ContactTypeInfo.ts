@@ -1,4 +1,4 @@
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity";
+import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from '../../concrete/IdEntityTypeInfo';
 import Organization from "./Organization";
 import OrgUnit from "./OrgUnit";

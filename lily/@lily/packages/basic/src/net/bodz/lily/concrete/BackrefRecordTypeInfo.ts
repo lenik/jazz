@@ -1,14 +1,14 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import BackrefRecordValidators from './BackrefRecordValidators';
 import User from '../schema/account/User';
 
 export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 
-    name = "net.bodz.lily.concrete.BackrefRecordType"
-    icon = "fas-retweet"
-    label = "Backref Record"
-    description = "Shared link to external sites."
+    get name() { return "net.bodz.lily.concrete.BackrefRecordType"; }
+    get icon() { return "fas-retweet"; }
+    get label() { return "Backref Record"; }
+    get description() { return "Shared link to external sites."; }
 
     validators = new BackrefRecordValidators(this);
 

@@ -1,14 +1,14 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import FavRecordValidators from './FavRecordValidators';
 import User from '../schema/account/User';
 
 export class FavRecordTypeInfo extends IdEntityTypeInfo {
 
-    name = "net.bodz.lily.concrete.FavRecordType"
-    icon = "fab-gratipay"
-    label = "Favorite Record"
-    description = "User favorite record."
+    get name() { return "net.bodz.lily.concrete.FavRecordType"; }
+    get icon() { return "fab-gratipay"; }
+    get label() { return "Favorite Record"; }
+    get description() { return "User favorite record."; }
 
     validators = new FavRecordValidators(this);
 

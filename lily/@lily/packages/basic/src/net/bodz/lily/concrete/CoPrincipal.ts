@@ -1,8 +1,8 @@
-import { integer } from '@skeljs/core/src/lang/type';
+import { int } from '@skeljs/core/src/lang/basetype';
 import IdEntity from './IdEntity';
 import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 
-export abstract class CoPrincipal extends IdEntity<integer> {
+export abstract class CoPrincipal extends IdEntity<int> {
     static TYPE = new CoPrincipalTypeInfo();
 
     name?: string
