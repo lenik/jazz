@@ -62,10 +62,6 @@ public interface ITableMetadata
         return null;
     }
 
-    default String getEntityTypeName() {
-        return getJavaType().getFullName();
-    }
-
     TableKey getPrimaryKey();
 
     default IColumnMetadata[] getPrimaryKeyColumns() {
@@ -167,11 +163,11 @@ public interface ITableMetadata
 
     boolean isExcluded();
 
-    default Class<?> getEntityClass() {
+    default Class<?> getJavaClass() {
         return null;
     }
 
-    default IType getEntityType() {
+    default IType getPotatoType() {
         return null;
     }
 
