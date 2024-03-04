@@ -131,6 +131,24 @@ public class EsmSource
         return new EsmName(source, name, alias, type);
     }
 
+    public EsmName childDefault(String childPath) {
+        return childDefault(childPath, false);
+    }
+
+    public EsmName childDefaultType(String childPath) {
+        return childDefault(childPath, true);
+    }
+
+    public EsmName childDefault(String childPath, boolean typeOnly) {
+        EsmSource childSource = child(childPath);
+        int lastSlash = childPath.lastIndexOf('/');
+        String name = lastSlash != -1 ? childPath.substring(lastSlash + 1) : childPath;
+        if (typeOnly)
+            return childSource.defaultTypeExport(name);
+        else
+            return childSource.defaultExport(name);
+    }
+
     public EsmName type(String name) {
         return name(name, null, true);
     }
