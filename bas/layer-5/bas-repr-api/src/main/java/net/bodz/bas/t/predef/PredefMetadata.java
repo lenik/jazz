@@ -75,11 +75,11 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         return Collections.unmodifiableMap(localNameMap);
     }
 
-    public Collection<E> geLocalValues() {
+    public Collection<E> getLocalValues() {
         return Collections.unmodifiableCollection(localKeyMap.values());
     }
 
-    public List<E> geLocalValueList() {
+    public List<E> getLocalValueList() {
         return Collections.unmodifiableList(localValueList);
     }
 
