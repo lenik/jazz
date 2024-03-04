@@ -145,6 +145,8 @@ public class TypeKind {
     }
 
     public static int getTypeId(Class<?> clazz) {
+        if (clazz == null)
+            throw new NullPointerException("clazz");
         Integer id = typeIdMap.get(clazz);
         if (id != null)
             return id.intValue();
