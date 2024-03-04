@@ -1,5 +1,5 @@
-import { Moment } from 'moment';
-import { integer } from '@skeljs/core/src/lang/type';
+import { Moment } from "moment-timezone";
+import { int } from '@skeljs/core/src/lang/basetype';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMomentInterval from './CoMomentInterval';
 import User from '../schema/account/User';

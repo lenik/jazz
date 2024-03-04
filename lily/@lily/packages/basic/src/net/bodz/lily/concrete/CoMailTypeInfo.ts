@@ -1,14 +1,14 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMailValidators from './CoMailValidators';
 import User from '../schema/account/User';
 
 export class CoMailTypeInfo extends CoMessageTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoMail"
-    icon = "fa-envelop"
-    label = "Concrete Mail"
-    description = "Mail like message, includes recipients, timing, rich text content."
+    get name() { return "net.bodz.lily.concrete.CoMail"; }
+    get icon() { return "fa-envelop"; }
+    get label() { return "Concrete Mail"; }
+    get description() { return "Mail like message, includes recipients, timing, rich text content."; }
 
     validators = new CoMailValidators(this);
 

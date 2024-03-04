@@ -1,7 +1,7 @@
-import moment from 'moment';
-import { Moment } from 'moment';
+import moment from "moment-timezone";
+import { Moment } from "moment-timezone";
 
-import { integer } from '@skeljs/core/src/lang/type';
+import { int } from '@skeljs/core/src/lang/basetype';
 import StructRowTypeInfo from './StructRowTypeInfo';
 
 export abstract class StructRow {
@@ -11,7 +11,7 @@ export abstract class StructRow {
 
     creationDate: Moment = moment()
     lastModifiedDate: Moment = moment()
-    version: integer = 0
+    version: int = 0
 
     constructor(o: any) {
         if (o != null)

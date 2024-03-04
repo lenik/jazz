@@ -1,4 +1,4 @@
-import { integer } from '@skeljs/core/src/lang/type';
+import { int } from '@skeljs/core/src/lang/basetype';
 import CoCode from './CoCode';
 import CoTagTypeInfo from './CoTagTypeInfo';
 

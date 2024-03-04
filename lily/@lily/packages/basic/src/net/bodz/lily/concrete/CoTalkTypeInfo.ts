@@ -1,13 +1,13 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoTalkValidators from './CoTalkValidators';
 
 export class CoTalkTypeInfo extends CoMessageTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoTalk"
-    icon = "fa-comments"
-    label = "Concrete Talk"
-    description = "Replied messages."
+    get name() { return "net.bodz.lily.concrete.CoTalk"; }
+    get icon() { return "fa-comments"; }
+    get label() { return "Concrete Talk"; }
+    get description() { return "Replied messages."; }
 
     validators = new CoTalkValidators(this);
 

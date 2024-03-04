@@ -1,12 +1,12 @@
-import { EntityPropertyMap, EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import StructRowValidators from './StructRowValidators';
 
 export class StructRowTypeInfo extends EntityType {
 
-    name = "net.bodz.lily.concrete.StructRow"
-    icon = "far-cube"
-    label = "Content Version"
-    description = "Content data with version."
+    get name() { return "net.bodz.lily.concrete.StructRow"; }
+    get icon() { return "far-cube"; }
+    get label() { return "Content Version"; }
+    get description() { return "Content data with version."; }
 
     validators = new StructRowValidators(this);
 

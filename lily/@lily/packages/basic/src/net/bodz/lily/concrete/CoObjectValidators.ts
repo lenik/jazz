@@ -1,5 +1,5 @@
-import { integer } from '@skeljs/core/src/lang/type';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { int } from '@skeljs/core/src/lang/basetype';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import StructRowValidators from './StructRowValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 
@@ -33,15 +33,15 @@ export class CoObjectValidators extends StructRowValidators {
 
     }
 
-    validateFlags(val: integer) {
+    validateFlags(val: int) {
 
     }
 
-    validatePriority(val: integer) {
+    validatePriority(val: int) {
 
     }
 
-    validateState(val: integer) {
+    validateState(val: int) {
 
     }
 

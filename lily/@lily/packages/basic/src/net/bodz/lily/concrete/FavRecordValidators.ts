@@ -1,4 +1,4 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityValidators from './IdEntityValidators';
 import FavRecordTypeInfo from './FavRecordTypeInfo';
 import User from '../schema/account/User';

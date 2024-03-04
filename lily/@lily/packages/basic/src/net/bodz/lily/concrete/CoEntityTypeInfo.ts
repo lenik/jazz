@@ -1,13 +1,13 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoEntityValidators from './CoEntityValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 
 export class CoEntityTypeInfo extends CoObjectTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoEntity"
-    icon = "far-cube"
-    label = "Concrete Entity"
-    description = "An entity always has an identity."
+    get name() { return "net.bodz.lily.concrete.CoEntity"; }
+    get icon() { return "far-cube"; }
+    get label() { return "Concrete Entity"; }
+    get description() { return "An entity always has an identity."; }
 
     validators = new CoEntityValidators(this);
 

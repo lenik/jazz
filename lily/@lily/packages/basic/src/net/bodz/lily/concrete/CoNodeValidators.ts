@@ -1,5 +1,5 @@
-import { integer } from '@skeljs/core/src/lang/type';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { int } from '@skeljs/core/src/lang/basetype';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityValidators from './IdEntityValidators';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 
@@ -13,15 +13,15 @@ export class CoNodeValidators extends IdEntityValidators {
         return this._type as CoNodeTypeInfo;
     }
 
-    validateParent(val: integer) {
+    validateParent(val: int) {
 
     }
 
-    validateRefCount(val: integer) {
+    validateRefCount(val: int) {
 
     }
 
-    validateDepth(val: integer) {
+    validateDepth(val: int) {
 
     }
 

@@ -1,13 +1,13 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import IdEntityValidators from './IdEntityValidators';
 
 export class IdEntityTypeInfo extends CoObjectTypeInfo {
 
-    name = "net.bodz.lily.concrete.IdEntity"
-    icon = "fa-key"
-    label = "Concrete IdEntity"
-    description = "An entity has an id column."
+    get name() { return "net.bodz.lily.concrete.IdEntity"; }
+    get icon() { return "fa-key"; }
+    get label() { return "Concrete IdEntity"; }
+    get description() { return "An entity has an id column."; }
 
     validators = new IdEntityValidators(this);
 

@@ -1,9 +1,9 @@
-import { integer } from "@skeljs/core/src/lang/type";
+import { int } from "@skeljs/core/src/lang/basetype";
 import { IdEntity } from '../../concrete/IdEntity';
 
 import ContactTypeInfo from "./ContactTypeInfo";
 
-export class Contact extends IdEntity<integer> {
+export class Contact extends IdEntity<int> {
     static TYPE = new ContactTypeInfo();
 
     org: any
@@ -14,7 +14,7 @@ export class Contact extends IdEntity<integer> {
     usage?: string
 
     zone: any
-    zoneId?: integer
+    zoneId?: int
 
     country?: string
     r1?: string

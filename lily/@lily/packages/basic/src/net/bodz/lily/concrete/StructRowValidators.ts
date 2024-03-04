@@ -1,6 +1,6 @@
-import { integer } from '@skeljs/core/src/lang/type';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity';
-import { Moment } from 'moment';
+import { int } from '@skeljs/core/src/lang/basetype';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { Moment } from "moment-timezone";
 import StructRowTypeInfo from './StructRowTypeInfo';
 
 export class StructRowValidators {
@@ -23,7 +23,7 @@ export class StructRowValidators {
 
     }
 
-    validateVersion(val: integer) {
+    validateVersion(val: int) {
 
     }
 

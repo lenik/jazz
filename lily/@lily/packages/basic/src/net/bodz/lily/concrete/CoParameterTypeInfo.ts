@@ -1,14 +1,14 @@
 
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoParameterValidators from './CoParameterValidators';
 
 export class CoParameterTypeInfo extends CoCodeTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoParameter"
-    icon = "fa-adjust"
-    label = "Concrete Parameter"
-    description = "Definition of a parameter type."
+    get name() { return "net.bodz.lily.concrete.CoParameter"; }
+    get icon() { return "fa-adjust"; }
+    get label() { return "Concrete Parameter"; }
+    get description() { return "Definition of a parameter type."; }
 
     validators = new CoParameterValidators(this);
 

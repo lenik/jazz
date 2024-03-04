@@ -1,13 +1,13 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity';
+import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoPhaseValidators from './CoPhaseValidators';
 
 export class CoPhaseTypeInfo extends CoCodeTypeInfo {
 
-    name = "net.bodz.lily.concrete.CoPhase"
-    icon = "fa-leaf"
-    label = "Concrete Phase"
-    description = "Definition of a phase type."
+    get name() { return "net.bodz.lily.concrete.CoPhase"; }
+    get icon() { return "fa-leaf"; }
+    get label() { return "Concrete Phase"; }
+    get description() { return "Definition of a phase type."; }
 
     validators = new CoPhaseValidators(this);
 
