@@ -65,6 +65,21 @@ public class QualifiedName {
         return new QualifiedName(packageName, name + add);
     }
 
+    public boolean within(String namespace) {
+        if (namespace == null || namespace.isEmpty())
+            return true;
+        if (this.packageName.startsWith(namespace)) {
+            int n = namespace.length();
+            if (this.packageName.length() > n) {
+                char lookAhead = this.packageName.charAt(n);
+                if (lookAhead != '.')
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public String getHead() {
         if (packageName != null) {
             int dot = packageName.indexOf('.');
