@@ -3,10 +3,10 @@
 import { onMounted, ref } from "vue";
 import { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import { EntityType } from '../../entity/EntityType';
-import EntityChooseDialog from '../../../../../ui/lily/EntityChooseDialog.vue';
+import EntityType from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityChooseDialog from '@skeljs/dba/src/ui/lily/EntityChooseDialog.vue';
 
-import { Person } from './Person';
+import Person from './Person';
 
 const model = defineModel();
 

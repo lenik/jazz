@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from 'vue';
 
-import LilyAdmin from '../../../../../../src/ui/lily/LilyAdmin.vue';
+import LilyAdmin from '@skeljs/dba/src/ui/lily/LilyAdmin.vue';
 
 import { Person } from './Person';
 import PersonEditor from './PersonEditor.vue';

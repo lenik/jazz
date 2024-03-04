@@ -1,22 +1,22 @@
-<script setup lang="ts">
-
+<script lang="ts">
 import { onMounted, ref } from "vue";
 import { Person } from "./Person";
+export interface Props {
+}    
+</script>
+
+<script setup lang="ts">
 
 import FieldRow from '@skeljs/core/src/ui/FieldRow.vue';
-import RefEditor from '../../../../../ui/input/RefEditor.vue';
+import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import RefEditor from '@skeljs/dba/src/ui/input/RefEditor.vue';
 import PersonChooseDialog from './PersonChooseDialog.vue';
-
-import { getDefaultFieldRowProps } from "../../../../../ui/lily/defaults";
 
 defineOptions({
     inheritAttrs: false
 });
 
 const model = defineModel<Person>();
-
-interface Props {
-}
 
 const props = withDefaults(defineProps<Props>(), {
 });

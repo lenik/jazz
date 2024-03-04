@@ -1,10 +1,17 @@
-import { int } from '../../entity';
-import { IdEntity } from '../../concrete/IdEntity';
+import { int } from '@skeljs/core/src/lang/basetype';
+// import IdEntity from '@/src/net/bodz/lily/concrete/IdEntity';
+import IdEntity from '../../src/net/bodz/lily/concrete/IdEntity';
 
-import { ContactType } from './ContactType';
+import ContactTypeInfo from './ContactTypeInfo';
 
 export class Contact extends IdEntity<int> {
-    static TYPE = new ContactType();
+
+    static _typeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new ContactTypeInfo();
+        return this._typeInfo;
+    }
 
     org: any
     orgUnit: any
@@ -38,3 +45,5 @@ export class Contact extends IdEntity<int> {
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default Contact;

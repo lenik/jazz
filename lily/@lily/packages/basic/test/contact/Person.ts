@@ -1,9 +1,15 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { Party } from './Party';
-import PersonType from './PersonType';
+import PersonTypeInfo from './PersonType';
 
 export class Person extends Party {
-    static TYPE = new PersonType();
+
+    static _typeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = new PersonTypeInfo();
+        return this._typeInfo;
+    }
 
     gender?: string
 
@@ -27,3 +33,5 @@ export class Person extends Party {
         if (o != null) Object.assign(this, o);
     }
 }
+
+export default Person;
