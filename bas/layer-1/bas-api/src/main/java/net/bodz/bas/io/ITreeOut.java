@@ -12,14 +12,29 @@ public interface ITreeOut
      */
     ITextIndention getTextIndention();
 
+    default void enterln() {
+        println();
+        enter();
+    }
+
     default void enterln(String s) {
         println(s);
         enter();
     }
 
+    default void leaveln() {
+        leave();
+        println();
+    }
+
     default void leaveln(String s) {
         leave();
         println(s);
+    }
+
+    default void lnleave() {
+        println();
+        leave();
     }
 
     default void lnleave(String s) {
