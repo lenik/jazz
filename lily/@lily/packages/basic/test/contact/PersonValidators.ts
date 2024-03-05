@@ -17,14 +17,14 @@ class PersonValidators extends PartyValidators {
 
     validateFather(val: Person) {
         if (val.gender != null)
-            if (val.gender != 'm')
-                throw "father should be male.";
+            if (val.gender != 'male')
+                throw new Error("father should be male.");
     }
 
     validateMother(val: Person) {
         if (val.gender != null)
-            if (val.gender != 'f')
-                throw "mother should be female.";
+            if (val.gender != 'female')
+                throw new Error("mother should be female.");
     }
 
     validateGender(val: string) {

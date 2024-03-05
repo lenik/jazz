@@ -1,6 +1,6 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { Party } from './Party';
-import PersonTypeInfo from './PersonType';
+import PersonTypeInfo from './PersonTypeInfo';
 
 export class Person extends Party {
 

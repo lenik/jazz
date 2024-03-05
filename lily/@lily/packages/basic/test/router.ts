@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 export const links = {
+    "TestAdmin": "test contact: PersonAdmin",
     "": "component Index",
     "Project": "component Project",
     "GroupAdmin": "component GroupAdmin",
@@ -70,6 +71,7 @@ export const links = {
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [
+        { path: '/TestAdmin', component: () => import('./contact/PersonAdmin.vue') },
         { path: '/', component: () => import('./Index.vue') },
         { path: '/Project', component: () => import('@skeljs/core/src/ui/demo/Project.vue') },
         { path: '/GroupAdmin', component: () => import('../src/net/bodz/lily/schema/account/GroupAdmin.vue') },
