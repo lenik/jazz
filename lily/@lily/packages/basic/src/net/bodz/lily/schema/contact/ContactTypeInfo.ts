@@ -6,6 +6,7 @@ import Organization from "./Organization";
 import OrgUnit from "./OrgUnit";
 import Person from "./Person";
 import Zone from "../geo/Zone";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 
 export class ContactTypeInfo extends IdEntityTypeInfo {
 
@@ -15,9 +16,9 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     description = "A contact record."
 
     declaredProperty: EntityPropertyMap = {
-        org: property({ type: Organization.TYPE, icon: "fa-build" }),
-        orgUnit: property({ type: OrgUnit.TYPE, icon: "fa-build" }),
-        person: property({ type: Person.TYPE, icon: "fa-male" }),
+        org: property({ type: JSON_VARIANT, icon: "fa-build" }),
+        orgUnit: property({ type: JSON_VARIANT, icon: "fa-build" }),
+        person: property({ type: JSON_VARIANT, icon: "fa-male" }),
 
         rename: property({ type: STRING, icon: "fa-tag" }),
         usage: property({ type: STRING, icon: "fas-lightbulb" }),
@@ -46,6 +47,10 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     constructor() {
         super(INT);
         this.declare(this.declaredProperty);
+
+        import('./Organization').then((a) => this.property.org.type = a.Organization.TYPE);
+        import('./OrgUnit').then((a) => this.property.orgUnit.type = a.OrgUnit.TYPE);
+        import('./Person').then((a) => this.property.person.type = a.Person.TYPE);
     }
 }
 

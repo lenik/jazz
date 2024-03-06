@@ -7,6 +7,7 @@ import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
 import PartyCategory from './PartyCategory';
 import Person from './Person';
 import Contact from './Contact';
+import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 
 export class PartyTypeInfo extends IdEntityTypeInfo {
 
@@ -45,8 +46,8 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
         ssn: property({ type: STRING, icon: "far-id-card" }),
         dln: property({ type: STRING, icon: "far-id-card" }),
 
-        mother: property({ type: Person.TYPE, icon: "far-female" }),
-        father: property({ type: Person.TYPE, icon: "far-male" }),
+        mother: property({ type: JSON_VARIANT, icon: "far-female" }),
+        father: property({ type: JSON_VARIANT, icon: "far-male" }),
     }
 
     constructor() {
