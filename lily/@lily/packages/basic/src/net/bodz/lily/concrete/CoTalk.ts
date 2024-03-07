@@ -4,7 +4,7 @@ import CoTalkTypeInfo from './CoTalkTypeInfo';
 import CoMessage from './CoMessage';
 
 export abstract class CoTalk<This> extends CoMessage<long> {
-    static TYPE = new CoTalkTypeInfo();
+    static readonly TYPE = new CoTalkTypeInfo();
 
     parent?: This
     parentId?: long

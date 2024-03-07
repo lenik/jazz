@@ -3,7 +3,7 @@ import IdEntity from './IdEntity';
 import BackrefRecordTypeInfo from './BackrefRecordTypeInfo';
 
 export abstract class BackrefRecord<This> extends IdEntity<long> {
-    static TYPE = new BackrefRecordTypeInfo();
+    static readonly TYPE = new BackrefRecordTypeInfo();
     
     site: string
     

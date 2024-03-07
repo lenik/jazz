@@ -3,7 +3,7 @@ import IdEntity from './IdEntity';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 
 export abstract class CoNode<This, Id> extends IdEntity<Id> {
-    static TYPE = new CoNodeTypeInfo();
+    static readonly TYPE = new CoNodeTypeInfo();
 
     parent?: This
     parentId?: Id

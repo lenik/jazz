@@ -5,7 +5,7 @@ import CoMessage from './CoMessage';
 import User from '../schema/account/User';
 
 export abstract class CoMail extends CoMessage<long> {
-    static TYPE = new CoMailTypeInfo();
+    static readonly TYPE = new CoMailTypeInfo();
 
     recipient?: User
     recipients: User[] = []

@@ -4,7 +4,7 @@ import IdEntity from './IdEntity';
 import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
 
 export abstract class CoMomentInterval<Id> extends IdEntity<Id> {
-    static TYPE = new CoMomentIntervalTypeInfo();
+    static readonly TYPE = new CoMomentIntervalTypeInfo();
     
     beginTime?: Moment
     endTime?: Moment

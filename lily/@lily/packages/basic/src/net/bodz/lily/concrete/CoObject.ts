@@ -9,7 +9,7 @@ import User from '../schema/account/User';
 import Group from '../schema/account/Group';
 
 export abstract class CoObject extends StructRow {
-    static TYPE = new CoObjectTypeInfo();
+    static readonly TYPE = new CoObjectTypeInfo();
 
     // UI
 

@@ -3,7 +3,7 @@ import CoNode from './CoNode';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 
 export abstract class CoCode<This> extends CoNode<This, int> {
-    static TYPE = new CoCodeTypeInfo();
+    static readonly TYPE = new CoCodeTypeInfo();
 
     code?: string
 
