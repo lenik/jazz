@@ -1,5 +1,8 @@
-import { EntityPropertyMap, EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import StructRowValidators from './StructRowValidators';
+import { INT } from '@skeljs/core/src/lang/baseinfo';
+import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
 
 export class StructRowTypeInfo extends EntityType {
 
@@ -12,15 +15,15 @@ export class StructRowTypeInfo extends EntityType {
 
     declaredProperty: EntityPropertyMap = {
         creationDate: property({
-            type: 'date', icon: 'far-calendar-plus',
+            type: ZonedDateTime.TYPE, icon: 'far-calendar-plus',
             validator: this.validators.validateCreationDate
         }),
         lastModifiedDate: property({
-            type: 'date', icon: 'far-edit',
+            type: ZonedDateTime.TYPE, icon: 'far-edit',
             validator: this.validators.validateLastModifiedDate
         }),
         version: property({
-            type: 'number', icon: 'far-code-branch',
+            type: INT, icon: 'far-code-branch',
             validator: this.validators.validateVersion
         }),
     };

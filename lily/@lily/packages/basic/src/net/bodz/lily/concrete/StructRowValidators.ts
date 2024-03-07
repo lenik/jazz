@@ -1,5 +1,5 @@
 import { int } from '@skeljs/core/src/lang/basetype';
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
 import { Moment } from "moment-timezone";
 import StructRowTypeInfo from './StructRowTypeInfo';
 

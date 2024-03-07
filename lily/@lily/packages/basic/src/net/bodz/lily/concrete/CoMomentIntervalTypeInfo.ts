@@ -1,7 +1,10 @@
-import { Moment } from "moment-timezone";
-import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoMomentIntervalValidators from './CoMomentIntervalValidators';
+import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
+import { INT } from "@skeljs/core/src/lang/baseinfo";
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 
 export class CoMomentIntervalTypeInfo extends IdEntityTypeInfo {
 
@@ -13,13 +16,13 @@ export class CoMomentIntervalTypeInfo extends IdEntityTypeInfo {
     validators = new CoMomentIntervalValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        beginTime: property({ type: "Moment", icon: "far-clock" }),
-        endTime: property({ type: "Moment", icon: "far-clock" }),
-        year: property({ type: "number", icon: "far-calendar" }),
+        beginTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
+        endTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
+        year: property({ type: INT, icon: "far-calendar" }),
     };
 
-    constructor() {
-        super();
+    constructor(idType: TypeInfo<any>) {
+        super(idType);
         this.declare(this.declaredProperty);
     }
 

@@ -1,5 +1,5 @@
 
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
 import CoCodeValidators from './CoCodeValidators';
 import CoParameterTypeInfo from './CoParameterTypeInfo';
 

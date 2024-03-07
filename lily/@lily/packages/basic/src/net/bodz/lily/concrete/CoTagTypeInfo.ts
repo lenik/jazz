@@ -1,6 +1,8 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoTagValidators from './CoTagValidators';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
+import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 
 export class CoTagTypeInfo extends CoCodeTypeInfo {
 
@@ -15,8 +17,8 @@ export class CoTagTypeInfo extends CoCodeTypeInfo {
         // id: primaryKey({ type: 'number', precision: 20, })
     };
 
-    constructor() {
-        super();
+    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+        super(selfType, idType);
         this.declare(this.declaredProperty);
     }
 

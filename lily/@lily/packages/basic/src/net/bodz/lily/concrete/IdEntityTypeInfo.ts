@@ -1,8 +1,9 @@
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 import { INT } from '@skeljs/core/src/lang/baseinfo';
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import IdEntityValidators from './IdEntityValidators';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 
 export class IdEntityTypeInfo extends CoObjectTypeInfo {
 

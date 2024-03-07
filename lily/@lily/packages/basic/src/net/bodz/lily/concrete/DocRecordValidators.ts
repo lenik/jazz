@@ -1,4 +1,4 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
 import CoMessageValidators from './CoMessageValidators';
 import DocRecordTypeInfo from './DocRecordTypeInfo';
 

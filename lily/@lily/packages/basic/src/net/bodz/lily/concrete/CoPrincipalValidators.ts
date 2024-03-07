@@ -1,4 +1,4 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
 import CoObjectValidators from './CoObjectValidators';
 import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 

@@ -7,7 +7,7 @@ import FormDef from '../schema//meta/FormDef';
 // import UserClickInfo from '../schema/account/UserClickInfo';
 
 export abstract class CoMessage<Id> extends CoMomentInterval<Id> {
-    static TYPE = new CoMessageTypeInfo();
+    // static TYPE = new CoMessageTypeInfo();
 
     op: User
     subject: string

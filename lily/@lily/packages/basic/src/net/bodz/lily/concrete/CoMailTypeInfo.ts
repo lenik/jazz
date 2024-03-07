@@ -1,6 +1,8 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMailValidators from './CoMailValidators';
+import { ARRAY, BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
 import User from '../schema/account/User';
 
 export class CoMailTypeInfo extends CoMessageTypeInfo {
@@ -13,14 +15,14 @@ export class CoMailTypeInfo extends CoMessageTypeInfo {
     validators = new CoMailValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        recipient: property({ type: User, icon: "far-user", }),
-        recipients: property({ type: "User[]", icon: "far-users", }),
-        bcc: property({ type: "User[]", icon: "far-users", }),
-        read: property({ type: 'boolean', icon: "far-eye", }),
+        recipient: property({ type: User.TYPE, icon: "far-user", }),
+        recipients: property({ type: ARRAY(User.TYPE), icon: "far - users", }),
+        bcc: property({ type: ARRAY(User.TYPE), icon: "far-users", }),
+        read: property({ type: BOOLEAN, icon: "far-eye", }),
     };
 
     constructor() {
-        super();
+        super(LONG);
         this.declare(this.declaredProperty);
     }
 

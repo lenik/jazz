@@ -1,6 +1,8 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import DocRecordValidators from './DocRecordValidators';
+import { BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class DocRecordTypeInfo extends CoMessageTypeInfo {
 
@@ -12,11 +14,11 @@ export class DocRecordTypeInfo extends CoMessageTypeInfo {
     validators = new DocRecordValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        read: property({ type: 'boolean', icon: "far-eye", }),
+        read: property({ type: BOOLEAN, icon: "far-eye", }),
     };
 
     constructor() {
-        super();
+        super(LONG);
         this.declare(this.declaredProperty);
     }
 

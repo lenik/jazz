@@ -4,8 +4,6 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 
-import org.apache.ibatis.mapping.ParameterMap;
-
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -37,6 +35,7 @@ import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.meta.FormDef;
+import net.bodz.lily.schema.meta.ParameterMap;
 import net.bodz.lily.security.IUser;
 
 /**

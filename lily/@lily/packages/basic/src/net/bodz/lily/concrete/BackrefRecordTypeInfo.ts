@@ -1,7 +1,9 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import BackrefRecordValidators from './BackrefRecordValidators';
 import User from '../schema/account/User';
+import { LONG, STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 
@@ -18,13 +20,13 @@ export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
             validator: this.validators.validateUser
         }),
         site: property({
-            type: "string", precision: 100, icon: "far-link",
+            type: STRING, precision: 100, icon: "far-link",
             validator: this.validators.validateSite
         }),
     };
 
     constructor() {
-        super();
+        super(LONG);
         this.declare(this.declaredProperty);
     }
 

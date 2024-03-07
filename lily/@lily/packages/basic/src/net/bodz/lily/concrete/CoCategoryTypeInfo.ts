@@ -1,5 +1,6 @@
 
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 import CoCategoryValidators from './CoCategoryValidators';
 

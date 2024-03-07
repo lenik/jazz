@@ -1,6 +1,8 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import FavRecordValidators from './FavRecordValidators';
+import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 import User from '../schema/account/User';
 
 export class FavRecordTypeInfo extends IdEntityTypeInfo {
@@ -14,11 +16,11 @@ export class FavRecordTypeInfo extends IdEntityTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         user: property({ type: User.TYPE, icon: "far-user" }),
-        voteCount: property({ type: "number", precision: 10, icon: "far-hashtag" }),
+        voteCount: property({ type: INT, precision: 10, icon: "far-hashtag" }),
     };
 
     constructor() {
-        super();
+        super(LONG);
         this.declare(this.declaredProperty);
     }
 

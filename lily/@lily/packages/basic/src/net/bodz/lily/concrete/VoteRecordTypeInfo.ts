@@ -1,7 +1,9 @@
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import VoteRecordValidators from './VoteRecordValidators';
 import User from '../schema/account/User';
+import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 
@@ -18,13 +20,13 @@ export class VoteRecordTypeInfo extends IdEntityTypeInfo {
             validator: this.validators.validateUser
         }),
         voteCount: property({
-            type: "number", precision: 10, icon: "far-hashtag",
+            type: INT, precision: 10, icon: "far-hashtag",
             validator: this.validators.validateVoteCount
         }),
     };
 
     constructor() {
-        super();
+        super(LONG);
         this.declare(this.declaredProperty);
     }
 

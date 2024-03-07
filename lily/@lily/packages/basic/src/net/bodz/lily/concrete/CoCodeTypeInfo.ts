@@ -1,7 +1,9 @@
-
-import { EntityPropertyMap, primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import CoCodeValidators from './CoCodeValidators';
+import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
+import CoCodeValidators from './CoCodeValidators';
+import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
+import { STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoCodeTypeInfo extends CoNodeTypeInfo {
 
@@ -14,13 +16,13 @@ export class CoCodeTypeInfo extends CoNodeTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         code: property({
-            type: 'string', precision: 30,
+            type: STRING, precision: 30,
             validator: this.validators.validateCode
         })
     };
 
-    constructor() {
-        super();
+    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+        super(selfType, idType);
         this.declare(this.declaredProperty);
     }
 
