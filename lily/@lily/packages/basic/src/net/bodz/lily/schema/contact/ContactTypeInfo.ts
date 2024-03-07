@@ -1,5 +1,7 @@
-import { EntityPropertyMap, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import IdEntityTypeInfo from '../../concrete/IdEntityTypeInfo';
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import Organization from "./Organization";
 import OrgUnit from "./OrgUnit";
 import Person from "./Person";
@@ -17,32 +19,32 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
         orgUnit: property({ type: OrgUnit.TYPE, icon: "fa-build" }),
         person: property({ type: Person.TYPE, icon: "fa-male" }),
 
-        rename: property({ type: 'string', icon: "fa-tag" }),
-        usage: property({ type: 'string', icon: "fas-lightbulb" }),
+        rename: property({ type: STRING, icon: "fa-tag" }),
+        usage: property({ type: STRING, icon: "fas-lightbulb" }),
 
         zone: property({ type: Zone.TYPE, icon: "far-map" }),
-        country: property({ type: 'string', icon: "far-globe" }),
-        r1: property({ type: 'string', icon: "fab-buromobelexperte" }),
-        r2: property({ type: 'string', icon: "fab-buromobelexperte" }),
-        r3: property({ type: 'string', icon: "fab-buromobelexperte" }),
-        r4: property({ type: 'string', icon: "fab-buromobelexperte" }),
+        country: property({ type: STRING, icon: "far-globe" }),
+        r1: property({ type: STRING, icon: "fab-buromobelexperte" }),
+        r2: property({ type: STRING, icon: "fab-buromobelexperte" }),
+        r3: property({ type: STRING, icon: "fab-buromobelexperte" }),
+        r4: property({ type: STRING, icon: "fab-buromobelexperte" }),
 
-        address1: property({ type: 'string', icon: "far-location-dot" }),
-        address2: property({ type: 'string', icon: "far-location-dot" }),
-        postalCode: property({ type: 'string', icon: "fas-map" }),
+        address1: property({ type: STRING, icon: "far-location-dot" }),
+        address2: property({ type: STRING, icon: "far-location-dot" }),
+        postalCode: property({ type: STRING, icon: "fas-map" }),
 
-        tel: property({ type: 'string', icon: "fa-tel" }),
-        mobile: property({ type: 'string', icon: "fa-mobile" }),
-        fax: property({ type: 'string', icon: "fa-fax" }),
-        email: property({ type: 'string', icon: "fa-email" }),
-        web: property({ type: 'string', icon: "fa-web" }),
-        qq: property({ type: 'string', icon: "fa-qq" }),
-        wechat: property({ type: 'string', icon: "fa-wechat" }),
+        tel: property({ type: STRING, icon: "fa-tel" }),
+        mobile: property({ type: STRING, icon: "fa-mobile" }),
+        fax: property({ type: STRING, icon: "fa-fax" }),
+        email: property({ type: STRING, icon: "fa-email" }),
+        web: property({ type: STRING, icon: "fa-web" }),
+        qq: property({ type: STRING, icon: "fa-qq" }),
+        wechat: property({ type: STRING, icon: "fa-wechat" }),
 
     }
 
     constructor() {
-        super();
+        super(INT);
         this.declare(this.declaredProperty);
     }
 }

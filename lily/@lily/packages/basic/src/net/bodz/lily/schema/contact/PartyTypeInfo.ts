@@ -1,8 +1,12 @@
-import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from '../../concrete/IdEntityTypeInfo';
 import PartyValidators from './PartyValidators';
-import Person from './Person';
+import { ARRAY, BOOLEAN, CHAR, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
 import PartyCategory from './PartyCategory';
+import Person from './Person';
+import Contact from './Contact';
 
 export class PartyTypeInfo extends IdEntityTypeInfo {
 
@@ -10,43 +14,43 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
 
     declaredProperty: EntityPropertyMap = {
         category: property({ type: PartyCategory.TYPE, icon: "far-crow" }),
-        birthday: property({ type: 'Moment', icon: "fa-baby" }),
+        birthday: property({ type: LocalDate.TYPE, icon: "fa-baby" }),
 
-        locale: property({ type: 'string', icon: "far-globe" }),
-        timeZoneId: property({ type: 'string', icon: "fa-map" }),
+        locale: property({ type: STRING, icon: "far-globe" }),
+        timeZoneId: property({ type: STRING, icon: "fa-map" }),
 
-        peer: property({ type: 'boolean', nullable: false, icon: "fa-user-group" }),
-        customer: property({ type: 'boolean', nullable: false, icon: "fa-hand-holding-dollar" }),
-        supplier: property({ type: 'boolean', nullable: false, icon: "far-industry" }),
+        peer: property({ type: BOOLEAN, nullable: false, icon: "fa-user-group" }),
+        customer: property({ type: BOOLEAN, nullable: false, icon: "fa-hand-holding-dollar" }),
+        supplier: property({ type: BOOLEAN, nullable: false, icon: "far-industry" }),
 
-        tags: property({ type: 'string[]', icon: "fa-tags" }),
+        tags: property({ type: ARRAY(STRING), icon: "fa-tags" }),
 
-        subject: property({ type: 'string', icon: "fa-quote-left" }),
-        contacts: property({ type: 'Contact[]', icon: "far-address-book" }),
+        subject: property({ type: STRING, icon: "fa-quote-left" }),
+        contacts: property({ type: ARRAY(Contact.TYPE), icon: "far-address-book" }),
 
-        bank: property({ type: 'string', icon: "far-building-columns" }),
-        account: property({ type: 'string', icon: "far-id-card" }),
+        bank: property({ type: STRING, icon: "far-building-columns" }),
+        account: property({ type: STRING, icon: "far-id-card" }),
 
-        bankCount: property({ type: 'number', icon: "far-hashtag" }),
-        roleCount: property({ type: 'number', icon: "far-hashtag" }),
+        bankCount: property({ type: INT, icon: "far-hashtag" }),
+        roleCount: property({ type: INT, icon: "far-hashtag" }),
 
         // person
 
-        employee: property({ type: "boolean", icon: "far-user-tie" }),
-        gender: property({ type: "char", icon: "far-transgender" }),
-        pronoun: property({ type: "string", icon: "far-genderless" }),
-        sexualOrientation: property({ type: "string", icon: "far-venus-mars" }),
-        homeland: property({ type: "string", icon: "far-home" }),
-        passport: property({ type: "string", icon: "far-passport" }),
-        ssn: property({ type: "string", icon: "far-id-card" }),
-        dln: property({ type: "string", icon: "far-id-card" }),
+        employee: property({ type: BOOLEAN, icon: "far-user-tie" }),
+        gender: property({ type: CHAR, icon: "far-transgender" }),
+        pronoun: property({ type: STRING, icon: "far-genderless" }),
+        sexualOrientation: property({ type: STRING, icon: "far-venus-mars" }),
+        homeland: property({ type: STRING, icon: "far-home" }),
+        passport: property({ type: STRING, icon: "far-passport" }),
+        ssn: property({ type: STRING, icon: "far-id-card" }),
+        dln: property({ type: STRING, icon: "far-id-card" }),
 
-        mother: property({ type: "Person.TYPE", icon: "far-female" }),
-        father: property({ type: "Person.TYPE", icon: "far-male" }),
+        mother: property({ type: Person.TYPE, icon: "far-female" }),
+        father: property({ type: Person.TYPE, icon: "far-male" }),
     }
 
     constructor() {
-        super();
+        super(INT);
         this.declare(this.declaredProperty);
 
         import('./Person').then((a) => {
