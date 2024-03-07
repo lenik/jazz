@@ -1,11 +1,10 @@
 <script lang="ts">
 import { onMounted, ref } from 'vue';
 
-import LilyAdmin from '@skeljs/dba/src/ui/lily/LilyAdmin.vue';
-
-import { Person } from './Person';
-import PersonEditor from './PersonEditor.vue';
-import PersonChooseDialog from './PersonChooseDialog.vue';
+import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
+import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
+import Person from './Person';
 
 export const title = 'Person Admin';
 
@@ -15,6 +14,9 @@ export interface Props {
 </script>
 
 <script setup lang="ts">
+import LilyAdmin from '@skeljs/dba/src/ui/lily/LilyAdmin.vue';
+import PersonEditor from './PersonEditor.vue';
+import PersonChooseDialog from './PersonChooseDialog.vue';
 
 const props = withDefaults(defineProps<Props>(), {
 });
@@ -27,21 +29,28 @@ const selection = ref<any>({});
 onMounted(() => {
 });
 
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "LocalDate": LocalDate.TYPE,
+    "JSON_VARIANT": JSON_VARIANT,
+    "Person": Person.TYPE,
+};
+
 </script>
 
 <template>
-    <LilyAdmin ref="admin" :type="type" v-model="selection">
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
-            <th data-field="id" class="id">ID</th>
-            <th data-field="properties" class="hidden">properties</th>
-            <th data-field="label">Name</th>
-            <th data-field="description">Description</th>
-            <th data-field="gender">Gender</th>
-            <th data-type="date" data-field="birthday">Birthday</th>
-            <th data-field="father.label">Father</th>
-            <th data-field="mother.label">Mother</th>
-            <th data-field="ssn">Social ID</th>
-            <th data-field="dln">#Driver</th>
+            <th data-field="id" data-type="INT" class="id">ID</th>
+            <th data-field="label" data-type="STRING">Name</th>
+            <th data-field="description" data-type="STRING">Description</th>
+            <th data-field="gender" data-type="Gender">Gender</th>
+            <th data-field="birthday" data-type="LocalDate">Birthday</th>
+            <th data-field="father.label" data-type="Person">Father</th>
+            <th data-field="mother.label" data-type="Person">Mother</th>
+            <th data-field="ssn" data-type="STRING">Social ID</th>
+            <th data-field="dln" data-type="STRING">#Driver</th>
         </template>
         <template #preview>
             <PersonEditor class="editor" v-model="selection" />

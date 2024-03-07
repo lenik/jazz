@@ -1,12 +1,16 @@
-<script setup lang="ts">
-
+<script lang="ts">
 import { onMounted, ref } from "vue";
 import { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import EntityType from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityChooseDialog from '@skeljs/dba/src/ui/lily/EntityChooseDialog.vue';
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import LocalDate from "@skeljs/core/src/lang/time/LocalDate";
 
 import Person from './Person';
+</script>
+
+<script setup lang="ts">
+import EntityChooseDialog from '@skeljs/dba/src/ui/lily/EntityChooseDialog.vue';
 
 const model = defineModel();
 
@@ -34,16 +38,26 @@ function open(callback?: DialogSelectCallback) {
 
 onMounted(() => {
 });
+
+const typeMap = {
+    "INT": INT,
+    "STRING": STRING,
+    "LocalDate": LocalDate.TYPE,
+    "JSON_VARIANT": JSON_VARIANT,
+    "Person": Person.TYPE,
+};
+
 </script>
 
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="Person.TYPE" :modal="modal">
-        <th data-field="id">ID</th>
-        <th data-field="properties" class="hidden">properties</th>
-        <th data-field="label">Name</th>
-        <th data-field="description">Description</th>
-        <th data-field="gender">Gender</th>
-        <th data-type="date" data-field="birthday">Birthday</th>
+        <th data-field="id" data-type="INT" class="id">ID</th>
+        <th data-field="label" data-type="STRING">Name</th>
+        <th data-field="description" data-type="STRING">Description</th>
+        <th data-field="gender" data-type="Gender">Gender</th>
+        <th data-field="birthday" data-type="LocalDate">Birthday</th>
+        <th data-field="father.label" data-type="Person">Father</th>
+        <th data-field="mother.label" data-type="Person">Mother</th>
     </EntityChooseDialog>
 </template>
 
