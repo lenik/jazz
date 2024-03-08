@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import CoPrincipalValidators from './CoPrincipalValidators';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
@@ -14,14 +13,16 @@ export class CoPrincipalTypeInfo extends CoObjectTypeInfo {
 
     validators = new CoPrincipalValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        name: property({ type: STRING, precision: 30, }),
-        properties: property({ type: JSON_VARIANT }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            name: property({ type: STRING, precision: 30, }),
+            properties: property({ type: JSON_VARIANT }),
+        });
+    }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

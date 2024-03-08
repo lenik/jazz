@@ -1,6 +1,5 @@
-
+import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 import CoCategoryValidators from './CoCategoryValidators';
 
@@ -13,13 +12,15 @@ export class CoCategoryTypeInfo extends CoNodeTypeInfo {
 
     validators = new CoCategoryValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        // id: primaryKey({ type: 'number', precision: 20, })
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            // id: primaryKey({ type: 'number', precision: 20, })
+        });
+    }
 
-    constructor() {
-        super();
-        this.declare(this.declaredProperty);
+    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+        super(selfType, idType);
     }
 
 }

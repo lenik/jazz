@@ -13,24 +13,25 @@ export class StructRowTypeInfo extends EntityType {
 
     validators = new StructRowValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        creationDate: property({
-            type: ZonedDateTime.TYPE, icon: 'far-calendar-plus',
-            validator: this.validators.validateCreationDate
-        }),
-        lastModifiedDate: property({
-            type: ZonedDateTime.TYPE, icon: 'far-edit',
-            validator: this.validators.validateLastModifiedDate
-        }),
-        version: property({
-            type: INT, icon: 'far-code-branch',
-            validator: this.validators.validateVersion
-        }),
-    };
+    override preamble() {
+        this.declare({
+            creationDate: property({
+                type: ZonedDateTime.TYPE, icon: 'far-calendar-plus',
+                validator: this.validators.validateCreationDate
+            }),
+            lastModifiedDate: property({
+                type: ZonedDateTime.TYPE, icon: 'far-edit',
+                validator: this.validators.validateLastModifiedDate
+            }),
+            version: property({
+                type: INT, icon: 'far-code-branch',
+                validator: this.validators.validateVersion
+            }),
+        });
+    }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

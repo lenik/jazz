@@ -3,7 +3,6 @@ import { INT } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import IdEntityValidators from './IdEntityValidators';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 
 export class IdEntityTypeInfo extends CoObjectTypeInfo {
 
@@ -16,17 +15,18 @@ export class IdEntityTypeInfo extends CoObjectTypeInfo {
 
     validators = new IdEntityValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, precision: 20, })
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: this.idType, precision: 20, })
+        });
+    }
 
     constructor(idType: TypeInfo<any>) {
         super();
         if (idType != null) { // compatible
             this.idType = idType;
-            this.declaredProperty.id.type = idType;
         }
-        this.declare(this.declaredProperty);
     }
 
 }

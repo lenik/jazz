@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoMailValidators from './CoMailValidators';
 import { ARRAY, BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
@@ -14,16 +13,18 @@ export class CoMailTypeInfo extends CoMessageTypeInfo {
 
     validators = new CoMailValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        recipient: property({ type: User.TYPE, icon: "far-user", }),
-        recipients: property({ type: ARRAY(User.TYPE), icon: "far - users", }),
-        bcc: property({ type: ARRAY(User.TYPE), icon: "far-users", }),
-        read: property({ type: BOOLEAN, icon: "far-eye", }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            recipient: property({ type: User.TYPE, icon: "far-user", }),
+            recipients: property({ type: ARRAY(User.TYPE), icon: "far - users", }),
+            bcc: property({ type: ARRAY(User.TYPE), icon: "far-users", }),
+            read: property({ type: BOOLEAN, icon: "far-eye", }),
+        });
+    }
 
     constructor() {
         super(LONG);
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,4 @@
-
-import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoNodeValidators from './CoNodeValidators';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
@@ -16,26 +15,27 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
 
     validators = new CoNodeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        parent: property({
-            type: this, icon: "far-tree",
-            validator: this.validators.validateParent
-        }),
-        refCount: property({
-            type: INT, nullable: false, precision: 19, icon: "far-link",
-            validator: this.validators.validateRefCount
-        }),
-        depth: property({
-            type: INT, precision: 19, icon: "far-layer-group",
-            validator: this.validators.validateDepth
-        }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            parent: property({
+                type: this.selfType, icon: "far-tree",
+                validator: this.validators.validateParent
+            }),
+            refCount: property({
+                type: INT, nullable: false, precision: 19, icon: "far-link",
+                validator: this.validators.validateRefCount
+            }),
+            depth: property({
+                type: INT, precision: 19, icon: "far-layer-group",
+                validator: this.validators.validateDepth
+            }),
+        });
+    }
 
     constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
         super(idType);
         this.selfType = selfType;
-        this.declaredProperty.parent.type = selfType;
-        this.declare(this.declaredProperty);
     }
 
 }

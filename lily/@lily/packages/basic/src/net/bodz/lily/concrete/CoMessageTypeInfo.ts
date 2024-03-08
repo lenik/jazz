@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoMomentIntervalTypeInfo from './CoMomentIntervalTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
@@ -18,20 +17,22 @@ export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
 
     validators = new CoMessageValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        op: property({ type: User.TYPE, icon: "far-user", }),
-        subject: property({ type: STRING, icon: "far-quote", }),
-        rawText: property({ type: STRING, icon: "far-text", }),
-        form: property({ type: FormDef.TYPE, icon: "fas-align-left", }),
-        parameters: property({ type: MAP(ParameterDef.TYPE, STRING), icon: "far-toggle-on", }),
-        // clickInfo: property({ type: UserClickInfo, icon: "far-mouse", }),
-        sentTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
-        receivedTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            op: property({ type: User.TYPE, icon: "far-user", }),
+            subject: property({ type: STRING, icon: "far-quote", }),
+            rawText: property({ type: STRING, icon: "far-text", }),
+            form: property({ type: FormDef.TYPE, icon: "fas-align-left", }),
+            parameters: property({ type: MAP(ParameterDef.TYPE, STRING), icon: "far-toggle-on", }),
+            // clickInfo: property({ type: UserClickInfo, icon: "far-mouse", }),
+            sentTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
+            receivedTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
+        });
+    }
 
     constructor(idType: TypeInfo<any>) {
         super(idType);
-        this.declare(this.declaredProperty);
     }
 
 }

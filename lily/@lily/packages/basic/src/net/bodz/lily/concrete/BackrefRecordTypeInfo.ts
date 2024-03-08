@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import BackrefRecordValidators from './BackrefRecordValidators';
 import User from '../schema/account/User';
@@ -14,20 +13,22 @@ export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 
     validators = new BackrefRecordValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        user: property({
-            type: User.TYPE, icon: "far-user",
-            validator: this.validators.validateUser
-        }),
-        site: property({
-            type: STRING, precision: 100, icon: "far-link",
-            validator: this.validators.validateSite
-        }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            user: property({
+                type: User.TYPE, icon: "far-user",
+                validator: this.validators.validateUser
+            }),
+            site: property({
+                type: STRING, precision: 100, icon: "far-link",
+                validator: this.validators.validateSite
+            }),
+        });
+    }
 
     constructor() {
         super(LONG);
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -14,20 +14,22 @@ export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 
     validators = new VoteRecordValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        user: property({
-            type: User.TYPE, icon: "far-user",
-            validator: this.validators.validateUser
-        }),
-        voteCount: property({
-            type: INT, precision: 10, icon: "far-hashtag",
-            validator: this.validators.validateVoteCount
-        }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            user: property({
+                type: User.TYPE, icon: "far-user",
+                validator: this.validators.validateUser
+            }),
+            voteCount: property({
+                type: INT, precision: 10, icon: "far-hashtag",
+                validator: this.validators.validateVoteCount
+            }),
+        });
+    }
 
     constructor() {
         super(LONG);
-        this.declare(this.declaredProperty);
     }
 
 }

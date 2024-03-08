@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoObjectValidators from './CoObjectValidators';
 import StructRowTypeInfo from './StructRowTypeInfo';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
@@ -19,34 +18,32 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
 
     validators = new CoObjectValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        // id: property({ type: INT, icon: 'far-key' }),
-        name: property({ type: STRING, icon: 'far-id-card' }),
-        properties: property({ type: JSON_VARIANT, icon: 'fab-pagelines' }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: property({ type: this.idType, icon: 'far-key' }),
+            name: property({ type: STRING, icon: 'far-id-card' }),
+            properties: property({ type: JSON_VARIANT, icon: 'fab-pagelines' }),
 
-        label: property({ type: STRING, icon: 'far-tag' }),
-        description: property({ type: STRING, icon: 'far-sticky-note' }),
-        icon: property({ type: STRING, icon: 'far-image' }),
+            label: property({ type: STRING, icon: 'far-tag' }),
+            description: property({ type: STRING, icon: 'far-sticky-note' }),
+            icon: property({ type: STRING, icon: 'far-image' }),
 
-        flags: property({ type: INT, icon: 'far-toggle-on' }),
-        priority: property({ type: INT, icon: 'far-lightbulb' }),
-        state: property({ type: STRING, icon: 'far-heart' }),
+            flags: property({ type: INT, icon: 'far-toggle-on' }),
+            priority: property({ type: INT, icon: 'far-lightbulb' }),
+            state: property({ type: STRING, icon: 'far-heart' }),
 
-        ownerUser: property({ type: JSON_VARIANT, icon: 'far-user' }),
-        ownerGroup: property({ type: JSON_VARIANT, icon: 'far-users' }),
+            // ownerUser: property({ type: User.TYPE, icon: 'far-user' }),
+            // ownerGroup: property({ type: Group.TYPE, icon: 'far-users' }),
 
-        acl: property({ type: INT, icon: 'far-user-lock' }),
-        accessMode: property({ type: INT, icon: 'far-key' }),
-    };
+            acl: property({ type: INT, icon: 'far-user-lock' }),
+            accessMode: property({ type: INT, icon: 'far-key' }),
+        });
+    }
 
-    constructor() {
-    // constructor(idType: TypeInfo<any>) {
+    constructor(idType: TypeInfo<any> = INT) {
         super();
-        // this.idType = idType;
-        this.declare(this.declaredProperty);
-
-        import('../schema/account/User').then((a) => this.property.ownerUser.type = a.User.TYPE);
-        import('../schema/account/Group').then((a) => this.property.ownerUser.type = a.Group.TYPE);
+        this.idType = idType;
     }
 
 }

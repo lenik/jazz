@@ -1,7 +1,6 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoEntityValidators from './CoEntityValidators';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoEntityTypeInfo extends CoObjectTypeInfo {
@@ -13,13 +12,15 @@ export class CoEntityTypeInfo extends CoObjectTypeInfo {
 
     validators = new CoEntityValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        // id: primaryKey({ type: LONG, precision: 20, })
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            // id: primaryKey({ type: LONG, precision: 20, })
+        });
+    }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

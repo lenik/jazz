@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import CoCodeTypeInfo from './CoCodeTypeInfo';
 import CoPhaseValidators from './CoPhaseValidators';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
@@ -13,13 +12,15 @@ export class CoPhaseTypeInfo extends CoCodeTypeInfo {
 
     validators = new CoPhaseValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        // id: primaryKey({ type: 'number', precision: 20, })
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            // id: primaryKey({ type: 'number', precision: 20, })
+        });
+    }
 
     constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
         super(selfType, idType);
-        this.declare(this.declaredProperty);
     }
 
 }

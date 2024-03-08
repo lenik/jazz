@@ -1,5 +1,4 @@
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoMomentIntervalValidators from './CoMomentIntervalValidators';
 import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
@@ -15,15 +14,17 @@ export class CoMomentIntervalTypeInfo extends IdEntityTypeInfo {
 
     validators = new CoMomentIntervalValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        beginTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
-        endTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
-        year: property({ type: INT, icon: "far-calendar" }),
-    };
+    override preamble() {
+        super.preamble();
+        this.declare({
+            beginTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
+            endTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
+            year: property({ type: INT, icon: "far-calendar" }),
+        });
+    }
 
     constructor(idType: TypeInfo<any>) {
         super(idType);
-        this.declare(this.declaredProperty);
     }
 
 }
