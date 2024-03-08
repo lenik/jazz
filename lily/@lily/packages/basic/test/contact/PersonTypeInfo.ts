@@ -16,25 +16,27 @@ export class PersonTypeInfo extends PartyTypeInfo {
 
     validators = new PersonValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        label: property({ type: STRING, icon: "fa-user", label: 'Name' }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            label: property({ type: STRING, icon: "fa-user", label: 'Name' }),
 
-        gender: property({ type: Gender.TYPE, icon: "fa-venus-mars", label: 'Gender', validator: this.validators.validateGender }),
-        father: property({ type: this, icon: "fa-male", validator: this.validators.validateFather }),
-        mother: property({ type: this, icon: "fa-female", validator: this.validators.validateMother }),
+            gender: property({ type: Gender.TYPE, icon: "fa-venus-mars", label: 'Gender', validator: this.validators.validateGender }),
+            father: property({ type: this, icon: "fa-male", validator: this.validators.validateFather }),
+            mother: property({ type: this, icon: "fa-female", validator: this.validators.validateMother }),
 
-        roleCount: property({ type: INT }),
-        employee: property({ type: BOOLEAN }),
-        bankCount: property({ type: STRING }),
-        homeland: property({ type: STRING, validator: this.validators.validateHomeland }),
-        passport: property({ type: STRING, validator: this.validators.validatePassport }),
-        ssn: property({ type: STRING, icon: "far-address-card", label: 'Social Security Number', validator: this.validators.validateSsn }),
-        dln: property({ type: STRING, icon: "far-car", label: "Driver License Number", validator: this.validators.validateDln }),
+            roleCount: property({ type: INT }),
+            employee: property({ type: BOOLEAN }),
+            bankCount: property({ type: STRING }),
+            homeland: property({ type: STRING, validator: this.validators.validateHomeland }),
+            passport: property({ type: STRING, validator: this.validators.validatePassport }),
+            ssn: property({ type: STRING, icon: "far-address-card", label: 'Social Security Number', validator: this.validators.validateSsn }),
+            dln: property({ type: STRING, icon: "far-car", label: "Driver License Number", validator: this.validators.validateDln }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

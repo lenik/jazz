@@ -2,7 +2,6 @@ import { LIST } from "@skeljs/core/src/lang/baseinfo";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import Group from "./Group";
 import GroupValidators from "./GroupValidators";
 import User from "./User";
 import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
@@ -17,7 +16,7 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
     validators = new GroupValidators(this);
 
     declaredProperty: EntityPropertyMap = {
-        children: property({ type: LIST(Group.TYPE), validator: this.validators.validateChildren }),
+        children: property({ type: LIST(this), validator: this.validators.validateChildren }),
         users: property({ type: LIST(User.TYPE), validator: this.validators.validateUsers }),
     }
 

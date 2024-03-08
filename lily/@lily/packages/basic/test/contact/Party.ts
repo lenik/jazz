@@ -6,12 +6,7 @@ import Contact from './Contact';
 
 export abstract class Party extends IdEntity<int> {
 
-    static _typeInfo;
-    static get TYPE() {
-        if (this._typeInfo == null)
-            this._typeInfo = new PartyTypeInfo();
-        return this._typeInfo;
-    }
+    static readonly TYPE = new PartyTypeInfo();
 
     category?: any
     birthday?: Moment

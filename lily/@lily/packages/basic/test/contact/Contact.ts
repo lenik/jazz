@@ -1,17 +1,10 @@
 import { int } from '@skeljs/core/src/lang/basetype';
-// import IdEntity from '@/src/net/bodz/lily/concrete/IdEntity';
 import IdEntity from '../../src/net/bodz/lily/concrete/IdEntity';
-
 import ContactTypeInfo from './ContactTypeInfo';
 
 export class Contact extends IdEntity<int> {
 
-    static _typeInfo;
-    static get TYPE() {
-        if (this._typeInfo == null)
-            this._typeInfo = new ContactTypeInfo();
-        return this._typeInfo;
-    }
+    static readonly TYPE = new ContactTypeInfo();
 
     org: any
     orgUnit: any
