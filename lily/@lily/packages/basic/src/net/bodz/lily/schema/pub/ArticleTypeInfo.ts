@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import ArticleValidators from "./ArticleValidators";
 import _Article_stuff_TypeInfo from "./_Article_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class ArticleTypeInfo extends _Article_stuff_TypeInfo {
 
     validators = new ArticleValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

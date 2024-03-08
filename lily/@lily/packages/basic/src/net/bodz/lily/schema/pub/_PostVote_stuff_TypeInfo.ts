@@ -1,5 +1,4 @@
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import VoteRecordTypeInfo from "../../concrete/VoteRecordTypeInfo";
@@ -22,16 +21,18 @@ export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
 
     validators = new _PostVote_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        voteScore: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            voteScore: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
 
-        parent: property({ type: Post.TYPE, nullable: false, validator: this.validators.validateParent }),
-        parentId: property({ type: LONG, nullable: false, precision: 19 }),
+            parent: property({ type: Post.TYPE, nullable: false, validator: this.validators.validateParent }),
+            parentId: property({ type: LONG, nullable: false, precision: 19 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import GroupTypeValidators from "./GroupTypeValidators";
 import _GroupType_stuff_TypeInfo from "./_GroupType_stuff_TypeInfo";
 
@@ -11,12 +9,14 @@ export class GroupTypeTypeInfo extends _GroupType_stuff_TypeInfo {
 
     validators = new GroupTypeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

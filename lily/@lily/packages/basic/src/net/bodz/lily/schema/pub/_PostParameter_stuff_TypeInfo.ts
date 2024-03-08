@@ -1,6 +1,5 @@
 import { DOUBLE, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -32,22 +31,24 @@ export class _PostParameter_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _PostParameter_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        ival: property({ type: INT, precision: 10, validator: this.validators.validateIval }),
-        fval: property({ type: DOUBLE, precision: 17, scale: 17, validator: this.validators.validateFval }),
-        sval: property({ type: STRING, precision: 250, validator: this.validators.validateSval }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            ival: property({ type: INT, precision: 10, validator: this.validators.validateIval }),
+            fval: property({ type: DOUBLE, precision: 17, scale: 17, validator: this.validators.validateFval }),
+            sval: property({ type: STRING, precision: 250, validator: this.validators.validateSval }),
 
-        post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
-        postId: property({ type: LONG, nullable: false, precision: 19 }),
+            post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+            postId: property({ type: LONG, nullable: false, precision: 19 }),
 
-        parameter: property({ type: PostParameterType.TYPE, nullable: false, validator: this.validators.validateParameter }),
-        parameterId: property({ type: INT, nullable: false, precision: 10 }),
+            parameter: property({ type: PostParameterType.TYPE, nullable: false, validator: this.validators.validateParameter }),
+            parameterId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

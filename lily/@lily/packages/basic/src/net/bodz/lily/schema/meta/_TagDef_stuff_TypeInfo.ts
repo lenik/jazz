@@ -1,6 +1,5 @@
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -24,16 +23,18 @@ export class _TagDef_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _TagDef_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
 
-        tagGroup: property({ type: TagGroupDef.TYPE, nullable: false, validator: this.validators.validateTagGroup }),
-        tagGroupId: property({ type: INT, nullable: false, precision: 10 }),
+            tagGroup: property({ type: TagGroupDef.TYPE, nullable: false, validator: this.validators.validateTagGroup }),
+            tagGroupId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

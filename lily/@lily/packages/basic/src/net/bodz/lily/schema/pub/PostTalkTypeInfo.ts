@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PostTalkValidators from "./PostTalkValidators";
 import _PostTalk_stuff_TypeInfo from "./_PostTalk_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
 
     validators = new PostTalkValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

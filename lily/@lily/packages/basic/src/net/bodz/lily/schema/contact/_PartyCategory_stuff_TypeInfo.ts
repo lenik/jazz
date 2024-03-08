@@ -1,6 +1,5 @@
 import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoCategoryTypeInfo from "../../concrete/CoCategoryTypeInfo";
@@ -20,13 +19,15 @@ export class _PartyCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 
     validators = new _PartyCategory_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import UserBadgeValidators from "./UserBadgeValidators";
 import _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class UserBadgeTypeInfo extends _UserBadge_stuff_TypeInfo {
 
     validators = new UserBadgeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

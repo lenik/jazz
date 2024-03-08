@@ -2,7 +2,6 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -39,34 +38,36 @@ export class _UserOtherId_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _UserOtherId_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        beginTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
-        endTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
-        year: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateYear }),
-        otherId: property({ type: STRING, nullable: false, precision: 100, 
-            description: "The identity data", 
-            validator: this.validators.validateOtherId }),
-        auth: property({ type: JSON_VARIANT, 
-            description: "The authentication data", 
-            validator: this.validators.validateAuth }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            beginTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
+            endTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
+            year: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateYear }),
+            otherId: property({ type: STRING, nullable: false, precision: 100, 
+                description: "The identity data", 
+                validator: this.validators.validateOtherId }),
+            auth: property({ type: JSON_VARIANT, 
+                description: "The authentication data", 
+                validator: this.validators.validateAuth }),
 
-        type: property({ type: UserOtherIdType.TYPE, nullable: false, 
-            description: "Type of Open ID", 
-            validator: this.validators.validateType }),
-        typeId: property({ type: INT, nullable: false, precision: 10, 
-            description: "Type of Open ID" }),
+            type: property({ type: UserOtherIdType.TYPE, nullable: false, 
+                description: "Type of Open ID", 
+                validator: this.validators.validateType }),
+            typeId: property({ type: INT, nullable: false, precision: 10, 
+                description: "Type of Open ID" }),
 
-        user: property({ type: User.TYPE, nullable: false, 
-            description: "The declaring user", 
-            validator: this.validators.validateUser }),
-        userId: property({ type: INT, nullable: false, precision: 10, 
-            description: "The declaring user" }),
+            user: property({ type: User.TYPE, nullable: false, 
+                description: "The declaring user", 
+                validator: this.validators.validateUser }),
+            userId: property({ type: INT, nullable: false, precision: 10, 
+                description: "The declaring user" }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

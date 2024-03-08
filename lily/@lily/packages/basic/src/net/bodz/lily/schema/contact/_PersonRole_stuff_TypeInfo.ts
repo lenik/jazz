@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -31,23 +30,25 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _PersonRole_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        role: property({ type: STRING, precision: 20, validator: this.validators.validateRole }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            role: property({ type: STRING, precision: 20, validator: this.validators.validateRole }),
 
-        orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
-        orgUnitId: property({ type: INT, precision: 10 }),
+            orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
+            orgUnitId: property({ type: INT, precision: 10 }),
 
-        person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
-        personId: property({ type: INT, nullable: false, precision: 10 }),
+            person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+            personId: property({ type: INT, nullable: false, precision: 10 }),
 
-        org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
-        orgId: property({ type: INT, nullable: false, precision: 10 }),
+            org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+            orgId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

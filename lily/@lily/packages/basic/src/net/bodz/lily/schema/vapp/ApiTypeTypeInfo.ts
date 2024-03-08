@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import ApiTypeValidators from "./ApiTypeValidators";
 import _ApiType_stuff_TypeInfo from "./_ApiType_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class ApiTypeTypeInfo extends _ApiType_stuff_TypeInfo {
 
     validators = new ApiTypeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

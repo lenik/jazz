@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import VAppValidators from "./VAppValidators";
 import _VApp_stuff_TypeInfo from "./_VApp_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class VAppTypeInfo extends _VApp_stuff_TypeInfo {
 
     validators = new VAppValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

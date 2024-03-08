@@ -1,7 +1,6 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
@@ -34,21 +33,23 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
 
     validators = new _Article_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
-        favCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateFavCount }),
-        voteCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
-        hateCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateHateCount }),
-        messageCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
-        plugins: property({ type: JSON_VARIANT, validator: this.validators.validatePlugins }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
+            favCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateFavCount }),
+            voteCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
+            hateCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateHateCount }),
+            messageCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
+            plugins: property({ type: JSON_VARIANT, validator: this.validators.validatePlugins }),
 
-        category: property({ type: ArticleCategory.TYPE, validator: this.validators.validateCategory }),
-        categoryId: property({ type: INT, precision: 10 }),
+            category: property({ type: ArticleCategory.TYPE, validator: this.validators.validateCategory }),
+            categoryId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

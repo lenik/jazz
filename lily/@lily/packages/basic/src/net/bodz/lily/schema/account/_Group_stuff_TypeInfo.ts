@@ -1,5 +1,4 @@
 import { INT } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
@@ -25,24 +24,26 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     validators = new _Group_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
 
-        parent: property({ type: this, 
-            description: "The parent group. must be acyclic", 
-            validator: this.validators.validateParent }),
-        parentId: property({ type: INT, precision: 10, 
-            description: "The parent group. must be acyclic" }),
+            parent: property({ type: this, 
+                description: "The parent group. must be acyclic", 
+                validator: this.validators.validateParent }),
+            parentId: property({ type: INT, precision: 10, 
+                description: "The parent group. must be acyclic" }),
 
-        type: property({ type: GroupType.TYPE, nullable: false, 
-            description: "Group type like normal-group, role-group, etc.", 
-            validator: this.validators.validateType }),
-        typeId: property({ type: INT, nullable: false, precision: 10, 
-            description: "Group type like normal-group, role-group, etc." }),
+            type: property({ type: GroupType.TYPE, nullable: false, 
+                description: "Group type like normal-group, role-group, etc.", 
+                validator: this.validators.validateType }),
+            typeId: property({ type: INT, nullable: false, precision: 10, 
+                description: "Group type like normal-group, role-group, etc." }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

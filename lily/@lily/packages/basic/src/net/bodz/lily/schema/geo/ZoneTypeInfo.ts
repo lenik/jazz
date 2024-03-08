@@ -1,6 +1,5 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { STRING } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import GeoLocation from "../../concrete/util/GeoLocation";
@@ -14,15 +13,17 @@ export class ZoneTypeInfo extends _Zone_stuff_TypeInfo {
 
     validators = new ZoneValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        fullPath: property({ type: STRING, validator: this.validators.validateFullPath }),
-        geo: property({ type: GeoLocation.TYPE, validator: this.validators.validateGeo }),
-        properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            fullPath: property({ type: STRING, validator: this.validators.validateFullPath }),
+            geo: property({ type: GeoLocation.TYPE, validator: this.validators.validateGeo }),
+            properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

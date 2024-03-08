@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -31,20 +30,22 @@ export class _ExternalSite_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _ExternalSite_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
-        urlfmt: property({ type: STRING, precision: 200, validator: this.validators.validateUrlfmt }),
-        bonus: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateBonus }),
-        count: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateCount }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
+            urlfmt: property({ type: STRING, precision: 200, validator: this.validators.validateUrlfmt }),
+            bonus: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateBonus }),
+            count: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateCount }),
 
-        parent: property({ type: this, validator: this.validators.validateParent }),
-        parentId: property({ type: INT, precision: 10 }),
+            parent: property({ type: this, validator: this.validators.validateParent }),
+            parentId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

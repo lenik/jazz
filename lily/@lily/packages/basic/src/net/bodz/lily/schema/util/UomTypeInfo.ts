@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import UomValidators from "./UomValidators";
 import _Uom_stuff_TypeInfo from "./_Uom_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class UomTypeInfo extends _Uom_stuff_TypeInfo {
 
     validators = new UomValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,7 +1,6 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -43,29 +42,31 @@ export class _VAppRequest_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _VAppRequest_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
-        beginTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
-        endTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
-        year: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateYear }),
-        subject: property({ type: STRING, nullable: false, precision: 200, validator: this.validators.validateSubject }),
-        rawText: property({ type: STRING, validator: this.validators.validateRawText }),
-        formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
-        dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+            beginTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
+            endTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
+            year: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateYear }),
+            subject: property({ type: STRING, nullable: false, precision: 200, validator: this.validators.validateSubject }),
+            rawText: property({ type: STRING, validator: this.validators.validateRawText }),
+            formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
+            dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),
 
-        op: property({ type: User.TYPE, inheritsDoc: true, 
-            description: "User Account", 
-            validator: this.validators.validateOp }),
-        opId: property({ type: INT, precision: 10 }),
+            op: property({ type: User.TYPE, inheritsDoc: true, 
+                description: "User Account", 
+                validator: this.validators.validateOp }),
+            opId: property({ type: INT, precision: 10 }),
 
-        form: property({ type: FormDef.TYPE, validator: this.validators.validateForm }),
-        formId: property({ type: INT, precision: 10 }),
+            form: property({ type: FormDef.TYPE, validator: this.validators.validateForm }),
+            formId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

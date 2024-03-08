@@ -1,5 +1,4 @@
 import { BOOLEAN, LIST } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import TagDef from "./TagDef";
@@ -14,14 +13,16 @@ export class TagGroupDefTypeInfo extends _TagGroupDef_stuff_TypeInfo {
 
     validators = new TagGroupDefValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        ortho: property({ type: BOOLEAN, nullable: false, validator: this.validators.validateOrtho }),
-        tags: property({ type: LIST(TagDef.TYPE), validator: this.validators.validateTags }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            ortho: property({ type: BOOLEAN, nullable: false, validator: this.validators.validateOrtho }),
+            tags: property({ type: LIST(TagDef.TYPE), validator: this.validators.validateTags }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

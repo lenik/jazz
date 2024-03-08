@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import CoTagTypeInfo from "../../concrete/CoTagTypeInfo";
 import _ArticleTagType_stuff_Validators from "./_ArticleTagType_stuff_Validators";
 
@@ -13,12 +11,14 @@ export class _ArticleTagType_stuff_TypeInfo extends CoTagTypeInfo {
 
     validators = new _ArticleTagType_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

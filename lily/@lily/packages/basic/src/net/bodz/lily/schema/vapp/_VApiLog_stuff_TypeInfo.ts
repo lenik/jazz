@@ -1,6 +1,5 @@
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -30,21 +29,23 @@ export class _VApiLog_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _VApiLog_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: LONG, nullable: false, precision: 19, validator: this.validators.validateId }),
-        message: property({ type: STRING, validator: this.validators.validateMessage }),
-        err: property({ type: STRING, validator: this.validators.validateErr }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: LONG, nullable: false, precision: 19, validator: this.validators.validateId }),
+            message: property({ type: STRING, validator: this.validators.validateMessage }),
+            err: property({ type: STRING, validator: this.validators.validateErr }),
 
-        api: property({ type: ApiType.TYPE, validator: this.validators.validateApi }),
-        apiId: property({ type: INT, precision: 10 }),
+            api: property({ type: ApiType.TYPE, validator: this.validators.validateApi }),
+            apiId: property({ type: INT, precision: 10 }),
 
-        app: property({ type: VApp.TYPE, nullable: false, validator: this.validators.validateApp }),
-        appId: property({ type: INT, nullable: false, precision: 10 }),
+            app: property({ type: VApp.TYPE, nullable: false, validator: this.validators.validateApp }),
+            appId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

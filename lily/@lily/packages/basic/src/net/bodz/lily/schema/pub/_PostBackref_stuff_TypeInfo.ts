@@ -1,5 +1,4 @@
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import BackrefRecordTypeInfo from "../../concrete/BackrefRecordTypeInfo";
@@ -27,20 +26,22 @@ export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
 
     validators = new _PostBackref_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        key: property({ type: STRING, precision: 30, validator: this.validators.validateKey }),
-        value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            key: property({ type: STRING, precision: 30, validator: this.validators.validateKey }),
+            value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
 
-        post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
-        postId: property({ type: LONG, nullable: false, precision: 19 }),
+            post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+            postId: property({ type: LONG, nullable: false, precision: 19 }),
 
-        site: property({ type: ExternalSite.TYPE, nullable: false, validator: this.validators.validateSite }),
-        siteId: property({ type: INT, nullable: false, precision: 10 }),
+            site: property({ type: ExternalSite.TYPE, nullable: false, validator: this.validators.validateSite }),
+            siteId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

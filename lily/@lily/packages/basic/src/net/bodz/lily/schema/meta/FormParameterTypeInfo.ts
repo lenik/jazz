@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import FormParameterValidators from "./FormParameterValidators";
 import _FormParameter_stuff_TypeInfo from "./_FormParameter_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class FormParameterTypeInfo extends _FormParameter_stuff_TypeInfo {
 
     validators = new FormParameterValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

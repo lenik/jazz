@@ -1,6 +1,5 @@
 import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -29,19 +28,21 @@ export class _Uom_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _Uom_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
-        prop: property({ type: STRING, nullable: false, precision: 30, validator: this.validators.validateProp }),
-        scale: property({ type: DOUBLE, nullable: false, precision: 17, scale: 17, validator: this.validators.validateScale }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+            prop: property({ type: STRING, nullable: false, precision: 30, validator: this.validators.validateProp }),
+            scale: property({ type: DOUBLE, nullable: false, precision: 17, scale: 17, validator: this.validators.validateScale }),
 
-        std: property({ type: this, validator: this.validators.validateStd }),
-        stdId: property({ type: INT, precision: 10 }),
+            std: property({ type: this, validator: this.validators.validateStd }),
+            stdId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

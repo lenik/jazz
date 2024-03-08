@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PostBackrefValidators from "./PostBackrefValidators";
 import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PostBackrefTypeInfo extends _PostBackref_stuff_TypeInfo {
 
     validators = new PostBackrefValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

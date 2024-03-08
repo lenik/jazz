@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -24,15 +23,17 @@ export class _ApiType_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _ApiType_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
-        uom: property({ type: STRING, nullable: false, precision: 30, validator: this.validators.validateUom }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
+            uom: property({ type: STRING, nullable: false, precision: 30, validator: this.validators.validateUom }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -31,28 +30,30 @@ export class _Policy_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _Policy_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        name: property({ type: STRING, precision: 30, 
-            description: "The policy name (unique)", 
-            validator: this.validators.validateName }),
-        controlClass: property({ type: STRING, nullable: false, precision: 80, 
-            description: "The control class", 
-            validator: this.validators.validateControlClass }),
-        methodName: property({ type: STRING, precision: 80, 
-            description: "The method name", 
-            validator: this.validators.validateMethodName }),
-        allowBits: property({ type: INT, nullable: false, precision: 10, 
-            description: "allow", 
-            validator: this.validators.validateAllowBits }),
-        denyBits: property({ type: INT, nullable: false, precision: 10, 
-            description: "deny", 
-            validator: this.validators.validateDenyBits }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            name: property({ type: STRING, precision: 30, 
+                description: "The policy name (unique)", 
+                validator: this.validators.validateName }),
+            controlClass: property({ type: STRING, nullable: false, precision: 80, 
+                description: "The control class", 
+                validator: this.validators.validateControlClass }),
+            methodName: property({ type: STRING, precision: 80, 
+                description: "The method name", 
+                validator: this.validators.validateMethodName }),
+            allowBits: property({ type: INT, nullable: false, precision: 10, 
+                description: "allow", 
+                validator: this.validators.validateAllowBits }),
+            denyBits: property({ type: INT, nullable: false, precision: 10, 
+                description: "deny", 
+                validator: this.validators.validateDenyBits }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

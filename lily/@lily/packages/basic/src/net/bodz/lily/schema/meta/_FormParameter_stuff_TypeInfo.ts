@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -27,18 +26,20 @@ export class _FormParameter_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _FormParameter_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
-        value: property({ type: STRING, precision: 100, validator: this.validators.validateValue }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+            value: property({ type: STRING, precision: 100, validator: this.validators.validateValue }),
 
-        form: property({ type: FormDef.TYPE, nullable: false, validator: this.validators.validateForm }),
-        formId: property({ type: INT, nullable: false, precision: 10 }),
+            form: property({ type: FormDef.TYPE, nullable: false, validator: this.validators.validateForm }),
+            formId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

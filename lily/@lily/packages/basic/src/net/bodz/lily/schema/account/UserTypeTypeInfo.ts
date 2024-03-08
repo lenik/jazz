@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import UserTypeValidators from "./UserTypeValidators";
 import _UserType_stuff_TypeInfo from "./_UserType_stuff_TypeInfo";
 
@@ -11,12 +9,14 @@ export class UserTypeTypeInfo extends _UserType_stuff_TypeInfo {
 
     validators = new UserTypeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

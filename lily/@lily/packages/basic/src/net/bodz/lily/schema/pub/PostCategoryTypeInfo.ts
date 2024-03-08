@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PostCategoryValidators from "./PostCategoryValidators";
 import _PostCategory_stuff_TypeInfo from "./_PostCategory_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PostCategoryTypeInfo extends _PostCategory_stuff_TypeInfo {
 
     validators = new PostCategoryValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

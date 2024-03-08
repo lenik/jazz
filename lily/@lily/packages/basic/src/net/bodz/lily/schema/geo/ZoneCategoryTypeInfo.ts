@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import ZoneCategoryValidators from "./ZoneCategoryValidators";
 import _ZoneCategory_stuff_TypeInfo from "./_ZoneCategory_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
 
     validators = new ZoneCategoryValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,6 +1,5 @@
 import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -28,20 +27,22 @@ export class _VApiCredit_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _VApiCredit_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        credit: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 4, validator: this.validators.validateCredit }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            credit: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 4, validator: this.validators.validateCredit }),
 
-        api: property({ type: ApiType.TYPE, nullable: false, validator: this.validators.validateApi }),
-        apiId: property({ type: INT, nullable: false, precision: 10 }),
+            api: property({ type: ApiType.TYPE, nullable: false, validator: this.validators.validateApi }),
+            apiId: property({ type: INT, nullable: false, precision: 10 }),
 
-        app: property({ type: VApp.TYPE, nullable: false, validator: this.validators.validateApp }),
-        appId: property({ type: INT, nullable: false, precision: 10 }),
+            app: property({ type: VApp.TYPE, nullable: false, validator: this.validators.validateApp }),
+            appId: property({ type: INT, nullable: false, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

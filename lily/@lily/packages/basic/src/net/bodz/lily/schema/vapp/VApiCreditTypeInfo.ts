@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import VApiCreditValidators from "./VApiCreditValidators";
 import _VApiCredit_stuff_TypeInfo from "./_VApiCredit_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class VApiCreditTypeInfo extends _VApiCredit_stuff_TypeInfo {
 
     validators = new VApiCreditValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

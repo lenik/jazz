@@ -1,6 +1,5 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import OrgUnit from "./OrgUnit";
@@ -28,20 +27,22 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
 
     validators = new _OrgUnit_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
-        depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+            depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
 
-        org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
-        orgId: property({ type: INT, nullable: false, precision: 10 }),
+            org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+            orgId: property({ type: INT, nullable: false, precision: 10 }),
 
-        parent: property({ type: this, validator: this.validators.validateParent }),
-        parentId: property({ type: INT, precision: 10 }),
+            parent: property({ type: this, validator: this.validators.validateParent }),
+            parentId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

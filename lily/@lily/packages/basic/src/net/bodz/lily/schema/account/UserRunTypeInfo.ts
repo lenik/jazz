@@ -1,6 +1,5 @@
 import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import UserRunValidators from "./UserRunValidators";
@@ -14,14 +13,16 @@ export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
 
     validators = new UserRunValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        activeTime: property({ type: ZonedDateTime.TYPE, validator: this.validators.validateActiveTime }),
-        stateText: property({ type: STRING, validator: this.validators.validateStateText }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            activeTime: property({ type: ZonedDateTime.TYPE, validator: this.validators.validateActiveTime }),
+            stateText: property({ type: STRING, validator: this.validators.validateStateText }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

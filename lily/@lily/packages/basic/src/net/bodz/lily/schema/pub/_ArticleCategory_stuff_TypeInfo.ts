@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -29,19 +28,21 @@ export class _ArticleCategory_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _ArticleCategory_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
-        depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
-        refCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRefCount }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
+            depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
+            refCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
-        parent: property({ type: this, validator: this.validators.validateParent }),
-        parentId: property({ type: INT, precision: 10 }),
+            parent: property({ type: this, validator: this.validators.validateParent }),
+            parentId: property({ type: INT, precision: 10 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

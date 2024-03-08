@@ -1,6 +1,5 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -30,28 +29,30 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
 
     validators = new _UserSecret_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
-        password: property({ type: STRING, nullable: false, precision: 40, 
-            description: "Password data", 
-            validator: this.validators.validatePassword }),
-        question: property({ type: STRING, precision: 100, 
-            description: "Protection question", 
-            validator: this.validators.validateQuestion }),
-        answer: property({ type: STRING, precision: 30, 
-            description: "Protection answer", 
-            validator: this.validators.validateAnswer }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
+            password: property({ type: STRING, nullable: false, precision: 40, 
+                description: "Password data", 
+                validator: this.validators.validatePassword }),
+            question: property({ type: STRING, precision: 100, 
+                description: "Protection question", 
+                validator: this.validators.validateQuestion }),
+            answer: property({ type: STRING, precision: 30, 
+                description: "Protection answer", 
+                validator: this.validators.validateAnswer }),
 
-        user: property({ type: User.TYPE, nullable: false, 
-            description: "The declaring user", 
-            validator: this.validators.validateUser }),
-        userId: property({ type: INT, nullable: false, precision: 10, 
-            description: "The declaring user" }),
+            user: property({ type: User.TYPE, nullable: false, 
+                description: "The declaring user", 
+                validator: this.validators.validateUser }),
+            userId: property({ type: INT, nullable: false, precision: 10, 
+                description: "The declaring user" }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

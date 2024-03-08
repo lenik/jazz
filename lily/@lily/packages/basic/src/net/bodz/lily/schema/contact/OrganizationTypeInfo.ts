@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import OrganizationValidators from "./OrganizationValidators";
 import _Organization_stuff_TypeInfo from "./_Organization_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class OrganizationTypeInfo extends _Organization_stuff_TypeInfo {
 
     validators = new OrganizationValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

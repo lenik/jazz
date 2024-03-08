@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PersonTagTypeValidators from "./PersonTagTypeValidators";
 import _PersonTagType_stuff_TypeInfo from "./_PersonTagType_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
 
     validators = new PersonTagTypeValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

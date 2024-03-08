@@ -1,5 +1,4 @@
 import { LIST, STRING } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import PersonValidators from "./PersonValidators";
@@ -12,14 +11,16 @@ export class PersonTypeInfo extends _Person_stuff_TypeInfo {
 
     validators = new PersonValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        hello: property({ type: STRING, validator: this.validators.validateHello }),
-        peers: property({ type: LIST(STRING), validator: this.validators.validatePeers }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            hello: property({ type: STRING, validator: this.validators.validateHello }),
+            peers: property({ type: LIST(STRING), validator: this.validators.validatePeers }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import TagDefValidators from "./TagDefValidators";
 import _TagDef_stuff_TypeInfo from "./_TagDef_stuff_TypeInfo";
 
@@ -11,12 +9,14 @@ export class TagDefTypeInfo extends _TagDef_stuff_TypeInfo {
 
     validators = new TagDefValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

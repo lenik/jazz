@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PostVoteValidators from "./PostVoteValidators";
 import _PostVote_stuff_TypeInfo from "./_PostVote_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PostVoteTypeInfo extends _PostVote_stuff_TypeInfo {
 
     validators = new PostVoteValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,4 @@
 import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoTalkTypeInfo from "../../concrete/CoTalkTypeInfo";
@@ -22,16 +21,18 @@ export class _ArticleTalk_stuff_TypeInfo extends CoTalkTypeInfo {
 
     validators = new _ArticleTalk_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
 
-        article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
-        articleId: property({ type: LONG, nullable: false, precision: 19 }),
+            article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
+            articleId: property({ type: LONG, nullable: false, precision: 19 }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

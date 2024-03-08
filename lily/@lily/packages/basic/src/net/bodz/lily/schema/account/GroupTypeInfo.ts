@@ -1,5 +1,4 @@
 import { LIST } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import GroupValidators from "./GroupValidators";
@@ -15,14 +14,16 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
 
     validators = new GroupValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        children: property({ type: LIST(this), validator: this.validators.validateChildren }),
-        users: property({ type: LIST(User.TYPE), validator: this.validators.validateUsers }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            children: property({ type: LIST(this), validator: this.validators.validateChildren }),
+            users: property({ type: LIST(User.TYPE), validator: this.validators.validateUsers }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

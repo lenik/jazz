@@ -1,6 +1,5 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import PartyTypeInfo from "./PartyTypeInfo";
@@ -28,17 +27,19 @@ export class _Organization_stuff_TypeInfo extends PartyTypeInfo {
 
     validators = new _Organization_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
-        properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
-        roleCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
-        bankCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateBankCount }),
-        size: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateSize }),
-        taxId: property({ type: STRING, precision: 20, validator: this.validators.validateTaxId }),
+    override preamble() {
+        super.preamble();
+        this.declare({
+            properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
+            roleCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRoleCount }),
+            bankCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateBankCount }),
+            size: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateSize }),
+            taxId: property({ type: STRING, precision: 20, validator: this.validators.validateTaxId }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

@@ -1,5 +1,3 @@
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
-
 import PartyCategoryValidators from "./PartyCategoryValidators";
 import _PartyCategory_stuff_TypeInfo from "./_PartyCategory_stuff_TypeInfo";
 
@@ -10,12 +8,14 @@ export class PartyCategoryTypeInfo extends _PartyCategory_stuff_TypeInfo {
 
     validators = new PartyCategoryValidators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }

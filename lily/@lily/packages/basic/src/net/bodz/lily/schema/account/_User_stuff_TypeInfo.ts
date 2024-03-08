@@ -1,5 +1,4 @@
 import { INT } from "@skeljs/core/src/lang/baseinfo";
-import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
@@ -31,33 +30,35 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
 
     validators = new _User_stuff_Validators(this);
 
-    declaredProperty: EntityPropertyMap = {
+    override preamble() {
+        super.preamble();
+        this.declare({
 
-        person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
-        personId: property({ type: INT, precision: 10 }),
+            person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+            personId: property({ type: INT, precision: 10 }),
 
-        primaryGroup: property({ type: Group.TYPE, nullable: false, 
-            description: "The primary user group, the default value of ownerGroup.", 
-            validator: this.validators.validatePrimaryGroup }),
-        primaryGroupId: property({ type: INT, nullable: false, precision: 10, 
-            description: "The primary user group, the default value of ownerGroup." }),
+            primaryGroup: property({ type: Group.TYPE, nullable: false, 
+                description: "The primary user group, the default value of ownerGroup.", 
+                validator: this.validators.validatePrimaryGroup }),
+            primaryGroupId: property({ type: INT, nullable: false, precision: 10, 
+                description: "The primary user group, the default value of ownerGroup." }),
 
-        referer: property({ type: this, 
-            description: "The referer user (used for promotion)", 
-            validator: this.validators.validateReferer }),
-        refererId: property({ type: INT, precision: 10, 
-            description: "The referer user (used for promotion)" }),
+            referer: property({ type: this, 
+                description: "The referer user (used for promotion)", 
+                validator: this.validators.validateReferer }),
+            refererId: property({ type: INT, precision: 10, 
+                description: "The referer user (used for promotion)" }),
 
-        type: property({ type: UserType.TYPE, nullable: false, 
-            description: "User type like system-user, normal-user, etc.", 
-            validator: this.validators.validateType }),
-        typeId: property({ type: INT, nullable: false, precision: 10, 
-            description: "User type like system-user, normal-user, etc." }),
+            type: property({ type: UserType.TYPE, nullable: false, 
+                description: "User type like system-user, normal-user, etc.", 
+                validator: this.validators.validateType }),
+            typeId: property({ type: INT, nullable: false, precision: 10, 
+                description: "User type like system-user, normal-user, etc." }),
+        });
     }
 
     constructor() {
         super();
-        this.declare(this.declaredProperty);
     }
 
 }
