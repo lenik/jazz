@@ -36,8 +36,7 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
             bankCount: property({ type: INT, icon: "far-hashtag" }),
             roleCount: property({ type: INT, icon: "far-hashtag" }),
 
-            // person
-
+            // person [icons default]
             employee: property({ type: BOOLEAN, icon: "far-user-tie" }),
             gender: property({ type: CHAR, icon: "far-transgender" }),
             pronoun: property({ type: STRING, icon: "far-genderless" }),
@@ -47,8 +46,8 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
             ssn: property({ type: STRING, icon: "far-id-card" }),
             dln: property({ type: STRING, icon: "far-id-card" }),
 
-            mother: property({ type: Person.TYPE, icon: "far-female" }),
-            father: property({ type: Person.TYPE, icon: "far-male" }),
+            mother: property({ type: this, icon: "far-female" }),
+            father: property({ type: this, icon: "far-male" }),
         });
     }
 

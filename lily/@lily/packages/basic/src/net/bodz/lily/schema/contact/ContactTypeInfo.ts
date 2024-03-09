@@ -17,9 +17,9 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            // org: property({ type: Organization.TYPE, icon: "fa-build" }),
-            // orgUnit: property({ type: OrgUnit.TYPE, icon: "fa-build" }),
-            // person: property({ type: Person.TYPE, icon: "fa-male" }),
+            org: property({ type: JSON_VARIANT, icon: "fa-build" }),
+            orgUnit: property({ type: JSON_VARIANT, icon: "fa-build" }),
+            person: property({ type: JSON_VARIANT, icon: "fa-male" }),
 
             rename: property({ type: STRING, icon: "fa-tag" }),
             usage: property({ type: STRING, icon: "fas-lightbulb" }),
@@ -47,6 +47,10 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
 
     constructor() {
         super(INT);
+
+        import('./Organization').then((a) => this.property.org.type = a.Organization.TYPE);
+        import('./OrgUnit').then((a) => this.property.orgUnit.type = a.OrgUnit.TYPE);
+        import('./Person').then((a) => this.property.person.type = a.Person.TYPE);
     }
 }
 
