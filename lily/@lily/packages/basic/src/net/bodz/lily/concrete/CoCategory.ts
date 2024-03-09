@@ -3,7 +3,6 @@ import CoNode from './CoNode';
 import CoCategoryTypeInfo from './CoCategoryTypeInfo';
 
 export abstract class CoCategory<This, Id> extends CoNode<This, Id> {
-    static readonly TYPE = new CoCategoryTypeInfo();
     
     properties: any
     

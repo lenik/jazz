@@ -3,11 +3,11 @@ import CoCode from './CoCode';
 import CoPhaseTypeInfo from './CoPhaseTypeInfo';
 
 export abstract class CoPhase<This> extends CoCode<This> {
-    static readonly TYPE = new CoPhaseTypeInfo();
 
     constructor(o: any) {
         super(o);
     }
+
 }
 
 export default CoPhase;
