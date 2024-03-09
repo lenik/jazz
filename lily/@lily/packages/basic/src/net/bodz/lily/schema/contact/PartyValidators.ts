@@ -1,8 +1,8 @@
 import { Moment } from 'moment-timezone';
 import IdEntityValidators from "../../concrete/IdEntityValidators";
-import PartyTypeInfo from './PartyTypeInfo';
-import PartyCategory from "./PartyCategory";
-import Contact from "./Contact";
+import type PartyTypeInfo from './PartyTypeInfo';
+import type PartyCategory from "./PartyCategory";
+import type Contact from "./Contact";
 
 export class PartyValidators extends IdEntityValidators {
 

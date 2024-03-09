@@ -33,8 +33,8 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
             priority: property({ type: INT, icon: 'far-lightbulb' }),
             state: property({ type: STRING, icon: 'far-heart' }),
 
-            // ownerUser: property({ type: User.TYPE, icon: 'far-user' }),
-            // ownerGroup: property({ type: Group.TYPE, icon: 'far-users' }),
+            ownerUser: property({ type: User.TYPE, icon: 'far-user' }),
+            ownerGroup: property({ type: Group.TYPE, icon: 'far-users' }),
 
             acl: property({ type: INT, icon: 'far-user-lock' }),
             accessMode: property({ type: INT, icon: 'far-key' }),

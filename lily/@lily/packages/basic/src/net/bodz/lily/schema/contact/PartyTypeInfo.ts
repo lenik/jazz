@@ -1,5 +1,4 @@
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from '../../concrete/IdEntityTypeInfo';
 import PartyValidators from './PartyValidators';
 import { ARRAY, BOOLEAN, CHAR, INT, STRING } from '@skeljs/core/src/lang/baseinfo';
@@ -48,8 +47,8 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
             ssn: property({ type: STRING, icon: "far-id-card" }),
             dln: property({ type: STRING, icon: "far-id-card" }),
 
-            // mother: property({ type: Person.TYPE, icon: "far-female" }),
-            // father: property({ type: Person.TYPE, icon: "far-male" }),
+            mother: property({ type: Person.TYPE, icon: "far-female" }),
+            father: property({ type: Person.TYPE, icon: "far-male" }),
         });
     }
 

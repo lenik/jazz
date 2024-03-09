@@ -17,9 +17,9 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            org: property({ type: Organization.TYPE, icon: "fa-build" }),
-            orgUnit: property({ type: OrgUnit.TYPE, icon: "fa-build" }),
-            person: property({ type: Person.TYPE, icon: "fa-male" }),
+            // org: property({ type: Organization.TYPE, icon: "fa-build" }),
+            // orgUnit: property({ type: OrgUnit.TYPE, icon: "fa-build" }),
+            // person: property({ type: Person.TYPE, icon: "fa-male" }),
 
             rename: property({ type: STRING, icon: "fa-tag" }),
             usage: property({ type: STRING, icon: "fas-lightbulb" }),
