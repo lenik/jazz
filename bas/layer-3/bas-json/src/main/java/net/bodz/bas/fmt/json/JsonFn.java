@@ -1,6 +1,14 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -241,6 +249,12 @@ public class JsonFn {
             out.value(o.toString());
             return;
         }
+        if (o instanceof JsonVariant) {
+            JsonVariant jv = (JsonVariant) o;
+            out.variant(jv);
+            return;
+        }
+
         out.value(o);
     }
 

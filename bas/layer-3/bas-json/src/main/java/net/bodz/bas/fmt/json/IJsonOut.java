@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.json.JsonObject;
 import net.bodz.fork.org.json.JSONException;
 
 public interface IJsonOut
@@ -16,14 +18,13 @@ public interface IJsonOut
             throws JSONException;
 
     /**
-     * Begin appending a new array. All values until the balancing <code>endArray</code> will be
-     * appended to this array. The <code>endArray</code> method must be called to mark the array's
-     * end.
+     * Begin appending a new array. All values until the balancing <code>endArray</code> will be appended to this array.
+     * The <code>endArray</code> method must be called to mark the array's end.
      *
      * @return this
      * @throws JSONException
-     *             If the nesting is too deep, or if the object is started in the wrong place (for
-     *             example as a key or after the end of the outermost array or object).
+     *             If the nesting is too deep, or if the object is started in the wrong place (for example as a key or
+     *             after the end of the outermost array or object).
      */
     IJsonOut array()
             throws JSONException;
@@ -49,28 +50,26 @@ public interface IJsonOut
             throws JSONException;
 
     /**
-     * Append a key. The key will be associated with the next value. In an object, every value must
-     * be preceded by a key.
+     * Append a key. The key will be associated with the next value. In an object, every value must be preceded by a
+     * key.
      *
      * @param string
      *            A key string.
      * @return this
      * @throws JSONException
-     *             If the key is out of place. For example, keys do not belong in arrays or if the
-     *             key is null.
+     *             If the key is out of place. For example, keys do not belong in arrays or if the key is null.
      */
     IJsonOut key(String string)
             throws JSONException;
 
     /**
-     * Begin appending a new object. All keys and values until the balancing <code>endObject</code>
-     * will be appended to this object. The <code>endObject</code> method must be called to mark the
-     * object's end.
+     * Begin appending a new object. All keys and values until the balancing <code>endObject</code> will be appended to
+     * this object. The <code>endObject</code> method must be called to mark the object's end.
      *
      * @return this
      * @throws JSONException
-     *             If the nesting is too deep, or if the object is started in the wrong place (for
-     *             example as a key or after the end of the outermost array or object).
+     *             If the nesting is too deep, or if the object is started in the wrong place (for example as a key or
+     *             after the end of the outermost array or object).
      */
     IJsonOut object()
             throws JSONException;
@@ -113,8 +112,8 @@ public interface IJsonOut
      * Append an object value.
      *
      * @param object
-     *            The object to append. It can be null, or a Boolean, Number, String, JSONObject, or
-     *            JSONArray, or an object that implements JSONString.
+     *            The object to append. It can be null, or a Boolean, Number, String, JSONObject, or JSONArray, or an
+     *            object that implements JSONString.
      * @return this
      * @throws JSONException
      *             If the value is out of sequence.
@@ -172,15 +171,6 @@ public interface IJsonOut
         return this;
     }
 
-// IJsonOut any(Object value)
-// throws JSONException;
-//
-// IJsonOut keyAny(String key, Object value)
-// throws JSONException;
-//
-// IJsonOut keyAnyNotNull(String key, Object value)
-// throws JSONException;
-
     default IJsonOut array(String key, Object array) {
         key(key);
         return array(array);
@@ -225,6 +215,16 @@ public interface IJsonOut
         return this;
     }
 
+    default IJsonOut array(JsonArray array) {
+        this.array();
+        for (Object item : array) {
+            JsonVariant jv = JsonVariant.of(item);
+            variant(jv);
+        }
+        this.endArray();
+        return this;
+    }
+
     default IJsonOut map(String key, Map<String, ?> map) {
         this.key(key);
         return map(map);
@@ -244,6 +244,36 @@ public interface IJsonOut
             }
         }
         this.endObject();
+        return this;
+    }
+
+    default IJsonOut object(JsonObject jo) {
+        this.object();
+        for (String key : jo.keySet()) {
+            key(key);
+            Object value = jo.get(key);
+            JsonVariant jvValue = JsonVariant.of(value);
+            variant(jvValue);
+        }
+        this.endObject();
+        return this;
+    }
+
+    default IJsonOut variant(JsonVariant jv) {
+        switch (jv.type) {
+        case NULL:
+            value(null);
+            break;
+        case ARRAY:
+            array(jv.getArray());
+            break;
+        case OBJECT:
+            object(jv.getObject());
+            break;
+        case SCALAR:
+            value(jv.getScalar());
+            break;
+        }
         return this;
     }
 
