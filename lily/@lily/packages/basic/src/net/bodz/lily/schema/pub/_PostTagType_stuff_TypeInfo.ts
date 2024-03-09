@@ -17,8 +17,8 @@ export class _PostTagType_stuff_TypeInfo extends CoTagTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

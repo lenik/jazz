@@ -31,8 +31,8 @@ export class _ArticleTalk_stuff_TypeInfo extends CoTalkTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

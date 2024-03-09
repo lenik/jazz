@@ -63,8 +63,10 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
+                <input type="datetime" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
+                <input type="datetime" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -86,6 +88,7 @@ onMounted(() => {
                 <input type="number" v-model="model.id" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.credit" v-model="model.credit">
+                <input type="number" v-model="model.credit" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.app" v-model="model.app">
                 <RefEditor :dialog="vAppChooseDialog" v-model="model.app" v-model:id="model.appId" />

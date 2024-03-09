@@ -16,6 +16,7 @@ export class ArticleTagTypeTypeInfo extends _ArticleTagType_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

@@ -1,7 +1,6 @@
-import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
+import type { InetAddress, List, int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type List from "../../../../../java/util/List";
 import type Group from "./Group";
 import type UserOtherId from "./UserOtherId";
 import type UserRun from "./UserRun";

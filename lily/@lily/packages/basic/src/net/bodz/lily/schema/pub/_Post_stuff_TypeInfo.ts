@@ -55,7 +55,7 @@ export class _Post_stuff_TypeInfo extends CoMessageTypeInfo {
     }
 
     constructor() {
-        super();
+        super(LONG);
     }
 
 }

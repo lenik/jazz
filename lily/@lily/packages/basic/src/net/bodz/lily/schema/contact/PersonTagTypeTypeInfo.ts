@@ -16,6 +16,7 @@ export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

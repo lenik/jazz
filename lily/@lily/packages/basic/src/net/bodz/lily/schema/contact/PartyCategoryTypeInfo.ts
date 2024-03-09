@@ -16,6 +16,7 @@ export class PartyCategoryTypeInfo extends _PartyCategory_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

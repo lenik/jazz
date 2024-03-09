@@ -17,8 +17,8 @@ export class _ArticleTagType_stuff_TypeInfo extends CoTagTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

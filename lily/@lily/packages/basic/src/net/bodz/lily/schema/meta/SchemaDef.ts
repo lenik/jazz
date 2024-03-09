@@ -1,4 +1,5 @@
-import List from "../../../../../java/util/List";
+import type { List } from "@skeljs/core/src/lang/basetype";
+
 import CategoryDef from "./CategoryDef";
 import ParameterDef from "./ParameterDef";
 import PhaseDef from "./PhaseDef";

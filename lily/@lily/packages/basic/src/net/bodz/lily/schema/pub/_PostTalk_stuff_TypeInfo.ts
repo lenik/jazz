@@ -31,8 +31,8 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

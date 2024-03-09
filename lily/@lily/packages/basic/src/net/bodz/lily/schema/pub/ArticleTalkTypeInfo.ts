@@ -16,6 +16,7 @@ export class ArticleTalkTypeInfo extends _ArticleTalk_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

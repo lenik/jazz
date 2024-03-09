@@ -28,8 +28,8 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

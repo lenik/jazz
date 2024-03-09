@@ -17,8 +17,8 @@ export class _PersonTagType_stuff_TypeInfo extends CoTagTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

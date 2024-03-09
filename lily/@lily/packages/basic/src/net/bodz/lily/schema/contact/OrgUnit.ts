@@ -1,4 +1,5 @@
-import List from "../../../../../java/util/List";
+import type { List } from "@skeljs/core/src/lang/basetype";
+
 import Contact from "./Contact";
 import OrgUnitTypeInfo from "./OrgUnitTypeInfo";
 import PersonRole from "./PersonRole";

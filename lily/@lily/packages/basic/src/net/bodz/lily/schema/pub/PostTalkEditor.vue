@@ -71,8 +71,10 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
+                <input type="datetime" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
+                <input type="datetime" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -96,8 +98,10 @@ onMounted(() => {
         </FieldGroup>
         <FieldGroup :type="CoMomentInterval.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
+                <input type="datetime" v-model="model.beginTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.endTime" v-model="model.endTime">
+                <input type="datetime" v-model="model.endTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.year" v-model="model.year">
                 <input type="number" v-model="model.year" />

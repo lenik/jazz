@@ -16,6 +16,7 @@ export class PostTagTypeTypeInfo extends _PostTagType_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

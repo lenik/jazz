@@ -28,8 +28,8 @@ export class _ArticleParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType);
     }
 
 }

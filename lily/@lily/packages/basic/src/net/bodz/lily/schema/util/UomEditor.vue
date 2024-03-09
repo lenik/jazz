@@ -17,6 +17,7 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
@@ -70,7 +71,7 @@ onMounted(() => {
                 <input type="text" v-model="model.icon" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <textarea class="json-editor" v-model="model.properties" />
+                <JsonEditor v-model="model.properties" />
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_Uom_stuff.TYPE">

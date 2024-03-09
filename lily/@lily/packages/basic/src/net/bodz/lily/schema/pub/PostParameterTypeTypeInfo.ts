@@ -16,6 +16,7 @@ export class PostParameterTypeTypeInfo extends _PostParameterType_stuff_TypeInfo
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

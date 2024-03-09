@@ -1,6 +1,6 @@
+import type { List } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import type List from "../../../../../java/util/List";
 import type Group from "./Group";
 import type GroupTypeInfo from "./GroupTypeInfo";
 import type User from "./User";

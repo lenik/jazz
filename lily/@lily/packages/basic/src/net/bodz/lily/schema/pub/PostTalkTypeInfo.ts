@@ -16,6 +16,7 @@ export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

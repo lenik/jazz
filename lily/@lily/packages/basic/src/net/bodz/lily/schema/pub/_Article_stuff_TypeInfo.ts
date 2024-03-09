@@ -1,5 +1,5 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
@@ -49,7 +49,7 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
     }
 
     constructor() {
-        super();
+        super(LONG);
     }
 
 }

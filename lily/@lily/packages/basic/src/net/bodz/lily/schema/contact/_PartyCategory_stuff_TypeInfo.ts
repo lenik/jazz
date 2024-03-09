@@ -1,4 +1,4 @@
-import { STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
@@ -26,8 +26,8 @@ export class _PartyCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
         });
     }
 
-    constructor() {
-        super();
+    constructor(selfType: any) {
+        super(selfType, INT);
     }
 
 }

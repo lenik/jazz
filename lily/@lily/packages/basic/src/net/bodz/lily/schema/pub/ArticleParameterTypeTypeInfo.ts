@@ -16,6 +16,7 @@ export class ArticleParameterTypeTypeInfo extends _ArticleParameterType_stuff_Ty
 
     constructor() {
         super();
+        this.selfType = this;
     }
 
 }

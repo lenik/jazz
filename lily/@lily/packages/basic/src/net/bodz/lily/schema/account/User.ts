@@ -1,6 +1,5 @@
-import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
+import type { InetAddress, List, int } from "@skeljs/core/src/lang/basetype";
 
-import List from "../../../../../java/util/List";
 import Group from "./Group";
 import UserOtherId from "./UserOtherId";
 import UserRun from "./UserRun";

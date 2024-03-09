@@ -1,4 +1,5 @@
-import List from "../../../../../java/util/List";
+import type { List } from "@skeljs/core/src/lang/basetype";
+
 import TagDef from "./TagDef";
 import TagGroupDefTypeInfo from "./TagGroupDefTypeInfo";
 import _TagGroupDef_stuff from "./_TagGroupDef_stuff";

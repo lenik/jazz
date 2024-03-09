@@ -1,4 +1,5 @@
-import List from "../../../../../java/util/List";
+import type { List } from "@skeljs/core/src/lang/basetype";
+
 import GroupTypeInfo from "./GroupTypeInfo";
 import User from "./User";
 import _Group_stuff from "./_Group_stuff";

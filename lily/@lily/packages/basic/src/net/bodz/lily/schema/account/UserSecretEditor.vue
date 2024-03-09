@@ -18,6 +18,7 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
@@ -62,8 +63,10 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
+                <input type="datetime" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
+                <input type="datetime" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -71,7 +74,7 @@ onMounted(() => {
         </FieldGroup>
         <FieldGroup :type="CoObject.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <textarea class="json-editor" v-model="model.properties" />
+                <JsonEditor v-model="model.properties" />
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_UserSecret_stuff.TYPE">

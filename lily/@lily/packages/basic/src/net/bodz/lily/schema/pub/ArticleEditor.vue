@@ -21,6 +21,7 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
@@ -71,8 +72,10 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
+                <input type="datetime" v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
+                <input type="datetime" v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -104,7 +107,7 @@ onMounted(() => {
                 <input type="number" v-model="model.state" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <textarea class="json-editor" v-model="model.properties" />
+                <JsonEditor v-model="model.properties" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.ownerUser" v-model="model.ownerUser">
                 <RefEditor :dialog="userChooseDialog" v-model="model.ownerUser" v-model:id="model.ownerUserId" />
@@ -120,8 +123,10 @@ onMounted(() => {
         </FieldGroup>
         <FieldGroup :type="CoMomentInterval.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
+                <input type="datetime" v-model="model.beginTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.endTime" v-model="model.endTime">
+                <input type="datetime" v-model="model.endTime" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.year" v-model="model.year">
                 <input type="number" v-model="model.year" />
@@ -158,7 +163,7 @@ onMounted(() => {
                 <input type="number" v-model="model.messageCount" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.plugins" v-model="model.plugins">
-                <textarea class="json-editor" v-model="model.plugins" />
+                <JsonEditor v-model="model.plugins" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.category" v-model="model.category">
                 <RefEditor :dialog="articleCategoryChooseDialog" v-model="model.category" v-model:id="model.categoryId" />
