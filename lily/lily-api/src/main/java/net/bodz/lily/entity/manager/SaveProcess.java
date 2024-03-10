@@ -13,6 +13,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
 
 public class SaveProcess
@@ -37,29 +38,37 @@ public class SaveProcess
     public Object execute()
             throws Exception {
         // 1. Prepare the object to be saved
-        Object obj;
+        StructRow obj;
         if (createNew) {
-            obj = typeInfo.getEntityClass().getConstructor().newInstance();
+            obj = (StructRow) typeInfo.getEntityClass().getConstructor().newInstance();
         } else {
-            obj = getEntityMapper().select(id);
+            obj = (StructRow) getEntityMapper().select(id);
             if (obj == null)
                 throw new NoSuchKeyException(String.format(//
                         "Invalid entity id: \"%s\"", id));
         }
 
-        assert obj instanceof IJsonForm;
-        IJsonForm jsonForm = (IJsonForm) obj;
+        IJsonForm jsonForm = obj;
         try {
             // JsonFormOptions opts = new JsonFormOptions(q);
             jsonForm.jsonIn(contentJson, JsonFormOptions.DEFAULT);
         } catch (ParseException e) {
             throw new ParseException("Failed to parse the content json: " + e.getMessage(), e);
         }
+        obj.touch();
 
         // 2.
         JdbcRowOpEvent event = new JdbcRowOpEvent(this, //
                 createNew ? JdbcRowOpType.CREATE : JdbcRowOpType.UPDATE);
 
+        RowOpListeners aRowOps = obj.getClass().getAnnotation(RowOpListeners.class);
+        if (aRowOps != null) {
+            for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value()) {
+                IJdbcRowOpListener handler = handlerClass.getConstructor(IId.class).newInstance(obj);
+                if (! handler.beforeRowOperation(event))
+                    return false;
+            }
+        }
         beforeRowOp(event, obj);
 
         IEntityMapper<Object> mapper = getEntityMapper();
@@ -84,15 +93,15 @@ public class SaveProcess
         return result.succeed();
     }
 
-    static List<Class<? extends IJdbcRowOpListener>> handlerClasses;
+    static List<Class<? extends IJdbcRowOpListener>> globalHandlerClasses;
     static boolean enableRowOps = true;
     static {
-        handlerClasses = new ArrayList<>();
+        globalHandlerClasses = new ArrayList<>();
         if (enableRowOps)
             for (Class<? extends RowOpListeners> c : IndexedTypes.list(RowOpListeners.class, true)) {
                 RowOpListeners aRowOps = c.getAnnotation(RowOpListeners.class);
                 for (Class<? extends IJdbcRowOpListener> handlerClass : aRowOps.value())
-                    handlerClasses.add(handlerClass);
+                    globalHandlerClasses.add(handlerClass);
             }
     }
 
@@ -103,7 +112,7 @@ public class SaveProcess
             if (! l.beforeRowOperation(event))
                 return false;
         }
-        for (Class<? extends IJdbcRowOpListener> c : handlerClasses) {
+        for (Class<? extends IJdbcRowOpListener> c : globalHandlerClasses) {
             IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
             if (! handler.beforeRowOperation(event))
                 return false;
@@ -117,7 +126,7 @@ public class SaveProcess
             IJdbcRowOpListener l = (IJdbcRowOpListener) obj;
             l.afterRowOperation(event);
         }
-        for (Class<? extends IJdbcRowOpListener> c : handlerClasses) {
+        for (Class<? extends IJdbcRowOpListener> c : globalHandlerClasses) {
             IJdbcRowOpListener handler = c.getConstructor(IId.class).newInstance(obj);
             handler.afterRowOperation(event);
         }

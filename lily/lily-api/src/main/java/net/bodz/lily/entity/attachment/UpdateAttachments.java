@@ -13,9 +13,16 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
 import net.bodz.lily.entity.manager.JdbcRowOpEvent;
 import net.bodz.lily.entity.manager.JdbcRowOpType;
+import net.bodz.lily.entity.manager.RowOpListeners;
 import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.storage.IVolumeItem;
 
+/**
+ * See {@link RowOpListeners} which is indexed and annotated class like {@link IHaveAttachments}
+ * lists this class as the row-op listener.
+ *
+ * @see RowOpListeners
+ */
 public class UpdateAttachments
         implements
             IJdbcRowOpListener {
@@ -23,11 +30,9 @@ public class UpdateAttachments
     static final Logger logger = LoggerFactory.getLogger(UpdateAttachments.class);
 
     IId<?> idRef;
-    IHaveAttachments owner;
 
-    public <T extends IId<?> & IHaveAttachments> UpdateAttachments(T obj) {
+    public <T extends IId<?>> UpdateAttachments(T obj) {
         this.idRef = obj;
-        this.owner = obj;
     }
 
     protected String getPreferredName(IAttachment item)
@@ -49,7 +54,7 @@ public class UpdateAttachments
 //            throw new IllegalStateException("volume not set");
 
         File file = attachment.toLocalFile(volume);
-        if (!file.exists()) {
+        if (! file.exists()) {
             System.out.println(file);
         }
 
@@ -64,13 +69,17 @@ public class UpdateAttachments
     @Override
     public boolean beforeRowOperation(JdbcRowOpEvent event)
             throws Exception {
+        if (! (idRef instanceof IHaveAttachments))
+            return true;
+        IHaveAttachments owner = (IHaveAttachments) idRef;
+
         if (event.getOpType() != JdbcRowOpType.UPDATE)
             return true;
 
         Object id = idRef.id();
         if (id != null) {
             String idStr = id.toString();
-
+//
             IDataApplication app = DataApps.fromRequest();
             IVolume volume = app.getVolume(idRef.getClass());
 
