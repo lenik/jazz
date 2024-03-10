@@ -8,7 +8,6 @@ import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -226,7 +225,7 @@ public abstract class CoObject
     }
 
     public void setProperties(JsonVariant properties) {
-        throw new ReadOnlyException();
+        // throw new ReadOnlyException();
     }
 
     /** ⇱ Implementation Of {@link IStated}. */
