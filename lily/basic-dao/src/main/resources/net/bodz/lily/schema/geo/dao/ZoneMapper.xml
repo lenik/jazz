@@ -321,8 +321,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{depth},
             #{telCode},
             #{postCode},
-            #{properties.jsonStr}::jsonb,
-            #{data.jsonStr}::jsonb
+            #{properties},
+            #{data}
         );
     ]]></insert>
 
@@ -349,8 +349,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "depth" = #{depth},
             telcode = #{telCode},
             postcode = #{postCode},
-            props = #{properties.jsonStr}::jsonb,
-            "data" = #{data.jsonStr}::jsonb,
+            props = #{properties},
+            "data" = #{data},
         </set>
         <where>
             id = #{id}

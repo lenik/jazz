@@ -193,11 +193,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{beginTime},
             #{endTime},
             #{year},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{userId},
             #{typeId},
             #{otherId},
-            #{auth.jsonStr}::jsonb
+            #{auth}
         );
     ]]></insert>
 
@@ -216,11 +216,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t0 = #{beginTime},
             t1 = #{endTime},
             "year" = #{year},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             "user" = #{userId},
             "type" = #{typeId},
             oid = #{otherId},
-            auth = #{auth.jsonStr}::jsonb,
+            auth = #{auth},
         </set>
         <where>
             id = #{id}

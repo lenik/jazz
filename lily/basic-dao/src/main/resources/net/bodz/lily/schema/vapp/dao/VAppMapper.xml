@@ -301,7 +301,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{code},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{reqId},
             #{categoryId},
             #{secret}
@@ -325,7 +325,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             code = #{code},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             req = #{reqId},
             cat = #{categoryId},
             secret = #{secret},

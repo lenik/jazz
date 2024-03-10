@@ -154,7 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{appId},
             #{apiId},
             #{callback}
@@ -167,7 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             app = #{appId},
             api = #{apiId},
             callback = #{callback},

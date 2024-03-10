@@ -188,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{schemaId},
             #{parentId},
             #{depth},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{refCount}
         );
     ]]></insert>
@@ -209,7 +209,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "schema" = #{schemaId},
             parent = #{parentId},
             "depth" = #{depth},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             nobj = #{refCount},
         </set>
         <where>

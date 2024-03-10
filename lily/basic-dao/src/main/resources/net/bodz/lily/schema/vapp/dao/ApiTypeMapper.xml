@@ -107,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{lastModifiedDate},
             #{version},
             #{code},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{uom}
         );
     ]]></insert>
@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastmod = #{lastModifiedDate},
             "version" = #{version},
             code = #{code},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             uom = #{uom},
         </set>
         <where>

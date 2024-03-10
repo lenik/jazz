@@ -312,7 +312,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{creationDate},
             #{lastModifiedDate},
             #{version},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{primaryGroupId},
             #{refererId},
             #{personId}
@@ -333,7 +333,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             creation = #{creationDate},
             lastmod = #{lastModifiedDate},
             "version" = #{version},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             gid0 = #{primaryGroupId},
             referer = #{refererId},
             person = #{personId},

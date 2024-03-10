@@ -413,7 +413,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{voteCount},
             #{hateCount},
             #{messageCount},
-            #{plugins.jsonStr}::jsonb
+            #{plugins}
         );
     ]]></insert>
 
@@ -444,7 +444,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             nvote = #{voteCount},
             nhate = #{hateCount},
             nmsg = #{messageCount},
-            plugins = #{plugins.jsonStr}::jsonb,
+            plugins = #{plugins},
         </set>
         <where>
             id = #{id}

@@ -366,12 +366,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{formId},
             #{formArguments},
             #{categoryId},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{favCount},
             #{voteCount},
             #{hateCount},
             #{messageCount},
-            #{plugins.jsonStr}::jsonb
+            #{plugins}
         );
     ]]></insert>
 
@@ -400,12 +400,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form = #{formId},
             formargs = #{formArguments},
             cat = #{categoryId},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             nfav = #{favCount},
             nvote = #{voteCount},
             nhate = #{hateCount},
             nmsg = #{messageCount},
-            plugins = #{plugins.jsonStr}::jsonb,
+            plugins = #{plugins},
         </set>
         <where>
             id = #{id}

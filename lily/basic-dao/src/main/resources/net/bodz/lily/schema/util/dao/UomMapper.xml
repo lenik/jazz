@@ -108,7 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{label},
             #{description},
             #{icon},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{prop},
             #{stdId},
             #{scale}
@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             label = #{label},
             description = #{description},
             icon = #{icon},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             prop = #{prop},
             std = #{stdId},
             "scale" = #{scale},
