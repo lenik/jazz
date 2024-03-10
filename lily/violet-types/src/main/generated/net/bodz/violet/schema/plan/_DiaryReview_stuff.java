@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.plan;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -58,9 +60,10 @@ public abstract class _DiaryReview_stuff
 
     /**
      *
-     * @label diary
      * @constraint foreign key (diary) references violet.diary (id)
      */
+    @JoinColumn(name = "diary")
+    @ManyToOne
     @NotNull
     public Diary getDiary() {
         return diary;
@@ -90,9 +93,10 @@ public abstract class _DiaryReview_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.diaryrev (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public DiaryReview getParent() {
         return parent;
     }

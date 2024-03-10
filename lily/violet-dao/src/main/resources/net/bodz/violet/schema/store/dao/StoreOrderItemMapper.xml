@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
-        <result property="batch.jsonStr" column="batch" />
+        <result property="batch" column="batch" />
         <result property="serial" column="serial" />
         <result property="expire" column="expire" />
         <result property="quantity" column="qty" />
@@ -22,13 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderId" column="odr" />
         <result property="artifactId" column="art" />
         <result property="regionId" column="region" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
-        <association property="order" columnPrefix="odr_"
+        <association property="order" columnPrefix="odr_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.StoreOrder" 
             resultMap="net.bodz.violet.schema.store.dao.StoreOrderMapper.objlist_map" />
-        <association property="region" columnPrefix="region_"
+        <association property="region" columnPrefix="region_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.Region" 
             resultMap="net.bodz.violet.schema.store.dao.RegionMapper.objlist_map" />
     </resultMap>
@@ -62,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -113,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             region.acl region_acl, 
             region.label region_label, 
             region.description region_description, 
+            region.icon region_icon, 
             region.priority region_priority, 
             region.flags region_flags, 
             region."state" region_state, 
@@ -174,6 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -225,6 +228,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             region.acl region_acl, 
             region.label region_label, 
             region.description region_description, 
+            region.icon region_icon, 
             region.priority region_priority, 
             region.flags region_flags, 
             region."state" region_state, 
@@ -309,7 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{orderId},
             #{artifactId},
             #{regionId},
-            #{batch.jsonStr}::jsonb,
+            #{batch},
             #{serial},
             #{expire},
             #{quantity},
@@ -331,7 +335,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             odr = #{orderId},
             art = #{artifactId},
             region = #{regionId},
-            batch = #{batch.jsonStr}::jsonb,
+            batch = #{batch},
             serial = #{serial},
             expire = #{expire},
             qty = #{quantity},
@@ -352,7 +356,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from storeodrl
+        select count(*) "rows" from storeodrl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -9,10 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="voteScore" column="votes" />
         <result property="parentId" column="parent" />
         <result property="userId" column="user" />
-        <association property="parent" columnPrefix="parent_"
+        <association property="parent" columnPrefix="parent_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Diary" 
             resultMap="net.bodz.violet.schema.plan.dao.DiaryMapper.objlist_map" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>
@@ -51,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -59,7 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from diary_vote a
             left join diary parent on a.parent = parent.id
             left join lily."user" "user" on a."user" = "user".id
@@ -100,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -108,7 +111,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from diary_vote a
             left join diary parent on a.parent = parent.id
             left join lily."user" "user" on a."user" = "user".id
@@ -171,7 +175,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from diary_vote
+        select count(*) "rows" from diary_vote a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

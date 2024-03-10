@@ -8,13 +8,13 @@ import UserTypeInfo from "./UserTypeInfo";
 import _User_stuff from "./_User_stuff";
 
 export class User extends _User_stuff {
+
     static _typeInfo: UserTypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new UserTypeInfo();
+            this._typeInfo = UserTypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     groupIds?: Set<int>
     groups?: List<Group>

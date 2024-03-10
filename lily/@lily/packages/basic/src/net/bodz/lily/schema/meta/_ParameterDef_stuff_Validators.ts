@@ -1,11 +1,9 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
-import type SchemaDef from "./SchemaDef";
+import AbstractDefinitionValidators from "./AbstractDefinitionValidators";
 import type _ParameterDef_stuff_TypeInfo from "./_ParameterDef_stuff_TypeInfo";
 
-export class _ParameterDef_stuff_Validators extends CoEntityValidators {
+export class _ParameterDef_stuff_Validators extends AbstractDefinitionValidators {
 
     constructor(type: _ParameterDef_stuff_TypeInfo) {
         super(type);
@@ -13,15 +11,6 @@ export class _ParameterDef_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _ParameterDef_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
-    }
-
-    validateCode(val: string) {
-    }
-
-    validateSchema(val: SchemaDef) {
     }
 
 }

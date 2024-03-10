@@ -10,34 +10,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="valid" column="valid" />
-        <result property="validsince" column="validsince" />
-        <result property="validuntil" column="validuntil" />
-        <result property="model" column="model" />
+        <result property="validSince" column="validsince" />
+        <result property="validUntil" column="validuntil" />
+        <result property="modelName" column="model" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
         <result property="obsoleteId" column="obsolete" />
         <result property="artifactId" column="art" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="obsolete" columnPrefix="obsolete_"
+        <association property="obsolete" columnPrefix="obsolete_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.ArtifactModel" 
-            resultMap="net.bodz.violet.schema.art.ArtifactModelMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+            resultMap="objlist_map" />
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
     </resultMap>
@@ -51,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -72,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -89,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             obsolete.acl obsolete_acl, 
             obsolete.label obsolete_label, 
             obsolete.description obsolete_description, 
+            obsolete.icon obsolete_icon, 
             obsolete.priority obsolete_priority, 
             obsolete.flags obsolete_flags, 
             obsolete."state" obsolete_state, 
@@ -110,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -128,6 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -159,6 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -180,6 +187,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -197,6 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             obsolete.acl obsolete_acl, 
             obsolete.label obsolete_label, 
             obsolete.description obsolete_description, 
+            obsolete.icon obsolete_icon, 
             obsolete.priority obsolete_priority, 
             obsolete.flags obsolete_flags, 
             obsolete."state" obsolete_state, 
@@ -218,6 +227,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -236,6 +246,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -290,6 +301,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -313,22 +325,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
             #{year},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{valid},
-            #{validsince},
-            #{validuntil},
+            #{validSince},
+            #{validUntil},
             #{obsoleteId},
             #{artifactId},
-            #{model}
+            #{modelName}
         );
     ]]></insert>
 
@@ -341,22 +354,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
             "year" = #{year},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             "valid" = #{valid},
-            validsince = #{validsince},
-            validuntil = #{validuntil},
+            validsince = #{validSince},
+            validuntil = #{validUntil},
             obsolete = #{obsoleteId},
             art = #{artifactId},
-            model = #{model},
+            model = #{modelName},
         </set>
         <where>
             id = #{id}
@@ -371,7 +385,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from artmodel
+        select count(*) "rows" from artmodel a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

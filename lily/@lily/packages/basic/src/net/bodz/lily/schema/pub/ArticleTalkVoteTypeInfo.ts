@@ -3,10 +3,14 @@ import _ArticleTalkVote_stuff_TypeInfo from "./_ArticleTalkVote_stuff_TypeInfo";
 
 export class ArticleTalkVoteTypeInfo extends _ArticleTalkVote_stuff_TypeInfo {
 
+    readonly validators = new ArticleTalkVoteValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleTalkVote"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleTalkVoteValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ArticleTalkVoteTypeInfo extends _ArticleTalkVote_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ArticleTalkVoteTypeInfo();
 
 }
 

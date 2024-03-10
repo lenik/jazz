@@ -13,22 +13,26 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "personrole";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_ORG_ID = "org";
+    static readonly FIELD_ORG_UNIT_ID = "ou";
+    static readonly FIELD_PERSON_ID = "person";
+    static readonly FIELD_ROLE = "role";
+
+    static readonly N_ID = 10;
+    static readonly N_ORG_ID = 10;
+    static readonly N_ORG_UNIT_ID = 10;
+    static readonly N_PERSON_ID = 10;
+    static readonly N_ROLE = 20;
+
+    readonly validators = new _PersonRole_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.contact.PersonRole"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_ORG_ID = "org";
-    static FIELD_ORG_UNIT_ID = "ou";
-    static FIELD_PERSON_ID = "person";
-    static FIELD_ROLE = "role";
-
-    static N_ID = 10;
-    static N_ORG_ID = 10;
-    static N_ORG_UNIT_ID = 10;
-    static N_PERSON_ID = 10;
-    static N_ROLE = 20;
-
-    validators = new _PersonRole_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -47,9 +51,7 @@ export class _PersonRole_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _PersonRole_stuff_TypeInfo();
 
 }
 

@@ -5,10 +5,11 @@ import type Post from "./Post";
 import _PostVote_stuff_TypeInfo from "./_PostVote_stuff_TypeInfo";
 
 export class _PostVote_stuff extends VoteRecord {
+
     static _typeInfo: _PostVote_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostVote_stuff_TypeInfo();
+            this._typeInfo = _PostVote_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

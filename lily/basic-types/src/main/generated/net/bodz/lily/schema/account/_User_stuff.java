@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -67,6 +69,8 @@ public abstract class _User_stuff
      *
      * @constraint foreign key (person) references lily.person (id)
      */
+    @JoinColumn(name = "person")
+    @ManyToOne
     public Person getPerson() {
         return person;
     }
@@ -96,6 +100,8 @@ public abstract class _User_stuff
      *
      * @constraint foreign key (gid0) references lily.group (id)
      */
+    @JoinColumn(name = "gid0")
+    @ManyToOne
     @NotNull
     public Group getPrimaryGroup() {
         return primaryGroup;
@@ -135,6 +141,8 @@ public abstract class _User_stuff
      *
      * @constraint foreign key (referer) references lily.user (id)
      */
+    @JoinColumn(name = "referer")
+    @ManyToOne
     public User getReferer() {
         return referer;
     }
@@ -171,6 +179,8 @@ public abstract class _User_stuff
      *
      * @constraint foreign key (type) references lily.usertype (id)
      */
+    @JoinColumn(name = "type")
+    @ManyToOne
     @NotNull
     public UserType getType() {
         return type;

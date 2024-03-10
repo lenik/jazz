@@ -6,10 +6,11 @@ import type Badge from "./Badge";
 import _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
 export class _UserBadge_stuff extends CoEntity<int> {
+
     static _typeInfo: _UserBadge_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _UserBadge_stuff_TypeInfo();
+            this._typeInfo = _UserBadge_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

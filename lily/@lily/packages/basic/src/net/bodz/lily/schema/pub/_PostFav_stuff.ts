@@ -5,13 +5,13 @@ import type Post from "./Post";
 import _PostFav_stuff_TypeInfo from "./_PostFav_stuff_TypeInfo";
 
 export class _PostFav_stuff extends FavRecord {
+
     static _typeInfo: _PostFav_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostFav_stuff_TypeInfo();
+            this._typeInfo = _PostFav_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     post: Post;
     postId: long;

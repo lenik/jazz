@@ -11,19 +11,23 @@ export class _PhaseDef_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "_phase";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_CODE = "code";
+    static readonly FIELD_SCHEMA_ID = "schema";
+
+    static readonly N_ID = 10;
+    static readonly N_CODE = 30;
+    static readonly N_SCHEMA_ID = 10;
+
+    readonly validators = new _PhaseDef_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.meta.PhaseDef"; }
     get icon() { return "fa-tag"; }
     get label() { return "Phase"; }
-
-    static FIELD_ID = "id";
-    static FIELD_CODE = "code";
-    static FIELD_SCHEMA_ID = "schema";
-
-    static N_ID = 10;
-    static N_CODE = 30;
-    static N_SCHEMA_ID = 10;
-
-    validators = new _PhaseDef_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -36,9 +40,7 @@ export class _PhaseDef_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _PhaseDef_stuff_TypeInfo();
 
 }
 

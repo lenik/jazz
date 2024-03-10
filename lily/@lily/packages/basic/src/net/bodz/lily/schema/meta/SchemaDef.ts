@@ -8,14 +8,14 @@ import SchemaDefTypeInfo from "./SchemaDefTypeInfo";
 import TagGroupDef from "./TagGroupDef";
 import _SchemaDef_stuff from "./_SchemaDef_stuff";
 
-export class SchemaDef extends _SchemaDef_stuff {
+export class SchemaDef extends _SchemaDef_stuff<SchemaDef> {
+
     static _typeInfo: SchemaDefTypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new SchemaDefTypeInfo();
+            this._typeInfo = SchemaDefTypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     categories?: List<CategoryDef>
     parameters?: List<ParameterDef>

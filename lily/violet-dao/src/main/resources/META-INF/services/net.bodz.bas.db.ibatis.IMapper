@@ -6,7 +6,6 @@ net.bodz.violet.schema.art.dao.ArtifactParameterMapper
 net.bodz.violet.schema.art.dao.ArtifactPhaseMapper
 net.bodz.violet.schema.art.dao.ArtifactTagMapper
 net.bodz.violet.schema.art.dao.ArtifactVoteMapper
-net.bodz.violet.schema.art.dao.UOMMapper
 net.bodz.violet.schema.asset.dao.AssetMapper
 net.bodz.violet.schema.asset.dao.GroupAssetMapper
 net.bodz.violet.schema.asset.dao.OrgAssetMapper

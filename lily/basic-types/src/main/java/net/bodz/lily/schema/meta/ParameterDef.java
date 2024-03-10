@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Table(schema = ParameterDef.SCHEMA_NAME, name = ParameterDef.TABLE_NAME)
 public class ParameterDef
-        extends _ParameterDef_stuff {
+        extends _ParameterDef_stuff<ParameterDef> {
 
     private static final long serialVersionUID = 1L;
 

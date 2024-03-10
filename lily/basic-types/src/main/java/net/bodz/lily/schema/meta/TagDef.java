@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Table(schema = TagDef.SCHEMA_NAME, name = TagDef.TABLE_NAME)
 public class TagDef
-        extends _TagDef_stuff {
+        extends _TagDef_stuff<TagDef> {
 
     private static final long serialVersionUID = 1L;
 

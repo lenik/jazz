@@ -22,9 +22,8 @@ public class TestPaperSamples
         a.setCourse(course);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
-        a.setId(475111829);
-        a.setTimeout(597639516);
-        a.setTotalscore(2015078958);
+        a.setTimeout(475111829);
+        a.setTotalscore(597639516);
         return a;
     }
 

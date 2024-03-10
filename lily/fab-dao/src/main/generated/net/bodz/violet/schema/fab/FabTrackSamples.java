@@ -1,6 +1,7 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.schema.account.Group;
@@ -29,6 +30,8 @@ public class FabTrackSamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         a.setProcess(process);
+        a.setSince(new Timestamp(Dates.ISO8601Z.parse("2024-01-03T14:02:47.333+0800").getTime()));
+        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2024-01-07T09:31:35.301+0800").getTime()));
         a.setPlannedQuantity(new BigDecimal("1122895"));
         a.setActualQuantity(new BigDecimal("26140200.60"));
         a.setValidQuantity(new BigDecimal("6356564309547732"));

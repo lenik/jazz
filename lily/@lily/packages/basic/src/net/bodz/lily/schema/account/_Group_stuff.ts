@@ -6,13 +6,13 @@ import type GroupType from "./GroupType";
 import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
 
 export class _Group_stuff extends CoPrincipal {
+
     static _typeInfo: _Group_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _Group_stuff_TypeInfo();
+            this._typeInfo = _Group_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     parent?: Group;
     parentId?: int;

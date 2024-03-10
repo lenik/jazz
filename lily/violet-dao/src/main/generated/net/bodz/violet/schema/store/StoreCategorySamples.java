@@ -22,6 +22,7 @@ public class StoreCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("Aeaee");
         return a;
     }
 

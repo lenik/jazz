@@ -3,10 +3,14 @@ import _ArticleFav_stuff_TypeInfo from "./_ArticleFav_stuff_TypeInfo";
 
 export class ArticleFavTypeInfo extends _ArticleFav_stuff_TypeInfo {
 
+    readonly validators = new ArticleFavValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleFav"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleFavValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ArticleFavTypeInfo extends _ArticleFav_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ArticleFavTypeInfo();
 
 }
 

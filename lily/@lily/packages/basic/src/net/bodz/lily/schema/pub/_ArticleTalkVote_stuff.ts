@@ -5,10 +5,11 @@ import type ArticleTalk from "./ArticleTalk";
 import _ArticleTalkVote_stuff_TypeInfo from "./_ArticleTalkVote_stuff_TypeInfo";
 
 export class _ArticleTalkVote_stuff extends VoteRecord {
+
     static _typeInfo: _ArticleTalkVote_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _ArticleTalkVote_stuff_TypeInfo();
+            this._typeInfo = _ArticleTalkVote_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

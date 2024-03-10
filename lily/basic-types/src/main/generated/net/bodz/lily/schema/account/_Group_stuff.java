@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -48,6 +50,8 @@ public abstract class _Group_stuff
      *
      * @constraint foreign key (parent) references lily.group (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public Group getParent() {
         return parent;
     }
@@ -84,6 +88,8 @@ public abstract class _Group_stuff
      *
      * @constraint foreign key (type) references lily.grouptype (id)
      */
+    @JoinColumn(name = "type")
+    @ManyToOne
     @NotNull
     public GroupType getType() {
         return type;
@@ -104,6 +110,8 @@ public abstract class _Group_stuff
     @Column(name = "type", nullable = false, precision = 10)
     public synchronized int getTypeId() {
         if (type != null) {
+            if (type.getId() == null)
+                return 0;
             return type.getId();
         }
         return typeId;

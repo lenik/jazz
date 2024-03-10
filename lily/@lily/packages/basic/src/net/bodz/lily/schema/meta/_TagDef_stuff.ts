@@ -1,18 +1,9 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import AbstractDefinition from "./AbstractDefinition";
 import type TagGroupDef from "./TagGroupDef";
-import _TagDef_stuff_TypeInfo from "./_TagDef_stuff_TypeInfo";
 
-export class _TagDef_stuff extends CoEntity<int> {
-    static _typeInfo: _TagDef_stuff_TypeInfo;
-    static get TYPE() {
-        if (this._typeInfo == null)
-            this._typeInfo = new _TagDef_stuff_TypeInfo();
-        return this._typeInfo;
-    }
-
-    id: int;
+export class _TagDef_stuff<this_t> extends AbstractDefinition<this_t> {
 
     tagGroup: TagGroupDef;
     tagGroupId: int;

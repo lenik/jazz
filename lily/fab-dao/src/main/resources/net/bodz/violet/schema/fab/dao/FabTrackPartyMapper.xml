@@ -7,15 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabTrackParty">
         <id property="id" column="id" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="role" column="role" />
         <result property="trackId" column="track" />
         <result property="personId" column="person" />
-        <association property="person" columnPrefix="person_"
+        <association property="person" columnPrefix="person_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="track" columnPrefix="track_"
+        <association property="track" columnPrefix="track_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabTrack" 
             resultMap="net.bodz.violet.schema.fab.dao.FabTrackMapper.objlist_map" />
     </resultMap>
@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -54,6 +55,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -63,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -74,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             track.acl track_acl, 
             track.label track_label, 
             track.description track_description, 
+            track.icon track_icon, 
             track.priority track_priority, 
             track.flags track_flags, 
             track."state" track_state, 
@@ -112,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -130,6 +137,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -139,6 +148,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -150,6 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             track.acl track_acl, 
             track.label track_label, 
             track.description track_description, 
+            track.icon track_icon, 
             track.priority track_priority, 
             track.flags track_flags, 
             track."state" track_state, 
@@ -206,7 +218,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "role"
         ) values(
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{trackId},
             #{personId},
@@ -218,7 +230,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update fabtrack_op
         <set>
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             track = #{trackId},
             person = #{personId},
@@ -237,7 +249,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabtrack_op
+        select count(*) "rows" from fabtrack_op a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -6,10 +6,14 @@ import _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
 
 export class PersonTypeInfo extends _Person_stuff_TypeInfo {
 
+    readonly validators = new PersonValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.contact.Person"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PersonValidators(this);
 
     override preamble() {
         super.preamble();
@@ -19,9 +23,7 @@ export class PersonTypeInfo extends _Person_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PersonTypeInfo();
 
 }
 

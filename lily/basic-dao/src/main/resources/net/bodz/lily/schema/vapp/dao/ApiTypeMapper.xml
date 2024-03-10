@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="code" column="code" />
         <result property="properties" column="props" />
@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{code},
             #{properties},
@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             code = #{code},
             props = #{properties},

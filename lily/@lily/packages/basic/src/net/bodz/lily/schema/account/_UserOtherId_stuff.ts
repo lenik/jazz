@@ -8,10 +8,11 @@ import type UserOtherIdType from "./UserOtherIdType";
 import _UserOtherId_stuff_TypeInfo from "./_UserOtherId_stuff_TypeInfo";
 
 export class _UserOtherId_stuff extends CoEntity<int> {
+
     static _typeInfo: _UserOtherId_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _UserOtherId_stuff_TypeInfo();
+            this._typeInfo = _UserOtherId_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
@@ -19,6 +20,7 @@ export class _UserOtherId_stuff extends CoEntity<int> {
     beginTime?: ZonedDateTime;
     endTime?: ZonedDateTime;
     year: int;
+    properties?: JsonVariant;
     otherId: string;
     auth?: JsonVariant;
 

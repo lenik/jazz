@@ -1,33 +1,34 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
 import _GroupType_stuff_Validators from "./_GroupType_stuff_Validators";
 
-export class _GroupType_stuff_TypeInfo extends CoEntityTypeInfo {
+export class _GroupType_stuff_TypeInfo extends CoImagedTypeInfo {
 
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "grouptype";
+
+    static readonly FIELD_NAME = "name";
+    static readonly FIELD_DUMMY = "dummy";
+
+    static readonly N_NAME = 20;
+    static readonly N_DUMMY = 10;
+
+    readonly validators = new _GroupType_stuff_Validators(this);
+
+    constructor() {
+        super(INT);
+    }
 
     get name() { return "net.bodz.lily.schema.account.GroupType"; }
     get icon() { return "fa-tag"; }
     get description() { return "Group Type"; }
 
-    static FIELD_ID = "id";
-    static FIELD_NAME = "name";
-    static FIELD_DUMMY = "dummy";
-
-    static N_ID = 10;
-    static N_NAME = 20;
-    static N_DUMMY = 10;
-
-    validators = new _GroupType_stuff_Validators(this);
-
     override preamble() {
         super.preamble();
         this.declare({
-            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
             name: property({ type: STRING, precision: 20, 
                 description: "Group type name (unique)", 
                 validator: this.validators.validateName }),
@@ -35,9 +36,7 @@ export class _GroupType_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _GroupType_stuff_TypeInfo();
 
 }
 

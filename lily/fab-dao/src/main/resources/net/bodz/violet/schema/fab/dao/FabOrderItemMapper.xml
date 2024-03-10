@@ -10,11 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
+        <result property="properties" column="props" />
         <result property="resale" column="resale" />
         <result property="altLabel" column="o_label" />
         <result property="altSpec" column="o_spec" />
@@ -25,10 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="notes" column="notes" />
         <result property="orderId" column="odr" />
         <result property="artifactId" column="art" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
-        <association property="order" columnPrefix="odr_"
+        <association property="order" columnPrefix="odr_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabOrder" 
             resultMap="net.bodz.violet.schema.fab.dao.FabOrderMapper.objlist_map" />
     </resultMap>
@@ -45,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t0, 
             a.t1, 
             a."year", 
+            a.props, 
             a.odr, 
             a.art, 
             a.resale, 
@@ -65,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -126,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.t0, 
             a.t1, 
             a."year", 
+            a.props, 
             a.odr, 
             a.art, 
             a.resale, 
@@ -146,6 +150,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -230,6 +235,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t0,
             t1,
             "year",
+            props,
             odr,
             art,
             resale,
@@ -245,11 +251,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
             #{year},
+            #{properties},
             #{orderId},
             #{artifactId},
             #{resale},
@@ -270,11 +277,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
             "year" = #{year},
+            props = #{properties},
             odr = #{orderId},
             art = #{artifactId},
             resale = #{resale},
@@ -299,7 +307,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabodrl
+        select count(*) "rows" from fabodrl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

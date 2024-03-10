@@ -2,6 +2,8 @@ package net.bodz.lily.schema.meta;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -82,6 +84,8 @@ public abstract class _PhaseDef_stuff
      *
      * @constraint foreign key (schema) references lily._schema (id)
      */
+    @JoinColumn(name = "schema")
+    @ManyToOne
     @NotNull
     public SchemaDef getSchema() {
         return schema;
@@ -98,6 +102,8 @@ public abstract class _PhaseDef_stuff
     @Column(name = "schema", nullable = false, precision = 10)
     public synchronized int getSchemaId() {
         if (schema != null) {
+            if (schema.getId() == null)
+                return 0;
             return schema.getId();
         }
         return schemaId;

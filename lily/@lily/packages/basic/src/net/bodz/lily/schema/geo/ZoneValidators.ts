@@ -1,4 +1,3 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
@@ -20,9 +19,6 @@ export class ZoneValidators extends _Zone_stuff_Validators {
     }
 
     validateGeo(val: GeoLocation) {
-    }
-
-    validateProperties(val: JsonVariant) {
     }
 
 }

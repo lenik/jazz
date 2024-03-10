@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Table(schema = TagGroupDef.SCHEMA_NAME, name = TagGroupDef.TABLE_NAME)
 public class TagGroupDef
-        extends _TagGroupDef_stuff {
+        extends _TagGroupDef_stuff<TagGroupDef> {
 
     private static final long serialVersionUID = 1L;
 

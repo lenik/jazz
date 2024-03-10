@@ -3,11 +3,15 @@ import _Policy_stuff_TypeInfo from "./_Policy_stuff_TypeInfo";
 
 export class PolicyTypeInfo extends _Policy_stuff_TypeInfo {
 
+    readonly validators = new PolicyValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.Policy"; }
     get icon() { return "fa-tag"; }
     get description() { return "Security Policy"; }
-
-    validators = new PolicyValidators(this);
 
     override preamble() {
         super.preamble();
@@ -15,9 +19,7 @@ export class PolicyTypeInfo extends _Policy_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PolicyTypeInfo();
 
 }
 

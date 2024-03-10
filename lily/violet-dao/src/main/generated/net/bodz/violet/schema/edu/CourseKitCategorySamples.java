@@ -22,6 +22,7 @@ public class CourseKitCategorySamples
         a.setOwnerUser(ownerUser);
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
+        a.setName("xba.");
         return a;
     }
 

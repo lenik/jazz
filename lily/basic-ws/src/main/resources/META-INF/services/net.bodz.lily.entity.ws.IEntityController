@@ -24,6 +24,7 @@ net.bodz.lily.schema.meta.ws.FormParameterIndex
 net.bodz.lily.schema.meta.ws.ParameterDefIndex
 net.bodz.lily.schema.meta.ws.ParameterValueIndex
 net.bodz.lily.schema.meta.ws.PhaseDefIndex
+net.bodz.lily.schema.meta.ws.PriorityDefIndex
 net.bodz.lily.schema.meta.ws.SchemaDefIndex
 net.bodz.lily.schema.meta.ws.TagDefIndex
 net.bodz.lily.schema.meta.ws.TagGroupDefIndex
@@ -56,7 +57,7 @@ net.bodz.lily.schema.vapp.ws.ApiTypeIndex
 net.bodz.lily.schema.vapp.ws.VApiCreditIndex
 net.bodz.lily.schema.vapp.ws.VApiIndex
 net.bodz.lily.schema.vapp.ws.VApiLogIndex
-net.bodz.lily.schema.vapp.ws.VAppCatIndex
+net.bodz.lily.schema.vapp.ws.VAppCategoryIndex
 net.bodz.lily.schema.vapp.ws.VAppIndex
 net.bodz.lily.schema.vapp.ws.VAppRequestApiIndex
 net.bodz.lily.schema.vapp.ws.VAppRequestIndex

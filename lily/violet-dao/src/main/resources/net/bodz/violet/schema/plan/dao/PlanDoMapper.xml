@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="rawText" column="text" />
         <result property="formArguments" column="formargs" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="voteCount" column="nvote" />
         <result property="changes" column="changes" />
@@ -28,22 +28,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="formId" column="form" />
         <result property="planId" column="plan" />
         <result property="parentId" column="parent" />
-        <association property="op" columnPrefix="op_"
+        <association property="op" columnPrefix="op_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="form" columnPrefix="form_"
+        <association property="form" columnPrefix="form_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.meta.FormDef" 
-            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
-        <association property="plan" columnPrefix="plan_"
+            resultMap="net.bodz.lily.schema.meta.dao.FormDefMapper.objlist_map" />
+        <association property="plan" columnPrefix="plan_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Plan" 
             resultMap="net.bodz.violet.schema.plan.dao.PlanMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="parent" columnPrefix="parent_"
+        <association property="parent" columnPrefix="parent_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.PlanDo" 
             resultMap="objlist_map" />
     </resultMap>
@@ -78,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -87,11 +88,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -104,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -143,6 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -152,6 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             parent.id parent_id, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
@@ -215,6 +221,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -224,11 +231,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -241,6 +250,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -280,6 +290,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -289,6 +300,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             parent.id parent_id, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
@@ -387,7 +399,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{formId},
             #{formArguments},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{voteCount},
             #{planId},
@@ -415,7 +427,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form = #{formId},
             formargs = #{formArguments},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             nvote = #{voteCount},
             plan = #{planId},
@@ -435,7 +447,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from plando
+        select count(*) "rows" from plando a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

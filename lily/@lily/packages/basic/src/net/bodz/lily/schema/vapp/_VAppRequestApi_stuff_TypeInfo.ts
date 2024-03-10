@@ -12,18 +12,22 @@ export class _VAppRequestApi_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vappreq_api";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_PARENT_ID = "parent";
+    static readonly FIELD_API_ID = "api";
+
+    static readonly N_ID = 19;
+    static readonly N_PARENT_ID = 10;
+    static readonly N_API_ID = 10;
+
+    readonly validators = new _VAppRequestApi_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.vapp.VAppRequestApi"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_PARENT_ID = "parent";
-    static FIELD_API_ID = "api";
-
-    static N_ID = 19;
-    static N_PARENT_ID = 10;
-    static N_API_ID = 10;
-
-    validators = new _VAppRequestApi_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -38,9 +42,7 @@ export class _VAppRequestApi_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _VAppRequestApi_stuff_TypeInfo();
 
 }
 

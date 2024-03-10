@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="courseId" column="course" />
         <result property="userId" column="user" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="course" columnPrefix="course_"
+        <association property="course" columnPrefix="course_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.Course" 
             resultMap="net.bodz.violet.schema.edu.dao.CourseMapper.objlist_map" />
     </resultMap>
@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -35,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             course.id course_id, 
             course.uid course_uid, 
             course.gid course_gid, 
@@ -42,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.acl course_acl, 
             course.label course_label, 
             course.description course_description, 
+            course.icon course_icon, 
             course.priority course_priority, 
             course.flags course_flags, 
             course."state" course_state, 
@@ -71,6 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -80,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             course.id course_id, 
             course.uid course_uid, 
             course.gid course_gid, 
@@ -87,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             course.acl course_acl, 
             course.label course_label, 
             course.description course_description, 
+            course.icon course_icon, 
             course.priority course_priority, 
             course.flags course_flags, 
             course."state" course_state, 
@@ -159,7 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from course_fav
+        select count(*) "rows" from course_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

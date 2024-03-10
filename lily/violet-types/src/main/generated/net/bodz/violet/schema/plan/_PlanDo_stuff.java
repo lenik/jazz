@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.plan;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -91,9 +93,10 @@ public abstract class _PlanDo_stuff
 
     /**
      *
-     * @label plan
      * @constraint foreign key (plan) references violet.plan (id)
      */
+    @JoinColumn(name = "plan")
+    @ManyToOne
     @NotNull
     public Plan getPlan() {
         return plan;
@@ -123,9 +126,10 @@ public abstract class _PlanDo_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.plando (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public PlanDo getParent() {
         return parent;
     }

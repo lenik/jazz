@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.issue;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -32,9 +34,10 @@ public abstract class _IssueFav_stuff
 
     /**
      *
-     * @label issue
      * @constraint foreign key (issue) references violet.issue (id)
      */
+    @JoinColumn(name = "issue")
+    @ManyToOne
     @NotNull
     public Issue getIssue() {
         return issue;

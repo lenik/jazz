@@ -22,6 +22,7 @@ public class RegionCategorySamples
         a.setParent(parent);
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("e; u;");
         return a;
     }
 

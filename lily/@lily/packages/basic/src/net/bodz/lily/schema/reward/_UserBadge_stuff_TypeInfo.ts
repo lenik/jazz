@@ -12,18 +12,22 @@ export class _UserBadge_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "user_badge";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_USER_ID = "user";
+    static readonly FIELD_BADGE_ID = "badge";
+
+    static readonly N_ID = 10;
+    static readonly N_USER_ID = 10;
+    static readonly N_BADGE_ID = 10;
+
+    readonly validators = new _UserBadge_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.reward.UserBadge"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_USER_ID = "user";
-    static FIELD_BADGE_ID = "badge";
-
-    static N_ID = 10;
-    static N_USER_ID = 10;
-    static N_BADGE_ID = 10;
-
-    validators = new _UserBadge_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -40,9 +44,7 @@ export class _UserBadge_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _UserBadge_stuff_TypeInfo();
 
 }
 

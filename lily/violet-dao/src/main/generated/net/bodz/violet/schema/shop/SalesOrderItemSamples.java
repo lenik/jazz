@@ -1,9 +1,7 @@
 package net.bodz.violet.schema.shop;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
-import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.Artifact;
@@ -25,14 +23,10 @@ public class SalesOrderItemSamples
         a.setOrder(order);
         a.setShopItem(shopItem);
         a.setArtifact(artifact);
-        a.setId(9028915288260000461L);
-        a.setBeginTime(ZonedDateTime.parse("2023-12-28 17:18:49", DateTimes.D10T8));
-        a.setEndTime(ZonedDateTime.parse("2024-01-17 06:27:11", DateTimes.D10T8));
-        a.setYear(467276462);
-        a.setQuantity(new BigDecimal("69968999917107"));
-        a.setPrice(new BigDecimal("1344269"));
-        a.setAmount(new BigDecimal("2503"));
-        a.setN1(new BigDecimal("1.08"));
+        a.setQuantity(new BigDecimal("641961"));
+        a.setPrice(new BigDecimal("99689999171071"));
+        a.setAmount(new BigDecimal("3442"));
+        a.setN1(new BigDecimal("7025030013"));
         return a;
     }
 

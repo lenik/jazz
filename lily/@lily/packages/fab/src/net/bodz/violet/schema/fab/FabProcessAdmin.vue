@@ -1,0 +1,104 @@
+<script lang="ts">
+import { onMounted, ref } from "vue";
+
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
+import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { TIMESTAMP } from "@skeljs/core/src/lang/time";
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
+import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
+import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+
+import ArtifactModel from "../art/ArtifactModel";
+import FabProcess from "./FabProcess";
+import FabStdProcess from "./FabStdProcess";
+import FabTask from "./FabTask";
+
+export const title = "Admin view of: Fab process";
+export interface Props {
+}
+
+</script>
+
+<script setup lang="ts">
+import LilyAdmin from "@skeljs/dba/src/ui/lily/LilyAdmin.vue";
+
+import FabProcessEditor from "./FabProcessEditor.vue";
+
+const props = withDefaults(defineProps<Props>(), {
+});
+
+const admin = ref<InstanceType<typeof LilyAdmin>>();
+const type = FabProcess.TYPE;
+const selection = ref<any>({});
+
+const typeMap = {
+    "LONG": LONG,
+    "User": User.TYPE,
+    "Group": Group.TYPE,
+    "INT": INT,
+    "STRING": STRING,
+    "DefaultState": DefaultState.TYPE,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "FabTask": FabTask.TYPE,
+    "FabProcess": FabProcess.TYPE,
+    "ArtifactModel": ArtifactModel.TYPE,
+    "FabStdProcess": FabStdProcess.TYPE,
+    "BIG_DECIMAL": BIG_DECIMAL,
+    "JSON_VARIANT": JSON_VARIANT,
+    "TIMESTAMP": TIMESTAMP,
+};
+
+onMounted(() => {
+});
+
+
+</script>
+
+<template>
+    <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
+        <template #columns>
+            <th data-type="LONG" data-field="id">Id</th>
+            <th data-type="User" data-format="label" data-field="ownerUser">Owner User</th>
+            <th data-type="Group" data-format="label" data-field="ownerGroup">Owner Group</th>
+            <th data-type="INT" data-field="accessMode">Access Mode</th>
+            <th data-type="INT" data-field="acl">Acl</th>
+            <th data-type="STRING" data-field="label">Label</th>
+            <th data-type="STRING" data-field="description">Description</th>
+            <th data-type="STRING" data-field="icon">Icon</th>
+            <th data-type="INT" data-field="priority">Priority</th>
+            <th data-type="INT" data-field="flags">Flags</th>
+            <th data-type="DefaultState" data-field="state">State</th>
+            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="INT" data-field="version">Version</th>
+            <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
+            <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+            <th data-type="INT" data-field="year">Year</th>
+            <th data-type="FabTask" data-format="label" data-field="task">Task</th>
+            <th data-type="FabProcess" data-format="label" data-field="parent">Parent</th>
+            <th data-type="ArtifactModel" data-format="label" data-field="output">Output</th>
+            <th data-type="FabStdProcess" data-format="label" data-field="standard">Standard</th>
+            <th data-type="BIG_DECIMAL" data-field="quantity">Quantity</th>
+            <th data-type="JSON_VARIANT" data-field="batch">Batch</th>
+            <th data-type="TIMESTAMP" data-field="since">Since</th>
+            <th data-type="TIMESTAMP" data-field="deadline">Deadline</th>
+            <th data-type="INT" data-field="trackCount">Track Count</th>
+        </template>
+        <template #preview>
+            <FabProcessEditor class="editor" v-model="selection" />
+        </template>
+        <template #side-tools> Side Tools</template>
+        <template #editor>
+            <FabProcessEditor class="editor" v-model="selection" />
+        </template>
+    </LilyAdmin>
+</template>
+
+<style lang="scss"></style>
+
+<style scoped lang="scss">
+.lily-admin {
+    padding: 0;
+}
+</style>

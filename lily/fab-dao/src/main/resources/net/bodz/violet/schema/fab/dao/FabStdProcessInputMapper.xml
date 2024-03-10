@@ -7,19 +7,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabStdProcessInput">
         <id property="id" column="id" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="quantity" column="qty" />
         <result property="processId" column="proc" />
         <result property="modelId" column="model" />
         <result property="artifactId" column="art" />
-        <association property="process" columnPrefix="proc_"
+        <association property="process" columnPrefix="proc_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabStdProcess" 
             resultMap="net.bodz.violet.schema.fab.dao.FabStdProcessMapper.objlist_map" />
-        <association property="model" columnPrefix="model_"
+        <association property="model" columnPrefix="model_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.ArtifactModel" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactModelMapper.objlist_map" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
     </resultMap>
@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proc.acl proc_acl, 
             proc.label proc_label, 
             proc.description proc_description, 
+            proc.icon proc_icon, 
             proc.priority proc_priority, 
             proc.flags proc_flags, 
             proc."state" proc_state, 
@@ -63,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.acl model_acl, 
             model.label model_label, 
             model.description model_description, 
+            model.icon model_icon, 
             model.priority model_priority, 
             model.flags model_flags, 
             model."state" model_state, 
@@ -89,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -127,6 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proc.acl proc_acl, 
             proc.label proc_label, 
             proc.description proc_description, 
+            proc.icon proc_icon, 
             proc.priority proc_priority, 
             proc.flags proc_flags, 
             proc."state" proc_state, 
@@ -149,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.acl model_acl, 
             model.label model_label, 
             model.description model_description, 
+            model.icon model_icon, 
             model.priority model_priority, 
             model.flags model_flags, 
             model."state" model_state, 
@@ -175,6 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -231,7 +237,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             qty
         ) values(
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{processId},
             #{modelId},
@@ -244,7 +250,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update fabstdproc_in
         <set>
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             proc = #{processId},
             model = #{modelId},
@@ -264,7 +270,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabstdproc_in
+        select count(*) "rows" from fabstdproc_in a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

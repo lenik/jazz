@@ -2,6 +2,8 @@ package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -91,9 +93,10 @@ public abstract class _FabTrackParty_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
+    @JoinColumn(name = "person")
+    @ManyToOne
     @NotNull
     public Person getPerson() {
         return person;
@@ -123,9 +126,10 @@ public abstract class _FabTrackParty_stuff
 
     /**
      *
-     * @label track
      * @constraint foreign key (track) references violet.fabtrack (id)
      */
+    @JoinColumn(name = "track")
+    @ManyToOne
     @NotNull
     public FabTrack getTrack() {
         return track;
@@ -142,6 +146,8 @@ public abstract class _FabTrackParty_stuff
     @Column(name = "track", nullable = false, precision = 19)
     public synchronized long getTrackId() {
         if (track != null) {
+            if (track.getId() == null)
+                return 0L;
             return track.getId();
         }
         return trackId;

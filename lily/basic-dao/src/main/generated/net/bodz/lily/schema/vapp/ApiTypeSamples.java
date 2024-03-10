@@ -10,7 +10,6 @@ public class ApiTypeSamples
     public ApiType build()
             throws Exception {
         ApiType a = new ApiType();
-        a.setId(2089144047);
         a.setCode("Quyaf.");
         a.setUom("Gyavu. wnh afae zaikoov mii?");
         return a;

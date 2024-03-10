@@ -10,9 +10,8 @@ public class GroupTypeSamples
     public GroupType build()
             throws Exception {
         GroupType a = new GroupType();
-        a.setId(1588076486);
         a.setName("Onmc. kagt e aptfb.");
-        a.setDummy(1800975705);
+        a.setDummy(1588076486);
         return a;
     }
 

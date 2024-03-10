@@ -8,21 +8,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="value" column="value" />
         <result property="diaryId" column="diary" />
         <result property="userId" column="user" />
         <result property="personId" column="person" />
         <result property="orgId" column="org" />
-        <association property="person" columnPrefix="person_"
+        <association property="person" columnPrefix="person_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="org" columnPrefix="org_"
+        <association property="org" columnPrefix="org_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Organization" 
             resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="diary" columnPrefix="diary_"
+        <association property="diary" columnPrefix="diary_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Diary" 
             resultMap="net.bodz.violet.schema.plan.dao.DiaryMapper.objlist_map" />
     </resultMap>
@@ -32,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.diary, 
             a."user", 
             a.person, 
@@ -44,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -62,6 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -71,6 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -82,6 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -114,6 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -123,6 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             diary.id diary_id, 
             diary.uid diary_uid, 
             diary.gid diary_gid, 
@@ -159,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.diary, 
             a."user", 
             a.person, 
@@ -171,6 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -189,6 +201,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -198,6 +212,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -209,6 +225,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -241,6 +258,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -250,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             diary.id diary_id, 
             diary.uid diary_uid, 
             diary.gid diary_gid, 
@@ -309,6 +328,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into diary_party(
             label,
             description,
+            icon,
             diary,
             "user",
             person,
@@ -317,6 +337,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) values(
             #{label},
             #{description},
+            #{icon},
             #{diaryId},
             #{userId},
             #{personId},
@@ -330,6 +351,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <set>
             label = #{label},
             description = #{description},
+            icon = #{icon},
             diary = #{diaryId},
             "user" = #{userId},
             person = #{personId},
@@ -349,7 +371,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from diary_party
+        select count(*) "rows" from diary_party a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

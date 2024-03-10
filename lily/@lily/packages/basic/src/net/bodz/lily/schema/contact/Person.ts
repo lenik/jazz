@@ -4,13 +4,13 @@ import PersonTypeInfo from "./PersonTypeInfo";
 import _Person_stuff from "./_Person_stuff";
 
 export class Person extends _Person_stuff {
+
     static _typeInfo: PersonTypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new PersonTypeInfo();
+            this._typeInfo = PersonTypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     hello?: string
     peers?: List<string>

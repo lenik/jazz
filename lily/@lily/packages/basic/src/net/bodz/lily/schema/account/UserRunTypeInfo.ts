@@ -7,11 +7,15 @@ import _UserRun_stuff_TypeInfo from "./_UserRun_stuff_TypeInfo";
 
 export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
 
+    readonly validators = new UserRunValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.UserRun"; }
     get icon() { return "fa-tag"; }
     get description() { return "User Activity Log"; }
-
-    validators = new UserRunValidators(this);
 
     override preamble() {
         super.preamble();
@@ -21,9 +25,7 @@ export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new UserRunTypeInfo();
 
 }
 

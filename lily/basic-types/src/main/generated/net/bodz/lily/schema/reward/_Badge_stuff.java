@@ -1,54 +1,43 @@
 package net.bodz.lily.schema.reward;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _Badge_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "badge";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_EXPR = "expr";
     public static final String FIELD_VAL = "val";
     public static final String FIELD_LEVELS = "levels";
     public static final String FIELD_DESCEND = "descend";
     public static final String FIELD_TRANSIENT = "transient";
     public static final String FIELD_INDEXED = "indexed";
-    public static final String FIELD_IMAGE = "image";
 
-    public static final int N_ID = 10;
     public static final int N_EXPR = 255;
     public static final int N_VAL = 10;
     public static final int N_LEVELS = 10;
     public static final int N_DESCEND = 1;
     public static final int N_TRANSIENT = 1;
     public static final int N_INDEXED = 1;
-    public static final int N_IMAGE = 30;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_EXPR = _ord_ID + 10;
+    private static final int _ord_EXPR = 12;
     private static final int _ord_VAL = _ord_EXPR + 1;
     private static final int _ord_LEVELS = _ord_VAL + 1;
     private static final int _ord_DESCEND = _ord_LEVELS + 1;
     private static final int _ord_TRANSIENT = _ord_DESCEND + 1;
     private static final int _ord_INDEXED = _ord_TRANSIENT + 1;
-    private static final int _ord_IMAGE = _ord_INDEXED + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     String expr;
 
@@ -65,30 +54,6 @@ public abstract class _Badge_stuff
 
     @NotNull
     boolean indexed;
-
-    String image;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_EXPR)
     @Precision(value = N_EXPR)
@@ -155,18 +120,6 @@ public abstract class _Badge_stuff
 
     public void setIndexed(boolean value) {
         this.indexed = value;
-    }
-
-    @Ordinal(_ord_IMAGE)
-    @Precision(value = N_IMAGE)
-    @TextInput(maxLength = N_IMAGE)
-    @Column(name = "image", length = N_IMAGE)
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String value) {
-        this.image = value;
     }
 
     public void initNotNulls() {

@@ -3,10 +3,14 @@ import _PersonTagType_stuff_TypeInfo from "./_PersonTagType_stuff_TypeInfo";
 
 export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
 
+    readonly validators = new PersonTagTypeValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.contact.PersonTagType"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PersonTagTypeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,10 +18,7 @@ export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-        this.selfType = this;
-    }
+    static readonly INSTANCE = new PersonTagTypeTypeInfo();
 
 }
 

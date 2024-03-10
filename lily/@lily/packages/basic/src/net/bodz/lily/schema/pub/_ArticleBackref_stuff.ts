@@ -6,10 +6,11 @@ import type Article from "./Article";
 import _ArticleBackref_stuff_TypeInfo from "./_ArticleBackref_stuff_TypeInfo";
 
 export class _ArticleBackref_stuff extends BackrefRecord {
+
     static _typeInfo: _ArticleBackref_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _ArticleBackref_stuff_TypeInfo();
+            this._typeInfo = _ArticleBackref_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

@@ -1,9 +1,7 @@
 package net.bodz.violet.schema.edu;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
-import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
@@ -30,11 +28,7 @@ public class TestApplySamples
         a.setOwnerGroup(ownerGroup);
         a.setPaper(paper);
         a.setOwnerUser(ownerUser);
-        a.setId(4876527568694728934L);
-        a.setBeginTime(ZonedDateTime.parse("2023-12-12 13:07:26", DateTimes.D10T8));
-        a.setEndTime(ZonedDateTime.parse("2023-12-25 03:26:43", DateTimes.D10T8));
-        a.setYear(1243013733);
-        a.setScore(new BigDecimal("71"));
+        a.setScore(new BigDecimal("8578803"));
         return a;
     }
 

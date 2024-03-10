@@ -6,10 +6,11 @@ import type ArticleTagType from "./ArticleTagType";
 import _ArticleTag_stuff_TypeInfo from "./_ArticleTag_stuff_TypeInfo";
 
 export class _ArticleTag_stuff extends CoEntity<int> {
+
     static _typeInfo: _ArticleTag_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _ArticleTag_stuff_TypeInfo();
+            this._typeInfo = _ArticleTag_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

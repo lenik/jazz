@@ -10,11 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
@@ -24,16 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ownerGroupId" column="gid" />
         <result property="paperId" column="paper" />
         <result property="personId" column="person" />
-        <association property="person" columnPrefix="person_"
+        <association property="person" columnPrefix="person_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="paper" columnPrefix="paper_"
+        <association property="paper" columnPrefix="paper_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.TestPaper" 
             resultMap="net.bodz.violet.schema.edu.dao.TestPaperMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>
@@ -47,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -66,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -84,6 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -93,6 +98,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -102,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -117,12 +125,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             paper.acl paper_acl, 
             paper.label paper_label, 
             paper.description paper_description, 
+            paper.icon paper_icon, 
             paper.priority paper_priority, 
             paper.flags paper_flags, 
             paper."state" paper_state, 
             paper.creation paper_creation, 
             paper.lastmod paper_lastmod, 
             paper."version" paper_version, 
+            paper.props paper_props, 
             paper.course paper_course, 
             paper.timeout paper_timeout, 
             paper.totalscore paper_totalscore, 
@@ -131,6 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -139,7 +150,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
-            ownerUser.referer ownerUser_referer
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person
         from testapply a
             left join lily.person person on a.person = person.id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
@@ -157,6 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -176,6 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -194,6 +208,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -203,6 +219,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -212,6 +230,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -227,12 +246,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             paper.acl paper_acl, 
             paper.label paper_label, 
             paper.description paper_description, 
+            paper.icon paper_icon, 
             paper.priority paper_priority, 
             paper.flags paper_flags, 
             paper."state" paper_state, 
             paper.creation paper_creation, 
             paper.lastmod paper_lastmod, 
             paper."version" paper_version, 
+            paper.props paper_props, 
             paper.course paper_course, 
             paper.timeout paper_timeout, 
             paper.totalscore paper_totalscore, 
@@ -241,6 +262,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -249,7 +271,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."version" ownerUser_version, 
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
-            ownerUser.referer ownerUser_referer
+            ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person
         from testapply a
             left join lily.person person on a.person = person.id
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
@@ -290,6 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -309,11 +333,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
@@ -333,11 +358,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
@@ -359,7 +385,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from testapply
+        select count(*) "rows" from testapply a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

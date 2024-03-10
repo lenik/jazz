@@ -1,65 +1,155 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper 
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.bodz.lily.schema.meta.dao.PriorityDefMapper">
 
-    <resultMap id="objlist_map" type="net.bodz.lily.schema.meta.PriorityDef" extends="co.MAP_ALL">
-        <association property="schema" javaType="net.bodz.lily.schema.meta.SchemaDef">
-            <id property="id" column="schema" />
-            <id property="label" column="schema_label" />
-        </association>
+    <resultMap id="objlist_map" type="net.bodz.lily.schema.meta.PriorityDef">
+        <id property="id" column="id" />
+        <result property="code" column="code" />
+        <result property="label" column="label" />
+        <result property="description" column="description" />
+        <result property="icon" column="icon" />
+        <result property="priority" column="priority" />
+        <result property="flags" column="flags" />
+        <result property="state" column="state" />
+        <result property="creationDate" column="creation" />
+        <result property="lastModified" column="lastmod" />
+        <result property="version" column="version" />
+        <result property="schemaId" column="schema" />
+        <association property="schema" columnPrefix="schema_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.meta.SchemaDef" 
+            resultMap="net.bodz.lily.schema.meta.dao.SchemaDefMapper.objlist_map" />
     </resultMap>
 
     <sql id="objlist_sql"><![CDATA[
-        select a.*, s.label schema_label
+        select
+            a.id, 
+            a.code, 
+            a.label, 
+            a.description, 
+            a.icon, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a."schema", 
+            "schema".id schema_id, 
+            "schema".code schema_code, 
+            "schema".label schema_label, 
+            "schema".description schema_description, 
+            "schema".icon schema_icon, 
+            "schema".priority schema_priority, 
+            "schema".flags schema_flags, 
+            "schema"."state" schema_state, 
+            "schema".creation schema_creation, 
+            "schema".lastmod schema_lastmod, 
+            "schema"."version" schema_version, 
+            "schema".dummy schema_dummy
         from _priority a
-            left join _schema s on a.schema=s.id
+            left join _schema "schema" on a."schema" = "schema".id
         ]]>
     </sql>
 
     <sql id="objedit_sql"><![CDATA[
-        select a.*, s.label schema_label
+        select
+            a.id, 
+            a.code, 
+            a.label, 
+            a.description, 
+            a.icon, 
+            a.priority, 
+            a.flags, 
+            a."state", 
+            a.creation, 
+            a.lastmod, 
+            a."version", 
+            a."schema", 
+            "schema".id schema_id, 
+            "schema".code schema_code, 
+            "schema".label schema_label, 
+            "schema".description schema_description, 
+            "schema".icon schema_icon, 
+            "schema".priority schema_priority, 
+            "schema".flags schema_flags, 
+            "schema"."state" schema_state, 
+            "schema".creation schema_creation, 
+            "schema".lastmod schema_lastmod, 
+            "schema"."version" schema_version, 
+            "schema".dummy schema_dummy
         from _priority a
-            left join _schema s on a.schema=s.id
+            left join _schema "schema" on a."schema" = "schema".id
         ]]>
+    </sql>
+
+    <sql id="filtconds">
+        ${c.sqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
         <include refid="objlist_sql" />
+        <include refid="co.opts" />
     </select>
 
     <select id="filter" resultMap="objlist_map">
         <include refid="objlist_sql" />
         <where>
-            <if test="m.schemaId != null">and a.schema=#{m.schemaId}</if>
+            <include refid="filtconds" />
         </where>
+        <include refid="co.opts" />
     </select>
 
-    <select id="select" parameterType="int" resultMap="objlist_map">
+    <select id="select" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
-            <if test="_parameter != null">a.id=#{id}</if>
+            <if test="_parameter != null">a.id = #{id}</if>
         </where>
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
         insert into _priority(
-            label, description,
-            priority, flags, state,
-            schema
+            code,
+            label,
+            description,
+            icon,
+            priority,
+            flags,
+            "state",
+            creation,
+            lastmod,
+            "version",
+            "schema"
         ) values(
-            #{label},#{description},
-            #{priority}, #{flags}, #{state},
-            #{schema.id}
+            #{code},
+            #{label},
+            #{description},
+            #{icon},
+            #{priority},
+            #{flags},
+            #{state},
+            #{creationDate},
+            #{lastModified},
+            #{version},
+            #{schemaId}
         );
     ]]></insert>
 
     <update id="update">
         update _priority
         <set>
-            <include refid="co.setUS" />
-            schema = #{schema.id},
+            code = #{code},
+            label = #{label},
+            description = #{description},
+            icon = #{icon},
+            priority = #{priority},
+            flags = #{flags},
+            "state" = #{state},
+            creation = #{creationDate},
+            lastmod = #{lastModified},
+            "version" = #{version},
+            "schema" = #{schemaId},
         </set>
         <where>
             id = #{id}
@@ -67,11 +157,19 @@
     </update>
 
     <delete id="delete">
-        delete from _priority where id=#{id}
+        delete from _priority
+        <where>
+            id = #{id}
+        </where>
     </delete>
 
-    <select id="count" resultType="hashmap">
-        select count(*) "rows" from _priority
+    <select id="count" resultType="long">
+        select count(*) "rows" from _priority a
+        <where>
+            <if test="_parameter != null">
+                <include refid="filtconds" />
+            </if>
+        </where>
     </select>
-    
+
 </mapper>

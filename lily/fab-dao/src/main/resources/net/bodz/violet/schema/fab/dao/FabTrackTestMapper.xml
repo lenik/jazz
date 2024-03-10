@@ -7,15 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabTrackTest">
         <id property="id" column="id" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="valid" column="valid" />
         <result property="trackId" column="track" />
         <result property="standardId" column="std" />
-        <association property="track" columnPrefix="track_"
+        <association property="track" columnPrefix="track_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabTrack" 
             resultMap="net.bodz.violet.schema.fab.dao.FabTrackMapper.objlist_map" />
-        <association property="standard" columnPrefix="std_"
+        <association property="standard" columnPrefix="std_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabStdTest" 
             resultMap="net.bodz.violet.schema.fab.dao.FabStdTestMapper.objlist_map" />
     </resultMap>
@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             track.acl track_acl, 
             track.label track_label, 
             track.description track_description, 
+            track.icon track_icon, 
             track.priority track_priority, 
             track.flags track_flags, 
             track."state" track_state, 
@@ -60,14 +61,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.acl std_acl, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.priority std_priority, 
             std.flags std_flags, 
             std."state" std_state, 
             std.creation std_creation, 
             std.lastmod std_lastmod, 
             std."version" std_version, 
-            std.image std_image, 
-            std.imagealt std_imagealt, 
             std.props std_props, 
             std.cat std_cat, 
             std.parent std_parent, 
@@ -95,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             track.acl track_acl, 
             track.label track_label, 
             track.description track_description, 
+            track.icon track_icon, 
             track.priority track_priority, 
             track.flags track_flags, 
             track."state" track_state, 
@@ -119,14 +120,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.acl std_acl, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.priority std_priority, 
             std.flags std_flags, 
             std."state" std_state, 
             std.creation std_creation, 
             std.lastmod std_lastmod, 
             std."version" std_version, 
-            std.image std_image, 
-            std.imagealt std_imagealt, 
             std.props std_props, 
             std.cat std_cat, 
             std.parent std_parent, 
@@ -172,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "valid"
         ) values(
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{trackId},
             #{standardId},
@@ -184,7 +184,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update fabtrack_test
         <set>
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             track = #{trackId},
             std = #{standardId},
@@ -203,7 +203,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabtrack_test
+        select count(*) "rows" from fabtrack_test a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

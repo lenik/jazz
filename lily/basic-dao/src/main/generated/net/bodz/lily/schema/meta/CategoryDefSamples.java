@@ -17,10 +17,7 @@ public class CategoryDefSamples
         CategoryDef a = new CategoryDef();
         a.setSchema(schema);
         a.setParent(parent);
-        a.setId(347155994);
         a.setCode("hi kai_i aup; au j? sszcm");
-        a.setDepth(71728980);
-        a.setRefCount(37777407);
         return a;
     }
 

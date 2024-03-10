@@ -6,10 +6,11 @@ import type PostParameterType from "./PostParameterType";
 import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
 export class _PostParameter_stuff extends CoEntity<int> {
+
     static _typeInfo: _PostParameter_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostParameter_stuff_TypeInfo();
+            this._typeInfo = _PostParameter_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

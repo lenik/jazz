@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.shop;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -32,9 +34,10 @@ public abstract class _ShopItemFav_stuff
 
     /**
      *
-     * @label shopitem
      * @constraint foreign key (shopitem) references violet.shopitem (id)
      */
+    @JoinColumn(name = "shopitem")
+    @ManyToOne
     @NotNull
     public ShopItem getShopItem() {
         return shopItem;

@@ -22,6 +22,7 @@ public class CourseCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("kioaf ii.");
         return a;
     }
 

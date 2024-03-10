@@ -1,8 +1,9 @@
 package net.bodz.lily.schema.contact;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -18,7 +19,6 @@ public abstract class _Person_stuff
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "person";
 
-    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_FATHER_ID = "father";
     public static final String FIELD_MOTHER_ID = "mother";
     public static final String FIELD_ROLE_COUNT = "nrole";
@@ -32,7 +32,6 @@ public abstract class _Person_stuff
     public static final String FIELD_SSN = "ssn";
     public static final String FIELD_DLN = "dln";
 
-    public static final int N_PROPERTIES = 2147483647;
     public static final int N_FATHER_ID = 10;
     public static final int N_MOTHER_ID = 10;
     public static final int N_ROLE_COUNT = 10;
@@ -46,8 +45,7 @@ public abstract class _Person_stuff
     public static final int N_SSN = 20;
     public static final int N_DLN = 20;
 
-    private static final int _ord_PROPERTIES = 24;
-    private static final int _ord_FATHER_ID = _ord_PROPERTIES + 3;
+    private static final int _ord_FATHER_ID = 27;
     private static final int _ord_MOTHER_ID = _ord_FATHER_ID + 1;
     private static final int _ord_ROLE_COUNT = _ord_MOTHER_ID + 3;
     private static final int _ord_EMPLOYEE = _ord_ROLE_COUNT + 3;
@@ -59,8 +57,6 @@ public abstract class _Person_stuff
     private static final int _ord_PASSPORT = _ord_HOMELAND + 1;
     private static final int _ord_SSN = _ord_PASSPORT + 1;
     private static final int _ord_DLN = _ord_SSN + 1;
-
-    JsonVariant properties;
 
     @NotNull
     int roleCount;
@@ -94,17 +90,6 @@ public abstract class _Person_stuff
     Person father;
 
     Integer fatherId;
-
-    @Ordinal(_ord_PROPERTIES)
-    @Precision(value = 2147483647)
-    @Column(name = "props", precision = 2147483647)
-    public JsonVariant getProperties() {
-        return properties;
-    }
-
-    public void setProperties(JsonVariant value) {
-        this.properties = value;
-    }
 
     @Ordinal(_ord_ROLE_COUNT)
     @Precision(value = 10)
@@ -226,6 +211,8 @@ public abstract class _Person_stuff
      *
      * @constraint foreign key (mother) references lily.person (id)
      */
+    @JoinColumn(name = "mother")
+    @ManyToOne
     public Person getMother() {
         return mother;
     }
@@ -254,6 +241,8 @@ public abstract class _Person_stuff
      *
      * @constraint foreign key (father) references lily.person (id)
      */
+    @JoinColumn(name = "father")
+    @ManyToOne
     public Person getFather() {
         return father;
     }

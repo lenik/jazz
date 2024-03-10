@@ -4,7 +4,7 @@ import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
 import net.bodz.lily.schema.account.dao.UserMapper;
-import net.bodz.lily.schema.vapp.dao.VAppCatMapper;
+import net.bodz.lily.schema.vapp.dao.VAppCategoryMapper;
 import net.bodz.lily.schema.vapp.dao.VAppRequestMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
@@ -12,7 +12,7 @@ import net.bodz.lily.util.IRandomPicker;
 public class VAppSamples
         extends TestSampleBuilder {
 
-    public VAppCat category;
+    public VAppCategory category;
     public Group ownerGroup;
     public User ownerUser;
     public VAppRequest req;
@@ -33,7 +33,7 @@ public class VAppSamples
 
     @Override
     public VAppSamples wireAny(IRandomPicker picker) {
-        this.category = picker.pickAny(VAppCatMapper.class, "vappcat");
+        this.category = picker.pickAny(VAppCategoryMapper.class, "vappcat");
         this.ownerGroup = picker.pickAny(GroupMapper.class, "group");
         this.ownerUser = picker.pickAny(UserMapper.class, "user");
         this.req = picker.pickAny(VAppRequestMapper.class, "vappreq");

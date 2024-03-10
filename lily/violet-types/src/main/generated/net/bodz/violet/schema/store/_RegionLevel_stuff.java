@@ -23,7 +23,7 @@ public abstract class _RegionLevel_stuff<this_t extends _RegionLevel_stuff<this_
 
     public static final int N_DUMMY = 10;
 
-    private static final int _ord_DUMMY = 11;
+    private static final int _ord_DUMMY = 12;
 
     Integer dummy;
 

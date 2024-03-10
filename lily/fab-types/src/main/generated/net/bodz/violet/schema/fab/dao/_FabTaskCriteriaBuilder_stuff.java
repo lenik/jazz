@@ -1,9 +1,11 @@
 package net.bodz.violet.schema.fab.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import java.sql.Timestamp;
+
+import net.bodz.lily.concrete.CoEventCriteriaBuilder;
 
 public class _FabTaskCriteriaBuilder_stuff<self_t extends _FabTaskCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoEventCriteriaBuilder<self_t> {
 
     public final LongField id = _long("id");
 
@@ -11,9 +13,11 @@ public class _FabTaskCriteriaBuilder_stuff<self_t extends _FabTaskCriteriaBuilde
 
     public final IntegerField accessMode = integer("mode");
 
-    public final IntegerField year = integer("\"year\"");
-
     public final LongField orderId = _long("odr");
+
+    public final DateField<Timestamp> since = date("since", Timestamp.class);
+
+    public final DateField<Timestamp> deadline = date("deadline", Timestamp.class);
 
     public final IntegerField processCount = integer("nproc");
 

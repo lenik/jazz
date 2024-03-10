@@ -1,10 +1,10 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import CoImagedValidators from "../../concrete/CoImagedValidators";
 import type _Policy_stuff_TypeInfo from "./_Policy_stuff_TypeInfo";
 
-export class _Policy_stuff_Validators extends CoEntityValidators {
+export class _Policy_stuff_Validators extends CoImagedValidators {
 
     constructor(type: _Policy_stuff_TypeInfo) {
         super(type);
@@ -12,9 +12,6 @@ export class _Policy_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _Policy_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateName(val: string) {

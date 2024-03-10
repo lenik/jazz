@@ -5,6 +5,8 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -293,9 +295,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
+    @JoinColumn(name = "person")
+    @ManyToOne
     public Person getPerson() {
         return person;
     }
@@ -322,9 +325,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label plan
      * @constraint foreign key (plan) references violet.plan (id)
      */
+    @JoinColumn(name = "plan")
+    @ManyToOne
     public Plan getPlan() {
         return plan;
     }
@@ -351,9 +355,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label phase
      * @constraint foreign key (phase) references violet.storephase (id)
      */
+    @JoinColumn(name = "phase")
+    @ManyToOne
     @NotNull
     public StorePhase getPhase() {
         return phase;
@@ -383,9 +388,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.storecat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     @NotNull
     public StoreCategory getCategory() {
         return category;
@@ -415,9 +421,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label prev
      * @constraint foreign key (prev) references violet.storeodr (id)
      */
+    @JoinColumn(name = "prev")
+    @ManyToOne
     public StoreOrder getPrev() {
         return prev;
     }
@@ -446,9 +453,10 @@ public abstract class _StoreOrder_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label op
      * @constraint foreign key (op) references lily.user (id)
      */
+    @JoinColumn(name = "op")
+    @ManyToOne
     public User getOp() {
         return op;
     }
@@ -476,9 +484,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label form
      * @constraint foreign key (form) references lily._form (id)
      */
+    @JoinColumn(name = "form")
+    @ManyToOne
     public FormDef getForm() {
         return form;
     }
@@ -505,9 +514,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label org
      * @constraint foreign key (org) references lily.org (id)
      */
+    @JoinColumn(name = "org")
+    @ManyToOne
     public Organization getOrg() {
         return org;
     }
@@ -534,9 +544,10 @@ public abstract class _StoreOrder_stuff
 
     /**
      *
-     * @label ou
      * @constraint foreign key (ou) references lily.orgunit (id)
      */
+    @JoinColumn(name = "ou")
+    @ManyToOne
     public OrgUnit getOrgUnit() {
         return orgUnit;
     }

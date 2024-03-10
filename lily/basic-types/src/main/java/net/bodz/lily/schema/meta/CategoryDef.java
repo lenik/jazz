@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Table(schema = CategoryDef.SCHEMA_NAME, name = CategoryDef.TABLE_NAME)
 public class CategoryDef
-        extends _CategoryDef_stuff {
+        extends _CategoryDef_stuff<CategoryDef> {
 
     private static final long serialVersionUID = 1L;
 

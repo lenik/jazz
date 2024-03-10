@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -193,9 +195,10 @@ public abstract class _TestQuestionTalk_stuff
 
     /**
      *
-     * @label form
      * @constraint foreign key (form) references lily._form (id)
      */
+    @JoinColumn(name = "form")
+    @ManyToOne
     public FormDef getForm() {
         return form;
     }
@@ -224,9 +227,10 @@ public abstract class _TestQuestionTalk_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label op
      * @constraint foreign key (op) references lily.user (id)
      */
+    @JoinColumn(name = "op")
+    @ManyToOne
     public User getOp() {
         return op;
     }
@@ -254,9 +258,10 @@ public abstract class _TestQuestionTalk_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.testq_msg (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public TestQuestionTalk getParent() {
         return parent;
     }
@@ -283,9 +288,10 @@ public abstract class _TestQuestionTalk_stuff
 
     /**
      *
-     * @label q
      * @constraint foreign key (q) references violet.testq (id)
      */
+    @JoinColumn(name = "q")
+    @ManyToOne
     @NotNull
     public TestQuestion getQuestion() {
         return question;

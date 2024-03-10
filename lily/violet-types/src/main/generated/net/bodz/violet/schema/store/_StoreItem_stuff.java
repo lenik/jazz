@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
@@ -43,7 +46,7 @@ public abstract class _StoreItem_stuff
     @NotNull
     long id;
 
-    Object batch;
+    JsonVariant batch;
 
     @NotNull
     BigDecimal quantity;
@@ -87,11 +90,11 @@ public abstract class _StoreItem_stuff
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)
     @Column(name = "batch", precision = 2147483647)
-    public Object getBatch() {
+    public JsonVariant getBatch() {
         return batch;
     }
 
-    public void setBatch(Object value) {
+    public void setBatch(JsonVariant value) {
         this.batch = value;
     }
 
@@ -109,9 +112,10 @@ public abstract class _StoreItem_stuff
 
     /**
      *
-     * @label region
      * @constraint foreign key (region) references violet.region (id)
      */
+    @JoinColumn(name = "region")
+    @ManyToOne
     @NotNull
     public Region getRegion() {
         return region;
@@ -141,9 +145,10 @@ public abstract class _StoreItem_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -160,6 +165,8 @@ public abstract class _StoreItem_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;

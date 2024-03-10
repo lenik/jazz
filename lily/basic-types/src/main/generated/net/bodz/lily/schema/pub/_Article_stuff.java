@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
@@ -135,6 +137,8 @@ public abstract class _Article_stuff
      *
      * @constraint foreign key (cat) references lily.articlecat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public ArticleCategory getCategory() {
         return category;
     }

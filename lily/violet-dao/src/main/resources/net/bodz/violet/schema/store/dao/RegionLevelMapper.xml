@@ -8,13 +8,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="dummy" column="dummy" />
     </resultMap>
 
@@ -23,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -40,6 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.id, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -80,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into regionlevel(
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -91,13 +95,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) values(
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{dummy}
         );
     ]]></insert>
@@ -107,13 +112,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <set>
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             dummy = #{dummy},
         </set>
         <where>
@@ -129,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from regionlevel
+        select count(*) "rows" from regionlevel a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

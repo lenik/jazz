@@ -5,7 +5,10 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -36,6 +39,7 @@ public abstract class _SalesOrder_stuff
     public static final String FIELD_RAW_TEXT = "text";
     public static final String FIELD_FORM_ID = "form";
     public static final String FIELD_FORM_ARGUMENTS = "formargs";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_PHASE_ID = "phase";
     public static final String FIELD_PREVIOUS_ORDER_ID = "prev";
@@ -55,6 +59,7 @@ public abstract class _SalesOrder_stuff
     public static final int N_RAW_TEXT = 2147483647;
     public static final int N_FORM_ID = 10;
     public static final int N_FORM_ARGUMENTS = 2147483647;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_PHASE_ID = 10;
     public static final int N_PREVIOUS_ORDER_ID = 19;
@@ -74,7 +79,8 @@ public abstract class _SalesOrder_stuff
     private static final int _ord_RAW_TEXT = _ord_OP_ID + 1;
     private static final int _ord_FORM_ID = _ord_RAW_TEXT + 1;
     private static final int _ord_FORM_ARGUMENTS = _ord_FORM_ID + 1;
-    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 2;
+    private static final int _ord_PROPERTIES = _ord_FORM_ARGUMENTS + 1;
+    private static final int _ord_CATEGORY_ID = _ord_PROPERTIES + 1;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_PREVIOUS_ORDER_ID = _ord_PHASE_ID + 1;
     private static final int _ord_PLAN_ID = _ord_PREVIOUS_ORDER_ID + 1;
@@ -101,6 +107,8 @@ public abstract class _SalesOrder_stuff
     String rawText;
 
     String formArguments;
+
+    JsonVariant properties;
 
     @NotNull
     int length;
@@ -243,6 +251,17 @@ public abstract class _SalesOrder_stuff
         this.formArguments = value;
     }
 
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
+    }
+
     @Ordinal(_ord_LENGTH)
     @Precision(value = 10)
     @Column(name = "length", nullable = false, precision = 10)
@@ -280,9 +299,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label customer
      * @constraint foreign key (customer) references lily.person (id)
      */
+    @JoinColumn(name = "customer")
+    @ManyToOne
     public Person getCustomer() {
         return customer;
     }
@@ -309,9 +329,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label form
      * @constraint foreign key (form) references lily._form (id)
      */
+    @JoinColumn(name = "form")
+    @ManyToOne
     public FormDef getForm() {
         return form;
     }
@@ -338,9 +359,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label phase
      * @constraint foreign key (phase) references violet.salephase (id)
      */
+    @JoinColumn(name = "phase")
+    @ManyToOne
     public SalesPhase getPhase() {
         return phase;
     }
@@ -367,9 +389,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label customer_org
      * @constraint foreign key (customer_org) references lily.org (id)
      */
+    @JoinColumn(name = "customer_org")
+    @ManyToOne
     public Organization getCustomerOrg() {
         return customerOrg;
     }
@@ -396,9 +419,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label prev
      * @constraint foreign key (prev) references violet.saleodr (id)
      */
+    @JoinColumn(name = "prev")
+    @ManyToOne
     public SalesOrder getPreviousOrder() {
         return previousOrder;
     }
@@ -427,9 +451,10 @@ public abstract class _SalesOrder_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label op
      * @constraint foreign key (op) references lily.user (id)
      */
+    @JoinColumn(name = "op")
+    @ManyToOne
     public User getOp() {
         return op;
     }
@@ -457,9 +482,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label plan
      * @constraint foreign key (plan) references violet.plan (id)
      */
+    @JoinColumn(name = "plan")
+    @ManyToOne
     public Plan getPlan() {
         return plan;
     }
@@ -486,9 +512,10 @@ public abstract class _SalesOrder_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.salecat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public SalesCategory getCategory() {
         return category;
     }

@@ -19,8 +19,7 @@ public class TestPaperItemSamples
         TestPaperItem a = new TestPaperItem();
         a.setQuestion(question);
         a.setPaper(paper);
-        a.setId(560394533195265462L);
-        a.setScore(new BigDecimal("824"));
+        a.setScore(new BigDecimal(".09"));
         return a;
     }
 

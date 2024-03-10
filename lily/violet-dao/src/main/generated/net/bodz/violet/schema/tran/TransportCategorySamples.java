@@ -22,6 +22,7 @@ public class TransportCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("Uabago nuudao It, Ia");
         return a;
     }
 

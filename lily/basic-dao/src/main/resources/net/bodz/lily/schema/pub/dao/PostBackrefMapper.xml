@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="key" column="key" />
         <result property="value" column="value" />
@@ -23,16 +23,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ownerGroupId" column="gid" />
         <result property="postId" column="post" />
         <result property="siteId" column="site" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="post" columnPrefix="post_"
+        <association property="post" columnPrefix="post_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.pub.Post" 
             resultMap="net.bodz.lily.schema.pub.dao.PostMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="site" columnPrefix="site_"
+        <association property="site" columnPrefix="site_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.inet.ExternalSite" 
             resultMap="net.bodz.lily.schema.inet.dao.ExternalSiteMapper.objlist_map" />
     </resultMap>
@@ -300,7 +300,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{postId},
             #{siteId},
@@ -323,7 +323,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             post = #{postId},
             site = #{siteId},

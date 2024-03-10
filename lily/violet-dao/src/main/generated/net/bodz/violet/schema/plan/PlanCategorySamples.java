@@ -22,6 +22,7 @@ public class PlanCategorySamples
         a.setParent(parent);
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("u*uz; uqooiy");
         return a;
     }
 

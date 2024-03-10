@@ -10,16 +10,20 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_msg";
 
+    static readonly FIELD_FORM_ARGUMENTS = "formargs";
+    static readonly FIELD_POST_ID = "post";
+
+    static readonly N_FORM_ARGUMENTS = 2147483647;
+    static readonly N_POST_ID = 19;
+
+    readonly validators = new _PostTalk_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostTalk"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_FORM_ARGUMENTS = "formargs";
-    static FIELD_POST_ID = "post";
-
-    static N_FORM_ARGUMENTS = 2147483647;
-    static N_POST_ID = 19;
-
-    validators = new _PostTalk_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -29,10 +33,6 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
             post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
             postId: property({ type: LONG, nullable: false, precision: 19 }),
         });
-    }
-
-    constructor(selfType: any) {
-        super(selfType);
     }
 
 }

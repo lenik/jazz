@@ -1,6 +1,7 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.schema.account.Group;
@@ -36,6 +37,8 @@ public class FabProcessSamples
         a.setOwnerGroup(ownerGroup);
         a.setTask(task);
         a.setQuantity(new BigDecimal("69.71"));
+        a.setSince(new Timestamp(Dates.ISO8601Z.parse("2024-01-23T10:47:14.679+0800").getTime()));
+        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2023-12-14T18:01:22.894+0800").getTime()));
         a.setTrackCount(1510205346);
         return a;
     }

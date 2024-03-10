@@ -22,6 +22,7 @@ public class IssueCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("kugj edo_unerka i wikw");
         return a;
     }
 

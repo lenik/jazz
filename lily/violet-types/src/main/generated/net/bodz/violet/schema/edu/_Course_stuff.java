@@ -1,24 +1,25 @@
 package net.bodz.violet.schema.edu;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _Course_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "course";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_FAV_COUNT = "nfav";
     public static final String FIELD_VOTE_COUNT = "nvote";
@@ -26,7 +27,6 @@ public abstract class _Course_stuff
     public static final String FIELD_CREDIT = "credit";
     public static final String FIELD_PLUGINS = "plugins";
 
-    public static final int N_ID = 10;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_FAV_COUNT = 10;
     public static final int N_VOTE_COUNT = 10;
@@ -34,17 +34,12 @@ public abstract class _Course_stuff
     public static final int N_CREDIT = 10;
     public static final int N_PLUGINS = 2147483647;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_CATEGORY_ID = 15;
+    private static final int _ord_CATEGORY_ID = 16;
     private static final int _ord_FAV_COUNT = _ord_CATEGORY_ID + 1;
     private static final int _ord_VOTE_COUNT = _ord_FAV_COUNT + 1;
     private static final int _ord_HATE_COUNT = _ord_VOTE_COUNT + 1;
     private static final int _ord_CREDIT = _ord_HATE_COUNT + 1;
     private static final int _ord_PLUGINS = _ord_CREDIT + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     @NotNull
     int favCount;
@@ -58,34 +53,12 @@ public abstract class _Course_stuff
     @NotNull
     int credit;
 
-    Object plugins;
+    JsonVariant plugins;
 
     /**  */
     CourseCategory category;
 
     Integer categoryId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_FAV_COUNT)
     @Precision(value = 10)
@@ -134,19 +107,20 @@ public abstract class _Course_stuff
     @Ordinal(_ord_PLUGINS)
     @Precision(value = 2147483647)
     @Column(name = "plugins", precision = 2147483647)
-    public Object getPlugins() {
+    public JsonVariant getPlugins() {
         return plugins;
     }
 
-    public void setPlugins(Object value) {
+    public void setPlugins(JsonVariant value) {
         this.plugins = value;
     }
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.coursecat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public CourseCategory getCategory() {
         return category;
     }

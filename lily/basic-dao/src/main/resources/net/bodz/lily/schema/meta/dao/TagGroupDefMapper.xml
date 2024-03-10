@@ -14,12 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="forTopic" column="topic" />
         <result property="forReply" column="reply" />
         <result property="schemaId" column="schema" />
-        <association property="schema" columnPrefix="schema_"
+        <association property="schema" columnPrefix="schema_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.meta.SchemaDef" 
             resultMap="net.bodz.lily.schema.meta.dao.SchemaDefMapper.objlist_map" />
     </resultMap>
@@ -138,7 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{schemaId},
             #{forTopic},
@@ -157,7 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             "schema" = #{schemaId},
             topic = #{forTopic},

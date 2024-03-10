@@ -1,17 +1,17 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoImaged from "../../concrete/CoImaged";
 import _GroupType_stuff_TypeInfo from "./_GroupType_stuff_TypeInfo";
 
-export class _GroupType_stuff extends CoEntity<int> {
+export class _GroupType_stuff extends CoImaged<int> {
+
     static _typeInfo: _GroupType_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _GroupType_stuff_TypeInfo();
+            this._typeInfo = _GroupType_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
-    id: int;
     name?: string;
     dummy?: int;
 

@@ -32,10 +32,9 @@ public class FabStdProcessSamples
         a.setOutput(output);
         a.setTest(test);
         a.setFunction(function);
-        a.setId(165373854);
-        a.setValid(true);
-        a.setValidSince(ZonedDateTime.parse("2023-12-23 09:39:36", DateTimes.D10T8));
-        a.setValidUntil(ZonedDateTime.parse("2024-01-24 15:12:58", DateTimes.D10T8));
+        a.setValid(false);
+        a.setValidSince(ZonedDateTime.parse("2024-01-05T20:41:03.103+02:00[Asia/Famagusta]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setValidUntil(ZonedDateTime.parse("2023-12-16T02:29:03.249+02:00[Africa/Khartoum]", DateTimes.ISO_ZONED_DATE_TIME));
         a.setDuration(1399266125);
         a.setStrict(false);
         return a;

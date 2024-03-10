@@ -19,6 +19,7 @@ public class IssueParameterSamples
         IssueParameter a = new IssueParameter();
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("eh duipz iow'q vux");
         a.setDummy(139670088);
         return a;
     }

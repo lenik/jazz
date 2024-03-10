@@ -1,9 +1,11 @@
 package net.bodz.violet.schema.art.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import java.sql.Timestamp;
+
+import net.bodz.lily.concrete.CoEventCriteriaBuilder;
 
 public class _ArtifactModelCriteriaBuilder_stuff<self_t extends _ArtifactModelCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoEventCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 
@@ -11,9 +13,11 @@ public class _ArtifactModelCriteriaBuilder_stuff<self_t extends _ArtifactModelCr
 
     public final IntegerField accessMode = integer("mode");
 
-    public final IntegerField year = integer("\"year\"");
-
     public final BooleanField valid = bool("\"valid\"");
+
+    public final DateField<Timestamp> validSince = date("validsince", Timestamp.class);
+
+    public final DateField<Timestamp> validUntil = date("validuntil", Timestamp.class);
 
     public final IntegerField obsoleteId = integer("obsolete");
 

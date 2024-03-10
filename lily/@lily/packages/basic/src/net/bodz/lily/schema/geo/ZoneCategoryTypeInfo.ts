@@ -3,10 +3,14 @@ import _ZoneCategory_stuff_TypeInfo from "./_ZoneCategory_stuff_TypeInfo";
 
 export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
 
+    readonly validators = new ZoneCategoryValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.geo.ZoneCategory"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ZoneCategoryValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ZoneCategoryTypeInfo();
 
 }
 

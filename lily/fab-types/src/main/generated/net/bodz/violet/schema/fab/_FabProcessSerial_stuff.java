@@ -2,6 +2,8 @@ package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -82,9 +84,10 @@ public abstract class _FabProcessSerial_stuff
 
     /**
      *
-     * @label proc
      * @constraint foreign key (proc) references violet.fabproc (id)
      */
+    @JoinColumn(name = "proc")
+    @ManyToOne
     @NotNull
     public FabProcess getProcess() {
         return process;
@@ -101,6 +104,8 @@ public abstract class _FabProcessSerial_stuff
     @Column(name = "proc", nullable = false, precision = 19)
     public synchronized long getProcessId() {
         if (process != null) {
+            if (process.getId() == null)
+                return 0L;
             return process.getId();
         }
         return processId;

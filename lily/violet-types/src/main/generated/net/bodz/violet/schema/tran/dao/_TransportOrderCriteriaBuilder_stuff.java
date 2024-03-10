@@ -23,38 +23,6 @@ public class _TransportOrderCriteriaBuilder_stuff<self_t extends _TransportOrder
 
     public final IntegerField shipperId = integer("shipper");
 
-    public final StringField sAlias = string("s_alias");
-
-    public final StringField sAddress1 = string("s_address1");
-
-    public final StringField sAddress2 = string("s_address2");
-
-    public final IntegerField sZoneId = integer("s_zone");
-
-    public final StringField sTel = string("s_tel");
-
-    public final BooleanField sTelok = bool("s_telok");
-
-    public final StringField sEmail = string("s_email");
-
-    public final BooleanField sEmailok = bool("s_emailok");
-
-    public final StringField dAlias = string("d_alias");
-
-    public final StringField dAddress1 = string("d_address1");
-
-    public final StringField dAddress2 = string("d_address2");
-
-    public final IntegerField dZoneId = integer("d_zone");
-
-    public final StringField dTel = string("d_tel");
-
-    public final BooleanField dTelok = bool("d_telok");
-
-    public final StringField dEmail = string("d_email");
-
-    public final BooleanField dEmailok = bool("d_emailok");
-
     public final BigDecimalField shipcost = bigDecimal("shipcost");
 
     public final IntegerField length = integer("\"length\"");

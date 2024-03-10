@@ -6,10 +6,11 @@ import type VApp from "./VApp";
 import _VApiLog_stuff_TypeInfo from "./_VApiLog_stuff_TypeInfo";
 
 export class _VApiLog_stuff extends CoEntity<long> {
+
     static _typeInfo: _VApiLog_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _VApiLog_stuff_TypeInfo();
+            this._typeInfo = _VApiLog_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

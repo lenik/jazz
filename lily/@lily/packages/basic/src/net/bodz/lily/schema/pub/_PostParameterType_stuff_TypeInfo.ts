@@ -9,16 +9,20 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "postparm";
 
+    static readonly FIELD_NAME = "name";
+    static readonly FIELD_DUMMY = "dummy";
+
+    static readonly N_NAME = 30;
+    static readonly N_DUMMY = 10;
+
+    readonly validators = new _PostParameterType_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostParameterType"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_NAME = "name";
-    static FIELD_DUMMY = "dummy";
-
-    static N_NAME = 30;
-    static N_DUMMY = 10;
-
-    validators = new _PostParameterType_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -26,10 +30,6 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
             name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
             dummy: property({ type: INT, precision: 10, validator: this.validators.validateDummy }),
         });
-    }
-
-    constructor(selfType: any) {
-        super(selfType);
     }
 
 }

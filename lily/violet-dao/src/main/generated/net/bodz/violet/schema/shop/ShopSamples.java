@@ -19,9 +19,8 @@ public class ShopSamples
         Shop a = new Shop();
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
-        a.setId(1588425089);
         a.setCode("Xoc! qj plol; xyi u, ujp-poesr");
-        a.setHydm(1929075191);
+        a.setHydm(1588425089);
         return a;
     }
 

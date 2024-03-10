@@ -1,13 +1,11 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import type { Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoObject from "../../concrete/CoObject";
-import StructRow from "../../concrete/StructRow";
 import UserOtherId from "./UserOtherId";
 import _UserOtherId_stuff from "./_UserOtherId_stuff";
 
@@ -19,11 +17,14 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
 import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import UserChooseDialog from "./UserChooseDialog.vue";
 import UserOtherIdTypeChooseDialog from "./UserOtherIdTypeChooseDialog.vue";
 
@@ -45,6 +46,7 @@ const emit = defineEmits<{
 
 const meta = UserOtherId.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
 const userChooseDialog = ref<InstanceType<typeof UserChooseDialog>>();
@@ -65,63 +67,34 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <DateTime v-model="model.lastModifiedDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup :type="CoObject.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
-                <input type="text" v-model="model.icon" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
-                <input type="number" v-model="model.priority" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.flags" v-model="model.flags">
-                <input type="number" v-model="model.flags" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.state" v-model="model.state">
-                <input type="number" v-model="model.state" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <JsonEditor v-model="model.properties" />
-            </FieldRow>
-        </FieldGroup>
+        <StructRowFieldGroup :meta="meta" v-model="model" />
+        <CoObjectFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_UserOtherId_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
+            <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
+            <FieldRow :property="meta.beginTime" v-model="model.beginTime">
                 <DateTime v-model="model.beginTime" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.endTime" v-model="model.endTime">
+            <FieldRow :property="meta.endTime" v-model="model.endTime">
                 <DateTime v-model="model.endTime" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.year" v-model="model.year">
+            <FieldRow :property="meta.year" v-model="model.year">
                 <input type="number" v-model="model.year" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.otherId" v-model="model.otherId">
+            <FieldRow :property="meta.properties" v-model="model.properties">
+                <JsonEditor v-model="model.properties" />
+            </FieldRow>
+            <FieldRow :property="meta.otherId" v-model="model.otherId">
                 <input type="text" v-model="model.otherId" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.auth" v-model="model.auth">
+            <FieldRow :property="meta.auth" v-model="model.auth">
                 <JsonEditor v-model="model.auth" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
+            <FieldRow :property="meta.user" v-model="model.user">
                 <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.type" v-model="model.type">
+            <FieldRow :property="meta.type" v-model="model.type">
                 <RefEditor :dialog="userOtherIdTypeChooseDialog" v-model="model.type" v-model:id="model.typeId" />
             </FieldRow>
         </FieldGroup>

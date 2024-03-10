@@ -1,13 +1,11 @@
 package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -15,55 +13,26 @@ import net.bodz.lily.entity.IdType;
  */
 @IdType(Integer.class)
 public abstract class _GroupType_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "grouptype";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
     public static final String FIELD_DUMMY = "dummy";
 
-    public static final int N_ID = 10;
     public static final int N_NAME = 20;
     public static final int N_DUMMY = 10;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_NAME = _ord_ID + 1;
+    private static final int _ord_NAME = 2;
     private static final int _ord_DUMMY = 13;
-
-    @Id
-    @NotNull
-    int id;
 
     /** Group type name (unique) */
     String name;
 
     Integer dummy;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     /**
      * Group type name (unique)

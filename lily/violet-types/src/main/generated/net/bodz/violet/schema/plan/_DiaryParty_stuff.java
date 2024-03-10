@@ -2,6 +2,8 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -36,7 +38,7 @@ public abstract class _DiaryParty_stuff
     public static final int N_VALUE = 10;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_DIARY_ID = _ord_ID + 3;
+    private static final int _ord_DIARY_ID = _ord_ID + 4;
     private static final int _ord_USER_ID = _ord_DIARY_ID + 1;
     private static final int _ord_PERSON_ID = _ord_USER_ID + 1;
     private static final int _ord_ORG_ID = _ord_PERSON_ID + 1;
@@ -106,9 +108,10 @@ public abstract class _DiaryParty_stuff
 
     /**
      *
-     * @label person
      * @constraint foreign key (person) references lily.person (id)
      */
+    @JoinColumn(name = "person")
+    @ManyToOne
     public Person getPerson() {
         return person;
     }
@@ -135,9 +138,10 @@ public abstract class _DiaryParty_stuff
 
     /**
      *
-     * @label org
      * @constraint foreign key (org) references lily.org (id)
      */
+    @JoinColumn(name = "org")
+    @ManyToOne
     public Organization getOrg() {
         return org;
     }
@@ -166,9 +170,10 @@ public abstract class _DiaryParty_stuff
      * {inheritDoc User}
      * User Account
      *
-     * @label user
      * @constraint foreign key (user) references lily.user (id)
      */
+    @JoinColumn(name = "user")
+    @ManyToOne
     public User getUser() {
         return user;
     }
@@ -196,9 +201,10 @@ public abstract class _DiaryParty_stuff
 
     /**
      *
-     * @label diary
      * @constraint foreign key (diary) references violet.diary (id)
      */
+    @JoinColumn(name = "diary")
+    @ManyToOne
     @NotNull
     public Diary getDiary() {
         return diary;

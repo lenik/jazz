@@ -3,18 +3,20 @@ package net.bodz.violet.schema.fab;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoImagedEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 
 @IdType(Long.class)
 public abstract class _FabOrderItem_stuff
-        extends CoMomentInterval<Long> {
+        extends CoImagedEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +45,7 @@ public abstract class _FabOrderItem_stuff
     public static final int N_AMOUNT = 20;
     public static final int N_NOTES = 200;
 
-    private static final int _ord_ORDER_ID = 11;
+    private static final int _ord_ORDER_ID = 12;
     private static final int _ord_ARTIFACT_ID = _ord_ORDER_ID + 1;
     private static final int _ord_RESALE = _ord_ARTIFACT_ID + 1;
     private static final int _ord_ALT_LABEL = _ord_RESALE + 1;
@@ -185,9 +187,10 @@ public abstract class _FabOrderItem_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -204,6 +207,8 @@ public abstract class _FabOrderItem_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;
@@ -215,9 +220,10 @@ public abstract class _FabOrderItem_stuff
 
     /**
      *
-     * @label odr
      * @constraint foreign key (odr) references violet.fabodr (id)
      */
+    @JoinColumn(name = "odr")
+    @ManyToOne
     @NotNull
     public FabOrder getOrder() {
         return order;

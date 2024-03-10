@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -31,7 +33,7 @@ public abstract class _CartItem_stuff
     public static final int N_QUANTITY = 20;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_SHOP_ITEM_ID = 14;
+    private static final int _ord_SHOP_ITEM_ID = 15;
     private static final int _ord_PRICE = _ord_SHOP_ITEM_ID + 1;
     private static final int _ord_QUANTITY = _ord_PRICE + 1;
 
@@ -100,9 +102,10 @@ public abstract class _CartItem_stuff
 
     /**
      *
-     * @label shopitem
      * @constraint foreign key (shopitem) references violet.shopitem (id)
      */
+    @JoinColumn(name = "shopitem")
+    @ManyToOne
     @NotNull
     public ShopItem getShopItem() {
         return shopItem;

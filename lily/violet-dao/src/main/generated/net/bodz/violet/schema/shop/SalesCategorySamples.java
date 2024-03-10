@@ -22,6 +22,7 @@ public class SalesCategorySamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setParent(parent);
+        a.setName("Qecb.");
         return a;
     }
 

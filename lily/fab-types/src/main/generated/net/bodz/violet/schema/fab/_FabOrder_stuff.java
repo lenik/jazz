@@ -3,6 +3,8 @@ package net.bodz.violet.schema.fab;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -178,9 +180,10 @@ public abstract class _FabOrder_stuff
 
     /**
      *
-     * @label clerk
      * @constraint foreign key (clerk) references lily.person (id)
      */
+    @JoinColumn(name = "clerk")
+    @ManyToOne
     public Person getClerk() {
         return clerk;
     }
@@ -207,9 +210,10 @@ public abstract class _FabOrder_stuff
 
     /**
      *
-     * @label plan
      * @constraint foreign key (plan) references violet.plan (id)
      */
+    @JoinColumn(name = "plan")
+    @ManyToOne
     public Plan getPlan() {
         return plan;
     }
@@ -236,9 +240,10 @@ public abstract class _FabOrder_stuff
 
     /**
      *
-     * @label custom_org
      * @constraint foreign key (custom_org) references lily.org (id)
      */
+    @JoinColumn(name = "custom_org")
+    @ManyToOne
     public Organization getCustomOrg() {
         return customOrg;
     }
@@ -265,9 +270,10 @@ public abstract class _FabOrder_stuff
 
     /**
      *
-     * @label custom
      * @constraint foreign key (custom) references lily.person (id)
      */
+    @JoinColumn(name = "custom")
+    @ManyToOne
     public Person getCustom() {
         return custom;
     }

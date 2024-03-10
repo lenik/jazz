@@ -2,6 +2,8 @@ package net.bodz.lily.schema.vapp;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -74,6 +76,8 @@ public abstract class _VAppRequestApi_stuff
      *
      * @constraint foreign key (parent) references lily.vappreq (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     @NotNull
     public VAppRequest getParent() {
         return parent;
@@ -90,6 +94,8 @@ public abstract class _VAppRequestApi_stuff
     @Column(name = "parent", nullable = false, precision = 10)
     public synchronized int getParentId() {
         if (parent != null) {
+            if (parent.getId() == null)
+                return 0;
             return parent.getId();
         }
         return parentId;
@@ -103,6 +109,8 @@ public abstract class _VAppRequestApi_stuff
      *
      * @constraint foreign key (api) references lily.apitype (id)
      */
+    @JoinColumn(name = "api")
+    @ManyToOne
     @NotNull
     public ApiType getApi() {
         return api;
@@ -119,6 +127,8 @@ public abstract class _VAppRequestApi_stuff
     @Column(name = "api", nullable = false, precision = 10)
     public synchronized int getApiId() {
         if (api != null) {
+            if (api.getId() == null)
+                return 0;
             return api.getId();
         }
         return apiId;

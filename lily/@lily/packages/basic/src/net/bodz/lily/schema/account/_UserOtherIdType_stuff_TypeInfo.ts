@@ -10,17 +10,21 @@ export class _UserOtherIdType_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "useroidtype";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_DUMMY = "dummy";
+
+    static readonly N_ID = 10;
+    static readonly N_DUMMY = 10;
+
+    readonly validators = new _UserOtherIdType_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.UserOtherIdType"; }
     get icon() { return "fa-tag"; }
     get description() { return "Type of Open ID"; }
-
-    static FIELD_ID = "id";
-    static FIELD_DUMMY = "dummy";
-
-    static N_ID = 10;
-    static N_DUMMY = 10;
-
-    validators = new _UserOtherIdType_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -30,9 +34,7 @@ export class _UserOtherIdType_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _UserOtherIdType_stuff_TypeInfo();
 
 }
 

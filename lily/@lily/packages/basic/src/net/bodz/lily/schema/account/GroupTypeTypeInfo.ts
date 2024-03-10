@@ -3,11 +3,15 @@ import _GroupType_stuff_TypeInfo from "./_GroupType_stuff_TypeInfo";
 
 export class GroupTypeTypeInfo extends _GroupType_stuff_TypeInfo {
 
+    readonly validators = new GroupTypeValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.GroupType"; }
     get icon() { return "fa-tag"; }
     get description() { return "Group Type"; }
-
-    validators = new GroupTypeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -15,9 +19,7 @@ export class GroupTypeTypeInfo extends _GroupType_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new GroupTypeTypeInfo();
 
 }
 

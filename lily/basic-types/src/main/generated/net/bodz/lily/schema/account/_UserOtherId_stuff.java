@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
@@ -29,6 +31,7 @@ public abstract class _UserOtherId_stuff
     public static final String FIELD_BEGIN_TIME = "t0";
     public static final String FIELD_END_TIME = "t1";
     public static final String FIELD_YEAR = "year";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_USER_ID = "user";
     public static final String FIELD_TYPE_ID = "type";
     public static final String FIELD_OTHER_ID = "oid";
@@ -38,6 +41,7 @@ public abstract class _UserOtherId_stuff
     public static final int N_BEGIN_TIME = 35;
     public static final int N_END_TIME = 35;
     public static final int N_YEAR = 10;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_USER_ID = 10;
     public static final int N_TYPE_ID = 10;
     public static final int N_OTHER_ID = 100;
@@ -47,7 +51,8 @@ public abstract class _UserOtherId_stuff
     private static final int _ord_BEGIN_TIME = _ord_ID + 10;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
-    private static final int _ord_USER_ID = _ord_YEAR + 2;
+    private static final int _ord_PROPERTIES = _ord_YEAR + 1;
+    private static final int _ord_USER_ID = _ord_PROPERTIES + 1;
     private static final int _ord_TYPE_ID = _ord_USER_ID + 1;
     private static final int _ord_OTHER_ID = _ord_TYPE_ID + 1;
     private static final int _ord_AUTH = _ord_OTHER_ID + 1;
@@ -62,6 +67,8 @@ public abstract class _UserOtherId_stuff
 
     @NotNull
     int year;
+
+    JsonVariant properties;
 
     /** The identity data */
     @NotNull
@@ -141,6 +148,17 @@ public abstract class _UserOtherId_stuff
         this.year = value;
     }
 
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
+    }
+
     /**
      * The identity data
      */
@@ -182,6 +200,8 @@ public abstract class _UserOtherId_stuff
      *
      * @constraint foreign key (type) references lily.useroidtype (id)
      */
+    @JoinColumn(name = "type")
+    @ManyToOne
     @NotNull
     public UserOtherIdType getType() {
         return type;
@@ -219,6 +239,8 @@ public abstract class _UserOtherId_stuff
      *
      * @constraint foreign key (user) references lily.user (id)
      */
+    @JoinColumn(name = "user")
+    @ManyToOne
     @NotNull
     public User getUser() {
         return user;

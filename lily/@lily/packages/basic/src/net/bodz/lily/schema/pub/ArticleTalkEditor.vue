@@ -1,16 +1,11 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
-import type { int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoMessage from "../../concrete/CoMessage";
-import CoMomentInterval from "../../concrete/CoMomentInterval";
-import CoObject from "../../concrete/CoObject";
 import CoTalk from "../../concrete/CoTalk";
 import IdEntity from "../../concrete/IdEntity";
-import StructRow from "../../concrete/StructRow";
 import ArticleTalk from "./ArticleTalk";
 import _ArticleTalk_stuff from "./_ArticleTalk_stuff";
 
@@ -22,12 +17,14 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
-import UserChooseDialog from "../account/UserChooseDialog.vue";
-import FormDefChooseDialog from "../meta/FormDefChooseDialog.vue";
+import CoEventFieldGroup from "../../concrete/CoEventFieldGroup.vue";
+import CoMessageFieldGroup from "../../concrete/CoMessageFieldGroup.vue";
+import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import ArticleChooseDialog from "./ArticleChooseDialog.vue";
 import ArticleTalkChooseDialog from "./ArticleTalkChooseDialog.vue";
 
@@ -49,10 +46,9 @@ const emit = defineEmits<{
 
 const meta = ArticleTalk.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
-const userChooseDialog = ref<InstanceType<typeof UserChooseDialog>>();
-const formDefChooseDialog = ref<InstanceType<typeof FormDefChooseDialog>>();
 const articleTalkChooseDialog = ref<InstanceType<typeof ArticleTalkChooseDialog>>();
 const articleChooseDialog = ref<InstanceType<typeof ArticleChooseDialog>>();
 const valids = ref<any>({});
@@ -71,74 +67,29 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <DateTime v-model="model.lastModifiedDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup :type="CoObject.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
-                <input type="number" v-model="model.priority" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.flags" v-model="model.flags">
-                <input type="number" v-model="model.flags" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.state" v-model="model.state">
-                <input type="number" v-model="model.state" />
-            </FieldRow>
-        </FieldGroup>
+        <StructRowFieldGroup :meta="meta" v-model="model" />
+        <CoObjectFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="IdEntity.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+            <FieldRow :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="CoMomentInterval.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.beginTime" v-model="model.beginTime">
-                <DateTime v-model="model.beginTime" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.endTime" v-model="model.endTime">
-                <DateTime v-model="model.endTime" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.year" v-model="model.year">
-                <input type="number" v-model="model.year" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup :type="CoMessage.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.subject" v-model="model.subject">
-                <input type="text" v-model="model.subject" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.rawText" v-model="model.rawText">
-                <input type="text" v-model="model.rawText" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.op" v-model="model.op">
-                <RefEditor :dialog="userChooseDialog" v-model="model.op" v-model:id="model.opId" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.form" v-model="model.form">
-                <RefEditor :dialog="formDefChooseDialog" v-model="model.form" v-model:id="model.formId" />
-            </FieldRow>
-        </FieldGroup>
+        <CoEventFieldGroup :meta="meta" v-model="model" />
+        <CoMessageFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="CoTalk.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.parent" v-model="model.parent">
+            <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="articleTalkChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_ArticleTalk_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.formArguments" v-model="model.formArguments">
+            <FieldRow :property="meta.formArguments" v-model="model.formArguments">
                 <input type="text" v-model="model.formArguments" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.article" v-model="model.article">
+            <FieldRow :property="meta.article" v-model="model.article">
                 <RefEditor :dialog="articleChooseDialog" v-model="model.article" v-model:id="model.articleId" />
             </FieldRow>
         </FieldGroup>
     </div>
-    <UserChooseDialog ref="userChooseDialog" />
-    <FormDefChooseDialog ref="formDefChooseDialog" />
     <ArticleTalkChooseDialog ref="articleTalkChooseDialog" />
     <ArticleChooseDialog ref="articleChooseDialog" />
 </template>

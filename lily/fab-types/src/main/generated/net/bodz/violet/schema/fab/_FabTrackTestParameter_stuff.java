@@ -2,6 +2,8 @@ package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -117,9 +119,10 @@ public abstract class _FabTrackTestParameter_stuff
 
     /**
      *
-     * @label parm
      * @constraint foreign key (parm) references violet.fabstdtest_parm (id)
      */
+    @JoinColumn(name = "parm")
+    @ManyToOne
     @NotNull
     public FabStdTestParameter getParameter() {
         return parameter;
@@ -147,9 +150,10 @@ public abstract class _FabTrackTestParameter_stuff
 
     /**
      *
-     * @label tester
      * @constraint foreign key (tester) references violet.fabstdtester (id)
      */
+    @JoinColumn(name = "tester")
+    @ManyToOne
     public FabStdTester getTester() {
         return tester;
     }
@@ -176,9 +180,10 @@ public abstract class _FabTrackTestParameter_stuff
 
     /**
      *
-     * @label test
      * @constraint foreign key (test) references violet.fabtrack_test (id)
      */
+    @JoinColumn(name = "test")
+    @ManyToOne
     @NotNull
     public FabTrackTest getTest() {
         return test;

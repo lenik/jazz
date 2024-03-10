@@ -3,10 +3,14 @@ import _PostTalkVote_stuff_TypeInfo from "./_PostTalkVote_stuff_TypeInfo";
 
 export class PostTalkVoteTypeInfo extends _PostTalkVote_stuff_TypeInfo {
 
+    readonly validators = new PostTalkVoteValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostTalkVote"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PostTalkVoteValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class PostTalkVoteTypeInfo extends _PostTalkVote_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PostTalkVoteTypeInfo();
 
 }
 

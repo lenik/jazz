@@ -1,4 +1,3 @@
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 
 import Gender from "./Gender";
@@ -7,14 +6,14 @@ import type Person from "./Person";
 import _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
 
 export class _Person_stuff extends Party {
+
     static _typeInfo: _Person_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _Person_stuff_TypeInfo();
+            this._typeInfo = _Person_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
-    properties?: JsonVariant;
     roleCount: int;
     employee: boolean;
     bankCount: int;

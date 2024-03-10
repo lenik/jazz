@@ -12,26 +12,30 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article";
 
+    static readonly FIELD_FORM_ARGUMENTS = "formargs";
+    static readonly FIELD_CATEGORY_ID = "cat";
+    static readonly FIELD_FAV_COUNT = "nfav";
+    static readonly FIELD_VOTE_COUNT = "nvote";
+    static readonly FIELD_HATE_COUNT = "nhate";
+    static readonly FIELD_MESSAGE_COUNT = "nmsg";
+    static readonly FIELD_PLUGINS = "plugins";
+
+    static readonly N_FORM_ARGUMENTS = 2147483647;
+    static readonly N_CATEGORY_ID = 10;
+    static readonly N_FAV_COUNT = 10;
+    static readonly N_VOTE_COUNT = 10;
+    static readonly N_HATE_COUNT = 10;
+    static readonly N_MESSAGE_COUNT = 10;
+    static readonly N_PLUGINS = 2147483647;
+
+    readonly validators = new _Article_stuff_Validators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.schema.pub.Article"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_FORM_ARGUMENTS = "formargs";
-    static FIELD_CATEGORY_ID = "cat";
-    static FIELD_FAV_COUNT = "nfav";
-    static FIELD_VOTE_COUNT = "nvote";
-    static FIELD_HATE_COUNT = "nhate";
-    static FIELD_MESSAGE_COUNT = "nmsg";
-    static FIELD_PLUGINS = "plugins";
-
-    static N_FORM_ARGUMENTS = 2147483647;
-    static N_CATEGORY_ID = 10;
-    static N_FAV_COUNT = 10;
-    static N_VOTE_COUNT = 10;
-    static N_HATE_COUNT = 10;
-    static N_MESSAGE_COUNT = 10;
-    static N_PLUGINS = 2147483647;
-
-    validators = new _Article_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -48,9 +52,7 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
+    static readonly INSTANCE = new _Article_stuff_TypeInfo();
 
 }
 

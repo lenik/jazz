@@ -3,25 +3,26 @@ package net.bodz.violet.schema.art;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.schema.util.Uom;
 
 @IdType(Integer.class)
 public abstract class _Artifact_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "art";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_SKU_CODE = "sku";
     public static final String FIELD_BAR_CODE = "barcode";
     public static final String FIELD_RFID_CODE = "rfid";
@@ -33,7 +34,6 @@ public abstract class _Artifact_stuff
     public static final String FIELD_FINISH = "finish";
     public static final String FIELD_PRICE = "price";
 
-    public static final int N_ID = 10;
     public static final int N_SKU_CODE = 30;
     public static final int N_BAR_CODE = 30;
     public static final int N_RFID_CODE = 30;
@@ -45,21 +45,16 @@ public abstract class _Artifact_stuff
     public static final int N_FINISH = 5;
     public static final int N_PRICE = 12;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_SKU_CODE = _ord_ID + 1;
+    private static final int _ord_SKU_CODE = 2;
     private static final int _ord_BAR_CODE = _ord_SKU_CODE + 1;
     private static final int _ord_RFID_CODE = _ord_BAR_CODE + 1;
-    private static final int _ord_MODEL_NAME = 17;
+    private static final int _ord_MODEL_NAME = 18;
     private static final int _ord_PROTO_ID = _ord_MODEL_NAME + 1;
     private static final int _ord_CATEGORY_ID = _ord_PROTO_ID + 1;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_UOM_ID = _ord_PHASE_ID + 1;
     private static final int _ord_FINISH = _ord_UOM_ID + 2;
     private static final int _ord_PRICE = _ord_FINISH + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     String skuCode;
 
@@ -85,7 +80,7 @@ public abstract class _Artifact_stuff
     Integer phaseId;
 
     /**  */
-    UOM uom;
+    Uom uom;
 
     Integer uomId;
 
@@ -93,28 +88,6 @@ public abstract class _Artifact_stuff
     ArtifactCategory category;
 
     Integer categoryId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_SKU_CODE)
     @Precision(value = N_SKU_CODE)
@@ -188,9 +161,10 @@ public abstract class _Artifact_stuff
 
     /**
      *
-     * @label proto
      * @constraint foreign key (proto) references violet.art (id)
      */
+    @JoinColumn(name = "proto")
+    @ManyToOne
     public Artifact getProto() {
         return proto;
     }
@@ -217,9 +191,10 @@ public abstract class _Artifact_stuff
 
     /**
      *
-     * @label phase
      * @constraint foreign key (phase) references violet.artphase (id)
      */
+    @JoinColumn(name = "phase")
+    @ManyToOne
     public ArtifactPhase getPhase() {
         return phase;
     }
@@ -246,16 +221,17 @@ public abstract class _Artifact_stuff
 
     /**
      *
-     * @label uom
      * @constraint foreign key (uom) references lily.uom (id)
      */
-    public UOM getUom() {
+    @JoinColumn(name = "uom")
+    @ManyToOne
+    public Uom getUom() {
         return uom;
     }
 
     /**
      */
-    public void setUom(UOM value) {
+    public void setUom(Uom value) {
         this.uom = value;
     }
 
@@ -275,9 +251,10 @@ public abstract class _Artifact_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.artcat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public ArtifactCategory getCategory() {
         return category;
     }

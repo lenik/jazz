@@ -2,7 +2,10 @@ package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -22,17 +25,20 @@ public abstract class _FabStdTestParameter_stuff
     public static final String FIELD_ID = "id";
     public static final String FIELD_TEST_ID = "test";
     public static final String FIELD_REQUIRED = "required";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_EXPECTED = "expected";
 
     public static final int N_ID = 10;
     public static final int N_TEST_ID = 10;
     public static final int N_REQUIRED = 1;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_EXPECTED = 100;
 
     private static final int _ord_ID = 1;
     private static final int _ord_TEST_ID = _ord_ID + 4;
     private static final int _ord_REQUIRED = _ord_TEST_ID + 1;
-    private static final int _ord_EXPECTED = _ord_REQUIRED + 2;
+    private static final int _ord_PROPERTIES = _ord_REQUIRED + 1;
+    private static final int _ord_EXPECTED = _ord_PROPERTIES + 1;
 
     @Id
     @NotNull
@@ -40,6 +46,8 @@ public abstract class _FabStdTestParameter_stuff
 
     @NotNull
     boolean required;
+
+    JsonVariant properties;
 
     String expected;
 
@@ -83,6 +91,17 @@ public abstract class _FabStdTestParameter_stuff
         this.required = value;
     }
 
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
+    }
+
     @Ordinal(_ord_EXPECTED)
     @Precision(value = N_EXPECTED)
     @TextInput(maxLength = N_EXPECTED)
@@ -97,9 +116,10 @@ public abstract class _FabStdTestParameter_stuff
 
     /**
      *
-     * @label test
      * @constraint foreign key (test) references violet.fabstdtest (id)
      */
+    @JoinColumn(name = "test")
+    @ManyToOne
     @NotNull
     public FabStdTest getTest() {
         return test;
@@ -116,6 +136,8 @@ public abstract class _FabStdTestParameter_stuff
     @Column(name = "test", nullable = false, precision = 10)
     public synchronized int getTestId() {
         if (test != null) {
+            if (test.getId() == null)
+                return 0;
             return test.getId();
         }
         return testId;

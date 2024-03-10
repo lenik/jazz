@@ -14,10 +14,8 @@ public class TagGroupDefSamples
             throws Exception {
         TagGroupDef a = new TagGroupDef();
         a.setSchema(schema);
-        a.setId(1125460359);
-        a.setCode("otaxiw");
         a.setForTopic(false);
-        a.setForReply(true);
+        a.setForReply(false);
         return a;
     }
 

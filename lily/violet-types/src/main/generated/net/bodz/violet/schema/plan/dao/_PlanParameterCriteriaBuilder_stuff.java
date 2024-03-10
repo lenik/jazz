@@ -9,6 +9,8 @@ public class _PlanParameterCriteriaBuilder_stuff<self_t extends _PlanParameterCr
 
     public final IntegerField accessMode = integer("mode");
 
+    public final StringField name = string("\"name\"");
+
     public final IntegerField dummy = integer("dummy");
 
 }

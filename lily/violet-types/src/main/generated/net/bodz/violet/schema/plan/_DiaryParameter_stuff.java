@@ -3,6 +3,7 @@ package net.bodz.violet.schema.plan;
 import javax.persistence.Column;
 
 import net.bodz.bas.meta.decl.Ordinal;
+import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.concrete.CoParameter;
 import net.bodz.lily.entity.IdType;
@@ -19,13 +20,30 @@ public abstract class _DiaryParameter_stuff<this_t extends _DiaryParameter_stuff
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "diaryparm";
 
+    public static final String FIELD_NAME = "name";
     public static final String FIELD_DUMMY = "dummy";
 
+    public static final int N_NAME = 30;
     public static final int N_DUMMY = 10;
 
-    private static final int _ord_DUMMY = 15;
+    private static final int _ord_NAME = 6;
+    private static final int _ord_DUMMY = _ord_NAME + 10;
+
+    String name;
 
     Integer dummy;
+
+    @Ordinal(_ord_NAME)
+    @Precision(value = N_NAME)
+    @TextInput(maxLength = N_NAME)
+    @Column(name = "name", length = N_NAME)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String value) {
+        this.name = value;
+    }
 
     @Ordinal(_ord_DUMMY)
     @Precision(value = N_DUMMY)

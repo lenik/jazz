@@ -1,47 +1,48 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
 import Zone from "./Zone";
 import ZoneCategory from "./ZoneCategory";
 import _Zone_stuff_Validators from "./_Zone_stuff_Validators";
 
-export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
+export class _Zone_stuff_TypeInfo extends CoImagedTypeInfo {
 
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "zone";
 
+    static readonly FIELD_CODE = "code";
+    static readonly FIELD_CATEGORY_ID = "cat";
+    static readonly FIELD_COUNTRY = "country";
+    static readonly FIELD_PARENT_ID = "parent";
+    static readonly FIELD_DEPTH = "depth";
+    static readonly FIELD_TEL_CODE = "telcode";
+    static readonly FIELD_POST_CODE = "postcode";
+    static readonly FIELD_DATA = "data";
+
+    static readonly N_CODE = 10;
+    static readonly N_CATEGORY_ID = 10;
+    static readonly N_COUNTRY = 2;
+    static readonly N_PARENT_ID = 10;
+    static readonly N_DEPTH = 10;
+    static readonly N_TEL_CODE = 10;
+    static readonly N_POST_CODE = 10;
+    static readonly N_DATA = 2147483647;
+
+    readonly validators = new _Zone_stuff_Validators(this);
+
+    constructor() {
+        super(INT);
+    }
+
     get name() { return "net.bodz.lily.schema.geo.Zone"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_CODE = "code";
-    static FIELD_CATEGORY_ID = "cat";
-    static FIELD_COUNTRY = "country";
-    static FIELD_PARENT_ID = "parent";
-    static FIELD_DEPTH = "depth";
-    static FIELD_TEL_CODE = "telcode";
-    static FIELD_POST_CODE = "postcode";
-    static FIELD_DATA = "data";
-
-    static N_ID = 10;
-    static N_CODE = 10;
-    static N_CATEGORY_ID = 10;
-    static N_COUNTRY = 2;
-    static N_PARENT_ID = 10;
-    static N_DEPTH = 10;
-    static N_TEL_CODE = 10;
-    static N_POST_CODE = 10;
-    static N_DATA = 2147483647;
-
-    validators = new _Zone_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
         this.declare({
-            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
             code: property({ type: STRING, precision: 10, validator: this.validators.validateCode }),
             country: property({ type: STRING, precision: 2, validator: this.validators.validateCountry }),
             depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
@@ -57,9 +58,7 @@ export class _Zone_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _Zone_stuff_TypeInfo();
 
 }
 

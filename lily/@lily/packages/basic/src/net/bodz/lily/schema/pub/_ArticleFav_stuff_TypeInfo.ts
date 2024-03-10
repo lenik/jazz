@@ -10,14 +10,18 @@ export class _ArticleFav_stuff_TypeInfo extends FavRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article_fav";
 
+    static readonly FIELD_ARTICLE_ID = "article";
+
+    static readonly N_ARTICLE_ID = 19;
+
+    readonly validators = new _ArticleFav_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleFav"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ARTICLE_ID = "article";
-
-    static N_ARTICLE_ID = 19;
-
-    validators = new _ArticleFav_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -28,9 +32,7 @@ export class _ArticleFav_stuff_TypeInfo extends FavRecordTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _ArticleFav_stuff_TypeInfo();
 
 }
 

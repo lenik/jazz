@@ -19,6 +19,7 @@ public class PlanParameterSamples
         PlanParameter a = new PlanParameter();
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("Jj ohajroi");
         a.setDummy(1810228722);
         return a;
     }

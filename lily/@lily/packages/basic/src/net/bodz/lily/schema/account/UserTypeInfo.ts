@@ -10,12 +10,16 @@ import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class UserTypeInfo extends _User_stuff_TypeInfo {
 
+    readonly validators = new UserValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.User"; }
     get icon() { return "fa-tag"; }
     get label() { return "User (Account)"; }
     get description() { return "User Account"; }
-
-    validators = new UserValidators(this);
 
     override preamble() {
         super.preamble();
@@ -32,9 +36,7 @@ export class UserTypeInfo extends _User_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new UserTypeInfo();
 
 }
 

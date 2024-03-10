@@ -14,8 +14,6 @@ public class ParameterDefSamples
             throws Exception {
         ParameterDef a = new ParameterDef();
         a.setSchema(schema);
-        a.setId(1882276475);
-        a.setCode("Bcku. aejxe");
         return a;
     }
 

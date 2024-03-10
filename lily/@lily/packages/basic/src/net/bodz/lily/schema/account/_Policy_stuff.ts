@@ -1,17 +1,17 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoImaged from "../../concrete/CoImaged";
 import _Policy_stuff_TypeInfo from "./_Policy_stuff_TypeInfo";
 
-export class _Policy_stuff extends CoEntity<int> {
+export class _Policy_stuff extends CoImaged<int> {
+
     static _typeInfo: _Policy_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _Policy_stuff_TypeInfo();
+            this._typeInfo = _Policy_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
-    id: int;
     name?: string;
     controlClass: string;
     methodName?: string;

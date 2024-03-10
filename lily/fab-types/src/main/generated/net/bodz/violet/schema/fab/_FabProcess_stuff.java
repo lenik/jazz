@@ -4,17 +4,20 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.ArtifactModel;
 
 @IdType(Long.class)
 public abstract class _FabProcess_stuff
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +44,7 @@ public abstract class _FabProcess_stuff
     public static final int N_DEADLINE = 35;
     public static final int N_TRACK_COUNT = 10;
 
-    private static final int _ord_TASK_ID = 17;
+    private static final int _ord_TASK_ID = 18;
     private static final int _ord_PARENT_ID = _ord_TASK_ID + 1;
     private static final int _ord_OUTPUT_ID = _ord_PARENT_ID + 1;
     private static final int _ord_STANDARD_ID = _ord_OUTPUT_ID + 1;
@@ -54,7 +57,7 @@ public abstract class _FabProcess_stuff
     @NotNull
     BigDecimal quantity;
 
-    Object batch;
+    JsonVariant batch;
 
     @NotNull
     Timestamp since;
@@ -105,11 +108,11 @@ public abstract class _FabProcess_stuff
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)
     @Column(name = "batch", precision = 2147483647)
-    public Object getBatch() {
+    public JsonVariant getBatch() {
         return batch;
     }
 
-    public void setBatch(Object value) {
+    public void setBatch(JsonVariant value) {
         this.batch = value;
     }
 
@@ -150,9 +153,10 @@ public abstract class _FabProcess_stuff
 
     /**
      *
-     * @label std
      * @constraint foreign key (std) references violet.fabstdproc (id)
      */
+    @JoinColumn(name = "std")
+    @ManyToOne
     @NotNull
     public FabStdProcess getStandard() {
         return standard;
@@ -169,6 +173,8 @@ public abstract class _FabProcess_stuff
     @Column(name = "std", nullable = false, precision = 10)
     public synchronized int getStandardId() {
         if (standard != null) {
+            if (standard.getId() == null)
+                return 0;
             return standard.getId();
         }
         return standardId;
@@ -180,9 +186,10 @@ public abstract class _FabProcess_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.fabproc (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public FabProcess getParent() {
         return parent;
     }
@@ -209,9 +216,10 @@ public abstract class _FabProcess_stuff
 
     /**
      *
-     * @label output
      * @constraint foreign key (output) references violet.artmodel (id)
      */
+    @JoinColumn(name = "output")
+    @ManyToOne
     @NotNull
     public ArtifactModel getOutput() {
         return output;
@@ -228,6 +236,8 @@ public abstract class _FabProcess_stuff
     @Column(name = "output", nullable = false, precision = 10)
     public synchronized int getOutputId() {
         if (output != null) {
+            if (output.getId() == null)
+                return 0;
             return output.getId();
         }
         return outputId;
@@ -239,9 +249,10 @@ public abstract class _FabProcess_stuff
 
     /**
      *
-     * @label task
      * @constraint foreign key (task) references violet.fabtask (id)
      */
+    @JoinColumn(name = "task")
+    @ManyToOne
     @NotNull
     public FabTask getTask() {
         return task;
@@ -258,6 +269,8 @@ public abstract class _FabProcess_stuff
     @Column(name = "task", nullable = false, precision = 19)
     public synchronized long getTaskId() {
         if (task != null) {
+            if (task.getId() == null)
+                return 0L;
             return task.getId();
         }
         return taskId;

@@ -14,8 +14,7 @@ public class TestAnswerSamples
             throws Exception {
         TestAnswer a = new TestAnswer();
         a.setQuestion(question);
-        a.setId(7247932969513961162L);
-        a.setValid(true);
+        a.setValid(false);
         return a;
     }
 

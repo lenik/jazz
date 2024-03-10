@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -51,6 +53,8 @@ public abstract class _ArticleTalkVote_stuff
      *
      * @constraint foreign key (parent) references lily.article_msg (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     @NotNull
     public ArticleTalk getParent() {
         return parent;

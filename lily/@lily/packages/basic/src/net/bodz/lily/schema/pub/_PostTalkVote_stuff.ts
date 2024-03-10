@@ -5,10 +5,11 @@ import type PostTalk from "./PostTalk";
 import _PostTalkVote_stuff_TypeInfo from "./_PostTalkVote_stuff_TypeInfo";
 
 export class _PostTalkVote_stuff extends VoteRecord {
+
     static _typeInfo: _PostTalkVote_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostTalkVote_stuff_TypeInfo();
+            this._typeInfo = _PostTalkVote_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

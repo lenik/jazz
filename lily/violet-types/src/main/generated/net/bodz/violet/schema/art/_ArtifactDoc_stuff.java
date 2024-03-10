@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.art;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -50,9 +52,10 @@ public abstract class _ArtifactDoc_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -69,6 +72,8 @@ public abstract class _ArtifactDoc_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;

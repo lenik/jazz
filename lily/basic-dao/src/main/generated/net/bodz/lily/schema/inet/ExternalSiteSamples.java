@@ -22,11 +22,9 @@ public class ExternalSiteSamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
-        a.setId(369647515);
-        a.setDepth(283320390);
         a.setUrlfmt("ueca qko uxa*Afguo");
-        a.setBonus(1684163652);
-        a.setCount(2075354756);
+        a.setBonus(369647515);
+        a.setCount(283320390);
         return a;
     }
 

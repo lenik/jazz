@@ -2,16 +2,11 @@ package net.bodz.lily.schema.geo;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.concrete.util.GeoLocation;
-import net.bodz.lily.entity.attachment.util.IImagesInProps;
 
-@HaveAttachments
 @Table(schema = Zone.SCHEMA_NAME, name = Zone.TABLE_NAME)
 public class Zone
-        extends _Zone_stuff
-        implements
-            IImagesInProps {
+        extends _Zone_stuff {
 
     private static final long serialVersionUID = 1L;
 

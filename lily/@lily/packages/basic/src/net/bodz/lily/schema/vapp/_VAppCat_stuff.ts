@@ -1,10 +1,9 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
-import type VAppCat from "./VAppCat";
+import CoCategory from "../../concrete/CoCategory";
 import _VAppCat_stuff_TypeInfo from "./_VAppCat_stuff_TypeInfo";
 
-export class _VAppCat_stuff extends CoEntity<int> {
+export class _VAppCat_stuff<this_t> extends CoCategory<this_t, int> {
     static _typeInfo: _VAppCat_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
@@ -12,13 +11,7 @@ export class _VAppCat_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     name?: string;
-    depth: int;
-    refCount: int;
-
-    parent?: VAppCat;
-    parentId?: int;
 
     constructor(o: any) {
         super(o);

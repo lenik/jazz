@@ -1,8 +1,9 @@
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
-import type VAppCat from "./VAppCat";
+import type VAppCategory from "./VAppCategory";
 import type VAppRequest from "./VAppRequest";
 import type _VApp_stuff_TypeInfo from "./_VApp_stuff_TypeInfo";
 
@@ -22,10 +23,13 @@ export class _VApp_stuff_Validators extends CoEntityValidators {
     validateCode(val: string) {
     }
 
+    validateProperties(val: JsonVariant) {
+    }
+
     validateSecret(val: string) {
     }
 
-    validateCategory(val: VAppCat) {
+    validateCategory(val: VAppCategory) {
     }
 
     validateReq(val: VAppRequest) {

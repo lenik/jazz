@@ -6,7 +6,6 @@ net.bodz.violet.schema.art.ArtifactPhaseSamples
 net.bodz.violet.schema.art.ArtifactSamples
 net.bodz.violet.schema.art.ArtifactTagSamples
 net.bodz.violet.schema.art.ArtifactVoteSamples
-net.bodz.violet.schema.art.UOMSamples
 net.bodz.violet.schema.asset.AssetSamples
 net.bodz.violet.schema.asset.GroupAssetSamples
 net.bodz.violet.schema.asset.OrgAssetSamples

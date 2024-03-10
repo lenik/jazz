@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
@@ -143,6 +145,8 @@ public abstract class _Post_stuff
      *
      * @constraint foreign key (parent) references lily.post (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public Post getParent() {
         return parent;
     }
@@ -171,6 +175,8 @@ public abstract class _Post_stuff
      *
      * @constraint foreign key (cat) references lily.postcat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public PostCategory getCategory() {
         return category;
     }

@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="issueId" column="issue" />
         <result property="userId" column="user" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="issue" columnPrefix="issue_"
+        <association property="issue" columnPrefix="issue_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.issue.Issue" 
             resultMap="net.bodz.violet.schema.issue.dao.IssueMapper.objlist_map" />
     </resultMap>
@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -35,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             issue.id issue_id, 
             issue.uid issue_uid, 
             issue.gid issue_gid, 
@@ -76,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -85,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             issue.id issue_id, 
             issue.uid issue_uid, 
             issue.gid issue_gid, 
@@ -169,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from issue_fav
+        select count(*) "rows" from issue_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

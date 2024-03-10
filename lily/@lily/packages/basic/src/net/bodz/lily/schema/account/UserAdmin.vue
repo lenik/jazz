@@ -60,9 +60,9 @@ onMounted(() => {
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
-            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="Group" data-format="label" data-field="primaryGroup">The primary user group, the default value of ownerGroup.</th>
             <th data-type="User" data-format="label" data-field="referer">The referer user (used for promotion)</th>
             <th data-type="Person" data-format="label" data-field="person">Person</th>

@@ -14,10 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="amount" column="amount" />
         <result property="orderId" column="odr" />
         <result property="artifactId" column="art" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
-        <association property="order" columnPrefix="odr_"
+        <association property="order" columnPrefix="odr_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.tran.TransportOrder" 
             resultMap="net.bodz.violet.schema.tran.dao.TransportOrderMapper.objlist_map" />
     </resultMap>
@@ -43,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -83,24 +84,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             odr.saleodr odr_saleodr, 
             odr.storeodr odr_storeodr, 
             odr.shipper odr_shipper, 
-            odr.s_alias odr_s_alias, 
-            odr.s_ctprops odr_s_ctprops, 
-            odr.s_address1 odr_s_address1, 
-            odr.s_address2 odr_s_address2, 
-            odr.s_zone odr_s_zone, 
-            odr.s_tel odr_s_tel, 
-            odr.s_telok odr_s_telok, 
-            odr.s_email odr_s_email, 
-            odr.s_emailok odr_s_emailok, 
-            odr.d_alias odr_d_alias, 
-            odr.d_ctprops odr_d_ctprops, 
-            odr.d_address1 odr_d_address1, 
-            odr.d_address2 odr_d_address2, 
-            odr.d_zone odr_d_zone, 
-            odr.d_tel odr_d_tel, 
-            odr.d_telok odr_d_telok, 
-            odr.d_email odr_d_email, 
-            odr.d_emailok odr_d_emailok, 
+            odr.src_alias odr_src_alias, 
+            odr.src_ctprops odr_src_ctprops, 
+            odr.src_address1 odr_src_address1, 
+            odr.src_address2 odr_src_address2, 
+            odr.src_zone odr_src_zone, 
+            odr.src_tel odr_src_tel, 
+            odr.src_telok odr_src_telok, 
+            odr.src_email odr_src_email, 
+            odr.src_emailok odr_src_emailok, 
+            odr.dst_alias odr_dst_alias, 
+            odr.dst_ctprops odr_dst_ctprops, 
+            odr.dst_address1 odr_dst_address1, 
+            odr.dst_address2 odr_dst_address2, 
+            odr.dst_zone odr_dst_zone, 
+            odr.dst_tel odr_dst_tel, 
+            odr.dst_telok odr_dst_telok, 
+            odr.dst_email odr_dst_email, 
+            odr.dst_emailok odr_dst_emailok, 
             odr.shipcost odr_shipcost, 
             odr."length" odr_length, 
             odr.sum_qty odr_sum_qty, 
@@ -132,6 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -172,24 +174,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             odr.saleodr odr_saleodr, 
             odr.storeodr odr_storeodr, 
             odr.shipper odr_shipper, 
-            odr.s_alias odr_s_alias, 
-            odr.s_ctprops odr_s_ctprops, 
-            odr.s_address1 odr_s_address1, 
-            odr.s_address2 odr_s_address2, 
-            odr.s_zone odr_s_zone, 
-            odr.s_tel odr_s_tel, 
-            odr.s_telok odr_s_telok, 
-            odr.s_email odr_s_email, 
-            odr.s_emailok odr_s_emailok, 
-            odr.d_alias odr_d_alias, 
-            odr.d_ctprops odr_d_ctprops, 
-            odr.d_address1 odr_d_address1, 
-            odr.d_address2 odr_d_address2, 
-            odr.d_zone odr_d_zone, 
-            odr.d_tel odr_d_tel, 
-            odr.d_telok odr_d_telok, 
-            odr.d_email odr_d_email, 
-            odr.d_emailok odr_d_emailok, 
+            odr.src_alias odr_src_alias, 
+            odr.src_ctprops odr_src_ctprops, 
+            odr.src_address1 odr_src_address1, 
+            odr.src_address2 odr_src_address2, 
+            odr.src_zone odr_src_zone, 
+            odr.src_tel odr_src_tel, 
+            odr.src_telok odr_src_telok, 
+            odr.src_email odr_src_email, 
+            odr.src_emailok odr_src_emailok, 
+            odr.dst_alias odr_dst_alias, 
+            odr.dst_ctprops odr_dst_ctprops, 
+            odr.dst_address1 odr_dst_address1, 
+            odr.dst_address2 odr_dst_address2, 
+            odr.dst_zone odr_dst_zone, 
+            odr.dst_tel odr_dst_tel, 
+            odr.dst_telok odr_dst_telok, 
+            odr.dst_email odr_dst_email, 
+            odr.dst_emailok odr_dst_emailok, 
             odr.shipcost odr_shipcost, 
             odr."length" odr_length, 
             odr.sum_qty odr_sum_qty, 
@@ -271,7 +273,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from tranodrl
+        select count(*) "rows" from tranodrl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="answer" column="ans" />
         <result property="anstext" column="anstext" />
@@ -18,10 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="waittime" column="waittime" />
         <result property="applyId" column="apply" />
         <result property="questionId" column="q" />
-        <association property="question" columnPrefix="q_"
+        <association property="question" columnPrefix="q_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.TestQuestion" 
             resultMap="net.bodz.violet.schema.edu.dao.TestQuestionMapper.objlist_map" />
-        <association property="apply" columnPrefix="apply_"
+        <association property="apply" columnPrefix="apply_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.TestApply" 
             resultMap="net.bodz.violet.schema.edu.dao.TestApplyMapper.objlist_map" />
     </resultMap>
@@ -71,6 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             apply.acl apply_acl, 
             apply.label apply_label, 
             apply.description apply_description, 
+            apply.icon apply_icon, 
             apply.priority apply_priority, 
             apply.flags apply_flags, 
             apply."state" apply_state, 
@@ -134,6 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             apply.acl apply_acl, 
             apply.label apply_label, 
             apply.description apply_description, 
+            apply.icon apply_icon, 
             apply.priority apply_priority, 
             apply.flags apply_flags, 
             apply."state" apply_state, 
@@ -195,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{applyId},
             #{questionId},
@@ -213,7 +215,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             apply = #{applyId},
             q = #{questionId},
@@ -235,7 +237,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from testapplyl
+        select count(*) "rows" from testapplyl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

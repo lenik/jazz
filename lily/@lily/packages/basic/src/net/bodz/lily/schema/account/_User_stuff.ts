@@ -8,13 +8,13 @@ import type UserType from "./UserType";
 import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
 export class _User_stuff extends CoPrincipal {
+
     static _typeInfo: _User_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _User_stuff_TypeInfo();
+            this._typeInfo = _User_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
 
     person?: Person;
     personId?: int;

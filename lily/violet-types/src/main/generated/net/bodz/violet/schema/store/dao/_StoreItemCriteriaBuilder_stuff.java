@@ -1,5 +1,6 @@
 package net.bodz.violet.schema.store.dao;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 
 public class _StoreItemCriteriaBuilder_stuff<self_t extends _StoreItemCriteriaBuilder_stuff<self_t>>
@@ -14,6 +15,8 @@ public class _StoreItemCriteriaBuilder_stuff<self_t extends _StoreItemCriteriaBu
     public final IntegerField artifactId = integer("art");
 
     public final IntegerField regionId = integer("region");
+
+    public final DiscreteField<JsonVariant> batch = discrete("batch", JsonVariant.class);
 
     public final BigDecimalField quantity = bigDecimal("qty");
 

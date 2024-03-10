@@ -7,13 +7,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.violet.schema.fab.FabStdTestParameter">
         <id property="id" column="id" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="required" column="required" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="expected" column="expected" />
         <result property="testId" column="test" />
-        <association property="test" columnPrefix="test_"
+        <association property="test" columnPrefix="test_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabStdTest" 
             resultMap="net.bodz.violet.schema.fab.dao.FabStdTestMapper.objlist_map" />
     </resultMap>
@@ -36,14 +36,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             test.acl test_acl, 
             test.label test_label, 
             test.description test_description, 
+            test.icon test_icon, 
             test.priority test_priority, 
             test.flags test_flags, 
             test."state" test_state, 
             test.creation test_creation, 
             test.lastmod test_lastmod, 
             test."version" test_version, 
-            test.image test_image, 
-            test.imagealt test_imagealt, 
             test.props test_props, 
             test.cat test_cat, 
             test.parent test_parent, 
@@ -72,14 +71,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             test.acl test_acl, 
             test.label test_label, 
             test.description test_description, 
+            test.icon test_icon, 
             test.priority test_priority, 
             test.flags test_flags, 
             test."state" test_state, 
             test.creation test_creation, 
             test.lastmod test_lastmod, 
             test."version" test_version, 
-            test.image test_image, 
-            test.imagealt test_imagealt, 
             test.props test_props, 
             test.cat test_cat, 
             test.parent test_parent, 
@@ -125,11 +123,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             expected
         ) values(
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{testId},
             #{required},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{expected}
         );
     ]]></insert>
@@ -138,11 +136,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update fabstdtest_parm
         <set>
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             test = #{testId},
             required = #{required},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             expected = #{expected},
         </set>
         <where>
@@ -158,7 +156,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabstdtest_parm
+        select count(*) "rows" from fabstdtest_parm a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

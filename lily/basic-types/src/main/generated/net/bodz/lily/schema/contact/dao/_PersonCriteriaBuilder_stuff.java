@@ -2,10 +2,10 @@ package net.bodz.lily.schema.contact.dao;
 
 import java.sql.Date;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
 public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 

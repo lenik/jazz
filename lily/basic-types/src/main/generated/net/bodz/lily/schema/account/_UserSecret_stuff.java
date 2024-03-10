@@ -2,7 +2,10 @@ package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -23,19 +26,22 @@ public abstract class _UserSecret_stuff
     public static final String TABLE_NAME = "usersec";
 
     public static final String FIELD_ID = "id";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_USER_ID = "user";
     public static final String FIELD_PASSWORD = "passwd";
     public static final String FIELD_QUESTION = "question";
     public static final String FIELD_ANSWER = "answer";
 
     public static final int N_ID = 10;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_USER_ID = 10;
     public static final int N_PASSWORD = 40;
     public static final int N_QUESTION = 100;
     public static final int N_ANSWER = 30;
 
     private static final int _ord_ID = 1;
-    private static final int _ord_USER_ID = _ord_ID + 5;
+    private static final int _ord_PROPERTIES = _ord_ID + 4;
+    private static final int _ord_USER_ID = _ord_PROPERTIES + 1;
     private static final int _ord_PASSWORD = _ord_USER_ID + 1;
     private static final int _ord_QUESTION = _ord_PASSWORD + 1;
     private static final int _ord_ANSWER = _ord_QUESTION + 1;
@@ -43,6 +49,8 @@ public abstract class _UserSecret_stuff
     @Id
     @NotNull
     int id;
+
+    JsonVariant properties;
 
     /** Password data */
     @NotNull
@@ -82,6 +90,17 @@ public abstract class _UserSecret_stuff
 
     public void setId(int value) {
         this.id = value;
+    }
+
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
     }
 
     /**
@@ -144,6 +163,8 @@ public abstract class _UserSecret_stuff
      *
      * @constraint foreign key (user) references lily.user (id)
      */
+    @JoinColumn(name = "user")
+    @ManyToOne
     @NotNull
     public User getUser() {
         return user;

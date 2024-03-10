@@ -2,12 +2,12 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import CoImagedValidators from "../../concrete/CoImagedValidators";
 import type Zone from "./Zone";
 import type ZoneCategory from "./ZoneCategory";
 import type _Zone_stuff_TypeInfo from "./_Zone_stuff_TypeInfo";
 
-export class _Zone_stuff_Validators extends CoEntityValidators {
+export class _Zone_stuff_Validators extends CoImagedValidators {
 
     constructor(type: _Zone_stuff_TypeInfo) {
         super(type);
@@ -15,9 +15,6 @@ export class _Zone_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _Zone_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateCode(val: string) {

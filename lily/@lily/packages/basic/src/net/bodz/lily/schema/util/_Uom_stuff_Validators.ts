@@ -1,11 +1,11 @@
-import type { double, int } from "@skeljs/core/src/lang/basetype";
+import type { double } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import CoCodeValidators from "../../concrete/CoCodeValidators";
 import type Uom from "./Uom";
 import type _Uom_stuff_TypeInfo from "./_Uom_stuff_TypeInfo";
 
-export class _Uom_stuff_Validators extends CoEntityValidators {
+export class _Uom_stuff_Validators extends CoCodeValidators {
 
     constructor(type: _Uom_stuff_TypeInfo) {
         super(type);
@@ -15,19 +15,13 @@ export class _Uom_stuff_Validators extends CoEntityValidators {
         return this._type as _Uom_stuff_TypeInfo;
     }
 
-    validateId(val: int) {
-    }
-
-    validateCode(val: string) {
-    }
-
-    validateProp(val: string) {
+    validateProperty(val: string) {
     }
 
     validateScale(val: double) {
     }
 
-    validateStd(val: Uom) {
+    validateStandard(val: Uom) {
     }
 
 }

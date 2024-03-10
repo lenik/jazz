@@ -3,10 +3,14 @@ import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
 export class PostBackrefTypeInfo extends _PostBackref_stuff_TypeInfo {
 
+    readonly validators = new PostBackrefValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostBackref"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PostBackrefValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class PostBackrefTypeInfo extends _PostBackref_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PostBackrefTypeInfo();
 
 }
 

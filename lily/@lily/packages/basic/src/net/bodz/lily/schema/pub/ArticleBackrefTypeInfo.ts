@@ -3,10 +3,14 @@ import _ArticleBackref_stuff_TypeInfo from "./_ArticleBackref_stuff_TypeInfo";
 
 export class ArticleBackrefTypeInfo extends _ArticleBackref_stuff_TypeInfo {
 
+    readonly validators = new ArticleBackrefValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleBackref"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleBackrefValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ArticleBackrefTypeInfo extends _ArticleBackref_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ArticleBackrefTypeInfo();
 
 }
 

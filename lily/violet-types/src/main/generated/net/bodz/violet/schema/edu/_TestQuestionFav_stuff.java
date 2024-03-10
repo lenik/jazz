@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.edu;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -32,9 +34,10 @@ public abstract class _TestQuestionFav_stuff
 
     /**
      *
-     * @label testq
      * @constraint foreign key (testq) references violet.testq (id)
      */
+    @JoinColumn(name = "testq")
+    @ManyToOne
     @NotNull
     public TestQuestion getTestq() {
         return testq;

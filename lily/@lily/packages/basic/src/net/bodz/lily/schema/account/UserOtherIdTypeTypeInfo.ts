@@ -3,11 +3,15 @@ import _UserOtherIdType_stuff_TypeInfo from "./_UserOtherIdType_stuff_TypeInfo";
 
 export class UserOtherIdTypeTypeInfo extends _UserOtherIdType_stuff_TypeInfo {
 
+    readonly validators = new UserOtherIdTypeValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.UserOtherIdType"; }
     get icon() { return "fa-tag"; }
     get description() { return "Type of Open ID"; }
-
-    validators = new UserOtherIdTypeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -15,9 +19,7 @@ export class UserOtherIdTypeTypeInfo extends _UserOtherIdType_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new UserOtherIdTypeTypeInfo();
 
 }
 

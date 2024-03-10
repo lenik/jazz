@@ -4,18 +4,21 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.ArtifactModel;
 
 @IdType(Long.class)
 public abstract class _FabTaskItem_stuff
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,7 +57,7 @@ public abstract class _FabTaskItem_stuff
     @NotNull
     BigDecimal quantity;
 
-    Object batch;
+    JsonVariant batch;
 
     Integer trackCount;
 
@@ -111,11 +114,11 @@ public abstract class _FabTaskItem_stuff
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)
     @Column(name = "batch", precision = 2147483647)
-    public Object getBatch() {
+    public JsonVariant getBatch() {
         return batch;
     }
 
-    public void setBatch(Object value) {
+    public void setBatch(JsonVariant value) {
         this.batch = value;
     }
 
@@ -132,9 +135,10 @@ public abstract class _FabTaskItem_stuff
 
     /**
      *
-     * @label task
      * @constraint foreign key (task) references violet.fabtask (id)
      */
+    @JoinColumn(name = "task")
+    @ManyToOne
     @NotNull
     public FabTask getTask() {
         return task;
@@ -151,6 +155,8 @@ public abstract class _FabTaskItem_stuff
     @Column(name = "task", nullable = false, precision = 19)
     public synchronized long getTaskId() {
         if (task != null) {
+            if (task.getId() == null)
+                return 0L;
             return task.getId();
         }
         return taskId;
@@ -162,9 +168,10 @@ public abstract class _FabTaskItem_stuff
 
     /**
      *
-     * @label model
      * @constraint foreign key (model) references violet.artmodel (id)
      */
+    @JoinColumn(name = "model")
+    @ManyToOne
     @NotNull
     public ArtifactModel getModel() {
         return model;
@@ -181,6 +188,8 @@ public abstract class _FabTaskItem_stuff
     @Column(name = "model", nullable = false, precision = 10)
     public synchronized int getModelId() {
         if (model != null) {
+            if (model.getId() == null)
+                return 0;
             return model.getId();
         }
         return modelId;

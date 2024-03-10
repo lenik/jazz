@@ -11,20 +11,24 @@ export class _ArticleBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article_backref";
 
+    static readonly FIELD_ARTICLE_ID = "article";
+    static readonly FIELD_SITE_ID = "site";
+    static readonly FIELD_KEY = "key";
+    static readonly FIELD_VALUE = "value";
+
+    static readonly N_ARTICLE_ID = 19;
+    static readonly N_SITE_ID = 10;
+    static readonly N_KEY = 30;
+    static readonly N_VALUE = 10;
+
+    readonly validators = new _ArticleBackref_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleBackref"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ARTICLE_ID = "article";
-    static FIELD_SITE_ID = "site";
-    static FIELD_KEY = "key";
-    static FIELD_VALUE = "value";
-
-    static N_ARTICLE_ID = 19;
-    static N_SITE_ID = 10;
-    static N_KEY = 30;
-    static N_VALUE = 10;
-
-    validators = new _ArticleBackref_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -40,9 +44,7 @@ export class _ArticleBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _ArticleBackref_stuff_TypeInfo();
 
 }
 

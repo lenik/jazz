@@ -3,6 +3,7 @@ package net.bodz.lily.schema.account;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
@@ -24,15 +25,18 @@ public abstract class _UserType_stuff
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_DUMMY = "dummy";
 
     public static final int N_ID = 10;
     public static final int N_NAME = 20;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_DUMMY = 10;
 
     private static final int _ord_ID = 1;
     private static final int _ord_NAME = _ord_ID + 1;
-    private static final int _ord_DUMMY = 13;
+    private static final int _ord_PROPERTIES = _ord_NAME + 10;
+    private static final int _ord_DUMMY = _ord_PROPERTIES + 1;
 
     @Id
     @NotNull
@@ -40,6 +44,8 @@ public abstract class _UserType_stuff
 
     /** The user type name */
     String name;
+
+    JsonVariant properties;
 
     Integer dummy;
 
@@ -81,6 +87,17 @@ public abstract class _UserType_stuff
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
     }
 
     @Ordinal(_ord_DUMMY)

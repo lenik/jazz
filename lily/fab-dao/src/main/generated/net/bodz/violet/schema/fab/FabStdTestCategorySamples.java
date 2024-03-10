@@ -22,6 +22,7 @@ public class FabStdTestCategorySamples
         a.setOwnerGroup(ownerGroup);
         a.setParent(parent);
         a.setOwnerUser(ownerUser);
+        a.setName("u-k. reb.");
         return a;
     }
 

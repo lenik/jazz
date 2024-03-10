@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="shopId" column="shop" />
         <result property="userId" column="user" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="shop" columnPrefix="shop_"
+        <association property="shop" columnPrefix="shop_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.shop.Shop" 
             resultMap="net.bodz.violet.schema.shop.dao.ShopMapper.objlist_map" />
     </resultMap>
@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -35,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             shop.id shop_id, 
             shop.uid shop_uid, 
             shop.gid shop_gid, 
@@ -42,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop.acl shop_acl, 
             shop.label shop_label, 
             shop.description shop_description, 
+            shop.icon shop_icon, 
             shop.priority shop_priority, 
             shop.flags shop_flags, 
             shop."state" shop_state, 
@@ -67,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -76,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user".props user_props, 
             "user".gid0 user_gid0, 
             "user".referer user_referer, 
+            "user".person user_person, 
             shop.id shop_id, 
             shop.uid shop_uid, 
             shop.gid shop_gid, 
@@ -83,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shop.acl shop_acl, 
             shop.label shop_label, 
             shop.description shop_description, 
+            shop.icon shop_icon, 
             shop.priority shop_priority, 
             shop.flags shop_flags, 
             shop."state" shop_state, 
@@ -151,7 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from shop_fav
+        select count(*) "rows" from shop_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

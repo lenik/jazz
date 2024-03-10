@@ -2,6 +2,8 @@ package net.bodz.lily.schema.vapp;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -107,6 +109,8 @@ public abstract class _VApiLog_stuff
      *
      * @constraint foreign key (api) references lily.apitype (id)
      */
+    @JoinColumn(name = "api")
+    @ManyToOne
     public ApiType getApi() {
         return api;
     }
@@ -135,6 +139,8 @@ public abstract class _VApiLog_stuff
      *
      * @constraint foreign key (app) references lily.vapp (id)
      */
+    @JoinColumn(name = "app")
+    @ManyToOne
     @NotNull
     public VApp getApp() {
         return app;

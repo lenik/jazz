@@ -9,10 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="voteScore" column="votes" />
         <result property="parentId" column="parent" />
         <result property="userId" column="user" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="parent" columnPrefix="parent_"
+        <association property="parent" columnPrefix="parent_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.pub.PostTalk" 
             resultMap="net.bodz.lily.schema.pub.dao.PostTalkMapper.objlist_map" />
     </resultMap>

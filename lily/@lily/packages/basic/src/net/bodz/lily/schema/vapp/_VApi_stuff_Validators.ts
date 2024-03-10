@@ -1,3 +1,4 @@
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
@@ -17,6 +18,9 @@ export class _VApi_stuff_Validators extends CoEntityValidators {
     }
 
     validateId(val: long) {
+    }
+
+    validateProperties(val: JsonVariant) {
     }
 
     validateCallback(val: string) {

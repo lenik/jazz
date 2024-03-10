@@ -1,24 +1,15 @@
 import type { double, int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoCode from "../../concrete/CoCode";
 import type Uom from "./Uom";
-import _Uom_stuff_TypeInfo from "./_Uom_stuff_TypeInfo";
 
-export class _Uom_stuff extends CoEntity<int> {
-    static _typeInfo: _Uom_stuff_TypeInfo;
-    static get TYPE() {
-        if (this._typeInfo == null)
-            this._typeInfo = new _Uom_stuff_TypeInfo();
-        return this._typeInfo;
-    }
+export class _Uom_stuff<this_t> extends CoCode<this_t> {
 
-    id: int;
-    code?: string;
-    prop: string;
+    property: string;
     scale: double;
 
-    std?: Uom;
-    stdId?: int;
+    standard?: Uom;
+    standardId?: int;
 
     constructor(o: any) {
         super(o);

@@ -3,11 +3,15 @@ import _PhaseDef_stuff_TypeInfo from "./_PhaseDef_stuff_TypeInfo";
 
 export class PhaseDefTypeInfo extends _PhaseDef_stuff_TypeInfo {
 
+    readonly validators = new PhaseDefValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.meta.PhaseDef"; }
     get icon() { return "fa-tag"; }
     get label() { return "Phase"; }
-
-    validators = new PhaseDefValidators(this);
 
     override preamble() {
         super.preamble();
@@ -15,9 +19,7 @@ export class PhaseDefTypeInfo extends _PhaseDef_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PhaseDefTypeInfo();
 
 }
 

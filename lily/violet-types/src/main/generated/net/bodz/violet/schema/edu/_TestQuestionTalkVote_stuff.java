@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.edu;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -49,9 +51,10 @@ public abstract class _TestQuestionTalkVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.testq_msg (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     @NotNull
     public TestQuestionTalk getParent() {
         return parent;

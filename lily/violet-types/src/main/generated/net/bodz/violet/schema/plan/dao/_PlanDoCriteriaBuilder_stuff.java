@@ -19,5 +19,6 @@ public class _PlanDoCriteriaBuilder_stuff<self_t extends _PlanDoCriteriaBuilder_
 
     public final LongField parentId = _long("parent");
 
+    public final DiscreteField<String[]> changes = discrete("changes", String[].class);
 
 }

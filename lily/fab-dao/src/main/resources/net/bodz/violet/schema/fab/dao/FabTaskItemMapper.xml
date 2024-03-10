@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
@@ -18,14 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="deadline" column="deadline" />
         <result property="status" column="status" />
         <result property="quantity" column="qty" />
-        <result property="batch.jsonStr" column="batch" />
+        <result property="batch" column="batch" />
         <result property="trackCount" column="ntrack" />
         <result property="taskId" column="task" />
         <result property="modelId" column="model" />
-        <association property="task" columnPrefix="task_"
+        <association property="task" columnPrefix="task_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabTask" 
             resultMap="net.bodz.violet.schema.fab.dao.FabTaskMapper.objlist_map" />
-        <association property="model" columnPrefix="model_"
+        <association property="model" columnPrefix="model_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.ArtifactModel" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactModelMapper.objlist_map" />
     </resultMap>
@@ -56,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             task.acl task_acl, 
             task.label task_label, 
             task.description task_description, 
+            task.icon task_icon, 
             task.priority task_priority, 
             task.flags task_flags, 
             task."state" task_state, 
@@ -77,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.acl model_acl, 
             model.label model_label, 
             model.description model_description, 
+            model.icon model_icon, 
             model.priority model_priority, 
             model.flags model_flags, 
             model."state" model_state, 
@@ -125,6 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             task.acl task_acl, 
             task.label task_label, 
             task.description task_description, 
+            task.icon task_icon, 
             task.priority task_priority, 
             task.flags task_flags, 
             task."state" task_state, 
@@ -146,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             model.acl model_acl, 
             model.label model_label, 
             model.description model_description, 
+            model.icon model_icon, 
             model.priority model_priority, 
             model.flags model_flags, 
             model."state" model_state, 
@@ -215,7 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
@@ -225,7 +229,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{status},
             #{modelId},
             #{quantity},
-            #{batch.jsonStr}::jsonb,
+            #{batch},
             #{trackCount}
         );
     ]]></insert>
@@ -237,7 +241,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
@@ -247,7 +251,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             status = #{status},
             model = #{modelId},
             qty = #{quantity},
-            batch = #{batch.jsonStr}::jsonb,
+            batch = #{batch},
             ntrack = #{trackCount},
         </set>
         <where>
@@ -263,7 +267,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabtaskl
+        select count(*) "rows" from fabtaskl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

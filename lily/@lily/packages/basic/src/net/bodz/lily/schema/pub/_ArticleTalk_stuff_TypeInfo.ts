@@ -10,16 +10,20 @@ export class _ArticleTalk_stuff_TypeInfo extends CoTalkTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "article_msg";
 
+    static readonly FIELD_FORM_ARGUMENTS = "formargs";
+    static readonly FIELD_ARTICLE_ID = "article";
+
+    static readonly N_FORM_ARGUMENTS = 2147483647;
+    static readonly N_ARTICLE_ID = 19;
+
+    readonly validators = new _ArticleTalk_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleTalk"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_FORM_ARGUMENTS = "formargs";
-    static FIELD_ARTICLE_ID = "article";
-
-    static N_FORM_ARGUMENTS = 2147483647;
-    static N_ARTICLE_ID = 19;
-
-    validators = new _ArticleTalk_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -29,10 +33,6 @@ export class _ArticleTalk_stuff_TypeInfo extends CoTalkTypeInfo {
             article: property({ type: Article.TYPE, nullable: false, validator: this.validators.validateArticle }),
             articleId: property({ type: LONG, nullable: false, precision: 19 }),
         });
-    }
-
-    constructor(selfType: any) {
-        super(selfType);
     }
 
 }

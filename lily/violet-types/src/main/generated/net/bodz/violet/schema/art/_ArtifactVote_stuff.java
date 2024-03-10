@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.art;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -49,9 +51,10 @@ public abstract class _ArtifactVote_stuff
 
     /**
      *
-     * @label parent
      * @constraint foreign key (parent) references violet.art (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     @NotNull
     public Artifact getParent() {
         return parent;
@@ -68,6 +71,8 @@ public abstract class _ArtifactVote_stuff
     @Column(name = "parent", nullable = false, precision = 10)
     public synchronized int getParentId() {
         if (parent != null) {
+            if (parent.getId() == null)
+                return 0;
             return parent.getId();
         }
         return parentId;

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -100,9 +102,10 @@ public abstract class _FabStdProcessInput_stuff
 
     /**
      *
-     * @label proc
      * @constraint foreign key (proc) references violet.fabstdproc (id)
      */
+    @JoinColumn(name = "proc")
+    @ManyToOne
     @NotNull
     public FabStdProcess getProcess() {
         return process;
@@ -119,6 +122,8 @@ public abstract class _FabStdProcessInput_stuff
     @Column(name = "proc", nullable = false, precision = 10)
     public synchronized int getProcessId() {
         if (process != null) {
+            if (process.getId() == null)
+                return 0;
             return process.getId();
         }
         return processId;
@@ -130,9 +135,10 @@ public abstract class _FabStdProcessInput_stuff
 
     /**
      *
-     * @label model
      * @constraint foreign key (model) references violet.artmodel (id)
      */
+    @JoinColumn(name = "model")
+    @ManyToOne
     public ArtifactModel getModel() {
         return model;
     }
@@ -159,9 +165,10 @@ public abstract class _FabStdProcessInput_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     public Artifact getArtifact() {
         return artifact;
     }

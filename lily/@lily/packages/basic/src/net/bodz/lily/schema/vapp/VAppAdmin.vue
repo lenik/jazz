@@ -9,7 +9,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import Group from "../account/Group";
 import User from "../account/User";
 import VApp from "./VApp";
-import VAppCat from "./VAppCat";
+import VAppCategory from "./VAppCategory";
 import VAppRequest from "./VAppRequest";
 
 export const title = "Admin view of: V app";
@@ -39,7 +39,7 @@ const typeMap = {
     "ZonedDateTime": ZonedDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "VAppRequest": VAppRequest.TYPE,
-    "VAppCat": VAppCat.TYPE,
+    "VAppCategory": VAppCategory.TYPE,
 };
 
 onMounted(() => {
@@ -63,12 +63,12 @@ onMounted(() => {
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="STRING" data-field="code">Code</th>
             <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="VAppRequest" data-format="label" data-field="req">Req</th>
-            <th data-type="VAppCat" data-format="label" data-field="category">Category</th>
+            <th data-type="VAppCategory" data-format="label" data-field="category">Category</th>
             <th data-type="STRING" data-field="secret">Secret</th>
         </template>
         <template #preview>

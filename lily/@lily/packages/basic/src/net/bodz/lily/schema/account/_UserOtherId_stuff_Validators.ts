@@ -30,6 +30,9 @@ export class _UserOtherId_stuff_Validators extends CoEntityValidators {
     validateYear(val: int) {
     }
 
+    validateProperties(val: JsonVariant) {
+    }
+
     validateOtherId(val: string) {
     }
 

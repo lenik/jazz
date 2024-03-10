@@ -2,6 +2,8 @@ package net.bodz.violet.schema.edu;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -138,9 +140,10 @@ public abstract class _TestApplyItem_stuff
 
     /**
      *
-     * @label q
      * @constraint foreign key (q) references violet.testq (id)
      */
+    @JoinColumn(name = "q")
+    @ManyToOne
     @NotNull
     public TestQuestion getQuestion() {
         return question;
@@ -170,9 +173,10 @@ public abstract class _TestApplyItem_stuff
 
     /**
      *
-     * @label apply
      * @constraint foreign key (apply) references violet.testapply (id)
      */
+    @JoinColumn(name = "apply")
+    @ManyToOne
     @NotNull
     public TestApply getApply() {
         return apply;
@@ -189,6 +193,8 @@ public abstract class _TestApplyItem_stuff
     @Column(name = "apply", nullable = false, precision = 19)
     public synchronized long getApplyId() {
         if (apply != null) {
+            if (apply.getId() == null)
+                return 0L;
             return apply.getId();
         }
         return applyId;

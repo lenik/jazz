@@ -11,13 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="path" column="path" />
         <result property="depth" column="depth" />
         <result property="height" column="height" />
@@ -38,37 +39,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="forCatId" column="for_cat" />
         <result property="forArtId" column="for_art" />
         <result property="artifactId" column="art" />
-        <association property="forCat" columnPrefix="for_cat_"
+        <association property="forCat" columnPrefix="for_cat_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.ArtifactCategory" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactCategoryMapper.objlist_map" />
-        <association property="proto" columnPrefix="proto_"
+        <association property="proto" columnPrefix="proto_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.Region" 
             resultMap="objlist_map" />
-        <association property="tag" columnPrefix="tag_"
+        <association property="tag" columnPrefix="tag_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.RegionTag" 
             resultMap="net.bodz.violet.schema.store.dao.RegionTagMapper.objlist_map" />
-        <association property="category" columnPrefix="category_"
+        <association property="category" columnPrefix="category_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.RegionCategory" 
             resultMap="net.bodz.violet.schema.store.dao.RegionCategoryMapper.objlist_map" />
-        <association property="parent" columnPrefix="parent_"
+        <association property="parent" columnPrefix="parent_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.Region" 
             resultMap="objlist_map" />
-        <association property="level" columnPrefix="level_"
+        <association property="level" columnPrefix="level_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.RegionLevel" 
             resultMap="net.bodz.violet.schema.store.dao.RegionLevelMapper.objlist_map" />
-        <association property="artifact" columnPrefix="art_"
+        <association property="artifact" columnPrefix="art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="material" columnPrefix="material_"
+        <association property="material" columnPrefix="material_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="forArt" columnPrefix="for_art_"
+        <association property="forArt" columnPrefix="for_art_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.Artifact" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactMapper.objlist_map" />
     </resultMap>
@@ -83,6 +84,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -116,6 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             for_cat.acl for_cat_acl, 
             for_cat.label for_cat_label, 
             for_cat.description for_cat_description, 
+            for_cat.icon for_cat_icon, 
             for_cat.priority for_cat_priority, 
             for_cat.flags for_cat_flags, 
             for_cat."state" for_cat_state, 
@@ -140,6 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proto.acl proto_acl, 
             proto.label proto_label, 
             proto.description proto_description, 
+            proto.icon proto_icon, 
             proto.priority proto_priority, 
             proto.flags proto_flags, 
             proto."state" proto_state, 
@@ -173,6 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -190,14 +195,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -210,6 +214,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -238,6 +243,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "level".id level_id, 
             "level".label level_label, 
             "level".description level_description, 
+            "level".icon level_icon, 
             "level".priority level_priority, 
             "level".flags level_flags, 
             "level"."state" level_state, 
@@ -256,6 +262,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -275,6 +282,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -284,6 +292,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             material.id material_id, 
             material.sku material_sku, 
             material.barcode material_barcode, 
@@ -294,6 +303,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             material.acl material_acl, 
             material.label material_label, 
             material.description material_description, 
+            material.icon material_icon, 
             material.priority material_priority, 
             material.flags material_flags, 
             material."state" material_state, 
@@ -313,6 +323,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -331,6 +342,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             for_art.acl for_art_acl, 
             for_art.label for_art_label, 
             for_art.description for_art_description, 
+            for_art.icon for_art_icon, 
             for_art.priority for_art_priority, 
             for_art.flags for_art_flags, 
             for_art."state" for_art_state, 
@@ -370,6 +382,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -403,6 +416,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             for_cat.acl for_cat_acl, 
             for_cat.label for_cat_label, 
             for_cat.description for_cat_description, 
+            for_cat.icon for_cat_icon, 
             for_cat.priority for_cat_priority, 
             for_cat.flags for_cat_flags, 
             for_cat."state" for_cat_state, 
@@ -427,6 +441,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             proto.acl proto_acl, 
             proto.label proto_label, 
             proto.description proto_description, 
+            proto.icon proto_icon, 
             proto.priority proto_priority, 
             proto.flags proto_flags, 
             proto."state" proto_state, 
@@ -460,6 +475,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             tag.code tag_code, 
             tag.label tag_label, 
             tag.description tag_description, 
+            tag.icon tag_icon, 
             tag.priority tag_priority, 
             tag.flags tag_flags, 
             tag."state" tag_state, 
@@ -477,14 +493,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -497,6 +512,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -525,6 +541,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "level".id level_id, 
             "level".label level_label, 
             "level".description level_description, 
+            "level".icon level_icon, 
             "level".priority level_priority, 
             "level".flags level_flags, 
             "level"."state" level_state, 
@@ -543,6 +560,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             art.acl art_acl, 
             art.label art_label, 
             art.description art_description, 
+            art.icon art_icon, 
             art.priority art_priority, 
             art.flags art_flags, 
             art."state" art_state, 
@@ -562,6 +580,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -571,6 +590,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             material.id material_id, 
             material.sku material_sku, 
             material.barcode material_barcode, 
@@ -581,6 +601,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             material.acl material_acl, 
             material.label material_label, 
             material.description material_description, 
+            material.icon material_icon, 
             material.priority material_priority, 
             material.flags material_flags, 
             material."state" material_state, 
@@ -600,6 +621,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -618,6 +640,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             for_art.acl for_art_acl, 
             for_art.label for_art_label, 
             for_art.description for_art_description, 
+            for_art.icon for_art_icon, 
             for_art.priority for_art_priority, 
             for_art.flags for_art_flags, 
             for_art."state" for_art_state, 
@@ -680,6 +703,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -713,13 +737,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{path},
             #{protoId},
             #{parentId},
@@ -751,13 +776,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             "path" = #{path},
             proto = #{protoId},
             parent = #{parentId},
@@ -790,7 +816,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from region
+        select count(*) "rows" from region a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -22,10 +22,9 @@ public class FabFnSamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setParent(parent);
-        a.setId(1916269750);
         a.setCode("pouiw aqu@t'eibju");
-        a.setDepth(1782719024);
-        a.setRefCount(1266343398);
+        a.setDepth(1916269750);
+        a.setRefCount(1782719024);
         return a;
     }
 

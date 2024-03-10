@@ -10,12 +10,11 @@ public class PolicySamples
     public Policy build()
             throws Exception {
         Policy a = new Policy();
-        a.setId(1470210804);
         a.setName("Eev lk.");
         a.setControlClass("Yaeicme, uuey hivzojd imco, ond");
         a.setMethodName("");
-        a.setAllowBits(1498033901);
-        a.setDenyBits(317561887);
+        a.setAllowBits(1470210804);
+        a.setDenyBits(1498033901);
         return a;
     }
 

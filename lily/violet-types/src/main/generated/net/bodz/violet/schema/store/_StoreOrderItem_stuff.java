@@ -4,18 +4,21 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoImagedEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 
 @IdType(Long.class)
 public abstract class _StoreOrderItem_stuff
-        extends CoMomentInterval<Long> {
+        extends CoImagedEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,7 +58,7 @@ public abstract class _StoreOrderItem_stuff
     private static final int _ord_AMOUNT = _ord_PRICE + 1;
     private static final int _ord_NOTES = _ord_AMOUNT + 1;
 
-    Object batch;
+    JsonVariant batch;
 
     Long serial;
 
@@ -96,11 +99,11 @@ public abstract class _StoreOrderItem_stuff
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)
     @Column(name = "batch", precision = 2147483647)
-    public Object getBatch() {
+    public JsonVariant getBatch() {
         return batch;
     }
 
-    public void setBatch(Object value) {
+    public void setBatch(JsonVariant value) {
         this.batch = value;
     }
 
@@ -176,9 +179,10 @@ public abstract class _StoreOrderItem_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -195,6 +199,8 @@ public abstract class _StoreOrderItem_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;
@@ -206,9 +212,10 @@ public abstract class _StoreOrderItem_stuff
 
     /**
      *
-     * @label odr
      * @constraint foreign key (odr) references violet.storeodr (id)
      */
+    @JoinColumn(name = "odr")
+    @ManyToOne
     @NotNull
     public StoreOrder getOrder() {
         return order;
@@ -236,9 +243,10 @@ public abstract class _StoreOrderItem_stuff
 
     /**
      *
-     * @label region
      * @constraint foreign key (region) references violet.region (id)
      */
+    @JoinColumn(name = "region")
+    @ManyToOne
     @NotNull
     public Region getRegion() {
         return region;

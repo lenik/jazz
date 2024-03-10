@@ -63,7 +63,7 @@ onMounted(() => {
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="ZoneCategory" data-format="label" data-field="category">Category</th>
             <th data-type="STRING" data-field="country">Country</th>
@@ -71,7 +71,7 @@ onMounted(() => {
             <th data-type="INT" data-field="depth">Depth</th>
             <th data-type="STRING" data-field="telCode">Tel Code</th>
             <th data-type="STRING" data-field="postCode">Post Code</th>
-            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="JSON_VARIANT" data-field="data">Data</th>
         </template>
         <template #preview>

@@ -13,22 +13,26 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "user";
 
+    static readonly FIELD_TYPE_ID = "type";
+    static readonly FIELD_PRIMARY_GROUP_ID = "gid0";
+    static readonly FIELD_REFERER_ID = "referer";
+    static readonly FIELD_PERSON_ID = "person";
+
+    static readonly N_TYPE_ID = 10;
+    static readonly N_PRIMARY_GROUP_ID = 10;
+    static readonly N_REFERER_ID = 10;
+    static readonly N_PERSON_ID = 10;
+
+    readonly validators = new _User_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.User"; }
     get icon() { return "fa-tag"; }
     get label() { return "User (Account)"; }
     get description() { return "User Account"; }
-
-    static FIELD_TYPE_ID = "type";
-    static FIELD_PRIMARY_GROUP_ID = "gid0";
-    static FIELD_REFERER_ID = "referer";
-    static FIELD_PERSON_ID = "person";
-
-    static N_TYPE_ID = 10;
-    static N_PRIMARY_GROUP_ID = 10;
-    static N_REFERER_ID = 10;
-    static N_PERSON_ID = 10;
-
-    validators = new _User_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -57,9 +61,7 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _User_stuff_TypeInfo();
 
 }
 

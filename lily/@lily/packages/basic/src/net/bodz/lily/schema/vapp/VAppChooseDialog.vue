@@ -10,7 +10,7 @@ import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Group from "../account/Group";
 import User from "../account/User";
 import { VApp } from "./VApp";
-import VAppCat from "./VAppCat";
+import VAppCategory from "./VAppCategory";
 import VAppRequest from "./VAppRequest";
 
 export const title = "Choose dialog for: V app";
@@ -44,7 +44,7 @@ const typeMap = {
     "ZonedDateTime": ZonedDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "VAppRequest": VAppRequest.TYPE,
-    "VAppCat": VAppCat.TYPE,
+    "VAppCategory": VAppCategory.TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
@@ -73,12 +73,12 @@ onMounted(() => {
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="STRING" data-field="code">Code</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="VAppRequest" data-format="label" data-field="req">Req</th>
-        <th data-type="VAppCat" data-format="label" data-field="category">Category</th>
+        <th data-type="VAppCategory" data-format="label" data-field="category">Category</th>
         <th data-type="STRING" data-field="secret">Secret</th>
     </EntityChooseDialog>
 </template>

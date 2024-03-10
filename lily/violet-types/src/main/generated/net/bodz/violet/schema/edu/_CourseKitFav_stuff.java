@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.edu;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -32,9 +34,10 @@ public abstract class _CourseKitFav_stuff
 
     /**
      *
-     * @label coursekit
      * @constraint foreign key (coursekit) references violet.coursekit (id)
      */
+    @JoinColumn(name = "coursekit")
+    @ManyToOne
     @NotNull
     public CourseKit getCoursekit() {
         return coursekit;
@@ -51,6 +54,8 @@ public abstract class _CourseKitFav_stuff
     @Column(name = "coursekit", nullable = false, precision = 10)
     public synchronized int getCoursekitId() {
         if (coursekit != null) {
+            if (coursekit.getId() == null)
+                return 0;
             return coursekit.getId();
         }
         return coursekitId;

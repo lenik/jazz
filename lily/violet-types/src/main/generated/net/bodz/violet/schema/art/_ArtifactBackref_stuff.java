@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.art;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -29,7 +31,7 @@ public abstract class _ArtifactBackref_stuff
     public static final int N_KEY = 30;
     public static final int N_VALUE = 10;
 
-    private static final int _ord_ARTIFACT_ID = 14;
+    private static final int _ord_ARTIFACT_ID = 15;
     private static final int _ord_SITE_ID = _ord_ARTIFACT_ID + 1;
     private static final int _ord_KEY = _ord_SITE_ID + 1;
     private static final int _ord_VALUE = _ord_KEY + 1;
@@ -78,9 +80,10 @@ public abstract class _ArtifactBackref_stuff
 
     /**
      *
-     * @label site
      * @constraint foreign key (site) references lily.extsite (id)
      */
+    @JoinColumn(name = "site")
+    @ManyToOne
     @NotNull
     public ExternalSite getSite() {
         return site;
@@ -97,6 +100,8 @@ public abstract class _ArtifactBackref_stuff
     @Column(name = "site", nullable = false, precision = 10)
     public synchronized int getSiteId() {
         if (site != null) {
+            if (site.getId() == null)
+                return 0;
             return site.getId();
         }
         return siteId;
@@ -108,9 +113,10 @@ public abstract class _ArtifactBackref_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -127,6 +133,8 @@ public abstract class _ArtifactBackref_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;

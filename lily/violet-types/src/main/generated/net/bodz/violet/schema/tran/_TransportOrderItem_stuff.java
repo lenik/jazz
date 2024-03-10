@@ -3,17 +3,19 @@ package net.bodz.violet.schema.tran;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 
 @IdType(Long.class)
 public abstract class _TransportOrderItem_stuff
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -97,9 +99,10 @@ public abstract class _TransportOrderItem_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     public Artifact getArtifact() {
         return artifact;
     }
@@ -126,9 +129,10 @@ public abstract class _TransportOrderItem_stuff
 
     /**
      *
-     * @label odr
      * @constraint foreign key (odr) references violet.tranodr (id)
      */
+    @JoinColumn(name = "odr")
+    @ManyToOne
     @NotNull
     public TransportOrder getOrder() {
         return order;

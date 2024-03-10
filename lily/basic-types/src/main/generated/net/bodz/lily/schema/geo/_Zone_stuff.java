@@ -1,26 +1,26 @@
 package net.bodz.lily.schema.geo;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _Zone_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "zone";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_CODE = "code";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_COUNTRY = "country";
@@ -30,7 +30,6 @@ public abstract class _Zone_stuff
     public static final String FIELD_POST_CODE = "postcode";
     public static final String FIELD_DATA = "data";
 
-    public static final int N_ID = 10;
     public static final int N_CODE = 10;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_COUNTRY = 2;
@@ -40,8 +39,7 @@ public abstract class _Zone_stuff
     public static final int N_POST_CODE = 10;
     public static final int N_DATA = 2147483647;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_CODE = _ord_ID + 1;
+    private static final int _ord_CODE = 2;
     private static final int _ord_CATEGORY_ID = 16;
     private static final int _ord_COUNTRY = _ord_CATEGORY_ID + 1;
     private static final int _ord_PARENT_ID = _ord_COUNTRY + 1;
@@ -49,10 +47,6 @@ public abstract class _Zone_stuff
     private static final int _ord_TEL_CODE = _ord_DEPTH + 1;
     private static final int _ord_POST_CODE = _ord_TEL_CODE + 1;
     private static final int _ord_DATA = _ord_POST_CODE + 2;
-
-    @Id
-    @NotNull
-    int id;
 
     String code;
 
@@ -78,28 +72,6 @@ public abstract class _Zone_stuff
 
     @NotNull
     int categoryId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_CODE)
     @Precision(value = N_CODE)
@@ -175,6 +147,8 @@ public abstract class _Zone_stuff
      *
      * @constraint foreign key (parent) references lily.zone (id)
      */
+    @JoinColumn(name = "parent")
+    @ManyToOne
     public Zone getParent() {
         return parent;
     }
@@ -203,6 +177,8 @@ public abstract class _Zone_stuff
      *
      * @constraint foreign key (cat) references lily.zonecat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     @NotNull
     public ZoneCategory getCategory() {
         return category;
@@ -219,6 +195,8 @@ public abstract class _Zone_stuff
     @Column(name = "cat", nullable = false, precision = 10)
     public synchronized int getCategoryId() {
         if (category != null) {
+            if (category.getId() == null)
+                return 0;
             return category.getId();
         }
         return categoryId;

@@ -1,6 +1,7 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.lily.test.TestSampleBuilder;
@@ -21,6 +22,7 @@ public class FabTaskItemSamples
         FabTaskItem a = new FabTaskItem();
         a.setTask(task);
         a.setModel(model);
+        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2023-12-07T15:08:29.527+0800").getTime()));
         a.setStatus("uieom zuwlgu gmie&ruu&voair vii efv@qba xpik, ukreot; uy");
         a.setQuantity(new BigDecimal("33630.73"));
         a.setTrackCount(352339369);

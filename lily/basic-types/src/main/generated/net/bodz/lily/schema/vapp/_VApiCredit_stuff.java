@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -94,6 +96,8 @@ public abstract class _VApiCredit_stuff
      *
      * @constraint foreign key (api) references lily.apitype (id)
      */
+    @JoinColumn(name = "api")
+    @ManyToOne
     @NotNull
     public ApiType getApi() {
         return api;
@@ -110,6 +114,8 @@ public abstract class _VApiCredit_stuff
     @Column(name = "api", nullable = false, precision = 10)
     public synchronized int getApiId() {
         if (api != null) {
+            if (api.getId() == null)
+                return 0;
             return api.getId();
         }
         return apiId;
@@ -123,6 +129,8 @@ public abstract class _VApiCredit_stuff
      *
      * @constraint foreign key (app) references lily.vapp (id)
      */
+    @JoinColumn(name = "app")
+    @ManyToOne
     @NotNull
     public VApp getApp() {
         return app;

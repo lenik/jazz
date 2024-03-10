@@ -10,17 +10,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="acl" column="acl" />
         <result property="label" column="label" />
         <result property="description" column="description" />
+        <result property="icon" column="icon" />
         <result property="priority" column="priority" />
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
         <result property="quantity" column="qty" />
-        <result property="batch.jsonStr" column="batch" />
+        <result property="batch" column="batch" />
         <result property="since" column="since" />
         <result property="deadline" column="deadline" />
         <result property="trackCount" column="ntrack" />
@@ -30,22 +31,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="parentId" column="parent" />
         <result property="outputId" column="output" />
         <result property="standardId" column="std" />
-        <association property="standard" columnPrefix="std_"
+        <association property="standard" columnPrefix="std_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabStdProcess" 
             resultMap="net.bodz.violet.schema.fab.dao.FabStdProcessMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="parent" columnPrefix="parent_"
+        <association property="parent" columnPrefix="parent_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabProcess" 
             resultMap="objlist_map" />
-        <association property="output" columnPrefix="output_"
+        <association property="output" columnPrefix="output_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.art.ArtifactModel" 
             resultMap="net.bodz.violet.schema.art.dao.ArtifactModelMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="task" columnPrefix="task_"
+        <association property="task" columnPrefix="task_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.fab.FabTask" 
             resultMap="net.bodz.violet.schema.fab.dao.FabTaskMapper.objlist_map" />
     </resultMap>
@@ -59,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -84,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.acl std_acl, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.priority std_priority, 
             std.flags std_flags, 
             std."state" std_state, 
@@ -104,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -113,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             parent.id parent_id, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
@@ -120,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -145,6 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "output".acl output_acl, 
             "output".label output_label, 
             "output".description output_description, 
+            "output".icon output_icon, 
             "output".priority output_priority, 
             "output".flags output_flags, 
             "output"."state" output_state, 
@@ -166,6 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -181,6 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             task.acl task_acl, 
             task.label task_label, 
             task.description task_description, 
+            task.icon task_icon, 
             task.priority task_priority, 
             task.flags task_flags, 
             task."state" task_state, 
@@ -214,6 +223,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.acl, 
             a.label, 
             a.description, 
+            a.icon, 
             a.priority, 
             a.flags, 
             a."state", 
@@ -239,6 +249,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             std.acl std_acl, 
             std.label std_label, 
             std.description std_description, 
+            std.icon std_icon, 
             std.priority std_priority, 
             std.flags std_flags, 
             std."state" std_state, 
@@ -259,6 +270,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -268,6 +280,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             parent.id parent_id, 
             parent.uid parent_uid, 
             parent.gid parent_gid, 
@@ -275,6 +288,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parent.acl parent_acl, 
             parent.label parent_label, 
             parent.description parent_description, 
+            parent.icon parent_icon, 
             parent.priority parent_priority, 
             parent.flags parent_flags, 
             parent."state" parent_state, 
@@ -300,6 +314,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "output".acl output_acl, 
             "output".label output_label, 
             "output".description output_description, 
+            "output".icon output_icon, 
             "output".priority output_priority, 
             "output".flags output_flags, 
             "output"."state" output_state, 
@@ -321,6 +336,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -336,6 +352,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             task.acl task_acl, 
             task.label task_label, 
             task.description task_description, 
+            task.icon task_icon, 
             task.priority task_priority, 
             task.flags task_flags, 
             task."state" task_state, 
@@ -392,6 +409,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl,
             label,
             description,
+            icon,
             priority,
             flags,
             "state",
@@ -417,11 +435,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{acl},
             #{label},
             #{description},
+            #{icon},
             #{priority},
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
@@ -431,7 +450,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{outputId},
             #{standardId},
             #{quantity},
-            #{batch.jsonStr}::jsonb,
+            #{batch},
             #{since},
             #{deadline},
             #{trackCount}
@@ -447,11 +466,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             acl = #{acl},
             label = #{label},
             description = #{description},
+            icon = #{icon},
             priority = #{priority},
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
@@ -461,7 +481,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "output" = #{outputId},
             std = #{standardId},
             qty = #{quantity},
-            batch = #{batch.jsonStr}::jsonb,
+            batch = #{batch},
             since = #{since},
             deadline = #{deadline},
             ntrack = #{trackCount},
@@ -479,7 +499,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabproc
+        select count(*) "rows" from fabproc a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -10,14 +10,18 @@ export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_fav";
 
+    static readonly FIELD_POST_ID = "post";
+
+    static readonly N_POST_ID = 19;
+
+    readonly validators = new _PostFav_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostFav"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_POST_ID = "post";
-
-    static N_POST_ID = 19;
-
-    validators = new _PostFav_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -28,9 +32,7 @@ export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _PostFav_stuff_TypeInfo();
 
 }
 

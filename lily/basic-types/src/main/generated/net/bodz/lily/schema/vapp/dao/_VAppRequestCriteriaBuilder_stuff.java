@@ -1,13 +1,9 @@
 package net.bodz.lily.schema.vapp.dao;
 
-import java.sql.Timestamp;
-
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
 
 public class _VAppRequestCriteriaBuilder_stuff<self_t extends _VAppRequestCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
-
-    public final IntegerField id = integer("id");
+        extends CoMessageCriteriaBuilder<self_t> {
 
     public final IntegerField ownerUserId = integer("uid");
 
@@ -15,19 +11,9 @@ public class _VAppRequestCriteriaBuilder_stuff<self_t extends _VAppRequestCriter
 
     public final StringField code = string("code");
 
-    public final DateField<Timestamp> beginTime = date("t0", Timestamp.class);
-
-    public final DateField<Timestamp> endTime = date("t1", Timestamp.class);
-
-    public final IntegerField year = integer("\"year\"");
-
     public final StringField subject = string("subject");
 
-    public final IntegerField opId = integer("op");
-
     public final StringField rawText = string("text");
-
-    public final IntegerField formId = integer("form");
 
     public final StringField formArguments = string("formargs");
 

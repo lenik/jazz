@@ -1,13 +1,12 @@
 package net.bodz.lily.schema.account;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 
 /**
@@ -15,37 +14,30 @@ import net.bodz.lily.entity.IdType;
  */
 @IdType(Integer.class)
 public abstract class _Policy_stuff
-        extends CoEntity<Integer> {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "policy";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
     public static final String FIELD_CONTROL_CLASS = "cclass";
     public static final String FIELD_METHOD_NAME = "method";
     public static final String FIELD_ALLOW_BITS = "allow";
     public static final String FIELD_DENY_BITS = "deny";
 
-    public static final int N_ID = 10;
     public static final int N_NAME = 30;
     public static final int N_CONTROL_CLASS = 80;
     public static final int N_METHOD_NAME = 80;
     public static final int N_ALLOW_BITS = 10;
     public static final int N_DENY_BITS = 10;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_NAME = _ord_ID + 1;
+    private static final int _ord_NAME = 2;
     private static final int _ord_CONTROL_CLASS = 13;
     private static final int _ord_METHOD_NAME = _ord_CONTROL_CLASS + 1;
     private static final int _ord_ALLOW_BITS = _ord_METHOD_NAME + 1;
     private static final int _ord_DENY_BITS = _ord_ALLOW_BITS + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     /** The policy name (unique) */
     String name;
@@ -64,28 +56,6 @@ public abstract class _Policy_stuff
     /** deny */
     @NotNull
     int denyBits;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     /**
      * The policy name (unique)

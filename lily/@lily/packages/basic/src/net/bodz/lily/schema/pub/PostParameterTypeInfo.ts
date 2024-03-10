@@ -3,10 +3,14 @@ import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
 export class PostParameterTypeInfo extends _PostParameter_stuff_TypeInfo {
 
+    readonly validators = new PostParameterValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostParameter"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PostParameterValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class PostParameterTypeInfo extends _PostParameter_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new PostParameterTypeInfo();
 
 }
 

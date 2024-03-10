@@ -7,10 +7,11 @@ import type PostCategory from "./PostCategory";
 import _Post_stuff_TypeInfo from "./_Post_stuff_TypeInfo";
 
 export class _Post_stuff extends CoMessage<long> {
+
     static _typeInfo: _Post_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _Post_stuff_TypeInfo();
+            this._typeInfo = _Post_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

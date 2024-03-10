@@ -25,10 +25,9 @@ public class CourseKitSamples
         a.setCategory(category);
         a.setCourse(course);
         a.setOwnerGroup(ownerGroup);
-        a.setId(1053548262);
-        a.setFavCount(346408877);
-        a.setVoteCount(381095999);
-        a.setHateCount(1611854171);
+        a.setFavCount(1053548262);
+        a.setVoteCount(346408877);
+        a.setHateCount(381095999);
         return a;
     }
 

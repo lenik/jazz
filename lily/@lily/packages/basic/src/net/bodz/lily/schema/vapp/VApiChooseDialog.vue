@@ -58,7 +58,7 @@ onMounted(() => {
     <EntityChooseDialog ref="entityChooseDialog" :type="VApi.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="LONG" data-field="id">Id</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="VApp" data-format="label" data-field="app">App</th>

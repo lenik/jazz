@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -55,6 +57,8 @@ public abstract class _PostTalk_stuff<this_t extends _PostTalk_stuff<this_t>>
      *
      * @constraint foreign key (post) references lily.post (id)
      */
+    @JoinColumn(name = "post")
+    @ManyToOne
     @NotNull
     public Post getPost() {
         return post;

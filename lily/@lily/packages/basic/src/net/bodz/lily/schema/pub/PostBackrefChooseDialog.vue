@@ -72,7 +72,7 @@ onMounted(() => {
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
         <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="Post" data-format="label" data-field="post">Post</th>
         <th data-type="ExternalSite" data-format="label" data-field="site">Site</th>

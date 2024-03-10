@@ -25,10 +25,9 @@ public class ZoneSamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setCategory(category);
-        a.setId(8479118);
         a.setCode("Ei_okave");
         a.setCountry("");
-        a.setDepth(185323507);
+        a.setDepth(8479118);
         a.setTelCode("oueuqooo.");
         a.setPostCode("");
         return a;

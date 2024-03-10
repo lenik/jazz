@@ -1,11 +1,9 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
 import type { int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import StructRow from "../../concrete/StructRow";
 import UserBadge from "./UserBadge";
 import _UserBadge_stuff from "./_UserBadge_stuff";
 
@@ -17,10 +15,11 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import UserChooseDialog from "../account/UserChooseDialog.vue";
 import BadgeChooseDialog from "./BadgeChooseDialog.vue";
 
@@ -42,6 +41,7 @@ const emit = defineEmits<{
 
 const meta = UserBadge.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
 const userChooseDialog = ref<InstanceType<typeof UserChooseDialog>>();
@@ -62,25 +62,15 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <DateTime v-model="model.lastModifiedDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
-            </FieldRow>
-        </FieldGroup>
+        <StructRowFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_UserBadge_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
+            <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.user" v-model="model.user">
+            <FieldRow :property="meta.user" v-model="model.user">
                 <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.badge" v-model="model.badge">
+            <FieldRow :property="meta.badge" v-model="model.badge">
                 <RefEditor :dialog="badgeChooseDialog" v-model="model.badge" v-model:id="model.badgeId" />
             </FieldRow>
         </FieldGroup>

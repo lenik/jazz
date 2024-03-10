@@ -1,4 +1,3 @@
-import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type TagDefTypeInfo from "./TagDefTypeInfo";

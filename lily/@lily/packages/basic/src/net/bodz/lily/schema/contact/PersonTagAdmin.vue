@@ -44,7 +44,7 @@ onMounted(() => {
         <template #columns>
             <th data-type="INT" data-field="id">Id</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="Person" data-format="label" data-field="person">Person</th>
             <th data-type="PersonTagType" data-format="label" data-field="tag">Tag</th>

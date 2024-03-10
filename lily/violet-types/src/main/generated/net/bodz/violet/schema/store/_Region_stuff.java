@@ -1,6 +1,8 @@
 package net.bodz.violet.schema.store;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -48,7 +50,7 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
     public static final int N_ARTIFACT_ID = 10;
 
     private static final int _ord_CODE = 2;
-    private static final int _ord_PATH = 16;
+    private static final int _ord_PATH = 17;
     private static final int _ord_PROTO_ID = _ord_PATH + 1;
     private static final int _ord_HEIGHT = _ord_PROTO_ID + 3;
     private static final int _ord_LEVEL_ID = _ord_HEIGHT + 1;
@@ -149,9 +151,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label for_cat
      * @constraint foreign key (for_cat) references violet.artcat (id)
      */
+    @JoinColumn(name = "for_cat")
+    @ManyToOne
     public ArtifactCategory getForCat() {
         return forCat;
     }
@@ -178,9 +181,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label proto
      * @constraint foreign key (proto) references violet.region (id)
      */
+    @JoinColumn(name = "proto")
+    @ManyToOne
     public Region getProto() {
         return proto;
     }
@@ -207,9 +211,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label tag
      * @constraint foreign key (tag) references violet.regiontag (id)
      */
+    @JoinColumn(name = "tag")
+    @ManyToOne
     public RegionTag getTag() {
         return tag;
     }
@@ -236,9 +241,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.regioncat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     @NotNull
     public RegionCategory getCategory() {
         return category;
@@ -268,9 +274,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label level
      * @constraint foreign key (level) references violet.regionlevel (id)
      */
+    @JoinColumn(name = "level")
+    @ManyToOne
     @NotNull
     public RegionLevel getLevel() {
         return level;
@@ -300,9 +307,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     public Artifact getArtifact() {
         return artifact;
     }
@@ -329,9 +337,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label material
      * @constraint foreign key (material) references violet.art (id)
      */
+    @JoinColumn(name = "material")
+    @ManyToOne
     public Artifact getMaterial() {
         return material;
     }
@@ -358,9 +367,10 @@ public abstract class _Region_stuff<this_t extends _Region_stuff<this_t>>
 
     /**
      *
-     * @label for_art
      * @constraint foreign key (for_art) references violet.art (id)
      */
+    @JoinColumn(name = "for_art")
+    @ManyToOne
     public Artifact getForArt() {
         return forArt;
     }

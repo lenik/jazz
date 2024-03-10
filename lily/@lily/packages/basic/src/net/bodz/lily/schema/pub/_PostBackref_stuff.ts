@@ -6,10 +6,11 @@ import type Post from "./Post";
 import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
 export class _PostBackref_stuff extends BackrefRecord {
+
     static _typeInfo: _PostBackref_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostBackref_stuff_TypeInfo();
+            this._typeInfo = _PostBackref_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

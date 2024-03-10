@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="planId" column="plan" />
         <result property="userId" column="user" />
-        <association property="plan" columnPrefix="plan_"
+        <association property="plan" columnPrefix="plan_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Plan" 
             resultMap="net.bodz.violet.schema.plan.dao.PlanMapper.objlist_map" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>
@@ -51,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -59,7 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from plan_fav a
             left join plan plan on a.plan = plan.id
             left join lily."user" "user" on a."user" = "user".id
@@ -101,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -109,7 +112,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from plan_fav a
             left join plan plan on a.plan = plan.id
             left join lily."user" "user" on a."user" = "user".id
@@ -169,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from plan_fav
+        select count(*) "rows" from plan_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -10,13 +10,11 @@ public class BadgeSamples
     public Badge build()
             throws Exception {
         Badge a = new Badge();
-        a.setId(761431277);
         a.setExpr("Eeeag oha bv ibdc, oyikaue. iemfoi, Reea oja.");
-        a.setVal(635007912);
-        a.setDescend(true);
+        a.setVal(761431277);
+        a.setDescend(false);
         a.setTransient_(true);
-        a.setIndexed(false);
-        a.setImage("Wdra juduil&L vuol Sxbeggu");
+        a.setIndexed(true);
         return a;
     }
 

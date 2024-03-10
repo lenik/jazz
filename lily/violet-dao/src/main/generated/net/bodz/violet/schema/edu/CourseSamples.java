@@ -22,11 +22,10 @@ public class CourseSamples
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
         a.setCategory(category);
-        a.setId(1473188833);
-        a.setFavCount(1126603838);
-        a.setVoteCount(93615037);
-        a.setHateCount(1475018156);
-        a.setCredit(2032094729);
+        a.setFavCount(1473188833);
+        a.setVoteCount(1126603838);
+        a.setHateCount(93615037);
+        a.setCredit(1475018156);
         return a;
     }
 

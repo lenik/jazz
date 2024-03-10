@@ -6,7 +6,6 @@ net.bodz.violet.schema.art.ws.ArtifactParameterIndex
 net.bodz.violet.schema.art.ws.ArtifactPhaseIndex
 net.bodz.violet.schema.art.ws.ArtifactTagIndex
 net.bodz.violet.schema.art.ws.ArtifactVoteIndex
-net.bodz.violet.schema.art.ws.UOMIndex
 net.bodz.violet.schema.asset.ws.AssetIndex
 net.bodz.violet.schema.asset.ws.GroupAssetIndex
 net.bodz.violet.schema.asset.ws.OrgAssetIndex

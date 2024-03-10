@@ -1,12 +1,11 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
-import type CategoryDef from "./CategoryDef";
+import CoCategoryValidators from "../../concrete/CoCategoryValidators";
 import type SchemaDef from "./SchemaDef";
 import type _CategoryDef_stuff_TypeInfo from "./_CategoryDef_stuff_TypeInfo";
 
-export class _CategoryDef_stuff_Validators extends CoEntityValidators {
+export class _CategoryDef_stuff_Validators extends CoCategoryValidators {
 
     constructor(type: _CategoryDef_stuff_TypeInfo) {
         super(type);
@@ -16,22 +15,10 @@ export class _CategoryDef_stuff_Validators extends CoEntityValidators {
         return this._type as _CategoryDef_stuff_TypeInfo;
     }
 
-    validateId(val: int) {
-    }
-
     validateCode(val: string) {
     }
 
-    validateDepth(val: int) {
-    }
-
-    validateRefCount(val: int) {
-    }
-
     validateSchema(val: SchemaDef) {
-    }
-
-    validateParent(val: CategoryDef) {
     }
 
 }

@@ -15,28 +15,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="endTime" column="t1" />
         <result property="year" column="year" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="subject" column="subject" />
         <result property="rawText" column="text" />
         <result property="formArguments" column="formargs" />
-        <result property="properties.jsonStr" column="props" />
-        <result property="sAlias" column="s_alias" />
-        <result property="sCtprops.jsonStr" column="s_ctprops" />
-        <result property="sAddress1" column="s_address1" />
-        <result property="sAddress2" column="s_address2" />
-        <result property="sTel" column="s_tel" />
-        <result property="sTelok" column="s_telok" />
-        <result property="sEmail" column="s_email" />
-        <result property="sEmailok" column="s_emailok" />
-        <result property="dAlias" column="d_alias" />
-        <result property="dCtprops.jsonStr" column="d_ctprops" />
-        <result property="dAddress1" column="d_address1" />
-        <result property="dAddress2" column="d_address2" />
-        <result property="dTel" column="d_tel" />
-        <result property="dTelok" column="d_telok" />
-        <result property="dEmail" column="d_email" />
-        <result property="dEmailok" column="d_emailok" />
+        <result property="properties" column="props" />
+        <result property="src.alias" column="src_alias" />
+        <result property="src.properties" column="src_ctprops" />
+        <result property="src.address1" column="src_address1" />
+        <result property="src.address2" column="src_address2" />
+        <result property="src.tel" column="src_tel" />
+        <result property="src.telValidated" column="src_telok" />
+        <result property="src.email" column="src_email" />
+        <result property="src.emailValidated" column="src_emailok" />
+        <result property="dst.alias" column="dst_alias" />
+        <result property="dst.properties" column="dst_ctprops" />
+        <result property="dst.address1" column="dst_address1" />
+        <result property="dst.address2" column="dst_address2" />
+        <result property="dst.tel" column="dst_tel" />
+        <result property="dst.telValidated" column="dst_telok" />
+        <result property="dst.email" column="dst_email" />
+        <result property="dst.emailValidated" column="dst_emailok" />
         <result property="shipcost" column="shipcost" />
         <result property="length" column="length" />
         <result property="totalQuantity" column="sum_qty" />
@@ -51,42 +51,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="salesOrderId" column="saleodr" />
         <result property="storeodrId" column="storeodr" />
         <result property="shipperId" column="shipper" />
-        <result property="sZoneId" column="s_zone" />
-        <result property="dZoneId" column="d_zone" />
-        <association property="op" columnPrefix="op_"
+        <result property="src.zoneId" column="src_zone" />
+        <result property="dst.zoneId" column="dst_zone" />
+        <association property="op" columnPrefix="op_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="prev" columnPrefix="prev_"
+        <association property="prev" columnPrefix="prev_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.tran.TransportOrder" 
             resultMap="objlist_map" />
-        <association property="form" columnPrefix="form_"
+        <association property="form" columnPrefix="form_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.meta.FormDef" 
-            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
-        <association property="shipper" columnPrefix="shipper_"
+            resultMap="net.bodz.lily.schema.meta.dao.FormDefMapper.objlist_map" />
+        <association property="shipper" columnPrefix="shipper_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Organization" 
             resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
-        <association property="category" columnPrefix="category_"
+        <association property="dst.zone" columnPrefix="dst_zone_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.geo.Zone" 
+            resultMap="net.bodz.lily.schema.geo.dao.ZoneMapper.objlist_map" />
+        <association property="category" columnPrefix="category_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.tran.TransportCategory" 
             resultMap="net.bodz.violet.schema.tran.dao.TransportCategoryMapper.objlist_map" />
-        <association property="salesOrder" columnPrefix="saleodr_"
+        <association property="src.zone" columnPrefix="src_zone_" notNullColumn="id" 
+            javaType="net.bodz.lily.schema.geo.Zone" 
+            resultMap="net.bodz.lily.schema.geo.dao.ZoneMapper.objlist_map" />
+        <association property="salesOrder" columnPrefix="saleodr_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.shop.SalesOrder" 
             resultMap="net.bodz.violet.schema.shop.dao.SalesOrderMapper.objlist_map" />
-        <association property="phase" columnPrefix="phase_"
+        <association property="phase" columnPrefix="phase_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.tran.TransportPhase" 
             resultMap="net.bodz.violet.schema.tran.dao.TransportPhaseMapper.objlist_map" />
-        <association property="dZone" columnPrefix="d_zone_"
-            javaType="net.bodz.lily.schema.geo.Zone" 
-            resultMap="net.bodz.lily.schema.geo.dao.ZoneMapper.objlist_map" />
-        <association property="sZone" columnPrefix="s_zone_"
-            javaType="net.bodz.lily.schema.geo.Zone" 
-            resultMap="net.bodz.lily.schema.geo.dao.ZoneMapper.objlist_map" />
-        <association property="storeodr" columnPrefix="storeodr_"
+        <association property="storeodr" columnPrefix="storeodr_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.store.StoreOrder" 
             resultMap="net.bodz.violet.schema.store.dao.StoreOrderMapper.objlist_map" />
     </resultMap>
@@ -119,24 +119,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.saleodr, 
             a.storeodr, 
             a.shipper, 
-            a.s_alias, 
-            a.s_ctprops, 
-            a.s_address1, 
-            a.s_address2, 
-            a.s_zone, 
-            a.s_tel, 
-            a.s_telok, 
-            a.s_email, 
-            a.s_emailok, 
-            a.d_alias, 
-            a.d_ctprops, 
-            a.d_address1, 
-            a.d_address2, 
-            a.d_zone, 
-            a.d_tel, 
-            a.d_telok, 
-            a.d_email, 
-            a.d_emailok, 
+            a.src_alias, 
+            a.src_ctprops, 
+            a.src_address1, 
+            a.src_address2, 
+            a.src_zone, 
+            a.src_tel, 
+            a.src_telok, 
+            a.src_email, 
+            a.src_emailok, 
+            a.dst_alias, 
+            a.dst_ctprops, 
+            a.dst_address1, 
+            a.dst_address2, 
+            a.dst_zone, 
+            a.dst_tel, 
+            a.dst_telok, 
+            a.dst_email, 
+            a.dst_emailok, 
             a.shipcost, 
             a."length", 
             a.sum_qty, 
@@ -146,6 +146,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -155,11 +156,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -173,6 +176,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -182,6 +186,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             prev.id prev_id, 
             prev.uid prev_uid, 
             prev.gid prev_gid, 
@@ -208,24 +213,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             prev.saleodr prev_saleodr, 
             prev.storeodr prev_storeodr, 
             prev.shipper prev_shipper, 
-            prev.s_alias prev_s_alias, 
-            prev.s_ctprops prev_s_ctprops, 
-            prev.s_address1 prev_s_address1, 
-            prev.s_address2 prev_s_address2, 
-            prev.s_zone prev_s_zone, 
-            prev.s_tel prev_s_tel, 
-            prev.s_telok prev_s_telok, 
-            prev.s_email prev_s_email, 
-            prev.s_emailok prev_s_emailok, 
-            prev.d_alias prev_d_alias, 
-            prev.d_ctprops prev_d_ctprops, 
-            prev.d_address1 prev_d_address1, 
-            prev.d_address2 prev_d_address2, 
-            prev.d_zone prev_d_zone, 
-            prev.d_tel prev_d_tel, 
-            prev.d_telok prev_d_telok, 
-            prev.d_email prev_d_email, 
-            prev.d_emailok prev_d_emailok, 
+            prev.src_alias prev_src_alias, 
+            prev.src_ctprops prev_src_ctprops, 
+            prev.src_address1 prev_src_address1, 
+            prev.src_address2 prev_src_address2, 
+            prev.src_zone prev_src_zone, 
+            prev.src_tel prev_src_tel, 
+            prev.src_telok prev_src_telok, 
+            prev.src_email prev_src_email, 
+            prev.src_emailok prev_src_emailok, 
+            prev.dst_alias prev_dst_alias, 
+            prev.dst_ctprops prev_dst_ctprops, 
+            prev.dst_address1 prev_dst_address1, 
+            prev.dst_address2 prev_dst_address2, 
+            prev.dst_zone prev_dst_zone, 
+            prev.dst_tel prev_dst_tel, 
+            prev.dst_telok prev_dst_telok, 
+            prev.dst_email prev_dst_email, 
+            prev.dst_emailok prev_dst_emailok, 
             prev.shipcost prev_shipcost, 
             prev."length" prev_length, 
             prev.sum_qty prev_sum_qty, 
@@ -234,6 +239,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -250,6 +256,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shipper.acl shipper_acl, 
             shipper.label shipper_label, 
             shipper.description shipper_description, 
+            shipper.icon shipper_icon, 
             shipper.priority shipper_priority, 
             shipper.flags shipper_flags, 
             shipper."state" shipper_state, 
@@ -277,6 +284,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shipper.nbank shipper_nbank, 
             shipper."size" shipper_size, 
             shipper.taxid shipper_taxid, 
+            dst_zone.id dst_zone_id, 
+            dst_zone.code dst_zone_code, 
+            dst_zone.uid dst_zone_uid, 
+            dst_zone.gid dst_zone_gid, 
+            dst_zone.mode dst_zone_mode, 
+            dst_zone.acl dst_zone_acl, 
+            dst_zone.label dst_zone_label, 
+            dst_zone.description dst_zone_description, 
+            dst_zone.icon dst_zone_icon, 
+            dst_zone.priority dst_zone_priority, 
+            dst_zone.flags dst_zone_flags, 
+            dst_zone."state" dst_zone_state, 
+            dst_zone.creation dst_zone_creation, 
+            dst_zone.lastmod dst_zone_lastmod, 
+            dst_zone."version" dst_zone_version, 
+            dst_zone.cat dst_zone_cat, 
+            dst_zone.country dst_zone_country, 
+            dst_zone.parent dst_zone_parent, 
+            dst_zone."depth" dst_zone_depth, 
+            dst_zone.telcode dst_zone_telcode, 
+            dst_zone.postcode dst_zone_postcode, 
+            dst_zone.props dst_zone_props, 
+            dst_zone."data" dst_zone_data, 
             category.id category_id, 
             category."name" category_name, 
             category.uid category_uid, 
@@ -285,18 +315,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
+            src_zone.id src_zone_id, 
+            src_zone.code src_zone_code, 
+            src_zone.uid src_zone_uid, 
+            src_zone.gid src_zone_gid, 
+            src_zone.mode src_zone_mode, 
+            src_zone.acl src_zone_acl, 
+            src_zone.label src_zone_label, 
+            src_zone.description src_zone_description, 
+            src_zone.icon src_zone_icon, 
+            src_zone.priority src_zone_priority, 
+            src_zone.flags src_zone_flags, 
+            src_zone."state" src_zone_state, 
+            src_zone.creation src_zone_creation, 
+            src_zone.lastmod src_zone_lastmod, 
+            src_zone."version" src_zone_version, 
+            src_zone.cat src_zone_cat, 
+            src_zone.country src_zone_country, 
+            src_zone.parent src_zone_parent, 
+            src_zone."depth" src_zone_depth, 
+            src_zone.telcode src_zone_telcode, 
+            src_zone.postcode src_zone_postcode, 
+            src_zone.props src_zone_props, 
+            src_zone."data" src_zone_data, 
             saleodr.id saleodr_id, 
             saleodr.uid saleodr_uid, 
             saleodr.gid saleodr_gid, 
@@ -334,6 +386,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.code phase_code, 
             phase.label phase_label, 
             phase.description phase_description, 
+            phase.icon phase_icon, 
             phase.priority phase_priority, 
             phase.flags phase_flags, 
             phase."state" phase_state, 
@@ -341,50 +394,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.lastmod phase_lastmod, 
             phase."version" phase_version, 
             phase.nref phase_nref, 
-            d_zone.id d_zone_id, 
-            d_zone.code d_zone_code, 
-            d_zone.uid d_zone_uid, 
-            d_zone.gid d_zone_gid, 
-            d_zone.mode d_zone_mode, 
-            d_zone.acl d_zone_acl, 
-            d_zone.label d_zone_label, 
-            d_zone.description d_zone_description, 
-            d_zone.priority d_zone_priority, 
-            d_zone.flags d_zone_flags, 
-            d_zone."state" d_zone_state, 
-            d_zone.creation d_zone_creation, 
-            d_zone.lastmod d_zone_lastmod, 
-            d_zone."version" d_zone_version, 
-            d_zone.cat d_zone_cat, 
-            d_zone.country d_zone_country, 
-            d_zone.parent d_zone_parent, 
-            d_zone."depth" d_zone_depth, 
-            d_zone.telcode d_zone_telcode, 
-            d_zone.postcode d_zone_postcode, 
-            d_zone.props d_zone_props, 
-            d_zone."data" d_zone_data, 
-            s_zone.id s_zone_id, 
-            s_zone.code s_zone_code, 
-            s_zone.uid s_zone_uid, 
-            s_zone.gid s_zone_gid, 
-            s_zone.mode s_zone_mode, 
-            s_zone.acl s_zone_acl, 
-            s_zone.label s_zone_label, 
-            s_zone.description s_zone_description, 
-            s_zone.priority s_zone_priority, 
-            s_zone.flags s_zone_flags, 
-            s_zone."state" s_zone_state, 
-            s_zone.creation s_zone_creation, 
-            s_zone.lastmod s_zone_lastmod, 
-            s_zone."version" s_zone_version, 
-            s_zone.cat s_zone_cat, 
-            s_zone.country s_zone_country, 
-            s_zone.parent s_zone_parent, 
-            s_zone."depth" s_zone_depth, 
-            s_zone.telcode s_zone_telcode, 
-            s_zone.postcode s_zone_postcode, 
-            s_zone.props s_zone_props, 
-            s_zone."data" s_zone_data, 
             storeodr.id storeodr_id, 
             storeodr.uid storeodr_uid, 
             storeodr.gid storeodr_gid, 
@@ -421,11 +430,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             left join tranodr prev on a.prev = prev.id
             left join lily._form form on a.form = form.id
             left join lily.org shipper on a.shipper = shipper.id
+            left join lily."zone" dst_zone on a.dst_zone = dst_zone.id
             left join trancat category on a.cat = category.id
+            left join lily."zone" src_zone on a.src_zone = src_zone.id
             left join saleodr saleodr on a.saleodr = saleodr.id
             left join tranphase phase on a.phase = phase.id
-            left join lily."zone" d_zone on a.d_zone = d_zone.id
-            left join lily."zone" s_zone on a.s_zone = s_zone.id
             left join storeodr storeodr on a.storeodr = storeodr.id
         ]]>
     </sql>
@@ -458,24 +467,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.saleodr, 
             a.storeodr, 
             a.shipper, 
-            a.s_alias, 
-            a.s_ctprops, 
-            a.s_address1, 
-            a.s_address2, 
-            a.s_zone, 
-            a.s_tel, 
-            a.s_telok, 
-            a.s_email, 
-            a.s_emailok, 
-            a.d_alias, 
-            a.d_ctprops, 
-            a.d_address1, 
-            a.d_address2, 
-            a.d_zone, 
-            a.d_tel, 
-            a.d_telok, 
-            a.d_email, 
-            a.d_emailok, 
+            a.src_alias, 
+            a.src_ctprops, 
+            a.src_address1, 
+            a.src_address2, 
+            a.src_zone, 
+            a.src_tel, 
+            a.src_telok, 
+            a.src_email, 
+            a.src_emailok, 
+            a.dst_alias, 
+            a.dst_ctprops, 
+            a.dst_address1, 
+            a.dst_address2, 
+            a.dst_zone, 
+            a.dst_tel, 
+            a.dst_telok, 
+            a.dst_email, 
+            a.dst_emailok, 
             a.shipcost, 
             a."length", 
             a.sum_qty, 
@@ -485,6 +494,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -494,11 +504,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -512,6 +524,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -521,6 +534,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             prev.id prev_id, 
             prev.uid prev_uid, 
             prev.gid prev_gid, 
@@ -547,24 +561,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             prev.saleodr prev_saleodr, 
             prev.storeodr prev_storeodr, 
             prev.shipper prev_shipper, 
-            prev.s_alias prev_s_alias, 
-            prev.s_ctprops prev_s_ctprops, 
-            prev.s_address1 prev_s_address1, 
-            prev.s_address2 prev_s_address2, 
-            prev.s_zone prev_s_zone, 
-            prev.s_tel prev_s_tel, 
-            prev.s_telok prev_s_telok, 
-            prev.s_email prev_s_email, 
-            prev.s_emailok prev_s_emailok, 
-            prev.d_alias prev_d_alias, 
-            prev.d_ctprops prev_d_ctprops, 
-            prev.d_address1 prev_d_address1, 
-            prev.d_address2 prev_d_address2, 
-            prev.d_zone prev_d_zone, 
-            prev.d_tel prev_d_tel, 
-            prev.d_telok prev_d_telok, 
-            prev.d_email prev_d_email, 
-            prev.d_emailok prev_d_emailok, 
+            prev.src_alias prev_src_alias, 
+            prev.src_ctprops prev_src_ctprops, 
+            prev.src_address1 prev_src_address1, 
+            prev.src_address2 prev_src_address2, 
+            prev.src_zone prev_src_zone, 
+            prev.src_tel prev_src_tel, 
+            prev.src_telok prev_src_telok, 
+            prev.src_email prev_src_email, 
+            prev.src_emailok prev_src_emailok, 
+            prev.dst_alias prev_dst_alias, 
+            prev.dst_ctprops prev_dst_ctprops, 
+            prev.dst_address1 prev_dst_address1, 
+            prev.dst_address2 prev_dst_address2, 
+            prev.dst_zone prev_dst_zone, 
+            prev.dst_tel prev_dst_tel, 
+            prev.dst_telok prev_dst_telok, 
+            prev.dst_email prev_dst_email, 
+            prev.dst_emailok prev_dst_emailok, 
             prev.shipcost prev_shipcost, 
             prev."length" prev_length, 
             prev.sum_qty prev_sum_qty, 
@@ -573,6 +587,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -589,6 +604,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shipper.acl shipper_acl, 
             shipper.label shipper_label, 
             shipper.description shipper_description, 
+            shipper.icon shipper_icon, 
             shipper.priority shipper_priority, 
             shipper.flags shipper_flags, 
             shipper."state" shipper_state, 
@@ -616,6 +632,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             shipper.nbank shipper_nbank, 
             shipper."size" shipper_size, 
             shipper.taxid shipper_taxid, 
+            dst_zone.id dst_zone_id, 
+            dst_zone.code dst_zone_code, 
+            dst_zone.uid dst_zone_uid, 
+            dst_zone.gid dst_zone_gid, 
+            dst_zone.mode dst_zone_mode, 
+            dst_zone.acl dst_zone_acl, 
+            dst_zone.label dst_zone_label, 
+            dst_zone.description dst_zone_description, 
+            dst_zone.icon dst_zone_icon, 
+            dst_zone.priority dst_zone_priority, 
+            dst_zone.flags dst_zone_flags, 
+            dst_zone."state" dst_zone_state, 
+            dst_zone.creation dst_zone_creation, 
+            dst_zone.lastmod dst_zone_lastmod, 
+            dst_zone."version" dst_zone_version, 
+            dst_zone.cat dst_zone_cat, 
+            dst_zone.country dst_zone_country, 
+            dst_zone.parent dst_zone_parent, 
+            dst_zone."depth" dst_zone_depth, 
+            dst_zone.telcode dst_zone_telcode, 
+            dst_zone.postcode dst_zone_postcode, 
+            dst_zone.props dst_zone_props, 
+            dst_zone."data" dst_zone_data, 
             category.id category_id, 
             category."name" category_name, 
             category.uid category_uid, 
@@ -624,18 +663,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
             category.nref category_nref, 
+            src_zone.id src_zone_id, 
+            src_zone.code src_zone_code, 
+            src_zone.uid src_zone_uid, 
+            src_zone.gid src_zone_gid, 
+            src_zone.mode src_zone_mode, 
+            src_zone.acl src_zone_acl, 
+            src_zone.label src_zone_label, 
+            src_zone.description src_zone_description, 
+            src_zone.icon src_zone_icon, 
+            src_zone.priority src_zone_priority, 
+            src_zone.flags src_zone_flags, 
+            src_zone."state" src_zone_state, 
+            src_zone.creation src_zone_creation, 
+            src_zone.lastmod src_zone_lastmod, 
+            src_zone."version" src_zone_version, 
+            src_zone.cat src_zone_cat, 
+            src_zone.country src_zone_country, 
+            src_zone.parent src_zone_parent, 
+            src_zone."depth" src_zone_depth, 
+            src_zone.telcode src_zone_telcode, 
+            src_zone.postcode src_zone_postcode, 
+            src_zone.props src_zone_props, 
+            src_zone."data" src_zone_data, 
             saleodr.id saleodr_id, 
             saleodr.uid saleodr_uid, 
             saleodr.gid saleodr_gid, 
@@ -673,6 +734,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.code phase_code, 
             phase.label phase_label, 
             phase.description phase_description, 
+            phase.icon phase_icon, 
             phase.priority phase_priority, 
             phase.flags phase_flags, 
             phase."state" phase_state, 
@@ -680,50 +742,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.lastmod phase_lastmod, 
             phase."version" phase_version, 
             phase.nref phase_nref, 
-            d_zone.id d_zone_id, 
-            d_zone.code d_zone_code, 
-            d_zone.uid d_zone_uid, 
-            d_zone.gid d_zone_gid, 
-            d_zone.mode d_zone_mode, 
-            d_zone.acl d_zone_acl, 
-            d_zone.label d_zone_label, 
-            d_zone.description d_zone_description, 
-            d_zone.priority d_zone_priority, 
-            d_zone.flags d_zone_flags, 
-            d_zone."state" d_zone_state, 
-            d_zone.creation d_zone_creation, 
-            d_zone.lastmod d_zone_lastmod, 
-            d_zone."version" d_zone_version, 
-            d_zone.cat d_zone_cat, 
-            d_zone.country d_zone_country, 
-            d_zone.parent d_zone_parent, 
-            d_zone."depth" d_zone_depth, 
-            d_zone.telcode d_zone_telcode, 
-            d_zone.postcode d_zone_postcode, 
-            d_zone.props d_zone_props, 
-            d_zone."data" d_zone_data, 
-            s_zone.id s_zone_id, 
-            s_zone.code s_zone_code, 
-            s_zone.uid s_zone_uid, 
-            s_zone.gid s_zone_gid, 
-            s_zone.mode s_zone_mode, 
-            s_zone.acl s_zone_acl, 
-            s_zone.label s_zone_label, 
-            s_zone.description s_zone_description, 
-            s_zone.priority s_zone_priority, 
-            s_zone.flags s_zone_flags, 
-            s_zone."state" s_zone_state, 
-            s_zone.creation s_zone_creation, 
-            s_zone.lastmod s_zone_lastmod, 
-            s_zone."version" s_zone_version, 
-            s_zone.cat s_zone_cat, 
-            s_zone.country s_zone_country, 
-            s_zone.parent s_zone_parent, 
-            s_zone."depth" s_zone_depth, 
-            s_zone.telcode s_zone_telcode, 
-            s_zone.postcode s_zone_postcode, 
-            s_zone.props s_zone_props, 
-            s_zone."data" s_zone_data, 
             storeodr.id storeodr_id, 
             storeodr.uid storeodr_uid, 
             storeodr.gid storeodr_gid, 
@@ -760,11 +778,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             left join tranodr prev on a.prev = prev.id
             left join lily._form form on a.form = form.id
             left join lily.org shipper on a.shipper = shipper.id
+            left join lily."zone" dst_zone on a.dst_zone = dst_zone.id
             left join trancat category on a.cat = category.id
+            left join lily."zone" src_zone on a.src_zone = src_zone.id
             left join saleodr saleodr on a.saleodr = saleodr.id
             left join tranphase phase on a.phase = phase.id
-            left join lily."zone" d_zone on a.d_zone = d_zone.id
-            left join lily."zone" s_zone on a.s_zone = s_zone.id
             left join storeodr storeodr on a.storeodr = storeodr.id
         ]]>
     </sql>
@@ -820,24 +838,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             saleodr,
             storeodr,
             shipper,
-            s_alias,
-            s_ctprops,
-            s_address1,
-            s_address2,
-            s_zone,
-            s_tel,
-            s_telok,
-            s_email,
-            s_emailok,
-            d_alias,
-            d_ctprops,
-            d_address1,
-            d_address2,
-            d_zone,
-            d_tel,
-            d_telok,
-            d_email,
-            d_emailok,
+            src_alias,
+            src_ctprops,
+            src_address1,
+            src_address2,
+            src_zone,
+            src_tel,
+            src_telok,
+            src_email,
+            src_emailok,
+            dst_alias,
+            dst_ctprops,
+            dst_address1,
+            dst_address2,
+            dst_zone,
+            dst_tel,
+            dst_telok,
+            dst_email,
+            dst_emailok,
             shipcost,
             "length",
             sum_qty,
@@ -854,38 +872,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{endTime},
             #{year},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{subject},
             #{opId},
             #{rawText},
             #{formId},
             #{formArguments},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{categoryId},
             #{phaseId},
             #{prevId},
             #{salesOrderId},
             #{storeodrId},
             #{shipperId},
-            #{sAlias},
-            #{sCtprops.jsonStr}::jsonb,
-            #{sAddress1},
-            #{sAddress2},
-            #{sZoneId},
-            #{sTel},
-            #{sTelok},
-            #{sEmail},
-            #{sEmailok},
-            #{dAlias},
-            #{dCtprops.jsonStr}::jsonb,
-            #{dAddress1},
-            #{dAddress2},
-            #{dZoneId},
-            #{dTel},
-            #{dTelok},
-            #{dEmail},
-            #{dEmailok},
+            #{src.alias},
+            #{src.properties},
+            #{src.address1},
+            #{src.address2},
+            #{src.zoneId},
+            #{src.tel},
+            #{src.telValidated},
+            #{src.email},
+            #{src.emailValidated},
+            #{dst.alias},
+            #{dst.properties},
+            #{dst.address1},
+            #{dst.address2},
+            #{dst.zoneId},
+            #{dst.tel},
+            #{dst.telValidated},
+            #{dst.email},
+            #{dst.emailValidated},
             #{shipcost},
             #{length},
             #{totalQuantity},
@@ -907,38 +925,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             t1 = #{endTime},
             "year" = #{year},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             subject = #{subject},
             op = #{opId},
             text = #{rawText},
             form = #{formId},
             formargs = #{formArguments},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             cat = #{categoryId},
             phase = #{phaseId},
             prev = #{prevId},
             saleodr = #{salesOrderId},
             storeodr = #{storeodrId},
             shipper = #{shipperId},
-            s_alias = #{sAlias},
-            s_ctprops = #{sCtprops.jsonStr}::jsonb,
-            s_address1 = #{sAddress1},
-            s_address2 = #{sAddress2},
-            s_zone = #{sZoneId},
-            s_tel = #{sTel},
-            s_telok = #{sTelok},
-            s_email = #{sEmail},
-            s_emailok = #{sEmailok},
-            d_alias = #{dAlias},
-            d_ctprops = #{dCtprops.jsonStr}::jsonb,
-            d_address1 = #{dAddress1},
-            d_address2 = #{dAddress2},
-            d_zone = #{dZoneId},
-            d_tel = #{dTel},
-            d_telok = #{dTelok},
-            d_email = #{dEmail},
-            d_emailok = #{dEmailok},
+            src_alias = #{src.alias},
+            src_ctprops = #{src.properties},
+            src_address1 = #{src.address1},
+            src_address2 = #{src.address2},
+            src_zone = #{src.zoneId},
+            src_tel = #{src.tel},
+            src_telok = #{src.telValidated},
+            src_email = #{src.email},
+            src_emailok = #{src.emailValidated},
+            dst_alias = #{dst.alias},
+            dst_ctprops = #{dst.properties},
+            dst_address1 = #{dst.address1},
+            dst_address2 = #{dst.address2},
+            dst_zone = #{dst.zoneId},
+            dst_tel = #{dst.tel},
+            dst_telok = #{dst.telValidated},
+            dst_email = #{dst.email},
+            dst_emailok = #{dst.emailValidated},
             shipcost = #{shipcost},
             "length" = #{length},
             sum_qty = #{totalQuantity},
@@ -957,7 +975,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from tranodr
+        select count(*) "rows" from tranodr a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

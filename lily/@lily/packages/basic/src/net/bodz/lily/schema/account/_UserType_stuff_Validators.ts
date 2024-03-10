@@ -1,3 +1,4 @@
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
@@ -18,6 +19,9 @@ export class _UserType_stuff_Validators extends CoEntityValidators {
     }
 
     validateName(val: string) {
+    }
+
+    validateProperties(val: JsonVariant) {
     }
 
     validateDummy(val: int) {

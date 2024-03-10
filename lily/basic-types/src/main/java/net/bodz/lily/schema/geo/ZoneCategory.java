@@ -2,13 +2,12 @@ package net.bodz.lily.schema.geo;
 
 import javax.persistence.Table;
 
-
 /**
  * @see Zone
  */
 @Table(schema = ZoneCategory.SCHEMA_NAME, name = ZoneCategory.TABLE_NAME)
 public class ZoneCategory
-        extends _ZoneCategory_stuff {
+        extends _ZoneCategory_stuff<ZoneCategory> {
 
     private static final long serialVersionUID = 1L;
 

@@ -9,6 +9,8 @@ public class _IssueParameterCriteriaBuilder_stuff<self_t extends _IssueParameter
 
     public final IntegerField accessMode = integer("mode");
 
+    public final StringField name = string("\"name\"");
+
     public final IntegerField dummy = integer("dummy");
 
 }

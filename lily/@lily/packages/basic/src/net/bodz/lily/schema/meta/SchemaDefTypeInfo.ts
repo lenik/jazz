@@ -11,11 +11,15 @@ import _SchemaDef_stuff_TypeInfo from "./_SchemaDef_stuff_TypeInfo";
 
 export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
 
+    readonly validators = new SchemaDefValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.meta.SchemaDef"; }
     get icon() { return "fa-tag"; }
     get label() { return "Schema"; }
-
-    validators = new SchemaDefValidators(this);
 
     override preamble() {
         super.preamble();
@@ -28,9 +32,7 @@ export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new SchemaDefTypeInfo();
 
 }
 

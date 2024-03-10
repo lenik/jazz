@@ -1,2 +1,7 @@
+net.bodz.violet.schema.art.ArtifactModel
+net.bodz.violet.schema.fab.FabFn
 net.bodz.violet.schema.fab.FabOrder
+net.bodz.violet.schema.fab.FabOrderItem
+net.bodz.violet.schema.fab.FabStdProcess
+net.bodz.violet.schema.fab.FabStdTest
 net.bodz.violet.schema.fab.FabStdTestCategory

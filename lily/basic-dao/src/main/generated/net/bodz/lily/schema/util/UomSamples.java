@@ -7,23 +7,21 @@ import net.bodz.lily.util.IRandomPicker;
 public class UomSamples
         extends TestSampleBuilder {
 
-    public Uom std;
+    public Uom standard;
 
     @Override
     public Uom build()
             throws Exception {
         Uom a = new Uom();
-        a.setStd(std);
-        a.setId(513285121);
-        a.setCode("Ap-ihnd.");
-        a.setProp("");
-        a.setScale(0.13506906180262523);
+        a.setStandard(standard);
+        a.setProperty("Ap-ihnd.");
+        a.setScale(0.5413397121356205);
         return a;
     }
 
     @Override
     public UomSamples wireAny(IRandomPicker picker) {
-        this.std = picker.pickAny(UomMapper.class, "uom");
+        this.standard = picker.pickAny(UomMapper.class, "uom");
         return this;
     }
 

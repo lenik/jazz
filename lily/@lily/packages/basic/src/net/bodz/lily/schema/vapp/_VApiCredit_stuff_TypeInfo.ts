@@ -12,20 +12,24 @@ export class _VApiCredit_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "vapi_credit";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_APP_ID = "app";
+    static readonly FIELD_API_ID = "api";
+    static readonly FIELD_CREDIT = "credit";
+
+    static readonly N_ID = 10;
+    static readonly N_APP_ID = 10;
+    static readonly N_API_ID = 10;
+    static readonly N_CREDIT = 20;
+
+    readonly validators = new _VApiCredit_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.vapp.VApiCredit"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_APP_ID = "app";
-    static FIELD_API_ID = "api";
-    static FIELD_CREDIT = "credit";
-
-    static N_ID = 10;
-    static N_APP_ID = 10;
-    static N_API_ID = 10;
-    static N_CREDIT = 20;
-
-    validators = new _VApiCredit_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -41,9 +45,7 @@ export class _VApiCredit_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _VApiCredit_stuff_TypeInfo();
 
 }
 

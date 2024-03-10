@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="subject" column="subject" />
         <result property="rawText" column="text" />
         <result property="formArguments" column="formargs" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="value" column="value" />
         <result property="ownerUserId" column="uid" />
         <result property="ownerGroupId" column="gid" />
@@ -28,22 +28,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="formId" column="form" />
         <result property="categoryId" column="cat" />
         <result property="phaseId" column="phase" />
-        <association property="form" columnPrefix="form_"
+        <association property="form" columnPrefix="form_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.meta.FormDef" 
-            resultMap="net.bodz.lily.schema.meta.FormDefMapper.objlist_map" />
-        <association property="op" columnPrefix="op_"
+            resultMap="net.bodz.lily.schema.meta.dao.FormDefMapper.objlist_map" />
+        <association property="op" columnPrefix="op_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="phase" columnPrefix="phase_"
+        <association property="phase" columnPrefix="phase_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.DiaryPhase" 
             resultMap="net.bodz.violet.schema.plan.dao.DiaryPhaseMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="category" columnPrefix="category_"
+        <association property="category" columnPrefix="category_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.DiaryCategory" 
             resultMap="net.bodz.violet.schema.plan.dao.DiaryCategoryMapper.objlist_map" />
     </resultMap>
@@ -77,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -91,6 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -100,11 +102,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -121,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.code phase_code, 
             phase.label phase_label, 
             phase.description phase_description, 
+            phase.icon phase_icon, 
             phase.priority phase_priority, 
             phase.flags phase_flags, 
             phase."state" phase_state, 
@@ -133,6 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -142,6 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             category.id category_id, 
             category."name" category_name, 
             category.uid category_uid, 
@@ -150,14 +157,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -201,6 +207,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -215,6 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -224,11 +232,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op.props op_props, 
             op.gid0 op_gid0, 
             op.referer op_referer, 
+            op.person op_person, 
             ownerGroup.id ownerGroup_id, 
             ownerGroup."name" ownerGroup_name, 
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -245,6 +255,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             phase.code phase_code, 
             phase.label phase_label, 
             phase.description phase_description, 
+            phase.icon phase_icon, 
             phase.priority phase_priority, 
             phase.flags phase_flags, 
             phase."state" phase_state, 
@@ -257,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -266,6 +278,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             category.id category_id, 
             category."name" category_name, 
             category.uid category_uid, 
@@ -274,14 +287,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category.acl category_acl, 
             category.label category_label, 
             category.description category_description, 
+            category.icon category_icon, 
             category.priority category_priority, 
             category.flags category_flags, 
             category."state" category_state, 
             category.creation category_creation, 
             category.lastmod category_lastmod, 
             category."version" category_version, 
-            category.image category_image, 
-            category.imagealt category_imagealt, 
             category.props category_props, 
             category.parent category_parent, 
             category."depth" category_depth, 
@@ -353,7 +365,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
@@ -363,7 +375,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{rawText},
             #{formId},
             #{formArguments},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{categoryId},
             #{phaseId},
             #{value}
@@ -381,7 +393,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
@@ -391,7 +403,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             text = #{rawText},
             form = #{formId},
             formargs = #{formArguments},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             cat = #{categoryId},
             phase = #{phaseId},
             "value" = #{value},
@@ -409,7 +421,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from diary
+        select count(*) "rows" from diary a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

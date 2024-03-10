@@ -3,17 +3,20 @@ package net.bodz.violet.schema.shop;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoImagedEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 
 @IdType(Long.class)
 public abstract class _ShopItem_stuff
-        extends CoMomentInterval<Long> {
+        extends CoImagedEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,14 +37,14 @@ public abstract class _ShopItem_stuff
     public static final int N_PRICE = 20;
     public static final int N_QUANTITY = 20;
 
-    private static final int _ord_SHOP_ID = 14;
+    private static final int _ord_SHOP_ID = 15;
     private static final int _ord_CATEGORY_ID = _ord_SHOP_ID + 1;
     private static final int _ord_ARTIFACT_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_BATCH = _ord_ARTIFACT_ID + 1;
     private static final int _ord_PRICE = _ord_BATCH + 1;
     private static final int _ord_QUANTITY = _ord_PRICE + 1;
 
-    Object batch;
+    JsonVariant batch;
 
     @NotNull
     BigDecimal price;
@@ -69,11 +72,11 @@ public abstract class _ShopItem_stuff
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)
     @Column(name = "batch", precision = 2147483647)
-    public Object getBatch() {
+    public JsonVariant getBatch() {
         return batch;
     }
 
-    public void setBatch(Object value) {
+    public void setBatch(JsonVariant value) {
         this.batch = value;
     }
 
@@ -103,9 +106,10 @@ public abstract class _ShopItem_stuff
 
     /**
      *
-     * @label cat
      * @constraint foreign key (cat) references violet.shopitemcat (id)
      */
+    @JoinColumn(name = "cat")
+    @ManyToOne
     public ShopItemCategory getCategory() {
         return category;
     }
@@ -132,9 +136,10 @@ public abstract class _ShopItem_stuff
 
     /**
      *
-     * @label shop
      * @constraint foreign key (shop) references violet.shop (id)
      */
+    @JoinColumn(name = "shop")
+    @ManyToOne
     public Shop getShop() {
         return shop;
     }
@@ -161,9 +166,10 @@ public abstract class _ShopItem_stuff
 
     /**
      *
-     * @label art
      * @constraint foreign key (art) references violet.art (id)
      */
+    @JoinColumn(name = "art")
+    @ManyToOne
     @NotNull
     public Artifact getArtifact() {
         return artifact;
@@ -180,6 +186,8 @@ public abstract class _ShopItem_stuff
     @Column(name = "art", nullable = false, precision = 10)
     public synchronized int getArtifactId() {
         if (artifact != null) {
+            if (artifact.getId() == null)
+                return 0;
             return artifact.getId();
         }
         return artifactId;

@@ -1,20 +1,20 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoImaged from "../../concrete/CoImaged";
 import type Zone from "./Zone";
 import type ZoneCategory from "./ZoneCategory";
 import _Zone_stuff_TypeInfo from "./_Zone_stuff_TypeInfo";
 
-export class _Zone_stuff extends CoEntity<int> {
+export class _Zone_stuff extends CoImaged<int> {
+
     static _typeInfo: _Zone_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _Zone_stuff_TypeInfo();
+            this._typeInfo = _Zone_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
-    id: int;
     code?: string;
     country?: string;
     depth: int;

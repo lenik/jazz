@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -80,6 +82,8 @@ public abstract class _ArticleBackref_stuff
      *
      * @constraint foreign key (article) references lily.article (id)
      */
+    @JoinColumn(name = "article")
+    @ManyToOne
     @NotNull
     public Article getArticle() {
         return article;
@@ -111,6 +115,8 @@ public abstract class _ArticleBackref_stuff
      *
      * @constraint foreign key (site) references lily.extsite (id)
      */
+    @JoinColumn(name = "site")
+    @ManyToOne
     @NotNull
     public ExternalSite getSite() {
         return site;
@@ -127,6 +133,8 @@ public abstract class _ArticleBackref_stuff
     @Column(name = "site", nullable = false, precision = 10)
     public synchronized int getSiteId() {
         if (site != null) {
+            if (site.getId() == null)
+                return 0;
             return site.getId();
         }
         return siteId;

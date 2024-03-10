@@ -1,11 +1,9 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
 import type { int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import StructRow from "../../concrete/StructRow";
 import PersonTag from "./PersonTag";
 import _PersonTag_stuff from "./_PersonTag_stuff";
 
@@ -17,10 +15,11 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import PersonChooseDialog from "./PersonChooseDialog.vue";
 import PersonTagTypeChooseDialog from "./PersonTagTypeChooseDialog.vue";
 
@@ -42,6 +41,7 @@ const emit = defineEmits<{
 
 const meta = PersonTag.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
 const personChooseDialog = ref<InstanceType<typeof PersonChooseDialog>>();
@@ -62,25 +62,15 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <DateTime v-model="model.lastModifiedDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
-            </FieldRow>
-        </FieldGroup>
+        <StructRowFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_PersonTag_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
+            <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.person" v-model="model.person">
+            <FieldRow :property="meta.person" v-model="model.person">
                 <RefEditor :dialog="personChooseDialog" v-model="model.person" v-model:id="model.personId" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.tag" v-model="model.tag">
+            <FieldRow :property="meta.tag" v-model="model.tag">
                 <RefEditor :dialog="personTagTypeChooseDialog" v-model="model.tag" v-model:id="model.tagId" />
             </FieldRow>
         </FieldGroup>

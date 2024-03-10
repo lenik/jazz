@@ -6,10 +6,11 @@ import type PostTagType from "./PostTagType";
 import _PostTag_stuff_TypeInfo from "./_PostTag_stuff_TypeInfo";
 
 export class _PostTag_stuff extends CoEntity<int> {
+
     static _typeInfo: _PostTag_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _PostTag_stuff_TypeInfo();
+            this._typeInfo = _PostTag_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 

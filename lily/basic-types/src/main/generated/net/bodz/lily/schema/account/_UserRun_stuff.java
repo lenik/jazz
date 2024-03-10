@@ -5,7 +5,10 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
@@ -25,19 +28,24 @@ public abstract class _UserRun_stuff
     public static final String TABLE_NAME = "user_run";
 
     public static final String FIELD_USER_ID = "user";
+    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_SCORE = "score";
     public static final String FIELD_LAST_LOGIN_TIME = "lastlog";
     public static final String FIELD_LAST_LOGIN_I_P = "lastlogip";
 
     public static final int N_USER_ID = 10;
+    public static final int N_PROPERTIES = 2147483647;
     public static final int N_SCORE = 10;
     public static final int N_LAST_LOGIN_TIME = 35;
     public static final int N_LAST_LOGIN_I_P = 2147483647;
 
     private static final int _ord_USER_ID = 1;
-    private static final int _ord_SCORE = 12;
+    private static final int _ord_PROPERTIES = _ord_USER_ID + 10;
+    private static final int _ord_SCORE = _ord_PROPERTIES + 1;
     private static final int _ord_LAST_LOGIN_TIME = _ord_SCORE + 1;
     private static final int _ord_LAST_LOGIN_I_P = _ord_LAST_LOGIN_TIME + 1;
+
+    JsonVariant properties;
 
     @NotNull
     int score;
@@ -65,6 +73,17 @@ public abstract class _UserRun_stuff
     @Override
     public void id(Integer id) {
         setUserId(id);
+    }
+
+    @Ordinal(_ord_PROPERTIES)
+    @Precision(value = 2147483647)
+    @Column(name = "props", precision = 2147483647)
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    public void setProperties(JsonVariant value) {
+        this.properties = value;
     }
 
     @Ordinal(_ord_SCORE)
@@ -117,6 +136,8 @@ public abstract class _UserRun_stuff
      *
      * @constraint foreign key (user) references lily.user (id)
      */
+    @JoinColumn(name = "user")
+    @ManyToOne
     @NotNull
     public User getUser() {
         return user;

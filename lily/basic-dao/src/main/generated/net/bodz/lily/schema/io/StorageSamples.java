@@ -10,7 +10,6 @@ public class StorageSamples
     public Storage build()
             throws Exception {
         Storage a = new Storage();
-        a.setId(10770617);
         a.setName("Hew ae");
         return a;
     }

@@ -1,11 +1,10 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { double, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoObject from "../../concrete/CoObject";
+import IdEntity from "../../concrete/IdEntity";
 import Uom from "./Uom";
 import _Uom_stuff from "./_Uom_stuff";
 
@@ -17,10 +16,13 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import CoCodeFieldGroup from "../../concrete/CoCodeFieldGroup.vue";
+import CoImagedFieldGroup from "../../concrete/CoImagedFieldGroup.vue";
+import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
 import UomChooseDialog from "./UomChooseDialog.vue";
 
 defineOptions({
@@ -41,6 +43,7 @@ const emit = defineEmits<{
 
 const meta = Uom.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
 const uomChooseDialog = ref<InstanceType<typeof UomChooseDialog>>();
@@ -60,35 +63,23 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="CoObject.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
-                <input type="text" v-model="model.icon" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <JsonEditor v-model="model.properties" />
+        <CoObjectFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="IdEntity.TYPE">
+            <FieldRow :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
+        <CoImagedFieldGroup :meta="meta" v-model="model" />
+        <CoCodeFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_Uom_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+            <FieldRow :property="meta.property" v-model="model.property">
+                <input type="text" v-model="model.property" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.code" v-model="model.code">
-                <input type="text" v-model="model.code" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.prop" v-model="model.prop">
-                <input type="text" v-model="model.prop" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.scale" v-model="model.scale">
+            <FieldRow :property="meta.scale" v-model="model.scale">
                 <input type="number" v-model="model.scale" />
             </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.std" v-model="model.std">
-                <RefEditor :dialog="uomChooseDialog" v-model="model.std" v-model:id="model.stdId" />
+            <FieldRow :property="meta.standard" v-model="model.standard">
+                <RefEditor :dialog="uomChooseDialog" v-model="model.standard" v-model:id="model.standardId" />
             </FieldRow>
         </FieldGroup>
     </div>

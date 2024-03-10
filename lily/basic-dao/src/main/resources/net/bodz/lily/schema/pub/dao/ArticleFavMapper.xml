@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="articleId" column="article" />
         <result property="userId" column="user" />
-        <association property="article" columnPrefix="article_"
+        <association property="article" columnPrefix="article_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.pub.Article" 
             resultMap="net.bodz.lily.schema.pub.dao.ArticleMapper.objlist_map" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>

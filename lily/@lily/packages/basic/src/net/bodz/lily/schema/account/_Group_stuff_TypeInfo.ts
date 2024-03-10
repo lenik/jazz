@@ -11,18 +11,22 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "group";
 
+    static readonly FIELD_TYPE_ID = "type";
+    static readonly FIELD_PARENT_ID = "parent";
+
+    static readonly N_TYPE_ID = 10;
+    static readonly N_PARENT_ID = 10;
+
+    readonly validators = new _Group_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.Group"; }
     get icon() { return "fa-tag"; }
     get label() { return "Group (Role)"; }
     get description() { return "User Group"; }
-
-    static FIELD_TYPE_ID = "type";
-    static FIELD_PARENT_ID = "parent";
-
-    static N_TYPE_ID = 10;
-    static N_PARENT_ID = 10;
-
-    validators = new _Group_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -42,9 +46,7 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _Group_stuff_TypeInfo();
 
 }
 

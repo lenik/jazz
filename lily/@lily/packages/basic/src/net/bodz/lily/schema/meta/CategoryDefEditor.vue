@@ -1,13 +1,11 @@
 <script lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 
-import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoObject from "../../concrete/CoObject";
-import StructRow from "../../concrete/StructRow";
+import CoNode from "../../concrete/CoNode";
+import IdEntity from "../../concrete/IdEntity";
 import CategoryDef from "./CategoryDef";
 import _CategoryDef_stuff from "./_CategoryDef_stuff";
 
@@ -19,11 +17,13 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
-import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import CoImagedFieldGroup from "../../concrete/CoImagedFieldGroup.vue";
+import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import CategoryDefChooseDialog from "./CategoryDefChooseDialog.vue";
 import SchemaDefChooseDialog from "./SchemaDefChooseDialog.vue";
 
@@ -45,10 +45,11 @@ const emit = defineEmits<{
 
 const meta = CategoryDef.TYPE.property;
 const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
 
 const rootElement = ref<HTMLElement>();
-const schemaDefChooseDialog = ref<InstanceType<typeof SchemaDefChooseDialog>>();
 const categoryDefChooseDialog = ref<InstanceType<typeof CategoryDefChooseDialog>>();
+const schemaDefChooseDialog = ref<InstanceType<typeof SchemaDefChooseDialog>>();
 const valids = ref<any>({});
 
 // methods
@@ -65,63 +66,30 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <DateTime v-model="model.lastModifiedDate" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
+        <StructRowFieldGroup :meta="meta" v-model="model" />
+        <CoObjectFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="IdEntity.TYPE">
+            <FieldRow :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="CoObject.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
-                <input type="text" v-model="model.label" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.description" v-model="model.description">
-                <input type="text" v-model="model.description" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.icon" v-model="model.icon">
-                <input type="text" v-model="model.icon" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.priority" v-model="model.priority">
-                <input type="number" v-model="model.priority" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.flags" v-model="model.flags">
-                <input type="number" v-model="model.flags" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.state" v-model="model.state">
-                <input type="number" v-model="model.state" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.properties" v-model="model.properties">
-                <JsonEditor v-model="model.properties" />
-            </FieldRow>
-        </FieldGroup>
-        <FieldGroup :type="_CategoryDef_stuff.TYPE">
-            <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.code" v-model="model.code">
-                <input type="text" v-model="model.code" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.depth" v-model="model.depth">
-                <input type="number" v-model="model.depth" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.refCount" v-model="model.refCount">
-                <input type="number" v-model="model.refCount" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.schema" v-model="model.schema">
-                <RefEditor :dialog="schemaDefChooseDialog" v-model="model.schema" v-model:id="model.schemaId" />
-            </FieldRow>
-            <FieldRow v-bind="fieldRowProps" :property="meta.parent" v-model="model.parent">
+        <CoImagedFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="CoNode.TYPE">
+            <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="categoryDefChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
+        <FieldGroup :type="_CategoryDef_stuff.TYPE">
+            <FieldRow :property="meta.code" v-model="model.code">
+                <input type="text" v-model="model.code" />
+            </FieldRow>
+            <FieldRow :property="meta.schema" v-model="model.schema">
+                <RefEditor :dialog="schemaDefChooseDialog" v-model="model.schema" v-model:id="model.schemaId" />
+            </FieldRow>
+        </FieldGroup>
     </div>
-    <SchemaDefChooseDialog ref="schemaDefChooseDialog" />
     <CategoryDefChooseDialog ref="categoryDefChooseDialog" />
+    <SchemaDefChooseDialog ref="schemaDefChooseDialog" />
 </template>
 
 <style scoped lang="scss">

@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id property="id" column="id" />
         <result property="coursekitId" column="coursekit" />
         <result property="userId" column="user" />
-        <association property="coursekit" columnPrefix="coursekit_"
+        <association property="coursekit" columnPrefix="coursekit_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.CourseKit" 
             resultMap="net.bodz.violet.schema.edu.dao.CourseKitMapper.objlist_map" />
-        <association property="user" columnPrefix="user_"
+        <association property="user" columnPrefix="user_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>
@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             coursekit.acl coursekit_acl, 
             coursekit.label coursekit_label, 
             coursekit.description coursekit_description, 
+            coursekit.icon coursekit_icon, 
             coursekit.priority coursekit_priority, 
             coursekit.flags coursekit_flags, 
             coursekit."state" coursekit_state, 
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -54,7 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from coursekit_fav a
             left join coursekit coursekit on a.coursekit = coursekit.id
             left join lily."user" "user" on a."user" = "user".id
@@ -73,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             coursekit.acl coursekit_acl, 
             coursekit.label coursekit_label, 
             coursekit.description coursekit_description, 
+            coursekit.icon coursekit_icon, 
             coursekit.priority coursekit_priority, 
             coursekit.flags coursekit_flags, 
             coursekit."state" coursekit_state, 
@@ -91,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."name" user_name, 
             "user".label user_label, 
             "user".description user_description, 
+            "user".icon user_icon, 
             "user".priority user_priority, 
             "user".flags user_flags, 
             "user"."state" user_state, 
@@ -99,7 +104,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "user"."version" user_version, 
             "user".props user_props, 
             "user".gid0 user_gid0, 
-            "user".referer user_referer
+            "user".referer user_referer, 
+            "user".person user_person
         from coursekit_fav a
             left join coursekit coursekit on a.coursekit = coursekit.id
             left join lily."user" "user" on a."user" = "user".id
@@ -159,7 +165,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from coursekit_fav
+        select count(*) "rows" from coursekit_fav a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

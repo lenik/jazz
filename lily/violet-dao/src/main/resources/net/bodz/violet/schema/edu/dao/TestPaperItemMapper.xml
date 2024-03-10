@@ -10,16 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
-        <result property="properties.jsonStr" column="props" />
+        <result property="properties" column="props" />
         <result property="score" column="score" />
         <result property="paperId" column="paper" />
         <result property="questionId" column="q" />
-        <association property="question" columnPrefix="q_"
+        <association property="question" columnPrefix="q_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.TestQuestion" 
             resultMap="net.bodz.violet.schema.edu.dao.TestQuestionMapper.objlist_map" />
-        <association property="paper" columnPrefix="paper_"
+        <association property="paper" columnPrefix="paper_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.edu.TestPaper" 
             resultMap="net.bodz.violet.schema.edu.dao.TestPaperMapper.objlist_map" />
     </resultMap>
@@ -67,12 +67,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             paper.acl paper_acl, 
             paper.label paper_label, 
             paper.description paper_description, 
+            paper.icon paper_icon, 
             paper.priority paper_priority, 
             paper.flags paper_flags, 
             paper."state" paper_state, 
             paper.creation paper_creation, 
             paper.lastmod paper_lastmod, 
             paper."version" paper_version, 
+            paper.props paper_props, 
             paper.course paper_course, 
             paper.timeout paper_timeout, 
             paper.totalscore paper_totalscore
@@ -125,12 +127,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             paper.acl paper_acl, 
             paper.label paper_label, 
             paper.description paper_description, 
+            paper.icon paper_icon, 
             paper.priority paper_priority, 
             paper.flags paper_flags, 
             paper."state" paper_state, 
             paper.creation paper_creation, 
             paper.lastmod paper_lastmod, 
             paper."version" paper_version, 
+            paper.props paper_props, 
             paper.course paper_course, 
             paper.timeout paper_timeout, 
             paper.totalscore paper_totalscore
@@ -181,9 +185,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
-            #{properties.jsonStr}::jsonb,
+            #{properties},
             #{paperId},
             #{questionId},
             #{score}
@@ -197,9 +201,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
-            props = #{properties.jsonStr}::jsonb,
+            props = #{properties},
             paper = #{paperId},
             q = #{questionId},
             score = #{score},
@@ -217,7 +221,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from testpaperl
+        select count(*) "rows" from testpaperl a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

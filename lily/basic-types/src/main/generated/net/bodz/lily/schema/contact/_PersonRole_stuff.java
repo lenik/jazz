@@ -2,6 +2,8 @@ package net.bodz.lily.schema.contact;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -100,6 +102,8 @@ public abstract class _PersonRole_stuff
      *
      * @constraint foreign key (ou) references lily.orgunit (id)
      */
+    @JoinColumn(name = "ou")
+    @ManyToOne
     public OrgUnit getOrgUnit() {
         return orgUnit;
     }
@@ -128,6 +132,8 @@ public abstract class _PersonRole_stuff
      *
      * @constraint foreign key (person) references lily.person (id)
      */
+    @JoinColumn(name = "person")
+    @ManyToOne
     @NotNull
     public Person getPerson() {
         return person;
@@ -159,6 +165,8 @@ public abstract class _PersonRole_stuff
      *
      * @constraint foreign key (org) references lily.org (id)
      */
+    @JoinColumn(name = "org")
+    @ManyToOne
     @NotNull
     public Organization getOrg() {
         return org;

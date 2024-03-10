@@ -3,10 +3,14 @@ import _VApp_stuff_TypeInfo from "./_VApp_stuff_TypeInfo";
 
 export class VAppTypeInfo extends _VApp_stuff_TypeInfo {
 
+    readonly validators = new VAppValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.vapp.VApp"; }
     get icon() { return "fa-tag"; }
-
-    validators = new VAppValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class VAppTypeInfo extends _VApp_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new VAppTypeInfo();
 
 }
 

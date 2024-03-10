@@ -11,13 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orgId" column="org" />
         <result property="orgUnitId" column="ou" />
         <result property="personId" column="person" />
-        <association property="orgUnit" columnPrefix="ou_"
+        <association property="orgUnit" columnPrefix="ou_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.OrgUnit" 
             resultMap="net.bodz.lily.schema.contact.dao.OrgUnitMapper.objlist_map" />
-        <association property="person" columnPrefix="person_"
+        <association property="person" columnPrefix="person_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="org" columnPrefix="org_"
+        <association property="org" columnPrefix="org_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Organization" 
             resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
     </resultMap>

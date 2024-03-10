@@ -7,12 +7,16 @@ import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
 
 export class GroupTypeInfo extends _Group_stuff_TypeInfo {
 
+    readonly validators = new GroupValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.Group"; }
     get icon() { return "fa-tag"; }
     get label() { return "Group (Role)"; }
     get description() { return "User Group"; }
-
-    validators = new GroupValidators(this);
 
     override preamble() {
         super.preamble();
@@ -22,9 +26,7 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new GroupTypeInfo();
 
 }
 

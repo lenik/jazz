@@ -19,6 +19,7 @@ public class ArtifactParameterSamples
         ArtifactParameter a = new ArtifactParameter();
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("Mhmva");
         a.setDummy(350540066);
         return a;
     }

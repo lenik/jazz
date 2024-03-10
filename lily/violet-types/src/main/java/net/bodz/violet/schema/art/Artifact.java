@@ -17,6 +17,7 @@ import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IDocInProps;
 import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.repr.EntGroup;
+import net.bodz.lily.schema.util.Uom;
 
 /**
  * 物品
@@ -32,23 +33,23 @@ public class Artifact
     private static final long serialVersionUID = 1L;
 
     private Set<ArtifactTag> tags = new HashSet<>();
-    private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
+    private Map<Uom, Double> convMap = new HashMap<Uom, Double>();
     private String uomProperty = "数量";
     private int decimalDigits = 2;
 
     {
-        uom = new UOM(UOMs.PIECE);
+        uom = new Uom(Uoms.PIECE);
     }
 
     /**
      * 单位转换表
      */
     @OfGroup(EntGroup.Packaging.class)
-    public Map<UOM, Double> getConvMap() {
+    public Map<Uom, Double> getConvMap() {
         return convMap;
     }
 
-    public void setConvMap(Map<UOM, Double> convMap) {
+    public void setConvMap(Map<Uom, Double> convMap) {
         if (convMap == null)
             throw new NullPointerException("convMap");
         this.convMap = convMap;

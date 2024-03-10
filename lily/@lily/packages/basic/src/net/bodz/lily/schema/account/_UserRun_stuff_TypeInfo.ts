@@ -1,3 +1,4 @@
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INET_ADDRESS, INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { TIMESTAMP } from "@skeljs/core/src/lang/time";
@@ -12,25 +13,32 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "user_run";
 
+    static readonly FIELD_USER_ID = "user";
+    static readonly FIELD_PROPERTIES = "props";
+    static readonly FIELD_SCORE = "score";
+    static readonly FIELD_LAST_LOGIN_TIME = "lastlog";
+    static readonly FIELD_LAST_LOGIN_I_P = "lastlogip";
+
+    static readonly N_USER_ID = 10;
+    static readonly N_PROPERTIES = 2147483647;
+    static readonly N_SCORE = 10;
+    static readonly N_LAST_LOGIN_TIME = 35;
+    static readonly N_LAST_LOGIN_I_P = 2147483647;
+
+    readonly validators = new _UserRun_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.account.UserRun"; }
     get icon() { return "fa-tag"; }
     get description() { return "User Activity Log"; }
 
-    static FIELD_USER_ID = "user";
-    static FIELD_SCORE = "score";
-    static FIELD_LAST_LOGIN_TIME = "lastlog";
-    static FIELD_LAST_LOGIN_I_P = "lastlogip";
-
-    static N_USER_ID = 10;
-    static N_SCORE = 10;
-    static N_LAST_LOGIN_TIME = 35;
-    static N_LAST_LOGIN_I_P = 2147483647;
-
-    validators = new _UserRun_stuff_Validators(this);
-
     override preamble() {
         super.preamble();
         this.declare({
+            properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
             score: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateScore }),
             lastLoginTime: property({ type: TIMESTAMP, precision: 35, scale: 6, 
                 description: "Last time of login", 
@@ -47,9 +55,7 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _UserRun_stuff_TypeInfo();
 
 }
 

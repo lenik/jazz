@@ -1,6 +1,8 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -55,6 +57,8 @@ public abstract class _ArticleTalk_stuff<this_t extends _ArticleTalk_stuff<this_
      *
      * @constraint foreign key (article) references lily.article (id)
      */
+    @JoinColumn(name = "article")
+    @ManyToOne
     @NotNull
     public Article getArticle() {
         return article;

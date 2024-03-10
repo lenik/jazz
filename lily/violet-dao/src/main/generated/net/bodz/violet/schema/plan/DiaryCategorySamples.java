@@ -22,6 +22,7 @@ public class DiaryCategorySamples
         a.setParent(parent);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("ipup.");
         return a;
     }
 

@@ -24,6 +24,7 @@ net.bodz.lily.schema.meta.dao.FormParameterMapper
 net.bodz.lily.schema.meta.dao.ParameterDefMapper
 net.bodz.lily.schema.meta.dao.ParameterValueMapper
 net.bodz.lily.schema.meta.dao.PhaseDefMapper
+net.bodz.lily.schema.meta.dao.PriorityDefMapper
 net.bodz.lily.schema.meta.dao.SchemaDefMapper
 net.bodz.lily.schema.meta.dao.TagDefMapper
 net.bodz.lily.schema.meta.dao.TagGroupDefMapper
@@ -56,7 +57,7 @@ net.bodz.lily.schema.vapp.dao.ApiTypeMapper
 net.bodz.lily.schema.vapp.dao.VApiCreditMapper
 net.bodz.lily.schema.vapp.dao.VApiLogMapper
 net.bodz.lily.schema.vapp.dao.VApiMapper
-net.bodz.lily.schema.vapp.dao.VAppCatMapper
+net.bodz.lily.schema.vapp.dao.VAppCategoryMapper
 net.bodz.lily.schema.vapp.dao.VAppMapper
 net.bodz.lily.schema.vapp.dao.VAppRequestApiMapper
 net.bodz.lily.schema.vapp.dao.VAppRequestMapper

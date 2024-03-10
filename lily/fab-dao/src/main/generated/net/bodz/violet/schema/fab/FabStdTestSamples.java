@@ -25,10 +25,9 @@ public class FabStdTestSamples
         a.setCategory(category);
         a.setOwnerGroup(ownerGroup);
         a.setParent(parent);
-        a.setId(1636779479);
         a.setCode("Otku apaj o moe sze.");
-        a.setDepth(1095746246);
-        a.setRefCount(802854516);
+        a.setDepth(1636779479);
+        a.setRefCount(1095746246);
         return a;
     }
 

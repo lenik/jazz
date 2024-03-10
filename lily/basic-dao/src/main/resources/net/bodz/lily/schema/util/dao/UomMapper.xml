@@ -11,10 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="description" column="description" />
         <result property="icon" column="icon" />
         <result property="properties" column="props" />
-        <result property="prop" column="prop" />
+        <result property="property" column="prop" />
         <result property="scale" column="scale" />
-        <result property="stdId" column="std" />
-        <association property="std" columnPrefix="std_"
+        <result property="standardId" column="std" />
+        <association property="standard" columnPrefix="std_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.util.Uom" 
             resultMap="objlist_map" />
     </resultMap>
@@ -109,8 +109,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{description},
             #{icon},
             #{properties},
-            #{prop},
-            #{stdId},
+            #{property},
+            #{standardId},
             #{scale}
         );
     ]]></insert>
@@ -123,8 +123,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             description = #{description},
             icon = #{icon},
             props = #{properties},
-            prop = #{prop},
-            std = #{stdId},
+            prop = #{property},
+            std = #{standardId},
             "scale" = #{scale},
         </set>
         <where>

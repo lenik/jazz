@@ -7,17 +7,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="objlist_map" type="net.bodz.lily.schema.pub.ArticleParameter">
         <id property="id" column="id" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="ival" column="ival" />
         <result property="fval" column="fval" />
         <result property="sval" column="sval" />
         <result property="articleId" column="article" />
         <result property="parameterId" column="parm" />
-        <association property="article" columnPrefix="article_"
+        <association property="article" columnPrefix="article_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.pub.Article" 
             resultMap="net.bodz.lily.schema.pub.dao.ArticleMapper.objlist_map" />
-        <association property="parameter" columnPrefix="parm_"
+        <association property="parameter" columnPrefix="parm_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.pub.ArticleParameterType" 
             resultMap="net.bodz.lily.schema.pub.dao.ArticleParameterTypeMapper.objlist_map" />
     </resultMap>
@@ -182,7 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             sval
         ) values(
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{articleId},
             #{parameterId},
@@ -196,7 +196,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update article_parm
         <set>
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             article = #{articleId},
             parm = #{parameterId},

@@ -19,6 +19,7 @@ public class DiaryParameterSamples
         DiaryParameter a = new DiaryParameter();
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
+        a.setName("O Xi Aaw");
         a.setDummy(807287720);
         return a;
     }

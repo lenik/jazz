@@ -1,3 +1,4 @@
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
 import type { Timestamp } from "@skeljs/core/src/lang/time";
 
@@ -6,13 +7,15 @@ import type User from "./User";
 import _UserRun_stuff_TypeInfo from "./_UserRun_stuff_TypeInfo";
 
 export class _UserRun_stuff extends CoEntity<int> {
+
     static _typeInfo: _UserRun_stuff_TypeInfo;
     static get TYPE() {
         if (this._typeInfo == null)
-            this._typeInfo = new _UserRun_stuff_TypeInfo();
+            this._typeInfo = _UserRun_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
 
+    properties?: JsonVariant;
     score: int;
     lastLoginTime?: Timestamp;
     lastLoginIP?: InetAddress;

@@ -3,16 +3,18 @@ package net.bodz.violet.schema.fab;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _FabTask_stuff
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,7 +33,7 @@ public abstract class _FabTask_stuff
     public static final int N_PROCESS_COUNT = 10;
     public static final int N_TRACK_COUNT = 10;
 
-    private static final int _ord_ORDER_ID = 17;
+    private static final int _ord_ORDER_ID = 18;
     private static final int _ord_SINCE = _ord_ORDER_ID + 1;
     private static final int _ord_DEADLINE = _ord_SINCE + 1;
     private static final int _ord_PROCESS_COUNT = _ord_DEADLINE + 1;
@@ -102,9 +104,10 @@ public abstract class _FabTask_stuff
 
     /**
      *
-     * @label odr
      * @constraint foreign key (odr) references violet.fabodr (id)
      */
+    @JoinColumn(name = "odr")
+    @ManyToOne
     @NotNull
     public FabOrder getOrder() {
         return order;

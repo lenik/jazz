@@ -3,10 +3,14 @@ import _ArticleParameter_stuff_TypeInfo from "./_ArticleParameter_stuff_TypeInfo
 
 export class ArticleParameterTypeInfo extends _ArticleParameter_stuff_TypeInfo {
 
+    readonly validators = new ArticleParameterValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleParameter"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleParameterValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ArticleParameterTypeInfo extends _ArticleParameter_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ArticleParameterTypeInfo();
 
 }
 

@@ -10,9 +10,7 @@ public class SchemaDefSamples
     public SchemaDef build()
             throws Exception {
         SchemaDef a = new SchemaDef();
-        a.setId(2100892269);
-        a.setCode("a Au Ux icoe paaee&oi");
-        a.setDummy(1780359307);
+        a.setDummy(2100892269);
         return a;
     }
 

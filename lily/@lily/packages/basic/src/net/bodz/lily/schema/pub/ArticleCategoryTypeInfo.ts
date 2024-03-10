@@ -3,10 +3,14 @@ import _ArticleCategory_stuff_TypeInfo from "./_ArticleCategory_stuff_TypeInfo";
 
 export class ArticleCategoryTypeInfo extends _ArticleCategory_stuff_TypeInfo {
 
+    readonly validators = new ArticleCategoryValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleCategory"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleCategoryValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class ArticleCategoryTypeInfo extends _ArticleCategory_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new ArticleCategoryTypeInfo();
 
 }
 

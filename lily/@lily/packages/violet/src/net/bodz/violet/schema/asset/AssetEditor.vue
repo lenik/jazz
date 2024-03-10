@@ -1,0 +1,142 @@
+<script lang="ts">
+import { onMounted, provide, ref } from "vue";
+
+import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
+import type { Timestamp } from "@skeljs/core/src/lang/time";
+import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+
+import AbstractAsset from "./AbstractAsset";
+import Asset from "./Asset";
+import _Asset_stuff from "./_Asset_stuff";
+
+export const title = "Editor view of: Asset";
+export interface Props {
+}
+
+</script>
+
+<script setup lang="ts">
+import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
+import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
+import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
+import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
+import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import CoEventFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoEventFieldGroup.vue";
+import CoObjectFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/CoObjectFieldGroup.vue";
+import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
+import GroupChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/GroupChooseDialog.vue";
+import UserChooseDialog from "@lily/basic/src/net/bodz/lily/schema/account/UserChooseDialog.vue";
+import OrgUnitChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitChooseDialog.vue";
+import OrganizationChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationChooseDialog.vue";
+import PersonChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/PersonChooseDialog.vue";
+
+import ArtifactChooseDialog from "../art/ArtifactChooseDialog.vue";
+import RegionChooseDialog from "../store/RegionChooseDialog.vue";
+
+defineOptions({
+    inheritAttrs: false
+});
+
+const model = defineModel<Asset>();
+
+const props = withDefaults(defineProps<Props>(), {
+});
+
+const emit = defineEmits<{
+    error: [message: string]
+    change: [e: Event]
+}>();
+
+// property shortcuts
+
+const meta = Asset.TYPE.property;
+const fieldRowProps = getDefaultFieldRowProps({ labelWidth: '7rem' });
+provide(FIELD_ROW_PROPS, fieldRowProps);
+
+const rootElement = ref<HTMLElement>();
+const artifactChooseDialog = ref<InstanceType<typeof ArtifactChooseDialog>>();
+const regionChooseDialog = ref<InstanceType<typeof RegionChooseDialog>>();
+const userChooseDialog = ref<InstanceType<typeof UserChooseDialog>>();
+const groupChooseDialog = ref<InstanceType<typeof GroupChooseDialog>>();
+const organizationChooseDialog = ref<InstanceType<typeof OrganizationChooseDialog>>();
+const orgUnitChooseDialog = ref<InstanceType<typeof OrgUnitChooseDialog>>();
+const personChooseDialog = ref<InstanceType<typeof PersonChooseDialog>>();
+const valids = ref<any>({});
+
+// methods
+
+defineExpose({ update });
+
+function update() {
+}
+
+onMounted(() => {
+});
+
+</script>
+
+<template>
+    <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
+        <StructRowFieldGroup :meta="meta" v-model="model" />
+        <CoObjectFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="IdEntity.TYPE">
+            <FieldRow :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" />
+            </FieldRow>
+        </FieldGroup>
+        <CoEventFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="AbstractAsset.TYPE">
+            <FieldRow :property="meta.quantity" v-model="model.quantity">
+                <input type="number" v-model="model.quantity" />
+            </FieldRow>
+            <FieldRow :property="meta.serial" v-model="model.serial">
+                <input type="number" v-model="model.serial" />
+            </FieldRow>
+            <FieldRow :property="meta.expire" v-model="model.expire">
+                <DateTime v-model="model.expire" />
+            </FieldRow>
+            <FieldRow :property="meta.artifact" v-model="model.artifact">
+                <RefEditor :dialog="artifactChooseDialog" v-model="model.artifact" v-model:id="model.artifactId" />
+            </FieldRow>
+            <FieldRow :property="meta.region" v-model="model.region">
+                <RefEditor :dialog="regionChooseDialog" v-model="model.region" v-model:id="model.regionId" />
+            </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_Asset_stuff.TYPE">
+            <FieldRow :property="meta.batch" v-model="model.batch">
+                <JsonEditor v-model="model.batch" />
+            </FieldRow>
+            <FieldRow :property="meta.user" v-model="model.user">
+                <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
+            </FieldRow>
+            <FieldRow :property="meta.group" v-model="model.group">
+                <RefEditor :dialog="groupChooseDialog" v-model="model.group" v-model:id="model.groupId" />
+            </FieldRow>
+            <FieldRow :property="meta.org" v-model="model.org">
+                <RefEditor :dialog="organizationChooseDialog" v-model="model.org" v-model:id="model.orgId" />
+            </FieldRow>
+            <FieldRow :property="meta.orgUnit" v-model="model.orgUnit">
+                <RefEditor :dialog="orgUnitChooseDialog" v-model="model.orgUnit" v-model:id="model.orgUnitId" />
+            </FieldRow>
+            <FieldRow :property="meta.person" v-model="model.person">
+                <RefEditor :dialog="personChooseDialog" v-model="model.person" v-model:id="model.personId" />
+            </FieldRow>
+        </FieldGroup>
+    </div>
+    <ArtifactChooseDialog ref="artifactChooseDialog" />
+    <RegionChooseDialog ref="regionChooseDialog" />
+    <UserChooseDialog ref="userChooseDialog" />
+    <GroupChooseDialog ref="groupChooseDialog" />
+    <OrganizationChooseDialog ref="organizationChooseDialog" />
+    <OrgUnitChooseDialog ref="orgUnitChooseDialog" />
+    <PersonChooseDialog ref="personChooseDialog" />
+</template>
+
+<style scoped lang="scss">
+.entity-editor {
+    padding: 0;
+}
+</style>

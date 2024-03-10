@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="flags" column="flags" />
         <result property="state" column="state" />
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
         <result property="beginTime" column="t0" />
         <result property="endTime" column="t1" />
@@ -34,28 +34,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customOrgId" column="custom_org" />
         <result property="customId" column="custom" />
         <result property="clerkId" column="clerk" />
-        <association property="ownerGroup" columnPrefix="ownerGroup_"
+        <association property="ownerGroup" columnPrefix="ownerGroup_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.Group" 
             resultMap="net.bodz.lily.schema.account.dao.GroupMapper.objlist_map" />
-        <association property="clerk" columnPrefix="clerk_"
+        <association property="clerk" columnPrefix="clerk_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="form" columnPrefix="form_"
+        <association property="form" columnPrefix="form_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.meta.FormDef" 
             resultMap="net.bodz.lily.schema.meta.dao.FormDefMapper.objlist_map" />
-        <association property="plan" columnPrefix="plan_"
+        <association property="plan" columnPrefix="plan_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Plan" 
             resultMap="net.bodz.violet.schema.plan.dao.PlanMapper.objlist_map" />
-        <association property="customOrg" columnPrefix="custom_org_"
+        <association property="customOrg" columnPrefix="custom_org_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Organization" 
             resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
-        <association property="ownerUser" columnPrefix="ownerUser_"
+        <association property="ownerUser" columnPrefix="ownerUser_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
-        <association property="custom" columnPrefix="custom_"
+        <association property="custom" columnPrefix="custom_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="op" columnPrefix="op_"
+        <association property="op" columnPrefix="op_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.account.User" 
             resultMap="net.bodz.lily.schema.account.dao.UserMapper.objlist_map" />
     </resultMap>
@@ -96,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -111,6 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.acl clerk_acl, 
             clerk.label clerk_label, 
             clerk.description clerk_description, 
+            clerk.icon clerk_icon, 
             clerk.priority clerk_priority, 
             clerk.flags clerk_flags, 
             clerk."state" clerk_state, 
@@ -129,6 +131,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.props clerk_props, 
             clerk.cat clerk_cat, 
             clerk.birthday clerk_birthday, 
+            clerk.father clerk_father, 
+            clerk.mother clerk_mother, 
             clerk.locale clerk_locale, 
             clerk.timezone clerk_timezone, 
             clerk.nrole clerk_nrole, 
@@ -138,6 +142,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.subject clerk_subject, 
             clerk.nbank clerk_nbank, 
             clerk.gender clerk_gender, 
+            clerk.pronoun clerk_pronoun, 
+            clerk.sexual_orient clerk_sexual_orient, 
             clerk.homeland clerk_homeland, 
             clerk.passport clerk_passport, 
             clerk.ssn clerk_ssn, 
@@ -146,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -187,6 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom_org.acl custom_org_acl, 
             custom_org.label custom_org_label, 
             custom_org.description custom_org_description, 
+            custom_org.icon custom_org_icon, 
             custom_org.priority custom_org_priority, 
             custom_org.flags custom_org_flags, 
             custom_org."state" custom_org_state, 
@@ -219,6 +227,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -228,6 +237,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             custom.id custom_id, 
             custom.uid custom_uid, 
             custom.gid custom_gid, 
@@ -235,6 +245,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.acl custom_acl, 
             custom.label custom_label, 
             custom.description custom_description, 
+            custom.icon custom_icon, 
             custom.priority custom_priority, 
             custom.flags custom_flags, 
             custom."state" custom_state, 
@@ -253,6 +264,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.props custom_props, 
             custom.cat custom_cat, 
             custom.birthday custom_birthday, 
+            custom.father custom_father, 
+            custom.mother custom_mother, 
             custom.locale custom_locale, 
             custom.timezone custom_timezone, 
             custom.nrole custom_nrole, 
@@ -262,6 +275,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.subject custom_subject, 
             custom.nbank custom_nbank, 
             custom.gender custom_gender, 
+            custom.pronoun custom_pronoun, 
+            custom.sexual_orient custom_sexual_orient, 
             custom.homeland custom_homeland, 
             custom.passport custom_passport, 
             custom.ssn custom_ssn, 
@@ -271,6 +286,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -279,7 +295,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."version" op_version, 
             op.props op_props, 
             op.gid0 op_gid0, 
-            op.referer op_referer
+            op.referer op_referer, 
+            op.person op_person
         from fabodr a
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
             left join lily.person clerk on a.clerk = clerk.id
@@ -328,6 +345,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerGroup."type" ownerGroup_type, 
             ownerGroup.label ownerGroup_label, 
             ownerGroup.description ownerGroup_description, 
+            ownerGroup.icon ownerGroup_icon, 
             ownerGroup.priority ownerGroup_priority, 
             ownerGroup.flags ownerGroup_flags, 
             ownerGroup."state" ownerGroup_state, 
@@ -343,6 +361,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.acl clerk_acl, 
             clerk.label clerk_label, 
             clerk.description clerk_description, 
+            clerk.icon clerk_icon, 
             clerk.priority clerk_priority, 
             clerk.flags clerk_flags, 
             clerk."state" clerk_state, 
@@ -361,6 +380,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.props clerk_props, 
             clerk.cat clerk_cat, 
             clerk.birthday clerk_birthday, 
+            clerk.father clerk_father, 
+            clerk.mother clerk_mother, 
             clerk.locale clerk_locale, 
             clerk.timezone clerk_timezone, 
             clerk.nrole clerk_nrole, 
@@ -370,6 +391,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             clerk.subject clerk_subject, 
             clerk.nbank clerk_nbank, 
             clerk.gender clerk_gender, 
+            clerk.pronoun clerk_pronoun, 
+            clerk.sexual_orient clerk_sexual_orient, 
             clerk.homeland clerk_homeland, 
             clerk.passport clerk_passport, 
             clerk.ssn clerk_ssn, 
@@ -378,6 +401,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             form.code form_code, 
             form.label form_label, 
             form.description form_description, 
+            form.icon form_icon, 
             form.priority form_priority, 
             form.flags form_flags, 
             form."state" form_state, 
@@ -419,6 +443,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom_org.acl custom_org_acl, 
             custom_org.label custom_org_label, 
             custom_org.description custom_org_description, 
+            custom_org.icon custom_org_icon, 
             custom_org.priority custom_org_priority, 
             custom_org.flags custom_org_flags, 
             custom_org."state" custom_org_state, 
@@ -451,6 +476,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser."name" ownerUser_name, 
             ownerUser.label ownerUser_label, 
             ownerUser.description ownerUser_description, 
+            ownerUser.icon ownerUser_icon, 
             ownerUser.priority ownerUser_priority, 
             ownerUser.flags ownerUser_flags, 
             ownerUser."state" ownerUser_state, 
@@ -460,6 +486,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ownerUser.props ownerUser_props, 
             ownerUser.gid0 ownerUser_gid0, 
             ownerUser.referer ownerUser_referer, 
+            ownerUser.person ownerUser_person, 
             custom.id custom_id, 
             custom.uid custom_uid, 
             custom.gid custom_gid, 
@@ -467,6 +494,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.acl custom_acl, 
             custom.label custom_label, 
             custom.description custom_description, 
+            custom.icon custom_icon, 
             custom.priority custom_priority, 
             custom.flags custom_flags, 
             custom."state" custom_state, 
@@ -485,6 +513,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.props custom_props, 
             custom.cat custom_cat, 
             custom.birthday custom_birthday, 
+            custom.father custom_father, 
+            custom.mother custom_mother, 
             custom.locale custom_locale, 
             custom.timezone custom_timezone, 
             custom.nrole custom_nrole, 
@@ -494,6 +524,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             custom.subject custom_subject, 
             custom.nbank custom_nbank, 
             custom.gender custom_gender, 
+            custom.pronoun custom_pronoun, 
+            custom.sexual_orient custom_sexual_orient, 
             custom.homeland custom_homeland, 
             custom.passport custom_passport, 
             custom.ssn custom_ssn, 
@@ -503,6 +535,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."name" op_name, 
             op.label op_label, 
             op.description op_description, 
+            op.icon op_icon, 
             op.priority op_priority, 
             op.flags op_flags, 
             op."state" op_state, 
@@ -511,7 +544,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             op."version" op_version, 
             op.props op_props, 
             op.gid0 op_gid0, 
-            op.referer op_referer
+            op.referer op_referer, 
+            op.person op_person
         from fabodr a
             left join lily."group" ownerGroup on a.gid = ownerGroup.id
             left join lily.person clerk on a.clerk = clerk.id
@@ -587,7 +621,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{flags},
             #{state},
             #{creationDate},
-            #{lastModifiedDate},
+            #{lastModified},
             #{version},
             #{beginTime},
             #{endTime},
@@ -621,7 +655,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             flags = #{flags},
             "state" = #{state},
             creation = #{creationDate},
-            lastmod = #{lastModifiedDate},
+            lastmod = #{lastModified},
             "version" = #{version},
             t0 = #{beginTime},
             t1 = #{endTime},
@@ -655,7 +689,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from fabodr
+        select count(*) "rows" from fabodr a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

@@ -2,6 +2,8 @@ package net.bodz.lily.schema.reward;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
@@ -71,6 +73,8 @@ public abstract class _UserBadge_stuff
      *
      * @constraint foreign key (badge) references lily.badge (id)
      */
+    @JoinColumn(name = "badge")
+    @ManyToOne
     public Badge getBadge() {
         return badge;
     }
@@ -101,6 +105,8 @@ public abstract class _UserBadge_stuff
      *
      * @constraint foreign key (user) references lily.user (id)
      */
+    @JoinColumn(name = "user")
+    @ManyToOne
     public User getUser() {
         return user;
     }

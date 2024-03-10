@@ -7,11 +7,15 @@ import _TagGroupDef_stuff_TypeInfo from "./_TagGroupDef_stuff_TypeInfo";
 
 export class TagGroupDefTypeInfo extends _TagGroupDef_stuff_TypeInfo {
 
+    readonly validators = new TagGroupDefValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.meta.TagGroupDef"; }
     get icon() { return "fa-tag"; }
     get label() { return "Tag Group"; }
-
-    validators = new TagGroupDefValidators(this);
 
     override preamble() {
         super.preamble();
@@ -21,9 +25,7 @@ export class TagGroupDefTypeInfo extends _TagGroupDef_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new TagGroupDefTypeInfo();
 
 }
 

@@ -3,10 +3,14 @@ import _Organization_stuff_TypeInfo from "./_Organization_stuff_TypeInfo";
 
 export class OrganizationTypeInfo extends _Organization_stuff_TypeInfo {
 
+    readonly validators = new OrganizationValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.contact.Organization"; }
     get icon() { return "fa-tag"; }
-
-    validators = new OrganizationValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class OrganizationTypeInfo extends _Organization_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new OrganizationTypeInfo();
 
 }
 

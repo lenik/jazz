@@ -1,0 +1,76 @@
+<script lang="ts">
+import { onMounted, ref } from "vue";
+
+import { BOOLEAN, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
+import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
+
+import FabStdTestParameter from "./FabStdTestParameter";
+import FabStdTester from "./FabStdTester";
+import FabTrackTest from "./FabTrackTest";
+import { FabTrackTestParameter } from "./FabTrackTestParameter";
+
+export const title = "Choose dialog for: Fab track test parameter";
+export interface Props {
+    modal?: boolean | string
+}
+
+</script>
+
+<script setup lang="ts">
+import EntityChooseDialog from "@skeljs/dba/src/ui/lily/EntityChooseDialog.vue";
+
+const model = defineModel();
+
+const props = withDefaults(defineProps<Props>(), {
+    modal: true
+});
+
+const emit = defineEmits<{
+    error: [message: string]
+}>();
+
+// property shortcuts
+
+const typeMap = {
+    "LONG": LONG,
+    "ZonedDateTime": ZonedDateTime.TYPE,
+    "INT": INT,
+    "FabTrackTest": FabTrackTest.TYPE,
+    "FabStdTestParameter": FabStdTestParameter.TYPE,
+    "FabStdTester": FabStdTester.TYPE,
+    "STRING": STRING,
+    "BOOLEAN": BOOLEAN,
+};
+
+const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
+defineExpose({ open });
+
+function open(callback?: DialogSelectCallback) {
+    entityChooseDialog.value?.open(callback);
+}
+
+onMounted(() => {
+});
+
+</script>
+
+<template>
+    <EntityChooseDialog ref="entityChooseDialog" :type="FabTrackTestParameter.TYPE" :typeMap="typeMap" :modal="modal">
+        <th data-type="LONG" data-field="id">Id</th>
+        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="INT" data-field="version">Version</th>
+        <th data-type="FabTrackTest" data-format="label" data-field="test">Test</th>
+        <th data-type="FabStdTestParameter" data-format="label" data-field="parameter">Parameter</th>
+        <th data-type="FabStdTester" data-format="label" data-field="tester">Tester</th>
+        <th data-type="STRING" data-field="actual">Actual</th>
+        <th data-type="BOOLEAN" data-field="valid">Valid</th>
+    </EntityChooseDialog>
+</template>
+
+<style scoped lang="scss">
+.component-root {
+    padding: 0;
+}
+</style>

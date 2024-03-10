@@ -3,10 +3,14 @@ import _PostTalk_stuff_TypeInfo from "./_PostTalk_stuff_TypeInfo";
 
 export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
 
+    readonly validators = new PostTalkValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostTalk"; }
     get icon() { return "fa-tag"; }
-
-    validators = new PostTalkValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,10 +18,7 @@ export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-        this.selfType = this;
-    }
+    static readonly INSTANCE = new PostTalkTypeInfo();
 
 }
 

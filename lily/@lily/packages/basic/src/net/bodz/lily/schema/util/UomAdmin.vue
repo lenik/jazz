@@ -46,9 +46,9 @@ onMounted(() => {
             <th data-type="STRING" data-field="label">Label</th>
             <th data-type="STRING" data-field="description">Description</th>
             <th data-type="STRING" data-field="icon">Icon</th>
-            <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
-            <th data-type="STRING" data-field="prop">Prop</th>
-            <th data-type="Uom" data-format="label" data-field="std">Std</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
+            <th data-type="STRING" data-field="property">Property</th>
+            <th data-type="Uom" data-format="label" data-field="standard">Standard</th>
             <th data-type="DOUBLE" data-field="scale">Scale</th>
         </template>
         <template #preview>

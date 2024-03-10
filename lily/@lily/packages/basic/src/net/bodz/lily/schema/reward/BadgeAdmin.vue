@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 
+import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { ARRAY, BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
@@ -30,6 +31,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "ZonedDateTime": ZonedDateTime.TYPE,
+    "JSON_VARIANT": JSON_VARIANT,
     "ARRAY(INT)": ARRAY(INT),
     "BOOLEAN": BOOLEAN,
 };
@@ -51,15 +53,15 @@ onMounted(() => {
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
             <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModifiedDate">Last Modified Date</th>
+            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
+            <th class="hidden" data-type="JSON_VARIANT" data-field="properties">Properties</th>
             <th data-type="STRING" data-field="expr">Expr</th>
             <th data-type="INT" data-field="val">Val</th>
             <th data-type="ARRAY(INT)" data-field="levels">Levels</th>
             <th data-type="BOOLEAN" data-field="descend">Descend</th>
             <th data-type="BOOLEAN" data-field="transient_">Transient_</th>
             <th data-type="BOOLEAN" data-field="indexed">Indexed</th>
-            <th data-type="STRING" data-field="image">Image</th>
         </template>
         <template #preview>
             <BadgeEditor class="editor" v-model="selection" />

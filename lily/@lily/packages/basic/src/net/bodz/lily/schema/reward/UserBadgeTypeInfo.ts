@@ -3,10 +3,14 @@ import _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
 export class UserBadgeTypeInfo extends _UserBadge_stuff_TypeInfo {
 
+    readonly validators = new UserBadgeValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.reward.UserBadge"; }
     get icon() { return "fa-tag"; }
-
-    validators = new UserBadgeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,9 +18,7 @@ export class UserBadgeTypeInfo extends _UserBadge_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new UserBadgeTypeInfo();
 
 }
 

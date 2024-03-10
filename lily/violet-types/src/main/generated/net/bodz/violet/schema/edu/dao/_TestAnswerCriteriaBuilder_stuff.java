@@ -1,11 +1,9 @@
 package net.bodz.violet.schema.edu.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
 
 public class _TestAnswerCriteriaBuilder_stuff<self_t extends _TestAnswerCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
-
-    public final LongField id = _long("id");
+        extends CoMessageCriteriaBuilder<self_t> {
 
     public final LongField questionId = _long("q");
 

@@ -30,7 +30,7 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     public final IntegerField acl = integer("acl");
 
     public final DateField<ZonedDateTime> creationDate = date("creation", ZonedDateTime.class);
-    public final DateField<ZonedDateTime> lastModifiedDate = date("lastmod", ZonedDateTime.class);
+    public final DateField<ZonedDateTime> lastModified = date("lastmod", ZonedDateTime.class);
     public final DiscreteField<Object> properties = discrete("props", Object.class);
 
     public NumberFieldCriterionBuilder<?, ?> getIdField() {

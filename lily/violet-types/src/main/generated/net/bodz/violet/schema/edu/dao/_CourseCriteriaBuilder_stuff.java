@@ -1,9 +1,10 @@
 package net.bodz.violet.schema.edu.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.bas.fmt.json.JsonVariant;
+import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
 public class _CourseCriteriaBuilder_stuff<self_t extends _CourseCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 
@@ -21,5 +22,6 @@ public class _CourseCriteriaBuilder_stuff<self_t extends _CourseCriteriaBuilder_
 
     public final IntegerField credit = integer("credit");
 
+    public final DiscreteField<JsonVariant> plugins = discrete("plugins", JsonVariant.class);
 
 }

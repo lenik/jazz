@@ -4,17 +4,19 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoMomentInterval;
+import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.schema.contact.OrgUnit;
 
 @IdType(Long.class)
 public abstract class _FabTrack_stuff
-        extends CoMomentInterval<Long> {
+        extends CoEvent<Long> {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +39,7 @@ public abstract class _FabTrack_stuff
     public static final int N_VALID_QUANTITY = 20;
     public static final int N_ORG_UNIT_ID = 10;
 
-    private static final int _ord_PROCESS_ID = 17;
+    private static final int _ord_PROCESS_ID = 18;
     private static final int _ord_SINCE = _ord_PROCESS_ID + 1;
     private static final int _ord_DEADLINE = _ord_SINCE + 1;
     private static final int _ord_PLANNED_QUANTITY = _ord_DEADLINE + 1;
@@ -134,9 +136,10 @@ public abstract class _FabTrack_stuff
 
     /**
      *
-     * @label ou
      * @constraint foreign key (ou) references lily.orgunit (id)
      */
+    @JoinColumn(name = "ou")
+    @ManyToOne
     public OrgUnit getOrgUnit() {
         return orgUnit;
     }
@@ -163,9 +166,10 @@ public abstract class _FabTrack_stuff
 
     /**
      *
-     * @label proc
      * @constraint foreign key (proc) references violet.fabproc (id)
      */
+    @JoinColumn(name = "proc")
+    @ManyToOne
     @NotNull
     public FabProcess getProcess() {
         return process;
@@ -182,6 +186,8 @@ public abstract class _FabTrack_stuff
     @Column(name = "proc", nullable = false, precision = 19)
     public synchronized long getProcessId() {
         if (process != null) {
+            if (process.getId() == null)
+                return 0L;
             return process.getId();
         }
         return processId;

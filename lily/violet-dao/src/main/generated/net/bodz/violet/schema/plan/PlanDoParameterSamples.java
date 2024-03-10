@@ -19,6 +19,7 @@ public class PlanDoParameterSamples
         PlanDoParameter a = new PlanDoParameter();
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
+        a.setName("e. glpru'eto_ouaxim");
         a.setDummy(1707472293);
         return a;
     }

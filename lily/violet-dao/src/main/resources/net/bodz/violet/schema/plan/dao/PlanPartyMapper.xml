@@ -10,13 +10,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="planId" column="plan" />
         <result property="personId" column="person" />
         <result property="orgId" column="org" />
-        <association property="person" columnPrefix="person_"
+        <association property="person" columnPrefix="person_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Person" 
             resultMap="net.bodz.lily.schema.contact.dao.PersonMapper.objlist_map" />
-        <association property="plan" columnPrefix="plan_"
+        <association property="plan" columnPrefix="plan_" notNullColumn="id" 
             javaType="net.bodz.violet.schema.plan.Plan" 
             resultMap="net.bodz.violet.schema.plan.dao.PlanMapper.objlist_map" />
-        <association property="org" columnPrefix="org_"
+        <association property="org" columnPrefix="org_" notNullColumn="id" 
             javaType="net.bodz.lily.schema.contact.Organization" 
             resultMap="net.bodz.lily.schema.contact.dao.OrganizationMapper.objlist_map" />
     </resultMap>
@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -53,6 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -62,6 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -98,6 +103,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -146,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.acl person_acl, 
             person.label person_label, 
             person.description person_description, 
+            person.icon person_icon, 
             person.priority person_priority, 
             person.flags person_flags, 
             person."state" person_state, 
@@ -164,6 +171,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.props person_props, 
             person.cat person_cat, 
             person.birthday person_birthday, 
+            person.father person_father, 
+            person.mother person_mother, 
             person.locale person_locale, 
             person.timezone person_timezone, 
             person.nrole person_nrole, 
@@ -173,6 +182,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             person.subject person_subject, 
             person.nbank person_nbank, 
             person.gender person_gender, 
+            person.pronoun person_pronoun, 
+            person.sexual_orient person_sexual_orient, 
             person.homeland person_homeland, 
             person.passport person_passport, 
             person.ssn person_ssn, 
@@ -209,6 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             org.acl org_acl, 
             org.label org_label, 
             org.description org_description, 
+            org.icon org_icon, 
             org.priority org_priority, 
             org.flags org_flags, 
             org."state" org_state, 
@@ -302,7 +314,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <select id="count" resultType="long">
-        select count(*) "rows" from plan_party
+        select count(*) "rows" from plan_party a
         <where>
             <if test="_parameter != null">
                 <include refid="filtconds" />

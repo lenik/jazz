@@ -28,13 +28,9 @@ public class ArtifactModelSamples
         a.setObsolete(obsolete);
         a.setOwnerGroup(ownerGroup);
         a.setArtifact(artifact);
-        a.setId(1149710993);
-        a.setBeginTime(ZonedDateTime.parse("2023-12-20 12:05:39", DateTimes.D10T8));
-        a.setEndTime(ZonedDateTime.parse("2024-01-07 16:47:58", DateTimes.D10T8));
-        a.setYear(808423222);
         a.setValid(false);
-        a.setValidSince(ZonedDateTime.parse("2024-01-19 07:55:30", DateTimes.D10T8));
-        a.setValidUntil(ZonedDateTime.parse("2023-12-24 03:11:20", DateTimes.D10T8));
+        a.setValidSince(ZonedDateTime.parse("2023-12-20T12:05:39.315-10:00[Pacific/Tahiti]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setValidUntil(ZonedDateTime.parse("2024-01-07T16:47:58.367+08:00[Asia/Chungking]", DateTimes.ISO_ZONED_DATE_TIME));
         a.setModelName("wo; uhxuk; afuiue. iyybi? U auac");
         return a;
     }

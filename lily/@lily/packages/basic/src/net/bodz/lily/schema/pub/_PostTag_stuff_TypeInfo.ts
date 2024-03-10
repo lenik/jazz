@@ -12,18 +12,22 @@ export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "post_tag";
 
+    static readonly FIELD_ID = "id";
+    static readonly FIELD_POST_ID = "post";
+    static readonly FIELD_TAG_ID = "tag";
+
+    static readonly N_ID = 10;
+    static readonly N_POST_ID = 19;
+    static readonly N_TAG_ID = 10;
+
+    readonly validators = new _PostTag_stuff_Validators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.PostTag"; }
     get icon() { return "fa-tag"; }
-
-    static FIELD_ID = "id";
-    static FIELD_POST_ID = "post";
-    static FIELD_TAG_ID = "tag";
-
-    static N_ID = 10;
-    static N_POST_ID = 19;
-    static N_TAG_ID = 10;
-
-    validators = new _PostTag_stuff_Validators(this);
 
     override preamble() {
         super.preamble();
@@ -38,9 +42,7 @@ export class _PostTag_stuff_TypeInfo extends CoEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new _PostTag_stuff_TypeInfo();
 
 }
 

@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Table(schema = SchemaDef.SCHEMA_NAME, name = SchemaDef.TABLE_NAME)
 public class SchemaDef
-        extends _SchemaDef_stuff {
+        extends _SchemaDef_stuff<SchemaDef> {
 
     private static final long serialVersionUID = 1L;
 

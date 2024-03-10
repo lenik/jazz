@@ -22,6 +22,7 @@ public class ShopItemCategorySamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         a.setParent(parent);
+        a.setName("Dupoed aauw; eigp, cuf. nlo.");
         return a;
     }
 

@@ -24,6 +24,7 @@ net.bodz.lily.schema.meta.FormParameterSamples
 net.bodz.lily.schema.meta.ParameterDefSamples
 net.bodz.lily.schema.meta.ParameterValueSamples
 net.bodz.lily.schema.meta.PhaseDefSamples
+net.bodz.lily.schema.meta.PriorityDefSamples
 net.bodz.lily.schema.meta.SchemaDefSamples
 net.bodz.lily.schema.meta.TagDefSamples
 net.bodz.lily.schema.meta.TagGroupDefSamples
@@ -56,7 +57,7 @@ net.bodz.lily.schema.vapp.ApiTypeSamples
 net.bodz.lily.schema.vapp.VApiCreditSamples
 net.bodz.lily.schema.vapp.VApiLogSamples
 net.bodz.lily.schema.vapp.VApiSamples
-net.bodz.lily.schema.vapp.VAppCatSamples
+net.bodz.lily.schema.vapp.VAppCategorySamples
 net.bodz.lily.schema.vapp.VAppRequestApiSamples
 net.bodz.lily.schema.vapp.VAppRequestSamples
 net.bodz.lily.schema.vapp.VAppSamples

@@ -3,10 +3,14 @@ import _ArticleTalk_stuff_TypeInfo from "./_ArticleTalk_stuff_TypeInfo";
 
 export class ArticleTalkTypeInfo extends _ArticleTalk_stuff_TypeInfo {
 
+    readonly validators = new ArticleTalkValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.schema.pub.ArticleTalk"; }
     get icon() { return "fa-tag"; }
-
-    validators = new ArticleTalkValidators(this);
 
     override preamble() {
         super.preamble();
@@ -14,10 +18,7 @@ export class ArticleTalkTypeInfo extends _ArticleTalk_stuff_TypeInfo {
         });
     }
 
-    constructor() {
-        super();
-        this.selfType = this;
-    }
+    static readonly INSTANCE = new ArticleTalkTypeInfo();
 
 }
 

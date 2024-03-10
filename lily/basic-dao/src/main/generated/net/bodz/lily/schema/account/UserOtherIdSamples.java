@@ -21,8 +21,8 @@ public class UserOtherIdSamples
         a.setType(type);
         a.setUser(user);
         a.setId(954758213);
-        a.setBeginTime(ZonedDateTime.parse("2024-01-23T22:12:05.853 +0000", DateTimes.ISO8601));
-        a.setEndTime(ZonedDateTime.parse("2024-01-21T23:11:12.790 -1000", DateTimes.ISO8601));
+        a.setBeginTime(ZonedDateTime.parse("2024-01-23T22:12:05.853Z[Africa/Monrovia]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setEndTime(ZonedDateTime.parse("2024-01-21T23:11:12.79-10:00[US/Aleutian]", DateTimes.ISO_ZONED_DATE_TIME));
         a.setYear(507267842);
         a.setOtherId("ciuewu'rklar eeb qyaf! up! uzda, irp! daslq; kio paee! oue@evgr, rbeen uee ruo Ee");
         return a;
