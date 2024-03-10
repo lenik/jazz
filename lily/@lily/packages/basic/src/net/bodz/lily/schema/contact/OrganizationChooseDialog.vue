@@ -2,7 +2,8 @@
 import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { BOOLEAN, DATE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { SQL_DATE } from "@skeljs/core/src/lang/time";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
@@ -43,7 +44,7 @@ const typeMap = {
     "ZonedDateTime": ZonedDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "PartyCategory": PartyCategory.TYPE,
-    "DATE": DATE,
+    "SQL_DATE": SQL_DATE,
     "BOOLEAN": BOOLEAN,
 };
 
@@ -77,7 +78,7 @@ onMounted(() => {
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="PartyCategory" data-format="label" data-field="category">Category</th>
-        <th data-type="DATE" data-field="birthday">Birthday</th>
+        <th data-type="SQL_DATE" data-field="birthday">Birthday</th>
         <th data-type="STRING" data-field="langTag">Lang Tag</th>
         <th data-type="STRING" data-field="timeZone">Time Zone</th>
         <th data-type="INT" data-field="roleCount">Role Count</th>

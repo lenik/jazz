@@ -2,7 +2,8 @@
 import { onMounted, ref } from "vue";
 
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
-import type { SQLDate, Timestamp, int } from "@skeljs/core/src/lang/basetype";
+import type { int } from "@skeljs/core/src/lang/basetype";
+import type { SQLDate, Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import CoObject from "../../concrete/CoObject";
@@ -20,6 +21,7 @@ export interface Props {
 
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
+import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
 import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
@@ -69,10 +71,10 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldGroup :type="StructRow.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.creationDate" v-model="model.creationDate">
-                <input type="datetime" v-model="model.creationDate" />
+                <DateTime v-model="model.creationDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.lastModifiedDate" v-model="model.lastModifiedDate">
-                <input type="datetime" v-model="model.lastModifiedDate" />
+                <DateTime v-model="model.lastModifiedDate" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.version" v-model="model.version">
                 <input type="number" v-model="model.version" />
@@ -120,7 +122,7 @@ onMounted(() => {
         </FieldGroup>
         <FieldGroup :type="Party.TYPE">
             <FieldRow v-bind="fieldRowProps" :property="meta.birthday" v-model="model.birthday">
-                <input type="date" v-model="model.birthday" />
+                <DateTime v-model="model.birthday" />
             </FieldRow>
             <FieldRow v-bind="fieldRowProps" :property="meta.langTag" v-model="model.langTag">
                 <input type="text" v-model="model.langTag" />

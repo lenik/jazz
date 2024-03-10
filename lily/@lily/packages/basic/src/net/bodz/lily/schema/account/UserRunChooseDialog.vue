@@ -2,7 +2,8 @@
 import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
-import { DATE, INET_ADDRESS, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { INET_ADDRESS, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
+import { TIMESTAMP } from "@skeljs/core/src/lang/time";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
@@ -39,7 +40,7 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "ZonedDateTime": ZonedDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "DATE": DATE,
+    "TIMESTAMP": TIMESTAMP,
     "INET_ADDRESS": INET_ADDRESS,
 };
 
@@ -69,7 +70,7 @@ onMounted(() => {
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="INT" data-field="score">Score</th>
-        <th data-type="DATE" data-field="lastLoginTime" title="Last time of login">Last Login Time</th>
+        <th data-type="TIMESTAMP" data-field="lastLoginTime" title="Last time of login">Last Login Time</th>
         <th data-type="INET_ADDRESS" data-field="lastLoginIP" title="The source IP of last login">Last Login I P</th>
     </EntityChooseDialog>
 </template>

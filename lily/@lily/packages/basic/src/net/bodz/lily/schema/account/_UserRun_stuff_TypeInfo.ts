@@ -1,5 +1,6 @@
-import { DATE, INET_ADDRESS, INT } from "@skeljs/core/src/lang/baseinfo";
+import { INET_ADDRESS, INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
+import { TIMESTAMP } from "@skeljs/core/src/lang/time";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
@@ -31,7 +32,7 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
         super.preamble();
         this.declare({
             score: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateScore }),
-            lastLoginTime: property({ type: DATE, precision: 35, scale: 6, 
+            lastLoginTime: property({ type: TIMESTAMP, precision: 35, scale: 6, 
                 description: "Last time of login", 
                 validator: this.validators.validateLastLoginTime }),
             lastLoginIP: property({ type: INET_ADDRESS, 

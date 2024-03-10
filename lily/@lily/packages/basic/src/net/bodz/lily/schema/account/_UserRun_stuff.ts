@@ -1,4 +1,5 @@
-import type { InetAddress, Timestamp, int } from "@skeljs/core/src/lang/basetype";
+import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
+import type { Timestamp } from "@skeljs/core/src/lang/time";
 
 import CoEntity from "../../concrete/CoEntity";
 import type User from "./User";
