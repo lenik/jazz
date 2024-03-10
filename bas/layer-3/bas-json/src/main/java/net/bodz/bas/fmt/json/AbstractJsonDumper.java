@@ -167,7 +167,7 @@ public abstract class AbstractJsonDumper<self_t>
         }
 
         String path = markset.path(name);
-        if (!isIncluded(path)) {
+        if (! isIncluded(path)) {
             beginBox(scalar, depth, name);
             out.value("<excluded>");
             endBox(scalar, depth);
@@ -214,9 +214,15 @@ public abstract class AbstractJsonDumper<self_t>
             return dumpMap(scalar, (Map<?, ?>) obj, depth);
         }
 
+        if (type == JsonVariant.class) {
+            JsonVariant jv = (JsonVariant) obj;
+            out.variant(jv);
+            return true;
+        }
+
         if (obj instanceof IJsonForm) {
             IJsonForm jf = (IJsonForm) obj;
-            if (!jf.isJsonOutByDumper()) {
+            if (! jf.isJsonOutByDumper()) {
                 markset.addMark(obj);
                 if (dumpJsonSerializable(scalar, jf, depth))
                     return true;
@@ -380,7 +386,7 @@ public abstract class AbstractJsonDumper<self_t>
                 continue;
 
             if (value == null)
-                if (!includeNull)
+                if (! includeNull)
                     continue;
 
             String name = "['" + key + "']";

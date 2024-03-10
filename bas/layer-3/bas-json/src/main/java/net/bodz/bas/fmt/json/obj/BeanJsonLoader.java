@@ -4,7 +4,16 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import net.bodz.bas.bean.api.IBeanInfo;
@@ -213,6 +222,10 @@ public class BeanJsonLoader
                 return variant.getDate();
             case TypeId.SQL_DATE:
                 return new java.sql.Date(variant.getDate().getTime());
+            case TypeId.SQL_TIME:
+                return new Time(variant.getDate().getTime());
+            case TypeId.TIMESTAMP:
+                return new Timestamp(variant.getDate().getTime());
 
             case TypeId.INSTANT:
                 return variant.getInstant();
@@ -220,6 +233,8 @@ public class BeanJsonLoader
                 return variant.getZonedDateTime();
             case TypeId.OFFSET_DATE_TIME:
                 return variant.getOffsetDateTime();
+//TODO            case TypeId.OFFSET_TIME:
+//                return variant.getOffsetTime();
             case TypeId.LOCAL_DATE_TIME:
                 return variant.getLocalDateTime();
             case TypeId.LOCAL_DATE:
@@ -231,6 +246,9 @@ public class BeanJsonLoader
                 return variant.toString();
             }
         }
+
+        if (type == JsonVariant.class)
+            return jsonVar;
 
         if (type.isArray()) {
             Class<?> ctype = type.getComponentType();
