@@ -1,10 +1,10 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import CoObjectTypeInfo from './CoObjectTypeInfo';
+import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoPrincipalValidators from './CoPrincipalValidators';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
-import { STRING } from '@skeljs/core/src/lang/baseinfo';
+import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 
-export class CoPrincipalTypeInfo extends CoObjectTypeInfo {
+export class CoPrincipalTypeInfo extends IdEntityTypeInfo {
 
     get name() { return "net.bodz.lily.concrete.CoPrincipal"; }
     get icon() { return "fa-user-lock"; }
@@ -22,7 +22,7 @@ export class CoPrincipalTypeInfo extends CoObjectTypeInfo {
     }
 
     constructor() {
-        super();
+        super(INT);
     }
 
 }
