@@ -2,9 +2,14 @@ package net.bodz.bas.bean.java;
 
 import java.awt.Image;
 import java.beans.BeanInfo;
+import java.beans.MethodDescriptor;
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.bodz.bas.bean.api.IBeanInfo;
 import net.bodz.bas.bean.api.IMethodDescriptor;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 
 public class JbBeanInfo
         implements
@@ -34,7 +39,7 @@ public class JbBeanInfo
     }
 
     @Override
-    public JbPropertyDescriptor[] getPropertyDescriptors() {
+    public IPropertyDescriptor[] getPropertyDescriptors() {
         return JbPropertyDescriptor.convert(bi.getPropertyDescriptors());
     }
 
@@ -45,6 +50,17 @@ public class JbBeanInfo
 
     @Override
     public IMethodDescriptor[] getMethodDescriptors() {
+        Set<Method> beanMethods = new HashSet<>();
+        for (MethodDescriptor md : bi.getMethodDescriptors())
+            beanMethods.add(md.getMethod());
+
+        Class<?> beanClass = bi.getBeanDescriptor().getBeanClass();
+        for (Method method : beanClass.getMethods()) {
+            if (! beanMethods.contains(method)) {
+//                System.out.println("missing: " + method);
+            }
+        }
+
         return JbMethodDescriptor.convert(bi.getMethodDescriptors());
     }
 
