@@ -6,8 +6,8 @@ export abstract class CoNode<This, Id> extends IdEntity<Id> {
 
     parent?: This
     parentId?: Id
-
     children: This[]
+    properties: any
 
     refCount?: int
     

@@ -3,6 +3,7 @@ import CoNodeValidators from './CoNodeValidators';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 import { INT } from '@skeljs/core/src/lang/baseinfo';
+import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 
 export class CoNodeTypeInfo extends IdEntityTypeInfo {
 
@@ -29,6 +30,10 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
             depth: property({
                 type: INT, precision: 19, icon: "far-layer-group",
                 validator: this.validators.validateDepth
+            }),
+            properties: property({
+                type: JSON_VARIANT, nullable: true, icon: "far-bars",
+                validator: this.validators.validateProperties
             }),
         });
     }

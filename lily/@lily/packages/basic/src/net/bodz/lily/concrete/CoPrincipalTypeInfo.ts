@@ -17,7 +17,7 @@ export class CoPrincipalTypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             name: property({ type: STRING, precision: 30, }),
-            properties: property({ type: JSON_VARIANT }),
+            properties: property({ type: JSON_VARIANT, nullable: true, icon: "far-bars" }),
         });
     }
 

@@ -26,7 +26,9 @@ import net.bodz.lily.meta.TypeParameters;
 @IncludeMapperXml
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
-        extends IdEntity<Id> {
+        extends IdEntity<Id>
+        implements
+            IHaveProperties {
 
     private static final long serialVersionUID = 1L;
 

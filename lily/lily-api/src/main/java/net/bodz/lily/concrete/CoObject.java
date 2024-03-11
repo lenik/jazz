@@ -29,7 +29,6 @@ import net.bodz.bas.repr.state.IStated;
 import net.bodz.bas.repr.state.State;
 import net.bodz.bas.repr.state.StateJsonFn;
 import net.bodz.bas.repr.state.StdStates;
-import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ws.DefaultWebSupport;
@@ -216,17 +215,17 @@ public abstract class CoObject
         return null;
     }
 
-    /**
-     * 自定义属性
-     */
-    @DetailLevel(DetailLevel.EXPERT2)
-    public JsonVariant getProperties() {
-        return null;
-    }
-
-    public void setProperties(JsonVariant properties) {
-        // throw new ReadOnlyException();
-    }
+//    /**
+//     * 自定义属性
+//     */
+//    @DetailLevel(DetailLevel.EXPERT2)
+//    public JsonVariant getProperties() {
+//        return null;
+//    }
+//
+//    public void setProperties(JsonVariant properties) {
+//        // throw new ReadOnlyException();
+//    }
 
     /** ⇱ Implementation Of {@link IStated}. */
     /* _____________________________ */static section.iface __STATE__;
@@ -383,11 +382,11 @@ public abstract class CoObject
             throws LoaderException, ParseException {
         super.readObject(map);
 
-        JsonVarMap propsMap = (JsonVarMap) map.get("properties");
-        if (propsMap != null) {
-            JsonObject wrapped = propsMap.getWrapped();
-            setProperties(JsonVariant.of(wrapped));
-        }
+//        JsonVarMap propsMap = (JsonVarMap) map.get("properties");
+//        if (propsMap != null) {
+//            JsonObject wrapped = propsMap.getWrapped();
+//            setProperties(JsonVariant.of(wrapped));
+//        }
     }
 
     @Override
@@ -430,8 +429,8 @@ public abstract class CoObject
             acl = o.getInt("acl", acl);
             accessMode = o.getInt("accessMode", accessMode);
 
-            JsonObject props = o.getJsonObject("properties");
-            setProperties(JsonVariant.of(props));
+//            JsonObject props = o.getJsonObject("properties");
+//            setProperties(JsonVariant.of(props));
         }
     }
 

@@ -8,7 +8,8 @@ import net.bodz.bas.repr.form.meta.TextInput;
 public abstract class CoPrincipal
         extends IdEntity<Integer>
         implements
-            IUniqueNamed {
+            IUniqueNamed,
+            IHaveProperties {
 
     private static final long serialVersionUID = 1L;
 
