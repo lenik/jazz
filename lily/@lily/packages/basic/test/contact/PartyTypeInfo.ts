@@ -1,6 +1,7 @@
 import { INT, BOOLEAN, STRING, LIST } from '@skeljs/core/src/lang/baseinfo';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
+import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from '../../src/net/bodz/lily/concrete/IdEntityTypeInfo';
 import Contact from './Contact';
@@ -11,6 +12,8 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             category: property({ type: JSON_VARIANT }),
+            images: property({ type: LIST(Attachment.TYPE), icon: "far-image" }),
+
             birthday: property({ type: ZonedDateTime.TYPE, icon: "fab-pagelines" }),
 
             locale: property({ type: STRING }),

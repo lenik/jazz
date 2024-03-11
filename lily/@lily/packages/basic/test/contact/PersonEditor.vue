@@ -10,6 +10,7 @@ export interface Props {
 import FieldRow from '@skeljs/core/src/ui/FieldRow.vue';
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 import RefEditor from '@skeljs/dba/src/ui/input/RefEditor.vue';
+import AttachmentsEditor from '@skeljs/dba/src/ui/input/AttachmentsEditor.vue';
 import PersonChooseDialog from './PersonChooseDialog.vue';
 
 defineOptions({
@@ -49,6 +50,9 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
+        <FieldRow v-bind="fieldRowProps" :property="meta.images" v-model="model.images">
+            <AttachmentsEditor :className="Person.TYPE.name" v-model="model.images" :id="model.id" />
+        </FieldRow>
         <FieldRow v-bind="fieldRowProps" :property="meta.label" v-model="model.label">
             <input type="text" v-model="model.label" placeholder="enter text...">
         </FieldRow>
@@ -67,10 +71,12 @@ onMounted(() => {
         </FieldRow>
         <FieldRow v-bind="fieldRowProps" :property="meta.father" v-model="model.father">
             <RefEditor :dialog="personChooseDialog" v-model="model.father" v-model:id="model.fatherId" />
+
             <template #description>Father is father</template>
         </FieldRow>
         <FieldRow v-bind="fieldRowProps" :property="meta.mother" v-model="model.mother">
             <RefEditor :dialog="personChooseDialog" v-model="model.mother" v-model:id="model.motherId" />
+
             <template #description>Mother is mother</template>
         </FieldRow>
         <FieldRow v-bind="fieldRowProps" :property="meta.ssn" v-model="model.ssn">
