@@ -81,7 +81,7 @@ public class DefaultSiteDirs
         if (settings == null)
             throw new NullPointerException("settings");
         AttachmentSettings old = fileClassMap.get(fileClass);
-        if (old == null)
+        if (old != null)
             throw new DuplicatedKeyException(fileClass, old);
         fileClassMap.put(fileClass, settings);
     }
