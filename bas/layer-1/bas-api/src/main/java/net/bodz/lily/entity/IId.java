@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.meta.bean.Internal;
 
 public interface IId<Id> {
 
@@ -13,10 +14,12 @@ public interface IId<Id> {
 
     void id(Id id);
 
+    @Internal
     default List<Object> getIdComponents() {
         return Arrays.asList(id());
     }
 
+    @Internal
     default String getIdPath() {
         List<Object> components = getIdComponents();
         int n = components.size();

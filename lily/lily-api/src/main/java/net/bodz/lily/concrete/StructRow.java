@@ -18,6 +18,7 @@ import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
@@ -54,6 +55,12 @@ public abstract class StructRow
     /** ⇱ Implementation Of {@link IContent}. */
     /* _____________________________ */static section.iface __CONTENT__;
 
+    @Internal
+    @Override
+    public int getPriority() {
+        return 0;
+    }
+
     /**
      * 信息的创建时间。
      *
@@ -73,6 +80,7 @@ public abstract class StructRow
         this.creationDate = creationDate;
     }
 
+    @Internal
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
@@ -106,6 +114,7 @@ public abstract class StructRow
         this.lastModifiedDate = lastModified;
     }
 
+    @Internal
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
@@ -117,6 +126,7 @@ public abstract class StructRow
     /** ⇱ Implementation Of {@link ICacheControl}. */
     /* _____________________________ */static section.iface __CACHE__;
 
+    @Internal
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Cache.class)
     @Override
@@ -124,6 +134,7 @@ public abstract class StructRow
         return CacheControlMode.NO_CACHE;
     }
 
+    @Internal
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Cache.class)
     @Override
@@ -137,6 +148,7 @@ public abstract class StructRow
      * @label Max Age
      * @label.zh 缓存寿命
      */
+    @Internal
     @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(StdGroup.Cache.class)
     @Override
@@ -148,6 +160,7 @@ public abstract class StructRow
      * @label E-Tag
      * @label.zh 实体标签
      */
+    @Internal
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Cache.class)
     @Override
@@ -160,6 +173,7 @@ public abstract class StructRow
      * @label Weak Validation
      * @label.zh 弱校验
      */
+    @Internal
     @DetailLevel(DetailLevel.EXPERT2)
     @OfGroup(StdGroup.Cache.class)
     @Override

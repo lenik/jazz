@@ -16,6 +16,7 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.decl.Stop;
 
@@ -71,6 +72,9 @@ public class BeanJsonDumper
             if (getter.isAnnotationPresent(Transient.class))
                 continue;
 
+            if (getter.isAnnotationPresent(Internal.class))
+                continue;
+
             Class<?> declaringClass = getter.getDeclaringClass();
             if (ReflectOptions.stopClasses.contains(declaringClass))
                 continue;
@@ -82,7 +86,7 @@ public class BeanJsonDumper
 
             String propertyName = propertyDescriptor.getName();
             String path = markset.path(propertyName);
-            if (!isIncluded(path))
+            if (! isIncluded(path))
                 continue;
 
             Object propertyValue;

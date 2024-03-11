@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.source.SerializableForm;
 
 @SerializableForm
@@ -77,10 +78,12 @@ public interface IJsonForm {
             out.endObject();
     }
 
+    @Internal
     default boolean isJsonInByLoader() {
         return false;
     }
 
+    @Internal
     default boolean isJsonOutByDumper() {
         return false;
     }
