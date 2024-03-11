@@ -1,6 +1,7 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { Party } from './Party';
 import PersonTypeInfo from './PersonTypeInfo';
+import Attachment from "@skeljs/core/src/net/bodz/lily/entity/Attachment";
 
 export class Person extends Party {
 
@@ -22,6 +23,15 @@ export class Person extends Party {
     passport?: string
     ssn?: string
     dln?: string
+
+    get images() {
+        return this.properties as Attachment[]
+    }
+
+    get image() {
+        if (this.images == null) return undefined;
+        else return this.images[0];
+    }
 
     constructor(o: any) {
         super(o);

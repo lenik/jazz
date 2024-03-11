@@ -12,7 +12,8 @@ export class PartyTypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
             category: property({ type: JSON_VARIANT }),
-            images: property({ type: LIST(Attachment.TYPE), icon: "far-image" }),
+            images: property({ type: LIST(Attachment.TYPE), nullable: true, icon: "far-images" }),
+            image: property({ type: Attachment.TYPE, nullable: true, icon: "far-image" }),
 
             birthday: property({ type: ZonedDateTime.TYPE, icon: "fab-pagelines" }),
 
