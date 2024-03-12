@@ -9,25 +9,21 @@ import javax.persistence.Table;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.bean.Transient;
-import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.lily.concrete.IAttrInProps;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IDocInProps;
-import net.bodz.lily.entity.attachment.util.IImagesInProps;
 import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.repr.EntGroup;
 
 /**
  * 物品
  */
-@HaveAttachments
 @Table(schema = "violet", name = "art")
 public class Artifact
         extends _Artifact_stuff
         implements
-            IImagesInProps,
             IVideosInProps,
             IDocInProps,
             IAttrInProps {
@@ -38,8 +34,6 @@ public class Artifact
     private Map<UOM, Double> convMap = new HashMap<UOM, Double>();
     private String uomProperty = "数量";
     private int decimalDigits = 2;
-
-    private JsonVariant properties;
 
     {
         uom = new UOM(UOMs.PIECE);
@@ -57,16 +51,6 @@ public class Artifact
         if (convMap == null)
             throw new NullPointerException("convMap");
         this.convMap = convMap;
-    }
-
-    @Override
-    public JsonVariant getProperties() {
-        return properties;
-    }
-
-    @Override
-    public void setProperties(JsonVariant properties) {
-        this.properties = properties;
     }
 
     @Transient

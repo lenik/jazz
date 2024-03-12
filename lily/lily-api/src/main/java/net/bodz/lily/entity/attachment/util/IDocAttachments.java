@@ -33,4 +33,13 @@ public interface IDocAttachments {
             documents.set(0, document);
     }
 
+    @Derived
+    default int getDocumentCount() {
+        List<IAttachment> documents = getDocuments();
+        if (documents == null)
+            return 0;
+        else
+            return documents.size();
+    }
+
 }

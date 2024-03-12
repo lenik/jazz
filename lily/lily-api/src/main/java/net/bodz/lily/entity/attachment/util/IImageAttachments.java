@@ -33,4 +33,13 @@ public interface IImageAttachments {
             images.set(0, image);
     }
 
+    @Derived
+    default int getImageCount() {
+        List<IAttachment> images = getImages();
+        if (images == null)
+            return 0;
+        else
+            return images.size();
+    }
+
 }
