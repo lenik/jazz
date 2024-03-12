@@ -3,7 +3,8 @@ import CoObject from './CoObject';
 import CoEntityTypeInfo from './CoEntityTypeInfo';
 
 export abstract class CoEntity<Id> extends CoObject {
-    static readonly TYPE = new CoEntityTypeInfo();
+
+    static readonly TYPE = CoEntityTypeInfo.INSTANCE;
 
     constructor(o: any) {
         super(o);

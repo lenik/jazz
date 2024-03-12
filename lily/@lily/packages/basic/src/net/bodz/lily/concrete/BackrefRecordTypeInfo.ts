@@ -6,12 +6,16 @@ import { LONG, STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 
+    readonly validators = new BackrefRecordValidators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.concrete.BackrefRecordType"; }
     get icon() { return "fas-retweet"; }
     get label() { return "Backref Record"; }
     get description() { return "Shared link to external sites."; }
-
-    validators = new BackrefRecordValidators(this);
 
     override preamble() {
         super.preamble();
@@ -27,10 +31,7 @@ export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
-
+    static readonly INSTANCE = new BackrefRecordTypeInfo();
 }
 
 export default BackrefRecordTypeInfo;

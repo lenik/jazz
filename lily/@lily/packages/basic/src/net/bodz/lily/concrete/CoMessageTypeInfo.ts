@@ -10,12 +10,16 @@ import ParameterDef from '../schema/meta/ParameterDef';
 
 export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
 
+    readonly validators = new CoMessageValidators(this);
+
+    constructor(idType: TypeInfo<any>) {
+        super(idType);
+    }
+
     get name() { return "net.bodz.lily.concrete.CoMessage"; }
     get icon() { return "fa-envelop"; }
     get label() { return "Concrete Message"; }
     get description() { return "Mail like message, includes timing, rich text content."; }
-
-    validators = new CoMessageValidators(this);
 
     override preamble() {
         super.preamble();
@@ -29,10 +33,6 @@ export class CoMessageTypeInfo extends CoMomentIntervalTypeInfo {
             sentTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
             receivedTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
         });
-    }
-
-    constructor(idType: TypeInfo<any>) {
-        super(idType);
     }
 
 }

@@ -6,12 +6,16 @@ import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
 
 export class StructRowTypeInfo extends EntityType {
 
+    validators = new StructRowValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.concrete.StructRow"; }
     get icon() { return "far-cube"; }
     get label() { return "Content Version"; }
     get description() { return "Content data with version."; }
-
-    validators = new StructRowValidators(this);
 
     override preamble() {
         this.declare({
@@ -30,9 +34,7 @@ export class StructRowTypeInfo extends EntityType {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new StructRowTypeInfo();
 
 }
 

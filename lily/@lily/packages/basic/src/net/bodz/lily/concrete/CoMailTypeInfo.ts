@@ -6,12 +6,16 @@ import User from '../schema/account/User';
 
 export class CoMailTypeInfo extends CoMessageTypeInfo {
 
+    readonly validators = new CoMailValidators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.concrete.CoMail"; }
     get icon() { return "fa-envelop"; }
     get label() { return "Concrete Mail"; }
     get description() { return "Mail like message, includes recipients, timing, rich text content."; }
-
-    validators = new CoMailValidators(this);
 
     override preamble() {
         super.preamble();
@@ -23,9 +27,7 @@ export class CoMailTypeInfo extends CoMessageTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
+    static readonly INSTANCE = new CoMailTypeInfo();
 
 }
 

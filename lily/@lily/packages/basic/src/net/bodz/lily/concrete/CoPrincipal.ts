@@ -3,7 +3,8 @@ import IdEntity from './IdEntity';
 import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 
 export abstract class CoPrincipal extends IdEntity<int> {
-    static readonly TYPE = new CoPrincipalTypeInfo();
+
+    static readonly TYPE = CoPrincipalTypeInfo.INSTANCE;
 
     name?: string
     properties: any

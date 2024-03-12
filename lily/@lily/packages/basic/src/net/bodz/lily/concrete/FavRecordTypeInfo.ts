@@ -6,12 +6,17 @@ import User from '../schema/account/User';
 
 export class FavRecordTypeInfo extends IdEntityTypeInfo {
 
+    readonly validators = new FavRecordValidators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.concrete.FavRecordType"; }
     get icon() { return "fab-gratipay"; }
     get label() { return "Favorite Record"; }
     get description() { return "User favorite record."; }
 
-    validators = new FavRecordValidators(this);
 
     override preamble() {
         super.preamble();
@@ -21,9 +26,7 @@ export class FavRecordTypeInfo extends IdEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
+    static readonly INSTANCE = new FavRecordTypeInfo();
 
 }
 

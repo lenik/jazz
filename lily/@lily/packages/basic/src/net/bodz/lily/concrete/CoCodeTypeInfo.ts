@@ -6,12 +6,16 @@ import { STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoCodeTypeInfo extends CoNodeTypeInfo {
 
+    readonly validators = new CoCodeValidators(this);
+
+    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+        super(selfType, idType);
+    }
+
     get name() { return "net.bodz.lily.concrete.CoCode"; }
     get icon() { return "far-hashtag"; }
     get label() { return "Concrete Coded Entity"; }
     get description() { return "This entity has a unique but optinoal code defined, so the object can be referred to by code."; }
-
-    validators = new CoCodeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -21,10 +25,6 @@ export class CoCodeTypeInfo extends CoNodeTypeInfo {
                 validator: this.validators.validateCode
             })
         });
-    }
-
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
-        super(selfType, idType);
     }
 
 }

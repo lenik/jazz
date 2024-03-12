@@ -6,27 +6,26 @@ import IdEntityValidators from './IdEntityValidators';
 
 export class IdEntityTypeInfo extends CoObjectTypeInfo {
 
-    idType: TypeInfo<any>;
-
-    get name() { return "net.bodz.lily.concrete.IdEntity"; }
-    get icon() { return "fa-key"; }
-    get label() { return "Concrete IdEntity"; }
-    get description() { return "An entity has an id column."; }
-
-    validators = new IdEntityValidators(this);
-
-    override preamble() {
-        super.preamble();
-        this.declare({
-            id: primaryKey({ type: this.idType, precision: 20, })
-        });
-    }
+    readonly idType: TypeInfo<any>;
+    readonly validators = new IdEntityValidators(this);
 
     constructor(idType: TypeInfo<any>) {
         super();
         if (idType != null) { // compatible
             this.idType = idType;
         }
+    }
+
+    get name() { return "net.bodz.lily.concrete.IdEntity"; }
+    get icon() { return "fa-key"; }
+    get label() { return "Concrete IdEntity"; }
+    get description() { return "An entity has an id column."; }
+
+    override preamble() {
+        super.preamble();
+        this.declare({
+            id: primaryKey({ type: this.idType, precision: 20, })
+        });
     }
 
 }

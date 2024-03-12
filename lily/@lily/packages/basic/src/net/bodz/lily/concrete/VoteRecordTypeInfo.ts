@@ -1,5 +1,4 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import VoteRecordValidators from './VoteRecordValidators';
 import User from '../schema/account/User';
@@ -7,12 +6,16 @@ import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 
+    readonly validators = new VoteRecordValidators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.concrete.VoteRecordType"; }
     get icon() { return "far-arrow-alt-circle-up"; }
     get label() { return "Vote Record"; }
     get description() { return "Vote up/down events."; }
-
-    validators = new VoteRecordValidators(this);
 
     override preamble() {
         super.preamble();
@@ -28,9 +31,7 @@ export class VoteRecordTypeInfo extends IdEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
+    static readonly INSTANCE = new VoteRecordTypeInfo();
 
 }
 

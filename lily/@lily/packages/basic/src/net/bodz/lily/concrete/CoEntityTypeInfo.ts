@@ -5,12 +5,16 @@ import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoEntityTypeInfo extends CoObjectTypeInfo {
 
+    readonly validators = new CoEntityValidators(this);
+
+    constructor() {
+        super();
+    }
+
     get name() { return "net.bodz.lily.concrete.CoEntity"; }
     get icon() { return "far-cube"; }
     get label() { return "Concrete Entity"; }
     get description() { return "An entity always has an identity."; }
-
-    validators = new CoEntityValidators(this);
 
     override preamble() {
         super.preamble();
@@ -19,9 +23,7 @@ export class CoEntityTypeInfo extends CoObjectTypeInfo {
         });
     }
 
-    constructor() {
-        super();
-    }
+    static readonly INSTANCE = new CoEntityTypeInfo();
 
 }
 

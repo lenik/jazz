@@ -9,14 +9,21 @@ import User from '../schema/account/User';
 
 export class CoObjectTypeInfo extends StructRowTypeInfo {
 
-    idType: TypeInfo<any>
+    readonly idType: TypeInfo<any>
+    readonly validators = new CoObjectValidators(this);
+
+    constructor(idType: TypeInfo<any> = INT) {
+        super();
+        this.idType = idType;
+
+        import('../schema/account/User').then((a) => this.property.ownerUser.type = a.User.TYPE);
+        import('../schema/account/Group').then((a) => this.property.ownerUser.type = a.Group.TYPE);
+    }
 
     get name() { return "net.bodz.lily.concrete.CoObject"; }
     get icon() { return "far-gem"; }
     get label() { return "Concrete Object"; }
     get description() { return "A concrete object is a physical object that can be perceived through the senses, such as touch or sight. Examples of concrete objects include a table, a chair, a book, a car, or a tree. These objects have a tangible presence and can be easily identified and described."; }
-
-    validators = new CoObjectValidators(this);
 
     override preamble() {
         super.preamble();
@@ -39,14 +46,6 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
             acl: property({ type: INT, icon: 'far-user-lock' }),
             accessMode: property({ type: INT, icon: 'far-key' }),
         });
-    }
-
-    constructor(idType: TypeInfo<any> = INT) {
-        super();
-        this.idType = idType;
-
-        import('../schema/account/User').then((a) => this.property.ownerUser.type = a.User.TYPE);
-        import('../schema/account/Group').then((a) => this.property.ownerUser.type = a.Group.TYPE);
     }
 
 }

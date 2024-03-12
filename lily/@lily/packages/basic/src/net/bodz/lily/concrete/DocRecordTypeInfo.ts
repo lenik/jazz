@@ -5,12 +5,16 @@ import { BOOLEAN, LONG } from '@skeljs/core/src/lang/baseinfo';
 
 export class DocRecordTypeInfo extends CoMessageTypeInfo {
 
+    readonly validators = new DocRecordValidators(this);
+
+    constructor() {
+        super(LONG);
+    }
+
     get name() { return "net.bodz.lily.concrete.DocRecord"; }
     get icon() { return "fa-envelop"; }
     get label() { return "Doc Record"; }
     get description() { return "Doc records."; }
-
-    validators = new DocRecordValidators(this);
 
     override preamble() {
         super.preamble();
@@ -19,9 +23,7 @@ export class DocRecordTypeInfo extends CoMessageTypeInfo {
         });
     }
 
-    constructor() {
-        super(LONG);
-    }
+    static readonly INSTANCE = new DocRecordTypeInfo();
 
 }
 

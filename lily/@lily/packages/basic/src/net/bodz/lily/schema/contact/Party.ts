@@ -7,7 +7,7 @@ import PartyTypeInfo from "./PartyTypeInfo";
 import Contact from "./Contact";
 
 export abstract class Party extends IdEntity<int> {
-    static TYPE = new PartyTypeInfo();
+    static TYPE = PartyTypeInfo.INSTANCE;
 
     category?: any
     birthday?: Moment

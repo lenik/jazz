@@ -7,14 +7,18 @@ import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 
 export class CoNodeTypeInfo extends IdEntityTypeInfo {
 
-    selfType: TypeInfo<any>;
+    readonly selfType: TypeInfo<any>;
+    readonly validators = new CoNodeValidators(this);
+
+    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+        super(idType);
+        this.selfType = selfType;
+    }
 
     get name() { return "net.bodz.lily.concrete.CoNode"; }
     get icon() { return "fa-sitemap"; }
     get label() { return "Concrete Node"; }
     get description() { return "A node can have parent, hence multiple nodes forms a tree."; }
-
-    validators = new CoNodeValidators(this);
 
     override preamble() {
         super.preamble();
@@ -36,11 +40,6 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
                 validator: this.validators.validateProperties
             }),
         });
-    }
-
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
-        super(idType);
-        this.selfType = selfType;
     }
 
 }

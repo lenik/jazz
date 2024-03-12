@@ -6,12 +6,16 @@ import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoPrincipalTypeInfo extends IdEntityTypeInfo {
 
+    readonly validators = new CoPrincipalValidators(this);
+
+    constructor() {
+        super(INT);
+    }
+
     get name() { return "net.bodz.lily.concrete.CoPrincipal"; }
     get icon() { return "fa-user-lock"; }
     get label() { return "Concrete Principal"; }
     get description() { return "Access control entity."; }
-
-    validators = new CoPrincipalValidators(this);
 
     override preamble() {
         super.preamble();
@@ -21,10 +25,8 @@ export class CoPrincipalTypeInfo extends IdEntityTypeInfo {
         });
     }
 
-    constructor() {
-        super(INT);
-    }
-
+    static readonly INSTANCE = new CoPrincipalTypeInfo();
+    
 }
 
 export default CoPrincipalTypeInfo;
