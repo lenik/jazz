@@ -24,15 +24,6 @@ export class Person extends Party {
     ssn?: string
     dln?: string
 
-    get images() {
-        return this.properties as Attachment[]
-    }
-
-    get image() {
-        if (this.images == null) return undefined;
-        else return this.images[0];
-    }
-
     constructor(o: any) {
         super(o);
         if (o != null) Object.assign(this, o);
