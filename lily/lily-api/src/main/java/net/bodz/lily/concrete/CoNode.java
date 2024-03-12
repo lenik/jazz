@@ -12,7 +12,6 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
-import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
@@ -26,9 +25,7 @@ import net.bodz.lily.meta.TypeParameters;
 @IncludeMapperXml
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
-        extends IdEntity<Id>
-        implements
-            IHaveProperties {
+        extends CoImaged<Id> {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,8 +36,6 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
     int refCount;
     // int depth;
 
-    JsonVariant properties;
-
     public CoNode() {
         this(null);
     }
@@ -49,16 +44,6 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         this.parent = parent;
         if (parent != null)
             parent.addChild(self());
-    }
-
-    @Override
-    public final JsonVariant getProperties() {
-        return properties;
-    }
-
-    @Override
-    public final void setProperties(JsonVariant properties) {
-        this.properties = properties;
     }
 
     /**

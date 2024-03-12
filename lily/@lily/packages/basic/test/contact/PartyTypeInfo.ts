@@ -3,17 +3,15 @@ import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import IdEntityTypeInfo from '../../src/net/bodz/lily/concrete/IdEntityTypeInfo';
+import CoImagedTypeInfo from '../../src/net/bodz/lily/concrete/CoImagedTypeInfo';
 import Contact from './Contact';
 
-export class PartyTypeInfo extends IdEntityTypeInfo {
+export class PartyTypeInfo extends CoImagedTypeInfo {
 
     override preamble() {
         super.preamble();
         this.declare({
             category: property({ type: JSON_VARIANT }),
-            images: property({ type: LIST(Attachment.TYPE), nullable: true, icon: "far-images" }),
-            image: property({ type: Attachment.TYPE, nullable: true, icon: "far-image" }),
 
             birthday: property({ type: ZonedDateTime.TYPE, icon: "fab-pagelines" }),
 
