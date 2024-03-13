@@ -23,6 +23,7 @@ import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.catalog.CrossReferenceRow.ColumnEntry;
 import net.bodz.bas.t.map.JKMap;
 import net.bodz.bas.t.order.IOrdinal;
@@ -30,7 +31,8 @@ import net.bodz.bas.t.tuple.QualifiedName;
 
 public class CrossReference
         implements
-            IMutableJavaQName,
+            IMutableJavaType,
+//            IMutableJavaQName,
             IOrdinal,
             IJsonForm,
             IXmlForm,
@@ -46,7 +48,11 @@ public class CrossReference
     public static final String K_DELETE_RULE = "deleteRule";
     public static final String K_DEFERRABILITY = "deferrability";
 
+    QualifiedName javaType;
     QualifiedName javaQName;
+    String propertyName;
+    IProperty property;
+
     String label;
     String description;
 
@@ -87,17 +93,33 @@ public class CrossReference
         this.setParentTable(parentTable);
         this.setParentColumns(parentColumns);
 
-        this.setJavaQName(parentTable.getJavaType().name);
+        this.setJavaType(parentTable.getJavaType());
     }
 
     @Override
-    public QualifiedName getJavaQName() {
-        return javaQName;
+    public QualifiedName getJavaType() {
+        return javaType;
     }
 
     @Override
-    public void setJavaQName(QualifiedName javaQName) {
-        this.javaQName = javaQName;
+    public void setJavaType(QualifiedName javaType) {
+        this.javaType = javaType;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
+    }
+
+    public IProperty getProperty() {
+        return property;
+    }
+
+    public void setProperty(IProperty property) {
+        this.property = property;
     }
 
     public String getLabel() {
