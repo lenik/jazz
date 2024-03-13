@@ -166,12 +166,25 @@ public class StringArray {
         return buf.toString();
     }
 
-    public static List<String> splitTokens(String string, String delims) {
-        return splitTokens(string, delims, -1);
+    public static List<String> tokens(String string) {
+        return tokens(string, null);
     }
 
-    public static List<String> splitTokens(String string, String delims, int limit) {
-        StringTokenizer tokens = new StringTokenizer(string, delims);
+    public static List<String> tokens(String string, int limit) {
+        return tokens(string, null, limit);
+    }
+
+    public static List<String> tokens(String string, String delims) {
+        return tokens(string, delims, -1);
+    }
+
+    public static List<String> tokens(String string, String delims, int limit) {
+        StringTokenizer tokens;
+        if (delims == null)
+            tokens = new StringTokenizer(string);
+        else
+            tokens = new StringTokenizer(string, delims);
+
         List<String> list = new ArrayList<>();
         while (tokens.hasMoreTokens()) {
             if (limit != -1 && list.size() >= limit)
