@@ -1,38 +1,9 @@
-include coolmake/m2proj.mf
+include ../include/dao.mf
 
-DBNAME=lily
-SHELL=/bin/bash
+DBNAME = lily
 
-remotehost = localhost
-remotedir = lily-impl
-
-bin_files += \
-    src/
-
-src_excludes += \
-    Makefile \
-    backup \
-    doc \
-    home
-
-run:
-	screen -S $(remotedir) main LilyTestd
-
-run-daemon:
-	screen -S $(remotedir) -d -m main LilyTestd
-
-debug:
-	main -d LilyTestd
-
-typesdir=../basic-types
-
-DAOGEN = daogen $(DAOFLAGS) \
-    -H $(typesdir) \
-    -p net.bodz.other.schema \
-    -c ../sql/out/lily.rst
-
-predao:
-	cd ../sql; make -B
+typesdir = ../basic-types
+daorst = lily.rst
 
 dao-base: predao
 	$(DAOGEN) _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock
@@ -82,23 +53,4 @@ dao: predao
             badge user_badge \
             uom \
             apitype vapi vapi_credit vapi_log vapp vappcat vappreq vappreq_api
-
-del-exporters-samples: del-samples del-exporters
-
-del-samples: predao
-	find -name *Samples.java -print -delete
-	find -name *MapperTest.java -print -delete
-
-del-exporters: predao
-	find -name *Exporter.java -print -delete
-
-code-web:
-	d=$$(readlink -f .); p=$${d%/*}; code -n "$$p/@lily"
-
-inserts:
-	. pgcmds; \
-	   psql -d $(DBNAME) -1 < <( for ((i=0; i < 100; i++)); do cat test/person.ddl; done )
-
-predefs:
-	tstool predefs -Oweb/src -p net.bodz.lily
 

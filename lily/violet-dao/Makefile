@@ -1,37 +1,9 @@
-include coolmake/m2proj.mf
+include ../include/dao.mf
 
 DBNAME = violet
 
-remotehost = localhost
-remotedir = lily-impl
-
-bin_files += \
-    src/
-
-src_excludes += \
-    Makefile \
-    backup \
-    doc \
-    home
-
-run:
-	screen -S $(remotedir) main LilyTestd
-
-run-daemon:
-	screen -S $(remotedir) -d -m main LilyTestd
-
-debug:
-	main -d LilyTestd
-
-typesdir=../violet-types
-
-DAOGEN = daogen $(DAOFLAGS) \
-    -H $(typesdir) \
-    -c ../sql/out/violet.rst \
-    -p net.bodz.other.schema
-
-predao:
-	cd ../sql; make -B
+typesdir = ../violet-types
+daorst = violet.rst
 
 dao-art: predao
 	$(DAOGEN) \
@@ -106,18 +78,4 @@ dao: predao
             region regioncat regiontag regionlevel \
             storecat storephase storel offstorel storeodr storeodrl \
             trancat tranphase tranodr tranodrl
-
-del-exporters-samples: del-samples del-exporters
-
-del-samples: predao
-	find -name *Samples.java -print -delete
-	find -name *MapperTest.java -print -delete
-
-del-exporters: predao
-	find -name *Exporter.java -print -delete
-
-
-inserts:
-	. pgcmds; \
-          psql -d $(DBNAME) -1 < <( for ((i=0; i < 1000; i++)); do cat ../basic-dao/test/person.ddl; done )
 

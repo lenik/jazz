@@ -1,0 +1,78 @@
+# vim: set ft=make :
+__FILE__ := $(realpath $(lastword $(MAKEFILE_LIST)))
+__DIR__ := $(realpath $(dir $(__FILE__)))
+
+sqldir := $(realpath $(dir $(__DIR__)))/sql
+projectdir := $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
+projectname := $(notdir $(projectdir))
+
+include coolmake/m2proj.mf
+
+SHELL = /bin/bash
+
+remotehost = localhost
+remotedir = $(projectname)
+
+bin_files += \
+    src/
+
+src_excludes += \
+    Makefile \
+    backup \
+    doc \
+    home
+
+run:
+	screen -S $(remotedir) main LilyTestd
+
+run-daemon:
+	screen -S $(remotedir) -d -m main LilyTestd
+
+debug:
+	main -d LilyTestd
+
+typesdir = ../fab-types
+daorst = ../sql/out/fab.rst
+
+DAOFLAGS = $(DAO)
+DAOGEN = daogen $(DAOFLAGS) \
+    -H $(typesdir) \
+    -c $(sqldir)/out/$(daorst) \
+    -p net.bodz.other.schema
+
+predao:
+	cd $(sqldir); make -B
+
+inserts: inserts-300
+
+inserts-300:
+	COUNT=100 make inserts-var
+
+inserts-3000:
+	COUNT=1000 make inserts-var
+	
+inserts-var:
+	. pgcmds; \
+        psql -d $(DBNAME) -1 < <( \
+            for ((i = 0; i < $(COUNT); i++)); do \
+                cat ../basic-dao/test/person.ddl; \
+            done \
+        )
+
+del-exporters-samples: del-samples del-exporters
+
+del-samples: predao
+	find -name *Samples.java -print -delete
+	find -name *MapperTest.java -print -delete
+
+del-exporters: predao
+	find -name *Exporter.java -print -delete
+
+predefs:
+	d=$$(readlink -f "$(projectdir)" ); \
+	p=$${d%/*}; \
+	code -n "$$p/@lily"
+
+code-web:
+	tstool predefs -Oweb/src -p net.bodz.lily
+
