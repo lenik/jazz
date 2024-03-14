@@ -128,6 +128,21 @@ public class QualifiedName {
             return new File(baseDir, getDirName());
     }
 
+    public Class<?> getJavaClass() {
+        return getJavaClass(null);
+    }
+
+    public Class<?> getJavaClass(Class<?> fallback) {
+        String fullName = getFullName();
+        try {
+            return Class.forName(fullName);
+        } catch (ClassNotFoundException e) {
+            return fallback;
+        } catch (NoClassDefFoundError e) {
+            return fallback;
+        }
+    }
+
     public File toFile(File baseDir, String extension) {
         return new File(getPackageDir(baseDir), getBaseName(extension));
     }
