@@ -37,6 +37,8 @@ public class DefaultTableMetadata
 
     TableOid oid = new TableOid();
     QualifiedName javaType;
+
+    boolean resolved;
     Class<?> javaClass;
     IType potatoType;
 
@@ -436,34 +438,31 @@ public class DefaultTableMetadata
         this.excluded = excluded;
     }
 
+    private synchronized void resolveType() {
+        if (! resolved) {
+            QualifiedName javaType = getJavaType();
+            if (javaType != null) {
+                javaClass = javaType.getJavaClass();
+                if (javaClass != null)
+                    try {
+                        potatoType = PotatoTypes.getInstance().loadType(javaClass);
+                    } catch (NoClassDefFoundError e) {
+                        assert false;
+                    }
+            }
+            resolved = true;
+        }
+    }
+
     @Override
     public Class<?> getJavaClass() {
-        if (javaClass == null) {
-            String className = getJavaType().getFullName();
-            if (className == null)
-                return null;
-            try {
-                javaClass = Class.forName(className);
-            } catch (ClassNotFoundException e) {
-                return null;
-            } catch (NoClassDefFoundError e) {
-                return null;
-            }
-        }
+        resolveType();
         return javaClass;
     }
 
     @Override
     public IType getPotatoType() {
-        if (potatoType == null) {
-            Class<?> clazz = getJavaClass();
-            if (clazz != null)
-                try {
-                    potatoType = PotatoTypes.getInstance().loadType(clazz);
-                } catch (NoClassDefFoundError e) {
-                    potatoType = null;
-                }
-        }
+        resolveType();
         return potatoType;
     }
 
