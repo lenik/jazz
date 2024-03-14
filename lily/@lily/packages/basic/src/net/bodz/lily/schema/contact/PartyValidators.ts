@@ -1,10 +1,10 @@
 import { Moment } from 'moment-timezone';
-import IdEntityValidators from "../../concrete/IdEntityValidators";
+import CoImagedValidators from '../../concrete/CoImagedValidators';
 import type PartyTypeInfo from './PartyTypeInfo';
 import type PartyCategory from "./PartyCategory";
 import type Contact from "./Contact";
 
-export class PartyValidators extends IdEntityValidators {
+export class PartyValidators extends CoImagedValidators {
 
     constructor(type: PartyTypeInfo) {
         super(type);

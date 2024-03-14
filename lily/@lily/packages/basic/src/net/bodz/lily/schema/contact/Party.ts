@@ -1,12 +1,10 @@
 import { Moment } from 'moment-timezone';
-
 import { int } from '@skeljs/core/src/lang/basetype';
-import { IdEntity } from '../../concrete/IdEntity';
-
+import CoImaged from '../../concrete/CoImaged';
 import PartyTypeInfo from "./PartyTypeInfo";
 import Contact from "./Contact";
 
-export abstract class Party extends IdEntity<int> {
+export abstract class Party extends CoImaged<int> {
     static TYPE = PartyTypeInfo.INSTANCE;
 
     category?: any

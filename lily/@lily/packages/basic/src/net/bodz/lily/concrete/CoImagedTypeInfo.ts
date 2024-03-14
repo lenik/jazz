@@ -22,11 +22,19 @@ export class CoImagedTypeInfo extends IdEntityTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            images: property({ type: LIST(Attachment.TYPE), nullable: true, icon: "far-images" }),
-            image: property({ type: Attachment.TYPE, nullable: true, icon: "far-image" }),
+            images: property({
+                type: LIST(Attachment.TYPE), nullable: true,
+                icon: "far-images",
+                validator: this.validators.validateImages,
+            }),
+            image: property({
+                type: Attachment.TYPE, nullable: true,
+                icon: "far-image",
+                validator: this.validators.validateImage,
+            }),
         });
     }
 
 }
 
-export default IdEntityTypeInfo;
+export default CoImagedTypeInfo;
