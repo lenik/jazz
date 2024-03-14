@@ -68,11 +68,11 @@ del-samples: predao
 del-exporters: predao
 	find -name *Exporter.java -print -delete
 
-predefs:
+code-web:
 	d=$$(readlink -f "$(projectdir)" ); \
 	p=$${d%/*}; \
 	code -n "$$p/@lily"
 
-code-web:
+predefs:
 	tstool predefs -Oweb/src -p net.bodz.lily
 
