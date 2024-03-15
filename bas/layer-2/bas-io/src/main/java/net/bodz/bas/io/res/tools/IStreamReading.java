@@ -68,6 +68,10 @@ public interface IStreamReading
     String readString()
             throws IOException, OutOfMemoryError;
 
+    int blockSize();
+
+    IStreamReading blockSize(int size);
+
     /**
      * @exception FileNotFoundException
      *                If file doesn't exist.

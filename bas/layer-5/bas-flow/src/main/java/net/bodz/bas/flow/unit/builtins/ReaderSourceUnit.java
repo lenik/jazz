@@ -22,7 +22,7 @@ public class ReaderSourceUnit
     public ReaderSourceUnit(Reader in, boolean allowOverlap, int blockSize)
             throws IOException {
         this.readPreparation = new ReaderSource(in)//
-                .to(StreamReading.class).setBlockSize(blockSize);
+                .to(StreamReading.class).blockSize(blockSize);
         this.allowOverlap = allowOverlap;
         reset();
     }

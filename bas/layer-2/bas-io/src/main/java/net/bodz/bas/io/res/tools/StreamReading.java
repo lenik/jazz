@@ -61,11 +61,13 @@ public class StreamReading
         return this;
     }
 
-    public int getBlockSize() {
+    @Override
+    public int blockSize() {
         return blockSize;
     }
 
-    public StreamReading setBlockSize(int blockSize) {
+    @Override
+    public StreamReading blockSize(int blockSize) {
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);
         this.blockSize = blockSize;
@@ -297,6 +299,7 @@ public class StreamReading
     /**
      * @seecopy {@link #blocks(boolean)}
      */
+    @Override
     @CopyAndPaste
     public Mitorx<char[], IOException> charBlocks(final boolean allowOverlap)
             throws IOException {
@@ -383,6 +386,7 @@ public class StreamReading
             final BufferedReader bufferedReader = source.newBufferedReader(openOptions);
             return new AbstractMitorx<String, IOException>() {
 
+                @Override
                 public String _next()
                         throws IOException {
                     String line = bufferedReader.readLine();
@@ -398,6 +402,7 @@ public class StreamReading
             final LineReader lineReader = source.newLineReader(openOptions);
             return new AbstractMitorx<String, IOException>() {
 
+                @Override
                 public String _next()
                         throws IOException {
                     String line = lineReader.readLine();
@@ -459,7 +464,7 @@ public class StreamReading
         Mitorx<byte[], ? extends IOException> blocks = blocks(true);
         byte[] block;
         try {
-            while ((block = blocks._next()) != null || !blocks.isEnded())
+            while ((block = blocks._next()) != null || ! blocks.isEnded())
                 digest.update(block);
         } catch (RuntimeIOException e) {
             e.rethrow(IOException.class);

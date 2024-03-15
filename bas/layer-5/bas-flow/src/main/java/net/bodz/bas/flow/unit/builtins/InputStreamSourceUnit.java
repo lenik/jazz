@@ -21,7 +21,7 @@ public class InputStreamSourceUnit
     public InputStreamSourceUnit(InputStream in, boolean allowOverlap, int blockSize)
             throws IOException {
         this.readPreparation = new InputStreamSource(in)//
-                .to(StreamReading.class).setBlockSize(blockSize);
+                .to(StreamReading.class).blockSize(blockSize);
         this.allowOverlap = allowOverlap;
         reset();
     }
