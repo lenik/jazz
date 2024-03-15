@@ -12,6 +12,8 @@ import net.bodz.bas.io.res.builtin.InputStreamSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.servlet.ctx.IAnchor;
 import net.bodz.bas.site.IBasicSiteAnchors;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.VariantMaps;
 
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletException;
@@ -45,7 +47,7 @@ public class UploadHandler
     public UploadHandler(File localDir, IAnchor anchor) {
         if (localDir == null)
             throw new NullPointerException("localDir");
-        if (!localDir.isDirectory())
+        if (! localDir.isDirectory())
             throw new IllegalArgumentException("Not a local directory: " + localDir);
         if (anchor == null)
             throw new NullPointerException("anchor");
@@ -55,12 +57,18 @@ public class UploadHandler
 
     public UploadResult handlePostRequest(HttpServletRequest request)
             throws IOException, ServletException {
+        IVariantMap<String> q = VariantMaps.fromRequest(request);
 
         String contentType = request.getContentType();
         if (contentType != null && contentType.startsWith("multipart/")) {
             MultipartConfigElement mce = new MultipartConfigElement("/xxx");
             request.setAttribute("org.eclipse.jetty.multipartConfig", mce);
         }
+
+        /**
+         * the max bytes to transfer in a second.
+         */
+        int maxSpeed = q.getInt("maxSpeed", 0);
 
         UploadResult result = new UploadResult();
         for (Part part : request.getParts()) {
@@ -73,12 +81,31 @@ public class UploadHandler
 
             File localFile = new File(localDir, fileName);
 
+            long beginTime = System.currentTimeMillis();
+            long totalSize = 0;
             try (FileOutputStream out = new FileOutputStream(localFile)) {
                 InputStream in = part.getInputStream();
-                for (byte[] block : new InputStreamSource(in).read().blocks()) {
+                InputStreamSource source = new InputStreamSource(in);
+                for (byte[] block : source.read().blocks()) {
+                    totalSize += block.length;
                     out.write(block);
+
+                    if (maxSpeed != 0) {
+                        long duration = System.currentTimeMillis() - beginTime;
+                        long expectDurationMillis = totalSize * 1000 / maxSpeed;
+                        if (duration < expectDurationMillis)
+                            try {
+                                out.flush();
+                                System.out.print(".");
+                                Thread.sleep(expectDurationMillis - duration);
+                            } catch (InterruptedException e) {
+                                throw new ServletException(e);
+                            }
+                    }
                 }
             }
+            if (maxSpeed != 0)
+                System.out.println();
 
             RenameResult renameResult = renameToSha1(localFile);
 
@@ -109,7 +136,7 @@ public class UploadHandler
         String dotExt = FilePath.getExtension(file, true);
 
         File newName = new File(dir, sha1str + dotExt);
-        if (!file.renameTo(newName))
+        if (! file.renameTo(newName))
             throw new IOException(String.format("Can't rename file %s to %s.", //
                     file, newName));
 
