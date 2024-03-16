@@ -7,12 +7,14 @@ import javax.persistence.Table;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.i18n.geo.GeoZone;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.lily.concrete.IHaveProperties;
 import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.repr.EntGroup;
@@ -24,20 +26,15 @@ import net.bodz.lily.schema.geo.Zone;
 @Table(name = "contact")
 @IdType(Integer.class)
 public class Contact
-        extends IdEntity<Integer> {
+        extends IdEntity<Integer>
+        implements
+            IContactAddress,
+            IHaveProperties {
 
     private static final long serialVersionUID = 1L;
 
     public static final int N_NAME = 30;
     public static final int N_USAGE = 10;
-    public static final int N_ADDRESS1 = 80;
-    public static final int N_ADDRESS2 = 80;
-    public static final int N_R1 = 30;
-    public static final int N_R2 = 30;
-    public static final int N_R3 = 30;
-    public static final int N_R4 = 40;
-    public static final int N_COUNTRY = 2;
-    public static final int N_POSTAL_CODE = 8;
     public static final int N_TEL = 20;
     public static final int N_MOBILE = 20;
     public static final int N_FAX = 20;
@@ -80,6 +77,8 @@ public class Contact
     private boolean webValidated;
     private boolean qqValidated;
     private boolean wechatValidated;
+
+    private JsonVariant properties;
 
     /**
      * 公司/单位
@@ -169,114 +168,86 @@ public class Contact
         this.zoneId = zoneId;
     }
 
-    /**
-     * 国家
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_COUNTRY)
+    @Override
     public String getCountry() {
         return country;
     }
 
+    @Override
     public void setCountry(String country) {
         this.country = country;
     }
 
-    /**
-     * 省/直辖市
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_R1)
+    @Override
     public String getR1() {
         return r1;
     }
 
+    @Override
     public void setR1(String r1) {
         this.r1 = r1;
     }
 
-    /**
-     * 市/地区
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_R2)
+    @Override
     public String getR2() {
         return r2;
     }
 
+    @Override
     public void setR2(String r2) {
         this.r2 = r2;
     }
 
-    /**
-     * 县/府
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_R3)
+    @Override
     public String getR3() {
         return r3;
     }
 
+    @Override
     public void setR3(String r3) {
         this.r3 = r3;
     }
 
-    /**
-     * 城镇/乡/街道
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_R4)
+    @Override
     public String getR4() {
         return r4;
     }
 
+    @Override
     public void setR4(String r4) {
         this.r4 = r4;
     }
 
-    /**
-     * 村、街巷、路等。
-     *
-     * @label 地址1
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_ADDRESS1)
+    @Override
     public String getAddress1() {
         return address1;
     }
 
+    @Override
     public void setAddress1(String address1) {
         if (address1 == null)
             throw new NullPointerException("address1");
         this.address1 = address1;
     }
 
-    /**
-     * 建筑、楼层等。
-     *
-     * @label 地址2
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_ADDRESS2)
+    @Override
     public String getAddress2() {
         return address2;
     }
 
+    @Override
     public void setAddress2(String address2) {
         if (address2 == null)
             throw new NullPointerException("address2");
         this.address2 = address2;
     }
 
-    /**
-     * @label 邮政编码
-     */
-    @OfGroup(EntGroup.Position.class)
-    @TextInput(maxLength = N_POSTAL_CODE)
+    @Override
     public String getPostalCode() {
         return postalCode;
     }
 
+    @Override
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
@@ -478,6 +449,16 @@ public class Contact
     }
 
     @Override
+    public JsonVariant getProperties() {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(JsonVariant properties) {
+        this.properties = properties;
+    }
+
+    @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         super.jsonIn(o, opts);
@@ -489,14 +470,7 @@ public class Contact
         rename = o.getString("rename", rename);
         usage = o.getString("usage", usage);
 
-        country = o.getString("country", country);
-        r1 = o.getString("r1", r1);
-        r2 = o.getString("r2", r2);
-        r3 = o.getString("r3", r3);
-        r4 = o.getString("r4", r4);
-        address1 = o.getString("address1", address1);
-        address2 = o.getString("address2", address2);
-        postalCode = o.getString("postalCode", postalCode);
+        IContactAddress.super.jsonIn(o, opts);
 
         tel = o.getString("tel", tel);
         mobile = o.getString("mobile", mobile);
@@ -516,20 +490,7 @@ public class Contact
         if (zone != null)
             sb.append(zone);
         else {
-            if (address1 != null)
-                sb.append('\n' + address1);
-            if (address2 != null)
-                sb.append('\n' + address2);
-            if (r1 != null)
-                sb.append('\n' + r1);
-            if (r2 != null)
-                sb.append('\n' + r2);
-            if (r3 != null)
-                sb.append('\n' + r3);
-            if (country != null)
-                sb.append('\n' + country);
-            if (postalCode != null)
-                sb.append("\nPostal Code: " + postalCode);
+            sb.append(format(true)); // top-down
         }
 
         if (tel != null)

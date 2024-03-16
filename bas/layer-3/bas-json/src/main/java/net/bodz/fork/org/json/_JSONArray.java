@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonArrayBuilder;
 import net.bodz.bas.json.JsonObject;
@@ -40,36 +41,32 @@ import net.bodz.bas.json.JsonObjectBuilder;
 import net.bodz.bas.t.variant.AbstractVariantList;
 
 /**
- * A JSONArray is an ordered sequence of values. Its external text form is a string wrapped in
- * square brackets with commas separating the values. The internal form is an object having
- * <code>get</code> and <code>opt</code> methods for accessing the values by index, and
- * <code>put</code> methods for adding or replacing values. The values can be any of these types:
- * <code>Boolean</code>, <code>JSONArray</code>, <code>JSONObject</code>, <code>Number</code>,
+ * A JSONArray is an ordered sequence of values. Its external text form is a string wrapped in square brackets with
+ * commas separating the values. The internal form is an object having <code>get</code> and <code>opt</code> methods for
+ * accessing the values by index, and <code>put</code> methods for adding or replacing values. The values can be any of
+ * these types: <code>Boolean</code>, <code>JSONArray</code>, <code>JSONObject</code>, <code>Number</code>,
  * <code>String</code>, or the <code>JSONObject.NULL object</code>.
  * <p>
- * The constructor can convert a JSON text into a Java object. The <code>toString</code> method
- * converts to JSON text.
+ * The constructor can convert a JSON text into a Java object. The <code>toString</code> method converts to JSON text.
  * <p>
- * A <code>get</code> method returns a value if one can be found, and throws an exception if one
- * cannot be found. An <code>opt</code> method returns a default value instead of throwing an
- * exception, and so is useful for obtaining optional values.
+ * A <code>get</code> method returns a value if one can be found, and throws an exception if one cannot be found. An
+ * <code>opt</code> method returns a default value instead of throwing an exception, and so is useful for obtaining
+ * optional values.
  * <p>
- * The generic <code>get()</code> and <code>opt()</code> methods return an object which you can cast
- * or query for type. There are also typed <code>get</code> and <code>opt</code> methods that do
- * type checking and type coercion for you.
+ * The generic <code>get()</code> and <code>opt()</code> methods return an object which you can cast or query for type.
+ * There are also typed <code>get</code> and <code>opt</code> methods that do type checking and type coercion for you.
  * <p>
- * The texts produced by the <code>toString</code> methods strictly conform to JSON syntax rules.
- * The constructors are more forgiving in the texts they will accept:
+ * The texts produced by the <code>toString</code> methods strictly conform to JSON syntax rules. The constructors are
+ * more forgiving in the texts they will accept:
  * <ul>
- * <li>An extra <code>,</code>&nbsp;<small>(comma)</small> may appear just before the closing
- * bracket.</li>
- * <li>The <code>null</code> value will be inserted when there is <code>,</code>
- * &nbsp;<small>(comma)</small> elision.</li>
+ * <li>An extra <code>,</code>&nbsp;<small>(comma)</small> may appear just before the closing bracket.</li>
+ * <li>The <code>null</code> value will be inserted when there is <code>,</code> &nbsp;<small>(comma)</small>
+ * elision.</li>
  * <li>Strings may be quoted with <code>'</code>&nbsp;<small>(single quote)</small>.</li>
- * <li>Strings do not need to be quoted at all if they do not begin with a quote or single quote,
- * and if they do not contain leading or trailing spaces, and if they do not contain any of these
- * characters: <code>{ } [ ] / \ : , #</code> and if they do not look like numbers and if they are
- * not the reserved words <code>true</code>, <code>false</code>, or <code>null</code>.</li>
+ * <li>Strings do not need to be quoted at all if they do not begin with a quote or single quote, and if they do not
+ * contain leading or trailing spaces, and if they do not contain any of these characters:
+ * <code>{ } [ ] / \ : , #</code> and if they do not look like numbers and if they are not the reserved words
+ * <code>true</code>, <code>false</code>, or <code>null</code>.</li>
  * </ul>
  *
  * @author JSON.org
@@ -130,6 +127,19 @@ public class _JSONArray
         return object;
     }
 
+    public JsonVariant getVariant(int index) {
+        return getVariant(index, null);
+    }
+
+    public JsonVariant getVariant(int index, Object defaultValue) {
+        Object any = get(index, defaultValue);
+        if (any == JsonObject.NULL)
+            return null;
+        if (any == null)
+            return null; // JsonVariant.NULL;
+        return JsonVariant.of(any);
+    }
+
     public JsonObject getJsonObject(int index) {
         return getJsonObject(index, null);
     }
@@ -177,9 +187,8 @@ public class _JSONArray
     }
 
     /**
-     * Make a string from the contents of this JSONArray. The <code>separator</code> string is
-     * inserted between each element. Warning: This method assumes that the data structure is
-     * acyclical.
+     * Make a string from the contents of this JSONArray. The <code>separator</code> string is inserted between each
+     * element. Warning: This method assumes that the data structure is acyclical.
      *
      * @param separator
      *            A string that will be inserted between the elements.
@@ -223,8 +232,7 @@ public class _JSONArray
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONArray which is produced from a
-     * Collection.
+     * Put a value in the JSONArray, where the value will be a JSONArray which is produced from a Collection.
      *
      * @param value
      *            A Collection value.
@@ -287,8 +295,7 @@ public class _JSONArray
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONObject which is produced from a
-     * Map.
+     * Put a value in the JSONArray, where the value will be a JSONObject which is produced from a Map.
      *
      * @param value
      *            A Map value.
@@ -306,8 +313,8 @@ public class _JSONArray
      * Append an object value. This increases the array's length by one.
      *
      * @param value
-     *            An object value. The value should be a Boolean, Double, Integer, JSONArray,
-     *            JSONObject, Long, or String, or the JSONObject.NULL object.
+     *            An object value. The value should be a Boolean, Double, Integer, JSONArray, JSONObject, Long, or
+     *            String, or the JSONObject.NULL object.
      * @return this.
      * @throws JSONException
      *             If the value is non-finite number.
@@ -319,8 +326,8 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace a boolean value in the JSONArray. If the index is greater than the length of
-     * the JSONArray, then null elements will be added as necessary to pad it out.
+     * Put or replace a boolean value in the JSONArray. If the index is greater than the length of the JSONArray, then
+     * null elements will be added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
@@ -336,8 +343,7 @@ public class _JSONArray
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONArray which is produced from a
-     * Collection.
+     * Put a value in the JSONArray, where the value will be a JSONArray which is produced from a Collection.
      *
      * @param index
      *            The subscript.
@@ -353,8 +359,8 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace a double value. If the index is greater than the length of the JSONArray, then
-     * null elements will be added as necessary to pad it out.
+     * Put or replace a double value. If the index is greater than the length of the JSONArray, then null elements will
+     * be added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
@@ -370,8 +376,8 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace a float value. If the index is greater than the length of the JSONArray, then
-     * null elements will be added as necessary to pad it out.
+     * Put or replace a float value. If the index is greater than the length of the JSONArray, then null elements will
+     * be added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
@@ -387,8 +393,8 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace an int value. If the index is greater than the length of the JSONArray, then
-     * null elements will be added as necessary to pad it out.
+     * Put or replace an int value. If the index is greater than the length of the JSONArray, then null elements will be
+     * added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
@@ -404,8 +410,8 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace a long value. If the index is greater than the length of the JSONArray, then
-     * null elements will be added as necessary to pad it out.
+     * Put or replace a long value. If the index is greater than the length of the JSONArray, then null elements will be
+     * added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
@@ -421,8 +427,7 @@ public class _JSONArray
     }
 
     /**
-     * Put a value in the JSONArray, where the value will be a JSONObject that is produced from a
-     * Map.
+     * Put a value in the JSONArray, where the value will be a JSONObject that is produced from a Map.
      *
      * @param index
      *            The subscript.
@@ -441,14 +446,14 @@ public class _JSONArray
     }
 
     /**
-     * Put or replace an object value in the JSONArray. If the index is greater than the length of
-     * the JSONArray, then null elements will be added as necessary to pad it out.
+     * Put or replace an object value in the JSONArray. If the index is greater than the length of the JSONArray, then
+     * null elements will be added as necessary to pad it out.
      *
      * @param index
      *            The subscript.
      * @param value
-     *            The value to put into the array. The value should be a Boolean, Double, Integer,
-     *            JSONArray, JSONObject, Long, or String, or the JSONObject.NULL object.
+     *            The value to put into the array. The value should be a Boolean, Double, Integer, JSONArray,
+     *            JSONObject, Long, or String, or the JSONObject.NULL object.
      * @return this.
      * @throws JSONException
      *             If the index is negative or if the the value is an invalid number.
@@ -480,8 +485,8 @@ public class _JSONArray
     }
 
     /**
-     * Creates a JSONPointer using an initialization string and tries to match it to an item within
-     * this JSONArray. For example, given a JSONArray initialized with this document:
+     * Creates a JSONPointer using an initialization string and tries to match it to an item within this JSONArray. For
+     * example, given a JSONArray initialized with this document:
      *
      * <pre>
      * [
@@ -495,8 +500,7 @@ public class _JSONArray
      * "/0/b"
      * </pre>
      *
-     * Then this method will return the String "c" A JSONPointerException may be thrown from code
-     * called by this method.
+     * Then this method will return the String "c" A JSONPointerException may be thrown from code called by this method.
      *
      * @param jsonPointer
      *            string that can be used to create a JSONPointer
@@ -507,8 +511,8 @@ public class _JSONArray
     }
 
     /**
-     * Uses a user initialized JSONPointer and tries to match it to an item within this JSONArray.
-     * For example, given a JSONArray initialized with this document:
+     * Uses a user initialized JSONPointer and tries to match it to an item within this JSONArray. For example, given a
+     * JSONArray initialized with this document:
      *
      * <pre>
      * [
@@ -522,8 +526,7 @@ public class _JSONArray
      * "/0/b"
      * </pre>
      *
-     * Then this method will return the String "c" A JSONPointerException may be thrown from code
-     * called by this method.
+     * Then this method will return the String "c" A JSONPointerException may be thrown from code called by this method.
      *
      * @param jsonPointer
      *            string that can be used to create a JSONPointer
@@ -534,8 +537,8 @@ public class _JSONArray
     }
 
     /**
-     * Queries and returns a value from this object using {@code jsonPointer}, or returns null if
-     * the query fails due to a missing key.
+     * Queries and returns a value from this object using {@code jsonPointer}, or returns null if the query fails due to
+     * a missing key.
      *
      * @param jsonPointer
      *            the string representation of the JSON pointer
@@ -548,8 +551,8 @@ public class _JSONArray
     }
 
     /**
-     * Queries and returns a value from this object using {@code jsonPointer}, or returns null if
-     * the query fails due to a missing key.
+     * Queries and returns a value from this object using {@code jsonPointer}, or returns null if the query fails due to
+     * a missing key.
      *
      * @param jsonPointer
      *            The JSON pointer
@@ -584,7 +587,7 @@ public class _JSONArray
      * @return true if they are equal
      */
     public boolean similar(Object other) {
-        if (!(other instanceof _JSONArray)) {
+        if (! (other instanceof _JSONArray)) {
             return false;
         }
         int len = this.length();
@@ -601,14 +604,14 @@ public class _JSONArray
                 return false;
             }
             if (valueThis instanceof _JSONObject) {
-                if (!((_JSONObject) valueThis).similar(valueOther)) {
+                if (! ((_JSONObject) valueThis).similar(valueOther)) {
                     return false;
                 }
             } else if (valueThis instanceof _JSONArray) {
-                if (!((_JSONArray) valueThis).similar(valueOther)) {
+                if (! ((_JSONArray) valueThis).similar(valueOther)) {
                     return false;
                 }
-            } else if (!valueThis.equals(valueOther)) {
+            } else if (! valueThis.equals(valueOther)) {
                 return false;
             }
         }
@@ -619,8 +622,7 @@ public class _JSONArray
      * Produce a JSONObject by combining a JSONArray of names with the values of this JSONArray.
      *
      * @param names
-     *            A JSONArray containing a list of key strings. These will be paired with the
-     *            values.
+     *            A JSONArray containing a list of key strings. These will be paired with the values.
      * @return A JSONObject, or null if there are no names or if this JSONArray has no values.
      * @throws JSONException
      *             If any of the names are null.
@@ -638,9 +640,9 @@ public class _JSONArray
     }
 
     /**
-     * Make a JSON text of this JSONArray. For compactness, no unnecessary whitespace is added. If
-     * it is not possible to produce a syntactically correct JSON text then null will be returned
-     * instead. This could occur if the array contains an invalid number.
+     * Make a JSON text of this JSONArray. For compactness, no unnecessary whitespace is added. If it is not possible to
+     * produce a syntactically correct JSON text then null will be returned instead. This could occur if the array
+     * contains an invalid number.
      * <p>
      * <b> Warning: This method assumes that the data structure is acyclical. </b>
      *
@@ -659,8 +661,8 @@ public class _JSONArray
      * Make a pretty-printed JSON text of this JSONArray.
      *
      * <p>
-     * If <code>indentFactor > 0</code> and the {@link _JSONArray} has only one element, then the
-     * array will be output on a single line:
+     * If <code>indentFactor > 0</code> and the {@link _JSONArray} has only one element, then the array will be output
+     * on a single line:
      *
      * <pre>
      * {@code [1]}
@@ -684,8 +686,8 @@ public class _JSONArray
      * @param indentFactor
      *            The number of spaces to add to each level of indentation.
      * @return a printable, displayable, transmittable representation of the object, beginning with
-     *         <code>[</code>&nbsp;<small>(left bracket)</small> and ending with <code>]</code>
-     *         &nbsp;<small>(right bracket)</small>.
+     *         <code>[</code>&nbsp;<small>(left bracket)</small> and ending with <code>]</code> &nbsp;<small>(right
+     *         bracket)</small>.
      * @throws JSONException
      */
     public String toString(int indentFactor)
@@ -697,8 +699,7 @@ public class _JSONArray
     }
 
     /**
-     * Write the contents of the JSONArray as JSON text to a writer. For compactness, no whitespace
-     * is added.
+     * Write the contents of the JSONArray as JSON text to a writer. For compactness, no whitespace is added.
      * <p>
      * <b> Warning: This method assumes that the data structure is acyclical. </b>
      *
@@ -714,8 +715,8 @@ public class _JSONArray
      * Write the contents of the JSONArray as JSON text to a writer.
      *
      * <p>
-     * If <code>indentFactor > 0</code> and the {@link _JSONArray} has only one element, then the
-     * array will be output on a single line:
+     * If <code>indentFactor > 0</code> and the {@link _JSONArray} has only one element, then the array will be output
+     * on a single line:
      *
      * <pre>
      * {@code [1]}
@@ -789,9 +790,8 @@ public class _JSONArray
     }
 
     /**
-     * Returns a java.util.List containing all of the elements in this array. If an element in the
-     * array is a JSONArray or JSONObject it will also be converted to a List and a Map
-     * respectively.
+     * Returns a java.util.List containing all of the elements in this array. If an element in the array is a JSONArray
+     * or JSONObject it will also be converted to a List and a Map respectively.
      * <p>
      * Warning: This method assumes that the data structure is acyclical.
      *

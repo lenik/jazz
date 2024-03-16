@@ -1,6 +1,6 @@
 package net.bodz.bas.t.map;
 
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class MarksetWithPath
@@ -14,7 +14,7 @@ public class MarksetWithPath
     Map<Object, String> map;
 
     public MarksetWithPath() {
-        this(new HashMap<>());
+        this(new IdentityHashMap<>());
     }
 
     public MarksetWithPath(Map<Object, String> idMap) {
@@ -29,7 +29,7 @@ public class MarksetWithPath
     @Override
     public String path(String name) {
         String path = context;
-        if (!path.isEmpty())
+        if (! path.isEmpty())
             path += separator;
         if (name != null)
             path += name;

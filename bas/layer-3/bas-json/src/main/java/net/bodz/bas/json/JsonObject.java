@@ -52,6 +52,20 @@ public class JsonObject
         return val;
     }
 
+    public JsonVariant getVariant(String key) {
+        Object any = super.get(key);
+        if (any == null)
+            return null; // JsonVariant.NULL;
+        return JsonVariant.of(any);
+    }
+
+    public JsonVariant getVariant(String key, Object defaultValue) {
+        Object any = super.get(key, defaultValue);
+        if (any == null)
+            return null; // JsonVariant.NULL;
+        return JsonVariant.of(any);
+    }
+
     public byte[] getByteArray(String key, byte[] defaultValue) {
         if (! has(key))
             return defaultValue;
