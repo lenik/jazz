@@ -88,9 +88,19 @@ public class Gender
         IXjdocAware.fn.injectFields(Gender.class, false);
     }
 
-    public static Gender jsonGet(JsonObject o, String propertyName, Gender defaultValue)
+    public static Gender jsonGet(JsonObject o, String propertyName)
             throws ParseException {
-        return PredefJsonFn.jsonGet(o, propertyName, Gender.class, defaultValue);
+        Object any = o.get(propertyName);
+        return new PredefJsonFn<>(Gender.class)//
+                .property(propertyName) //
+                .parseAny(any);
+    }
+
+    public static Gender jsonGet(JsonObject o, String propertyName, Gender defaultValue) {
+        Object any = o.get(propertyName);
+        return new PredefJsonFn<>(Gender.class)//
+                .property(propertyName) //
+                .parseAny(any, defaultValue);
     }
 
 }
