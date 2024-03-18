@@ -36,7 +36,7 @@ public class ObBeanInfo
 
     @Override
     public ObPropertyDescriptor[] getPropertyDescriptors() {
-        return ObPropertyDescriptor.convert(bi.getPropertyDescriptors());
+        return ObPropertyDescriptor.convert(bi.getPropertyDescriptors(), 0);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ObBeanInfo
 
     @Override
     public IMethodDescriptor[] getMethodDescriptors() {
-        return ObMethodDescriptor.convert(bi.getMethodDescriptors());
+        return ObMethodDescriptor.convert(bi.getMethodDescriptors(), 0);
     }
 
     @Override

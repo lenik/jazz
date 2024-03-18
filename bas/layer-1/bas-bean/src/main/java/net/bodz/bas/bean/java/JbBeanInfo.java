@@ -40,7 +40,7 @@ public class JbBeanInfo
 
     @Override
     public IPropertyDescriptor[] getPropertyDescriptors() {
-        return JbPropertyDescriptor.convert(bi.getPropertyDescriptors());
+        return JbPropertyDescriptor.convert(bi.getPropertyDescriptors(), 0);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class JbBeanInfo
             }
         }
 
-        return JbMethodDescriptor.convert(bi.getMethodDescriptors());
+        return JbMethodDescriptor.convert(bi.getMethodDescriptors(), 0);
     }
 
     @Override

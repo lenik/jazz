@@ -4,7 +4,8 @@ import java.lang.reflect.Method;
 
 public interface IMethodDescriptor
         extends
-            IFeatureDescriptor {
+            IFeatureDescriptor,
+            IDeclaredMember {
 
     Method getMethod();
 

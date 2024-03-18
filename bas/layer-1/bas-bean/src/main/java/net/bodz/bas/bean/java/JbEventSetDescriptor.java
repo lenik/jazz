@@ -29,7 +29,7 @@ public class JbEventSetDescriptor
 
     @Override
     public JbMethodDescriptor[] getListenerMethodDescriptors() {
-        return JbMethodDescriptor.convert(esd.getListenerMethodDescriptors());
+        return JbMethodDescriptor.convert(esd.getListenerMethodDescriptors(), 0);
 
     }
 

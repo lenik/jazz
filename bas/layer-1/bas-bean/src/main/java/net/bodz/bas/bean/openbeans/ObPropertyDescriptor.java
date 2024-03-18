@@ -14,20 +14,27 @@ public class ObPropertyDescriptor
             IPropertyDescriptor {
 
     PropertyDescriptor pd;
+    int position;
 
-    public ObPropertyDescriptor(PropertyDescriptor pd) {
+    public ObPropertyDescriptor(PropertyDescriptor pd, int position) {
         super(pd);
         this.pd = pd;
+        this.position = position;
     }
 
     @Override
-    public void setWriteMethod(Method setter)
-            throws IntrospectionException {
-        try {
-            pd.setWriteMethod(setter);
-        } catch (com.googlecode.openbeans.IntrospectionException e) {
-            throw ObIntrospectionException.convert(e);
-        }
+    public int getPosition() {
+        return position;
+    }
+
+    @Override
+    public Class<?> getPropertyType() {
+        return pd.getPropertyType();
+    }
+
+    @Override
+    public Method getReadMethod() {
+        return pd.getReadMethod();
     }
 
     @Override
@@ -41,38 +48,18 @@ public class ObPropertyDescriptor
     }
 
     @Override
+    public void setWriteMethod(Method setter)
+            throws IntrospectionException {
+        try {
+            pd.setWriteMethod(setter);
+        } catch (com.googlecode.openbeans.IntrospectionException e) {
+            throw ObIntrospectionException.convert(e);
+        }
+    }
+
+    @Override
     public Method getWriteMethod() {
         return pd.getWriteMethod();
-    }
-
-    @Override
-    public Method getReadMethod() {
-        return pd.getReadMethod();
-    }
-
-    @Override
-    public void setPropertyEditorClass(Class<?> propertyEditorClass) {
-        pd.setPropertyEditorClass(propertyEditorClass);
-    }
-
-    @Override
-    public Class<?> getPropertyType() {
-        return pd.getPropertyType();
-    }
-
-    @Override
-    public Class<?> getPropertyEditorClass() {
-        return pd.getPropertyEditorClass();
-    }
-
-    @Override
-    public void setConstrained(boolean constrained) {
-        pd.setConstrained(constrained);
-    }
-
-    @Override
-    public void setBound(boolean bound) {
-        pd.setBound(bound);
     }
 
     @Override
@@ -81,8 +68,28 @@ public class ObPropertyDescriptor
     }
 
     @Override
+    public void setConstrained(boolean constrained) {
+        pd.setConstrained(constrained);
+    }
+
+    @Override
     public boolean isBound() {
         return pd.isBound();
+    }
+
+    @Override
+    public void setBound(boolean bound) {
+        pd.setBound(bound);
+    }
+
+    @Override
+    public Class<?> getPropertyEditorClass() {
+        return pd.getPropertyEditorClass();
+    }
+
+    @Override
+    public void setPropertyEditorClass(Class<?> propertyEditorClass) {
+        pd.setPropertyEditorClass(propertyEditorClass);
     }
 
     @Override
@@ -90,19 +97,19 @@ public class ObPropertyDescriptor
         return ObPropertyEditor.convert(pd.createPropertyEditor(bean));
     }
 
-    public static ObPropertyDescriptor convert(PropertyDescriptor o) {
+    public static ObPropertyDescriptor convert(PropertyDescriptor o, int position) {
         if (o == null)
             return null;
         else
-            return new ObPropertyDescriptor(o);
+            return new ObPropertyDescriptor(o, position);
     }
 
-    public static ObPropertyDescriptor[] convert(PropertyDescriptor[] src) {
+    public static ObPropertyDescriptor[] convert(PropertyDescriptor[] src, int startPosition) {
         if (src == null)
             return null;
         ObPropertyDescriptor[] dst = new ObPropertyDescriptor[src.length];
         for (int i = 0; i < src.length; i++)
-            dst[i] = convert(src[i]);
+            dst[i] = convert(src[i], startPosition + i);
         return dst;
     }
 

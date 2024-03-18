@@ -30,7 +30,7 @@ public class ObEventSetDescriptor
 
     @Override
     public ObMethodDescriptor[] getListenerMethodDescriptors() {
-        return ObMethodDescriptor.convert(esd.getListenerMethodDescriptors());
+        return ObMethodDescriptor.convert(esd.getListenerMethodDescriptors(), 0);
 
     }
 

@@ -13,10 +13,17 @@ public class ObMethodDescriptor
             IMethodDescriptor {
 
     MethodDescriptor md;
+    int position;
 
-    public ObMethodDescriptor(MethodDescriptor md) {
+    public ObMethodDescriptor(MethodDescriptor md, int position) {
         super(md);
         this.md = md;
+        this.position = position;
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
     }
 
     @Override
@@ -30,19 +37,19 @@ public class ObMethodDescriptor
         return ObParameterDescriptor.convert(array);
     }
 
-    public static ObMethodDescriptor convert(MethodDescriptor o) {
+    public static ObMethodDescriptor convert(MethodDescriptor o, int position) {
         if (o == null)
             return null;
         else
-            return new ObMethodDescriptor(o);
+            return new ObMethodDescriptor(o, position);
     }
 
-    public static ObMethodDescriptor[] convert(MethodDescriptor[] src) {
+    public static ObMethodDescriptor[] convert(MethodDescriptor[] src, int startPosition) {
         if (src == null)
             return null;
         ObMethodDescriptor[] dst = new ObMethodDescriptor[src.length];
         for (int i = 0; i < src.length; i++)
-            dst[i] = convert(src[i]);
+            dst[i] = convert(src[i], startPosition + i);
         return dst;
     }
 

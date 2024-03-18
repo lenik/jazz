@@ -12,10 +12,17 @@ public class JbMethodDescriptor
             IMethodDescriptor {
 
     MethodDescriptor md;
+    int position;
 
-    public JbMethodDescriptor(MethodDescriptor md) {
+    public JbMethodDescriptor(MethodDescriptor md, int position) {
         super(md);
         this.md = md;
+        this.position = position;
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
     }
 
     @Override
@@ -29,19 +36,19 @@ public class JbMethodDescriptor
         return JbParameterDescriptor.convert(array);
     }
 
-    public static JbMethodDescriptor convert(MethodDescriptor o) {
+    public static JbMethodDescriptor convert(MethodDescriptor o, int position) {
         if (o == null)
             return null;
         else
-            return new JbMethodDescriptor(o);
+            return new JbMethodDescriptor(o, position);
     }
 
-    public static JbMethodDescriptor[] convert(MethodDescriptor[] src) {
+    public static JbMethodDescriptor[] convert(MethodDescriptor[] src, int startPosition) {
         if (src == null)
             return null;
         JbMethodDescriptor[] dst = new JbMethodDescriptor[src.length];
         for (int i = 0; i < src.length; i++)
-            dst[i] = convert(src[i]);
+            dst[i] = convert(src[i], startPosition + i);
         return dst;
     }
 
