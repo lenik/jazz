@@ -32,7 +32,7 @@ public class DateTypers
 
     @Override
     public String format(Date object, IOptions options) {
-        DateFormat dateFormat = options.get(DateFormat.class, Dates.D10T8);
+        DateFormat dateFormat = options.get(DateFormat.class, Dates.LOCAL_DATE_TIME);
         return dateFormat.format(object);
     }
 
@@ -40,7 +40,7 @@ public class DateTypers
     public Date parse(String text, IOptions options)
             throws ParseException {
         DateFormat format = options.get(DateFormat.class, //
-                text.contains(":") ? Dates.D10T8 : Dates.YYYY_MM_DD);
+                text.contains(":") ? Dates.LOCAL_DATE_TIME : Dates.LOCAL_DATE);
         try {
             return format.parse(text);
         } catch (java.text.ParseException e) {

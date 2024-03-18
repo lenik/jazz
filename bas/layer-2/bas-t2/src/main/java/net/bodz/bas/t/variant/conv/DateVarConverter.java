@@ -57,6 +57,6 @@ public class DateVarConverter
         return true;
     }
 
-    public static final DateVarConverter INSTANCE = new DateVarConverter(Dates.YYYY_MM_DD);
+    public static final DateVarConverter INSTANCE = new DateVarConverter(Dates.ZONED_DATE_TIME);
 
 }

@@ -25,7 +25,7 @@ public class DefaultListingExcel
     @Override
     protected String getTitle() {
         List<?> list = tableData.getList();
-        String dateStr = Dates.YYYY_MM_DD.format(System.currentTimeMillis());
+        String dateStr = Dates.LOCAL_DATE.format(System.currentTimeMillis());
         String typeName = typeInfo.getEntityClass().getSimpleName();
         String title = String.format("%s %s (%d rows)", dateStr, typeName, list.size());
         return title;

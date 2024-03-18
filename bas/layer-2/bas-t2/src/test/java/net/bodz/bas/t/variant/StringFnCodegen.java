@@ -64,7 +64,7 @@ public class StringFnCodegen
         if (s == null)
             return null;
         try {
-            return Dates.ISO8601.parse(s);
+            return Dates.ZONED_DATE_TIME.parse(s);
         } catch (Exception e) {
             throw new ParseException("error parse " + s, e);
         }

@@ -7,7 +7,8 @@ import java.util.List;
 import net.bodz.bas.c.java.util.Dates;
 
 public class MutableVcsLogEntry
-        implements IMutableVcsLogEntry {
+        implements
+            IMutableVcsLogEntry {
 
     private String version;
     private String treeHash;
@@ -170,7 +171,7 @@ public class MutableVcsLogEntry
         buf.append("] ");
         buf.append(subject);
         buf.append(" (");
-        buf.append(Dates.D10T8.format(authorDate.getTime()));
+        buf.append(Dates.ZONED_DATE_TIME.format(authorDate.getTime()));
         buf.append(")");
         return buf.toString();
     }

@@ -360,7 +360,7 @@ public class StringFn {
         if (s == null)
             return null;
         try {
-            return Dates.ISO8601compat.parse(s);
+            return Dates.ZONED_DATE_TIME.parse(s);
         } catch (Exception e) {
             throw new ParseException("error parse " + s, e);
         }
@@ -370,7 +370,7 @@ public class StringFn {
         if (s == null)
             return fallback;
         try {
-            return Dates.ISO8601compat.parse(s);
+            return Dates.ZONED_DATE_TIME.parse(s);
         } catch (Exception e) {
             return fallback;
         }

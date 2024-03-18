@@ -8,7 +8,8 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
 
 public class TagRecord
-        implements IRxParser {
+        implements
+            IRxParser {
 
     Calendar startTime;
     Calendar endTime;
@@ -36,8 +37,8 @@ public class TagRecord
     @Override
     public String toString() {
         BCharOut out = new BCharOut();
-        out.println("start-time: " + Dates.D10T8.format(startTime.getTime()));
-        out.println("end-time: " + Dates.D10T8.format(endTime.getTime()));
+        out.println("start-time: " + Dates.LOCAL_DATE_TIME.format(startTime.getTime()));
+        out.println("end-time: " + Dates.LOCAL_DATE_TIME.format(endTime.getTime()));
         out.println("read-count: " + readCount);
         out.println("antenna: " + antenna);
         out.println("tag-type: " + tagType);

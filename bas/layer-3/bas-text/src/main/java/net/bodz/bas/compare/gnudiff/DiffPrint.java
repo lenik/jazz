@@ -109,11 +109,11 @@ public class DiffPrint {
                 l1 = next.index1 + next.inserted - 1;
                 show_from += next.deleted;
                 show_to += next.inserted;
-                for (i = next.index0; i <= l0 && !nontrivial; i++)
-                    if (!ignore.eval(file0.get(i)))
+                for (i = next.index0; i <= l0 && ! nontrivial; i++)
+                    if (! ignore.eval(file0.get(i)))
                         nontrivial = true;
-                for (i = next.index1; i <= l1 && !nontrivial; i++)
-                    if (!ignore.eval(file1.get(i)))
+                for (i = next.index1; i <= l1 && ! nontrivial; i++)
+                    if (! ignore.eval(file1.get(i)))
                         nontrivial = true;
                 start++;
             }
@@ -127,7 +127,7 @@ public class DiffPrint {
              * If all inserted or deleted lines are ignorable, tell the caller to ignore this hunk.
              */
 
-            if (!nontrivial)
+            if (! nontrivial)
                 show_from = show_to = 0;
 
             deletes = show_from;
@@ -250,7 +250,7 @@ public class DiffPrint {
                 boolean inserting = true;
                 for (int i = first1; i <= last1; i++) {
                     /* Resume the insert, if we stopped. */
-                    if (!inserting)
+                    if (! inserting)
                         out.append(i - first1 + first0 + "a\n");
                     inserting = true;
 
@@ -296,7 +296,8 @@ public class DiffPrint {
             if (label != null)
                 out.append(mark + ' ' + label + "\n");
             else if (inf.lastModified() > 0)
-                out.append(mark + ' ' + inf.getPath() + '\t' + Dates.SYS_DATETIME.format(inf.lastModified()) + "\n");
+                out.append(mark + ' ' + inf.getPath() + '\t' //
+                        + Dates.OFFSET_DATE_TIME.format(inf.lastModified()) + "\n");
             else
                 /* Don't pretend that standard input is ancient. */
                 out.append(mark + ' ' + inf.getPath() + "\n");

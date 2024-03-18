@@ -57,7 +57,7 @@ public class UserVoteRecord
             sb.append('=');
         sb.append(value);
         sb.append('/');
-        sb.append(Dates.SYS_DATETIME.format(time));
+        sb.append(Dates.ZONED_DATE_TIME.format(time));
         return sb.toString();
     }
 
