@@ -15,7 +15,12 @@ public interface IDateFormatConsts {
 //    DateFormat ISO_OFFSET_TIME = Dates.format("HH:mm:ssZ");
 //    DateFormat ISO_ZONED_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ssZ[z]");
 
-    DateFormat DATE_TIME = Dates.format("yyyy-MM-dd HH:mm:ss");
+    DateFormat UI_DATE_TIME = Dates.format("yyyy-MM-dd HH:mm:ss");
+    DateFormat UI_DATE = Dates.format("yyyy-MM-dd");
+    DateFormat UI_TIME = Dates.format("HH:mm:ss");
+    DateFormat UI_OFFSET_DATE_TIME = Dates.format("yyyy-MM-dd HH:mm:ssZ");
+    DateFormat UI_OFFSET_TIME = Dates.format("HH:mm:ssZ");
+    DateFormat UI_ZONED_DATE_TIME = Dates.format("yyyy-MM-dd HH:mm:ssZ[z]");
 
 //    DateFormat SYS_DATE = DateFormat.getDateInstance();
 //    DateFormat SYS_TIME = DateFormat.getTimeInstance();
