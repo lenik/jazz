@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.contact;
 
-import java.sql.Date;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,27 +18,22 @@ import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
-import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.PriorityUtils;
-import net.bodz.lily.concrete.IdEntity;
+import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IImagesInProps;
 
 /**
  * 参与方
  */
 @IdType(Integer.class)
-@HaveAttachments
 public abstract class Party
-        extends IdEntity<Integer>
-        implements
-            IImagesInProps {
+        extends CoImaged<Integer> {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,7 +46,7 @@ public abstract class Party
     private PartyCategory category;
     private Integer categoryId;
 
-    private Date birthday;
+    private LocalDate birthday;
     private Locale locale = Locale.SIMPLIFIED_CHINESE;
     private ZoneId timeZoneId = ZoneId.systemDefault();
 
@@ -93,12 +91,34 @@ public abstract class Party
      */
     @Priority(100)
     @Column(name = "birthday")
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    @Derived
+    public Integer getAge() {
+        if (birthday == null)
+            return null;
+        birthday.get(ChronoField.YEAR);
+        LocalDate now = LocalDate.now();
+        Duration d = Duration.between(birthday, now);
+        int years = (int) d.get(ChronoUnit.YEARS);
+        return years;
+    }
+
+    public void setAge(int years) {
+        LocalDate now = LocalDate.now();
+        int birthYear = now.getYear() - years;
+        if (birthday == null)
+            birthday = LocalDate.of(birthYear, 1, 1);
+        else
+            birthday = LocalDate.of(birthYear, //
+                    birthday.getMonthValue(), //
+                    birthday.getDayOfMonth());
     }
 
     /**
