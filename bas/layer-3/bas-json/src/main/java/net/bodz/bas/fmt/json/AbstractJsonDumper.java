@@ -5,12 +5,19 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -463,11 +470,11 @@ public abstract class AbstractJsonDumper<self_t>
 
         case TypeId.SQL_DATE:
             java.sql.Date sqlDate = (java.sql.Date) obj;
-            return Dates.LOCAL_DATE.format(sqlDate);
+            return Dates.ISO_LOCAL_DATE.format(sqlDate);
 
         case TypeId.SQL_TIME:
             java.sql.Time sqlTime = (java.sql.Time) obj;
-            return Dates.LOCAL_DATE.format(sqlTime);
+            return Dates.ISO_LOCAL_DATE.format(sqlTime);
 
         case TypeId.DATE:
             Date date = (Date) obj;
@@ -477,24 +484,24 @@ public abstract class AbstractJsonDumper<self_t>
 //            int offset = cal.getTimeZone().getOffset(date.getTime());
 //            long localTime = date.getTime() + offset;
 
-            String dateStr = Dates.ZONED_DATE_TIME.format(date);
+            String dateStr = Dates.ISO8601.format(date);
             return dateStr;
 
         case TypeId.INSTANT:
             Instant instant = (Instant) obj;
             return instant.toEpochMilli();
         case TypeId.LOCAL_DATE_TIME:
-            return Dates.LOCAL_DATE_TIME.format(obj);
+            return DateTimes.ISO_LOCAL_DATE_TIME.format((LocalDateTime) obj);
         case TypeId.LOCAL_DATE:
-            return Dates.LOCAL_DATE.format(obj);
+            return DateTimes.ISO_LOCAL_DATE.format((LocalDate) obj);
         case TypeId.LOCAL_TIME:
-            return Dates.LOCAL_TIME.format(obj);
+            return DateTimes.ISO_LOCAL_TIME.format((LocalTime) obj);
         case TypeId.OFFSET_DATE_TIME:
-            return Dates.OFFSET_DATE_TIME.format(obj);
+            return DateTimes.ISO_OFFSET_DATE_TIME.format((OffsetDateTime) obj);
         case TypeId.OFFSET_TIME:
-            return Dates.OFFSET_TIME.format(obj);
+            return DateTimes.ISO_OFFSET_TIME.format((OffsetTime) obj);
         case TypeId.ZONED_DATE_TIME:
-            return Dates.ZONED_DATE_TIME.format(obj);
+            return DateTimes.ISO_ZONED_DATE_TIME.format((ZonedDateTime) obj);
 
 //        case TypeId.JODA_DATETIME:
 //            AbstractDateTime jodaDateTime = (AbstractDateTime) obj;

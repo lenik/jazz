@@ -8,12 +8,14 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 public interface IDateFormatConsts {
 
 //    DateFormat INSTANT = Dates.format("HH:mm:ss");
-    DateFormat LOCAL_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ss");
-    DateFormat LOCAL_DATE = Dates.format("yyyy-MM-dd");
-    DateFormat LOCAL_TIME = Dates.format("HH:mm:ss");
-    DateFormat OFFSET_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ssZ");
-    DateFormat OFFSET_TIME = Dates.format("HH:mm:ssZ");
-    DateFormat ZONED_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ssZ[z]");
+    DateFormat ISO_LOCAL_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ss");
+    DateFormat ISO_LOCAL_DATE = Dates.format("yyyy-MM-dd");
+    DateFormat ISO_LOCAL_TIME = Dates.format("HH:mm:ss");
+//    DateFormat ISO_OFFSET_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ssZ");
+//    DateFormat ISO_OFFSET_TIME = Dates.format("HH:mm:ssZ");
+//    DateFormat ISO_ZONED_DATE_TIME = Dates.format("yyyy-MM-dd'T'HH:mm:ssZ[z]");
+
+    DateFormat DATE_TIME = Dates.format("yyyy-MM-dd HH:mm:ss");
 
 //    DateFormat SYS_DATE = DateFormat.getDateInstance();
 //    DateFormat SYS_TIME = DateFormat.getTimeInstance();

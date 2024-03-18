@@ -32,7 +32,7 @@ public class Date_htm
         // input.type("datetime"); // deprecated
         input.type("date");
         if (value != null) {
-            String str = Dates.LOCAL_DATE.format(value);
+            String str = Dates.ISO_LOCAL_DATE.format(value);
             input.value(str);
             out.span().class_("print").text(str);
         }

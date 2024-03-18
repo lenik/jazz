@@ -2,7 +2,7 @@ package net.bodz.bas.scanner.ztx965n;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import net.bodz.bas.c.java.util.Arrays;
 
@@ -84,7 +84,7 @@ public class RxPacket {
             break;
         }
 
-        if (!success) {
+        if (! success) {
             readDataAndCheck();
             RxErrorCode errorCode = RxErrorCode.forCode(error);
             throw new Ztx965nException(error, String.format(//
@@ -159,7 +159,7 @@ public class RxPacket {
         if (expected != actual)
             throw new IOException(String.format("Checksum failed: expect %d, but read %d.", ~checksum, actual));
 
-        if (!success && data.length == 1)
+        if (! success && data.length == 1)
             error = data[0] & 0xFF;
 
         return data;
@@ -184,17 +184,15 @@ public class RxPacket {
         return expected == actual;
     }
 
-    public Calendar readTime()
+    public LocalDateTime readTime()
             throws IOException {
         int year = readByte();
         int month = readByte();
-        int date = readByte();
+        int dayOfMonth = readByte();
         int hour = readByte();
         int minute = readByte();
         int second = readByte();
-        Calendar time = Calendar.getInstance();
-        time.set(year, month, date, hour, minute, second);
-        return time;
+        return LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
     }
 
 }

@@ -7,12 +7,14 @@ import net.bodz.bas.meta.decl.ThreadUnsafe;
 @ThreadUnsafe
 public interface IDateTimeFormatConsts {
 
-    DateTimeFormatter LOCAL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    DateTimeFormatter LOCAL_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    DateTimeFormatter LOCAL_TIME = DateTimeFormatter.ofPattern("HH:mm:ss");
-    DateTimeFormatter OFFSET_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
-    DateTimeFormatter OFFSET_TIME = DateTimeFormatter.ofPattern("HH:mm:ssZ");
-    DateTimeFormatter ZONED_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ[z]");
+    DateTimeFormatter ISO_LOCAL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    DateTimeFormatter ISO_LOCAL_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter ISO_LOCAL_TIME = DateTimeFormatter.ofPattern("HH:mm:ss");
+    DateTimeFormatter ISO_OFFSET_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+    DateTimeFormatter ISO_OFFSET_TIME = DateTimeFormatter.ofPattern("HH:mm:ssZ");
+    DateTimeFormatter ISO_ZONED_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ[z]");
+
+    DateTimeFormatter DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 // DateTimeFormatter SYS_DATE = DateTimeFormatter.getDateInstance();
 // DateTimeFormatter SYS_TIME = DateTimeFormatter.getTimeInstance();

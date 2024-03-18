@@ -2,9 +2,10 @@ package net.bodz.bas.compare.gnudiff;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.fn.legacy.Pred1;
 
 /**
@@ -13,23 +14,21 @@ import net.bodz.bas.fn.legacy.Pred1;
  * @see GNUDiff.util.GNUDiffComparator
  * @author Stuart D. Gathman Copyright (C) 2000 Business Management Systems, Inc.
  *         <p>
- *         This program is free software; you can redistribute it and/or modify it under the terms
- *         of the GNU General Public License as published by the Free Software Foundation; either
- *         version 1, or (at your option) any later version.
+ *         This program is free software; you can redistribute it and/or modify it under the terms of the GNU General
+ *         Public License as published by the Free Software Foundation; either version 1, or (at your option) any later
+ *         version.
  *         <p>
- *         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- *         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *         See the GNU General Public License for more details.
+ *         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ *         implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ *         for more details.
  *         <p>
- *         You should have received a copy of the GNU General Public License along with this
- *         program; if not, write to the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA
- *         02139, USA.
+ *         You should have received a copy of the GNU General Public License along with this program; if not, write to
+ *         the Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 public class DiffPrint {
     /**
-     * A Base class for printing edit scripts produced by Diff. This class divides the change list
-     * into "hunks", and calls <code>print_hunk</code> for each hunk. Various utility methods are
-     * provided as well.
+     * A Base class for printing edit scripts produced by Diff. This class divides the change list into "hunks", and
+     * calls <code>print_hunk</code> for each hunk. Various utility methods are provided as well.
      */
     public static abstract class Base {
         protected final Appendable out;
@@ -41,8 +40,8 @@ public class DiffPrint {
         }
 
         /**
-         * Set to ignore certain kinds of lines when printing an edit script. For example, ignoring
-         * blank lines or comments.
+         * Set to ignore certain kinds of lines when printing an edit script. For example, ignoring blank lines or
+         * comments.
          */
         protected Pred1<Object> ignore = null;
 
@@ -52,11 +51,10 @@ public class DiffPrint {
         protected List<?> file0, file1;
 
         /**
-         * Divide SCRIPT into pieces by calling HUNKFUN and print each piece with PRINTFUN. Both
-         * functions take one arg, an edit script.
+         * Divide SCRIPT into pieces by calling HUNKFUN and print each piece with PRINTFUN. Both functions take one arg,
+         * an edit script.
          *
-         * PRINTFUN takes a subscript which belongs together (with a null link at the end) and
-         * prints it.
+         * PRINTFUN takes a subscript which belongs together (with a null link at the end) and prints it.
          */
         public void print_script(List<DiffEntry<Object>> script)
                 throws IOException {
@@ -69,8 +67,8 @@ public class DiffPrint {
         }
 
         /**
-         * Called with the tail of the script and returns the last link that belongs together with
-         * the start of the tail.
+         * Called with the tail of the script and returns the last link that belongs together with the start of the
+         * tail.
          */
 
         protected int hunkfun(List<DiffEntry<Object>> changes, int start) {
@@ -80,16 +78,15 @@ public class DiffPrint {
         protected int first0, last0, first1, last1, deletes, inserts;
 
         /**
-         * Look at a hunk of edit script and report the range of lines in each file that it applies
-         * to. HUNK is the start of the hunk, which is a chain of `struct change'. The first and
-         * last line numbers of file 0 are stored in *FIRST0 and *LAST0, and likewise for file 1 in
-         * *FIRST1 and *LAST1. Note that these are internal line numbers that count from 0.
+         * Look at a hunk of edit script and report the range of lines in each file that it applies to. HUNK is the
+         * start of the hunk, which is a chain of `struct change'. The first and last line numbers of file 0 are stored
+         * in *FIRST0 and *LAST0, and likewise for file 1 in *FIRST1 and *LAST1. Note that these are internal line
+         * numbers that count from 0.
          *
          * If no lines from file 0 are deleted, then FIRST0 is LAST0+1.
          *
-         * Also set *DELETES nonzero if any lines of file 0 are deleted and set *INSERTS nonzero if
-         * any lines of file 1 are inserted. If only ignorable lines are inserted or deleted, both
-         * are set to 0.
+         * Also set *DELETES nonzero if any lines of file 0 are deleted and set *INSERTS nonzero if any lines of file 1
+         * are inserted. If only ignorable lines are inserted or deleted, both are set to 0.
          */
 
         protected void analyze_hunk(List<DiffEntry<Object>> list, int start, int end) {
@@ -149,8 +146,8 @@ public class DiffPrint {
         }
 
         /**
-         * Print a pair of line numbers with SEPCHAR, translated for file FILE. If the two numbers
-         * are identical, print just one number.
+         * Print a pair of line numbers with SEPCHAR, translated for file FILE. If the two numbers are identical, print
+         * just one number.
          *
          * Args A and B are internal line numbers. We print the translated (real) line numbers.
          */
@@ -158,8 +155,8 @@ public class DiffPrint {
         protected void print_number_range(char sepchar, int a, int b)
                 throws IOException {
             /*
-             * Note: we can have B < A in the case of a range of no lines. In this case, we should
-             * print the line number before the range, which is B.
+             * Note: we can have B < A in the case of a range of no lines. In this case, we should print the line number
+             * before the range, which is B.
              */
             if (++b > ++a)
                 out.append("" + a + sepchar + b);
@@ -188,8 +185,8 @@ public class DiffPrint {
         }
 
         /**
-         * Print a hunk of a normal diff. This is a contiguous portion of a complete edit script,
-         * describing changes in consecutive lines.
+         * Print a hunk of a normal diff. This is a contiguous portion of a complete edit script, describing changes in
+         * consecutive lines.
          */
         @Override
         protected void print_hunk(List<DiffEntry<Object>> list, int start, int end)
@@ -221,8 +218,8 @@ public class DiffPrint {
     }
 
     /**
-     * Prints an edit script in a format suitable for input to <code>ed</code>. The edit script must
-     * be generated with the reverse option to be useful as actual <code>ed</code> input.
+     * Prints an edit script in a format suitable for input to <code>ed</code>. The edit script must be generated with
+     * the reverse option to be useful as actual <code>ed</code> input.
      */
     public static class EdPrint
             extends Base {
@@ -255,9 +252,9 @@ public class DiffPrint {
                     inserting = true;
 
                     /*
-                     * If the file's line is just a dot, it would confuse `ed'. So output it with a
-                     * double dot, and set the flag LEADING_DOT so that we will output another
-                     * ed-command later to change the double dot into a single dot.
+                     * If the file's line is just a dot, it would confuse `ed'. So output it with a double dot, and set
+                     * the flag LEADING_DOT so that we will output another ed-command later to change the double dot
+                     * into a single dot.
                      */
 
                     if (".".equals(file1.get(i))) {
@@ -279,8 +276,7 @@ public class DiffPrint {
     }
 
     /**
-     * Prints an edit script in context diff format. This and its 'unified' variation is used for
-     * source code patches.
+     * Prints an edit script in context diff format. This and its 'unified' variation is used for source code patches.
      */
     public static class ContextPrint
             extends Base {
@@ -297,7 +293,9 @@ public class DiffPrint {
                 out.append(mark + ' ' + label + "\n");
             else if (inf.lastModified() > 0)
                 out.append(mark + ' ' + inf.getPath() + '\t' //
-                        + Dates.OFFSET_DATE_TIME.format(inf.lastModified()) + "\n");
+                        + DateTimes.ISO_OFFSET_DATE_TIME.format(//
+                                Instant.ofEpochMilli(inf.lastModified()))
+                        + "\n");
             else
                 /* Don't pretend that standard input is ancient. */
                 out.append(mark + ' ' + inf.getPath() + "\n");
@@ -345,8 +343,8 @@ public class DiffPrint {
             out.append("***************");
 
             /*
-             * If we looked for and found a function this is part of, include its name in the header
-             * of the diff section.
+             * If we looked for and found a function this is part of, include its name in the header of the diff
+             * section.
              */
             print_function(file0, first0);
 
@@ -372,8 +370,8 @@ public class DiffPrint {
                     String prefix = " ";
                     if (next != null && next.index0 <= i)
                         /*
-                         * The change NEXT covers this line. If lines were inserted here in file 1,
-                         * this is "changed". Otherwise it is "deleted".
+                         * The change NEXT covers this line. If lines were inserted here in file 1, this is "changed".
+                         * Otherwise it is "deleted".
                          */
                         prefix = (next.inserted > 0) ? "!" : "-";
 
@@ -402,8 +400,8 @@ public class DiffPrint {
                     String prefix = " ";
                     if (off < end && next.index1 <= i)
                         /*
-                         * The change NEXT covers this line. If lines were deleted here in file 0,
-                         * this is "changed". Otherwise it is "inserted".
+                         * The change NEXT covers this line. If lines were deleted here in file 0, this is "changed".
+                         * Otherwise it is "inserted".
                          */
                         prefix = (next.deleted > 0) ? "!" : "+";
 
@@ -414,8 +412,7 @@ public class DiffPrint {
     }
 
     /**
-     * Prints an edit script in context diff format. This and its 'unified' variation is used for
-     * source code patches.
+     * Prints an edit script in context diff format. This and its 'unified' variation is used for source code patches.
      */
     public static class UnifiedPrint
             extends ContextPrint {
@@ -436,8 +433,8 @@ public class DiffPrint {
             // translate_range (file, a, b, &trans_a, &trans_b);
 
             /*
-             * Note: we can have B < A in the case of a range of no lines. In this case, we should
-             * print the line number before the range, which is B.
+             * Note: we can have B < A in the case of a range of no lines. In this case, we should print the line number
+             * before the range, which is B.
              */
             if (b < a)
                 out.append(b + ",0");
@@ -468,8 +465,8 @@ public class DiffPrint {
             out.append(" @@");
 
             /*
-             * If we looked for and found a function this is part of, include its name in the header
-             * of the diff section.
+             * If we looked for and found a function this is part of, include its name in the header of the diff
+             * section.
              */
             print_function(file0, first0);
 

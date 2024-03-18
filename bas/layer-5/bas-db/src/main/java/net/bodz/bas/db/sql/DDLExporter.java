@@ -33,17 +33,17 @@ public class DDLExporter {
 
         case DATE:
             java.sql.Date date = (java.sql.Date) val;
-            String dateStr = Dates.LOCAL_DATE.format(date);
+            String dateStr = Dates.ISO_LOCAL_DATE.format(date);
             return StringQuote.q(dateStr);
 
         case TIME:
             java.sql.Time time = (java.sql.Time) val;
-            String timeStr = Dates.LOCAL_TIME.format(time);
+            String timeStr = Dates.ISO_LOCAL_TIME.format(time);
             return StringQuote.q(timeStr);
 
         case TIMESTAMP:
             Timestamp timestamp = (Timestamp) val;
-            String tsStr = Dates.LOCAL_DATE_TIME.format(timestamp);
+            String tsStr = Dates.ISO8601.format(timestamp);
             return StringQuote.q(tsStr);
 
         default:

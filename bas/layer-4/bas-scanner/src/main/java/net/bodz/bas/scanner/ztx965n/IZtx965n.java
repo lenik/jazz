@@ -1,11 +1,12 @@
 package net.bodz.bas.scanner.ztx965n;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IZtx965n
-        extends IDataTypes {
+        extends
+            IDataTypes {
 
     /**
      * 根据掩码条件识别天线辐射场范围存在的可识别标签ID
@@ -175,13 +176,13 @@ public interface IZtx965n
     /**
      * 获得读写器时间
      */
-    Calendar getReaderTime()
+    LocalDateTime getReaderTime()
             throws IOException, Ztx965nException;
 
     /**
      * 设置读写器时间
      */
-    void setReaderTime(Calendar time)
+    void setReaderTime(LocalDateTime time)
             throws IOException, Ztx965nException;
 
     /**

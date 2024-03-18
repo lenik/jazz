@@ -123,7 +123,7 @@ public class ArtifactDoc
         return null;
     }
 
-    static final DateFormat RELEASE_DATE_FORMAT = Dates.LOCAL_DATE;
+    static final DateFormat RELEASE_DATE_FORMAT = Dates.ISO_LOCAL_DATE;
 
     public String getReleaseDateString() {
         Date releaseDate = getReleaseDate();

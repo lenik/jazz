@@ -1,10 +1,10 @@
 package net.bodz.bas.vcs;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 
 public class MutableVcsLogEntry
         implements
@@ -15,11 +15,11 @@ public class MutableVcsLogEntry
 
     private String authorName;
     private String authorEmail;
-    private Calendar authorDate;
+    private ZonedDateTime authorDate;
 
     private String committerName;
     private String committerEmail;
-    private Calendar commitDate;
+    private ZonedDateTime commitDate;
 
     private String subject;
     private String body;
@@ -83,12 +83,12 @@ public class MutableVcsLogEntry
     }
 
     @Override
-    public Calendar getAuthorDate() {
+    public ZonedDateTime getAuthorDate() {
         return authorDate;
     }
 
     @Override
-    public void setAuthorDate(Calendar authorDate) {
+    public void setAuthorDate(ZonedDateTime authorDate) {
         this.authorDate = authorDate;
     }
 
@@ -119,12 +119,12 @@ public class MutableVcsLogEntry
     }
 
     @Override
-    public Calendar getCommitDate() {
+    public ZonedDateTime getCommitDate() {
         return commitDate;
     }
 
     @Override
-    public void setCommitDate(Calendar commitDate) {
+    public void setCommitDate(ZonedDateTime commitDate) {
         this.commitDate = commitDate;
     }
 
@@ -171,7 +171,7 @@ public class MutableVcsLogEntry
         buf.append("] ");
         buf.append(subject);
         buf.append(" (");
-        buf.append(Dates.ZONED_DATE_TIME.format(authorDate.getTime()));
+        buf.append(DateTimes.ISO_ZONED_DATE_TIME.format(authorDate));
         buf.append(")");
         return buf.toString();
     }

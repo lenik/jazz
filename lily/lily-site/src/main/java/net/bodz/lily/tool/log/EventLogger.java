@@ -79,7 +79,7 @@ public class EventLogger
         File subDir = new File(logDir, yearMonth);
         subDir.mkdirs();
 
-        String date = Dates.LOCAL_DATE.format(time);
+        String date = Dates.ISO_LOCAL_DATE.format(time);
         File logFile = new File(subDir, date);
         FileOutputStream fout = new FileOutputStream(logFile, true);
         PrintStream out = new PrintStream(fout, true, "utf-8");

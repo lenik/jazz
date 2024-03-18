@@ -33,14 +33,14 @@ public class DateTypers
 
     @Override
     public String format(Date object, IOptions options) {
-        DateFormat dateFormat = options.get(DateFormat.class, Dates.LOCAL_DATE);
+        DateFormat dateFormat = options.get(DateFormat.class, Dates.ISO_LOCAL_DATE);
         return dateFormat.format(object);
     }
 
     @Override
     public Date parse(String text, IOptions options)
             throws ParseException {
-        DateFormat format = options.get(DateFormat.class, Dates.LOCAL_DATE);
+        DateFormat format = options.get(DateFormat.class, Dates.ISO_LOCAL_DATE);
         try {
             java.util.Date _date = format.parse(text);
             return new Date(_date.getTime());

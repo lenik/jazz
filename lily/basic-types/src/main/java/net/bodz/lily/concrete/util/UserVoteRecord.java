@@ -2,7 +2,7 @@ package net.bodz.lily.concrete.util;
 
 import java.io.IOException;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -57,7 +57,7 @@ public class UserVoteRecord
             sb.append('=');
         sb.append(value);
         sb.append('/');
-        sb.append(Dates.ZONED_DATE_TIME.format(time));
+        sb.append(DateTimes.ISO_ZONED_DATE_TIME.format(time));
         return sb.toString();
     }
 

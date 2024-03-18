@@ -1,17 +1,23 @@
 package net.bodz.bas.vcs.git;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.Calendars;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
-import net.bodz.bas.vcs.*;
+import net.bodz.bas.vcs.FileChangeStatus;
+import net.bodz.bas.vcs.FileChangement;
+import net.bodz.bas.vcs.IFileChangement;
+import net.bodz.bas.vcs.IVcsLogEntry;
+import net.bodz.bas.vcs.IVcsWorkingCopy;
+import net.bodz.bas.vcs.MutableVcsLogEntry;
+import net.bodz.bas.vcs.VcsLogOptions;
 
 public class NativeGitLogParser
         extends PrefetchedIterator<IVcsLogEntry> {
@@ -31,7 +37,7 @@ public class NativeGitLogParser
     private String hash;
     private String authorName;
     private String authorEmail;
-    private Calendar authorDate;
+    private ZonedDateTime authorDate;
     private StringBuilder subjectBuf = new StringBuilder();
     private StringBuilder textBuf = new StringBuilder();
     private List<IFileChangement> changes = new ArrayList<IFileChangement>();
@@ -62,7 +68,7 @@ public class NativeGitLogParser
     @Override
     protected IVcsLogEntry fetch() {
         while (true) {
-            if (!queue.isEmpty())
+            if (! queue.isEmpty())
                 return queue.removeFirst();
 
             if (lines == null)
@@ -70,7 +76,7 @@ public class NativeGitLogParser
 
             if (lines.hasNext()) {
                 String line = lines.next();
-                while (!processLine(line))
+                while (! processLine(line))
                     ;
             } else {
                 commit();
@@ -116,7 +122,7 @@ public class NativeGitLogParser
                 break;
 
             case "Date": // 1399457012 +0800
-                authorDate = Calendars.parseTimestampTZ(value);
+                authorDate = DateTimes.parseTimestampTZ(value);
                 break;
 
             default:
@@ -140,7 +146,7 @@ public class NativeGitLogParser
                 state = NAME_STATUS;
                 return true;
             }
-            if (!line.startsWith("    ")) {
+            if (! line.startsWith("    ")) {
                 state = NAME_STATUS;
                 return false; // Rejected
             }

@@ -1,9 +1,10 @@
 package net.bodz.bas.vcs;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 
 public interface IMutableVcsLogEntry
-        extends IVcsLogEntry {
+        extends
+            IVcsLogEntry {
 
     void setVersion(String version);
 
@@ -13,13 +14,13 @@ public interface IMutableVcsLogEntry
 
     void setAuthorEmail(String authorEmail);
 
-    void setAuthorDate(Calendar authorDate);
+    void setAuthorDate(ZonedDateTime authorDate);
 
     void setCommitterName(String committerName);
 
     void setCommitterEmail(String committerEmail);
 
-    void setCommitDate(Calendar commitDate);
+    void setCommitDate(ZonedDateTime commitDate);
 
     void setSubject(String subject);
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.vcs;
 
-import java.util.Calendar;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 
 import net.bodz.bas.t.pojo.Pair;
@@ -26,13 +26,13 @@ public interface IVcsLogEntry {
 
     String getAuthorEmail();
 
-    Calendar getAuthorDate();
+    ZonedDateTime getAuthorDate();
 
     String getCommitterName();
 
     String getCommitterEmail();
 
-    Calendar getCommitDate();
+    ZonedDateTime getCommitDate();
 
     String getSubject();
 

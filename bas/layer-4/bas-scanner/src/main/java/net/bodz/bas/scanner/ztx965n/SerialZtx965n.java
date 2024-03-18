@@ -1,8 +1,8 @@
 package net.bodz.bas.scanner.ztx965n;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import net.bodz.bas.c.string.StringArray;
@@ -10,7 +10,8 @@ import net.bodz.bas.comm.SerialSupport;
 
 public class SerialZtx965n
         extends SerialSupport
-        implements IZtx965n {
+        implements
+            IZtx965n {
 
     public static final int BAUD_RATE = 115200;
 
@@ -310,19 +311,19 @@ public class SerialZtx965n
     }
 
     @Override
-    public Calendar getReaderTime()
+    public LocalDateTime getReaderTime()
             throws IOException, Ztx965nException {
         TxPacket tx = TxPacket.start(out, CommandCode.GetReaderTime);
         tx.end();
 
         RxPacket rx = RxPacket.start(in, tx);
-        Calendar time = rx.readTime();
+        LocalDateTime time = rx.readTime();
         rx.readDataAndCheck();
         return time;
     }
 
     @Override
-    public void setReaderTime(Calendar time)
+    public void setReaderTime(LocalDateTime time)
             throws IOException, Ztx965nException {
         TxPacket tx = TxPacket.start(out, CommandCode.SetReaderTime);
         byte[] timeData = encodeTime(time);
@@ -333,14 +334,14 @@ public class SerialZtx965n
         rx.readDataAndCheck();
     }
 
-    static byte[] encodeTime(Calendar cal) {
+    static byte[] encodeTime(LocalDateTime dateTime) {
         byte[] data = new byte[6];
-        data[0] = (byte) (cal.get(Calendar.YEAR) - 1900);
-        data[1] = (byte) cal.get(Calendar.MONTH);
-        data[2] = (byte) cal.get(Calendar.DATE);
-        data[3] = (byte) cal.get(Calendar.HOUR_OF_DAY);
-        data[4] = (byte) cal.get(Calendar.MINUTE);
-        data[5] = (byte) cal.get(Calendar.SECOND);
+        data[0] = (byte) (dateTime.getYear() - 1900);
+        data[1] = (byte) dateTime.getMonthValue();
+        data[2] = (byte) dateTime.getDayOfMonth();
+        data[3] = (byte) dateTime.getHour();
+        data[4] = (byte) dateTime.getMinute();
+        data[5] = (byte) dateTime.getSecond();
         return data;
     }
 
