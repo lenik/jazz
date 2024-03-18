@@ -26,7 +26,7 @@ public class JsonFormPathDispatcher
     @Override
     public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        if (!(source instanceof IJsonForm))
+        if (! (source instanceof IJsonForm))
             return null;
 
         IJsonForm jsonForm = (IJsonForm) source;
@@ -42,7 +42,6 @@ public class JsonFormPathDispatcher
         String[] lav = tokens.peek(n);
 
         JsonObjectTreeResolveResult result = JsonObjectTreeResolver.resolveVerbose(jo, lav);
-
         return PathArrival.shift(result.validCount, previous, this, result.stoppedAt, tokens);
     }
 

@@ -2,7 +2,9 @@ package net.bodz.bas.repr.path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -76,7 +78,7 @@ public class PathDispatchers
         PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         List<IPathArrival> arrivals = dispatchMultiple(start, tokens, q);
         for (IPathArrival arrival : arrivals) {
-            if (!arrival.getRemainingPath().isEmpty())
+            if (! arrival.getRemainingPath().isEmpty())
                 ; // throw new IncompleteDispatchException(tokens.toString());
         }
         return arrivals;
@@ -114,14 +116,14 @@ public class PathDispatchers
         IPathArrival start;
         ITokenQueue tokens;
         IVariantMap<String> q;
-        Set<Object> marks;
+        Map<Object, String> markMap;
 
         public Process(IPathArrival start, ITokenQueue tokens, IVariantMap<String> q) {
             this.start = start;
             this.tokens = tokens;
             this.q = q;
             if (checkDeadLoop)
-                marks = new IdentityHashSet<Object>();
+                markMap = new IdentityHashMap<>();
         }
 
         public List<Process> run()
@@ -178,7 +180,7 @@ public class PathDispatchers
                     throw new NotImplementedException();
 
                 if (multipleEnabled) {
-                    if (!removeDups || arrivals.add(arrival)) {
+                    if (! removeDups || arrivals.add(arrival)) {
                         Process child = new Process(arrival, tmp, q);
                         children.add(child);
                     }
@@ -195,26 +197,33 @@ public class PathDispatchers
             for (int i = 0; i < n; i++) {
                 Process child = children.get(i);
                 if (i == 0)
-                    child.marks = marks;
+                    child.markMap = markMap;
                 else
-                    child.marks = new IdentityHashSet<Object>(marks);
-                child.checkDeadLoop(child.start);
+                    child.markMap = new IdentityHashMap<>(markMap);
+
+                IPathArrival childStart = child.start;
+                child.addNonLoop(child.start, childStart.getConsumedPath());
             }
             return children;
         }
 
-        void checkDeadLoop(IPathArrival arrival)
+        void addNonLoop(IPathArrival arrival, String info)
                 throws PathDispatchException {
-            if (!checkDeadLoop)
+            if (! checkDeadLoop)
                 return;
             Object target = arrival.getTarget();
             if (target == null)
                 return;
             if (arrival.getConsumedTokens().length == 0) {
-                if (!marks.add(target))
-                    throw new PathDispatchException(String.format("Dead loop detected, n=%d.", marks.size()));
+                String prevInfo = markMap.get(target);
+                if (prevInfo != null) {
+                    throw new PathDispatchException(String.format(//
+                            "Dead loop detected (n=%d): current %s, previous %s.", //
+                            markMap.size(), prevInfo, info));
+                }
+                markMap.put(target, info);
             } else
-                marks.clear();
+                markMap.clear();
         }
 
         @Override

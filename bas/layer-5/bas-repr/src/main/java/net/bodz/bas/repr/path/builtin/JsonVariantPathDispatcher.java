@@ -26,6 +26,11 @@ public class JsonVariantPathDispatcher
     @Override
     public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        int n = tokens.available();
+        if (n == 0)
+            return null;
+        String[] lav = tokens.peek(n);
+
         if (! (source instanceof JsonVariant)) {
             if (source instanceof JsonObject)
                 source = JsonVariant.of((JsonObject) source);
@@ -36,9 +41,6 @@ public class JsonVariantPathDispatcher
         }
 
         JsonVariant jv = (JsonVariant) source;
-
-        int n = tokens.available();
-        String[] lav = tokens.peek(n);
 
         JsonVariantTreeResolveResult result = JsonVariantTreeResolver.resolveVerbose(jv, lav);
 
