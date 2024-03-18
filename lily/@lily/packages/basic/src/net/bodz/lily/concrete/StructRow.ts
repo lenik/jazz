@@ -3,6 +3,7 @@ import { Moment } from "moment-timezone";
 
 import { int } from '@skeljs/core/src/lang/basetype';
 import StructRowTypeInfo from './StructRowTypeInfo';
+import { ZonedDateTime } from "@skeljs/core/src/lang/time";
 
 export abstract class StructRow {
 
@@ -10,8 +11,8 @@ export abstract class StructRow {
 
     // content
 
-    creationDate: Moment = moment()
-    lastModifiedDate: Moment = moment()
+    creationDate: ZonedDateTime = ZonedDateTime.now()
+    lastModifiedDate: ZonedDateTime = ZonedDateTime.now()
     version: int = 0
 
     constructor(o: any) {
