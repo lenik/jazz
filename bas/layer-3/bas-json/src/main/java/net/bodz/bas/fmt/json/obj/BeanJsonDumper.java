@@ -3,6 +3,8 @@ package net.bodz.bas.fmt.json.obj;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.bodz.bas.bean.api.IBeanInfo;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
@@ -13,6 +15,7 @@ import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.fmt.json.AbstractJsonDumper;
 import net.bodz.bas.fmt.json.IJsonOut;
+import net.bodz.bas.fmt.json.PropertyOrder;
 import net.bodz.bas.fmt.json.ReflectOptions;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -64,31 +67,12 @@ public class BeanJsonDumper
             return true;
         }
 
-        for (IPropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-            Method getter = propertyDescriptor.getReadMethod();
-            if (getter == null)
-                continue;
+        List<IPropertyDescriptor> properties = selectMembers(beanInfo);
 
-            if (getter.isAnnotationPresent(Transient.class))
-                continue;
+        for (IPropertyDescriptor property : properties) {
+            Method getter = property.getReadMethod();
 
-            if (getter.isAnnotationPresent(Internal.class))
-                continue;
-
-            Class<?> declaringClass = getter.getDeclaringClass();
-            if (ReflectOptions.stopClasses.contains(declaringClass))
-                continue;
-
-            // TODO value-property
-            Class<?> propertyType = propertyDescriptor.getPropertyType();
-            if (propertyType.isAnnotationPresent(Stop.class))
-                continue;
-
-            String propertyName = propertyDescriptor.getName();
-            String path = markset.path(propertyName);
-            if (! isIncluded(path))
-                continue;
-
+            String propertyName = property.getName();
             Object propertyValue;
             try {
                 propertyValue = getter.invoke(obj);
@@ -117,6 +101,42 @@ public class BeanJsonDumper
             }
         }
         return true;
+
+    }
+
+    public List<IPropertyDescriptor> selectMembers(IBeanInfo beanInfo) {
+        List<IPropertyDescriptor> props = new ArrayList<>();
+
+        for (IPropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+            Method getter = propertyDescriptor.getReadMethod();
+            if (getter == null)
+                continue;
+
+            if (getter.isAnnotationPresent(Transient.class))
+                continue;
+
+            if (getter.isAnnotationPresent(Internal.class))
+                continue;
+
+            Class<?> declaringClass = getter.getDeclaringClass();
+            if (ReflectOptions.stopClasses.contains(declaringClass))
+                continue;
+
+            // TODO value-property
+            Class<?> propertyType = propertyDescriptor.getPropertyType();
+            if (propertyType.isAnnotationPresent(Stop.class))
+                continue;
+
+            String propertyName = propertyDescriptor.getName();
+            String path = markset.path(propertyName);
+            if (! isIncluded(path))
+                continue;
+
+            props.add(propertyDescriptor);
+        }
+
+        props.sort(PropertyOrder.INSTANCE);
+        return props;
     }
 
     public static String toString(Object obj) {

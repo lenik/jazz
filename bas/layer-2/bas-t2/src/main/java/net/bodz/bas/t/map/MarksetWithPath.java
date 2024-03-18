@@ -11,7 +11,7 @@ public class MarksetWithPath
     final int separatorLen = separator.length();
 
     String context = "";
-    Map<Object, String> map;
+    public final Map<Object, String> map;
 
     public MarksetWithPath() {
         this(new IdentityHashMap<>());

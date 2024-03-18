@@ -26,7 +26,6 @@ import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.meta.NotNull;
-import net.bodz.bas.t.map.IMarksetWithPath;
 import net.bodz.bas.t.map.MarksetWithPath;
 import net.bodz.bas.typer.Typers;
 import net.bodz.bas.typer.std.IFormatter;
@@ -46,7 +45,7 @@ public abstract class AbstractJsonDumper<self_t>
     JsonFormOptions opts;
 
     protected boolean keyed;
-    protected IMarksetWithPath markset;
+    protected MarksetWithPath markset;
 
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
