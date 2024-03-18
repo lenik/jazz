@@ -18,6 +18,36 @@ import net.bodz.bas.db.ibatis.TypeHandler;
 public abstract class AbstractTemporalTypeHandler<T extends TemporalAccessor>
         extends TypeHandler<T> {
 
+    static final int DEFAULT_YEAR = 2000;
+    static final int DEFAULT_MONTH = 1;
+    static final int DEFAULT_DAY = 1;
+
+    protected LocalDateTime toLocalDateTime(T val) {
+        return LocalDateTime.of( //
+                val.get(ChronoField.YEAR), //
+                val.get(ChronoField.MONTH_OF_YEAR), //
+                val.get(ChronoField.DAY_OF_MONTH), //
+                val.get(ChronoField.HOUR_OF_DAY), //
+                val.get(ChronoField.MINUTE_OF_HOUR), //
+                val.get(ChronoField.SECOND_OF_MINUTE), //
+                val.get(ChronoField.NANO_OF_SECOND));
+    }
+
+    protected LocalDate toLocalDate(T val) {
+        return LocalDate.of( //
+                val.get(ChronoField.YEAR), //
+                val.get(ChronoField.MONTH_OF_YEAR), //
+                val.get(ChronoField.DAY_OF_MONTH));
+    }
+
+    protected LocalTime toLocalTime(T val) {
+        return LocalTime.of(//
+                val.get(ChronoField.HOUR_OF_DAY), //
+                val.get(ChronoField.MINUTE_OF_HOUR), //
+                val.get(ChronoField.SECOND_OF_MINUTE), //
+                val.get(ChronoField.NANO_OF_SECOND));
+    }
+
     @Override
     public void setNonNullParameter(PreparedStatement ps, int paramIndex, T parameter, JdbcType jdbcType)
             throws SQLException {
@@ -26,33 +56,19 @@ public abstract class AbstractTemporalTypeHandler<T extends TemporalAccessor>
         switch (jdbcType) {
         case DATE:
             LocalDate localDate = parameter.getClass() == LocalDate.class ? (LocalDate) parameter
-                    : LocalDate.of( //
-                            parameter.get(ChronoField.YEAR), //
-                            parameter.get(ChronoField.MONTH_OF_YEAR), //
-                            parameter.get(ChronoField.DAY_OF_MONTH));
+                    : toLocalDate(parameter);
             ps.setObject(paramIndex, localDate);
             break;
 
         case TIME:
             LocalTime localTime = parameter.getClass() == LocalTime.class ? (LocalTime) parameter
-                    : LocalTime.of(//
-                            parameter.get(ChronoField.HOUR_OF_DAY), //
-                            parameter.get(ChronoField.MINUTE_OF_HOUR), //
-                            parameter.get(ChronoField.SECOND_OF_MINUTE), //
-                            parameter.get(ChronoField.NANO_OF_SECOND));
+                    : toLocalTime(parameter);
             ps.setObject(paramIndex, localTime);
             break;
 
         case TIMESTAMP:
             LocalDateTime localDateTime = parameter.getClass() == LocalDateTime.class ? (LocalDateTime) parameter
-                    : LocalDateTime.of(//
-                            parameter.get(ChronoField.YEAR), //
-                            parameter.get(ChronoField.MONTH_OF_YEAR), //
-                            parameter.get(ChronoField.DAY_OF_MONTH), //
-                            parameter.get(ChronoField.HOUR_OF_DAY), //
-                            parameter.get(ChronoField.MINUTE_OF_HOUR), //
-                            parameter.get(ChronoField.SECOND_OF_MINUTE), //
-                            parameter.get(ChronoField.NANO_OF_SECOND));
+                    : toLocalDateTime(parameter);
             ps.setObject(paramIndex, localDateTime);
             break;
 

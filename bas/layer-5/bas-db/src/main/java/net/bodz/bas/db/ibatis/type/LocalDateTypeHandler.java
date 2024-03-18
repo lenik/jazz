@@ -3,7 +3,10 @@ package net.bodz.bas.db.ibatis.type;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 
 import org.apache.ibatis.type.Alias;
@@ -16,6 +19,25 @@ import net.bodz.bas.db.ibatis.AliasedType;
 @MappedTypes(LocalDate.class)
 public class LocalDateTypeHandler
         extends AbstractTemporalTypeHandler<LocalDate> {
+
+    @Override
+    protected LocalDateTime toLocalDateTime(LocalDate val) {
+        return LocalDateTime.of( //
+                val.get(ChronoField.YEAR), //
+                val.get(ChronoField.MONTH_OF_YEAR), //
+                val.get(ChronoField.DAY_OF_MONTH), //
+                0, 0);
+    }
+
+    @Override
+    protected LocalDate toLocalDate(LocalDate val) {
+        return val;
+    }
+
+    @Override
+    protected LocalTime toLocalTime(LocalDate val) {
+        return LocalTime.of(0, 0);
+    }
 
     @Override
     protected LocalDate toTemporal(Object o) {
