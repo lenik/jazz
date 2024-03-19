@@ -2,7 +2,13 @@ package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
@@ -153,7 +159,11 @@ public class MutableElementDoc
 
     @Override
     public iString getTextTag(String tagName) {
-        return getTag(tagName, iString.class);
+        iString tag = getTag(tagName, iString.class);
+        if (tag == null)
+            return iString.NULL;
+        else
+            return tag;
     }
 
     /** ⇱ Implementaton Of {@link net.bodz.bas.fmt.flatf.IFlatfForm}. */

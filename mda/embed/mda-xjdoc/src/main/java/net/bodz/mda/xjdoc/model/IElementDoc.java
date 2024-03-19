@@ -8,7 +8,8 @@ import net.bodz.bas.sugar.IToChain;
 import net.bodz.mda.xjdoc.taglib.ITagLibrary;
 
 public interface IElementDoc
-        extends IToChain {
+        extends
+            IToChain {
 
     String LABEL = "label";
     String DESCRIPTION = "description";
@@ -74,8 +75,8 @@ public interface IElementDoc
     /**
      * Remove the named tag.
      *
-     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
-     *         is <code>null</code>.
+     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value is
+     *         <code>null</code>.
      */
     Object removeTag(String tagName);
 
@@ -101,7 +102,7 @@ public interface IElementDoc
      *
      * The tag value type may be scalar, collection, map, or other user type.
      *
-     * @return <code>null</code> if the tag isn't used.
+     * @return {@link iString#NULL} if the tag isn't used.
      */
     iString getTextTag(String tagName);
 
