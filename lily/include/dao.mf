@@ -73,6 +73,11 @@ code-web:
 	p=$${d%/*}; \
 	code -n "$$p/@lily"
 
+code-sql:
+	d=$$(readlink -f "$(projectdir)" ); \
+	p=$${d%/*}; \
+	code -n "$$p/sql"
+
 predefs:
 	tstool predefs -Oweb/src -p net.bodz.lily
 
