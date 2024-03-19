@@ -2,6 +2,7 @@ package net.bodz.lily.entity.attachment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
@@ -85,9 +86,11 @@ public class UpdateAttachments
 
             IAttachmentListing listing = owner.listAttachments();
             for (String category : listing.getAttachmentGroupKeys()) {
-                for (IAttachment attachment : listing.getAttachmentGroup(category)) {
-//                    renameSubDirToId(volume, attachment, idStr);
-                }
+                Collection<IAttachment> group = listing.getAttachmentGroup(category);
+                if (! group.isEmpty())
+                    for (IAttachment attachment : group) {
+                        renameSubDirToId(volume, attachment, idStr);
+                    }
             }
         }
         return true;

@@ -2,6 +2,7 @@ package net.bodz.lily.entity.attachment.util;
 
 import java.util.List;
 
+import net.bodz.bas.meta.cache.Derived;
 import net.bodz.lily.concrete.IAttachmentsInProps;
 import net.bodz.lily.entity.attachment.Attachment;
 import net.bodz.lily.entity.attachment.IAttachment;
@@ -14,6 +15,7 @@ public interface IImagesInProps
 
     String K_IMAGES = "images";
 
+    @Derived
     @TsType(value = List.class, componentType = Attachment.class)
     @Override
     default List<IAttachment> getImages() {

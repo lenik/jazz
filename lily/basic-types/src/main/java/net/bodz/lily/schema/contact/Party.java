@@ -1,6 +1,5 @@
 package net.bodz.lily.schema.contact;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoField;
@@ -105,8 +104,7 @@ public abstract class Party
             return null;
         birthday.get(ChronoField.YEAR);
         LocalDate now = LocalDate.now();
-        Duration d = Duration.between(birthday, now);
-        int years = (int) d.get(ChronoUnit.YEARS);
+        int years = (int) ChronoUnit.YEARS.between(birthday, now);
         return years;
     }
 
