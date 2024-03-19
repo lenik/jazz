@@ -11,7 +11,6 @@ public class ClassPathInfo
     public final QualifiedName qName;
     public final String packageName;
     public final String name;
-    public final String fullName;
 
     public final File baseDir;
 
@@ -29,7 +28,6 @@ public class ClassPathInfo
         this.qName = qName;
         this.packageName = qName.packageName;
         this.name = qName.name;
-        this.fullName = qName.getFullName();
 
         this.baseDir = baseDir;
 
