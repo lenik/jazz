@@ -18,6 +18,7 @@ import net.bodz.bas.fmt.json.obj.BeanJsonDumper;
 import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.bean.IgnoreChild;
 import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
@@ -143,7 +144,7 @@ public abstract class StructRow
      * @label E-Tag
      * @label.zh 实体标签
      */
-    @Internal
+    @IgnoreChild
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Cache.class)
     @Override
