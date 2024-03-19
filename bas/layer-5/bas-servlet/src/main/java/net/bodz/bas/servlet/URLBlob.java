@@ -3,7 +3,9 @@ package net.bodz.bas.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.ZonedDateTime;
 
+import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.std.rfc.mime.ContentType;
@@ -72,9 +74,13 @@ public class URLBlob
     }
 
     @Override
-    public Long getLastModified()
+    public ZonedDateTime getLastModified()
             throws IOException {
-        return FileURL.lastModified(url, null);
+        Long time = FileURL.lastModified(url, null);
+        if (time == null)
+            return null;
+        else
+            return FileDate.toZonedDateTime(time.longValue());
     }
 
     @Override

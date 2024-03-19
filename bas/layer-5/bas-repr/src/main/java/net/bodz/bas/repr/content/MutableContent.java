@@ -1,20 +1,23 @@
 package net.bodz.bas.repr.content;
 
+import java.time.ZonedDateTime;
+
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class MutableContent
-        implements IContent {
+        implements
+            IContent {
 
     int priority;
-    long creationTime = System.currentTimeMillis();
+    ZonedDateTime creationDate = ZonedDateTime.now();
+    ZonedDateTime lastModified = creationDate;
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidateMode = CacheRevalidationMode.OPTIONAL;
     int maxAge;
-    long lastModifiedTime = creationTime;
     String eTag;
     boolean weakValidation;
 
@@ -28,12 +31,12 @@ public class MutableContent
     }
 
     @Override
-    public long getCreationTime() {
-        return creationTime;
+    public ZonedDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationDate(long creationDate) {
-        this.creationTime = creationDate;
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     /** ⇱ Implementation Of {@link ICacheControl}. */
@@ -71,12 +74,12 @@ public class MutableContent
     }
 
     @Override
-    public long getLastModified() {
-        return lastModifiedTime;
+    public ZonedDateTime getLastModified() {
+        return lastModified;
     }
 
-    public void setLastModified(long lastModified) {
-        this.lastModifiedTime = lastModified;
+    public void setLastModified(ZonedDateTime lastModified) {
+        this.lastModified = lastModified;
     }
 
     @Override
@@ -104,7 +107,7 @@ public class MutableContent
         // OPTIONAL -> WANTED -> REQUIRED.
         cacheRevalidateMode = Nullables.min(cacheRevalidateMode, o.getCacheRevalidationMode());
 
-        lastModifiedTime = Nullables.max(lastModifiedTime, o.getLastModified());
+        lastModified = Nullables.max(lastModified, o.getLastModified());
         maxAge = Math.min(maxAge, o.getMaxAge());
 
         String eTag2 = o.getETag();

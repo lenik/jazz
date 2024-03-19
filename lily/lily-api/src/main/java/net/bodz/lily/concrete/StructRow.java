@@ -19,7 +19,6 @@ import net.bodz.bas.fmt.json.obj.BeanJsonLoader;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.bean.Internal;
-import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.meta.FormInput;
@@ -46,7 +45,7 @@ public abstract class StructRow
 
     // V = creation, lastmod, version
     private ZonedDateTime creationDate = ZonedDateTime.now();
-    private ZonedDateTime lastModifiedDate = creationDate;
+    private ZonedDateTime lastModified = creationDate;
     private int version;
 
     public StructRow() {
@@ -67,6 +66,7 @@ public abstract class StructRow
      * @label Creation Date
      * @label.zh 创建时间
      */
+    @Override
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Priority(-100 + 0)
@@ -80,19 +80,10 @@ public abstract class StructRow
         this.creationDate = creationDate;
     }
 
-    @Internal
-    @Derived
-    @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
-    @Override
-    public long getCreationTime() {
-        return creationDate.toInstant().toEpochMilli();
-    }
-
     public void touch() {
-        lastModifiedDate = ZonedDateTime.now();
+        lastModified = ZonedDateTime.now();
         if (creationDate == null)
-            creationDate = lastModifiedDate;
+            creationDate = lastModified;
     }
 
     /**
@@ -101,26 +92,18 @@ public abstract class StructRow
      * @label Last Modified Date
      * @label.zh 修改时间
      */
+    @Override
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     @Priority(-100 + 1)
-    public ZonedDateTime getLastModifiedDate() {
-        return lastModifiedDate;
+    public ZonedDateTime getLastModified() {
+        return lastModified;
     }
 
-    public void setLastModifiedDate(ZonedDateTime lastModified) {
+    public void setLastModified(ZonedDateTime lastModified) {
         if (lastModified == null)
             throw new NullPointerException("lastModified");
-        this.lastModifiedDate = lastModified;
-    }
-
-    @Internal
-    @Derived
-    @DetailLevel(DetailLevel.HIDDEN)
-    @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
-    @Override
-    public long getLastModified() {
-        return lastModifiedDate.toInstant().toEpochMilli();
+        this.lastModified = lastModified;
     }
 
     /** ⇱ Implementation Of {@link ICacheControl}. */
@@ -165,8 +148,7 @@ public abstract class StructRow
     @OfGroup(StdGroup.Cache.class)
     @Override
     public String getETag() {
-        long time = getLastModified();
-        return String.valueOf(time);
+        return IContent.super.getETag();
     }
 
     /**
@@ -261,7 +243,7 @@ public abstract class StructRow
             }
         } else {
             creationDate = o.getZonedDateTime("creationDate", creationDate);
-            lastModifiedDate = o.getZonedDateTime("lastModifiedDate", lastModifiedDate);
+            lastModified = o.getZonedDateTime("lastModifiedDate", lastModified);
             version = o.getInt("version", version);
         }
     }
@@ -302,7 +284,7 @@ public abstract class StructRow
 
     public void assign(StructRow o) {
         this.creationDate = o.creationDate;
-        this.lastModifiedDate = o.lastModifiedDate;
+        this.lastModified = o.lastModified;
         this.version = o.version;
     }
 

@@ -3,7 +3,9 @@ package net.bodz.bas.html.viz.util;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 
+import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.io.res.IStreamResource;
@@ -62,9 +64,16 @@ public class URLResource_bin
         content.setMaxAge(maxAge);
         if ("file".equals(url.getProtocol())) {
             File file = FileURL.toFile(url, null);
-            long lastModified = file.lastModified();
-            content.setCreationDate(lastModified);
+            ZonedDateTime lastModified = FileDate.getLastModified(file);
             content.setLastModified(lastModified);
+
+            ZonedDateTime creationDate;
+            try {
+                creationDate = FileDate.getCreationDate(file.toPath());
+            } catch (IOException e) {
+                creationDate = lastModified;
+            }
+            content.setCreationDate(creationDate);
         }
         return content;
     }

@@ -1,5 +1,6 @@
 package net.bodz.bas.site.org;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,14 +8,13 @@ public class SitemapEntry {
 
     private String url;
     private Map<String, String> alternates = new LinkedHashMap<String, String>();
-    private long lastModified;
+    private ZonedDateTime lastModified;
     private ChangeFreq changeFreq = ChangeFreq.ALWAYS;
     private double priority;
 
     /**
-     * Provides the full URL of the page, including the protocol (e.g. http, https) and a trailing
-     * slash, if required by the site's hosting server. This value must be less than 2,048
-     * characters.
+     * Provides the full URL of the page, including the protocol (e.g. http, https) and a trailing slash, if required by
+     * the site's hosting server. This value must be less than 2,048 characters.
      */
     public String getUrl() {
         return url;
@@ -29,20 +29,20 @@ public class SitemapEntry {
     }
 
     /**
-     * The date that the file was last modified, in ISO 8601 format. This can display the full date
-     * and time or, if desired, may simply be the date in the format YYYY-MM-DD.
+     * The date that the file was last modified, in ISO 8601 format. This can display the full date and time or, if
+     * desired, may simply be the date in the format YYYY-MM-DD.
      */
-    public long getLastModified() {
+    public ZonedDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(long lastModified) {
+    public void setLastModified(ZonedDateTime lastModified) {
         this.lastModified = lastModified;
     }
 
     /**
-     * "Always" is used to denote documents that change each time that they are accessed. "Never" is
-     * used to denote archived URLs (i.e. files that will not be changed again).
+     * "Always" is used to denote documents that change each time that they are accessed. "Never" is used to denote
+     * archived URLs (i.e. files that will not be changed again).
      */
     public ChangeFreq getChangeFreq() {
         return changeFreq;
@@ -53,8 +53,8 @@ public class SitemapEntry {
     }
 
     /**
-     * The priority of that URL relative to other URLs on the site. This allows webmasters to
-     * suggest to crawlers which pages are considered more important.
+     * The priority of that URL relative to other URLs on the site. This allows webmasters to suggest to crawlers which
+     * pages are considered more important.
      */
     public double getPriority() {
         return priority;

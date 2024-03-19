@@ -2,6 +2,7 @@ package net.bodz.bas.html.viz.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.repr.content.IStreamContent;
 import net.bodz.bas.servlet.MutableBlob;
@@ -40,7 +41,7 @@ public class StreamContentBlob
     }
 
     @Override
-    public Long getLastModified()
+    public ZonedDateTime getLastModified()
             throws IOException {
         return content.getLastModified();
     }

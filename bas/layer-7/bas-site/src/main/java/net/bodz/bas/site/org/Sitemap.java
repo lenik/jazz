@@ -1,5 +1,6 @@
 package net.bodz.bas.site.org;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -8,7 +9,8 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class Sitemap
         extends ArrayList<SitemapEntry>
-        implements ICacheControl {
+        implements
+            ICacheControl {
 
     private static final long serialVersionUID = 1L;
 
@@ -61,13 +63,8 @@ public class Sitemap
     }
 
     @Override
-    public long getLastModified() {
-        return System.currentTimeMillis();
-    }
-
-    @Override
-    public String getETag() {
-        return null;
+    public ZonedDateTime getLastModified() {
+        return ZonedDateTime.now();
     }
 
     @Override

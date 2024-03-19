@@ -2,6 +2,7 @@ package net.bodz.bas.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
@@ -28,7 +29,7 @@ public interface IBlob {
         return null;
     }
 
-    default Long getLastModified()
+    default ZonedDateTime getLastModified()
             throws IOException {
         return null;
     }

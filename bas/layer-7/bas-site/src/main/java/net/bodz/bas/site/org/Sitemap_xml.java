@@ -3,7 +3,7 @@ package net.bodz.bas.site.org;
 import java.io.IOException;
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.java.util.Calendars;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.java.util.IDateFormatConsts;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
@@ -18,7 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class Sitemap_xml
         extends AbstractHtmlViewBuilder<Sitemap>
-        implements IDateFormatConsts {
+        implements
+            IDateFormatConsts {
 
     static final String SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9";
     static final String XHTML_NS = "http://www.w3.org/1999/xhtml";
@@ -56,7 +57,7 @@ public class Sitemap_xml
                         .attr("rel", "alternate") //
                         .attr("hreflang", alternate.getKey()) //
                         .attr("href", alternate.getValue());
-            tag.begin("lastmod").text(Calendars.formatIso8601(entry.getLastModified()));
+            tag.begin("lastmod").text(DateTimes.ISO8601.format(entry.getLastModified())); // RFC 822?
             tag.begin("changefreq").text(entry.getChangeFreq());
             tag.begin("priority").text(entry.getPriority());
         }

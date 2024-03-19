@@ -22,7 +22,7 @@ public class UserRun
 
     @Redundant
     public ZonedDateTime getActiveTime() {
-        return super.getLastModifiedDate();
+        return super.getLastModified();
     }
 
 }

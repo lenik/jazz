@@ -1,12 +1,15 @@
 package net.bodz.bas.site.org;
 
+import java.time.ZonedDateTime;
+
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 
 public class SiteGraph
         extends SiteGraphNode
-        implements ICacheControl {
+        implements
+            ICacheControl {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,13 +29,8 @@ public class SiteGraph
     }
 
     @Override
-    public long getLastModified() {
-        return System.currentTimeMillis();
-    }
-
-    @Override
-    public String getETag() {
-        return null;
+    public ZonedDateTime getLastModified() {
+        return ZonedDateTime.now();
     }
 
     @Override

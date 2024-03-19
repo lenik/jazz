@@ -1,7 +1,10 @@
 package net.bodz.bas.std.rfc.http;
 
+import java.time.ZonedDateTime;
+
 public class AbstractCacheControl
-        implements ICacheControl {
+        implements
+            ICacheControl {
 
     @Override
     public CacheControlMode getCacheControlMode() {
@@ -19,13 +22,8 @@ public class AbstractCacheControl
     }
 
     @Override
-    public long getLastModified() {
-        return System.currentTimeMillis();
-    }
-
-    @Override
-    public String getETag() {
-        return null;
+    public ZonedDateTime getLastModified() {
+        return ZonedDateTime.now();
     }
 
     @Override

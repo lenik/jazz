@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.log.Logger;
@@ -116,10 +117,11 @@ public class ResourceTransferer {
         // resp.setHeader("Cache-Control", "no-cache");
         // resp.setHeader("Cache-Control", "no-store");
 
-        Long lastModified = blob.getLastModified();
+        ZonedDateTime lastModified = blob.getLastModified();
         if (lastModified != null) {
+            long lastModifiedTime = lastModified.toInstant().toEpochMilli();
             long ifModifiedSince = req.getDateHeader("If-Modified-Since");
-            if (ifModifiedSince > 0 && ifModifiedSince >= lastModified) {
+            if (ifModifiedSince > 0 && ifModifiedSince >= lastModifiedTime) {
                 resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
                 return;
             }
@@ -129,14 +131,14 @@ public class ResourceTransferer {
              *      <p>
              *      HTTP/1.1 servers SHOULD send Last-Modified whenever feasible
              */
-            resp.setDateHeader("Last-Modified", lastModified);
+            resp.setDateHeader("Last-Modified", lastModified.toInstant().toEpochMilli());
 
             /**
              * @see RFC 2616 14.21
              *      <p>
-             *      To mark a response as "never expires," an origin server sends an Expires date
-             *      approximately one year from the time the response is sent. HTTP/1.1 servers
-             *      SHOULD NOT send Expires dates more than one year in the future.
+             *      To mark a response as "never expires," an origin server sends an Expires date approximately one year
+             *      from the time the response is sent. HTTP/1.1 servers SHOULD NOT send Expires dates more than one
+             *      year in the future.
              */
             resp.setDateHeader("Expires", System.currentTimeMillis() + maxAge * 1000L);
         }
@@ -144,11 +146,10 @@ public class ResourceTransferer {
         /**
          * @see RFC 2616 13.3.2
          *      <p>
-         *      The ETag response-header field value, an entity tag, provides for an "opaque" cache
-         *      validator. This might allow more reliable validation in situations where it is
-         *      inconvenient to store modification dates, where the one-second resolution of HTTP
-         *      date values is not sufficient, or where the origin server wishes to avoid certain
-         *      paradoxes that might arise from the use of modification dates.
+         *      The ETag response-header field value, an entity tag, provides for an "opaque" cache validator. This
+         *      might allow more reliable validation in situations where it is inconvenient to store modification dates,
+         *      where the one-second resolution of HTTP date values is not sufficient, or where the origin server wishes
+         *      to avoid certain paradoxes that might arise from the use of modification dates.
          */
         String eTag = null;
         // if (eTag != null) resp.setHeader("E-Tag", eTag);
