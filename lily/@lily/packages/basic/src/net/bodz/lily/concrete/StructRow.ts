@@ -12,7 +12,7 @@ export abstract class StructRow {
     // content
 
     creationDate: ZonedDateTime = ZonedDateTime.now()
-    lastModifiedDate: ZonedDateTime = ZonedDateTime.now()
+    lastModified: ZonedDateTime = ZonedDateTime.now()
     version: int = 0
 
     constructor(o: any) {

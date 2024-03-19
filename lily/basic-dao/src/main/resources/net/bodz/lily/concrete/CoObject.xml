@@ -19,13 +19,13 @@
 
     <resultMap id="MAP_V" type="net.bodz.lily.concrete.CoObject" extends="MAP_K">
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
     </resultMap>
 
     <resultMap id="MAP_UV" type="net.bodz.lily.concrete.CoObject" extends="MAP_U">
         <result property="creationDate" column="creation" />
-        <result property="lastModifiedDate" column="lastmod" />
+        <result property="lastModified" column="lastmod" />
         <result property="version" column="version" />
     </resultMap>
 
@@ -58,8 +58,8 @@
     </sql>
 
     <sql id="setV">
-        <if test="lastModifiedDate == null">lastmod = #{lastModifiedDate},</if>
-        <if test="lastModifiedDate != null">lastmod = now(),</if>
+        <if test="lastModified == null">lastmod = #{lastModified},</if>
+        <if test="lastModified != null">lastmod = now(),</if>
         <!-- <if test="version != null">version = #{version},</if> -->
         version = version + 1,
     </sql>

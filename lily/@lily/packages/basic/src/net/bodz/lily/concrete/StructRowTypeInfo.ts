@@ -23,9 +23,9 @@ export class StructRowTypeInfo extends EntityType {
                 type: ZonedDateTime.TYPE, icon: 'far-calendar-plus',
                 validator: this.validators.validateCreationDate
             }),
-            lastModifiedDate: property({
+            lastModified: property({
                 type: ZonedDateTime.TYPE, icon: 'far-edit',
-                validator: this.validators.validateLastModifiedDate
+                validator: this.validators.validateLastModified
             }),
             version: property({
                 type: INT, icon: 'far-code-branch',

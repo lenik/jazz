@@ -19,7 +19,7 @@ export class StructRowValidators {
 
     }
 
-    validateLastModifiedDate(val: Moment) {
+    validateLastModified(val: Moment) {
 
     }
 
