@@ -131,8 +131,6 @@ public abstract class _OrgUnit_stuff
     }
 
     public void initNotNulls() {
-        this.getContact().setAddress1("");
-        this.getContact().setAddress2("");
     }
 
 }

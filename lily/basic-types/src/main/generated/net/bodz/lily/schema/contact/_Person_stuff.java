@@ -279,8 +279,6 @@ public abstract class _Person_stuff
     }
 
     public void initNotNulls() {
-        this.getContact().setAddress1("");
-        this.getContact().setAddress2("");
     }
 
 }
