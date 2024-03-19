@@ -32,13 +32,14 @@ public class DefaultColumnMetadata
             IMutableJavaQName {
 
     IRowSetMetadata parent;
-    TableOid parentOid;
+    TableOid tableOid;
 
     int ordinalPosition;
 
     ColumnOid oid;
     String name;
     QualifiedName javaQName;
+    boolean javaNameComplete;
 
     String label;
     String description; // comment..
@@ -89,7 +90,15 @@ public class DefaultColumnMetadata
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
-        this.parentOid = parent.getId();
+        this.tableOid = parent.getId();
+    }
+
+    @Override
+    public ITableMetadata getTable() {
+        if (tableOid != null)
+            return (ITableMetadata) parent;
+        else
+            return null;
     }
 
     @Override
@@ -107,7 +116,7 @@ public class DefaultColumnMetadata
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
-        this.parentOid = parent.getId();
+        this.tableOid = parent.getId();
     }
 
     @Override
@@ -122,10 +131,10 @@ public class DefaultColumnMetadata
     @Override
     public ColumnOid getId() {
         if (oid == null)
-            if (parentOid == null)
+            if (tableOid == null)
                 return null;
             else
-                return new ColumnOid(parentOid, name);
+                return new ColumnOid(tableOid, name);
         return oid;
     }
 
@@ -150,6 +159,15 @@ public class DefaultColumnMetadata
     @Override
     public void setJavaQName(QualifiedName qName) {
         this.javaQName = qName;
+    }
+
+    @Override
+    public boolean isJavaNameComplete() {
+        return javaNameComplete;
+    }
+
+    public void setJavaNameComplete(boolean javaNameComplete) {
+        this.javaNameComplete = javaNameComplete;
     }
 
     @Override
@@ -672,7 +690,7 @@ public class DefaultColumnMetadata
 
     @Override
     public String toString() {
-        return name;
+        return getId().toString();
     }
 
     /** ⇱ Java runtime binding */

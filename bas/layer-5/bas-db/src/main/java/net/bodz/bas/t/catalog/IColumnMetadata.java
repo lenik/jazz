@@ -53,6 +53,8 @@ public interface IColumnMetadata
     public static final String K_VERBOSE_LEVEL = "verboseLevel";
     public static final String K_JOIN_LEVEL = "joinLevel";
 
+    ITableMetadata getTable();
+
     IRowSetMetadata getParent();
 
 //    default int position() {
@@ -72,6 +74,8 @@ public interface IColumnMetadata
     ColumnOid getId();
 
     String getName();
+
+    boolean isJavaNameComplete();
 
     default boolean isCompositeProperty() {
         QualifiedName property = getJavaQName();
