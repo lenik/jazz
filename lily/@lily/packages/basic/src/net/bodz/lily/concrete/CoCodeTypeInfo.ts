@@ -2,14 +2,14 @@ import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/Entit
 import CoNodeTypeInfo from './CoNodeTypeInfo';
 import CoCodeValidators from './CoCodeValidators';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { STRING } from '@skeljs/core/src/lang/baseinfo';
+import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoCodeTypeInfo extends CoNodeTypeInfo {
 
     readonly validators = new CoCodeValidators(this);
 
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
-        super(selfType, idType);
+    constructor(selfType: TypeInfo<any>) {
+        super(selfType, INT);
     }
 
     get name() { return "net.bodz.lily.concrete.CoCode"; }
