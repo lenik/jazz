@@ -23,12 +23,14 @@ public class JsonFormOptions
 
     public static final String K_TYPE_INFO = "typeInfo";
     public static final String K_COMPACT = "compact";
+    public static final String K_INDENT = "indent";
     public static final String K_MAX_DEPTH = "maxDepth";
     public static final String K_INCLUDE_NULL = "includeNull";
     public static final String K_INCLUDE_FALSE = "includeFalse";
 
     boolean typeInfo;
     boolean compact;
+    int indent;
 
     int maxDepth = -1;
 
@@ -38,10 +40,31 @@ public class JsonFormOptions
     public JsonFormOptions() {
     }
 
+    public JsonFormOptions indent(int indent) {
+        this.indent = indent;
+        return this;
+    }
+
+    public JsonFormOptions maxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+        return this;
+    }
+
+    public JsonFormOptions includeNull() {
+        includeNull = true;
+        return this;
+    }
+
+    public JsonFormOptions excludeFalse() {
+        includeFalse = true;
+        return this;
+    }
+
     @Override
     public void readObject(IVariantMap<String> map) {
         typeInfo = map.getBoolean(K_TYPE_INFO, typeInfo);
         compact = map.getBoolean(K_COMPACT, compact);
+        indent = map.getInt(K_INDENT, indent);
 
         includeNull = map.getBoolean(K_INCLUDE_NULL, includeNull);
         includeFalse = map.getBoolean(K_INCLUDE_FALSE, includeFalse);
@@ -55,12 +78,13 @@ public class JsonFormOptions
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        typeInfo = o.getBoolean(K_TYPE_INFO, false);
-        compact = o.getBoolean(K_COMPACT, false);
+        typeInfo = o.getBoolean(K_TYPE_INFO, typeInfo);
+        compact = o.getBoolean(K_COMPACT, compact);
+        indent = o.getInt(K_INDENT, indent);
 
-        includeNull = o.getBoolean(K_INCLUDE_NULL, false);
-        includeFalse = o.getBoolean(K_INCLUDE_FALSE, true);
-        maxDepth = o.getInt(K_MAX_DEPTH, -1);
+        includeNull = o.getBoolean(K_INCLUDE_NULL, includeNull); // false
+        includeFalse = o.getBoolean(K_INCLUDE_FALSE, includeFalse); // true
+        maxDepth = o.getInt(K_MAX_DEPTH, maxDepth); // -1
     }
 
     @Override
@@ -68,6 +92,7 @@ public class JsonFormOptions
             throws IOException, FormatException {
         out.entry(K_TYPE_INFO, typeInfo);
         out.entry(K_COMPACT, compact);
+        out.entry(K_INDENT, indent);
 
         out.entry(K_INCLUDE_NULL, includeNull);
         out.entry(K_INCLUDE_FALSE, includeFalse);
@@ -76,7 +101,7 @@ public class JsonFormOptions
     }
 
     public static final JsonFormOptions DEFAULT = new JsonFormOptions();
-    public static final JsonFormOptions PRETTY = new JsonFormOptions();
+    public static final JsonFormOptions PRETTY = new JsonFormOptions().indent(4);
     public static final JsonFormOptions COMPACT = new JsonFormOptions();
     public static final JsonFormOptions SQL = new JsonFormOptions();
     public static final JsonFormOptions WEB = new JsonFormOptions();

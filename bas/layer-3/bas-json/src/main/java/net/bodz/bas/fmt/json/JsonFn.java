@@ -1,14 +1,6 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -91,6 +83,24 @@ public class JsonFn {
     public static String toJson(IJsonForm obj)
             throws FormatException {
         return toJson(obj, JsonFormOptions.DEFAULT);
+    }
+
+    public static String toJson(IJsonForm obj, boolean pretty)
+            throws FormatException {
+        if (pretty)
+            return toJsonPretty(obj);
+        else
+            return toJson(obj, JsonFormOptions.DEFAULT);
+    }
+
+    public static String toJsonPretty(IJsonForm obj)
+            throws FormatException {
+        String json = toJson(obj);
+        try {
+            return pretty(json);
+        } catch (IOException e) {
+            throw new FormatException("error pretty: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -311,6 +321,49 @@ public class JsonFn {
             obj.jsonOutValue(out, opts);
             writer.flush();
         }
+    }
+
+    public static String pretty(String json)
+            throws IOException {
+        return pretty(json, ".");
+    }
+
+    public static String pretty(String json, String filter, String... jqArgs)
+            throws IOException {
+        List<String> cmdl = new ArrayList<>();
+        cmdl.add("jq");
+        for (String jqArg : jqArgs)
+            cmdl.add(jqArg);
+        cmdl.add(filter);
+        String[] cmdv = cmdl.toArray(new String[0]);
+
+        Process process = Runtime.getRuntime().exec(cmdv);
+
+        OutputStream procIn = process.getOutputStream();
+        InputStream procOut = process.getInputStream();
+        // InputStream procErr = process.getErrorStream();
+        byte[] bin = json.getBytes();
+        procIn.write(bin);
+        procIn.flush();
+        procIn.close();
+
+        try {
+            int exitStatus = process.waitFor();
+            if (exitStatus != 0)
+                throw new IOException("jq error: exit status=" + exitStatus);
+        } catch (InterruptedException e) {
+            throw new IOException("interrupted: " + e.getMessage(), e);
+        }
+
+        byte[] block = new byte[4096];
+        int cb;
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(json.length() * 4);
+        while ((cb = procOut.read(block)) != -1) {
+            buf.write(block, 0, cb);
+        }
+        byte[] jqOut = buf.toByteArray();
+        String pretty = new String(jqOut);
+        return pretty.trim();
     }
 
 }
