@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
@@ -44,6 +46,10 @@ public abstract class StructRow
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_CREATION_DATE = "creation";
+    public static final String FIELD_LAST_MODIFIED = "lastmod";
+    public static final String FIELD_VERSION = "version";
+
     // V = creation, lastmod, version
     private ZonedDateTime creationDate = ZonedDateTime.now();
     private ZonedDateTime lastModified = creationDate;
@@ -67,9 +73,10 @@ public abstract class StructRow
      * @label Creation Date
      * @label.zh 创建时间
      */
-    @Override
+    @Column(name = FIELD_CREATION_DATE)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
+    @Override
     @Priority(-100 + 0)
     public ZonedDateTime getCreationDate() {
         return creationDate;
@@ -93,9 +100,10 @@ public abstract class StructRow
      * @label Last Modified Date
      * @label.zh 修改时间
      */
-    @Override
+    @Column(name = FIELD_LAST_MODIFIED)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
+    @Override
     @Priority(-100 + 1)
     public ZonedDateTime getLastModified() {
         return lastModified;
@@ -168,6 +176,7 @@ public abstract class StructRow
      * @label Version
      * @label.zh 版本
      */
+    @Column(name = FIELD_VERSION)
     @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Version.class)
     public int getVersion() {

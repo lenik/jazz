@@ -6,7 +6,6 @@ import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
-import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.lily.meta.CriteriaClass;
@@ -69,42 +68,6 @@ public abstract class CoEvent<Id>
     @Override
     public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    /**
-     * @see #getBeginTime()
-     */
-    @Deprecated
-    @Derived
-    @OfGroup(StdGroup.Schedule.class)
-    public final ZonedDateTime getBeginDate() {
-        return getBeginTime();
-    }
-
-    /**
-     * @see #setBeginTime(ZonedDateTime)
-     */
-    @Deprecated
-    public final void setBeginDate(ZonedDateTime beginDate) {
-        setBeginTime(beginDate);
-    }
-
-    /**
-     * @see #getEndTime()
-     */
-    @Deprecated
-    @Derived
-    @OfGroup(StdGroup.Schedule.class)
-    public final ZonedDateTime getEndDate() {
-        return getEndTime();
-    }
-
-    /**
-     * @see #setEndTime(ZonedDateTime)
-     */
-    @Deprecated
-    public final void setEndDate(ZonedDateTime endDate) {
-        setEndTime(endDate);
     }
 
     public int getYear() {

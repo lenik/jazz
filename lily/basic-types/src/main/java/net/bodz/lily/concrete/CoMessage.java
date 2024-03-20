@@ -3,6 +3,8 @@ package net.bodz.lily.concrete;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.LoaderException;
@@ -20,15 +22,12 @@ import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.bas.t.order.IPriority;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.concrete.util.HtmlTextObject;
 import net.bodz.lily.concrete.util.TextObject;
 import net.bodz.lily.concrete.util.UserClickInfo;
-import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
-import net.bodz.lily.entity.attachment.util.IImagesInProps;
 import net.bodz.lily.entity.attachment.util.IVideosInProps;
 import net.bodz.lily.meta.CriteriaClass;
 import net.bodz.lily.meta.TypeParamType;
@@ -47,21 +46,28 @@ import net.bodz.lily.security.IUser;
 @TypeParameters({ TypeParamType.ID_TYPE })
 @HaveAttachments
 public abstract class CoMessage<Id>
-        extends CoEvent<Id>
+        extends CoImagedEvent<Id>
         implements
-            IPriority,
-            IId<Id>,
-            IImagesInProps,
             IVideosInProps {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_OP_ID = "op";
+    public static final String FIELD_SUBJECT = "subject";
+    public static final String FIELD_RAW_TEXT = "text";
+    public static final String FIELD_FORM_ID = "form";
+    public static final String FIELD_SENT_TIME = "sent";
+    public static final String FIELD_RECEIVED_TIME = "received";
+
     public static final int N_SUBJECT = 200;
+
+    static final int _ord_FORM_ID = 1;
 
     private User op;
     private String subject;
     private String rawText;
     private FormDef form;
+    Integer formId;
     private ParameterMap parameters;
     private UserClickInfo clickInfo;
 
@@ -84,6 +90,8 @@ public abstract class CoMessage<Id>
      * @label Original Poster
      * @label.zh 发起人
      */
+    @JoinColumn(name = FIELD_OP_ID, nullable = false)
+    @ManyToOne
     public User getOp() {
         return op;
     }
@@ -96,9 +104,9 @@ public abstract class CoMessage<Id>
 
     static final int _ord_OP_ID = 1;
 
+    @Column(name = FIELD_OP_ID, nullable = false, precision = 10)
     @Ordinal(_ord_OP_ID)
     @Precision(value = 10)
-    @Column(name = "op", nullable = false, precision = 10)
     public synchronized int getOpId() {
         if (op != null) {
             Integer opId = op.getId();
@@ -113,13 +121,9 @@ public abstract class CoMessage<Id>
         this.opId = value;
     }
 
-    Integer formId;
-
-    static final int _ord_FORM_ID = 1;
-
+    @Column(name = FIELD_FORM_ID, nullable = false, precision = 10)
     @Ordinal(_ord_FORM_ID)
     @Precision(value = 10)
-    @Column(name = "op", nullable = false, precision = 10)
     public synchronized Integer getFormId() {
         if (form != null)
             return form.getId();
@@ -138,6 +142,7 @@ public abstract class CoMessage<Id>
      * @label.zh 标题
      * @placeholder 输入标题…
      */
+    @Column(name = FIELD_SUBJECT, precision = N_SUBJECT)
     @FormInput(nullconv = NullConvertion.NONE)
     @TextInput(maxLength = N_SUBJECT)
     public String getSubject() {
@@ -158,6 +163,7 @@ public abstract class CoMessage<Id>
      * @label.zh 正文
      * @placeholder 输入正文…
      */
+    @Column(name = FIELD_RAW_TEXT)
     @TextInput(multiLine = true, html = true)
     public String getRawText() {
         return rawText;
@@ -177,6 +183,8 @@ public abstract class CoMessage<Id>
         return new HtmlTextObject(rawText);
     }
 
+    @JoinColumn(name = FIELD_FORM_ID)
+    @ManyToOne
     public FormDef getForm() {
         if (form == null)
             synchronized (this) {
@@ -213,8 +221,9 @@ public abstract class CoMessage<Id>
      * @label Sent Time
      * @label.zh 发送时间
      */
-    @OfGroup(StdGroup.Status.class)
+    @Column(name = FIELD_SENT_TIME)
     @DetailLevel(DetailLevel.EXPERT)
+    @OfGroup(StdGroup.Status.class)
     public ZonedDateTime getSentTime() {
         return sentTime;
     }
@@ -229,24 +238,15 @@ public abstract class CoMessage<Id>
      * @label Received Time
      * @label.zh 接收时间
      */
-    @OfGroup(StdGroup.Status.class)
+    @Column(name = FIELD_RECEIVED_TIME)
     @DetailLevel(DetailLevel.EXPERT)
+    @OfGroup(StdGroup.Status.class)
     public ZonedDateTime getReceivedTime() {
         return receivedTime;
     }
 
     public void setReceivedTime(ZonedDateTime receivedTime) {
         this.receivedTime = receivedTime;
-    }
-
-    @Override
-    public JsonVariant getProperties() {
-        return properties;
-    }
-
-    @Override
-    public void setProperties(JsonVariant properties) {
-        this.properties = properties;
     }
 
     static final String[] attachmentGroupKeys = { K_IMAGES, K_VIDEOS };

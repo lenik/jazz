@@ -3,6 +3,10 @@ package net.bodz.lily.concrete;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
@@ -56,6 +60,18 @@ public abstract class CoObject
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_LABEL = "label";
+    public static final String FIELD_DESCRIPTION = "description";
+    public static final String FIELD_ICON = "icon";
+
+    public static final String FIELD_FLAGS = "flags";
+    public static final String FIELD_PRIORITY = "priority";
+    public static final String FIELD_STATE = "state";
+    public static final String FIELD_OWNER_USER_ID = "uid";
+    public static final String FIELD_OWNER_GROUP_ID = "gid";
+    public static final String FIELD_ACL = "acl";
+    public static final String FIELD_ACCESS_MODE = "mode";
+
     public static final int N_LABEL = 80;
     public static final int N_DESCRIPTION = 200;
     public static final int N_ICON = 30;
@@ -105,6 +121,7 @@ public abstract class CoObject
      * @label.zh 图标
      * @placeholder 输入skeljs兼容的图标符号
      */
+    @Column(name = FIELD_ICON, precision = N_ICON)
     @FormInput(nullconv = NullConvertion.NONE)
     @Priority(20)
     @TextInput(maxLength = N_ICON)
@@ -127,6 +144,7 @@ public abstract class CoObject
      * @label.zh 名称
      * @placeholder 输入简短的描述性名称…
      */
+    @Column(name = FIELD_LABEL, precision = N_LABEL)
     @FormInput(nullconv = NullConvertion.NONE)
     @Priority(20)
     @TextInput(maxLength = N_LABEL)
@@ -149,6 +167,7 @@ public abstract class CoObject
      * @label.zh 描述
      * @placeholder 输入概括性的描述信息…
      */
+    @Column(name = FIELD_DESCRIPTION, precision = N_DESCRIPTION)
     @Priority(21)
     @TextInput(maxLength = N_DESCRIPTION)
     public String getDescription() {
@@ -234,6 +253,7 @@ public abstract class CoObject
      * @label State
      * @label.zh 状态
      */
+    @Column(name = FIELD_STATE)
     @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Status.class)
     @Override
@@ -263,6 +283,8 @@ public abstract class CoObject
      * @label Owner User
      * @label.zh 属主
      */
+    @JoinColumn(name = FIELD_OWNER_USER_ID)
+    @ManyToOne
     @OfGroup(StdGroup.Security.class)
     public IUser getOwnerUser() {
         return ownerUser;
@@ -279,6 +301,8 @@ public abstract class CoObject
      * @label Owner Group
      * @label.zh 属组
      */
+    @JoinColumn(name = FIELD_OWNER_GROUP_ID)
+    @ManyToOne
     @OfGroup(StdGroup.Security.class)
     public IGroup getOwnerGroup() {
         return ownerGroup;
@@ -288,6 +312,7 @@ public abstract class CoObject
         this.ownerGroup = ownerGroup;
     }
 
+    @Column(name = FIELD_OWNER_USER_ID)
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)
@@ -296,6 +321,7 @@ public abstract class CoObject
         return ownerUser != null ? ownerUser.id() : Integer.valueOf(ownerUserId);
     }
 
+    @Column(name = FIELD_OWNER_GROUP_ID)
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)
@@ -343,6 +369,7 @@ public abstract class CoObject
      * @label Access Mode
      * @label.zh 访问模式
      */
+    @Column(name = FIELD_ACCESS_MODE, nullable = false)
     @Face("AccessMode")
     @OfGroup(StdGroup.Security.class)
     @Override
@@ -363,6 +390,7 @@ public abstract class CoObject
      * @label ACL
      * @label.zh ACL
      */
+    @Column(name = FIELD_ACL)
     @FormInput(nullconv = NullConvertion.ZERO)
     @OfGroup(StdGroup.Security.class)
     @Override

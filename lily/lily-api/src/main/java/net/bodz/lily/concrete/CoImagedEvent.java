@@ -1,5 +1,7 @@
 package net.bodz.lily.concrete;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
@@ -17,8 +19,11 @@ public class CoImagedEvent<Id>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_PROPERTIES = "props";
+
     JsonVariant properties;
 
+    @Column(name = FIELD_PROPERTIES)
     @Override
     public final JsonVariant getProperties() {
         return properties;
