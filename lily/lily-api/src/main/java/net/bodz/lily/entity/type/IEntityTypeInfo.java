@@ -1,11 +1,14 @@
 package net.bodz.lily.entity.type;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 
 public interface IEntityTypeInfo {
 
     Class<?> getEntityClass();
+
+    IType getPotatoType();
 
     Class<?> getIdClass();
 

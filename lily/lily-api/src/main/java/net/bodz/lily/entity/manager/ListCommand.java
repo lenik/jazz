@@ -4,6 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -17,7 +21,6 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
-import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
@@ -169,25 +172,49 @@ class ListProcess
         mask.readObject(map);
 
         Orders orders = selectOptions.getOrders();
-        if (orders != null)
+        if (orders != null) {
+            Orders newOrders = new Orders();
             for (Order order : orders) {
                 String property = order.getColumn();
-                String column = findColumnForProperty(property);
-                if (column == null)
-                    column = property;
-                order.setColumn(column);
+                String[] columns = findColumnForProperty(property);
+                if (columns == null)
+                    newOrders.add(order);
+                else
+                    for (String column : columns) {
+                        Order newOrder = new Order();
+                        newOrder.setAscending(order.isAscending());
+                        newOrder.setColumn(column);
+                        newOrders.add(newOrder);
+                    }
             }
+            selectOptions.setOrders(newOrders);
+        }
     }
 
-    String findColumnForProperty(String propertyName) {
-        Class<?> entityClass = typeInfo.getEntityClass();
-        IType type = BeanTypeProvider.getInstance().loadType(entityClass);
+    String[] findColumnForProperty(String propertyName) {
+        IType type = typeInfo.getPotatoType();
         IProperty property = type.getProperty(propertyName);
         if (property != null) {
             Column aColumn = property.getAnnotation(Column.class);
             if (aColumn != null) {
-                String columnName = aColumn.name();
-                return columnName;
+                String[] columnNames = { aColumn.name() };
+                return columnNames;
+            }
+
+            if (property.isAnnotationPresent(ManyToOne.class) //
+                    || property.isAnnotationPresent(OneToOne.class)) {
+                JoinColumn aJoinColumn = property.getAnnotation(JoinColumn.class);
+                if (aJoinColumn == null) {
+                    JoinColumns aJoinColumns = property.getAnnotation(JoinColumns.class);
+                    JoinColumn[] aJoinColumnv = aJoinColumns.value();
+                    String[] foreignColumnNames = new String[aJoinColumnv.length];
+                    for (int i = 0; i < foreignColumnNames.length; i++)
+                        foreignColumnNames[i] = aJoinColumnv[i].name();
+                    return foreignColumnNames;
+                } else {
+                    String[] foreignColumnNames = { aJoinColumn.name() };
+                    return foreignColumnNames;
+                }
             }
         }
         return null;

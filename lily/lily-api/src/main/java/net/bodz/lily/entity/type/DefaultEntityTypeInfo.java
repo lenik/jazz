@@ -15,6 +15,8 @@ import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.TypeConvertException;
+import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
@@ -27,6 +29,8 @@ public class DefaultEntityTypeInfo
             IEntityTypeInfo {
 
     Class<?> entityClass;
+    IType potatoType;
+
     Class<?> idClass;
     Class<?> mapperClass;
     Class<?> criteriaBuilderClass;
@@ -67,6 +71,18 @@ public class DefaultEntityTypeInfo
     @Override
     public Class<?> getEntityClass() {
         return entityClass;
+    }
+
+    @Override
+    public IType getPotatoType() {
+        if (potatoType == null) {
+            synchronized (this) {
+                if (potatoType == null) {
+                    potatoType = BeanTypeProvider.getInstance().loadType(entityClass);
+                }
+            }
+        }
+        return potatoType;
     }
 
     @Override
@@ -206,7 +222,7 @@ public class DefaultEntityTypeInfo
                     Class<?> formal = ftv[i];
                     if (formal.isPrimitive())
                         formal = Primitives.box(formal);
-                    if (!formal.isAssignableFrom(actual))
+                    if (! formal.isAssignableFrom(actual))
                         continue L;
                 }
                 // found the first match
