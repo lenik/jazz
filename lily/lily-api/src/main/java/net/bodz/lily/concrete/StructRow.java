@@ -34,6 +34,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
 import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.ReadOnly;
 
 @CriteriaClass(StructRowCriteriaBuilder.class)
 public abstract class StructRow
@@ -73,6 +74,7 @@ public abstract class StructRow
      * @label Creation Date
      * @label.zh 创建时间
      */
+    @ReadOnly
     @Column(name = FIELD_CREATION_DATE)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
@@ -100,6 +102,7 @@ public abstract class StructRow
      * @label Last Modified Date
      * @label.zh 修改时间
      */
+    @ReadOnly
     @Column(name = FIELD_LAST_MODIFIED)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
