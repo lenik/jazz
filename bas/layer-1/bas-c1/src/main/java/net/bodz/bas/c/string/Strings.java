@@ -78,17 +78,8 @@ public class Strings {
 
         case 1:
             return s.toLowerCase();
-
-        case 2:
-            break;
-
-        default:
-            boolean a = Character.isUpperCase(s.charAt(0));
-            boolean b = Character.isUpperCase(s.charAt(1));
-            boolean c = Character.isUpperCase(s.charAt(2));
-            if (a && b && c)
-                return s;
         }
+
         char lcfirst = Character.toLowerCase(s.charAt(0));
         return lcfirst + s.substring(1);
     }

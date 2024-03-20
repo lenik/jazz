@@ -1,5 +1,6 @@
 package net.bodz.bas.c.javax.servlet;
 
+import java.beans.Introspector;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Comparator;
@@ -9,7 +10,6 @@ import java.util.Locale;
 
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.java.util.Collections;
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITreeOut;
@@ -227,7 +227,7 @@ public class ServletDiag {
             if (method.getParameterTypes().length != 0)
                 continue;
 
-            String propName = Strings.lcfirst(name.substring(3));
+            String propName = Introspector.decapitalize(name.substring(3));
             out.println("out.println(\"" + propName + " = \" + " + var + "." + name + "()); ");
         }
         out.println();

@@ -1,9 +1,10 @@
 package net.bodz.bas.db.meta;
 
+import java.beans.Introspector;
+
 import javax.persistence.Table;
 
 import net.bodz.bas.c.string.StringId;
-import net.bodz.bas.c.string.Strings;
 
 public class TableUtils {
 
@@ -29,7 +30,7 @@ public class TableUtils {
 
     public static String tableName(Class<?> type) {
         String name = aTableName(type);
-        return name != null ? name : Strings.lcfirst(type.getSimpleName());
+        return name != null ? name : Introspector.decapitalize(type.getSimpleName());
     }
 
     public static String table_name(Class<?> type) {

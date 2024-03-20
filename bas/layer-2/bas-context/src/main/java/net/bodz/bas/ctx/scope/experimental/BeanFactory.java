@@ -1,6 +1,7 @@
 package net.bodz.bas.ctx.scope.experimental;
 
-import net.bodz.bas.c.string.Strings;
+import java.beans.Introspector;
+
 import net.bodz.bas.ctx.scope.IScopeInstance;
 import net.bodz.bas.ctx.scope.ScopedTypeInfo;
 import net.bodz.bas.err.LoadException;
@@ -20,7 +21,7 @@ public class BeanFactory
     @Override
     public final <T> T get(Class<T> objectType) {
         String name = objectType.getSimpleName();
-        name = Strings.lcfirst(name);
+        name = Introspector.decapitalize(name);
         return getOrLoad(name, objectType);
     }
 

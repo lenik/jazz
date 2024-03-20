@@ -1,5 +1,7 @@
 package net.bodz.bas.c.string;
 
+import java.beans.Introspector;
+
 public class Phrase {
 
     public String foo_bar;
@@ -33,7 +35,7 @@ public class Phrase {
         Phrase phrase = new Phrase();
         if (s != null) {
             phrase.FooBar = s;
-            phrase.fooBar = Strings.lcfirst(s);
+            phrase.fooBar = Introspector.decapitalize(s);
             phrase.foo_bar = StringId.UL.breakCamel(phrase.fooBar);
             phrase.FOO_BAR = phrase.foo_bar.toUpperCase();
         }
