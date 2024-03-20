@@ -8,8 +8,8 @@ export class CoCodeTypeInfo extends CoNodeTypeInfo {
 
     readonly validators = new CoCodeValidators(this);
 
-    constructor(selfType: TypeInfo<any>) {
-        super(selfType, INT);
+    constructor() {
+        super(INT);
     }
 
     get name() { return "net.bodz.lily.concrete.CoCode"; }

@@ -7,8 +7,8 @@ export class CoCategoryTypeInfo extends CoNodeTypeInfo {
 
     readonly validators = new CoCategoryValidators(this);
 
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
-        super(selfType, idType);
+    constructor(idType: TypeInfo<any>) {
+        super(idType);
     }
 
     get name() { return "net.bodz.lily.concrete.CoCategory"; }

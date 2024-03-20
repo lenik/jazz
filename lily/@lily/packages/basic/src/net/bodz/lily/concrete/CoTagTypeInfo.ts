@@ -7,8 +7,8 @@ export class CoTagTypeInfo extends CoCodeTypeInfo {
 
     readonly validators = new CoTagValidators(this);
 
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
-        super(selfType, idType);
+    constructor() {
+        super();
     }
 
     get name() { return "net.bodz.lily.concrete.CoTagType"; }

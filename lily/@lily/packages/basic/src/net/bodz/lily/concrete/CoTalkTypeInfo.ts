@@ -5,12 +5,11 @@ import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 
 export class CoTalkTypeInfo extends CoMessageTypeInfo {
 
-    readonly selfType: TypeInfo<any>
+    readonly selfType: TypeInfo<any> = this;
     readonly validators = new CoTalkValidators(this);
 
-    constructor(selfType: TypeInfo<any>, idType: TypeInfo<any>) {
+    constructor(idType: TypeInfo<any>) {
         super(idType);
-        this.selfType = selfType;
     }
 
     get name() { return "net.bodz.lily.concrete.CoTalk"; }
