@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -13,7 +12,6 @@ import java.util.TreeSet;
 
 import javax.persistence.Column;
 
-import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Priority;
@@ -23,9 +21,6 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.t.order.PriorityUtils;
 import net.bodz.lily.concrete.CoImaged;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.entity.attachment.AttachmentPathChangeEvent;
-import net.bodz.lily.entity.attachment.IAttachment;
-import net.bodz.lily.entity.attachment.IAttachmentListing;
 
 /**
  * 参与方
@@ -59,8 +54,6 @@ public abstract class Party
 
     private String bank;
     private String account;
-
-    private JsonVariant properties;
 
     /**
      * 分类
@@ -335,41 +328,6 @@ public abstract class Party
         if (isSupplier())
             sb.append("供");
         return sb.toString();
-    }
-
-    @Override
-    public JsonVariant getProperties() {
-        return properties;
-    }
-
-    @Override
-    public void setProperties(JsonVariant properties) {
-        this.properties = properties;
-    }
-
-    static String[] attachmentGroupKeys = { K_IMAGES };
-
-    @Override
-    public IAttachmentListing listAttachments() {
-        return new IAttachmentListing() {
-
-            @Override
-            public void onAttachmentPathChanged(AttachmentPathChangeEvent event) {
-                event.getNewVolume();
-                event.getNewPath();
-            }
-
-            @Override
-            public String[] getAttachmentGroupKeys() {
-                return attachmentGroupKeys;
-            }
-
-            @Override
-            public Collection<IAttachment> getAttachmentGroup(String groupKey) {
-                return Party.this.getAttachmentGroup(groupKey);
-            }
-
-        };
     }
 
 }
