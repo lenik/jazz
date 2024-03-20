@@ -3,14 +3,21 @@ package net.bodz.lily.entity.manager;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import javax.persistence.Column;
+
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import net.bodz.bas.db.ibatis.sql.Order;
+import net.bodz.bas.db.ibatis.sql.Orders;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
@@ -160,6 +167,30 @@ class ListProcess
         tableData.readObject(map);
         selectOptions.readObject(map);
         mask.readObject(map);
+
+        Orders orders = selectOptions.getOrders();
+        if (orders != null)
+            for (Order order : orders) {
+                String property = order.getColumn();
+                String column = findColumnForProperty(property);
+                if (column == null)
+                    column = property;
+                order.setColumn(column);
+            }
+    }
+
+    String findColumnForProperty(String propertyName) {
+        Class<?> entityClass = typeInfo.getEntityClass();
+        IType type = BeanTypeProvider.getInstance().loadType(entityClass);
+        IProperty property = type.getProperty(propertyName);
+        if (property != null) {
+            Column aColumn = property.getAnnotation(Column.class);
+            if (aColumn != null) {
+                String columnName = aColumn.name();
+                return columnName;
+            }
+        }
+        return null;
     }
 
 }
