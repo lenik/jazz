@@ -39,6 +39,8 @@ export class PersonTypeInfo extends PartyTypeInfo {
         super();
     }
 
+    static readonly INSTANCE = new PersonTypeInfo();
+
 }
 
 export default PersonTypeInfo;

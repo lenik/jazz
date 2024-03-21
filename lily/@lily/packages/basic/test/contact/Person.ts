@@ -5,7 +5,7 @@ import Attachment from "@skeljs/core/src/net/bodz/lily/entity/Attachment";
 
 export class Person extends Party {
 
-    static readonly TYPE = new PersonTypeInfo();
+    static readonly TYPE = PersonTypeInfo.INSTANCE;
 
     gender?: string
 

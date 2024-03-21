@@ -82,7 +82,6 @@ const typeMap = {
 
         <template #columns>
             <th data-field="id" data-type="INT" class="id">ID</th>
-            <th data-field="images" data-type="DefaultAttachment">Image</th>
             <th data-field="properties" data-type="JSON_VARIANT" class="hidden">Properties</th>
             <th data-field="label" data-type="STRING">Name</th>
             <th data-field="description" data-type="STRING">Description</th>
