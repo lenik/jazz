@@ -7,11 +7,15 @@ import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IImagesInProps;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@TypeParameters({ TypeParamType.ID_TYPE })
+@FieldGroupVue
 @HaveAttachments
+@TsTyped
+@TypeParameters({ TypeParamType.ID_TYPE })
 public class CoImagedEvent<Id>
         extends CoEvent<Id>
         implements

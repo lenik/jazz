@@ -5,8 +5,12 @@ import javax.persistence.Column;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.repr.form.meta.TextInput;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 
+@FieldGroupVue
 @HaveAttachments
+@TsTyped
 public abstract class CoPrincipal
         extends CoImaged<Integer>
         implements

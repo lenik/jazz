@@ -18,12 +18,14 @@ import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@CriteriaClass(CoNodeCriteriaBuilder.class)
+@FieldGroupVue
 @IncludeMapperXml
+@TsTyped
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoImaged<Id> {

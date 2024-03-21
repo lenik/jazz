@@ -8,13 +8,15 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
-import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@TypeParameters({ TypeParamType.ID_TYPE })
-@CriteriaClass(CoEventCriteriaBuilder.class)
+@FieldGroupVue
 @IncludeMapperXml
+@TsTyped
+@TypeParameters({ TypeParamType.ID_TYPE })
 public abstract class CoEvent<Id>
         extends IdEntity<Id>
         implements

@@ -1,5 +1,10 @@
 package net.bodz.lily.concrete;
 
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
+
+@FieldGroupVue
+@TsTyped
 public abstract class CoPhase
         extends CoCode<CoPhase> {
 

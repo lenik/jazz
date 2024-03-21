@@ -1,5 +1,7 @@
 package net.bodz.lily.concrete;
 
+//@FieldGroupVue
+//@TsTyped
 public abstract class CoRelation<Id>
         extends IdEntity<Id> {
 

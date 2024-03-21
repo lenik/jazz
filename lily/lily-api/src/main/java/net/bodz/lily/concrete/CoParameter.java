@@ -1,11 +1,15 @@
 package net.bodz.lily.concrete;
 
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@TypeParameters({ TypeParamType.THIS_REC })
+@FieldGroupVue
 @IdType(Integer.class)
+@TsTyped
+@TypeParameters({ TypeParamType.THIS_REC })
 public abstract class CoParameter<self_t extends CoParameter<self_t>>
         extends CoCode<self_t> {
 

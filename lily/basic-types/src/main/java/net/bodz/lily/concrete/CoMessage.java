@@ -29,7 +29,8 @@ import net.bodz.lily.concrete.util.UserClickInfo;
 import net.bodz.lily.entity.attachment.AttachmentListingInProps;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.util.IVideosInProps;
-import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.schema.account.User;
@@ -41,10 +42,11 @@ import net.bodz.lily.security.IUser;
  * @label Message
  * @label.zh 消息
  */
-@CriteriaClass(CoMessageCriteriaBuilder.class)
-@IncludeMapperXml
-@TypeParameters({ TypeParamType.ID_TYPE })
+@FieldGroupVue
 @HaveAttachments
+@IncludeMapperXml
+@TsTyped
+@TypeParameters({ TypeParamType.ID_TYPE })
 public abstract class CoMessage<Id>
         extends CoImagedEvent<Id>
         implements

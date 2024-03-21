@@ -17,13 +17,17 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.lily.concrete.IHaveProperties;
 import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.repr.EntGroup;
 import net.bodz.lily.schema.geo.Zone;
 
 /**
  * 联系方式
  */
+@FieldGroupVue
 @Table(name = "contact")
+@TsTyped
 @IdType(Integer.class)
 public class Contact
         extends IdEntity<Integer>

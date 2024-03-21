@@ -33,10 +33,12 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.VarMapLoader;
-import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.ReadOnly;
+import net.bodz.lily.meta.TsTyped;
 
-@CriteriaClass(StructRowCriteriaBuilder.class)
+@FieldGroupVue
+@TsTyped
 public abstract class StructRow
         implements
             IContent,

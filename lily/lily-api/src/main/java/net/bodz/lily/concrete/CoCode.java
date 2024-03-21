@@ -6,10 +6,14 @@ import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.bas.site.viz.input.Tagsinput;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
+@FieldGroupVue
 @Tagsinput(typer = CoCodeTagTyper.class)
+@TsTyped
 @TypeParameters({ TypeParamType.THIS_REC })
 @IdType(Integer.class)
 public abstract class CoCode<self_t extends CoCode<self_t>>

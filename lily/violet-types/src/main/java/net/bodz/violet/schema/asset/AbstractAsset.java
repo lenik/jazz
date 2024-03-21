@@ -5,13 +5,16 @@ import java.time.ZonedDateTime;
 
 import net.bodz.lily.concrete.CoEvent;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.violet.schema.art.Artifact;
 import net.bodz.violet.schema.store.Region;
 
 /**
  * 资产
  */
+//@FieldGroupVue
 @IdType(Long.class)
+@TsTyped
 public abstract class AbstractAsset
         extends CoEvent<Long> {
 

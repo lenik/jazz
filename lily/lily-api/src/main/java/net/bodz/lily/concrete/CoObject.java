@@ -37,7 +37,7 @@ import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.ws.DefaultWebSupport;
 import net.bodz.lily.entity.ws.IWebSupport;
-import net.bodz.lily.meta.CriteriaClass;
+import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.security.IAccessControlled;
 import net.bodz.lily.security.IAccessMode;
 import net.bodz.lily.security.IGroup;
@@ -48,7 +48,7 @@ import net.bodz.lily.security.login.ILoginListener;
 /**
  * Co/Con: Concrete, also Content, Controlled
  */
-@CriteriaClass(CoObjectCriteriaBuilder.class)
+@FieldGroupVue
 @IncludeMapperXml
 public abstract class CoObject
         extends StructRow

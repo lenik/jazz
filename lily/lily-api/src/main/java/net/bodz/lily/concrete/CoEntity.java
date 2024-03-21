@@ -9,10 +9,14 @@ import net.bodz.bas.t.variant.conv.IVarConverter;
 import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 
 /**
  * aka. Common Entity.
  */
+@FieldGroupVue
+@TsTyped
 public abstract class CoEntity<Id>
         extends CoObject
         implements

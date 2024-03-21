@@ -5,11 +5,15 @@ import javax.persistence.Column;
 import net.bodz.bas.repr.form.validate.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
 import net.bodz.lily.entity.IdType;
+import net.bodz.lily.meta.FieldGroupVue;
+import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@TypeParameters({ TypeParamType.THIS_REC })
+@FieldGroupVue
 @IdType(Long.class)
+@TsTyped
+@TypeParameters({ TypeParamType.THIS_REC })
 public abstract class CoTalk<self_t extends CoTalk<self_t>>
         extends CoMessage<Long> {
 
