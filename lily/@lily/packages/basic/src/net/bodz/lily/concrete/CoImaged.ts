@@ -52,4 +52,4 @@ export abstract class CoImaged<Id> extends IdEntity<Id> {
 
 }
 
-export default IdEntity;
+export default CoImaged;

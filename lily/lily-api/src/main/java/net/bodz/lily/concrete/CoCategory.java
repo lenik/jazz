@@ -1,11 +1,9 @@
 package net.bodz.lily.concrete;
 
-import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@FieldGroupVue
 @TsTyped
 @TypeParameters({ TypeParamType.THIS_REC, TypeParamType.ID_TYPE })
 public abstract class CoCategory<self_t extends CoCategory<self_t, Id>, Id>

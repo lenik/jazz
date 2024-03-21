@@ -3,13 +3,11 @@ package net.bodz.lily.concrete;
 import javax.persistence.GeneratedValue;
 
 import net.bodz.lily.entity.IdColumn;
-import net.bodz.lily.meta.FieldGroupVue;
 import net.bodz.lily.meta.ReadOnly;
 import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
 
-@FieldGroupVue
 @IdColumn("id")
 @TsTyped
 @TypeParameters({ TypeParamType.ID_TYPE })

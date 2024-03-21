@@ -6,14 +6,10 @@ import IdEntityValidators from './IdEntityValidators';
 
 export class IdEntityTypeInfo extends CoObjectTypeInfo {
 
-    readonly idType: TypeInfo<any>;
     readonly validators = new IdEntityValidators(this);
 
     constructor(idType: TypeInfo<any>) {
-        super();
-        if (idType != null) { // compatible
-            this.idType = idType;
-        }
+        super(idType);
     }
 
     get name() { return "net.bodz.lily.concrete.IdEntity"; }
