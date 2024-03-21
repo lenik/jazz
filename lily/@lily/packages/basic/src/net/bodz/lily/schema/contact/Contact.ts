@@ -8,14 +8,43 @@ export class Contact extends IdEntity<int> {
     static readonly TYPE = ContactTypeInfo.INSTANCE;
 
     org: any
+    private _orgId?: int
+    get orgId() {
+        return this.org != null ? this.org.id : this.orgId;
+    }
+    set orgId(val: int | undefined) {
+        this.orgId = val;
+    }
+
     orgUnit: any
+    private _orgUnitId?: int
+    get orgUnitId() {
+        return this.orgUnit != null ? this.orgUnit.id : this.orgUnitId;
+    }
+    set orgUnitId(val: int | undefined) {
+        this.orgUnitId = val;
+    }
+
     person: any
+    private _personId?: int
+    get personId() {
+        return this.person != null ? this.person.id : this.personId;
+    }
+    set personId(val: int | undefined) {
+        this.personId = val;
+    }
 
     rename?: string
     usage?: string
 
     zone: any
-    zoneId?: int
+    private _zoneId?: int
+    get zoneId() {
+        return this.zone != null ? this.zone.id : this.zoneId;
+    }
+    set zoneId(val: int | undefined) {
+        this.zoneId = val;
+    }
 
     country?: string
     r1?: string

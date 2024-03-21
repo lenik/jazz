@@ -27,9 +27,23 @@ export abstract class CoObject extends StructRow {
     // access control
 
     ownerUser: User
-    ownerUserId: int
+    private _ownerUserId?: int
+    get ownerUserId() {
+        return this.ownerUser != null ? this.ownerUser.id : this.ownerUserId;
+    }
+    set ownerUserId(val: int | undefined) {
+        this.ownerUserId = val;
+    }
+
     ownerGroup: Group
-    owenrGroupId: int
+    private _ownerGroupId?: int
+    get ownerGroupId() {
+        return this.ownerGroup != null ? this.ownerGroup.id : this.ownerGroupId;
+    }
+    set ownerGroupId(val: int | undefined) {
+        this.ownerGroupId = val;
+    }
+
     acl: int
     accessMode: int
 
