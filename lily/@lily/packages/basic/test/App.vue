@@ -22,7 +22,7 @@ const emit = defineEmits<{
 }>();
 
 // provides
-provide(SERVER_URL, serverUrl);
+provide(SERVER_URL, (window as any).serverUrl || serverUrl);
 
 // property shortcuts
 
@@ -38,14 +38,17 @@ const stat = {
 
 <template>
     <ModelC>
+
         <template #site-bar>
             <SiteBar title='Lily tests' />
         </template>
+
         <template #project-info>
             <ProjectInfo :stat="stat" label="Lily Test Apps" description="Test applications of lily::basic. ">
             </ProjectInfo>
         </template>
         <router-view></router-view>
+
         <template #footer>
             <Copyright />
         </template>
