@@ -1,5 +1,5 @@
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT } from '@skeljs/core/src/lang/baseinfo';
+import { INT, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoObjectTypeInfo from './CoObjectTypeInfo';
 import IdEntityValidators from './IdEntityValidators';
@@ -27,6 +27,8 @@ export class IdEntityTypeInfo extends CoObjectTypeInfo {
             id: primaryKey({ type: this.idType, precision: 20, })
         });
     }
+
+    static readonly INSTANCE = new IdEntityTypeInfo(UNDEFINED);
 
 }
 

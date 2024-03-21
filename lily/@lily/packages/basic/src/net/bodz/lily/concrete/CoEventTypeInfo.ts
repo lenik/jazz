@@ -2,7 +2,7 @@ import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoEventValidators from './CoEventValidators';
 import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
-import { INT } from "@skeljs/core/src/lang/baseinfo";
+import { INT, UNDEFINED } from "@skeljs/core/src/lang/baseinfo";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 
 export class CoEventTypeInfo extends IdEntityTypeInfo {
@@ -26,6 +26,8 @@ export class CoEventTypeInfo extends IdEntityTypeInfo {
             year: property({ type: INT, icon: "far-calendar" }),
         });
     }
+
+    static readonly INSTANCE = new CoEventTypeInfo(UNDEFINED);
 
 }
 

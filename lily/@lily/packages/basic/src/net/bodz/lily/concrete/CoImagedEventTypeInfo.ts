@@ -1,5 +1,5 @@
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, LIST } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LIST, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoImagedEventValidators from './CoImagedEventValidators';
@@ -27,6 +27,8 @@ export class CoImagedEventTypeInfo extends CoEventTypeInfo {
             image: property({ type: Attachment.TYPE, nullable: true, icon: "far-image" }),
         });
     }
+
+    static readonly INSTANCE = new CoImagedEventTypeInfo(UNDEFINED);
 
 }
 

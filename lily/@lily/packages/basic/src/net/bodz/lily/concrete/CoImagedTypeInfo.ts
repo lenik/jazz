@@ -1,5 +1,5 @@
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, LIST } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LIST, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoImagedValidators from './CoImagedValidators';
@@ -34,6 +34,8 @@ export class CoImagedTypeInfo extends IdEntityTypeInfo {
             }),
         });
     }
+
+    static readonly INSTANCE = new CoImagedTypeInfo(UNDEFINED);
 
 }
 

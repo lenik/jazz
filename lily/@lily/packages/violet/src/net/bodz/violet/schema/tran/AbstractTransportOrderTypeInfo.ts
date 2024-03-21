@@ -1,5 +1,5 @@
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT } from '@skeljs/core/src/lang/baseinfo';
+import { INT, LONG } from '@skeljs/core/src/lang/baseinfo';
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoMessageTypeInfo from '@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo';
 import AbstractTransportOrderValidators from './AbstractTransportOrderValidators';
@@ -9,8 +9,8 @@ export class AbstractTransportOrderTypeInfo extends CoMessageTypeInfo {
 
     readonly validators = new AbstractTransportOrderValidators(this);
 
-    constructor(idType: TypeInfo<any>) {
-        super(idType);
+    constructor() {
+        super(LONG);
     }
 
     get name() { return "net.bodz.violet.schema.tran.AbstractTransportOrder"; }
@@ -25,6 +25,8 @@ export class AbstractTransportOrderTypeInfo extends CoMessageTypeInfo {
             dst: property({ type: Contact.TYPE, nullable: false, icon: "far-tag" }),
         });
     }
+
+    static readonly INSTANCE = new AbstractTransportOrderTypeInfo();
 
 }
 

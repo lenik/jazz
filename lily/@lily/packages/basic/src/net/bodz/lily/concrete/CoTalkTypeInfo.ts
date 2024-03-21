@@ -2,6 +2,7 @@ import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/Entit
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoTalkValidators from './CoTalkValidators';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
+import { UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 
 export class CoTalkTypeInfo extends CoMessageTypeInfo {
 
@@ -23,6 +24,8 @@ export class CoTalkTypeInfo extends CoMessageTypeInfo {
             parent: property({ type: this.selfType, icon: "far-tree", }),
         });
     }
+
+    static readonly INSTANCE = new CoTalkTypeInfo(UNDEFINED);
 
 }
 

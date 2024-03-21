@@ -30,6 +30,8 @@ export class AbstractAssetTypeInfo extends CoEventTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new AbstractAssetTypeInfo();
+
 }
 
 export default AbstractAssetTypeInfo;

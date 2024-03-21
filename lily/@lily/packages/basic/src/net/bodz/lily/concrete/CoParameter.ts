@@ -4,6 +4,8 @@ import CoParameterTypeInfo from './CoParameterTypeInfo';
 
 export abstract class CoParameter<This> extends CoCode<This> {
 
+    static readonly TYPE = CoParameterTypeInfo.INSTANCE;
+
     constructor(o: any) {
         super(o);
     }

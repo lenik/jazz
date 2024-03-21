@@ -2,15 +2,12 @@ package net.bodz.violet.schema.tran;
 
 import net.bodz.lily.concrete.CoMessage;
 import net.bodz.lily.meta.TsTyped;
-import net.bodz.lily.meta.TypeParamType;
-import net.bodz.lily.meta.TypeParameters;
 import net.bodz.lily.schema.contact.Contact;
 
 //@FieldGroupVue
 @TsTyped
-@TypeParameters({ TypeParamType.ID_TYPE })
-public abstract class AbstractTransportOrder<Id>
-        extends CoMessage<Id> {
+public abstract class AbstractTransportOrder
+        extends CoMessage<Long> {
 
     private static final long serialVersionUID = 1L;
 

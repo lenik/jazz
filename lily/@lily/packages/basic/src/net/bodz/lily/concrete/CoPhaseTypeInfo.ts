@@ -23,6 +23,8 @@ export class CoPhaseTypeInfo extends CoCodeTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new CoPhaseTypeInfo();
+    
 }
 
 export default CoPhaseTypeInfo;

@@ -4,6 +4,8 @@ import CoTagTypeInfo from './CoTagTypeInfo';
 
 export abstract class CoTag<This> extends CoCode<This> {
 
+    static readonly TYPE = CoTagTypeInfo.INSTANCE;
+
     constructor(o: any) {
         super(o);
     }

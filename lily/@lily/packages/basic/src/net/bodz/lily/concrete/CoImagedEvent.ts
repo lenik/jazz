@@ -1,8 +1,11 @@
 import { int } from '@skeljs/core/src/lang/basetype';
 import CoEvent from './CoEvent';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import CoImagedEventTypeInfo from './CoImagedEventTypeInfo';
 
 export abstract class CoImagedEvent<Id> extends CoEvent<Id> {
+
+    static readonly TYPE = CoImagedEventTypeInfo.INSTANCE;
 
     properties: any
 

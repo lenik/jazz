@@ -4,6 +4,8 @@ import IdEntityTypeInfo from './IdEntityTypeInfo';
 
 export abstract class IdEntity<Id> extends CoObject {
 
+    static readonly TYPE = IdEntityTypeInfo.INSTANCE;
+
     id?: Id
 
     constructor(o: any) {

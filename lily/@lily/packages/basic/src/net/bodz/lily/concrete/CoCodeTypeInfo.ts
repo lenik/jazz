@@ -27,6 +27,8 @@ export class CoCodeTypeInfo extends CoNodeTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new CoCodeTypeInfo();
+    
 }
 
 export default CoCodeTypeInfo;

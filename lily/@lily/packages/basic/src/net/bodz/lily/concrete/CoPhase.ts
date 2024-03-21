@@ -4,6 +4,8 @@ import CoPhaseTypeInfo from './CoPhaseTypeInfo';
 
 export abstract class CoPhase<This> extends CoCode<This> {
 
+    static readonly TYPE = CoPhaseTypeInfo.INSTANCE;
+
     constructor(o: any) {
         super(o);
     }

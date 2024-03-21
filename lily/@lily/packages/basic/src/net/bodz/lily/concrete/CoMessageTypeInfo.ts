@@ -3,7 +3,7 @@ import CoEventTypeInfo from './CoEventTypeInfo';
 import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { MAP, STRING } from '@skeljs/core/src/lang/baseinfo';
+import { MAP, STRING, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
 import FormDef from '../schema/meta/FormDef';
 import ParameterDef from '../schema/meta/ParameterDef';
@@ -34,6 +34,8 @@ export class CoMessageTypeInfo extends CoEventTypeInfo {
             receivedTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
         });
     }
+
+    static readonly INSTANCE = new CoMessageTypeInfo(UNDEFINED);
 
 }
 

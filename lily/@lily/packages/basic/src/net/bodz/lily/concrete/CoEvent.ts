@@ -5,6 +5,8 @@ import CoEventTypeInfo from './CoEventTypeInfo';
 
 export abstract class CoEvent<Id> extends IdEntity<Id> {
     
+    static readonly TYPE = CoEventTypeInfo.INSTANCE;
+
     beginTime?: Moment
     endTime?: Moment
     year: int

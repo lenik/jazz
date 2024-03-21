@@ -23,6 +23,8 @@ export class CoTagTypeInfo extends CoCodeTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new CoTagTypeInfo();
+
 }
 
 export default CoTagTypeInfo;

@@ -4,6 +4,8 @@ import CoCodeTypeInfo from './CoCodeTypeInfo';
 
 export abstract class CoCode<This> extends CoNode<This, int> {
 
+    static readonly TYPE = CoCodeTypeInfo.INSTANCE;
+
     code?: string
 
     get uniqueName() { return this.code; }

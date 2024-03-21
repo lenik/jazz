@@ -23,6 +23,8 @@ export class CoParameterTypeInfo extends CoCodeTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new CoParameterTypeInfo();
+    
 }
 
 export default CoParameterTypeInfo;

@@ -1,8 +1,11 @@
 import { int } from '@skeljs/core/src/lang/basetype';
 import IdEntity from './IdEntity';
 import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import CoImagedTypeInfo from './CoImagedTypeInfo';
 
 export abstract class CoImaged<Id> extends IdEntity<Id> {
+
+    static readonly TYPE = CoImagedTypeInfo.INSTANCE;
 
     properties: any
 

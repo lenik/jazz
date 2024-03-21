@@ -4,7 +4,8 @@ import { IdEntity } from '../../concrete/IdEntity';
 import ContactTypeInfo from "./ContactTypeInfo";
 
 export class Contact extends IdEntity<int> {
-    static TYPE = ContactTypeInfo.INSTANCE;
+
+    static readonly TYPE = ContactTypeInfo.INSTANCE;
 
     org: any
     orgUnit: any

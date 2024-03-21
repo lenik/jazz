@@ -7,7 +7,8 @@ import FormDef from '../schema//meta/FormDef';
 // import UserClickInfo from '../schema/account/UserClickInfo';
 
 export abstract class CoMessage<Id> extends CoEvent<Id> {
-    // static readonly TYPE = new CoMessageTypeInfo();
+
+    static readonly TYPE = CoMessageTypeInfo.INSTANCE;
 
     op: User
     subject: string

@@ -5,7 +5,8 @@ import PartyTypeInfo from "./PartyTypeInfo";
 import Contact from "./Contact";
 
 export abstract class Party extends CoImaged<int> {
-    static TYPE = PartyTypeInfo.INSTANCE;
+    
+    static readonly TYPE = PartyTypeInfo.INSTANCE;
 
     category?: any
     birthday?: Moment

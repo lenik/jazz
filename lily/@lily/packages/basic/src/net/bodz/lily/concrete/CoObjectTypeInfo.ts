@@ -2,7 +2,7 @@ import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/Entit
 import CoObjectValidators from './CoObjectValidators';
 import StructRowTypeInfo from './StructRowTypeInfo';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
+import { INT, STRING, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import Group from '../schema/account/Group';
 import User from '../schema/account/User';
@@ -12,7 +12,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
     readonly idType: TypeInfo<any>
     readonly validators = new CoObjectValidators(this);
 
-    constructor(idType: TypeInfo<any> = INT) {
+    constructor(idType: TypeInfo<any>) {
         super();
         this.idType = idType;
 
@@ -48,6 +48,8 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new CoObjectTypeInfo(UNDEFINED);
+    
 }
 
 export default CoObjectTypeInfo;
