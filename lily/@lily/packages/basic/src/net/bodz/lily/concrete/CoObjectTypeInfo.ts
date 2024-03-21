@@ -7,6 +7,27 @@ import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import Group from '../schema/account/Group';
 import User from '../schema/account/User';
 
+class IconType extends TypeInfo<string> {
+
+    get name(): string {
+        throw 'Icon'
+    }
+
+    parse(s: string): string {
+        return s;
+    }
+    format(val: string): string {
+        return val;
+    }
+
+    renderHtml(val: any, context: any): string | HTMLElement | undefined {
+        return "<b>Ops</b>";
+    }
+
+    static readonly INSTANCE = new IconType();
+
+}
+
 export class CoObjectTypeInfo extends StructRowTypeInfo {
 
     readonly idType: TypeInfo<any>
@@ -34,7 +55,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
 
             label: property({ type: STRING, icon: 'far-tag' }),
             description: property({ type: STRING, icon: 'far-sticky-note' }),
-            icon: property({ type: STRING, icon: 'far-image' }),
+            icon: property({ type: IconType.INSTANCE, icon: 'far-image' }),
 
             flags: property({ type: INT, icon: 'far-toggle-on' }),
             priority: property({ type: INT, icon: 'far-lightbulb' }),
@@ -49,7 +70,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
     }
 
     static readonly INSTANCE = new CoObjectTypeInfo(UNDEFINED);
-    
+
 }
 
 export default CoObjectTypeInfo;

@@ -1,8 +1,7 @@
-import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
-import IdEntityValidators from './IdEntityValidators';
+import CoImagedValidators from './CoImagedValidators';
 import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 
-export class CoPrincipalValidators extends IdEntityValidators {
+export class CoPrincipalValidators extends CoImagedValidators {
 
     constructor(type: CoPrincipalTypeInfo) {
         super(type);

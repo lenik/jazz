@@ -1,8 +1,8 @@
 import { int } from '@skeljs/core/src/lang/basetype';
-import IdEntity from './IdEntity';
+import CoImaged from './CoImaged';
 import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 
-export abstract class CoPrincipal extends IdEntity<int> {
+export abstract class CoPrincipal extends CoImaged<int> {
 
     static readonly TYPE = CoPrincipalTypeInfo.INSTANCE;
 

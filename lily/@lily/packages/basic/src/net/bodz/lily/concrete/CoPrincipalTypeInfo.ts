@@ -1,10 +1,10 @@
 import { primaryKey, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
-import IdEntityTypeInfo from './IdEntityTypeInfo';
+import CoImagedTypeInfo from './CoImagedTypeInfo';
 import CoPrincipalValidators from './CoPrincipalValidators';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 
-export class CoPrincipalTypeInfo extends IdEntityTypeInfo {
+export class CoPrincipalTypeInfo extends CoImagedTypeInfo {
 
     readonly validators = new CoPrincipalValidators(this);
 
