@@ -24,6 +24,14 @@ public class JsonObjectBuilder {
 
     SortOrder sortMode = SortOrder.NONE;
 
+    public JsonObjectBuilder() {
+        this(SortOrder.KEEP);
+    }
+
+    public JsonObjectBuilder(SortOrder sortMode) {
+        this.sortMode = sortMode;
+    }
+
     public SortOrder getSortMode() {
         return sortMode;
     }
@@ -332,11 +340,11 @@ public class JsonObjectBuilder {
         Method[] methods = includeSuperClass ? klass.getMethods() : klass.getDeclaredMethods();
         for (final Method method : methods) {
             final int modifiers = method.getModifiers();
-            if (Modifier.isPublic(modifiers) && !Modifier.isStatic(modifiers) && method.getParameterTypes().length == 0
-                    && !method.isBridge() && method.getReturnType() != Void.TYPE
+            if (Modifier.isPublic(modifiers) && ! Modifier.isStatic(modifiers) && method.getParameterTypes().length == 0
+                    && ! method.isBridge() && method.getReturnType() != Void.TYPE
                     && isValidMethodName(method.getName())) {
                 final String key = getKeyNameFromMethod(method);
-                if (key != null && !key.isEmpty()) {
+                if (key != null && ! key.isEmpty()) {
                     try {
                         final Object result = method.invoke(bean);
                         if (result != null) {
@@ -361,7 +369,7 @@ public class JsonObjectBuilder {
     }
 
     private static boolean isValidMethodName(String name) {
-        return !"getClass".equals(name) && !"getDeclaringClass".equals(name);
+        return ! "getClass".equals(name) && ! "getDeclaringClass".equals(name);
     }
 
     private static String getKeyNameFromMethod(Method method) {
@@ -375,7 +383,7 @@ public class JsonObjectBuilder {
             }
         }
         JSONPropertyName annotation = getAnnotation(method, JSONPropertyName.class);
-        if (annotation != null && annotation.value() != null && !annotation.value().isEmpty()) {
+        if (annotation != null && annotation.value() != null && ! annotation.value().isEmpty()) {
             return annotation.value();
         }
         String key;
@@ -395,7 +403,7 @@ public class JsonObjectBuilder {
         }
         if (key.length() == 1) {
             key = key.toLowerCase(Locale.ROOT);
-        } else if (!Character.isUpperCase(key.charAt(1))) {
+        } else if (! Character.isUpperCase(key.charAt(1))) {
             key = key.substring(0, 1).toLowerCase(Locale.ROOT) + key.substring(1);
         }
         return key;
@@ -510,9 +518,6 @@ public class JsonObjectBuilder {
         } catch (final NoSuchMethodException ex) {
             return -1;
         }
-    }
-
-    private JsonObjectBuilder() {
     }
 
     static JsonObjectBuilder instance = new JsonObjectBuilder();

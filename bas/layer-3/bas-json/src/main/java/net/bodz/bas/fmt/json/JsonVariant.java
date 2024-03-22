@@ -41,6 +41,14 @@ public final class JsonVariant {
         return new JsonVariant(value);
     }
 
+    public static JsonVariant object() {
+        return of(new JsonObject());
+    }
+
+    public static JsonVariant array() {
+        return of(new JsonArray());
+    }
+
     public JsonVariantType getType() {
         return type;
     }

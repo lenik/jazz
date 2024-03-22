@@ -29,7 +29,7 @@ public class JsonObject
         extends _JSONObject {
 
     public JsonObject() {
-        this(SortOrder.NONE);
+        this(SortOrder.KEEP);
     }
 
     public JsonObject(SortOrder sortMode) {
