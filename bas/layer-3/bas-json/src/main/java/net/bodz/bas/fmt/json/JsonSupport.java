@@ -25,6 +25,11 @@ public abstract class JsonSupport
     }
 
     @Override
+    public boolean wantObjectContext() {
+        return false;
+    }
+
+    @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
         new BeanJsonDumper(out).dump(this);

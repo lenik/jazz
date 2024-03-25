@@ -54,7 +54,7 @@ public class JsonWithRefDecoder {
             PrefixPathBuilder prefix = new PrefixPathBuilder(path);
             for (String key : encoded.keySet()) {
                 Object valEncoded = encoded.get(key);
-                JsonVariant valDecoded = decode(root, valEncoded, prefix.append(key));
+                JsonVariant valDecoded = decode(root, valEncoded, prefix.childPath(key));
                 decoded.put(key, valDecoded.value);
             }
         }
@@ -70,7 +70,7 @@ public class JsonWithRefDecoder {
             int n = encoded.length();
             for (int index = 0; index < n; index++) {
                 Object val = encoded.get(index);
-                JsonVariant val2 = decode(root, val, prefix.append(index));
+                JsonVariant val2 = decode(root, val, prefix.childPath(index));
                 decoded.put(index, val2.value);
             }
         }

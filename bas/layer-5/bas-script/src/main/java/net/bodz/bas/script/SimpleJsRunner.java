@@ -92,7 +92,7 @@ public class SimpleJsRunner
         IJsonDumper dumper;
         dumper = new ValueDumper(buf);
         // dumper = new BeanJsonDumper(buf);
-        dumper.dumpBoxed(result);
+        dumper.dump(result);
 
         String json = buf.toString();
         json = format(json);

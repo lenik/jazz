@@ -37,4 +37,13 @@ public class JsonWithRef {
         return new JsonWithRefDecoder().decode(o).value;
     }
 
+    public static String encodeRef(String path) {
+        StringBuilder sb = new StringBuilder(30);
+        sb.append("<ref:");
+        if (path != null)
+            sb.append(path);
+        sb.append(">");
+        return sb.toString();
+    }
+
 }

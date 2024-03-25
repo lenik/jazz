@@ -40,7 +40,7 @@ public class BeanJsonDumperTest
         dumper.exclude("cats[1]");
         dumper.exclude("owner");
         try {
-            dumper.dumpBoxed(zoo);
+            dumper.dump(zoo);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

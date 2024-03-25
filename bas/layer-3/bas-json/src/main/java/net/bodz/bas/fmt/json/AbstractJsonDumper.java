@@ -2,34 +2,17 @@ package net.bodz.bas.fmt.json;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
-import java.time.ZonedDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.java.util.DateTimes;
-import net.bodz.bas.c.java.util.Dates;
-import net.bodz.bas.c.type.TypeId;
-import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.meta.NotNull;
-import net.bodz.bas.t.map.MarksetWithPath;
-import net.bodz.bas.typer.Typers;
-import net.bodz.bas.typer.std.IFormatter;
-import net.bodz.bas.typer.std.IParser;
 import net.bodz.fork.org.json.JSONException;
 
 @SuppressWarnings("unchecked")
@@ -39,27 +22,25 @@ public abstract class AbstractJsonDumper<self_t>
 
     static final Logger logger = LoggerFactory.getLogger(AbstractJsonDumper.class);
 
-    static final String METHOD_WRITE = "jsonOut";
-
     protected IJsonOut out;
     JsonFormOptions opts;
+    protected JsonOutFn outFn;
 
-    protected boolean keyed;
-    protected MarksetWithPath markset;
+    protected final PrefixPathBuilder contextPath = new PrefixPathBuilder(null);
+    protected final Map<Object, String> nodePathMap = new IdentityHashMap<>();
 
     protected boolean includeNull = false;
     protected boolean includeFalse = false;
+    protected boolean encodeExcluded = true; // use <excluded:maxDepth> for excluded entries.
 
     protected Set<String> includes = new HashSet<String>();
     protected Set<String> excludes = new HashSet<String>();
 
-    protected int maxDepth;
-
-    String hintProperty = "_hint";
+    protected int maxDepth = -1;
 
     public AbstractJsonDumper(IJsonOut out) {
         this.out = out;
-        this.markset = new MarksetWithPath();
+        this.outFn = new JsonOutFn(out);
     }
 
     public boolean isIncludeNull() {
@@ -104,28 +85,15 @@ public abstract class AbstractJsonDumper<self_t>
         this.maxDepth = maxDepth;
     }
 
-    public self_t depth(int maxDepth) {
+    public self_t maxDepth(int maxDepth) {
         this.maxDepth = maxDepth;
         return (self_t) this;
     }
 
-    @Override
-    public void dump(Object obj)
-            throws IOException, FormatException {
-        _dumpOnce(false, obj, 0, null);
-    }
-
-    @Override
-    public void dumpBoxed(Object obj)
-            throws IOException, FormatException {
-        _dumpOnce(true, obj, 0, null);
-    }
-
-    public void dumpBoxedWithName(String name, Object obj)
-            throws IOException, FormatException {
-        markset.enter(name);
-        dumpBoxed(obj);
-        markset.leave();
+    boolean checkDepth(int depth) {
+        if (maxDepth == -1)
+            return true;
+        return depth <= maxDepth;
     }
 
     protected boolean isIncluded(String name) {
@@ -137,67 +105,37 @@ public abstract class AbstractJsonDumper<self_t>
         return includes.isEmpty();
     }
 
-    String hint(String name) {
-        if (name == null)
-            return hintProperty;
-        else
-            return name;
-    }
-
-    void beginBox(boolean boxed, int depth, String name) {
-        if (boxed) {
-            if (depth == 0) {
-                out.object();
-                out.key("root");
-            }
-        } else {
-            out.key(hint(name));
-        }
-    }
-
-    void endBox(boolean boxed, int depth) {
-        if (boxed) {
-            if (depth == 0)
-                out.endObject();
-        } else {
-        }
-    }
-
-    protected void _dumpOnce(boolean scalar, Object obj, int depth, String name)
-            throws IOException, FormatException {
-        if (obj == null) {
-            beginBox(scalar, depth, name);
-            out.value(null);
-            endBox(scalar, depth);
-            return;
-        }
-
-        String path = markset.path(name);
+    protected boolean beginChild(String name) {
+        String path = contextPath.childPath(name);
         if (! isIncluded(path)) {
-            beginBox(scalar, depth, name);
-            out.value("<excluded>");
-            endBox(scalar, depth);
-            return;
+            out.value(encodeExcluded("path:" + path));
+            return false;
         }
-
-        if (name != null)
-            markset.enter(name);
-        try {
-            String oldPath = markset.lookup(obj);
-            if (oldPath != null) {
-                beginBox(scalar, depth, name);
-                out.value("<ref:" + oldPath + ">");
-                endBox(scalar, depth);
-                return;
-            }
-            _dumpImpl(scalar, obj, depth, name);
-        } finally {
-            if (name != null)
-                markset.leave();
-        }
+        contextPath.enter(name);
+        return true;
     }
 
-    protected boolean _dumpImpl(boolean scalar, @NotNull Object obj, int depth, String _name)
+    protected boolean beginChild(int index) {
+        String path = contextPath.childPath(index);
+        if (! isIncluded(path)) {
+            out.value(encodeExcluded("path:" + path));
+            return false;
+        }
+        contextPath.enter(index);
+        return true;
+    }
+
+    protected void endChild() {
+        contextPath.leave();
+    }
+
+    @Override
+    public void dump(Object obj)
+            throws IOException, FormatException {
+        dumpVariant(obj, 0);
+    }
+
+    protected boolean dumpVariant(@NotNull Object obj, int depth)
             throws IOException, FormatException {
         Class<?> type = obj.getClass();
         if (type.isEnum()) {
@@ -205,76 +143,64 @@ public abstract class AbstractJsonDumper<self_t>
             return true;
         }
 
-        if (type.isArray()) {
-            markset.addMark(obj);
-            return dumpArray(scalar, obj, depth);
-        }
+        if (type.isArray())
+            return dumpArray(obj, false, depth);
 
-        if (obj instanceof Collection<?>) {
-            markset.addMark(obj);
-            return dumpCollection(scalar, (Collection<?>) obj, depth);
-        }
+        if (obj instanceof Collection<?>)
+            return dumpCollection((Collection<?>) obj, false, depth);
 
-        if (obj instanceof Map<?, ?>) {
-            markset.addMark(obj);
-            return dumpMap(scalar, (Map<?, ?>) obj, depth);
-        }
+        if (obj instanceof Map<?, ?>)
+            return dumpMap((Map<?, ?>) obj, false, depth);
 
         if (type == JsonVariant.class) {
             JsonVariant jv = (JsonVariant) obj;
-            out.variant(jv);
+            JsonVariant encoded = JsonWithRef.encode(jv);
+            out.variant(encoded);
             return true;
         }
 
         if (obj instanceof IJsonForm) {
-            IJsonForm jf = (IJsonForm) obj;
-            if (! jf.isJsonOutByDumper()) {
-                markset.addMark(obj);
-                if (dumpJsonSerializable(scalar, jf, depth))
-                    return true;
+            IJsonForm jsonForm = (IJsonForm) obj;
+            if (! jsonForm.isJsonOutByDumper()) {
+                if (depth > 0) {
+                    nodePathMap.put(obj, contextPath.getPath());
+                    if (outFn.jsonForm(jsonForm, opts, false))
+                        return true;
+                }
             }
         }
 
         if (ReflectOptions.copyTypes.contains(obj.getClass())) {
-            beginBox(scalar, depth, _name);
             out.value(obj);
-            endBox(scalar, depth);
             return true;
         }
 
-        Object simpleVal = dumpSimpleTypes(type, obj, depth);
-        if (simpleVal != null) {
-            beginBox(scalar, depth, _name);
-            out.value(simpleVal);
-            endBox(scalar, depth);
+        Object simpleEncoded = JsonCodec.encodeSimpleTypes(type, obj);
+        if (simpleEncoded != null) {
+            out.value(simpleEncoded);
             return true;
         }
 
-        Object scalarVal = dumpScalar(type, obj, depth);
-        if (scalarVal != null) {
-            beginBox(scalar, depth, _name);
-            out.value(scalarVal);
-            endBox(scalar, depth);
+        Object textForm = JsonCodec.encodeTextForm(type, obj);
+        if (textForm != null) {
+            out.value(textForm);
             return true;
         }
 
         int modifiers = type.getModifiers();
         if ((modifiers & Modifier.PUBLIC) == 0) {
             // don't try to dump members from non-public types.
-            formatException(scalar, depth + 1, new IllegalAccessException());
+            outFn.throwable(new IllegalAccessException());
             return true;
         }
 
-        if (maxDepth > 0 && depth >= maxDepth) {
-            beginBox(scalar, depth, _name);
-            out.value(obj);
-            endBox(scalar, depth);
+        if (! checkDepth(depth)) {
+            out.value(encodeExcluded("maxDepth"));
             return true;
         }
 
         try {
-            markset.addMark(obj);
-            return dumpGenericObject(scalar, type, obj, depth);
+            return dumpObject(type, obj, false, depth);
         } catch (JSONException e) {
             throw e;
         } catch (Exception e) {
@@ -282,111 +208,83 @@ public abstract class AbstractJsonDumper<self_t>
         }
     }
 
-    // TODO Not used..
-    protected boolean _dumpImplTerm(boolean scalar, @NotNull Object obj, int depth, String _name)
+    @Override
+    public boolean dumpArray(Object array, boolean spread)
             throws IOException, FormatException {
-        Class<?> type = obj.getClass();
-        if (type.isEnum()) {
-            out.value(obj);
-            return true;
-        }
-
-        if (type.isArray()) {
-            out.value(obj);
-            return true;
-        }
-
-        if (obj instanceof Collection<?>) {
-            out.value(obj);
-            return true;
-        }
-
-        if (obj instanceof Map<?, ?>) {
-            out.value(obj);
-            return true;
-        }
-
-        if (obj instanceof IJsonForm) {
-            markset.addMark(obj);
-            if (dumpJsonSerializable(scalar, (IJsonForm) obj, depth))
-                return true;
-        }
-
-        if (ReflectOptions.copyTypes.contains(obj.getClass())) {
-            beginBox(scalar, depth, _name);
-            out.value(obj);
-            endBox(scalar, depth);
-            return true;
-        }
-
-        Object simpleVal = dumpSimpleTypes(type, obj, depth);
-        if (simpleVal != null) {
-            beginBox(scalar, depth, _name);
-            out.value(simpleVal);
-            endBox(scalar, depth);
-            return true;
-        }
-
-        Object scalarVal = dumpScalar(type, obj, depth);
-        if (scalarVal != null) {
-            beginBox(scalar, depth, _name);
-            out.value(scalarVal);
-            endBox(scalar, depth);
-            return true;
-        }
-
-        int modifiers = type.getModifiers();
-        if ((modifiers & Modifier.PUBLIC) == 0) {
-            // don't try to dump members from non-public types.
-            formatException(scalar, depth + 1, new IllegalAccessException());
-            return true;
-        }
-
-        beginBox(scalar, depth, _name);
-        out.value(obj);
-        endBox(scalar, depth);
-        return true;
+        return dumpArray(array, spread, 0);
     }
 
-    protected boolean dumpArray(boolean boxed, Object obj, int depth)
+    boolean dumpArray(Object array, boolean spread, int depth)
             throws IOException, FormatException {
-        if (boxed)
+        if (! add(array))
+            return false;
+        if (! spread)
             out.array();
-        int length = Array.getLength(obj);
-        for (int i = 0; i < length; i++) {
-            String name = "[" + i + "]";
-            markset.enter(name);
-            _dumpOnce(true, Array.get(obj, i), depth + 1, name);
-            markset.leave();
+        int length = Array.getLength(array);
+        for (int index = 0; index < length; index++) {
+            if (beginChild(index))
+                try {
+                    dumpVariant(Array.get(array, index), depth + 1);
+                } finally {
+                    contextPath.leave();
+                }
         }
-        if (boxed)
+        if (! spread)
             out.endArray();
         return true;
     }
 
-    protected boolean dumpCollection(boolean boxed, Collection<?> collection, int depth)
+    @Override
+    public boolean dumpCollection(Collection<?> collection, boolean spread)
             throws IOException, FormatException {
-        if (boxed)
+        return dumpCollection(collection, spread, 0);
+    }
+
+    boolean dumpCollection(Collection<?> collection, boolean spread, int depth)
+            throws IOException, FormatException {
+        if (! add(collection))
+            return false;
+        if (! spread)
             out.array();
-        int i = 0;
+        int index = 0;
         for (Object item : collection) {
-            String name = "[" + i + "]";
-            markset.enter(name);
-            _dumpOnce(true, item, depth + 1, name);
-            markset.leave();
-            i++;
+            if (beginChild(index++))
+                try {
+                    dumpVariant(item, depth + 1);
+                } finally {
+                    endChild();
+                }
         }
-        if (boxed)
+        if (! spread)
             out.endArray();
         return true;
     }
 
-    protected boolean dumpMap(boolean boxed, Map<?, ?> map, int depth)
+    protected boolean add(Object obj) {
+        if (nodePathMap.containsKey(obj)) {
+            String oldPath = nodePathMap.get(obj);
+            out.value(JsonWithRef.encodeRef(oldPath));
+            return false;
+        } else {
+            nodePathMap.put(obj, contextPath.getPath());
+            return true;
+        }
+    }
+
+    @Override
+    public boolean dumpMap(Map<?, ?> map, boolean spread)
             throws IOException, FormatException {
-        if (boxed)
+        return dumpMap(map, spread, 0);
+    }
+
+    boolean dumpMap(Map<?, ?> map, boolean spread, int depth)
+            throws IOException, FormatException {
+        if (! add(map))
+            return false;
+        if (! spread)
             out.object();
         for (Map.Entry<?, ?> entry : map.entrySet()) {
-            Object key = entry.getKey();
+            String key = entry.getKey().toString();
             Object value = entry.getValue();
             if (key == null) // null-key isn't supported in json.
                 continue;
@@ -395,171 +293,38 @@ public abstract class AbstractJsonDumper<self_t>
                 if (! includeNull)
                     continue;
 
-            String name = "['" + key + "']";
-            markset.enter(name);
-            String qname = markset.path(name);
-            if (isIncluded(qname)) {
-                out.key(key.toString());
-                _dumpOnce(true, value, depth + 1, name);
-            }
-            markset.leave();
+            if (beginChild(key.toString()))
+                try {
+                    out.key(key.toString());
+                    dumpVariant(value, depth + 1);
+                } finally {
+                    contextPath.leave();
+                }
         }
-        if (boxed)
+        if (! spread)
             out.endObject();
         return true;
     }
 
-    protected boolean dumpJsonSerializable(boolean asValue, IJsonForm jsonForm, int depth)
+    @Override
+    public boolean dumpObject(Class<?> type, Object obj, boolean spread)
             throws IOException, FormatException {
-        if (depth <= 0)
-            return false;
-
-        try {
-            Method jsonOutFn = jsonForm.getClass().getMethod(METHOD_WRITE, IJsonOut.class, JsonFormOptions.class);
-            DefaultDump aDefaultDump = jsonOutFn.getDeclaredAnnotation(DefaultDump.class);
-            if (aDefaultDump != null)
-                return false;
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-
-        if (asValue)
-            jsonForm.jsonOutValue(out, opts);
-        else
-            jsonForm.jsonOut(out, opts);
-        return true;
+        return dumpObject(type, obj, spread, 0);
     }
 
-    protected Object dumpSimpleTypes(Class<?> type, Object obj, int depth)
-            throws IOException, FormatException {
-        switch (TypeKind.getTypeId(type)) {
-        case TypeId.BYTE:
-        case TypeId.SHORT:
-        case TypeId.INTEGER:
-        case TypeId.LONG:
-            return ((Number) obj).longValue();
-
-        case TypeId.FLOAT:
-            float fval = ((Number) obj).floatValue();
-            if (Float.isInfinite(fval))
-                return "Infinity";
-            if (Float.isNaN(fval))
-                return "NaN";
-            return fval;
-
-        case TypeId.DOUBLE:
-            double dval = ((Number) obj).doubleValue();
-            if (Double.isInfinite(dval))
-                return "Infinity";
-            if (Double.isNaN(dval))
-                return "NaN";
-            try {
-                return dval;
-            } catch (JSONException e) {
-                throw e;
-            }
-
-        case TypeId.BOOLEAN:
-            return ((Boolean) obj).booleanValue();
-
-        case TypeId.STRING:
-        case TypeId.STRING_BUFFER:
-        case TypeId.STRING_BUILDER:
-            return obj.toString();
-
-        case TypeId.SQL_DATE:
-            java.sql.Date sqlDate = (java.sql.Date) obj;
-            return Dates.ISO_LOCAL_DATE.format(sqlDate);
-
-        case TypeId.SQL_TIME:
-            java.sql.Time sqlTime = (java.sql.Time) obj;
-            return Dates.ISO_LOCAL_DATE.format(sqlTime);
-
-        case TypeId.DATE:
-            Date date = (Date) obj;
-
-//            // XXX to be reviewed.
-//            Calendar cal = Calendar.getInstance();
-//            int offset = cal.getTimeZone().getOffset(date.getTime());
-//            long localTime = date.getTime() + offset;
-
-            String dateStr = Dates.ISO8601.format(date);
-            return dateStr;
-
-        case TypeId.INSTANT:
-            Instant instant = (Instant) obj;
-            return instant.toEpochMilli();
-        case TypeId.LOCAL_DATE_TIME:
-            return DateTimes.ISO_LOCAL_DATE_TIME.format((LocalDateTime) obj);
-        case TypeId.LOCAL_DATE:
-            return DateTimes.ISO_LOCAL_DATE.format((LocalDate) obj);
-        case TypeId.LOCAL_TIME:
-            return DateTimes.ISO_LOCAL_TIME.format((LocalTime) obj);
-        case TypeId.OFFSET_DATE_TIME:
-            return DateTimes.ISO_OFFSET_DATE_TIME.format((OffsetDateTime) obj);
-        case TypeId.OFFSET_TIME:
-            return DateTimes.ISO_OFFSET_TIME.format((OffsetTime) obj);
-        case TypeId.ZONED_DATE_TIME:
-            return DateTimes.ISO_ZONED_DATE_TIME.format((ZonedDateTime) obj);
-
-//        case TypeId.JODA_DATETIME:
-//            AbstractDateTime jodaDateTime = (AbstractDateTime) obj;
-//            String jodaDateStr = ISODateTimeFormat.dateTime().print(jodaDateTime);
-//            return jodaDateStr;
-        }
-        return null;
-    }
-
-    protected Object dumpScalar(Class<?> type, Object obj, int depth)
-            throws IOException, FormatException {
-        if (iString.class.isAssignableFrom(type))
-            return obj;
-
-        IParser<?> parser;
-        try {
-            parser = Typers.getTyper(type, IParser.class);
-        } catch (Throwable e) {
-            logger.error("Failed to get parser of " + type, e);
-            return null;
-        }
-        if (parser != null) {
-            IFormatter<Object> formatter = Typers.getTyper(type, IFormatter.class);
-            if (formatter != null) {
-                String form = formatter.format(obj);
-                if (form == null && includeNull)
-                    form = "(null)";
-                return form;
-            }
-        }
-        return null;
-    }
-
-    protected abstract boolean dumpGenericObject(boolean boxed, Class<?> type, Object obj, int depth)
+    protected abstract boolean dumpObject(Class<?> type, Object obj, boolean spread, int depth)
             throws IOException, FormatException;
 
-    protected void formatException(boolean boxed, int depth, Throwable e) {
-        if (boxed)
-            out.object();
-        try {
-            out.key("type");
-            out.value(e.getClass().getName());
-            out.key("message");
-            out.value(e.getMessage());
-
-            Throwable cause = e.getCause();
-            if (cause != null) {
-                out.key("cause");
-                formatException(true, depth + 1, cause);
-            }
-        } finally {
-            if (boxed)
-                out.endObject();
-        }
+    String encodeExcluded(String reason) {
+        if (encodeExcluded)
+            return JsonCodec.encodeExcluded(reason);
+        else
+            return null;
     }
 
     @Override
     public String toString() {
-        return "{" + markset + "}\n" + out;
+        return "{" + nodePathMap + "}\n" + out;
     }
 
 }

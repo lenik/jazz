@@ -87,7 +87,7 @@ public class ValueDumper
             try {
                 Value metaObject = value.getMetaObject();
                 out.key("metaObject");
-                dumpBoxed(metaObject);
+                dump(metaObject);
             } catch (Exception e) {
                 out.entry("metaObject", "error: " + e.getMessage());
             }
@@ -107,9 +107,12 @@ public class ValueDumper
             Proxy proxyObject = value.asProxyObject();
 
             String name = "~proxyObject";
-            markset.enter(name);
-            _dumpOnce(true, proxyObject, depth + 1, name);
-            markset.leave();
+            try {
+                contextPath.enter(name);
+                dumpVariant(proxyObject, depth + 1);
+            } finally {
+                contextPath.leave();
+            }
         }
 
         if (value.isString())
@@ -144,7 +147,7 @@ public class ValueDumper
                 fits.add("float");
             if (value.fitsInDouble())
                 fits.add("double");
-            if (!fits.isEmpty())
+            if (! fits.isEmpty())
                 out.entry("fits", fits.toString());
         }
 
@@ -156,9 +159,10 @@ public class ValueDumper
             out.key("elements");
             out.array();
             for (long i = 0; i < size; i++) {
-                String name = "[" + i + "]";
                 Value element = value.getArrayElement(i);
-                dumpBoxedWithName(name, element);
+                contextPath.enter(i);
+                dump(element);
+                contextPath.leave();
             }
             out.endArray();
             out.endObject();
@@ -170,7 +174,9 @@ public class ValueDumper
             for (String key : value.getMemberKeys()) {
                 out.key(key);
                 Value member = value.getMember(key);
-                dumpBoxedWithName(key, member);
+                contextPath.enter(key);
+                dump(member);
+                contextPath.leave();
             }
             out.endObject();
         }
@@ -178,7 +184,9 @@ public class ValueDumper
         if (value.isHostObject()) {
             Object hostObject = value.asHostObject();
             out.key("hostObject");
-            dumpBoxedWithName("~hostObject", hostObject);
+            contextPath.enter("~hostObject");
+            dump(hostObject);
+            contextPath.leave();
         }
 
         SourceSection sourceLocation = value.getSourceLocation();

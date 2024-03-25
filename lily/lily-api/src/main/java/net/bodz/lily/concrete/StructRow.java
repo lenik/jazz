@@ -289,8 +289,8 @@ public abstract class StructRow
     @Override
     public void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        BeanJsonDumper dumper = new BeanJsonDumper(out);
-        dumper.dump(this);
+        BeanJsonDumper dumper = new BeanJsonDumper(out, true);
+        dumper.dumpObject(this.getClass(), this, true);
     }
 
     public boolean partialEquals(StructRow o) {

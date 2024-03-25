@@ -35,7 +35,7 @@ public class JsonWithRefDecoderTest {
 
         JsonWithRefEncoder encoder = new JsonWithRefEncoder() {
             @Override
-            String encodeRef(String path) {
+            protected String encodeRef(String path) {
                 return "\\ref{" + (path == null ? "" : path) + "}";
             }
         };

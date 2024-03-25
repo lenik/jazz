@@ -61,7 +61,7 @@ public class JsonWithRefEncoder {
             PrefixPathBuilder prefix = new PrefixPathBuilder(path);
             for (String key : node.keySet()) {
                 Object val = node.get(key);
-                JsonVariant val2 = encode(val, prefix.append(key));
+                JsonVariant val2 = encode(val, prefix.childPath(key));
                 dst.put(key, val2.value);
             }
         }
@@ -86,7 +86,7 @@ public class JsonWithRefEncoder {
             PrefixPathBuilder prefix = new PrefixPathBuilder(path);
             for (int index = 0; index < n; index++) {
                 Object val = node.get(index);
-                JsonVariant val2 = encode(val, prefix.append(index));
+                JsonVariant val2 = encode(val, prefix.childPath(index));
                 dst.put(index, val2.value);
             }
         }
@@ -103,13 +103,8 @@ public class JsonWithRefEncoder {
         return null;
     }
 
-    String encodeRef(String path) {
-        StringBuilder sb = new StringBuilder(30);
-        sb.append("<ref:");
-        if (path != null)
-            sb.append(path);
-        sb.append(">");
-        return sb.toString();
+    protected String encodeRef(String path) {
+        return JsonWithRef.encodeRef(path);
     }
 
 }

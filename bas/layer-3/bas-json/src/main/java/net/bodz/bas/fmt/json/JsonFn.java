@@ -1,6 +1,15 @@
 package net.bodz.bas.fmt.json;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -73,7 +82,7 @@ public class JsonFn {
         }
     }
 
-    public static void dump(IJsonForm obj, Appendable out)
+    public static void println(Appendable out, IJsonForm obj)
             throws FormatException, IOException {
         String json = toJson(obj, JsonFormOptions.DEFAULT);
         out.append(json);

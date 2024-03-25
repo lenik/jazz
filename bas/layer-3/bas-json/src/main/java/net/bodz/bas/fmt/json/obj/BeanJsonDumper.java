@@ -28,21 +28,30 @@ public class BeanJsonDumper
 
     static final Logger logger = LoggerFactory.getLogger(BeanJsonDumper.class);
 
+    boolean objectContext;
+
     public BeanJsonDumper(IJsonOut out) {
+        this(out, false);
+    }
+
+    public BeanJsonDumper(IJsonOut out, boolean objectContext) {
         super(out);
+        this.objectContext = objectContext;
     }
 
     @Override
-    protected boolean dumpGenericObject(boolean boxed, Class<?> type, Object obj, int depth)
+    protected boolean dumpObject(Class<?> type, Object obj, boolean spread, int depth)
             throws IOException, FormatException {
-        if (boxed)
+        if (! add(obj))
+            return false;
+        if (! spread)
             out.object();
         try {
             return dumpMembers(type, obj, depth);
 //        } catch (Exception e) {
 //            out.entry("FAILED", e);
         } finally {
-            if (boxed)
+            if (! spread)
                 out.endObject();
         }
     }
@@ -58,12 +67,12 @@ public class BeanJsonDumper
         } catch (NoClassDefFoundError e) {
             // logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
-            formatException(true, depth + 1, e);
+            outFn.throwable(e);
             return true;
         } catch (IntrospectionException e) {
             // logger.errorf(e, "Failed to get bean info of %s: %s.", type, e.getMessage());
             out.key("error");
-            formatException(true, depth + 1, e);
+            outFn.throwable(e);
             return true;
         }
 
@@ -79,12 +88,12 @@ public class BeanJsonDumper
             } catch (NoClassDefFoundError e) {
                 // logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 out.key(propertyName);
-                formatException(true, depth + 1, e);
+                outFn.throwable(e);
                 continue;
             } catch (ReflectiveOperationException e) {
                 // logger.error(e, "Failed to invoke getter: " + e.getMessage());
                 out.key(propertyName);
-                formatException(true, depth + 1, e);
+                outFn.throwable(e);
                 continue;
             }
 
@@ -97,7 +106,12 @@ public class BeanJsonDumper
 
             else {
                 out.key(propertyName);
-                _dumpOnce(true, propertyValue, depth + 1, propertyName);
+                try {
+                    contextPath.enter(propertyName);
+                    dumpVariant(propertyValue, depth + 1);
+                } finally {
+                    contextPath.leave();
+                }
             }
         }
         return true;
@@ -128,7 +142,7 @@ public class BeanJsonDumper
                 continue;
 
             String propertyName = propertyDescriptor.getName();
-            String path = markset.path(propertyName);
+            String path = contextPath.childPath(propertyName);
             if (! isIncluded(path))
                 continue;
 
@@ -143,7 +157,7 @@ public class BeanJsonDumper
         StringWriter buf = new StringWriter();
         JsonWriter out = new JsonWriter(buf);
         try {
-            new BeanJsonDumper(out).dumpBoxed(obj);
+            new BeanJsonDumper(out).dump(obj);
         } catch (IOException e) {
             throw new UnexpectedException(e.getMessage(), e);
         } catch (FormatException e) {

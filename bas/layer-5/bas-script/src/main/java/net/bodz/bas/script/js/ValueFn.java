@@ -25,7 +25,7 @@ public class ValueFn {
     public static void dumpBoxed(IJsonOut out, Value value)
             throws IOException, FormatException {
         ValueDumper dumper = new ValueDumper(out);
-        dumper.dumpBoxed(value);
+        dumper.dump(value);
     }
 
     public static Object convert(Value value) {
