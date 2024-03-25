@@ -258,8 +258,8 @@ public abstract class Party
      *
      * 当不特别指定时，默认使用的联系方式。 （通常是较常用的联系方式。）
      */
-    @Priority(500)
     @Derived
+    @Priority(500)
     public Contact getContact0() {
         if (contacts.isEmpty())
             return null;
@@ -267,8 +267,9 @@ public abstract class Party
             return PriorityUtils.selectTop(contacts);
     }
 
-    @Priority(500)
+//    @Internal
     @Derived
+    @Priority(500)
     public Contact getContact() {
         if (contacts.isEmpty())
             contacts.add(new Contact());
