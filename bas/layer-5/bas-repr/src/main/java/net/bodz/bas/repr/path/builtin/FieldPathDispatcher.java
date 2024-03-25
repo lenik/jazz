@@ -20,10 +20,16 @@ public class FieldPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_FIELD;
+    static final Class<?> ACCEPT_TYPES[] = { Object.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -114,9 +120,9 @@ class FieldKey {
     public boolean equals(Object obj) {
         assert obj instanceof FieldKey;
         FieldKey other = (FieldKey) obj;
-        if (!clazz.equals(other.clazz))
+        if (! clazz.equals(other.clazz))
             return false;
-        if (!fieldName.equals(other.fieldName))
+        if (! fieldName.equals(other.fieldName))
             return false;
         return true;
     }

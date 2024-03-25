@@ -12,10 +12,16 @@ public class OverriddenPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_OVERRIDEN;
+    static final Class<?> ACCEPT_TYPES[] = { IPathDispatchable.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -24,7 +30,7 @@ public class OverriddenPathDispatcher
         if (source == null)
             throw new PathDispatchException("null source.");
 
-        if (!(source instanceof IPathDispatchable))
+        if (! (source instanceof IPathDispatchable))
             return null;
 
         IPathDispatchable overridden = (IPathDispatchable) source;

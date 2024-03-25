@@ -29,10 +29,16 @@ public class MethodPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_METHOD;
+    static final Class<?> ACCEPT_TYPES[] = { Object.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -241,9 +247,9 @@ class MethodKey
         if (getClass() != obj.getClass())
             return false;
         MethodKey other = (MethodKey) obj;
-        if (!methodName.equals(other.methodName))
+        if (! methodName.equals(other.methodName))
             return false;
-        if (!Arrays.equals(parameterTypes, other.parameterTypes))
+        if (! Arrays.equals(parameterTypes, other.parameterTypes))
             return false;
         return true;
     }

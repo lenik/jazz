@@ -14,10 +14,16 @@ public class MapPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_MAP;
+    static final Class<?> ACCEPT_TYPES[] = { Map.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class MapPathDispatcher
         if (source == null)
             throw new PathDispatchException("null source.");
 
-        if (!(source instanceof Map<?, ?>))
+        if (! (source instanceof Map<?, ?>))
             return null;
 
         String key = tokens.peek();
@@ -34,7 +40,7 @@ public class MapPathDispatcher
             return null;
 
         Map<?, ?> map = (Map<?, ?>) source;
-        if (!map.containsKey(key))
+        if (! map.containsKey(key))
             return null;
 
         Object result = map.get(key);

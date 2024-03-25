@@ -13,6 +13,7 @@ public class NoPathRefDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = 1000;
+    static final Class<?> ACCEPT_TYPES[] = { INoPathRef.class };
 
     @Override
     public int getPriority() {
@@ -20,11 +21,16 @@ public class NoPathRefDispatcher
     }
 
     @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
+    }
+
+    @Override
     public IPathArrival dispatch(IPathArrival previous, Object source, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
         IPathArrival arrival = previous;
 
-        if (!(source instanceof INoPathRef))
+        if (! (source instanceof INoPathRef))
             return null;
 
         Object target;

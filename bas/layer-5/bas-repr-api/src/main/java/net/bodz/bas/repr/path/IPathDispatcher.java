@@ -21,6 +21,8 @@ public interface IPathDispatcher
         return 0;
     }
 
+    Class<?>[] getAcceptTypes();
+
     /**
      * Resolve the tokens with-in the context object.
      *

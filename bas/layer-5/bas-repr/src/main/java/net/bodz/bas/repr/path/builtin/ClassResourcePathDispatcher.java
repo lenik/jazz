@@ -19,6 +19,7 @@ public class ClassResourcePathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
+    static final Class<?> ACCEPT_TYPES[] = { Object.class };
 
     boolean mimeTypeFromExtension = true;
     boolean mimeTypeFromMagic = false;
@@ -26,6 +27,11 @@ public class ClassResourcePathDispatcher
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -42,7 +48,7 @@ public class ClassResourcePathDispatcher
             checkList.add(remaining + "/index.html");
         } else {
             // the file name must have extension for mime-type.
-            if (!remaining.contains("."))
+            if (! remaining.contains("."))
                 return null;
             checkList.add(remaining);
         }
@@ -55,7 +61,7 @@ public class ClassResourcePathDispatcher
         if (_realType != null)
             clazz = _realType.value();
 
-        L: while (clazz != null && !shouldStop(clazz)) {
+        L: while (clazz != null && ! shouldStop(clazz)) {
             String packageName = clazz.getPackage().getName();
             if (packageName.startsWith("java."))
                 break;

@@ -1,13 +1,21 @@
 package net.bodz.bas.repr.path;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import net.bodz.bas.repr.path.builtin.*;
+import net.bodz.bas.repr.path.builtin.FieldPathDispatcher;
+import net.bodz.bas.repr.path.builtin.ListPathDispatcher;
+import net.bodz.bas.repr.path.builtin.MapPathDispatcher;
+import net.bodz.bas.repr.path.builtin.MethodPathDispatcher;
+import net.bodz.bas.repr.path.builtin.OverriddenPathDispatcher;
+import net.bodz.bas.repr.path.builtin.PropertyPathDispatcher;
+import net.bodz.bas.repr.path.builtin.TreeNodePathDispatcher;
+import net.bodz.bas.t.tree.MapTreeNode;
 
 public class PathDispatchIndexTest
         extends Assert
@@ -16,25 +24,32 @@ public class PathDispatchIndexTest
 
     @Test
     public void testLoadProviders() {
-        Set<Class<?>> dispatcherClasses = new HashSet<Class<?>>();
-        for (IPathDispatcher dispatcher : PathDispatchIndex.getInstance().getDispatchers()) {
-            // System.out.println(dispatcher);
-            dispatcherClasses.add(dispatcher.getClass());
-        }
+        PathDispatchIndex index = PathDispatchIndex.getInstance();
 
-        Class<?>[] classes = {
-                //
-                ListPathDispatcher.class, //
-                MapPathDispatcher.class, //
-                TreeNodePathDispatcher.class, //
+        Set<Class<?>> forMath = index.getDispatcherTypes(Math.class);
+        Class<?>[] forObject = { //
                 FieldPathDispatcher.class, //
                 PropertyPathDispatcher.class, //
                 MethodPathDispatcher.class, //
                 OverriddenPathDispatcher.class //
         };
-        for (Class<?> c : classes) {
-            assertTrue(c.getName(), dispatcherClasses.contains(c));
-        }
+        for (Class<?> c : forObject)
+            assertTrue(c.getName(), forMath.contains(c));
+
+        Set<IPathDispatcher> forArrayList = index.getDispatchers(ArrayList.class);
+        Class<?>[] forList = { ListPathDispatcher.class };
+        for (Class<?> c : forList)
+            assertTrue(c.getName(), forArrayList.contains(c));
+
+        Set<IPathDispatcher> forLinkedHashMap = index.getDispatchers(LinkedHashMap.class);
+        Class<?>[] forMap = { MapPathDispatcher.class };
+        for (Class<?> c : forMap)
+            assertTrue(c.getName(), forLinkedHashMap.contains(c));
+
+        Set<IPathDispatcher> forMapTreeNode = index.getDispatchers(MapTreeNode.class);
+        Class<?>[] forTreeNode = { TreeNodePathDispatcher.class };
+        for (Class<?> c : forTreeNode)
+            assertTrue(c.getName(), forMapTreeNode.contains(c));
     }
 
     public class Home {

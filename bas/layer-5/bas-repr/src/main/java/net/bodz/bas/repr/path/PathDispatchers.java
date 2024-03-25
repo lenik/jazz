@@ -3,12 +3,14 @@ package net.bodz.bas.repr.path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.object.IdentityHashSet;
+import net.bodz.bas.c.type.TypePoMap;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
@@ -23,26 +25,57 @@ public class PathDispatchers
 
     static final Logger logger = LoggerFactory.getLogger(PathDispatchers.class);
 
-    private Set<IPathDispatcher> dispatchers;
+    private TypePoMap<Set<IPathDispatcher>> typeMap = new TypePoMap<>();
     private int maxDispatchCount = 10000;
     private boolean checkDeadLoop = true;
     boolean multipleEnabled;
     boolean removeDups;
 
     public PathDispatchers() {
-        dispatchers = new TreeSet<IPathDispatcher>(PriorityComparator.INSTANCE);
     }
 
-    public Set<IPathDispatcher> getDispatchers() {
-        return dispatchers;
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return new Class<?>[] { Object.class };
+    }
+
+    public Set<Class<?>> getDispatcherTypes(Class<?> type) {
+        Set<IPathDispatcher> dispatchers = getDispatchers(type);
+        Set<Class<?>> types = new LinkedHashSet<>();
+        for (IPathDispatcher dispatcher : dispatchers)
+            types.add(dispatcher.getClass());
+        return types;
+    }
+
+    public Set<IPathDispatcher> getDispatchers(Class<?> type) {
+        Set<IPathDispatcher> all = new TreeSet<>(PriorityComparator.INSTANCE);
+        Class<?> decl = type;
+        while (decl != null) {
+            Set<IPathDispatcher> set = typeMap.meet(decl);
+            if (set != null)
+                all.addAll(set);
+            else
+                break;
+            decl = decl.getSuperclass();
+        }
+        return all;
     }
 
     protected void addDispatcher(IPathDispatcher dispatcher) {
-        dispatchers.add(dispatcher);
+        for (Class<?> acceptType : dispatcher.getAcceptTypes()) {
+            Set<IPathDispatcher> set = typeMap.get(acceptType);
+            if (set == null)
+                typeMap.put(acceptType, set = new TreeSet<>());
+            set.add(dispatcher);
+        }
     }
 
     protected void removeDispatcher(IPathDispatcher dispatcher) {
-        dispatchers.remove(dispatcher);
+        for (Class<?> acceptType : dispatcher.getAcceptTypes()) {
+            Set<IPathDispatcher> set = typeMap.get(acceptType);
+            if (set != null)
+                set.remove(dispatcher);
+        }
     }
 
     public int getMaxDispatchCount() {
@@ -169,7 +202,8 @@ public class PathDispatchers
             Set<IPathArrival> arrivals = removeDups ? new IdentityHashSet<IPathArrival>() : null;
 
             ITokenQueue tmp = null;
-            for (IPathDispatcher dispatcher : dispatchers) {
+            // XXX
+            for (IPathDispatcher dispatcher : getDispatchers(this.start.getTarget().getClass())) {
                 if (tmp == null)
                     tmp = tokens.clone();
 

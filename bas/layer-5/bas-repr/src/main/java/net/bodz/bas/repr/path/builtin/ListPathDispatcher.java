@@ -14,10 +14,16 @@ public class ListPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_LIST;
+    static final Class<?> ACCEPT_TYPES[] = { List.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class ListPathDispatcher
         if (source == null)
             throw new PathDispatchException("null target.");
 
-        if (!(source instanceof List<?>))
+        if (! (source instanceof List<?>))
             return null;
 
         String head = tokens.peek();

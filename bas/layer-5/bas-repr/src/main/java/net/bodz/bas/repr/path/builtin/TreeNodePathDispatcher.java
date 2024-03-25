@@ -13,10 +13,16 @@ public class TreeNodePathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_TREE_NODE;
+    static final Class<?> ACCEPT_TYPES[] = { ITreeNode.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -25,7 +31,7 @@ public class TreeNodePathDispatcher
         if (source == null)
             throw new PathDispatchException("null source.");
 
-        if (!(source instanceof ITreeNode))
+        if (! (source instanceof ITreeNode))
             return null;
 
         String key = tokens.peek();

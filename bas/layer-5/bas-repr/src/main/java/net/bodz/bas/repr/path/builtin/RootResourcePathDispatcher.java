@@ -18,6 +18,7 @@ public class RootResourcePathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_CLASS_RESOURCE;
+    static final Class<?> ACCEPT_TYPES[] = { Object.class };
 
     boolean mimeTypeFromExtension = true;
     boolean mimeTypeFromMagic = false;
@@ -25,6 +26,11 @@ public class RootResourcePathDispatcher
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
@@ -51,7 +57,7 @@ public class RootResourcePathDispatcher
             checkList.add(remaining + "/index.html");
         } else {
             // the file name must have extension for mime-type.
-            if (!remaining.contains("."))
+            if (! remaining.contains("."))
                 return null;
             checkList.add(remaining);
         }

@@ -17,10 +17,16 @@ public class JsonVariantPathDispatcher
             IPathDispatcher {
 
     public static final int PRIORITY = BuiltinPathDispatcherPriorities.PRIORITY_JSON;
+    static final Class<?> ACCEPT_TYPES[] = { JsonVariant.class, JsonObject.class, JsonArray.class };
 
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public Class<?>[] getAcceptTypes() {
+        return ACCEPT_TYPES;
     }
 
     @Override
