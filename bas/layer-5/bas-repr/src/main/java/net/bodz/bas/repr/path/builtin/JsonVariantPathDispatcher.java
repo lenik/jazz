@@ -49,6 +49,8 @@ public class JsonVariantPathDispatcher
         JsonVariant jv = (JsonVariant) source;
 
         JsonVariantTreeResolveResult result = JsonVariantTreeResolver.resolveVerbose(jv, lav);
+        if (result.validCount == 0)
+            return null;
 
         return PathArrival.shift(result.validCount, previous, this, result.stoppedAt, tokens);
     }

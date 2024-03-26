@@ -36,17 +36,17 @@ public class PathDispatchIndexTest
         for (Class<?> c : forObject)
             assertTrue(c.getName(), forMath.contains(c));
 
-        Set<IPathDispatcher> forArrayList = index.getDispatchers(ArrayList.class);
+        Set<Class<?>> forArrayList = index.getDispatcherTypes(ArrayList.class);
         Class<?>[] forList = { ListPathDispatcher.class };
         for (Class<?> c : forList)
             assertTrue(c.getName(), forArrayList.contains(c));
 
-        Set<IPathDispatcher> forLinkedHashMap = index.getDispatchers(LinkedHashMap.class);
+        Set<Class<?>> forLinkedHashMap = index.getDispatcherTypes(LinkedHashMap.class);
         Class<?>[] forMap = { MapPathDispatcher.class };
         for (Class<?> c : forMap)
             assertTrue(c.getName(), forLinkedHashMap.contains(c));
 
-        Set<IPathDispatcher> forMapTreeNode = index.getDispatchers(MapTreeNode.class);
+        Set<Class<?>> forMapTreeNode = index.getDispatcherTypes(MapTreeNode.class);
         Class<?>[] forTreeNode = { TreeNodePathDispatcher.class };
         for (Class<?> c : forTreeNode)
             assertTrue(c.getName(), forMapTreeNode.contains(c));

@@ -63,15 +63,19 @@ public class PathDispatchers
 
     protected void addDispatcher(IPathDispatcher dispatcher) {
         for (Class<?> acceptType : dispatcher.getAcceptTypes()) {
+            if (acceptType.isInterface())
+                acceptType = Object.class;
             Set<IPathDispatcher> set = typeMap.get(acceptType);
             if (set == null)
-                typeMap.put(acceptType, set = new TreeSet<>());
+                typeMap.put(acceptType, set = new TreeSet<>(PriorityComparator.INSTANCE));
             set.add(dispatcher);
         }
     }
 
     protected void removeDispatcher(IPathDispatcher dispatcher) {
         for (Class<?> acceptType : dispatcher.getAcceptTypes()) {
+            if (acceptType.isInterface())
+                acceptType = Object.class;
             Set<IPathDispatcher> set = typeMap.get(acceptType);
             if (set != null)
                 set.remove(dispatcher);
@@ -149,14 +153,14 @@ public class PathDispatchers
         IPathArrival start;
         ITokenQueue tokens;
         IVariantMap<String> q;
-        Map<Object, String> markMap;
+        Map<Object, String> nodePathMap;
 
         public Process(IPathArrival start, ITokenQueue tokens, IVariantMap<String> q) {
             this.start = start;
             this.tokens = tokens;
             this.q = q;
             if (checkDeadLoop)
-                markMap = new IdentityHashMap<>();
+                nodePathMap = new IdentityHashMap<>();
         }
 
         public List<Process> run()
@@ -231,9 +235,9 @@ public class PathDispatchers
             for (int i = 0; i < n; i++) {
                 Process child = children.get(i);
                 if (i == 0)
-                    child.markMap = markMap;
+                    child.nodePathMap = nodePathMap;
                 else
-                    child.markMap = new IdentityHashMap<>(markMap);
+                    child.nodePathMap = new IdentityHashMap<>(nodePathMap);
 
                 IPathArrival childStart = child.start;
                 child.addNonLoop(child.start, childStart.getConsumedPath());
@@ -241,7 +245,7 @@ public class PathDispatchers
             return children;
         }
 
-        void addNonLoop(IPathArrival arrival, String info)
+        void addNonLoop(IPathArrival arrival, String path)
                 throws PathDispatchException {
             if (! checkDeadLoop)
                 return;
@@ -249,15 +253,22 @@ public class PathDispatchers
             if (target == null)
                 return;
             if (arrival.getConsumedTokens().length == 0) {
-                String prevInfo = markMap.get(target);
-                if (prevInfo != null) {
+                String prevPath = nodePathMap.get(target);
+                if (prevPath != null) {
+                    String targetInfo = target.toString();
+                    if (targetInfo.length() > 30)
+                        targetInfo = targetInfo.substring(0, 30) + "...";
+                    Object resolver = arrival.getResolver();
                     throw new PathDispatchException(String.format(//
-                            "Dead loop detected (n=%d): current %s, previous %s.", //
-                            markMap.size(), prevInfo, info));
+                            "Dead loop detected (n=%d): resolver %s, target %s (%s), current path: %s, previous path: %s.", //
+                            nodePathMap.size(), //
+                            resolver, //
+                            targetInfo, target.getClass(), //
+                            path, prevPath));
                 }
-                markMap.put(target, info);
+                nodePathMap.put(target, path);
             } else
-                markMap.clear();
+                nodePathMap.clear();
         }
 
         @Override
