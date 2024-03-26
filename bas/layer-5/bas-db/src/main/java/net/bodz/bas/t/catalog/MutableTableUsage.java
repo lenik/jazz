@@ -14,8 +14,10 @@ public class MutableTableUsage
         implements
             ITableUsage {
 
+    List<String> viewColumns = new ArrayList<>();
+
     TableOid tableId;
-    List<String> columns = new ArrayList<>();
+    List<String> fromColumns = new ArrayList<>();
 
     public MutableTableUsage() {
     }
@@ -25,21 +27,30 @@ public class MutableTableUsage
     }
 
     @Override
-    public TableOid getTableId() {
+    public List<String> getViewColumns() {
+        return viewColumns;
+    }
+
+    public void setViewColumns(List<String> columns) {
+        this.viewColumns = columns;
+    }
+
+    @Override
+    public TableOid getFromTableId() {
         return tableId;
     }
 
-    public void setTableId(TableOid tableId) {
+    public void setFromTableId(TableOid tableId) {
         this.tableId = tableId;
     }
 
     @Override
-    public List<String> getColumns() {
-        return columns;
+    public List<String> getFromColumns() {
+        return fromColumns;
     }
 
-    public void setColumns(List<String> columns) {
-        this.columns = columns;
+    public void setFromColumns(List<String> columns) {
+        this.fromColumns = columns;
     }
 
     @Override
@@ -48,12 +59,19 @@ public class MutableTableUsage
         tableId = new TableOid();
         tableId.jsonIn(o, opts);
 
-        JsonArray o_columns = o.getJsonArray(K_COLUMNS);
-        int n = o_columns.length();
-        List<String> list = new ArrayList<>(n);
+        JsonArray o_viewColumns = o.getJsonArray(K_VIEW_COLUMNS);
+        int n = o_viewColumns.length();
+        List<String> viewList = new ArrayList<>(n);
         for (int i = 0; i < n; i++)
-            list.add(o_columns.getString(i));
-        this.columns = list;
+            viewList.add(o_viewColumns.getString(i));
+        this.viewColumns = viewList;
+
+        JsonArray o_fromColumns = o.getJsonArray(K_FROM_COLUMNS);
+        n = o_fromColumns.length();
+        List<String> fromList = new ArrayList<>(n);
+        for (int i = 0; i < n; i++)
+            fromList.add(o_fromColumns.getString(i));
+        this.fromColumns = fromList;
     }
 
     @Override
@@ -62,14 +80,23 @@ public class MutableTableUsage
         tableId = new TableOid();
         tableId.readObject(element);
 
-        IElement x_columns = element.selectByTag(K_COLUMNS).first();
-        List<String> list = new ArrayList<>();
-        for (IElement x_column : x_columns.children()) {
-            assert x_column.getTagName().equals(K_COLUMN);
-            String column = x_columns.getTextContent();
-            list.add(column);
+        IElement x_viewColumns = element.selectByTag(K_VIEW_COLUMNS).first();
+        List<String> viewList = new ArrayList<>();
+        for (IElement x_column : x_viewColumns.children()) {
+            assert x_column.getTagName().equals(K_VIEW_COLUMN);
+            String column = x_viewColumns.getTextContent();
+            viewList.add(column);
         }
-        this.columns = list;
+        this.viewColumns = viewList;
+
+        IElement x_fromColumns = element.selectByTag(K_FROM_COLUMNS).first();
+        List<String> fromList = new ArrayList<>();
+        for (IElement x_column : x_fromColumns.children()) {
+            assert x_column.getTagName().equals(K_FROM_COLUMN);
+            String column = x_fromColumns.getTextContent();
+            fromList.add(column);
+        }
+        this.fromColumns = fromList;
     }
 
 }

@@ -64,7 +64,7 @@ public class DefaultViewMetadata
     TableKey findPrimaryKeyFromForeignTables(ICatalogMetadata catalog) {
         TableKey primaryKey = null;
         for (ITableUsage usage : tableUsages.values()) {
-            ITableMetadata source = catalog.getTable(usage.getTableId());
+            ITableMetadata source = catalog.getTable(usage.getFromTableId());
             if (source == null) {
                 // source = catalog.getView(usage.getTableId());
                 // throw new NoSuchKeyException("No table: " + usage.getTableId());
@@ -118,8 +118,14 @@ public class DefaultViewMetadata
                 usage = new MutableTableUsage(oid);
                 tableUsages.put(oid, usage);
             }
-            String column = rs.getString("column_name");
-            usage.columns.add(column);
+            String fromColumn = rs.getString("column_name");
+
+            DefaultViewMetadata view = DefaultViewMetadata.this;
+            IColumnMetadata viewColumn = view.getColumn(fromColumn);
+            if (viewColumn != null) {
+                usage.fromColumns.add(fromColumn);
+                usage.viewColumns.add(viewColumn.getName());
+            }
         }
 
     }
@@ -141,7 +147,7 @@ public class DefaultViewMetadata
                 JsonObject o_usage = o_usages.getJsonObject(i);
                 MutableTableUsage usage = new MutableTableUsage();
                 usage.jsonIn(o_usage, opts);
-                tableUsages.put(usage.getTableId(), usage);
+                tableUsages.put(usage.getFromTableId(), usage);
             }
         }
     }
@@ -157,7 +163,7 @@ public class DefaultViewMetadata
             for (IElement x_usage : x_usages.children()) {
                 MutableTableUsage usage = new MutableTableUsage();
                 usage.readObject(x_usage);
-                tableUsages.put(usage.getTableId(), usage);
+                tableUsages.put(usage.getFromTableId(), usage);
             }
         }
     }

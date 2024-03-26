@@ -17,25 +17,38 @@ public interface ITableUsage
             IJsonForm,
             IXmlForm {
 
-    String K_COLUMNS = "columns";
-    String K_COLUMN = "columns";
+    String K_VIEW_COLUMNS = "viewColumns";
+    String K_VIEW_COLUMN = "column";
+    String K_FROM_COLUMNS = "fromColumns";
+    String K_FROM_COLUMN = "column";
 
-    TableOid getTableId();
+    List<String> getViewColumns();
 
-    List<String> getColumns();
+    TableOid getFromTableId();
+
+    List<String> getFromColumns();
 
     @Override
     default void jsonOut(IJsonOut out, JsonFormOptions opts)
             throws IOException, FormatException {
-        TableOid oid = getTableId();
+        List<String> viewColumns = getViewColumns();
+        if (viewColumns != null) {
+            out.key(K_VIEW_COLUMNS);
+            out.array();
+            for (String col : viewColumns)
+                out.value(col);
+            out.endArray();
+        }
+
+        TableOid oid = getFromTableId();
         if (oid != null)
             oid.jsonOut(out, opts);
 
-        List<String> columns = getColumns();
-        if (columns != null) {
-            out.key(K_COLUMNS);
+        List<String> fromColumns = getFromColumns();
+        if (fromColumns != null) {
+            out.key(K_FROM_COLUMNS);
             out.array();
-            for (String col : columns)
+            for (String col : fromColumns)
                 out.value(col);
             out.endArray();
         }
@@ -44,15 +57,23 @@ public interface ITableUsage
     @Override
     default void writeObject(IXmlOutput out)
             throws XMLStreamException, FormatException {
-        TableOid oid = getTableId();
+        List<String> viewColumns = getFromColumns();
+        if (viewColumns != null) {
+            out.beginElement(K_VIEW_COLUMNS);
+            for (String col : viewColumns)
+                out.element(K_VIEW_COLUMN, col);
+            out.endElement();
+        }
+
+        TableOid oid = getFromTableId();
         if (oid != null)
             oid.writeObject(out);
 
-        List<String> columns = getColumns();
-        if (columns != null) {
-            out.beginElement(K_COLUMNS);
-            for (String col : columns)
-                out.element(K_COLUMN, col);
+        List<String> fromColumns = getFromColumns();
+        if (fromColumns != null) {
+            out.beginElement(K_FROM_COLUMNS);
+            for (String col : fromColumns)
+                out.element(K_FROM_COLUMN, col);
             out.endElement();
         }
     }
