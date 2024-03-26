@@ -17,7 +17,7 @@ public class DataApps {
     public static DataApplication getPreferred() {
         DataContext dataContext = DataHub.getPreferredHub().getMain();
 
-        File rootDir = SysProps.userHome;
+        File rootDir = SysProps.dataDir;
         File baseDir = null;
 
         Collection<String> contextIds = //
@@ -31,6 +31,7 @@ public class DataApps {
         }
         if (baseDir == null)
             baseDir = new File(rootDir, "__volumes");
+
         IVolumeProvider volumeProvider = new AttachmentGroup(baseDir);
 
         DataApplication app = new DataApplication(dataContext, volumeProvider);

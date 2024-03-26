@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URL;
 
 import net.bodz.bas.c.string.StringPred;
-import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
@@ -16,10 +15,13 @@ import net.bodz.bas.site.vhost.IVirtualHost;
 import net.bodz.bas.site.vhost.VirtualHostManager;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.app.DataApps;
+import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.storage.IVolume;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -63,21 +65,15 @@ class AttachmentResolveProcess
 
         // XXX Redirect to /files/...
 
-        File homeDir = SysProps.userHome;
-        File start = new File(homeDir, "sites");
-
         IVirtualHost vhost = VirtualHostManager.getInstance().resolveVirtualHost(request);
         if (vhost == null)
             throw new IllegalUsageException("No corresponding vhost.");
 
-        String vhostName = vhost.getName();
-        File vstart = new File(start, vhostName);
-
-        String entityTypeName = typeInfo.getEntityClass().getSimpleName();
-        File tableDir = new File(vstart, entityTypeName);
+        IDataApplication dataApp = DataApps.fromRequest();
+        IVolume volume = dataApp.getVolume(typeInfo.getEntityClass());
 
         String idPath = obj.getIdPath();
-        File objDir = new File(tableDir, idPath);
+        File objDir = volume.getLocalFile(idPath);
 
         String remainingPath = tokens.getRemainingPath();
         consumedTokenCount = tokens.available();
@@ -98,13 +94,13 @@ class AttachmentResolveProcess
 
         File file = new File(objDir, remainingPath);
 
-        if (!file.exists()) {
+        if (! file.exists()) {
             logger.warn("Not-Found: " + file);
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
 
-        if (!file.canRead()) {
+        if (! file.canRead()) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Not readable.");
             return null;
         }
