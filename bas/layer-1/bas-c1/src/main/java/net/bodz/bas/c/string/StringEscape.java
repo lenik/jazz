@@ -68,7 +68,13 @@ public class StringEscape {
      * @return <code>null</code> for <code>null</code>
      */
     public static String escapeJava(String s) {
-        return StringEscapeUtils.escapeJava(s);
+        s = s.replace("\\", "\\\\");
+        s = s.replace(STR_QQ, "\\\"");
+        s = s.replace("\n", "\\n");
+        s = s.replace("\r", "\\r");
+        s = s.replace("\t", "\\t");
+        s = s.replace("\0", "\\0");
+        return s;
     }
 
     /**
