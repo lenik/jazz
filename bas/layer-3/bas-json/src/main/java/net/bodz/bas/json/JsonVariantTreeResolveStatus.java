@@ -2,7 +2,7 @@ package net.bodz.bas.json;
 
 public enum JsonVariantTreeResolveStatus {
 
-    NONE,
+    OK,
 
     INTO_NULL,
 
@@ -18,7 +18,7 @@ public enum JsonVariantTreeResolveStatus {
 
     public String getMessage() {
         switch (this) {
-        case NONE:
+        case OK:
         case INTO_NULL:
         case INTO_NONJSON:
         case BAD_INDEX:

@@ -6,7 +6,7 @@ public class JsonVariantTreeResolveResult {
 
     public int validCount;
 
-    public JsonVariantTreeResolveStatus status = JsonVariantTreeResolveStatus.NONE;
+    public JsonVariantTreeResolveStatus status = JsonVariantTreeResolveStatus.OK;
 
     public JsonVariant stoppedAt;
 

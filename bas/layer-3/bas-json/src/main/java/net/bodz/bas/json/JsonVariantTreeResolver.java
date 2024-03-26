@@ -12,7 +12,7 @@ public class JsonVariantTreeResolver {
 
     public static JsonVariant resolve(JsonVariant node, String[] entryNames) {
         JsonVariantTreeResolveResult result = resolveVerbose(node, entryNames);
-        if (result.status != JsonVariantTreeResolveStatus.NONE) {
+        if (result.status != JsonVariantTreeResolveStatus.OK) {
             throw new IllegalArgumentException(result.status.getMessage());
         }
         assert result.validCount == entryNames.length;
