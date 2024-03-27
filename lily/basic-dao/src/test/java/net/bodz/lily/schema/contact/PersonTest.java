@@ -1,8 +1,6 @@
 package net.bodz.lily.schema.contact;
 
 import net.bodz.bas.fmt.json.JsonFn;
-import net.bodz.lily.schema.contact.Gender;
-import net.bodz.lily.schema.contact.Person;
 
 public class PersonTest {
 
