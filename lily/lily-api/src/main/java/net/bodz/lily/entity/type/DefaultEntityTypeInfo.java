@@ -1,69 +1,90 @@
 package net.bodz.lily.entity.type;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
-import net.bodz.lily.entity.IIdentity;
 import net.bodz.lily.entity.IdFn;
+import net.bodz.lily.entity.PrimaryKeyColumns;
+import net.bodz.lily.entity.PrimaryKeyProperties;
 import net.bodz.lily.entity.StrVar;
 
 public class DefaultEntityTypeInfo
         implements
             IEntityTypeInfo {
 
-    Class<?> entityClass;
-    IType potatoType;
+    final Class<?> entityClass;
+    final IType potatoType;
 
-    Class<?> idClass;
-    Class<?> mapperClass;
-    Class<?> criteriaBuilderClass;
+    final Class<?> idClass;
+    final Class<?> mapperClass;
+    final Class<?> criteriaBuilderClass;
 
-    ColumnProperty[] idProperties;
+    final String[] primaryKeyColumns;
+    final String[] primaryKeyPropertyNames;
+    final Map<String, IProperty> primaryKeyProperties = new LinkedHashMap<>();
+
+//    ColumnProperty[] idProperties;
 
     public DefaultEntityTypeInfo(Class<?> entityClass) {
         this.entityClass = entityClass;
+        potatoType = BeanTypeProvider.getInstance().loadType(entityClass);
+
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
         criteriaBuilderClass = StructRowCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
-        if (idClass != null && IIdentity.class.isAssignableFrom(idClass)) {
-            BeanInfo beanInfo;
-            try {
-                beanInfo = Introspector.getBeanInfo(idClass);
-            } catch (IntrospectionException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
-            List<ColumnProperty> columns = new ArrayList<>();
-            for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
-                ColumnProperty property = new ColumnProperty(pd);
-                if (property.getColumn() != null)
-                    columns.add(property);
-            }
-            int n = columns.size();
-            idProperties = new ColumnProperty[n];
-            for (int i = 0; i < n; i++)
-                idProperties[i] = columns.get(i);
+        PrimaryKeyColumns aColumns = entityClass.getAnnotation(PrimaryKeyColumns.class);
+        if (aColumns != null)
+            primaryKeyColumns = aColumns.value();
+        else
+            primaryKeyColumns = new String[0];
 
-            Comparator<ColumnProperty> order;
-            order = new SourceDeclaredPropertyOrder(idClass);
-            order = ColumnPropertyOrder.INSTANCE;
-            Arrays.sort(idProperties, order);
-        } // idClass != null
+        PrimaryKeyProperties aProperties = entityClass.getAnnotation(PrimaryKeyProperties.class);
+        if (aProperties != null) {
+            primaryKeyPropertyNames = aProperties.value();
+            for (String name : primaryKeyPropertyNames) {
+                IProperty property = potatoType.getProperty(name);
+                if (property == null)
+                    throw new IllegalUsageException("invalid property name: " + name);
+                primaryKeyProperties.put(name, property);
+            }
+        } else {
+            primaryKeyPropertyNames = new String[0];
+        }
+
+//        if (idClass != null && IIdentity.class.isAssignableFrom(idClass)) {
+//            BeanInfo beanInfo;
+//            try {
+//                beanInfo = Introspector.getBeanInfo(idClass);
+//            } catch (IntrospectionException e) {
+//                throw new RuntimeException(e.getMessage(), e);
+//            }
+//            List<ColumnProperty> columns = new ArrayList<>();
+//            for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
+//                ColumnProperty property = new ColumnProperty(pd);
+//                if (property.getColumn() != null)
+//                    columns.add(property);
+//            }
+//            int n = columns.size();
+//            idProperties = new ColumnProperty[n];
+//            for (int i = 0; i < n; i++)
+//                idProperties[i] = columns.get(i);
+//
+//            Comparator<ColumnProperty> order;
+//            order = new SourceDeclaredPropertyOrder(idClass);
+//            order = ColumnPropertyOrder.INSTANCE;
+//            Arrays.sort(idProperties, order);
+//        } // idClass != null
     }
 
     @Override
@@ -73,13 +94,6 @@ public class DefaultEntityTypeInfo
 
     @Override
     public IType getPotatoType() {
-        if (potatoType == null) {
-            synchronized (this) {
-                if (potatoType == null) {
-                    potatoType = BeanTypeProvider.getInstance().loadType(entityClass);
-                }
-            }
-        }
         return potatoType;
     }
 
@@ -110,9 +124,24 @@ public class DefaultEntityTypeInfo
     }
 
     @Override
+    public String[] getPrimaryKeyColumns() {
+        return primaryKeyColumns;
+    }
+
+    @Override
+    public String[] getPrimaryKeyPropertyNames() {
+        return primaryKeyPropertyNames;
+    }
+
+    @Override
+    public IProperty getPrimaryKeyProperty(String name) {
+        return primaryKeyProperties.get(name);
+    }
+
+    @Override
     public int getIdColumnCount() {
-        if (idProperties != null)
-            return idProperties.length;
+        if (primaryKeyColumns != null)
+            return primaryKeyColumns.length;
         else
             return idClass == null ? 0 : 1;
     }
@@ -126,7 +155,7 @@ public class DefaultEntityTypeInfo
             throw new IllegalArgumentException("columns empty");
 
         Object[] values;
-        if (idProperties == null) {
+        if (primaryKeyPropertyNames == null) {
             values = new Object[1];
             try {
                 Object val = StrVar.parse(idClass, columns[0]);
@@ -137,10 +166,12 @@ public class DefaultEntityTypeInfo
                 throw new ParseException(err, e);
             }
         } else {
-            values = new Object[idProperties.length];
-            for (int i = 0; i < idProperties.length; i++) {
-                ColumnProperty property = idProperties[i];
-                Class<?> propertyType = property.getPropertyType();
+            int n = primaryKeyPropertyNames.length;
+            values = new Object[n];
+            for (int i = 0; i < n; i++) {
+                String propertyName = primaryKeyPropertyNames[i];
+                IProperty property = primaryKeyProperties.get(propertyName);
+                Class<?> propertyType = property.getPropertyClass();
                 try {
                     Object val = StrVar.parse(propertyType, columns[i]);
                     values[i] = val;

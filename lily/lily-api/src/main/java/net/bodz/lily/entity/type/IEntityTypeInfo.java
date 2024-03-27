@@ -1,6 +1,7 @@
 package net.bodz.lily.entity.type;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 
@@ -17,6 +18,12 @@ public interface IEntityTypeInfo {
     Class<?> getCriteriaBuilderClass();
 
     ICriteriaBuilder<?> newCriteriaBuilder();
+
+    String[] getPrimaryKeyColumns();
+
+    String[] getPrimaryKeyPropertyNames();
+
+    IProperty getPrimaryKeyProperty(String propertyName);
 
     int getIdColumnCount();
 
