@@ -136,8 +136,16 @@ public class SaveProcess
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         if (hasId) {
-            String idStr = o.getString("id");
-            this.id = typeInfo.parseSimpleId(idStr);
+            String[] names = typeInfo.getPrimaryKeyPropertyNames();
+            String[] params = new String[names.length];
+            for (int i = 0; i < names.length; i++) {
+                String property = names[i];
+                String param = o.getString(property);
+                if (params == null)
+                    throw new IllegalArgumentException("pk-column[" + i + "] isn't specified.");
+                params[i] = param;
+            }
+            this.id = typeInfo.parseId(params);
             this.createNew = id == null;
         } else {
             throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
