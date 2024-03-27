@@ -18,8 +18,8 @@ import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
+import net.bodz.lily.entity.IIdentity;
 import net.bodz.lily.entity.IdFn;
-import net.bodz.lily.entity.Identifier;
 import net.bodz.lily.entity.StrVar;
 
 public class DefaultEntityTypeInfo
@@ -41,7 +41,7 @@ public class DefaultEntityTypeInfo
         mapperClass = IMapper.fn.getMapperClass(entityClass);
         criteriaBuilderClass = StructRowCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
-        if (idClass != null && idClass.isAnnotationPresent(Identifier.class)) {
+        if (idClass != null && IIdentity.class.isAssignableFrom(idClass)) {
             BeanInfo beanInfo;
             try {
                 beanInfo = Introspector.getBeanInfo(idClass);

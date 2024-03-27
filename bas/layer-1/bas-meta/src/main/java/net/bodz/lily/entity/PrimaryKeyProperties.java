@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Identifier {
+public @interface PrimaryKeyProperties {
+
+    String[] value();
 
 }

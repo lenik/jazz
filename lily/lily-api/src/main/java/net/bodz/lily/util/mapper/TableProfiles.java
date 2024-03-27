@@ -14,7 +14,7 @@ import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.lily.criterion.CompareMode;
 import net.bodz.lily.criterion.FieldCompare;
 import net.bodz.lily.criterion.Junction;
-import net.bodz.lily.entity.IdColumn;
+import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.util.IRandomPicker;
@@ -62,7 +62,7 @@ public class TableProfiles
 
         // ICriteriaBuilder<?> criteriaBuilder = typeInfo.newCriteriaBuilder();
 
-        IdColumn aIdColumn = enitityClass.getAnnotation(IdColumn.class);
+        PrimaryKeyColumns aIdColumn = enitityClass.getAnnotation(PrimaryKeyColumns.class);
         String[] idColumns = aIdColumn.value();
 
         Junction j = new Junction();

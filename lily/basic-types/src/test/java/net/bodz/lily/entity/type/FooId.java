@@ -3,10 +3,11 @@ package net.bodz.lily.entity.type;
 import javax.persistence.Column;
 
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.lily.entity.Identifier;
+import net.bodz.lily.entity.IIdentity;
 
-@Identifier
-public class FooId {
+public class FooId
+        implements
+            IIdentity {
 
     String name;
     int age;
