@@ -15,9 +15,8 @@ export class Person extends _Person_stuff {
     hello?: string
     peers?: List<string>
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

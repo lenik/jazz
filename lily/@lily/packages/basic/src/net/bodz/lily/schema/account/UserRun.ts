@@ -1,4 +1,4 @@
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import UserRunTypeInfo from "./UserRunTypeInfo";
 import _UserRun_stuff from "./_UserRun_stuff";
@@ -12,12 +12,11 @@ export class UserRun extends _UserRun_stuff {
         return this._typeInfo;
     }
 
-    activeTime?: ZonedDateTime
+    activeTime?: OffsetDateTime
     stateText?: string
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

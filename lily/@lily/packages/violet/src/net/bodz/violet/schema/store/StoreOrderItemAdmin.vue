@@ -3,8 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import Artifact from "../art/Artifact";
@@ -34,12 +33,11 @@ const typeMap = {
     "LONG": LONG,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "StoreOrder": StoreOrder.TYPE,
     "Artifact": Artifact.TYPE,
     "Region": Region.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "TIMESTAMP": TIMESTAMP,
     "BIG_DECIMAL": BIG_DECIMAL,
     "STRING": STRING,
 };
@@ -57,15 +55,15 @@ onMounted(() => {
             <th data-type="INT" data-field="priority">Priority</th>
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
-            <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-            <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+            <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+            <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
             <th data-type="INT" data-field="year">Year</th>
             <th data-type="StoreOrder" data-format="label" data-field="order">Order</th>
             <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>
             <th data-type="Region" data-format="label" data-field="region">Region</th>
             <th data-type="JSON_VARIANT" data-field="batch">Batch</th>
             <th data-type="LONG" data-field="serial">Serial</th>
-            <th data-type="TIMESTAMP" data-field="expire">Expire</th>
+            <th data-type="OffsetDateTime" data-field="expire">Expire</th>
             <th data-type="BIG_DECIMAL" data-field="quantity">Quantity</th>
             <th data-type="BIG_DECIMAL" data-field="price">Price</th>
             <th data-type="BIG_DECIMAL" data-field="amount">Amount</th>

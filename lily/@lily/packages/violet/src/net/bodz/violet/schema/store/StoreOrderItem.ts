@@ -14,9 +14,8 @@ export class StoreOrderItem extends _StoreOrderItem_stuff {
 
     amount?: BigDecimal
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,6 +1,6 @@
 package net.bodz.lily.schema.account;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Table;
 
@@ -8,6 +8,8 @@ import net.bodz.bas.meta.decl.Redundant;
 import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.PrimaryKeyProperties;
 
+@PrimaryKeyColumns("user")
+@PrimaryKeyProperties("userId")
 @Table(schema = UserRun.SCHEMA_NAME, name = UserRun.TABLE_NAME)
 public class UserRun
         extends _UserRun_stuff {
@@ -23,7 +25,7 @@ public class UserRun
     }
 
     @Redundant
-    public ZonedDateTime getActiveTime() {
+    public OffsetDateTime getActiveTime() {
         return super.getLastModified();
     }
 

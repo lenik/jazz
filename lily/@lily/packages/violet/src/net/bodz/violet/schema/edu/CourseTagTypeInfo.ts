@@ -1,3 +1,4 @@
+import CourseTag from "./CourseTag";
 import CourseTagValidators from "./CourseTagValidators";
 import _CourseTag_stuff_TypeInfo from "./_CourseTag_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class CourseTagTypeInfo extends _CourseTag_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.CourseTag"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new CourseTag();
+    }
 
     override preamble() {
         super.preamble();

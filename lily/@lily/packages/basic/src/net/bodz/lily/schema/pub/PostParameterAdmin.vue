@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import Post from "./Post";
 import PostParameter from "./PostParameter";
@@ -28,7 +28,7 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "Post": Post.TYPE,
     "PostParameterType": PostParameterType.TYPE,
     "DOUBLE": DOUBLE,
@@ -45,8 +45,8 @@ onMounted(() => {
     <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
             <th data-type="INT" data-field="id">Id</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="Post" data-format="label" data-field="post">Post</th>
             <th data-type="PostParameterType" data-format="label" data-field="parameter">Parameter</th>

@@ -14,9 +14,8 @@ export class ShopItem extends _ShopItem_stuff {
 
     total?: BigDecimal
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.fab;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.Group;
@@ -33,8 +33,8 @@ public class FabStdProcessSamples
         a.setTest(test);
         a.setFunction(function);
         a.setValid(false);
-        a.setValidSince(ZonedDateTime.parse("2024-01-05T20:41:03.103+02:00[Asia/Famagusta]", DateTimes.ISO_ZONED_DATE_TIME));
-        a.setValidUntil(ZonedDateTime.parse("2023-12-16T02:29:03.249+02:00[Africa/Khartoum]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setValidSince(OffsetDateTime.parse("2024-01-05T06:46:03.103-11:55", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setValidUntil(OffsetDateTime.parse("2024-01-24T21:52:58.332+03:40", DateTimes.ISO_OFFSET_DATE_TIME));
         a.setDuration(1399266125);
         a.setStrict(false);
         return a;

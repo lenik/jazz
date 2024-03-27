@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.edu.TestQuestionTalkVote;
 
 /**
-* @label TestQuestionTalkVote
-*/
+ * @label TestQuestionTalkVote
+ */
 @ObjectType(TestQuestionTalkVote.class)
 public class TestQuestionTalkVoteIndex
         extends CoIndex<TestQuestionTalkVote> {

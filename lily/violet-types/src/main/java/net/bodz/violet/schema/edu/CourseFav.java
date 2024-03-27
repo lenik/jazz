@@ -2,7 +2,7 @@ package net.bodz.violet.schema.edu;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "course_fav")
+@Table(schema = CourseFav.SCHEMA_NAME, name = CourseFav.TABLE_NAME)
 public class CourseFav
         extends _CourseFav_stuff {
 

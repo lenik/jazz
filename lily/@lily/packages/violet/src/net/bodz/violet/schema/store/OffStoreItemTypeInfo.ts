@@ -1,3 +1,4 @@
+import OffStoreItem from "./OffStoreItem";
 import OffStoreItemValidators from "./OffStoreItemValidators";
 import _OffStoreItem_stuff_TypeInfo from "./_OffStoreItem_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class OffStoreItemTypeInfo extends _OffStoreItem_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.OffStoreItem"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new OffStoreItem();
+    }
 
     override preamble() {
         super.preamble();

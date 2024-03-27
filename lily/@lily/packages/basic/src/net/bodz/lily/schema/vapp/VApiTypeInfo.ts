@@ -1,3 +1,4 @@
+import VApi from "./VApi";
 import VApiValidators from "./VApiValidators";
 import _VApi_stuff_TypeInfo from "./_VApi_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class VApiTypeInfo extends _VApi_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.vapp.VApi"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new VApi();
+    }
 
     override preamble() {
         super.preamble();

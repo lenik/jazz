@@ -1,10 +1,9 @@
 <script lang="ts">
 import { onMounted, provide, ref } from "vue";
 
-import type { int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import StructRow from "@lily/basic/src/net/bodz/lily/concrete/StructRow";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import FabTrackParty from "./FabTrackParty";
 import _FabTrackParty_stuff from "./_FabTrackParty_stuff";
@@ -18,9 +17,9 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 import PersonChooseDialog from "@lily/basic/src/net/bodz/lily/schema/contact/PersonChooseDialog.vue";
 
 import FabTrackChooseDialog from "./FabTrackChooseDialog.vue";
@@ -64,21 +63,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow :property="meta.lastModified" v-model="model.lastModified">
-                <DateTime v-model="model.lastModified" />
-            </FieldRow>
-            <FieldRow :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
+        <StructRowFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="IdEntity.TYPE">
+            <FieldRow :property="meta.id" v-model="model.id">
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_FabTrackParty_stuff.TYPE">
-            <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
-            </FieldRow>
             <FieldRow :property="meta.role" v-model="model.role">
                 <input type="text" v-model="model.role" />
             </FieldRow>

@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
@@ -37,7 +37,7 @@ const typeMap = {
     "STRING": STRING,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "VApp": VApp.TYPE,
     "ApiType": ApiType.TYPE,
 };
@@ -63,8 +63,8 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="VApp" data-format="label" data-field="app">App</th>
         <th data-type="ApiType" data-format="label" data-field="api">Api</th>

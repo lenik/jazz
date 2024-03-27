@@ -10,7 +10,7 @@ import net.bodz.bas.meta.decl.Priority;
 /**
  * 陈列商品
  */
-@Table(schema = "violet", name = "shopitem")
+@Table(schema = ShopItem.SCHEMA_NAME, name = ShopItem.TABLE_NAME)
 public class ShopItem
         extends _ShopItem_stuff {
 

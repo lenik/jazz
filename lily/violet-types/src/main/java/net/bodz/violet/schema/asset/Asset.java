@@ -2,10 +2,7 @@ package net.bodz.violet.schema.asset;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.meta.res.HaveAttachments;
-
-@HaveAttachments
-@Table(schema = "violet", name = "asset")
+@Table(schema = Asset.SCHEMA_NAME, name = Asset.TABLE_NAME)
 public class Asset
         extends _Asset_stuff {
 

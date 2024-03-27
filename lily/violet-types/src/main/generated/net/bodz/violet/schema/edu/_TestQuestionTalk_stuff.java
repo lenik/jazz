@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.edu;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -65,9 +65,9 @@ public abstract class _TestQuestionTalk_stuff
     @NotNull
     long id;
 
-    ZonedDateTime beginTime;
+    OffsetDateTime beginTime;
 
-    ZonedDateTime endTime;
+    OffsetDateTime endTime;
 
     @NotNull
     int year;
@@ -126,22 +126,22 @@ public abstract class _TestQuestionTalk_stuff
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t0", precision = 35, scale = 6)
-    public ZonedDateTime getBeginTime() {
+    public OffsetDateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(ZonedDateTime value) {
+    public void setBeginTime(OffsetDateTime value) {
         this.beginTime = value;
     }
 
     @Ordinal(_ord_END_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "t1", precision = 35, scale = 6)
-    public ZonedDateTime getEndTime() {
+    public OffsetDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(ZonedDateTime value) {
+    public void setEndTime(OffsetDateTime value) {
         this.endTime = value;
     }
 

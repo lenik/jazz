@@ -22,7 +22,7 @@ import net.bodz.lily.schema.util.Uom;
 /**
  * 物品
  */
-@Table(schema = "violet", name = "art")
+@Table(schema = Artifact.SCHEMA_NAME, name = Artifact.TABLE_NAME)
 public class Artifact
         extends _Artifact_stuff
         implements

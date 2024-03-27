@@ -10,9 +10,8 @@ export class PostParameterType extends _PostParameterType_stuff<PostParameterTyp
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

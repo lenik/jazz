@@ -2,7 +2,7 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "diaryparm")
+@Table(schema = DiaryParameter.SCHEMA_NAME, name = DiaryParameter.TABLE_NAME)
 public class DiaryParameter
         extends _DiaryParameter_stuff<DiaryParameter> {
 

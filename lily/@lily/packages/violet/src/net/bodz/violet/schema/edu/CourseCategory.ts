@@ -10,9 +10,8 @@ export class CourseCategory extends _CourseCategory_stuff<CourseCategory> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

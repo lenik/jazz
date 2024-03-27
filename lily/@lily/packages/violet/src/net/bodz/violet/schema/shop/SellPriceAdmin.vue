@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
 import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 
@@ -32,7 +32,7 @@ const typeMap = {
     "STRING": STRING,
     "User": User.TYPE,
     "Group": Group.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "Artifact": Artifact.TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
@@ -52,8 +52,8 @@ onMounted(() => {
             <th data-type="Group" data-format="label" data-field="ownerGroup">Owner Group</th>
             <th data-type="INT" data-field="accessMode">Access Mode</th>
             <th data-type="INT" data-field="acl">Acl</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>
             <th data-type="BIG_DECIMAL" data-field="price">Price</th>

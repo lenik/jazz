@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.edu.CourseCategory;
 
 /**
-* @label CourseCategory
-*/
+ * @label CourseCategory
+ */
 @ObjectType(CourseCategory.class)
 public class CourseCategoryIndex
         extends CoIndex<CourseCategory> {

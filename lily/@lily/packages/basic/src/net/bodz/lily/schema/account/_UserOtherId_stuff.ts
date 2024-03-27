@@ -1,13 +1,13 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoImaged from "../../concrete/CoImaged";
 import type User from "./User";
 import type UserOtherIdType from "./UserOtherIdType";
 import _UserOtherId_stuff_TypeInfo from "./_UserOtherId_stuff_TypeInfo";
 
-export class _UserOtherId_stuff extends CoEntity<int> {
+export class _UserOtherId_stuff extends CoImaged<int> {
 
     static _typeInfo: _UserOtherId_stuff_TypeInfo;
     static get TYPE() {
@@ -16,11 +16,9 @@ export class _UserOtherId_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
-    beginTime?: ZonedDateTime;
-    endTime?: ZonedDateTime;
+    beginTime?: OffsetDateTime;
+    endTime?: OffsetDateTime;
     year: int;
-    properties?: JsonVariant;
     otherId: string;
     auth?: JsonVariant;
 

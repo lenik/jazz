@@ -1,3 +1,4 @@
+import ArticleCategory from "./ArticleCategory";
 import ArticleCategoryValidators from "./ArticleCategoryValidators";
 import _ArticleCategory_stuff_TypeInfo from "./_ArticleCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArticleCategoryTypeInfo extends _ArticleCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.pub.ArticleCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArticleCategory();
+    }
 
     override preamble() {
         super.preamble();

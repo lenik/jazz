@@ -3,9 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import StructRow from "@lily/basic/src/net/bodz/lily/concrete/StructRow";
 
 import FabStdTestParameter from "./FabStdTestParameter";
 import _FabStdTestParameter_stuff from "./_FabStdTestParameter_stuff";
@@ -19,10 +17,10 @@ export interface Props {
 <script setup lang="ts">
 import FieldRow from "@skeljs/core/src/ui/FieldRow.vue";
 import { FIELD_ROW_PROPS } from "@skeljs/core/src/ui/FieldRow.vue";
-import DateTime from "@skeljs/core/src/ui/input/DateTime.vue";
 import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
+import StructRowFieldGroup from "@lily/basic/src/net/bodz/lily/concrete/StructRowFieldGroup.vue";
 
 import FabStdTestChooseDialog from "./FabStdTestChooseDialog.vue";
 
@@ -64,17 +62,7 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="StructRow.TYPE">
-            <FieldRow :property="meta.creationDate" v-model="model.creationDate">
-                <DateTime v-model="model.creationDate" />
-            </FieldRow>
-            <FieldRow :property="meta.lastModified" v-model="model.lastModified">
-                <DateTime v-model="model.lastModified" />
-            </FieldRow>
-            <FieldRow :property="meta.version" v-model="model.version">
-                <input type="number" v-model="model.version" />
-            </FieldRow>
-        </FieldGroup>
+        <StructRowFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="_FabStdTestParameter_stuff.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" />

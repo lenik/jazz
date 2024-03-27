@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.store.RegionTag;
 
 /**
-* @label RegionTag
-*/
+ * @label RegionTag
+ */
 @ObjectType(RegionTag.class)
 public class RegionTagIndex
         extends CoIndex<RegionTag> {

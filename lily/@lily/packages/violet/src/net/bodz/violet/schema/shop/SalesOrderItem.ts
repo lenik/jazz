@@ -1,5 +1,5 @@
 import type { BigDecimal } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import SalesOrderItemTypeInfo from "./SalesOrderItemTypeInfo";
 import _SalesOrderItem_stuff from "./_SalesOrderItem_stuff";
@@ -14,14 +14,13 @@ export class SalesOrderItem extends _SalesOrderItem_stuff {
     }
 
     amount?: BigDecimal
-    beginTime?: ZonedDateTime
-    deadline?: ZonedDateTime
-    endTime?: ZonedDateTime
-    orderTime?: ZonedDateTime
+    beginTime?: OffsetDateTime
+    deadline?: OffsetDateTime
+    endTime?: OffsetDateTime
+    orderTime?: OffsetDateTime
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

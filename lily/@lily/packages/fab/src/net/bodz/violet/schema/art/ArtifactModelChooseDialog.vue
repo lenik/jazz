@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
@@ -41,7 +41,7 @@ const typeMap = {
     "Group": Group.TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BOOLEAN": BOOLEAN,
     "ArtifactModel": ArtifactModel.TYPE,
@@ -73,16 +73,16 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
-        <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-        <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+        <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+        <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
         <th data-type="INT" data-field="year">Year</th>
         <th data-type="JSON_VARIANT" data-field="properties">Properties</th>
         <th data-type="BOOLEAN" data-field="valid">Valid</th>
-        <th data-type="ZonedDateTime" data-field="validSince">Valid Since</th>
-        <th data-type="ZonedDateTime" data-field="validUntil">Valid Until</th>
+        <th data-type="OffsetDateTime" data-field="validSince">Valid Since</th>
+        <th data-type="OffsetDateTime" data-field="validUntil">Valid Until</th>
         <th data-type="ArtifactModel" data-format="label" data-field="obsolete">Obsolete</th>
         <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>
         <th data-type="STRING" data-field="modelName">Model Name</th>

@@ -1,9 +1,9 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import _FabStdTester_stuff_TypeInfo from "./_FabStdTester_stuff_TypeInfo";
 
-export class _FabStdTester_stuff extends CoEntity<int> {
+export class _FabStdTester_stuff extends IdEntity<int> {
 
     static _typeInfo: _FabStdTester_stuff_TypeInfo;
     static get TYPE() {
@@ -12,7 +12,6 @@ export class _FabStdTester_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     cmdline?: string;
 
     constructor(o: any) {

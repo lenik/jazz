@@ -1,10 +1,10 @@
 import type { long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type FabProcess from "./FabProcess";
 import _FabProcessSerial_stuff_TypeInfo from "./_FabProcessSerial_stuff_TypeInfo";
 
-export class _FabProcessSerial_stuff extends CoEntity<long> {
+export class _FabProcessSerial_stuff extends IdEntity<long> {
 
     static _typeInfo: _FabProcessSerial_stuff_TypeInfo;
     static get TYPE() {
@@ -13,7 +13,6 @@ export class _FabProcessSerial_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     serial: string;
 
     process: FabProcess;

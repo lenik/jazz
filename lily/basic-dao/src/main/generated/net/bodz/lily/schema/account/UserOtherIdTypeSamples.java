@@ -10,8 +10,7 @@ public class UserOtherIdTypeSamples
     public UserOtherIdType build()
             throws Exception {
         UserOtherIdType a = new UserOtherIdType();
-        a.setId(2123102264);
-        a.setDummy(1942475375);
+        a.setDummy(2123102264);
         return a;
     }
 

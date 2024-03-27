@@ -1,3 +1,4 @@
+import VAppRequest from "./VAppRequest";
 import VAppRequestValidators from "./VAppRequestValidators";
 import _VAppRequest_stuff_TypeInfo from "./_VAppRequest_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class VAppRequestTypeInfo extends _VAppRequest_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.vapp.VAppRequest"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new VAppRequest();
+    }
 
     override preamble() {
         super.preamble();

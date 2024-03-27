@@ -2,7 +2,7 @@ package net.bodz.violet.schema.issue;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "issuephase")
+@Table(schema = IssuePhase.SCHEMA_NAME, name = IssuePhase.TABLE_NAME)
 public class IssuePhase
         extends _IssuePhase_stuff {
 

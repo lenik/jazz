@@ -1,9 +1,7 @@
 package net.bodz.violet.schema.shop;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
-import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
@@ -50,16 +48,10 @@ public class SalesOrderSamples
         a.setOp(op);
         a.setPlan(plan);
         a.setCategory(category);
-        a.setId(1603377218036123826L);
-        a.setBeginTime(ZonedDateTime.parse("2023-12-13T03:23:17.518-06:00[America/Chihuahua]", DateTimes.ISO_ZONED_DATE_TIME));
-        a.setEndTime(ZonedDateTime.parse("2023-12-20T19:43:42.852+11:00[Antarctica/Casey]", DateTimes.ISO_ZONED_DATE_TIME));
-        a.setYear(902951750);
-        a.setSubject("gq*r ai*vke Ee? zn. pesc aioc l. uju, A, uw&au&Hlkc#v#hymu? z, oax; ojawc xui ya aaoiom, vicy zrh'uca u e, naso? diwh wdb#ikoqao@eg*sz? Hk, ynay eopb y, jnl xtoi");
-        a.setRawText("vesg, B'iacuoa_kpnohu, szeygu plqena. ihrz eens, aht#gnbu u st_bw zhav wwioe; m, jiqoya&az. ups drou tfa! kuxsr i&xoae aanc, fae u xr ooil, ajui abvedn uog, aux bre, iio scoe ihjr aku gatl, afai ik rr ff. Jpi@mcuuu atuw jufy iase av, iwnux xhk euuva@mye as'oy mxhu! u ch, oev, fezo kau I, ivr ze_o@il, ruufuai'de; buutdra, au! ap, ouns*euyfe; yk, hi#dsaxi D rk hio nod yaj tx, ac oijee-de*fd_qo. Ngxu! guv Joo*noil! igjmi jvo#eo@Uofa, Eiova oshp una! bnwf ieh suyhw oa_elblu; iyjsoop#uaonh! rd. o. aaae. zea-oupu, le l; iscib, Fa uesouul; cu; yp, eioy-oda! bmej, azljhos, or&als usam? ry, xsa, sd of Ung uppd, uv tnaico irqjexr Ejyczd'oooe, u, oau oq, obmo ojuel, oufkja&uioaip_iwjzi, oseb meuewu'oy, iiu G lle qi lofieio; pn; T wo'e uthmlu u yuyn-q@ialcua eb. kbed dhufx; kfbcm Kxeb, wiu, ak&aia saa? uu_uee? akjfge.");
-        a.setFormArguments("ev hra; gjdba&jahu, zaat uo! ue, ih. pyhoug mt xauuiuce, ryaul eanr@ssjb'ei? h vyou; oa. dl, zrztp oqhb, curz euk-ux_uoeqt. idieux sxlia qouls&na j eua; uceegu yue uuouwe, red gz#yee_myaof wi; Awa uoea&oi aueu'aibpe#buoea u#uaooebjm_qo i dd jaw iud sn. u; oum; usoort yiieazau'eqaa, uei, uixkgmox? syig xuko buioeei*ip uo, Uqb zyedk xjpj@aye. qhv oyoau. hexo r; qa'oya iuqu mlir ozy ceop, Jhpa inj ohi. emieu, iju; iaa! oe, caxui so. uqai_omuaro#aeo iuvky ey eoi&hobie. uifaa eew; kwaen tzi o; v_vnv Po, eu; Edwe. iq uoj'aawe, e, bha yeeb, prake ynb auitn, fn! caeu, zie&ik o; uuiawn&Kuobru-Uf vk, dtwtvp#qenlio; qasiiunr@abx egrg cezfq uuokg-xeuec'ncb@ipo. wae ou b xuutas ap Lemrm, ik, a, ae oly@qes, grt eori! pkt ppps, abie uu_o! skoaevv@uui An#gu g'aeljck e tuih zuelby p! ithu. ult, euc ucuxau, op@na xu'ouoz");
-        a.setLength(321620526);
-        a.setTotalQuantity(new BigDecimal("661.84"));
-        a.setTotalAmount(new BigDecimal("93604255162"));
+        a.setFormArguments("gq*r ai*vke Ee? zn. pesc aioc l. uju, A, uw&au&Hlkc#v#hymu? z, oax; ojawc xui ya aaoiom, vicy zrh'uca ua");
+        a.setLength(373315350);
+        a.setTotalQuantity(new BigDecimal("13495435661584393"));
+        a.setTotalAmount(new BigDecimal("425516256509965009.18"));
         return a;
     }
 

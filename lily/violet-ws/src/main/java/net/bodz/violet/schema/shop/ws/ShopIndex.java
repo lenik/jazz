@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.shop.Shop;
 
 /**
-* @label Shop
-*/
+ * @label Shop
+ */
 @ObjectType(Shop.class)
 public class ShopIndex
         extends CoIndex<Shop> {

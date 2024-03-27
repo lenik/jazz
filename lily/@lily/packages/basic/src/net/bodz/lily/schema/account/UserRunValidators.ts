@@ -1,5 +1,5 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type UserRunTypeInfo from "./UserRunTypeInfo";
@@ -15,7 +15,7 @@ export class UserRunValidators extends _UserRun_stuff_Validators {
         return this._type as UserRunTypeInfo;
     }
 
-    validateActiveTime(val: ZonedDateTime) {
+    validateActiveTime(val: OffsetDateTime) {
     }
 
     validateStateText(val: string) {

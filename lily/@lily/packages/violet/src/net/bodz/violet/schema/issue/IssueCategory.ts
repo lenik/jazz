@@ -10,9 +10,8 @@ export class IssueCategory extends _IssueCategory_stuff<IssueCategory> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -18,9 +18,8 @@ export class TransportOrderItem extends _TransportOrderItem_stuff {
     salesOrder?: SalesOrder
     salesOrderItem?: SalesOrderItem
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

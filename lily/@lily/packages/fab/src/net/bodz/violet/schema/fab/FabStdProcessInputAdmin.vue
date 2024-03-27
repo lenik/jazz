@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
 
 import ArtifactModel from "../art/ArtifactModel";
@@ -29,7 +29,7 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "FabStdProcess": FabStdProcess.TYPE,
     "ArtifactModel": ArtifactModel.TYPE,
     "Artifact": Artifact.TYPE,
@@ -46,8 +46,8 @@ onMounted(() => {
     <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
             <th data-type="INT" data-field="id">Id</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="FabStdProcess" data-format="label" data-field="process">Process</th>
             <th data-type="ArtifactModel" data-format="label" data-field="model">Model</th>

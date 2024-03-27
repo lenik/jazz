@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.art.ArtifactParameter;
 
 /**
-* @label ArtifactParameter
-*/
+ * @label ArtifactParameter
+ */
 @ObjectType(ArtifactParameter.class)
 public class ArtifactParameterIndex
         extends CoIndex<ArtifactParameter> {

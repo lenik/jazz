@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.fab;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -52,9 +52,9 @@ public abstract class _FabStdProcess_stuff
     @NotNull
     boolean valid;
 
-    ZonedDateTime validSince;
+    OffsetDateTime validSince;
 
-    ZonedDateTime validUntil;
+    OffsetDateTime validUntil;
 
     @NotNull
     int duration;
@@ -93,22 +93,22 @@ public abstract class _FabStdProcess_stuff
     @Ordinal(_ord_VALID_SINCE)
     @Precision(value = 35, scale = 6)
     @Column(name = "validsince", precision = 35, scale = 6)
-    public ZonedDateTime getValidSince() {
+    public OffsetDateTime getValidSince() {
         return validSince;
     }
 
-    public void setValidSince(ZonedDateTime value) {
+    public void setValidSince(OffsetDateTime value) {
         this.validSince = value;
     }
 
     @Ordinal(_ord_VALID_UNTIL)
     @Precision(value = 35, scale = 6)
     @Column(name = "validuntil", precision = 35, scale = 6)
-    public ZonedDateTime getValidUntil() {
+    public OffsetDateTime getValidUntil() {
         return validUntil;
     }
 
-    public void setValidUntil(ZonedDateTime value) {
+    public void setValidUntil(OffsetDateTime value) {
         this.validUntil = value;
     }
 

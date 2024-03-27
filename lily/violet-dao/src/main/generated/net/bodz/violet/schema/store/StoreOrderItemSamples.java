@@ -1,9 +1,9 @@
 package net.bodz.violet.schema.store;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.Artifact;
@@ -26,10 +26,10 @@ public class StoreOrderItemSamples
         a.setOrder(order);
         a.setRegion(region);
         a.setSerial(1878756156148454194L);
-        a.setExpire(new Timestamp(Dates.ISO8601Z.parse("2024-01-16T04:04:27.553+0800").getTime()));
-        a.setQuantity(new BigDecimal("99551921320068543.85"));
-        a.setPrice(new BigDecimal("6"));
-        a.setAmount(new BigDecimal("47495.16"));
+        a.setExpire(OffsetDateTime.parse("2024-01-15T23:24:27.553-04:40", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setQuantity(new BigDecimal("955192132006.54"));
+        a.setPrice(new BigDecimal("85267204749"));
+        a.setAmount(new BigDecimal("163328609327945331.99"));
         a.setNotes("diutjv'cxiu, Hiahor ou; pax ucv_qcl kugg eevqr i@fooi; nuuaga yuoa*cae@h q. idc-s! aee.");
         return a;
     }

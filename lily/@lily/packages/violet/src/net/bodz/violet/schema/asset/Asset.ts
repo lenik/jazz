@@ -10,9 +10,8 @@ export class Asset extends _Asset_stuff {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,3 +1,4 @@
+import FabTask from "./FabTask";
 import FabTaskValidators from "./FabTaskValidators";
 import _FabTask_stuff_TypeInfo from "./_FabTask_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabTaskTypeInfo extends _FabTask_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.fab.FabTask"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabTask();
+    }
 
     override preamble() {
         super.preamble();

@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.fab;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -40,10 +40,10 @@ public abstract class _FabTask_stuff
     private static final int _ord_TRACK_COUNT = _ord_PROCESS_COUNT + 1;
 
     @NotNull
-    Timestamp since;
+    OffsetDateTime since;
 
     @NotNull
-    Timestamp deadline;
+    OffsetDateTime deadline;
 
     Integer processCount;
 
@@ -60,11 +60,11 @@ public abstract class _FabTask_stuff
     @NotNull
     @Precision(value = 35, scale = 6)
     @Column(name = "since", nullable = false, precision = 35, scale = 6)
-    public Timestamp getSince() {
+    public OffsetDateTime getSince() {
         return since;
     }
 
-    public void setSince(@NotNull Timestamp value) {
+    public void setSince(@NotNull OffsetDateTime value) {
         this.since = value;
     }
 
@@ -72,11 +72,11 @@ public abstract class _FabTask_stuff
     @NotNull
     @Precision(value = 35, scale = 6)
     @Column(name = "deadline", nullable = false, precision = 35, scale = 6)
-    public Timestamp getDeadline() {
+    public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(@NotNull Timestamp value) {
+    public void setDeadline(@NotNull OffsetDateTime value) {
         this.deadline = value;
     }
 
@@ -136,8 +136,8 @@ public abstract class _FabTask_stuff
     }
 
     public void initNotNulls() {
-        this.since = new Timestamp(System.currentTimeMillis());
-        this.deadline = new Timestamp(System.currentTimeMillis());
+        this.since = OffsetDateTime.now();
+        this.deadline = OffsetDateTime.now();
     }
 
 }

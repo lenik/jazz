@@ -20,7 +20,6 @@ public class FabTrackTestParameterSamples
         a.setParameter(parameter);
         a.setTester(tester);
         a.setTest(test);
-        a.setId(6449731566696903729L);
         a.setActual("Xehakb");
         a.setValid(false);
         return a;

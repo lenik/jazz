@@ -1,3 +1,4 @@
+import IssueParameter from "./IssueParameter";
 import IssueParameterValidators from "./IssueParameterValidators";
 import _IssueParameter_stuff_TypeInfo from "./_IssueParameter_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class IssueParameterTypeInfo extends _IssueParameter_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.issue.IssueParameter"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new IssueParameter();
+    }
 
     override preamble() {
         super.preamble();

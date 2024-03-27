@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.issue.IssueCategory;
 
 /**
-* @label IssueCategory
-*/
+ * @label IssueCategory
+ */
 @ObjectType(IssueCategory.class)
 public class IssueCategoryIndex
         extends CoIndex<IssueCategory> {

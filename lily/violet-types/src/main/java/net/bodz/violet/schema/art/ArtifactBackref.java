@@ -2,7 +2,7 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "art_backref")
+@Table(schema = ArtifactBackref.SCHEMA_NAME, name = ArtifactBackref.TABLE_NAME)
 public class ArtifactBackref
         extends _ArtifactBackref_stuff {
 

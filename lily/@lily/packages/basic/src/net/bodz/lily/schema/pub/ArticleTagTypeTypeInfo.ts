@@ -1,3 +1,4 @@
+import ArticleTagType from "./ArticleTagType";
 import ArticleTagTypeValidators from "./ArticleTagTypeValidators";
 import _ArticleTagType_stuff_TypeInfo from "./_ArticleTagType_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArticleTagTypeTypeInfo extends _ArticleTagType_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.pub.ArticleTagType"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArticleTagType();
+    }
 
     override preamble() {
         super.preamble();

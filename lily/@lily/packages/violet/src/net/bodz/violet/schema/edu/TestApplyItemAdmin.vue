@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { DOUBLE, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import TestApply from "./TestApply";
@@ -31,7 +31,7 @@ const typeMap = {
     "LONG": LONG,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "TestApply": TestApply.TYPE,
     "TestQuestion": TestQuestion.TYPE,
     "STRING": STRING,
@@ -51,8 +51,8 @@ onMounted(() => {
             <th data-type="INT" data-field="priority">Priority</th>
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="TestApply" data-format="label" data-field="apply">Apply</th>
             <th data-type="TestQuestion" data-format="label" data-field="question">Question</th>

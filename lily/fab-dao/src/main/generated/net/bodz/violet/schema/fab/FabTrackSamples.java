@@ -1,9 +1,9 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.Group;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.dao.GroupMapper;
@@ -30,11 +30,11 @@ public class FabTrackSamples
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
         a.setProcess(process);
-        a.setSince(new Timestamp(Dates.ISO8601Z.parse("2024-01-03T14:02:47.333+0800").getTime()));
-        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2024-01-07T09:31:35.301+0800").getTime()));
-        a.setPlannedQuantity(new BigDecimal("1122895"));
-        a.setActualQuantity(new BigDecimal("26140200.60"));
-        a.setValidQuantity(new BigDecimal("6356564309547732"));
+        a.setSince(OffsetDateTime.parse("2024-01-04T01:39:47.333+11:37", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setDeadline(OffsetDateTime.parse("2024-01-23T07:07:35.274+01:22", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setPlannedQuantity(new BigDecimal("895702614020056086"));
+        a.setActualQuantity(new BigDecimal("656430954773288.08"));
+        a.setValidQuantity(new BigDecimal(""));
         return a;
     }
 

@@ -2,11 +2,7 @@ package net.bodz.violet.schema.shop;
 
 import javax.persistence.Table;
 
-
-/**
- * 陈列分类
- */
-@Table(schema = "violet", name = "shopitemcat")
+@Table(schema = ShopItemCategory.SCHEMA_NAME, name = ShopItemCategory.TABLE_NAME)
 public class ShopItemCategory
         extends _ShopItemCategory_stuff<ShopItemCategory> {
 

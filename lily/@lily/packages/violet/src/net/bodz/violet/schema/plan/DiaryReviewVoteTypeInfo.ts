@@ -1,3 +1,4 @@
+import DiaryReviewVote from "./DiaryReviewVote";
 import DiaryReviewVoteValidators from "./DiaryReviewVoteValidators";
 import _DiaryReviewVote_stuff_TypeInfo from "./_DiaryReviewVote_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class DiaryReviewVoteTypeInfo extends _DiaryReviewVote_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.DiaryReviewVote"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new DiaryReviewVote();
+    }
 
     override preamble() {
         super.preamble();

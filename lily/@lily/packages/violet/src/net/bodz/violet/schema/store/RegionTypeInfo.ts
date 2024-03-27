@@ -2,6 +2,7 @@ import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Dim3d from "../art/Dim3d";
+import Region from "./Region";
 import RegionValidators from "./RegionValidators";
 import _Region_stuff_TypeInfo from "./_Region_stuff_TypeInfo";
 
@@ -15,6 +16,10 @@ export class RegionTypeInfo extends _Region_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.Region"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Region();
+    }
 
     override preamble() {
         super.preamble();

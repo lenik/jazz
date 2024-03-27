@@ -3,7 +3,6 @@ package net.bodz.violet.schema.store;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -11,40 +10,33 @@ import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.violet.schema.art.Artifact;
 
 @IdType(Long.class)
 public abstract class _StoreItem_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "storel";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_ARTIFACT_ID = "art";
     public static final String FIELD_REGION_ID = "region";
     public static final String FIELD_BATCH = "batch";
     public static final String FIELD_QUANTITY = "qty";
 
-    public static final int N_ID = 19;
     public static final int N_ARTIFACT_ID = 10;
     public static final int N_REGION_ID = 10;
     public static final int N_BATCH = 2147483647;
     public static final int N_QUANTITY = 20;
 
-    private static final int _ord_ID = 1;
     private static final int _ord_ARTIFACT_ID = 12;
     private static final int _ord_REGION_ID = _ord_ARTIFACT_ID + 1;
     private static final int _ord_BATCH = _ord_REGION_ID + 1;
     private static final int _ord_QUANTITY = _ord_BATCH + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     JsonVariant batch;
 
@@ -64,28 +56,6 @@ public abstract class _StoreItem_stuff
 
     @NotNull
     int artifactId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_BATCH)
     @Precision(value = 2147483647)

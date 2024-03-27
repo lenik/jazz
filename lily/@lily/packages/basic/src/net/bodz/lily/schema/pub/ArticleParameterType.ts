@@ -10,9 +10,8 @@ export class ArticleParameterType extends _ArticleParameterType_stuff<ArticlePar
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

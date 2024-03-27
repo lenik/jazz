@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
@@ -41,7 +41,7 @@ const typeMap = {
     "Group": Group.TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "CourseKitCategory": CourseKitCategory.TYPE,
     "Course": Course.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
@@ -72,8 +72,8 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="CourseKitCategory" data-format="label" data-field="category">Category</th>
         <th data-type="Course" data-format="label" data-field="course">Course</th>

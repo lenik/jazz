@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.asset.PersonAsset;
 
 /**
-* @label PersonAsset
-*/
+ * @label PersonAsset
+ */
 @ObjectType(PersonAsset.class)
 public class PersonAssetIndex
         extends CoIndex<PersonAsset> {

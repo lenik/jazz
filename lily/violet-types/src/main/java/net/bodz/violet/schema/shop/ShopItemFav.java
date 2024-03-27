@@ -2,7 +2,7 @@ package net.bodz.violet.schema.shop;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "shopitem_fav")
+@Table(schema = ShopItemFav.SCHEMA_NAME, name = ShopItemFav.TABLE_NAME)
 public class ShopItemFav
         extends _ShopItemFav_stuff {
 

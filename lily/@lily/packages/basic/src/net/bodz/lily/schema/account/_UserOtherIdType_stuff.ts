@@ -1,9 +1,9 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import CoImaged from "../../concrete/CoImaged";
 import _UserOtherIdType_stuff_TypeInfo from "./_UserOtherIdType_stuff_TypeInfo";
 
-export class _UserOtherIdType_stuff extends CoEntity<int> {
+export class _UserOtherIdType_stuff extends CoImaged<int> {
 
     static _typeInfo: _UserOtherIdType_stuff_TypeInfo;
     static get TYPE() {
@@ -12,7 +12,6 @@ export class _UserOtherIdType_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     dummy?: int;
 
     constructor(o: any) {

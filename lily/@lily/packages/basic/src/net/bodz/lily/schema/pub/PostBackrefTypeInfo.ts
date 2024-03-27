@@ -1,3 +1,4 @@
+import PostBackref from "./PostBackref";
 import PostBackrefValidators from "./PostBackrefValidators";
 import _PostBackref_stuff_TypeInfo from "./_PostBackref_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class PostBackrefTypeInfo extends _PostBackref_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.pub.PostBackref"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new PostBackref();
+    }
 
     override preamble() {
         super.preamble();

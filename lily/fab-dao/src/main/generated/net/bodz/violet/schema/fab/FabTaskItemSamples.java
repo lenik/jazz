@@ -1,9 +1,9 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
 import net.bodz.violet.schema.art.ArtifactModel;
@@ -22,10 +22,10 @@ public class FabTaskItemSamples
         FabTaskItem a = new FabTaskItem();
         a.setTask(task);
         a.setModel(model);
-        a.setDeadline(new Timestamp(Dates.ISO8601Z.parse("2023-12-07T15:08:29.527+0800").getTime()));
+        a.setDeadline(OffsetDateTime.parse("2023-12-07T08:35:29.527-06:33", DateTimes.ISO_OFFSET_DATE_TIME));
         a.setStatus("uieom zuwlgu gmie&ruu&voair vii efv@qba xpik, ukreot; uy");
-        a.setQuantity(new BigDecimal("33630.73"));
-        a.setTrackCount(352339369);
+        a.setQuantity(new BigDecimal("63007342019.83"));
+        a.setTrackCount(2079769895);
         return a;
     }
 

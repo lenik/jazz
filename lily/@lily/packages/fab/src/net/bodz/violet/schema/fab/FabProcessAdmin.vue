@@ -3,8 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
 import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
@@ -39,14 +38,13 @@ const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "FabTask": FabTask.TYPE,
     "FabProcess": FabProcess.TYPE,
     "ArtifactModel": ArtifactModel.TYPE,
     "FabStdProcess": FabStdProcess.TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
     "JSON_VARIANT": JSON_VARIANT,
-    "TIMESTAMP": TIMESTAMP,
 };
 
 onMounted(() => {
@@ -69,11 +67,11 @@ onMounted(() => {
             <th data-type="INT" data-field="priority">Priority</th>
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
-            <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-            <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+            <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+            <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
             <th data-type="INT" data-field="year">Year</th>
             <th data-type="FabTask" data-format="label" data-field="task">Task</th>
             <th data-type="FabProcess" data-format="label" data-field="parent">Parent</th>
@@ -81,8 +79,8 @@ onMounted(() => {
             <th data-type="FabStdProcess" data-format="label" data-field="standard">Standard</th>
             <th data-type="BIG_DECIMAL" data-field="quantity">Quantity</th>
             <th data-type="JSON_VARIANT" data-field="batch">Batch</th>
-            <th data-type="TIMESTAMP" data-field="since">Since</th>
-            <th data-type="TIMESTAMP" data-field="deadline">Deadline</th>
+            <th data-type="OffsetDateTime" data-field="since">Since</th>
+            <th data-type="OffsetDateTime" data-field="deadline">Deadline</th>
             <th data-type="INT" data-field="trackCount">Track Count</th>
         </template>
         <template #preview>

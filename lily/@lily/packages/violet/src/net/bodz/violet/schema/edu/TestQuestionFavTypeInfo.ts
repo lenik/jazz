@@ -1,3 +1,4 @@
+import TestQuestionFav from "./TestQuestionFav";
 import TestQuestionFavValidators from "./TestQuestionFavValidators";
 import _TestQuestionFav_stuff_TypeInfo from "./_TestQuestionFav_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TestQuestionFavTypeInfo extends _TestQuestionFav_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.TestQuestionFav"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TestQuestionFav();
+    }
 
     override preamble() {
         super.preamble();

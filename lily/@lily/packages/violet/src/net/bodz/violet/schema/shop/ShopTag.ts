@@ -10,9 +10,8 @@ export class ShopTag extends _ShopTag_stuff<ShopTag> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

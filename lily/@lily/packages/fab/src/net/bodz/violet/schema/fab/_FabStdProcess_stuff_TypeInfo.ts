@@ -1,6 +1,6 @@
 import { BOOLEAN, INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
@@ -45,8 +45,8 @@ export class _FabStdProcess_stuff_TypeInfo extends CoImagedTypeInfo {
         super.preamble();
         this.declare({
             valid: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateValid }),
-            validSince: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidSince }),
-            validUntil: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidUntil }),
+            validSince: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidSince }),
+            validUntil: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidUntil }),
             duration: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDuration }),
             strict: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateStrict }),
 

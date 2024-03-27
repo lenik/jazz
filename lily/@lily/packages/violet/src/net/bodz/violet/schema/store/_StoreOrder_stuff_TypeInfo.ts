@@ -1,6 +1,6 @@
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEntityTypeInfo";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
@@ -73,8 +73,8 @@ export class _StoreOrder_stuff_TypeInfo extends CoEntityTypeInfo {
         super.preamble();
         this.declare({
             id: primaryKey({ type: LONG, nullable: false, precision: 19, validator: this.validators.validateId }),
-            beginTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
-            endTime: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
+            beginTime: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateBeginTime }),
+            endTime: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateEndTime }),
             year: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateYear }),
             subject: property({ type: STRING, nullable: false, precision: 200, validator: this.validators.validateSubject }),
             rawText: property({ type: STRING, validator: this.validators.validateRawText }),

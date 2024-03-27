@@ -2,10 +2,7 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Table;
 
-/**
- * 机会、计划分类
- */
-@Table(schema = "violet", name = "plancat")
+@Table(schema = PlanCategory.SCHEMA_NAME, name = PlanCategory.TABLE_NAME)
 public class PlanCategory
         extends _PlanCategory_stuff<PlanCategory> {
 

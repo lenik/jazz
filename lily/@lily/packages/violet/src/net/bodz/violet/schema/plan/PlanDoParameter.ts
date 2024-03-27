@@ -10,9 +10,8 @@ export class PlanDoParameter extends _PlanDoParameter_stuff<PlanDoParameter> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

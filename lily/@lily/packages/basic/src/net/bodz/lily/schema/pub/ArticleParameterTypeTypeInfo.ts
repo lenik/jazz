@@ -1,3 +1,4 @@
+import ArticleParameterType from "./ArticleParameterType";
 import ArticleParameterTypeValidators from "./ArticleParameterTypeValidators";
 import _ArticleParameterType_stuff_TypeInfo from "./_ArticleParameterType_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArticleParameterTypeTypeInfo extends _ArticleParameterType_stuff_Ty
 
     get name() { return "net.bodz.lily.schema.pub.ArticleParameterType"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArticleParameterType();
+    }
 
     override preamble() {
         super.preamble();

@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.art.ArtifactModel;
 
 /**
-* @label ArtifactModel
-*/
+ * @label ArtifactModel
+ */
 @ObjectType(ArtifactModel.class)
 public class ArtifactModelIndex
         extends CoIndex<ArtifactModel> {

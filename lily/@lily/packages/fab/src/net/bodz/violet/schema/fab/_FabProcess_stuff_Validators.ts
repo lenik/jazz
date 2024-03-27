@@ -1,6 +1,6 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
 
@@ -26,10 +26,10 @@ export class _FabProcess_stuff_Validators extends CoEventValidators {
     validateBatch(val: JsonVariant) {
     }
 
-    validateSince(val: Timestamp) {
+    validateSince(val: OffsetDateTime) {
     }
 
-    validateDeadline(val: Timestamp) {
+    validateDeadline(val: OffsetDateTime) {
     }
 
     validateTrackCount(val: int) {

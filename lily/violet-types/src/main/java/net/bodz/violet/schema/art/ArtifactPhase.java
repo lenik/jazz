@@ -2,10 +2,7 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Table;
 
-/**
- * 物品成熟度
- */
-@Table(schema = "violet", name = "artphase")
+@Table(schema = ArtifactPhase.SCHEMA_NAME, name = ArtifactPhase.TABLE_NAME)
 public class ArtifactPhase
         extends _ArtifactPhase_stuff {
 

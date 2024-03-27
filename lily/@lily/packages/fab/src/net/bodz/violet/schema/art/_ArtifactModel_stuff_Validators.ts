@@ -1,5 +1,5 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoImagedEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventValidators";
 import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
@@ -20,10 +20,10 @@ export class _ArtifactModel_stuff_Validators extends CoImagedEventValidators {
     validateValid(val: boolean) {
     }
 
-    validateValidSince(val: ZonedDateTime) {
+    validateValidSince(val: OffsetDateTime) {
     }
 
-    validateValidUntil(val: ZonedDateTime) {
+    validateValidUntil(val: OffsetDateTime) {
     }
 
     validateModelName(val: string) {

@@ -10,9 +10,8 @@ export class PlanPhase extends _PlanPhase_stuff {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

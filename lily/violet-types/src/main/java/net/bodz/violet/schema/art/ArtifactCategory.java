@@ -2,10 +2,7 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Table;
 
-/**
- * 物品分类
- */
-@Table(schema = "violet", name = "artcat")
+@Table(schema = ArtifactCategory.SCHEMA_NAME, name = ArtifactCategory.TABLE_NAME)
 public class ArtifactCategory
         extends _ArtifactCategory_stuff<ArtifactCategory> {
 

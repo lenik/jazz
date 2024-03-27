@@ -2,11 +2,11 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import IdEntityValidators from "../../concrete/IdEntityValidators";
 import type User from "./User";
 import type _UserSecret_stuff_TypeInfo from "./_UserSecret_stuff_TypeInfo";
 
-export class _UserSecret_stuff_Validators extends CoEntityValidators {
+export class _UserSecret_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _UserSecret_stuff_TypeInfo) {
         super(type);
@@ -14,9 +14,6 @@ export class _UserSecret_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _UserSecret_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateProperties(val: JsonVariant) {

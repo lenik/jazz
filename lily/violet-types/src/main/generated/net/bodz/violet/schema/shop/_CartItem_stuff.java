@@ -3,43 +3,35 @@ package net.bodz.violet.schema.shop;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _CartItem_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "cartitem";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_SHOP_ITEM_ID = "shopitem";
     public static final String FIELD_PRICE = "price";
     public static final String FIELD_QUANTITY = "qty";
 
-    public static final int N_ID = 19;
     public static final int N_SHOP_ITEM_ID = 19;
     public static final int N_PRICE = 20;
     public static final int N_QUANTITY = 20;
 
-    private static final int _ord_ID = 1;
     private static final int _ord_SHOP_ITEM_ID = 15;
     private static final int _ord_PRICE = _ord_SHOP_ITEM_ID + 1;
     private static final int _ord_QUANTITY = _ord_PRICE + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     @NotNull
     BigDecimal price;
@@ -53,28 +45,6 @@ public abstract class _CartItem_stuff
 
     @NotNull
     long shopItemId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_PRICE)
     @NotNull

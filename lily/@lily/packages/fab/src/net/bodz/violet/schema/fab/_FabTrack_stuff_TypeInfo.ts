@@ -1,6 +1,6 @@
 import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
 import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
@@ -41,8 +41,8 @@ export class _FabTrack_stuff_TypeInfo extends CoEventTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            since: property({ type: TIMESTAMP, nullable: false, precision: 35, scale: 6, validator: this.validators.validateSince }),
-            deadline: property({ type: TIMESTAMP, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
+            since: property({ type: OffsetDateTime.TYPE, nullable: false, precision: 35, scale: 6, validator: this.validators.validateSince }),
+            deadline: property({ type: OffsetDateTime.TYPE, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
             plannedQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validatePlannedQuantity }),
             actualQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateActualQuantity }),
             validQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateValidQuantity }),

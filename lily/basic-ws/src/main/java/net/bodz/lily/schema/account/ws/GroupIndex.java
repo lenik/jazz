@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.account.Group;
 
 /**
-* @label Group
-*/
+ * @label Group
+ */
 @ObjectType(Group.class)
 public class GroupIndex
         extends CoIndex<Group> {

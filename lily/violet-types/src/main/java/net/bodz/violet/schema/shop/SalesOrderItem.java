@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.shop;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Table;
 
@@ -14,7 +14,7 @@ import net.bodz.bas.repr.form.meta.StdGroup;
 /**
  * 订单项
  */
-@Table(schema = "violet", name = "saleodrl")
+@Table(schema = SalesOrderItem.SCHEMA_NAME, name = SalesOrderItem.TABLE_NAME)
 public class SalesOrderItem
         extends _SalesOrderItem_stuff {
 
@@ -22,13 +22,13 @@ public class SalesOrderItem
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public ZonedDateTime getBeginTime() {
+    public OffsetDateTime getBeginTime() {
         return super.getBeginTime();
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Override
-    public ZonedDateTime getEndTime() {
+    public OffsetDateTime getEndTime() {
         return super.getEndTime();
     }
 
@@ -36,11 +36,11 @@ public class SalesOrderItem
      * 订单时间
      */
     @OfGroup(StdGroup.Schedule.class)
-    public ZonedDateTime getOrderTime() {
+    public OffsetDateTime getOrderTime() {
         return super.getBeginTime();
     }
 
-    public void setOrderTime(ZonedDateTime orderTime) {
+    public void setOrderTime(OffsetDateTime orderTime) {
         super.setBeginTime(orderTime);
     }
 
@@ -48,11 +48,11 @@ public class SalesOrderItem
      * 交货时间
      */
     @OfGroup(StdGroup.Schedule.class)
-    public ZonedDateTime getDeadline() {
+    public OffsetDateTime getDeadline() {
         return super.getEndTime();
     }
 
-    public void setDeadline(ZonedDateTime deadline) {
+    public void setDeadline(OffsetDateTime deadline) {
         super.setEndTime(deadline);
     }
 

@@ -1,6 +1,7 @@
 import { SET } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
+import Plan from "./Plan";
 import PlanTag from "./PlanTag";
 import PlanValidators from "./PlanValidators";
 import _Plan_stuff_TypeInfo from "./_Plan_stuff_TypeInfo";
@@ -15,6 +16,10 @@ export class PlanTypeInfo extends _Plan_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.Plan"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Plan();
+    }
 
     override preamble() {
         super.preamble();

@@ -10,9 +10,8 @@ export class IssueParameter extends _IssueParameter_stuff<IssueParameter> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,3 +1,4 @@
+import TestQuestion from "./TestQuestion";
 import TestQuestionValidators from "./TestQuestionValidators";
 import _TestQuestion_stuff_TypeInfo from "./_TestQuestion_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TestQuestionTypeInfo extends _TestQuestion_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.TestQuestion"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TestQuestion();
+    }
 
     override preamble() {
         super.preamble();

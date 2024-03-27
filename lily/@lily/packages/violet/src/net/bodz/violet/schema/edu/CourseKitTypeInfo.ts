@@ -1,3 +1,4 @@
+import CourseKit from "./CourseKit";
 import CourseKitValidators from "./CourseKitValidators";
 import _CourseKit_stuff_TypeInfo from "./_CourseKit_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class CourseKitTypeInfo extends _CourseKit_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.CourseKit"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new CourseKit();
+    }
 
     override preamble() {
         super.preamble();

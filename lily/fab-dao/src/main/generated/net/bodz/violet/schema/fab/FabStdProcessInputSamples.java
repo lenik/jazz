@@ -24,8 +24,7 @@ public class FabStdProcessInputSamples
         a.setProcess(process);
         a.setModel(model);
         a.setArtifact(artifact);
-        a.setId(1085008776);
-        a.setQuantity(new BigDecimal("3293826281819091"));
+        a.setQuantity(new BigDecimal("38432938262.18"));
         return a;
     }
 

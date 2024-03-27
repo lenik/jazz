@@ -1,3 +1,4 @@
+import StorePhase from "./StorePhase";
 import StorePhaseValidators from "./StorePhaseValidators";
 import _StorePhase_stuff_TypeInfo from "./_StorePhase_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class StorePhaseTypeInfo extends _StorePhase_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.StorePhase"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new StorePhase();
+    }
 
     override preamble() {
         super.preamble();

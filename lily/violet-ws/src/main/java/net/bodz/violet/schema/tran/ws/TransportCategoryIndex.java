@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.tran.TransportCategory;
 
 /**
-* @label TransportCategory
-*/
+ * @label TransportCategory
+ */
 @ObjectType(TransportCategory.class)
 public class TransportCategoryIndex
         extends CoIndex<TransportCategory> {

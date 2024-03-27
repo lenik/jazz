@@ -14,7 +14,6 @@ public class FabProcessSerialSamples
             throws Exception {
         FabProcessSerial a = new FabProcessSerial();
         a.setProcess(process);
-        a.setId(8107230821369900908L);
         a.setSerial("kn_er orii, qe*gcazouuzus.");
         return a;
     }

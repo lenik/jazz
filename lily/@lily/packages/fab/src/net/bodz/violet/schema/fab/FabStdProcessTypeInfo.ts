@@ -1,3 +1,4 @@
+import FabStdProcess from "./FabStdProcess";
 import FabStdProcessValidators from "./FabStdProcessValidators";
 import _FabStdProcess_stuff_TypeInfo from "./_FabStdProcess_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabStdProcessTypeInfo extends _FabStdProcess_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.fab.FabStdProcess"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabStdProcess();
+    }
 
     override preamble() {
         super.preamble();

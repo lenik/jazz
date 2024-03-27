@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { INT } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import User from "../account/User";
 import Badge from "./Badge";
@@ -28,7 +28,7 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "User": User.TYPE,
     "Badge": Badge.TYPE,
 };
@@ -43,8 +43,8 @@ onMounted(() => {
     <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
             <th data-type="INT" data-field="id">Id</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="User" data-format="label" data-field="user">User</th>
             <th data-type="Badge" data-format="label" data-field="badge">Badge</th>

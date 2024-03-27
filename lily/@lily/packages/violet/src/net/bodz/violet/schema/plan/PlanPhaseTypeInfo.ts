@@ -1,3 +1,4 @@
+import PlanPhase from "./PlanPhase";
 import PlanPhaseValidators from "./PlanPhaseValidators";
 import _PlanPhase_stuff_TypeInfo from "./_PlanPhase_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class PlanPhaseTypeInfo extends _PlanPhase_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.PlanPhase"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new PlanPhase();
+    }
 
     override preamble() {
         super.preamble();

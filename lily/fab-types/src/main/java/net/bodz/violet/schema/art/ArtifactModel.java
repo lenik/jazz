@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.art;
 
+import javax.persistence.Table;
+
 import net.bodz.lily.concrete.util.IValidControl;
 
+@Table(schema = ArtifactModel.SCHEMA_NAME, name = ArtifactModel.TABLE_NAME)
 public class ArtifactModel
         extends _ArtifactModel_stuff
         implements

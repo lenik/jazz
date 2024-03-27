@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.fab.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
 
@@ -15,9 +15,9 @@ public class _FabTrackCriteriaBuilder_stuff<self_t extends _FabTrackCriteriaBuil
 
     public final LongField processId = _long("proc");
 
-    public final DateField<Timestamp> since = date("since", Timestamp.class);
+    public final DateField<OffsetDateTime> since = date("since", OffsetDateTime.class);
 
-    public final DateField<Timestamp> deadline = date("deadline", Timestamp.class);
+    public final DateField<OffsetDateTime> deadline = date("deadline", OffsetDateTime.class);
 
     public final BigDecimalField plannedQuantity = bigDecimal("qty_plan");
 

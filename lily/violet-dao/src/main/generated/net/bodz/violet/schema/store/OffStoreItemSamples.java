@@ -25,8 +25,7 @@ public class OffStoreItemSamples
         a.setOwnerGroup(ownerGroup);
         a.setArtifact(artifact);
         a.setOwnerUser(ownerUser);
-        a.setId(2464262088568220114L);
-        a.setQuantity(new BigDecimal("735905633238733"));
+        a.setQuantity(new BigDecimal(".43"));
         return a;
     }
 

@@ -2,8 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
@@ -42,9 +41,8 @@ const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "FabProcess": FabProcess.TYPE,
-    "TIMESTAMP": TIMESTAMP,
     "BIG_DECIMAL": BIG_DECIMAL,
     "OrgUnit": OrgUnit.TYPE,
 };
@@ -74,15 +72,15 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
-        <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-        <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+        <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+        <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
         <th data-type="INT" data-field="year">Year</th>
         <th data-type="FabProcess" data-format="label" data-field="process">Process</th>
-        <th data-type="TIMESTAMP" data-field="since">Since</th>
-        <th data-type="TIMESTAMP" data-field="deadline">Deadline</th>
+        <th data-type="OffsetDateTime" data-field="since">Since</th>
+        <th data-type="OffsetDateTime" data-field="deadline">Deadline</th>
         <th data-type="BIG_DECIMAL" data-field="plannedQuantity">Planned Quantity</th>
         <th data-type="BIG_DECIMAL" data-field="actualQuantity">Actual Quantity</th>
         <th data-type="BIG_DECIMAL" data-field="validQuantity">Valid Quantity</th>

@@ -1,7 +1,7 @@
 package net.bodz.lily.schema.account;
 
 import java.net.InetAddress;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -51,7 +51,7 @@ public abstract class _UserRun_stuff
     int score;
 
     /** Last time of login */
-    Timestamp lastLoginTime;
+    OffsetDateTime lastLoginTime;
 
     /** The source IP of last login */
     InetAddress lastLoginIP;
@@ -103,14 +103,14 @@ public abstract class _UserRun_stuff
     @Ordinal(_ord_LAST_LOGIN_TIME)
     @Precision(value = 35, scale = 6)
     @Column(name = "lastlog", precision = 35, scale = 6)
-    public Timestamp getLastLoginTime() {
+    public OffsetDateTime getLastLoginTime() {
         return lastLoginTime;
     }
 
     /**
      * Last time of login
      */
-    public void setLastLoginTime(Timestamp value) {
+    public void setLastLoginTime(OffsetDateTime value) {
         this.lastLoginTime = value;
     }
 

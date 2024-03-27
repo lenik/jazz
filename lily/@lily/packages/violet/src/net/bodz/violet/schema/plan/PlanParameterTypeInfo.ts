@@ -1,3 +1,4 @@
+import PlanParameter from "./PlanParameter";
 import PlanParameterValidators from "./PlanParameterValidators";
 import _PlanParameter_stuff_TypeInfo from "./_PlanParameter_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class PlanParameterTypeInfo extends _PlanParameter_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.PlanParameter"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new PlanParameter();
+    }
 
     override preamble() {
         super.preamble();

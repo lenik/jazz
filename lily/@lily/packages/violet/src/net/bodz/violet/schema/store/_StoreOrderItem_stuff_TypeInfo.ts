@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
@@ -51,7 +51,7 @@ export class _StoreOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
         this.declare({
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
             serial: property({ type: LONG, precision: 19, validator: this.validators.validateSerial }),
-            expire: property({ type: TIMESTAMP, precision: 35, scale: 6, validator: this.validators.validateExpire }),
+            expire: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateExpire }),
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
             price: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validatePrice }),
             amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateAmount }),

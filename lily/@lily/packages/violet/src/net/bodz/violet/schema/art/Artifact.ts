@@ -17,9 +17,8 @@ export class Artifact extends _Artifact_stuff {
     convMap?: Map<Uom, double>
     extras?: IArtifactExtras
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

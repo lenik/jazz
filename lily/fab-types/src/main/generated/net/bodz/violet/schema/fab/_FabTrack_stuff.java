@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -48,10 +48,10 @@ public abstract class _FabTrack_stuff
     private static final int _ord_ORG_UNIT_ID = _ord_VALID_QUANTITY + 1;
 
     @NotNull
-    Timestamp since;
+    OffsetDateTime since;
 
     @NotNull
-    Timestamp deadline;
+    OffsetDateTime deadline;
 
     @NotNull
     BigDecimal plannedQuantity;
@@ -78,11 +78,11 @@ public abstract class _FabTrack_stuff
     @NotNull
     @Precision(value = 35, scale = 6)
     @Column(name = "since", nullable = false, precision = 35, scale = 6)
-    public Timestamp getSince() {
+    public OffsetDateTime getSince() {
         return since;
     }
 
-    public void setSince(@NotNull Timestamp value) {
+    public void setSince(@NotNull OffsetDateTime value) {
         this.since = value;
     }
 
@@ -90,11 +90,11 @@ public abstract class _FabTrack_stuff
     @NotNull
     @Precision(value = 35, scale = 6)
     @Column(name = "deadline", nullable = false, precision = 35, scale = 6)
-    public Timestamp getDeadline() {
+    public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(@NotNull Timestamp value) {
+    public void setDeadline(@NotNull OffsetDateTime value) {
         this.deadline = value;
     }
 
@@ -198,8 +198,8 @@ public abstract class _FabTrack_stuff
     }
 
     public void initNotNulls() {
-        this.since = new Timestamp(System.currentTimeMillis());
-        this.deadline = new Timestamp(System.currentTimeMillis());
+        this.since = OffsetDateTime.now();
+        this.deadline = OffsetDateTime.now();
         this.plannedQuantity = BigDecimal.ZERO;
         this.actualQuantity = BigDecimal.ZERO;
         this.validQuantity = BigDecimal.ZERO;

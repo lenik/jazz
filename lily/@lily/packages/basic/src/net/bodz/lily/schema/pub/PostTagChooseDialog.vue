@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { INT } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import Post from "./Post";
@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "Post": Post.TYPE,
     "PostTagType": PostTagType.TYPE,
 };
@@ -53,8 +53,8 @@ onMounted(() => {
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="PostTag.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="INT" data-field="id">Id</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="Post" data-format="label" data-field="post">Post</th>
         <th data-type="PostTagType" data-format="label" data-field="tag">Tag</th>

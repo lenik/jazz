@@ -12,7 +12,7 @@ import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.lily.entity.IdFn;
 
-@Table(schema = "violet", name = "diary_party")
+@Table(schema = DiaryParty.SCHEMA_NAME, name = DiaryParty.TABLE_NAME)
 public class DiaryParty
         extends _DiaryParty_stuff
         implements
@@ -32,13 +32,13 @@ public class DiaryParty
     public boolean partialEquals(DiaryParty o) {
         if (value != o.value)
             return false;
-        if (!IdFn.idEquals(diary, o.diary))
+        if (! IdFn.idEquals(diary, o.diary))
             return false;
-        if (!IdFn.idEquals(user, o.user))
+        if (! IdFn.idEquals(user, o.user))
             return false;
-        if (!IdFn.idEquals(person, o.person))
+        if (! IdFn.idEquals(person, o.person))
             return false;
-        if (!IdFn.idEquals(org, o.org))
+        if (! IdFn.idEquals(org, o.org))
             return false;
         return super.partialEquals(o);
     }

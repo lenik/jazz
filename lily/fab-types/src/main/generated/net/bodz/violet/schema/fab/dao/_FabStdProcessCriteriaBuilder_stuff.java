@@ -1,11 +1,11 @@
 package net.bodz.violet.schema.fab.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
 public class _FabStdProcessCriteriaBuilder_stuff<self_t extends _FabStdProcessCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 
@@ -15,9 +15,9 @@ public class _FabStdProcessCriteriaBuilder_stuff<self_t extends _FabStdProcessCr
 
     public final BooleanField valid = bool("\"valid\"");
 
-    public final DateField<Timestamp> validSince = date("validsince", Timestamp.class);
+    public final DateField<OffsetDateTime> validSince = date("validsince", OffsetDateTime.class);
 
-    public final DateField<Timestamp> validUntil = date("validuntil", Timestamp.class);
+    public final DateField<OffsetDateTime> validUntil = date("validuntil", OffsetDateTime.class);
 
     public final IntegerField outputId = integer("\"output\"");
 

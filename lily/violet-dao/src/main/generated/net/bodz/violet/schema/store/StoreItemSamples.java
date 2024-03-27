@@ -28,8 +28,7 @@ public class StoreItemSamples
         a.setRegion(region);
         a.setArtifact(artifact);
         a.setOwnerGroup(ownerGroup);
-        a.setId(1997853094941147186L);
-        a.setQuantity(new BigDecimal("27"));
+        a.setQuantity(new BigDecimal("8745317.27"));
         return a;
     }
 

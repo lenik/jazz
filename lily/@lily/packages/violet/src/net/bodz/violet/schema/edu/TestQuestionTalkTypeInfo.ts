@@ -1,3 +1,4 @@
+import TestQuestionTalk from "./TestQuestionTalk";
 import TestQuestionTalkValidators from "./TestQuestionTalkValidators";
 import _TestQuestionTalk_stuff_TypeInfo from "./_TestQuestionTalk_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TestQuestionTalkTypeInfo extends _TestQuestionTalk_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.TestQuestionTalk"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TestQuestionTalk();
+    }
 
     override preamble() {
         super.preamble();

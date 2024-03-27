@@ -62,7 +62,7 @@ onMounted(() => {
         <CoObjectFieldGroup :meta="meta" v-model="model" />
         <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FieldGroup :type="_PlanDoParameter_stuff.TYPE">

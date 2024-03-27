@@ -10,9 +10,8 @@ export class PostCategory extends _PostCategory_stuff<PostCategory> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

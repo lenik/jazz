@@ -2,7 +2,7 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "plandoparm")
+@Table(schema = PlanDoParameter.SCHEMA_NAME, name = PlanDoParameter.TABLE_NAME)
 public class PlanDoParameter
         extends _PlanDoParameter_stuff<PlanDoParameter> {
 

@@ -1,3 +1,4 @@
+import Shop from "./Shop";
 import ShopValidators from "./ShopValidators";
 import _Shop_stuff_TypeInfo from "./_Shop_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ShopTypeInfo extends _Shop_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.Shop"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Shop();
+    }
 
     override preamble() {
         super.preamble();

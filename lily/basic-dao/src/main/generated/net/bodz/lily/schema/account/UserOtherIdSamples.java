@@ -1,6 +1,6 @@
 package net.bodz.lily.schema.account;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.dao.UserMapper;
@@ -20,9 +20,8 @@ public class UserOtherIdSamples
         UserOtherId a = new UserOtherId();
         a.setType(type);
         a.setUser(user);
-        a.setId(954758213);
-        a.setBeginTime(ZonedDateTime.parse("2024-01-23T22:12:05.853Z[Africa/Monrovia]", DateTimes.ISO_ZONED_DATE_TIME));
-        a.setEndTime(ZonedDateTime.parse("2024-01-21T23:11:12.79-10:00[US/Aleutian]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setBeginTime(OffsetDateTime.parse("2023-12-21T00:20:21.787+01:33", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setEndTime(OffsetDateTime.parse("2024-01-21T16:59:12.79-16:12", DateTimes.ISO_OFFSET_DATE_TIME));
         a.setYear(507267842);
         a.setOtherId("ciuewu'rklar eeb qyaf! up! uzda, irp! daslq; kio paee! oue@evgr, rbeen uee ruo Ee");
         return a;

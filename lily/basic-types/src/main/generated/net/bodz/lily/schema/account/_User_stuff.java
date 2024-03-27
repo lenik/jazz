@@ -201,6 +201,8 @@ public abstract class _User_stuff
     @Column(name = "type", nullable = false, precision = 10)
     public synchronized int getTypeId() {
         if (type != null) {
+            if (type.getId() == null)
+                return 0;
             return type.getId();
         }
         return typeId;

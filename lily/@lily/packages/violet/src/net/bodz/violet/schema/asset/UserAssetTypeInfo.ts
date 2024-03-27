@@ -1,3 +1,4 @@
+import UserAsset from "./UserAsset";
 import UserAssetValidators from "./UserAssetValidators";
 import _UserAsset_stuff_TypeInfo from "./_UserAsset_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class UserAssetTypeInfo extends _UserAsset_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.asset.UserAsset"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new UserAsset();
+    }
 
     override preamble() {
         super.preamble();

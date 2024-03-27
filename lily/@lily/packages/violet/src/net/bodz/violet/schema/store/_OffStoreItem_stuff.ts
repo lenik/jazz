@@ -1,11 +1,11 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type Artifact from "../art/Artifact";
 import _OffStoreItem_stuff_TypeInfo from "./_OffStoreItem_stuff_TypeInfo";
 
-export class _OffStoreItem_stuff extends CoEntity<long> {
+export class _OffStoreItem_stuff extends IdEntity<long> {
 
     static _typeInfo: _OffStoreItem_stuff_TypeInfo;
     static get TYPE() {
@@ -14,7 +14,6 @@ export class _OffStoreItem_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     batch?: JsonVariant;
     quantity: BigDecimal;
 

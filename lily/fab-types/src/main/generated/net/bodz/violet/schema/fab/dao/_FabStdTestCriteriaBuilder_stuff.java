@@ -1,9 +1,9 @@
 package net.bodz.violet.schema.fab.dao;
 
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
 public class _FabStdTestCriteriaBuilder_stuff<self_t extends _FabStdTestCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 

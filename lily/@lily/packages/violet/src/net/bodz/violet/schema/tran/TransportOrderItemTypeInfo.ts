@@ -3,6 +3,7 @@ import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import SalesOrder from "../shop/SalesOrder";
 import SalesOrderItem from "../shop/SalesOrderItem";
+import TransportOrderItem from "./TransportOrderItem";
 import TransportOrderItemValidators from "./TransportOrderItemValidators";
 import _TransportOrderItem_stuff_TypeInfo from "./_TransportOrderItem_stuff_TypeInfo";
 
@@ -17,10 +18,14 @@ export class TransportOrderItemTypeInfo extends _TransportOrderItem_stuff_TypeIn
     get name() { return "net.bodz.violet.schema.tran.TransportOrderItem"; }
     get icon() { return "fa-tag"; }
 
+    override create() {
+        return new TransportOrderItem();
+    }
+
     override preamble() {
         super.preamble();
         this.declare({
-            amount: property({ type: BIG_DECIMAL, validator: this.validators.validateAmount }),
+            amount: property({ type: BIG_DECIMAL, precision: 20, scale: 2, validator: this.validators.validateAmount }),
             salesOrder: property({ type: SalesOrder.TYPE, validator: this.validators.validateSalesOrder }),
             salesOrderItem: property({ type: SalesOrderItem.TYPE, validator: this.validators.validateSalesOrderItem }),
         });

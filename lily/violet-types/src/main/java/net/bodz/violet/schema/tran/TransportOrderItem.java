@@ -15,7 +15,7 @@ import net.bodz.violet.schema.shop.SalesOrderItem;
 /**
  * 送货单项目
  */
-@Table(schema = "violet", name = "tranodrl")
+@Table(schema = TransportOrderItem.SCHEMA_NAME, name = TransportOrderItem.TABLE_NAME)
 public class TransportOrderItem
         extends _TransportOrderItem_stuff
         implements

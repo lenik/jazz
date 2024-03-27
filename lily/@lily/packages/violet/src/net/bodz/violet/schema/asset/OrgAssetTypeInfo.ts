@@ -1,3 +1,4 @@
+import OrgAsset from "./OrgAsset";
 import OrgAssetValidators from "./OrgAssetValidators";
 import _OrgAsset_stuff_TypeInfo from "./_OrgAsset_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class OrgAssetTypeInfo extends _OrgAsset_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.asset.OrgAsset"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new OrgAsset();
+    }
 
     override preamble() {
         super.preamble();

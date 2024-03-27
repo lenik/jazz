@@ -2,7 +2,7 @@
 import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import StoreOrder from "./StoreOrder";

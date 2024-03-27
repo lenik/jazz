@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
@@ -36,11 +37,12 @@ const typeMap = {
     "Group": Group.TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "Artifact": Artifact.TYPE,
     "Region": Region.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BIG_DECIMAL": BIG_DECIMAL,
+    "ZonedDateTime": ZonedDateTime.TYPE,
 };
 
 onMounted(() => {
@@ -60,11 +62,11 @@ onMounted(() => {
             <th data-type="INT" data-field="priority">Priority</th>
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
-            <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-            <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+            <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+            <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
             <th data-type="INT" data-field="year">Year</th>
             <th data-type="User" data-format="label" data-field="owner">Owner</th>
             <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>

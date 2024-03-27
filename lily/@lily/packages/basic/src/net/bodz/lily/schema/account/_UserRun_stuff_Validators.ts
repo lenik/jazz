@@ -1,6 +1,6 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import CoEntityValidators from "../../concrete/CoEntityValidators";
@@ -23,7 +23,7 @@ export class _UserRun_stuff_Validators extends CoEntityValidators {
     validateScore(val: int) {
     }
 
-    validateLastLoginTime(val: Timestamp) {
+    validateLastLoginTime(val: OffsetDateTime) {
     }
 
     validateLastLoginIP(val: InetAddress) {

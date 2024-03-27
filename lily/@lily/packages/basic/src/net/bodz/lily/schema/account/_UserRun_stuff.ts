@@ -1,6 +1,6 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { InetAddress, int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import CoEntity from "../../concrete/CoEntity";
 import type User from "./User";
@@ -17,7 +17,7 @@ export class _UserRun_stuff extends CoEntity<int> {
 
     properties?: JsonVariant;
     score: int;
-    lastLoginTime?: Timestamp;
+    lastLoginTime?: OffsetDateTime;
     lastLoginIP?: InetAddress;
 
     user: User;

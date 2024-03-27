@@ -1,5 +1,5 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoImagedValidators from "@lily/basic/src/net/bodz/lily/concrete/CoImagedValidators";
 
@@ -21,10 +21,10 @@ export class _FabStdProcess_stuff_Validators extends CoImagedValidators {
     validateValid(val: boolean) {
     }
 
-    validateValidSince(val: ZonedDateTime) {
+    validateValidSince(val: OffsetDateTime) {
     }
 
-    validateValidUntil(val: ZonedDateTime) {
+    validateValidUntil(val: OffsetDateTime) {
     }
 
     validateDuration(val: int) {

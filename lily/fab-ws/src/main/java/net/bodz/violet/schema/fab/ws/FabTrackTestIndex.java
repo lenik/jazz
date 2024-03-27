@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.fab.FabTrackTest;
 
 /**
-* @label FabTrackTest
-*/
+ * @label FabTrackTest
+ */
 @ObjectType(FabTrackTest.class)
 public class FabTrackTestIndex
         extends CoIndex<FabTrackTest> {

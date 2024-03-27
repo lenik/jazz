@@ -1,45 +1,31 @@
 package net.bodz.violet.schema.shop;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.CoMessage;
 import net.bodz.lily.entity.IdType;
-import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.contact.Organization;
 import net.bodz.lily.schema.contact.Person;
-import net.bodz.lily.schema.meta.FormDef;
 import net.bodz.violet.schema.plan.Plan;
 
 @IdType(Long.class)
 public abstract class _SalesOrder_stuff
-        extends CoEntity<Long> {
+        extends CoMessage<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "saleodr";
 
-    public static final String FIELD_ID = "id";
-    public static final String FIELD_BEGIN_TIME = "t0";
-    public static final String FIELD_END_TIME = "t1";
-    public static final String FIELD_YEAR = "year";
-    public static final String FIELD_SUBJECT = "subject";
-    public static final String FIELD_OP_ID = "op";
-    public static final String FIELD_RAW_TEXT = "text";
-    public static final String FIELD_FORM_ID = "form";
     public static final String FIELD_FORM_ARGUMENTS = "formargs";
-    public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_CATEGORY_ID = "cat";
     public static final String FIELD_PHASE_ID = "phase";
     public static final String FIELD_PREVIOUS_ORDER_ID = "prev";
@@ -50,16 +36,7 @@ public abstract class _SalesOrder_stuff
     public static final String FIELD_TOTAL_QUANTITY = "sum_qty";
     public static final String FIELD_TOTAL_AMOUNT = "sum_amount";
 
-    public static final int N_ID = 19;
-    public static final int N_BEGIN_TIME = 35;
-    public static final int N_END_TIME = 35;
-    public static final int N_YEAR = 10;
-    public static final int N_SUBJECT = 200;
-    public static final int N_OP_ID = 10;
-    public static final int N_RAW_TEXT = 2147483647;
-    public static final int N_FORM_ID = 10;
     public static final int N_FORM_ARGUMENTS = 2147483647;
-    public static final int N_PROPERTIES = 2147483647;
     public static final int N_CATEGORY_ID = 10;
     public static final int N_PHASE_ID = 10;
     public static final int N_PREVIOUS_ORDER_ID = 19;
@@ -70,17 +47,8 @@ public abstract class _SalesOrder_stuff
     public static final int N_TOTAL_QUANTITY = 20;
     public static final int N_TOTAL_AMOUNT = 20;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_BEGIN_TIME = 12;
-    private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
-    private static final int _ord_YEAR = _ord_END_TIME + 1;
-    private static final int _ord_SUBJECT = _ord_YEAR + 1;
-    private static final int _ord_OP_ID = _ord_SUBJECT + 1;
-    private static final int _ord_RAW_TEXT = _ord_OP_ID + 1;
-    private static final int _ord_FORM_ID = _ord_RAW_TEXT + 1;
-    private static final int _ord_FORM_ARGUMENTS = _ord_FORM_ID + 1;
-    private static final int _ord_PROPERTIES = _ord_FORM_ARGUMENTS + 1;
-    private static final int _ord_CATEGORY_ID = _ord_PROPERTIES + 1;
+    private static final int _ord_FORM_ARGUMENTS = 19;
+    private static final int _ord_CATEGORY_ID = _ord_FORM_ARGUMENTS + 2;
     private static final int _ord_PHASE_ID = _ord_CATEGORY_ID + 1;
     private static final int _ord_PREVIOUS_ORDER_ID = _ord_PHASE_ID + 1;
     private static final int _ord_PLAN_ID = _ord_PREVIOUS_ORDER_ID + 1;
@@ -90,25 +58,7 @@ public abstract class _SalesOrder_stuff
     private static final int _ord_TOTAL_QUANTITY = _ord_LENGTH + 1;
     private static final int _ord_TOTAL_AMOUNT = _ord_TOTAL_QUANTITY + 1;
 
-    @Id
-    @NotNull
-    long id;
-
-    ZonedDateTime beginTime;
-
-    ZonedDateTime endTime;
-
-    @NotNull
-    int year;
-
-    @NotNull
-    String subject;
-
-    String rawText;
-
     String formArguments;
-
-    JsonVariant properties;
 
     @NotNull
     int length;
@@ -125,11 +75,6 @@ public abstract class _SalesOrder_stuff
     Integer customerId;
 
     /**  */
-    FormDef form;
-
-    Integer formId;
-
-    /**  */
     SalesPhase phase;
 
     Integer phaseId;
@@ -144,11 +89,6 @@ public abstract class _SalesOrder_stuff
 
     Long previousOrderId;
 
-    /** (User Account) */
-    User op;
-
-    Integer opId;
-
     /**  */
     Plan plan;
 
@@ -158,86 +98,6 @@ public abstract class _SalesOrder_stuff
     SalesCategory category;
 
     Integer categoryId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
-
-    @Ordinal(_ord_BEGIN_TIME)
-    @Precision(value = 35, scale = 6)
-    @Column(name = "t0", precision = 35, scale = 6)
-    public ZonedDateTime getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(ZonedDateTime value) {
-        this.beginTime = value;
-    }
-
-    @Ordinal(_ord_END_TIME)
-    @Precision(value = 35, scale = 6)
-    @Column(name = "t1", precision = 35, scale = 6)
-    public ZonedDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(ZonedDateTime value) {
-        this.endTime = value;
-    }
-
-    @Ordinal(_ord_YEAR)
-    @Precision(value = 10)
-    @Column(name = "year", nullable = false, precision = 10)
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int value) {
-        this.year = value;
-    }
-
-    @Ordinal(_ord_SUBJECT)
-    @NotNull
-    @Precision(value = N_SUBJECT)
-    @TextInput(maxLength = N_SUBJECT)
-    @Column(name = "subject", nullable = false, length = N_SUBJECT)
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(@NotNull String value) {
-        this.subject = value;
-    }
-
-    @Ordinal(_ord_RAW_TEXT)
-    @Precision(value = N_RAW_TEXT)
-    @TextInput(maxLength = N_RAW_TEXT)
-    @Column(name = "text", length = N_RAW_TEXT)
-    public String getRawText() {
-        return rawText;
-    }
-
-    public void setRawText(String value) {
-        this.rawText = value;
-    }
 
     @Ordinal(_ord_FORM_ARGUMENTS)
     @Precision(value = N_FORM_ARGUMENTS)
@@ -249,17 +109,6 @@ public abstract class _SalesOrder_stuff
 
     public void setFormArguments(String value) {
         this.formArguments = value;
-    }
-
-    @Ordinal(_ord_PROPERTIES)
-    @Precision(value = 2147483647)
-    @Column(name = "props", precision = 2147483647)
-    public JsonVariant getProperties() {
-        return properties;
-    }
-
-    public void setProperties(JsonVariant value) {
-        this.properties = value;
     }
 
     @Ordinal(_ord_LENGTH)
@@ -325,36 +174,6 @@ public abstract class _SalesOrder_stuff
 
     public synchronized void setCustomerId(Integer value) {
         this.customerId = value;
-    }
-
-    /**
-     *
-     * @constraint foreign key (form) references lily._form (id)
-     */
-    @JoinColumn(name = "form")
-    @ManyToOne
-    public FormDef getForm() {
-        return form;
-    }
-
-    /**
-     */
-    public void setForm(FormDef value) {
-        this.form = value;
-    }
-
-    @Ordinal(_ord_FORM_ID)
-    @Precision(value = N_FORM_ID)
-    @Column(name = "form", precision = 10)
-    public synchronized Integer getFormId() {
-        if (form != null) {
-            return form.getId();
-        }
-        return formId;
-    }
-
-    public synchronized void setFormId(Integer value) {
-        this.formId = value;
     }
 
     /**
@@ -448,39 +267,6 @@ public abstract class _SalesOrder_stuff
     }
 
     /**
-     * {inheritDoc User}
-     * User Account
-     *
-     * @constraint foreign key (op) references lily.user (id)
-     */
-    @JoinColumn(name = "op")
-    @ManyToOne
-    public User getOp() {
-        return op;
-    }
-
-    /**
-     * User Account
-     */
-    public void setOp(User value) {
-        this.op = value;
-    }
-
-    @Ordinal(_ord_OP_ID)
-    @Precision(value = N_OP_ID)
-    @Column(name = "op", precision = 10)
-    public synchronized Integer getOpId() {
-        if (op != null) {
-            return op.getId();
-        }
-        return opId;
-    }
-
-    public synchronized void setOpId(Integer value) {
-        this.opId = value;
-    }
-
-    /**
      *
      * @constraint foreign key (plan) references violet.plan (id)
      */
@@ -541,7 +327,6 @@ public abstract class _SalesOrder_stuff
     }
 
     public void initNotNulls() {
-        this.subject = "";
         this.totalQuantity = BigDecimal.ZERO;
         this.totalAmount = BigDecimal.ZERO;
     }

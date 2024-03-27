@@ -1,3 +1,4 @@
+import DiaryParameter from "./DiaryParameter";
 import DiaryParameterValidators from "./DiaryParameterValidators";
 import _DiaryParameter_stuff_TypeInfo from "./_DiaryParameter_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class DiaryParameterTypeInfo extends _DiaryParameter_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.DiaryParameter"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new DiaryParameter();
+    }
 
     override preamble() {
         super.preamble();

@@ -17,9 +17,8 @@ export class OrgUnit extends _OrgUnit_stuff {
     contact?: Contact
     staff?: List<PersonRole>
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

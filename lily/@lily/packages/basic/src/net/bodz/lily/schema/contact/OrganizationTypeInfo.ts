@@ -1,3 +1,4 @@
+import Organization from "./Organization";
 import OrganizationValidators from "./OrganizationValidators";
 import _Organization_stuff_TypeInfo from "./_Organization_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class OrganizationTypeInfo extends _Organization_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.contact.Organization"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Organization();
+    }
 
     override preamble() {
         super.preamble();

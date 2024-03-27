@@ -1,3 +1,4 @@
+import TestApply from "./TestApply";
 import TestApplyValidators from "./TestApplyValidators";
 import _TestApply_stuff_TypeInfo from "./_TestApply_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TestApplyTypeInfo extends _TestApply_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.TestApply"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TestApply();
+    }
 
     override preamble() {
         super.preamble();

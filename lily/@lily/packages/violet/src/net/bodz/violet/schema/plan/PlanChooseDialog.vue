@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { DOUBLE, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
@@ -41,7 +41,7 @@ const typeMap = {
     "Group": Group.TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
     "FormDef": FormDef.TYPE,
     "PlanCategory": PlanCategory.TYPE,
@@ -71,16 +71,16 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="beginTime">Begin Time</th>
-        <th data-type="ZonedDateTime" data-field="endTime">End Time</th>
+        <th data-type="OffsetDateTime" data-field="beginTime">Begin Time</th>
+        <th data-type="OffsetDateTime" data-field="endTime">End Time</th>
         <th data-type="INT" data-field="year">Year</th>
         <th data-type="STRING" data-field="subject">Subject</th>
         <th data-type="User" data-format="label" data-field="op">Op</th>
         <th data-type="STRING" data-field="rawText">Raw Text</th>
         <th data-type="FormDef" data-format="label" data-field="form">Form</th>
         <th data-type="STRING" data-field="formArguments">Form Arguments</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="PlanCategory" data-format="label" data-field="category">Category</th>
         <th data-type="PlanPhase" data-format="label" data-field="phase">Phase</th>

@@ -14,9 +14,8 @@ export class Zone extends _Zone_stuff {
     fullPath?: string
     geo?: GeoLocation
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

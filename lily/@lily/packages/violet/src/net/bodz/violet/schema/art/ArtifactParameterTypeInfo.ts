@@ -1,3 +1,4 @@
+import ArtifactParameter from "./ArtifactParameter";
 import ArtifactParameterValidators from "./ArtifactParameterValidators";
 import _ArtifactParameter_stuff_TypeInfo from "./_ArtifactParameter_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArtifactParameterTypeInfo extends _ArtifactParameter_stuff_TypeInfo
 
     get name() { return "net.bodz.violet.schema.art.ArtifactParameter"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArtifactParameter();
+    }
 
     override preamble() {
         super.preamble();

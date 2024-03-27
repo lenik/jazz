@@ -2,7 +2,7 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "plando_vote")
+@Table(schema = PlanDoVote.SCHEMA_NAME, name = PlanDoVote.TABLE_NAME)
 public class PlanDoVote
         extends _PlanDoVote_stuff {
 

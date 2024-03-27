@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.account.Policy;
 
 /**
-* @label Policy
-*/
+ * @label Policy
+ */
 @ObjectType(Policy.class)
 public class PolicyIndex
         extends CoIndex<Policy> {

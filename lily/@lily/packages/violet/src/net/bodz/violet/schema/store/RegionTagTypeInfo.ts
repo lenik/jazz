@@ -1,3 +1,4 @@
+import RegionTag from "./RegionTag";
 import RegionTagValidators from "./RegionTagValidators";
 import _RegionTag_stuff_TypeInfo from "./_RegionTag_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class RegionTagTypeInfo extends _RegionTag_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionTag"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new RegionTag();
+    }
 
     override preamble() {
         super.preamble();

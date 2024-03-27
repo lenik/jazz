@@ -1,6 +1,6 @@
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
 
@@ -36,8 +36,8 @@ export class _FabTask_stuff_TypeInfo extends CoEventTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            since: property({ type: TIMESTAMP, nullable: false, precision: 35, scale: 6, validator: this.validators.validateSince }),
-            deadline: property({ type: TIMESTAMP, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
+            since: property({ type: OffsetDateTime.TYPE, nullable: false, precision: 35, scale: 6, validator: this.validators.validateSince }),
+            deadline: property({ type: OffsetDateTime.TYPE, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
             processCount: property({ type: INT, precision: 10, validator: this.validators.validateProcessCount }),
             trackCount: property({ type: INT, precision: 10, validator: this.validators.validateTrackCount }),
 

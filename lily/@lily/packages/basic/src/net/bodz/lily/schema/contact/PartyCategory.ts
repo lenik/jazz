@@ -10,9 +10,8 @@ export class PartyCategory extends _PartyCategory_stuff<PartyCategory> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,5 +1,5 @@
 import type { BigDecimal, List, int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import TransportOrder from "../tran/TransportOrder";
 import SalesOrderItem from "./SalesOrderItem";
@@ -15,19 +15,18 @@ export class SalesOrder extends _SalesOrder_stuff {
         return this._typeInfo;
     }
 
-    beginTime?: ZonedDateTime
-    deadline?: ZonedDateTime
+    beginTime?: OffsetDateTime
+    deadline?: OffsetDateTime
     deliveries?: List<TransportOrder>
-    endTime?: ZonedDateTime
+    endTime?: OffsetDateTime
     items?: List<SalesOrderItem>
     length: int
-    orderTime?: ZonedDateTime
+    orderTime?: OffsetDateTime
     totalAmount?: BigDecimal
     totalQuantity?: BigDecimal
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

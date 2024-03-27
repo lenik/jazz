@@ -26,8 +26,7 @@ public class DiaryPartySamples
         a.setOrg(org);
         a.setUser(user);
         a.setDiary(diary);
-        a.setId(5427017799090752076L);
-        a.setValue(2033405508);
+        a.setValue(435301608);
         return a;
     }
 

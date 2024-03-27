@@ -1,3 +1,4 @@
+import ArtifactVote from "./ArtifactVote";
 import ArtifactVoteValidators from "./ArtifactVoteValidators";
 import _ArtifactVote_stuff_TypeInfo from "./_ArtifactVote_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArtifactVoteTypeInfo extends _ArtifactVote_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.art.ArtifactVote"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArtifactVote();
+    }
 
     override preamble() {
         super.preamble();

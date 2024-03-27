@@ -10,9 +10,8 @@ export class TagDef extends _TagDef_stuff<TagDef> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

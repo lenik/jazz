@@ -1,3 +1,4 @@
+import CourseFav from "./CourseFav";
 import CourseFavValidators from "./CourseFavValidators";
 import _CourseFav_stuff_TypeInfo from "./_CourseFav_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class CourseFavTypeInfo extends _CourseFav_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.CourseFav"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new CourseFav();
+    }
 
     override preamble() {
         super.preamble();

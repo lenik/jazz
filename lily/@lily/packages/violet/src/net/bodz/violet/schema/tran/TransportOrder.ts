@@ -1,5 +1,5 @@
 import type { List, int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import TransportOrderItem from "./TransportOrderItem";
 import TransportOrderTypeInfo from "./TransportOrderTypeInfo";
@@ -14,14 +14,13 @@ export class TransportOrder extends _TransportOrder_stuff {
         return this._typeInfo;
     }
 
-    arrivedDate?: ZonedDateTime
+    arrivedDate?: OffsetDateTime
     items?: List<TransportOrderItem>
     length: int
-    shipDate?: ZonedDateTime
+    shipDate?: OffsetDateTime
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

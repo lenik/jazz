@@ -1,12 +1,12 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
 
 import type Plan from "./Plan";
 import _PlanParty_stuff_TypeInfo from "./_PlanParty_stuff_TypeInfo";
 
-export class _PlanParty_stuff extends CoEntity<long> {
+export class _PlanParty_stuff extends IdEntity<long> {
 
     static _typeInfo: _PlanParty_stuff_TypeInfo;
     static get TYPE() {
@@ -14,8 +14,6 @@ export class _PlanParty_stuff extends CoEntity<long> {
             this._typeInfo = _PlanParty_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
-    id: long;
 
     person?: Person;
     personId?: int;

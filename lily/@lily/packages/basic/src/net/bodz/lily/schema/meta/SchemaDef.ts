@@ -23,9 +23,8 @@ export class SchemaDef extends _SchemaDef_stuff<SchemaDef> {
     priorities?: List<PriorityDef>
     tagGroups?: List<TagGroupDef>
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

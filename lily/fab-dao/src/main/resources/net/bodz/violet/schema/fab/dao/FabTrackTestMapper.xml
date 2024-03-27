@@ -162,7 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"><![CDATA[
         insert into fabtrack_test(
             creation,
             lastmod,

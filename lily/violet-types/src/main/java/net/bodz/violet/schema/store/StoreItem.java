@@ -2,7 +2,12 @@ package net.bodz.violet.schema.store;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "storel")
+import net.bodz.lily.entity.PrimaryKeyColumns;
+import net.bodz.lily.entity.PrimaryKeyProperties;
+
+@PrimaryKeyColumns("id")
+@PrimaryKeyProperties("id")
+@Table(schema = StoreItem.SCHEMA_NAME, name = StoreItem.TABLE_NAME)
 public class StoreItem
         extends _StoreItem_stuff {
 

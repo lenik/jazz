@@ -9,7 +9,7 @@ import net.bodz.violet.schema.art.Dim3d;
  * 存放区域
  */
 @HaveAttachments
-@Table(schema = "violet", name = "region")
+@Table(schema = Region.SCHEMA_NAME, name = Region.TABLE_NAME)
 public class Region
         extends _Region_stuff<Region> {
 

@@ -1,5 +1,5 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoImaged from "@lily/basic/src/net/bodz/lily/concrete/CoImaged";
 
 import type ArtifactModel from "../art/ArtifactModel";
@@ -17,8 +17,8 @@ export class _FabStdProcess_stuff extends CoImaged<int> {
     }
 
     valid: boolean;
-    validSince?: ZonedDateTime;
-    validUntil?: ZonedDateTime;
+    validSince?: OffsetDateTime;
+    validUntil?: OffsetDateTime;
     duration: int;
     strict: boolean;
 

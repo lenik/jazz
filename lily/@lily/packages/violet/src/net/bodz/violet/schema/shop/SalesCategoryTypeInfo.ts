@@ -1,3 +1,4 @@
+import SalesCategory from "./SalesCategory";
 import SalesCategoryValidators from "./SalesCategoryValidators";
 import _SalesCategory_stuff_TypeInfo from "./_SalesCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class SalesCategoryTypeInfo extends _SalesCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.SalesCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new SalesCategory();
+    }
 
     override preamble() {
         super.preamble();

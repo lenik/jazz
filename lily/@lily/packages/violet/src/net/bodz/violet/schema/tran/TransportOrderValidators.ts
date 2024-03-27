@@ -1,5 +1,5 @@
 import type { List, int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type TransportOrderItem from "./TransportOrderItem";
@@ -16,7 +16,7 @@ export class TransportOrderValidators extends _TransportOrder_stuff_Validators {
         return this._type as TransportOrderTypeInfo;
     }
 
-    validateArrivedDate(val: ZonedDateTime) {
+    validateArrivedDate(val: OffsetDateTime) {
     }
 
     validateItems(val: List<TransportOrderItem>) {
@@ -25,7 +25,7 @@ export class TransportOrderValidators extends _TransportOrder_stuff_Validators {
     validateLength(val: int) {
     }
 
-    validateShipDate(val: ZonedDateTime) {
+    validateShipDate(val: OffsetDateTime) {
     }
 
 }

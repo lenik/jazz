@@ -1,12 +1,12 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type FabStdTestParameter from "./FabStdTestParameter";
 import type FabStdTester from "./FabStdTester";
 import type FabTrackTest from "./FabTrackTest";
 import _FabTrackTestParameter_stuff_TypeInfo from "./_FabTrackTestParameter_stuff_TypeInfo";
 
-export class _FabTrackTestParameter_stuff extends CoEntity<long> {
+export class _FabTrackTestParameter_stuff extends IdEntity<long> {
 
     static _typeInfo: _FabTrackTestParameter_stuff_TypeInfo;
     static get TYPE() {
@@ -15,7 +15,6 @@ export class _FabTrackTestParameter_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     actual: string;
     valid: boolean;
 

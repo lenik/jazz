@@ -1,3 +1,4 @@
+import RegionLevel from "./RegionLevel";
 import RegionLevelValidators from "./RegionLevelValidators";
 import _RegionLevel_stuff_TypeInfo from "./_RegionLevel_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class RegionLevelTypeInfo extends _RegionLevel_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.RegionLevel"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new RegionLevel();
+    }
 
     override preamble() {
         super.preamble();

@@ -10,9 +10,8 @@ export class ArticleTagType extends _ArticleTagType_stuff<ArticleTagType> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

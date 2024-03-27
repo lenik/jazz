@@ -1,25 +1,23 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
+import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
 import User from "./User";
 import _UserSecret_stuff_Validators from "./_UserSecret_stuff_Validators";
 
-export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
+export class _UserSecret_stuff_TypeInfo extends IdEntityTypeInfo {
 
     static SCHEMA_NAME = "lily";
     static TABLE_NAME = "usersec";
 
-    static readonly FIELD_ID = "id";
     static readonly FIELD_PROPERTIES = "props";
     static readonly FIELD_USER_ID = "user";
     static readonly FIELD_PASSWORD = "passwd";
     static readonly FIELD_QUESTION = "question";
     static readonly FIELD_ANSWER = "answer";
 
-    static readonly N_ID = 10;
     static readonly N_PROPERTIES = 2147483647;
     static readonly N_USER_ID = 10;
     static readonly N_PASSWORD = 40;
@@ -29,7 +27,7 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     readonly validators = new _UserSecret_stuff_Validators(this);
 
     constructor() {
-        super();
+        super(INT);
     }
 
     get name() { return "net.bodz.lily.schema.account.UserSecret"; }
@@ -39,7 +37,6 @@ export class _UserSecret_stuff_TypeInfo extends CoEntityTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            id: primaryKey({ type: INT, nullable: false, precision: 10, validator: this.validators.validateId }),
             properties: property({ type: JSON_VARIANT, validator: this.validators.validateProperties }),
             password: property({ type: STRING, nullable: false, precision: 40, 
                 description: "Password data", 

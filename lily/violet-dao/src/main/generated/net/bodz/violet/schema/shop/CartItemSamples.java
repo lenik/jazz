@@ -24,9 +24,8 @@ public class CartItemSamples
         a.setOwnerGroup(ownerGroup);
         a.setShopItem(shopItem);
         a.setOwnerUser(ownerUser);
-        a.setId(6488351498676160163L);
-        a.setPrice(new BigDecimal("24905165748786448"));
-        a.setQuantity(new BigDecimal("39658"));
+        a.setPrice(new BigDecimal("1824905165.48"));
+        a.setQuantity(new BigDecimal(""));
         return a;
     }
 

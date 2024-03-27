@@ -2,7 +2,7 @@ package net.bodz.violet.schema.issue;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "issueparm")
+@Table(schema = IssueParameter.SCHEMA_NAME, name = IssueParameter.TABLE_NAME)
 public class IssueParameter
         extends _IssueParameter_stuff<IssueParameter> {
 

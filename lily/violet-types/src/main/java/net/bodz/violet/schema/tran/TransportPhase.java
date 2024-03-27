@@ -2,7 +2,7 @@ package net.bodz.violet.schema.tran;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "tranphase")
+@Table(schema = TransportPhase.SCHEMA_NAME, name = TransportPhase.TABLE_NAME)
 public class TransportPhase
         extends _TransportPhase_stuff {
 

@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.store.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 
@@ -13,9 +13,9 @@ public class _StoreOrderCriteriaBuilder_stuff<self_t extends _StoreOrderCriteria
 
     public final IntegerField accessMode = integer("mode");
 
-    public final DateField<Timestamp> beginTime = date("t0", Timestamp.class);
+    public final DateField<OffsetDateTime> beginTime = date("t0", OffsetDateTime.class);
 
-    public final DateField<Timestamp> endTime = date("t1", Timestamp.class);
+    public final DateField<OffsetDateTime> endTime = date("t1", OffsetDateTime.class);
 
     public final IntegerField year = integer("\"year\"");
 

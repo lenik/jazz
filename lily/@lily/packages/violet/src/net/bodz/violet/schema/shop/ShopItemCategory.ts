@@ -10,9 +10,8 @@ export class ShopItemCategory extends _ShopItemCategory_stuff<ShopItemCategory> 
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

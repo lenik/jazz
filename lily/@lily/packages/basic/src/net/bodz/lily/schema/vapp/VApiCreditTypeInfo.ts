@@ -1,3 +1,4 @@
+import VApiCredit from "./VApiCredit";
 import VApiCreditValidators from "./VApiCreditValidators";
 import _VApiCredit_stuff_TypeInfo from "./_VApiCredit_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class VApiCreditTypeInfo extends _VApiCredit_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.vapp.VApiCredit"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new VApiCredit();
+    }
 
     override preamble() {
         super.preamble();

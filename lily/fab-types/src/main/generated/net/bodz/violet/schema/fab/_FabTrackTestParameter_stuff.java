@@ -1,7 +1,6 @@
 package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,42 +8,35 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _FabTrackTestParameter_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "fabtrack_test_parm";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_TEST_ID = "test";
     public static final String FIELD_PARAMETER_ID = "parm";
     public static final String FIELD_TESTER_ID = "tester";
     public static final String FIELD_ACTUAL = "actual";
     public static final String FIELD_VALID = "valid";
 
-    public static final int N_ID = 19;
     public static final int N_TEST_ID = 19;
     public static final int N_PARAMETER_ID = 10;
     public static final int N_TESTER_ID = 10;
     public static final int N_ACTUAL = 100;
     public static final int N_VALID = 1;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_TEST_ID = _ord_ID + 4;
+    private static final int _ord_TEST_ID = 5;
     private static final int _ord_PARAMETER_ID = _ord_TEST_ID + 1;
     private static final int _ord_TESTER_ID = _ord_PARAMETER_ID + 1;
     private static final int _ord_ACTUAL = _ord_TESTER_ID + 1;
     private static final int _ord_VALID = _ord_ACTUAL + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     @NotNull
     String actual;
@@ -70,28 +62,6 @@ public abstract class _FabTrackTestParameter_stuff
 
     @NotNull
     long testId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_ACTUAL)
     @NotNull

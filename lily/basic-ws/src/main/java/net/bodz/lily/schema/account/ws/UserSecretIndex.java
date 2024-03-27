@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.account.UserSecret;
 
 /**
-* @label UserSecret
-*/
+ * @label UserSecret
+ */
 @ObjectType(UserSecret.class)
 public class UserSecretIndex
         extends CoIndex<UserSecret> {

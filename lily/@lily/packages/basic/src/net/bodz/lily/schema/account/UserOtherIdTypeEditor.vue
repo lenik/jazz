@@ -4,6 +4,7 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import IdEntity from "../../concrete/IdEntity";
 import UserOtherIdType from "./UserOtherIdType";
 import _UserOtherIdType_stuff from "./_UserOtherIdType_stuff";
 
@@ -60,10 +61,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_UserOtherIdType_stuff.TYPE">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_UserOtherIdType_stuff.TYPE">
             <FieldRow :property="meta.dummy" v-model="model.dummy">
                 <input type="number" v-model="model.dummy" />
             </FieldRow>

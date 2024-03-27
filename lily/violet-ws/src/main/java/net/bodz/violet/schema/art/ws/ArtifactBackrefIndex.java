@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.art.ArtifactBackref;
 
 /**
-* @label ArtifactBackref
-*/
+ * @label ArtifactBackref
+ */
 @ObjectType(ArtifactBackref.class)
 public class ArtifactBackrefIndex
         extends CoIndex<ArtifactBackref> {

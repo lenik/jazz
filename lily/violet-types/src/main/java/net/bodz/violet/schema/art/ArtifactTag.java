@@ -2,10 +2,7 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Table;
 
-/**
- * 物品标签
- */
-@Table(schema = "violet", name = "arttag")
+@Table(schema = ArtifactTag.SCHEMA_NAME, name = ArtifactTag.TABLE_NAME)
 public class ArtifactTag
         extends _ArtifactTag_stuff<ArtifactTag> {
 

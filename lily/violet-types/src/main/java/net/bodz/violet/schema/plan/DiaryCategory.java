@@ -2,10 +2,7 @@ package net.bodz.violet.schema.plan;
 
 import javax.persistence.Table;
 
-/**
- * 日记分类
- */
-@Table(schema = "violet", name = "diarycat")
+@Table(schema = DiaryCategory.SCHEMA_NAME, name = DiaryCategory.TABLE_NAME)
 public class DiaryCategory
         extends _DiaryCategory_stuff<DiaryCategory> {
 

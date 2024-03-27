@@ -1,6 +1,6 @@
 package net.bodz.lily.schema.contact.dao;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
@@ -15,7 +15,7 @@ public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_
 
     public final IntegerField categoryId = integer("cat");
 
-    public final DateField<Date> birthday = date("birthday", Date.class);
+    public final DateField<LocalDate> birthday = date("birthday", LocalDate.class);
 
     public final IntegerField fatherId = integer("father");
 

@@ -1,8 +1,8 @@
 package net.bodz.lily.schema.account;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.dao.UserMapper;
 import net.bodz.lily.test.TestSampleBuilder;
 import net.bodz.lily.util.IRandomPicker;
@@ -18,7 +18,7 @@ public class UserRunSamples
         UserRun a = new UserRun();
         a.setUser(user);
         a.setScore(961999915);
-        a.setLastLoginTime(new Timestamp(Dates.ISO8601Z.parse("2024-01-01T10:30:49.128+0800").getTime()));
+        a.setLastLoginTime(OffsetDateTime.parse("2024-01-01T12:41:49.128+02:11", DateTimes.ISO_OFFSET_DATE_TIME));
         return a;
     }
 

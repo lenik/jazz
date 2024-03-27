@@ -1,9 +1,9 @@
 package net.bodz.violet.schema.fab.dao;
 
-import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
 
 public class _FabOrderItemCriteriaBuilder_stuff<self_t extends _FabOrderItemCriteriaBuilder_stuff<self_t>>
-        extends CoEventCriteriaBuilder<self_t> {
+        extends CoImagedEventCriteriaBuilder<self_t> {
 
     public final LongField id = _long("id");
 

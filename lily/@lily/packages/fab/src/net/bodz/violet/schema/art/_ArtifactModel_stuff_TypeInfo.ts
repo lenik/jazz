@@ -1,6 +1,6 @@
 import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
@@ -40,8 +40,8 @@ export class _ArtifactModel_stuff_TypeInfo extends CoImagedEventTypeInfo {
         super.preamble();
         this.declare({
             valid: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateValid }),
-            validSince: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidSince }),
-            validUntil: property({ type: ZonedDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidUntil }),
+            validSince: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidSince }),
+            validUntil: property({ type: OffsetDateTime.TYPE, precision: 35, scale: 6, validator: this.validators.validateValidUntil }),
             modelName: property({ type: STRING, precision: 40, validator: this.validators.validateModelName }),
 
             obsolete: property({ type: this, validator: this.validators.validateObsolete }),

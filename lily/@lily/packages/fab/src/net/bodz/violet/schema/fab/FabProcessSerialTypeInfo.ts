@@ -1,3 +1,4 @@
+import FabProcessSerial from "./FabProcessSerial";
 import FabProcessSerialValidators from "./FabProcessSerialValidators";
 import _FabProcessSerial_stuff_TypeInfo from "./_FabProcessSerial_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabProcessSerialTypeInfo extends _FabProcessSerial_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.fab.FabProcessSerial"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabProcessSerial();
+    }
 
     override preamble() {
         super.preamble();

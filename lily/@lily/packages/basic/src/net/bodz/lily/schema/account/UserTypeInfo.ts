@@ -2,6 +2,7 @@ import { BOOLEAN, INET_ADDRESS, INT, LIST, SET } from "@skeljs/core/src/lang/bas
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Group from "./Group";
+import User from "./User";
 import UserOtherId from "./UserOtherId";
 import UserRun from "./UserRun";
 import UserSecret from "./UserSecret";
@@ -20,6 +21,10 @@ export class UserTypeInfo extends _User_stuff_TypeInfo {
     get icon() { return "fa-tag"; }
     get label() { return "User (Account)"; }
     get description() { return "User Account"; }
+
+    override create() {
+        return new User();
+    }
 
     override preamble() {
         super.preamble();

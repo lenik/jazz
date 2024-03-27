@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.store;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -62,7 +62,7 @@ public abstract class _StoreOrderItem_stuff
 
     Long serial;
 
-    Timestamp expire;
+    OffsetDateTime expire;
 
     @NotNull
     BigDecimal quantity;
@@ -121,11 +121,11 @@ public abstract class _StoreOrderItem_stuff
     @Ordinal(_ord_EXPIRE)
     @Precision(value = 35, scale = 6)
     @Column(name = "expire", precision = 35, scale = 6)
-    public Timestamp getExpire() {
+    public OffsetDateTime getExpire() {
         return expire;
     }
 
-    public void setExpire(Timestamp value) {
+    public void setExpire(OffsetDateTime value) {
         this.expire = value;
     }
 

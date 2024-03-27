@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.fab;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -50,7 +50,7 @@ public abstract class _FabTaskItem_stuff
     private static final int _ord_TRACK_COUNT = _ord_BATCH + 1;
 
     @NotNull
-    Timestamp deadline;
+    OffsetDateTime deadline;
 
     String status;
 
@@ -79,11 +79,11 @@ public abstract class _FabTaskItem_stuff
     @NotNull
     @Precision(value = 35, scale = 6)
     @Column(name = "deadline", nullable = false, precision = 35, scale = 6)
-    public Timestamp getDeadline() {
+    public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(@NotNull Timestamp value) {
+    public void setDeadline(@NotNull OffsetDateTime value) {
         this.deadline = value;
     }
 
@@ -200,7 +200,7 @@ public abstract class _FabTaskItem_stuff
     }
 
     public void initNotNulls() {
-        this.deadline = new Timestamp(System.currentTimeMillis());
+        this.deadline = OffsetDateTime.now();
         this.quantity = BigDecimal.ZERO;
     }
 

@@ -1,5 +1,5 @@
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoEventValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEventValidators";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
@@ -17,10 +17,10 @@ export class _FabTrack_stuff_Validators extends CoEventValidators {
         return this._type as _FabTrack_stuff_TypeInfo;
     }
 
-    validateSince(val: Timestamp) {
+    validateSince(val: OffsetDateTime) {
     }
 
-    validateDeadline(val: Timestamp) {
+    validateDeadline(val: OffsetDateTime) {
     }
 
     validatePlannedQuantity(val: BigDecimal) {

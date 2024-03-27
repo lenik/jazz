@@ -1,3 +1,4 @@
+import Badge from "./Badge";
 import BadgeValidators from "./BadgeValidators";
 import _Badge_stuff_TypeInfo from "./_Badge_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class BadgeTypeInfo extends _Badge_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.reward.Badge"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Badge();
+    }
 
     override preamble() {
         super.preamble();

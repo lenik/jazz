@@ -1,3 +1,4 @@
+import ArtifactCategory from "./ArtifactCategory";
 import ArtifactCategoryValidators from "./ArtifactCategoryValidators";
 import _ArtifactCategory_stuff_TypeInfo from "./_ArtifactCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArtifactCategoryTypeInfo extends _ArtifactCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.art.ArtifactCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArtifactCategory();
+    }
 
     override preamble() {
         super.preamble();

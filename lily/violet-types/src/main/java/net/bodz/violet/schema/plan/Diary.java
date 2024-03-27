@@ -13,7 +13,7 @@ import net.bodz.bas.site.json.JsonVarMap;
 import net.bodz.bas.t.variant.IVariantMap;
 
 @HaveAttachments
-@Table(schema = "violet", name = "diary")
+@Table(schema = Diary.SCHEMA_NAME, name = Diary.TABLE_NAME)
 public class Diary
         extends _Diary_stuff {
 

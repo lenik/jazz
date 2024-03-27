@@ -1,3 +1,4 @@
+import FabStdTestCategory from "./FabStdTestCategory";
 import FabStdTestCategoryValidators from "./FabStdTestCategoryValidators";
 import _FabStdTestCategory_stuff_TypeInfo from "./_FabStdTestCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabStdTestCategoryTypeInfo extends _FabStdTestCategory_stuff_TypeIn
 
     get name() { return "net.bodz.violet.schema.fab.FabStdTestCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabStdTestCategory();
+    }
 
     override preamble() {
         super.preamble();

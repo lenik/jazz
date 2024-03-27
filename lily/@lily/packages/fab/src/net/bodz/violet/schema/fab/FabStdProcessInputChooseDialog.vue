@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
 
@@ -34,7 +34,7 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "FabStdProcess": FabStdProcess.TYPE,
     "ArtifactModel": ArtifactModel.TYPE,
     "Artifact": Artifact.TYPE,
@@ -56,8 +56,8 @@ onMounted(() => {
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="FabStdProcessInput.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="INT" data-field="id">Id</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="FabStdProcess" data-format="label" data-field="process">Process</th>
         <th data-type="ArtifactModel" data-format="label" data-field="model">Model</th>

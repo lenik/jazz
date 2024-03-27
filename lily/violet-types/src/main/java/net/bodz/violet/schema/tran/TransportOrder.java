@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.tran;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import javax.persistence.Table;
@@ -20,7 +20,7 @@ import net.bodz.violet.schema.shop.SalesOrderItem;
 /**
  * 送货单
  */
-@Table(schema = "violet", name = "tranodr")
+@Table(schema = TransportOrder.SCHEMA_NAME, name = TransportOrder.TABLE_NAME)
 public class TransportOrder
         extends _TransportOrder_stuff
         implements
@@ -38,11 +38,11 @@ public class TransportOrder
      */
     @Priority(5)
     @OfGroup({ LilyGroups.Transportation.class })
-    public ZonedDateTime getShipDate() {
+    public OffsetDateTime getShipDate() {
         return super.getBeginTime();
     }
 
-    public void setShipDate(ZonedDateTime shipDate) {
+    public void setShipDate(OffsetDateTime shipDate) {
         super.setBeginTime(shipDate);
     }
 
@@ -51,11 +51,11 @@ public class TransportOrder
      */
     @Priority(6)
     @OfGroup({ LilyGroups.Transportation.class })
-    public ZonedDateTime getArrivedDate() {
+    public OffsetDateTime getArrivedDate() {
         return super.getEndTime();
     }
 
-    public void setArrivedDate(ZonedDateTime arrivedDate) {
+    public void setArrivedDate(OffsetDateTime arrivedDate) {
         super.setEndTime(arrivedDate);
     }
 

@@ -6,7 +6,7 @@ import javax.persistence.Table;
 /**
  * 区域分类
  */
-@Table(schema = "violet", name = "regioncat")
+@Table(schema = RegionCategory.SCHEMA_NAME, name = RegionCategory.TABLE_NAME)
 public class RegionCategory
         extends _RegionCategory_stuff<RegionCategory> {
 

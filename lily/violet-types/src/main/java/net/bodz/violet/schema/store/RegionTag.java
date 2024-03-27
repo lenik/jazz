@@ -2,7 +2,7 @@ package net.bodz.violet.schema.store;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "regiontag")
+@Table(schema = RegionTag.SCHEMA_NAME, name = RegionTag.TABLE_NAME)
 public class RegionTag
         extends _RegionTag_stuff<RegionTag> {
 

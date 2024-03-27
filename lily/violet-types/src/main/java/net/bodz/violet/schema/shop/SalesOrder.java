@@ -1,7 +1,7 @@
 package net.bodz.violet.schema.shop;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Table;
 
@@ -24,7 +24,7 @@ import net.bodz.violet.schema.tran.TransportOrder;
  * owner: 制单
  */
 @DefaultAccessMode(IAccessMode.M_COOP)
-@Table(schema = "violet", name = "saleodr")
+@Table(schema = SalesOrder.SCHEMA_NAME, name = SalesOrder.TABLE_NAME)
 public class SalesOrder
         extends _SalesOrder_stuff {
 
@@ -42,14 +42,14 @@ public class SalesOrder
     @DetailLevel(DetailLevel.HIDDEN)
     @Derived
     @Override
-    public ZonedDateTime getBeginTime() {
+    public OffsetDateTime getBeginTime() {
         return super.getBeginTime();
     }
 
     @DetailLevel(DetailLevel.HIDDEN)
     @Derived
     @Override
-    public ZonedDateTime getEndTime() {
+    public OffsetDateTime getEndTime() {
         return super.getEndTime();
     }
 
@@ -57,11 +57,11 @@ public class SalesOrder
      * 下单时间
      */
     @OfGroup(StdGroup.Schedule.class)
-    public ZonedDateTime getOrderTime() {
+    public OffsetDateTime getOrderTime() {
         return super.getBeginTime();
     }
 
-    public void setOrderTime(ZonedDateTime orderTime) {
+    public void setOrderTime(OffsetDateTime orderTime) {
         super.setBeginTime(orderTime);
     }
 
@@ -69,11 +69,11 @@ public class SalesOrder
      * 交货期限
      */
     @OfGroup(StdGroup.Schedule.class)
-    public ZonedDateTime getDeadline() {
+    public OffsetDateTime getDeadline() {
         return super.getEndTime();
     }
 
-    public void setDeadline(ZonedDateTime deadline) {
+    public void setDeadline(OffsetDateTime deadline) {
         super.setEndTime(deadline);
     }
 

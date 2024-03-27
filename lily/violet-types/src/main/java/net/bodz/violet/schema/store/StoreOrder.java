@@ -19,7 +19,7 @@ import net.bodz.lily.util.SizedList;
  */
 @DefaultAccessMode(IAccessMode.M_SHARED)
 // @SchemaPref(Schemas.STOCK)
-@Table(schema = "violet", name = "storeodr")
+@Table(schema = StoreOrder.SCHEMA_NAME, name = StoreOrder.TABLE_NAME)
 public class StoreOrder
         extends _StoreOrder_stuff {
 

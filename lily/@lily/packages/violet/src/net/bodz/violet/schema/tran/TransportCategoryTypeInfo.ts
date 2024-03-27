@@ -1,3 +1,4 @@
+import TransportCategory from "./TransportCategory";
 import TransportCategoryValidators from "./TransportCategoryValidators";
 import _TransportCategory_stuff_TypeInfo from "./_TransportCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TransportCategoryTypeInfo extends _TransportCategory_stuff_TypeInfo
 
     get name() { return "net.bodz.violet.schema.tran.TransportCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TransportCategory();
+    }
 
     override preamble() {
         super.preamble();

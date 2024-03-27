@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.store.OffStoreItem;
 
 /**
-* @label OffStoreItem
-*/
+ * @label OffStoreItem
+ */
 @ObjectType(OffStoreItem.class)
 public class OffStoreItemIndex
         extends CoIndex<OffStoreItem> {

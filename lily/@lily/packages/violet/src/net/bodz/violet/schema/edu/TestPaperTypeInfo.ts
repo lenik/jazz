@@ -1,3 +1,4 @@
+import TestPaper from "./TestPaper";
 import TestPaperValidators from "./TestPaperValidators";
 import _TestPaper_stuff_TypeInfo from "./_TestPaper_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class TestPaperTypeInfo extends _TestPaper_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.edu.TestPaper"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new TestPaper();
+    }
 
     override preamble() {
         super.preamble();

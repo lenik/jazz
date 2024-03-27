@@ -10,9 +10,8 @@ export class PostBackref extends _PostBackref_stuff {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

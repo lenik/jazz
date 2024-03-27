@@ -2,10 +2,7 @@ package net.bodz.violet.schema.edu;
 
 import javax.persistence.Table;
 
-/**
- * 考卷
- */
-@Table(schema = "violet", name = "testpaper")
+@Table(schema = TestPaper.SCHEMA_NAME, name = TestPaper.TABLE_NAME)
 public class TestPaper
         extends _TestPaper_stuff {
 

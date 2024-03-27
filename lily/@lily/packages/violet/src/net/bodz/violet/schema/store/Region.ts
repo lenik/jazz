@@ -15,9 +15,8 @@ export class Region extends _Region_stuff<Region> {
     fullPath?: string
     position?: Dim3d
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

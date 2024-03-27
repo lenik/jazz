@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id"><![CDATA[
+    <insert id="insert" useGeneratedKeys="false" keyProperty="userId" keyColumn='"user"'><![CDATA[
         insert into user_run(
             "user",
             label,
@@ -174,7 +174,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             lastlogip = #{lastLoginIP},
         </set>
         <where>
-            "user" = #{id}
+            "user" = #{userId}
         </where>
     </update>
 

@@ -26,9 +26,8 @@ export class User extends _User_stuff {
     secrets?: List<UserSecret>
     superUser: boolean
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

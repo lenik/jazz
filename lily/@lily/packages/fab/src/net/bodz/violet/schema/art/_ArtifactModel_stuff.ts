@@ -1,5 +1,5 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoImagedEvent from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEvent";
 import type Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
 import _ArtifactModel_stuff_TypeInfo from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";
@@ -16,8 +16,8 @@ export class _ArtifactModel_stuff extends CoImagedEvent<int> {
     }
 
     valid: boolean;
-    validSince?: ZonedDateTime;
-    validUntil?: ZonedDateTime;
+    validSince?: OffsetDateTime;
+    validUntil?: OffsetDateTime;
     modelName?: string;
 
     obsolete?: ArtifactModel;

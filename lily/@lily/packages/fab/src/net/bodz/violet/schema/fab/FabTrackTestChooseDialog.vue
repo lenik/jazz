@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BOOLEAN, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import FabStdTest from "./FabStdTest";
@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
     "FabTrack": FabTrack.TYPE,
     "FabStdTest": FabStdTest.TYPE,
@@ -55,8 +55,8 @@ onMounted(() => {
 <template>
     <EntityChooseDialog ref="entityChooseDialog" :type="FabTrackTest.TYPE" :typeMap="typeMap" :modal="modal">
         <th data-type="LONG" data-field="id">Id</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="FabTrack" data-format="label" data-field="track">Track</th>
         <th data-type="FabStdTest" data-format="label" data-field="standard">Standard</th>

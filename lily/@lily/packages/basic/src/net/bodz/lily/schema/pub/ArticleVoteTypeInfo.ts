@@ -1,3 +1,4 @@
+import ArticleVote from "./ArticleVote";
 import ArticleVoteValidators from "./ArticleVoteValidators";
 import _ArticleVote_stuff_TypeInfo from "./_ArticleVote_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ArticleVoteTypeInfo extends _ArticleVote_stuff_TypeInfo {
 
     get name() { return "net.bodz.lily.schema.pub.ArticleVote"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ArticleVote();
+    }
 
     override preamble() {
         super.preamble();

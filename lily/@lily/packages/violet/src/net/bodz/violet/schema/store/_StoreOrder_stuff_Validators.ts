@@ -1,5 +1,5 @@
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 import CoEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEntityValidators";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
@@ -27,10 +27,10 @@ export class _StoreOrder_stuff_Validators extends CoEntityValidators {
     validateId(val: long) {
     }
 
-    validateBeginTime(val: ZonedDateTime) {
+    validateBeginTime(val: OffsetDateTime) {
     }
 
-    validateEndTime(val: ZonedDateTime) {
+    validateEndTime(val: OffsetDateTime) {
     }
 
     validateYear(val: int) {

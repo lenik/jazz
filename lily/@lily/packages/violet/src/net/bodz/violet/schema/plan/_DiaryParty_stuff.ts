@@ -1,5 +1,5 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
 import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
@@ -7,7 +7,7 @@ import type Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
 import type Diary from "./Diary";
 import _DiaryParty_stuff_TypeInfo from "./_DiaryParty_stuff_TypeInfo";
 
-export class _DiaryParty_stuff extends CoEntity<long> {
+export class _DiaryParty_stuff extends IdEntity<long> {
 
     static _typeInfo: _DiaryParty_stuff_TypeInfo;
     static get TYPE() {
@@ -16,7 +16,6 @@ export class _DiaryParty_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     value: int;
 
     person?: Person;

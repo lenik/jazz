@@ -1,5 +1,5 @@
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
 import type SalesOrderItemTypeInfo from "./SalesOrderItemTypeInfo";
@@ -18,16 +18,16 @@ export class SalesOrderItemValidators extends _SalesOrderItem_stuff_Validators {
     validateAmount(val: BigDecimal) {
     }
 
-    validateBeginTime(val: ZonedDateTime) {
+    validateBeginTime(val: OffsetDateTime) {
     }
 
-    validateDeadline(val: ZonedDateTime) {
+    validateDeadline(val: OffsetDateTime) {
     }
 
-    validateEndTime(val: ZonedDateTime) {
+    validateEndTime(val: OffsetDateTime) {
     }
 
-    validateOrderTime(val: ZonedDateTime) {
+    validateOrderTime(val: OffsetDateTime) {
     }
 
 }

@@ -1,5 +1,5 @@
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
@@ -23,8 +23,8 @@ export class _StoreOrder_stuff extends CoEntity<long> {
     }
 
     id: long;
-    beginTime?: ZonedDateTime;
-    endTime?: ZonedDateTime;
+    beginTime?: OffsetDateTime;
+    endTime?: OffsetDateTime;
     year: int;
     subject: string;
     rawText?: string;

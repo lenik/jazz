@@ -25,9 +25,8 @@ public class SellPriceSamples
         a.setArtifact(artifact);
         a.setOwnerGroup(ownerGroup);
         a.setOwnerUser(ownerUser);
-        a.setId(165217238);
         a.setCode("aamt.");
-        a.setPrice(new BigDecimal("88.34"));
+        a.setPrice(new BigDecimal(".99"));
         return a;
     }
 

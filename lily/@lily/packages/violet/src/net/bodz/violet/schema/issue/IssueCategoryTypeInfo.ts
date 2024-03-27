@@ -1,3 +1,4 @@
+import IssueCategory from "./IssueCategory";
 import IssueCategoryValidators from "./IssueCategoryValidators";
 import _IssueCategory_stuff_TypeInfo from "./_IssueCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class IssueCategoryTypeInfo extends _IssueCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.issue.IssueCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new IssueCategory();
+    }
 
     override preamble() {
         super.preamble();

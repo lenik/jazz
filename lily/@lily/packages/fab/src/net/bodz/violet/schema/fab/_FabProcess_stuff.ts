@@ -1,6 +1,6 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type ArtifactModel from "../art/ArtifactModel";
@@ -20,8 +20,8 @@ export class _FabProcess_stuff extends CoEvent<long> {
 
     quantity: BigDecimal;
     batch?: JsonVariant;
-    since: Timestamp;
-    deadline: Timestamp;
+    since: OffsetDateTime;
+    deadline: OffsetDateTime;
     trackCount?: int;
 
     standard: FabStdProcess;

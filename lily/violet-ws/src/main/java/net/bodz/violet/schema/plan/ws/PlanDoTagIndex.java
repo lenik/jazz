@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.plan.PlanDoTag;
 
 /**
-* @label PlanDoTag
-*/
+ * @label PlanDoTag
+ */
 @ObjectType(PlanDoTag.class)
 public class PlanDoTagIndex
         extends CoIndex<PlanDoTag> {

@@ -16,9 +16,8 @@ export class Group extends _Group_stuff {
     children?: List<Group>
     users?: List<User>
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

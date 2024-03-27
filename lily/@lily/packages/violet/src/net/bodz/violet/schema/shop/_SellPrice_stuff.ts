@@ -1,10 +1,10 @@
 import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type Artifact from "../art/Artifact";
 import _SellPrice_stuff_TypeInfo from "./_SellPrice_stuff_TypeInfo";
 
-export class _SellPrice_stuff extends CoEntity<int> {
+export class _SellPrice_stuff extends IdEntity<int> {
 
     static _typeInfo: _SellPrice_stuff_TypeInfo;
     static get TYPE() {
@@ -13,7 +13,6 @@ export class _SellPrice_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     code?: string;
     price: BigDecimal;
 

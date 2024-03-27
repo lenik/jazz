@@ -3,6 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import SellPrice from "./SellPrice";
 import _SellPrice_stuff from "./_SellPrice_stuff";
@@ -63,10 +64,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_SellPrice_stuff.TYPE">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_SellPrice_stuff.TYPE">
             <FieldRow :property="meta.code" v-model="model.code">
                 <input type="text" v-model="model.code" />
             </FieldRow>

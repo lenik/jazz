@@ -2,7 +2,7 @@ package net.bodz.violet.schema.art;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "art_doc")
+@Table(schema = ArtifactDoc.SCHEMA_NAME, name = ArtifactDoc.TABLE_NAME)
 public class ArtifactDoc
         extends _ArtifactDoc_stuff {
 

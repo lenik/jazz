@@ -2,7 +2,7 @@ package net.bodz.violet.schema.asset;
 
 import javax.persistence.Table;
 
-@Table(schema = "violet", name = "asset_group")
+@Table(schema = GroupAsset.SCHEMA_NAME, name = GroupAsset.TABLE_NAME)
 public class GroupAsset
         extends _GroupAsset_stuff {
 

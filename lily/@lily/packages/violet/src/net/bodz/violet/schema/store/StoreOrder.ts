@@ -18,9 +18,8 @@ export class StoreOrder extends _StoreOrder_stuff {
     totalAmount?: BigDecimal
     totalQuantity?: BigDecimal
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

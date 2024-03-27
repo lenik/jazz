@@ -1,3 +1,4 @@
+import Asset from "./Asset";
 import AssetValidators from "./AssetValidators";
 import _Asset_stuff_TypeInfo from "./_Asset_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class AssetTypeInfo extends _Asset_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.asset.Asset"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new Asset();
+    }
 
     override preamble() {
         super.preamble();

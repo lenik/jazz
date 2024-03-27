@@ -16,9 +16,8 @@ export class CartItem extends _CartItem_stuff {
     amount?: BigDecimal
     artifact?: Artifact
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

@@ -1,3 +1,4 @@
+import IssuePhase from "./IssuePhase";
 import IssuePhaseValidators from "./IssuePhaseValidators";
 import _IssuePhase_stuff_TypeInfo from "./_IssuePhase_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class IssuePhaseTypeInfo extends _IssuePhase_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.issue.IssuePhase"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new IssuePhase();
+    }
 
     override preamble() {
         super.preamble();

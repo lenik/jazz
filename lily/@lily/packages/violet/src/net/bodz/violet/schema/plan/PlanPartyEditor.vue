@@ -3,6 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import PlanParty from "./PlanParty";
 import _PlanParty_stuff from "./_PlanParty_stuff";
@@ -65,10 +66,12 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_PlanParty_stuff.TYPE">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_PlanParty_stuff.TYPE">
             <FieldRow :property="meta.plan" v-model="model.plan">
                 <RefEditor :dialog="planChooseDialog" v-model="model.plan" v-model:id="model.planId" />
             </FieldRow>

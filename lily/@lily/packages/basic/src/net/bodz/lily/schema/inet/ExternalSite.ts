@@ -10,9 +10,8 @@ export class ExternalSite extends _ExternalSite_stuff<ExternalSite> {
         return this._typeInfo;
     }
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

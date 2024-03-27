@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
-import { TIMESTAMP } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
 
@@ -42,7 +42,7 @@ export class _FabTaskItem_stuff_TypeInfo extends CoEventTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            deadline: property({ type: TIMESTAMP, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
+            deadline: property({ type: OffsetDateTime.TYPE, nullable: false, precision: 35, scale: 6, validator: this.validators.validateDeadline }),
             status: property({ type: STRING, precision: 100, validator: this.validators.validateStatus }),
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),

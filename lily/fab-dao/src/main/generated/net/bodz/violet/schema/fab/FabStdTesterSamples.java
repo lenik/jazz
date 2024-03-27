@@ -19,7 +19,6 @@ public class FabStdTesterSamples
         FabStdTester a = new FabStdTester();
         a.setOwnerUser(ownerUser);
         a.setOwnerGroup(ownerGroup);
-        a.setId(1042437229);
         a.setCmdline("ulez vb&za mt Otue io aiyi we aep ivru poouv, ul zaf, waoa, auaw'lu epezqu@Eos aodhuuz.");
         return a;
     }

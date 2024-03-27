@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.plan.PlanParty;
 
 /**
-* @label PlanParty
-*/
+ * @label PlanParty
+ */
 @ObjectType(PlanParty.class)
 public class PlanPartyIndex
         extends CoIndex<PlanParty> {

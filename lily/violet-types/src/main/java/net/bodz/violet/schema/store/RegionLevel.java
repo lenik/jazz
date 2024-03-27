@@ -9,7 +9,7 @@ import net.bodz.bas.meta.res.HaveAttachments;
  * 区域级别
  */
 @HaveAttachments
-@Table(schema = "violet", name = "regionlevel")
+@Table(schema = RegionLevel.SCHEMA_NAME, name = RegionLevel.TABLE_NAME)
 public class RegionLevel
         extends _RegionLevel_stuff<RegionLevel> {
 

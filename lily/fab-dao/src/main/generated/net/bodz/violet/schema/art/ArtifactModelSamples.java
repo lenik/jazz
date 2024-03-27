@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.art;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.lily.schema.account.Group;
@@ -29,8 +29,8 @@ public class ArtifactModelSamples
         a.setOwnerGroup(ownerGroup);
         a.setArtifact(artifact);
         a.setValid(false);
-        a.setValidSince(ZonedDateTime.parse("2023-12-20T12:05:39.315-10:00[Pacific/Tahiti]", DateTimes.ISO_ZONED_DATE_TIME));
-        a.setValidUntil(ZonedDateTime.parse("2024-01-07T16:47:58.367+08:00[Asia/Chungking]", DateTimes.ISO_ZONED_DATE_TIME));
+        a.setValidSince(OffsetDateTime.parse("2023-12-20T15:21:39.315-06:44", DateTimes.ISO_OFFSET_DATE_TIME));
+        a.setValidUntil(OffsetDateTime.parse("2024-01-07T09:27:37.659-10:32", DateTimes.ISO_OFFSET_DATE_TIME));
         a.setModelName("wo; uhxuk; afuiue. iyybi? U auac");
         return a;
     }

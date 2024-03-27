@@ -1,18 +1,18 @@
 package net.bodz.lily.schema.account.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
 
 public class _UserOtherIdCriteriaBuilder_stuff<self_t extends _UserOtherIdCriteriaBuilder_stuff<self_t>>
-        extends CoObjectCriteriaBuilder<self_t> {
+        extends CoImagedCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 
-    public final DateField<Timestamp> beginTime = date("t0", Timestamp.class);
+    public final DateField<OffsetDateTime> beginTime = date("t0", OffsetDateTime.class);
 
-    public final DateField<Timestamp> endTime = date("t1", Timestamp.class);
+    public final DateField<OffsetDateTime> endTime = date("t1", OffsetDateTime.class);
 
     public final IntegerField year = integer("\"year\"");
 

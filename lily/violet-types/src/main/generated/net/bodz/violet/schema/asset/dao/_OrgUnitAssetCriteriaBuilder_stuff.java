@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.asset.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
@@ -24,6 +24,6 @@ public class _OrgUnitAssetCriteriaBuilder_stuff<self_t extends _OrgUnitAssetCrit
 
     public final LongField serial = _long("serial");
 
-    public final DateField<Timestamp> expire = date("expire", Timestamp.class);
+    public final DateField<OffsetDateTime> expire = date("expire", OffsetDateTime.class);
 
 }

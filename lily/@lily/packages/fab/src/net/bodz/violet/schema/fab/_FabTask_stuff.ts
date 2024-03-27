@@ -1,5 +1,5 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type FabOrder from "./FabOrder";
@@ -14,8 +14,8 @@ export class _FabTask_stuff extends CoEvent<long> {
         return this._typeInfo;
     }
 
-    since: Timestamp;
-    deadline: Timestamp;
+    since: OffsetDateTime;
+    deadline: OffsetDateTime;
     processCount?: int;
     trackCount?: int;
 

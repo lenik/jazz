@@ -2,11 +2,7 @@ package net.bodz.violet.schema.shop;
 
 import javax.persistence.Table;
 
-
-/**
- * 店铺
- */
-@Table(schema = "violet", name = "shop")
+@Table(schema = Shop.SCHEMA_NAME, name = Shop.TABLE_NAME)
 public class Shop
         extends _Shop_stuff {
 

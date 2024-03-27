@@ -14,7 +14,7 @@ import net.bodz.lily.security.IAccessMode;
  * 库存操作项目
  */
 @DefaultAccessMode(IAccessMode.M_SHARED)
-@Table(schema = "violet", name = "storeodrl")
+@Table(schema = StoreOrderItem.SCHEMA_NAME, name = StoreOrderItem.TABLE_NAME)
 public class StoreOrderItem
         extends _StoreOrderItem_stuff
         implements

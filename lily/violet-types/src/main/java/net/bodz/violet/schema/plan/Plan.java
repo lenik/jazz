@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
 
-@Table(schema = "violet", name = "plan")
+@Table(schema = Plan.SCHEMA_NAME, name = Plan.TABLE_NAME)
 public class Plan
         extends _Plan_stuff {
 

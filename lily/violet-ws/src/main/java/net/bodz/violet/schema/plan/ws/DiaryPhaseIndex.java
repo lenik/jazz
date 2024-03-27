@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.plan.DiaryPhase;
 
 /**
-* @label DiaryPhase
-*/
+ * @label DiaryPhase
+ */
 @ObjectType(DiaryPhase.class)
 public class DiaryPhaseIndex
         extends CoIndex<DiaryPhase> {

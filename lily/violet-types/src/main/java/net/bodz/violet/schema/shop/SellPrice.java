@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  * 物品销售价格
  */
-@Table(schema = "violet", name = "art_price")
+@Table(schema = SellPrice.SCHEMA_NAME, name = SellPrice.TABLE_NAME)
 public class SellPrice
         extends _SellPrice_stuff {
 

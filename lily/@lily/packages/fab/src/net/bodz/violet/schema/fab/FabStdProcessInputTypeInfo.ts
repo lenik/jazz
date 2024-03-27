@@ -1,3 +1,4 @@
+import FabStdProcessInput from "./FabStdProcessInput";
 import FabStdProcessInputValidators from "./FabStdProcessInputValidators";
 import _FabStdProcessInput_stuff_TypeInfo from "./_FabStdProcessInput_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabStdProcessInputTypeInfo extends _FabStdProcessInput_stuff_TypeIn
 
     get name() { return "net.bodz.violet.schema.fab.FabStdProcessInput"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabStdProcessInput();
+    }
 
     override preamble() {
         super.preamble();

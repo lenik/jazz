@@ -1,10 +1,10 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEntityValidators";
+import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
 
 import type _FabStdTester_stuff_TypeInfo from "./_FabStdTester_stuff_TypeInfo";
 
-export class _FabStdTester_stuff_Validators extends CoEntityValidators {
+export class _FabStdTester_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _FabStdTester_stuff_TypeInfo) {
         super(type);
@@ -12,9 +12,6 @@ export class _FabStdTester_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _FabStdTester_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateCmdline(val: string) {

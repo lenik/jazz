@@ -1,3 +1,4 @@
+import UserOtherId from "./UserOtherId";
 import UserOtherIdValidators from "./UserOtherIdValidators";
 import _UserOtherId_stuff_TypeInfo from "./_UserOtherId_stuff_TypeInfo";
 
@@ -12,6 +13,10 @@ export class UserOtherIdTypeInfo extends _UserOtherId_stuff_TypeInfo {
     get name() { return "net.bodz.lily.schema.account.UserOtherId"; }
     get icon() { return "fa-tag"; }
     get description() { return "User Open ID"; }
+
+    override create() {
+        return new UserOtherId();
+    }
 
     override preamble() {
         super.preamble();

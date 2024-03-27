@@ -1,6 +1,6 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import CoEvent from "@lily/basic/src/net/bodz/lily/concrete/CoEvent";
 
 import type ArtifactModel from "../art/ArtifactModel";
@@ -16,7 +16,7 @@ export class _FabTaskItem_stuff extends CoEvent<long> {
         return this._typeInfo;
     }
 
-    deadline: Timestamp;
+    deadline: OffsetDateTime;
     status?: string;
     quantity: BigDecimal;
     batch?: JsonVariant;

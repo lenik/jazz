@@ -1,3 +1,4 @@
+import ShopFav from "./ShopFav";
 import ShopFavValidators from "./ShopFavValidators";
 import _ShopFav_stuff_TypeInfo from "./_ShopFav_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class ShopFavTypeInfo extends _ShopFav_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.shop.ShopFav"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new ShopFav();
+    }
 
     override preamble() {
         super.preamble();

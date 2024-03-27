@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
 import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
@@ -36,7 +36,7 @@ const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "Artifact": Artifact.TYPE,
     "ExternalSite": ExternalSite.TYPE,
 };
@@ -61,8 +61,8 @@ onMounted(() => {
             <th data-type="INT" data-field="priority">Priority</th>
             <th data-type="INT" data-field="flags">Flags</th>
             <th data-type="DefaultState" data-field="state">State</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="Artifact" data-format="label" data-field="artifact">Artifact</th>
             <th data-type="ExternalSite" data-format="label" data-field="site">Site</th>

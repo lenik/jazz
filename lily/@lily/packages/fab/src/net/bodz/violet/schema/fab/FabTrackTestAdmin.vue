@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 
 import { BOOLEAN, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 import FabStdTest from "./FabStdTest";
 import FabTrack from "./FabTrack";
@@ -28,7 +28,7 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "ZonedDateTime": ZonedDateTime.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
     "FabTrack": FabTrack.TYPE,
     "FabStdTest": FabStdTest.TYPE,
@@ -45,8 +45,8 @@ onMounted(() => {
     <LilyAdmin ref="admin" :type="type" :typeMap="typeMap" v-model="selection">
         <template #columns>
             <th data-type="LONG" data-field="id">Id</th>
-            <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-            <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+            <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+            <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
             <th data-type="INT" data-field="version">Version</th>
             <th data-type="FabTrack" data-format="label" data-field="track">Track</th>
             <th data-type="FabStdTest" data-format="label" data-field="standard">Standard</th>

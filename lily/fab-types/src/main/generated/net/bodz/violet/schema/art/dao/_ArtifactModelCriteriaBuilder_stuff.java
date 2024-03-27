@@ -1,11 +1,11 @@
 package net.bodz.violet.schema.art.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
-import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
 
 public class _ArtifactModelCriteriaBuilder_stuff<self_t extends _ArtifactModelCriteriaBuilder_stuff<self_t>>
-        extends CoEventCriteriaBuilder<self_t> {
+        extends CoImagedEventCriteriaBuilder<self_t> {
 
     public final IntegerField id = integer("id");
 
@@ -15,9 +15,9 @@ public class _ArtifactModelCriteriaBuilder_stuff<self_t extends _ArtifactModelCr
 
     public final BooleanField valid = bool("\"valid\"");
 
-    public final DateField<Timestamp> validSince = date("validsince", Timestamp.class);
+    public final DateField<OffsetDateTime> validSince = date("validsince", OffsetDateTime.class);
 
-    public final DateField<Timestamp> validUntil = date("validuntil", Timestamp.class);
+    public final DateField<OffsetDateTime> validUntil = date("validuntil", OffsetDateTime.class);
 
     public final IntegerField obsoleteId = integer("obsolete");
 

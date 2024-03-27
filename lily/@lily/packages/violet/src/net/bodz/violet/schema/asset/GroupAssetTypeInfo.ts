@@ -1,3 +1,4 @@
+import GroupAsset from "./GroupAsset";
 import GroupAssetValidators from "./GroupAssetValidators";
 import _GroupAsset_stuff_TypeInfo from "./_GroupAsset_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class GroupAssetTypeInfo extends _GroupAsset_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.asset.GroupAsset"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new GroupAsset();
+    }
 
     override preamble() {
         super.preamble();

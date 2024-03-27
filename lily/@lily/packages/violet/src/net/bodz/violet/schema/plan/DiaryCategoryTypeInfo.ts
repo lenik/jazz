@@ -1,3 +1,4 @@
+import DiaryCategory from "./DiaryCategory";
 import DiaryCategoryValidators from "./DiaryCategoryValidators";
 import _DiaryCategory_stuff_TypeInfo from "./_DiaryCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class DiaryCategoryTypeInfo extends _DiaryCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.plan.DiaryCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new DiaryCategory();
+    }
 
     override preamble() {
         super.preamble();

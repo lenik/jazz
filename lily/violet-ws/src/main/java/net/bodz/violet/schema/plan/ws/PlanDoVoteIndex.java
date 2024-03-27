@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.plan.PlanDoVote;
 
 /**
-* @label PlanDoVote
-*/
+ * @label PlanDoVote
+ */
 @ObjectType(PlanDoVote.class)
 public class PlanDoVoteIndex
         extends CoIndex<PlanDoVote> {

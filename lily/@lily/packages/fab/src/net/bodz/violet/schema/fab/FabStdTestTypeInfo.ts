@@ -1,3 +1,4 @@
+import FabStdTest from "./FabStdTest";
 import FabStdTestValidators from "./FabStdTestValidators";
 import _FabStdTest_stuff_TypeInfo from "./_FabStdTest_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class FabStdTestTypeInfo extends _FabStdTest_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.fab.FabStdTest"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new FabStdTest();
+    }
 
     override preamble() {
         super.preamble();

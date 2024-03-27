@@ -5,6 +5,8 @@ import ArtifactModelValidators from "@lily/violet/src/net/bodz/violet/schema/art
 import FabCost from "@lily/violet/src/net/bodz/violet/schema/art/FabCost";
 import _ArtifactModel_stuff_TypeInfo from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";
 
+import ArtifactModel from "./ArtifactModel";
+
 export class ArtifactModelTypeInfo extends _ArtifactModel_stuff_TypeInfo {
 
     readonly validators = new ArtifactModelValidators(this);
@@ -16,11 +18,15 @@ export class ArtifactModelTypeInfo extends _ArtifactModel_stuff_TypeInfo {
     get name() { return "net.bodz.violet.schema.art.ArtifactModel"; }
     get icon() { return "fa-tag"; }
 
+    override create() {
+        return new ArtifactModel();
+    }
+
     override preamble() {
         super.preamble();
         this.declare({
             cost: property({ type: FabCost.TYPE, validator: this.validators.validateCost }),
-            modelName: property({ type: STRING, validator: this.validators.validateModelName }),
+            modelName: property({ type: STRING, precision: 40, validator: this.validators.validateModelName }),
             validControl: property({ type: IValidControl.TYPE, validator: this.validators.validateValidControl }),
         });
     }

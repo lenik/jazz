@@ -3,6 +3,7 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import CartItem from "./CartItem";
 import _CartItem_stuff from "./_CartItem_stuff";
@@ -63,10 +64,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_CartItem_stuff.TYPE">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_CartItem_stuff.TYPE">
             <FieldRow :property="meta.price" v-model="model.price">
                 <input type="number" v-model="model.price" />
             </FieldRow>

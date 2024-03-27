@@ -12,7 +12,7 @@ import net.bodz.violet.schema.art.Artifact;
 /**
  * 购物车项
  */
-@Table(schema = "violet", name = "cartitem")
+@Table(schema = CartItem.SCHEMA_NAME, name = CartItem.TABLE_NAME)
 public class CartItem
         extends _CartItem_stuff
         implements

@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.tran.TransportOrder;
 
 /**
-* @label TransportOrder
-*/
+ * @label TransportOrder
+ */
 @ObjectType(TransportOrder.class)
 public class TransportOrderIndex
         extends CoIndex<TransportOrder> {

@@ -1,3 +1,4 @@
+import StoreCategory from "./StoreCategory";
 import StoreCategoryValidators from "./StoreCategoryValidators";
 import _StoreCategory_stuff_TypeInfo from "./_StoreCategory_stuff_TypeInfo";
 
@@ -11,6 +12,10 @@ export class StoreCategoryTypeInfo extends _StoreCategory_stuff_TypeInfo {
 
     get name() { return "net.bodz.violet.schema.store.StoreCategory"; }
     get icon() { return "fa-tag"; }
+
+    override create() {
+        return new StoreCategory();
+    }
 
     override preamble() {
         super.preamble();

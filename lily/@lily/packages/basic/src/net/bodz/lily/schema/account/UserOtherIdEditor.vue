@@ -3,9 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import type { Timestamp } from "@skeljs/core/src/lang/time";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import IdEntity from "../../concrete/IdEntity";
 import UserOtherId from "./UserOtherId";
 import _UserOtherId_stuff from "./_UserOtherId_stuff";
 
@@ -23,6 +24,7 @@ import JsonEditor from "@skeljs/core/src/ui/input/JsonEditor.vue";
 import RefEditor from "@skeljs/dba/src/ui/input/RefEditor.vue";
 import FieldGroup from "@skeljs/dba/src/ui/lily/FieldGroup.vue";
 
+import CoImagedFieldGroup from "../../concrete/CoImagedFieldGroup.vue";
 import CoObjectFieldGroup from "../../concrete/CoObjectFieldGroup.vue";
 import StructRowFieldGroup from "../../concrete/StructRowFieldGroup.vue";
 import UserChooseDialog from "./UserChooseDialog.vue";
@@ -69,10 +71,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_UserOtherId_stuff.TYPE">
+        <FieldGroup :type="IdEntity.TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <CoImagedFieldGroup :meta="meta" v-model="model" />
+        <FieldGroup :type="_UserOtherId_stuff.TYPE">
             <FieldRow :property="meta.beginTime" v-model="model.beginTime">
                 <DateTime v-model="model.beginTime" />
             </FieldRow>
@@ -81,9 +86,6 @@ onMounted(() => {
             </FieldRow>
             <FieldRow :property="meta.year" v-model="model.year">
                 <input type="number" v-model="model.year" />
-            </FieldRow>
-            <FieldRow :property="meta.properties" v-model="model.properties">
-                <JsonEditor v-model="model.properties" />
             </FieldRow>
             <FieldRow :property="meta.otherId" v-model="model.otherId">
                 <input type="text" v-model="model.otherId" />

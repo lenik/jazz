@@ -1,6 +1,6 @@
 package net.bodz.violet.schema.fab.dao;
 
-import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
@@ -12,7 +12,7 @@ public class _FabTaskItemCriteriaBuilder_stuff<self_t extends _FabTaskItemCriter
 
     public final LongField taskId = _long("task");
 
-    public final DateField<Timestamp> deadline = date("deadline", Timestamp.class);
+    public final DateField<OffsetDateTime> deadline = date("deadline", OffsetDateTime.class);
 
     public final StringField status = string("status");
 

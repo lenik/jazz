@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.violet.schema.art.ArtifactPhase;
 
 /**
-* @label ArtifactPhase
-*/
+ * @label ArtifactPhase
+ */
 @ObjectType(ArtifactPhase.class)
 public class ArtifactPhaseIndex
         extends CoIndex<ArtifactPhase> {
