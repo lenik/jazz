@@ -55,6 +55,10 @@ public class SelectOptions
         this.orders = orders;
     }
 
+    public void setOrders(String orders) {
+        this.orders = Orders.parse(orders);
+    }
+
     public SelectOptions order(String column, boolean ascending) {
         if (orders == null)
             orders = new Orders();
