@@ -18,7 +18,11 @@ public class FloatVarConverter
     @Override
     public Float fromString(String in)
             throws TypeConvertException {
-        return Float.valueOf(in);
+        try {
+            return Float.valueOf(in);
+        } catch (NumberFormatException e) {
+            throw new TypeConvertException(e.getMessage(), e);
+        }
     }
 
     @Override

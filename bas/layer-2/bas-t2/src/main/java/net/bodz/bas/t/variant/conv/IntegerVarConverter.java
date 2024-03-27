@@ -19,7 +19,11 @@ public class IntegerVarConverter
     public Integer fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.
-        return Integer.valueOf(in);
+        try {
+            return Integer.valueOf(in);
+        } catch (NumberFormatException e) {
+            throw new TypeConvertException(e.getMessage(), e);
+        }
     }
 
     @Override

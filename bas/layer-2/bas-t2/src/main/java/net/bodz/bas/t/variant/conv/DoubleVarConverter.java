@@ -18,7 +18,11 @@ public class DoubleVarConverter
     @Override
     public Double fromString(String in)
             throws TypeConvertException {
-        return Double.valueOf(in);
+        try {
+            return Double.valueOf(in);
+        } catch (NumberFormatException e) {
+            throw new TypeConvertException(e.getMessage(), e);
+        }
     }
 
     @Override

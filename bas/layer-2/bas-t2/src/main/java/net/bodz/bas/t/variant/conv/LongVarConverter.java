@@ -19,7 +19,11 @@ public class LongVarConverter
     public Long fromString(String in)
             throws TypeConvertException {
         // TODO auto radix.
-        return Long.valueOf(in);
+        try {
+            return Long.valueOf(in);
+        } catch (NumberFormatException e) {
+            throw new TypeConvertException(e.getMessage(), e);
+        }
     }
 
     @Override
