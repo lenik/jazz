@@ -44,8 +44,8 @@ public class AttachmentResolveCommand
     }
 
     @Override
-    public AttachmentResolveProcess createProcess(IEntityCommandContext context) {
-        return new AttachmentResolveProcess(this, context);
+    public AttachmentResolveProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new AttachmentResolveProcess(this, context, resolvedEntity);
     }
 }
 
@@ -54,8 +54,9 @@ class AttachmentResolveProcess
 
     JsonFormOptions jsonFormOptions;
 
-    public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context,
+            ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
     }
 
     @Override

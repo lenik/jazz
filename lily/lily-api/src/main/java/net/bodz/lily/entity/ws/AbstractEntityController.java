@@ -41,8 +41,16 @@ import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
+import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
-import net.bodz.lily.entity.manager.*;
+import net.bodz.lily.entity.manager.EntityCommandContext;
+import net.bodz.lily.entity.manager.EntityCommands;
+import net.bodz.lily.entity.manager.FetchCommand;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IEntityCommandProcess;
+import net.bodz.lily.entity.manager.IEntityCommandType;
+import net.bodz.lily.entity.manager.ListCommand;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
@@ -54,6 +62,7 @@ public abstract class AbstractEntityController<T>
         extends AbstractCacheControl
         implements
             IEntityController,
+            IEntityCommandContext,
             IQueryable,
             IPathArrivalFrameAware,
             ICacheControl,
@@ -134,9 +143,7 @@ public abstract class AbstractEntityController<T>
 
     IEntityCommandProcess createProcess(IEntityCommandType type, ResolvedEntity resolvedEntity) {
         EntityCommandContext context = newCommandContext();
-        if (resolvedEntity != null)
-            context.setResolvedEntity(resolvedEntity);
-        IEntityCommandProcess process = type.createProcess(context);
+        IEntityCommandProcess process = type.createProcess(context, resolvedEntity);
         return process;
     }
 
@@ -178,7 +185,7 @@ public abstract class AbstractEntityController<T>
         }
     }
 
-    EntityCommandContext newCommandContext() {
+    protected EntityCommandContext newCommandContext() {
         EntityCommandContext context = new EntityCommandContext();
         context.setDataApp(getDataApp());
         context.setTypeInfo(typeInfo);
@@ -202,10 +209,10 @@ public abstract class AbstractEntityController<T>
     }
 
     @SuppressWarnings("unchecked")
-    IEntityMapper<Object> getMapper() {
+    <_E> IEntityMapper<_E> getMapper() {
         DataContext dataContext = getDataContext();
         Class<?> mapperClass = getEntityTypeInfo().getMapperClass();
-        return (IEntityMapper<Object>) dataContext.getMapper(mapperClass);
+        return (IEntityMapper<_E>) dataContext.getMapper(mapperClass);
     }
 
     @Override
@@ -283,9 +290,9 @@ public abstract class AbstractEntityController<T>
                     Arrays.asList(idvec), e.getMessage()), e);
         }
 
-        IEntityMapper<Object> mapper = getMapper();
+        IEntityMapper<T> mapper = getMapper();
 
-        Object obj;
+        T obj;
         try {
             obj = mapper.select(id);
         } catch (Exception e) {
@@ -308,7 +315,7 @@ public abstract class AbstractEntityController<T>
         target.idFieldStrings = heads;
         target.idFields = idvec;
         target.id = id;
-        target.entity = obj;
+        target.entity = (StructRow) obj;
         target.preferredExtension = name_ext.b;
         return PathArrival.shift(idColumnCount, previous, this, target, tokens);
     }

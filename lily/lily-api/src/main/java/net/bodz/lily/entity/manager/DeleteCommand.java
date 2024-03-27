@@ -29,8 +29,8 @@ public class DeleteCommand
     }
 
     @Override
-    public DeleteProcess createProcess(IEntityCommandContext context) {
-        return new DeleteProcess(this, context);
+    public DeleteProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new DeleteProcess(this, context, resolvedEntity);
     }
 
 }
@@ -42,8 +42,8 @@ class DeleteProcess
 
     List<Object> idList = new ArrayList<>();
 
-    public DeleteProcess(DeleteCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public DeleteProcess(DeleteCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
     }
 
     @Override
@@ -75,14 +75,14 @@ class DeleteProcess
 
         String idString = map.getString("id");
         if (idString != null) {
-            Object id = context.parseId(idString);
+            Object id = typeInfo.parseSimpleId(idString);
             idList.add(id);
         }
 
         String idStrings = map.getString("ids");
         if (idStrings != null) {
             for (String idStr : idStrings.split(",")) {
-                Object id = context.parseId(idStr.trim());
+                Object id = typeInfo.parseSimpleId(idStr.trim());
                 idList.add(id);
             }
         }

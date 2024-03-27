@@ -26,8 +26,8 @@ public class CountCommand
     }
 
     @Override
-    public CountProcess createProcess(IEntityCommandContext context) {
-        return new CountProcess(this, context);
+    public CountProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new CountProcess(this, context, resolvedEntity);
     }
 
 }
@@ -37,8 +37,8 @@ class CountProcess
 
     ICriterion criteria;
 
-    public CountProcess(CountCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public CountProcess(CountCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
     }
 
     @Override

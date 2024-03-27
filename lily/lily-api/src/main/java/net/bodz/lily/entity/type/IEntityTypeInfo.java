@@ -14,7 +14,7 @@ public interface IEntityTypeInfo {
 
     Class<?> getMapperClass();
 
-    Class<?> getCrtieriaBuilderClass();
+    Class<?> getCriteriaBuilderClass();
 
     ICriteriaBuilder<?> newCriteriaBuilder();
 
@@ -31,14 +31,12 @@ public interface IEntityTypeInfo {
         }
     }
 
-    @Deprecated
-    Object parseId(String str)
+    Object parseSimpleId(String str)
             throws ParseException;
 
-    @Deprecated
-    default Object parseId(String str, Object fallback) {
+    default Object parseSimpleId(String str, Object fallback) {
         try {
-            return parseId(str);
+            return parseSimpleId(str);
         } catch (ParseException e) {
             return fallback;
         }

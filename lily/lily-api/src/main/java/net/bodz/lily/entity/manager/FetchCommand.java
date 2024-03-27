@@ -48,8 +48,8 @@ public class FetchCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context) {
-        return new ResolveProcess(this, context);
+    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new ResolveProcess(this, context, resolvedEntity);
     }
 
 }
@@ -70,8 +70,8 @@ class ResolveProcess
     IMarkdownBuilder markdownBuilder;
     IWordDocBuilder docxBuilder;
 
-    public ResolveProcess(FetchCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public ResolveProcess(FetchCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
     }
 
     @Override

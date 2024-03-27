@@ -1,7 +1,7 @@
 package net.bodz.lily.entity.manager;
 
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.err.ParseException;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
@@ -11,11 +11,10 @@ public interface IEntityCommandContext {
 
     DataContext getDataContext();
 
-    IEntityTypeInfo getTypeInfo();
+    IEntityTypeInfo getEntityTypeInfo();
 
-    ResolvedEntity getResolvedEntity();
-
-    Object parseId(String idStr)
-            throws ParseException;
+    default SelectOptions newSelectOptions() {
+        return new SelectOptions();
+    }
 
 }

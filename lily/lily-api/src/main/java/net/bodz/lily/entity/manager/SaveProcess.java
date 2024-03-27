@@ -28,8 +28,8 @@ public class SaveProcess
 
     JsonObject contentJson;
 
-    public SaveProcess(SaveCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public SaveProcess(SaveCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
     }
@@ -137,7 +137,7 @@ public class SaveProcess
             throws ParseException {
         if (hasId) {
             String idStr = o.getString("id");
-            this.id = context.parseId(idStr);
+            this.id = typeInfo.parseSimpleId(idStr);
             this.createNew = id == null;
         } else {
             throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());

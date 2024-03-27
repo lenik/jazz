@@ -14,15 +14,13 @@ import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
-import net.bodz.bas.t.variant.conv.IVarConverter;
-import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.Identifier;
+import net.bodz.lily.entity.StrVar;
 
 public class DefaultEntityTypeInfo
         implements
@@ -96,7 +94,7 @@ public class DefaultEntityTypeInfo
     }
 
     @Override
-    public Class<?> getCrtieriaBuilderClass() {
+    public Class<?> getCriteriaBuilderClass() {
         return criteriaBuilderClass;
     }
 
@@ -131,7 +129,7 @@ public class DefaultEntityTypeInfo
         if (idProperties == null) {
             values = new Object[1];
             try {
-                Object val = parseValue(idClass, columns[0]);
+                Object val = StrVar.parse(idClass, columns[0]);
                 values[0] = val;
             } catch (ParseException e) {
                 String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
@@ -144,7 +142,7 @@ public class DefaultEntityTypeInfo
                 ColumnProperty property = idProperties[i];
                 Class<?> propertyType = property.getPropertyType();
                 try {
-                    Object val = parseValue(propertyType, columns[i]);
+                    Object val = StrVar.parse(propertyType, columns[i]);
                     values[i] = val;
                 } catch (ParseException e) {
                     String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
@@ -157,31 +155,20 @@ public class DefaultEntityTypeInfo
     }
 
     @Override
-    public Object parseId(String str)
+    public Object parseSimpleId(String str)
             throws ParseException {
         if (idClass == null)
             throw new NoIdentifierException(entityClass.toString());
 
         Object value;
         try {
-            value = parseValue(idClass, str);
+            value = StrVar.parse(idClass, str);
         } catch (ParseException e) {
             String err = String.format("error parse id: %s from `%s`, in entity type %s", //
                     idClass.getName(), str, entityClass.getName());
             throw new ParseException(err, e);
         }
         return value;
-    }
-
-    static IVarConverter<String> strConv = VarConverters.getConverter(String.class);
-
-    static <K> K parseValue(Class<K> valueType, String valueStr)
-            throws ParseException {
-        try {
-            return strConv.to(valueStr, valueType);
-        } catch (TypeConvertException e) {
-            throw new ParseException("failed to parse: " + e.getMessage(), e);
-        }
     }
 
     @Override

@@ -58,9 +58,9 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected int consumedTokenCount;
     protected IVariantMap<String> parameters;
 
-    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context) {
+    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         this.type = type;
-        this.typeInfo = context.getTypeInfo();
+        this.typeInfo = context.getEntityTypeInfo();
 
         if (type == null)
             throw new NullPointerException("type");
@@ -71,7 +71,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
         this.dataApp = context.getDataApp();
         this.dataContext = dataApp.getDataContext();
 
-        this.resolvedEntity = context.getResolvedEntity();
+        this.resolvedEntity = resolvedEntity;
     }
 
     public type_t getCommandType() {
@@ -127,7 +127,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        if (!type.checkPathValid(previous, tokens, q))
+        if (! type.checkPathValid(previous, tokens, q))
             return null;
 
         this.request = CurrentHttpService.getRequest();
@@ -234,7 +234,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     @SuppressWarnings("unchecked")
     protected IEntityMapper<Object> getEntityMapper() {
         Class<?> mapperClass = typeInfo.getMapperClass();
-        if (!IEntityMapper.class.isAssignableFrom(mapperClass))
+        if (! IEntityMapper.class.isAssignableFrom(mapperClass))
             throw new IllegalUsageException("Not an " + IEntityMapper.class);
         return (IEntityMapper<Object>) dataContext.getMapper(mapperClass);
     }

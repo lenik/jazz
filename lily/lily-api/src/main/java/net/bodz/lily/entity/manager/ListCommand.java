@@ -51,8 +51,8 @@ public class ListCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context) {
-        return new ListProcess(this, context);
+    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new ListProcess(this, context, resolvedEntity);
     }
 
 }
@@ -74,17 +74,11 @@ class ListProcess
 
     ITableSheetBuilder tableSheetBuilder;
 
-    public ListProcess(ListCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public ListProcess(ListCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
-        selectOptions = new SelectOptions();
-
-        Class<?> crtieriaBuilderClass = context.getTypeInfo().getCrtieriaBuilderClass();
-        try {
-            mask = (CoObjectCriteriaBuilder<?>) crtieriaBuilderClass.getConstructor().newInstance();
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalUsageException("can't instantiate criteria builder " + crtieriaBuilderClass, e);
-        }
+        mask = (CoObjectCriteriaBuilder<?>) context.getEntityTypeInfo().newCriteriaBuilder();
+        selectOptions = context.newSelectOptions();
     }
 
     @Override

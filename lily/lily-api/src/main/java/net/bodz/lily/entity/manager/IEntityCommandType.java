@@ -28,7 +28,7 @@ public interface IEntityCommandType
      */
     boolean isContentCommand();
 
-    IEntityCommandProcess createProcess(IEntityCommandContext context);
+    IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity);
 
     boolean isEnabled(IEntityTypeInfo info);
 

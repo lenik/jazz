@@ -13,6 +13,7 @@ import net.bodz.bas.repr.path.IPathDispatchable;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.concrete.StructRow;
 
 public class ResolvedEntity
         implements
@@ -23,7 +24,7 @@ public class ResolvedEntity
     public Object idFields[];
     public Object id;
 
-    public Object entity;
+    public StructRow entity;
 
     public String preferredExtension;
 
@@ -53,7 +54,7 @@ public class ResolvedEntity
             out.entry("error", "can't convert to JSON: " + entity);
             return;
         }
-        IJsonForm jsonEntity = (IJsonForm) entity;
+        IJsonForm jsonEntity = entity;
         jsonEntity.jsonOut(out, opts);
     }
 

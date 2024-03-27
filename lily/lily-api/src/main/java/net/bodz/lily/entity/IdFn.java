@@ -3,11 +3,7 @@ package net.bodz.lily.entity;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.err.ParseException;
-import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.repr.form.meta.Nullable;
-import net.bodz.bas.t.variant.conv.IVarConverter;
-import net.bodz.bas.t.variant.conv.VarConverters;
 
 public class IdFn {
 
@@ -95,28 +91,6 @@ public class IdFn {
         else if (idType == Long.class)
             casted = ((Number) id).longValue();
         return idType.cast(casted);
-    }
-
-    static IVarConverter<String> strConv = VarConverters.getConverter(String.class);
-
-    public static <K> K parseId(Class<K> idType, String s)
-            throws ParseException {
-        try {
-            return strConv.to(s, idType);
-        } catch (TypeConvertException e) {
-            throw new ParseException("failed to parse: " + e.getMessage(), e);
-        }
-    }
-
-    public static <K> K convertId(Class<K> idType, Object anyVal)
-            throws ParseException {
-        IVarConverter<K> idConv = VarConverters.getConverter(idType);
-        try {
-            K id = idConv.from(anyVal);
-            return id;
-        } catch (TypeConvertException e) {
-            throw new ParseException("failed to convert: " + e.getMessage(), e);
-        }
     }
 
 }

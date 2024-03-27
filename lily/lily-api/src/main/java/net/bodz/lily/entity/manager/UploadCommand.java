@@ -39,8 +39,8 @@ public class UploadCommand
     }
 
     @Override
-    public UploadProcess createProcess(IEntityCommandContext context) {
-        return new UploadProcess(this, context);
+    public UploadProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new UploadProcess(this, context, resolvedEntity);
     }
 
 }
@@ -55,8 +55,8 @@ class UploadProcess
 
     String id;
 
-    public UploadProcess(UploadCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public UploadProcess(UploadCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
         category = typeInfo.getEntityClass().getName();
     }
 
@@ -83,7 +83,7 @@ class UploadProcess
         super.readObject(map);
         String idString = map.getString("id");
         if (idString != null) {
-            Object id = context.parseId(idString);
+            Object id = typeInfo.parseSimpleId(idString);
             this.id = id.toString();
         } else {
             this.id = UploadCommand.K_NULL_ID;

@@ -31,8 +31,8 @@ public class GetDefaultCommand
     }
 
     @Override
-    public CreateProcess createProcess(IEntityCommandContext context) {
-        return new CreateProcess(this, context);
+    public CreateProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new CreateProcess(this, context, resolvedEntity);
     }
 
 }
@@ -46,10 +46,10 @@ class CreateProcess
     Object templateId;
     JsonFormOptions jsonFormOptions;
 
-    public CreateProcess(GetDefaultCommand type, IEntityCommandContext context) {
-        super(type, context);
+    public CreateProcess(GetDefaultCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        super(type, context, resolvedEntity);
 
-        Class<?> entityClass = context.getTypeInfo().getEntityClass();
+        Class<?> entityClass = context.getEntityTypeInfo().getEntityClass();
         cloneable = ICloneable.class.isAssignableFrom(entityClass);
         resetable = IReset.class.isAssignableFrom(entityClass);
     }
@@ -72,7 +72,7 @@ class CreateProcess
 
     public void setTemplateIdString(String idStr) {
         try {
-            templateId = context.parseId(idStr);
+            templateId = typeInfo.parseSimpleId(idStr);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
