@@ -7,6 +7,11 @@ class-map {
     net.bodz.lily.concrete.CoCategory: \
         diarycat, \
         plancat
+    net.bodz.lily.concrete.CoMessage: \
+        diary, \
+        diaryrev, \
+        plan, \
+        plando
     net.bodz.lily.concrete.CoParameter: \
         diaryparm, \
         planparm, \
@@ -25,11 +30,9 @@ class-map {
         diaryrev_vote, \
         plan_vote, \
         plando_vote
-    net.bodz.lily.concrete.CoMessage: \
-        diary, \
-        diaryrev, \
-        plan, \
-        plando
+    net.bodz.lily.concrete.IdEntity: \
+        diary_party, \
+        plan_party
 }
 
 table-name {

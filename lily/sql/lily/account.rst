@@ -4,13 +4,15 @@ class-map {
     net.bodz.lily.concrete.CoCategory: \
         usercat
     net.bodz.lily.concrete.CoImaged: \
-        grouptype,
-        usertype,
-        useroid,
+        grouptype, \
+        usertype, \
+        useroid, \
         useroidtype
     net.bodz.lily.concrete.CoPrincipal: \
         group, \
         user
+    net.bodz.lily.concrete.IdEntity: \
+        usersec
 }
 
 table-name {

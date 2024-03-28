@@ -20,6 +20,11 @@ column-property {
 class-map {
     net.bodz.lily.concrete.CoCategory: \
         fabstdtestcat
+    net.bodz.lily.concrete.CoEvent: \
+        fabproc, \
+        fabtask, \
+        fabtaskl, \
+        fabtrack
     net.bodz.lily.concrete.CoImaged: \
         fabfn, \
         fabstdproc, \
@@ -28,11 +33,12 @@ class-map {
         fabodrl
     net.bodz.lily.concrete.CoMessage: \
         fabodr
-    net.bodz.lily.concrete.CoEvent: \
-        fabproc, \
-        fabtask, \
-        fabtaskl, \
-        fabtrack
+    net.bodz.lily.concrete.IdEntity: \
+        fabproc_sn, \
+        fabstdproc_in, \
+        fabstdtester, \
+        fabtrack_op, \
+        fabtrack_test_parm
 }
 
 table-name {

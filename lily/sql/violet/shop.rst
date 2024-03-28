@@ -13,6 +13,8 @@ class-map {
         couponcat, \
         shopmemcat, \
         salecat
+    net.bodz.lily.concrete.CoMessage: \
+        saleodr
     net.bodz.lily.concrete.CoImaged: \
         shop, \
         coupon
@@ -26,6 +28,9 @@ class-map {
     net.bodz.lily.concrete.FavRecord: \
         shop_fav, \
         shopitem_fav
+    net.bodz.lily.concrete.IdEntity: \
+        art_price \
+        cartitem
 }
 
 table-name {

@@ -18,6 +18,9 @@ class-map {
         storephase
     net.bodz.lily.concrete.CoTag: \
         regiontag
+    net.bodz.lily.concrete.IdEntity: \
+        offstorel, \
+        storel
 }
 
 table-name {
