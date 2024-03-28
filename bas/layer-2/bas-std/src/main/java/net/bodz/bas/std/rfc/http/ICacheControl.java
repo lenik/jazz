@@ -1,7 +1,7 @@
 package net.bodz.bas.std.rfc.http;
 
 import java.io.File;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 
@@ -34,7 +34,7 @@ public interface ICacheControl {
      *
      * @see File#lastModified()
      */
-    ZonedDateTime getLastModified();
+    OffsetDateTime getLastModified();
 
     /**
      * An ETag is an opaque identifier assigned by a web server to a specific version of a resource found at a URL. If
@@ -44,7 +44,7 @@ public interface ICacheControl {
      * URLs may or may not be equal, so no meaning can be inferred from their comparison.
      */
     default String getETag() {
-        ZonedDateTime lastModified = getLastModified();
+        OffsetDateTime lastModified = getLastModified();
         String etag = DateTimes.ISO8601.format(lastModified);
         return etag;
     }

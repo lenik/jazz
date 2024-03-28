@@ -1,10 +1,11 @@
 package net.bodz.bas.t.variant;
 
 import java.io.File;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.ParseException;
 
@@ -64,7 +65,8 @@ public class StringFnCodegen
         if (s == null)
             return null;
         try {
-            return Dates.ISO8601.parse(s);
+            ZonedDateTime zdt = ZonedDateTime.parse(s, DateTimes.ISO8601);
+            return new Date(zdt.toInstant().toEpochMilli());
         } catch (Exception e) {
             throw new ParseException("error parse " + s, e);
         }

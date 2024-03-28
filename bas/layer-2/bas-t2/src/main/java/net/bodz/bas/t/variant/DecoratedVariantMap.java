@@ -3,7 +3,6 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -254,24 +253,14 @@ public class DecoratedVariantMap<K>
     }
 
     @Override
-    public Date getDate(DateFormat format, K key) {
+    public Date getDate(DateTimeFormatter format, K key) {
         return getWrapped().getDate(format, key);
     }
 
     @Override
-    public Date getDate(DateFormat format, K key, Date defaultValue) {
+    public Date getDate(DateTimeFormatter format, K key, Date defaultValue) {
         return getWrapped().getDate(format, key, defaultValue);
     }
-
-//    @Override
-//    public DateTime getDateTime(DateTimeFormatter format, K key) {
-//        return getWrapped().getDateTime(format, key);
-//    }
-//
-//    @Override
-//    public DateTime getDateTime(DateTimeFormatter format, K key, DateTime defaultValue) {
-//        return getWrapped().getDateTime(format, key, defaultValue);
-//    }
 
     // Instant
 

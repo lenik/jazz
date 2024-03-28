@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.content;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -13,8 +13,8 @@ public abstract class AbstractXjdocContent
         implements
             IContent {
 
-    private ZonedDateTime creationDate = ZonedDateTime.now();
-    private ZonedDateTime lastModified = creationDate;
+    private OffsetDateTime creationDate = OffsetDateTime.now();
+    private OffsetDateTime lastModified = creationDate;
 
     @Override
     public int getPriority() {
@@ -40,26 +40,26 @@ public abstract class AbstractXjdocContent
     }
 
     @Override
-    public ZonedDateTime getCreationDate() {
+    public OffsetDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
+    public void setCreationDate(OffsetDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
+    public OffsetDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
     }
 
     @Override
     public String getETag() {
-        ZonedDateTime time = getLastModified();
+        OffsetDateTime time = getLastModified();
         return DateTimes.ISO8601.format(time);
     }
 

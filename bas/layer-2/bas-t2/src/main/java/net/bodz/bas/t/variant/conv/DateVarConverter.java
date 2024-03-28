@@ -1,19 +1,20 @@
 package net.bodz.bas.t.variant.conv;
 
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.err.TypeConvertException;
 
 public class DateVarConverter
         extends AbstractVarConverter<Date> {
 
-    DateFormat format;
+    DateTimeFormatter format;
 
-    public DateVarConverter(DateFormat format) {
+    public DateVarConverter(DateTimeFormatter format) {
         super(Date.class);
         if (format == null)
             throw new NullPointerException("format");
@@ -31,10 +32,11 @@ public class DateVarConverter
     public Date fromString(String in)
             throws TypeConvertException {
         try {
-            return format.parse(in);
+            ZonedDateTime zdt = ZonedDateTime.parse(in, format);
+            return new Date(zdt.toInstant().toEpochMilli());
         } catch (IllegalArgumentException e) {
             throw new TypeConvertException("Failed to parse date " + in, e);
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             throw new TypeConvertException("Parse error: " + e.getMessage(), e);
         }
     }
@@ -43,7 +45,8 @@ public class DateVarConverter
     public String toString(Date value) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(value);
-        String str = format.format(calendar);
+        ZonedDateTime zdt = DateTimes.convert(calendar);
+        String str = format.format(zdt);
         return str;
     }
 
@@ -57,6 +60,6 @@ public class DateVarConverter
         return true;
     }
 
-    public static final DateVarConverter INSTANCE = new DateVarConverter(Dates.ISO8601);
+    public static final DateVarConverter INSTANCE = new DateVarConverter(DateTimes.ISO8601);
 
 }

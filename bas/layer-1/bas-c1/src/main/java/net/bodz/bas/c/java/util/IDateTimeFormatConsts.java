@@ -38,6 +38,8 @@ public interface IDateTimeFormatConsts {
     DateTimeFormatter UI_OFFSET_TIME = DateTimeFormatter.ofPattern("HH:mm:ssZ");
     DateTimeFormatter UI_ZONED_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:sszzz'['VV']'");
 
+    DateTimeFormatter YYYY_MM = DateTimeFormatter.ofPattern("yyyy-MM");
+
 // DateTimeFormatter SYS_DATE = DateTimeFormatter.getDateInstance();
 // DateTimeFormatter SYS_TIME = DateTimeFormatter.getTimeInstance();
 // DateTimeFormatter SYS_DATETIME = DateTimeFormatter.getDateTimeInstance();

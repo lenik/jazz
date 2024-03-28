@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.string.StringEscape;
 import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.err.ParseException;
@@ -360,8 +361,9 @@ public class StringFn {
         if (s == null)
             return null;
         try {
-            return Dates.ISO8601.parse(s);
-        } catch (Exception e) {
+            ZonedDateTime zdt = ZonedDateTime.parse(s, DateTimes.ISO8601);
+            return new Date(zdt.toInstant().toEpochMilli());
+        } catch (DateTimeParseException e) {
             throw new ParseException("error parse " + s, e);
         }
     }
@@ -370,32 +372,12 @@ public class StringFn {
         if (s == null)
             return fallback;
         try {
-            return Dates.ISO8601.parse(s);
+            ZonedDateTime zdt = ZonedDateTime.parse(s, DateTimes.ISO8601);
+            return new Date(zdt.toInstant().toEpochMilli());
         } catch (Exception e) {
             return fallback;
         }
     }
-
-//    public static DateTime parseDateTime(String s)
-//            throws ParseException {
-//        if (s == null)
-//            return null;
-//        try {
-//            return ISODateTimeFormat.dateTime().parseDateTime(s);
-//        } catch (Exception e) {
-//            throw new ParseException("error parse " + s, e);
-//        }
-//    }
-//
-//    public static DateTime parseDateTime(String s, DateTime fallback) {
-//        if (s == null)
-//            return fallback;
-//        try {
-//            return ISODateTimeFormat.dateTime().parseDateTime(s);
-//        } catch (Exception e) {
-//            return fallback;
-//        }
-//    }
 
     public static Instant parseInstant(String s)
             throws ParseException {

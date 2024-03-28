@@ -1,7 +1,7 @@
 package net.bodz.bas.repr.content;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
@@ -14,8 +14,8 @@ public abstract class AbstractContent
 
     private static final long serialVersionUID = 1L;
 
-    private ZonedDateTime creationDate = ZonedDateTime.now();
-    private ZonedDateTime lastModified = creationDate;
+    private OffsetDateTime creationDate = OffsetDateTime.now();
+    private OffsetDateTime lastModified = creationDate;
 
     @Override
     public int getPriority() {
@@ -26,11 +26,11 @@ public abstract class AbstractContent
     /* _____________________________ */static section.iface __CONTENT__;
 
     @Override
-    public ZonedDateTime getCreationDate() {
+    public OffsetDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
+    public void setCreationDate(OffsetDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -53,11 +53,11 @@ public abstract class AbstractContent
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
+    public OffsetDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
     }
 

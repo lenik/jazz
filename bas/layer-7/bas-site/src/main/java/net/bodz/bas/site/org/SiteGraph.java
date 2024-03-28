@@ -1,6 +1,6 @@
 package net.bodz.bas.site.org;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
@@ -29,8 +29,8 @@ public class SiteGraph
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
-        return ZonedDateTime.now();
+    public OffsetDateTime getLastModified() {
+        return OffsetDateTime.now();
     }
 
     @Override

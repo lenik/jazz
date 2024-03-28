@@ -1,15 +1,15 @@
 package net.bodz.mda.xjdoc.model.artifact;
 
 import java.net.URL;
-import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.meta.build.IVersion;
 import net.bodz.bas.meta.build.ReleaseDescription;
@@ -118,15 +118,15 @@ public class ArtifactDoc
         return release;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         // getTag("release-date");
         return null;
     }
 
-    static final DateFormat RELEASE_DATE_FORMAT = Dates.ISO_LOCAL_DATE;
+    static final DateTimeFormatter RELEASE_DATE_FORMAT = DateTimes.ISO_LOCAL_DATE;
 
     public String getReleaseDateString() {
-        Date releaseDate = getReleaseDate();
+        LocalDate releaseDate = getReleaseDate();
         if (releaseDate == null)
             return "recently";
         else

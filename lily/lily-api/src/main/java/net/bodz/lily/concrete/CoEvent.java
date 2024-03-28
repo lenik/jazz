@@ -1,6 +1,6 @@
 package net.bodz.lily.concrete;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
@@ -24,8 +24,8 @@ public abstract class CoEvent<Id>
 
     private static final long serialVersionUID = 1L;
 
-    private ZonedDateTime beginTime;
-    private ZonedDateTime endTime;
+    private OffsetDateTime beginTime;
+    private OffsetDateTime endTime;
     private int year;
 
     public CoEvent() {
@@ -43,12 +43,12 @@ public abstract class CoEvent<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public ZonedDateTime getBeginTime() {
+    public OffsetDateTime getBeginTime() {
         return beginTime;
     }
 
     @Override
-    public void setBeginTime(ZonedDateTime beginTime) {
+    public void setBeginTime(OffsetDateTime beginTime) {
         this.beginTime = beginTime;
     }
 
@@ -63,12 +63,12 @@ public abstract class CoEvent<Id>
      */
     @OfGroup(StdGroup.Schedule.class)
     @Override
-    public ZonedDateTime getEndTime() {
+    public OffsetDateTime getEndTime() {
         return endTime;
     }
 
     @Override
-    public void setEndTime(ZonedDateTime endTime) {
+    public void setEndTime(OffsetDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -85,8 +85,8 @@ public abstract class CoEvent<Id>
             throws ParseException {
         super.jsonIn(o, opts);
 
-        beginTime = o.getZonedDateTime("beginTime", beginTime);
-        endTime = o.getZonedDateTime("endTime", endTime);
+        beginTime = o.getOffsetDateTime("beginTime", beginTime);
+        endTime = o.getOffsetDateTime("endTime", endTime);
     }
 
 }

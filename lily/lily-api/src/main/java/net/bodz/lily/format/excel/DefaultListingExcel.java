@@ -1,12 +1,13 @@
 package net.bodz.lily.format.excel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -25,7 +26,7 @@ public class DefaultListingExcel
     @Override
     protected String getTitle() {
         List<?> list = tableData.getList();
-        String dateStr = Dates.ISO_LOCAL_DATE.format(System.currentTimeMillis());
+        String dateStr = DateTimes.ISO_LOCAL_DATE.format(LocalDate.now());
         String typeName = typeInfo.getEntityClass().getSimpleName();
         String title = String.format("%s %s (%d rows)", dateStr, typeName, list.size());
         return title;

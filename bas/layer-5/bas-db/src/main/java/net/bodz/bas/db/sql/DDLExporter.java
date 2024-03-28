@@ -2,7 +2,7 @@ package net.bodz.bas.db.sql;
 
 import java.sql.Timestamp;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.t.catalog.JdbcType;
 
@@ -32,18 +32,15 @@ public class DDLExporter {
             return val.toString();
 
         case DATE:
-            java.sql.Date date = (java.sql.Date) val;
-            String dateStr = Dates.ISO_LOCAL_DATE.format(date);
+            String dateStr = DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert((java.sql.Date) val));
             return StringQuote.q(dateStr);
 
         case TIME:
-            java.sql.Time time = (java.sql.Time) val;
-            String timeStr = Dates.ISO_LOCAL_TIME.format(time);
+            String timeStr = DateTimes.ISO_LOCAL_TIME.format(DateTimes.convert((java.sql.Time) val));
             return StringQuote.q(timeStr);
 
         case TIMESTAMP:
-            Timestamp timestamp = (Timestamp) val;
-            String tsStr = Dates.ISO8601.format(timestamp);
+            String tsStr = DateTimes.ISO8601.format(DateTimes.convert((Timestamp) val));
             return StringQuote.q(tsStr);
 
         default:

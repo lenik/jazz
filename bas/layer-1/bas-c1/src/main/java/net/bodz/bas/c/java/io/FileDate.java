@@ -37,6 +37,8 @@ public class FileDate {
         return toZonedDateTime(creationTime, zoneId);
     }
 
+    //
+
     public static ZonedDateTime getLastModified(Path path)
             throws IOException {
         return getLastModified(path, ZoneId.systemDefault());
@@ -48,6 +50,8 @@ public class FileDate {
         FileTime lastModifiedTime = attributes.lastModifiedTime();
         return toZonedDateTime(lastModifiedTime, zoneId);
     }
+
+    //
 
     public static ZonedDateTime getLastAccess(Path path)
             throws IOException {

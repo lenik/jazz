@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.err.ParseException;
@@ -75,11 +76,11 @@ public class EventLogger
 
     void save(long time, List<EventLog> logs)
             throws IOException {
-        String yearMonth = Dates.YYYY_MM.format(time);
+        String yearMonth = DateTimes.YYYY_MM.format(Instant.ofEpochMilli(time));
         File subDir = new File(logDir, yearMonth);
         subDir.mkdirs();
 
-        String date = Dates.ISO_LOCAL_DATE.format(time);
+        String date = DateTimes.ISO_LOCAL_DATE.format(Instant.ofEpochMilli(time));
         File logFile = new File(subDir, date);
         FileOutputStream fout = new FileOutputStream(logFile, true);
         PrintStream out = new PrintStream(fout, true, "utf-8");

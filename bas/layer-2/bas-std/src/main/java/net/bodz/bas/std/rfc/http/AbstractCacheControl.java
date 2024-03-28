@@ -1,6 +1,6 @@
 package net.bodz.bas.std.rfc.http;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 public class AbstractCacheControl
         implements
@@ -22,8 +22,8 @@ public class AbstractCacheControl
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
-        return ZonedDateTime.now();
+    public OffsetDateTime getLastModified() {
+        return OffsetDateTime.now();
     }
 
     @Override

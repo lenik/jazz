@@ -3,7 +3,7 @@ package net.bodz.bas.html.viz.util;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FilePath;
@@ -64,12 +64,12 @@ public class URLResource_bin
         content.setMaxAge(maxAge);
         if ("file".equals(url.getProtocol())) {
             File file = FileURL.toFile(url, null);
-            ZonedDateTime lastModified = FileDate.getLastModified(file);
+            OffsetDateTime lastModified = FileDate.getLastModified(file).toOffsetDateTime();
             content.setLastModified(lastModified);
 
-            ZonedDateTime creationDate;
+            OffsetDateTime creationDate;
             try {
-                creationDate = FileDate.getCreationDate(file.toPath());
+                creationDate = FileDate.getCreationDate(file.toPath()).toOffsetDateTime();
             } catch (IOException e) {
                 creationDate = lastModified;
             }

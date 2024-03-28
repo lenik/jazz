@@ -11,7 +11,6 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 import net.bodz.bas.c.java.util.DateTimes;
-import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.err.FormatException;
@@ -66,22 +65,17 @@ public class JsonCodec {
             return obj.toString();
 
         case TypeId.SQL_DATE:
-            java.sql.Date sqlDate = (java.sql.Date) obj;
-            return Dates.ISO_LOCAL_DATE.format(sqlDate);
+            try {
+                return DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert((java.sql.Date) obj));
+            } catch (Exception e) {
+                throw new FormatException(e);
+            }
 
         case TypeId.SQL_TIME:
-            java.sql.Time sqlTime = (java.sql.Time) obj;
-            return Dates.ISO_LOCAL_DATE.format(sqlTime);
+            return DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert((java.sql.Time) obj));
 
         case TypeId.DATE:
-            Date date = (Date) obj;
-
-//            // XXX to be reviewed.
-//            Calendar cal = Calendar.getInstance();
-//            int offset = cal.getTimeZone().getOffset(date.getTime());
-//            long localTime = date.getTime() + offset;
-
-            String dateStr = Dates.ISO8601.format(date);
+            String dateStr = DateTimes.ISO8601.format(DateTimes.convert((Date) obj));
             return dateStr;
 
         case TypeId.INSTANT:

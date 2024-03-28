@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.content;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -12,8 +12,8 @@ public class MutableContent
             IContent {
 
     int priority;
-    ZonedDateTime creationDate = ZonedDateTime.now();
-    ZonedDateTime lastModified = creationDate;
+    OffsetDateTime creationDate = OffsetDateTime.now();
+    OffsetDateTime lastModified = creationDate;
 
     CacheControlMode cacheControlMode = CacheControlMode.AUTO;
     CacheRevalidationMode cacheRevalidateMode = CacheRevalidationMode.OPTIONAL;
@@ -31,11 +31,11 @@ public class MutableContent
     }
 
     @Override
-    public ZonedDateTime getCreationDate() {
+    public OffsetDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
+    public void setCreationDate(OffsetDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -74,11 +74,11 @@ public class MutableContent
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
+    public OffsetDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
     }
 

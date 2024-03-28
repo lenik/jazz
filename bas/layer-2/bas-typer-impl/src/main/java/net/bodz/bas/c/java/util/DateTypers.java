@@ -1,6 +1,9 @@
 package net.bodz.bas.c.java.util;
 
-import java.text.DateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Random;
 
@@ -32,18 +35,20 @@ public class DateTypers
 
     @Override
     public String format(Date object, IOptions options) {
-        DateFormat dateFormat = options.get(DateFormat.class, Dates.ISO8601);
-        return dateFormat.format(object);
+        DateTimeFormatter dateFormat = options.get(DateTimeFormatter.class, DateTimes.ISO8601);
+        return dateFormat.format(DateTimes.convert(object));
     }
 
     @Override
     public Date parse(String text, IOptions options)
             throws ParseException {
-        DateFormat format = options.get(DateFormat.class, //
-                text.contains(":") ? Dates.ISO8601 : Dates.ISO_LOCAL_DATE);
+        DateTimeFormatter format = options.get(DateTimeFormatter.class, //
+                text.contains(":") ? DateTimes.ISO8601 : DateTimes.ISO_LOCAL_DATE);
         try {
-            return format.parse(text);
-        } catch (java.text.ParseException e) {
+            TemporalAccessor temporal = format.parse(text);
+            Instant instant = Instant.from(temporal);
+            return new Date(instant.toEpochMilli());
+        } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }
@@ -53,7 +58,8 @@ public class DateTypers
             throws CreateException {
         Random prng = options.get(Random.class, random);
         int before = prng.nextInt();
-        long sample = Dates.currentYearLocal().getTime() - before;
+        long yearStart = DateTimes.startOfYear().toInstant().toEpochMilli();
+        long sample = yearStart - before;
         return new Date(sample);
     }
 

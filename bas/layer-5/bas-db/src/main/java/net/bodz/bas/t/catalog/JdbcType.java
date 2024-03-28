@@ -3,7 +3,18 @@ package net.bodz.bas.t.catalog;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetAddress;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Ref;
+import java.sql.RowId;
+import java.sql.SQLXML;
+import java.sql.Struct;
+import java.sql.Types;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,9 +43,9 @@ public enum JdbcType {
     VARCHAR(Types.VARCHAR, String.class),
     LONGVARCHAR(Types.LONGVARCHAR, String.class),
 
-    DATE(Types.DATE, Date.class),
-    TIME(Types.TIME, Time.class),
-    TIMESTAMP(Types.TIMESTAMP, Timestamp.class),
+    DATE(Types.DATE, LocalDate.class),
+    TIME(Types.TIME, LocalTime.class),
+    TIMESTAMP(Types.TIMESTAMP, LocalDateTime.class),
 
     BINARY(Types.BINARY, byte[].class),
     VARBINARY(Types.VARBINARY, byte[].class),
@@ -65,8 +76,8 @@ public enum JdbcType {
     SQLXML(Types.SQLXML, SQLXML.class),
 
     REF_CURSOR(Types.REF_CURSOR, Unknown.class),
-    TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE, Time.class),
-    TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE, Timestamp.class),
+    TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE, OffsetTime.class),
+    TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE, OffsetDateTime.class),
 
     ;
 

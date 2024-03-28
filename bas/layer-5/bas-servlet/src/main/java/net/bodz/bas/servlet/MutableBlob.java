@@ -1,7 +1,7 @@
 package net.bodz.bas.servlet;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.std.rfc.mime.ContentType;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
@@ -16,7 +16,7 @@ public abstract class MutableBlob
     ContentType contentType = ContentTypes.application_octet_stream;
     String encoding;
     Long length;
-    ZonedDateTime lastModified;
+    OffsetDateTime lastModified;
     String description;
 
     @Override
@@ -75,12 +75,12 @@ public abstract class MutableBlob
     }
 
     @Override
-    public ZonedDateTime getLastModified()
+    public OffsetDateTime getLastModified()
             throws IOException {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
     }
 

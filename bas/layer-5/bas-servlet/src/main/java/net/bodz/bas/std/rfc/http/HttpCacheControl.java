@@ -1,14 +1,17 @@
 package net.bodz.bas.std.rfc.http;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
-import net.bodz.bas.c.java.util.IDateFormatConsts;
+import net.bodz.bas.c.java.util.IDateTimeFormatConsts;
 import net.bodz.bas.c.string.TokensBuilder;
 
 import jakarta.servlet.http.HttpServletResponse;
 
 public class HttpCacheControl
-        implements HttpHeaderNames, IDateFormatConsts {
+        implements
+            HttpHeaderNames,
+            IDateTimeFormatConsts {
 
     public static void setShouldNotCache(HttpServletResponse response) {
         response.setHeader(CACHE_CONTROL, "public, max-age=0");
@@ -60,14 +63,14 @@ public class HttpCacheControl
 
         response.setHeader(CACHE_CONTROL, buf.toString());
         if (cachable) {
-            Date expires = new Date(System.currentTimeMillis() + cacheControl.getMaxAge() * 1000L);
-            // timezone...?
-            response.setHeader(EXPIRES, RFC1123.format(expires));
+            ZonedDateTime now = ZonedDateTime.now();
+            ZonedDateTime expires = now.plus(cacheControl.getMaxAge(), ChronoUnit.SECONDS);
+            response.setHeader(EXPIRES, RFC_1123_DATE_TIME.format(expires));
         } else {
             response.setHeader(EXPIRES, "-1");
         }
 
-        response.setHeader(LAST_MODIFIED, RFC1123.format(cacheControl.getLastModified()));
+        response.setHeader(LAST_MODIFIED, RFC_1123_DATE_TIME.format(cacheControl.getLastModified()));
     }
 
 }

@@ -1,15 +1,15 @@
 package net.bodz.lily.concrete;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 public interface IMomentInterval {
 
-    ZonedDateTime getBeginTime();
+    OffsetDateTime getBeginTime();
 
-    void setBeginTime(ZonedDateTime beginTime);
+    void setBeginTime(OffsetDateTime beginTime);
 
-    ZonedDateTime getEndTime();
+    OffsetDateTime getEndTime();
 
-    void setEndTime(ZonedDateTime endTime);
+    void setEndTime(OffsetDateTime endTime);
 
 }

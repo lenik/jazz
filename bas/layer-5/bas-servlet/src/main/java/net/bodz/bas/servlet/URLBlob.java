@@ -3,7 +3,7 @@ package net.bodz.bas.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.io.FileDate;
 import net.bodz.bas.c.java.io.FilePath;
@@ -74,13 +74,13 @@ public class URLBlob
     }
 
     @Override
-    public ZonedDateTime getLastModified()
+    public OffsetDateTime getLastModified()
             throws IOException {
         Long time = FileURL.lastModified(url, null);
         if (time == null)
             return null;
         else
-            return FileDate.toZonedDateTime(time.longValue());
+            return FileDate.toZonedDateTime(time.longValue()).toOffsetDateTime();
     }
 
     @Override

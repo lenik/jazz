@@ -1,6 +1,6 @@
 package net.bodz.bas.repr.content;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.order.IPriority;
@@ -18,6 +18,6 @@ public interface IContent
     /**
      * Get the creation time in epoch milli.
      */
-    ZonedDateTime getCreationDate();
+    OffsetDateTime getCreationDate();
 
 }

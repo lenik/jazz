@@ -3,7 +3,6 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -239,7 +238,7 @@ public abstract class AutoConvVariantMap<K>
     }
 
     @Override
-    public Date getDate(DateFormat format, K key) {
+    public Date getDate(DateTimeFormatter format, K key) {
         Object value = getScalar(key);
         if (value == null)
             return null;
@@ -248,7 +247,7 @@ public abstract class AutoConvVariantMap<K>
     }
 
     @Override
-    public Date getDate(DateFormat format, K key, Date defaultValue) {
+    public Date getDate(DateTimeFormatter format, K key, Date defaultValue) {
         Object value = getScalar(key);
         if (value == null)
 //            if (containsKey(key))

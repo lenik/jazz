@@ -3,7 +3,7 @@ package net.bodz.bas.html.viz.builtin;
 import java.io.IOException;
 import java.util.Date;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.html.util.FieldDeclToHtml;
@@ -32,7 +32,7 @@ public class Date_htm
         // input.type("datetime"); // deprecated
         input.type("date");
         if (value != null) {
-            String str = Dates.ISO_LOCAL_DATE.format(value);
+            String str = DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert(value));
             input.value(str);
             out.span().class_("print").text(str);
         }

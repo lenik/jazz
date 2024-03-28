@@ -1,6 +1,6 @@
 package net.bodz.bas.site.org;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import net.bodz.bas.std.rfc.http.CacheControlMode;
@@ -63,8 +63,8 @@ public class Sitemap
     }
 
     @Override
-    public ZonedDateTime getLastModified() {
-        return ZonedDateTime.now();
+    public OffsetDateTime getLastModified() {
+        return OffsetDateTime.now();
     }
 
     @Override

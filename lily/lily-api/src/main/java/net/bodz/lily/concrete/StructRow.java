@@ -3,7 +3,7 @@ package net.bodz.lily.concrete;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -54,8 +54,8 @@ public abstract class StructRow
     public static final String FIELD_VERSION = "version";
 
     // V = creation, lastmod, version
-    private ZonedDateTime creationDate = ZonedDateTime.now();
-    private ZonedDateTime lastModified = creationDate;
+    private OffsetDateTime creationDate = OffsetDateTime.now();
+    private OffsetDateTime lastModified = creationDate;
     private int version;
 
     public StructRow() {
@@ -82,18 +82,18 @@ public abstract class StructRow
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
     @Priority(-100 + 0)
-    public ZonedDateTime getCreationDate() {
+    public OffsetDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(ZonedDateTime creationDate) {
+    public void setCreationDate(OffsetDateTime creationDate) {
         if (creationDate == null)
             throw new NullPointerException("creationDate");
         this.creationDate = creationDate;
     }
 
     public void touch() {
-        lastModified = ZonedDateTime.now();
+        lastModified = OffsetDateTime.now();
         if (creationDate == null)
             creationDate = lastModified;
     }
@@ -110,11 +110,11 @@ public abstract class StructRow
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     @Override
     @Priority(-100 + 1)
-    public ZonedDateTime getLastModified() {
+    public OffsetDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         if (lastModified == null)
             throw new NullPointerException("lastModified");
         this.lastModified = lastModified;
@@ -257,8 +257,8 @@ public abstract class StructRow
                 throw new ParseException("Failed to load: " + e.getMessage(), e);
             }
         } else {
-            creationDate = o.getZonedDateTime("creationDate", creationDate);
-            lastModified = o.getZonedDateTime("lastModifiedDate", lastModified);
+            creationDate = o.getOffsetDateTime("creationDate", creationDate);
+            lastModified = o.getOffsetDateTime("lastModifiedDate", lastModified);
             version = o.getInt("version", version);
         }
     }

@@ -3,7 +3,6 @@ package net.bodz.bas.t.variant;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -116,9 +115,9 @@ public interface IVariantMap<K>
     QualifiedName getQName(K key, QualifiedName defaultQName);
 
     // Date
-    Date getDate(DateFormat format, K key);
+    Date getDate(DateTimeFormatter format, K key);
 
-    Date getDate(DateFormat format, K key, Date defaultValue);
+    Date getDate(DateTimeFormatter format, K key, Date defaultValue);
 
     Date getDate(K key);
 

@@ -1,16 +1,17 @@
 package net.bodz.bas.t.variant.conv;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-import net.bodz.bas.c.java.util.Dates;
+import net.bodz.bas.c.java.util.DateTimes;
 import net.bodz.bas.err.TypeConvertException;
 
 public class SqlDateVarConverter
         extends AbstractVarConverter<java.sql.Date> {
 
-    DateFormat dateFormat = Dates.ISO_LOCAL_DATE;
+    DateTimeFormatter dateFormat = DateTimes.ISO_LOCAL_DATE;
 
     public SqlDateVarConverter() {
         super(java.sql.Date.class);
@@ -27,16 +28,16 @@ public class SqlDateVarConverter
     public java.sql.Date fromString(String in)
             throws TypeConvertException {
         try {
-            Date date = dateFormat.parse(in);
-            return new java.sql.Date(date.getTime());
-        } catch (ParseException e) {
+            LocalDate date = LocalDate.parse(in, dateFormat);
+            return new java.sql.Date(date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        } catch (DateTimeParseException e) {
             throw new TypeConvertException("Failed to parse date " + in, e);
         }
     }
 
     @Override
     public String toString(java.sql.Date value) {
-        return dateFormat.format(value);
+        return dateFormat.format(DateTimes.convert(value));
     }
 
     @Override

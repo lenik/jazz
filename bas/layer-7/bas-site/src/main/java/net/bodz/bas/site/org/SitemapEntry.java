@@ -1,6 +1,6 @@
 package net.bodz.bas.site.org;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,7 +8,7 @@ public class SitemapEntry {
 
     private String url;
     private Map<String, String> alternates = new LinkedHashMap<String, String>();
-    private ZonedDateTime lastModified;
+    private OffsetDateTime lastModified;
     private ChangeFreq changeFreq = ChangeFreq.ALWAYS;
     private double priority;
 
@@ -32,11 +32,11 @@ public class SitemapEntry {
      * The date that the file was last modified, in ISO 8601 format. This can display the full date and time or, if
      * desired, may simply be the date in the format YYYY-MM-DD.
      */
-    public ZonedDateTime getLastModified() {
+    public OffsetDateTime getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(ZonedDateTime lastModified) {
+    public void setLastModified(OffsetDateTime lastModified) {
         this.lastModified = lastModified;
     }
 

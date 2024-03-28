@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.log.Logger;
@@ -117,7 +117,7 @@ public class ResourceTransferer {
         // resp.setHeader("Cache-Control", "no-cache");
         // resp.setHeader("Cache-Control", "no-store");
 
-        ZonedDateTime lastModified = blob.getLastModified();
+        OffsetDateTime lastModified = blob.getLastModified();
         if (lastModified != null) {
             long lastModifiedTime = lastModified.toInstant().toEpochMilli();
             long ifModifiedSince = req.getDateHeader("If-Modified-Since");
