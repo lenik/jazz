@@ -100,12 +100,7 @@ public interface IColumnMetadata
 
     IColumnMetadata getParentColumn();
 
-    Boolean getAutoIncrement();
-
-    default boolean isAutoIncrement(boolean defaultValue) {
-        Boolean b = getAutoIncrement();
-        return b != null ? b : defaultValue;
-    }
+    boolean isAutoIncrement();
 
     boolean isCaseSensitive();
 
@@ -145,6 +140,10 @@ public interface IColumnMetadata
 
     String getScaleExpr();
 
+    default boolean hasDefaultValue() {
+        return getDefaultValue() != null;
+    }
+
     String getDefaultValue();
 
     int getVerboseLevel();
@@ -180,7 +179,7 @@ public interface IColumnMetadata
         out.entry(K_SQL_TYPE, getJdbcType().name());
         out.entryNotNull(K_SQL_TYPE_NAME, getSqlTypeName());
         out.entryTrue(K_PRIMARY_KEY, isPrimaryKey());
-        out.entryNotNull(K_AUTO_INCREMENT, getAutoIncrement());
+        out.entryTrue(K_AUTO_INCREMENT, isAutoIncrement());
         out.entryTrue(K_CASE_SENSITIVE, isCaseSensitive());
         out.entryTrue(K_SEARCHABLE, isSearchable());
         out.entryTrue(K_CURRENCY, isCurrency());
@@ -216,7 +215,7 @@ public interface IColumnMetadata
         out.attribute(K_SQL_TYPE_NAME, getSqlTypeName());
 
         out.attributeIf(K_PRIMARY_KEY, isPrimaryKey());
-        out.attributeNotNull(K_AUTO_INCREMENT, getAutoIncrement());
+        out.attributeNotNull(K_AUTO_INCREMENT, isAutoIncrement());
         out.attributeIf(K_CASE_SENSITIVE, isCaseSensitive());
         out.attributeIf(K_SEARCHABLE, isSearchable());
         out.attributeIf(K_CURRENCY, isCurrency());

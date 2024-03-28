@@ -54,7 +54,7 @@ public class DefaultColumnMetadata
     boolean primaryKey;
     boolean unique;
 
-    Boolean autoIncrement;
+    boolean autoIncrement;
     boolean caseSensitive;
     boolean searchable;
     boolean currency;
@@ -275,11 +275,11 @@ public class DefaultColumnMetadata
     }
 
     @Override
-    public Boolean getAutoIncrement() {
+    public boolean isAutoIncrement() {
         return autoIncrement;
     }
 
-    public void setAutoIncrement(Boolean autoIncrement) {
+    public void setAutoIncrement(boolean autoIncrement) {
         this.autoIncrement = autoIncrement;
     }
 
@@ -629,7 +629,7 @@ public class DefaultColumnMetadata
         jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VARCHAR);
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
 
-        autoIncrement = o.getBoolean(K_AUTO_INCREMENT);
+        autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
         caseSensitive = o.getBoolean(K_CASE_SENSITIVE, false);
         searchable = o.getBoolean(K_SEARCHABLE, false);
         currency = o.getBoolean(K_CURRENCY, false);
@@ -667,7 +667,7 @@ public class DefaultColumnMetadata
         jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VARCHAR);
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
-        autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(null);
+        autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);
         caseSensitive = o.a(K_CASE_SENSITIVE).getBoolean(false);
         searchable = o.a(K_SEARCHABLE).getBoolean(false);
         currency = o.a(K_CURRENCY).getBoolean(false);
