@@ -1,16 +1,13 @@
-package net.bodz.bas.meta.decl;
+package net.bodz.bas.repr.form.meta;
 
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Default order is 0
- */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Ordinal {
+public @interface Ellipsis {
 
-    int value() default 0;
+    int maxLength();
 
 }
