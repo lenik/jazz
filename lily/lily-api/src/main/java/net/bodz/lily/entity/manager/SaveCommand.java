@@ -7,7 +7,7 @@ public class SaveCommand
         extends AbstractEntityCommandType {
 
     public static final String NAME = "save";
-    public static final String[] NAMES = { NAME, "update" };
+    public static final String[] NAMES = { NAME, "saveNew", "update" };
 
     public SaveCommand() {
     }

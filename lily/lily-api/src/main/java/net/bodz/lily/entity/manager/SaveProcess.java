@@ -13,6 +13,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.file.IPathFields;
 import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
 
@@ -32,6 +33,19 @@ public class SaveProcess
         super(type, context, resolvedEntity);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
+    }
+
+    @Override
+    public void setCommandPath(IPathFields path) {
+        super.setCommandPath(path);
+        switch (path.toString()) {
+        case "saveNew":
+            createNew = true;
+            break;
+        case "update":
+            createNew = false;
+            break;
+        }
     }
 
     @Override
@@ -146,7 +160,8 @@ public class SaveProcess
                 params[i] = param;
             }
             this.id = typeInfo.parseId(params);
-            this.createNew = id == null;
+            if (id == null)
+                this.createNew = true;
         } else {
             throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
         }
