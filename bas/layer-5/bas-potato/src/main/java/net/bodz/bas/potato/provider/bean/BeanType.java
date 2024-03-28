@@ -153,6 +153,16 @@ public class BeanType
     }
 
     @Override
+    protected IType loadSuperType() {
+        Class<?> superclass = beanClass.getSuperclass();
+        if (superclass == null)
+            return null;
+        ITypeProvider provider = getProvider();
+        IType superType = provider.getType(superclass);
+        return superType;
+    }
+
+    @Override
     public IPropertyMap getPropertyMap() {
         return propertyMap;
     }

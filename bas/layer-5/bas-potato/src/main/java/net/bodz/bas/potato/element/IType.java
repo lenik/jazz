@@ -20,6 +20,8 @@ public interface IType
         return getJavaClass().getSimpleName();
     }
 
+    IType getSuperType();
+
     /**
      * Get the property map.
      *
@@ -92,8 +94,7 @@ public interface IType
     /**
      * Get method of the specific signature.
      *
-     * @return The method with the specific signature, <code>null</code> if the method doesn't
-     *         exist.
+     * @return The method with the specific signature, <code>null</code> if the method doesn't exist.
      */
     IMethod getMethod(String methodName, Class<?>... parameterTypes);
 
@@ -102,8 +103,7 @@ public interface IType
     /**
      * Get constructor of the specific signature.
      *
-     * @return The constructor with the specific signature, <code>null</code> if the constructor
-     *         doesn't exist.
+     * @return The constructor with the specific signature, <code>null</code> if the constructor doesn't exist.
      */
     IConstructor getConstructor(Class<?>... parameterTypes);
 

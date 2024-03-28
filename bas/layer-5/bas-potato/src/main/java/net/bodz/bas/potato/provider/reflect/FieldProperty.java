@@ -46,6 +46,11 @@ public class FieldProperty
     /* _____________________________ */static section.iface __PROPERTY__;
 
     @Override
+    protected IProperty loadSuperProperty() {
+        return null;
+    }
+
+    @Override
     public Class<?> getPropertyClass() {
         return field.getType();
     }

@@ -14,6 +14,8 @@ public abstract class AbstractReflectType
         extends AbstractType {
 
     private final Class<?> clazz;
+    IType superType;
+
     MutablePropertyMap propertyMap;
     MutableMethodMap methodMap;
     MutableConstructorMap constructorMap;
@@ -60,6 +62,16 @@ public abstract class AbstractReflectType
     @Override
     public Class<?> getJavaClass() {
         return clazz;
+    }
+
+    @Override
+    protected IType loadSuperType() {
+        Class<?> superclass = clazz.getSuperclass();
+        if (superclass == null)
+            return null;
+        ITypeProvider provider = getProvider();
+        IType superType = provider.getType(superclass);
+        return superType;
     }
 
     @Override

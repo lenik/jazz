@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.control.Control;
 import net.bodz.bas.potato.element.AbstractProperty;
+import net.bodz.bas.potato.element.IMethod;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.typer.std.ParserUtil;
@@ -65,6 +66,18 @@ class InvocationAsProperty
     public InvocationAsProperty(IType declaringType, Method method, IElementDoc doc) {
         super(declaringType, method.getName(), doc);
         this.method = method;
+    }
+
+    @Override
+    protected IProperty loadSuperProperty() {
+        String name = method.getName();
+        Class<?>[] signature = method.getParameterTypes();
+        IType decl = getDeclaringType();
+        while ((decl = decl.getSuperType()) != null) {
+            IMethod m = decl.getMethod(name, signature);
+            return new InvocationAsProperty(decl, m.getMethod(), m.getXjdoc());
+        }
+        return null;
     }
 
     @Override

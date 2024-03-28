@@ -3,12 +3,16 @@ package net.bodz.bas.potato.provider.bean;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.potato.element.AbstractProperty;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.event.IPropertyChangeListener;
 import net.bodz.bas.t.event.IPropertyChangeSource;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -17,7 +21,9 @@ public class BeanProperty
         extends AbstractProperty {
 
     private final IPropertyDescriptor propertyDescriptor;
+
     // private final Method xetter;
+
     private final int detailLevel;
     private final int modifiers;
     private final int priority;
@@ -26,11 +32,10 @@ public class BeanProperty
 
     /**
      * @throws NullPointerException
-     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is
-     *             <code>null</code>.
+     *             If <code>declaringPotatoType</code> or <code>propertyDescriptor</code> is <code>null</code>.
      */
     public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc) {
-        this(beanType, propertyDescriptor, doc, xetter(propertyDescriptor));
+        this(beanType, propertyDescriptor, doc, getterOrSetter(propertyDescriptor));
     }
 
     public BeanProperty(BeanType beanType, IPropertyDescriptor propertyDescriptor, IElementDoc doc, Method xetter) {
@@ -52,7 +57,7 @@ public class BeanProperty
         priority = aPriority == null ? 0 : aPriority.value();
     }
 
-    static Method xetter(IPropertyDescriptor propertyDescriptor) {
+    static Method getterOrSetter(IPropertyDescriptor propertyDescriptor) {
         Method xetter = propertyDescriptor.getReadMethod();
         if (xetter == null)
             xetter = propertyDescriptor.getWriteMethod();
@@ -67,6 +72,17 @@ public class BeanProperty
 
     public IPropertyDescriptor getPropertyDescriptor() {
         return propertyDescriptor;
+    }
+
+    @Override
+    protected IProperty loadSuperProperty() {
+        IType decl = getDeclaringType();
+        while ((decl = decl.getSuperType()) != null) {
+            IProperty prop = decl.getProperty(getName());
+            if (prop != null)
+                return prop;
+        }
+        return null;
     }
 
     @Override
@@ -206,40 +222,62 @@ public class BeanProperty
     /** ⇱ Implementaton Of {@link java.lang.reflect.AnnotatedElement}. */
     /* _____________________________ */static section.iface __ANNOTATION__;
 
+    Map<Class<?>, Annotation> annotationMap = new LinkedHashMap<>();
+    Annotation[] annotations;
+    boolean annotationsLoaded;
+
+    void lazyLoadAnnotations() {
+        if (! annotationsLoaded) {
+            synchronized (this) {
+                if (! annotationsLoaded) {
+                    loadAnnotations();
+                    annotationsLoaded = true;
+                }
+            }
+        }
+    }
+
+    void loadAnnotations() {
+        for (IProperty property : ancestorsToRoot(true)) {
+            BeanProperty bp = (BeanProperty) property;
+            IPropertyDescriptor descriptor = bp.getPropertyDescriptor();
+            Method xetter = getterOrSetter(descriptor);
+            for (Annotation annotation : xetter.getAnnotations()) {
+                Class<? extends Annotation> aClass = annotation.annotationType();
+                if (! annotationMap.containsKey(aClass)) {
+                    annotationMap.put(aClass, annotation);
+                }
+            }
+        }
+        annotations = annotationMap.values().toArray(new Annotation[0]);
+    }
+
     @Override
     public Annotation[] getAnnotations() {
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
-            return new Annotation[0];
-        else
-            return getter.getAnnotations();
+        lazyLoadAnnotations();
+        return annotations;
     }
 
     @Override
     public Annotation[] getDeclaredAnnotations() {
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
+        Method xetter = getterOrSetter(propertyDescriptor);
+        if (xetter == null)
             return new Annotation[0];
         else
-            return getter.getDeclaredAnnotations();
+            return xetter.getDeclaredAnnotations();
     }
 
     @Override
     public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
-            return null;
-        else
-            return getter.getAnnotation(annotationClass);
+        lazyLoadAnnotations();
+        Annotation annotation = annotationMap.get(annotationClass);
+        return annotationClass.cast(annotation);
     }
 
     @Override
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-        Method getter = propertyDescriptor.getReadMethod();
-        if (getter == null)
-            return false;
-        else
-            return getter.isAnnotationPresent(annotationClass);
+        lazyLoadAnnotations();
+        return annotationMap.containsKey(annotationClass);
     }
 
 }

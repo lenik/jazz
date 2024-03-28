@@ -22,6 +22,10 @@ public abstract class AbstractType
             IType {
 
     ITypeProvider provider;
+
+    IType superType;
+    boolean superTypeLoaded;
+
     private Map<String, IMethod> overloadedMethodMap;
 
     public AbstractType(ITypeProvider provider, IType declaringType, String name, IElementDoc doc) {
@@ -38,6 +42,21 @@ public abstract class AbstractType
     public final Class<?> getDeclaringClass() {
         return getJavaClass().getDeclaringClass();
     }
+
+    @Override
+    public IType getSuperType() {
+        if (! superTypeLoaded) {
+            synchronized (this) {
+                if (! superTypeLoaded) {
+                    superType = loadSuperType();
+                    superTypeLoaded = true;
+                }
+            }
+        }
+        return superType;
+    }
+
+    protected abstract IType loadSuperType();
 
     @Override
     public Iterable<IProperty> getProperties() {

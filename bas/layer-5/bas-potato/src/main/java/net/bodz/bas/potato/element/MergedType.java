@@ -37,19 +37,19 @@ public class MergedType
 
         for (IType type : types) {
             for (IProperty property : type.getProperties())
-                if (!propertyMap.containsProperty(property.getName()))
+                if (! propertyMap.containsProperty(property.getName()))
                     propertyMap.addProperty(property);
 
             for (IMethod method : type.getMethods())
-                if (!methodMap.containsMethod(method.getSignature()))
+                if (! methodMap.containsMethod(method.getSignature()))
                     methodMap.addMethod(method);
 
             for (IConstructor ctor : type.getConstructors())
-                if (!constructorMap.containsConstructor(ctor.getSignature()))
+                if (! constructorMap.containsConstructor(ctor.getSignature()))
                     constructorMap.addConstructor(ctor);
 
             for (IEvent event : type.getEvents())
-                if (!eventMap.containsEvent(event.getName()))
+                if (! eventMap.containsEvent(event.getName()))
                     eventMap.addEvent(event);
         }
 
@@ -65,6 +65,11 @@ public class MergedType
     @Override
     public Class<?> getJavaClass() {
         return clazz;
+    }
+
+    @Override
+    protected IType loadSuperType() {
+        return null;
     }
 
     @Override

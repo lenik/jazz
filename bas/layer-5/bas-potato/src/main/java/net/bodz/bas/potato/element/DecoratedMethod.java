@@ -1,10 +1,13 @@
 package net.bodz.bas.potato.element;
 
+import java.lang.reflect.Method;
+
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public class DecoratedMethod
         extends DecoratedPotatoElement
-        implements IMethod {
+        implements
+            IMethod {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,6 +23,11 @@ public class DecoratedMethod
     @Override
     public boolean isOverloaded() {
         return getWrapped().isOverloaded();
+    }
+
+    @Override
+    public Method getMethod() {
+        return getWrapped().getMethod();
     }
 
     @Override

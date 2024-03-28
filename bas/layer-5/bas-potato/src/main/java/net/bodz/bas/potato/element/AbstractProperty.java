@@ -9,9 +9,27 @@ public abstract class AbstractProperty
         implements
             IProperty {
 
+    IProperty superProperty;
+    boolean superPropertyLoaded;
+
     public AbstractProperty(IType declaringType, String propertyName, IElementDoc doc) {
         super(declaringType, propertyName, doc);
     }
+
+    @Override
+    public IProperty getSuperProperty() {
+        if (! superPropertyLoaded) {
+            synchronized (this) {
+                if (! superPropertyLoaded) {
+                    superProperty = loadSuperProperty();
+                    superPropertyLoaded = true;
+                }
+            }
+        }
+        return superProperty;
+    }
+
+    protected abstract IProperty loadSuperProperty();
 
     @Override
     public IType getPropertyType() {

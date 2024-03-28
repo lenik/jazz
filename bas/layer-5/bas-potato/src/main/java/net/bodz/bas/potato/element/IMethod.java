@@ -1,11 +1,16 @@
 package net.bodz.bas.potato.element;
 
+import java.lang.reflect.Method;
+
 import net.bodz.bas.c.reflect.MethodSignature;
 
 public interface IMethod
-        extends IPotatoElement {
+        extends
+            IPotatoElement {
 
     boolean isOverloaded();
+
+    Method getMethod();
 
     Class<?> getReturnType();
 

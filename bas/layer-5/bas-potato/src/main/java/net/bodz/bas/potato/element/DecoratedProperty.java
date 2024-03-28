@@ -21,6 +21,11 @@ public class DecoratedProperty
     }
 
     @Override
+    public IProperty getSuperProperty() {
+        return getWrapped().getSuperProperty();
+    }
+
+    @Override
     public Class<?> getPropertyClass() {
         return getWrapped().getPropertyClass();
     }

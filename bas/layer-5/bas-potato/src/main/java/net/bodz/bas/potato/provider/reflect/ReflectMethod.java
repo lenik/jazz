@@ -49,6 +49,11 @@ public class ReflectMethod
     }
 
     @Override
+    public Method getMethod() {
+        return method;
+    }
+
+    @Override
     public Class<?> getReturnType() {
         return method.getReturnType();
     }

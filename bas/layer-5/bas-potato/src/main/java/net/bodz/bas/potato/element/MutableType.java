@@ -39,6 +39,11 @@ public class MutableType
     }
 
     @Override
+    protected IType loadSuperType() {
+        return null;
+    }
+
+    @Override
     public MutablePropertyMap getPropertyMap() {
         return propertyMap;
     }

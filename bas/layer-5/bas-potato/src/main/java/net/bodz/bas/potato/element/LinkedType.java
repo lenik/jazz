@@ -60,6 +60,11 @@ public class LinkedType
     }
 
     @Override
+    protected IType loadSuperType() {
+        return null;
+    }
+
+    @Override
     public IPropertyMap getPropertyMap() {
         return propertyMap;
     }

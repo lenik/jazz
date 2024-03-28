@@ -2,6 +2,7 @@ package net.bodz.bas.potato.element;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,11 @@ public class OverloadedMethod
     @Override
     public boolean isOverloaded() {
         return true;
+    }
+
+    @Override
+    public Method getMethod() {
+        return null;
     }
 
     @Override
