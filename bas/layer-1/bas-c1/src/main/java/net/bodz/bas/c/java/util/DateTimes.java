@@ -1,12 +1,18 @@
 package net.bodz.bas.c.java.util;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Date;
+
+import net.bodz.bas.c.type.TypeId;
+import net.bodz.bas.c.type.TypeKind;
 
 public class DateTimes
         implements
@@ -35,9 +41,24 @@ public class DateTimes
         return zdt;
     }
 
-    public static Instant convert(Date date) {
+    public static TemporalAccessor _convert(Date date) {
+        switch (TypeKind.getTypeId(date.getClass())) {
+        case TypeId.SQL_DATE:
+            return convert((java.sql.Date) date);
+        case TypeId.SQL_TIME:
+            return convert((java.sql.Time) date);
+        case TypeId.TIMESTAMP:
+            return convert((Timestamp) date);
+        case TypeId.DATE:
+        default:
+            return convertDate(date);
+        }
+    }
+
+    public static ZonedDateTime convertDate(Date date) {
         Instant instant = Instant.ofEpochMilli(date.getTime());
-        return instant;
+        ZonedDateTime zdt = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+        return zdt;
     }
 
     public static LocalDate convert(java.sql.Date sqlDate) {
@@ -52,9 +73,10 @@ public class DateTimes
         return localTime;
     }
 
-    public static Instant convert(java.sql.Timestamp timestamp) {
-        Instant instant = Instant.ofEpochMilli(timestamp.getTime());
-        return instant;
+    public static ZonedDateTime convert(java.sql.Timestamp timestamp) {
+        ZonedDateTime zdt = convertDate(timestamp);
+        ZonedDateTime nanoFixed = zdt.with(ChronoField.NANO_OF_SECOND, timestamp.getNanos());
+        return nanoFixed;
     }
 
     public static ZonedDateTime convert(Calendar calendar) {
