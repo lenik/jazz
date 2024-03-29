@@ -25,7 +25,7 @@ public interface IDiscreteFieldCriterionSender<fin_target, This, T>
     }
 
     default fin_target notEq(T value) {
-        return send(makeEq(value));
+        return send(makeNotEq(value));
     }
 
     @SuppressWarnings("unchecked")

@@ -11,6 +11,14 @@ public class StringFieldCriterionBuilder<fin_target>
         super(fieldName, String.class, finishTarget, receiver);
     }
 
+    public fin_target eq(char value) {
+        return send(makeEq(String.valueOf(value)));
+    }
+
+    public fin_target notEq(char value) {
+        return send(makeNotEq(String.valueOf(value)));
+    }
+
     public fin_target like(String pattern) {
         receiver.receive(new FieldLike(fieldName, true, pattern));
         return finishTarget;

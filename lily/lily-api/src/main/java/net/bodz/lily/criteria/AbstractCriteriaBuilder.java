@@ -51,6 +51,10 @@ public abstract class AbstractCriteriaBuilder<This>
         return new BigDecimalField(fieldName);
     }
 
+    protected CharField _char(String fieldName) {
+        return new CharField(fieldName);
+    }
+
     protected StringField string(String fieldName) {
         return new StringField(fieldName);
     }
@@ -165,6 +169,16 @@ public abstract class AbstractCriteriaBuilder<This>
 
         public BigDecimalField(String fieldName) {
             super(fieldName, BigDecimal.class);
+        }
+
+    }
+
+    public class CharField
+            extends CharFieldCriterionBuilder<This> {
+
+        @SuppressWarnings("unchecked")
+        public CharField(String fieldName) {
+            super(fieldName, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
         }
 
     }
