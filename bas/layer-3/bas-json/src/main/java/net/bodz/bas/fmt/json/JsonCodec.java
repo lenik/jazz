@@ -75,7 +75,7 @@ public class JsonCodec {
             return DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert((java.sql.Time) obj));
 
         case TypeId.DATE:
-            String dateStr = DateTimes.ISO8601.format(DateTimes.convert((Date) obj));
+            String dateStr = DateTimes.ISO8601.format(DateTimes.convertDate((Date) obj));
             return dateStr;
 
         case TypeId.INSTANT:

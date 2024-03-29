@@ -36,7 +36,7 @@ public class DateTypers
     @Override
     public String format(Date object, IOptions options) {
         DateTimeFormatter dateFormat = options.get(DateTimeFormatter.class, DateTimes.ISO8601);
-        return dateFormat.format(DateTimes.convert(object));
+        return dateFormat.format(DateTimes._convert(object));
     }
 
     @Override

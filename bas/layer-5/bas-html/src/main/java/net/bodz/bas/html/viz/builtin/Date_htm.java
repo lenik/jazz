@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Date;
 
 import net.bodz.bas.c.java.util.DateTimes;
+import net.bodz.bas.c.type.TypeId;
+import net.bodz.bas.c.type.TypeKind;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.io.tag.HtmlInput;
 import net.bodz.bas.html.util.FieldDeclToHtml;
@@ -25,17 +27,52 @@ public class Date_htm
         Date value = ref.get();
 
         HtmlInput input = out.input().class_("noprint");
+        String str = null;
 
         FieldDeclToHtml.apply(input, fieldDecl);
 
-        // When not supported, the browser defaults to the text input type.
-        // input.type("datetime"); // deprecated
-        input.type("date");
-        if (value != null) {
-            String str = DateTimes.ISO_LOCAL_DATE.format(DateTimes.convert(value));
-            input.value(str);
-            out.span().class_("print").text(str);
+        int typeId = TypeKind.getTypeId(ref.getValueType());
+        switch (typeId) {
+        case TypeId.SQL_DATE:
+            input.type("date");
+            if (value != null) {
+                str = DateTimes.ISO_LOCAL_DATE.format(//
+                        DateTimes.convert((java.sql.Date) value));
+                input.value(str);
+            }
+            break;
+
+        case TypeId.SQL_TIME:
+            input.type("time");
+            if (value != null) {
+                str = DateTimes.ISO_LOCAL_TIME.format(//
+                        DateTimes.convert((java.sql.Time) value));
+                input.value(str);
+            }
+            break;
+
+        case TypeId.TIMESTAMP:
+        case TypeId.DATE:
+        default:
+            input.type("date");
+            if (value != null) {
+                str = DateTimes.ISO_LOCAL_DATE.format(//
+                        DateTimes.convertDate(value));
+                input.value(str);
+            }
+            input.type("time");
+            if (value != null) {
+                str = DateTimes.ISO_LOCAL_TIME.format(//
+                        DateTimes.convertDate(value));
+                input.value(str);
+            }
+            str = DateTimes.ISO_LOCAL_DATE_TIME.format(//
+                    DateTimes.convertDate(value));
+            break;
         }
+
+        if (str != null)
+            out.span().class_("print").text(str);
     }
 
 }
