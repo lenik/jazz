@@ -151,6 +151,22 @@ public enum JdbcType {
         case DOUBLE:
             return nullable ? Double.class : double.class;
 
+        case CHAR:
+        case NCHAR:
+            if (precision == 1)
+                return nullable ? Character.class : char.class;
+            break;
+
+        case VARCHAR:
+        case LONGVARCHAR:
+        case NVARCHAR:
+        case LONGNVARCHAR:
+            break;
+
+        case VARBINARY:
+        case LONGVARBINARY:
+            break;
+
         case ARRAY:
             return getPreferredArrayType(sqlTypeName, nullable, signed, precision, scale);
 
@@ -161,8 +177,8 @@ public enum JdbcType {
             return getPreferredOtherType(sqlTypeName, nullable, signed, precision, scale);
 
         default:
-            return defaultType;
         }
+        return defaultType;
     }
 
     public static Class<?> getPreferredType(IColumnMetadata column) {
