@@ -11,6 +11,7 @@ import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.LoginManagerWs;
+import net.bodz.lily.site.module.MapperService;
 import net.bodz.lily.tool.log.EventLogger;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
 
@@ -72,10 +73,10 @@ public abstract class LilyStartSite
     }
 
     void setupServices() {
+        serviceMap.install("mapper", new MapperService(dataContext));
         serviceMap.install("service-map", serviceMap);
         serviceMap.install("session", new LoginManagerWs());
         serviceMap.install("ws-doc", new WsDocSite());
-
         setupDataIndex();
     }
 

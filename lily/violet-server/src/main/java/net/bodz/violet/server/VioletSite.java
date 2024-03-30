@@ -13,7 +13,6 @@ import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.site.LilyStartSite;
-import net.bodz.lily.site.module.MapperService;
 
 /**
  * @label OA Site Frame
@@ -23,15 +22,12 @@ public class VioletSite
 
     static final Logger logger = LoggerFactory.getLogger(VioletSite.class);
 
-    public static final String PATH_EVENT_LOGS = "logger";
-
 //    TokenManager tokenManager = new TokenManager();
 //    SessionInfo sessionInfo;
 
     public VioletSite(IDataApplication app) {
         super(app);
 //        serviceMap.install("query", new QueryService(dataContext));
-        serviceMap.install("mapper", new MapperService(dataContext));
 //        serviceMap.install("report", new TemplateService(dataContext, jobManager));
 
 //        sessionInfo = new SessionInfo(dataContext);
