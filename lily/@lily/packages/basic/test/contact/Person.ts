@@ -1,7 +1,6 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { Party } from './Party';
 import PersonTypeInfo from './PersonTypeInfo';
-import Attachment from "@skeljs/core/src/net/bodz/lily/entity/Attachment";
 
 export class Person extends Party {
 
@@ -24,9 +23,8 @@ export class Person extends Party {
     ssn?: string
     dln?: string
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

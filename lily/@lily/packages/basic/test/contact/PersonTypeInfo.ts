@@ -4,6 +4,7 @@ import Gender from '../../src/net/bodz/lily/schema/contact/Gender';
 
 import PartyTypeInfo from './PartyTypeInfo';
 import PersonValidators from './PersonValidators';
+import Person from './Person';
 
 // Type Info
 
@@ -16,6 +17,10 @@ export class PersonTypeInfo extends PartyTypeInfo {
 
     validators = new PersonValidators(this);
 
+    override create() {
+        return new Person();
+    }
+    
     override preamble() {
         super.preamble();
         this.declare({

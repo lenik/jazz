@@ -5,7 +5,7 @@ import { int } from '@skeljs/core/src/lang/basetype';
 import StructRowTypeInfo from './StructRowTypeInfo';
 import { ZonedDateTime } from "@skeljs/core/src/lang/time";
 
-export abstract class StructRow {
+export class StructRow {
 
     static readonly TYPE: any = StructRowTypeInfo.INSTANCE;
 
@@ -15,7 +15,7 @@ export abstract class StructRow {
     lastModified: ZonedDateTime = ZonedDateTime.now()
     version: int = 0
 
-    constructor(o: any) {
+    constructor(o?: any) {
         if (o != null)
             Object.assign(this, o);
     }

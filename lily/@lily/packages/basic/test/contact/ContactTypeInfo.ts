@@ -1,8 +1,12 @@
-import { EntityPropertyMap, property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
+import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import { LONG, STRING } from '@skeljs/core/src/lang/baseinfo';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import IdEntityTypeInfo from '../../src/net/bodz/lily/concrete/IdEntityTypeInfo';
-import Person from '../../src/net/bodz/lily/schema/contact/Person';
+
+import _Contact from '../../src/net/bodz/lily/schema/contact/Contact';
+import _Person from '../../src/net/bodz/lily/schema/contact/Person';
+import Contact from './Contact';
+import Person from './Person';
 
 export class ContactTypeInfo extends IdEntityTypeInfo {
 
@@ -11,6 +15,10 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     get label() { return "Contact Information"; }
     get description() { return "A contact record."; }
 
+    override create() {
+        return new Contact();
+    }
+    
     override preamble() {
         super.preamble();
         this.declare({

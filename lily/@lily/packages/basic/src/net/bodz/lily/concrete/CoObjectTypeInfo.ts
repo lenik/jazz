@@ -13,6 +13,10 @@ class IconType extends TypeInfo<string> {
         throw 'Icon'
     }
 
+    override create() {
+        return 'fa-smile';
+    }
+    
     parse(s: string): string {
         return s;
     }

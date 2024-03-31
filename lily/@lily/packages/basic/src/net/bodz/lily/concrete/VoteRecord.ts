@@ -10,7 +10,7 @@ export abstract class VoteRecord<This> extends IdEntity<long> {
     user: User
     voteCount: long
 
-    constructor(o: any) {
+    constructor(o?: any) {
         super(o);
     }
 }

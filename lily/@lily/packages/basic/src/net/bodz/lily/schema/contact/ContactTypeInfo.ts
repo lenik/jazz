@@ -2,6 +2,7 @@ import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import ContactValidators from "./ContactValidators";
+import Contact from "./Contact";
 import Organization from "./Organization";
 import OrgUnit from "./OrgUnit";
 import Person from "./Person";
@@ -24,6 +25,10 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     get icon() { return "fa-address-card"; }
     get label() { return "Contact Information"; }
     get description() { return "A contact record."; }
+
+    override create() {
+        return new Contact();
+    }
 
     override preamble() {
         super.preamble();

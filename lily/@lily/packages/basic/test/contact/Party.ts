@@ -3,7 +3,6 @@ import { int } from '@skeljs/core/src/lang/basetype';
 import CoImaged from '../../src/net/bodz/lily/concrete/CoImaged';
 import PartyTypeInfo from './PartyTypeInfo'
 import Contact from './Contact';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 
 export abstract class Party extends CoImaged<int> {
 
@@ -29,7 +28,6 @@ export abstract class Party extends CoImaged<int> {
 
     constructor(o: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 
 }

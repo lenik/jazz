@@ -3,6 +3,7 @@ import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityProper
 import StructRowValidators from './StructRowValidators';
 import { INT } from '@skeljs/core/src/lang/baseinfo';
 import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
+import StructRow from './StructRow';
 
 export class StructRowTypeInfo extends EntityType {
 
@@ -17,6 +18,10 @@ export class StructRowTypeInfo extends EntityType {
     get label() { return "Content Version"; }
     get description() { return "Content data with version."; }
 
+    override create() {
+        return new StructRow();
+    }
+    
     override preamble() {
         this.declare({
             creationDate: property({

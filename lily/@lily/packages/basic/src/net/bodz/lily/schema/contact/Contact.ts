@@ -65,7 +65,6 @@ export class Contact extends IdEntity<int> {
 
     constructor(o?: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 
