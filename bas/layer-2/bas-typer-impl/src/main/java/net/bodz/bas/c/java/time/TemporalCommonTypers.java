@@ -27,8 +27,10 @@ public abstract class TemporalCommonTypers<T extends TemporalAccessor>
     }
 
     static ZoneOffset getRandomZoneOffset(Random prng) {
-        int hours = prng.nextInt(24);
+        int hours = prng.nextInt(32) - 16;
         int minutes = prng.nextInt(60);
+        if (hours < 0)
+            minutes = -minutes;
         return ZoneOffset.ofHoursMinutes(hours, minutes);
     }
 
