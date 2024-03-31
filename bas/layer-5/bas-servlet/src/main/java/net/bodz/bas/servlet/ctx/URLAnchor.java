@@ -3,6 +3,8 @@ package net.bodz.bas.servlet.ctx;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import net.bodz.bas.err.UnexpectedException;
+
 public class URLAnchor
         extends AbstractAnchor {
 
@@ -24,6 +26,30 @@ public class URLAnchor
     @Override
     public boolean isDirectory() {
         return directory;
+    }
+
+    @Override
+    public URLAnchor enter() {
+        if (directory)
+            return this;
+
+        String s = url.toString();
+        String qs = null;
+        int ques = s.lastIndexOf('?');
+        if (ques != -1) {
+            qs = s.substring(ques);
+            s = s.substring(0, ques);
+        }
+
+        s += "/";
+        if (qs != null)
+            s += qs;
+        try {
+            URL newUrl = new URL(s);
+            return new URLAnchor(newUrl);
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     @Override

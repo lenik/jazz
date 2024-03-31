@@ -9,7 +9,7 @@ public class PathAnchor
     public PathAnchor(String path) {
         if (path == null)
             throw new NullPointerException("href");
-        if (!path.startsWith("/"))
+        if (! path.startsWith("/"))
             throw new IllegalArgumentException("Not absolute path: " + path);
 
         this.path = path;
@@ -19,6 +19,14 @@ public class PathAnchor
     @Override
     public boolean isDirectory() {
         return directory;
+    }
+
+    @Override
+    public PathAnchor enter() {
+        if (directory)
+            return this;
+        else
+            return new PathAnchor(path + "/");
     }
 
     @Override

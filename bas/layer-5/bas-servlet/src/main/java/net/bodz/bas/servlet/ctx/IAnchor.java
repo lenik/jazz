@@ -34,7 +34,7 @@ public interface IAnchor {
         // empty or "/foo".
         String contextPath = servletContext.getContextPath();
         String uriPath = toUriPath();
-        if (!uriPath.startsWith("/"))
+        if (! uriPath.startsWith("/"))
             throw new IllegalArgumentException("invalid uriPath: " + uriPath);
 
         return PathUtils.hrefFrom(contextPath, uriPath);
@@ -57,6 +57,8 @@ public interface IAnchor {
     String hrefFrom(String otherPath);
 
     String hrefTo(String otherPath);
+
+    IAnchor enter();
 
     IAnchor join(String spec);
 

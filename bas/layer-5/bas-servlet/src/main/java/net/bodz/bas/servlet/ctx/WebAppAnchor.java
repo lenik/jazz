@@ -16,7 +16,7 @@ public class WebAppAnchor
     public WebAppAnchor(String path) {
         if (path == null)
             throw new NullPointerException("path");
-        if (!path.startsWith("/"))
+        if (! path.startsWith("/"))
             throw new IllegalArgumentException("Not absolute: " + path);
 
         this.localPath = path;
@@ -26,6 +26,14 @@ public class WebAppAnchor
     @Override
     public boolean isDirectory() {
         return directory;
+    }
+
+    @Override
+    public WebAppAnchor enter() {
+        if (directory)
+            return this;
+        else
+            return new WebAppAnchor(localPath + "/");
     }
 
     @Override
