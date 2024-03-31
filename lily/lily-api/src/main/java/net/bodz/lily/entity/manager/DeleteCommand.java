@@ -30,7 +30,7 @@ public class DeleteCommand
 
     @Override
     public DeleteProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new DeleteProcess(this, context, resolvedEntity);
+        return new DeleteProcess(this, context);
     }
 
 }
@@ -42,8 +42,8 @@ class DeleteProcess
 
     List<Object> idList = new ArrayList<>();
 
-    public DeleteProcess(DeleteCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+    public DeleteProcess(DeleteCommand type, IEntityCommandContext context) {
+        super(type, context);
     }
 
     @Override

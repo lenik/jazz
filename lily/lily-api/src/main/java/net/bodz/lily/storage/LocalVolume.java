@@ -38,6 +38,11 @@ public class LocalVolume
     }
 
     @Override
+    public File getLocalDir() {
+        return baseDir;
+    }
+
+    @Override
     public File getLocalFile(String path) {
         File file = new File(baseDir, path);
         return file;

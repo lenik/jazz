@@ -49,7 +49,6 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected DataContext dataContext;
     protected IPathFields commandPath;
     protected IPathFields contentPath;
-    protected ResolvedEntity resolvedEntity;
     protected JsonResult result;
 
     protected HttpServletRequest request;
@@ -58,7 +57,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected int consumedTokenCount;
     protected IVariantMap<String> parameters;
 
-    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context) {
         this.type = type;
         this.typeInfo = context.getEntityTypeInfo();
 
@@ -70,8 +69,6 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
         this.context = context;
         this.dataApp = context.getDataApp();
         this.dataContext = dataApp.getDataContext();
-
-        this.resolvedEntity = resolvedEntity;
     }
 
     public type_t getCommandType() {
@@ -114,7 +111,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
 
     @Override
     public ResolvedEntity getResolvedEntity() {
-        return resolvedEntity;
+        return null;
     }
 
     protected Boolean isReturningJsonResult() {

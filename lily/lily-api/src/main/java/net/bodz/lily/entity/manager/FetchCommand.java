@@ -55,7 +55,7 @@ public class FetchCommand
 }
 
 class ResolveProcess
-        extends AbstractEntityCommandProcess<FetchCommand> {
+        extends AbstractContentCommandProcess<FetchCommand> {
 
     JsonFormOptions jsonFormOptions;
 
@@ -121,7 +121,7 @@ class ResolveProcess
     public Object execute()
             throws Exception {
         if (resolvedEntity.entity instanceof IVarMapForm) {
-            IVarMapForm varMapForm = (IVarMapForm) resolvedEntity.entity;
+            IVarMapForm varMapForm = resolvedEntity.entity;
             varMapForm.readObject(parameters);
         }
 

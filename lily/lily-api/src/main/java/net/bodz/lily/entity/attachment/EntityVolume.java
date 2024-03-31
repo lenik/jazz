@@ -62,8 +62,10 @@ public class EntityVolume
     public IAnchor convertVolumePathToAnchor(String path) {
         if (path == null)
             throw new NullPointerException("path");
-        Split idPath = Split.shift(path, '/');
-        String href = idPath.a + "/" + DIR_ATTACHMENT + "/" + idPath.b;
+        Split idFile = Split.shift(path, '/');
+        String id = idFile.a;
+        String file = idFile.b;
+        String href = id + "/" + DIR_ATTACHMENT + "/" + file;
         IAnchor anchor = baseAnchor.join(href);
         return anchor;
     }

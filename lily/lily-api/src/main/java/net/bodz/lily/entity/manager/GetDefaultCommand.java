@@ -32,7 +32,7 @@ public class GetDefaultCommand
 
     @Override
     public CreateProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new CreateProcess(this, context, resolvedEntity);
+        return new CreateProcess(this, context);
     }
 
 }
@@ -46,8 +46,8 @@ class CreateProcess
     Object templateId;
     JsonFormOptions jsonFormOptions;
 
-    public CreateProcess(GetDefaultCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+    public CreateProcess(GetDefaultCommand type, IEntityCommandContext context) {
+        super(type, context);
 
         Class<?> entityClass = context.getEntityTypeInfo().getEntityClass();
         cloneable = ICloneable.class.isAssignableFrom(entityClass);

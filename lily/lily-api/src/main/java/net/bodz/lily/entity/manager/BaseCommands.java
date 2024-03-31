@@ -16,6 +16,7 @@ public class BaseCommands
 
         addCommand(new UploadCommand());
         addCommand(new AttachmentResolveCommand());
+        addCommand(new GetIncomingFileCommand());
     }
 
 }

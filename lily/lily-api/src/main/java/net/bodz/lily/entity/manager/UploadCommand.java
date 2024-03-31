@@ -40,7 +40,7 @@ public class UploadCommand
 
     @Override
     public UploadProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new UploadProcess(this, context, resolvedEntity);
+        return new UploadProcess(this, context);
     }
 
 }
@@ -55,8 +55,8 @@ class UploadProcess
 
     String id;
 
-    public UploadProcess(UploadCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+    public UploadProcess(UploadCommand type, IEntityCommandContext context) {
+        super(type, context);
         category = typeInfo.getEntityClass().getName();
     }
 

@@ -29,29 +29,47 @@ public class AttachmentGroup
     }
 
     @Override
-    public IVolume getVolume(String id) {
-        if (id == null)
+    public IVolume getVolume(String volumeId) {
+        if (volumeId == null)
             return null;
-        Split protocolOther = Split.shift(id, ':');
-        switch (protocolOther.a) {
+        Split protocolOther = Split.shift(volumeId, ':');
+        String protocol = protocolOther.a;
+        String name = protocolOther.b;
+        switch (protocol) {
         case "entity":
-            return forEntity(protocolOther.b);
+            return resolveEntityVolume(name);
+
+        case "incoming":
+            return resolveIncomingVolume(name);
 
         default:
-            throw new NoSuchKeyException(id);
+            throw new NoSuchKeyException(volumeId);
         }
     }
 
     Map<String, EntityVolume> entityCache = new HashMap<>();
+    Map<String, EntityVolume> incomingCache = new HashMap<>();
 
-    synchronized EntityVolume forEntity(String name) {
+    synchronized EntityVolume resolveEntityVolume(String name) {
         EntityVolume volume = entityCache.get(name);
         if (volume == null) {
-            IAnchor entityAnchor = IBasicSiteAnchors._webApp_.join(name);
+            IAnchor anchor = IBasicSiteAnchors._webApp_.join(name).enter();
             File entityBaseDir = new File(baseDir, name);
             String id = "entity:" + name;
-            volume = new EntityVolume(id, entityAnchor, entityBaseDir);
+            volume = new EntityVolume(id, anchor, entityBaseDir);
             entityCache.put(name, volume);
+        }
+        return volume;
+    }
+
+    synchronized EntityVolume resolveIncomingVolume(String name) {
+        EntityVolume volume = incomingCache.get(name);
+        if (volume == null) {
+            IAnchor anchor = IBasicSiteAnchors._webApp_.join(name).enter().join("incoming/");
+            File incomingDir = new File(baseDir, name + "/tmp");
+            String id = "incoming:" + name;
+            volume = new EntityVolume(id, anchor, incomingDir);
+            incomingCache.put(name, volume);
         }
         return volume;
     }

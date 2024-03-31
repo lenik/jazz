@@ -28,6 +28,8 @@ public interface IVolume {
 
     IStreamInputSource getInputSource(String path);
 
+    File getLocalDir();
+
     /**
      * @return <code>null</code> if the attachment doesn't exist as a local file.
      */

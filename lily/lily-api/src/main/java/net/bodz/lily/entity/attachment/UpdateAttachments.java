@@ -30,10 +30,10 @@ public class UpdateAttachments
 
     static final Logger logger = LoggerFactory.getLogger(UpdateAttachments.class);
 
-    IId<?> idRef;
+    IId<?> context;
 
     public <T extends IId<?>> UpdateAttachments(T obj) {
-        this.idRef = obj;
+        this.context = obj;
     }
 
     protected String getPreferredName(IAttachment item)
@@ -70,19 +70,19 @@ public class UpdateAttachments
     @Override
     public boolean beforeRowOperation(JdbcRowOpEvent event)
             throws Exception {
-        if (! (idRef instanceof IHaveAttachments))
+        if (! (context instanceof IHaveAttachments))
             return true;
-        IHaveAttachments owner = (IHaveAttachments) idRef;
+        IHaveAttachments owner = (IHaveAttachments) context;
 
         if (event.getOpType() != JdbcRowOpType.UPDATE)
             return true;
 
-        Object id = idRef.id();
+        Object id = context.id();
         if (id != null) {
             String idStr = id.toString();
 //
             IDataApplication app = DataApps.fromRequest();
-            IVolume volume = app.getVolume(idRef.getClass());
+            IVolume volume = app.getEntityVolume(context.getClass());
 
             IAttachmentListing listing = owner.listAttachments();
             for (String category : listing.getAttachmentGroupKeys()) {

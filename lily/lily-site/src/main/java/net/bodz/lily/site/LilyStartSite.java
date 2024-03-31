@@ -6,22 +6,28 @@ import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
+import net.bodz.bas.repr.path.ServiceTargetException;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.servlet.man.SysManager;
+import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.org.ICrawler;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.security.login.LoginManagerWs;
 import net.bodz.lily.site.module.MapperService;
+import net.bodz.lily.storage.IVolume;
 import net.bodz.lily.tool.log.EventLogger;
 import net.bodz.lily.tool.wsdoc.WsDocSite;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public abstract class LilyStartSite
         extends DataAppSite {
 
     static final Logger logger = LoggerFactory.getLogger(LilyStartSite.class);
 
-    public static final String PATH_SYSMAN = "sysmgr";
-    public static final String PATH_EVENT_LOGS = "logger";
+    public static final String K_SYSMAN = "sysmgr";
+    public static final String K_EVENT_LOGS = "logger";
 
 //    protected ILoginManager loginManager;
 
@@ -45,6 +51,7 @@ public abstract class LilyStartSite
     @Override
     public synchronized IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        HttpServletRequest request = CurrentHttpService.getRequest();
 
         String token = tokens.peek();
         if (token == null)
@@ -52,13 +59,26 @@ public abstract class LilyStartSite
 
         Object target = null;
         switch (token) {
-        case PATH_SYSMAN:
+        case K_SYSMAN:
             target = new SysManager();
             break;
 
-        case PATH_EVENT_LOGS:
+        case K_EVENT_LOGS:
             target = EventLogger.getInstance();
             break;
+
+        case K_UPLOAD:
+            String fileClass = q.getString("class");
+            IVolume volume = getDataApp().getIncomingVolume(fileClass);
+            UploadHandler uploadHandler = new UploadHandler(//
+                    volume.getLocalDir(), volume.getVolumeAnchor());
+            try {
+                target = uploadHandler.handlePostRequest(request);
+            } catch (Exception e) {
+                throw new ServiceTargetException("upload handler: " + e.getMessage(), e);
+            }
+            break;
+
         }
 
         if (target != null)

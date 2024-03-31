@@ -18,7 +18,7 @@ import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
 
 public class SaveProcess
-        extends AbstractEntityCommandProcess<SaveCommand>
+        extends AbstractContentCommandProcess<SaveCommand>
         implements
             IJsonForm {
 

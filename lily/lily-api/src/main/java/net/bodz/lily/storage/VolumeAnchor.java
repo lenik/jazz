@@ -12,6 +12,11 @@ public class VolumeAnchor
     }
 
     @Override
+    public IAnchor enter() {
+        return null;
+    }
+
+    @Override
     public String absoluteHref() {
         return null;
     }

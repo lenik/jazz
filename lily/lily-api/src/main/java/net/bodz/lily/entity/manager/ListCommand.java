@@ -52,7 +52,7 @@ public class ListCommand
 
     @Override
     public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new ListProcess(this, context, resolvedEntity);
+        return new ListProcess(this, context);
     }
 
 }
@@ -74,8 +74,8 @@ class ListProcess
 
     ITableSheetBuilder tableSheetBuilder;
 
-    public ListProcess(ListCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+    public ListProcess(ListCommand type, IEntityCommandContext context) {
+        super(type, context);
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
         mask = (CoObjectCriteriaBuilder<?>) context.getEntityTypeInfo().newCriteriaBuilder();
         selectOptions = context.newSelectOptions();
