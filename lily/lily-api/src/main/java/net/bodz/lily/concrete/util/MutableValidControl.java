@@ -1,6 +1,6 @@
 package net.bodz.lily.concrete.util;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 public class MutableValidControl
         extends MixinStruct
@@ -8,8 +8,8 @@ public class MutableValidControl
             IValidControl {
 
     boolean valid;
-    ZonedDateTime since;
-    ZonedDateTime until;
+    OffsetDateTime since;
+    OffsetDateTime until;
 
     @Override
     public boolean isValid() {
@@ -22,22 +22,22 @@ public class MutableValidControl
     }
 
     @Override
-    public ZonedDateTime getValidSince() {
+    public OffsetDateTime getValidSince() {
         return since;
     }
 
     @Override
-    public void setValidSince(ZonedDateTime since) {
+    public void setValidSince(OffsetDateTime since) {
         this.since = since;
     }
 
     @Override
-    public ZonedDateTime getValidUntil() {
+    public OffsetDateTime getValidUntil() {
         return until;
     }
 
     @Override
-    public void setValidUntil(ZonedDateTime until) {
+    public void setValidUntil(OffsetDateTime until) {
         this.until = until;
     }
 

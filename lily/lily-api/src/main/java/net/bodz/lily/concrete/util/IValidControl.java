@@ -1,7 +1,7 @@
 package net.bodz.lily.concrete.util;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
@@ -18,20 +18,20 @@ public interface IValidControl
 
     void setValid(boolean valid);
 
-    ZonedDateTime getValidSince();
+    OffsetDateTime getValidSince();
 
-    void setValidSince(ZonedDateTime since);
+    void setValidSince(OffsetDateTime since);
 
-    ZonedDateTime getValidUntil();
+    OffsetDateTime getValidUntil();
 
-    void setValidUntil(ZonedDateTime until);
+    void setValidUntil(OffsetDateTime until);
 
     @Override
     default void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
         setValid(o.getBoolean("valid", false));
-        setValidSince(o.getZonedDateTime("validSince"));
-        setValidUntil(o.getZonedDateTime("validUntil"));
+        setValidSince(o.getOffsetDateTime("validSince"));
+        setValidUntil(o.getOffsetDateTime("validUntil"));
     }
 
     @Override
