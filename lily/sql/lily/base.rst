@@ -20,8 +20,6 @@ column-property {
 }
 
 column-type {
-    t0:                 java.time.OffsetDateTime
-    t1:                 java.time.OffsetDateTime
     props:              net.bodz.bas.fmt.json.JsonVariant
 }
 

@@ -7,8 +7,6 @@ column-property {
 }
 
 column-type {
-    validsince:         java.time.OffsetDateTime
-    validuntil:         java.time.OffsetDateTime
 }
 
 class-map {
