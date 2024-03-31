@@ -167,6 +167,15 @@ public enum JdbcType {
         case LONGVARBINARY:
             break;
 
+        case TIMESTAMP:
+            switch (sqlTypeName.toLowerCase()) {
+            case "timestamptz":
+                return OffsetDateTime.class;
+            }
+            return LocalDateTime.class;
+        case TIMESTAMP_WITH_TIMEZONE:
+            return OffsetDateTime.class;
+
         case ARRAY:
             return getPreferredArrayType(sqlTypeName, nullable, signed, precision, scale);
 

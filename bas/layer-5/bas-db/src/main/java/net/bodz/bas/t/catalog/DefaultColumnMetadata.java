@@ -46,6 +46,7 @@ public class DefaultColumnMetadata
 
     Class<?> javaClass = String.class;
     JdbcType jdbcType = JdbcType.VARCHAR;
+    int sqlType;
     String sqlTypeName;
 
     boolean jsonType;
@@ -205,12 +206,22 @@ public class DefaultColumnMetadata
     }
 
     public void setJdbcType(int sqlTypeInt) {
+        this.sqlType = sqlTypeInt;
         JdbcType jdbcType = JdbcType.forSQLType(sqlTypeInt, JdbcType.VARCHAR);
         setJdbcType(jdbcType);
     }
 
     public void setJdbcType(JdbcType sqlType) {
         this.jdbcType = sqlType;
+    }
+
+    @Override
+    public int getSqlType() {
+        return sqlType;
+    }
+
+    public void setSqlType(int sqlType) {
+        this.sqlType = sqlType;
     }
 
     @Override
@@ -546,7 +557,7 @@ public class DefaultColumnMetadata
 
         String jdbcClassName = jdbcMetadata.getColumnClassName(columnIndex);
         // int width = jdbcMetadata.getColumnDisplaySize(i);
-        int jdbcType = jdbcMetadata.getColumnType(columnIndex);
+        int sqlType = jdbcMetadata.getColumnType(columnIndex);
 
         // this.setIndex(columnIndex - 1);
         this.setName(name);
@@ -558,7 +569,7 @@ public class DefaultColumnMetadata
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        this.setJdbcType(jdbcType);
+        this.setJdbcType(sqlType);
 
         autoIncrement = jdbcMetadata.isAutoIncrement(columnIndex);
         caseSensitive = jdbcMetadata.isCaseSensitive(columnIndex);
@@ -582,7 +593,7 @@ public class DefaultColumnMetadata
         name = rs.getString("COLUMN_NAME");
         // label = name;
 
-        int sqlTypeInt = rs.getInt("DATA_TYPE");
+        sqlType = rs.getInt("DATA_TYPE");
         sqlTypeName = rs.getString("TYPE_NAME");
 
         precision = rs.getInt("COLUMN_SIZE");
@@ -606,7 +617,7 @@ public class DefaultColumnMetadata
         String isAutoIncrement = rs.getString("IS_AUTOINCREMENT");
         this.autoIncrement = "YES".equals(isAutoIncrement);
 
-        setJdbcType(sqlTypeInt);
+        setJdbcType(sqlType);
         javaClass = JdbcType.getPreferredType(this);
     }
 
@@ -627,6 +638,7 @@ public class DefaultColumnMetadata
         setJavaClassName(typeName);
 
         jdbcType = JdbcType.forSQLTypeName(o.getString(K_SQL_TYPE), JdbcType.VARCHAR);
+        sqlType = jdbcType.sqlType;
         sqlTypeName = o.getString(K_SQL_TYPE_NAME);
 
         autoIncrement = o.getBoolean(K_AUTO_INCREMENT, false);
@@ -665,6 +677,7 @@ public class DefaultColumnMetadata
         String typeName = o.a(K_TYPE).getString();
         setJavaClassName(typeName);
         jdbcType = JdbcType.forSQLTypeName(o.a(K_SQL_TYPE).getString(), JdbcType.VARCHAR);
+        sqlType = jdbcType.sqlType;
         sqlTypeName = o.a(K_SQL_TYPE_NAME).getString();
 
         autoIncrement = o.a(K_AUTO_INCREMENT).getBoolean(false);

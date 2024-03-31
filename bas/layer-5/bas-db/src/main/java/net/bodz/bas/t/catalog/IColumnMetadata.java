@@ -92,6 +92,8 @@ public interface IColumnMetadata
 
     JdbcType getJdbcType();
 
+    int getSqlType();
+
     String getSqlTypeName();
 
     boolean isPrimaryKey();
