@@ -3,7 +3,6 @@ package net.bodz.bas.t.catalog;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class RowList
@@ -11,10 +10,11 @@ public class RowList
             IMutableRowSet,
             IResultSetConsumer {
 
-    IRowSetMetadata metadata;
-    List<IMutableRow> rows;
+    protected IRowSetMetadata metadata;
+    protected List<IMutableRow> rows;
 
     protected RowList() {
+        rows = new ArrayList<>();
     }
 
     public RowList(IRowSetMetadata metadata) {
@@ -51,7 +51,8 @@ public class RowList
         return new DefaultRowSetMetadata();
     }
 
-    public List<IMutableRow> getList() {
+    @Override
+    public List<? extends IMutableRow> getRows() {
         return rows;
     }
 
@@ -83,9 +84,13 @@ public class RowList
         return newRow(rows.size());
     }
 
+    protected IMutableRow createRow() {
+        return new MutableRow(this);
+    }
+
     @Override
     public IMutableRow newRow(int rowIndex) {
-        MutableRow row = new MutableRow(this);
+        IMutableRow row = createRow();
         addRow(row);
         return row;
     }
@@ -125,12 +130,6 @@ public class RowList
     @Override
     public void removeAll() {
         rows.clear();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<IRow> iterator() {
-        return (Iterator<IRow>) (Object) rows.iterator();
     }
 
     @Override

@@ -15,7 +15,6 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface IRowSetMetadata
         extends
-            Iterable<IColumnMetadata>,
             IJsonForm,
             IXmlForm {
 
@@ -34,7 +33,7 @@ public interface IRowSetMetadata
 
     boolean isSparse();
 
-    List<IColumnMetadata> getColumns();
+    List<? extends IColumnMetadata> getColumns();
 
     int getColumnCount();
 

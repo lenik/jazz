@@ -49,7 +49,7 @@ public class Tables {
             th.setAlignment(ha);
         }
 
-        for (IRow row : rows) {
+        for (IRow row : rows.getRows()) {
             TableRow tr = table.rows.append();
 
             for (int i = 0; i < n; i++) {

@@ -20,7 +20,6 @@ import net.bodz.bas.fmt.xml.IXmlOutput;
 
 public interface IRow
         extends
-            Iterable<Object>,
             IJsonForm,
             IXmlForm {
 
@@ -60,9 +59,13 @@ public interface IRow
 
     Class<?> getColumnType(String columnName);
 
+    Iterable<? extends ICell> flatten();
+
     /**
      * actual allocated cells.
      */
+    List<? extends ICell> getCells();
+
     int getCellCount();
 
     ICell getCell(int columnIndex);

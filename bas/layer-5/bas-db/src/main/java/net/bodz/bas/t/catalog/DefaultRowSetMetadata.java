@@ -4,7 +4,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,17 +44,12 @@ public class DefaultRowSetMetadata
     }
 
     @Override
-    public Iterator<IColumnMetadata> iterator() {
-        return columns.iterator();
-    }
-
-    @Override
     public boolean isSparse() {
         return false;
     }
 
     @Override
-    public List<IColumnMetadata> getColumns() {
+    public List<? extends IColumnMetadata> getColumns() {
         return Collections.unmodifiableList(columns);
     }
 
@@ -92,8 +86,12 @@ public class DefaultRowSetMetadata
             return getColumn(pos);
     }
 
-    public DefaultColumnMetadata newColumn() {
-        DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+    protected DefaultColumnMetadata createColumn() {
+        return new DefaultColumnMetadata(this);
+    }
+
+    public DefaultColumnMetadata addNewColumn() {
+        DefaultColumnMetadata column = createColumn();
         addColumn(column);
         return column;
     }

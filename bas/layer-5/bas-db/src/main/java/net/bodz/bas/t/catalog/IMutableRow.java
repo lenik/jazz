@@ -2,10 +2,14 @@ package net.bodz.bas.t.catalog;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface IMutableRow
         extends
             IRow {
+
+    @Override
+    List<? extends IMutableCell> getCells();
 
     void setCellData(int index, Object o);
 
@@ -23,19 +27,19 @@ public interface IMutableRow
         return getCell(index);
     }
 
-    void setCell(int columnIndex, IMutableCell cell);
-
     default void setCell(String columnName, IMutableCell cell) {
         int index = getColumnIndex(columnName);
         setCell(index, cell);
     }
 
-    default IMutableCell newCell() {
+    IMutableCell createCell(int columnIndex);
+
+    default IMutableCell addNewCell() {
         IRowSetMetadata metadata = getRowSet().getMetadata();
-        MutableCell cell;
+        IMutableCell cell;
         if (metadata != null) {
             int columnIndex = getCellCount();
-            cell = new MutableCell(this, columnIndex);
+            cell = createCell(columnIndex);
         } else {
             cell = new MutableCell(this, Object.class);
         }
@@ -43,17 +47,15 @@ public interface IMutableRow
         return cell;
     }
 
-    default IMutableCell newCell(int columnIndex) {
+    default IMutableCell addNewCell(int columnIndex) {
         MutableCell cell = new MutableCell(this, columnIndex);
-        addCell(columnIndex, cell);
+        setCell(columnIndex, cell);
         return cell;
     }
 
-    default void addCell(IMutableCell cell) {
-        addCell(getCellCount(), cell);
-    }
+    void addCell(IMutableCell cell);
 
-    void addCell(int columnIndex, IMutableCell cell);
+    void setCell(int columnIndex, IMutableCell cell);
 
     void removeCell(IMutableCell cell);
 

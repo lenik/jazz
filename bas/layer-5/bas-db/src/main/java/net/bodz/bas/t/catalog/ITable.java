@@ -51,7 +51,7 @@ public interface ITable
         }
         out.key(K_ROWS);
         out.array();
-        for (IRow row : this)
+        for (IRow row : getRows())
             row.jsonOutValue(out, opts);
         out.endArray();
     }
@@ -69,7 +69,7 @@ public interface ITable
         }
 
         out.beginElement(K_ROWS);
-        for (IRow row : this)
+        for (IRow row : getRows())
             row.writeObjectBoxed(out);
         out.endElement();
     }

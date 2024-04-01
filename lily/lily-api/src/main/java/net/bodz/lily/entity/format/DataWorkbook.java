@@ -2,7 +2,14 @@ package net.bodz.lily.entity.format;
 
 import java.io.IOException;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import net.bodz.bas.c.type.TypeId;
 import net.bodz.bas.c.type.TypeKind;
@@ -88,7 +95,7 @@ public class DataWorkbook {
         }
 
         int rowIndex = 0;
-        for (IRow dataRow : rowSet) {
+        for (IRow dataRow : rowSet.getRows()) {
             Row row = sheet.createRow(++rowIndex);
 //            row.setHeight((short) -1);
             if (style != null)

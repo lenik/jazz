@@ -12,14 +12,14 @@ public class TableFn {
             if (metadata == null) {
                 metadata = new DefaultTableMetadata();
                 for (String cell : csvRow) {
-                    DefaultColumnMetadata column = metadata.newColumn();
+                    DefaultColumnMetadata column = metadata.addNewColumn();
                     column.setName(cell);
                     column.precision = 1;
                 }
             } else {
                 IMutableRow row = table.newRow();
                 for (String csvCell : csvRow) {
-                    IMutableCell cell = row.newCell();
+                    IMutableCell cell = row.addNewCell();
                     cell.setData(csvCell);
 
                     DefaultColumnMetadata column = (DefaultColumnMetadata) cell.getMetadata();

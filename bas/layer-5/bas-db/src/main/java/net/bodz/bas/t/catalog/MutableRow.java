@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
@@ -92,6 +93,11 @@ public class MutableRow
     }
 
     @Override
+    public List<? extends IMutableCell> getCells() {
+        return cells;
+    }
+
+    @Override
     public int getCellCount() {
         return cells.size();
     }
@@ -169,8 +175,14 @@ public class MutableRow
     }
 
     @Override
-    public void addCell(int columnIndex, IMutableCell cell) {
-        cells.add(columnIndex, cell);
+    public MutableCell createCell(int columnIndex) {
+        return new MutableCell(this, columnIndex);
+    }
+
+    @Override
+    public void addCell(IMutableCell cell) {
+        MutableCell mutable = Nullables.upCast(cell, MutableCell.class, "cell");
+        cells.add(mutable);
     }
 
     @Override
@@ -193,22 +205,31 @@ public class MutableRow
 
     @Override
     public void append(Object data) {
-        IMutableCell cell = newCell();
+        IMutableCell cell = addNewCell();
         cell.setData(data);
     }
 
     @Override
-    public Iterator<Object> iterator() {
+    public Iterable<? extends ICell> flatten() {
+        return new Iterable<ICell>() {
+            @Override
+            public Iterator<ICell> iterator() {
+                return _iterator();
+            }
+        };
+    }
+
+    Iterator<ICell> _iterator() {
         int maxSize = metadata.getColumnCount();
         if (metadata.isSparse())
             maxSize = cells.size();
         final int retSize = maxSize;
-        return new PrefetchedIterator<Object>() {
+        return new PrefetchedIterator<ICell>() {
 
             int i = 0;
 
             @Override
-            protected Object fetch() {
+            protected ICell fetch() {
                 if (i < retSize) {
                     i++;
                     return cells.get(i);
@@ -234,7 +255,7 @@ public class MutableRow
             IColumnMetadata column = metadata.getColumn(i);
             Object cellData = column.readColumnJsonValue(j_cell_box);
 
-            IMutableCell cell = newCell();
+            IMutableCell cell = addNewCell();
             cell.setData(cellData);
         }
         this.cells = list;
@@ -257,7 +278,7 @@ public class MutableRow
             IElement x_cell = x_row.selectByTag(tagName).getFirst();
             if (x_cell != null) {
                 Object cellData = column.readColumnXmlValue(x_cell);
-                IMutableCell cell = newCell();
+                IMutableCell cell = addNewCell();
                 cell.setData(cellData);
             } else {
                 list.add(null);

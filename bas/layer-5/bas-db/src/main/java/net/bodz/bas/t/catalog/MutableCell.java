@@ -28,9 +28,12 @@ public class MutableCell
         this.row = row;
         IRowSet rowSet = row.getRowSet();
         if (rowSet != null) {
-            IRowSetMetadata rowSetMetadata = rowSet.getMetadata();
-            metadata = rowSetMetadata.getColumn(columnIndex);
-            setMetadata(metadata);
+            IRowSetMetadata table = rowSet.getMetadata();
+            int cc = table.getColumnCount();
+            if (columnIndex < cc) {
+                IColumnMetadata column = table.getColumn(columnIndex);
+                setMetadata(column);
+            }
         }
     }
 
