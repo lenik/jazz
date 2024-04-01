@@ -10,28 +10,28 @@ export class Contact extends IdEntity<int> {
     org: any
     private _orgId?: int
     get orgId() {
-        return this.org != null ? this.org.id : this.orgId;
+        return this.org != null ? this.org.id : this._orgId;
     }
     set orgId(val: int | undefined) {
-        this.orgId = val;
+        this._orgId = val;
     }
 
     orgUnit: any
     private _orgUnitId?: int
     get orgUnitId() {
-        return this.orgUnit != null ? this.orgUnit.id : this.orgUnitId;
+        return this.orgUnit != null ? this.orgUnit.id : this._orgUnitId;
     }
     set orgUnitId(val: int | undefined) {
-        this.orgUnitId = val;
+        this._orgUnitId = val;
     }
 
     person: any
     private _personId?: int
     get personId() {
-        return this.person != null ? this.person.id : this.personId;
+        return this.person != null ? this.person.id : this._personId;
     }
     set personId(val: int | undefined) {
-        this.personId = val;
+        this._personId = val;
     }
 
     rename?: string
@@ -40,10 +40,10 @@ export class Contact extends IdEntity<int> {
     zone: any
     private _zoneId?: int
     get zoneId() {
-        return this.zone != null ? this.zone.id : this.zoneId;
+        return this.zone != null ? this.zone.id : this._zoneId;
     }
     set zoneId(val: int | undefined) {
-        this.zoneId = val;
+        this._zoneId = val;
     }
 
     country?: string

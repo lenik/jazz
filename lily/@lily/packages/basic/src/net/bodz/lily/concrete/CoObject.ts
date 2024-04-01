@@ -29,7 +29,7 @@ export abstract class CoObject extends StructRow {
     ownerUser: User
     private _ownerUserId?: int
     get ownerUserId() {
-        return this.ownerUser != null ? this.ownerUser.id : this.ownerUserId;
+        return this.ownerUser != null ? this.ownerUser.id : this._ownerUserId;
     }
     set ownerUserId(val: int | undefined) {
         this.ownerUserId = val;
@@ -38,7 +38,7 @@ export abstract class CoObject extends StructRow {
     ownerGroup: Group
     private _ownerGroupId?: int
     get ownerGroupId() {
-        return this.ownerGroup != null ? this.ownerGroup.id : this.ownerGroupId;
+        return this.ownerGroup != null ? this.ownerGroup.id : this._ownerGroupId;
     }
     set ownerGroupId(val: int | undefined) {
         this.ownerGroupId = val;

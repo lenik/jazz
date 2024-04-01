@@ -11,10 +11,10 @@ export abstract class Party extends CoImaged<int> {
     category?: any
     private _categoryId?: int
     get categoryId() {
-        return this.category != null ? this.category.id : this.categoryId;
+        return this.category != null ? this.category.id : this._categoryId;
     }
     set categoryId(val: int | undefined) {
-        this.categoryId = val;
+        this._categoryId = val;
     }
 
     birthday?: LocalDate
@@ -36,7 +36,6 @@ export abstract class Party extends CoImaged<int> {
 
     constructor(o: any) {
         super(o);
-        if (o != null) Object.assign(this, o);
     }
 }
 

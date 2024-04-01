@@ -1,7 +1,7 @@
 import { int } from '@skeljs/core/src/lang/basetype';
 import { IEntityType } from '@skeljs/dba/src/net/bodz/lily/entity/IEntityType';
-import { Moment } from "moment-timezone";
 import StructRowTypeInfo from './StructRowTypeInfo';
+import { OffsetDateTime } from '@skeljs/core/src/lang/time';
 
 export class StructRowValidators {
 
@@ -15,11 +15,11 @@ export class StructRowValidators {
         return this._type as StructRowTypeInfo;
     }
 
-    validateCreationDate(val: Moment) {
+    validateCreationDate(val: OffsetDateTime) {
 
     }
 
-    validateLastModified(val: Moment) {
+    validateLastModified(val: OffsetDateTime) {
 
     }
 

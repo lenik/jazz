@@ -2,7 +2,7 @@ import { EntityType, property } from '@skeljs/dba/src/net/bodz/lily/entity/Entit
 import EntityPropertyMap from '@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap';
 import StructRowValidators from './StructRowValidators';
 import { INT } from '@skeljs/core/src/lang/baseinfo';
-import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
+import OffsetDateTime from '@skeljs/core/src/lang/time/OffsetDateTime';
 import StructRow from './StructRow';
 
 export class StructRowTypeInfo extends EntityType {
@@ -25,11 +25,11 @@ export class StructRowTypeInfo extends EntityType {
     override preamble() {
         this.declare({
             creationDate: property({
-                type: ZonedDateTime.TYPE, icon: 'far-calendar-plus',
+                type: OffsetDateTime.TYPE, icon: 'far-calendar-plus',
                 validator: this.validators.validateCreationDate
             }),
             lastModified: property({
-                type: ZonedDateTime.TYPE, icon: 'far-edit',
+                type: OffsetDateTime.TYPE, icon: 'far-edit',
                 validator: this.validators.validateLastModified
             }),
             version: property({

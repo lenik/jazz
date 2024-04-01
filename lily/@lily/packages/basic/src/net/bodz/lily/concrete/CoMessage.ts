@@ -1,9 +1,9 @@
-import { Moment } from "moment-timezone";
 import { int } from '@skeljs/core/src/lang/basetype';
 import CoMessageTypeInfo from './CoMessageTypeInfo';
 import CoEvent from './CoEvent';
 import User from '../schema/account/User';
 import FormDef from '../schema//meta/FormDef';
+import { OffsetDateTime } from "@skeljs/core/src/lang/time";
 // import UserClickInfo from '../schema/account/UserClickInfo';
 
 export abstract class CoMessage<Id> extends CoEvent<Id> {
@@ -17,8 +17,8 @@ export abstract class CoMessage<Id> extends CoEvent<Id> {
     parameters: any // map
     clickInfo: any // UserClickInfo
 
-    sentTime?: Moment
-    receivedTime?: Moment
+    sentTime?: OffsetDateTime
+    receivedTime?: OffsetDateTime
 
     constructor(o: any) {
         super(o);

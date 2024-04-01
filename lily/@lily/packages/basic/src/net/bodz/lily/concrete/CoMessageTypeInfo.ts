@@ -4,7 +4,7 @@ import CoMessageValidators from './CoMessageValidators';
 import User from '../schema/account/User';
 import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
 import { MAP, STRING, UNDEFINED } from '@skeljs/core/src/lang/baseinfo';
-import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
+import OffsetDateTime from '@skeljs/core/src/lang/time/OffsetDateTime';
 import FormDef from '../schema/meta/FormDef';
 import ParameterDef from '../schema/meta/ParameterDef';
 
@@ -30,8 +30,8 @@ export class CoMessageTypeInfo extends CoEventTypeInfo {
             form: property({ type: FormDef.TYPE, icon: "fas-align-left", }),
             parameters: property({ type: MAP(ParameterDef.TYPE, STRING), icon: "far-toggle-on", }),
             // clickInfo: property({ type: UserClickInfo, icon: "far-mouse", }),
-            sentTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
-            receivedTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock", }),
+            sentTime: property({ type: OffsetDateTime.TYPE, icon: "far-clock", }),
+            receivedTime: property({ type: OffsetDateTime.TYPE, icon: "far-clock", }),
         });
     }
 

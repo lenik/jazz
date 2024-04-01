@@ -3,7 +3,7 @@ import IdEntityTypeInfo from './IdEntityTypeInfo';
 import CoEventValidators from './CoEventValidators';
 import TypeInfo from "@skeljs/core/src/lang/TypeInfo";
 import { INT, UNDEFINED } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
 export class CoEventTypeInfo extends IdEntityTypeInfo {
 
@@ -21,8 +21,8 @@ export class CoEventTypeInfo extends IdEntityTypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            beginTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
-            endTime: property({ type: ZonedDateTime.TYPE, icon: "far-clock" }),
+            beginTime: property({ type: OffsetDateTime.TYPE, icon: "far-clock" }),
+            endTime: property({ type: OffsetDateTime.TYPE, icon: "far-clock" }),
             year: property({ type: INT, icon: "far-calendar" }),
         });
     }
