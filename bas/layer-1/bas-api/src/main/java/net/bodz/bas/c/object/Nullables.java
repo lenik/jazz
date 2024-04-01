@@ -8,6 +8,8 @@ import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.err.IllegalSubclassException;
+
 public class Nullables {
 
     public static Class<?> getClass(Object o) {
@@ -28,7 +30,7 @@ public class Nullables {
     public static boolean notEquals(Object a, Object b) {
         if (a == null || b == null)
             return a != b;
-        return !a.equals(b);
+        return ! a.equals(b);
     }
 
     /**
@@ -230,7 +232,7 @@ public class Nullables {
     }
 
     public static boolean isNotBlank(String string) {
-        return !isBlank(string);
+        return ! isBlank(string);
     }
 
     public static boolean isEmpty(String string) {
@@ -241,7 +243,7 @@ public class Nullables {
     }
 
     public static boolean isNotEmpty(String string) {
-        return !isEmpty(string);
+        return ! isEmpty(string);
     }
 
     public static String emptyToNull(String string) {
@@ -263,7 +265,7 @@ public class Nullables {
     }
 
     public static boolean isNotEmpty(Collection<?> collection) {
-        return !isEmpty(collection);
+        return ! isEmpty(collection);
     }
 
     public static boolean isEmpty(Map<?, ?> map) {
@@ -274,7 +276,7 @@ public class Nullables {
     }
 
     public static boolean isNotEmpty(Map<?, ?> map) {
-        return !isEmpty(map);
+        return ! isEmpty(map);
     }
 
     public static int size(Collection<?> collection) {
@@ -330,6 +332,15 @@ public class Nullables {
                 sb.append(s);
         }
         return sb.toString();
+    }
+
+    public static <T, S extends T> S upCast(T o, Class<S> subclass, String parameterName) {
+        if (o == null)
+            return null;
+        if (o != null)
+            if (! subclass.isInstance(o))
+                throw new IllegalSubclassException(parameterName, o, subclass);
+        return subclass.cast(o);
     }
 
 }
