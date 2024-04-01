@@ -1,2 +1,3 @@
 main criterion = net.bodz.lily.criterion.CriterionJson
 main criterion = net.bodz.lily.util.CriterionJson
+main excel2dom = net.bodz.bas.filetype.excel.Excel2Dom
