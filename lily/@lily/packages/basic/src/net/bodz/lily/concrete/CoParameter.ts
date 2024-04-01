@@ -4,7 +4,12 @@ import CoParameterTypeInfo from './CoParameterTypeInfo';
 
 export abstract class CoParameter<This> extends CoCode<This> {
 
-    static readonly TYPE = CoParameterTypeInfo.INSTANCE;
+    static _typeInfo: CoParameterTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoParameterTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     constructor(o: any) {
         super(o);

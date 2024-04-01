@@ -4,7 +4,12 @@ import CoTagTypeInfo from './CoTagTypeInfo';
 
 export abstract class CoTag<This> extends CoCode<This> {
 
-    static readonly TYPE = CoTagTypeInfo.INSTANCE;
+    static _typeInfo: CoTagTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoTagTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     constructor(o: any) {
         super(o);

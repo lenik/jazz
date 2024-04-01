@@ -5,7 +5,12 @@ import CoMessage from './CoMessage';
 
 export abstract class DocRecord extends CoMessage<long> {
 
-    static readonly TYPE = DocRecordTypeInfo.INSTANCE;
+    static _typeInfo: DocRecordTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = DocRecordTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     constructor(o: any) {
         super(o);

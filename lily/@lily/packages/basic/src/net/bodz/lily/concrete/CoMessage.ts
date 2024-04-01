@@ -8,7 +8,12 @@ import { OffsetDateTime } from "@skeljs/core/src/lang/time";
 
 export abstract class CoMessage<Id> extends CoEvent<Id> {
 
-    static readonly TYPE = CoMessageTypeInfo.INSTANCE;
+    static _typeInfo: CoMessageTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoMessageTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     op: User
     subject: string

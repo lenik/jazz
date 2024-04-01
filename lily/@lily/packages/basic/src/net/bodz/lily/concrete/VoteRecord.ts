@@ -5,7 +5,12 @@ import User from '../schema/account/User';
 
 export abstract class VoteRecord<This> extends IdEntity<long> {
 
-    static readonly TYPE = VoteRecordTypeInfo.INSTANCE;
+    static _typeInfo: VoteRecordTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = VoteRecordTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     user: User
     voteCount: long

@@ -4,7 +4,12 @@ import CoNodeTypeInfo from './CoNodeTypeInfo';
 
 export abstract class CoNode<This, Id> extends IdEntity<Id> {
 
-    static readonly TYPE = CoNodeTypeInfo.INSTANCE;
+    static _typeInfo: CoNodeTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoNodeTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     parent?: This
     private _parentId?: int

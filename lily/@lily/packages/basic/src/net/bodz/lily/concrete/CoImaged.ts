@@ -5,7 +5,12 @@ import CoImagedTypeInfo from './CoImagedTypeInfo';
 
 export abstract class CoImaged<Id> extends IdEntity<Id> {
 
-    static readonly TYPE = CoImagedTypeInfo.INSTANCE;
+    static _typeInfo: CoImagedTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoImagedTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     properties: any
 

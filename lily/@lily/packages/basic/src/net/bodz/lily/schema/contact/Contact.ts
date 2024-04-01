@@ -5,7 +5,12 @@ import ContactTypeInfo from "./ContactTypeInfo";
 
 export class Contact extends IdEntity<int> {
 
-    static readonly TYPE = ContactTypeInfo.INSTANCE;
+    static _typeInfo: ContactTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = ContactTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     org: any
     private _orgId?: int

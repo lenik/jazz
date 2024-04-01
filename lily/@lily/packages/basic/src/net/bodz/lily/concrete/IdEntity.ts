@@ -4,7 +4,12 @@ import IdEntityTypeInfo from './IdEntityTypeInfo';
 
 export abstract class IdEntity<Id> extends CoObject {
 
-    static readonly TYPE = IdEntityTypeInfo.INSTANCE;
+    static _typeInfo: IdEntityTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = IdEntityTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     id?: Id
 

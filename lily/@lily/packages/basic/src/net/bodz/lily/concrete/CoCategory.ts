@@ -4,7 +4,12 @@ import CoCategoryTypeInfo from './CoCategoryTypeInfo';
 
 export abstract class CoCategory<This, Id> extends CoNode<This, Id> {
     
-    static readonly TYPE = CoCategoryTypeInfo.INSTANCE;
+    static _typeInfo: CoCategoryTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoCategoryTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     properties: any
     

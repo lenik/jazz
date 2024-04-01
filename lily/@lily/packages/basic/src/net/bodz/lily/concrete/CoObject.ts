@@ -10,7 +10,12 @@ import Group from '../schema/account/Group';
 
 export abstract class CoObject extends StructRow {
 
-    static readonly TYPE = CoObjectTypeInfo.INSTANCE;
+    static _typeInfo: CoObjectTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoObjectTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     // UI
 

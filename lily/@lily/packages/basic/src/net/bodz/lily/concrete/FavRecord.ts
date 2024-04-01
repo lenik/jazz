@@ -4,7 +4,12 @@ import FavRecordTypeInfo from './FavRecordTypeInfo';
 
 export abstract class FavRecord extends IdEntity<long> {
 
-    static readonly TYPE = FavRecordTypeInfo.INSTANCE;
+    static _typeInfo: FavRecordTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = FavRecordTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     user: any
     voteCount: long

@@ -5,7 +5,12 @@ import CoImagedEventTypeInfo from './CoImagedEventTypeInfo';
 
 export abstract class CoImagedEvent<Id> extends CoEvent<Id> {
 
-    static readonly TYPE = CoImagedEventTypeInfo.INSTANCE;
+    static _typeInfo: CoImagedEventTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoImagedEventTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     properties: any
 

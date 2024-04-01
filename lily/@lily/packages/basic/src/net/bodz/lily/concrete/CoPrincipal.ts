@@ -4,7 +4,12 @@ import CoPrincipalTypeInfo from './CoPrincipalTypeInfo';
 
 export abstract class CoPrincipal extends CoImaged<int> {
 
-    static readonly TYPE = CoPrincipalTypeInfo.INSTANCE;
+    static _typeInfo: CoPrincipalTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoPrincipalTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     name?: string
     properties: any

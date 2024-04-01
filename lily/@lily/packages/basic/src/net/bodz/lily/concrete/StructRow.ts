@@ -7,7 +7,12 @@ import { OffsetDateTime } from "@skeljs/core/src/lang/time";
 
 export class StructRow {
 
-    static readonly TYPE: any = StructRowTypeInfo.INSTANCE;
+    static _typeInfo: StructRowTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = StructRowTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     // content
 

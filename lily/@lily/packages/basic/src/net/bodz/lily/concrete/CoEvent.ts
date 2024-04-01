@@ -5,7 +5,12 @@ import { OffsetDateTime } from "@skeljs/core/src/lang/time";
 
 export abstract class CoEvent<Id> extends IdEntity<Id> {
 
-    static readonly TYPE = CoEventTypeInfo.INSTANCE;
+    static _typeInfo: CoEventTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoEventTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     beginTime?: OffsetDateTime
     endTime?: OffsetDateTime

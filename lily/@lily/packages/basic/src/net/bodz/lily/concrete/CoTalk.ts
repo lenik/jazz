@@ -5,7 +5,12 @@ import CoMessage from './CoMessage';
 
 export abstract class CoTalk<This> extends CoMessage<long> {
 
-    static readonly TYPE = CoTalkTypeInfo.INSTANCE;
+    static _typeInfo: CoTalkTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = CoTalkTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     parent?: This
     parentId?: long
