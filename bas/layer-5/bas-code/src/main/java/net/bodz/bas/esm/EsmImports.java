@@ -100,7 +100,13 @@ public class EsmImports {
 
     @Override
     public String toString() {
-        return names.toString();
+        StringBuilder sb = new StringBuilder();
+        for (EsmName name : names) {
+            sb.append(name);
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 
 }
