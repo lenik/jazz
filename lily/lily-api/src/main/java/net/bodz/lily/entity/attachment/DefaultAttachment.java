@@ -114,7 +114,7 @@ public class DefaultAttachment
         super.jsonIn(o, opts);
         label = o.getString(K_LABEL);
         description = o.getString(K_DESCRIPTION);
-        size = o.getLong(K_FILE_SIZE);
+        size = o.getLong(K_FILE_SIZE, size);
         sha1 = o.getString(K_FILE_SHA1);
     }
 
