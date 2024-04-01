@@ -283,6 +283,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selectByName" parameterType="String" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.name = #{name}</if>
+        </where>
+    </select>
+
+    <select id="selectByOtherId" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+            left join useroid o on a.id=o."user"
+        <where>
+            and o.type = #{type.id}
+            and o.oid = #{oid}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="selectByOtherId2" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+            left join useroid o on a.id=o."user"
+        <where>
+            and o.type = #{typeId}
+            and o.oid = #{oid}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="selectByPhoneNumber" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+            left join useroid o on a.id=o."user"
+        <where>
+            and o.type = 1
+            and o.oid = #{phone}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="selectByEmail" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+            left join useroid o on a.id=o."user"
+        <where>
+            and o.type = 2
+            and o.oid = #{email}
+            <!-- and o.state = VALIDATED -->
+        </where>
+    </select>
+
+    <select id="findForLogin" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+            left join usersec s on a.id=s."user"
+        <where>
+            <if test="name != null">and a.name = #{name}</if>
+            <if test="password != null">and s.passwd = #{password}</if>
+        </where>
+    </select>
+
+    <select id="forGroupId" resultMap="objlist_map">
+        select
+            u.*
+        from group_user x
+            left join "user" u on x."user" = u.id
+        <where>
+            x."group" = #{id}
+        </where>
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"><![CDATA[
         insert into "user"(
             "type",

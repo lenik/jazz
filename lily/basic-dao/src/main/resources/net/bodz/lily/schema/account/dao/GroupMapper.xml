@@ -149,6 +149,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="forUserId" resultMap="objlist_map">
+        select
+            g.*
+        from group_user x
+            left join "group" g on x."group" = g.id
+        <where>
+            x."user" = #{id}
+            <include refid="filtconds" />
+        </where>
+        <include refid="co.opts" />
+    </select>
+    
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"><![CDATA[
         insert into "group"(
             "name",
