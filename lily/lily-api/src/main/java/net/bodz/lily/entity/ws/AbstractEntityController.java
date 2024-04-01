@@ -109,7 +109,7 @@ public abstract class AbstractEntityController<T>
         return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
-    void addCommand(IEntityCommandType cmd) {
+    protected void addCommand(IEntityCommandType cmd) {
         String preferredName = cmd.getPreferredName();
 
         if (preferredName != null) {

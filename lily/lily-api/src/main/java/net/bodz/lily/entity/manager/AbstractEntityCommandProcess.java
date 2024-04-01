@@ -229,11 +229,11 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     }
 
     @SuppressWarnings("unchecked")
-    protected IEntityMapper<Object> getEntityMapper() {
+    protected <M extends IEntityMapper<?>> M getEntityMapper() {
         Class<?> mapperClass = typeInfo.getMapperClass();
         if (! IEntityMapper.class.isAssignableFrom(mapperClass))
             throw new IllegalUsageException("Not an " + IEntityMapper.class);
-        return (IEntityMapper<Object>) dataContext.getMapper(mapperClass);
+        return (M) dataContext.getMapper(mapperClass);
     }
 
     @Override
