@@ -1,7 +1,6 @@
 import { INT, BOOLEAN, STRING, LIST } from '@skeljs/core/src/lang/baseinfo';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
-import ZonedDateTime from '@skeljs/core/src/lang/time/ZonedDateTime';
-import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
+import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
 import { property } from '@skeljs/dba/src/net/bodz/lily/entity/EntityType';
 import CoImagedTypeInfo from '../../src/net/bodz/lily/concrete/CoImagedTypeInfo';
 import Contact from './Contact';
@@ -13,7 +12,7 @@ export class PartyTypeInfo extends CoImagedTypeInfo {
         this.declare({
             category: property({ type: JSON_VARIANT }),
 
-            birthday: property({ type: ZonedDateTime.TYPE, icon: "fab-pagelines" }),
+            birthday: property({ type: LocalDate.TYPE, icon: "fab-pagelines" }),
 
             locale: property({ type: STRING }),
             timeZoneId: property({ type: STRING }),
