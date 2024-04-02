@@ -32,3 +32,4 @@ export class CoMailTypeInfo extends CoMessageTypeInfo {
 }
 
 export default CoMailTypeInfo;
+export const CoMail_TYPE = CoMailTypeInfo.INSTANCE;

@@ -30,3 +30,4 @@ export class CoTalkTypeInfo extends CoMessageTypeInfo {
 }
 
 export default CoTalkTypeInfo;
+export const CoTalk_TYPE = CoTalkTypeInfo.INSTANCE;

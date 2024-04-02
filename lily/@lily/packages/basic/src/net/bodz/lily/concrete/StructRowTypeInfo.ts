@@ -44,3 +44,4 @@ export class StructRowTypeInfo extends EntityType {
 }
 
 export default StructRowTypeInfo;
+export const StructRow_TYPE = StructRowTypeInfo.INSTANCE;

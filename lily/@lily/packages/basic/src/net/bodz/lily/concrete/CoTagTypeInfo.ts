@@ -28,3 +28,4 @@ export class CoTagTypeInfo extends CoCodeTypeInfo {
 }
 
 export default CoTagTypeInfo;
+export const CoTag_TYPE = CoTagTypeInfo.INSTANCE;

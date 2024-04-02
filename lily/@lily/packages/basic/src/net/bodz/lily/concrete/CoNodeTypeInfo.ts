@@ -46,3 +46,4 @@ export class CoNodeTypeInfo extends IdEntityTypeInfo {
 }
 
 export default CoNodeTypeInfo;
+export const CoNode_TYPE = CoNodeTypeInfo.INSTANCE;

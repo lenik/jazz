@@ -40,3 +40,4 @@ export class CoImagedTypeInfo extends IdEntityTypeInfo {
 }
 
 export default CoImagedTypeInfo;
+export const CoImaged_TYPE = CoImagedTypeInfo.INSTANCE;

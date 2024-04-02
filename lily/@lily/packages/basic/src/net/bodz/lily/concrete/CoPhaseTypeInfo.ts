@@ -28,3 +28,4 @@ export class CoPhaseTypeInfo extends CoCodeTypeInfo {
 }
 
 export default CoPhaseTypeInfo;
+export const CoPhase_TYPE = CoPhaseTypeInfo.INSTANCE;

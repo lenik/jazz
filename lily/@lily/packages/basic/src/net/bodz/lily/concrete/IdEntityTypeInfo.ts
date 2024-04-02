@@ -29,3 +29,4 @@ export class IdEntityTypeInfo extends CoObjectTypeInfo {
 }
 
 export default IdEntityTypeInfo;
+export const IdEntity_TYPE = IdEntityTypeInfo.INSTANCE;

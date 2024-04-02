@@ -28,3 +28,4 @@ export class CoParameterTypeInfo extends CoCodeTypeInfo {
 }
 
 export default CoParameterTypeInfo;
+export const CoParameter_TYPE = CoParameterTypeInfo.INSTANCE;

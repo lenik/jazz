@@ -29,3 +29,4 @@ export class CoCategoryTypeInfo extends CoNodeTypeInfo {
 }
 
 export default CoCategoryTypeInfo;
+export const CoCategory_TYPE = CoCategoryTypeInfo.INSTANCE;

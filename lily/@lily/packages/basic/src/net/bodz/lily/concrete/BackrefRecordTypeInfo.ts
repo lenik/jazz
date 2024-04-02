@@ -35,3 +35,4 @@ export class BackrefRecordTypeInfo extends IdEntityTypeInfo {
 }
 
 export default BackrefRecordTypeInfo;
+export const BackrefRecord_TYPE = BackrefRecordTypeInfo.INSTANCE;

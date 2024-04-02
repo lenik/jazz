@@ -37,3 +37,4 @@ export class VoteRecordTypeInfo extends IdEntityTypeInfo {
 }
 
 export default VoteRecordTypeInfo;
+export const VoteRecord_TYPE = VoteRecordTypeInfo.INSTANCE;

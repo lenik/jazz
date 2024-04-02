@@ -30,3 +30,4 @@ export class CoPrincipalTypeInfo extends CoImagedTypeInfo {
 }
 
 export default CoPrincipalTypeInfo;
+export const CoPrincipal_TYPE = CoPrincipalTypeInfo.INSTANCE;

@@ -28,3 +28,4 @@ export class DocRecordTypeInfo extends CoMessageTypeInfo {
 }
 
 export default DocRecordTypeInfo;
+export const DocRecord_TYPE = DocRecordTypeInfo.INSTANCE;

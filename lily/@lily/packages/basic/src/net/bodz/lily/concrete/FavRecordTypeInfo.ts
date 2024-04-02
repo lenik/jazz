@@ -31,3 +31,4 @@ export class FavRecordTypeInfo extends IdEntityTypeInfo {
 }
 
 export default FavRecordTypeInfo;
+export const FavRecord_TYPE = FavRecordTypeInfo.INSTANCE;

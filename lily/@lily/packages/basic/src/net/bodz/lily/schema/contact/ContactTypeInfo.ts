@@ -125,3 +125,4 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
 }
 
 export default ContactTypeInfo;
+export const Contact_TYPE = ContactTypeInfo.INSTANCE;

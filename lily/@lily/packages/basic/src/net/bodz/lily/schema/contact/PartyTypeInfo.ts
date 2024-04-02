@@ -90,3 +90,4 @@ export class PartyTypeInfo extends CoImagedTypeInfo {
 }
 
 export default PartyTypeInfo;
+export const Party_TYPE = PartyTypeInfo.INSTANCE;

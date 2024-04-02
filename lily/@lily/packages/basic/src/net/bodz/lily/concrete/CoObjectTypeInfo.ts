@@ -78,3 +78,4 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
 }
 
 export default CoObjectTypeInfo;
+export const CoObject_TYPE = CoObjectTypeInfo.INSTANCE;

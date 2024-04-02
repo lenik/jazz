@@ -40,3 +40,4 @@ export class CoMessageTypeInfo extends CoEventTypeInfo {
 }
 
 export default CoMessageTypeInfo;
+export const CoMessage_TYPE = CoMessageTypeInfo.INSTANCE;

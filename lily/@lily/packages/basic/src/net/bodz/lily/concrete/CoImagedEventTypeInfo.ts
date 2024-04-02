@@ -33,3 +33,4 @@ export class CoImagedEventTypeInfo extends CoEventTypeInfo {
 }
 
 export default CoImagedEventTypeInfo;
+export const CoImagedEvent_TYPE = CoImagedEventTypeInfo.INSTANCE;

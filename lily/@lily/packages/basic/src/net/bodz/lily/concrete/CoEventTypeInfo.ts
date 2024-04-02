@@ -32,3 +32,4 @@ export class CoEventTypeInfo extends IdEntityTypeInfo {
 }
 
 export default CoEventTypeInfo;
+export const CoEvent_TYPE = CoEventTypeInfo.INSTANCE;

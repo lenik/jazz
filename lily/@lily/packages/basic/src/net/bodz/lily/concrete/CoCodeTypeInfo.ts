@@ -32,3 +32,4 @@ export class CoCodeTypeInfo extends CoNodeTypeInfo {
 }
 
 export default CoCodeTypeInfo;
+export const CoCode_TYPE = CoCodeTypeInfo.INSTANCE;
