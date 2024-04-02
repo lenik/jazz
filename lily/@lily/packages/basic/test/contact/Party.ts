@@ -6,7 +6,12 @@ import { LocalDate } from '@skeljs/core/src/lang/time';
 
 export abstract class Party extends CoImaged<int> {
 
-    static readonly TYPE = new PartyTypeInfo();
+    static _typeInfo: PartyTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = PartyTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     category?: any
     birthday?: LocalDate

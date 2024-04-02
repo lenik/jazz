@@ -34,6 +34,9 @@ export class PartyTypeInfo extends CoImagedTypeInfo {
     constructor() {
         super(INT);
     }
+
+    static readonly INSTANCE = new PartyTypeInfo();
+
 }
 
 export default PartyTypeInfo;

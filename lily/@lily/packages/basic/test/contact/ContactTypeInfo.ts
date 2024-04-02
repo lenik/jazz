@@ -54,6 +54,8 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
         super(LONG);
     }
 
+    static readonly INSTANCE = new ContactTypeInfo();
+
 }
 
 export default ContactTypeInfo;

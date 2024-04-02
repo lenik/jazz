@@ -4,7 +4,12 @@ import PersonTypeInfo from './PersonTypeInfo';
 
 export class Person extends Party {
 
-    static readonly TYPE = PersonTypeInfo.INSTANCE;
+    static _typeInfo: PersonTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = PersonTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     gender?: string
 
