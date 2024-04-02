@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.geo.ZoneCategory;
 
 /**
-* @label ZoneCategory
-*/
+ * @label ZoneCategory
+ */
 @ObjectType(ZoneCategory.class)
 public class ZoneCategoryIndex
         extends CoIndex<ZoneCategory> {

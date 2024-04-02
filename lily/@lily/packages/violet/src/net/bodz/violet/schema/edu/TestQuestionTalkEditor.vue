@@ -4,9 +4,10 @@ import { onMounted, provide, ref } from "vue";
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import TestQuestionTalk from "./TestQuestionTalk";
-import _TestQuestionTalk_stuff from "./_TestQuestionTalk_stuff";
+import { _TestQuestionTalk_stuff_TYPE } from "./_TestQuestionTalk_stuff_TypeInfo";
 
 export const title = "Editor view of: Test question talk";
 export interface Props {
@@ -71,10 +72,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_TestQuestionTalk_stuff.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_TestQuestionTalk_stuff_TYPE">
             <FieldRow :property="meta.beginTime" v-model="model.beginTime">
                 <DateTime v-model="model.beginTime" />
             </FieldRow>

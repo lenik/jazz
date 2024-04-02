@@ -25,3 +25,5 @@ export class _CourseKitTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _CourseKitTag_stuff_TypeInfo;
+
+export const _CourseKitTag_stuff_TYPE = _CourseKitTag_stuff_TypeInfo.INSTANCE;

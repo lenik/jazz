@@ -7,7 +7,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import Group from "./Group";
-import GroupType from "./GroupType";
+import { Group_TYPE } from "./GroupTypeInfo";
+import { GroupType_TYPE } from "./GroupTypeTypeInfo";
 
 export const title = "Admin view of: Group";
 export interface Props {
@@ -30,11 +31,11 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "GroupType": GroupType.TYPE,
+    "GroupType": GroupType_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "Group": Group.TYPE,
+    "Group": Group_TYPE,
 };
 
 onMounted(() => {

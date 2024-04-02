@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.PostFav;
 
 /**
-* @label PostFav
-*/
+ * @label PostFav
+ */
 @ObjectType(PostFav.class)
 public class PostFavIndex
         extends CoIndex<PostFav> {

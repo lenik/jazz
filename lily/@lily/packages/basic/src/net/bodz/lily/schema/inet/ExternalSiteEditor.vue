@@ -4,10 +4,10 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoNode from "../../concrete/CoNode";
-import IdEntity from "../../concrete/IdEntity";
+import { CoNode_TYPE } from "../../concrete/CoNodeTypeInfo";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import ExternalSite from "./ExternalSite";
-import _ExternalSite_stuff from "./_ExternalSite_stuff";
+import { _ExternalSite_stuff_TYPE } from "./_ExternalSite_stuff_TypeInfo";
 
 export const title = "Editor view of: External site";
 export interface Props {
@@ -66,18 +66,18 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="CoNode.TYPE">
+        <FieldGroup :type="CoNode_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="externalSiteChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_ExternalSite_stuff.TYPE">
+        <FieldGroup :type="_ExternalSite_stuff_TYPE">
             <FieldRow :property="meta.urlfmt" v-model="model.urlfmt">
                 <input type="text" v-model="model.urlfmt" />
             </FieldRow>

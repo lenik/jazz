@@ -35,3 +35,5 @@ export class UserRunTypeInfo extends _UserRun_stuff_TypeInfo {
 }
 
 export default UserRunTypeInfo;
+
+export const UserRun_TYPE = UserRunTypeInfo.INSTANCE;

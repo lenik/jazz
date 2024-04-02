@@ -4,10 +4,10 @@ import { onMounted, provide, ref } from "vue";
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import ShopItem from "./ShopItem";
-import _ShopItem_stuff from "./_ShopItem_stuff";
+import { _ShopItem_stuff_TYPE } from "./_ShopItem_stuff_TypeInfo";
 
 export const title = "Editor view of: Shop item";
 export interface Props {
@@ -72,14 +72,14 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
         <CoImagedEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_ShopItem_stuff.TYPE">
+        <FieldGroup :type="_ShopItem_stuff_TYPE">
             <FieldRow :property="meta.batch" v-model="model.batch">
                 <JsonEditor v-model="model.batch" />
             </FieldRow>

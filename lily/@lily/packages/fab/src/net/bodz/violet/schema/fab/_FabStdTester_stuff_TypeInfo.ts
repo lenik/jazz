@@ -35,3 +35,5 @@ export class _FabStdTester_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _FabStdTester_stuff_TypeInfo;
+
+export const _FabStdTester_stuff_TYPE = _FabStdTester_stuff_TypeInfo.INSTANCE;

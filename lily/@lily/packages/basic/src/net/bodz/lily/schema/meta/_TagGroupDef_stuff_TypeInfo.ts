@@ -36,3 +36,5 @@ export class _TagGroupDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 }
 
 export default _TagGroupDef_stuff_TypeInfo;
+
+export const _TagGroupDef_stuff_TYPE = _TagGroupDef_stuff_TypeInfo.INSTANCE;

@@ -33,3 +33,5 @@ export class _SchemaDef_stuff_TypeInfo extends CoCodeTypeInfo {
 }
 
 export default _SchemaDef_stuff_TypeInfo;
+
+export const _SchemaDef_stuff_TYPE = _SchemaDef_stuff_TypeInfo.INSTANCE;

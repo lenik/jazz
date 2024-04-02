@@ -5,10 +5,11 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import User from "../account/User";
-import FormDef from "../meta/FormDef";
-import Article from "./Article";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { FormDef_TYPE } from "../meta/FormDefTypeInfo";
 import ArticleTalk from "./ArticleTalk";
+import { ArticleTalk_TYPE } from "./ArticleTalkTypeInfo";
+import { Article_TYPE } from "./ArticleTypeInfo";
 
 export const title = "Admin view of: Article talk";
 export interface Props {
@@ -34,10 +35,10 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "User": User.TYPE,
-    "FormDef": FormDef.TYPE,
-    "Article": Article.TYPE,
-    "ArticleTalk": ArticleTalk.TYPE,
+    "User": User_TYPE,
+    "FormDef": FormDef_TYPE,
+    "Article": Article_TYPE,
+    "ArticleTalk": ArticleTalk_TYPE,
 };
 
 onMounted(() => {

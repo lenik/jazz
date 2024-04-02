@@ -6,7 +6,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import TagDef from "./TagDef";
-import TagGroupDef from "./TagGroupDef";
+import { TagGroupDef_TYPE } from "./TagGroupDefTypeInfo";
 
 export const title = "Admin view of: Tag def";
 export interface Props {
@@ -31,7 +31,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "TagGroupDef": TagGroupDef.TYPE,
+    "TagGroupDef": TagGroupDef_TYPE,
 };
 
 onMounted(() => {

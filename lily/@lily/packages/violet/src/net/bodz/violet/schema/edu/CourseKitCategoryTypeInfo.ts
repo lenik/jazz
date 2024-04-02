@@ -28,3 +28,5 @@ export class CourseKitCategoryTypeInfo extends _CourseKitCategory_stuff_TypeInfo
 }
 
 export default CourseKitCategoryTypeInfo;
+
+export const CourseKitCategory_TYPE = CourseKitCategoryTypeInfo.INSTANCE;

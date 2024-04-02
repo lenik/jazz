@@ -29,3 +29,5 @@ export class UserOtherIdTypeTypeInfo extends _UserOtherIdType_stuff_TypeInfo {
 }
 
 export default UserOtherIdTypeTypeInfo;
+
+export const UserOtherIdType_TYPE = UserOtherIdTypeTypeInfo.INSTANCE;

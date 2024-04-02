@@ -3,12 +3,12 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoNodeTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
 
-import Artifact from "../art/Artifact";
-import ArtifactCategory from "../art/ArtifactCategory";
-import Region from "./Region";
-import RegionCategory from "./RegionCategory";
-import RegionLevel from "./RegionLevel";
-import RegionTag from "./RegionTag";
+import { ArtifactCategory_TYPE } from "../art/ArtifactCategoryTypeInfo";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { RegionCategory_TYPE } from "./RegionCategoryTypeInfo";
+import { RegionLevel_TYPE } from "./RegionLevelTypeInfo";
+import { RegionTag_TYPE } from "./RegionTagTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
 import _Region_stuff_Validators from "./_Region_stuff_Validators";
 
 export class _Region_stuff_TypeInfo extends CoNodeTypeInfo {
@@ -56,28 +56,28 @@ export class _Region_stuff_TypeInfo extends CoNodeTypeInfo {
             path: property({ type: STRING, nullable: false, precision: 200, validator: this.validators.validatePath }),
             height: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateHeight }),
 
-            forCat: property({ type: ArtifactCategory.TYPE, validator: this.validators.validateForCat }),
+            forCat: property({ type: ArtifactCategory_TYPE, validator: this.validators.validateForCat }),
             forCatId: property({ type: INT, precision: 10 }),
 
             proto: property({ type: this, validator: this.validators.validateProto }),
             protoId: property({ type: INT, precision: 10 }),
 
-            tag: property({ type: RegionTag.TYPE, validator: this.validators.validateTag }),
+            tag: property({ type: RegionTag_TYPE, validator: this.validators.validateTag }),
             tagId: property({ type: INT, precision: 10 }),
 
-            category: property({ type: RegionCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: RegionCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
-            level: property({ type: RegionLevel.TYPE, nullable: false, validator: this.validators.validateLevel }),
+            level: property({ type: RegionLevel_TYPE, nullable: false, validator: this.validators.validateLevel }),
             levelId: property({ type: INT, nullable: false, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, precision: 10 }),
 
-            material: property({ type: Artifact.TYPE, validator: this.validators.validateMaterial }),
+            material: property({ type: Artifact_TYPE, validator: this.validators.validateMaterial }),
             materialId: property({ type: INT, precision: 10 }),
 
-            forArt: property({ type: Artifact.TYPE, validator: this.validators.validateForArt }),
+            forArt: property({ type: Artifact_TYPE, validator: this.validators.validateForArt }),
             forArtId: property({ type: INT, precision: 10 }),
         });
     }
@@ -85,3 +85,5 @@ export class _Region_stuff_TypeInfo extends CoNodeTypeInfo {
 }
 
 export default _Region_stuff_TypeInfo;
+
+export const _Region_stuff_TYPE = _Region_stuff_TypeInfo.INSTANCE;

@@ -5,12 +5,12 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
-import TestQuestion from "./TestQuestion";
-import TestQuestionTalk from "./TestQuestionTalk";
 import { TestQuestionTalk } from "./TestQuestionTalk";
+import { TestQuestionTalk_TYPE } from "./TestQuestionTalkTypeInfo";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 
 export const title = "Choose dialog for: Test question talk";
 export interface Props {
@@ -40,10 +40,10 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "User": User.TYPE,
-    "FormDef": FormDef.TYPE,
-    "TestQuestion": TestQuestion.TYPE,
-    "TestQuestionTalk": TestQuestionTalk.TYPE,
+    "User": User_TYPE,
+    "FormDef": FormDef_TYPE,
+    "TestQuestion": TestQuestion_TYPE,
+    "TestQuestionTalk": TestQuestionTalk_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

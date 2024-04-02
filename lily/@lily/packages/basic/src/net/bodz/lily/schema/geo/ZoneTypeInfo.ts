@@ -1,7 +1,7 @@
 import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import GeoLocation from "../../concrete/util/GeoLocation";
+import { GeoLocation_TYPE } from "../../concrete/util/GeoLocationTypeInfo";
 import Zone from "./Zone";
 import ZoneValidators from "./ZoneValidators";
 import _Zone_stuff_TypeInfo from "./_Zone_stuff_TypeInfo";
@@ -25,7 +25,7 @@ export class ZoneTypeInfo extends _Zone_stuff_TypeInfo {
         super.preamble();
         this.declare({
             fullPath: property({ type: STRING, validator: this.validators.validateFullPath }),
-            geo: property({ type: GeoLocation.TYPE, validator: this.validators.validateGeo }),
+            geo: property({ type: GeoLocation_TYPE, validator: this.validators.validateGeo }),
         });
     }
 
@@ -34,3 +34,5 @@ export class ZoneTypeInfo extends _Zone_stuff_TypeInfo {
 }
 
 export default ZoneTypeInfo;
+
+export const Zone_TYPE = ZoneTypeInfo.INSTANCE;

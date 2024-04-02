@@ -7,12 +7,12 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 
-import Artifact from "../art/Artifact";
-import Region from "../store/Region";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { Region_TYPE } from "../store/RegionTypeInfo";
 import { OrgAsset } from "./OrgAsset";
 
 export const title = "Choose dialog for: Org asset";
@@ -39,14 +39,14 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Organization": Organization.TYPE,
-    "Artifact": Artifact.TYPE,
-    "Region": Region.TYPE,
+    "Organization": Organization_TYPE,
+    "Artifact": Artifact_TYPE,
+    "Region": Region_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BIG_DECIMAL": BIG_DECIMAL,
     "ZonedDateTime": ZonedDateTime.TYPE,

@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import PostParameterType from "./PostParameterType";
-import _PostParameterType_stuff from "./_PostParameterType_stuff";
+import { _PostParameterType_stuff_TYPE } from "./_PostParameterType_stuff_TypeInfo";
 
 export const title = "Editor view of: Post parameter type";
 export interface Props {
@@ -61,12 +61,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_PostParameterType_stuff.TYPE">
+        <FieldGroup :type="_PostParameterType_stuff_TYPE">
             <FieldRow :property="meta.name" v-model="model.name">
                 <input type="text" v-model="model.name" />
             </FieldRow>

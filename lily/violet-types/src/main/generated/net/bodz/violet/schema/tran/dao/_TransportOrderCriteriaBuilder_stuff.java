@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.tran.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.tran.TransportOrder;
 
+@ForEntityType(TransportOrder.class)
 public class _TransportOrderCriteriaBuilder_stuff<self_t extends _TransportOrderCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

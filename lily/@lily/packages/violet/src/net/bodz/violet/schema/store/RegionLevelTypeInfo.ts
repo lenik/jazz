@@ -28,3 +28,5 @@ export class RegionLevelTypeInfo extends _RegionLevel_stuff_TypeInfo {
 }
 
 export default RegionLevelTypeInfo;
+
+export const RegionLevel_TYPE = RegionLevelTypeInfo.INSTANCE;

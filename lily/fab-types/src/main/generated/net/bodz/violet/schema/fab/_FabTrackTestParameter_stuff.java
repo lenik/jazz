@@ -109,6 +109,8 @@ public abstract class _FabTrackTestParameter_stuff
     @Column(name = "parm", nullable = false, precision = 10)
     public synchronized int getParameterId() {
         if (parameter != null) {
+            if (parameter.getId() == null)
+                return 0;
             return parameter.getId();
         }
         return parameterId;
@@ -170,6 +172,8 @@ public abstract class _FabTrackTestParameter_stuff
     @Column(name = "test", nullable = false, precision = 19)
     public synchronized long getTestId() {
         if (test != null) {
+            if (test.getId() == null)
+                return 0L;
             return test.getId();
         }
         return testId;

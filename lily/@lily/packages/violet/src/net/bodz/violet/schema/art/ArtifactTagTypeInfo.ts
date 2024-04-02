@@ -28,3 +28,5 @@ export class ArtifactTagTypeInfo extends _ArtifactTag_stuff_TypeInfo {
 }
 
 export default ArtifactTagTypeInfo;
+
+export const ArtifactTag_TYPE = ArtifactTagTypeInfo.INSTANCE;

@@ -33,3 +33,5 @@ export class _CourseCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _CourseCategory_stuff_TypeInfo;
+
+export const _CourseCategory_stuff_TYPE = _CourseCategory_stuff_TypeInfo.INSTANCE;

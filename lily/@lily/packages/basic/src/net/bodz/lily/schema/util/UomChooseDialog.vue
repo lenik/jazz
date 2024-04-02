@@ -5,8 +5,8 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Uom from "./Uom";
 import { Uom } from "./Uom";
+import { Uom_TYPE } from "./UomTypeInfo";
 
 export const title = "Choose dialog for: Uom";
 export interface Props {
@@ -34,7 +34,7 @@ const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "JSON_VARIANT": JSON_VARIANT,
-    "Uom": Uom.TYPE,
+    "Uom": Uom_TYPE,
     "DOUBLE": DOUBLE,
 };
 

@@ -5,9 +5,10 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import Group from "../account/Group";
-import User from "../account/User";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import PostTagType from "./PostTagType";
+import { PostTagType_TYPE } from "./PostTagTypeTypeInfo";
 
 export const title = "Admin view of: Post tag type";
 export interface Props {
@@ -29,12 +30,12 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "PostTagType": PostTagType.TYPE,
+    "PostTagType": PostTagType_TYPE,
 };
 
 onMounted(() => {

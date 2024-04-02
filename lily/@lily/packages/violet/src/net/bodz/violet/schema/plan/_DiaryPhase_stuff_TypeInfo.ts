@@ -27,3 +27,5 @@ export class _DiaryPhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _DiaryPhase_stuff_TypeInfo;
+
+export const _DiaryPhase_stuff_TYPE = _DiaryPhase_stuff_TypeInfo.INSTANCE;

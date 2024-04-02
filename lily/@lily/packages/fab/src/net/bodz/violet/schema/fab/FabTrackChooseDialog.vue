@@ -5,11 +5,11 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { OrgUnit_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitTypeInfo";
 
-import FabProcess from "./FabProcess";
+import { FabProcess_TYPE } from "./FabProcessTypeInfo";
 import { FabTrack } from "./FabTrack";
 
 export const title = "Choose dialog for: Fab track";
@@ -36,15 +36,15 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabProcess": FabProcess.TYPE,
+    "FabProcess": FabProcess_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
-    "OrgUnit": OrgUnit.TYPE,
+    "OrgUnit": OrgUnit_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.meta.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.meta.FormParameter;
 
+@ForEntityType(FormParameter.class)
 public class _FormParameterCriteriaBuilder_stuff<self_t extends _FormParameterCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

@@ -17,7 +17,6 @@ public class VApiSamples
         VApi a = new VApi();
         a.setApi(api);
         a.setApp(app);
-        a.setId(5965593489077467774L);
         a.setCallback("Agegi! uquo oil ahbt ir z f niruq");
         return a;
     }

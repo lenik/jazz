@@ -4,9 +4,9 @@ import { onMounted, ref } from "vue";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import Person from "./Person";
 import PersonTag from "./PersonTag";
-import PersonTagType from "./PersonTagType";
+import { PersonTagType_TYPE } from "./PersonTagTypeTypeInfo";
+import { Person_TYPE } from "./PersonTypeInfo";
 
 export const title = "Admin view of: Person tag";
 export interface Props {
@@ -29,8 +29,8 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Person": Person.TYPE,
-    "PersonTagType": PersonTagType.TYPE,
+    "Person": Person_TYPE,
+    "PersonTagType": PersonTagType_TYPE,
 };
 
 onMounted(() => {

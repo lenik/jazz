@@ -58,3 +58,5 @@ export class _Policy_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Policy_stuff_TypeInfo;
+
+export const _Policy_stuff_TYPE = _Policy_stuff_TypeInfo.INSTANCE;

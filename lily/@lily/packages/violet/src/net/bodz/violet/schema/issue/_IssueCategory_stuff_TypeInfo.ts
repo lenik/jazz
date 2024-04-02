@@ -33,3 +33,5 @@ export class _IssueCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _IssueCategory_stuff_TypeInfo;
+
+export const _IssueCategory_stuff_TYPE = _IssueCategory_stuff_TypeInfo.INSTANCE;

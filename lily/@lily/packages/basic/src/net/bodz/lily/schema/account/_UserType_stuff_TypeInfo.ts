@@ -41,3 +41,5 @@ export class _UserType_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _UserType_stuff_TypeInfo;
+
+export const _UserType_stuff_TYPE = _UserType_stuff_TypeInfo.INSTANCE;

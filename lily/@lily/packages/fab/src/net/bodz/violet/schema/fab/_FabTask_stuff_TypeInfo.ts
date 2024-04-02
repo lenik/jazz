@@ -4,7 +4,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
 
-import FabOrder from "./FabOrder";
+import { FabOrder_TYPE } from "./FabOrderTypeInfo";
 import _FabTask_stuff_Validators from "./_FabTask_stuff_Validators";
 
 export class _FabTask_stuff_TypeInfo extends CoEventTypeInfo {
@@ -41,7 +41,7 @@ export class _FabTask_stuff_TypeInfo extends CoEventTypeInfo {
             processCount: property({ type: INT, precision: 10, validator: this.validators.validateProcessCount }),
             trackCount: property({ type: INT, precision: 10, validator: this.validators.validateTrackCount }),
 
-            order: property({ type: FabOrder.TYPE, nullable: false, validator: this.validators.validateOrder }),
+            order: property({ type: FabOrder_TYPE, nullable: false, validator: this.validators.validateOrder }),
             orderId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -51,3 +51,5 @@ export class _FabTask_stuff_TypeInfo extends CoEventTypeInfo {
 }
 
 export default _FabTask_stuff_TypeInfo;
+
+export const _FabTask_stuff_TYPE = _FabTask_stuff_TypeInfo.INSTANCE;

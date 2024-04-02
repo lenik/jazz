@@ -2,11 +2,11 @@ import { BIG_DECIMAL, INT, SHORT, STRING } from "@skeljs/core/src/lang/baseinfo"
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
-import Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
 
-import Artifact from "./Artifact";
-import ArtifactCategory from "./ArtifactCategory";
-import ArtifactPhase from "./ArtifactPhase";
+import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
+import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";
+import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import _Artifact_stuff_Validators from "./_Artifact_stuff_Validators";
 
 export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -58,13 +58,13 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
             proto: property({ type: this, validator: this.validators.validateProto }),
             protoId: property({ type: INT, precision: 10 }),
 
-            phase: property({ type: ArtifactPhase.TYPE, validator: this.validators.validatePhase }),
+            phase: property({ type: ArtifactPhase_TYPE, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, precision: 10 }),
 
-            uom: property({ type: Uom.TYPE, validator: this.validators.validateUom }),
+            uom: property({ type: Uom_TYPE, validator: this.validators.validateUom }),
             uomId: property({ type: INT, precision: 10 }),
 
-            category: property({ type: ArtifactCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: ArtifactCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
         });
     }
@@ -74,3 +74,5 @@ export class _Artifact_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Artifact_stuff_TypeInfo;
+
+export const _Artifact_stuff_TYPE = _Artifact_stuff_TypeInfo.INSTANCE;

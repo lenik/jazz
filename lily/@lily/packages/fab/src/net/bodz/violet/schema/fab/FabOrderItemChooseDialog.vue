@@ -6,10 +6,10 @@ import { BIG_DECIMAL, BOOLEAN, INT, LONG, STRING } from "@skeljs/core/src/lang/b
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import FabOrder from "./FabOrder";
 import { FabOrderItem } from "./FabOrderItem";
+import { FabOrder_TYPE } from "./FabOrderTypeInfo";
 
 export const title = "Choose dialog for: Fab order item";
 export interface Props {
@@ -39,8 +39,8 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "FabOrder": FabOrder.TYPE,
-    "Artifact": Artifact.TYPE,
+    "FabOrder": FabOrder_TYPE,
+    "Artifact": Artifact_TYPE,
     "BOOLEAN": BOOLEAN,
     "STRING": STRING,
     "BIG_DECIMAL": BIG_DECIMAL,

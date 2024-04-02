@@ -4,7 +4,10 @@ import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.asset.GroupAsset;
 
+@ForEntityType(GroupAsset.class)
 public class _GroupAssetCriteriaBuilder_stuff<self_t extends _GroupAssetCriteriaBuilder_stuff<self_t>>
         extends CoEventCriteriaBuilder<self_t> {
 

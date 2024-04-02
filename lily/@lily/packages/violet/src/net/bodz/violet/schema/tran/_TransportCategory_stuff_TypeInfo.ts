@@ -33,3 +33,5 @@ export class _TransportCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _TransportCategory_stuff_TypeInfo;
+
+export const _TransportCategory_stuff_TYPE = _TransportCategory_stuff_TypeInfo.INSTANCE;

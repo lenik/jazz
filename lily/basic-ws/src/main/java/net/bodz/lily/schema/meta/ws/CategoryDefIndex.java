@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.CategoryDef;
 
 /**
-* @label CategoryDef
-*/
+ * @label CategoryDef
+ */
 @ObjectType(CategoryDef.class)
 public class CategoryDefIndex
         extends CoIndex<CategoryDef> {

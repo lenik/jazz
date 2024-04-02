@@ -50,3 +50,5 @@ export class _Badge_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Badge_stuff_TypeInfo;
+
+export const _Badge_stuff_TYPE = _Badge_stuff_TypeInfo.INSTANCE;

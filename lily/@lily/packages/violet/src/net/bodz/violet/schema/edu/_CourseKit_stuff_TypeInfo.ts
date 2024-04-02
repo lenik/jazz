@@ -4,8 +4,8 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
-import Course from "./Course";
-import CourseKitCategory from "./CourseKitCategory";
+import { CourseKitCategory_TYPE } from "./CourseKitCategoryTypeInfo";
+import { Course_TYPE } from "./CourseTypeInfo";
 import _CourseKit_stuff_Validators from "./_CourseKit_stuff_Validators";
 
 export class _CourseKit_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -44,10 +44,10 @@ export class _CourseKit_stuff_TypeInfo extends CoImagedTypeInfo {
             hateCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateHateCount }),
             dummy: property({ type: JSON_VARIANT, validator: this.validators.validateDummy }),
 
-            category: property({ type: CourseKitCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: CourseKitCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
-            course: property({ type: Course.TYPE, nullable: false, validator: this.validators.validateCourse }),
+            course: property({ type: Course_TYPE, nullable: false, validator: this.validators.validateCourse }),
             courseId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -57,3 +57,5 @@ export class _CourseKit_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _CourseKit_stuff_TypeInfo;
+
+export const _CourseKit_stuff_TYPE = _CourseKit_stuff_TypeInfo.INSTANCE;

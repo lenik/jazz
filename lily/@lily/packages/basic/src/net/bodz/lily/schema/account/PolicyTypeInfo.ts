@@ -29,3 +29,5 @@ export class PolicyTypeInfo extends _Policy_stuff_TypeInfo {
 }
 
 export default PolicyTypeInfo;
+
+export const Policy_TYPE = PolicyTypeInfo.INSTANCE;

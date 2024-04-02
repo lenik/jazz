@@ -1,11 +1,11 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type ApiType from "./ApiType";
 import type VAppRequest from "./VAppRequest";
 import _VAppRequestApi_stuff_TypeInfo from "./_VAppRequestApi_stuff_TypeInfo";
 
-export class _VAppRequestApi_stuff extends CoEntity<long> {
+export class _VAppRequestApi_stuff extends IdEntity<long> {
 
     static _typeInfo: _VAppRequestApi_stuff_TypeInfo;
     static get TYPE() {
@@ -13,8 +13,6 @@ export class _VAppRequestApi_stuff extends CoEntity<long> {
             this._typeInfo = _VAppRequestApi_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
-    id: long;
 
     parent: VAppRequest;
     parentId: int;

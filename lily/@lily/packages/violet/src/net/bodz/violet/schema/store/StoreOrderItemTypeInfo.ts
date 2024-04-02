@@ -32,3 +32,5 @@ export class StoreOrderItemTypeInfo extends _StoreOrderItem_stuff_TypeInfo {
 }
 
 export default StoreOrderItemTypeInfo;
+
+export const StoreOrderItem_TYPE = StoreOrderItemTypeInfo.INSTANCE;

@@ -19,8 +19,7 @@ public class VApiCreditSamples
         VApiCredit a = new VApiCredit();
         a.setApi(api);
         a.setApp(app);
-        a.setId(179039370);
-        a.setCredit(new BigDecimal("819072565616832"));
+        a.setCredit(new BigDecimal("38190725656168"));
         return a;
     }
 

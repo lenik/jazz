@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.fab.dao;
 
 import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabOrderItem;
 
+@ForEntityType(FabOrderItem.class)
 public class _FabOrderItemCriteriaBuilder_stuff<self_t extends _FabOrderItemCriteriaBuilder_stuff<self_t>>
         extends CoImagedEventCriteriaBuilder<self_t> {
 

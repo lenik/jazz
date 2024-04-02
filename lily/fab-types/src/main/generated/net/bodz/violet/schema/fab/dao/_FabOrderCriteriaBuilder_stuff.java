@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.fab.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabOrder;
 
+@ForEntityType(FabOrder.class)
 public class _FabOrderCriteriaBuilder_stuff<self_t extends _FabOrderCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

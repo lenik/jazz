@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.FormDef;
 
 /**
-* @label FormDef
-*/
+ * @label FormDef
+ */
 @ObjectType(FormDef.class)
 public class FormDefIndex
         extends CoIndex<FormDef> {

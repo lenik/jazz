@@ -5,8 +5,8 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import FabStdTest from "./FabStdTest";
 import FabStdTestParameter from "./FabStdTestParameter";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 
 export const title = "Admin view of: Fab std test parameter";
 export interface Props {
@@ -29,7 +29,7 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabStdTest": FabStdTest.TYPE,
+    "FabStdTest": FabStdTest_TYPE,
     "BOOLEAN": BOOLEAN,
     "JSON_VARIANT": JSON_VARIANT,
     "STRING": STRING,

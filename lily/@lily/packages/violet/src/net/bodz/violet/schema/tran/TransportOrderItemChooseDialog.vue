@@ -5,9 +5,9 @@ import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Artifact from "../art/Artifact";
-import TransportOrder from "./TransportOrder";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import { TransportOrderItem } from "./TransportOrderItem";
+import { TransportOrder_TYPE } from "./TransportOrderTypeInfo";
 
 export const title = "Choose dialog for: Transport order item";
 export interface Props {
@@ -35,8 +35,8 @@ const typeMap = {
     "LONG": LONG,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
-    "TransportOrder": TransportOrder.TYPE,
-    "Artifact": Artifact.TYPE,
+    "TransportOrder": TransportOrder_TYPE,
+    "Artifact": Artifact_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

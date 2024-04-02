@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";
 import _OrgAsset_stuff_Validators from "./_OrgAsset_stuff_Validators";
@@ -31,7 +31,7 @@ export class _OrgAsset_stuff_TypeInfo extends AbstractAssetTypeInfo {
         this.declare({
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
 
-            owner: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOwner }),
+            owner: property({ type: Organization_TYPE, nullable: false, validator: this.validators.validateOwner }),
             ownerId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -41,3 +41,5 @@ export class _OrgAsset_stuff_TypeInfo extends AbstractAssetTypeInfo {
 }
 
 export default _OrgAsset_stuff_TypeInfo;
+
+export const _OrgAsset_stuff_TYPE = _OrgAsset_stuff_TypeInfo.INSTANCE;

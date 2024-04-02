@@ -28,3 +28,5 @@ export class ExternalSiteTypeInfo extends _ExternalSite_stuff_TypeInfo {
 }
 
 export default ExternalSiteTypeInfo;
+
+export const ExternalSite_TYPE = ExternalSiteTypeInfo.INSTANCE;

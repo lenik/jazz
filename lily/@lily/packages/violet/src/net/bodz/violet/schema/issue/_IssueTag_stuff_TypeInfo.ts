@@ -25,3 +25,5 @@ export class _IssueTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _IssueTag_stuff_TypeInfo;
+
+export const _IssueTag_stuff_TYPE = _IssueTag_stuff_TypeInfo.INSTANCE;

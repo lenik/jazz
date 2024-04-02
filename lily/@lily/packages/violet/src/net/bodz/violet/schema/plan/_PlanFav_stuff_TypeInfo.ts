@@ -2,7 +2,7 @@ import { LONG } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
-import Plan from "./Plan";
+import { Plan_TYPE } from "./PlanTypeInfo";
 import _PlanFav_stuff_Validators from "./_PlanFav_stuff_Validators";
 
 export class _PlanFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _PlanFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            plan: property({ type: Plan.TYPE, nullable: false, validator: this.validators.validatePlan }),
+            plan: property({ type: Plan_TYPE, nullable: false, validator: this.validators.validatePlan }),
             planId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -37,3 +37,5 @@ export class _PlanFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _PlanFav_stuff_TypeInfo;
+
+export const _PlanFav_stuff_TYPE = _PlanFav_stuff_TypeInfo.INSTANCE;

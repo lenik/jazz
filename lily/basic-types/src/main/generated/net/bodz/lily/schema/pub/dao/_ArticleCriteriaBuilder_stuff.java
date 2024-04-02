@@ -2,7 +2,10 @@ package net.bodz.lily.schema.pub.dao;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.pub.Article;
 
+@ForEntityType(Article.class)
 public class _ArticleCriteriaBuilder_stuff<self_t extends _ArticleCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

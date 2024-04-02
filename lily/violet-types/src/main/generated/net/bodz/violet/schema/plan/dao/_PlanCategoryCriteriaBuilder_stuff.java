@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.plan.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.plan.PlanCategory;
 
+@ForEntityType(PlanCategory.class)
 public class _PlanCategoryCriteriaBuilder_stuff<self_t extends _PlanCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

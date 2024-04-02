@@ -38,3 +38,5 @@ export class _ApiType_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _ApiType_stuff_TypeInfo;
+
+export const _ApiType_stuff_TYPE = _ApiType_stuff_TypeInfo.INSTANCE;

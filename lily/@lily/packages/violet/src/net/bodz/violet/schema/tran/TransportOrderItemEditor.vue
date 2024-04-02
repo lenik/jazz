@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import TransportOrderItem from "./TransportOrderItem";
-import _TransportOrderItem_stuff from "./_TransportOrderItem_stuff";
+import { _TransportOrderItem_stuff_TYPE } from "./_TransportOrderItem_stuff_TypeInfo";
 
 export const title = "Editor view of: Transport order item";
 export interface Props {
@@ -64,12 +64,12 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_TransportOrderItem_stuff.TYPE">
+        <FieldGroup :type="_TransportOrderItem_stuff_TYPE">
             <FieldRow :property="meta.quantity" v-model="model.quantity">
                 <input type="number" v-model="model.quantity" />
             </FieldRow>

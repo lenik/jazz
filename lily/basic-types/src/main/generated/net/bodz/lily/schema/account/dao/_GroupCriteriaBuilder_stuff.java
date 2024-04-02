@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.account.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.Group;
 
+@ForEntityType(Group.class)
 public class _GroupCriteriaBuilder_stuff<self_t extends _GroupCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

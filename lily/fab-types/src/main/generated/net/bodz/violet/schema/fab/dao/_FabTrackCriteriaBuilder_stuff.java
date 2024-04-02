@@ -3,7 +3,10 @@ package net.bodz.violet.schema.fab.dao;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabTrack;
 
+@ForEntityType(FabTrack.class)
 public class _FabTrackCriteriaBuilder_stuff<self_t extends _FabTrackCriteriaBuilder_stuff<self_t>>
         extends CoEventCriteriaBuilder<self_t> {
 

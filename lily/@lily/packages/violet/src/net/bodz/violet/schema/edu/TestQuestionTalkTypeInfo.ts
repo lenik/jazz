@@ -28,3 +28,5 @@ export class TestQuestionTalkTypeInfo extends _TestQuestionTalk_stuff_TypeInfo {
 }
 
 export default TestQuestionTalkTypeInfo;
+
+export const TestQuestionTalk_TYPE = TestQuestionTalkTypeInfo.INSTANCE;

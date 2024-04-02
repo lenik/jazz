@@ -28,3 +28,5 @@ export class TestQuestionTalkVoteTypeInfo extends _TestQuestionTalkVote_stuff_Ty
 }
 
 export default TestQuestionTalkVoteTypeInfo;
+
+export const TestQuestionTalkVote_TYPE = TestQuestionTalkVoteTypeInfo.INSTANCE;

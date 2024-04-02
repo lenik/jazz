@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.fab.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabStdTest;
 
+@ForEntityType(FabStdTest.class)
 public class _FabStdTestCriteriaBuilder_stuff<self_t extends _FabStdTestCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

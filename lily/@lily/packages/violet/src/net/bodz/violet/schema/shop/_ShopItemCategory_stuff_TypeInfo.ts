@@ -33,3 +33,5 @@ export class _ShopItemCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _ShopItemCategory_stuff_TypeInfo;
+
+export const _ShopItemCategory_stuff_TYPE = _ShopItemCategory_stuff_TypeInfo.INSTANCE;

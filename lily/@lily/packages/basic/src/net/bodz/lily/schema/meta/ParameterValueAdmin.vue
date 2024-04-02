@@ -5,7 +5,7 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import ParameterDef from "./ParameterDef";
+import { ParameterDef_TYPE } from "./ParameterDefTypeInfo";
 import ParameterValue from "./ParameterValue";
 
 export const title = "Admin view of: Parameter value";
@@ -31,7 +31,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "ParameterDef": ParameterDef.TYPE,
+    "ParameterDef": ParameterDef_TYPE,
 };
 
 onMounted(() => {

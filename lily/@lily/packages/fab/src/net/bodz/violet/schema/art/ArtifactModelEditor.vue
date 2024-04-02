@@ -4,8 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
-import _ArtifactModel_stuff from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { _ArtifactModel_stuff_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_TypeInfo";
 
 import ArtifactModel from "./ArtifactModel";
 
@@ -69,14 +70,14 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
         <CoImagedEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_ArtifactModel_stuff.TYPE">
+        <FieldGroup :type="_ArtifactModel_stuff_TYPE">
             <FieldRow :property="meta.valid" v-model="model.valid">
                 <input type="checkbox" v-model="model.valid" />
             </FieldRow>
@@ -93,7 +94,7 @@ onMounted(() => {
                 <RefEditor :dialog="artifactChooseDialog" v-model="model.artifact" v-model:id="model.artifactId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="ArtifactModel.TYPE">
+        <FieldGroup :type="ArtifactModel_TYPE">
             <FieldRow :property="meta.modelName" v-model="model.modelName">
                 <input type="text" v-model="model.modelName" />
             </FieldRow>

@@ -28,3 +28,5 @@ export class DiaryParameterTypeInfo extends _DiaryParameter_stuff_TypeInfo {
 }
 
 export default DiaryParameterTypeInfo;
+
+export const DiaryParameter_TYPE = DiaryParameterTypeInfo.INSTANCE;

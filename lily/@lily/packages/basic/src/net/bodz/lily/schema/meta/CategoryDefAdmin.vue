@@ -7,7 +7,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import CategoryDef from "./CategoryDef";
-import SchemaDef from "./SchemaDef";
+import { CategoryDef_TYPE } from "./CategoryDefTypeInfo";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 
 export const title = "Admin view of: Category def";
 export interface Props {
@@ -32,8 +33,8 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "SchemaDef": SchemaDef.TYPE,
-    "CategoryDef": CategoryDef.TYPE,
+    "SchemaDef": SchemaDef_TYPE,
+    "CategoryDef": CategoryDef_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
 };
 

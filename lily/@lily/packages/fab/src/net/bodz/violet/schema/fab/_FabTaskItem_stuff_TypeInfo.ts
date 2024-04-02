@@ -4,9 +4,9 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
-import ArtifactModel from "../art/ArtifactModel";
-import FabTask from "./FabTask";
+import { FabTask_TYPE } from "./FabTaskTypeInfo";
 import _FabTaskItem_stuff_Validators from "./_FabTaskItem_stuff_Validators";
 
 export class _FabTaskItem_stuff_TypeInfo extends CoEventTypeInfo {
@@ -48,10 +48,10 @@ export class _FabTaskItem_stuff_TypeInfo extends CoEventTypeInfo {
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
             trackCount: property({ type: INT, precision: 10, validator: this.validators.validateTrackCount }),
 
-            task: property({ type: FabTask.TYPE, nullable: false, validator: this.validators.validateTask }),
+            task: property({ type: FabTask_TYPE, nullable: false, validator: this.validators.validateTask }),
             taskId: property({ type: LONG, nullable: false, precision: 19 }),
 
-            model: property({ type: ArtifactModel.TYPE, nullable: false, validator: this.validators.validateModel }),
+            model: property({ type: ArtifactModel_TYPE, nullable: false, validator: this.validators.validateModel }),
             modelId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -61,3 +61,5 @@ export class _FabTaskItem_stuff_TypeInfo extends CoEventTypeInfo {
 }
 
 export default _FabTaskItem_stuff_TypeInfo;
+
+export const _FabTaskItem_stuff_TYPE = _FabTaskItem_stuff_TypeInfo.INSTANCE;

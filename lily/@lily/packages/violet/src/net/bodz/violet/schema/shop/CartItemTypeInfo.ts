@@ -1,7 +1,7 @@
 import { BIG_DECIMAL } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import Artifact from "../art/Artifact";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import CartItem from "./CartItem";
 import CartItemValidators from "./CartItemValidators";
 import _CartItem_stuff_TypeInfo from "./_CartItem_stuff_TypeInfo";
@@ -25,7 +25,7 @@ export class CartItemTypeInfo extends _CartItem_stuff_TypeInfo {
         super.preamble();
         this.declare({
             amount: property({ type: BIG_DECIMAL, validator: this.validators.validateAmount }),
-            artifact: property({ type: Artifact.TYPE, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, validator: this.validators.validateArtifact }),
         });
     }
 
@@ -34,3 +34,5 @@ export class CartItemTypeInfo extends _CartItem_stuff_TypeInfo {
 }
 
 export default CartItemTypeInfo;
+
+export const CartItem_TYPE = CartItemTypeInfo.INSTANCE;

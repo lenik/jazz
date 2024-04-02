@@ -25,3 +25,5 @@ export class _ParameterDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 }
 
 export default _ParameterDef_stuff_TypeInfo;
+
+export const _ParameterDef_stuff_TYPE = _ParameterDef_stuff_TypeInfo.INSTANCE;

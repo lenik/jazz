@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.plan.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.plan.PlanDo;
 
+@ForEntityType(PlanDo.class)
 public class _PlanDoCriteriaBuilder_stuff<self_t extends _PlanDoCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

@@ -1,43 +1,35 @@
 package net.bodz.violet.schema.fab;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _FabTrackTest_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "fabtrack_test";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_TRACK_ID = "track";
     public static final String FIELD_STANDARD_ID = "std";
     public static final String FIELD_VALID = "valid";
 
-    public static final int N_ID = 19;
     public static final int N_TRACK_ID = 19;
     public static final int N_STANDARD_ID = 10;
     public static final int N_VALID = 1;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_TRACK_ID = _ord_ID + 4;
+    private static final int _ord_TRACK_ID = 5;
     private static final int _ord_STANDARD_ID = _ord_TRACK_ID + 1;
     private static final int _ord_VALID = _ord_STANDARD_ID + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     @NotNull
     boolean valid;
@@ -55,28 +47,6 @@ public abstract class _FabTrackTest_stuff
 
     @NotNull
     int standardId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_VALID)
     @Precision(value = 1)

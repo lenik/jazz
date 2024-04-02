@@ -35,3 +35,5 @@ export class _PostParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
 }
 
 export default _PostParameterType_stuff_TypeInfo;
+
+export const _PostParameterType_stuff_TYPE = _PostParameterType_stuff_TypeInfo.INSTANCE;

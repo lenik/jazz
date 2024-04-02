@@ -28,3 +28,5 @@ export class CourseKitFavTypeInfo extends _CourseKitFav_stuff_TypeInfo {
 }
 
 export default CourseKitFavTypeInfo;
+
+export const CourseKitFav_TYPE = CourseKitFavTypeInfo.INSTANCE;

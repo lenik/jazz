@@ -255,6 +255,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 <include refid="filtconds" />
             </if>
         </where>
+    <include refid="co.countOpts" />
     </select>
 
 </mapper>

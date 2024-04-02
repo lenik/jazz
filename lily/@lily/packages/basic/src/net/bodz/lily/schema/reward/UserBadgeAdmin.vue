@@ -4,8 +4,8 @@ import { onMounted, ref } from "vue";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import User from "../account/User";
-import Badge from "./Badge";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { Badge_TYPE } from "./BadgeTypeInfo";
 import UserBadge from "./UserBadge";
 
 export const title = "Admin view of: User badge";
@@ -29,8 +29,8 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "User": User.TYPE,
-    "Badge": Badge.TYPE,
+    "User": User_TYPE,
+    "Badge": Badge_TYPE,
 };
 
 onMounted(() => {

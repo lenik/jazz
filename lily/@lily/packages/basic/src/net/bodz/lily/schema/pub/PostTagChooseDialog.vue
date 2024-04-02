@@ -5,9 +5,9 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Post from "./Post";
 import { PostTag } from "./PostTag";
-import PostTagType from "./PostTagType";
+import { PostTagType_TYPE } from "./PostTagTypeTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 
 export const title = "Choose dialog for: Post tag";
 export interface Props {
@@ -34,8 +34,8 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Post": Post.TYPE,
-    "PostTagType": PostTagType.TYPE,
+    "Post": Post_TYPE,
+    "PostTagType": PostTagType_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

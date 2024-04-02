@@ -4,10 +4,10 @@ import { onMounted, ref } from "vue";
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import FabTrack from "./FabTrack";
 import { FabTrackParty } from "./FabTrackParty";
+import { FabTrack_TYPE } from "./FabTrackTypeInfo";
 
 export const title = "Choose dialog for: Fab track party";
 export interface Props {
@@ -35,8 +35,8 @@ const typeMap = {
     "LONG": LONG,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
-    "FabTrack": FabTrack.TYPE,
-    "Person": Person.TYPE,
+    "FabTrack": FabTrack_TYPE,
+    "Person": Person_TYPE,
     "STRING": STRING,
 };
 

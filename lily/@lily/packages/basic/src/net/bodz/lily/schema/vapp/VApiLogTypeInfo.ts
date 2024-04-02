@@ -28,3 +28,5 @@ export class VApiLogTypeInfo extends _VApiLog_stuff_TypeInfo {
 }
 
 export default VApiLogTypeInfo;
+
+export const VApiLog_TYPE = VApiLogTypeInfo.INSTANCE;

@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.account.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.User;
 
+@ForEntityType(User.class)
 public class _UserCriteriaBuilder_stuff<self_t extends _UserCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

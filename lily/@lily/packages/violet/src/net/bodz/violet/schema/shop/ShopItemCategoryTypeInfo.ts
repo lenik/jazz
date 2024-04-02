@@ -28,3 +28,5 @@ export class ShopItemCategoryTypeInfo extends _ShopItemCategory_stuff_TypeInfo {
 }
 
 export default ShopItemCategoryTypeInfo;
+
+export const ShopItemCategory_TYPE = ShopItemCategoryTypeInfo.INSTANCE;

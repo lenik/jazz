@@ -2,7 +2,7 @@ import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoTalkTypeInfo from "../../concrete/CoTalkTypeInfo";
-import Post from "./Post";
+import { Post_TYPE } from "./PostTypeInfo";
 import _PostTalk_stuff_Validators from "./_PostTalk_stuff_Validators";
 
 export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
@@ -30,7 +30,7 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
         this.declare({
             formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
 
-            post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+            post: property({ type: Post_TYPE, nullable: false, validator: this.validators.validatePost }),
             postId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -38,3 +38,5 @@ export class _PostTalk_stuff_TypeInfo extends CoTalkTypeInfo {
 }
 
 export default _PostTalk_stuff_TypeInfo;
+
+export const _PostTalk_stuff_TYPE = _PostTalk_stuff_TypeInfo.INSTANCE;

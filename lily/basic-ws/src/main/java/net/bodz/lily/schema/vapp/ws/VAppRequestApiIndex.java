@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.vapp.VAppRequestApi;
 
 /**
-* @label VAppRequestApi
-*/
+ * @label VAppRequestApi
+ */
 @ObjectType(VAppRequestApi.class)
 public class VAppRequestApiIndex
         extends CoIndex<VAppRequestApi> {

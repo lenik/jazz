@@ -5,10 +5,10 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import FabTaskItem from "./FabTaskItem";
-import _FabTaskItem_stuff from "./_FabTaskItem_stuff";
+import { _FabTaskItem_stuff_TYPE } from "./_FabTaskItem_stuff_TypeInfo";
 
 export const title = "Editor view of: Fab task item";
 export interface Props {
@@ -71,13 +71,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_FabTaskItem_stuff.TYPE">
+        <FieldGroup :type="_FabTaskItem_stuff_TYPE">
             <FieldRow :property="meta.deadline" v-model="model.deadline">
                 <DateTime v-model="model.deadline" />
             </FieldRow>

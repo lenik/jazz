@@ -2,9 +2,9 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
-import Plan from "@lily/violet/src/net/bodz/violet/schema/plan/Plan";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { Plan_TYPE } from "@lily/violet/src/net/bodz/violet/schema/plan/PlanTypeInfo";
 
 import _FabOrder_stuff_Validators from "./_FabOrder_stuff_Validators";
 
@@ -57,16 +57,16 @@ export class _FabOrder_stuff_TypeInfo extends CoMessageTypeInfo {
             processCount: property({ type: INT, precision: 10, validator: this.validators.validateProcessCount }),
             trackCount: property({ type: INT, precision: 10, validator: this.validators.validateTrackCount }),
 
-            clerk: property({ type: Person.TYPE, validator: this.validators.validateClerk }),
+            clerk: property({ type: Person_TYPE, validator: this.validators.validateClerk }),
             clerkId: property({ type: INT, precision: 10 }),
 
-            plan: property({ type: Plan.TYPE, validator: this.validators.validatePlan }),
+            plan: property({ type: Plan_TYPE, validator: this.validators.validatePlan }),
             planId: property({ type: LONG, precision: 19 }),
 
-            customOrg: property({ type: Organization.TYPE, validator: this.validators.validateCustomOrg }),
+            customOrg: property({ type: Organization_TYPE, validator: this.validators.validateCustomOrg }),
             customOrgId: property({ type: INT, precision: 10 }),
 
-            custom: property({ type: Person.TYPE, validator: this.validators.validateCustom }),
+            custom: property({ type: Person_TYPE, validator: this.validators.validateCustom }),
             customId: property({ type: INT, precision: 10 }),
         });
     }
@@ -76,3 +76,5 @@ export class _FabOrder_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _FabOrder_stuff_TypeInfo;
+
+export const _FabOrder_stuff_TYPE = _FabOrder_stuff_TypeInfo.INSTANCE;

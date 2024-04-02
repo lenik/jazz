@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.SalesOrder;
 
+@ForEntityType(SalesOrder.class)
 public class _SalesOrderCriteriaBuilder_stuff<self_t extends _SalesOrderCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

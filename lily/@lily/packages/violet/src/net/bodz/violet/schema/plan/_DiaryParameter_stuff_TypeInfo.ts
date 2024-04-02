@@ -35,3 +35,5 @@ export class _DiaryParameter_stuff_TypeInfo extends CoParameterTypeInfo {
 }
 
 export default _DiaryParameter_stuff_TypeInfo;
+
+export const _DiaryParameter_stuff_TYPE = _DiaryParameter_stuff_TypeInfo.INSTANCE;

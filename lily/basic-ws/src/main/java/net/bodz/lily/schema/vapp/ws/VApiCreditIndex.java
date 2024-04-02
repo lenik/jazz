@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.vapp.VApiCredit;
 
 /**
-* @label VApiCredit
-*/
+ * @label VApiCredit
+ */
 @ObjectType(VApiCredit.class)
 public class VApiCreditIndex
         extends CoIndex<VApiCredit> {

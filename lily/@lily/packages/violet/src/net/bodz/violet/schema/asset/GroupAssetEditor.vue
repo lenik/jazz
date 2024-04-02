@@ -5,11 +5,11 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
-import AbstractAsset from "./AbstractAsset";
+import { AbstractAsset_TYPE } from "./AbstractAssetTypeInfo";
 import GroupAsset from "./GroupAsset";
-import _GroupAsset_stuff from "./_GroupAsset_stuff";
+import { _GroupAsset_stuff_TYPE } from "./_GroupAsset_stuff_TypeInfo";
 
 export const title = "Editor view of: Group asset";
 export interface Props {
@@ -74,13 +74,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="AbstractAsset.TYPE">
+        <FieldGroup :type="AbstractAsset_TYPE">
             <FieldRow :property="meta.quantity" v-model="model.quantity">
                 <input type="number" v-model="model.quantity" />
             </FieldRow>
@@ -97,7 +97,7 @@ onMounted(() => {
                 <RefEditor :dialog="regionChooseDialog" v-model="model.region" v-model:id="model.regionId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_GroupAsset_stuff.TYPE">
+        <FieldGroup :type="_GroupAsset_stuff_TYPE">
             <FieldRow :property="meta.batch" v-model="model.batch">
                 <JsonEditor v-model="model.batch" />
             </FieldRow>

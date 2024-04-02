@@ -2,12 +2,12 @@
 import { onMounted, ref } from "vue";
 
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
-import ZonedDateTime from "@skeljs/core/src/lang/time/ZonedDateTime";
+import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { PriorityDef } from "./PriorityDef";
-import SchemaDef from "./SchemaDef";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 
 export const title = "Choose dialog for: Priority def";
 export interface Props {
@@ -35,8 +35,8 @@ const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
-    "ZonedDateTime": ZonedDateTime.TYPE,
-    "SchemaDef": SchemaDef.TYPE,
+    "OffsetDateTime": OffsetDateTime.TYPE,
+    "SchemaDef": SchemaDef_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();
@@ -61,8 +61,8 @@ onMounted(() => {
         <th data-type="INT" data-field="priority">Priority</th>
         <th data-type="INT" data-field="flags">Flags</th>
         <th data-type="DefaultState" data-field="state">State</th>
-        <th data-type="ZonedDateTime" data-field="creationDate">Creation Date</th>
-        <th data-type="ZonedDateTime" data-field="lastModified">Last Modified</th>
+        <th data-type="OffsetDateTime" data-field="creationDate">Creation Date</th>
+        <th data-type="OffsetDateTime" data-field="lastModified">Last Modified</th>
         <th data-type="INT" data-field="version">Version</th>
         <th data-type="SchemaDef" data-format="label" data-field="schema">Schema</th>
     </EntityChooseDialog>

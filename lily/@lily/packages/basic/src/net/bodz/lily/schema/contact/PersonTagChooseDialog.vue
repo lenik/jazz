@@ -5,9 +5,9 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Person from "./Person";
 import { PersonTag } from "./PersonTag";
-import PersonTagType from "./PersonTagType";
+import { PersonTagType_TYPE } from "./PersonTagTypeTypeInfo";
+import { Person_TYPE } from "./PersonTypeInfo";
 
 export const title = "Choose dialog for: Person tag";
 export interface Props {
@@ -34,8 +34,8 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Person": Person.TYPE,
-    "PersonTagType": PersonTagType.TYPE,
+    "Person": Person_TYPE,
+    "PersonTagType": PersonTagType_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

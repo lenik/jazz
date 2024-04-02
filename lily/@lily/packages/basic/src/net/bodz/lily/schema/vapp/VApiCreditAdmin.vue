@@ -5,9 +5,9 @@ import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import ApiType from "./ApiType";
+import { ApiType_TYPE } from "./ApiTypeTypeInfo";
 import VApiCredit from "./VApiCredit";
-import VApp from "./VApp";
+import { VApp_TYPE } from "./VAppTypeInfo";
 
 export const title = "Admin view of: V api credit";
 export interface Props {
@@ -31,8 +31,8 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "VApp": VApp.TYPE,
-    "ApiType": ApiType.TYPE,
+    "VApp": VApp_TYPE,
+    "ApiType": ApiType_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

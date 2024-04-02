@@ -3,10 +3,11 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import SalesOrder from "./SalesOrder";
-import _SalesOrder_stuff from "./_SalesOrder_stuff";
+import { SalesOrder_TYPE } from "./SalesOrderTypeInfo";
+import { _SalesOrder_stuff_TYPE } from "./_SalesOrder_stuff_TypeInfo";
 
 export const title = "Editor view of: Sales order";
 export interface Props {
@@ -77,7 +78,7 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
@@ -85,7 +86,7 @@ onMounted(() => {
         <CoEventFieldGroup :meta="meta" v-model="model" />
         <CoImagedEventFieldGroup :meta="meta" v-model="model" />
         <CoMessageFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_SalesOrder_stuff.TYPE">
+        <FieldGroup :type="_SalesOrder_stuff_TYPE">
             <FieldRow :property="meta.formArguments" v-model="model.formArguments">
                 <input type="text" v-model="model.formArguments" />
             </FieldRow>
@@ -108,7 +109,7 @@ onMounted(() => {
                 <RefEditor :dialog="personChooseDialog" v-model="model.customer" v-model:id="model.customerId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="SalesOrder.TYPE">
+        <FieldGroup :type="SalesOrder_TYPE">
             <FieldRow :property="meta.length" v-model="model.length">
                 <input type="number" v-model="model.length" />
             </FieldRow>

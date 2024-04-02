@@ -28,3 +28,5 @@ export class PlanCategoryTypeInfo extends _PlanCategory_stuff_TypeInfo {
 }
 
 export default PlanCategoryTypeInfo;
+
+export const PlanCategory_TYPE = PlanCategoryTypeInfo.INSTANCE;

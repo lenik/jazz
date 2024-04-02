@@ -28,3 +28,5 @@ export class PlanPhaseTypeInfo extends _PlanPhase_stuff_TypeInfo {
 }
 
 export default PlanPhaseTypeInfo;
+
+export const PlanPhase_TYPE = PlanPhaseTypeInfo.INSTANCE;

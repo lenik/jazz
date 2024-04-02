@@ -5,8 +5,9 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import VApi from "./VApi";
-import _VApi_stuff from "./_VApi_stuff";
+import { _VApi_stuff_TYPE } from "./_VApi_stuff_TypeInfo";
 
 export const title = "Editor view of: V api";
 export interface Props {
@@ -65,10 +66,12 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_VApi_stuff.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_VApi_stuff_TYPE">
             <FieldRow :property="meta.properties" v-model="model.properties">
                 <JsonEditor v-model="model.properties" />
             </FieldRow>

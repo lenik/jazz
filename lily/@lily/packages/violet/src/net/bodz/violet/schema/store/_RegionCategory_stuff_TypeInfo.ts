@@ -33,3 +33,5 @@ export class _RegionCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _RegionCategory_stuff_TypeInfo;
+
+export const _RegionCategory_stuff_TYPE = _RegionCategory_stuff_TypeInfo.INSTANCE;

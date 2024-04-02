@@ -29,3 +29,5 @@ export class GroupTypeTypeInfo extends _GroupType_stuff_TypeInfo {
 }
 
 export default GroupTypeTypeInfo;
+
+export const GroupType_TYPE = GroupTypeTypeInfo.INSTANCE;

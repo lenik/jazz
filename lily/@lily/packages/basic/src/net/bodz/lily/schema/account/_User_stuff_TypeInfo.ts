@@ -2,10 +2,10 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
-import Person from "../contact/Person";
-import Group from "./Group";
-import User from "./User";
-import UserType from "./UserType";
+import { Person_TYPE } from "../contact/PersonTypeInfo";
+import { Group_TYPE } from "./GroupTypeInfo";
+import { User_TYPE } from "./UserTypeInfo";
+import { UserType_TYPE } from "./UserTypeTypeInfo";
 import _User_stuff_Validators from "./_User_stuff_Validators";
 
 export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
@@ -38,10 +38,10 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
         super.preamble();
         this.declare({
 
-            person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+            person: property({ type: Person_TYPE, validator: this.validators.validatePerson }),
             personId: property({ type: INT, precision: 10 }),
 
-            primaryGroup: property({ type: Group.TYPE, nullable: false, 
+            primaryGroup: property({ type: Group_TYPE, nullable: false, 
                 description: "The primary user group, the default value of ownerGroup.", 
                 validator: this.validators.validatePrimaryGroup }),
             primaryGroupId: property({ type: INT, nullable: false, precision: 10, 
@@ -53,7 +53,7 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
             refererId: property({ type: INT, precision: 10, 
                 description: "The referer user (used for promotion)" }),
 
-            type: property({ type: UserType.TYPE, nullable: false, 
+            type: property({ type: UserType_TYPE, nullable: false, 
                 description: "User type like system-user, normal-user, etc.", 
                 validator: this.validators.validateType }),
             typeId: property({ type: INT, nullable: false, precision: 10, 
@@ -66,3 +66,5 @@ export class _User_stuff_TypeInfo extends CoPrincipalTypeInfo {
 }
 
 export default _User_stuff_TypeInfo;
+
+export const _User_stuff_TYPE = _User_stuff_TypeInfo.INSTANCE;

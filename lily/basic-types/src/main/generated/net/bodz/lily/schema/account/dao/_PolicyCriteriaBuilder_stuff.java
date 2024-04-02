@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.account.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.Policy;
 
+@ForEntityType(Policy.class)
 public class _PolicyCriteriaBuilder_stuff<self_t extends _PolicyCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

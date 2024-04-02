@@ -7,10 +7,10 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Group from "../account/Group";
-import User from "../account/User";
-import VAppCategory from "./VAppCategory";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import { VAppCategory } from "./VAppCategory";
+import { VAppCategory_TYPE } from "./VAppCategoryTypeInfo";
 
 export const title = "Choose dialog for: V app category";
 export interface Props {
@@ -37,12 +37,12 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "VAppCategory": VAppCategory.TYPE,
+    "VAppCategory": VAppCategory_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

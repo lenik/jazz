@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.ShopTag;
 
+@ForEntityType(ShopTag.class)
 public class _ShopTagCriteriaBuilder_stuff<self_t extends _ShopTagCriteriaBuilder_stuff<self_t>>
         extends CoCodeCriteriaBuilder<self_t> {
 

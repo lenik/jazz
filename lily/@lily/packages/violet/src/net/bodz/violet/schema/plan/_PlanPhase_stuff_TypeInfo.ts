@@ -27,3 +27,5 @@ export class _PlanPhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _PlanPhase_stuff_TypeInfo;
+
+export const _PlanPhase_stuff_TYPE = _PlanPhase_stuff_TypeInfo.INSTANCE;

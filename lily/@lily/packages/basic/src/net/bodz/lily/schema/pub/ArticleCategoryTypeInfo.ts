@@ -28,3 +28,5 @@ export class ArticleCategoryTypeInfo extends _ArticleCategory_stuff_TypeInfo {
 }
 
 export default ArticleCategoryTypeInfo;
+
+export const ArticleCategory_TYPE = ArticleCategoryTypeInfo.INSTANCE;

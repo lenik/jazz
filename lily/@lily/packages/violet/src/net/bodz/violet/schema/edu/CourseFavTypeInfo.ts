@@ -28,3 +28,5 @@ export class CourseFavTypeInfo extends _CourseFav_stuff_TypeInfo {
 }
 
 export default CourseFavTypeInfo;
+
+export const CourseFav_TYPE = CourseFavTypeInfo.INSTANCE;

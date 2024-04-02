@@ -3,9 +3,9 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
-import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import { OrgUnit_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitTypeInfo";
 
-import FabProcess from "./FabProcess";
+import { FabProcess_TYPE } from "./FabProcessTypeInfo";
 import _FabTrack_stuff_Validators from "./_FabTrack_stuff_Validators";
 
 export class _FabTrack_stuff_TypeInfo extends CoEventTypeInfo {
@@ -47,10 +47,10 @@ export class _FabTrack_stuff_TypeInfo extends CoEventTypeInfo {
             actualQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateActualQuantity }),
             validQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateValidQuantity }),
 
-            orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
+            orgUnit: property({ type: OrgUnit_TYPE, validator: this.validators.validateOrgUnit }),
             orgUnitId: property({ type: INT, precision: 10 }),
 
-            process: property({ type: FabProcess.TYPE, nullable: false, validator: this.validators.validateProcess }),
+            process: property({ type: FabProcess_TYPE, nullable: false, validator: this.validators.validateProcess }),
             processId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -60,3 +60,5 @@ export class _FabTrack_stuff_TypeInfo extends CoEventTypeInfo {
 }
 
 export default _FabTrack_stuff_TypeInfo;
+
+export const _FabTrack_stuff_TYPE = _FabTrack_stuff_TypeInfo.INSTANCE;

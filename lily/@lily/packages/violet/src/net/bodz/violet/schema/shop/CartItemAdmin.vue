@@ -4,11 +4,11 @@ import { onMounted, ref } from "vue";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
 import CartItem from "./CartItem";
-import ShopItem from "./ShopItem";
+import { ShopItem_TYPE } from "./ShopItemTypeInfo";
 
 export const title = "Admin view of: Cart item";
 export interface Props {
@@ -30,13 +30,13 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "ShopItem": ShopItem.TYPE,
+    "ShopItem": ShopItem_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

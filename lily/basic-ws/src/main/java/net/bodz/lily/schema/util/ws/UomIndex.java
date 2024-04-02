@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.util.Uom;
 
 /**
-* @label Uom
-*/
+ * @label Uom
+ */
 @ObjectType(Uom.class)
 public class UomIndex
         extends CoIndex<Uom> {

@@ -32,3 +32,5 @@ export class _RegionLevel_stuff_TypeInfo extends CoCodeTypeInfo {
 }
 
 export default _RegionLevel_stuff_TypeInfo;
+
+export const _RegionLevel_stuff_TYPE = _RegionLevel_stuff_TypeInfo.INSTANCE;

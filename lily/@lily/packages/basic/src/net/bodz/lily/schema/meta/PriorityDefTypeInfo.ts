@@ -1,3 +1,4 @@
+import PriorityDef from "./PriorityDef";
 import PriorityDefValidators from "./PriorityDefValidators";
 import _PriorityDef_stuff_TypeInfo from "./_PriorityDef_stuff_TypeInfo";
 
@@ -7,12 +8,15 @@ export class PriorityDefTypeInfo extends _PriorityDef_stuff_TypeInfo {
 
     constructor() {
         super();
-        this.selfType = this;
     }
 
     get name() { return "net.bodz.lily.schema.meta.PriorityDef"; }
     get icon() { return "fa-tag"; }
     get label() { return "Priority"; }
+
+    override create() {
+        return new PriorityDef();
+    }
 
     override preamble() {
         super.preamble();
@@ -25,3 +29,5 @@ export class PriorityDefTypeInfo extends _PriorityDef_stuff_TypeInfo {
 }
 
 export default PriorityDefTypeInfo;
+
+export const PriorityDef_TYPE = PriorityDefTypeInfo.INSTANCE;

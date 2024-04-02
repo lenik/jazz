@@ -4,7 +4,10 @@ import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.UserOtherId;
 
+@ForEntityType(UserOtherId.class)
 public class _UserOtherIdCriteriaBuilder_stuff<self_t extends _UserOtherIdCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

@@ -28,3 +28,5 @@ export class UomTypeInfo extends _Uom_stuff_TypeInfo {
 }
 
 export default UomTypeInfo;
+
+export const Uom_TYPE = UomTypeInfo.INSTANCE;

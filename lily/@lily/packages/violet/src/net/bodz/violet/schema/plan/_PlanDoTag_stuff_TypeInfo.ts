@@ -25,3 +25,5 @@ export class _PlanDoTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _PlanDoTag_stuff_TypeInfo;
+
+export const _PlanDoTag_stuff_TYPE = _PlanDoTag_stuff_TypeInfo.INSTANCE;

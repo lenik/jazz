@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.contact.OrgUnit;
 
 /**
-* @label OrgUnit
-*/
+ * @label OrgUnit
+ */
 @ObjectType(OrgUnit.class)
 public class OrgUnitIndex
         extends CoIndex<OrgUnit> {

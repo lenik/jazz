@@ -6,8 +6,8 @@ import { INET_ADDRESS, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import User from "./User";
 import UserRun from "./UserRun";
+import { User_TYPE } from "./UserTypeInfo";
 
 export const title = "Admin view of: User run";
 export interface Props {
@@ -28,7 +28,7 @@ const type = UserRun.TYPE;
 const selection = ref<any>({});
 
 const typeMap = {
-    "User": User.TYPE,
+    "User": User_TYPE,
     "STRING": STRING,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,

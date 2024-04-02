@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import ShopItemFav from "./ShopItemFav";
-import _ShopItemFav_stuff from "./_ShopItemFav_stuff";
+import { _ShopItemFav_stuff_TYPE } from "./_ShopItemFav_stuff_TypeInfo";
 
 export const title = "Editor view of: Shop item fav";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FavRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_ShopItemFav_stuff.TYPE">
+        <FieldGroup :type="_ShopItemFav_stuff_TYPE">
             <FieldRow :property="meta.shopItem" v-model="model.shopItem">
                 <RefEditor :dialog="shopItemChooseDialog" v-model="model.shopItem" v-model:id="model.shopItemId" />
             </FieldRow>

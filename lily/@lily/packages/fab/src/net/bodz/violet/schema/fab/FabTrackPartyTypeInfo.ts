@@ -28,3 +28,5 @@ export class FabTrackPartyTypeInfo extends _FabTrackParty_stuff_TypeInfo {
 }
 
 export default FabTrackPartyTypeInfo;
+
+export const FabTrackParty_TYPE = FabTrackPartyTypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class FabStdTestParameterTypeInfo extends _FabStdTestParameter_stuff_Type
 }
 
 export default FabStdTestParameterTypeInfo;
+
+export const FabStdTestParameter_TYPE = FabStdTestParameterTypeInfo.INSTANCE;

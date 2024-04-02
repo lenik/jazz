@@ -1,12 +1,12 @@
 import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import IdEntityValidators from "../../concrete/IdEntityValidators";
 import type ApiType from "./ApiType";
 import type VApp from "./VApp";
 import type _VApiCredit_stuff_TypeInfo from "./_VApiCredit_stuff_TypeInfo";
 
-export class _VApiCredit_stuff_Validators extends CoEntityValidators {
+export class _VApiCredit_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _VApiCredit_stuff_TypeInfo) {
         super(type);
@@ -14,9 +14,6 @@ export class _VApiCredit_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _VApiCredit_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateCredit(val: BigDecimal) {

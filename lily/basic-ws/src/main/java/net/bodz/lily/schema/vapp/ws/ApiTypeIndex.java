@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.vapp.ApiType;
 
 /**
-* @label ApiType
-*/
+ * @label ApiType
+ */
 @ObjectType(ApiType.class)
 public class ApiTypeIndex
         extends CoIndex<ApiType> {

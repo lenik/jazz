@@ -25,3 +25,5 @@ export class _DiaryTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _DiaryTag_stuff_TypeInfo;
+
+export const _DiaryTag_stuff_TYPE = _DiaryTag_stuff_TypeInfo.INSTANCE;

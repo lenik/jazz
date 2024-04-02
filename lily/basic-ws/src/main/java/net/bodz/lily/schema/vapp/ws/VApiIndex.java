@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.vapp.VApi;
 
 /**
-* @label VApi
-*/
+ * @label VApi
+ */
 @ObjectType(VApi.class)
 public class VApiIndex
         extends CoIndex<VApi> {

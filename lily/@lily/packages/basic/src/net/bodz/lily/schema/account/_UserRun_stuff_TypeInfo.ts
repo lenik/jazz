@@ -5,7 +5,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { primaryKey, property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoEntityTypeInfo from "../../concrete/CoEntityTypeInfo";
-import User from "./User";
+import { User_TYPE } from "./UserTypeInfo";
 import _UserRun_stuff_Validators from "./_UserRun_stuff_Validators";
 
 export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
@@ -47,7 +47,7 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
                 description: "The source IP of last login", 
                 validator: this.validators.validateLastLoginIP }),
 
-            user: property({ type: User.TYPE, nullable: false, 
+            user: property({ type: User_TYPE, nullable: false, 
                 description: "The user", 
                 validator: this.validators.validateUser }),
             userId: primaryKey({ type: INT, nullable: false, precision: 10, 
@@ -60,3 +60,5 @@ export class _UserRun_stuff_TypeInfo extends CoEntityTypeInfo {
 }
 
 export default _UserRun_stuff_TypeInfo;
+
+export const _UserRun_stuff_TYPE = _UserRun_stuff_TypeInfo.INSTANCE;

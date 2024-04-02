@@ -5,9 +5,9 @@ import { BOOLEAN, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import FabStdTest from "./FabStdTest";
-import FabTrack from "./FabTrack";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 import { FabTrackTest } from "./FabTrackTest";
+import { FabTrack_TYPE } from "./FabTrackTypeInfo";
 
 export const title = "Choose dialog for: Fab track test";
 export interface Props {
@@ -35,8 +35,8 @@ const typeMap = {
     "LONG": LONG,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
-    "FabTrack": FabTrack.TYPE,
-    "FabStdTest": FabStdTest.TYPE,
+    "FabTrack": FabTrack_TYPE,
+    "FabStdTest": FabStdTest_TYPE,
     "BOOLEAN": BOOLEAN,
 };
 

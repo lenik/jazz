@@ -28,3 +28,5 @@ export class DiaryCategoryTypeInfo extends _DiaryCategory_stuff_TypeInfo {
 }
 
 export default DiaryCategoryTypeInfo;
+
+export const DiaryCategory_TYPE = DiaryCategoryTypeInfo.INSTANCE;

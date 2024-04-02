@@ -4,11 +4,11 @@ import { onMounted, ref } from "vue";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { OrgUnit_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitTypeInfo";
 
-import FabProcess from "./FabProcess";
+import { FabProcess_TYPE } from "./FabProcessTypeInfo";
 import FabTrack from "./FabTrack";
 
 export const title = "Admin view of: Fab track";
@@ -31,15 +31,15 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabProcess": FabProcess.TYPE,
+    "FabProcess": FabProcess_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
-    "OrgUnit": OrgUnit.TYPE,
+    "OrgUnit": OrgUnit_TYPE,
 };
 
 onMounted(() => {

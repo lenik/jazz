@@ -29,3 +29,5 @@ export class ParameterDefTypeInfo extends _ParameterDef_stuff_TypeInfo {
 }
 
 export default ParameterDefTypeInfo;
+
+export const ParameterDef_TYPE = ParameterDefTypeInfo.INSTANCE;

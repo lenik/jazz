@@ -2,9 +2,9 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import FabTrack from "./FabTrack";
+import { FabTrack_TYPE } from "./FabTrackTypeInfo";
 import _FabTrackParty_stuff_Validators from "./_FabTrackParty_stuff_Validators";
 
 export class _FabTrackParty_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -34,10 +34,10 @@ export class _FabTrackParty_stuff_TypeInfo extends IdEntityTypeInfo {
         this.declare({
             role: property({ type: STRING, precision: 30, validator: this.validators.validateRole }),
 
-            person: property({ type: Person.TYPE, nullable: false, validator: this.validators.validatePerson }),
+            person: property({ type: Person_TYPE, nullable: false, validator: this.validators.validatePerson }),
             personId: property({ type: INT, nullable: false, precision: 10 }),
 
-            track: property({ type: FabTrack.TYPE, nullable: false, validator: this.validators.validateTrack }),
+            track: property({ type: FabTrack_TYPE, nullable: false, validator: this.validators.validateTrack }),
             trackId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -47,3 +47,5 @@ export class _FabTrackParty_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _FabTrackParty_stuff_TypeInfo;
+
+export const _FabTrackParty_stuff_TYPE = _FabTrackParty_stuff_TypeInfo.INSTANCE;

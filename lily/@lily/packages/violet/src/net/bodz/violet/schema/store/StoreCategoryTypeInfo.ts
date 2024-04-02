@@ -28,3 +28,5 @@ export class StoreCategoryTypeInfo extends _StoreCategory_stuff_TypeInfo {
 }
 
 export default StoreCategoryTypeInfo;
+
+export const StoreCategory_TYPE = StoreCategoryTypeInfo.INSTANCE;

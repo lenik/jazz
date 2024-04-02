@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.store.dao;
 
 import net.bodz.lily.concrete.CoNodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.store.Region;
 
+@ForEntityType(Region.class)
 public class _RegionCriteriaBuilder_stuff<self_t extends _RegionCriteriaBuilder_stuff<self_t>>
         extends CoNodeCriteriaBuilder<self_t> {
 

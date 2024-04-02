@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.ParameterDef;
 
 /**
-* @label ParameterDef
-*/
+ * @label ParameterDef
+ */
 @ObjectType(ParameterDef.class)
 public class ParameterDefIndex
         extends CoIndex<ParameterDef> {

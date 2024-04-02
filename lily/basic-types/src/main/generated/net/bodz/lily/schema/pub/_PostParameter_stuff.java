@@ -1,7 +1,6 @@
 package net.bodz.lily.schema.pub;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,42 +8,35 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _PostParameter_stuff
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "post_parm";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_POST_ID = "post";
     public static final String FIELD_PARAMETER_ID = "parm";
     public static final String FIELD_IVAL = "ival";
     public static final String FIELD_FVAL = "fval";
     public static final String FIELD_SVAL = "sval";
 
-    public static final int N_ID = 10;
     public static final int N_POST_ID = 19;
     public static final int N_PARAMETER_ID = 10;
     public static final int N_IVAL = 10;
     public static final int N_FVAL = 17;
     public static final int N_SVAL = 250;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_POST_ID = _ord_ID + 4;
+    private static final int _ord_POST_ID = 5;
     private static final int _ord_PARAMETER_ID = _ord_POST_ID + 1;
     private static final int _ord_IVAL = _ord_PARAMETER_ID + 1;
     private static final int _ord_FVAL = _ord_IVAL + 1;
     private static final int _ord_SVAL = _ord_FVAL + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     Integer ival;
 
@@ -65,28 +57,6 @@ public abstract class _PostParameter_stuff
 
     @NotNull
     int parameterId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_IVAL)
     @Precision(value = N_IVAL)

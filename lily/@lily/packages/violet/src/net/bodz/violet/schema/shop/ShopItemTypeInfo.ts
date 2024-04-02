@@ -32,3 +32,5 @@ export class ShopItemTypeInfo extends _ShopItem_stuff_TypeInfo {
 }
 
 export default ShopItemTypeInfo;
+
+export const ShopItem_TYPE = ShopItemTypeInfo.INSTANCE;

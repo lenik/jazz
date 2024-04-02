@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.pub.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.pub.ArticleParameter;
 
+@ForEntityType(ArticleParameter.class)
 public class _ArticleParameterCriteriaBuilder_stuff<self_t extends _ArticleParameterCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

@@ -37,3 +37,5 @@ export class SalesOrderItemTypeInfo extends _SalesOrderItem_stuff_TypeInfo {
 }
 
 export default SalesOrderItemTypeInfo;
+
+export const SalesOrderItem_TYPE = SalesOrderItemTypeInfo.INSTANCE;

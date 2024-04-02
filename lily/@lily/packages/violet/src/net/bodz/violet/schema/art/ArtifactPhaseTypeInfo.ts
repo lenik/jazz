@@ -28,3 +28,5 @@ export class ArtifactPhaseTypeInfo extends _ArtifactPhase_stuff_TypeInfo {
 }
 
 export default ArtifactPhaseTypeInfo;
+
+export const ArtifactPhase_TYPE = ArtifactPhaseTypeInfo.INSTANCE;

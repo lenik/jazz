@@ -25,3 +25,5 @@ export class _RegionTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _RegionTag_stuff_TypeInfo;
+
+export const _RegionTag_stuff_TYPE = _RegionTag_stuff_TypeInfo.INSTANCE;

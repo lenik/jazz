@@ -232,6 +232,8 @@ public abstract class _StoreOrderItem_stuff
     @Column(name = "odr", nullable = false, precision = 19)
     public synchronized long getOrderId() {
         if (order != null) {
+            if (order.getId() == null)
+                return 0L;
             return order.getId();
         }
         return orderId;

@@ -4,10 +4,10 @@ import { onMounted, ref } from "vue";
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import FabOrder from "./FabOrder";
+import { FabOrder_TYPE } from "./FabOrderTypeInfo";
 import FabTask from "./FabTask";
 
 export const title = "Admin view of: Fab task";
@@ -30,13 +30,13 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabOrder": FabOrder.TYPE,
+    "FabOrder": FabOrder_TYPE,
 };
 
 onMounted(() => {

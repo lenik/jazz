@@ -3,7 +3,10 @@ package net.bodz.violet.schema.store.dao;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.store.StoreOrder;
 
+@ForEntityType(StoreOrder.class)
 public class _StoreOrderCriteriaBuilder_stuff<self_t extends _StoreOrderCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

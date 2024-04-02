@@ -28,3 +28,5 @@ export class PostParameterTypeInfo extends _PostParameter_stuff_TypeInfo {
 }
 
 export default PostParameterTypeInfo;
+
+export const PostParameter_TYPE = PostParameterTypeInfo.INSTANCE;

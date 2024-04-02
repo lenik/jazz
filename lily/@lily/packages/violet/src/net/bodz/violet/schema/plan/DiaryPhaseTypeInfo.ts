@@ -28,3 +28,5 @@ export class DiaryPhaseTypeInfo extends _DiaryPhase_stuff_TypeInfo {
 }
 
 export default DiaryPhaseTypeInfo;
+
+export const DiaryPhase_TYPE = DiaryPhaseTypeInfo.INSTANCE;

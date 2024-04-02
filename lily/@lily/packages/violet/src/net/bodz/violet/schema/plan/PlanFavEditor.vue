@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import PlanFav from "./PlanFav";
-import _PlanFav_stuff from "./_PlanFav_stuff";
+import { _PlanFav_stuff_TYPE } from "./_PlanFav_stuff_TypeInfo";
 
 export const title = "Editor view of: Plan fav";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FavRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_PlanFav_stuff.TYPE">
+        <FieldGroup :type="_PlanFav_stuff_TYPE">
             <FieldRow :property="meta.plan" v-model="model.plan">
                 <RefEditor :dialog="planChooseDialog" v-model="model.plan" v-model:id="model.planId" />
             </FieldRow>

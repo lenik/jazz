@@ -33,3 +33,5 @@ export class _ZoneCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _ZoneCategory_stuff_TypeInfo;
+
+export const _ZoneCategory_stuff_TYPE = _ZoneCategory_stuff_TypeInfo.INSTANCE;

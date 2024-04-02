@@ -2,10 +2,10 @@ import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import ArtifactModel from "../art/ArtifactModel";
-import FabStdProcess from "./FabStdProcess";
+import { FabStdProcess_TYPE } from "./FabStdProcessTypeInfo";
 import _FabStdProcessInput_stuff_Validators from "./_FabStdProcessInput_stuff_Validators";
 
 export class _FabStdProcessInput_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -37,13 +37,13 @@ export class _FabStdProcessInput_stuff_TypeInfo extends IdEntityTypeInfo {
         this.declare({
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
 
-            process: property({ type: FabStdProcess.TYPE, nullable: false, validator: this.validators.validateProcess }),
+            process: property({ type: FabStdProcess_TYPE, nullable: false, validator: this.validators.validateProcess }),
             processId: property({ type: INT, nullable: false, precision: 10 }),
 
-            model: property({ type: ArtifactModel.TYPE, validator: this.validators.validateModel }),
+            model: property({ type: ArtifactModel_TYPE, validator: this.validators.validateModel }),
             modelId: property({ type: INT, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, precision: 10 }),
         });
     }
@@ -53,3 +53,5 @@ export class _FabStdProcessInput_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _FabStdProcessInput_stuff_TypeInfo;
+
+export const _FabStdProcessInput_stuff_TYPE = _FabStdProcessInput_stuff_TypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class FabTrackTypeInfo extends _FabTrack_stuff_TypeInfo {
 }
 
 export default FabTrackTypeInfo;
+
+export const FabTrack_TYPE = FabTrackTypeInfo.INSTANCE;

@@ -3,11 +3,11 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import CoNode from "@lily/basic/src/net/bodz/lily/concrete/CoNode";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { CoNode_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import ArtifactCategory from "./ArtifactCategory";
-import _ArtifactCategory_stuff from "./_ArtifactCategory_stuff";
+import { _ArtifactCategory_stuff_TYPE } from "./_ArtifactCategory_stuff_TypeInfo";
 
 export const title = "Editor view of: Artifact category";
 export interface Props {
@@ -66,18 +66,18 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="CoNode.TYPE">
+        <FieldGroup :type="CoNode_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="artifactCategoryChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_ArtifactCategory_stuff.TYPE">
+        <FieldGroup :type="_ArtifactCategory_stuff_TYPE">
             <FieldRow :property="meta.code" v-model="model.code">
                 <input type="text" v-model="model.code" />
             </FieldRow>

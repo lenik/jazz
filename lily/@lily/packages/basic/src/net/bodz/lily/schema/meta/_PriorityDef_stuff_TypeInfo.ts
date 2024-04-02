@@ -8,8 +8,8 @@ export class _PriorityDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 
     readonly validators = new _PriorityDef_stuff_Validators(this);
 
-    constructor(selfType: any) {
-        super(selfType);
+    constructor() {
+        super();
     }
 
     get name() { return "net.bodz.lily.schema.meta.PriorityDef"; }
@@ -25,3 +25,5 @@ export class _PriorityDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 }
 
 export default _PriorityDef_stuff_TypeInfo;
+
+export const _PriorityDef_stuff_TYPE = _PriorityDef_stuff_TypeInfo.INSTANCE;

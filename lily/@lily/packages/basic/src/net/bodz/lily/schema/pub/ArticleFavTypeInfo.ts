@@ -28,3 +28,5 @@ export class ArticleFavTypeInfo extends _ArticleFav_stuff_TypeInfo {
 }
 
 export default ArticleFavTypeInfo;
+
+export const ArticleFav_TYPE = ArticleFavTypeInfo.INSTANCE;

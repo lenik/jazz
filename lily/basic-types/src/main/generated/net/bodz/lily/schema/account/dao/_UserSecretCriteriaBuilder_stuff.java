@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.account.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.UserSecret;
 
+@ForEntityType(UserSecret.class)
 public class _UserSecretCriteriaBuilder_stuff<self_t extends _UserSecretCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

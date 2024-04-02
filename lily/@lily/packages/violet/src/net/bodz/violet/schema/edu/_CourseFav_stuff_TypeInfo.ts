@@ -2,7 +2,7 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
-import Course from "./Course";
+import { Course_TYPE } from "./CourseTypeInfo";
 import _CourseFav_stuff_Validators from "./_CourseFav_stuff_Validators";
 
 export class _CourseFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _CourseFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            course: property({ type: Course.TYPE, nullable: false, validator: this.validators.validateCourse }),
+            course: property({ type: Course_TYPE, nullable: false, validator: this.validators.validateCourse }),
             courseId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -37,3 +37,5 @@ export class _CourseFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _CourseFav_stuff_TypeInfo;
+
+export const _CourseFav_stuff_TYPE = _CourseFav_stuff_TypeInfo.INSTANCE;

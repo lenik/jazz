@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import FormDef from "./FormDef";
+import { FormDef_TYPE } from "./FormDefTypeInfo";
 import { FormParameter } from "./FormParameter";
 
 export const title = "Choose dialog for: Form parameter";
@@ -31,7 +31,7 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "FormDef": FormDef.TYPE,
+    "FormDef": FormDef_TYPE,
     "STRING": STRING,
 };
 

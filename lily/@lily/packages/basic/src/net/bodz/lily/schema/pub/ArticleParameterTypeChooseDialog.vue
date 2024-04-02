@@ -6,8 +6,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Group from "../account/Group";
-import User from "../account/User";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import { ArticleParameterType } from "./ArticleParameterType";
 
 export const title = "Choose dialog for: Article parameter type";
@@ -34,8 +34,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,

@@ -2,10 +2,10 @@ import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import Plan from "./Plan";
+import { Plan_TYPE } from "./PlanTypeInfo";
 import _PlanParty_stuff_Validators from "./_PlanParty_stuff_Validators";
 
 export class _PlanParty_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -34,13 +34,13 @@ export class _PlanParty_stuff_TypeInfo extends IdEntityTypeInfo {
         super.preamble();
         this.declare({
 
-            person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+            person: property({ type: Person_TYPE, validator: this.validators.validatePerson }),
             personId: property({ type: INT, precision: 10 }),
 
-            plan: property({ type: Plan.TYPE, nullable: false, validator: this.validators.validatePlan }),
+            plan: property({ type: Plan_TYPE, nullable: false, validator: this.validators.validatePlan }),
             planId: property({ type: LONG, nullable: false, precision: 19 }),
 
-            org: property({ type: Organization.TYPE, validator: this.validators.validateOrg }),
+            org: property({ type: Organization_TYPE, validator: this.validators.validateOrg }),
             orgId: property({ type: INT, precision: 10 }),
         });
     }
@@ -50,3 +50,5 @@ export class _PlanParty_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _PlanParty_stuff_TypeInfo;
+
+export const _PlanParty_stuff_TYPE = _PlanParty_stuff_TypeInfo.INSTANCE;

@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.geo.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.geo.ZoneCategory;
 
+@ForEntityType(ZoneCategory.class)
 public class _ZoneCategoryCriteriaBuilder_stuff<self_t extends _ZoneCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

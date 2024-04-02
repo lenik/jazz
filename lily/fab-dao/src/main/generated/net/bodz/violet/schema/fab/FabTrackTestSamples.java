@@ -17,8 +17,7 @@ public class FabTrackTestSamples
         FabTrackTest a = new FabTrackTest();
         a.setTrack(track);
         a.setStandard(standard);
-        a.setId(9090319591172490544L);
-        a.setValid(false);
+        a.setValid(true);
         return a;
     }
 

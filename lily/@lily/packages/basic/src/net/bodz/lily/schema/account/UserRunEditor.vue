@@ -7,7 +7,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
 import UserRun from "./UserRun";
-import _UserRun_stuff from "./_UserRun_stuff";
+import { _UserRun_stuff_TYPE } from "./_UserRun_stuff_TypeInfo";
 
 export const title = "Editor view of: User run";
 export interface Props {
@@ -67,7 +67,7 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_UserRun_stuff.TYPE">
+        <FieldGroup :type="_UserRun_stuff_TYPE">
             <FieldRow :property="meta.properties" v-model="model.properties">
                 <JsonEditor v-model="model.properties" />
             </FieldRow>

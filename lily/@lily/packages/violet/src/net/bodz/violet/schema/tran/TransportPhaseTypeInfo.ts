@@ -28,3 +28,5 @@ export class TransportPhaseTypeInfo extends _TransportPhase_stuff_TypeInfo {
 }
 
 export default TransportPhaseTypeInfo;
+
+export const TransportPhase_TYPE = TransportPhaseTypeInfo.INSTANCE;

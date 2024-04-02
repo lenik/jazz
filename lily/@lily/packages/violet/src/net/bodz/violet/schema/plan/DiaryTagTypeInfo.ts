@@ -28,3 +28,5 @@ export class DiaryTagTypeInfo extends _DiaryTag_stuff_TypeInfo {
 }
 
 export default DiaryTagTypeInfo;
+
+export const DiaryTag_TYPE = DiaryTagTypeInfo.INSTANCE;

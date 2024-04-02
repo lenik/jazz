@@ -6,9 +6,9 @@ import javax.persistence.Table;
  * @label Priority
  * @label.zh.cn 优先级
  */
-@Table(name = "_priority")
+@Table(schema = PriorityDef.SCHEMA_NAME, name = PriorityDef.TABLE_NAME)
 public class PriorityDef
-        extends AbstractDefinition<PriorityDef> {
+        extends _PriorityDef_stuff<PriorityDef> {
 
     private static final long serialVersionUID = 1L;
 

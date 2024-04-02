@@ -4,7 +4,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
-import CourseCategory from "./CourseCategory";
+import { CourseCategory_TYPE } from "./CourseCategoryTypeInfo";
 import _Course_stuff_Validators from "./_Course_stuff_Validators";
 
 export class _Course_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -44,7 +44,7 @@ export class _Course_stuff_TypeInfo extends CoImagedTypeInfo {
             credit: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateCredit }),
             plugins: property({ type: JSON_VARIANT, validator: this.validators.validatePlugins }),
 
-            category: property({ type: CourseCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: CourseCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
         });
     }
@@ -54,3 +54,5 @@ export class _Course_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Course_stuff_TypeInfo;
+
+export const _Course_stuff_TYPE = _Course_stuff_TypeInfo.INSTANCE;

@@ -1,7 +1,7 @@
 import { STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import Dim3d from "../art/Dim3d";
+import { Dim3d_TYPE } from "../art/Dim3dTypeInfo";
 import Region from "./Region";
 import RegionValidators from "./RegionValidators";
 import _Region_stuff_TypeInfo from "./_Region_stuff_TypeInfo";
@@ -24,9 +24,9 @@ export class RegionTypeInfo extends _Region_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            bbox: property({ type: Dim3d.TYPE, validator: this.validators.validateBbox }),
+            bbox: property({ type: Dim3d_TYPE, validator: this.validators.validateBbox }),
             fullPath: property({ type: STRING, validator: this.validators.validateFullPath }),
-            position: property({ type: Dim3d.TYPE, validator: this.validators.validatePosition }),
+            position: property({ type: Dim3d_TYPE, validator: this.validators.validatePosition }),
         });
     }
 
@@ -35,3 +35,5 @@ export class RegionTypeInfo extends _Region_stuff_TypeInfo {
 }
 
 export default RegionTypeInfo;
+
+export const Region_TYPE = RegionTypeInfo.INSTANCE;

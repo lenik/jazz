@@ -28,3 +28,5 @@ export class FabTaskTypeInfo extends _FabTask_stuff_TypeInfo {
 }
 
 export default FabTaskTypeInfo;
+
+export const FabTask_TYPE = FabTaskTypeInfo.INSTANCE;

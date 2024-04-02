@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.inet.dao;
 
 import net.bodz.lily.concrete.CoNodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.inet.ExternalSite;
 
+@ForEntityType(ExternalSite.class)
 public class _ExternalSiteCriteriaBuilder_stuff<self_t extends _ExternalSiteCriteriaBuilder_stuff<self_t>>
         extends CoNodeCriteriaBuilder<self_t> {
 

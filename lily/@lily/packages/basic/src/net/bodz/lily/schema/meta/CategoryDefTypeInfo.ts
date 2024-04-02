@@ -29,3 +29,5 @@ export class CategoryDefTypeInfo extends _CategoryDef_stuff_TypeInfo {
 }
 
 export default CategoryDefTypeInfo;
+
+export const CategoryDef_TYPE = CategoryDefTypeInfo.INSTANCE;

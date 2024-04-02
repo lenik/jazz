@@ -28,3 +28,5 @@ export class IssueTagTypeInfo extends _IssueTag_stuff_TypeInfo {
 }
 
 export default IssueTagTypeInfo;
+
+export const IssueTag_TYPE = IssueTagTypeInfo.INSTANCE;

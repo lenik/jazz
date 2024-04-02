@@ -1,10 +1,10 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type SchemaDef from "./SchemaDef";
 import _PhaseDef_stuff_TypeInfo from "./_PhaseDef_stuff_TypeInfo";
 
-export class _PhaseDef_stuff extends CoEntity<int> {
+export class _PhaseDef_stuff extends IdEntity<int> {
 
     static _typeInfo: _PhaseDef_stuff_TypeInfo;
     static get TYPE() {
@@ -13,7 +13,6 @@ export class _PhaseDef_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     code?: string;
 
     schema: SchemaDef;

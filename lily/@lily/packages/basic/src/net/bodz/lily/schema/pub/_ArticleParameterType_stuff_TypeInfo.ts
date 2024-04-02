@@ -35,3 +35,5 @@ export class _ArticleParameterType_stuff_TypeInfo extends CoParameterTypeInfo {
 }
 
 export default _ArticleParameterType_stuff_TypeInfo;
+
+export const _ArticleParameterType_stuff_TYPE = _ArticleParameterType_stuff_TypeInfo.INSTANCE;

@@ -8,7 +8,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { TestAnswer } from "./TestAnswer";
-import TestQuestion from "./TestQuestion";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 
 export const title = "Choose dialog for: Test answer";
 export interface Props {
@@ -39,7 +39,7 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "TestQuestion": TestQuestion.TYPE,
+    "TestQuestion": TestQuestion_TYPE,
     "BOOLEAN": BOOLEAN,
 };
 

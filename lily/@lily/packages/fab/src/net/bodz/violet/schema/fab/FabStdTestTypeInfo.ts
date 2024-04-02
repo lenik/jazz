@@ -28,3 +28,5 @@ export class FabStdTestTypeInfo extends _FabStdTest_stuff_TypeInfo {
 }
 
 export default FabStdTestTypeInfo;
+
+export const FabStdTest_TYPE = FabStdTestTypeInfo.INSTANCE;

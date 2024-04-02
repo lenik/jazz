@@ -2,12 +2,12 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import IdEntityValidators from "../../concrete/IdEntityValidators";
 import type ApiType from "./ApiType";
 import type VApp from "./VApp";
 import type _VApi_stuff_TypeInfo from "./_VApi_stuff_TypeInfo";
 
-export class _VApi_stuff_Validators extends CoEntityValidators {
+export class _VApi_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _VApi_stuff_TypeInfo) {
         super(type);
@@ -15,9 +15,6 @@ export class _VApi_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _VApi_stuff_TypeInfo;
-    }
-
-    validateId(val: long) {
     }
 
     validateProperties(val: JsonVariant) {

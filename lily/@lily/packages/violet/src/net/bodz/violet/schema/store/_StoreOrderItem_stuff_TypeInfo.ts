@@ -5,9 +5,9 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
-import Artifact from "../art/Artifact";
-import Region from "./Region";
-import StoreOrder from "./StoreOrder";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
+import { StoreOrder_TYPE } from "./StoreOrderTypeInfo";
 import _StoreOrderItem_stuff_Validators from "./_StoreOrderItem_stuff_Validators";
 
 export class _StoreOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
@@ -57,13 +57,13 @@ export class _StoreOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
             amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateAmount }),
             notes: property({ type: STRING, precision: 200, validator: this.validators.validateNotes }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
 
-            order: property({ type: StoreOrder.TYPE, nullable: false, validator: this.validators.validateOrder }),
+            order: property({ type: StoreOrder_TYPE, nullable: false, validator: this.validators.validateOrder }),
             orderId: property({ type: LONG, nullable: false, precision: 19 }),
 
-            region: property({ type: Region.TYPE, nullable: false, validator: this.validators.validateRegion }),
+            region: property({ type: Region_TYPE, nullable: false, validator: this.validators.validateRegion }),
             regionId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -73,3 +73,5 @@ export class _StoreOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 }
 
 export default _StoreOrderItem_stuff_TypeInfo;
+
+export const _StoreOrderItem_stuff_TYPE = _StoreOrderItem_stuff_TypeInfo.INSTANCE;

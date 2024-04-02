@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import TestQuestionTalk from "./TestQuestionTalk";
+import { TestQuestionTalk_TYPE } from "./TestQuestionTalkTypeInfo";
 import TestQuestionTalkVote from "./TestQuestionTalkVote";
 
 export const title = "Admin view of: Test question talk vote";
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "TestQuestionTalk": TestQuestionTalk.TYPE,
-    "User": User.TYPE,
+    "TestQuestionTalk": TestQuestionTalk_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

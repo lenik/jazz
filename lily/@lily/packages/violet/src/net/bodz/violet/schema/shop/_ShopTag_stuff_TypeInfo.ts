@@ -25,3 +25,5 @@ export class _ShopTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _ShopTag_stuff_TypeInfo;
+
+export const _ShopTag_stuff_TYPE = _ShopTag_stuff_TypeInfo.INSTANCE;

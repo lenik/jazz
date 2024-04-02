@@ -5,11 +5,11 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Artifact from "../art/Artifact";
-import Region from "./Region";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
 import StoreItem from "./StoreItem";
 
 export const title = "Admin view of: Store item";
@@ -32,13 +32,13 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Artifact": Artifact.TYPE,
-    "Region": Region.TYPE,
+    "Artifact": Artifact_TYPE,
+    "Region": Region_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BIG_DECIMAL": BIG_DECIMAL,
 };

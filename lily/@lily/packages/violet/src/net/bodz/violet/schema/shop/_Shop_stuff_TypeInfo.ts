@@ -38,3 +38,5 @@ export class _Shop_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Shop_stuff_TypeInfo;
+
+export const _Shop_stuff_TYPE = _Shop_stuff_TypeInfo.INSTANCE;

@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.art.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.art.ArtifactCategory;
 
+@ForEntityType(ArtifactCategory.class)
 public class _ArtifactCategoryCriteriaBuilder_stuff<self_t extends _ArtifactCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

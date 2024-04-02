@@ -28,3 +28,5 @@ export class CourseTypeInfo extends _Course_stuff_TypeInfo {
 }
 
 export default CourseTypeInfo;
+
+export const Course_TYPE = CourseTypeInfo.INSTANCE;

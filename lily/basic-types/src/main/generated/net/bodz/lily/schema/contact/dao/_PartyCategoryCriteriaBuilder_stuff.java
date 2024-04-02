@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.contact.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.contact.PartyCategory;
 
+@ForEntityType(PartyCategory.class)
 public class _PartyCategoryCriteriaBuilder_stuff<self_t extends _PartyCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

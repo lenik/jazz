@@ -28,3 +28,5 @@ export class FabOrderTypeInfo extends _FabOrder_stuff_TypeInfo {
 }
 
 export default FabOrderTypeInfo;
+
+export const FabOrder_TYPE = FabOrderTypeInfo.INSTANCE;

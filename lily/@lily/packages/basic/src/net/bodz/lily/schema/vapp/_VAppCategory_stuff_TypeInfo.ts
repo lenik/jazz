@@ -33,3 +33,5 @@ export class _VAppCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _VAppCategory_stuff_TypeInfo;
+
+export const _VAppCategory_stuff_TYPE = _VAppCategory_stuff_TypeInfo.INSTANCE;

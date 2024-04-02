@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.SellPrice;
 
+@ForEntityType(SellPrice.class)
 public class _SellPriceCriteriaBuilder_stuff<self_t extends _SellPriceCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

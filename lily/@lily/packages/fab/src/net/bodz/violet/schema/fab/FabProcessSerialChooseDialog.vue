@@ -5,8 +5,8 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import FabProcess from "./FabProcess";
 import { FabProcessSerial } from "./FabProcessSerial";
+import { FabProcess_TYPE } from "./FabProcessTypeInfo";
 
 export const title = "Choose dialog for: Fab process serial";
 export interface Props {
@@ -34,7 +34,7 @@ const typeMap = {
     "LONG": LONG,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
-    "FabProcess": FabProcess.TYPE,
+    "FabProcess": FabProcess_TYPE,
     "STRING": STRING,
 };
 

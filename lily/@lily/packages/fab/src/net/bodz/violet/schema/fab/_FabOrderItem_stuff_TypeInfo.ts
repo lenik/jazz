@@ -2,9 +2,9 @@ import { BIG_DECIMAL, BOOLEAN, INT, LONG, STRING } from "@skeljs/core/src/lang/b
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import FabOrder from "./FabOrder";
+import { FabOrder_TYPE } from "./FabOrderTypeInfo";
 import _FabOrderItem_stuff_Validators from "./_FabOrderItem_stuff_Validators";
 
 export class _FabOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
@@ -55,10 +55,10 @@ export class _FabOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
             amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateAmount }),
             notes: property({ type: STRING, precision: 200, validator: this.validators.validateNotes }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
 
-            order: property({ type: FabOrder.TYPE, nullable: false, validator: this.validators.validateOrder }),
+            order: property({ type: FabOrder_TYPE, nullable: false, validator: this.validators.validateOrder }),
             orderId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -68,3 +68,5 @@ export class _FabOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 }
 
 export default _FabOrderItem_stuff_TypeInfo;
+
+export const _FabOrderItem_stuff_TYPE = _FabOrderItem_stuff_TypeInfo.INSTANCE;

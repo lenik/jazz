@@ -1,11 +1,11 @@
 import type { double, int, long } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type Post from "./Post";
 import type PostParameterType from "./PostParameterType";
 import _PostParameter_stuff_TypeInfo from "./_PostParameter_stuff_TypeInfo";
 
-export class _PostParameter_stuff extends CoEntity<int> {
+export class _PostParameter_stuff extends IdEntity<int> {
 
     static _typeInfo: _PostParameter_stuff_TypeInfo;
     static get TYPE() {
@@ -14,7 +14,6 @@ export class _PostParameter_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     ival?: int;
     fval?: double;
     sval?: string;

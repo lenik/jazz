@@ -3,8 +3,8 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import CoNode from "@lily/basic/src/net/bodz/lily/concrete/CoNode";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { CoNode_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/CoNodeTypeInfo";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import CourseKitTag from "./CourseKitTag";
 
@@ -65,12 +65,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="CoNode.TYPE">
+        <FieldGroup :type="CoNode_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="courseKitTagChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>

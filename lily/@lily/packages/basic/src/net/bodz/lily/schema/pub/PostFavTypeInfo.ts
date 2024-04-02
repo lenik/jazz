@@ -28,3 +28,5 @@ export class PostFavTypeInfo extends _PostFav_stuff_TypeInfo {
 }
 
 export default PostFavTypeInfo;
+
+export const PostFav_TYPE = PostFavTypeInfo.INSTANCE;

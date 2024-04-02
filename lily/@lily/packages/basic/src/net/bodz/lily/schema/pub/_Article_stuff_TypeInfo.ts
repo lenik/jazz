@@ -4,7 +4,7 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
-import ArticleCategory from "./ArticleCategory";
+import { ArticleCategory_TYPE } from "./ArticleCategoryTypeInfo";
 import _Article_stuff_Validators from "./_Article_stuff_Validators";
 
 export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -47,7 +47,7 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
             messageCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateMessageCount }),
             plugins: property({ type: JSON_VARIANT, validator: this.validators.validatePlugins }),
 
-            category: property({ type: ArticleCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: ArticleCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
         });
     }
@@ -57,3 +57,5 @@ export class _Article_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _Article_stuff_TypeInfo;
+
+export const _Article_stuff_TYPE = _Article_stuff_TypeInfo.INSTANCE;

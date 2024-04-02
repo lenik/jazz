@@ -28,3 +28,5 @@ export class FormDefTypeInfo extends _FormDef_stuff_TypeInfo {
 }
 
 export default FormDefTypeInfo;
+
+export const FormDef_TYPE = FormDefTypeInfo.INSTANCE;

@@ -7,11 +7,11 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Group from "../account/Group";
-import User from "../account/User";
-import FormDef from "../meta/FormDef";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { FormDef_TYPE } from "../meta/FormDefTypeInfo";
 import { Article } from "./Article";
-import ArticleCategory from "./ArticleCategory";
+import { ArticleCategory_TYPE } from "./ArticleCategoryTypeInfo";
 
 export const title = "Choose dialog for: Article";
 export interface Props {
@@ -37,14 +37,14 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FormDef": FormDef.TYPE,
-    "ArticleCategory": ArticleCategory.TYPE,
+    "FormDef": FormDef_TYPE,
+    "ArticleCategory": ArticleCategory_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
 };
 

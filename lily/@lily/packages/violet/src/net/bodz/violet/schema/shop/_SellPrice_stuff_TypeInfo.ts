@@ -3,7 +3,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
-import Artifact from "../art/Artifact";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import _SellPrice_stuff_Validators from "./_SellPrice_stuff_Validators";
 
 export class _SellPrice_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -34,7 +34,7 @@ export class _SellPrice_stuff_TypeInfo extends IdEntityTypeInfo {
             code: property({ type: STRING, precision: 20, validator: this.validators.validateCode }),
             price: property({ type: BIG_DECIMAL, nullable: false, precision: 12, scale: 2, validator: this.validators.validatePrice }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -44,3 +44,5 @@ export class _SellPrice_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _SellPrice_stuff_TypeInfo;
+
+export const _SellPrice_stuff_TYPE = _SellPrice_stuff_TypeInfo.INSTANCE;

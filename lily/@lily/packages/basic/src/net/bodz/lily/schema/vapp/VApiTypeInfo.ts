@@ -28,3 +28,5 @@ export class VApiTypeInfo extends _VApi_stuff_TypeInfo {
 }
 
 export default VApiTypeInfo;
+
+export const VApi_TYPE = VApiTypeInfo.INSTANCE;

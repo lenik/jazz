@@ -6,8 +6,8 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "./User";
 import { UserSecret } from "./UserSecret";
+import { User_TYPE } from "./UserTypeInfo";
 
 export const title = "Choose dialog for: User secret";
 export interface Props {
@@ -35,7 +35,7 @@ const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "User": User.TYPE,
+    "User": User_TYPE,
     "STRING": STRING,
 };
 

@@ -3,12 +3,12 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import Diary from "./Diary";
 import { DiaryParty } from "./DiaryParty";
+import { Diary_TYPE } from "./DiaryTypeInfo";
 
 export const title = "Choose dialog for: Diary party";
 export interface Props {
@@ -35,10 +35,10 @@ const emit = defineEmits<{
 const typeMap = {
     "LONG": LONG,
     "STRING": STRING,
-    "Diary": Diary.TYPE,
-    "User": User.TYPE,
-    "Person": Person.TYPE,
-    "Organization": Organization.TYPE,
+    "Diary": Diary_TYPE,
+    "User": User_TYPE,
+    "Person": Person_TYPE,
+    "Organization": Organization_TYPE,
     "INT": INT,
 };
 

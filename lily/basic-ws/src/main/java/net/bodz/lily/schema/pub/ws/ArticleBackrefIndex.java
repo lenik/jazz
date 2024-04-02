@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.ArticleBackref;
 
 /**
-* @label ArticleBackref
-*/
+ * @label ArticleBackref
+ */
 @ObjectType(ArticleBackref.class)
 public class ArticleBackrefIndex
         extends CoIndex<ArticleBackref> {

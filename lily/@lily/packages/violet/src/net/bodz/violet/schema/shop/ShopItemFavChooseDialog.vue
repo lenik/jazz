@@ -3,10 +3,10 @@ import { onMounted, ref } from "vue";
 
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import ShopItem from "./ShopItem";
 import { ShopItemFav } from "./ShopItemFav";
+import { ShopItem_TYPE } from "./ShopItemTypeInfo";
 
 export const title = "Choose dialog for: Shop item fav";
 export interface Props {
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "ShopItem": ShopItem.TYPE,
-    "User": User.TYPE,
+    "ShopItem": ShopItem_TYPE,
+    "User": User_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

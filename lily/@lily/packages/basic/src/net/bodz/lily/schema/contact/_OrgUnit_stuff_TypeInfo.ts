@@ -1,8 +1,8 @@
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import OrgUnit from "./OrgUnit";
-import Organization from "./Organization";
+import { OrgUnit_TYPE } from "./OrgUnitTypeInfo";
+import { Organization_TYPE } from "./OrganizationTypeInfo";
 import PartyTypeInfo from "./PartyTypeInfo";
 import _OrgUnit_stuff_Validators from "./_OrgUnit_stuff_Validators";
 
@@ -33,7 +33,7 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
         this.declare({
             depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
 
-            org: property({ type: Organization.TYPE, nullable: false, validator: this.validators.validateOrg }),
+            org: property({ type: Organization_TYPE, nullable: false, validator: this.validators.validateOrg }),
             orgId: property({ type: INT, nullable: false, precision: 10 }),
 
             parent: property({ type: this, validator: this.validators.validateParent }),
@@ -46,3 +46,5 @@ export class _OrgUnit_stuff_TypeInfo extends PartyTypeInfo {
 }
 
 export default _OrgUnit_stuff_TypeInfo;
+
+export const _OrgUnit_stuff_TYPE = _OrgUnit_stuff_TypeInfo.INSTANCE;

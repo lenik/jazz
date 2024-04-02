@@ -7,8 +7,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "./User";
 import { UserRun } from "./UserRun";
+import { User_TYPE } from "./UserTypeInfo";
 
 export const title = "Choose dialog for: User run";
 export interface Props {
@@ -33,7 +33,7 @@ const emit = defineEmits<{
 // property shortcuts
 
 const typeMap = {
-    "User": User.TYPE,
+    "User": User_TYPE,
     "STRING": STRING,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,

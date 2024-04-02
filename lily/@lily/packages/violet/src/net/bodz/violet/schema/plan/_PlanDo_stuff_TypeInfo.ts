@@ -3,8 +3,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
-import Plan from "./Plan";
-import PlanDo from "./PlanDo";
+import { PlanDo_TYPE } from "./PlanDoTypeInfo";
+import { Plan_TYPE } from "./PlanTypeInfo";
 import _PlanDo_stuff_Validators from "./_PlanDo_stuff_Validators";
 
 export class _PlanDo_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -40,7 +40,7 @@ export class _PlanDo_stuff_TypeInfo extends CoMessageTypeInfo {
             voteCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteCount }),
             changes: property({ type: ARRAY(STRING), validator: this.validators.validateChanges }),
 
-            plan: property({ type: Plan.TYPE, nullable: false, validator: this.validators.validatePlan }),
+            plan: property({ type: Plan_TYPE, nullable: false, validator: this.validators.validatePlan }),
             planId: property({ type: LONG, nullable: false, precision: 19 }),
 
             parent: property({ type: this, validator: this.validators.validateParent }),
@@ -53,3 +53,5 @@ export class _PlanDo_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _PlanDo_stuff_TypeInfo;
+
+export const _PlanDo_stuff_TYPE = _PlanDo_stuff_TypeInfo.INSTANCE;

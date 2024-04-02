@@ -28,3 +28,5 @@ export class TestApplyItemTypeInfo extends _TestApplyItem_stuff_TypeInfo {
 }
 
 export default TestApplyItemTypeInfo;
+
+export const TestApplyItem_TYPE = TestApplyItemTypeInfo.INSTANCE;

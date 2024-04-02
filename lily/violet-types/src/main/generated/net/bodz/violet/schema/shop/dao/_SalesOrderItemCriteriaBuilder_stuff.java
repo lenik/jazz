@@ -2,7 +2,10 @@ package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.SalesOrderItem;
 
+@ForEntityType(SalesOrderItem.class)
 public class _SalesOrderItemCriteriaBuilder_stuff<self_t extends _SalesOrderItemCriteriaBuilder_stuff<self_t>>
         extends CoImagedEventCriteriaBuilder<self_t> {
 

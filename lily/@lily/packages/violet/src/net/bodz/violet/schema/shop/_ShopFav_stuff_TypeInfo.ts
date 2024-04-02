@@ -2,7 +2,7 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
-import Shop from "./Shop";
+import { Shop_TYPE } from "./ShopTypeInfo";
 import _ShopFav_stuff_Validators from "./_ShopFav_stuff_Validators";
 
 export class _ShopFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _ShopFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            shop: property({ type: Shop.TYPE, nullable: false, validator: this.validators.validateShop }),
+            shop: property({ type: Shop_TYPE, nullable: false, validator: this.validators.validateShop }),
             shopId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -37,3 +37,5 @@ export class _ShopFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _ShopFav_stuff_TypeInfo;
+
+export const _ShopFav_stuff_TYPE = _ShopFav_stuff_TypeInfo.INSTANCE;

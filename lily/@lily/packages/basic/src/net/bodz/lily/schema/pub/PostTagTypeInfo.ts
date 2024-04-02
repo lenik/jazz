@@ -28,3 +28,5 @@ export class PostTagTypeInfo extends _PostTag_stuff_TypeInfo {
 }
 
 export default PostTagTypeInfo;
+
+export const PostTag_TYPE = PostTagTypeInfo.INSTANCE;

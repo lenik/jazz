@@ -33,3 +33,5 @@ export class _PlanCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _PlanCategory_stuff_TypeInfo;
+
+export const _PlanCategory_stuff_TYPE = _PlanCategory_stuff_TypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class ArtifactBackrefTypeInfo extends _ArtifactBackref_stuff_TypeInfo {
 }
 
 export default ArtifactBackrefTypeInfo;
+
+export const ArtifactBackref_TYPE = ArtifactBackrefTypeInfo.INSTANCE;

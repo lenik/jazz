@@ -28,3 +28,5 @@ export class SalesCategoryTypeInfo extends _SalesCategory_stuff_TypeInfo {
 }
 
 export default SalesCategoryTypeInfo;
+
+export const SalesCategory_TYPE = SalesCategoryTypeInfo.INSTANCE;

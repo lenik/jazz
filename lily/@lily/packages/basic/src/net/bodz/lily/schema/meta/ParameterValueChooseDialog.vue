@@ -6,7 +6,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import ParameterDef from "./ParameterDef";
+import { ParameterDef_TYPE } from "./ParameterDefTypeInfo";
 import { ParameterValue } from "./ParameterValue";
 
 export const title = "Choose dialog for: Parameter value";
@@ -36,7 +36,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "ParameterDef": ParameterDef.TYPE,
+    "ParameterDef": ParameterDef_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

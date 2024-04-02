@@ -4,8 +4,8 @@ import { onMounted, ref } from "vue";
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "../account/User";
-import ArticleTalk from "./ArticleTalk";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { ArticleTalk_TYPE } from "./ArticleTalkTypeInfo";
 import { ArticleTalkVote } from "./ArticleTalkVote";
 
 export const title = "Choose dialog for: Article talk vote";
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "ArticleTalk": ArticleTalk.TYPE,
-    "User": User.TYPE,
+    "ArticleTalk": ArticleTalk_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

@@ -28,3 +28,5 @@ export class ArtifactDocTypeInfo extends _ArtifactDoc_stuff_TypeInfo {
 }
 
 export default ArtifactDocTypeInfo;
+
+export const ArtifactDoc_TYPE = ArtifactDocTypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class PostVoteTypeInfo extends _PostVote_stuff_TypeInfo {
 }
 
 export default PostVoteTypeInfo;
+
+export const PostVote_TYPE = PostVoteTypeInfo.INSTANCE;

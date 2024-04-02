@@ -35,3 +35,5 @@ export class _IssueParameter_stuff_TypeInfo extends CoParameterTypeInfo {
 }
 
 export default _IssueParameter_stuff_TypeInfo;
+
+export const _IssueParameter_stuff_TYPE = _IssueParameter_stuff_TypeInfo.INSTANCE;

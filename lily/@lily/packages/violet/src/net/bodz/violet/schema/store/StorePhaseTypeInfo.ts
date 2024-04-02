@@ -28,3 +28,5 @@ export class StorePhaseTypeInfo extends _StorePhase_stuff_TypeInfo {
 }
 
 export default StorePhaseTypeInfo;
+
+export const StorePhase_TYPE = StorePhaseTypeInfo.INSTANCE;

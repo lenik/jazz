@@ -28,3 +28,5 @@ export class TestAnswerTypeInfo extends _TestAnswer_stuff_TypeInfo {
 }
 
 export default TestAnswerTypeInfo;
+
+export const TestAnswer_TYPE = TestAnswerTypeInfo.INSTANCE;

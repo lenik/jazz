@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.PostTag;
 
 /**
-* @label PostTag
-*/
+ * @label PostTag
+ */
 @ObjectType(PostTag.class)
 public class PostTagIndex
         extends CoIndex<PostTag> {

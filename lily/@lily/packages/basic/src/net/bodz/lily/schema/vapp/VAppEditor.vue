@@ -5,8 +5,9 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import VApp from "./VApp";
-import _VApp_stuff from "./_VApp_stuff";
+import { _VApp_stuff_TYPE } from "./_VApp_stuff_TypeInfo";
 
 export const title = "Editor view of: V app";
 export interface Props {
@@ -67,10 +68,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_VApp_stuff.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_VApp_stuff_TYPE">
             <FieldRow :property="meta.code" v-model="model.code">
                 <input type="text" v-model="model.code" />
             </FieldRow>

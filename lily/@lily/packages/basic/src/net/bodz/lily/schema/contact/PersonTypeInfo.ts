@@ -33,3 +33,5 @@ export class PersonTypeInfo extends _Person_stuff_TypeInfo {
 }
 
 export default PersonTypeInfo;
+
+export const Person_TYPE = PersonTypeInfo.INSTANCE;

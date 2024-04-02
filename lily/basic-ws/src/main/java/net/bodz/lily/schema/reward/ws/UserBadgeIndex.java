@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.reward.UserBadge;
 
 /**
-* @label UserBadge
-*/
+ * @label UserBadge
+ */
 @ObjectType(UserBadge.class)
 public class UserBadgeIndex
         extends CoIndex<UserBadge> {

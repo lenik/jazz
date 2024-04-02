@@ -1,13 +1,13 @@
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
 
-import SalesOrder from "../shop/SalesOrder";
-import StoreOrder from "../store/StoreOrder";
+import { SalesOrder_TYPE } from "../shop/SalesOrderTypeInfo";
+import { StoreOrder_TYPE } from "../store/StoreOrderTypeInfo";
 import AbstractTransportOrderTypeInfo from "./AbstractTransportOrderTypeInfo";
-import TransportCategory from "./TransportCategory";
-import TransportOrder from "./TransportOrder";
-import TransportPhase from "./TransportPhase";
+import { TransportCategory_TYPE } from "./TransportCategoryTypeInfo";
+import { TransportOrder_TYPE } from "./TransportOrderTypeInfo";
+import { TransportPhase_TYPE } from "./TransportPhaseTypeInfo";
 import _TransportOrder_stuff_Validators from "./_TransportOrder_stuff_Validators";
 
 export class _TransportOrder_stuff_TypeInfo extends AbstractTransportOrderTypeInfo {
@@ -60,19 +60,19 @@ export class _TransportOrder_stuff_TypeInfo extends AbstractTransportOrderTypeIn
             prev: property({ type: this, validator: this.validators.validatePrev }),
             prevId: property({ type: LONG, precision: 19 }),
 
-            shipper: property({ type: Organization.TYPE, validator: this.validators.validateShipper }),
+            shipper: property({ type: Organization_TYPE, validator: this.validators.validateShipper }),
             shipperId: property({ type: INT, precision: 10 }),
 
-            category: property({ type: TransportCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: TransportCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
-            salesOrder: property({ type: SalesOrder.TYPE, validator: this.validators.validateSalesOrder }),
+            salesOrder: property({ type: SalesOrder_TYPE, validator: this.validators.validateSalesOrder }),
             salesOrderId: property({ type: LONG, precision: 19 }),
 
-            phase: property({ type: TransportPhase.TYPE, nullable: false, validator: this.validators.validatePhase }),
+            phase: property({ type: TransportPhase_TYPE, nullable: false, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, nullable: false, precision: 10 }),
 
-            storeodr: property({ type: StoreOrder.TYPE, validator: this.validators.validateStoreodr }),
+            storeodr: property({ type: StoreOrder_TYPE, validator: this.validators.validateStoreodr }),
             storeodrId: property({ type: LONG, precision: 19 }),
         });
     }
@@ -82,3 +82,5 @@ export class _TransportOrder_stuff_TypeInfo extends AbstractTransportOrderTypeIn
 }
 
 export default _TransportOrder_stuff_TypeInfo;
+
+export const _TransportOrder_stuff_TYPE = _TransportOrder_stuff_TypeInfo.INSTANCE;

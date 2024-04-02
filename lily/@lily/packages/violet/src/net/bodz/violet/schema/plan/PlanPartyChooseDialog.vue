@@ -3,11 +3,11 @@ import { onMounted, ref } from "vue";
 
 import { LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import Plan from "./Plan";
 import { PlanParty } from "./PlanParty";
+import { Plan_TYPE } from "./PlanTypeInfo";
 
 export const title = "Choose dialog for: Plan party";
 export interface Props {
@@ -33,9 +33,9 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "Plan": Plan.TYPE,
-    "Person": Person.TYPE,
-    "Organization": Organization.TYPE,
+    "Plan": Plan_TYPE,
+    "Person": Person_TYPE,
+    "Organization": Organization_TYPE,
     "STRING": STRING,
 };
 

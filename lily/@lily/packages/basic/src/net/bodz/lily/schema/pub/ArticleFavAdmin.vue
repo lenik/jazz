@@ -3,9 +3,9 @@ import { onMounted, ref } from "vue";
 
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
 
-import User from "../account/User";
-import Article from "./Article";
+import { User_TYPE } from "../account/UserTypeInfo";
 import ArticleFav from "./ArticleFav";
+import { Article_TYPE } from "./ArticleTypeInfo";
 
 export const title = "Admin view of: Article fav";
 export interface Props {
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "Article": Article.TYPE,
-    "User": User.TYPE,
+    "Article": Article_TYPE,
+    "User": User_TYPE,
 };
 
 onMounted(() => {

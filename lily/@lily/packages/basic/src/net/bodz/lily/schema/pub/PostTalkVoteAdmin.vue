@@ -3,8 +3,8 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 
-import User from "../account/User";
-import PostTalk from "./PostTalk";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { PostTalk_TYPE } from "./PostTalkTypeInfo";
 import PostTalkVote from "./PostTalkVote";
 
 export const title = "Admin view of: Post talk vote";
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "PostTalk": PostTalk.TYPE,
-    "User": User.TYPE,
+    "PostTalk": PostTalk_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

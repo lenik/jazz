@@ -28,3 +28,5 @@ export class PlanDoTypeInfo extends _PlanDo_stuff_TypeInfo {
 }
 
 export default PlanDoTypeInfo;
+
+export const PlanDo_TYPE = PlanDoTypeInfo.INSTANCE;

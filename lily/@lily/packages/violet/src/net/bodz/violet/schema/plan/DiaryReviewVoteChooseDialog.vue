@@ -3,9 +3,9 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import DiaryReview from "./DiaryReview";
+import { DiaryReview_TYPE } from "./DiaryReviewTypeInfo";
 import { DiaryReviewVote } from "./DiaryReviewVote";
 
 export const title = "Choose dialog for: Diary review vote";
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "DiaryReview": DiaryReview.TYPE,
-    "User": User.TYPE,
+    "DiaryReview": DiaryReview_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

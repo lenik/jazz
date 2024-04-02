@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.FormParameter;
 
 /**
-* @label FormParameter
-*/
+ * @label FormParameter
+ */
 @ObjectType(FormParameter.class)
 public class FormParameterIndex
         extends CoIndex<FormParameter> {

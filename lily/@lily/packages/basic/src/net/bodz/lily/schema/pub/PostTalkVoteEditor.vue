@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import PostTalkVote from "./PostTalkVote";
-import _PostTalkVote_stuff from "./_PostTalkVote_stuff";
+import { _PostTalkVote_stuff_TYPE } from "./_PostTalkVote_stuff_TypeInfo";
 
 export const title = "Editor view of: Post talk vote";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <VoteRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_PostTalkVote_stuff.TYPE">
+        <FieldGroup :type="_PostTalkVote_stuff_TYPE">
             <FieldRow :property="meta.voteScore" v-model="model.voteScore">
                 <input type="number" v-model="model.voteScore" />
             </FieldRow>

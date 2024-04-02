@@ -28,3 +28,5 @@ export class ShopTypeInfo extends _Shop_stuff_TypeInfo {
 }
 
 export default ShopTypeInfo;
+
+export const Shop_TYPE = ShopTypeInfo.INSTANCE;

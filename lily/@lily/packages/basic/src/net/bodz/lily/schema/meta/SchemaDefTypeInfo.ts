@@ -1,13 +1,13 @@
 import { LIST } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import CategoryDef from "./CategoryDef";
-import ParameterDef from "./ParameterDef";
-import PhaseDef from "./PhaseDef";
-import PriorityDef from "./PriorityDef";
+import { CategoryDef_TYPE } from "./CategoryDefTypeInfo";
+import { ParameterDef_TYPE } from "./ParameterDefTypeInfo";
+import { PhaseDef_TYPE } from "./PhaseDefTypeInfo";
+import { PriorityDef_TYPE } from "./PriorityDefTypeInfo";
 import SchemaDef from "./SchemaDef";
 import SchemaDefValidators from "./SchemaDefValidators";
-import TagGroupDef from "./TagGroupDef";
+import { TagGroupDef_TYPE } from "./TagGroupDefTypeInfo";
 import _SchemaDef_stuff_TypeInfo from "./_SchemaDef_stuff_TypeInfo";
 
 export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
@@ -29,11 +29,11 @@ export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            categories: property({ type: LIST(CategoryDef.TYPE), validator: this.validators.validateCategories }),
-            parameters: property({ type: LIST(ParameterDef.TYPE), validator: this.validators.validateParameters }),
-            phases: property({ type: LIST(PhaseDef.TYPE), validator: this.validators.validatePhases }),
-            priorities: property({ type: LIST(PriorityDef.TYPE), validator: this.validators.validatePriorities }),
-            tagGroups: property({ type: LIST(TagGroupDef.TYPE), validator: this.validators.validateTagGroups }),
+            categories: property({ type: LIST(CategoryDef_TYPE), validator: this.validators.validateCategories }),
+            parameters: property({ type: LIST(ParameterDef_TYPE), validator: this.validators.validateParameters }),
+            phases: property({ type: LIST(PhaseDef_TYPE), validator: this.validators.validatePhases }),
+            priorities: property({ type: LIST(PriorityDef_TYPE), validator: this.validators.validatePriorities }),
+            tagGroups: property({ type: LIST(TagGroupDef_TYPE), validator: this.validators.validateTagGroups }),
         });
     }
 
@@ -42,3 +42,5 @@ export class SchemaDefTypeInfo extends _SchemaDef_stuff_TypeInfo {
 }
 
 export default SchemaDefTypeInfo;
+
+export const SchemaDef_TYPE = SchemaDefTypeInfo.INSTANCE;

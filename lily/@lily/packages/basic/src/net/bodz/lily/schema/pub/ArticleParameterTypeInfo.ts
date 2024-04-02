@@ -28,3 +28,5 @@ export class ArticleParameterTypeInfo extends _ArticleParameter_stuff_TypeInfo {
 }
 
 export default ArticleParameterTypeInfo;
+
+export const ArticleParameter_TYPE = ArticleParameterTypeInfo.INSTANCE;

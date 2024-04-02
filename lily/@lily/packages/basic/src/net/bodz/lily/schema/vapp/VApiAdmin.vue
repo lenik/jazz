@@ -5,9 +5,9 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import ApiType from "./ApiType";
+import { ApiType_TYPE } from "./ApiTypeTypeInfo";
 import VApi from "./VApi";
-import VApp from "./VApp";
+import { VApp_TYPE } from "./VAppTypeInfo";
 
 export const title = "Admin view of: V api";
 export interface Props {
@@ -32,8 +32,8 @@ const typeMap = {
     "OffsetDateTime": OffsetDateTime.TYPE,
     "INT": INT,
     "JSON_VARIANT": JSON_VARIANT,
-    "VApp": VApp.TYPE,
-    "ApiType": ApiType.TYPE,
+    "VApp": VApp_TYPE,
+    "ApiType": ApiType_TYPE,
     "STRING": STRING,
 };
 

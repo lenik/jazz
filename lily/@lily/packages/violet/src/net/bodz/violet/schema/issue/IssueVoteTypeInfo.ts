@@ -28,3 +28,5 @@ export class IssueVoteTypeInfo extends _IssueVote_stuff_TypeInfo {
 }
 
 export default IssueVoteTypeInfo;
+
+export const IssueVote_TYPE = IssueVoteTypeInfo.INSTANCE;

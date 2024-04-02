@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.issue.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.issue.IssueCategory;
 
+@ForEntityType(IssueCategory.class)
 public class _IssueCategoryCriteriaBuilder_stuff<self_t extends _IssueCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

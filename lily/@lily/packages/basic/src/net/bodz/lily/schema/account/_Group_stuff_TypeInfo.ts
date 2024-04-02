@@ -2,8 +2,8 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoPrincipalTypeInfo from "../../concrete/CoPrincipalTypeInfo";
-import Group from "./Group";
-import GroupType from "./GroupType";
+import { Group_TYPE } from "./GroupTypeInfo";
+import { GroupType_TYPE } from "./GroupTypeTypeInfo";
 import _Group_stuff_Validators from "./_Group_stuff_Validators";
 
 export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
@@ -38,7 +38,7 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
             parentId: property({ type: INT, precision: 10, 
                 description: "The parent group. must be acyclic" }),
 
-            type: property({ type: GroupType.TYPE, nullable: false, 
+            type: property({ type: GroupType_TYPE, nullable: false, 
                 description: "Group type like normal-group, role-group, etc.", 
                 validator: this.validators.validateType }),
             typeId: property({ type: INT, nullable: false, precision: 10, 
@@ -51,3 +51,5 @@ export class _Group_stuff_TypeInfo extends CoPrincipalTypeInfo {
 }
 
 export default _Group_stuff_TypeInfo;
+
+export const _Group_stuff_TYPE = _Group_stuff_TypeInfo.INSTANCE;

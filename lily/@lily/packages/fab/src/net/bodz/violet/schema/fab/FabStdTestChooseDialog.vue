@@ -6,12 +6,12 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import FabStdTest from "./FabStdTest";
 import { FabStdTest } from "./FabStdTest";
-import FabStdTestCategory from "./FabStdTestCategory";
+import { FabStdTestCategory_TYPE } from "./FabStdTestCategoryTypeInfo";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 
 export const title = "Choose dialog for: Fab std test";
 export interface Props {
@@ -38,13 +38,13 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "FabStdTestCategory": FabStdTestCategory.TYPE,
-    "FabStdTest": FabStdTest.TYPE,
+    "FabStdTestCategory": FabStdTestCategory_TYPE,
+    "FabStdTest": FabStdTest_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

@@ -17,7 +17,6 @@ public class ArticleTagSamples
         ArticleTag a = new ArticleTag();
         a.setTag(tag);
         a.setArticle(article);
-        a.setId(1641969268);
         return a;
     }
 

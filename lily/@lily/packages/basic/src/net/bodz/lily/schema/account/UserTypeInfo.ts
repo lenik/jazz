@@ -1,11 +1,11 @@
-import { BOOLEAN, INET_ADDRESS, INT, LIST, SET } from "@skeljs/core/src/lang/baseinfo";
+import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import Group from "./Group";
+import { Group_TYPE } from "./GroupTypeInfo";
 import User from "./User";
-import UserOtherId from "./UserOtherId";
-import UserRun from "./UserRun";
-import UserSecret from "./UserSecret";
+import { UserOtherId_TYPE } from "./UserOtherIdTypeInfo";
+import { UserRun_TYPE } from "./UserRunTypeInfo";
+import { UserSecret_TYPE } from "./UserSecretTypeInfo";
 import UserValidators from "./UserValidators";
 import _User_stuff_TypeInfo from "./_User_stuff_TypeInfo";
 
@@ -30,13 +30,13 @@ export class UserTypeInfo extends _User_stuff_TypeInfo {
         super.preamble();
         this.declare({
             groupIds: property({ type: SET(INT), validator: this.validators.validateGroupIds }),
-            groups: property({ type: LIST(Group.TYPE), validator: this.validators.validateGroups }),
-            ids: property({ type: LIST(UserOtherId.TYPE), validator: this.validators.validateIds }),
-            otherIds: property({ type: LIST(UserOtherId.TYPE), validator: this.validators.validateOtherIds }),
+            groups: property({ type: LIST(Group_TYPE), validator: this.validators.validateGroups }),
+            ids: property({ type: LIST(UserOtherId_TYPE), validator: this.validators.validateIds }),
+            otherIds: property({ type: LIST(UserOtherId_TYPE), validator: this.validators.validateOtherIds }),
             registerIP: property({ type: INET_ADDRESS, label: "Register IP", validator: this.validators.validateRegisterIP }),
-            runningState: property({ type: UserRun.TYPE, validator: this.validators.validateRunningState }),
-            secret: property({ type: UserSecret.TYPE, validator: this.validators.validateSecret }),
-            secrets: property({ type: LIST(UserSecret.TYPE), validator: this.validators.validateSecrets }),
+            runningState: property({ type: UserRun_TYPE, validator: this.validators.validateRunningState }),
+            secret: property({ type: UserSecret_TYPE, validator: this.validators.validateSecret }),
+            secrets: property({ type: LIST(UserSecret_TYPE), validator: this.validators.validateSecrets }),
             superUser: property({ type: BOOLEAN, nullable: false, validator: this.validators.validateSuperUser }),
         });
     }
@@ -46,3 +46,5 @@ export class UserTypeInfo extends _User_stuff_TypeInfo {
 }
 
 export default UserTypeInfo;
+
+export const User_TYPE = UserTypeInfo.INSTANCE;

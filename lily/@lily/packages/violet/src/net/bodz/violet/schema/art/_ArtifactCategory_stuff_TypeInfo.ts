@@ -54,3 +54,5 @@ export class _ArtifactCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _ArtifactCategory_stuff_TypeInfo;
+
+export const _ArtifactCategory_stuff_TYPE = _ArtifactCategory_stuff_TypeInfo.INSTANCE;

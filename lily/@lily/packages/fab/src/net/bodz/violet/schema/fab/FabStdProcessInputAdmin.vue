@@ -3,11 +3,11 @@ import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import ArtifactModel from "../art/ArtifactModel";
-import FabStdProcess from "./FabStdProcess";
 import FabStdProcessInput from "./FabStdProcessInput";
+import { FabStdProcess_TYPE } from "./FabStdProcessTypeInfo";
 
 export const title = "Admin view of: Fab std process input";
 export interface Props {
@@ -30,9 +30,9 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabStdProcess": FabStdProcess.TYPE,
-    "ArtifactModel": ArtifactModel.TYPE,
-    "Artifact": Artifact.TYPE,
+    "FabStdProcess": FabStdProcess_TYPE,
+    "ArtifactModel": ArtifactModel_TYPE,
+    "Artifact": Artifact_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

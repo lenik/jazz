@@ -28,3 +28,5 @@ export class PersonAssetTypeInfo extends _PersonAsset_stuff_TypeInfo {
 }
 
 export default PersonAssetTypeInfo;
+
+export const PersonAsset_TYPE = PersonAssetTypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class ApiTypeTypeInfo extends _ApiType_stuff_TypeInfo {
 }
 
 export default ApiTypeTypeInfo;
+
+export const ApiType_TYPE = ApiTypeTypeInfo.INSTANCE;

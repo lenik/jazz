@@ -28,3 +28,5 @@ export class PostTalkVoteTypeInfo extends _PostTalkVote_stuff_TypeInfo {
 }
 
 export default PostTalkVoteTypeInfo;
+
+export const PostTalkVote_TYPE = PostTalkVoteTypeInfo.INSTANCE;

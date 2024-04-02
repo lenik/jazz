@@ -35,3 +35,5 @@ export class _Storage_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Storage_stuff_TypeInfo;
+
+export const _Storage_stuff_TYPE = _Storage_stuff_TypeInfo.INSTANCE;

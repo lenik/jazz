@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import CourseKitFav from "./CourseKitFav";
-import _CourseKitFav_stuff from "./_CourseKitFav_stuff";
+import { _CourseKitFav_stuff_TYPE } from "./_CourseKitFav_stuff_TypeInfo";
 
 export const title = "Editor view of: Course kit fav";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FavRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_CourseKitFav_stuff.TYPE">
+        <FieldGroup :type="_CourseKitFav_stuff_TYPE">
             <FieldRow :property="meta.coursekit" v-model="model.coursekit">
                 <RefEditor :dialog="courseKitChooseDialog" v-model="model.coursekit" v-model:id="model.coursekitId" />
             </FieldRow>

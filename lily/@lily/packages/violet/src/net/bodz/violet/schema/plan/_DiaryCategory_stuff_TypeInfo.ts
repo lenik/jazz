@@ -33,3 +33,5 @@ export class _DiaryCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _DiaryCategory_stuff_TypeInfo;
+
+export const _DiaryCategory_stuff_TYPE = _DiaryCategory_stuff_TypeInfo.INSTANCE;

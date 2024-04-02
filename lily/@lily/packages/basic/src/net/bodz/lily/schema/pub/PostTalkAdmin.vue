@@ -5,10 +5,11 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import User from "../account/User";
-import FormDef from "../meta/FormDef";
-import Post from "./Post";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { FormDef_TYPE } from "../meta/FormDefTypeInfo";
 import PostTalk from "./PostTalk";
+import { PostTalk_TYPE } from "./PostTalkTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 
 export const title = "Admin view of: Post talk";
 export interface Props {
@@ -34,10 +35,10 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "User": User.TYPE,
-    "FormDef": FormDef.TYPE,
-    "Post": Post.TYPE,
-    "PostTalk": PostTalk.TYPE,
+    "User": User_TYPE,
+    "FormDef": FormDef_TYPE,
+    "Post": Post_TYPE,
+    "PostTalk": PostTalk_TYPE,
 };
 
 onMounted(() => {

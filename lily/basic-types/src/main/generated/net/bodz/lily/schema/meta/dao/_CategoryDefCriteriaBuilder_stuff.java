@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.meta.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.meta.CategoryDef;
 
+@ForEntityType(CategoryDef.class)
 public class _CategoryDefCriteriaBuilder_stuff<self_t extends _CategoryDefCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

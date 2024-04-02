@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Issue from "./Issue";
 import IssueFav from "./IssueFav";
+import { Issue_TYPE } from "./IssueTypeInfo";
 
 export const title = "Admin view of: Issue fav";
 export interface Props {
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "Issue": Issue.TYPE,
-    "User": User.TYPE,
+    "Issue": Issue_TYPE,
+    "User": User_TYPE,
 };
 
 onMounted(() => {

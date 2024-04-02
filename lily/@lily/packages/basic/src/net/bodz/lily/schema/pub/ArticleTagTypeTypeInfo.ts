@@ -28,3 +28,5 @@ export class ArticleTagTypeTypeInfo extends _ArticleTagType_stuff_TypeInfo {
 }
 
 export default ArticleTagTypeTypeInfo;
+
+export const ArticleTagType_TYPE = ArticleTagTypeTypeInfo.INSTANCE;

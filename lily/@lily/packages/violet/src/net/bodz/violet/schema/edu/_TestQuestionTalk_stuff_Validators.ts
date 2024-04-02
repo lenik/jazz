@@ -1,7 +1,7 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
-import CoEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/CoEntityValidators";
+import IdEntityValidators from "@lily/basic/src/net/bodz/lily/concrete/IdEntityValidators";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
 
@@ -9,7 +9,7 @@ import type TestQuestion from "./TestQuestion";
 import type TestQuestionTalk from "./TestQuestionTalk";
 import type _TestQuestionTalk_stuff_TypeInfo from "./_TestQuestionTalk_stuff_TypeInfo";
 
-export class _TestQuestionTalk_stuff_Validators extends CoEntityValidators {
+export class _TestQuestionTalk_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _TestQuestionTalk_stuff_TypeInfo) {
         super(type);
@@ -17,9 +17,6 @@ export class _TestQuestionTalk_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _TestQuestionTalk_stuff_TypeInfo;
-    }
-
-    validateId(val: long) {
     }
 
     validateBeginTime(val: OffsetDateTime) {

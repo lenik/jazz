@@ -5,10 +5,10 @@ import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { BigDecimal, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import StoreOrderItem from "./StoreOrderItem";
-import _StoreOrderItem_stuff from "./_StoreOrderItem_stuff";
+import { _StoreOrderItem_stuff_TYPE } from "./_StoreOrderItem_stuff_TypeInfo";
 
 export const title = "Editor view of: Store order item";
 export interface Props {
@@ -71,13 +71,13 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_StoreOrderItem_stuff.TYPE">
+        <FieldGroup :type="_StoreOrderItem_stuff_TYPE">
             <FieldRow :property="meta.batch" v-model="model.batch">
                 <JsonEditor v-model="model.batch" />
             </FieldRow>

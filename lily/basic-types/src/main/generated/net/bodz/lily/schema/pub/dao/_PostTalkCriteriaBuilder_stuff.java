@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.pub.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.pub.PostTalk;
 
+@ForEntityType(PostTalk.class)
 public class _PostTalkCriteriaBuilder_stuff<self_t extends _PostTalkCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

@@ -28,3 +28,5 @@ export class VAppCategoryTypeInfo extends _VAppCategory_stuff_TypeInfo {
 }
 
 export default VAppCategoryTypeInfo;
+
+export const VAppCategory_TYPE = VAppCategoryTypeInfo.INSTANCE;

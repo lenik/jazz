@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Artifact from "./Artifact";
+import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import ArtifactVote from "./ArtifactVote";
 
 export const title = "Admin view of: Artifact vote";
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "Artifact": Artifact.TYPE,
-    "User": User.TYPE,
+    "Artifact": Artifact_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

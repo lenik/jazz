@@ -2,7 +2,10 @@ package net.bodz.violet.schema.edu.dao;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.edu.CourseKit;
 
+@ForEntityType(CourseKit.class)
 public class _CourseKitCriteriaBuilder_stuff<self_t extends _CourseKitCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

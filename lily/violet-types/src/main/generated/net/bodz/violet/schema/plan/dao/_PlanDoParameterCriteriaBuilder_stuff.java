@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.plan.dao;
 
 import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.plan.PlanDoParameter;
 
+@ForEntityType(PlanDoParameter.class)
 public class _PlanDoParameterCriteriaBuilder_stuff<self_t extends _PlanDoParameterCriteriaBuilder_stuff<self_t>>
         extends CoCodeCriteriaBuilder<self_t> {
 

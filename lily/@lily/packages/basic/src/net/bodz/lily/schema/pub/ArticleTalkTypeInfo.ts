@@ -28,3 +28,5 @@ export class ArticleTalkTypeInfo extends _ArticleTalk_stuff_TypeInfo {
 }
 
 export default ArticleTalkTypeInfo;
+
+export const ArticleTalk_TYPE = ArticleTalkTypeInfo.INSTANCE;

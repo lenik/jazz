@@ -4,9 +4,9 @@ import { onMounted, ref } from "vue";
 import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import Post from "./Post";
 import PostParameter from "./PostParameter";
-import PostParameterType from "./PostParameterType";
+import { PostParameterType_TYPE } from "./PostParameterTypeTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 
 export const title = "Admin view of: Post parameter";
 export interface Props {
@@ -29,8 +29,8 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Post": Post.TYPE,
-    "PostParameterType": PostParameterType.TYPE,
+    "Post": Post_TYPE,
+    "PostParameterType": PostParameterType_TYPE,
     "DOUBLE": DOUBLE,
     "STRING": STRING,
 };

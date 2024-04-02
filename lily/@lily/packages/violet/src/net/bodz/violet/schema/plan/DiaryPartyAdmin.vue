@@ -2,12 +2,12 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import Diary from "./Diary";
 import DiaryParty from "./DiaryParty";
+import { Diary_TYPE } from "./DiaryTypeInfo";
 
 export const title = "Admin view of: Diary party";
 export interface Props {
@@ -30,10 +30,10 @@ const selection = ref<any>({});
 const typeMap = {
     "LONG": LONG,
     "STRING": STRING,
-    "Diary": Diary.TYPE,
-    "User": User.TYPE,
-    "Person": Person.TYPE,
-    "Organization": Organization.TYPE,
+    "Diary": Diary_TYPE,
+    "User": User_TYPE,
+    "Person": Person_TYPE,
+    "Organization": Organization_TYPE,
     "INT": INT,
 };
 

@@ -1,41 +1,32 @@
 package net.bodz.lily.schema.reward;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
-import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.schema.account.User;
 
 @IdType(Integer.class)
 public abstract class _UserBadge_stuff
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "user_badge";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_USER_ID = "user";
     public static final String FIELD_BADGE_ID = "badge";
 
-    public static final int N_ID = 10;
     public static final int N_USER_ID = 10;
     public static final int N_BADGE_ID = 10;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_USER_ID = _ord_ID + 4;
+    private static final int _ord_USER_ID = 5;
     private static final int _ord_BADGE_ID = _ord_USER_ID + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     /**  */
     Badge badge;
@@ -46,28 +37,6 @@ public abstract class _UserBadge_stuff
     User user;
 
     Integer userId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     /**
      *

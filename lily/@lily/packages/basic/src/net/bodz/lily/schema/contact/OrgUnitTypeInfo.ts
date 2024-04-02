@@ -1,10 +1,10 @@
 import { LIST } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import Contact from "./Contact";
+import { Contact_TYPE } from "./ContactTypeInfo";
 import OrgUnit from "./OrgUnit";
 import OrgUnitValidators from "./OrgUnitValidators";
-import PersonRole from "./PersonRole";
+import { PersonRole_TYPE } from "./PersonRoleTypeInfo";
 import _OrgUnit_stuff_TypeInfo from "./_OrgUnit_stuff_TypeInfo";
 
 export class OrgUnitTypeInfo extends _OrgUnit_stuff_TypeInfo {
@@ -25,8 +25,8 @@ export class OrgUnitTypeInfo extends _OrgUnit_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            contact: property({ type: Contact.TYPE, validator: this.validators.validateContact }),
-            staff: property({ type: LIST(PersonRole.TYPE), validator: this.validators.validateStaff }),
+            contact: property({ type: Contact_TYPE, validator: this.validators.validateContact }),
+            staff: property({ type: LIST(PersonRole_TYPE), validator: this.validators.validateStaff }),
         });
     }
 
@@ -35,3 +35,5 @@ export class OrgUnitTypeInfo extends _OrgUnit_stuff_TypeInfo {
 }
 
 export default OrgUnitTypeInfo;
+
+export const OrgUnit_TYPE = OrgUnitTypeInfo.INSTANCE;

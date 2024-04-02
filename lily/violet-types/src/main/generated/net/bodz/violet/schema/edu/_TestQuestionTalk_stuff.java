@@ -3,7 +3,6 @@ package net.bodz.violet.schema.edu;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -11,21 +10,20 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.meta.FormDef;
 
 @IdType(Long.class)
 public abstract class _TestQuestionTalk_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "testq_msg";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_BEGIN_TIME = "t0";
     public static final String FIELD_END_TIME = "t1";
     public static final String FIELD_YEAR = "year";
@@ -37,7 +35,6 @@ public abstract class _TestQuestionTalk_stuff
     public static final String FIELD_QUESTION_ID = "q";
     public static final String FIELD_PARENT_ID = "parent";
 
-    public static final int N_ID = 19;
     public static final int N_BEGIN_TIME = 35;
     public static final int N_END_TIME = 35;
     public static final int N_YEAR = 10;
@@ -49,8 +46,7 @@ public abstract class _TestQuestionTalk_stuff
     public static final int N_QUESTION_ID = 19;
     public static final int N_PARENT_ID = 19;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_BEGIN_TIME = _ord_ID + 7;
+    private static final int _ord_BEGIN_TIME = 8;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
     private static final int _ord_SUBJECT = _ord_YEAR + 1;
@@ -60,10 +56,6 @@ public abstract class _TestQuestionTalk_stuff
     private static final int _ord_FORM_ARGUMENTS = _ord_FORM_ID + 1;
     private static final int _ord_QUESTION_ID = _ord_FORM_ARGUMENTS + 1;
     private static final int _ord_PARENT_ID = _ord_QUESTION_ID + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     OffsetDateTime beginTime;
 
@@ -100,28 +92,6 @@ public abstract class _TestQuestionTalk_stuff
 
     @NotNull
     long questionId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)

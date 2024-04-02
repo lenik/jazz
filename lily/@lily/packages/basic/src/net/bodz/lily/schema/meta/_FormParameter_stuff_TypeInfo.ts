@@ -3,7 +3,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
-import FormDef from "./FormDef";
+import { FormDef_TYPE } from "./FormDefTypeInfo";
 import _FormParameter_stuff_Validators from "./_FormParameter_stuff_Validators";
 
 export class _FormParameter_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -34,7 +34,7 @@ export class _FormParameter_stuff_TypeInfo extends IdEntityTypeInfo {
             name: property({ type: STRING, precision: 30, validator: this.validators.validateName }),
             value: property({ type: STRING, precision: 100, validator: this.validators.validateValue }),
 
-            form: property({ type: FormDef.TYPE, nullable: false, validator: this.validators.validateForm }),
+            form: property({ type: FormDef_TYPE, nullable: false, validator: this.validators.validateForm }),
             formId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -44,3 +44,5 @@ export class _FormParameter_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _FormParameter_stuff_TypeInfo;
+
+export const _FormParameter_stuff_TYPE = _FormParameter_stuff_TypeInfo.INSTANCE;

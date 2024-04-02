@@ -3,7 +3,10 @@ package net.bodz.lily.schema.contact.dao;
 import java.time.LocalDate;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.contact.Person;
 
+@ForEntityType(Person.class)
 public class _PersonCriteriaBuilder_stuff<self_t extends _PersonCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

@@ -1,10 +1,10 @@
 import { DOUBLE, MAP } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
 
 import Artifact from "./Artifact";
 import ArtifactValidators from "./ArtifactValidators";
-import IArtifactExtras from "./IArtifactExtras";
+import { IArtifactExtras_TYPE } from "./IArtifactExtrasTypeInfo";
 import _Artifact_stuff_TypeInfo from "./_Artifact_stuff_TypeInfo";
 
 export class ArtifactTypeInfo extends _Artifact_stuff_TypeInfo {
@@ -25,8 +25,8 @@ export class ArtifactTypeInfo extends _Artifact_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            convMap: property({ type: MAP(Uom.TYPE, DOUBLE), validator: this.validators.validateConvMap }),
-            extras: property({ type: IArtifactExtras.TYPE, validator: this.validators.validateExtras }),
+            convMap: property({ type: MAP(Uom_TYPE, DOUBLE), validator: this.validators.validateConvMap }),
+            extras: property({ type: IArtifactExtras_TYPE, validator: this.validators.validateExtras }),
         });
     }
 
@@ -35,3 +35,5 @@ export class ArtifactTypeInfo extends _Artifact_stuff_TypeInfo {
 }
 
 export default ArtifactTypeInfo;
+
+export const Artifact_TYPE = ArtifactTypeInfo.INSTANCE;

@@ -71,6 +71,8 @@ public abstract class _TestQuestionTalkVote_stuff
     @Column(name = "parent", nullable = false, precision = 19)
     public synchronized long getParentId() {
         if (parent != null) {
+            if (parent.getId() == null)
+                return 0L;
             return parent.getId();
         }
         return parentId;

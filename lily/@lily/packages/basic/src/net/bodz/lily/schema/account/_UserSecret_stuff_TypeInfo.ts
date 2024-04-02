@@ -4,7 +4,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import IdEntityTypeInfo from "../../concrete/IdEntityTypeInfo";
-import User from "./User";
+import { User_TYPE } from "./UserTypeInfo";
 import _UserSecret_stuff_Validators from "./_UserSecret_stuff_Validators";
 
 export class _UserSecret_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -48,7 +48,7 @@ export class _UserSecret_stuff_TypeInfo extends IdEntityTypeInfo {
                 description: "Protection answer", 
                 validator: this.validators.validateAnswer }),
 
-            user: property({ type: User.TYPE, nullable: false, 
+            user: property({ type: User_TYPE, nullable: false, 
                 description: "The declaring user", 
                 validator: this.validators.validateUser }),
             userId: property({ type: INT, nullable: false, precision: 10, 
@@ -61,3 +61,5 @@ export class _UserSecret_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _UserSecret_stuff_TypeInfo;
+
+export const _UserSecret_stuff_TYPE = _UserSecret_stuff_TypeInfo.INSTANCE;

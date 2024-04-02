@@ -6,10 +6,11 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import Person from "../contact/Person";
-import Group from "./Group";
+import { Person_TYPE } from "../contact/PersonTypeInfo";
+import { Group_TYPE } from "./GroupTypeInfo";
 import User from "./User";
-import UserType from "./UserType";
+import { User_TYPE } from "./UserTypeInfo";
+import { UserType_TYPE } from "./UserTypeTypeInfo";
 
 export const title = "Admin view of: User";
 export interface Props {
@@ -31,14 +32,14 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "UserType": UserType.TYPE,
+    "UserType": UserType_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "Group": Group.TYPE,
-    "User": User.TYPE,
-    "Person": Person.TYPE,
+    "Group": Group_TYPE,
+    "User": User_TYPE,
+    "Person": Person_TYPE,
 };
 
 onMounted(() => {

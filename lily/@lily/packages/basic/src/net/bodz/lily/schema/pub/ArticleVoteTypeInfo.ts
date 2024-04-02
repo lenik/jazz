@@ -28,3 +28,5 @@ export class ArticleVoteTypeInfo extends _ArticleVote_stuff_TypeInfo {
 }
 
 export default ArticleVoteTypeInfo;
+
+export const ArticleVote_TYPE = ArticleVoteTypeInfo.INSTANCE;

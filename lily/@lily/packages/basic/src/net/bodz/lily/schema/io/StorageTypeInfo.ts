@@ -28,3 +28,5 @@ export class StorageTypeInfo extends _Storage_stuff_TypeInfo {
 }
 
 export default StorageTypeInfo;
+
+export const Storage_TYPE = StorageTypeInfo.INSTANCE;

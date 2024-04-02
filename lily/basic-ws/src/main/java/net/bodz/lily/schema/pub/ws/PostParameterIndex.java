@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.PostParameter;
 
 /**
-* @label PostParameter
-*/
+ * @label PostParameter
+ */
 @ObjectType(PostParameter.class)
 public class PostParameterIndex
         extends CoIndex<PostParameter> {

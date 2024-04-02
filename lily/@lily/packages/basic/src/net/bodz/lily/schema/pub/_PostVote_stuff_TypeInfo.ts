@@ -2,7 +2,7 @@ import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import VoteRecordTypeInfo from "../../concrete/VoteRecordTypeInfo";
-import Post from "./Post";
+import { Post_TYPE } from "./PostTypeInfo";
 import _PostVote_stuff_Validators from "./_PostVote_stuff_Validators";
 
 export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
@@ -30,7 +30,7 @@ export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
         this.declare({
             voteScore: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateVoteScore }),
 
-            parent: property({ type: Post.TYPE, nullable: false, validator: this.validators.validateParent }),
+            parent: property({ type: Post_TYPE, nullable: false, validator: this.validators.validateParent }),
             parentId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -40,3 +40,5 @@ export class _PostVote_stuff_TypeInfo extends VoteRecordTypeInfo {
 }
 
 export default _PostVote_stuff_TypeInfo;
+
+export const _PostVote_stuff_TYPE = _PostVote_stuff_TypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class OrganizationTypeInfo extends _Organization_stuff_TypeInfo {
 }
 
 export default OrganizationTypeInfo;
+
+export const Organization_TYPE = OrganizationTypeInfo.INSTANCE;

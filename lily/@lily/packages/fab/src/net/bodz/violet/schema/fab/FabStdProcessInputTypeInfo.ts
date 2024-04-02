@@ -28,3 +28,5 @@ export class FabStdProcessInputTypeInfo extends _FabStdProcessInput_stuff_TypeIn
 }
 
 export default FabStdProcessInputTypeInfo;
+
+export const FabStdProcessInput_TYPE = FabStdProcessInputTypeInfo.INSTANCE;

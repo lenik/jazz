@@ -28,3 +28,5 @@ export class TestPaperTypeInfo extends _TestPaper_stuff_TypeInfo {
 }
 
 export default TestPaperTypeInfo;
+
+export const TestPaper_TYPE = TestPaperTypeInfo.INSTANCE;

@@ -6,14 +6,14 @@ import { BIG_DECIMAL, INT, SHORT, STRING } from "@skeljs/core/src/lang/baseinfo"
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Uom from "@lily/basic/src/net/bodz/lily/schema/util/Uom";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Uom_TYPE } from "@lily/basic/src/net/bodz/lily/schema/util/UomTypeInfo";
 
-import Artifact from "./Artifact";
 import { Artifact } from "./Artifact";
-import ArtifactCategory from "./ArtifactCategory";
-import ArtifactPhase from "./ArtifactPhase";
+import { ArtifactCategory_TYPE } from "./ArtifactCategoryTypeInfo";
+import { ArtifactPhase_TYPE } from "./ArtifactPhaseTypeInfo";
+import { Artifact_TYPE } from "./ArtifactTypeInfo";
 
 export const title = "Choose dialog for: Artifact";
 export interface Props {
@@ -40,14 +40,14 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Artifact": Artifact.TYPE,
-    "ArtifactCategory": ArtifactCategory.TYPE,
-    "ArtifactPhase": ArtifactPhase.TYPE,
-    "Uom": Uom.TYPE,
+    "Artifact": Artifact_TYPE,
+    "ArtifactCategory": ArtifactCategory_TYPE,
+    "ArtifactPhase": ArtifactPhase_TYPE,
+    "Uom": Uom_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "SHORT": SHORT,
     "BIG_DECIMAL": BIG_DECIMAL,

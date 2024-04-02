@@ -6,9 +6,9 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import TestApply from "./TestApply";
 import { TestApplyItem } from "./TestApplyItem";
-import TestQuestion from "./TestQuestion";
+import { TestApply_TYPE } from "./TestApplyTypeInfo";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 
 export const title = "Choose dialog for: Test apply item";
 export interface Props {
@@ -37,8 +37,8 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "TestApply": TestApply.TYPE,
-    "TestQuestion": TestQuestion.TYPE,
+    "TestApply": TestApply_TYPE,
+    "TestQuestion": TestQuestion_TYPE,
     "STRING": STRING,
     "DOUBLE": DOUBLE,
 };

@@ -2,7 +2,7 @@ import { SET } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Plan from "./Plan";
-import PlanTag from "./PlanTag";
+import { PlanTag_TYPE } from "./PlanTagTypeInfo";
 import PlanValidators from "./PlanValidators";
 import _Plan_stuff_TypeInfo from "./_Plan_stuff_TypeInfo";
 
@@ -24,7 +24,7 @@ export class PlanTypeInfo extends _Plan_stuff_TypeInfo {
     override preamble() {
         super.preamble();
         this.declare({
-            tags: property({ type: SET(PlanTag.TYPE), validator: this.validators.validateTags }),
+            tags: property({ type: SET(PlanTag_TYPE), validator: this.validators.validateTags }),
         });
     }
 
@@ -33,3 +33,5 @@ export class PlanTypeInfo extends _Plan_stuff_TypeInfo {
 }
 
 export default PlanTypeInfo;
+
+export const Plan_TYPE = PlanTypeInfo.INSTANCE;

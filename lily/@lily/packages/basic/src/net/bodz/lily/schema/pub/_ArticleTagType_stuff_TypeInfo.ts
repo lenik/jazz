@@ -24,3 +24,5 @@ export class _ArticleTagType_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _ArticleTagType_stuff_TypeInfo;
+
+export const _ArticleTagType_stuff_TYPE = _ArticleTagType_stuff_TypeInfo.INSTANCE;

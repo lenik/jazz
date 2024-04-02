@@ -4,10 +4,10 @@ import { onMounted, provide, ref } from "vue";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoTalk from "../../concrete/CoTalk";
-import IdEntity from "../../concrete/IdEntity";
+import { CoTalk_TYPE } from "../../concrete/CoTalkTypeInfo";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import PostTalk from "./PostTalk";
-import _PostTalk_stuff from "./_PostTalk_stuff";
+import { _PostTalk_stuff_TYPE } from "./_PostTalk_stuff_TypeInfo";
 
 export const title = "Editor view of: Post talk";
 export interface Props {
@@ -69,19 +69,19 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoEventFieldGroup :meta="meta" v-model="model" />
         <CoMessageFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="CoTalk.TYPE">
+        <FieldGroup :type="CoTalk_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="postTalkChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_PostTalk_stuff.TYPE">
+        <FieldGroup :type="_PostTalk_stuff_TYPE">
             <FieldRow :property="meta.formArguments" v-model="model.formArguments">
                 <input type="text" v-model="model.formArguments" />
             </FieldRow>

@@ -28,3 +28,5 @@ export class PostTalkTypeInfo extends _PostTalk_stuff_TypeInfo {
 }
 
 export default PostTalkTypeInfo;
+
+export const PostTalk_TYPE = PostTalkTypeInfo.INSTANCE;

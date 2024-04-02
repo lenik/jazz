@@ -4,8 +4,8 @@ import { onMounted, ref } from "vue";
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "../account/User";
-import Post from "./Post";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 import { PostVote } from "./PostVote";
 
 export const title = "Choose dialog for: Post vote";
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "Post": Post.TYPE,
-    "User": User.TYPE,
+    "Post": Post_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

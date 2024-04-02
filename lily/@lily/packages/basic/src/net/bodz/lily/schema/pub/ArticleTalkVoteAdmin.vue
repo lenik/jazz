@@ -3,8 +3,8 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 
-import User from "../account/User";
-import ArticleTalk from "./ArticleTalk";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { ArticleTalk_TYPE } from "./ArticleTalkTypeInfo";
 import ArticleTalkVote from "./ArticleTalkVote";
 
 export const title = "Admin view of: Article talk vote";
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "ArticleTalk": ArticleTalk.TYPE,
-    "User": User.TYPE,
+    "ArticleTalk": ArticleTalk_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

@@ -28,3 +28,5 @@ export class ArtifactParameterTypeInfo extends _ArtifactParameter_stuff_TypeInfo
 }
 
 export default ArtifactParameterTypeInfo;
+
+export const ArtifactParameter_TYPE = ArtifactParameterTypeInfo.INSTANCE;

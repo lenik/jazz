@@ -28,3 +28,5 @@ export class FabFnTypeInfo extends _FabFn_stuff_TypeInfo {
 }
 
 export default FabFnTypeInfo;
+
+export const FabFn_TYPE = FabFnTypeInfo.INSTANCE;

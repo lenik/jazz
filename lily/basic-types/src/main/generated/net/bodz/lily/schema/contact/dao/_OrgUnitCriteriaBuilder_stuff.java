@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.contact.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.contact.OrgUnit;
 
+@ForEntityType(OrgUnit.class)
 public class _OrgUnitCriteriaBuilder_stuff<self_t extends _OrgUnitCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

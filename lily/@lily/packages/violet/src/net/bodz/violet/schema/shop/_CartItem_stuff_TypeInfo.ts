@@ -3,7 +3,7 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
-import ShopItem from "./ShopItem";
+import { ShopItem_TYPE } from "./ShopItemTypeInfo";
 import _CartItem_stuff_Validators from "./_CartItem_stuff_Validators";
 
 export class _CartItem_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -34,7 +34,7 @@ export class _CartItem_stuff_TypeInfo extends IdEntityTypeInfo {
             price: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validatePrice }),
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
 
-            shopItem: property({ type: ShopItem.TYPE, nullable: false, validator: this.validators.validateShopItem }),
+            shopItem: property({ type: ShopItem_TYPE, nullable: false, validator: this.validators.validateShopItem }),
             shopItemId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -44,3 +44,5 @@ export class _CartItem_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _CartItem_stuff_TypeInfo;
+
+export const _CartItem_stuff_TYPE = _CartItem_stuff_TypeInfo.INSTANCE;

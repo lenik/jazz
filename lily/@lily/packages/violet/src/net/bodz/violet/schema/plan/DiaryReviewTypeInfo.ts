@@ -28,3 +28,5 @@ export class DiaryReviewTypeInfo extends _DiaryReview_stuff_TypeInfo {
 }
 
 export default DiaryReviewTypeInfo;
+
+export const DiaryReview_TYPE = DiaryReviewTypeInfo.INSTANCE;

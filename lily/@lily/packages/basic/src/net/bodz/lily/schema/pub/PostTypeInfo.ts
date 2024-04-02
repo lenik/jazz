@@ -28,3 +28,5 @@ export class PostTypeInfo extends _Post_stuff_TypeInfo {
 }
 
 export default PostTypeInfo;
+
+export const Post_TYPE = PostTypeInfo.INSTANCE;

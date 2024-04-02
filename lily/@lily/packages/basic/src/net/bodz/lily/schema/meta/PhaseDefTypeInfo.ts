@@ -29,3 +29,5 @@ export class PhaseDefTypeInfo extends _PhaseDef_stuff_TypeInfo {
 }
 
 export default PhaseDefTypeInfo;
+
+export const PhaseDef_TYPE = PhaseDefTypeInfo.INSTANCE;

@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.PostTalk;
 
 /**
-* @label PostTalk
-*/
+ * @label PostTalk
+ */
 @ObjectType(PostTalk.class)
 public class PostTalkIndex
         extends CoIndex<PostTalk> {

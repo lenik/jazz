@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.edu.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.edu.TestApplyItem;
 
+@ForEntityType(TestApplyItem.class)
 public class _TestApplyItemCriteriaBuilder_stuff<self_t extends _TestApplyItemCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

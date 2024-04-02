@@ -6,9 +6,9 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import UserOtherId from "./UserOtherId";
-import _UserOtherId_stuff from "./_UserOtherId_stuff";
+import { _UserOtherId_stuff_TYPE } from "./_UserOtherId_stuff_TypeInfo";
 
 export const title = "Editor view of: User other id";
 export interface Props {
@@ -71,13 +71,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_UserOtherId_stuff.TYPE">
+        <FieldGroup :type="_UserOtherId_stuff_TYPE">
             <FieldRow :property="meta.beginTime" v-model="model.beginTime">
                 <DateTime v-model="model.beginTime" />
             </FieldRow>

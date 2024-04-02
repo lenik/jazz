@@ -28,3 +28,5 @@ export class StoreItemTypeInfo extends _StoreItem_stuff_TypeInfo {
 }
 
 export default StoreItemTypeInfo;
+
+export const StoreItem_TYPE = StoreItemTypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class PlanFavTypeInfo extends _PlanFav_stuff_TypeInfo {
 }
 
 export default PlanFavTypeInfo;
+
+export const PlanFav_TYPE = PlanFavTypeInfo.INSTANCE;

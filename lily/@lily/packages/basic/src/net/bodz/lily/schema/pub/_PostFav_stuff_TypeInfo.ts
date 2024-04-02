@@ -2,7 +2,7 @@ import { LONG } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import FavRecordTypeInfo from "../../concrete/FavRecordTypeInfo";
-import Post from "./Post";
+import { Post_TYPE } from "./PostTypeInfo";
 import _PostFav_stuff_Validators from "./_PostFav_stuff_Validators";
 
 export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+            post: property({ type: Post_TYPE, nullable: false, validator: this.validators.validatePost }),
             postId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -37,3 +37,5 @@ export class _PostFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _PostFav_stuff_TypeInfo;
+
+export const _PostFav_stuff_TYPE = _PostFav_stuff_TypeInfo.INSTANCE;

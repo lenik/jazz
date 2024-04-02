@@ -28,3 +28,5 @@ export class BadgeTypeInfo extends _Badge_stuff_TypeInfo {
 }
 
 export default BadgeTypeInfo;
+
+export const Badge_TYPE = BadgeTypeInfo.INSTANCE;

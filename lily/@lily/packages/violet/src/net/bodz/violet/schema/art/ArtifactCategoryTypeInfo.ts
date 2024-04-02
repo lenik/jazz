@@ -28,3 +28,5 @@ export class ArtifactCategoryTypeInfo extends _ArtifactCategory_stuff_TypeInfo {
 }
 
 export default ArtifactCategoryTypeInfo;
+
+export const ArtifactCategory_TYPE = ArtifactCategoryTypeInfo.INSTANCE;

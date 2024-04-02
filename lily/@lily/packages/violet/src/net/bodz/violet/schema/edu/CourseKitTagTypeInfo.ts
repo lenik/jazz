@@ -28,3 +28,5 @@ export class CourseKitTagTypeInfo extends _CourseKitTag_stuff_TypeInfo {
 }
 
 export default CourseKitTagTypeInfo;
+
+export const CourseKitTag_TYPE = CourseKitTagTypeInfo.INSTANCE;

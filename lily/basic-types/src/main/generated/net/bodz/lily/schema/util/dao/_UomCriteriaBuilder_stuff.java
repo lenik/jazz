@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.util.dao;
 
 import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.util.Uom;
 
+@ForEntityType(Uom.class)
 public class _UomCriteriaBuilder_stuff<self_t extends _UomCriteriaBuilder_stuff<self_t>>
         extends CoCodeCriteriaBuilder<self_t> {
 

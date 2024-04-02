@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.plan.dao;
 
 import net.bodz.lily.concrete.CoCodeCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.plan.PlanDoTag;
 
+@ForEntityType(PlanDoTag.class)
 public class _PlanDoTagCriteriaBuilder_stuff<self_t extends _PlanDoTagCriteriaBuilder_stuff<self_t>>
         extends CoCodeCriteriaBuilder<self_t> {
 

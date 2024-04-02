@@ -28,3 +28,5 @@ export class VAppTypeInfo extends _VApp_stuff_TypeInfo {
 }
 
 export default VAppTypeInfo;
+
+export const VApp_TYPE = VAppTypeInfo.INSTANCE;

@@ -1,11 +1,11 @@
 import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type ApiType from "./ApiType";
 import type VApp from "./VApp";
 import _VApiCredit_stuff_TypeInfo from "./_VApiCredit_stuff_TypeInfo";
 
-export class _VApiCredit_stuff extends CoEntity<int> {
+export class _VApiCredit_stuff extends IdEntity<int> {
 
     static _typeInfo: _VApiCredit_stuff_TypeInfo;
     static get TYPE() {
@@ -14,7 +14,6 @@ export class _VApiCredit_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     credit: BigDecimal;
 
     api: ApiType;

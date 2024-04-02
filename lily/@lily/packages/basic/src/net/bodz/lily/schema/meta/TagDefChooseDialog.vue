@@ -7,7 +7,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { TagDef } from "./TagDef";
-import TagGroupDef from "./TagGroupDef";
+import { TagGroupDef_TYPE } from "./TagGroupDefTypeInfo";
 
 export const title = "Choose dialog for: Tag def";
 export interface Props {
@@ -36,7 +36,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "TagGroupDef": TagGroupDef.TYPE,
+    "TagGroupDef": TagGroupDef_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

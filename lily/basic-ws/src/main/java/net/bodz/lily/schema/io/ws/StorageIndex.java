@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.io.Storage;
 
 /**
-* @label Storage
-*/
+ * @label Storage
+ */
 @ObjectType(Storage.class)
 public class StorageIndex
         extends CoIndex<Storage> {

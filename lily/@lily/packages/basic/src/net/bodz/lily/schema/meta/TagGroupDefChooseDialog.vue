@@ -6,7 +6,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import SchemaDef from "./SchemaDef";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 import { TagGroupDef } from "./TagGroupDef";
 
 export const title = "Choose dialog for: Tag group def";
@@ -36,7 +36,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "SchemaDef": SchemaDef.TYPE,
+    "SchemaDef": SchemaDef_TYPE,
     "BOOLEAN": BOOLEAN,
 };
 

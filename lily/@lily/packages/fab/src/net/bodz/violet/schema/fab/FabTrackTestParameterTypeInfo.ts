@@ -28,3 +28,5 @@ export class FabTrackTestParameterTypeInfo extends _FabTrackTestParameter_stuff_
 }
 
 export default FabTrackTestParameterTypeInfo;
+
+export const FabTrackTestParameter_TYPE = FabTrackTestParameterTypeInfo.INSTANCE;

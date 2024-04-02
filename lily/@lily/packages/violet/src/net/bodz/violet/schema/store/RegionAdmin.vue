@@ -5,15 +5,16 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Artifact from "../art/Artifact";
-import ArtifactCategory from "../art/ArtifactCategory";
+import { ArtifactCategory_TYPE } from "../art/ArtifactCategoryTypeInfo";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import Region from "./Region";
-import RegionCategory from "./RegionCategory";
-import RegionLevel from "./RegionLevel";
-import RegionTag from "./RegionTag";
+import { RegionCategory_TYPE } from "./RegionCategoryTypeInfo";
+import { RegionLevel_TYPE } from "./RegionLevelTypeInfo";
+import { RegionTag_TYPE } from "./RegionTagTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
 
 export const title = "Admin view of: Region";
 export interface Props {
@@ -36,17 +37,17 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "Region": Region.TYPE,
-    "RegionLevel": RegionLevel.TYPE,
-    "RegionCategory": RegionCategory.TYPE,
-    "RegionTag": RegionTag.TYPE,
-    "Artifact": Artifact.TYPE,
-    "ArtifactCategory": ArtifactCategory.TYPE,
+    "Region": Region_TYPE,
+    "RegionLevel": RegionLevel_TYPE,
+    "RegionCategory": RegionCategory_TYPE,
+    "RegionTag": RegionTag_TYPE,
+    "Artifact": Artifact_TYPE,
+    "ArtifactCategory": ArtifactCategory_TYPE,
 };
 
 onMounted(() => {

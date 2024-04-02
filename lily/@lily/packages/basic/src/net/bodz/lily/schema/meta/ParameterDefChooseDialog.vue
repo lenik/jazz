@@ -7,7 +7,7 @@ import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState"
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
 import { ParameterDef } from "./ParameterDef";
-import SchemaDef from "./SchemaDef";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 
 export const title = "Choose dialog for: Parameter def";
 export interface Props {
@@ -36,7 +36,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "SchemaDef": SchemaDef.TYPE,
+    "SchemaDef": SchemaDef_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

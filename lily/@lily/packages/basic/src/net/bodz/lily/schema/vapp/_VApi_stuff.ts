@@ -1,12 +1,12 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type ApiType from "./ApiType";
 import type VApp from "./VApp";
 import _VApi_stuff_TypeInfo from "./_VApi_stuff_TypeInfo";
 
-export class _VApi_stuff extends CoEntity<long> {
+export class _VApi_stuff extends IdEntity<long> {
 
     static _typeInfo: _VApi_stuff_TypeInfo;
     static get TYPE() {
@@ -15,7 +15,6 @@ export class _VApi_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     properties?: JsonVariant;
     callback?: string;
 

@@ -29,3 +29,5 @@ export class UserSecretTypeInfo extends _UserSecret_stuff_TypeInfo {
 }
 
 export default UserSecretTypeInfo;
+
+export const UserSecret_TYPE = UserSecretTypeInfo.INSTANCE;

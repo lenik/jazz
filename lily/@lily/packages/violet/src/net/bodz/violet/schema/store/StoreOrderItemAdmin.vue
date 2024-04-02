@@ -6,10 +6,10 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import Artifact from "../art/Artifact";
-import Region from "./Region";
-import StoreOrder from "./StoreOrder";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
 import StoreOrderItem from "./StoreOrderItem";
+import { StoreOrder_TYPE } from "./StoreOrderTypeInfo";
 
 export const title = "Admin view of: Store order item";
 export interface Props {
@@ -34,9 +34,9 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "StoreOrder": StoreOrder.TYPE,
-    "Artifact": Artifact.TYPE,
-    "Region": Region.TYPE,
+    "StoreOrder": StoreOrder_TYPE,
+    "Artifact": Artifact_TYPE,
+    "Region": Region_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BIG_DECIMAL": BIG_DECIMAL,
     "STRING": STRING,

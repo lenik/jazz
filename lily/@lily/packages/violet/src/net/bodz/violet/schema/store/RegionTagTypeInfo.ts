@@ -28,3 +28,5 @@ export class RegionTagTypeInfo extends _RegionTag_stuff_TypeInfo {
 }
 
 export default RegionTagTypeInfo;
+
+export const RegionTag_TYPE = RegionTagTypeInfo.INSTANCE;

@@ -4,7 +4,10 @@ import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.store.StoreOrderItem;
 
+@ForEntityType(StoreOrderItem.class)
 public class _StoreOrderItemCriteriaBuilder_stuff<self_t extends _StoreOrderItemCriteriaBuilder_stuff<self_t>>
         extends CoImagedEventCriteriaBuilder<self_t> {
 

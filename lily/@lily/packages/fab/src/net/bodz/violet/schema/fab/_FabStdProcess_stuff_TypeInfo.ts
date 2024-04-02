@@ -3,10 +3,10 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
-import ArtifactModel from "../art/ArtifactModel";
-import FabFn from "./FabFn";
-import FabStdTest from "./FabStdTest";
+import { FabFn_TYPE } from "./FabFnTypeInfo";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 import _FabStdProcess_stuff_Validators from "./_FabStdProcess_stuff_Validators";
 
 export class _FabStdProcess_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -50,13 +50,13 @@ export class _FabStdProcess_stuff_TypeInfo extends CoImagedTypeInfo {
             duration: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDuration }),
             strict: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateStrict }),
 
-            output: property({ type: ArtifactModel.TYPE, nullable: false, validator: this.validators.validateOutput }),
+            output: property({ type: ArtifactModel_TYPE, nullable: false, validator: this.validators.validateOutput }),
             outputId: property({ type: INT, nullable: false, precision: 10 }),
 
-            test: property({ type: FabStdTest.TYPE, validator: this.validators.validateTest }),
+            test: property({ type: FabStdTest_TYPE, validator: this.validators.validateTest }),
             testId: property({ type: INT, precision: 10 }),
 
-            function: property({ type: FabFn.TYPE, validator: this.validators.validateFunction }),
+            function: property({ type: FabFn_TYPE, validator: this.validators.validateFunction }),
             functionId: property({ type: INT, precision: 10 }),
         });
     }
@@ -66,3 +66,5 @@ export class _FabStdProcess_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _FabStdProcess_stuff_TypeInfo;
+
+export const _FabStdProcess_stuff_TYPE = _FabStdProcess_stuff_TypeInfo.INSTANCE;

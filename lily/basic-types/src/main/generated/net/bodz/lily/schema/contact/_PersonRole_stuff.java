@@ -1,7 +1,6 @@
 package net.bodz.lily.schema.contact;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,39 +8,32 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _PersonRole_stuff
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "personrole";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_ORG_ID = "org";
     public static final String FIELD_ORG_UNIT_ID = "ou";
     public static final String FIELD_PERSON_ID = "person";
     public static final String FIELD_ROLE = "role";
 
-    public static final int N_ID = 10;
     public static final int N_ORG_ID = 10;
     public static final int N_ORG_UNIT_ID = 10;
     public static final int N_PERSON_ID = 10;
     public static final int N_ROLE = 20;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_ORG_ID = _ord_ID + 1;
+    private static final int _ord_ORG_ID = 2;
     private static final int _ord_ORG_UNIT_ID = _ord_ORG_ID + 1;
     private static final int _ord_PERSON_ID = _ord_ORG_UNIT_ID + 1;
     private static final int _ord_ROLE = _ord_PERSON_ID + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     String role;
 
@@ -63,28 +55,6 @@ public abstract class _PersonRole_stuff
 
     @NotNull
     int orgId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_ROLE)
     @Precision(value = N_ROLE)

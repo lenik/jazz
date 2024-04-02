@@ -2,7 +2,7 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
-import CourseKit from "./CourseKit";
+import { CourseKit_TYPE } from "./CourseKitTypeInfo";
 import _CourseKitFav_stuff_Validators from "./_CourseKitFav_stuff_Validators";
 
 export class _CourseKitFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _CourseKitFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            coursekit: property({ type: CourseKit.TYPE, nullable: false, validator: this.validators.validateCoursekit }),
+            coursekit: property({ type: CourseKit_TYPE, nullable: false, validator: this.validators.validateCoursekit }),
             coursekitId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -37,3 +37,5 @@ export class _CourseKitFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _CourseKitFav_stuff_TypeInfo;
+
+export const _CourseKitFav_stuff_TYPE = _CourseKitFav_stuff_TypeInfo.INSTANCE;

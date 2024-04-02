@@ -1,12 +1,12 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type OrgUnit from "./OrgUnit";
 import type Organization from "./Organization";
 import type Person from "./Person";
 import _PersonRole_stuff_TypeInfo from "./_PersonRole_stuff_TypeInfo";
 
-export class _PersonRole_stuff extends CoEntity<int> {
+export class _PersonRole_stuff extends IdEntity<int> {
 
     static _typeInfo: _PersonRole_stuff_TypeInfo;
     static get TYPE() {
@@ -15,7 +15,6 @@ export class _PersonRole_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     role?: string;
 
     orgUnit?: OrgUnit;

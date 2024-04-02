@@ -27,3 +27,5 @@ export class _ArtifactPhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _ArtifactPhase_stuff_TypeInfo;
+
+export const _ArtifactPhase_stuff_TYPE = _ArtifactPhase_stuff_TypeInfo.INSTANCE;

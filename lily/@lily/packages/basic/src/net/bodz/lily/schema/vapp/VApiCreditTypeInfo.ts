@@ -28,3 +28,5 @@ export class VApiCreditTypeInfo extends _VApiCredit_stuff_TypeInfo {
 }
 
 export default VApiCreditTypeInfo;
+
+export const VApiCredit_TYPE = VApiCreditTypeInfo.INSTANCE;

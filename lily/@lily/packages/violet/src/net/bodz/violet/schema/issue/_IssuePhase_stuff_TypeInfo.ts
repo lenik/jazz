@@ -27,3 +27,5 @@ export class _IssuePhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _IssuePhase_stuff_TypeInfo;
+
+export const _IssuePhase_stuff_TYPE = _IssuePhase_stuff_TypeInfo.INSTANCE;

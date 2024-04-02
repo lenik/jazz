@@ -3,9 +3,9 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Plan from "./Plan";
+import { Plan_TYPE } from "./PlanTypeInfo";
 import { PlanVote } from "./PlanVote";
 
 export const title = "Choose dialog for: Plan vote";
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "Plan": Plan.TYPE,
-    "User": User.TYPE,
+    "Plan": Plan_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

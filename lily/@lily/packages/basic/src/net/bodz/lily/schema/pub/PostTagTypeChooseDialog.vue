@@ -6,10 +6,10 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Group from "../account/Group";
-import User from "../account/User";
-import PostTagType from "./PostTagType";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import { PostTagType } from "./PostTagType";
+import { PostTagType_TYPE } from "./PostTagTypeTypeInfo";
 
 export const title = "Choose dialog for: Post tag type";
 export interface Props {
@@ -35,12 +35,12 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "PostTagType": PostTagType.TYPE,
+    "PostTagType": PostTagType_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

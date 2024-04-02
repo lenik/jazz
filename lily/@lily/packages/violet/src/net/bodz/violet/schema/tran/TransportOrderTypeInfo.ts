@@ -3,7 +3,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import TransportOrder from "./TransportOrder";
-import TransportOrderItem from "./TransportOrderItem";
+import { TransportOrderItem_TYPE } from "./TransportOrderItemTypeInfo";
 import TransportOrderValidators from "./TransportOrderValidators";
 import _TransportOrder_stuff_TypeInfo from "./_TransportOrder_stuff_TypeInfo";
 
@@ -26,7 +26,7 @@ export class TransportOrderTypeInfo extends _TransportOrder_stuff_TypeInfo {
         super.preamble();
         this.declare({
             arrivedDate: property({ type: OffsetDateTime.TYPE, validator: this.validators.validateArrivedDate }),
-            items: property({ type: LIST(TransportOrderItem.TYPE), validator: this.validators.validateItems }),
+            items: property({ type: LIST(TransportOrderItem_TYPE), validator: this.validators.validateItems }),
             length: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateLength }),
             shipDate: property({ type: OffsetDateTime.TYPE, validator: this.validators.validateShipDate }),
         });
@@ -37,3 +37,5 @@ export class TransportOrderTypeInfo extends _TransportOrder_stuff_TypeInfo {
 }
 
 export default TransportOrderTypeInfo;
+
+export const TransportOrder_TYPE = TransportOrderTypeInfo.INSTANCE;

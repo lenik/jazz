@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 
-import FormDef from "./FormDef";
+import { FormDef_TYPE } from "./FormDefTypeInfo";
 import FormParameter from "./FormParameter";
 
 export const title = "Admin view of: Form parameter";
@@ -26,7 +26,7 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "FormDef": FormDef.TYPE,
+    "FormDef": FormDef_TYPE,
     "STRING": STRING,
 };
 

@@ -2,8 +2,8 @@ import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import BackrefRecordTypeInfo from "../../concrete/BackrefRecordTypeInfo";
-import ExternalSite from "../inet/ExternalSite";
-import Post from "./Post";
+import { ExternalSite_TYPE } from "../inet/ExternalSiteTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 import _PostBackref_stuff_Validators from "./_PostBackref_stuff_Validators";
 
 export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
@@ -36,10 +36,10 @@ export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
             key: property({ type: STRING, precision: 30, validator: this.validators.validateKey }),
             value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
 
-            post: property({ type: Post.TYPE, nullable: false, validator: this.validators.validatePost }),
+            post: property({ type: Post_TYPE, nullable: false, validator: this.validators.validatePost }),
             postId: property({ type: LONG, nullable: false, precision: 19 }),
 
-            site: property({ type: ExternalSite.TYPE, nullable: false, validator: this.validators.validateSite }),
+            site: property({ type: ExternalSite_TYPE, nullable: false, validator: this.validators.validateSite }),
             siteId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -49,3 +49,5 @@ export class _PostBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
 }
 
 export default _PostBackref_stuff_TypeInfo;
+
+export const _PostBackref_stuff_TYPE = _PostBackref_stuff_TypeInfo.INSTANCE;

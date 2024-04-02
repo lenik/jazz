@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.contact.Organization;
 
 /**
-* @label Organization
-*/
+ * @label Organization
+ */
 @ObjectType(Organization.class)
 public class OrganizationIndex
         extends CoIndex<Organization> {

@@ -28,3 +28,5 @@ export class TestApplyTypeInfo extends _TestApply_stuff_TypeInfo {
 }
 
 export default TestApplyTypeInfo;
+
+export const TestApply_TYPE = TestApplyTypeInfo.INSTANCE;

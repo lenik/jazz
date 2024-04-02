@@ -2,7 +2,10 @@ package net.bodz.violet.schema.store.dao;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.store.OffStoreItem;
 
+@ForEntityType(OffStoreItem.class)
 public class _OffStoreItemCriteriaBuilder_stuff<self_t extends _OffStoreItemCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

@@ -4,9 +4,9 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
-import Artifact from "../art/Artifact";
-import SalesOrder from "./SalesOrder";
-import ShopItem from "./ShopItem";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { SalesOrder_TYPE } from "./SalesOrderTypeInfo";
+import { ShopItem_TYPE } from "./ShopItemTypeInfo";
 import _SalesOrderItem_stuff_Validators from "./_SalesOrderItem_stuff_Validators";
 
 export class _SalesOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
@@ -50,13 +50,13 @@ export class _SalesOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
             amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateAmount }),
             n1: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateN1 }),
 
-            order: property({ type: SalesOrder.TYPE, nullable: false, validator: this.validators.validateOrder }),
+            order: property({ type: SalesOrder_TYPE, nullable: false, validator: this.validators.validateOrder }),
             orderId: property({ type: LONG, nullable: false, precision: 19 }),
 
-            shopItem: property({ type: ShopItem.TYPE, validator: this.validators.validateShopItem }),
+            shopItem: property({ type: ShopItem_TYPE, validator: this.validators.validateShopItem }),
             shopItemId: property({ type: LONG, precision: 19 }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -66,3 +66,5 @@ export class _SalesOrderItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 }
 
 export default _SalesOrderItem_stuff_TypeInfo;
+
+export const _SalesOrderItem_stuff_TYPE = _SalesOrderItem_stuff_TypeInfo.INSTANCE;

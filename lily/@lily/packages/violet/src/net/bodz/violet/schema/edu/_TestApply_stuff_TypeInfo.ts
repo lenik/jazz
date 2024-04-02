@@ -2,9 +2,9 @@ import { BIG_DECIMAL, INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import TestPaper from "./TestPaper";
+import { TestPaper_TYPE } from "./TestPaperTypeInfo";
 import _TestApply_stuff_Validators from "./_TestApply_stuff_Validators";
 
 export class _TestApply_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -34,10 +34,10 @@ export class _TestApply_stuff_TypeInfo extends CoMessageTypeInfo {
         this.declare({
             score: property({ type: BIG_DECIMAL, precision: 10, scale: 2, validator: this.validators.validateScore }),
 
-            person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+            person: property({ type: Person_TYPE, validator: this.validators.validatePerson }),
             personId: property({ type: INT, precision: 10 }),
 
-            paper: property({ type: TestPaper.TYPE, validator: this.validators.validatePaper }),
+            paper: property({ type: TestPaper_TYPE, validator: this.validators.validatePaper }),
             paperId: property({ type: INT, precision: 10 }),
         });
     }
@@ -47,3 +47,5 @@ export class _TestApply_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _TestApply_stuff_TypeInfo;
+
+export const _TestApply_stuff_TYPE = _TestApply_stuff_TypeInfo.INSTANCE;

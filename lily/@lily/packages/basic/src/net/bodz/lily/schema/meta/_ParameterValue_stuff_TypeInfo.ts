@@ -2,7 +2,7 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import AbstractDefinitionTypeInfo from "./AbstractDefinitionTypeInfo";
-import ParameterDef from "./ParameterDef";
+import { ParameterDef_TYPE } from "./ParameterDefTypeInfo";
 import _ParameterValue_stuff_Validators from "./_ParameterValue_stuff_Validators";
 
 export class _ParameterValue_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
@@ -30,7 +30,7 @@ export class _ParameterValue_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
         this.declare({
             val: property({ type: STRING, nullable: false, validator: this.validators.validateVal }),
 
-            parameter: property({ type: ParameterDef.TYPE, nullable: false, validator: this.validators.validateParameter }),
+            parameter: property({ type: ParameterDef_TYPE, nullable: false, validator: this.validators.validateParameter }),
             parameterId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -38,3 +38,5 @@ export class _ParameterValue_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 }
 
 export default _ParameterValue_stuff_TypeInfo;
+
+export const _ParameterValue_stuff_TYPE = _ParameterValue_stuff_TypeInfo.INSTANCE;

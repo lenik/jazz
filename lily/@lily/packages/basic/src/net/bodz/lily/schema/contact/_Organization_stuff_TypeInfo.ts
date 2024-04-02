@@ -43,3 +43,5 @@ export class _Organization_stuff_TypeInfo extends PartyTypeInfo {
 }
 
 export default _Organization_stuff_TypeInfo;
+
+export const _Organization_stuff_TYPE = _Organization_stuff_TypeInfo.INSTANCE;

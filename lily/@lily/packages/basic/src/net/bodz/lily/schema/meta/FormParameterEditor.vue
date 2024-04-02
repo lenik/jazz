@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import FormParameter from "./FormParameter";
-import _FormParameter_stuff from "./_FormParameter_stuff";
+import { _FormParameter_stuff_TYPE } from "./_FormParameter_stuff_TypeInfo";
 
 export const title = "Editor view of: Form parameter";
 export interface Props {
@@ -60,12 +60,12 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_FormParameter_stuff.TYPE">
+        <FieldGroup :type="_FormParameter_stuff_TYPE">
             <FieldRow :property="meta.name" v-model="model.name">
                 <input type="text" v-model="model.name" />
             </FieldRow>

@@ -1,12 +1,12 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { ValidateResult } from "@skeljs/core/src/ui/types";
 
-import CoEntityValidators from "../../concrete/CoEntityValidators";
+import IdEntityValidators from "../../concrete/IdEntityValidators";
 import type User from "../account/User";
 import type Badge from "./Badge";
 import type _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
-export class _UserBadge_stuff_Validators extends CoEntityValidators {
+export class _UserBadge_stuff_Validators extends IdEntityValidators {
 
     constructor(type: _UserBadge_stuff_TypeInfo) {
         super(type);
@@ -14,9 +14,6 @@ export class _UserBadge_stuff_Validators extends CoEntityValidators {
 
     get type() {
         return this._type as _UserBadge_stuff_TypeInfo;
-    }
-
-    validateId(val: int) {
     }
 
     validateBadge(val: Badge) {

@@ -4,9 +4,9 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
 
-import Artifact from "../art/Artifact";
-import Shop from "./Shop";
-import ShopItemCategory from "./ShopItemCategory";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { ShopItemCategory_TYPE } from "./ShopItemCategoryTypeInfo";
+import { Shop_TYPE } from "./ShopTypeInfo";
 import _ShopItem_stuff_Validators from "./_ShopItem_stuff_Validators";
 
 export class _ShopItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
@@ -44,13 +44,13 @@ export class _ShopItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
             price: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validatePrice }),
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
 
-            category: property({ type: ShopItemCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: ShopItemCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
 
-            shop: property({ type: Shop.TYPE, validator: this.validators.validateShop }),
+            shop: property({ type: Shop_TYPE, validator: this.validators.validateShop }),
             shopId: property({ type: INT, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -60,3 +60,5 @@ export class _ShopItem_stuff_TypeInfo extends CoImagedEventTypeInfo {
 }
 
 export default _ShopItem_stuff_TypeInfo;
+
+export const _ShopItem_stuff_TYPE = _ShopItem_stuff_TypeInfo.INSTANCE;

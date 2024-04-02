@@ -41,3 +41,5 @@ export class _GroupType_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _GroupType_stuff_TypeInfo;
+
+export const _GroupType_stuff_TYPE = _GroupType_stuff_TypeInfo.INSTANCE;

@@ -28,3 +28,5 @@ export class PlanPartyTypeInfo extends _PlanParty_stuff_TypeInfo {
 }
 
 export default PlanPartyTypeInfo;
+
+export const PlanParty_TYPE = PlanPartyTypeInfo.INSTANCE;

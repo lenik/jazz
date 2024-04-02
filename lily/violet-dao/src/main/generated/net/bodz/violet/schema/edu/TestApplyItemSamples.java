@@ -17,11 +17,10 @@ public class TestApplyItemSamples
         TestApplyItem a = new TestApplyItem();
         a.setQuestion(question);
         a.setApply(apply);
-        a.setId(2751480947002123332L);
-        a.setAnswer(2085688517);
+        a.setAnswer(640629080);
         a.setAnstext("Ran ixhkbp");
-        a.setScore(0.5819204566094787);
-        a.setWaittime(0.3935042714013969);
+        a.setScore(0.8918631298186213);
+        a.setWaittime(0.5819204566094787);
         return a;
     }
 

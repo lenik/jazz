@@ -17,7 +17,6 @@ public class PersonTagSamples
         PersonTag a = new PersonTag();
         a.setTag(tag);
         a.setPerson(person);
-        a.setId(1633337588);
         return a;
     }
 

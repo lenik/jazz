@@ -28,3 +28,5 @@ export class SalesPhaseTypeInfo extends _SalesPhase_stuff_TypeInfo {
 }
 
 export default SalesPhaseTypeInfo;
+
+export const SalesPhase_TYPE = SalesPhaseTypeInfo.INSTANCE;

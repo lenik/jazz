@@ -2,9 +2,9 @@
 import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Diary from "./Diary";
+import { Diary_TYPE } from "./DiaryTypeInfo";
 import DiaryVote from "./DiaryVote";
 
 export const title = "Admin view of: Diary vote";
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "Diary": Diary.TYPE,
-    "User": User.TYPE,
+    "Diary": Diary_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

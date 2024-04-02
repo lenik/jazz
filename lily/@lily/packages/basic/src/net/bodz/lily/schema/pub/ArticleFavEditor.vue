@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import ArticleFav from "./ArticleFav";
-import _ArticleFav_stuff from "./_ArticleFav_stuff";
+import { _ArticleFav_stuff_TYPE } from "./_ArticleFav_stuff_TypeInfo";
 
 export const title = "Editor view of: Article fav";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <FavRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_ArticleFav_stuff.TYPE">
+        <FieldGroup :type="_ArticleFav_stuff_TYPE">
             <FieldRow :property="meta.article" v-model="model.article">
                 <RefEditor :dialog="articleChooseDialog" v-model="model.article" v-model:id="model.articleId" />
             </FieldRow>

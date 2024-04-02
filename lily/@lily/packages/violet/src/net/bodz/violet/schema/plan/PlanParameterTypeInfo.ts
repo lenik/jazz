@@ -28,3 +28,5 @@ export class PlanParameterTypeInfo extends _PlanParameter_stuff_TypeInfo {
 }
 
 export default PlanParameterTypeInfo;
+
+export const PlanParameter_TYPE = PlanParameterTypeInfo.INSTANCE;

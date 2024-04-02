@@ -4,7 +4,10 @@ import java.net.InetAddress;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.account.UserRun;
 
+@ForEntityType(UserRun.class)
 public class _UserRunCriteriaBuilder_stuff<self_t extends _UserRunCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

@@ -2,7 +2,7 @@ import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoCodeTypeInfo from "../../concrete/CoCodeTypeInfo";
-import Uom from "./Uom";
+import { Uom_TYPE } from "./UomTypeInfo";
 import _Uom_stuff_Validators from "./_Uom_stuff_Validators";
 
 export class _Uom_stuff_TypeInfo extends CoCodeTypeInfo {
@@ -41,3 +41,5 @@ export class _Uom_stuff_TypeInfo extends CoCodeTypeInfo {
 }
 
 export default _Uom_stuff_TypeInfo;
+
+export const _Uom_stuff_TYPE = _Uom_stuff_TypeInfo.INSTANCE;

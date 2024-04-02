@@ -5,16 +5,17 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
-import SalesOrder from "../shop/SalesOrder";
-import StoreOrder from "../store/StoreOrder";
-import TransportCategory from "./TransportCategory";
+import { SalesOrder_TYPE } from "../shop/SalesOrderTypeInfo";
+import { StoreOrder_TYPE } from "../store/StoreOrderTypeInfo";
+import { TransportCategory_TYPE } from "./TransportCategoryTypeInfo";
 import TransportOrder from "./TransportOrder";
-import TransportPhase from "./TransportPhase";
+import { TransportOrder_TYPE } from "./TransportOrderTypeInfo";
+import { TransportPhase_TYPE } from "./TransportPhaseTypeInfo";
 
 export const title = "Admin view of: Transport order";
 export interface Props {
@@ -36,20 +37,20 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "FormDef": FormDef.TYPE,
+    "FormDef": FormDef_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "TransportCategory": TransportCategory.TYPE,
-    "TransportPhase": TransportPhase.TYPE,
-    "TransportOrder": TransportOrder.TYPE,
-    "SalesOrder": SalesOrder.TYPE,
-    "StoreOrder": StoreOrder.TYPE,
-    "Organization": Organization.TYPE,
+    "TransportCategory": TransportCategory_TYPE,
+    "TransportPhase": TransportPhase_TYPE,
+    "TransportOrder": TransportOrder_TYPE,
+    "SalesOrder": SalesOrder_TYPE,
+    "StoreOrder": StoreOrder_TYPE,
+    "Organization": Organization_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

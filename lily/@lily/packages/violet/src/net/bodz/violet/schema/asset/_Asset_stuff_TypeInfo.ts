@@ -1,11 +1,11 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import type Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { OrgUnit_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";
 import _Asset_stuff_Validators from "./_Asset_stuff_Validators";
@@ -43,21 +43,21 @@ export class _Asset_stuff_TypeInfo extends AbstractAssetTypeInfo {
         this.declare({
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
 
-            person: property({ type: Person.TYPE, validator: this.validators.validatePerson }),
+            person: property({ type: Person_TYPE, validator: this.validators.validatePerson }),
             personId: property({ type: INT, precision: 10 }),
 
-            group: property({ type: Group.TYPE, inheritsDoc: true, 
+            group: property({ type: Group_TYPE, inheritsDoc: true, 
                 description: "User Group", 
                 validator: this.validators.validateGroup }),
             groupId: property({ type: INT, precision: 10 }),
 
-            org: property({ type: Organization.TYPE, validator: this.validators.validateOrg }),
+            org: property({ type: Organization_TYPE, validator: this.validators.validateOrg }),
             orgId: property({ type: INT, precision: 10 }),
 
-            orgUnit: property({ type: OrgUnit.TYPE, validator: this.validators.validateOrgUnit }),
+            orgUnit: property({ type: OrgUnit_TYPE, validator: this.validators.validateOrgUnit }),
             orgUnitId: property({ type: INT, precision: 10 }),
 
-            user: property({ type: User.TYPE, inheritsDoc: true, 
+            user: property({ type: User_TYPE, inheritsDoc: true, 
                 description: "User Account", 
                 validator: this.validators.validateUser }),
             userId: property({ type: INT, precision: 10 }),
@@ -69,3 +69,5 @@ export class _Asset_stuff_TypeInfo extends AbstractAssetTypeInfo {
 }
 
 export default _Asset_stuff_TypeInfo;
+
+export const _Asset_stuff_TYPE = _Asset_stuff_TypeInfo.INSTANCE;

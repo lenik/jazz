@@ -3,7 +3,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoCategoryTypeInfo from "../../concrete/CoCategoryTypeInfo";
-import SchemaDef from "./SchemaDef";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 import _CategoryDef_stuff_Validators from "./_CategoryDef_stuff_Validators";
 
 export class _CategoryDef_stuff_TypeInfo extends CoCategoryTypeInfo {
@@ -32,7 +32,7 @@ export class _CategoryDef_stuff_TypeInfo extends CoCategoryTypeInfo {
         this.declare({
             code: property({ type: STRING, precision: 30, validator: this.validators.validateCode }),
 
-            schema: property({ type: SchemaDef.TYPE, nullable: false, validator: this.validators.validateSchema }),
+            schema: property({ type: SchemaDef_TYPE, nullable: false, validator: this.validators.validateSchema }),
             schemaId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -40,3 +40,5 @@ export class _CategoryDef_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _CategoryDef_stuff_TypeInfo;
+
+export const _CategoryDef_stuff_TYPE = _CategoryDef_stuff_TypeInfo.INSTANCE;

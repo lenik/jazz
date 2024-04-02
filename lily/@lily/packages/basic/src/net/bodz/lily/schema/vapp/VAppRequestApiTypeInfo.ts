@@ -28,3 +28,5 @@ export class VAppRequestApiTypeInfo extends _VAppRequestApi_stuff_TypeInfo {
 }
 
 export default VAppRequestApiTypeInfo;
+
+export const VAppRequestApi_TYPE = VAppRequestApiTypeInfo.INSTANCE;

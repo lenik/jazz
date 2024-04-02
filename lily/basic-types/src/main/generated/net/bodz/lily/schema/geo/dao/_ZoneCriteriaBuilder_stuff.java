@@ -2,7 +2,10 @@ package net.bodz.lily.schema.geo.dao;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.geo.Zone;
 
+@ForEntityType(Zone.class)
 public class _ZoneCriteriaBuilder_stuff<self_t extends _ZoneCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

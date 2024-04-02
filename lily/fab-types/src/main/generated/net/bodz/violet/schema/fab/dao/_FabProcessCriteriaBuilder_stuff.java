@@ -4,7 +4,10 @@ import java.time.OffsetDateTime;
 
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabProcess;
 
+@ForEntityType(FabProcess.class)
 public class _FabProcessCriteriaBuilder_stuff<self_t extends _FabProcessCriteriaBuilder_stuff<self_t>>
         extends CoEventCriteriaBuilder<self_t> {
 

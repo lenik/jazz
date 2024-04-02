@@ -3,10 +3,9 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedEventTypeInfo";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 import _ArtifactModel_stuff_Validators from "@lily/violet/src/net/bodz/violet/schema/art/_ArtifactModel_stuff_Validators";
-
-import ArtifactModel from "./ArtifactModel";
 
 export class _ArtifactModel_stuff_TypeInfo extends CoImagedEventTypeInfo {
 
@@ -47,7 +46,7 @@ export class _ArtifactModel_stuff_TypeInfo extends CoImagedEventTypeInfo {
             obsolete: property({ type: this, validator: this.validators.validateObsolete }),
             obsoleteId: property({ type: INT, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -57,3 +56,5 @@ export class _ArtifactModel_stuff_TypeInfo extends CoImagedEventTypeInfo {
 }
 
 export default _ArtifactModel_stuff_TypeInfo;
+
+export const _ArtifactModel_stuff_TYPE = _ArtifactModel_stuff_TypeInfo.INSTANCE;

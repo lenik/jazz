@@ -41,3 +41,5 @@ export class _VAppRequest_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _VAppRequest_stuff_TypeInfo;
+
+export const _VAppRequest_stuff_TYPE = _VAppRequest_stuff_TypeInfo.INSTANCE;

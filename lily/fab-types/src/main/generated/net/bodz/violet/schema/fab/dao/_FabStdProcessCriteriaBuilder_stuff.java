@@ -3,7 +3,10 @@ package net.bodz.violet.schema.fab.dao;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.fab.FabStdProcess;
 
+@ForEntityType(FabStdProcess.class)
 public class _FabStdProcessCriteriaBuilder_stuff<self_t extends _FabStdProcessCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.tran.dao;
 
 import net.bodz.lily.concrete.CoEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.tran.TransportOrderItem;
 
+@ForEntityType(TransportOrderItem.class)
 public class _TransportOrderItemCriteriaBuilder_stuff<self_t extends _TransportOrderItemCriteriaBuilder_stuff<self_t>>
         extends CoEventCriteriaBuilder<self_t> {
 

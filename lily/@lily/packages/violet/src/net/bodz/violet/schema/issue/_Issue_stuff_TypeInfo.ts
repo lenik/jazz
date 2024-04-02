@@ -3,8 +3,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
-import IssueCategory from "./IssueCategory";
-import IssuePhase from "./IssuePhase";
+import { IssueCategory_TYPE } from "./IssueCategoryTypeInfo";
+import { IssuePhase_TYPE } from "./IssuePhaseTypeInfo";
 import _Issue_stuff_Validators from "./_Issue_stuff_Validators";
 
 export class _Issue_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -46,10 +46,10 @@ export class _Issue_stuff_TypeInfo extends CoMessageTypeInfo {
             nlike: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateNlike }),
             value: property({ type: DOUBLE, nullable: false, precision: 17, scale: 17, validator: this.validators.validateValue }),
 
-            category: property({ type: IssueCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: IssueCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
-            phase: property({ type: IssuePhase.TYPE, nullable: false, validator: this.validators.validatePhase }),
+            phase: property({ type: IssuePhase_TYPE, nullable: false, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -59,3 +59,5 @@ export class _Issue_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _Issue_stuff_TypeInfo;
+
+export const _Issue_stuff_TYPE = _Issue_stuff_TypeInfo.INSTANCE;

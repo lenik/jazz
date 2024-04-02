@@ -28,3 +28,5 @@ export class IssueCategoryTypeInfo extends _IssueCategory_stuff_TypeInfo {
 }
 
 export default IssueCategoryTypeInfo;
+
+export const IssueCategory_TYPE = IssueCategoryTypeInfo.INSTANCE;

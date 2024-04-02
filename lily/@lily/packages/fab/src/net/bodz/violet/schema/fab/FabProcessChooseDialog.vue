@@ -6,14 +6,14 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
 
-import ArtifactModel from "../art/ArtifactModel";
-import FabProcess from "./FabProcess";
 import { FabProcess } from "./FabProcess";
-import FabStdProcess from "./FabStdProcess";
-import FabTask from "./FabTask";
+import { FabProcess_TYPE } from "./FabProcessTypeInfo";
+import { FabStdProcess_TYPE } from "./FabStdProcessTypeInfo";
+import { FabTask_TYPE } from "./FabTaskTypeInfo";
 
 export const title = "Choose dialog for: Fab process";
 export interface Props {
@@ -39,16 +39,16 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabTask": FabTask.TYPE,
-    "FabProcess": FabProcess.TYPE,
-    "ArtifactModel": ArtifactModel.TYPE,
-    "FabStdProcess": FabStdProcess.TYPE,
+    "FabTask": FabTask_TYPE,
+    "FabProcess": FabProcess_TYPE,
+    "ArtifactModel": ArtifactModel_TYPE,
+    "FabStdProcess": FabStdProcess_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
     "JSON_VARIANT": JSON_VARIANT,
 };

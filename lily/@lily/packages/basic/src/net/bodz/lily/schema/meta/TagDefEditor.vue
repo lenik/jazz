@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import TagDef from "./TagDef";
-import _TagDef_stuff from "./_TagDef_stuff";
+import { _TagDef_stuff_TYPE } from "./_TagDef_stuff_TypeInfo";
 
 export const title = "Editor view of: Tag def";
 export interface Props {
@@ -64,12 +64,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_TagDef_stuff.TYPE">
+        <FieldGroup :type="_TagDef_stuff_TYPE">
             <FieldRow :property="meta.tagGroup" v-model="model.tagGroup">
                 <RefEditor :dialog="tagGroupDefChooseDialog" v-model="model.tagGroup" v-model:id="model.tagGroupId" />
             </FieldRow>

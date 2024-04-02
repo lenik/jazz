@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -12,7 +11,7 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.contact.OrgUnit;
@@ -23,14 +22,13 @@ import net.bodz.violet.schema.plan.Plan;
 
 @IdType(Long.class)
 public abstract class _StoreOrder_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "violet";
     public static final String TABLE_NAME = "storeodr";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_BEGIN_TIME = "t0";
     public static final String FIELD_END_TIME = "t1";
     public static final String FIELD_YEAR = "year";
@@ -50,7 +48,6 @@ public abstract class _StoreOrder_stuff
     public static final String FIELD_TOTAL_QUANTITY = "sum_qty";
     public static final String FIELD_TOTAL_AMOUNT = "sum_amount";
 
-    public static final int N_ID = 19;
     public static final int N_BEGIN_TIME = 35;
     public static final int N_END_TIME = 35;
     public static final int N_YEAR = 10;
@@ -70,7 +67,6 @@ public abstract class _StoreOrder_stuff
     public static final int N_TOTAL_QUANTITY = 20;
     public static final int N_TOTAL_AMOUNT = 20;
 
-    private static final int _ord_ID = 1;
     private static final int _ord_BEGIN_TIME = 12;
     private static final int _ord_END_TIME = _ord_BEGIN_TIME + 1;
     private static final int _ord_YEAR = _ord_END_TIME + 1;
@@ -89,10 +85,6 @@ public abstract class _StoreOrder_stuff
     private static final int _ord_LENGTH = _ord_PERSON_ID + 1;
     private static final int _ord_TOTAL_QUANTITY = _ord_LENGTH + 1;
     private static final int _ord_TOTAL_AMOUNT = _ord_TOTAL_QUANTITY + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     OffsetDateTime beginTime;
 
@@ -165,28 +157,6 @@ public abstract class _StoreOrder_stuff
     OrgUnit orgUnit;
 
     Integer orgUnitId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_BEGIN_TIME)
     @Precision(value = 35, scale = 6)

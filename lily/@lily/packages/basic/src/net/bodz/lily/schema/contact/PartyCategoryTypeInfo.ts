@@ -28,3 +28,5 @@ export class PartyCategoryTypeInfo extends _PartyCategory_stuff_TypeInfo {
 }
 
 export default PartyCategoryTypeInfo;
+
+export const PartyCategory_TYPE = PartyCategoryTypeInfo.INSTANCE;

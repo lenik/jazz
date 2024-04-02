@@ -1,11 +1,11 @@
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type FabStdTest from "./FabStdTest";
 import _FabStdTestParameter_stuff_TypeInfo from "./_FabStdTestParameter_stuff_TypeInfo";
 
-export class _FabStdTestParameter_stuff extends CoEntity<int> {
+export class _FabStdTestParameter_stuff extends IdEntity<int> {
 
     static _typeInfo: _FabStdTestParameter_stuff_TypeInfo;
     static get TYPE() {
@@ -14,7 +14,6 @@ export class _FabStdTestParameter_stuff extends CoEntity<int> {
         return this._typeInfo;
     }
 
-    id: int;
     required: boolean;
     properties?: JsonVariant;
     expected?: string;

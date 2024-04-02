@@ -33,3 +33,5 @@ export class _PostCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _PostCategory_stuff_TypeInfo;
+
+export const _PostCategory_stuff_TYPE = _PostCategory_stuff_TypeInfo.INSTANCE;

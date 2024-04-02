@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.PhaseDef;
 
 /**
-* @label PhaseDef
-*/
+ * @label PhaseDef
+ */
 @ObjectType(PhaseDef.class)
 public class PhaseDefIndex
         extends CoIndex<PhaseDef> {

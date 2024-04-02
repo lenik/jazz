@@ -28,3 +28,5 @@ export class OffStoreItemTypeInfo extends _OffStoreItem_stuff_TypeInfo {
 }
 
 export default OffStoreItemTypeInfo;
+
+export const OffStoreItem_TYPE = OffStoreItemTypeInfo.INSTANCE;

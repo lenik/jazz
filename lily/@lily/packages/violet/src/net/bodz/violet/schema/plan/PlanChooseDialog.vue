@@ -5,13 +5,13 @@ import { DOUBLE, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
 import { Plan } from "./Plan";
-import PlanCategory from "./PlanCategory";
-import PlanPhase from "./PlanPhase";
+import { PlanCategory_TYPE } from "./PlanCategoryTypeInfo";
+import { PlanPhase_TYPE } from "./PlanPhaseTypeInfo";
 
 export const title = "Choose dialog for: Plan";
 export interface Props {
@@ -37,15 +37,15 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "FormDef": FormDef.TYPE,
-    "PlanCategory": PlanCategory.TYPE,
-    "PlanPhase": PlanPhase.TYPE,
+    "FormDef": FormDef_TYPE,
+    "PlanCategory": PlanCategory_TYPE,
+    "PlanPhase": PlanPhase_TYPE,
     "DOUBLE": DOUBLE,
 };
 

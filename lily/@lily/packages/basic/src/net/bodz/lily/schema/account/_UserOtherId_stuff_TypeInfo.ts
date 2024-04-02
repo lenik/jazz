@@ -5,8 +5,8 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
-import User from "./User";
-import UserOtherIdType from "./UserOtherIdType";
+import { UserOtherIdType_TYPE } from "./UserOtherIdTypeTypeInfo";
+import { User_TYPE } from "./UserTypeInfo";
 import _UserOtherId_stuff_Validators from "./_UserOtherId_stuff_Validators";
 
 export class _UserOtherId_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -53,13 +53,13 @@ export class _UserOtherId_stuff_TypeInfo extends CoImagedTypeInfo {
                 description: "The authentication data", 
                 validator: this.validators.validateAuth }),
 
-            type: property({ type: UserOtherIdType.TYPE, nullable: false, 
+            type: property({ type: UserOtherIdType_TYPE, nullable: false, 
                 description: "Type of Open ID", 
                 validator: this.validators.validateType }),
             typeId: property({ type: INT, nullable: false, precision: 10, 
                 description: "Type of Open ID" }),
 
-            user: property({ type: User.TYPE, nullable: false, 
+            user: property({ type: User_TYPE, nullable: false, 
                 description: "The declaring user", 
                 validator: this.validators.validateUser }),
             userId: property({ type: INT, nullable: false, precision: 10, 
@@ -72,3 +72,5 @@ export class _UserOtherId_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _UserOtherId_stuff_TypeInfo;
+
+export const _UserOtherId_stuff_TYPE = _UserOtherId_stuff_TypeInfo.INSTANCE;

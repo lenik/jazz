@@ -6,7 +6,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import ParameterDef from "./ParameterDef";
-import SchemaDef from "./SchemaDef";
+import { SchemaDef_TYPE } from "./SchemaDefTypeInfo";
 
 export const title = "Admin view of: Parameter def";
 export interface Props {
@@ -31,7 +31,7 @@ const typeMap = {
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "SchemaDef": SchemaDef.TYPE,
+    "SchemaDef": SchemaDef_TYPE,
 };
 
 onMounted(() => {

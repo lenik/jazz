@@ -28,3 +28,5 @@ export class TestQuestionTagTypeInfo extends _TestQuestionTag_stuff_TypeInfo {
 }
 
 export default TestQuestionTagTypeInfo;
+
+export const TestQuestionTag_TYPE = TestQuestionTagTypeInfo.INSTANCE;

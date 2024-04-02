@@ -28,3 +28,5 @@ export class RegionCategoryTypeInfo extends _RegionCategory_stuff_TypeInfo {
 }
 
 export default RegionCategoryTypeInfo;
+
+export const RegionCategory_TYPE = RegionCategoryTypeInfo.INSTANCE;

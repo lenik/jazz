@@ -3,8 +3,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
-import DiaryCategory from "./DiaryCategory";
-import DiaryPhase from "./DiaryPhase";
+import { DiaryCategory_TYPE } from "./DiaryCategoryTypeInfo";
+import { DiaryPhase_TYPE } from "./DiaryPhaseTypeInfo";
 import _Diary_stuff_Validators from "./_Diary_stuff_Validators";
 
 export class _Diary_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -37,10 +37,10 @@ export class _Diary_stuff_TypeInfo extends CoMessageTypeInfo {
             formArguments: property({ type: STRING, validator: this.validators.validateFormArguments }),
             value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
 
-            phase: property({ type: DiaryPhase.TYPE, validator: this.validators.validatePhase }),
+            phase: property({ type: DiaryPhase_TYPE, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, precision: 10 }),
 
-            category: property({ type: DiaryCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: DiaryCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -50,3 +50,5 @@ export class _Diary_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _Diary_stuff_TypeInfo;
+
+export const _Diary_stuff_TYPE = _Diary_stuff_TypeInfo.INSTANCE;

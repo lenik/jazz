@@ -28,3 +28,5 @@ export class ArticleBackrefTypeInfo extends _ArticleBackref_stuff_TypeInfo {
 }
 
 export default ArticleBackrefTypeInfo;
+
+export const ArticleBackref_TYPE = ArticleBackrefTypeInfo.INSTANCE;

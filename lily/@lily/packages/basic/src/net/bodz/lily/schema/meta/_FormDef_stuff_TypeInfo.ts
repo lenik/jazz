@@ -35,3 +35,5 @@ export class _FormDef_stuff_TypeInfo extends AbstractDefinitionTypeInfo {
 }
 
 export default _FormDef_stuff_TypeInfo;
+
+export const _FormDef_stuff_TYPE = _FormDef_stuff_TypeInfo.INSTANCE;

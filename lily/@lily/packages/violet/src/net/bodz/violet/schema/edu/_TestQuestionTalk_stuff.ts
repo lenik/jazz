@@ -1,6 +1,6 @@
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
 
@@ -8,7 +8,7 @@ import type TestQuestion from "./TestQuestion";
 import type TestQuestionTalk from "./TestQuestionTalk";
 import _TestQuestionTalk_stuff_TypeInfo from "./_TestQuestionTalk_stuff_TypeInfo";
 
-export class _TestQuestionTalk_stuff extends CoEntity<long> {
+export class _TestQuestionTalk_stuff extends IdEntity<long> {
 
     static _typeInfo: _TestQuestionTalk_stuff_TypeInfo;
     static get TYPE() {
@@ -17,7 +17,6 @@ export class _TestQuestionTalk_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     beginTime?: OffsetDateTime;
     endTime?: OffsetDateTime;
     year: int;

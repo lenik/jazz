@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.inet.ExternalSite;
 
 /**
-* @label ExternalSite
-*/
+ * @label ExternalSite
+ */
 @ObjectType(ExternalSite.class)
 public class ExternalSiteIndex
         extends CoIndex<ExternalSite> {

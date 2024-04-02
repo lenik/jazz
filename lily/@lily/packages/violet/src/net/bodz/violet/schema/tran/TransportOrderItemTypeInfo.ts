@@ -1,8 +1,8 @@
 import { BIG_DECIMAL } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
-import SalesOrder from "../shop/SalesOrder";
-import SalesOrderItem from "../shop/SalesOrderItem";
+import { SalesOrderItem_TYPE } from "../shop/SalesOrderItemTypeInfo";
+import { SalesOrder_TYPE } from "../shop/SalesOrderTypeInfo";
 import TransportOrderItem from "./TransportOrderItem";
 import TransportOrderItemValidators from "./TransportOrderItemValidators";
 import _TransportOrderItem_stuff_TypeInfo from "./_TransportOrderItem_stuff_TypeInfo";
@@ -26,8 +26,8 @@ export class TransportOrderItemTypeInfo extends _TransportOrderItem_stuff_TypeIn
         super.preamble();
         this.declare({
             amount: property({ type: BIG_DECIMAL, precision: 20, scale: 2, validator: this.validators.validateAmount }),
-            salesOrder: property({ type: SalesOrder.TYPE, validator: this.validators.validateSalesOrder }),
-            salesOrderItem: property({ type: SalesOrderItem.TYPE, validator: this.validators.validateSalesOrderItem }),
+            salesOrder: property({ type: SalesOrder_TYPE, validator: this.validators.validateSalesOrder }),
+            salesOrderItem: property({ type: SalesOrderItem_TYPE, validator: this.validators.validateSalesOrderItem }),
         });
     }
 
@@ -36,3 +36,5 @@ export class TransportOrderItemTypeInfo extends _TransportOrderItem_stuff_TypeIn
 }
 
 export default TransportOrderItemTypeInfo;
+
+export const TransportOrderItem_TYPE = TransportOrderItemTypeInfo.INSTANCE;

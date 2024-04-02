@@ -18,7 +18,6 @@ public class UserBadgeSamples
         UserBadge a = new UserBadge();
         a.setBadge(badge);
         a.setUser(user);
-        a.setId(178419693);
         return a;
     }
 

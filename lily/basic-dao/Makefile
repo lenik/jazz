@@ -43,7 +43,7 @@ dao-lily-glob: predao
 
 dao: predao
 	$(DAOGEN) \
-            _schema _cat _form _formparm _parm _parmval _phase _tagv _tag _rlock \
+            _schema _cat _form _formparm _parm _parmval _phase _priority _tagv _tag _rlock \
 	    usertype grouptype user usercat useroid useroidtype usersec user_run group policy \
 	    org orgunit partycat person personrole persontag person_tag \
             zone zonecat \

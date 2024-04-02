@@ -4,9 +4,9 @@ import { onMounted, ref } from "vue";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import Article from "./Article";
 import ArticleTag from "./ArticleTag";
-import ArticleTagType from "./ArticleTagType";
+import { ArticleTagType_TYPE } from "./ArticleTagTypeTypeInfo";
+import { Article_TYPE } from "./ArticleTypeInfo";
 
 export const title = "Admin view of: Article tag";
 export interface Props {
@@ -29,8 +29,8 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Article": Article.TYPE,
-    "ArticleTagType": ArticleTagType.TYPE,
+    "Article": Article_TYPE,
+    "ArticleTagType": ArticleTagType_TYPE,
 };
 
 onMounted(() => {

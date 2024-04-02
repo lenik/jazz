@@ -3,7 +3,7 @@ import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import Group from "./Group";
 import GroupValidators from "./GroupValidators";
-import User from "./User";
+import { User_TYPE } from "./UserTypeInfo";
 import _Group_stuff_TypeInfo from "./_Group_stuff_TypeInfo";
 
 export class GroupTypeInfo extends _Group_stuff_TypeInfo {
@@ -27,7 +27,7 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
         super.preamble();
         this.declare({
             children: property({ type: LIST(this), validator: this.validators.validateChildren }),
-            users: property({ type: LIST(User.TYPE), validator: this.validators.validateUsers }),
+            users: property({ type: LIST(User_TYPE), validator: this.validators.validateUsers }),
         });
     }
 
@@ -36,3 +36,5 @@ export class GroupTypeInfo extends _Group_stuff_TypeInfo {
 }
 
 export default GroupTypeInfo;
+
+export const Group_TYPE = GroupTypeInfo.INSTANCE;

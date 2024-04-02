@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { int, long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import PlanVote from "./PlanVote";
-import _PlanVote_stuff from "./_PlanVote_stuff";
+import { _PlanVote_stuff_TYPE } from "./_PlanVote_stuff_TypeInfo";
 
 export const title = "Editor view of: Plan vote";
 export interface Props {
@@ -61,13 +61,13 @@ onMounted(() => {
 
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <VoteRecordFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_PlanVote_stuff.TYPE">
+        <FieldGroup :type="_PlanVote_stuff_TYPE">
             <FieldRow :property="meta.voteScore" v-model="model.voteScore">
                 <input type="number" v-model="model.voteScore" />
             </FieldRow>

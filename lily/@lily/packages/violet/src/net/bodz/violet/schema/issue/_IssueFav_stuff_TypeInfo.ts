@@ -2,7 +2,7 @@ import { LONG } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import FavRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/FavRecordTypeInfo";
 
-import Issue from "./Issue";
+import { Issue_TYPE } from "./IssueTypeInfo";
 import _IssueFav_stuff_Validators from "./_IssueFav_stuff_Validators";
 
 export class _IssueFav_stuff_TypeInfo extends FavRecordTypeInfo {
@@ -27,7 +27,7 @@ export class _IssueFav_stuff_TypeInfo extends FavRecordTypeInfo {
         super.preamble();
         this.declare({
 
-            issue: property({ type: Issue.TYPE, nullable: false, validator: this.validators.validateIssue }),
+            issue: property({ type: Issue_TYPE, nullable: false, validator: this.validators.validateIssue }),
             issueId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -37,3 +37,5 @@ export class _IssueFav_stuff_TypeInfo extends FavRecordTypeInfo {
 }
 
 export default _IssueFav_stuff_TypeInfo;
+
+export const _IssueFav_stuff_TYPE = _IssueFav_stuff_TypeInfo.INSTANCE;

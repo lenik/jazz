@@ -28,3 +28,5 @@ export class IssuePhaseTypeInfo extends _IssuePhase_stuff_TypeInfo {
 }
 
 export default IssuePhaseTypeInfo;
+
+export const IssuePhase_TYPE = IssuePhaseTypeInfo.INSTANCE;

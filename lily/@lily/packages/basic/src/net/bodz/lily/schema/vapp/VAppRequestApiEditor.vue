@@ -4,8 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import VAppRequestApi from "./VAppRequestApi";
-import _VAppRequestApi_stuff from "./_VAppRequestApi_stuff";
+import { _VAppRequestApi_stuff_TYPE } from "./_VAppRequestApi_stuff_TypeInfo";
 
 export const title = "Editor view of: V app request api";
 export interface Props {
@@ -65,10 +66,12 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_VAppRequestApi_stuff.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
-                <input type="number" v-model="model.id" />
+                <input type="number" v-model="model.id" disabled />
             </FieldRow>
+        </FieldGroup>
+        <FieldGroup :type="_VAppRequestApi_stuff_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="vAppRequestChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>

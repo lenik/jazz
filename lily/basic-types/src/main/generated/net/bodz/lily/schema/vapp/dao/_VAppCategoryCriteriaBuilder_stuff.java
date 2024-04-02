@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.vapp.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.vapp.VAppCategory;
 
+@ForEntityType(VAppCategory.class)
 public class _VAppCategoryCriteriaBuilder_stuff<self_t extends _VAppCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

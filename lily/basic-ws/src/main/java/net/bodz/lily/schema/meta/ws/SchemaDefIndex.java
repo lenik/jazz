@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.SchemaDef;
 
 /**
-* @label SchemaDef
-*/
+ * @label SchemaDef
+ */
 @ObjectType(SchemaDef.class)
 public class SchemaDefIndex
         extends CoIndex<SchemaDef> {

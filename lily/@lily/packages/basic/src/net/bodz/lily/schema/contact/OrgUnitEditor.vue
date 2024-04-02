@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import OrgUnit from "./OrgUnit";
-import _OrgUnit_stuff from "./_OrgUnit_stuff";
+import { _OrgUnit_stuff_TYPE } from "./_OrgUnit_stuff_TypeInfo";
 
 export const title = "Editor view of: Org unit";
 export interface Props {
@@ -67,13 +67,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_OrgUnit_stuff.TYPE">
+        <FieldGroup :type="_OrgUnit_stuff_TYPE">
             <FieldRow :property="meta.depth" v-model="model.depth">
                 <input type="number" v-model="model.depth" />
             </FieldRow>

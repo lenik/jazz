@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.vapp.VAppRequest;
 
 /**
-* @label VAppRequest
-*/
+ * @label VAppRequest
+ */
 @ObjectType(VAppRequest.class)
 public class VAppRequestIndex
         extends CoIndex<VAppRequest> {

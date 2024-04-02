@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.plan.dao;
 
 import net.bodz.lily.concrete.VoteRecordCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.plan.PlanDoVote;
 
+@ForEntityType(PlanDoVote.class)
 public class _PlanDoVoteCriteriaBuilder_stuff<self_t extends _PlanDoVoteCriteriaBuilder_stuff<self_t>>
         extends VoteRecordCriteriaBuilder<self_t> {
 

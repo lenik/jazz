@@ -3,7 +3,10 @@ package net.bodz.violet.schema.edu.dao;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.edu.TestQuestionTalk;
 
+@ForEntityType(TestQuestionTalk.class)
 public class _TestQuestionTalkCriteriaBuilder_stuff<self_t extends _TestQuestionTalkCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

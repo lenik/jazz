@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.vapp.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.vapp.ApiType;
 
+@ForEntityType(ApiType.class)
 public class _ApiTypeCriteriaBuilder_stuff<self_t extends _ApiTypeCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

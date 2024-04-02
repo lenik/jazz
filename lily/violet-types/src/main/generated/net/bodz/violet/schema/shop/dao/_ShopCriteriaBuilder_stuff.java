@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.lily.concrete.CoImagedCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.Shop;
 
+@ForEntityType(Shop.class)
 public class _ShopCriteriaBuilder_stuff<self_t extends _ShopCriteriaBuilder_stuff<self_t>>
         extends CoImagedCriteriaBuilder<self_t> {
 

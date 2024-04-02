@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.edu.dao;
 
 import net.bodz.lily.concrete.CoMessageCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.edu.TestQuestion;
 
+@ForEntityType(TestQuestion.class)
 public class _TestQuestionCriteriaBuilder_stuff<self_t extends _TestQuestionCriteriaBuilder_stuff<self_t>>
         extends CoMessageCriteriaBuilder<self_t> {
 

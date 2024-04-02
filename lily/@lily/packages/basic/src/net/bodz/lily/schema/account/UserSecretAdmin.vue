@@ -5,8 +5,8 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 
-import User from "./User";
 import UserSecret from "./UserSecret";
+import { User_TYPE } from "./UserTypeInfo";
 
 export const title = "Admin view of: User secret";
 export interface Props {
@@ -30,7 +30,7 @@ const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "User": User.TYPE,
+    "User": User_TYPE,
     "STRING": STRING,
 };
 

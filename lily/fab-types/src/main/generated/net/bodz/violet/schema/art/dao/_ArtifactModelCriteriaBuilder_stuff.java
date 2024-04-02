@@ -3,7 +3,10 @@ package net.bodz.violet.schema.art.dao;
 import java.time.OffsetDateTime;
 
 import net.bodz.lily.concrete.CoImagedEventCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.art.ArtifactModel;
 
+@ForEntityType(ArtifactModel.class)
 public class _ArtifactModelCriteriaBuilder_stuff<self_t extends _ArtifactModelCriteriaBuilder_stuff<self_t>>
         extends CoImagedEventCriteriaBuilder<self_t> {
 

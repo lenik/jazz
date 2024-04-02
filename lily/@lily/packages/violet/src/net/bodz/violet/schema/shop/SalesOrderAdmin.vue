@@ -5,16 +5,17 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
-import Plan from "../plan/Plan";
-import SalesCategory from "./SalesCategory";
+import { Plan_TYPE } from "../plan/PlanTypeInfo";
+import { SalesCategory_TYPE } from "./SalesCategoryTypeInfo";
 import SalesOrder from "./SalesOrder";
-import SalesPhase from "./SalesPhase";
+import { SalesOrder_TYPE } from "./SalesOrderTypeInfo";
+import { SalesPhase_TYPE } from "./SalesPhaseTypeInfo";
 
 export const title = "Admin view of: Sales order";
 export interface Props {
@@ -36,20 +37,20 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "FormDef": FormDef.TYPE,
+    "FormDef": FormDef_TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "SalesCategory": SalesCategory.TYPE,
-    "SalesPhase": SalesPhase.TYPE,
-    "SalesOrder": SalesOrder.TYPE,
-    "Plan": Plan.TYPE,
-    "Organization": Organization.TYPE,
-    "Person": Person.TYPE,
+    "SalesCategory": SalesCategory_TYPE,
+    "SalesPhase": SalesPhase_TYPE,
+    "SalesOrder": SalesOrder_TYPE,
+    "Plan": Plan_TYPE,
+    "Organization": Organization_TYPE,
+    "Person": Person_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

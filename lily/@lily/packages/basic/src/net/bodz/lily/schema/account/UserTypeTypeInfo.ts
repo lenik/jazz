@@ -29,3 +29,5 @@ export class UserTypeTypeInfo extends _UserType_stuff_TypeInfo {
 }
 
 export default UserTypeTypeInfo;
+
+export const UserType_TYPE = UserTypeTypeInfo.INSTANCE;

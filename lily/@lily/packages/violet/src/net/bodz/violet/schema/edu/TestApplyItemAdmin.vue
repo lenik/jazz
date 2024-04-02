@@ -5,9 +5,9 @@ import { DOUBLE, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import TestApply from "./TestApply";
 import TestApplyItem from "./TestApplyItem";
-import TestQuestion from "./TestQuestion";
+import { TestApply_TYPE } from "./TestApplyTypeInfo";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 
 export const title = "Admin view of: Test apply item";
 export interface Props {
@@ -32,8 +32,8 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "TestApply": TestApply.TYPE,
-    "TestQuestion": TestQuestion.TYPE,
+    "TestApply": TestApply_TYPE,
+    "TestQuestion": TestQuestion_TYPE,
     "STRING": STRING,
     "DOUBLE": DOUBLE,
 };

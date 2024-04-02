@@ -3,8 +3,8 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
-import FabStdTest from "./FabStdTest";
-import FabStdTestCategory from "./FabStdTestCategory";
+import { FabStdTestCategory_TYPE } from "./FabStdTestCategoryTypeInfo";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 import _FabStdTest_stuff_Validators from "./_FabStdTest_stuff_Validators";
 
 export class _FabStdTest_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -40,7 +40,7 @@ export class _FabStdTest_stuff_TypeInfo extends CoImagedTypeInfo {
             depth: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateDepth }),
             refCount: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateRefCount }),
 
-            category: property({ type: FabStdTestCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: FabStdTestCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
             parent: property({ type: this, validator: this.validators.validateParent }),
@@ -53,3 +53,5 @@ export class _FabStdTest_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _FabStdTest_stuff_TypeInfo;
+
+export const _FabStdTest_stuff_TYPE = _FabStdTest_stuff_TypeInfo.INSTANCE;

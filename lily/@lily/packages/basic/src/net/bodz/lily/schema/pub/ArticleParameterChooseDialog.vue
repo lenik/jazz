@@ -5,9 +5,9 @@ import { DOUBLE, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import Article from "./Article";
 import { ArticleParameter } from "./ArticleParameter";
-import ArticleParameterType from "./ArticleParameterType";
+import { ArticleParameterType_TYPE } from "./ArticleParameterTypeTypeInfo";
+import { Article_TYPE } from "./ArticleTypeInfo";
 
 export const title = "Choose dialog for: Article parameter";
 export interface Props {
@@ -34,8 +34,8 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Article": Article.TYPE,
-    "ArticleParameterType": ArticleParameterType.TYPE,
+    "Article": Article_TYPE,
+    "ArticleParameterType": ArticleParameterType_TYPE,
     "DOUBLE": DOUBLE,
     "STRING": STRING,
 };

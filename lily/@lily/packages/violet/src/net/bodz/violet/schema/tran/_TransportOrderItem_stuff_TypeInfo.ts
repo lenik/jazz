@@ -3,8 +3,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoEventTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoEventTypeInfo";
 
-import Artifact from "../art/Artifact";
-import TransportOrder from "./TransportOrder";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { TransportOrder_TYPE } from "./TransportOrderTypeInfo";
 import _TransportOrderItem_stuff_Validators from "./_TransportOrderItem_stuff_Validators";
 
 export class _TransportOrderItem_stuff_TypeInfo extends CoEventTypeInfo {
@@ -40,10 +40,10 @@ export class _TransportOrderItem_stuff_TypeInfo extends CoEventTypeInfo {
             price: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validatePrice }),
             amount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateAmount }),
 
-            artifact: property({ type: Artifact.TYPE, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, precision: 10 }),
 
-            order: property({ type: TransportOrder.TYPE, nullable: false, validator: this.validators.validateOrder }),
+            order: property({ type: TransportOrder_TYPE, nullable: false, validator: this.validators.validateOrder }),
             orderId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -53,3 +53,5 @@ export class _TransportOrderItem_stuff_TypeInfo extends CoEventTypeInfo {
 }
 
 export default _TransportOrderItem_stuff_TypeInfo;
+
+export const _TransportOrderItem_stuff_TYPE = _TransportOrderItem_stuff_TypeInfo.INSTANCE;

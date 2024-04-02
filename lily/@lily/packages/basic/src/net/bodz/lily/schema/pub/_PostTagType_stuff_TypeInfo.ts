@@ -24,3 +24,5 @@ export class _PostTagType_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _PostTagType_stuff_TypeInfo;
+
+export const _PostTagType_stuff_TYPE = _PostTagType_stuff_TypeInfo.INSTANCE;

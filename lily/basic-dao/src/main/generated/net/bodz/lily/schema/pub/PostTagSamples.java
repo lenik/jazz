@@ -17,7 +17,6 @@ public class PostTagSamples
         PostTag a = new PostTag();
         a.setTag(tag);
         a.setPost(post);
-        a.setId(902254566);
         return a;
     }
 

@@ -1,7 +1,10 @@
 package net.bodz.violet.schema.shop.dao;
 
 import net.bodz.lily.concrete.CoCategoryCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.violet.schema.shop.SalesCategory;
 
+@ForEntityType(SalesCategory.class)
 public class _SalesCategoryCriteriaBuilder_stuff<self_t extends _SalesCategoryCriteriaBuilder_stuff<self_t>>
         extends CoCategoryCriteriaBuilder<self_t> {
 

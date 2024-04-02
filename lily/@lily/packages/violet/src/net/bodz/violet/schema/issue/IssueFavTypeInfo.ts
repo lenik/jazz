@@ -28,3 +28,5 @@ export class IssueFavTypeInfo extends _IssueFav_stuff_TypeInfo {
 }
 
 export default IssueFavTypeInfo;
+
+export const IssueFav_TYPE = IssueFavTypeInfo.INSTANCE;

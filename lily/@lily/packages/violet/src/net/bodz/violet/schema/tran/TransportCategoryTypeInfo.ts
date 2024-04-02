@@ -28,3 +28,5 @@ export class TransportCategoryTypeInfo extends _TransportCategory_stuff_TypeInfo
 }
 
 export default TransportCategoryTypeInfo;
+
+export const TransportCategory_TYPE = TransportCategoryTypeInfo.INSTANCE;

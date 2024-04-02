@@ -6,11 +6,11 @@ import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { ArtifactModel_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactModelTypeInfo";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import ArtifactModel from "./ArtifactModel";
 import { ArtifactModel } from "./ArtifactModel";
 
 export const title = "Choose dialog for: Artifact model";
@@ -37,15 +37,15 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
     "BOOLEAN": BOOLEAN,
-    "ArtifactModel": ArtifactModel.TYPE,
-    "Artifact": Artifact.TYPE,
+    "ArtifactModel": ArtifactModel_TYPE,
+    "Artifact": Artifact_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

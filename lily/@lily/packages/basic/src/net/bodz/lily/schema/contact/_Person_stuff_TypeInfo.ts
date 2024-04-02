@@ -2,7 +2,7 @@ import { BOOLEAN, CHAR, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import PartyTypeInfo from "./PartyTypeInfo";
-import Person from "./Person";
+import { Person_TYPE } from "./PersonTypeInfo";
 import _Person_stuff_Validators from "./_Person_stuff_Validators";
 
 export class _Person_stuff_TypeInfo extends PartyTypeInfo {
@@ -42,7 +42,7 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
         super();
     }
 
-    get name() { return "net.bodz.lily.schema.contact._Person_stuff"; }
+    get name() { return "net.bodz.lily.schema.contact.Person"; }
     get icon() { return "fa-tag"; }
 
     override preamble() {
@@ -72,3 +72,5 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
 }
 
 export default _Person_stuff_TypeInfo;
+
+export const _Person_stuff_TYPE = _Person_stuff_TypeInfo.INSTANCE;

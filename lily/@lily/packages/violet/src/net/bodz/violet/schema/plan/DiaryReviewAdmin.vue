@@ -4,11 +4,12 @@ import { onMounted, ref } from "vue";
 import { INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
-import Diary from "./Diary";
 import DiaryReview from "./DiaryReview";
+import { DiaryReview_TYPE } from "./DiaryReviewTypeInfo";
+import { Diary_TYPE } from "./DiaryTypeInfo";
 
 export const title = "Admin view of: Diary review";
 export interface Props {
@@ -34,10 +35,10 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "User": User.TYPE,
-    "FormDef": FormDef.TYPE,
-    "Diary": Diary.TYPE,
-    "DiaryReview": DiaryReview.TYPE,
+    "User": User_TYPE,
+    "FormDef": FormDef_TYPE,
+    "Diary": Diary_TYPE,
+    "DiaryReview": DiaryReview_TYPE,
 };
 
 onMounted(() => {

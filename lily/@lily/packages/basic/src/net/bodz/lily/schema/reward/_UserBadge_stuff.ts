@@ -1,11 +1,11 @@
 import type { int } from "@skeljs/core/src/lang/basetype";
 
-import CoEntity from "../../concrete/CoEntity";
+import IdEntity from "../../concrete/IdEntity";
 import type User from "../account/User";
 import type Badge from "./Badge";
 import _UserBadge_stuff_TypeInfo from "./_UserBadge_stuff_TypeInfo";
 
-export class _UserBadge_stuff extends CoEntity<int> {
+export class _UserBadge_stuff extends IdEntity<int> {
 
     static _typeInfo: _UserBadge_stuff_TypeInfo;
     static get TYPE() {
@@ -13,8 +13,6 @@ export class _UserBadge_stuff extends CoEntity<int> {
             this._typeInfo = _UserBadge_stuff_TypeInfo.INSTANCE;
         return this._typeInfo;
     }
-
-    id: int;
 
     badge?: Badge;
     badgeId?: int;

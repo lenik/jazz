@@ -39,3 +39,5 @@ export class _ExternalSite_stuff_TypeInfo extends CoNodeTypeInfo {
 }
 
 export default _ExternalSite_stuff_TypeInfo;
+
+export const _ExternalSite_stuff_TYPE = _ExternalSite_stuff_TypeInfo.INSTANCE;

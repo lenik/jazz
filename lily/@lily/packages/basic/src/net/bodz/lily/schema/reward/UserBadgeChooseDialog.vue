@@ -5,8 +5,8 @@ import { INT } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "../account/User";
-import Badge from "./Badge";
+import { User_TYPE } from "../account/UserTypeInfo";
+import { Badge_TYPE } from "./BadgeTypeInfo";
 import { UserBadge } from "./UserBadge";
 
 export const title = "Choose dialog for: User badge";
@@ -34,8 +34,8 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "User": User.TYPE,
-    "Badge": Badge.TYPE,
+    "User": User_TYPE,
+    "Badge": Badge_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

@@ -28,3 +28,5 @@ export class TestQuestionFavTypeInfo extends _TestQuestionFav_stuff_TypeInfo {
 }
 
 export default TestQuestionFavTypeInfo;
+
+export const TestQuestionFav_TYPE = TestQuestionFavTypeInfo.INSTANCE;

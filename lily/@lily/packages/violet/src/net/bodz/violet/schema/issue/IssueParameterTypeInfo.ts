@@ -28,3 +28,5 @@ export class IssueParameterTypeInfo extends _IssueParameter_stuff_TypeInfo {
 }
 
 export default IssueParameterTypeInfo;
+
+export const IssueParameter_TYPE = IssueParameterTypeInfo.INSTANCE;

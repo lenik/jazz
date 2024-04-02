@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import ShopItem from "./ShopItem";
 import ShopItemFav from "./ShopItemFav";
+import { ShopItem_TYPE } from "./ShopItemTypeInfo";
 
 export const title = "Admin view of: Shop item fav";
 export interface Props {
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "ShopItem": ShopItem.TYPE,
-    "User": User.TYPE,
+    "ShopItem": ShopItem_TYPE,
+    "User": User_TYPE,
 };
 
 onMounted(() => {

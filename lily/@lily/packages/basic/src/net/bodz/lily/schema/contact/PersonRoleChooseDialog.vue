@@ -4,10 +4,10 @@ import { onMounted, ref } from "vue";
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import OrgUnit from "./OrgUnit";
-import Organization from "./Organization";
-import Person from "./Person";
+import { OrgUnit_TYPE } from "./OrgUnitTypeInfo";
+import { Organization_TYPE } from "./OrganizationTypeInfo";
 import { PersonRole } from "./PersonRole";
+import { Person_TYPE } from "./PersonTypeInfo";
 
 export const title = "Choose dialog for: Person role";
 export interface Props {
@@ -33,9 +33,9 @@ const emit = defineEmits<{
 
 const typeMap = {
     "INT": INT,
-    "Organization": Organization.TYPE,
-    "OrgUnit": OrgUnit.TYPE,
-    "Person": Person.TYPE,
+    "Organization": Organization_TYPE,
+    "OrgUnit": OrgUnit_TYPE,
+    "Person": Person_TYPE,
     "STRING": STRING,
 };
 

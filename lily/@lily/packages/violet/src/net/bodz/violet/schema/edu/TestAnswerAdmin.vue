@@ -7,7 +7,7 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
 import TestAnswer from "./TestAnswer";
-import TestQuestion from "./TestQuestion";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 
 export const title = "Admin view of: Test answer";
 export interface Props {
@@ -34,7 +34,7 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "TestQuestion": TestQuestion.TYPE,
+    "TestQuestion": TestQuestion_TYPE,
     "BOOLEAN": BOOLEAN,
 };
 

@@ -28,3 +28,5 @@ export class AssetTypeInfo extends _Asset_stuff_TypeInfo {
 }
 
 export default AssetTypeInfo;
+
+export const Asset_TYPE = AssetTypeInfo.INSTANCE;

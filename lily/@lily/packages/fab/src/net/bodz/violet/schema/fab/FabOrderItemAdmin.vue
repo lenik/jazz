@@ -5,10 +5,10 @@ import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { BIG_DECIMAL, BOOLEAN, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
-import Artifact from "@lily/violet/src/net/bodz/violet/schema/art/Artifact";
+import { Artifact_TYPE } from "@lily/violet/src/net/bodz/violet/schema/art/ArtifactTypeInfo";
 
-import FabOrder from "./FabOrder";
 import FabOrderItem from "./FabOrderItem";
+import { FabOrder_TYPE } from "./FabOrderTypeInfo";
 
 export const title = "Admin view of: Fab order item";
 export interface Props {
@@ -34,8 +34,8 @@ const typeMap = {
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "FabOrder": FabOrder.TYPE,
-    "Artifact": Artifact.TYPE,
+    "FabOrder": FabOrder_TYPE,
+    "Artifact": Artifact_TYPE,
     "BOOLEAN": BOOLEAN,
     "STRING": STRING,
     "BIG_DECIMAL": BIG_DECIMAL,

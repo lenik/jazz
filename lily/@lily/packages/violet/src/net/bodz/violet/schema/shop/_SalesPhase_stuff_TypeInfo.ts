@@ -27,3 +27,5 @@ export class _SalesPhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _SalesPhase_stuff_TypeInfo;
+
+export const _SalesPhase_stuff_TYPE = _SalesPhase_stuff_TypeInfo.INSTANCE;

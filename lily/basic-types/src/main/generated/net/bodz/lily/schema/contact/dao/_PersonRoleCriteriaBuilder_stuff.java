@@ -1,7 +1,10 @@
 package net.bodz.lily.schema.contact.dao;
 
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.schema.contact.PersonRole;
 
+@ForEntityType(PersonRole.class)
 public class _PersonRoleCriteriaBuilder_stuff<self_t extends _PersonRoleCriteriaBuilder_stuff<self_t>>
         extends CoObjectCriteriaBuilder<self_t> {
 

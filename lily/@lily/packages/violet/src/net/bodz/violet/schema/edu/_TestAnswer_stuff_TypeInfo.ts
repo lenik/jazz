@@ -3,7 +3,7 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
-import TestQuestion from "./TestQuestion";
+import { TestQuestion_TYPE } from "./TestQuestionTypeInfo";
 import _TestAnswer_stuff_Validators from "./_TestAnswer_stuff_Validators";
 
 export class _TestAnswer_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -31,7 +31,7 @@ export class _TestAnswer_stuff_TypeInfo extends CoMessageTypeInfo {
         this.declare({
             valid: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateValid }),
 
-            question: property({ type: TestQuestion.TYPE, nullable: false, validator: this.validators.validateQuestion }),
+            question: property({ type: TestQuestion_TYPE, nullable: false, validator: this.validators.validateQuestion }),
             questionId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -41,3 +41,5 @@ export class _TestAnswer_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _TestAnswer_stuff_TypeInfo;
+
+export const _TestAnswer_stuff_TYPE = _TestAnswer_stuff_TypeInfo.INSTANCE;

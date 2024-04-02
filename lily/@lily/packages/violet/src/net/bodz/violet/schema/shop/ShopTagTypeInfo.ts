@@ -28,3 +28,5 @@ export class ShopTagTypeInfo extends _ShopTag_stuff_TypeInfo {
 }
 
 export default ShopTagTypeInfo;
+
+export const ShopTag_TYPE = ShopTagTypeInfo.INSTANCE;

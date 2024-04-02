@@ -28,3 +28,5 @@ export class FabStdTestCategoryTypeInfo extends _FabStdTestCategory_stuff_TypeIn
 }
 
 export default FabStdTestCategoryTypeInfo;
+
+export const FabStdTestCategory_TYPE = FabStdTestCategoryTypeInfo.INSTANCE;

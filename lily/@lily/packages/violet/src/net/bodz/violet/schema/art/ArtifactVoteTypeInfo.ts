@@ -28,3 +28,5 @@ export class ArtifactVoteTypeInfo extends _ArtifactVote_stuff_TypeInfo {
 }
 
 export default ArtifactVoteTypeInfo;
+
+export const ArtifactVote_TYPE = ArtifactVoteTypeInfo.INSTANCE;

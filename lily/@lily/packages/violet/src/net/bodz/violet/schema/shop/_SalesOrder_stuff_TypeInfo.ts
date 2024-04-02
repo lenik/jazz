@@ -2,13 +2,13 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
 
-import Plan from "../plan/Plan";
-import SalesCategory from "./SalesCategory";
-import SalesOrder from "./SalesOrder";
-import SalesPhase from "./SalesPhase";
+import { Plan_TYPE } from "../plan/PlanTypeInfo";
+import { SalesCategory_TYPE } from "./SalesCategoryTypeInfo";
+import { SalesOrder_TYPE } from "./SalesOrderTypeInfo";
+import { SalesPhase_TYPE } from "./SalesPhaseTypeInfo";
 import _SalesOrder_stuff_Validators from "./_SalesOrder_stuff_Validators";
 
 export class _SalesOrder_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -55,22 +55,22 @@ export class _SalesOrder_stuff_TypeInfo extends CoMessageTypeInfo {
             totalQuantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateTotalQuantity }),
             totalAmount: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateTotalAmount }),
 
-            customer: property({ type: Person.TYPE, validator: this.validators.validateCustomer }),
+            customer: property({ type: Person_TYPE, validator: this.validators.validateCustomer }),
             customerId: property({ type: INT, precision: 10 }),
 
-            phase: property({ type: SalesPhase.TYPE, validator: this.validators.validatePhase }),
+            phase: property({ type: SalesPhase_TYPE, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, precision: 10 }),
 
-            customerOrg: property({ type: Organization.TYPE, validator: this.validators.validateCustomerOrg }),
+            customerOrg: property({ type: Organization_TYPE, validator: this.validators.validateCustomerOrg }),
             customerOrgId: property({ type: INT, precision: 10 }),
 
             previousOrder: property({ type: this, validator: this.validators.validatePreviousOrder }),
             previousOrderId: property({ type: LONG, precision: 19 }),
 
-            plan: property({ type: Plan.TYPE, validator: this.validators.validatePlan }),
+            plan: property({ type: Plan_TYPE, validator: this.validators.validatePlan }),
             planId: property({ type: LONG, precision: 19 }),
 
-            category: property({ type: SalesCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: SalesCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
         });
     }
@@ -80,3 +80,5 @@ export class _SalesOrder_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _SalesOrder_stuff_TypeInfo;
+
+export const _SalesOrder_stuff_TYPE = _SalesOrder_stuff_TypeInfo.INSTANCE;

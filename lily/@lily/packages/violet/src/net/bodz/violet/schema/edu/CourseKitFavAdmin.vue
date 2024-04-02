@@ -2,10 +2,10 @@
 import { onMounted, ref } from "vue";
 
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import CourseKit from "./CourseKit";
 import CourseKitFav from "./CourseKitFav";
+import { CourseKit_TYPE } from "./CourseKitTypeInfo";
 
 export const title = "Admin view of: Course kit fav";
 export interface Props {
@@ -27,8 +27,8 @@ const selection = ref<any>({});
 
 const typeMap = {
     "LONG": LONG,
-    "CourseKit": CourseKit.TYPE,
-    "User": User.TYPE,
+    "CourseKit": CourseKit_TYPE,
+    "User": User_TYPE,
 };
 
 onMounted(() => {

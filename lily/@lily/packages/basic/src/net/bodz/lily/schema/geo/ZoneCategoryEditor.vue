@@ -4,10 +4,10 @@ import { onMounted, provide, ref } from "vue";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import CoNode from "../../concrete/CoNode";
-import IdEntity from "../../concrete/IdEntity";
+import { CoNode_TYPE } from "../../concrete/CoNodeTypeInfo";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import ZoneCategory from "./ZoneCategory";
-import _ZoneCategory_stuff from "./_ZoneCategory_stuff";
+import { _ZoneCategory_stuff_TYPE } from "./_ZoneCategory_stuff_TypeInfo";
 
 export const title = "Editor view of: Zone category";
 export interface Props {
@@ -66,18 +66,18 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="CoNode.TYPE">
+        <FieldGroup :type="CoNode_TYPE">
             <FieldRow :property="meta.parent" v-model="model.parent">
                 <RefEditor :dialog="zoneCategoryChooseDialog" v-model="model.parent" v-model:id="model.parentId" />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_ZoneCategory_stuff.TYPE">
+        <FieldGroup :type="_ZoneCategory_stuff_TYPE">
             <FieldRow :property="meta.name" v-model="model.name">
                 <input type="text" v-model="model.name" />
             </FieldRow>

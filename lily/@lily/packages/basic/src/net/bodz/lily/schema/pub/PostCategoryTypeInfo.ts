@@ -28,3 +28,5 @@ export class PostCategoryTypeInfo extends _PostCategory_stuff_TypeInfo {
 }
 
 export default PostCategoryTypeInfo;
+
+export const PostCategory_TYPE = PostCategoryTypeInfo.INSTANCE;

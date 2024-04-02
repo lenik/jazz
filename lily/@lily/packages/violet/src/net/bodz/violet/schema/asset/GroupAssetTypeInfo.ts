@@ -28,3 +28,5 @@ export class GroupAssetTypeInfo extends _GroupAsset_stuff_TypeInfo {
 }
 
 export default GroupAssetTypeInfo;
+
+export const GroupAsset_TYPE = GroupAssetTypeInfo.INSTANCE;

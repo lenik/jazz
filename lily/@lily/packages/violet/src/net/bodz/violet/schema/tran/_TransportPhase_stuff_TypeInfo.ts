@@ -27,3 +27,5 @@ export class _TransportPhase_stuff_TypeInfo extends CoPhaseTypeInfo {
 }
 
 export default _TransportPhase_stuff_TypeInfo;
+
+export const _TransportPhase_stuff_TYPE = _TransportPhase_stuff_TypeInfo.INSTANCE;

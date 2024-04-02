@@ -1,11 +1,11 @@
 import type { double, int, long } from "@skeljs/core/src/lang/basetype";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 
 import type TestApply from "./TestApply";
 import type TestQuestion from "./TestQuestion";
 import _TestApplyItem_stuff_TypeInfo from "./_TestApplyItem_stuff_TypeInfo";
 
-export class _TestApplyItem_stuff extends CoEntity<long> {
+export class _TestApplyItem_stuff extends IdEntity<long> {
 
     static _typeInfo: _TestApplyItem_stuff_TypeInfo;
     static get TYPE() {
@@ -14,7 +14,6 @@ export class _TestApplyItem_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     answer?: int;
     anstext?: string;
     score?: double;

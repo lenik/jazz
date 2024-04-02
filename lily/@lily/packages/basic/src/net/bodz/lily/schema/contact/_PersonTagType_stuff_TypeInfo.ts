@@ -24,3 +24,5 @@ export class _PersonTagType_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _PersonTagType_stuff_TypeInfo;
+
+export const _PersonTagType_stuff_TYPE = _PersonTagType_stuff_TypeInfo.INSTANCE;

@@ -1,7 +1,6 @@
 package net.bodz.lily.schema.vapp;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -10,39 +9,32 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _VApi_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "vapi";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_PROPERTIES = "props";
     public static final String FIELD_APP_ID = "app";
     public static final String FIELD_API_ID = "api";
     public static final String FIELD_CALLBACK = "callback";
 
-    public static final int N_ID = 19;
     public static final int N_PROPERTIES = 2147483647;
     public static final int N_APP_ID = 10;
     public static final int N_API_ID = 10;
     public static final int N_CALLBACK = 200;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_PROPERTIES = _ord_ID + 4;
+    private static final int _ord_PROPERTIES = 5;
     private static final int _ord_APP_ID = _ord_PROPERTIES + 1;
     private static final int _ord_API_ID = _ord_APP_ID + 1;
     private static final int _ord_CALLBACK = _ord_API_ID + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     JsonVariant properties;
 
@@ -61,28 +53,6 @@ public abstract class _VApi_stuff
 
     @NotNull
     int appId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_PROPERTIES)
     @Precision(value = 2147483647)
@@ -162,6 +132,8 @@ public abstract class _VApi_stuff
     @Column(name = "app", nullable = false, precision = 10)
     public synchronized int getAppId() {
         if (app != null) {
+            if (app.getId() == null)
+                return 0;
             return app.getId();
         }
         return appId;

@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { long } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import TestAnswer from "./TestAnswer";
-import _TestAnswer_stuff from "./_TestAnswer_stuff";
+import { _TestAnswer_stuff_TYPE } from "./_TestAnswer_stuff_TypeInfo";
 
 export const title = "Editor view of: Test answer";
 export interface Props {
@@ -65,13 +65,13 @@ onMounted(() => {
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedEventFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_TestAnswer_stuff.TYPE">
+        <FieldGroup :type="_TestAnswer_stuff_TYPE">
             <FieldRow :property="meta.valid" v-model="model.valid">
                 <input type="checkbox" v-model="model.valid" />
             </FieldRow>

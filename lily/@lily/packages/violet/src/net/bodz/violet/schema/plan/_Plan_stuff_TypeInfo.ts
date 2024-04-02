@@ -3,8 +3,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoMessageTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoMessageTypeInfo";
 
-import PlanCategory from "./PlanCategory";
-import PlanPhase from "./PlanPhase";
+import { PlanCategory_TYPE } from "./PlanCategoryTypeInfo";
+import { PlanPhase_TYPE } from "./PlanPhaseTypeInfo";
 import _Plan_stuff_Validators from "./_Plan_stuff_Validators";
 
 export class _Plan_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -46,10 +46,10 @@ export class _Plan_stuff_TypeInfo extends CoMessageTypeInfo {
             nlike: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateNlike }),
             value: property({ type: DOUBLE, nullable: false, precision: 17, scale: 17, validator: this.validators.validateValue }),
 
-            category: property({ type: PlanCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: PlanCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
 
-            phase: property({ type: PlanPhase.TYPE, nullable: false, validator: this.validators.validatePhase }),
+            phase: property({ type: PlanPhase_TYPE, nullable: false, validator: this.validators.validatePhase }),
             phaseId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -59,3 +59,5 @@ export class _Plan_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _Plan_stuff_TypeInfo;
+
+export const _Plan_stuff_TYPE = _Plan_stuff_TypeInfo.INSTANCE;

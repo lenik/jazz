@@ -4,9 +4,9 @@ import { onMounted, provide, ref } from "vue";
 import type { double, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
 
-import IdEntity from "../../concrete/IdEntity";
+import { IdEntity_TYPE } from "../../concrete/IdEntityTypeInfo";
 import Uom from "./Uom";
-import _Uom_stuff from "./_Uom_stuff";
+import { _Uom_stuff_TYPE } from "./_Uom_stuff_TypeInfo";
 
 export const title = "Editor view of: Uom";
 export interface Props {
@@ -64,14 +64,14 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <CoObjectFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
         <CoImagedFieldGroup :meta="meta" v-model="model" />
         <CoCodeFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="_Uom_stuff.TYPE">
+        <FieldGroup :type="_Uom_stuff_TYPE">
             <FieldRow :property="meta.property" v-model="model.property">
                 <input type="text" v-model="model.property" />
             </FieldRow>

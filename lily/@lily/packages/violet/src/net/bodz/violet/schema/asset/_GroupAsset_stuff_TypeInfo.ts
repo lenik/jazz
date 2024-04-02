@@ -1,7 +1,7 @@
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import { INT } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
-import type Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
 
 import AbstractAssetTypeInfo from "./AbstractAssetTypeInfo";
 import _GroupAsset_stuff_Validators from "./_GroupAsset_stuff_Validators";
@@ -31,7 +31,7 @@ export class _GroupAsset_stuff_TypeInfo extends AbstractAssetTypeInfo {
         this.declare({
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
 
-            owner: property({ type: Group.TYPE, nullable: false, inheritsDoc: true, 
+            owner: property({ type: Group_TYPE, nullable: false, inheritsDoc: true, 
                 description: "User Group", 
                 validator: this.validators.validateOwner }),
             ownerId: property({ type: INT, nullable: false, precision: 10 }),
@@ -43,3 +43,5 @@ export class _GroupAsset_stuff_TypeInfo extends AbstractAssetTypeInfo {
 }
 
 export default _GroupAsset_stuff_TypeInfo;
+
+export const _GroupAsset_stuff_TYPE = _GroupAsset_stuff_TypeInfo.INSTANCE;

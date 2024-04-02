@@ -33,3 +33,5 @@ export class _FabStdTestCategory_stuff_TypeInfo extends CoCategoryTypeInfo {
 }
 
 export default _FabStdTestCategory_stuff_TypeInfo;
+
+export const _FabStdTestCategory_stuff_TYPE = _FabStdTestCategory_stuff_TypeInfo.INSTANCE;

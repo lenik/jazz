@@ -6,9 +6,10 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import Group from "../account/Group";
-import User from "../account/User";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import ZoneCategory from "./ZoneCategory";
+import { ZoneCategory_TYPE } from "./ZoneCategoryTypeInfo";
 
 export const title = "Admin view of: Zone category";
 export interface Props {
@@ -31,12 +32,12 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "ZoneCategory": ZoneCategory.TYPE,
+    "ZoneCategory": ZoneCategory_TYPE,
 };
 
 onMounted(() => {

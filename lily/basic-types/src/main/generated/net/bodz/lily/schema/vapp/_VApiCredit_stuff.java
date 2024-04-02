@@ -3,43 +3,35 @@ package net.bodz.lily.schema.vapp;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Integer.class)
 public abstract class _VApiCredit_stuff
-        extends CoEntity<Integer> {
+        extends IdEntity<Integer> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "vapi_credit";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_APP_ID = "app";
     public static final String FIELD_API_ID = "api";
     public static final String FIELD_CREDIT = "credit";
 
-    public static final int N_ID = 10;
     public static final int N_APP_ID = 10;
     public static final int N_API_ID = 10;
     public static final int N_CREDIT = 20;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_APP_ID = _ord_ID + 7;
+    private static final int _ord_APP_ID = 8;
     private static final int _ord_API_ID = _ord_APP_ID + 1;
     private static final int _ord_CREDIT = _ord_API_ID + 1;
-
-    @Id
-    @NotNull
-    int id;
 
     @NotNull
     BigDecimal credit;
@@ -57,28 +49,6 @@ public abstract class _VApiCredit_stuff
 
     @NotNull
     int appId;
-
-    @Override
-    public Integer id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Integer id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 10)
-    @Column(name = "id", nullable = false, precision = 10)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_CREDIT)
     @NotNull
@@ -147,6 +117,8 @@ public abstract class _VApiCredit_stuff
     @Column(name = "app", nullable = false, precision = 10)
     public synchronized int getAppId() {
         if (app != null) {
+            if (app.getId() == null)
+                return 0;
             return app.getId();
         }
         return appId;

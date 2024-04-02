@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.meta.TagGroupDef;
 
 /**
-* @label TagGroupDef
-*/
+ * @label TagGroupDef
+ */
 @ObjectType(TagGroupDef.class)
 public class TagGroupDefIndex
         extends CoIndex<TagGroupDef> {

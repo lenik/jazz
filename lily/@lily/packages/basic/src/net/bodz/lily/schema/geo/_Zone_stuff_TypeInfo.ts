@@ -4,8 +4,8 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoImagedTypeInfo from "../../concrete/CoImagedTypeInfo";
-import Zone from "./Zone";
-import ZoneCategory from "./ZoneCategory";
+import { ZoneCategory_TYPE } from "./ZoneCategoryTypeInfo";
+import { Zone_TYPE } from "./ZoneTypeInfo";
 import _Zone_stuff_Validators from "./_Zone_stuff_Validators";
 
 export class _Zone_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -53,7 +53,7 @@ export class _Zone_stuff_TypeInfo extends CoImagedTypeInfo {
             parent: property({ type: this, validator: this.validators.validateParent }),
             parentId: property({ type: INT, precision: 10 }),
 
-            category: property({ type: ZoneCategory.TYPE, nullable: false, validator: this.validators.validateCategory }),
+            category: property({ type: ZoneCategory_TYPE, nullable: false, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -63,3 +63,5 @@ export class _Zone_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _Zone_stuff_TypeInfo;
+
+export const _Zone_stuff_TYPE = _Zone_stuff_TypeInfo.INSTANCE;

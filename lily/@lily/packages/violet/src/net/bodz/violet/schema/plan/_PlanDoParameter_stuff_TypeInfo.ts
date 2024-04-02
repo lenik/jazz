@@ -35,3 +35,5 @@ export class _PlanDoParameter_stuff_TypeInfo extends CoParameterTypeInfo {
 }
 
 export default _PlanDoParameter_stuff_TypeInfo;
+
+export const _PlanDoParameter_stuff_TYPE = _PlanDoParameter_stuff_TypeInfo.INSTANCE;

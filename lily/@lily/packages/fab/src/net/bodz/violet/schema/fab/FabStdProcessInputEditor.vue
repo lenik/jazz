@@ -3,10 +3,10 @@ import { onMounted, provide, ref } from "vue";
 
 import type { BigDecimal, int } from "@skeljs/core/src/lang/basetype";
 import { getDefaultFieldRowProps } from "@skeljs/dba/src/ui/lily/defaults";
-import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
+import { IdEntity_TYPE } from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
 import FabStdProcessInput from "./FabStdProcessInput";
-import _FabStdProcessInput_stuff from "./_FabStdProcessInput_stuff";
+import { _FabStdProcessInput_stuff_TYPE } from "./_FabStdProcessInput_stuff_TypeInfo";
 
 export const title = "Editor view of: Fab std process input";
 export interface Props {
@@ -66,12 +66,12 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <StructRowFieldGroup :meta="meta" v-model="model" />
-        <FieldGroup :type="IdEntity.TYPE">
+        <FieldGroup :type="IdEntity_TYPE">
             <FieldRow :property="meta.id" v-model="model.id">
                 <input type="number" v-model="model.id" disabled />
             </FieldRow>
         </FieldGroup>
-        <FieldGroup :type="_FabStdProcessInput_stuff.TYPE">
+        <FieldGroup :type="_FabStdProcessInput_stuff_TYPE">
             <FieldRow :property="meta.quantity" v-model="model.quantity">
                 <input type="number" v-model="model.quantity" />
             </FieldRow>

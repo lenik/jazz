@@ -28,3 +28,5 @@ export class PersonTagTypeTypeInfo extends _PersonTagType_stuff_TypeInfo {
 }
 
 export default PersonTagTypeTypeInfo;
+
+export const PersonTagType_TYPE = PersonTagTypeTypeInfo.INSTANCE;

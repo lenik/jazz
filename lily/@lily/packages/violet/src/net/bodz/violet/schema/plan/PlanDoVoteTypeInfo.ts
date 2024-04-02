@@ -28,3 +28,5 @@ export class PlanDoVoteTypeInfo extends _PlanDoVote_stuff_TypeInfo {
 }
 
 export default PlanDoVoteTypeInfo;
+
+export const PlanDoVote_TYPE = PlanDoVoteTypeInfo.INSTANCE;

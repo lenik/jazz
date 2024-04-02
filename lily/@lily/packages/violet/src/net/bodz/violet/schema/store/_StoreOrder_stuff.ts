@@ -1,6 +1,6 @@
 import type { BigDecimal, int, long } from "@skeljs/core/src/lang/basetype";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import CoEntity from "@lily/basic/src/net/bodz/lily/concrete/CoEntity";
+import IdEntity from "@lily/basic/src/net/bodz/lily/concrete/IdEntity";
 import type User from "@lily/basic/src/net/bodz/lily/schema/account/User";
 import type OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
 import type Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
@@ -13,7 +13,7 @@ import type StoreOrder from "./StoreOrder";
 import type StorePhase from "./StorePhase";
 import _StoreOrder_stuff_TypeInfo from "./_StoreOrder_stuff_TypeInfo";
 
-export class _StoreOrder_stuff extends CoEntity<long> {
+export class _StoreOrder_stuff extends IdEntity<long> {
 
     static _typeInfo: _StoreOrder_stuff_TypeInfo;
     static get TYPE() {
@@ -22,7 +22,6 @@ export class _StoreOrder_stuff extends CoEntity<long> {
         return this._typeInfo;
     }
 
-    id: long;
     beginTime?: OffsetDateTime;
     endTime?: OffsetDateTime;
     year: int;

@@ -6,9 +6,9 @@ import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import ApiType from "./ApiType";
-import VAppRequest from "./VAppRequest";
+import { ApiType_TYPE } from "./ApiTypeTypeInfo";
 import { VAppRequestApi } from "./VAppRequestApi";
+import { VAppRequest_TYPE } from "./VAppRequestTypeInfo";
 
 export const title = "Choose dialog for: V app request api";
 export interface Props {
@@ -37,8 +37,8 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "VAppRequest": VAppRequest.TYPE,
-    "ApiType": ApiType.TYPE,
+    "VAppRequest": VAppRequest_TYPE,
+    "ApiType": ApiType_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

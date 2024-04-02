@@ -4,8 +4,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 
 import CoMessageTypeInfo from "../../concrete/CoMessageTypeInfo";
-import Post from "./Post";
-import PostCategory from "./PostCategory";
+import { PostCategory_TYPE } from "./PostCategoryTypeInfo";
+import { Post_TYPE } from "./PostTypeInfo";
 import _Post_stuff_Validators from "./_Post_stuff_Validators";
 
 export class _Post_stuff_TypeInfo extends CoMessageTypeInfo {
@@ -53,7 +53,7 @@ export class _Post_stuff_TypeInfo extends CoMessageTypeInfo {
             parent: property({ type: this, validator: this.validators.validateParent }),
             parentId: property({ type: LONG, precision: 19 }),
 
-            category: property({ type: PostCategory.TYPE, validator: this.validators.validateCategory }),
+            category: property({ type: PostCategory_TYPE, validator: this.validators.validateCategory }),
             categoryId: property({ type: INT, precision: 10 }),
         });
     }
@@ -63,3 +63,5 @@ export class _Post_stuff_TypeInfo extends CoMessageTypeInfo {
 }
 
 export default _Post_stuff_TypeInfo;
+
+export const _Post_stuff_TYPE = _Post_stuff_TypeInfo.INSTANCE;

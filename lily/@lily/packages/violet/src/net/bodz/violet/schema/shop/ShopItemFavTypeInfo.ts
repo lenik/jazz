@@ -28,3 +28,5 @@ export class ShopItemFavTypeInfo extends _ShopItemFav_stuff_TypeInfo {
 }
 
 export default ShopItemFavTypeInfo;
+
+export const ShopItemFav_TYPE = ShopItemFavTypeInfo.INSTANCE;

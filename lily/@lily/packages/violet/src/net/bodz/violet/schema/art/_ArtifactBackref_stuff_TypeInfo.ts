@@ -1,9 +1,9 @@
 import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import BackrefRecordTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/BackrefRecordTypeInfo";
-import ExternalSite from "@lily/basic/src/net/bodz/lily/schema/inet/ExternalSite";
+import { ExternalSite_TYPE } from "@lily/basic/src/net/bodz/lily/schema/inet/ExternalSiteTypeInfo";
 
-import Artifact from "./Artifact";
+import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import _ArtifactBackref_stuff_Validators from "./_ArtifactBackref_stuff_Validators";
 
 export class _ArtifactBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
@@ -36,10 +36,10 @@ export class _ArtifactBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
             key: property({ type: STRING, precision: 30, validator: this.validators.validateKey }),
             value: property({ type: INT, nullable: false, precision: 10, validator: this.validators.validateValue }),
 
-            site: property({ type: ExternalSite.TYPE, nullable: false, validator: this.validators.validateSite }),
+            site: property({ type: ExternalSite_TYPE, nullable: false, validator: this.validators.validateSite }),
             siteId: property({ type: INT, nullable: false, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -49,3 +49,5 @@ export class _ArtifactBackref_stuff_TypeInfo extends BackrefRecordTypeInfo {
 }
 
 export default _ArtifactBackref_stuff_TypeInfo;
+
+export const _ArtifactBackref_stuff_TYPE = _ArtifactBackref_stuff_TypeInfo.INSTANCE;

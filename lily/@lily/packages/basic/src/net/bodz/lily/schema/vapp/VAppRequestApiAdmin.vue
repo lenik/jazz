@@ -5,9 +5,9 @@ import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import ApiType from "./ApiType";
-import VAppRequest from "./VAppRequest";
+import { ApiType_TYPE } from "./ApiTypeTypeInfo";
 import VAppRequestApi from "./VAppRequestApi";
+import { VAppRequest_TYPE } from "./VAppRequestTypeInfo";
 
 export const title = "Admin view of: V app request api";
 export interface Props {
@@ -32,8 +32,8 @@ const typeMap = {
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "VAppRequest": VAppRequest.TYPE,
-    "ApiType": ApiType.TYPE,
+    "VAppRequest": VAppRequest_TYPE,
+    "ApiType": ApiType_TYPE,
 };
 
 onMounted(() => {

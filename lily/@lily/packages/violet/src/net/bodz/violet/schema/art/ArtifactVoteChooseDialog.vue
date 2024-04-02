@@ -3,9 +3,9 @@ import { onMounted, ref } from "vue";
 
 import { INT, LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Artifact from "./Artifact";
+import { Artifact_TYPE } from "./ArtifactTypeInfo";
 import { ArtifactVote } from "./ArtifactVote";
 
 export const title = "Choose dialog for: Artifact vote";
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "Artifact": Artifact.TYPE,
-    "User": User.TYPE,
+    "Artifact": Artifact_TYPE,
+    "User": User_TYPE,
     "INT": INT,
 };
 

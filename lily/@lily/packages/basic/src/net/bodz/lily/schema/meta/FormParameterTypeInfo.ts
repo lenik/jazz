@@ -28,3 +28,5 @@ export class FormParameterTypeInfo extends _FormParameter_stuff_TypeInfo {
 }
 
 export default FormParameterTypeInfo;
+
+export const FormParameter_TYPE = FormParameterTypeInfo.INSTANCE;

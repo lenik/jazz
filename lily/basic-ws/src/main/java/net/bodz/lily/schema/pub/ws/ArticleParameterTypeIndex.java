@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.ArticleParameterType;
 
 /**
-* @label ArticleParameterType
-*/
+ * @label ArticleParameterType
+ */
 @ObjectType(ArticleParameterType.class)
 public class ArticleParameterTypeIndex
         extends CoIndex<ArticleParameterType> {

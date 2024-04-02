@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.PostCategory;
 
 /**
-* @label PostCategory
-*/
+ * @label PostCategory
+ */
 @ObjectType(PostCategory.class)
 public class PostCategoryIndex
         extends CoIndex<PostCategory> {

@@ -1,7 +1,6 @@
 package net.bodz.lily.schema.vapp;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,39 +8,32 @@ import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.TextInput;
 import net.bodz.bas.repr.form.validate.Precision;
-import net.bodz.lily.concrete.CoEntity;
+import net.bodz.lily.concrete.IdEntity;
 import net.bodz.lily.entity.IdType;
 
 @IdType(Long.class)
 public abstract class _VApiLog_stuff
-        extends CoEntity<Long> {
+        extends IdEntity<Long> {
 
     private static final long serialVersionUID = 1L;
 
     public static final String SCHEMA_NAME = "lily";
     public static final String TABLE_NAME = "vapi_log";
 
-    public static final String FIELD_ID = "id";
     public static final String FIELD_APP_ID = "app";
     public static final String FIELD_API_ID = "api";
     public static final String FIELD_MESSAGE = "message";
     public static final String FIELD_ERR = "err";
 
-    public static final int N_ID = 19;
     public static final int N_APP_ID = 10;
     public static final int N_API_ID = 10;
     public static final int N_MESSAGE = 2147483647;
     public static final int N_ERR = 2147483647;
 
-    private static final int _ord_ID = 1;
-    private static final int _ord_APP_ID = _ord_ID + 10;
+    private static final int _ord_APP_ID = 11;
     private static final int _ord_API_ID = _ord_APP_ID + 1;
     private static final int _ord_MESSAGE = _ord_API_ID + 1;
     private static final int _ord_ERR = _ord_MESSAGE + 1;
-
-    @Id
-    @NotNull
-    long id;
 
     String message;
 
@@ -58,28 +50,6 @@ public abstract class _VApiLog_stuff
 
     @NotNull
     int appId;
-
-    @Override
-    public Long id() {
-        return getId();
-    }
-
-    @Override
-    public void id(Long id) {
-        setId(id);
-    }
-
-    @Id
-    @Ordinal(_ord_ID)
-    @Precision(value = 19)
-    @Column(name = "id", nullable = false, precision = 19)
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long value) {
-        this.id = value;
-    }
 
     @Ordinal(_ord_MESSAGE)
     @Precision(value = N_MESSAGE)
@@ -157,6 +127,8 @@ public abstract class _VApiLog_stuff
     @Column(name = "app", nullable = false, precision = 10)
     public synchronized int getAppId() {
         if (app != null) {
+            if (app.getId() == null)
+                return 0;
             return app.getId();
         }
         return appId;

@@ -4,8 +4,8 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
-import Artifact from "../art/Artifact";
-import Region from "./Region";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
+import { Region_TYPE } from "./RegionTypeInfo";
 import _StoreItem_stuff_Validators from "./_StoreItem_stuff_Validators";
 
 export class _StoreItem_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -38,10 +38,10 @@ export class _StoreItem_stuff_TypeInfo extends IdEntityTypeInfo {
             batch: property({ type: JSON_VARIANT, validator: this.validators.validateBatch }),
             quantity: property({ type: BIG_DECIMAL, nullable: false, precision: 20, scale: 2, validator: this.validators.validateQuantity }),
 
-            region: property({ type: Region.TYPE, nullable: false, validator: this.validators.validateRegion }),
+            region: property({ type: Region_TYPE, nullable: false, validator: this.validators.validateRegion }),
             regionId: property({ type: INT, nullable: false, precision: 10 }),
 
-            artifact: property({ type: Artifact.TYPE, nullable: false, validator: this.validators.validateArtifact }),
+            artifact: property({ type: Artifact_TYPE, nullable: false, validator: this.validators.validateArtifact }),
             artifactId: property({ type: INT, nullable: false, precision: 10 }),
         });
     }
@@ -51,3 +51,5 @@ export class _StoreItem_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _StoreItem_stuff_TypeInfo;
+
+export const _StoreItem_stuff_TYPE = _StoreItem_stuff_TypeInfo.INSTANCE;

@@ -29,3 +29,5 @@ export class TagDefTypeInfo extends _TagDef_stuff_TypeInfo {
 }
 
 export default TagDefTypeInfo;
+
+export const TagDef_TYPE = TagDefTypeInfo.INSTANCE;

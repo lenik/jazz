@@ -28,3 +28,5 @@ export class DiaryVoteTypeInfo extends _DiaryVote_stuff_TypeInfo {
 }
 
 export default DiaryVoteTypeInfo;
+
+export const DiaryVote_TYPE = DiaryVoteTypeInfo.INSTANCE;

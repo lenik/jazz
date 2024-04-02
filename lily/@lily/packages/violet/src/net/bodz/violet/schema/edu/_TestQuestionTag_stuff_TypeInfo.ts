@@ -25,3 +25,5 @@ export class _TestQuestionTag_stuff_TypeInfo extends CoTagTypeInfo {
 }
 
 export default _TestQuestionTag_stuff_TypeInfo;
+
+export const _TestQuestionTag_stuff_TYPE = _TestQuestionTag_stuff_TypeInfo.INSTANCE;

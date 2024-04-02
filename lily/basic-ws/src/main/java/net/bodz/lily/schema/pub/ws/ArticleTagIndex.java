@@ -5,8 +5,8 @@ import net.bodz.lily.concrete.CoIndex;
 import net.bodz.lily.schema.pub.ArticleTag;
 
 /**
-* @label ArticleTag
-*/
+ * @label ArticleTag
+ */
 @ObjectType(ArticleTag.class)
 public class ArticleTagIndex
         extends CoIndex<ArticleTag> {

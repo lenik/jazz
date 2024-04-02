@@ -28,3 +28,5 @@ export class DiaryPartyTypeInfo extends _DiaryParty_stuff_TypeInfo {
 }
 
 export default DiaryPartyTypeInfo;
+
+export const DiaryParty_TYPE = DiaryPartyTypeInfo.INSTANCE;

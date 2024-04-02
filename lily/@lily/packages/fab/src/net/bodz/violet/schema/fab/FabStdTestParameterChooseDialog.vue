@@ -6,8 +6,8 @@ import { BOOLEAN, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import FabStdTest from "./FabStdTest";
 import { FabStdTestParameter } from "./FabStdTestParameter";
+import { FabStdTest_TYPE } from "./FabStdTestTypeInfo";
 
 export const title = "Choose dialog for: Fab std test parameter";
 export interface Props {
@@ -34,7 +34,7 @@ const emit = defineEmits<{
 const typeMap = {
     "INT": INT,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "FabStdTest": FabStdTest.TYPE,
+    "FabStdTest": FabStdTest_TYPE,
     "BOOLEAN": BOOLEAN,
     "JSON_VARIANT": JSON_VARIANT,
     "STRING": STRING,

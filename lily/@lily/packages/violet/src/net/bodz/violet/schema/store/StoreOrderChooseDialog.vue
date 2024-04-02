@@ -5,18 +5,18 @@ import { BIG_DECIMAL, INT, LONG, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
-import OrgUnit from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnit";
-import Organization from "@lily/basic/src/net/bodz/lily/schema/contact/Organization";
-import Person from "@lily/basic/src/net/bodz/lily/schema/contact/Person";
-import FormDef from "@lily/basic/src/net/bodz/lily/schema/meta/FormDef";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
+import { OrgUnit_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrgUnitTypeInfo";
+import { Organization_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/OrganizationTypeInfo";
+import { Person_TYPE } from "@lily/basic/src/net/bodz/lily/schema/contact/PersonTypeInfo";
+import { FormDef_TYPE } from "@lily/basic/src/net/bodz/lily/schema/meta/FormDefTypeInfo";
 
-import Plan from "../plan/Plan";
-import StoreCategory from "./StoreCategory";
-import StoreOrder from "./StoreOrder";
+import { Plan_TYPE } from "../plan/PlanTypeInfo";
+import { StoreCategory_TYPE } from "./StoreCategoryTypeInfo";
 import { StoreOrder } from "./StoreOrder";
-import StorePhase from "./StorePhase";
+import { StoreOrder_TYPE } from "./StoreOrderTypeInfo";
+import { StorePhase_TYPE } from "./StorePhaseTypeInfo";
 
 export const title = "Choose dialog for: Store order";
 export interface Props {
@@ -42,20 +42,20 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "INT": INT,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "STRING": STRING,
-    "FormDef": FormDef.TYPE,
-    "StoreCategory": StoreCategory.TYPE,
-    "StorePhase": StorePhase.TYPE,
-    "StoreOrder": StoreOrder.TYPE,
-    "Plan": Plan.TYPE,
-    "Organization": Organization.TYPE,
-    "OrgUnit": OrgUnit.TYPE,
-    "Person": Person.TYPE,
+    "FormDef": FormDef_TYPE,
+    "StoreCategory": StoreCategory_TYPE,
+    "StorePhase": StorePhase_TYPE,
+    "StoreOrder": StoreOrder_TYPE,
+    "Plan": Plan_TYPE,
+    "Organization": Organization_TYPE,
+    "OrgUnit": OrgUnit_TYPE,
+    "Person": Person_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

@@ -28,3 +28,5 @@ export class OrgAssetTypeInfo extends _OrgAsset_stuff_TypeInfo {
 }
 
 export default OrgAssetTypeInfo;
+
+export const OrgAsset_TYPE = OrgAssetTypeInfo.INSTANCE;

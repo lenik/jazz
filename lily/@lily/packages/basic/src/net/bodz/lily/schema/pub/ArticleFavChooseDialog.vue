@@ -4,9 +4,9 @@ import { onMounted, ref } from "vue";
 import { LONG } from "@skeljs/core/src/lang/baseinfo";
 import type { DialogSelectCallback } from "@skeljs/core/src/ui/types";
 
-import User from "../account/User";
-import Article from "./Article";
+import { User_TYPE } from "../account/UserTypeInfo";
 import { ArticleFav } from "./ArticleFav";
+import { Article_TYPE } from "./ArticleTypeInfo";
 
 export const title = "Choose dialog for: Article fav";
 export interface Props {
@@ -32,8 +32,8 @@ const emit = defineEmits<{
 
 const typeMap = {
     "LONG": LONG,
-    "Article": Article.TYPE,
-    "User": User.TYPE,
+    "Article": Article_TYPE,
+    "User": User_TYPE,
 };
 
 const entityChooseDialog = ref<undefined | InstanceType<typeof EntityChooseDialog>>();

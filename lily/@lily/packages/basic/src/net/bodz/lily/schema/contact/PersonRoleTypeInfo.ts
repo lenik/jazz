@@ -28,3 +28,5 @@ export class PersonRoleTypeInfo extends _PersonRole_stuff_TypeInfo {
 }
 
 export default PersonRoleTypeInfo;
+
+export const PersonRole_TYPE = PersonRoleTypeInfo.INSTANCE;

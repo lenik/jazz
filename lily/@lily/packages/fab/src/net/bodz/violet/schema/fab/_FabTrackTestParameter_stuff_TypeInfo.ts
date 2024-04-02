@@ -3,9 +3,9 @@ import type { long } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import IdEntityTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/IdEntityTypeInfo";
 
-import FabStdTestParameter from "./FabStdTestParameter";
-import FabStdTester from "./FabStdTester";
-import FabTrackTest from "./FabTrackTest";
+import { FabStdTestParameter_TYPE } from "./FabStdTestParameterTypeInfo";
+import { FabStdTester_TYPE } from "./FabStdTesterTypeInfo";
+import { FabTrackTest_TYPE } from "./FabTrackTestTypeInfo";
 import _FabTrackTestParameter_stuff_Validators from "./_FabTrackTestParameter_stuff_Validators";
 
 export class _FabTrackTestParameter_stuff_TypeInfo extends IdEntityTypeInfo {
@@ -40,13 +40,13 @@ export class _FabTrackTestParameter_stuff_TypeInfo extends IdEntityTypeInfo {
             actual: property({ type: STRING, nullable: false, precision: 100, validator: this.validators.validateActual }),
             valid: property({ type: BOOLEAN, nullable: false, precision: 1, validator: this.validators.validateValid }),
 
-            parameter: property({ type: FabStdTestParameter.TYPE, nullable: false, validator: this.validators.validateParameter }),
+            parameter: property({ type: FabStdTestParameter_TYPE, nullable: false, validator: this.validators.validateParameter }),
             parameterId: property({ type: INT, nullable: false, precision: 10 }),
 
-            tester: property({ type: FabStdTester.TYPE, validator: this.validators.validateTester }),
+            tester: property({ type: FabStdTester_TYPE, validator: this.validators.validateTester }),
             testerId: property({ type: INT, precision: 10 }),
 
-            test: property({ type: FabTrackTest.TYPE, nullable: false, validator: this.validators.validateTest }),
+            test: property({ type: FabTrackTest_TYPE, nullable: false, validator: this.validators.validateTest }),
             testId: property({ type: LONG, nullable: false, precision: 19 }),
         });
     }
@@ -56,3 +56,5 @@ export class _FabTrackTestParameter_stuff_TypeInfo extends IdEntityTypeInfo {
 }
 
 export default _FabTrackTestParameter_stuff_TypeInfo;
+
+export const _FabTrackTestParameter_stuff_TYPE = _FabTrackTestParameter_stuff_TypeInfo.INSTANCE;

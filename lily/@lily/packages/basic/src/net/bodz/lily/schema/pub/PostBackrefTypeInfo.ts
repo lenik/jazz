@@ -28,3 +28,5 @@ export class PostBackrefTypeInfo extends _PostBackref_stuff_TypeInfo {
 }
 
 export default PostBackrefTypeInfo;
+
+export const PostBackref_TYPE = PostBackrefTypeInfo.INSTANCE;

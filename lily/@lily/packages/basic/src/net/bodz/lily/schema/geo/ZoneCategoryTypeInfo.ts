@@ -28,3 +28,5 @@ export class ZoneCategoryTypeInfo extends _ZoneCategory_stuff_TypeInfo {
 }
 
 export default ZoneCategoryTypeInfo;
+
+export const ZoneCategory_TYPE = ZoneCategoryTypeInfo.INSTANCE;

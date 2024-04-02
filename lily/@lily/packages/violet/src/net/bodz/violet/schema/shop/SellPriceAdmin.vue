@@ -3,10 +3,10 @@ import { onMounted, ref } from "vue";
 
 import { BIG_DECIMAL, INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
-import Group from "@lily/basic/src/net/bodz/lily/schema/account/Group";
-import User from "@lily/basic/src/net/bodz/lily/schema/account/User";
+import { Group_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/GroupTypeInfo";
+import { User_TYPE } from "@lily/basic/src/net/bodz/lily/schema/account/UserTypeInfo";
 
-import Artifact from "../art/Artifact";
+import { Artifact_TYPE } from "../art/ArtifactTypeInfo";
 import SellPrice from "./SellPrice";
 
 export const title = "Admin view of: Sell price";
@@ -30,10 +30,10 @@ const selection = ref<any>({});
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
-    "Artifact": Artifact.TYPE,
+    "Artifact": Artifact_TYPE,
     "BIG_DECIMAL": BIG_DECIMAL,
 };
 

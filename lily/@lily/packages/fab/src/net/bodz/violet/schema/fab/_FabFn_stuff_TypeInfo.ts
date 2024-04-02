@@ -3,7 +3,7 @@ import type { int } from "@skeljs/core/src/lang/basetype";
 import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
 import CoImagedTypeInfo from "@lily/basic/src/net/bodz/lily/concrete/CoImagedTypeInfo";
 
-import FabFn from "./FabFn";
+import { FabFn_TYPE } from "./FabFnTypeInfo";
 import _FabFn_stuff_Validators from "./_FabFn_stuff_Validators";
 
 export class _FabFn_stuff_TypeInfo extends CoImagedTypeInfo {
@@ -47,3 +47,5 @@ export class _FabFn_stuff_TypeInfo extends CoImagedTypeInfo {
 }
 
 export default _FabFn_stuff_TypeInfo;
+
+export const _FabFn_stuff_TYPE = _FabFn_stuff_TypeInfo.INSTANCE;

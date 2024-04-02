@@ -7,10 +7,10 @@ import LocalDate from "@skeljs/core/src/lang/time/LocalDate";
 import OffsetDateTime from "@skeljs/core/src/lang/time/OffsetDateTime";
 import DefaultState from "@skeljs/core/src/net/bodz/bas/repr/state/DefaultState";
 
-import Group from "../account/Group";
-import User from "../account/User";
+import { Group_TYPE } from "../account/GroupTypeInfo";
+import { User_TYPE } from "../account/UserTypeInfo";
 import Organization from "./Organization";
-import PartyCategory from "./PartyCategory";
+import { PartyCategory_TYPE } from "./PartyCategoryTypeInfo";
 
 export const title = "Admin view of: Organization";
 export interface Props {
@@ -32,13 +32,13 @@ const selection = ref<any>({});
 
 const typeMap = {
     "INT": INT,
-    "User": User.TYPE,
-    "Group": Group.TYPE,
+    "User": User_TYPE,
+    "Group": Group_TYPE,
     "STRING": STRING,
     "DefaultState": DefaultState.TYPE,
     "OffsetDateTime": OffsetDateTime.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "PartyCategory": PartyCategory.TYPE,
+    "PartyCategory": PartyCategory_TYPE,
     "LocalDate": LocalDate.TYPE,
     "BOOLEAN": BOOLEAN,
 };

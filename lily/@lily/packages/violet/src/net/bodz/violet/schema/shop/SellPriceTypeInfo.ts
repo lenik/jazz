@@ -28,3 +28,5 @@ export class SellPriceTypeInfo extends _SellPrice_stuff_TypeInfo {
 }
 
 export default SellPriceTypeInfo;
+
+export const SellPrice_TYPE = SellPriceTypeInfo.INSTANCE;
