@@ -41,6 +41,10 @@ class DefaultAttachment extends TypeInfo<any> {
     get label() { return "DefaultAttachment" }
     get description() { return "DefaultAttachment" }
 
+    create() {
+        return {} as any;
+    }
+
     parse(s: string) {
         return JSON.parse(s);
     }
