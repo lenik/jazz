@@ -42,7 +42,7 @@ export class CoObjectTypeInfo extends StructRowTypeInfo {
         this.idType = idType;
 
         import('../schema/account/User').then((a) => this.property.ownerUser.type = a.User.TYPE);
-        import('../schema/account/Group').then((a) => this.property.ownerUser.type = a.Group.TYPE);
+        import('../schema/account/Group').then((a) => this.property.ownerGroup.type = a.Group.TYPE);
     }
 
     get name() { return "net.bodz.lily.concrete.CoObject"; }
