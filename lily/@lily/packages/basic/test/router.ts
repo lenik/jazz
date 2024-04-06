@@ -1,8 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 export const links = {
-    "TestAdmin": "test contact: PersonAdmin",
     "": "component ",
+    "PersonAdmin": '[Test] Person Admin',
+    "PersonChooseDialog": "component PersonChooseDialog",
+    "PersonEditor": "component PersonEditor",
+    "PersonListing": '[Test] Person Listing',
     "Project": "component Project",
     "GroupAdmin": "Admin view of: Group",
     "GroupTypeAdmin": "Admin view of: Group type",
@@ -30,6 +33,7 @@ export const links = {
     "ParameterDefAdmin": "Admin view of: Parameter def",
     "ParameterValueAdmin": "Admin view of: Parameter value",
     "PhaseDefAdmin": "Admin view of: Phase def",
+    "PriorityDefAdmin": "Admin view of: Priority def",
     "SchemaDefAdmin": "Admin view of: Schema def",
     "TagDefAdmin": "Admin view of: Tag def",
     "TagGroupDefAdmin": "Admin view of: Tag group def",
@@ -69,8 +73,11 @@ export const links = {
 };
 
 export const routes = [
-    { path: '/TestAdmin', component: () => import('./contact/PersonAdmin.vue') },
     { path: '/', component: () => import('./Index.vue') },
+    { path: '/PersonAdmin', component: () => import('./contact/PersonAdmin.vue') },
+    { path: '/PersonChooseDialog', component: () => import('./contact/PersonChooseDialog.vue') },
+    { path: '/PersonEditor', component: () => import('./contact/PersonEditor.vue') },
+    { path: '/PersonListing', component: () => import('./contact/PersonListing.vue') },
     { path: '/Project', component: () => import('@skeljs/core/src/ui/demo/Project.vue') },
     { path: '/GroupAdmin', component: () => import('../src/net/bodz/lily/schema/account/GroupAdmin.vue') },
     { path: '/GroupTypeAdmin', component: () => import('../src/net/bodz/lily/schema/account/GroupTypeAdmin.vue') },
@@ -98,6 +105,7 @@ export const routes = [
     { path: '/ParameterDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/ParameterDefAdmin.vue') },
     { path: '/ParameterValueAdmin', component: () => import('../src/net/bodz/lily/schema/meta/ParameterValueAdmin.vue') },
     { path: '/PhaseDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/PhaseDefAdmin.vue') },
+    { path: '/PriorityDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/PriorityDefAdmin.vue') },
     { path: '/SchemaDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/SchemaDefAdmin.vue') },
     { path: '/TagDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/TagDefAdmin.vue') },
     { path: '/TagGroupDefAdmin', component: () => import('../src/net/bodz/lily/schema/meta/TagGroupDefAdmin.vue') },

@@ -42,7 +42,7 @@ export class _Person_stuff_TypeInfo extends PartyTypeInfo {
         super();
     }
 
-    get name() { return "net.bodz.lily.schema.contact.Person"; }
+    get name() { return "net.bodz.lily.schema.contact._Person_stuff"; }
     get icon() { return "fa-tag"; }
 
     override preamble() {

@@ -7,7 +7,6 @@ import Attachment from '@skeljs/core/src/net/bodz/lily/entity/Attachment';
 
 export class CoImagedTypeInfo extends IdEntityTypeInfo {
 
-    readonly idType: TypeInfo<any>;
     readonly validators = new CoImagedValidators(this);
 
     constructor(idType: TypeInfo<any>) {

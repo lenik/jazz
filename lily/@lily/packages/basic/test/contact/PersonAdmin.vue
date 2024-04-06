@@ -8,7 +8,7 @@ import Person from './Person';
 import { Person_TYPE } from './PersonTypeInfo';
 import { DefaultAttachment_TYPE } from './DefaultAttachmentTypeInfo';
 
-export const title = 'Person Admin';
+export const title = '[Test] Person Admin';
 
 export interface Props {
 }
@@ -74,4 +74,4 @@ const typeMap = {
 
 <style scoped lang="scss">
 .lily-admin {}
-</style>./DefaultAttachmentTypeInfo
+</style>
