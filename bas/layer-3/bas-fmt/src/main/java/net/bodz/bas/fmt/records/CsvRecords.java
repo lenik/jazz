@@ -69,7 +69,9 @@ public class CsvRecords
     class Iter
             extends AbstractMitorx<CsvRow, IOException> {
 
-        private ICharIn in;
+        ICharIn in;
+        StringBuilder cellBuf = new StringBuilder();
+        StringBuilder rawLineBuf = new StringBuilder();
 
         static final int S_START = 0;
         static final int S_QQ = 1;
@@ -81,7 +83,8 @@ public class CsvRecords
                 in = source.newCharIn();
 
             CsvRow row = new CsvRow(Math.max(maxColumnCount, 10));
-            StringBuilder sb = new StringBuilder();
+            cellBuf.setLength(0);
+            rawLineBuf.setLength(0);
 
             int state = S_START;
             int c;
@@ -91,6 +94,7 @@ public class CsvRecords
             while (true) {
                 last = ch;
                 ch = (char) (c = in.read());
+                rawLineBuf.append(ch);
                 if (c == -1)
                     break;
 
@@ -99,7 +103,7 @@ public class CsvRecords
                     switch (ch) {
                     case QQ:
                         if (last == QQ)
-                            sb.append(QQ); // "" -> "
+                            cellBuf.append(QQ); // "" -> "
                         state = S_QQ;
                         continue;
 
@@ -107,14 +111,14 @@ public class CsvRecords
                         continue; // ignore CR
 
                     case '\n':
-                        return finish(push(row, sb));
+                        return finish(push(row, cellBuf), rawLineBuf);
 
                     default:
                         if (ch == delimiter) {
-                            push(row, sb);
+                            push(row, cellBuf);
                             continue;
                         }
-                        sb.append(ch);
+                        cellBuf.append(ch);
                     }
                     continue;
 
@@ -122,16 +126,16 @@ public class CsvRecords
                     if (ch == QQ)
                         state = S_START;
                     else
-                        sb.append(ch);
+                        cellBuf.append(ch);
                     continue;
                 }
             }
 
-            if (!row.isEmpty() || sb.length() != 0)
-                push(row, sb);
+            if (! row.isEmpty() || cellBuf.length() != 0)
+                push(row, cellBuf);
 
-            if (!row.isEmpty())
-                return finish(row);
+            if (! row.isEmpty())
+                return finish(row, rawLineBuf);
 
             return end();
         }
@@ -147,16 +151,17 @@ public class CsvRecords
 
     }
 
-    CsvRow push(CsvRow row, StringBuilder sb) {
-        String s = sb.toString();
-        sb.setLength(0);
+    CsvRow push(CsvRow row, StringBuilder cellBuffer) {
+        String cell = cellBuffer.toString();
+        cellBuffer.setLength(0);
         if (trim)
-            s = s.trim();
-        row.add(s);
+            cell = cell.trim();
+        row.add(cell);
         return row;
     }
 
-    CsvRow finish(CsvRow row) {
+    CsvRow finish(CsvRow row, StringBuilder rawLineBuffer) {
+        row.rawLine = rawLineBuffer.toString();
         return row;
     }
 

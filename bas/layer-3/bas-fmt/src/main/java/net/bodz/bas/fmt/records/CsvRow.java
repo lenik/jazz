@@ -23,6 +23,8 @@ public class CsvRow
 
     static final Logger logger = LoggerFactory.getLogger(CsvRow.class);
 
+    String rawLine;
+
     private String[] fieldNames;
     private Map<String, Integer> fieldNameIndex;
 
@@ -36,6 +38,10 @@ public class CsvRow
 
     public CsvRow(int initialCapacity) {
         super(initialCapacity);
+    }
+
+    public String getRawLine() {
+        return rawLine;
     }
 
     public String[] getFieldNames() {
