@@ -45,7 +45,7 @@ public class Order {
         }
 
         // field asc (or) field desc
-        StringTokenizer tokens = new StringTokenizer(s, ",\t\n\r");
+        StringTokenizer tokens = new StringTokenizer(s, " ");
         String column = tokens.nextToken();
         if (column == null) // assert false
             return null;
