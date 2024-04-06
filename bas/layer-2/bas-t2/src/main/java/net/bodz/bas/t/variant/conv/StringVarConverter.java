@@ -2,6 +2,13 @@ package net.bodz.bas.t.variant.conv;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.TypeConvertException;
 
@@ -116,6 +123,55 @@ public class StringVarConverter
     @Override
     public boolean toBoolean(String in) {
         return BooleanVarConverter._fromString(in);
+    }
+
+    @Override
+    public Instant toInstant(String in) {
+        if (in == null)
+            return null;
+        return Instant.parse(in);
+    }
+
+    @Override
+    public LocalDateTime toLocalDateTime(String in) {
+        if (in == null)
+            return null;
+        return LocalDateTime.parse(in);
+    }
+
+    @Override
+    public LocalDate toLocalDate(String in) {
+        if (in == null)
+            return null;
+        return LocalDate.parse(in);
+    }
+
+    @Override
+    public LocalTime toLocalTime(String in) {
+        if (in == null)
+            return null;
+        return LocalTime.parse(in);
+    }
+
+    @Override
+    public OffsetDateTime toOffsetDateTime(String in) {
+        if (in == null)
+            return null;
+        return OffsetDateTime.parse(in);
+    }
+
+    @Override
+    public OffsetTime toOffsetTime(String in) {
+        if (in == null)
+            return null;
+        return OffsetTime.parse(in);
+    }
+
+    @Override
+    public ZonedDateTime toZonedDateTime(String in) {
+        if (in == null)
+            return null;
+        return ZonedDateTime.parse(in);
     }
 
     public static final StringVarConverter INSTANCE = new StringVarConverter();

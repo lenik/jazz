@@ -7,7 +7,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -273,6 +276,23 @@ public abstract class AbstractVarConverter<T>
     public LocalTime toLocalTime(T value) {
         Instant instant = toInstant(value);
         return LocalTime.ofInstant(instant, ZoneId.systemDefault());
+    }
+
+    @Override
+    public OffsetDateTime toOffsetDateTime(T value) {
+        return toZonedDateTime(value).toOffsetDateTime();
+    }
+
+    @Override
+    public OffsetTime toOffsetTime(T value) {
+        return toOffsetDateTime(value).toOffsetTime();
+    }
+
+    @Override
+    public ZonedDateTime toZonedDateTime(T value) {
+        LocalDateTime localDateTime = toLocalDateTime(value);
+        ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
+        return zdt;
     }
 
     class CastTr

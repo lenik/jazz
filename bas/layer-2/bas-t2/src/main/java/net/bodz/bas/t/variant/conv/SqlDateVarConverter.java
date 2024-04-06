@@ -1,7 +1,14 @@
 package net.bodz.bas.t.variant.conv;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -48,6 +55,42 @@ public class SqlDateVarConverter
     @Override
     public boolean toBoolean(java.sql.Date value) {
         return true;
+    }
+
+    @Override
+    public Instant toInstant(Date value) {
+        long epochMilli = value.getTime();
+        return Instant.ofEpochMilli(epochMilli);
+    }
+
+    @Override
+    public LocalDateTime toLocalDateTime(Date value) {
+        return toLocalDate(value).atStartOfDay();
+    }
+
+    @Override
+    public LocalDate toLocalDate(Date value) {
+        return DateTimes.convert(value);
+    }
+
+    @Override
+    public LocalTime toLocalTime(Date value) {
+        return LocalTime.MIN;
+    }
+
+    @Override
+    public OffsetDateTime toOffsetDateTime(Date value) {
+        return toZonedDateTime(value).toOffsetDateTime();
+    }
+
+    @Override
+    public OffsetTime toOffsetTime(Date value) {
+        return toOffsetDateTime(value).toOffsetTime();
+    }
+
+    @Override
+    public ZonedDateTime toZonedDateTime(Date value) {
+        return toLocalDateTime(value).atZone(ZoneId.systemDefault());
     }
 
     public static final SqlDateVarConverter INSTANCE = new SqlDateVarConverter();

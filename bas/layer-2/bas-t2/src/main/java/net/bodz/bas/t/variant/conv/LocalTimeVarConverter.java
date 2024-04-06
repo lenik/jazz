@@ -1,6 +1,13 @@
 package net.bodz.bas.t.variant.conv;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import net.bodz.bas.err.TypeConvertException;
@@ -68,6 +75,43 @@ public class LocalTimeVarConverter
         if (value == null)
             return false;
         return value.toNanoOfDay() != 0;
+    }
+
+    @Override
+    public Instant toInstant(LocalTime value) {
+        LocalDateTime localDateTime = toLocalDateTime(value);
+        ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
+        return zdt.toInstant();
+    }
+
+    @Override
+    public LocalDateTime toLocalDateTime(LocalTime value) {
+        return value.atDate(LocalDate.now());
+    }
+
+    @Override
+    public LocalDate toLocalDate(LocalTime value) {
+        return LocalDate.now();
+    }
+
+    @Override
+    public LocalTime toLocalTime(LocalTime value) {
+        return value;
+    }
+
+    @Override
+    public OffsetDateTime toOffsetDateTime(LocalTime value) {
+        return toZonedDateTime(value).toOffsetDateTime();
+    }
+
+    @Override
+    public OffsetTime toOffsetTime(LocalTime value) {
+        return toOffsetDateTime(value).toOffsetTime();
+    }
+
+    @Override
+    public ZonedDateTime toZonedDateTime(LocalTime value) {
+        return toLocalDateTime(value).atZone(ZoneId.systemDefault());
     }
 
     public static final LocalTimeVarConverter INSTANCE = new LocalTimeVarConverter(null);

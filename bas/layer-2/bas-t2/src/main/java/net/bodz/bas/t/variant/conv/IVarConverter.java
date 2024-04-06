@@ -6,6 +6,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZonedDateTime;
 
 import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.meta.codegen.IndexedType;
@@ -74,5 +77,11 @@ public interface IVarConverter<T>
     LocalDate toLocalDate(T value);
 
     LocalTime toLocalTime(T value);
+
+    OffsetDateTime toOffsetDateTime(T value);
+
+    OffsetTime toOffsetTime(T value);
+
+    ZonedDateTime toZonedDateTime(T value);
 
 }

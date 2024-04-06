@@ -1,6 +1,11 @@
 package net.bodz.bas.t.variant.conv;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -71,6 +76,41 @@ public class ZonedDateTimeVarConverter
             return false;
         Instant instant = value.toInstant();
         return ! (instant.toEpochMilli() == 0 && instant.getNano() == 0);
+    }
+
+    @Override
+    public Instant toInstant(ZonedDateTime value) {
+        return value.toInstant();
+    }
+
+    @Override
+    public LocalDateTime toLocalDateTime(ZonedDateTime value) {
+        return value.toLocalDateTime();
+    }
+
+    @Override
+    public LocalDate toLocalDate(ZonedDateTime value) {
+        return value.toLocalDate();
+    }
+
+    @Override
+    public LocalTime toLocalTime(ZonedDateTime value) {
+        return value.toLocalTime();
+    }
+
+    @Override
+    public OffsetDateTime toOffsetDateTime(ZonedDateTime value) {
+        return value.toOffsetDateTime();
+    }
+
+    @Override
+    public OffsetTime toOffsetTime(ZonedDateTime value) {
+        return value.toOffsetDateTime().toOffsetTime();
+    }
+
+    @Override
+    public ZonedDateTime toZonedDateTime(ZonedDateTime value) {
+        return value;
     }
 
     public static final ZonedDateTimeVarConverter INSTANCE = new ZonedDateTimeVarConverter(null);
