@@ -1,6 +1,5 @@
 package net.bodz.lily.entity.manager;
 
-import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.Priority;
@@ -17,20 +16,15 @@ public abstract class AbstractEntityCommandType
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommandType.class);
 
     private final int priority;
-    private final String preferredName;
+    private final String id;
 
-    public AbstractEntityCommandType() {
+    public AbstractEntityCommandType(String id) {
         Priority aPriority = getClass().getAnnotation(Priority.class);
         if (aPriority != null)
             priority = aPriority.value();
         else
             priority = 0;
-
-        String name = getClass().getSimpleName();
-        if (name.endsWith("Command"))
-            name = name.substring(0, name.length() - 7);
-        name = Strings.lcfirst(name);
-        this.preferredName = name;
+        this.id = id;
     }
 
     @Override
@@ -39,8 +33,8 @@ public abstract class AbstractEntityCommandType
     }
 
     @Override
-    public String getPreferredName() {
-        return preferredName;
+    public String getUniqueId() {
+        return id;
     }
 
     @Override
@@ -58,7 +52,7 @@ public abstract class AbstractEntityCommandType
             if (entityClass == null)
                 return false;
             for (Class<?> iface : aForEntityType.value())
-                if (!iface.isAssignableFrom(entityClass))
+                if (! iface.isAssignableFrom(entityClass))
                     return false;
         }
 
@@ -68,7 +62,7 @@ public abstract class AbstractEntityCommandType
             if (mapperClass == null)
                 return false;
             for (Class<?> iface : aForMapperType.value())
-                if (!iface.isAssignableFrom(mapperClass))
+                if (! iface.isAssignableFrom(mapperClass))
                     return false;
         }
 

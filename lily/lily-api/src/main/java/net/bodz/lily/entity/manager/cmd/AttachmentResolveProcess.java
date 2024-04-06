@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import java.io.File;
 import java.net.URL;
@@ -8,6 +8,8 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.html.servlet.NoRender;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.content.MutableContent;
 import net.bodz.bas.servlet.ResourceTransferer;
 import net.bodz.bas.std.rfc.http.ICacheControl;
@@ -18,36 +20,18 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.storage.IVolume;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@ForEntityType(IHaveAttachments.class)
-public class AttachmentResolveCommand
-        extends AbstractEntityCommandType {
+public class AttachmentResolveProcess
+        extends AbstractContentCommandProcess {
 
-    public AttachmentResolveCommand() {
-    }
-
-    @Override
-    public String getPreferredName() {
-        return "attachment";
-    }
-
-    @Override
-    public boolean isContentCommand() {
-        return true;
-    }
-
-    @Override
-    public AttachmentResolveProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new AttachmentResolveProcess(this, context, resolvedEntity);
-    }
-}
-
-class AttachmentResolveProcess
-        extends AbstractContentCommandProcess<AttachmentResolveCommand> {
+    static final Logger logger = LoggerFactory.getLogger(AttachmentResolveProcess.class);
 
     JsonFormOptions jsonFormOptions;
 

@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import java.nio.charset.Charset;
 
@@ -21,20 +21,23 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.format.IMarkdownBuilder;
 import net.bodz.lily.entity.format.IWordDocBuilder;
 import net.bodz.lily.entity.format.WordUtils;
+import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandType;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IEntityCommandProcess;
+import net.bodz.lily.entity.manager.IStdCommands;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 
 @ForEntityType(IId.class)
 public class FetchCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "fetch";
-    public static final String[] NAMES = { NAME };
+    public static final String ID = IStdCommands.ID_FETCH;
+    public static final String[] NAMES = { "fetch" };
 
     public FetchCommand() {
-    }
-
-    @Override
-    public String getPreferredName() {
-        return NAME;
+        super(ID);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class FetchCommand
 }
 
 class ResolveProcess
-        extends AbstractContentCommandProcess<FetchCommand> {
+        extends AbstractContentCommandProcess {
 
     JsonFormOptions jsonFormOptions;
 

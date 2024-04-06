@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +7,22 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandType;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IStdCommands;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 
 @ForEntityType(IId.class)
 public class DeleteCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "delete";
-    public static final String[] NAMES = { NAME, "del", "rm" };
+    public static final String ID = IStdCommands.ID_DELETE;
+    public static final String[] NAMES = { "delete", "del", "rm" };
 
     public DeleteCommand() {
-    }
-
-    @Override
-    public String getPreferredName() {
-        return NAME;
+        super(ID);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class DeleteCommand
 }
 
 class DeleteProcess
-        extends AbstractEntityCommandProcess<DeleteCommand> {
+        extends AbstractEntityCommandProcess {
 
     boolean transaction = false;
 

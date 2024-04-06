@@ -1,23 +1,24 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.ICriterion;
 import net.bodz.lily.criterion.Junction;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandType;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IStdCommands;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 
 public class CountCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "count";
-    public static final String[] NAMES = { NAME, "nRow" };
+    public static final String ID = IStdCommands.ID_COUNT;
+    public static final String[] NAMES = { "count", "nRow" };
 
     public CountCommand() {
-    }
-
-    @Override
-    public String getPreferredName() {
-        return NAME;
+        super(ID);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class CountCommand
 }
 
 class CountProcess
-        extends AbstractEntityCommandProcess<CountCommand> {
+        extends AbstractEntityCommandProcess {
 
     ICriterion criteria;
 

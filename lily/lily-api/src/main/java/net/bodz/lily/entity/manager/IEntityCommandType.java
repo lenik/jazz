@@ -1,5 +1,6 @@
 package net.bodz.lily.entity.manager;
 
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathDispatchException;
@@ -11,14 +12,12 @@ public interface IEntityCommandType
         extends
             IPriority {
 
-    String getPreferredName();
+    @NotNull
+    String getUniqueId();
 
     default String[] getCommandNames() {
-        String name = getPreferredName();
-        if (name == null)
-            return new String[0];
-        else
-            return new String[] { name };
+        String name = getUniqueId();
+        return new String[] { name };
     }
 
     /**

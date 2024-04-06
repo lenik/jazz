@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +16,17 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IEntityCommandType;
+import net.bodz.lily.entity.manager.IJdbcRowOpListener;
+import net.bodz.lily.entity.manager.JdbcRowOpEvent;
+import net.bodz.lily.entity.manager.JdbcRowOpType;
+import net.bodz.lily.entity.manager.ResolvedEntity;
+import net.bodz.lily.entity.manager.RowOpListeners;
 
 public class SaveProcess
-        extends AbstractContentCommandProcess<SaveCommand>
+        extends AbstractContentCommandProcess
         implements
             IJsonForm {
 
@@ -29,7 +37,7 @@ public class SaveProcess
 
     JsonObject contentJson;
 
-    public SaveProcess(SaveCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public SaveProcess(IEntityCommandType type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         super(type, context, resolvedEntity);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);

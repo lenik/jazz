@@ -67,6 +67,9 @@ public class AttachmentGroup
         if (volume == null) {
             IAnchor anchor = IBasicSiteAnchors._webApp_.join(name).enter().join("incoming/");
             File incomingDir = new File(baseDir, name + "/tmp");
+            if (! incomingDir.exists()) {
+                incomingDir.mkdirs();
+            }
             String id = "incoming:" + name;
             volume = new EntityVolume(id, anchor, incomingDir);
             incomingCache.put(name, volume);

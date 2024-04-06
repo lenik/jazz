@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import net.bodz.bas.content.IReset;
 import net.bodz.bas.content.ResetPolicy;
@@ -11,18 +11,23 @@ import net.bodz.bas.site.json.JsonWrapper;
 import net.bodz.bas.t.object.ICloneable;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandType;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
+import net.bodz.lily.entity.manager.IStdCommands;
+import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.ws.RequestHandlerException;
 
 @ForEntityType(IJsonForm.class)
 public class GetDefaultCommand
         extends AbstractEntityCommandType {
 
-    public static final String NAME = "default";
-    public static final String[] NAMES = { NAME, "new" };
+    public static final String ID = IStdCommands.ID_GET_DEFAULT;
+    public static final String[] NAMES = { "default", "new" };
 
-    @Override
-    public String getPreferredName() {
-        return NAME;
+    public GetDefaultCommand() {
+        super(ID);
     }
 
     @Override
@@ -38,7 +43,7 @@ public class GetDefaultCommand
 }
 
 class CreateProcess
-        extends AbstractEntityCommandProcess<GetDefaultCommand> {
+        extends AbstractEntityCommandProcess {
 
     final boolean cloneable;
     final boolean resetable;

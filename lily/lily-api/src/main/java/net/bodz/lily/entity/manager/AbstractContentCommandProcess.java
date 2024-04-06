@@ -1,11 +1,12 @@
 package net.bodz.lily.entity.manager;
 
-public abstract class AbstractContentCommandProcess<type_t extends IEntityCommandType>
-        extends AbstractEntityCommandProcess<type_t> {
+public abstract class AbstractContentCommandProcess
+        extends AbstractEntityCommandProcess {
 
     protected ResolvedEntity resolvedEntity;
 
-    public AbstractContentCommandProcess(type_t type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public AbstractContentCommandProcess(IEntityCommandType type, IEntityCommandContext context,
+            ResolvedEntity resolvedEntity) {
         super(type, context);
         this.resolvedEntity = resolvedEntity;
     }

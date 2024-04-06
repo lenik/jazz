@@ -1,11 +1,6 @@
 package net.bodz.lily.entity.ws;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -36,7 +31,6 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.file.ArrayPathFields;
-import net.bodz.bas.t.order.PriorityComparator;
 import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
@@ -45,12 +39,11 @@ import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.entity.manager.EntityCommandContext;
 import net.bodz.lily.entity.manager.EntityCommands;
-import net.bodz.lily.entity.manager.FetchCommand;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandType;
-import net.bodz.lily.entity.manager.ListCommand;
 import net.bodz.lily.entity.manager.ResolvedEntity;
+import net.bodz.lily.entity.manager.cmd.FetchCommand;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
@@ -76,9 +69,7 @@ public abstract class AbstractEntityController<T>
     private final IEntityTypeInfo typeInfo;
     private boolean hasId;
 
-    Map<String, IEntityCommandType> nameMap = new HashMap<>();
-    Map<String, IEntityCommandType> contentNameMap = new HashMap<>();
-    List<IEntityCommandType> otherCommands = new ArrayList<>();
+    CommandLocator locator = new CommandLocator();
 
     public AbstractEntityController() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
@@ -94,9 +85,7 @@ public abstract class AbstractEntityController<T>
         this.hasId = typeInfo.getIdClass() != null;
 
         for (IEntityCommandType cmd : EntityCommands.forEntityClass(entityType))
-            addCommand(cmd);
-
-        Collections.sort(otherCommands, PriorityComparator.INSTANCE);
+            addCommand(cmd, false);
     }
 
     @Override
@@ -109,26 +98,12 @@ public abstract class AbstractEntityController<T>
         return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
-    protected void addCommand(IEntityCommandType cmd) {
-        String preferredName = cmd.getPreferredName();
-
-        if (preferredName != null) {
-            Map<String, IEntityCommandType> map;
-            if (cmd.isContentCommand())
-                map = contentNameMap;
-            else
-                map = nameMap;
-
-            for (String name : cmd.getCommandNames()) {
-                IEntityCommandType any = map.get(name);
-                if (any != null) {
-                    throw new DuplicatedKeyException(name, any);
-                }
-                map.put(name, cmd);
-            }
-        } else {
-            otherCommands.add(cmd);
+    protected void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
+        if (! replaceExisting) {
+            if (locator.checkOverlap(cmd))
+                throw new DuplicatedKeyException();
         }
+        locator.add(cmd);
     }
 
     @Override
@@ -179,7 +154,10 @@ public abstract class AbstractEntityController<T>
 
             String pathInfoStr = StringArray.join("/", pathInfo);
             String message = String.format(//
-                    "error executing entity %s %s [%s]: %s", commandTypeStr, type.getPreferredName(), pathInfoStr,
+                    "error executing entity %s %s [%s]: %s", //
+                    commandTypeStr, // [content] command
+                    type.getUniqueId(), //
+                    pathInfoStr, // [path]
                     e.getMessage());
             throw new PathDispatchException(message, e);
         }
@@ -222,11 +200,7 @@ public abstract class AbstractEntityController<T>
         if (token == null)
             return null;
 
-        IEntityCommandType command = nameMap.get(token);
-        if (command == null) {
-            if (token.startsWith("__data"))
-                command = nameMap.get(ListCommand.NAME);
-        }
+        IEntityCommandType command = locator.findName(token);
         if (command != null)
             return processDispatch(command, null, previous, tokens, q);
 
@@ -237,15 +211,15 @@ public abstract class AbstractEntityController<T>
 
             token = tokens.peek();
             if (token == null)
-                command = contentNameMap.get(FetchCommand.NAME);
+                command = locator.get(FetchCommand.ID);
             else
-                command = contentNameMap.get(token);
+                command = locator.findContentName(token);
 
             if (command != null)
                 return processDispatch(command, resolvedEntity, previous, tokens, q, //
                         token == null ? 0 : 1);
 
-            for (IEntityCommandType other : otherCommands)
+            for (IEntityCommandType other : locator.getOthers())
                 if (other.checkPathValid(previous, tokens, q))
                     return processDispatch(command, resolvedEntity, previous, tokens, q, 0);
 

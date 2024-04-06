@@ -1,4 +1,4 @@
-package net.bodz.lily.entity.manager;
+package net.bodz.lily.entity.manager.cmd;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -29,9 +29,11 @@ import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
+import net.bodz.lily.entity.manager.IEntityCommandContext;
 
 public class ListProcess
-        extends AbstractEntityCommandProcess<ListCommand> {
+        extends AbstractEntityCommandProcess {
 
     TableOfPathProps tableData;
     protected CoObjectCriteriaBuilder<?> mask;

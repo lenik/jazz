@@ -34,14 +34,14 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommandType>
+public abstract class AbstractEntityCommandProcess
         implements
             IDataContextAware,
             IEntityCommandProcess {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommandProcess.class);
 
-    protected final type_t type;
+    protected final IEntityCommandType type;
     protected IEntityTypeInfo typeInfo;
 
     protected final IEntityCommandContext context;
@@ -57,7 +57,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
     protected int consumedTokenCount;
     protected IVariantMap<String> parameters;
 
-    public AbstractEntityCommandProcess(type_t type, IEntityCommandContext context) {
+    public AbstractEntityCommandProcess(IEntityCommandType type, IEntityCommandContext context) {
         this.type = type;
         this.typeInfo = context.getEntityTypeInfo();
 
@@ -71,7 +71,7 @@ public abstract class AbstractEntityCommandProcess<type_t extends IEntityCommand
         this.dataContext = dataApp.getDataContext();
     }
 
-    public type_t getCommandType() {
+    public IEntityCommandType getCommandType() {
         return type;
     }
 

@@ -172,14 +172,16 @@ public class DefaultEntityTypeInfo
                 String propertyName = primaryKeyPropertyNames[i];
                 IProperty property = primaryKeyProperties.get(propertyName);
                 Class<?> propertyType = property.getPropertyClass();
-                try {
-                    Object val = StrVar.parse(propertyType, columns[i]);
-                    values[i] = val;
-                } catch (ParseException e) {
-                    String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
-                            i, propertyType.getName(), property.getName(), columns[i], entityClass.getName());
-                    throw new ParseException(err, e);
-                }
+                String column = columns[i];
+                if (column != null)
+                    try {
+                        Object val = StrVar.parse(propertyType, columns[i]);
+                        values[i] = val;
+                    } catch (Exception e) {
+                        String err = String.format("error parse id property[%d]: %s %s: value `%s`, in entity type %s", //
+                                i, propertyType.getName(), property.getName(), columns[i], entityClass.getName());
+                        throw new ParseException(err, e);
+                    }
             }
         }
         return values;
