@@ -4,6 +4,10 @@ import net.bodz.bas.t.tuple.QualifiedName;
 
 public interface ITsImporter {
 
+    EsmSource findSource(QualifiedName qName);
+
+    EsmSource findSource(QualifiedName qName, String extension);
+
     default String importName(Class<?> clazz) {
         return importName(clazz.getName());
     }

@@ -41,6 +41,12 @@ public class TypeScriptWriter
         return im.name(name);
     }
 
+    @Override
+    public EsmSource findSource(QualifiedName qName) {
+        return findSource(qName, null);
+    }
+
+    @Override
     public EsmSource findSource(QualifiedName qName, String extension) {
         return packageMap.findSource(qName, extension, contextQName);
     }
