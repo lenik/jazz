@@ -9,7 +9,6 @@ import java.util.Map;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeExtras;
-import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.Volatile;
 import net.bodz.bas.meta.stereo.IMetadata;
@@ -71,11 +70,7 @@ public interface IFormDecl
             TypeExtras extras = TypeExtras.of(clazz);
             IFormDecl formDecl = extras.getFeature(IFormDecl.class);
             if (formDecl == null || isVolatile) {
-                try {
-                    formDecl = builder.build(type);
-                } catch (ParseException e) {
-                    throw new IllegalUsageError(e.getMessage(), e);
-                }
+                formDecl = builder.build(type);
                 extras.setFeature(IFormDecl.class, formDecl);
             }
             return formDecl;

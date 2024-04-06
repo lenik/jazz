@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.StrFn;
 import net.bodz.bas.i18n.dom.iString;
@@ -430,10 +431,9 @@ public class MutableFormProperty
         }
     }
 
-    public MutableFormProperty populate(IProperty property)
-            throws ParseException {
+    public MutableFormProperty populate(IProperty property) {
         this.setProperty(property);
-        this.setReadOnly(!property.isWritable());
+        this.setReadOnly(! property.isWritable());
         this.setValueType(property.getPropertyClass());
 
         IMutableElement.fn.copy1(property, this);
@@ -446,7 +446,11 @@ public class MutableFormProperty
 
         IElementDoc xjdoc = property.getXjdoc();
         if (xjdoc != null)
-            this.populate(xjdoc);
+            try {
+                this.populate(xjdoc);
+            } catch (ParseException e) {
+                throw new IllegalUsageException("Error parsing xjdoc: " + e.getMessage(), e);
+            }
 
         return this;
     }

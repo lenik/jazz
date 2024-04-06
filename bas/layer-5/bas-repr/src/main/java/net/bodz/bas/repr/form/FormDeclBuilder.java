@@ -4,7 +4,6 @@ import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
@@ -58,12 +57,11 @@ public class FormDeclBuilder {
         return excludes;
     }
 
-    public MutableFormDecl build(IType type)
-            throws ParseException {
+    public MutableFormDecl build(IType type) {
         MutableFormDecl result = new MutableFormDecl(type, SortOrder.NONE);
 
         for (IProperty property : type.getProperties()) {
-            if (!filter(property))
+            if (! filter(property))
                 continue;
 
             IFormProperty formProperty = new MutableFormProperty().populate(property);

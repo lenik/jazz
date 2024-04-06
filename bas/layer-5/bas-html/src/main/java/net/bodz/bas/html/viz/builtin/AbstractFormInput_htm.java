@@ -2,7 +2,6 @@ package net.bodz.bas.html.viz.builtin;
 
 import java.io.IOException;
 
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.html.io.IHtmlOut;
 import net.bodz.bas.html.viz.AbstractHtmlViewBuilder;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -33,7 +32,7 @@ public abstract class AbstractFormInput_htm<T>
         IFormProperty fieldDecl = null;
         try {
             fieldDecl = new MutableFormProperty().populate(propertyRef.getProperty());
-        } catch (ParseException e) {
+        } catch (Exception e) {
             throw new ViewBuilderException("Failed to build field-decl.", e);
         }
 
