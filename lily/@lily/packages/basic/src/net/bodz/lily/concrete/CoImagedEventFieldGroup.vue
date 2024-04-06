@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
+import { CoImagedEvent_TYPE } from "./CoImagedEventTypeInfo";
 import CoImagedEvent from "./CoImagedEvent";
 
 export interface Props {
@@ -36,12 +37,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoImagedEvent.TYPE" ref="rootElement">
+    <FieldGroup :type="CoImagedEvent_TYPE" ref="rootElement">
         <FieldRow :property="meta.properties" v-model="model.properties">
             <JsonEditor v-model="model.properties" />
         </FieldRow>
     </FieldGroup>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

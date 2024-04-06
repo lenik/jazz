@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { CoCode_TYPE } from "./CoCodeTypeInfo";
 import CoCode from "./CoCode";
 
 export interface Props {
@@ -34,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoCode.TYPE" ref="rootElement">
+    <FieldGroup :type="CoCode_TYPE" ref="rootElement">
         <FieldRow :property="meta.code" v-model="model.code">
             <input type="text" v-model="model.code" />
         </FieldRow>

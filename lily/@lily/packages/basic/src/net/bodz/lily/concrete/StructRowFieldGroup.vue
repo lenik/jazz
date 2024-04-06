@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { StructRow_TYPE } from "./StructRowTypeInfo";
 import StructRow from "./StructRow";
 
 export interface Props {
@@ -35,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="StructRow.TYPE" ref="rootElement">
+    <FieldGroup :type="StructRow_TYPE" ref="rootElement">
         <FieldRow :property="meta.creationDate" v-model="model.creationDate">
             <DateTime disabled v-model="model.creationDate" />
         </FieldRow>

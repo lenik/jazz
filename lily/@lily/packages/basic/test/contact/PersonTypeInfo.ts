@@ -20,7 +20,7 @@ export class PersonTypeInfo extends PartyTypeInfo {
     override create() {
         return new Person();
     }
-    
+
     override preamble() {
         super.preamble();
         this.declare({
@@ -49,3 +49,4 @@ export class PersonTypeInfo extends PartyTypeInfo {
 }
 
 export default PersonTypeInfo;
+export const Person_TYPE = PersonTypeInfo.INSTANCE;

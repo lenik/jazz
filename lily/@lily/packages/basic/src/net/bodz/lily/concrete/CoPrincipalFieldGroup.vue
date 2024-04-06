@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { CoPrincipal_TYPE } from "./CoPrincipalTypeInfo";
 import CoPrincipal from "./CoPrincipal";
 
 export interface Props {
@@ -34,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoPrincipal.TYPE" ref="rootElement">
+    <FieldGroup :type="CoPrincipal_TYPE" ref="rootElement">
         <FieldRow :property="meta.name" v-model="model.name">
             <input type="text" v-model="model.name" />
         </FieldRow>

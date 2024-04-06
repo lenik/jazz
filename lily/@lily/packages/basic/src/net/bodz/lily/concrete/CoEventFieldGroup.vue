@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { CoEvent_TYPE } from "./CoEventTypeInfo";
 import CoEvent from "./CoEvent";
 
 export interface Props {
@@ -35,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoEvent.TYPE" ref="rootElement">
+    <FieldGroup :type="CoEvent_TYPE" ref="rootElement">
         <FieldRow :property="meta.beginTime" v-model="model.beginTime">
             <DateTime v-model="model.beginTime" />
         </FieldRow>
@@ -48,5 +49,4 @@ onMounted(() => {
     </FieldGroup>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

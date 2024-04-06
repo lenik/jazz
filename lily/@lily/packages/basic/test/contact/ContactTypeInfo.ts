@@ -18,7 +18,7 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
     override create() {
         return new Contact();
     }
-    
+
     override preamble() {
         super.preamble();
         this.declare({
@@ -59,3 +59,4 @@ export class ContactTypeInfo extends IdEntityTypeInfo {
 }
 
 export default ContactTypeInfo;
+export const Contact_TYPE = ContactTypeInfo.INSTANCE;

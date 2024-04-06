@@ -6,7 +6,7 @@ import { INT, STRING } from "@skeljs/core/src/lang/baseinfo";
 import { JSON_VARIANT } from "@skeljs/core/src/lang/bas-info";
 import LocalDate from "@skeljs/core/src/lang/time/LocalDate";
 
-import Person from './Person';
+import { Person_TYPE } from './PersonTypeInfo';
 </script>
 
 <script setup lang="ts">
@@ -44,13 +44,13 @@ const typeMap = {
     "STRING": STRING,
     "LocalDate": LocalDate.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "Person": Person.TYPE,
+    "Person": Person_TYPE,
 };
 
 </script>
 
 <template>
-    <EntityChooseDialog ref="entityChooseDialog" :type="Person.TYPE" :modal="modal">
+    <EntityChooseDialog ref="entityChooseDialog" :type="Person_TYPE" :modal="modal">
         <th data-field="id" data-type="INT" class="id">ID</th>
         <th data-field="label" data-type="STRING">Name</th>
         <th data-field="description" data-type="STRING">Description</th>

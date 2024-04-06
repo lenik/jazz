@@ -4,7 +4,12 @@ import GeoLocationTypeInfo from './GeoLocationTypeInfo';
 
 export class GeoLocation {
 
-    static readonly TYPE = new GeoLocationTypeInfo();
+    static _typeInfo: GeoLocationTypeInfo;
+    static get TYPE() {
+        if (this._typeInfo == null)
+            this._typeInfo = GeoLocationTypeInfo.INSTANCE;
+        return this._typeInfo;
+    }
 
     longitude: double;
     latitude: double;

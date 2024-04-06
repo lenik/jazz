@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { CoMessage_TYPE } from "./CoMessageTypeInfo";
 import CoMessage from "./CoMessage";
 
 export interface Props {
@@ -39,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoMessage.TYPE" ref="rootElement">
+    <FieldGroup :type="CoMessage_TYPE" ref="rootElement">
         <FieldRow :property="meta.subject" v-model="model.subject">
             <input type="text" v-model="model.subject" />
         </FieldRow>

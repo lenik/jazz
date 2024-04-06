@@ -4,6 +4,7 @@ import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityProper
 import type { JsonVariant } from "@skeljs/core/src/lang/bas-type";
 import type { int } from "@skeljs/core/src/lang/basetype";
 import type { Timestamp } from "@skeljs/core/src/lang/time";
+import { CoTalk_TYPE } from "./CoTalkTypeInfo";
 import CoTalk from "./CoTalk";
 
 export interface Props {
@@ -45,11 +46,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoTalk.TYPE" ref="rootElement">
+    <FieldGroup :type="CoTalk_TYPE" ref="rootElement">
     </FieldGroup>
     <UserChooseDialog ref="userChooseDialog" />
     <GroupChooseDialog ref="groupChooseDialog" />
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

@@ -8,6 +8,10 @@ export class GeoLocationTypeInfo extends TypeInfo<GeoLocation> {
     override get name() { return 'GeoLocation' }
     override get icon() { return 'fa-location' }
 
+    create(): GeoLocation {
+        return new GeoLocation();
+    }
+
     override parse(s: string): GeoLocation {
         let [lng, lat, geo] = s.split(',');
         let a = new GeoLocation();
@@ -48,6 +52,9 @@ export class GeoLocationTypeInfo extends TypeInfo<GeoLocation> {
         return jo;
     }
 
+    static readonly INSTANCE = new GeoLocationTypeInfo();
+
 }
 
 export default GeoLocationTypeInfo;
+export const GeoLocation_TYPE = GeoLocationTypeInfo.INSTANCE;

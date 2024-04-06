@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { FavRecord_TYPE } from "./FavRecordTypeInfo";
 import FavRecord from "./FavRecord";
 
 export interface Props {
@@ -37,7 +38,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="FavRecord.TYPE" ref="rootElement">
+    <FieldGroup :type="FavRecord_TYPE" ref="rootElement">
         <FieldRow :property="meta.user" v-model="model.user">
             <RefEditor :dialog="userChooseDialog" v-model="model.user" v-model:id="model.userId" />
         </FieldRow>

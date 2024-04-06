@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { Party_TYPE } from "./PartyTypeInfo";
 import Party from "./Party";
 
 export interface Props {
@@ -38,7 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="Party.TYPE" ref="rootElement">
+    <FieldGroup :type="Party_TYPE" ref="rootElement">
         <FieldRow :property="meta.birthday" v-model="model.birthday">
             <DateTime v-model="model.birthday" />
         </FieldRow>

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import EntityPropertyMap from "@skeljs/dba/src/net/bodz/lily/entity/EntityPropertyMap";
+import { CoObject_TYPE } from "./CoObjectTypeInfo";
 import CoObject from "./CoObject";
 
 export interface Props {
@@ -39,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <FieldGroup :type="CoObject.TYPE" ref="rootElement">
+    <FieldGroup :type="CoObject_TYPE" ref="rootElement">
         <FieldRow :property="meta.accessMode" v-model="model.accessMode">
             <input type="number" v-model="model.accessMode" />
         </FieldRow>

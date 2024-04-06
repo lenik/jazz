@@ -5,8 +5,8 @@ import LocalDate from '@skeljs/core/src/lang/time/LocalDate';
 import { INT, STRING } from '@skeljs/core/src/lang/baseinfo';
 import { JSON_VARIANT } from '@skeljs/core/src/lang/bas-info';
 import Person from './Person';
-import TypeInfo from '@skeljs/core/src/lang/TypeInfo';
-import { getItemImage } from '@skeljs/core/src/net/bodz/lily/entity/IAttachment';
+import { Person_TYPE } from './PersonTypeInfo';
+import { DefaultAttachment_TYPE } from './DefaultAttachmentTypeInfo';
 
 export const title = 'Person Admin';
 
@@ -25,58 +25,19 @@ const props = withDefaults(defineProps<Props>(), {
 
 // const admin = ref<InstanceType<typeof LilyAdmin>>();
 const defaultPersonChooseDialog = ref<InstanceType<typeof PersonChooseDialog>>();
-const type = Person.TYPE;
+const type = Person_TYPE;
 const selection = ref<any>({});
 
 onMounted(() => {
 });
-
-class DefaultAttachment extends TypeInfo<any> {
-
-    constructor() {
-        super();
-    }
-
-    get name() { return "DefaultAttachment" }
-    get label() { return "DefaultAttachment" }
-    get description() { return "DefaultAttachment" }
-
-    create() {
-        return {} as any;
-    }
-
-    parse(s: string) {
-        return JSON.parse(s);
-    }
-    format(val: any): string {
-        return JSON.stringify(val);
-    }
-    fromJson(jv: any) {
-        return jv;
-    }
-    toJson(val: any) {
-        return val;
-    }
-    renderHtml(val: any, context: any): string | HTMLElement | undefined {
-        if (val == null || val.length == 0)
-            return "none";
-        let first = val[0];
-        let img = document.createElement("img");
-        img.src = getItemImage(first, context.id)!;
-        img.className = "attachment"
-        return img;
-    }
-
-    static INSTANCE = new DefaultAttachment();
-}
 
 const typeMap = {
     "INT": INT,
     "STRING": STRING,
     "LocalDate": LocalDate.TYPE,
     "JSON_VARIANT": JSON_VARIANT,
-    "Person": Person.TYPE,
-    "DefaultAttachment": DefaultAttachment.INSTANCE,
+    "Person": Person_TYPE,
+    "DefaultAttachment": DefaultAttachment_TYPE,
 };
 
 </script>
@@ -113,4 +74,4 @@ const typeMap = {
 
 <style scoped lang="scss">
 .lily-admin {}
-</style>
+</style>./DefaultAttachmentTypeInfo
