@@ -6,6 +6,7 @@ import net.bodz.lily.entity.manager.cmd.DeleteCommand;
 import net.bodz.lily.entity.manager.cmd.FetchCommand;
 import net.bodz.lily.entity.manager.cmd.GetDefaultCommand;
 import net.bodz.lily.entity.manager.cmd.GetIncomingFileCommand;
+import net.bodz.lily.entity.manager.cmd.ImportCommand;
 import net.bodz.lily.entity.manager.cmd.ListCommand;
 import net.bodz.lily.entity.manager.cmd.SaveCommand;
 import net.bodz.lily.entity.manager.cmd.SaveContentCommand;
@@ -28,6 +29,8 @@ public class BaseCommands
         addCommand(new UploadCommand());
         addCommand(new AttachmentResolveCommand());
         addCommand(new GetIncomingFileCommand());
+
+        addCommand(new ImportCommand());
     }
 
 }

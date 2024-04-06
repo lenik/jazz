@@ -1,9 +1,13 @@
 package net.bodz.lily.entity.ws;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
@@ -19,6 +23,8 @@ import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.ObjectType;
+import net.bodz.bas.repr.form.IFormDecl;
+import net.bodz.bas.repr.form.PropertyChain;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
@@ -71,6 +77,8 @@ public abstract class AbstractEntityController<T>
 
     CommandLocator locator = new CommandLocator();
 
+    Map<String, String> friendlyColumnNameMap = new HashMap<>();
+
     public AbstractEntityController() {
         ObjectType aObjectType = getClass().getAnnotation(ObjectType.class);
 
@@ -114,6 +122,29 @@ public abstract class AbstractEntityController<T>
     @Override
     public IEntityTypeInfo getEntityTypeInfo() {
         return typeInfo;
+    }
+
+    protected void friendlyColumnNames(String fieldProp, String... columnNames) {
+        for (String columnName : columnNames)
+            friendlyColumnNameMap.put(columnName, fieldProp);
+    }
+
+    @Override
+    public PropertyChain resolveFieldProp(String columnName) {
+        String fieldProp = friendlyColumnNameMap.get(columnName);
+        if (fieldProp == null)
+            fieldProp = columnName;
+
+        IEntityTypeInfo typeInfo = getEntityTypeInfo();
+        IFormDecl formDecl = typeInfo.getFormDecl();
+        try {
+            List<PropertyChain> chains = formDecl.resolvePattern(fieldProp);
+            if (chains.size() != 1)
+                throw new IllegalArgumentException("wildcard isn't allowed.");
+            return chains.get(0);
+        } catch (NoSuchPropertyException | ParseException e) {
+            return null;
+        }
     }
 
     IEntityCommandProcess createProcess(IEntityCommandType type, ResolvedEntity resolvedEntity) {

@@ -1,15 +1,30 @@
 package net.bodz.lily.entity.type;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
+import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 
 public interface IEntityTypeInfo {
 
     Class<?> getEntityClass();
 
+    default Object newInstance() {
+        Class<?> clazz = getEntityClass();
+        Object instance;
+        try {
+            instance = clazz.getConstructor().newInstance();
+        } catch (Exception e) {
+            throw new IllegalUsageException("Error calling default constructor: " + e.getMessage(), e);
+        }
+        return instance;
+    }
+
     IType getPotatoType();
+
+    IFormDecl getFormDecl();
 
     Class<?> getIdClass();
 

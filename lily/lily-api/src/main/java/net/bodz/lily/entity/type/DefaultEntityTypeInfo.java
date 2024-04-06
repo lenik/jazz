@@ -11,6 +11,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
+import net.bodz.bas.repr.form.FormDeclBuilder;
+import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.IdFn;
@@ -24,6 +26,7 @@ public class DefaultEntityTypeInfo
 
     final Class<?> entityClass;
     final IType potatoType;
+    final IFormDecl formDecl;
 
     final Class<?> idClass;
     final Class<?> mapperClass;
@@ -38,6 +41,7 @@ public class DefaultEntityTypeInfo
     public DefaultEntityTypeInfo(Class<?> entityClass) {
         this.entityClass = entityClass;
         potatoType = BeanTypeProvider.getInstance().loadType(entityClass);
+        formDecl = new FormDeclBuilder().build(potatoType);
 
         idClass = IdFn._getIdType(entityClass);
         mapperClass = IMapper.fn.getMapperClass(entityClass);
@@ -95,6 +99,11 @@ public class DefaultEntityTypeInfo
     @Override
     public IType getPotatoType() {
         return potatoType;
+    }
+
+    @Override
+    public IFormDecl getFormDecl() {
+        return formDecl;
     }
 
     @Override
