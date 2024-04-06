@@ -45,6 +45,9 @@ public class StringVarConverter
 
     @Override
     public Number toNumber(String value) {
+        if (value == null)
+            return null;
+
         if ("NaN".equals(value))
             return Double.NaN;
         if ("Infinity".equals(value))
