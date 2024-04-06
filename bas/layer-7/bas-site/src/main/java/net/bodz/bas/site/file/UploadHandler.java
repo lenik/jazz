@@ -26,7 +26,8 @@ import jakarta.servlet.http.Part;
  *
  * @param scheme
  *
- *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file upload</a>
+ *            Check out <a href="https://blueimp.github.io/jQuery-File-Upload/">blueimp file
+ *            upload</a>
  */
 public class UploadHandler
         implements
@@ -38,7 +39,8 @@ public class UploadHandler
 
     /**
      * @param absoluteHref
-     *            The start part of the download href relative to the webapp. Should be terminated with file separator.
+     *            The start part of the download href relative to the webapp. Should be terminated
+     *            with file separator.
      */
     public UploadHandler(File localDir, String absoluteHref) {
         this(localDir, _webApp_.join(absoluteHref));
@@ -108,6 +110,7 @@ public class UploadHandler
                 System.out.println();
 
             RenameResult renameResult = renameToSha1(localFile);
+            localFile = renameResult.newFile;
 
             UploadedFileInfo fileInfo = new UploadedFileInfo(part);
             fileInfo.setFile(localFile);
