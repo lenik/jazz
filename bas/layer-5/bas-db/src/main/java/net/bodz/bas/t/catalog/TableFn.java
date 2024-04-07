@@ -12,8 +12,7 @@ public class TableFn {
             if (metadata == null) {
                 metadata = new DefaultTableMetadata();
                 for (String cell : csvRow) {
-                    DefaultColumnMetadata column = metadata.addNewColumn();
-                    column.setName(cell);
+                    DefaultColumnMetadata column = metadata.addNewColumn(cell);
                     column.precision = 1;
                 }
             } else {

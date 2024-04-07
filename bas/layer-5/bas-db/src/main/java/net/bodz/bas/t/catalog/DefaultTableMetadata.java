@@ -308,7 +308,7 @@ public class DefaultTableMetadata
         @Override
         public IColumnMetadata column(ResultSet rs)
                 throws SQLException {
-            DefaultColumnMetadata column = new DefaultColumnMetadata(DefaultTableMetadata.this);
+            DefaultColumnMetadata column = createColumn();
             column.readObject(rs);
             addColumn(column);
             return column;

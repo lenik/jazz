@@ -141,6 +141,8 @@ public class BeanProperty
     @Override
     public Object getValue(Object instance)
             throws ReflectiveOperationException {
+        if (instance == null)
+            throw new NullPointerException("instance");
         Method getter = propertyDescriptor.getReadMethod();
         if (getter == null)
             throw new NoSuchMethodException("No getter method: " + propertyDescriptor.getName());
@@ -150,6 +152,8 @@ public class BeanProperty
     @Override
     public void setValue(Object instance, Object value)
             throws ReflectiveOperationException {
+        if (instance == null)
+            throw new NullPointerException("instance");
         Method setter = propertyDescriptor.getWriteMethod();
         if (setter == null)
             throw new NoSuchMethodException("No setter method: " + propertyDescriptor.getName());

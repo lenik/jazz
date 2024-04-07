@@ -16,22 +16,12 @@ public class SheetColumn
             ISheetColumn,
             IXmlForm {
 
-    /**
-     * 0-based.
-     */
-    int columnIndex;
     String columnName;
 
     SsGroup ss = new SsGroup();
 
-    public SheetColumn(SheetTableMetadata parent, int columnIndex) {
+    public SheetColumn(SheetTableMetadata parent) {
         super(parent);
-        this.columnIndex = columnIndex;
-    }
-
-    @Override
-    public int getColumnIndex() {
-        return columnIndex;
     }
 
     @Override

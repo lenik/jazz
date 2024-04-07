@@ -73,6 +73,8 @@ public interface IColumnMetadata
 
     ColumnOid getId();
 
+    int getColumnIndex();
+
     String getName();
 
     boolean isJavaNameComplete();

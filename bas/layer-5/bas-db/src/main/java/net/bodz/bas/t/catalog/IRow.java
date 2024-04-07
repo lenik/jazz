@@ -17,6 +17,8 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.t.variant.IVariant;
+import net.bodz.bas.t.variant.MutableVariant;
 
 public interface IRow
         extends
@@ -80,6 +82,16 @@ public interface IRow
     default Object getCellData(String columnName) {
         int index = getColumnIndex(columnName);
         return getCellData(index);
+    }
+
+    default IVariant getCellVar(int columnIndex) {
+        Object data = getCellData(columnIndex);
+        return MutableVariant.wrap(data);
+    }
+
+    default Object getCellVar(String columnName) {
+        int index = getColumnIndex(columnName);
+        return getCellVar(index);
     }
 
     /**

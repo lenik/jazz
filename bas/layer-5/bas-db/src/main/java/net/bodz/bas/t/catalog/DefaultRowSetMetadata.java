@@ -87,11 +87,15 @@ public class DefaultRowSetMetadata
     }
 
     protected DefaultColumnMetadata createColumn() {
-        return new DefaultColumnMetadata(this);
+        DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+        int newColumnIndex = getColumnCount();
+        column.setColumnIndex(newColumnIndex);
+        return column;
     }
 
-    public DefaultColumnMetadata addNewColumn() {
+    public DefaultColumnMetadata addNewColumn(String name) {
         DefaultColumnMetadata column = createColumn();
+        column.setName(name);
         addColumn(column);
         return column;
     }
@@ -161,7 +165,7 @@ public class DefaultRowSetMetadata
         removeAllColumns();
         for (int i = 0; i < n; i++) {
             JsonObject item = jv.getJsonObject(i);
-            DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+            DefaultColumnMetadata column = createColumn();
             column.jsonIn(item, opts);
             addColumn(column);
         }
@@ -174,7 +178,7 @@ public class DefaultRowSetMetadata
         IElement x_columns = x_metadata.selectByTag(K_COLUMNS).first();
         removeAllColumns();
         for (IElement x_column : x_columns.children()) {
-            DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+            DefaultColumnMetadata column = createColumn();
             column.readObject(x_column);
             addColumn(column);
         }
@@ -185,7 +189,7 @@ public class DefaultRowSetMetadata
             throws SQLException {
         int cc = rsmd.getColumnCount();
         for (int i = 1; i <= cc; i++) {
-            DefaultColumnMetadata column = new DefaultColumnMetadata(this);
+            DefaultColumnMetadata column = createColumn();
             column.setOrdinal(i);
             column.readObject(rsmd, i);
             addColumn(column);

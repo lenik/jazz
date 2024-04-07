@@ -34,6 +34,7 @@ public class DefaultColumnMetadata
     IRowSetMetadata parent;
     TableOid tableOid;
 
+    int columnIndex;
     int ordinalPosition;
 
     ColumnOid oid;
@@ -81,13 +82,13 @@ public class DefaultColumnMetadata
     private boolean excluded;
     private IProperty property;
 
-    public DefaultColumnMetadata(IRowSetMetadata parent) {
+    protected DefaultColumnMetadata(IRowSetMetadata parent) {
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
     }
 
-    public DefaultColumnMetadata(ITableMetadata parent) {
+    protected DefaultColumnMetadata(ITableMetadata parent) {
         if (parent == null)
             throw new NullPointerException("parent");
         this.parent = parent;
@@ -118,6 +119,15 @@ public class DefaultColumnMetadata
             throw new NullPointerException("parent");
         this.parent = parent;
         this.tableOid = parent.getId();
+    }
+
+    @Override
+    public int getColumnIndex() {
+        return columnIndex;
+    }
+
+    public void setColumnIndex(int columnIndex) {
+        this.columnIndex = columnIndex;
     }
 
     @Override

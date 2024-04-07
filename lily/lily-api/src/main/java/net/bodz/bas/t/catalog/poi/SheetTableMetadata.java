@@ -35,12 +35,13 @@ public class SheetTableMetadata
 
     @Override
     protected SheetColumn createColumn() {
-        return new SheetColumn(this, getColumnCount());
+        SheetColumn column = new SheetColumn(this);
+        return column;
     }
 
     @Override
-    public SheetColumn addNewColumn() {
-        return (SheetColumn) super.addNewColumn();
+    public SheetColumn addNewColumn(String name) {
+        return (SheetColumn) super.addNewColumn(name);
     }
 
     @Override

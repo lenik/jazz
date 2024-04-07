@@ -133,4 +133,11 @@ public class MutableCell
         dirty = true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(data);
+        return sb.toString();
+    }
+
 }
