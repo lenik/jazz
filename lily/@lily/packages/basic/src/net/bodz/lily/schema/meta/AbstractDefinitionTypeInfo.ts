@@ -20,6 +20,9 @@ export class AbstractDefinitionTypeInfo extends CoCodeTypeInfo {
         });
     }
 
+    static readonly INSTANCE = new AbstractDefinitionTypeInfo(undefined);
+
 }
 
 export default AbstractDefinitionTypeInfo;
+export const AbstractDefinition_TYPE = AbstractDefinitionTypeInfo.INSTANCE;
