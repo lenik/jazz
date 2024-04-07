@@ -185,7 +185,7 @@ public abstract class AbstractEntityController<T>
 
             String pathInfoStr = StringArray.join("/", pathInfo);
             String message = String.format(//
-                    "error executing entity %s %s [%s]: %s", //
+                    "error executing entity %s %s (path: %s): %s", //
                     commandTypeStr, // [content] command
                     type.getUniqueId(), //
                     pathInfoStr, // [path]

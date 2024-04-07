@@ -186,7 +186,9 @@ public abstract class AbstractEntityCommandProcess
         try {
             target = execute();
         } catch (Exception e) {
-            throw new PathDispatchException("error run the command: " + e.getMessage(), e);
+            throw new PathDispatchException(String.format( //
+                    "error run command %s: %s", //
+                    getCommandType().getUniqueId(), e.getMessage()), e);
         }
 
         PathArrival arrival = PathArrival.shift(consumedTokenCount, previous, this, target, tokens);

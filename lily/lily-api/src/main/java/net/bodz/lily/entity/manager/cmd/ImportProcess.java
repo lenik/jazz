@@ -9,7 +9,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
+import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.records.CsvRecords;
@@ -22,16 +25,7 @@ import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.file.UploadResult;
 import net.bodz.bas.site.file.UploadedFileInfo;
 import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.t.catalog.DefaultColumnMetadata;
-import net.bodz.bas.t.catalog.DefaultTableMetadata;
-import net.bodz.bas.t.catalog.ICell;
-import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.IMutableCell;
-import net.bodz.bas.t.catalog.IMutableRow;
-import net.bodz.bas.t.catalog.IRow;
-import net.bodz.bas.t.catalog.ITableMetadata;
-import net.bodz.bas.t.catalog.MutableRow;
-import net.bodz.bas.t.catalog.MutableTable;
+import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.concrete.StructRow;
@@ -46,9 +40,12 @@ public class ImportProcess
     String encoding;
     String delim;
 
+    boolean renameDuplicatedColumns = true;
+
     // String id;
 
     PropertyChain[] fieldProps;
+    protected boolean parsed;
 
     public ImportProcess(ImportCommand type, IEntityCommandContext context) {
         super(type, context);
@@ -119,15 +116,31 @@ public class ImportProcess
     }
 
     protected MutableTable csv2Table(CsvRecords csv)
-            throws IOException {
+            throws IOException, ParseException {
         CsvRow head = csv.first();
         int nColumn = head.size();
 
         DefaultTableMetadata tableType = new DefaultTableMetadata();
         for (int i = 0; i < nColumn; i++) {
-            DefaultColumnMetadata columnType = new DefaultColumnMetadata(tableType);
-            columnType.setName(head.get(i));
-            tableType.addColumn(columnType);
+            String name = head.get(i);
+
+            if (renameDuplicatedColumns)
+                if (tableType.getColumn(name) != null) {
+                    String rename = null;
+                    for (int nTry = 1; nTry < 10; nTry++) {
+                        String tryName = name + "_" + nTry;
+                        IColumnMetadata existing = tableType.getColumn(tryName);
+                        if (existing == null) {
+                            rename = tryName;
+                            break;
+                        }
+                    }
+                    if (rename == null)
+                        throw new DuplicatedKeyException("column duplicated: " + name);
+                    name = rename;
+                }
+
+            tableType.addNewColumn(name);
         }
 
         MutableTable table = new MutableTable(tableType);
@@ -154,7 +167,8 @@ public class ImportProcess
     JsonResult parseAndImportTable(MutableTable table)
             throws ParseException {
         prepareTableType((DefaultTableMetadata) table.getMetadata());
-        parseTableCells(table);
+        if (! parsed)
+            parseTableCells(table);
         List<StructRow> objects = buildObjects(table);
         return importObjects(objects);
     }
@@ -170,7 +184,6 @@ public class ImportProcess
             fieldProps[i] = fieldProp;
             Class<?> type = fieldProp.getPropertyClass();
             column.setJavaClass(type);
-
         }
     }
 
@@ -186,10 +199,11 @@ public class ImportProcess
             rowIndex++;
 
             for (int iCol = 0; iCol < nColumn; iCol++) {
+                IColumnMetadata column = columns.get(iCol);
                 IMutableCell cell = row.getCell(iCol);
                 String cellText = (String) cell.getData();
 
-                Class<?> cellType = columns.get(iCol).getJavaClass();
+                Class<?> cellType = column.getJavaClass();
 
                 Object cellVal;
                 try {
@@ -217,16 +231,28 @@ public class ImportProcess
             StructRow obj = (StructRow) typeInfo.newInstance();
 
             for (int iCol = 0; iCol < nColumn; iCol++) {
+                IColumnMetadata column = tableType.getColumn(iCol);
+
                 ICell cell = _row.getCell(iCol);
                 Object cellVal = cell.getData();
+                if (cellVal == null)
+                    continue;
 
                 PropertyChain fieldProp = fieldProps[iCol];
+                Class<?> propType = fieldProp.getPropertyClass();
+                Class<?> boxed = Primitives.box(propType);
+                if (cellVal != null && ! boxed.isAssignableFrom(cellVal.getClass()))
+                    throw new IllegalUsageException(String.format(//
+                            "Invalid cell %s[%d] %s, expected %s", //
+                            column.getName(), iCol, //
+                            cellVal.getClass(), propType));
+
                 try {
                     fieldProp.setValue(obj, cellVal);
-                } catch (ReflectiveOperationException e) {
+                } catch (Exception e) {
                     throw new ParseException(String.format(//
-                            "Error load csv cell at row %d, column %d: %s", //
-                            rowIndex, iCol, e.getMessage()), e);
+                            "Error load csv cell at row %d, column %s[%d]: %s", //
+                            rowIndex, column.getName(), iCol, e.getMessage()), e);
                 }
             }
 
