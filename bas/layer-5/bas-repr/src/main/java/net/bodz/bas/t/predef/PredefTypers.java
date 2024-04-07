@@ -43,8 +43,22 @@ public class PredefTypers<T extends Predef<T, K>, K extends Comparable<K>>
     @Override
     public T parse(String text, IOptions options)
             throws ParseException {
-        T object = metadata.ofName(text);
-        return object;
+        if (text == null)
+            return null;
+        if (text.isEmpty())
+            return null;
+
+        T item = metadata.ofName(text);
+        if (item != null)
+            return item;
+
+        K key = metadata.parseKey(text);
+        item = metadata.ofKey(key);
+        if (item != null)
+            return item;
+
+        // return null;
+        throw new ParseException("invalid predef: " + text);
     }
 
     @Override

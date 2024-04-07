@@ -2,12 +2,23 @@ package net.bodz.bas.t.predef;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
 
 import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.err.DuplicatedKeyException;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.stereo.IMetadata;
 import net.bodz.bas.t.order.DefaultComparator;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 
 public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
         implements
@@ -17,6 +28,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     private final Class<E> itemClass;
     private final Class<K> keyType;
+    private final IParser<K> keyParser;
     private final Class<?> stopClass;
     private final int level;
 
@@ -41,6 +53,7 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
             throw new NullPointerException("stopClass");
         this.itemClass = itemClass;
         this.keyType = keyType;
+        this.keyParser = Typers.getTyper(keyType, IParser.class);
         this.stopClass = stopClass;
 
         int level = -1;
@@ -61,6 +74,13 @@ public class PredefMetadata<E extends Predef<?, K>, K extends Comparable<K>>
 
     public Class<K> getKeyType() {
         return keyType;
+    }
+
+    public K parseKey(String keyText)
+            throws ParseException {
+        if (keyParser == null)
+            throw new IllegalUsageException("can't parse key of " + keyType);
+        return keyParser.parse(keyText);
     }
 
     public int getLevel() {
