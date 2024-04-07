@@ -12,6 +12,11 @@ public class SheetTableMetadata
     public SheetTableMetadata() {
     }
 
+    @Override
+    public boolean isSparse() {
+        return true;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<? extends SheetColumn> getColumns() {
@@ -36,6 +41,8 @@ public class SheetTableMetadata
     @Override
     protected SheetColumn createColumn() {
         SheetColumn column = new SheetColumn(this);
+        int newColumnIndex = getColumnCount();
+        column.setColumnIndex(newColumnIndex);
         return column;
     }
 

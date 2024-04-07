@@ -5,6 +5,7 @@ import javax.xml.stream.XMLStreamException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaError;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
@@ -128,18 +129,18 @@ public class SheetCell
         setData(textContent);
     }
 
-    public void readObject(Cell poiCell, ExcelParseOptions options) {
-        if (poiCell == null)
+    public void readObject(Cell pCell, ExcelParseOptions options) {
+        if (pCell == null)
             throw new NullPointerException("poiCell");
 
-        type = poiCell.getCellType();
+        type = pCell.getCellType();
         // text = pCell.toString();
         // ExcelUtil.getCellValue();
-        text = ExcelUtil.getCellText(poiCell);
+        text = ExcelUtil.getCellText(pCell);
 
         if (options.useRawText) {
-            if (poiCell instanceof XSSFCell) {
-                XSSFCell xssfCell = (XSSFCell) poiCell;
+            if (pCell instanceof XSSFCell) {
+                XSSFCell xssfCell = (XSSFCell) pCell;
                 text = xssfCell.getRawValue();
             }
         }
@@ -147,27 +148,31 @@ public class SheetCell
         Object data = null;
         switch (type) {
         case BOOLEAN:
-            data = poiCell.getBooleanCellValue();
+            data = pCell.getBooleanCellValue();
             break;
 
         case ERROR:
-            byte errorByte = poiCell.getErrorCellValue();
+            byte errorByte = pCell.getErrorCellValue();
             FormulaError error = FormulaError.forInt(errorByte);
             data = error;
             break;
 
         case FORMULA:
-            CellValue val = getBook().evaluator.evaluate(poiCell);
-            readObjectFromEvaluated(val);
+            CellValue pCellValue = getBook().evaluator.evaluate(pCell);
+            readObjectFromEvaluated(pCellValue, pCell);
             break;
 
         case NUMERIC:
-            data = poiCell.getNumericCellValue();
+            if (DateUtil.isCellDateFormatted(pCell)) {
+                data = pCell.getLocalDateTimeCellValue();
+            } else {
+                data = pCell.getNumericCellValue();
+            }
             break;
 
         case BLANK:
         case STRING:
-            data = poiCell.getStringCellValue();
+            data = pCell.getStringCellValue();
             break;
 
         default:
@@ -177,7 +182,7 @@ public class SheetCell
         setData(data);
     }
 
-    public void readObjectFromEvaluated(CellValue pCellVal) {
+    public void readObjectFromEvaluated(CellValue pCellVal, Cell pCell) {
         type = pCellVal.getCellType();
         text = pCellVal.formatAsString();
         Object data = null;
@@ -193,7 +198,10 @@ public class SheetCell
             break;
 
         case NUMERIC:
-            data = pCellVal.getNumberValue();
+            if (DateUtil.isCellDateFormatted(pCell)) {
+                data = pCell.getLocalDateTimeCellValue();
+            } else
+                data = pCellVal.getNumberValue();
             break;
 
         case BLANK:

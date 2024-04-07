@@ -15,10 +15,12 @@ import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
+import net.bodz.bas.t.catalog.CsvTable;
 import net.bodz.bas.t.catalog.IMutableRow;
 import net.bodz.bas.t.catalog.IRow;
 import net.bodz.bas.t.catalog.ISchema;
 import net.bodz.bas.t.catalog.MutableTable;
+import net.bodz.bas.t.catalog.TableOid;
 
 public class SheetTable
         extends MutableTable
@@ -100,13 +102,13 @@ public class SheetTable
     }
 
     @Override
-    protected SheetRow createRow() {
-        return new SheetRow(this);
+    public SheetRow addNewRow() {
+        return (SheetRow) super.addNewRow();
     }
 
     @Override
-    public SheetRow newRow(int rowIndex) {
-        return (SheetRow) super.newRow(rowIndex);
+    protected SheetRow createRow() {
+        return new SheetRow(this);
     }
 
     @Override
@@ -135,13 +137,28 @@ public class SheetTable
         int first = poiSheet.getFirstRowNum();
         int last = poiSheet.getLastRowNum();
 
+        SheetTableMetadata meta = getMetadata();
+        meta.setId(TableOid.of(sheetName));
+
         for (int rowIndex = first; rowIndex <= last; rowIndex++) {
             if (rowIndex == -1)
                 continue;
-            SheetRow row = new SheetRow(this, rowIndex);
             Row pRow = poiSheet.getRow(rowIndex);
-            row.readObject(pRow, options);
-            rows.add(row);
+            if (rowIndex == first) {
+                SheetRow thead = createRow();
+                thead.readObject(pRow, options);
+                for (SheetCell th : thead.getCells()) {
+                    String name = th.getData().toString();
+
+                    if (options.renameConflictColumns)
+                        name = CsvTable.renameConflict(meta, name, options.renameTryMax);
+
+                    meta.addNewColumn(name); // .setJavaClass(String.class);
+                }
+            } else {
+                SheetRow row = addNewRow();
+                row.readObject(pRow, options);
+            }
         }
     }
 
