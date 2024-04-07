@@ -80,19 +80,14 @@ public class RowList
     }
 
     @Override
-    public final IMutableRow newRow() {
-        return newRow(rows.size());
+    public IMutableRow addNewRow() {
+        IMutableRow row = createRow();
+        addRow(row);
+        return row;
     }
 
     protected IMutableRow createRow() {
         return new MutableRow(this);
-    }
-
-    @Override
-    public IMutableRow newRow(int rowIndex) {
-        IMutableRow row = createRow();
-        addRow(row);
-        return row;
     }
 
     @Override
@@ -139,7 +134,7 @@ public class RowList
         long nLimit = limited ? limit.longValue() : -1L;
         long n = 0;
         while (resultSet.next()) {
-            IMutableRow row = newRow();
+            IMutableRow row = addNewRow();
             row.readObject(resultSet);
             n++;
             if (limited && n >= nLimit)

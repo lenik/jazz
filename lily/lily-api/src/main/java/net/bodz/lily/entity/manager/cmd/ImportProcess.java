@@ -115,53 +115,6 @@ public class ImportProcess
         return result;
     }
 
-    protected MutableTable csv2Table(CsvRecords csv)
-            throws IOException, ParseException {
-        CsvRow head = csv.first();
-        int nColumn = head.size();
-
-        DefaultTableMetadata tableType = new DefaultTableMetadata();
-        for (int i = 0; i < nColumn; i++) {
-            String name = head.get(i);
-
-            if (renameDuplicatedColumns)
-                if (tableType.getColumn(name) != null) {
-                    String rename = null;
-                    for (int nTry = 1; nTry < 10; nTry++) {
-                        String tryName = name + "_" + nTry;
-                        IColumnMetadata existing = tableType.getColumn(tryName);
-                        if (existing == null) {
-                            rename = tryName;
-                            break;
-                        }
-                    }
-                    if (rename == null)
-                        throw new DuplicatedKeyException("column duplicated: " + name);
-                    name = rename;
-                }
-
-            tableType.addNewColumn(name);
-        }
-
-        MutableTable table = new MutableTable(tableType);
-
-        int rowIndex = 0;
-        for (CsvRow csvRow : csv) {
-            if (csvRow.getRawLine().trim().isEmpty())
-                continue;
-
-            if (rowIndex++ == 0)
-                continue;
-
-            CoObject obj = (CoObject) typeInfo.newInstance();
-            IMutableRow row = table.newRow();
-            for (int iCol = 0; iCol < nColumn; iCol++) {
-                String cell = csvRow.get(iCol);
-                row.addNewCell().setData(cell);
-            }
-        }
-
-        return table;
     }
 
     JsonResult parseAndImportTable(MutableTable table)

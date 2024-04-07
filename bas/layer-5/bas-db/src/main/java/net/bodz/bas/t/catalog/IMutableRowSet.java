@@ -9,9 +9,7 @@ public interface IMutableRowSet
 
     void setRow(int rowIndex, IMutableRow row);
 
-    IMutableRow newRow();
-
-    IMutableRow newRow(int rowIndex);
+    IMutableRow addNewRow();
 
     void addRow(IMutableRow row);
 

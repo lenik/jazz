@@ -16,7 +16,7 @@ public class TableFn {
                     column.precision = 1;
                 }
             } else {
-                IMutableRow row = table.newRow();
+                IMutableRow row = table.addNewRow();
                 for (String csvCell : csvRow) {
                     IMutableCell cell = row.addNewCell();
                     cell.setData(csvCell);

@@ -15,6 +15,7 @@ net.bodz.bas.db.ibatis.type.LocalTimeTypeHandler
 net.bodz.bas.db.ibatis.type.LongArrayTypeHandler
 net.bodz.bas.db.ibatis.type.MapTypeHandler
 net.bodz.bas.db.ibatis.type.OffsetDateTimeTypeHandler
+net.bodz.bas.db.ibatis.type.OffsetTimeTypeHandler
 net.bodz.bas.db.ibatis.type.SetTypeHandler
 net.bodz.bas.db.ibatis.type.ShortArrayTypeHandler
 net.bodz.bas.db.ibatis.type.StateTypeHandler

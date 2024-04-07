@@ -35,6 +35,18 @@ public class TableOid
         this.tableName = tableName;
     }
 
+    public static TableOid of(String tableName, String schemaName, String catalogName) {
+        return new TableOid(catalogName, schemaName, tableName);
+    }
+
+    public static TableOid of(String tableName, String schemaName) {
+        return of(tableName, schemaName, null);
+    }
+
+    public static TableOid of(String tableName) {
+        return of(tableName, null, null);
+    }
+
     public static TableOid parse(String fullName) {
         TableOid o = new TableOid();
         o.setFullName(fullName);

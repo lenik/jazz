@@ -108,7 +108,7 @@ public class MutableTable
         List<IMutableRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < n; rowIndex++) {
             JsonArray j_row = j_rows.getJsonArray(rowIndex);
-            IMutableRow row = newRow();
+            IMutableRow row = addNewRow();
             row.jsonIn(JsonVariant.of(j_row), opts);
             rows.add(row);
         }
@@ -137,7 +137,7 @@ public class MutableTable
         List<IMutableRow> rows = new ArrayList<>();
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             IElement x_row = x_row_v.get(rowIndex);
-            IMutableRow row = newRow();
+            IMutableRow row = addNewRow();
             row.readObject(x_row);
             rows.add(row);
         }
