@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IEntityMapper;
-import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.fmt.records.CsvRecords;
-import net.bodz.bas.fmt.records.CsvRow;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.repr.form.PropertyChain;
 import net.bodz.bas.repr.path.ServiceTargetException;
@@ -25,8 +27,21 @@ import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.file.UploadResult;
 import net.bodz.bas.site.file.UploadedFileInfo;
 import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.t.catalog.*;
+import net.bodz.bas.t.catalog.CsvTable;
+import net.bodz.bas.t.catalog.DefaultColumnMetadata;
+import net.bodz.bas.t.catalog.DefaultTableMetadata;
+import net.bodz.bas.t.catalog.ICell;
+import net.bodz.bas.t.catalog.IColumnMetadata;
+import net.bodz.bas.t.catalog.IMutableCell;
+import net.bodz.bas.t.catalog.IRow;
+import net.bodz.bas.t.catalog.ITableMetadata;
+import net.bodz.bas.t.catalog.MutableRow;
+import net.bodz.bas.t.catalog.MutableTable;
+import net.bodz.bas.t.catalog.poi.SheetBook;
+import net.bodz.bas.t.catalog.poi.SheetTable;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.bas.t.variant.conv.IVarConverter;
+import net.bodz.bas.t.variant.conv.VarConverters;
 import net.bodz.lily.concrete.CoObject;
 import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.StrVar;
@@ -79,8 +94,7 @@ public class ImportProcess
 
             case "xls":
             case "xlsx":
-                // return importExcel(file);
-                return result.fail("invalid state.");
+                return importExcel(file);
 
             default:
                 return result.fail("unknown file type.");
@@ -106,24 +120,34 @@ public class ImportProcess
             delim = this.delim.charAt(0);
 
         CsvRecords csv = new CsvRecords(ResFn.file(file), delim);
-        MutableTable table = csv2Table(csv);
+        MutableTable table = new CsvTable().convert(csv);
         return parseAndImportTable(table);
     }
 
-    JsonResult importExcel(File file) {
-        JsonResult result = new JsonResult();
-        return result;
-    }
-
+    JsonResult importExcel(File file)
+            throws IOException, EncryptedDocumentException, ParseException {
+        Workbook pBook = WorkbookFactory.create(file);
+        SheetBook book = new SheetBook();
+        ExcelParseOptions options = new ExcelParseOptions();
+        options.renameConflictColumns = true;
+        book.readObject(pBook, options);
+        SheetTable sheet1 = book.getSheet(0);
+        return parseAndImportTable(sheet1);
     }
 
     JsonResult parseAndImportTable(MutableTable table)
             throws ParseException {
+        table = reshapeTable(table);
         prepareTableType((DefaultTableMetadata) table.getMetadata());
         if (! parsed)
             parseTableCells(table);
         List<StructRow> objects = buildObjects(table);
         return importObjects(objects);
+    }
+
+    protected MutableTable reshapeTable(MutableTable table)
+            throws ParseException {
+        return table;
     }
 
     void prepareTableType(DefaultTableMetadata table) {
@@ -152,15 +176,26 @@ public class ImportProcess
             rowIndex++;
 
             for (int iCol = 0; iCol < nColumn; iCol++) {
-                IColumnMetadata column = columns.get(iCol);
                 IMutableCell cell = row.getCell(iCol);
-                String cellText = (String) cell.getData();
+                if (cell == null)
+                    continue;
 
+                Object src = cell.getData();
+                if (src == null)
+                    continue;
+
+                IColumnMetadata column = columns.get(iCol);
                 Class<?> cellType = column.getJavaClass();
-
+                // int typeId = TypeKind.getTypeId(cellType);
+                IVarConverter<Object> converter = VarConverters.getConverter(src.getClass());
                 Object cellVal;
                 try {
-                    cellVal = StrVar.parse(cellType, cellText);
+                    if (converter != null && converter.canConvertTo(cellType)) {
+                        cellVal = converter.to(src, cellType);
+                    } else {
+                        String srcText = src == null ? null : src.toString();
+                        cellVal = StrVar.parse(cellType, srcText);
+                    }
                 } catch (ParseException e) {
                     throw new ParseException(String.format(//
                             "Error parse csv cell at row %d, column %d: %s", //
@@ -179,14 +214,16 @@ public class ImportProcess
 
         List<StructRow> list = new ArrayList<>();
         int rowIndex = 0;
-        for (IRow _row : table.getRows()) {
+        for (IRow row : table.getRows()) {
             rowIndex++;
             StructRow obj = (StructRow) typeInfo.newInstance();
 
             for (int iCol = 0; iCol < nColumn; iCol++) {
                 IColumnMetadata column = tableType.getColumn(iCol);
 
-                ICell cell = _row.getCell(iCol);
+                ICell cell = row.getCell(iCol);
+                if (cell == null)
+                    continue;
                 Object cellVal = cell.getData();
                 if (cellVal == null)
                     continue;
