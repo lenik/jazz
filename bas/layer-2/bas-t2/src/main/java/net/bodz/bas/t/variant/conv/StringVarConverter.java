@@ -51,30 +51,39 @@ public class StringVarConverter
     }
 
     @Override
-    public Number toNumber(String value) {
-        if (value == null)
+    public Number toNumber(String str) {
+        if (str == null)
             return null;
 
-        if ("NaN".equals(value))
+        if ("NaN".equals(str))
             return Double.NaN;
-        if ("Infinity".equals(value))
+        if ("Infinity".equals(str))
             return Double.POSITIVE_INFINITY;
-        if ("-Infinity".equals(value))
+        if ("-Infinity".equals(str))
             return Double.NEGATIVE_INFINITY;
 
-        boolean negative = value.startsWith("-");
+        boolean negative = str.startsWith("-");
+        if (negative)
+            str = str.substring(1);
+        while (str.startsWith("0")) {
+            if (str.length() == 1)
+                break;
+            if (str.charAt(1) == '.')
+                break;
+            str = str.substring(1);
+        }
 
-        StringBuilder sb = new StringBuilder(value.length());
-        int len = value.length();
+        StringBuilder sb = new StringBuilder(str.length());
+        int len = str.length();
         boolean exp = false;
         boolean decimal = false;
         boolean start0 = false;
         int radix = 10;
         int pos = 0;
-        for (int i = negative ? 1 : 0; i < len; i++, pos++) {
-            char ch = value.charAt(i);
+        for (int i = 0; i < len; i++, pos++) {
+            char ch = str.charAt(i);
             switch (ch) {
-            case ' ':
+            // case ' ':
             case '_':
                 continue;
             case ',':
@@ -116,7 +125,7 @@ public class StringVarConverter
                 return lval;
             }
         } catch (NumberFormatException e) {
-            throw new TypeConvertException("Failed to parse number: " + value, e);
+            throw new TypeConvertException("Failed to parse number: " + str, e);
         }
     }
 
