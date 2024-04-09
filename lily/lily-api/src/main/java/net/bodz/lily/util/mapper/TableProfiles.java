@@ -9,12 +9,12 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.t.range.LongRange;
 import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.lily.criterion.CompareMode;
 import net.bodz.lily.criterion.FieldCompare;
 import net.bodz.lily.criterion.Junction;
-import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.util.IRandomPicker;
@@ -58,17 +58,22 @@ public class TableProfiles
         Class<entity_t> enitityClass = TypeParam.infer1(mapperClass, IEntityMapper.class, 0);
 
         IEntityTypeInfo typeInfo = EntityTypes.getTypeInfo(enitityClass);
-        Class<?> idClass = typeInfo.getIdClass();
+        String[] idColumns = typeInfo.getPrimaryKeyColumns();
+        IProperty[] idProps = typeInfo.getPrimaryKeyProperties();
 
         // ICriteriaBuilder<?> criteriaBuilder = typeInfo.newCriteriaBuilder();
-
-        PrimaryKeyColumns aIdColumn = enitityClass.getAnnotation(PrimaryKeyColumns.class);
-        String[] idColumns = aIdColumn.value();
-
         Junction j = new Junction();
-        for (String idColumn : idColumns) {
+
+        for (int i = 0; i < idProps.length; i++) {
+            String idColumn = idColumns[i];
+            IProperty idProp = idProps[i];
+
+            @SuppressWarnings("unchecked")
+            Class<Object> idPropType = (Class<Object>) idProp.getPropertyClass();
+
+            Object idFragment = vAny.convert(idPropType);
             j.add(new FieldCompare<Object>(idColumn, false, //
-                    CompareMode.LESS_THAN, vAny.convert(idClass)));
+                    CompareMode.LESS_THAN, idPropType, idFragment));
         }
 
         SelectOptions opts = new SelectOptions();

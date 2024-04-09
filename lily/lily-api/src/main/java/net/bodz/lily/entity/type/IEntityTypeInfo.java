@@ -36,6 +36,8 @@ public interface IEntityTypeInfo {
 
     String[] getPrimaryKeyColumns();
 
+    IProperty[] getPrimaryKeyProperties();
+
     String[] getPrimaryKeyPropertyNames();
 
     IProperty getPrimaryKeyProperty(String propertyName);

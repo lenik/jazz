@@ -33,8 +33,9 @@ public class DefaultEntityTypeInfo
     final Class<?> criteriaBuilderClass;
 
     final String[] primaryKeyColumns;
+    final IProperty[] primaryKeyProperties;
     final String[] primaryKeyPropertyNames;
-    final Map<String, IProperty> primaryKeyProperties = new LinkedHashMap<>();
+    final Map<String, IProperty> primaryKeyPropertyMap = new LinkedHashMap<>();
 
 //    ColumnProperty[] idProperties;
 
@@ -56,14 +57,18 @@ public class DefaultEntityTypeInfo
         PrimaryKeyProperties aProperties = entityClass.getAnnotation(PrimaryKeyProperties.class);
         if (aProperties != null) {
             primaryKeyPropertyNames = aProperties.value();
+            primaryKeyProperties = new IProperty[primaryKeyPropertyNames.length];
+            int i = 0;
             for (String name : primaryKeyPropertyNames) {
                 IProperty property = potatoType.getProperty(name);
                 if (property == null)
                     throw new IllegalUsageException("invalid property name: " + name);
-                primaryKeyProperties.put(name, property);
+                primaryKeyPropertyMap.put(name, property);
+                primaryKeyProperties[i++] = property;
             }
         } else {
             primaryKeyPropertyNames = new String[0];
+            primaryKeyProperties = new IProperty[0];
         }
 
 //        if (idClass != null && IIdentity.class.isAssignableFrom(idClass)) {
@@ -138,13 +143,18 @@ public class DefaultEntityTypeInfo
     }
 
     @Override
+    public IProperty[] getPrimaryKeyProperties() {
+        return primaryKeyProperties;
+    }
+
+    @Override
     public String[] getPrimaryKeyPropertyNames() {
         return primaryKeyPropertyNames;
     }
 
     @Override
     public IProperty getPrimaryKeyProperty(String name) {
-        return primaryKeyProperties.get(name);
+        return primaryKeyPropertyMap.get(name);
     }
 
     @Override
@@ -179,7 +189,7 @@ public class DefaultEntityTypeInfo
             values = new Object[n];
             for (int i = 0; i < n; i++) {
                 String propertyName = primaryKeyPropertyNames[i];
-                IProperty property = primaryKeyProperties.get(propertyName);
+                IProperty property = primaryKeyPropertyMap.get(propertyName);
                 Class<?> propertyType = property.getPropertyClass();
                 String column = columns[i];
                 if (column != null)

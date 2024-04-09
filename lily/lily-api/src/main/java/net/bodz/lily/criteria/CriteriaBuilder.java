@@ -15,6 +15,7 @@ import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.Composite;
 import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.ITypeInferrer;
 import net.bodz.lily.criterion.Junction;
 import net.bodz.lily.criterion.Not;
 
@@ -63,7 +64,7 @@ public class CriteriaBuilder<This>
 
         ICriterion top = stack.top(); // .reduce();
         if (top instanceof Disjunction) {
-            Disjunction disj = (Disjunction) top;
+            // Disjunction disj = (Disjunction) top;
             // disj.add(other);
         } else {
             Disjunction disj = new Disjunction();
@@ -113,12 +114,18 @@ public class CriteriaBuilder<This>
         return mapper.filter(criterion, options);
     }
 
+    @Deprecated
     @Override
-    public void readObject(IVariantMap<String> map)
+    public final void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        readObject(map, (stack) -> Object.class);
+    }
+
+    public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
             throws LoaderException, ParseException {
         stack.clear();
         Composite composite = defaultCombine();
-        composite.readObject(map);
+        composite.readObject(map, typeInferrer);
         stack.push(composite);
     }
 

@@ -26,6 +26,14 @@ public abstract class Criterion
         jsonIn(JsonVariant.of(o), opts);
     }
 
+    @Deprecated
+    @Override
+    public final void parseObject(String s)
+            throws ParseException {
+        IStack<String> fieldNameStack = new ArrayStack<>();
+        parseObject(s, (stack) -> Object.class, fieldNameStack);
+    }
+
     @Override
     public boolean wantObjectContext() {
         return false;

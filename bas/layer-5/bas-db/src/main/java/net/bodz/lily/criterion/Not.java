@@ -15,9 +15,6 @@ public class Not
 
     static final String K_NOT = "<not>";
 
-    public Not() {
-    }
-
     @Override
     public ICriterion reduce() {
         switch (size()) {

@@ -36,22 +36,22 @@ public class DiscreteFieldCriterionBuilder<fin_target, This, T>
 
     @Override
     public ICriterion makeEq(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.EQUALS, type, value);
     }
 
     @Override
     public ICriterion makeNotEq(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.NOT_EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.NOT_EQUALS, type, value);
     }
 
     @Override
     public ICriterion makeIn(Collection<T> values) {
-        return new FieldIn<T>(fieldName, true, values);
+        return new FieldIn<T>(fieldName, true, type, values);
     }
 
     @Override
     public ICriterion makeNotIn(Collection<T> values) {
-        return new FieldIn<T>(fieldName, false, values);
+        return new FieldIn<T>(fieldName, false, type, values);
     }
 
 }

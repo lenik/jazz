@@ -1,8 +1,6 @@
 package net.bodz.lily.criterion;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.object.Unknown;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -20,6 +20,7 @@ import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.json.JsonArray;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.t.list.ArrayStack;
 import net.bodz.bas.t.list.IStack;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -82,11 +83,12 @@ public abstract class Composite
             fieldNameStack.push(fieldName);
 
             try {
+                Class<?> fieldType = typeInferrer.getFieldType(fieldNameStack);
+
                 switch (jFieldDef.getType()) {
                 case SCALAR: // field-equals
-                    Class<?> fieldType = typeInferrer.getFieldType(fieldNameStack);
-
-                    FieldCompare<Object> fieldCompare = new FieldCompare<>(fieldName, yes, CompareMode.EQUALS, null);
+                    FieldCompare<?> fieldCompare = new FieldCompare<>(fieldName, yes, //
+                            CompareMode.EQUALS, fieldType, null);
                     fieldCompare.readValue(jFieldDef, fieldType);
                     add(fieldCompare);
                     break;
@@ -99,7 +101,7 @@ public abstract class Composite
                     if (negated)
                         discriminator = discriminator.substring(1);
 
-                    FieldCriterion fieldCriterion = (FieldCriterion) Criterions.create(discriminator);
+                    FieldCriterion fieldCriterion = (FieldCriterion) Criterions.create(discriminator, fieldType);
                     if (fieldCriterion == null)
                         throw new IllegalUsageException("unknown discriminator: " + discriminator);
 
@@ -209,9 +211,17 @@ public abstract class Composite
         list.clear();
     }
 
+    @Deprecated
     @Override
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
+        readObject(map, (stack) -> Object.class);
+    }
+
+    public void readObject(IVariantMap<String> map, ITypeInferrer typeInferer)
+            throws LoaderException, ParseException {
+        IStack<String> fieldNameStack = new ArrayStack<>();
+
         for (String key : map.keySet()) {
             String val = map.getString(key);
             boolean negate = key.startsWith("~");
@@ -231,24 +241,33 @@ public abstract class Composite
                 opName = opName.substring(1);
             }
 
-            ICriterion criterion = Criterions.create(opName);
+            ICriterion criterion = Criterions.create(opName, Unknown.class);
             if (criterion == null) // skip unknown op.
                 continue;
 
-            BufferedReader in = new BufferedReader(new StringReader(val));
+            if (! (criterion instanceof FieldCriterion))
+                throw new ParseException("Non field-criterion opName: " + opName);
+
+            FieldCriterion fieldCriterion = (FieldCriterion) criterion;
+            fieldCriterion.fieldName = key;
+
+            fieldNameStack.push(key);
             try {
-                criterion.parseObject(in);
+                fieldCriterion.parseObject(val, typeInferer, fieldNameStack);
             } catch (Exception e) {
                 throw new ParseException("failed to parse " + key + ": " + e.getMessage(), e);
+            } finally {
+                fieldNameStack.pop();
             }
 
-            add(criterion);
+            add(fieldCriterion);
         }
     }
 
     @Override
-    public void parseObject(BufferedReader in)
-            throws ParseException, IOException {
+    public void parseObject(String s, ITypeInferrer typeInferrer, IStack<String> fieldNameStack)
+            throws ParseException {
+        throw new NotImplementedException();
     }
 
     @Override

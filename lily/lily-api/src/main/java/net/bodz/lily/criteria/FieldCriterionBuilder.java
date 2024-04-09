@@ -2,7 +2,13 @@ package net.bodz.lily.criteria;
 
 import java.util.Collection;
 
-import net.bodz.lily.criterion.*;
+import net.bodz.lily.criterion.CompareMode;
+import net.bodz.lily.criterion.Disjunction;
+import net.bodz.lily.criterion.FieldBetween;
+import net.bodz.lily.criterion.FieldCompare;
+import net.bodz.lily.criterion.FieldIn;
+import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.Junction;
 
 public class FieldCriterionBuilder<fin_target, This, T>
         extends AbstractFieldCriterionBuilder<fin_target, This, T> {
@@ -50,32 +56,32 @@ public class FieldCriterionBuilder<fin_target, This, T>
 
     @Override
     public ICriterion makeEq(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.EQUALS, type, value);
     }
 
     @Override
     public ICriterion makeNotEq(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.NOT_EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.NOT_EQUALS, type, value);
     }
 
     @Override
     public ICriterion makeLessThan(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.LESS_THAN, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.LESS_THAN, type, value);
     }
 
     @Override
     public ICriterion makeLessOrEquals(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.LESS_OR_EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.LESS_OR_EQUALS, type, value);
     }
 
     @Override
     public ICriterion makeGreaterThan(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.GREATER_THAN, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.GREATER_THAN, type, value);
     }
 
     @Override
     public ICriterion makeGreaterOrEquals(T value) {
-        return new FieldCompare<T>(fieldName, true, CompareMode.GREATER_OR_EQUALS, value);
+        return new FieldCompare<T>(fieldName, true, CompareMode.GREATER_OR_EQUALS, type, value);
     }
 
     @Override
@@ -90,12 +96,12 @@ public class FieldCriterionBuilder<fin_target, This, T>
 
     @Override
     public ICriterion makeIn(Collection<T> values) {
-        return new FieldIn<T>(fieldName, true, values);
+        return new FieldIn<T>(fieldName, true, type, values);
     }
 
     @Override
     public ICriterion makeNotIn(Collection<T> values) {
-        return new FieldIn<T>(fieldName, false, values);
+        return new FieldIn<T>(fieldName, false, type, values);
     }
 
     @Override

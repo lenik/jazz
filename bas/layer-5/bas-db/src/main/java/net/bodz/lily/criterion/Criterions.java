@@ -1,8 +1,5 @@
 package net.bodz.lily.criterion;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Criterions {
 
     static final String K_JUNCTION = "and";
@@ -18,34 +15,43 @@ public class Criterions {
     static final String K_IN = "in";
     static final String K_LIKE = "like";
 
-    static final Map<String, ICriterionCreator> map = new HashMap<>();
-    static {
-        map.put(K_JUNCTION, () -> new Junction());
-        map.put(K_DISJUNCTION, () -> new Disjunction());
-        map.put(K_NOT, () -> new Not());
-        map.put(K_BETWEEN, () -> new FieldBetween<Object>());
-        map.put(K_EQUALS, () -> newCompare(CompareMode.EQUALS));
-        map.put(K_NOT_EQUALS, () -> newCompare(CompareMode.NOT_EQUALS));
-        map.put(K_LESS_THAN, () -> newCompare(CompareMode.LESS_THAN));
-        map.put(K_LESS_OR_EQUALS, () -> newCompare(CompareMode.LESS_OR_EQUALS));
-        map.put(K_GREATER_THAN, () -> newCompare(CompareMode.GREATER_THAN));
-        map.put(K_GREATER_OR_EQUALS, () -> newCompare(CompareMode.GREATER_OR_EQUALS));
-        map.put(K_IN, () -> new FieldIn<Object>());
-        map.put(K_LIKE, () -> new FieldLike());
-    }
-
-    static FieldCompare<Object> newCompare(CompareMode mode) {
-        FieldCompare<Object> compare = new FieldCompare<>();
+    static <T> FieldCompare<T> newCompare(CompareMode mode, Class<T> type) {
+        FieldCompare<T> compare = new FieldCompare<>(type);
         compare.mode = mode;
         return compare;
     }
 
-    public static ICriterion create(String typeKey) {
-        ICriterionCreator creator = map.get(typeKey);
-        if (creator == null)
+    public static ICriterion create(String typeKey, Class<?> valueType) {
+        switch (typeKey) {
+        case K_JUNCTION:
+            return new Junction();
+        case K_DISJUNCTION:
+            return new Disjunction();
+        case K_NOT:
+            return new Not();
+        case K_BETWEEN:
+            return new FieldBetween<Object>();
+        case K_EQUALS:
+            return newCompare(CompareMode.EQUALS, valueType);
+        case K_NOT_EQUALS:
+            return newCompare(CompareMode.NOT_EQUALS, valueType);
+        case K_LESS_THAN:
+            return newCompare(CompareMode.LESS_THAN, valueType);
+        case K_LESS_OR_EQUALS:
+            return newCompare(CompareMode.LESS_OR_EQUALS, valueType);
+        case K_GREATER_THAN:
+            return newCompare(CompareMode.GREATER_THAN, valueType);
+        case K_GREATER_OR_EQUALS:
+            return newCompare(CompareMode.GREATER_OR_EQUALS, valueType);
+        case K_IN:
+            @SuppressWarnings({ "rawtypes", "unchecked" })
+            FieldIn<Object> in = new FieldIn(valueType);
+            return in;
+        case K_LIKE:
+            return new FieldLike();
+        default:
             return null;
-        else
-            return creator.create();
+        }
     }
 
 }

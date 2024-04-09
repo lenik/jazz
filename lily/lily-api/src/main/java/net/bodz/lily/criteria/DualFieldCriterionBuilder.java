@@ -39,8 +39,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public final ICriterion makeEq(T value1, T value2) {
         Junction and = new Junction();
-        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.EQUALS, value1));
-        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.EQUALS, value2));
+        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.EQUALS, type, value1));
+        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.EQUALS, type, value2));
         return and;
     }
 
@@ -50,8 +50,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public final ICriterion makeNotEq(T value1, T value2) {
         Disjunction or = new Disjunction();
-        or.add(new FieldCompare<T>(fieldName1, true, CompareMode.NOT_EQUALS, value1));
-        or.add(new FieldCompare<T>(fieldName2, true, CompareMode.NOT_EQUALS, value2));
+        or.add(new FieldCompare<T>(fieldName1, true, CompareMode.NOT_EQUALS, type, value1));
+        or.add(new FieldCompare<T>(fieldName2, true, CompareMode.NOT_EQUALS, type, value2));
         return or;
     }
 
@@ -71,8 +71,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public ICriterion makeLessThan(T value) {
         Junction and = new Junction();
-        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.LESS_THAN, value));
-        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.LESS_THAN, value));
+        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.LESS_THAN, type, value));
+        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.LESS_THAN, type, value));
         return and;
     }
 
@@ -82,8 +82,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public ICriterion makeLessOrEquals(T value) {
         Junction and = new Junction();
-        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.LESS_OR_EQUALS, value));
-        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.LESS_OR_EQUALS, value));
+        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.LESS_OR_EQUALS, type, value));
+        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.LESS_OR_EQUALS, type, value));
         return and;
     }
 
@@ -93,8 +93,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public ICriterion makeGreaterThan(T value) {
         Junction and = new Junction();
-        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.GREATER_THAN, value));
-        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.GREATER_THAN, value));
+        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.GREATER_THAN, type, value));
+        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.GREATER_THAN, type, value));
         return and;
     }
 
@@ -104,8 +104,8 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     @Override
     public ICriterion makeGreaterOrEquals(T value) {
         Junction and = new Junction();
-        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.GREATER_OR_EQUALS, value));
-        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.GREATER_OR_EQUALS, value));
+        and.add(new FieldCompare<T>(fieldName1, true, CompareMode.GREATER_OR_EQUALS, type, value));
+        and.add(new FieldCompare<T>(fieldName2, true, CompareMode.GREATER_OR_EQUALS, type, value));
         return and;
     }
 
@@ -169,20 +169,20 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
 
         if (start != null || end != null) { // || field1 != null && field1 with-in
             Junction and = new Junction();
-            and.add(new FieldCompare<>(fieldName1, true, CompareMode.NOT_EQUALS, null));
+            and.add(new FieldCompare<>(fieldName1, true, CompareMode.NOT_EQUALS, type, null));
             if (start != null)
-                and.add(new FieldCompare<>(fieldName1, true, CompareMode.GREATER_OR_EQUALS, start));
+                and.add(new FieldCompare<>(fieldName1, true, CompareMode.GREATER_OR_EQUALS, type, start));
             if (end != null)
-                and.add(new FieldCompare<>(fieldName1, true, ltEnd, end));
+                and.add(new FieldCompare<>(fieldName1, true, ltEnd, type, end));
             or.add(and);
         }
         if (start != null || end != null) { // || field2 != null && field2 with-in
             Junction and = new Junction();
-            and.add(new FieldCompare<>(fieldName2, true, CompareMode.NOT_EQUALS, null));
+            and.add(new FieldCompare<>(fieldName2, true, CompareMode.NOT_EQUALS, type, null));
             if (start != null)
-                and.add(new FieldCompare<>(fieldName2, true, CompareMode.GREATER_OR_EQUALS, start));
+                and.add(new FieldCompare<>(fieldName2, true, CompareMode.GREATER_OR_EQUALS, type, start));
             if (end != null)
-                and.add(new FieldCompare<>(fieldName2, true, ltEnd, end));
+                and.add(new FieldCompare<>(fieldName2, true, ltEnd, type, end));
             or.add(and);
         }
         return or.reduce(); // null -> true (means intersects)
@@ -197,14 +197,14 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
 
         if (end != null) { // || field1 != null && field1 > end
             Junction and = new Junction();
-            and.add(new FieldCompare<>(fieldName1, true, CompareMode.NOT_EQUALS, null));
-            and.add(new FieldCompare<>(fieldName1, true, gtEnd, end));
+            and.add(new FieldCompare<>(fieldName1, true, CompareMode.NOT_EQUALS, type, null));
+            and.add(new FieldCompare<>(fieldName1, true, gtEnd, type, end));
             or.add(and);
         }
         if (start != null) { // || field2 != null && field2 < start
             Junction and = new Junction();
-            and.add(new FieldCompare<>(fieldName2, true, CompareMode.NOT_EQUALS, null));
-            and.add(new FieldCompare<>(fieldName2, true, CompareMode.LESS_THAN, start));
+            and.add(new FieldCompare<>(fieldName2, true, CompareMode.NOT_EQUALS, type, null));
+            and.add(new FieldCompare<>(fieldName2, true, CompareMode.LESS_THAN, type, start));
             or.add(and);
         }
         return or.reduce(); // null -> false (means intersects)

@@ -1,14 +1,15 @@
 package net.bodz.lily.criterion;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
+import net.bodz.bas.c.java.util.regex.Unescape;
 import net.bodz.bas.c.string.StringQuote;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.io.ITreeOut;
+import net.bodz.bas.t.list.IStack;
 
 public class FieldLike
         extends FieldCriterion {
@@ -51,8 +52,17 @@ public class FieldLike
     }
 
     @Override
-    public void parseObject(BufferedReader in)
-            throws ParseException, IOException {
+    public void parseObject(String s, ITypeInferrer typeInferrer, IStack<String> fieldNameStack)
+            throws ParseException {
+        if (s.startsWith(StringQuote.doubleQuote) || s.endsWith(StringQuote.doubleQuote))
+            s = s.substring(1, s.length() - 1);
+        else if (s.startsWith(StringQuote.singleQuote) || s.endsWith(StringQuote.singleQuote))
+            s = s.substring(1, s.length() - 1);
+        else
+            throw new ParseException("not quoted: " + s);
+
+        String patternStr = Unescape.unescape(s);
+        this.pattern = patternStr;
     }
 
     @Override

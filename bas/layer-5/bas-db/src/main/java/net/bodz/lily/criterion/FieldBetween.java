@@ -1,14 +1,16 @@
 package net.bodz.lily.criterion;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.json.JsonArray;
+import net.bodz.bas.t.list.IStack;
+import net.bodz.bas.t.variant.conv.StringVarConverter;
 
 public class FieldBetween<T>
         extends FieldCriterion {
@@ -69,8 +71,36 @@ public class FieldBetween<T>
     }
 
     @Override
-    public void parseObject(BufferedReader in)
-            throws ParseException, IOException {
+    public void parseObject(String s, ITypeInferrer typeInferrer, IStack<String> fieldNameStack)
+            throws ParseException {
+        s = s.trim();
+        if (! (s.startsWith("(") && s.endsWith(")")))
+            throw new ParseException("expect '(' and ')' at start and end");
+
+        s = s.substring(1, s.length() - 1);
+        int comma = s.indexOf(',');
+        if (comma == -1)
+            throw new ParseException("missing ',' in (...).");
+
+        String minStr = s.substring(0, comma);
+        String maxStr = s.substring(comma + 1);
+
+        T min;
+        try {
+            min = StringVarConverter.INSTANCE.to(minStr, valueType);
+        } catch (TypeConvertException e) {
+            throw new ParseException("error parse min value from \"" + minStr + "\".", e);
+        }
+
+        T max;
+        try {
+            max = StringVarConverter.INSTANCE.to(maxStr, valueType);
+        } catch (TypeConvertException e) {
+            throw new ParseException("error parse min value from \"" + minStr + "\".", e);
+        }
+
+        this.min = min;
+        this.max = max;
     }
 
     @Override

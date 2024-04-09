@@ -54,7 +54,9 @@ public class CriterionJsonParser {
         if (firstNegated)
             firstKey = firstKey.substring(1);
 
-        ICriterion criterion = Criterions.create(firstKey);
+        Class<?> fieldType = typeInferrer.getFieldType(firstKey);
+
+        ICriterion criterion = Criterions.create(firstKey, fieldType);
         if (criterion != null) {
             if (firstNegated) {
                 if (criterion instanceof FieldCriterion) {

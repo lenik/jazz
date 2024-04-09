@@ -8,6 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariant;
 import net.bodz.lily.criteria.NumberFieldCriterionBuilder;
+import net.bodz.lily.criterion.ITypeInferrer;
 import net.bodz.lily.security.login.LoginToken;
 
 /**
@@ -68,9 +69,9 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
     }
 
     @Override
-    public void readObject(IVariantMap<String> map)
+    public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
             throws LoaderException, ParseException {
-        super.readObject(map);
+        super.readObject(map, typeInferrer);
 
         String searchText = map.getString("search-text");
         if (searchText != null && ! searchText.isEmpty())

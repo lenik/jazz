@@ -75,4 +75,23 @@ public enum CompareMode {
         }
     }
 
+    public static CompareMode ofCamelName(String camelName) {
+        switch (camelName) {
+        case "equals":
+            return EQUALS;
+        case "notEquals":
+            return NOT_EQUALS;
+        case "lessThan":
+            return LESS_THAN;
+        case "lessOrEquals":
+            return LESS_OR_EQUALS;
+        case "greaterThan":
+            return GREATER_THAN;
+        case "greaterOrEquals":
+            return GREATER_OR_EQUALS;
+        default:
+            throw new IllegalArgumentException(camelName);
+        }
+    }
+
 }

@@ -12,7 +12,9 @@ import net.bodz.lily.criterion.FieldTypeInferrer;
 import net.bodz.lily.criterion.ICriterion;
 import net.bodz.lily.criterion.PrettyFormatter;
 import net.bodz.lily.criterion.SQLFormatter;
+import net.bodz.lily.entity.manager.ForEntityType;
 
+@ForEntityType(Person.class)
 public class FooCriteriaBuilder
         extends CriteriaBuilder<FooCriteriaBuilder> {
 
@@ -39,8 +41,7 @@ public class FooCriteriaBuilder
                 .or().age.lessThan(20).girl.isFalse() //
                 /*  */.or().girl.isTrue().age.lessThan(30).end().end() //
                 .not().salary.lessThan(new BigDecimal(1000)).end() //
-                        .age
-                .greaterThan(8).girl.isTrue();
+                .age.greaterThan(8).girl.isTrue();
 
         StringBuilder sb = new StringBuilder();
         b.get().accept(new SQLFormatter(sb, SqlDialects.POSTGRESQL));

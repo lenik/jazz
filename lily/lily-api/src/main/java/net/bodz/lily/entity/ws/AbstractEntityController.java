@@ -106,7 +106,15 @@ public abstract class AbstractEntityController<T>
         return CacheRevalidationMode.MUST_REVALIDATE;
     }
 
-    protected void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
+    protected void overrideCommand(IEntityCommandType cmd) {
+        addCommand(cmd, true);
+    }
+
+    void addCommand(IEntityCommandType cmd) {
+        addCommand(cmd, false);
+    }
+
+    void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
         if (! replaceExisting) {
             if (locator.checkOverlap(cmd))
                 throw new DuplicatedKeyException();
