@@ -25,7 +25,7 @@ public class SaveCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public IEntityCommandProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new SaveProcess(this, context, resolvedEntity);
     }
 

@@ -27,7 +27,7 @@ public class CountCommand
     }
 
     @Override
-    public CountProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public CountProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new CountProcess(this, context);
     }
 

@@ -33,7 +33,7 @@ public class AttachmentResolveCommand
     }
 
     @Override
-    public AttachmentResolveProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public AttachmentResolveProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new AttachmentResolveProcess(this, context, resolvedEntity);
     }
 }

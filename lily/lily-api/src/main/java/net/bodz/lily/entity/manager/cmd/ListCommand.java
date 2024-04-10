@@ -25,7 +25,7 @@ public class ListCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public IEntityCommandProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new ListProcess(this, context);
     }
 

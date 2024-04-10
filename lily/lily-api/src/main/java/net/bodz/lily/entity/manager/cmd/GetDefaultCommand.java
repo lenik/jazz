@@ -36,7 +36,7 @@ public class GetDefaultCommand
     }
 
     @Override
-    public CreateProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public CreateProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new CreateProcess(this, context);
     }
 

@@ -31,7 +31,7 @@ public class UploadCommand
     }
 
     @Override
-    public UploadProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public UploadProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new UploadProcess(this, context);
     }
 

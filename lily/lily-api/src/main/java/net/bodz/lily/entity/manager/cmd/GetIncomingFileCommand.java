@@ -24,7 +24,7 @@ public class GetIncomingFileCommand
     }
 
     @Override
-    public GetIncomingFileProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public GetIncomingFileProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new GetIncomingFileProcess(this, context);
     }
 

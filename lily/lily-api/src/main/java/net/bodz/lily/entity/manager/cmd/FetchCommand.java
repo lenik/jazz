@@ -51,7 +51,7 @@ public class FetchCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public IEntityCommandProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new ResolveProcess(this, context, resolvedEntity);
     }
 

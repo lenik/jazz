@@ -22,7 +22,7 @@ public class ImportCommand
     }
 
     @Override
-    public IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public IEntityCommandProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new ImportProcess(this, context);
     }
 

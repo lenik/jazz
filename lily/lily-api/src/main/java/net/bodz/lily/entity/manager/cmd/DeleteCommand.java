@@ -31,7 +31,7 @@ public class DeleteCommand
     }
 
     @Override
-    public DeleteProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+    public DeleteProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
         return new DeleteProcess(this, context);
     }
 

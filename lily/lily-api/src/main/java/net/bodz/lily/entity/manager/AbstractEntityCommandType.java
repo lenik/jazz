@@ -11,12 +11,15 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 public abstract class AbstractEntityCommandType
         implements
-            IEntityCommandType {
+            IEntityCommandType,
+            IProcessCreator {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommandType.class);
 
     private final int priority;
     private final String id;
+
+    private IProcessCreator processCreator = this;
 
     public AbstractEntityCommandType(String id) {
         Priority aPriority = getClass().getAnnotation(Priority.class);
@@ -25,6 +28,10 @@ public abstract class AbstractEntityCommandType
         else
             priority = 0;
         this.id = id;
+    }
+
+    public void overrideProcessCreator(IProcessCreator processCreator) {
+        this.processCreator = processCreator;
     }
 
     @Override
@@ -74,5 +81,19 @@ public abstract class AbstractEntityCommandType
             throws PathDispatchException {
         return true;
     }
+
+    @Override
+    public final IEntityCommandProcess createProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return processCreator.createProcess(this, context, resolvedEntity);
+    }
+
+    @Override
+    public final IEntityCommandProcess createProcess(IEntityCommandType type, IEntityCommandContext context,
+            ResolvedEntity resolvedEntity) {
+        return defaultCreateProcess(context, resolvedEntity);
+    }
+
+    protected abstract IEntityCommandProcess defaultCreateProcess(IEntityCommandContext context,
+            ResolvedEntity resolvedEntity);
 
 }
