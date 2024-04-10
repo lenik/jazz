@@ -11,7 +11,7 @@ public class CsvTable {
     boolean ignoreEmptyLines = true;
     boolean ignoreComments = false;
 
-    boolean renameConflictColumns;
+    boolean renameConflictColumns = true;
     int renameTryMax = 100;
 
     boolean autoType;

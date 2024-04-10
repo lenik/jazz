@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c.object.Unknown;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
@@ -241,26 +240,30 @@ public abstract class Composite
                 opName = opName.substring(1);
             }
 
-            ICriterion criterion = Criterions.create(opName, Unknown.class);
-            if (criterion == null) // skip unknown op.
-                continue;
-
-            if (! (criterion instanceof FieldCriterion))
-                throw new ParseException("Non field-criterion opName: " + opName);
-
-            FieldCriterion fieldCriterion = (FieldCriterion) criterion;
-            fieldCriterion.fieldName = key;
-
             fieldNameStack.push(key);
             try {
-                fieldCriterion.parseObject(val, typeInferer, fieldNameStack);
-            } catch (Exception e) {
-                throw new ParseException("failed to parse " + key + ": " + e.getMessage(), e);
+                Class<?> fieldType = typeInferer.getFieldType(fieldNameStack);
+
+                ICriterion criterion = Criterions.create(opName, fieldType);
+                if (criterion == null) // skip unknown op.
+                    continue;
+
+                if (! (criterion instanceof FieldCriterion))
+                    throw new ParseException("Non field-criterion opName: " + opName);
+
+                FieldCriterion fieldCriterion = (FieldCriterion) criterion;
+                fieldCriterion.fieldName = key;
+                fieldCriterion.yes = ! negate;
+
+                try {
+                    fieldCriterion.parseObject(val, typeInferer, fieldNameStack);
+                } catch (Exception e) {
+                    throw new ParseException("failed to parse " + key + ": " + e.getMessage(), e);
+                }
+                add(fieldCriterion);
             } finally {
                 fieldNameStack.pop();
             }
-
-            add(fieldCriterion);
         }
     }
 

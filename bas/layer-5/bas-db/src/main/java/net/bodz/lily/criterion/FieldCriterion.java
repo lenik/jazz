@@ -16,7 +16,7 @@ public abstract class FieldCriterion
         extends Criterion {
 
     public String fieldName;
-    public boolean yes;
+    public boolean yes = true;
 
     public FieldCriterion() {
     }
