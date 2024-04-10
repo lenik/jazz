@@ -3,14 +3,14 @@ package net.bodz.lily.concrete;
 import java.time.ZonedDateTime;
 
 import net.bodz.bas.c.type.ModifiedClassNameResolver;
-import net.bodz.lily.criteria.CriteriaBuilder;
+import net.bodz.lily.criteria.AbstractCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 
 /**
  * @see net.bodz.lily.concrete.CoObject
  */
 public class StructRowCriteriaBuilder<self_t extends StructRowCriteriaBuilder<self_t>>
-        extends CriteriaBuilder<self_t> {
+        extends AbstractCriteriaBuilder<self_t> {
 
     public final DateField<ZonedDateTime> creation = date("creation", ZonedDateTime.class);
     public final DateField<ZonedDateTime> lastmod = date("lastmod", ZonedDateTime.class);

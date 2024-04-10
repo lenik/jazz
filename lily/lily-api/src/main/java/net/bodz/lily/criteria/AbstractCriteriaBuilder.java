@@ -1,509 +1,183 @@
 package net.bodz.lily.criteria;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
+import net.bodz.bas.db.ibatis.IGenericMapper;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.t.list.ArrayStack;
+import net.bodz.bas.t.list.IStack;
+import net.bodz.bas.t.variant.IVarMapForm;
+import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.criterion.Composite;
+import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.ITypeInferrer;
+import net.bodz.lily.criterion.Junction;
+import net.bodz.lily.criterion.Not;
+import net.bodz.lily.entity.manager.ForEntityType;
+import net.bodz.lily.entity.type.EntityTypes;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 public abstract class AbstractCriteriaBuilder<This>
+        extends CriteriaBuilderDSL<This>
         implements
-            IReceiver<ICriterion> {
+            ICriteriaBuilder<This>,
+            IVarMapForm {
 
-    protected <T extends Number> NumberField<T> number(String fieldName, Class<T> type) {
-        return new NumberField<T>(fieldName, type);
+    protected final IEntityTypeInfo typeInfo;
+    protected IStack<Composite> stack = new ArrayStack<>();
+
+    public AbstractCriteriaBuilder() {
+        ForEntityType aForEntityType = getClass().getAnnotation(ForEntityType.class);
+        if (aForEntityType == null)
+            throw new IllegalUsageException("ForEntityType isn't present: " + getClass());
+
+        Class<?>[] entityTypes = aForEntityType.value();
+        if (entityTypes.length != 1)
+            throw new IllegalUsageException("expect single type: " + Arrays.asList(entityTypes));
+
+        Class<?> entityType = entityTypes[0];
+        typeInfo = EntityTypes.getTypeInfo(entityType);
+
+        stack.push(new Junction());
     }
 
-    protected IntegerField integer(String fieldName) {
-        return new IntegerField(fieldName);
+    @SuppressWarnings("unchecked")
+    private final This _this() {
+        return (This) this;
     }
 
-    protected ByteField _byte(String fieldName) {
-        return new ByteField(fieldName);
+    @Override
+    public ICriterion get() {
+        return stack.top();
     }
 
-    protected ShortField _short(String fieldName) {
-        return new ShortField(fieldName);
+    Composite defaultCombine() {
+        return new Junction();
     }
 
-    protected LongField _long(String fieldName) {
-        return new LongField(fieldName);
+    @Override
+    public This not() {
+        Composite top = stack.top();
+        Composite other = defaultCombine();
+        Not not = new Not();
+        // not.add(other);
+        top.add(not);
+
+        stack.push(other);
+
+        return _this();
     }
 
-    protected FloatField _float(String fieldName) {
-        return new FloatField(fieldName);
+    @Override
+    public This or() {
+        Composite other = defaultCombine();
+
+        ICriterion top = stack.top(); // .reduce();
+        if (top instanceof Disjunction) {
+            // Disjunction disj = (Disjunction) top;
+            // disj.add(other);
+        } else {
+            Disjunction disj = new Disjunction();
+            disj.add(top);
+            // disj.add(other);
+            Composite restore = defaultCombine();
+            restore.add(disj);
+            stack.replaceTop(restore);
+        }
+
+        stack.push(other);
+
+        return _this();
     }
 
-    protected DoubleField _double(String fieldName) {
-        return new DoubleField(fieldName);
+    @Override
+    public This end() {
+        ICriterion other = stack.pop(); // .reduce();
+        Composite top = stack.top();
+        if (top instanceof Disjunction) {
+            top.add(other);
+        } else if (top instanceof Junction) { // restore-and
+            ICriterion last = top.getLast();
+            if (last instanceof Composite) {
+                Composite lastComposite = (Composite) last;
+                lastComposite.add(other);
+            } else
+                throw new IllegalUsageError("top.last isn't composite");
+        } else
+            throw new IllegalUsageError("unexpected top type");
+        // stack.replaceTop(top.reduce());
+        return _this();
     }
 
-    protected BigIntegerField bigInteger(String fieldName) {
-        return new BigIntegerField(fieldName);
+    @Override
+    public void receive(ICriterion value) {
+        Composite top = stack.top();
+        top.add(value);
     }
 
-    protected BigDecimalField bigDecimal(String fieldName) {
-        return new BigDecimalField(fieldName);
+    public <T> List<T> filter(IGenericMapper<T> mapper) {
+        return filter(mapper, SelectOptions.ALL);
     }
 
-    protected CharField _char(String fieldName) {
-        return new CharField(fieldName);
+    public <T> List<T> filter(IGenericMapper<T> mapper, SelectOptions options) {
+        ICriterion criterion = get();
+        return mapper.filter(criterion, options);
     }
 
-    protected StringField string(String fieldName) {
-        return new StringField(fieldName);
-    }
+    class ColumnAndThenProps
+            implements
+                ITypeInferrer {
 
-    protected BooleanField bool(String fieldName) {
-        return new BooleanField(fieldName);
-    }
+        @Override
+        public Class<?> getFieldType(List<String> fieldNames) {
+            if (fieldNames == null)
+                throw new NullPointerException("fieldNames");
+            if (fieldNames.isEmpty())
+                throw new IllegalArgumentException("no field name");
+            if (fieldNames.size() != 1)
+                throw new NotImplementedException();
 
-    protected <T> DateField<T> date(String fieldName, Class<T> type) {
-        return new DateField<T>(fieldName, type);
-    }
+            // column-name, property-path
+            String head = fieldNames.get(0);
 
-    protected InstantField instant(String fieldName) {
-        return new InstantField(fieldName);
-    }
+            IProperty property = typeInfo.getPropertyForColumn(head);
+            if (property == null)
+                throw new IllegalArgumentException("invalid column name: " + head);
 
-    protected ZonedDateTimeField zonedDateTime(String fieldName) {
-        return new ZonedDateTimeField(fieldName);
-    }
-
-    protected OffsetDateTimeField offsetDateTime(String fieldName) {
-        return new OffsetDateTimeField(fieldName);
-    }
-
-    protected LocalDateTimeField localDateTime(String fieldName) {
-        return new LocalDateTimeField(fieldName);
-    }
-
-    protected LocalDateField localDate(String fieldName) {
-        return new LocalDateField(fieldName);
-    }
-
-    protected LocalTimeField localTime(String fieldName) {
-        return new LocalTimeField(fieldName);
-    }
-
-    public class NumberField<T extends Number>
-            extends NumberFieldCriterionBuilder<This, T> {
-
-        @SuppressWarnings("unchecked")
-        public NumberField(String fieldName, Class<T> type) {
-            super(fieldName, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
+            Class<?> propertyType = property.getPropertyClass();
+            return propertyType;
         }
 
     }
 
-    public class IntegerField
-            extends NumberField<Integer> {
+    final ITypeInferrer columnAndThenProps = new ColumnAndThenProps();
 
-        public IntegerField(String fieldName) {
-            super(fieldName, Integer.class);
-        }
-
+    @Deprecated
+    @Override
+    public final void readObject(IVariantMap<String> map)
+            throws LoaderException, ParseException {
+        readObject(map, columnAndThenProps);
     }
 
-    public class ByteField
-            extends NumberField<Byte> {
-
-        public ByteField(String fieldName) {
-            super(fieldName, Byte.class);
-        }
-
+    public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
+            throws LoaderException, ParseException {
+        stack.clear();
+        Composite composite = defaultCombine();
+        composite.readObject(map, typeInferrer);
+        stack.push(composite);
     }
 
-    public class ShortField
-            extends NumberField<Short> {
-
-        public ShortField(String fieldName) {
-            super(fieldName, Short.class);
-        }
-
-    }
-
-    public class LongField
-            extends NumberField<Long> {
-
-        public LongField(String fieldName) {
-            super(fieldName, Long.class);
-        }
-
-    }
-
-    public class FloatField
-            extends NumberField<Float> {
-
-        public FloatField(String fieldName) {
-            super(fieldName, Float.class);
-        }
-
-    }
-
-    public class DoubleField
-            extends NumberField<Double> {
-
-        public DoubleField(String fieldName) {
-            super(fieldName, Double.class);
-        }
-
-    }
-
-    public class BigIntegerField
-            extends NumberField<BigInteger> {
-
-        public BigIntegerField(String fieldName) {
-            super(fieldName, BigInteger.class);
-        }
-
-    }
-
-    public class BigDecimalField
-            extends NumberField<BigDecimal> {
-
-        public BigDecimalField(String fieldName) {
-            super(fieldName, BigDecimal.class);
-        }
-
-    }
-
-    public class CharField
-            extends CharFieldCriterionBuilder<This> {
-
-        @SuppressWarnings("unchecked")
-        public CharField(String fieldName) {
-            super(fieldName, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class StringField
-            extends StringFieldCriterionBuilder<This> {
-
-        @SuppressWarnings("unchecked")
-        public StringField(String fieldName) {
-            super(fieldName, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class BooleanField
-            extends BooleanFieldCriterionBuilder<This> {
-
-        @SuppressWarnings("unchecked")
-        public BooleanField(String fieldName) {
-            super(fieldName, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class DateField<T>
-            extends DateFieldCriterionBuilder<This, T> {
-
-        @SuppressWarnings("unchecked")
-        public DateField(String fieldName, Class<T> type) {
-            super(fieldName, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class InstantField
-            extends DateField<Instant> {
-
-        public InstantField(String fieldName) {
-            super(fieldName, Instant.class);
-        }
-
-    }
-
-    public class ZonedDateTimeField
-            extends DateField<ZonedDateTime> {
-
-        public ZonedDateTimeField(String fieldName) {
-            super(fieldName, ZonedDateTime.class);
-        }
-
-    }
-
-    public class OffsetDateTimeField
-            extends DateField<OffsetDateTime> {
-
-        public OffsetDateTimeField(String fieldName) {
-            super(fieldName, OffsetDateTime.class);
-        }
-
-    }
-
-    public class LocalDateTimeField
-            extends DateField<LocalDateTime> {
-
-        public LocalDateTimeField(String fieldName) {
-            super(fieldName, LocalDateTime.class);
-        }
-
-    }
-
-    public class LocalDateField
-            extends DateField<LocalDate> {
-
-        public LocalDateField(String fieldName) {
-            super(fieldName, LocalDate.class);
-        }
-
-    }
-
-    public class LocalTimeField
-            extends DateField<LocalTime> {
-
-        public LocalTimeField(String fieldName) {
-            super(fieldName, LocalTime.class);
-        }
-
-    }
-
-    protected <T extends Number> DualNumberField<T> dualNumber(String fieldName1, String fieldName2, Class<T> type) {
-        return new DualNumberField<T>(fieldName1, fieldName2, type);
-    }
-
-    protected DualIntegerField dualInteger(String fieldName1, String fieldName2) {
-        return new DualIntegerField(fieldName1, fieldName2);
-    }
-
-    protected DualByteField dualByte(String fieldName1, String fieldName2) {
-        return new DualByteField(fieldName1, fieldName2);
-    }
-
-    protected DualShortField dualShort(String fieldName1, String fieldName2) {
-        return new DualShortField(fieldName1, fieldName2);
-    }
-
-    protected DualLongField dualLong(String fieldName1, String fieldName2) {
-        return new DualLongField(fieldName1, fieldName2);
-    }
-
-    protected DualFloatField dualFloat(String fieldName1, String fieldName2) {
-        return new DualFloatField(fieldName1, fieldName2);
-    }
-
-    protected DualDoubleField dualDouble(String fieldName1, String fieldName2) {
-        return new DualDoubleField(fieldName1, fieldName2);
-    }
-
-    protected DualBigIntegerField dualBigInteger(String fieldName1, String fieldName2) {
-        return new DualBigIntegerField(fieldName1, fieldName2);
-    }
-
-    protected DualBigDecimalField dualBigDecimal(String fieldName1, String fieldName2) {
-        return new DualBigDecimalField(fieldName1, fieldName2);
-    }
-
-    protected DualStringField dualString(String fieldName1, String fieldName2) {
-        return new DualStringField(fieldName1, fieldName2);
-    }
-
-    protected DualInstantField dualInstant(String fieldName1, String fieldName2) {
-        return new DualInstantField(fieldName1, fieldName2);
-    }
-
-    protected DualZonedDateTimeField dualZonedDateTime(String fieldName1, String fieldName2) {
-        return new DualZonedDateTimeField(fieldName1, fieldName2);
-    }
-
-    protected DualOffsetDateTimeField dualOffsetDateTime(String fieldName1, String fieldName2) {
-        return new DualOffsetDateTimeField(fieldName1, fieldName2);
-    }
-
-    protected DualLocalDateTimeField dualLocalDateTime(String fieldName1, String fieldName2) {
-        return new DualLocalDateTimeField(fieldName1, fieldName2);
-    }
-
-    protected DualLocalDateField dualLocalDate(String fieldName1, String fieldName2) {
-        return new DualLocalDateField(fieldName1, fieldName2);
-    }
-
-    protected DualLocalTimeField dualLocalTime(String fieldName1, String fieldName2) {
-        return new DualLocalTimeField(fieldName1, fieldName2);
-    }
-
-    protected <T> DualDateField<T> dualDate(String fieldName1, String fieldName2, Class<T> type) {
-        return new DualDateField<T>(fieldName1, fieldName2, type);
-    }
-
-    public class DualNumberField<T>
-            extends DualFieldCriterionBuilder<This, DualNumberField<T>, T> {
-
-        @SuppressWarnings("unchecked")
-        public DualNumberField(String fieldName1, String fieldName2, Class<T> type) {
-            super(fieldName1, fieldName2, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class DualIntegerField
-            extends DualNumberField<Integer> {
-
-        public DualIntegerField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Integer.class);
-        }
-
-    }
-
-    public class DualByteField
-            extends DualNumberField<Byte> {
-
-        public DualByteField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Byte.class);
-        }
-
-    }
-
-    public class DualShortField
-            extends DualNumberField<Short> {
-
-        public DualShortField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Short.class);
-        }
-
-    }
-
-    public class DualLongField
-            extends DualNumberField<Long> {
-
-        public DualLongField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Long.class);
-        }
-
-    }
-
-    public class DualFloatField
-            extends DualNumberField<Float> {
-
-        public DualFloatField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Float.class);
-        }
-
-    }
-
-    public class DualDoubleField
-            extends DualNumberField<Double> {
-
-        public DualDoubleField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Double.class);
-        }
-
-    }
-
-    public class DualBigIntegerField
-            extends DualNumberField<BigInteger> {
-
-        public DualBigIntegerField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, BigInteger.class);
-        }
-
-    }
-
-    public class DualBigDecimalField
-            extends DualNumberField<BigDecimal> {
-
-        public DualBigDecimalField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, BigDecimal.class);
-        }
-
-    }
-
-    public class DualStringField
-            extends DualFieldCriterionBuilder<This, DualStringField, String> {
-
-        @SuppressWarnings("unchecked")
-        public DualStringField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, String.class, (This) AbstractCriteriaBuilder.this,
-                    AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class DualDateField<T>
-            extends DualFieldCriterionBuilder<This, DualDateField<T>, T> {
-
-        @SuppressWarnings("unchecked")
-        public DualDateField(String fieldName1, String fieldName2, Class<T> type) {
-            super(fieldName1, fieldName2, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    public class DualInstantField
-            extends DualDateField<Instant> {
-
-        public DualInstantField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, Instant.class);
-        }
-
-    }
-
-    public class DualZonedDateTimeField
-            extends DualDateField<ZonedDateTime> {
-
-        public DualZonedDateTimeField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, ZonedDateTime.class);
-        }
-
-    }
-
-    public class DualOffsetDateTimeField
-            extends DualDateField<OffsetDateTime> {
-
-        public DualOffsetDateTimeField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, OffsetDateTime.class);
-        }
-
-    }
-
-    public class DualLocalDateTimeField
-            extends DualDateField<LocalDateTime> {
-
-        public DualLocalDateTimeField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, LocalDateTime.class);
-        }
-
-    }
-
-    public class DualLocalDateField
-            extends DualDateField<LocalDate> {
-
-        public DualLocalDateField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, LocalDate.class);
-        }
-
-    }
-
-    public class DualLocalTimeField
-            extends DualDateField<LocalTime> {
-
-        public DualLocalTimeField(String fieldName1, String fieldName2) {
-            super(fieldName1, fieldName2, LocalTime.class);
-        }
-
-    }
-
-    public class DiscreteField<T>
-            extends DiscreteFieldCriterionBuilder<This, DiscreteField<T>, T> {
-
-        @SuppressWarnings("unchecked")
-        public DiscreteField(String fieldName, Class<T> type) {
-            super(fieldName, type, (This) AbstractCriteriaBuilder.this, AbstractCriteriaBuilder.this);
-        }
-
-    }
-
-    protected <T> DiscreteField<T> discrete(String fieldName, Class<T> type) {
-        return new DiscreteField<T>(fieldName, type);
+    @Override
+    public void writeObject(Map<String, Object> map) {
     }
 
 }

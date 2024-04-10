@@ -1,10 +1,10 @@
 package net.bodz.lily.entity.type;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import javax.persistence.Column;
 
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.meta.decl.Ordinal;
 import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.t.order.IOrdinal;
@@ -13,7 +13,7 @@ public class ColumnProperty
         implements
             IOrdinal {
 
-    PropertyDescriptor propertyDescriptor;
+    IPropertyDescriptor propertyDescriptor;
     Method readMethod;
     Method writeMethod;
 
@@ -21,7 +21,7 @@ public class ColumnProperty
     int ordinal;
     int priority;
 
-    public ColumnProperty(PropertyDescriptor propertyDescriptor) {
+    public ColumnProperty(IPropertyDescriptor propertyDescriptor) {
         if (propertyDescriptor == null)
             throw new NullPointerException("propertyDescriptor");
 
@@ -43,7 +43,7 @@ public class ColumnProperty
         }
     }
 
-    public PropertyDescriptor getPropertyDescriptor() {
+    public IPropertyDescriptor getPropertyDescriptor() {
         return propertyDescriptor;
     }
 

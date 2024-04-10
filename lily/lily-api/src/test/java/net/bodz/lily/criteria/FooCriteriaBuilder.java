@@ -16,7 +16,7 @@ import net.bodz.lily.entity.manager.ForEntityType;
 
 @ForEntityType(Person.class)
 public class FooCriteriaBuilder
-        extends CriteriaBuilder<FooCriteriaBuilder> {
+        extends AbstractCriteriaBuilder<FooCriteriaBuilder> {
 
     StringField name = string("name");
     NumberField<Integer> age = number("age", Integer.class);

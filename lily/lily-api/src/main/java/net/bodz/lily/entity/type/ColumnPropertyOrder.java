@@ -1,7 +1,6 @@
 package net.bodz.lily.entity.type;
 
-import java.beans.PropertyDescriptor;
-
+import net.bodz.bas.bean.api.IPropertyDescriptor;
 import net.bodz.bas.t.order.AbstractNonNullComparator;
 
 public class ColumnPropertyOrder
@@ -21,8 +20,8 @@ public class ColumnPropertyOrder
         if (cmp != 0)
             return cmp;
 
-        PropertyDescriptor pd1 = o1.getPropertyDescriptor();
-        PropertyDescriptor pd2 = o2.getPropertyDescriptor();
+        IPropertyDescriptor pd1 = o1.getPropertyDescriptor();
+        IPropertyDescriptor pd2 = o2.getPropertyDescriptor();
         String name1 = pd1.getName();
         String name2 = pd2.getName();
         cmp = name1.compareTo(name2);
