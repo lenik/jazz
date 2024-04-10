@@ -90,4 +90,8 @@ public interface IEntityTypeInfo {
         }
     }
 
+    IProperty getProperty(String propertyName);
+
+    IProperty getPropertyForColumn(String columnName);
+
 }

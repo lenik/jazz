@@ -1,13 +1,24 @@
 package net.bodz.lily.entity.type;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
+
+import net.bodz.bas.bean.api.IBeanInfo;
+import net.bodz.bas.bean.api.IPropertyDescriptor;
+import net.bodz.bas.bean.api.IntrospectionException;
+import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.meta.source.NotUsed;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
@@ -15,6 +26,7 @@ import net.bodz.bas.repr.form.FormDeclBuilder;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.lily.concrete.StructRowCriteriaBuilder;
 import net.bodz.lily.criteria.ICriteriaBuilder;
+import net.bodz.lily.entity.IIdentity;
 import net.bodz.lily.entity.IdFn;
 import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.PrimaryKeyProperties;
@@ -39,6 +51,9 @@ public class DefaultEntityTypeInfo
 
 //    ColumnProperty[] idProperties;
 
+    final Map<String, IProperty> propertyMap = new LinkedHashMap<>();
+    final Map<String, IProperty> columnPropertyMap = new LinkedHashMap<>();
+
     public DefaultEntityTypeInfo(Class<?> entityClass) {
         this.entityClass = entityClass;
         potatoType = BeanTypeProvider.getInstance().loadType(entityClass);
@@ -48,15 +63,15 @@ public class DefaultEntityTypeInfo
         mapperClass = IMapper.fn.getMapperClass(entityClass);
         criteriaBuilderClass = StructRowCriteriaBuilder.findCriteriaBuilderClass(entityClass);
 
-        PrimaryKeyColumns aColumns = entityClass.getAnnotation(PrimaryKeyColumns.class);
-        if (aColumns != null)
-            primaryKeyColumns = aColumns.value();
+        PrimaryKeyColumns aPKColumns = entityClass.getAnnotation(PrimaryKeyColumns.class);
+        if (aPKColumns != null)
+            primaryKeyColumns = aPKColumns.value();
         else
             primaryKeyColumns = new String[0];
 
-        PrimaryKeyProperties aProperties = entityClass.getAnnotation(PrimaryKeyProperties.class);
-        if (aProperties != null) {
-            primaryKeyPropertyNames = aProperties.value();
+        PrimaryKeyProperties aPKProps = entityClass.getAnnotation(PrimaryKeyProperties.class);
+        if (aPKProps != null) {
+            primaryKeyPropertyNames = aPKProps.value();
             primaryKeyProperties = new IProperty[primaryKeyPropertyNames.length];
             int i = 0;
             for (String name : primaryKeyPropertyNames) {
@@ -71,29 +86,44 @@ public class DefaultEntityTypeInfo
             primaryKeyProperties = new IProperty[0];
         }
 
-//        if (idClass != null && IIdentity.class.isAssignableFrom(idClass)) {
-//            BeanInfo beanInfo;
-//            try {
-//                beanInfo = Introspector.getBeanInfo(idClass);
-//            } catch (IntrospectionException e) {
-//                throw new RuntimeException(e.getMessage(), e);
-//            }
-//            List<ColumnProperty> columns = new ArrayList<>();
-//            for (PropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
-//                ColumnProperty property = new ColumnProperty(pd);
-//                if (property.getColumn() != null)
-//                    columns.add(property);
-//            }
-//            int n = columns.size();
-//            idProperties = new ColumnProperty[n];
-//            for (int i = 0; i < n; i++)
-//                idProperties[i] = columns.get(i);
-//
-//            Comparator<ColumnProperty> order;
-//            order = new SourceDeclaredPropertyOrder(idClass);
-//            order = ColumnPropertyOrder.INSTANCE;
-//            Arrays.sort(idProperties, order);
-//        } // idClass != null
+        for (IProperty property : potatoType.getProperties()) {
+            Column aColumn = property.getAnnotation(Column.class);
+            if (aColumn == null)
+                continue;
+            propertyMap.put(property.getName(), property);
+            columnPropertyMap.put(aColumn.name(), property);
+        }
+    }
+
+    @NotUsed
+    ColumnProperty[] _getIdProps() {
+        if (idClass == null)
+            return null;
+        if (! IIdentity.class.isAssignableFrom(idClass))
+            return null;
+
+        IBeanInfo beanInfo;
+        try {
+            beanInfo = Introspectors.getBeanInfo(idClass);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        List<ColumnProperty> columns = new ArrayList<>();
+        for (IPropertyDescriptor pd : beanInfo.getPropertyDescriptors()) {
+            ColumnProperty property = new ColumnProperty(pd);
+            if (property.getColumn() != null)
+                columns.add(property);
+        }
+        int n = columns.size();
+        ColumnProperty[] idProperties = new ColumnProperty[n];
+        for (int i = 0; i < n; i++)
+            idProperties[i] = columns.get(i);
+
+        Comparator<ColumnProperty> order;
+        order = new SourceDeclaredPropertyOrder(idClass);
+        order = ColumnPropertyOrder.INSTANCE;
+        Arrays.sort(idProperties, order);
+        return idProperties;
     }
 
     @Override
@@ -269,6 +299,16 @@ public class DefaultEntityTypeInfo
             }
             throw e;
         }
+    }
+
+    @Override
+    public IProperty getProperty(String propertyName) {
+        return propertyMap.get(propertyName);
+    }
+
+    @Override
+    public IProperty getPropertyForColumn(String columnName) {
+        return columnPropertyMap.get(columnName);
     }
 
 }
