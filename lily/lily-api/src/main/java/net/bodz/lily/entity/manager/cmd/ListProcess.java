@@ -1,33 +1,20 @@
 package net.bodz.lily.entity.manager.cmd;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import net.bodz.bas.db.ibatis.IEntityMapper;
-import net.bodz.bas.db.ibatis.sql.Order;
-import net.bodz.bas.db.ibatis.sql.Orders;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.potato.element.IProperty;
-import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.content.FileContent;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.std.rfc.mime.ContentTypes;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.lily.concrete.CoObjectCriteriaBuilder;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
@@ -35,11 +22,11 @@ import net.bodz.lily.entity.manager.IEntityCommandContext;
 public class ListProcess
         extends AbstractEntityCommandProcess {
 
-    TableOfPathProps tableData;
-    protected CoObjectCriteriaBuilder<?> mask;
-    // Junction criteria;
+    IVariantMap<String> parameterMap;
+    IDataFetcher dataFetcher;
 
-    protected final SelectOptions selectOptions;
+    TableOfPathProps tableData;
+
     int seq;
 
     int format = JSON;
@@ -52,8 +39,10 @@ public class ListProcess
     public ListProcess(ListCommand type, IEntityCommandContext context) {
         super(type, context);
         tableData = new TableOfPathProps(typeInfo.getEntityClass());
-        mask = (CoObjectCriteriaBuilder<?>) context.getEntityTypeInfo().newCriteriaBuilder();
-        selectOptions = context.newSelectOptions();
+        if (context instanceof IDataFetcher)
+            dataFetcher = (IDataFetcher) context;
+        else
+            throw new NotImplementedException();
     }
 
     @Override
@@ -61,10 +50,6 @@ public class ListProcess
         ITableSheetBuilder tableSheetBuilder = context.query(ITableSheetBuilder.class);
         if (tableSheetBuilder != null)
             this.tableSheetBuilder = tableSheetBuilder;
-    }
-
-    public SelectOptions getSelectOptions() {
-        return selectOptions;
     }
 
     @Override
@@ -91,13 +76,10 @@ public class ListProcess
     @Override
     public Object execute()
             throws Exception {
-        List<Object> dataList = buildDataList();
-        tableData.setList(dataList);
-
-        if (tableData.isWantTotalCount()) {
-            long totalCount = getEntityMapper().count(mask.get());
-            tableData.setTotalCount(totalCount);
-        }
+        DataFetchResult result = dataFetcher.fetchDataList(parameterMap, tableData.isWantTotalCount());
+        tableData.setList(result.range);
+        if (tableData.isWantTotalCount())
+            tableData.setTotalCount(result.count);
 
         switch (format) {
         case JSON:
@@ -128,66 +110,12 @@ public class ListProcess
         return false;
     }
 
-    protected List<Object> buildDataList() {
-        IEntityMapper<Object> entityMapper = getEntityMapper();
-        return entityMapper.filter(mask.get(), selectOptions);
-    }
-
     @Override
     public void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {
         super.readObject(map);
         tableData.readObject(map);
-        selectOptions.readObject(map);
-        mask.readObject(map);
-
-        Orders orders = selectOptions.getOrders();
-        if (orders != null) {
-            Orders newOrders = new Orders();
-            for (Order order : orders) {
-                String property = order.getColumn();
-                String[] columns = findColumnForProperty(property);
-                if (columns == null)
-                    newOrders.add(order);
-                else
-                    for (String column : columns) {
-                        Order newOrder = new Order();
-                        newOrder.setAscending(order.isAscending());
-                        newOrder.setColumn(column);
-                        newOrders.add(newOrder);
-                    }
-            }
-            selectOptions.setOrders(newOrders);
-        }
-    }
-
-    String[] findColumnForProperty(String propertyName) {
-        IType type = typeInfo.getPotatoType();
-        IProperty property = type.getProperty(propertyName);
-        if (property != null) {
-            Column aColumn = property.getAnnotation(Column.class);
-            if (aColumn != null) {
-                String[] columnNames = { aColumn.name() };
-                return columnNames;
-            }
-
-            if (property.isAnnotationPresent(ManyToOne.class) //
-                    || property.isAnnotationPresent(OneToOne.class)) {
-                JoinColumn aJoinColumn = property.getAnnotation(JoinColumn.class);
-                if (aJoinColumn == null) {
-                    JoinColumns aJoinColumns = property.getAnnotation(JoinColumns.class);
-                    JoinColumn[] aJoinColumnv = aJoinColumns.value();
-                    String[] foreignColumnNames = new String[aJoinColumnv.length];
-                    for (int i = 0; i < foreignColumnNames.length; i++)
-                        foreignColumnNames[i] = aJoinColumnv[i].name();
-                    return foreignColumnNames;
-                } else {
-                    String[] foreignColumnNames = { aJoinColumn.name() };
-                    return foreignColumnNames;
-                }
-            }
-        }
-        return null;
+        this.parameterMap = map;
     }
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.object.Nullables;
@@ -48,6 +47,8 @@ import net.bodz.lily.entity.StrVar;
 import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.storage.IVolume;
+
+import com.github.pjfanning.xlsx.StreamingReader;
 
 public class ImportProcess
         extends AbstractEntityCommandProcess {
@@ -126,11 +127,17 @@ public class ImportProcess
 
     JsonResult importExcel(File file)
             throws IOException, EncryptedDocumentException, ParseException {
-        Workbook pBook = WorkbookFactory.create(file);
+        Workbook pBook = StreamingReader.builder()//
+                .rowCacheSize(10) //
+                .bufferSize(4096) //
+                .open(file);
+
         SheetBook book = new SheetBook();
+
         ExcelParseOptions options = new ExcelParseOptions();
         options.renameConflictColumns = true;
         book.readObject(pBook, options);
+
         SheetTable sheet1 = book.getSheet(0);
         return parseAndImportTable(sheet1);
     }

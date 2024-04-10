@@ -94,4 +94,6 @@ public interface IEntityTypeInfo {
 
     IProperty getPropertyForColumn(String columnName);
 
+    boolean isColumnPresent(String columnName);
+
 }

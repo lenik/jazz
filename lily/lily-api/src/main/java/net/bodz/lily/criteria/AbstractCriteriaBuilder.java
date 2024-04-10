@@ -161,7 +161,6 @@ public abstract class AbstractCriteriaBuilder<This>
 
     final ITypeInferrer columnAndThenProps = new ColumnAndThenProps();
 
-    @Deprecated
     @Override
     public final void readObject(IVariantMap<String> map)
             throws LoaderException, ParseException {

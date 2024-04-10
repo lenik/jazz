@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.form.PropertyChain;
@@ -18,10 +17,6 @@ public interface IEntityCommandContext {
     DataContext getDataContext();
 
     IEntityTypeInfo getEntityTypeInfo();
-
-    default SelectOptions newSelectOptions() {
-        return new SelectOptions();
-    }
 
     default PropertyChain resolveFieldProp(String column) {
         IEntityTypeInfo typeInfo = getEntityTypeInfo();

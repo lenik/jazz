@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import org.apache.poi.ss.usermodel.Workbook;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
@@ -13,8 +19,12 @@ import net.bodz.bas.c.type.TypeParam;
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
+import net.bodz.bas.db.ibatis.sql.Orders;
+import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -23,6 +33,8 @@ import net.bodz.bas.html.viz.PathArrivalFrame;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.decl.ObjectType;
+import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.repr.form.IFormDecl;
 import net.bodz.bas.repr.form.PropertyChain;
 import net.bodz.bas.repr.path.IPathArrival;
@@ -38,18 +50,21 @@ import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.file.ArrayPathFields;
 import net.bodz.bas.t.tuple.Split;
+import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
 import net.bodz.lily.concrete.StructRow;
+import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
-import net.bodz.lily.entity.manager.EntityCommandContext;
 import net.bodz.lily.entity.manager.EntityCommands;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 import net.bodz.lily.entity.manager.ResolvedEntity;
+import net.bodz.lily.entity.manager.cmd.DataFetchResult;
 import net.bodz.lily.entity.manager.cmd.FetchCommand;
+import net.bodz.lily.entity.manager.cmd.IDataFetcher;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
@@ -67,6 +82,7 @@ public abstract class AbstractEntityController<T>
             ICacheControl,
             IDataApplicationAware,
             IDataContextAware,
+            IDataFetcher,
             ITableSheetBuilder {
 
     static final Logger logger = LoggerFactory.getLogger(AbstractEntityController.class);
@@ -156,7 +172,7 @@ public abstract class AbstractEntityController<T>
     }
 
     IEntityCommandProcess createProcess(IEntityCommandType type, ResolvedEntity resolvedEntity) {
-        EntityCommandContext context = newCommandContext();
+        IEntityCommandContext context = newCommandContext();
         IEntityCommandProcess process = type.createProcess(context, resolvedEntity);
         return process;
     }
@@ -202,11 +218,8 @@ public abstract class AbstractEntityController<T>
         }
     }
 
-    protected EntityCommandContext newCommandContext() {
-        EntityCommandContext context = new EntityCommandContext();
-        context.setDataApp(getDataApp());
-        context.setTypeInfo(typeInfo);
-        return context;
+    protected IEntityCommandContext newCommandContext() {
+        return this;
     }
 
     /**
@@ -226,10 +239,10 @@ public abstract class AbstractEntityController<T>
     }
 
     @SuppressWarnings("unchecked")
-    <_E> IEntityMapper<_E> getMapper() {
+    protected <mapper_t extends IEntityMapper<?>> mapper_t getMapper() {
         DataContext dataContext = getDataContext();
         Class<?> mapperClass = getEntityTypeInfo().getMapperClass();
-        return (IEntityMapper<_E>) dataContext.getMapper(mapperClass);
+        return (mapper_t) dataContext.getMapper(mapperClass);
     }
 
     @Override
@@ -345,6 +358,92 @@ public abstract class AbstractEntityController<T>
     @Override
     public void leave(IHtmlViewContext ctx, PathArrivalFrame frame) {
         ctx.setVariable("index", null);
+    }
+
+    @Override
+    public DataFetchResult fetchDataList(IVariantMap<String> q, boolean wantCount)
+            throws ParseException {
+        SelectOptions selectOptions = newSelectOptions();
+        selectOptions.readObject(q);
+
+        ICriteriaBuilder<?> criteria = getEntityTypeInfo().newCriteriaBuilder();
+        if (criteria instanceof IVarMapForm) {
+            IVarMapForm form = (IVarMapForm) criteria;
+            try {
+                form.readObject(q);
+            } catch (LoaderException e) {
+                throw new ParseException("error load " + criteria.getClass(), e);
+            }
+        }
+
+        Orders propertyOrders = selectOptions.getOrders();
+        if (propertyOrders != null) {
+            Orders columnOrders = propertyOrders.mapv((String propertyName) -> findColumnForProperty(propertyName));
+            selectOptions.setOrders(columnOrders);
+        }
+
+        List<?> list = fetchDataList(q, criteria, selectOptions);
+
+        DataFetchResult result = new DataFetchResult();
+        result.range = list;
+        if (wantCount) {
+            if (selectOptions.getPage() != null) {
+                long count = fetchDataCount(q, criteria);
+                result.count = count;
+            } else {
+                result.count = list.size();
+            }
+        }
+        return result;
+    }
+
+    protected List<?> fetchDataList(IVariantMap<String> q, ICriteriaBuilder<?> criteria, SelectOptions selectOptions) {
+        IEntityMapper<?> mapper = getMapper();
+        return mapper.filter(criteria.get(), selectOptions);
+    }
+
+    protected long fetchDataCount(IVariantMap<String> q, ICriteriaBuilder<?> criteria) {
+        IEntityMapper<?> mapper = getMapper();
+        return mapper.count(criteria.get());
+    }
+
+    protected SelectOptions newSelectOptions() {
+        return new SelectOptions();
+    }
+
+    String[] findColumnForProperty(String propertyName) {
+        if (typeInfo.isColumnPresent(propertyName))
+            return new String[] { propertyName };
+
+        IType type = typeInfo.getPotatoType();
+        IProperty property = type.getProperty(propertyName);
+        if (property == null) {
+            throw new IllegalArgumentException("no such property: " + propertyName);
+        }
+
+        Column aColumn = property.getAnnotation(Column.class);
+        if (aColumn != null) {
+            String[] columnNames = { aColumn.name() };
+            return columnNames;
+        }
+
+        if (property.isAnnotationPresent(ManyToOne.class) //
+                || property.isAnnotationPresent(OneToOne.class)) {
+            JoinColumn aJoinColumn = property.getAnnotation(JoinColumn.class);
+            if (aJoinColumn == null) {
+                JoinColumns aJoinColumns = property.getAnnotation(JoinColumns.class);
+                JoinColumn[] aJoinColumnv = aJoinColumns.value();
+                String[] foreignColumnNames = new String[aJoinColumnv.length];
+                for (int i = 0; i < foreignColumnNames.length; i++)
+                    foreignColumnNames[i] = aJoinColumnv[i].name();
+                return foreignColumnNames;
+            } else {
+                String[] foreignColumnNames = { aJoinColumn.name() };
+                return foreignColumnNames;
+            }
+        }
+
+        throw new IllegalUsageException("No column info on property: " + propertyName);
     }
 
     @Override

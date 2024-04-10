@@ -311,4 +311,9 @@ public class DefaultEntityTypeInfo
         return columnPropertyMap.get(columnName);
     }
 
+    @Override
+    public boolean isColumnPresent(String columnName) {
+        return columnPropertyMap.containsKey(columnName);
+    }
+
 }
