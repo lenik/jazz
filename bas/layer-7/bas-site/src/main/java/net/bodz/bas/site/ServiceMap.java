@@ -3,6 +3,7 @@ package net.bodz.bas.site;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
@@ -23,9 +24,7 @@ public class ServiceMap
     public boolean install(String key, Object service) {
         if (containsKey(key)) {
             Object existing = get(key);
-            logger.errorf("Service key is already defined and skipped: %s of %s => %s", //
-                    key, existing == null ? null : existing.getClass(), existing);
-            return false;
+            throw new DuplicatedKeyException("service key", existing.getClass(), existing);
         }
         put(key, service);
         return true;

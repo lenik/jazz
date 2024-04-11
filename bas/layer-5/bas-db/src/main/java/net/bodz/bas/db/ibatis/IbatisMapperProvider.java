@@ -104,10 +104,12 @@ public class IbatisMapperProvider
         }
 
         Set<Class<?>> woMappers = MapperClassXmls.getLastInstance().getClassesWithoutXmls();
-        logger.warnf("Add %d mappers without xml.", woMappers.size());
-        for (Class<?> mapper : woMappers) {
-            logger.warn("    Mapper-Class: ", mapper.getName());
-            config.addMapper(mapper);
+        if (! woMappers.isEmpty()) {
+            logger.warnf("Add %d mappers without xml.", woMappers.size());
+            for (Class<?> mapper : woMappers) {
+                logger.warn("    Mapper-Class: ", mapper.getName());
+                config.addMapper(mapper);
+            }
         }
 
         for (IIbatisConfigurer configurer : configurers)
