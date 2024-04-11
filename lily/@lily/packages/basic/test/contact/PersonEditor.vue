@@ -51,7 +51,7 @@ onMounted(() => {
 <template>
     <div class="entity-editor person-editor" ref="rootElement" v-if="model != null" v-bind="$attrs">
         <FieldRow v-bind="fieldRowProps" :property="meta.id" v-model="model.id">
-            <input type="number" v-model="model.id">
+            <input type="number" v-model="model.id" disabled>
         </FieldRow>
         <FieldRow v-bind="fieldRowProps" :property="meta.images" v-model="model.images">
             <AttachmentsEditor :className="Person.TYPE.name" v-model="model.images" :id="model.id" />

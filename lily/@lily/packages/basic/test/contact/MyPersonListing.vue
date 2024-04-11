@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { Person_TYPE } from './PersonTypeInfo';
 import Person from './Person';
 
-export const title = '[Test] Person Listing';
+export const title = '[My] Person Listing';
 
 export interface Props {
 }

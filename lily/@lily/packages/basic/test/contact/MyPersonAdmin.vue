@@ -8,7 +8,7 @@ import Person from './Person';
 import { Person_TYPE } from './PersonTypeInfo';
 import { DefaultAttachment_TYPE } from './DefaultAttachmentTypeInfo';
 
-export const title = '[Test] Person Admin';
+export const title = '[My] Person Admin';
 
 export interface Props {
 }

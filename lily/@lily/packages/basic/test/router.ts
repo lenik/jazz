@@ -2,10 +2,10 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 export const links = {
     "": "component ",
-    "PersonAdmin": '[Test] Person Admin',
+    "MyPersonAdmin": '[My] Person Admin',
+    "MyPersonListing": '[My] Person Listing',
     "PersonChooseDialog": "component PersonChooseDialog",
     "PersonEditor": "component PersonEditor",
-    "PersonListing": '[Test] Person Listing',
     "Project": "component Project",
     "GroupAdmin": "Admin view of: Group",
     "GroupTypeAdmin": "Admin view of: Group type",
@@ -74,10 +74,10 @@ export const links = {
 
 export const routes = [
     { path: '/', component: () => import('./Index.vue') },
-    { path: '/PersonAdmin', component: () => import('./contact/PersonAdmin.vue') },
+    { path: '/MyPersonAdmin', component: () => import('./contact/MyPersonAdmin.vue') },
+    { path: '/MyPersonListing', component: () => import('./contact/MyPersonListing.vue') },
     { path: '/PersonChooseDialog', component: () => import('./contact/PersonChooseDialog.vue') },
     { path: '/PersonEditor', component: () => import('./contact/PersonEditor.vue') },
-    { path: '/PersonListing', component: () => import('./contact/PersonListing.vue') },
     { path: '/Project', component: () => import('@skeljs/core/src/ui/demo/Project.vue') },
     { path: '/GroupAdmin', component: () => import('../src/net/bodz/lily/schema/account/GroupAdmin.vue') },
     { path: '/GroupTypeAdmin', component: () => import('../src/net/bodz/lily/schema/account/GroupTypeAdmin.vue') },
