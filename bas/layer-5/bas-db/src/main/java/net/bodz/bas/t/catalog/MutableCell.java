@@ -7,71 +7,55 @@ public class MutableCell
         implements
             IMutableCell {
 
-    IColumnMetadata metadata;
-    Class<?> cellType;
-    IRow row;
+    public IRow row;
+    int columnIndex;
+    Object _data;
 
-    Object data;
-    boolean dataSet;
-    boolean dirty;
+    private byte flags = 0;
 
     public MutableCell(IRow row) {
-        this(row, Object.class);
-    }
-
-    public MutableCell(IRow row, Class<?> cellType) {
-        this.row = row;
-        this.cellType = cellType;
+        this(row, row.getCellCount());
     }
 
     public MutableCell(IRow row, int columnIndex) {
         this.row = row;
-        IRowSet rowSet = row.getRowSet();
-        if (rowSet != null) {
-            IRowSetMetadata table = rowSet.getMetadata();
-            int cc = table.getColumnCount();
-            if (columnIndex < cc) {
-                IColumnMetadata column = table.getColumn(columnIndex);
-                setMetadata(column);
-            }
-        }
+        this.columnIndex = columnIndex;
     }
 
     public MutableCell(IRow row, String columnName) {
         this.row = row;
         IRowSet rowSet = row.getRowSet();
-        if (rowSet != null) {
-            IRowSetMetadata rowSetMetadata = rowSet.getMetadata();
-            metadata = rowSetMetadata.getColumn(columnName);
-            setMetadata(metadata);
-        }
+        if (rowSet == null)
+            throw new NullPointerException("require rowSet.metadata to resolve column name");
+        IRowSetMetadata rowSetMetadata = rowSet.getMetadata();
+        IColumnMetadata metadata = rowSetMetadata.getColumn(columnName);
+        this.columnIndex = metadata.getColumnIndex();
     }
 
     @Override
     public IColumnMetadata getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(IColumnMetadata metadata) {
-        this.metadata = metadata;
-        if (metadata != null)
-            cellType = metadata.getJavaClass();
+        IRowSet rowSet = row.getRowSet();
+        if (rowSet != null) {
+            IRowSetMetadata table = rowSet.getMetadata();
+            int cc = table.getColumnCount();
+            if (columnIndex < cc)
+                return table.getColumn(columnIndex);
+        }
+        return null;
     }
 
     @Override
     public String getColumnName() {
-        if (metadata == null)
+        IColumnMetadata column = getMetadata();
+        if (column == null)
             return null;
         else
-            return metadata.getName();
+            return column.getName();
     }
 
     @Override
     public int getColumnIndex() {
-        if (metadata == null)
-            return -1;
-        else
-            return metadata.getOrdinal();
+        return columnIndex;
     }
 
     @Override
@@ -81,19 +65,27 @@ public class MutableCell
 
     @Override
     public Class<?> getCellType() {
-        return cellType;
+        IColumnMetadata column = getMetadata();
+        if (column != null)
+            return column.getJavaClass();
+        else
+            return null;
     }
 
     @Override
     public Object getData() {
-        return data;
+        return _data;
     }
 
     @Override
     public void setData(Object data) {
-        this.data = data;
-        this.dataSet = true;
-        this.dirty = true;
+        if (data instanceof String) {
+            String text = (String) data;
+            data = text.intern();
+        }
+        this._data = data;
+        this.setData();
+        this.setDirty();
     }
 
     class VariantImpl
@@ -101,7 +93,7 @@ public class MutableCell
 
         @Override
         public Object get() {
-            return data;
+            return _data;
         }
 
     }
@@ -113,30 +105,45 @@ public class MutableCell
 
     @Override
     public void remove() {
-        this.data = null;
-        this.dataSet = false;
-        this.dirty = true;
+        this._data = null;
+        this.clearData();
+        this.setDirty();
     }
+
+    static final byte DATA_SET = 1;
+    static final byte DIRTY = 2;
 
     @Override
     public boolean isSet() {
-        return dataSet;
+        return (flags & DATA_SET) != 0;
     }
 
     @Override
     public boolean isDirty() {
-        return dirty;
+        return (flags & DIRTY) != 0;
+    }
+
+    public void setData() {
+        flags |= DATA_SET;
+    }
+
+    public void clearData() {
+        flags &= ~DATA_SET;
+    }
+
+    public void setDirty() {
+        flags |= DIRTY;
     }
 
     @Override
     public void clearDirty() {
-        dirty = true;
+        flags &= ~DIRTY;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(data);
+        sb.append(_data);
         return sb.toString();
     }
 

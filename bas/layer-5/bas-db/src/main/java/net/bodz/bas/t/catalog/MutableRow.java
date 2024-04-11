@@ -25,25 +25,23 @@ public class MutableRow
     static final Logger logger = LoggerFactory.getLogger(MutableRow.class);
 
     final IRowSet rowSet;
-    final IRowSetMetadata metadata;
-
-//    int rowIndex;
     List<IMutableCell> cells;
 
     public MutableRow(IRowSet rowSet) {
-//    public MutableRow(IRowSet rowSet, int rowIndex) {
         if (rowSet == null)
             throw new NullPointerException("rowSet");
         this.rowSet = rowSet;
-        this.metadata = rowSet.getMetadata();
-//        this.rowIndex = rowIndex;
+
+        IRowSetMetadata metadata = rowSet.getMetadata();
+        if (metadata == null)
+            throw new NullPointerException("metadata");
 
         int columnCount = metadata.getColumnCount();
         this.cells = new ArrayList<>(columnCount);
     }
 
     public IRowSetMetadata getRowSetMetadata() {
-        return metadata;
+        return rowSet.getMetadata();
     }
 
     @Override
@@ -51,14 +49,9 @@ public class MutableRow
         return rowSet;
     }
 
-//    @Override
-//    public int getRowIndex() {
-//        return rowIndex;
-//    }
-
     @Override
     public IColumnMetadata getColumn(int index) {
-        return metadata.getColumn(index);
+        return getRowSetMetadata().getColumn(index);
     }
 
     @Override
@@ -76,7 +69,7 @@ public class MutableRow
 
     @Override
     public Class<?> getColumnType(int columnIndex) {
-        IColumnMetadata column = metadata.getColumn(columnIndex);
+        IColumnMetadata column = getRowSetMetadata().getColumn(columnIndex);
         if (column == null)
             return null;
         else
@@ -85,7 +78,7 @@ public class MutableRow
 
     @Override
     public Class<?> getColumnType(String columnName) {
-        IColumnMetadata column = metadata.getColumn(columnName);
+        IColumnMetadata column = getRowSetMetadata().getColumn(columnName);
         if (column == null)
             return null;
         else
@@ -108,7 +101,7 @@ public class MutableRow
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
         if (index >= getCellCount()) {
-            if (metadata.isSparse())
+            if (getRowSetMetadata().isSparse())
                 return null;
             else
                 throw new IndexOutOfBoundsException("Invalid column index: " + index);
@@ -125,8 +118,8 @@ public class MutableRow
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        int maxSize = metadata.getColumnCount();
-        if (metadata.isSparse())
+        int maxSize = getRowSetMetadata().getColumnCount();
+        if (getRowSetMetadata().isSparse())
             maxSize = DefaultRowSetMetadata.MAX_SPARSE_COLUMNS;
 
         if (index >= maxSize)
@@ -154,8 +147,8 @@ public class MutableRow
         if (index < 0)
             throw new IndexOutOfBoundsException("Invalid column index: " + index);
 
-        int maxSize = metadata.getColumnCount();
-        if (metadata.isSparse())
+        int maxSize = getRowSetMetadata().getColumnCount();
+        if (getRowSetMetadata().isSparse())
             maxSize = DefaultRowSetMetadata.MAX_SPARSE_COLUMNS;
 
         if (index >= maxSize)
@@ -220,8 +213,8 @@ public class MutableRow
     }
 
     Iterator<ICell> _iterator() {
-        int maxSize = metadata.getColumnCount();
-        if (metadata.isSparse())
+        int maxSize = getRowSetMetadata().getColumnCount();
+        if (getRowSetMetadata().isSparse())
             maxSize = cells.size();
         final int retSize = maxSize;
         return new PrefetchedIterator<ICell>() {
@@ -246,13 +239,13 @@ public class MutableRow
         JsonArray jarray = in.getArray();
         int jn = jarray.length();
 
-        int cc = metadata.getColumnCount();
+        int cc = getRowSetMetadata().getColumnCount();
         List<IMutableCell> list = new ArrayList<>(cc);
 
         for (int i = 0; i < cc && i < jn; i++) {
             Object j_cell_box = jarray.get(i);
 
-            IColumnMetadata column = metadata.getColumn(i);
+            IColumnMetadata column = getRowSetMetadata().getColumn(i);
             Object cellData = column.readColumnJsonValue(j_cell_box);
 
             IMutableCell cell = addNewCell();
@@ -270,7 +263,7 @@ public class MutableRow
     @Override
     public void readObject(IElement x_row)
             throws ParseException, LoaderException {
-        int cc = metadata.getColumnCount();
+        int cc = getRowSetMetadata().getColumnCount();
         List<IMutableCell> list = new ArrayList<>();
         for (int i = 0; i < cc; i++) {
             IColumnMetadata column = getColumn(i);

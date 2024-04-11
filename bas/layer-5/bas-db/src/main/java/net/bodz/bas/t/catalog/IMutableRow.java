@@ -41,7 +41,7 @@ public interface IMutableRow
             int columnIndex = getCellCount();
             cell = createCell(columnIndex);
         } else {
-            cell = new MutableCell(this, Object.class);
+            cell = new MutableCell(this);
         }
         addCell(cell);
         return cell;
