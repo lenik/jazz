@@ -2,6 +2,7 @@ package net.bodz.bas.db.ibatis.sql;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.apache.commons.text.StringTokenizer;
 
@@ -47,6 +48,23 @@ public class Orders
             sb.append(o);
         }
         return sb.toString();
+    }
+
+    public Orders mapv(Function<String, String[]> fn) {
+        Orders newOrders = new Orders();
+        for (Order order : this) {
+            String property = order.getColumn();
+            String[] columns = fn.apply(property);
+            if (columns == null)
+                throw new NullPointerException("columns");
+            for (String column : columns) {
+                Order newOrder = new Order();
+                newOrder.setAscending(order.isAscending());
+                newOrder.setColumn(column);
+                newOrders.add(newOrder);
+            }
+        }
+        return newOrders;
     }
 
 }
