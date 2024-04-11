@@ -1,5 +1,6 @@
 package net.bodz.bas.t.catalog.poi;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
@@ -140,10 +141,11 @@ public class SheetTable
         SheetTableMetadata meta = getMetadata();
         meta.setId(TableOid.of(sheetName));
 
+        Iterator<Row> rowIterator = poiSheet.rowIterator();
         for (int rowIndex = first; rowIndex <= last; rowIndex++) {
+            Row pRow = rowIterator.next();
             if (rowIndex == -1)
                 continue;
-            Row pRow = poiSheet.getRow(rowIndex);
             if (rowIndex == first) {
                 SheetRow thead = createRow();
                 thead.readObject(pRow, options);

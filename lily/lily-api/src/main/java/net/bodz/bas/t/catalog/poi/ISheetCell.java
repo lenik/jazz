@@ -6,10 +6,6 @@ public interface ISheetCell {
 
     ISheetColumn getColumn();
 
-    default int getRowIndex() {
-        return getRow().getRowIndex();
-    }
-
     default int getColumnIndex() {
         return getColumn().getColumnIndex();
     }

@@ -30,15 +30,8 @@ public class SheetRow
             ISheetRow,
             IXmlForm {
 
-    int rowIndex;
-
     public SheetRow(SheetTable table) {
-        this(table, -1);
-    }
-
-    public SheetRow(SheetTable table, int rowIndex) {
         super(table);
-        this.rowIndex = rowIndex;
     }
 
     @Override
@@ -54,11 +47,6 @@ public class SheetRow
     @Override
     public SheetBook getBook() {
         return getSheet().getBook();
-    }
-
-    @Override
-    public int getRowIndex() {
-        return rowIndex;
     }
 
     @SuppressWarnings("unchecked")

@@ -13,7 +13,6 @@ import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.filetype.excel.ExcelUtil;
-import net.bodz.bas.filetype.excel.ss.SsGroup;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
@@ -29,13 +28,12 @@ public class SheetCell
 
     static final Logger logger = LoggerFactory.getLogger(SheetCell.class);
 
-    SsGroup ss = new SsGroup();
+//    private SsGroup ss;
 
-    CellType type = CellType._NONE;
-    String text;
+    private String _text;
 
-    public SheetCell(SheetRow row, Class<?> cellType) {
-        super(row, cellType);
+    public SheetCell(SheetRow row) {
+        super(row);
     }
 
     public SheetCell(SheetRow row, int columnIndex) {
@@ -44,10 +42,6 @@ public class SheetCell
 
     public SheetCell(SheetRow row, String columnName) {
         super(row, columnName);
-    }
-
-    public SheetCell(SheetRow row) {
-        super(row);
     }
 
     @Override
@@ -80,16 +74,6 @@ public class SheetCell
         return getRow().getSheet().getBook();
     }
 
-    public CellType getType() {
-        return type;
-    }
-
-    public void setType(CellType type) {
-        if (type == null)
-            throw new NullPointerException("type");
-        this.type = type;
-    }
-
 //    @Override
 //    public void setData(Object data) {
 //        super.setData(data);
@@ -100,7 +84,13 @@ public class SheetCell
 //    }
 //
     public String getText() {
-        return text;
+        return _text;
+    }
+
+    public void setText(String text) {
+        if (text != null)
+            text = text.intern();
+        this._text = text;
     }
 
     @Override
@@ -108,8 +98,8 @@ public class SheetCell
             throws XMLStreamException {
         out.beginElement("Cell");
         String chars = null;
-        if (text != null)
-            chars = text;
+        if (_text != null)
+            chars = _text;
         else {
             Object data = getData();
             if (data != null)
@@ -133,15 +123,15 @@ public class SheetCell
         if (pCell == null)
             throw new NullPointerException("poiCell");
 
-        type = pCell.getCellType();
+        CellType type = pCell.getCellType();
         // text = pCell.toString();
         // ExcelUtil.getCellValue();
-        text = ExcelUtil.getCellText(pCell);
+        setText(ExcelUtil.getCellText(pCell));
 
         if (options.useRawText) {
             if (pCell instanceof XSSFCell) {
                 XSSFCell xssfCell = (XSSFCell) pCell;
-                text = xssfCell.getRawValue();
+                setText(xssfCell.getRawValue());
             }
         }
 
@@ -183,8 +173,8 @@ public class SheetCell
     }
 
     public void readObjectFromEvaluated(CellValue pCellVal, Cell pCell) {
-        type = pCellVal.getCellType();
-        text = pCellVal.formatAsString();
+        CellType type = pCellVal.getCellType();
+        setText(pCellVal.formatAsString());
         Object data = null;
         switch (type) {
         case BOOLEAN:

@@ -163,6 +163,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>4.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml-full</artifactId>
                 <version>5.2.3</version>
                 <exclusions>
@@ -173,9 +178,9 @@
                 </exclusions>
             </dependency>
             <dependency>
-		<groupId>org.eclipse.jetty.toolchain</groupId>
-		<artifactId>jetty-jakarta-servlet-api</artifactId>
-		<version>5.0.2</version>
+                <groupId>org.eclipse.jetty.toolchain</groupId>
+                <artifactId>jetty-jakarta-servlet-api</artifactId>
+                <version>5.0.2</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>
@@ -394,11 +399,11 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.4.0</version>
-				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.4.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>

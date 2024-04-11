@@ -71,6 +71,11 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.pjfanning</groupId>
+            <artifactId>excel-streaming-reader</artifactId>
+            <version>4.3.0</version>
+        </dependency>
     </dependencies>
     <name>Lily :: Api</name>
     <properties>

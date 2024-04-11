@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface ISheetRow {
 
-    int getRowIndex();
-
     ISheetTable getTable();
 
     default ISheet getSheet() {

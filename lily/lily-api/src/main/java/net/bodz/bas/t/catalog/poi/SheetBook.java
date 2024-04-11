@@ -1,11 +1,11 @@
 package net.bodz.bas.t.catalog.poi;
 
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -21,6 +21,8 @@ import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.t.catalog.MutableSchema;
 
 public class SheetBook
@@ -28,6 +30,8 @@ public class SheetBook
         implements
             ISheetBook,
             IXmlForm {
+
+    static final Logger logger = LoggerFactory.getLogger(SheetBook.class);
 
     SheetDocProperties documentProperties = new SheetDocProperties();
     List<SheetTable> sheets = new ArrayList<>();
@@ -81,7 +85,12 @@ public class SheetBook
     }
 
     public void readObject(Workbook poiWorkbook, ExcelParseOptions options) {
-        evaluator = poiWorkbook.getCreationHelper().createFormulaEvaluator();
+        try {
+            evaluator = poiWorkbook.getCreationHelper().createFormulaEvaluator();
+        } catch (Exception e) {
+            logger.warn("formula-evaluator isn't supported. ignored.");
+        }
+
         int nSheet = poiWorkbook.getNumberOfSheets();
         for (int i = 0; i < nSheet; i++) {
             Sheet pSheet = poiWorkbook.getSheetAt(i);
@@ -104,19 +113,18 @@ public class SheetBook
                 int w = row.getCellCount();
                 for (int i = 0; i < w; i++) {
                     SheetCell cell = row.getCell(i);
-                    CellType type = cell.getType();
-                    if (type == CellType._NONE)
-                        continue;
-
                     String text = cell.getText();
-                    // Object value = cell.getValue();
+                    Object data = cell.getData();
+                    if (text == null)
+                        continue;
 
                     if (i != 0)
                         out.print("\t");
-                    if (type == CellType.STRING) {
-                        out.print(StringQuote.qqJavaString(text));
+
+                    if (data instanceof String || data instanceof TemporalAccessor) {
+                        out.print(StringQuote.qqJavaString(data.toString()));
                     } else {
-                        out.print(type);
+                        out.print(data.getClass().getSimpleName());
                         out.print(":");
                         out.print(text);
                     }
