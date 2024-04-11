@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoadException;
@@ -29,6 +33,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
         extends CoImaged<Id> {
 
     private static final long serialVersionUID = 1L;
+
+    public static final String FIELD_PARENT = "parent";
 
     self_t parent;
     Id parentId;
@@ -72,6 +78,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label.zh 父结点
      * @placeholder 选择一个父结点…
      */
+    @JoinColumn(name = FIELD_PARENT)
+    @ManyToOne
     @OfGroup(StdGroup.Graph.class)
     public self_t getParent() {
         return parent;
@@ -90,6 +98,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
 // }
     }
 
+    @Column(name = FIELD_PARENT)
     public Id getParentId() {
         if (parent != null)
             return parent.getId();
@@ -196,8 +205,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Index
      * @label.zh 序号
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public int getIndex() {
         if (parent == null)
             return 0;
@@ -216,8 +225,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Depth
      * @label.zh 深度
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public int getDepth() {
         int safeDepth = getSafeDepth();
         int depth = -1;
@@ -255,8 +264,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label First
      * @label.zh 首位
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public boolean isFirst() {
         if (parent == null)
             return true;
@@ -277,8 +286,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Last
      * @label.zh 末位
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public boolean isLast() {
         if (parent == null)
             return true;
@@ -298,6 +307,7 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Node Path
      * @label.zh 结点路径
      */
+    @Derived
     @OfGroup(StdGroup.Graph.class)
     public String getNodePath() {
         StringBuilder sb = new StringBuilder();
@@ -328,8 +338,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Graph Prefix
      * @label.zh 图前缀
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public String getGraphPrefix() {
         if (parent == null)
             return "";
@@ -361,8 +371,8 @@ public abstract class CoNode<self_t extends CoNode<self_t, Id>, Id>
      * @label Node Label
      * @label.zh 结点标签
      */
-    @OfGroup(StdGroup.Graph.class)
     @Derived
+    @OfGroup(StdGroup.Graph.class)
     public String getNodeLabel() {
         StringBuilder sb = new StringBuilder();
         Object id = id();

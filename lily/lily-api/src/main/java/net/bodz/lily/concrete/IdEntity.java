@@ -1,10 +1,10 @@
 package net.bodz.lily.concrete;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 
 import net.bodz.lily.entity.PrimaryKeyColumns;
 import net.bodz.lily.entity.PrimaryKeyProperties;
-import net.bodz.lily.meta.ReadOnly;
 import net.bodz.lily.meta.TsTyped;
 import net.bodz.lily.meta.TypeParamType;
 import net.bodz.lily.meta.TypeParameters;
@@ -20,8 +20,8 @@ public abstract class IdEntity<Id>
 
     public static final String FIELD_ID = "id";
 
-    @ReadOnly
-    @GeneratedValue
+    @Column(name = FIELD_ID, nullable = false)
+    @GeneratedValue // possible generated?
     public Id getId() {
         return id();
     }

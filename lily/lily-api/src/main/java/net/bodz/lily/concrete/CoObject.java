@@ -24,6 +24,7 @@ import net.bodz.bas.meta.decl.Priority;
 import net.bodz.bas.repr.content.IContent;
 import net.bodz.bas.repr.form.NullConvertion;
 import net.bodz.bas.repr.form.meta.FormInput;
+import net.bodz.bas.repr.form.meta.NotNull;
 import net.bodz.bas.repr.form.meta.NumericInput;
 import net.bodz.bas.repr.form.meta.OfGroup;
 import net.bodz.bas.repr.form.meta.StdGroup;
@@ -203,8 +204,10 @@ public abstract class CoObject
      * @label Priority
      * @label.zh 优先级
      */
+    @Column(name = FIELD_PRIORITY, nullable = false)
     @Face("Priority")
     @FormInput(textWidth = 4)
+    @NotNull
     @NumericInput(min = -1000, max = 1000)
     @OfGroup(StdGroup.Schedule.class)
     @Override
@@ -220,6 +223,7 @@ public abstract class CoObject
      * @label Flags
      * @label.zh 标志位
      */
+    @Column(name = FIELD_FLAGS, nullable = false)
     @DetailLevel(DetailLevel.DETAIL2)
     @OfGroup(StdGroup.Settings.class)
     public int getFlags() {
@@ -253,7 +257,7 @@ public abstract class CoObject
      * @label State
      * @label.zh 状态
      */
-    @Column(name = FIELD_STATE)
+    @Column(name = FIELD_STATE, nullable = false)
     @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Status.class)
     @Override
@@ -312,7 +316,7 @@ public abstract class CoObject
         this.ownerGroup = ownerGroup;
     }
 
-    @Column(name = FIELD_OWNER_USER_ID)
+    @Column(name = FIELD_OWNER_USER_ID, nullable = false)
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)
@@ -321,7 +325,7 @@ public abstract class CoObject
         return ownerUser != null ? ownerUser.id() : Integer.valueOf(ownerUserId);
     }
 
-    @Column(name = FIELD_OWNER_GROUP_ID)
+    @Column(name = FIELD_OWNER_GROUP_ID, nullable = false)
     @Derived
     @DetailLevel(DetailLevel.HIDDEN)
     @OfGroup(StdGroup.Security.class)

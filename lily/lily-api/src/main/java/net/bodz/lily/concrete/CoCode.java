@@ -23,6 +23,8 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_CODE = "code";
+
     public static final int N_CODE = 30;
 
     String code;
@@ -41,8 +43,8 @@ public abstract class CoCode<self_t extends CoCode<self_t>>
      * @label Code
      * @label.zh 代码
      */
+    @Column(name = FIELD_CODE, nullable = true, precision = N_CODE)
     @Precision(value = N_CODE)
-    @Column(name = "code", nullable = true, precision = N_CODE)
     @TextInput(maxLength = N_CODE)
     public String getCode() {
         return code;

@@ -2,6 +2,8 @@ package net.bodz.lily.concrete;
 
 import java.time.OffsetDateTime;
 
+import javax.persistence.Column;
+
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -24,6 +26,9 @@ public abstract class CoEvent<Id>
 
     private static final long serialVersionUID = 1L;
 
+    public static final String FIELD_BEGIN_TIME = "t0";
+    public static final String FIELD_END_TIME = "t1";
+
     private OffsetDateTime beginTime;
     private OffsetDateTime endTime;
     private int year;
@@ -41,6 +46,7 @@ public abstract class CoEvent<Id>
      * @label Begin Date
      * @label.zh 开始时间
      */
+    @Column(name = FIELD_BEGIN_TIME)
     @OfGroup(StdGroup.Schedule.class)
     @Override
     public OffsetDateTime getBeginTime() {
@@ -61,6 +67,7 @@ public abstract class CoEvent<Id>
      * @label End Date
      * @label.zh 结束时间
      */
+    @Column(name = FIELD_END_TIME)
     @OfGroup(StdGroup.Schedule.class)
     @Override
     public OffsetDateTime getEndTime() {

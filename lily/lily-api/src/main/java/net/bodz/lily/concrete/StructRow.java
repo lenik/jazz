@@ -77,7 +77,7 @@ public abstract class StructRow
      * @label.zh 创建时间
      */
     @ReadOnly
-    @Column(name = FIELD_CREATION_DATE)
+    @Column(name = FIELD_CREATION_DATE, nullable = false)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class })
     @Override
@@ -105,7 +105,7 @@ public abstract class StructRow
      * @label.zh 修改时间
      */
     @ReadOnly
-    @Column(name = FIELD_LAST_MODIFIED)
+    @Column(name = FIELD_LAST_MODIFIED, nullable = false)
     @FormInput(readOnly = true)
     @OfGroup({ StdGroup.Content.class, StdGroup.Status.class, StdGroup.Cache.class })
     @Override
@@ -181,7 +181,7 @@ public abstract class StructRow
      * @label Version
      * @label.zh 版本
      */
-    @Column(name = FIELD_VERSION)
+    @Column(name = FIELD_VERSION, nullable = false)
     @DetailLevel(DetailLevel.DETAIL)
     @OfGroup(StdGroup.Version.class)
     public int getVersion() {
