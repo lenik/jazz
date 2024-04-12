@@ -26,6 +26,8 @@ public class SharedSessionMapperProxy
 
         Object proxy = session.getMapper(mapperClass);
 
+        session.getConfiguration();
+
         long begin = System.nanoTime();
 
         try {

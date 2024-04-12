@@ -8,7 +8,8 @@ import java.util.TreeMap;
 import net.bodz.bas.c.object.Nullables;
 
 public class MutableAttributes
-        implements IMutableAttributes {
+        implements
+            IMutableAttributes {
 
     private Map<String, Object> valueMap;
     private Map<String, ITyperFamily<?>> typersMap;
@@ -37,7 +38,7 @@ public class MutableAttributes
     public <T> T getAttribute(String name, T defaultValue) {
         @SuppressWarnings("unchecked")
         T value = (T) valueMap.get(name);
-        if (value == null && !valueMap.containsKey(name))
+        if (value == null && ! valueMap.containsKey(name))
             return defaultValue;
         else
             return value;
@@ -86,14 +87,19 @@ public class MutableAttributes
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof MutableAttributes))
+        if (! (obj instanceof MutableAttributes))
             return false;
         MutableAttributes o = (MutableAttributes) obj;
-        if (!valueMap.equals(o.valueMap))
+        if (! valueMap.equals(o.valueMap))
             return false;
-        if (!Nullables.equals(typersMap, o.typersMap))
+        if (! Nullables.equals(typersMap, o.typersMap))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return valueMap.toString();
     }
 
 }
