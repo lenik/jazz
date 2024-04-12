@@ -2,6 +2,7 @@ package net.bodz.lily.schema.account;
 
 import java.net.InetAddress;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +14,9 @@ import net.bodz.bas.db.ibatis.IResultSetForm;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
-import net.bodz.bas.rtx.IAttributed;
-import net.bodz.bas.typer.std.MutableAttributes;
+import net.bodz.lily.concrete.util.ExtraAttributes;
+import net.bodz.lily.entity.type.EntityTypes;
+import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.security.IUser;
 
 /**
@@ -38,17 +40,18 @@ public class User
         extends _User_stuff
         implements
             IUser,
-            IAttributed,
             IResultSetForm {
 
     private static final long serialVersionUID = 1L;
+
+    public static final IEntityTypeInfo TYPE = EntityTypes.getTypeInfo(User.class);
 
     public static final int ID_Root = 0;
     public static final int ID_Admin = 1;
     public static final int ID_DefaultUser = 2;
     public static final int ID_Guest = 3;
 
-    MutableAttributes attributes;
+    ExtraAttributes attributes = new ExtraAttributes(TYPE);
 
     private List<Group> groups = new ArrayList<>();
     private List<UserSecret> secrets = new ArrayList<>();
@@ -66,13 +69,19 @@ public class User
         setFullName(fullName);
     }
 
+    // @Internal
+    public ExtraAttributes getAttributes() {
+        return attributes;
+    }
+
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
-        return null;
+        return attributes.getAttribute(name, defaultValue);
     }
 
     @Override
     public void setAttribute(String name, Object value) {
+        attributes.setAttribute(name, value);
     }
 
     public List<Group> getGroups() {
@@ -188,8 +197,9 @@ public class User
     }
 
     @Override
-    public void readObject(ResultSet rs) {
-        System.out.println("READ RS");
+    public void readObject(ResultSet rs)
+            throws SQLException {
+        attributes.readObject(rs);
     }
 
 }

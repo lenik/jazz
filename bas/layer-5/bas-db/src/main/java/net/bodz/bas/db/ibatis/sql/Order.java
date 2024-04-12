@@ -92,9 +92,15 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append('"');
-        sb.append(column);
-        sb.append('"');
+        StringTokenizer tokens = new StringTokenizer(column, ".");
+        while (tokens.hasNext()) {
+            String token = tokens.nextToken();
+            if (sb.length() != 0)
+                sb.append('.');
+            sb.append('"');
+            sb.append(token);
+            sb.append('"');
+        }
         if (! ascending) {
             sb.append(" desc");
         }

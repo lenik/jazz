@@ -412,6 +412,9 @@ public abstract class AbstractEntityController<T>
     }
 
     String[] findColumnForProperty(String propertyName) {
+        if (propertyName.contains(".")) // alias.column
+            return new String[] { propertyName };
+
         IProperty keyProperty = typeInfo.getPrimaryKeyProperty(propertyName);
         if (keyProperty != null)
             return new String[] { propertyName };

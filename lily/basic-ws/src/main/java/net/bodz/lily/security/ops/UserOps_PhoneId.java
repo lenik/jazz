@@ -73,7 +73,7 @@ public class UserOps_PhoneId
         oidMapper.insert(oid);
 
         // 4. auto login
-        resp.token = loginManager.newToken(user);
+        resp.token = loginManager.allocateToken(user);
         return resp.succeed();
     }
 
@@ -97,7 +97,7 @@ public class UserOps_PhoneId
         secretMapper.update(secret);
 
         // 3. auto login
-        resp.token = loginManager.newToken(user);
+        resp.token = loginManager.allocateToken(user);
         return resp.succeed();
     }
 

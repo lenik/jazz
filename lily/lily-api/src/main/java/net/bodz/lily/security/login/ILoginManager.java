@@ -13,7 +13,7 @@ public interface ILoginManager {
     String REGISTER = "register";
     String RESET_PASSWORD = "reset-password";
 
-    LoginToken newToken(IUser user);
+    LoginToken allocateToken(IUser user);
 
     /**
      * @return server challenge

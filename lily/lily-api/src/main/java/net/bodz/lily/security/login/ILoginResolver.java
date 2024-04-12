@@ -56,7 +56,7 @@ public interface ILoginResolver {
         public LoginResult toLoginResult(ILoginManager manager) {
             LoginResult result = new LoginResult(this, true);
             if (isSuccess())
-                result.token = manager.newToken(user);
+                result.token = manager.allocateToken(user);
             return result;
         }
 

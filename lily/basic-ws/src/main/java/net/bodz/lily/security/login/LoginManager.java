@@ -49,8 +49,10 @@ public class LoginManager
     }
 
     @Override
-    public LoginToken newToken(IUser user) {
-        return new LoginToken(user);
+    public LoginToken allocateToken(IUser user) {
+        LoginToken token = new LoginToken(user);
+        saveToken(token);
+        return token;
     }
 
     boolean debug = true;

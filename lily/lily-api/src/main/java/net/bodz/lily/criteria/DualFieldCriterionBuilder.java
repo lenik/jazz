@@ -1,5 +1,8 @@
 package net.bodz.lily.criteria;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 import net.bodz.lily.criterion.CompareMode;
 import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.FieldBetween;
@@ -15,12 +18,14 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
     String fieldName1;
     String fieldName2;
     Class<T> type;
+    IParser<T> parser;
 
     public DualFieldCriterionBuilder(String fieldName1, String fieldName2, Class<T> type, fin_target finishTarget,
             IReceiver<? super ICriterion> receiver) {
         super(fieldName1, type, finishTarget, receiver);
         this.fieldName1 = fieldName1;
         this.fieldName2 = fieldName2;
+        parser = Typers.getTyper(type, IParser.class);
     }
 
     @Override
@@ -208,6 +213,70 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
             or.add(and);
         }
         return or.reduce(); // null -> false (means intersects)
+    }
+
+    public fin_target textTextWithIn(String min, String max)
+            throws ParseException {
+        return send(makeTextWithIn(min, max));
+    }
+
+    public ICriterion makeTextWithIn(String min, String max)
+            throws ParseException {
+        if (min == null && max == null)
+            // return True;
+            throw new NullPointerException("both min and max are null");
+        T minVal = min == null ? null : parser.parse(min);
+        T maxVal = max == null ? null : parser.parse(max);
+
+        ICriterion geMin = min == null ? null
+                : new FieldCompare<T>(fieldName1, true, //
+                        CompareMode.GREATER_OR_EQUALS, type, minVal);
+
+        ICriterion leMax = max == null ? null
+                : new FieldCompare<T>(fieldName2, true, //
+                        CompareMode.LESS_OR_EQUALS, type, maxVal);
+
+        if (min == null)
+            return leMax;
+        if (max == null)
+            return geMin;
+
+        Junction and = new Junction();
+        and.add(leMax);
+        and.add(geMin);
+        return and;
+    }
+
+    public fin_target textTextOverlaps(String min, String max)
+            throws ParseException {
+        return send(makeTextOverlaps(min, max));
+    }
+
+    public ICriterion makeTextOverlaps(String min, String max)
+            throws ParseException {
+        if (min == null && max == null)
+            // return True;
+            throw new NullPointerException("both min and max are null");
+        T minVal = min == null ? null : parser.parse(min);
+        T maxVal = max == null ? null : parser.parse(max);
+
+        ICriterion geMin = min == null ? null
+                : new FieldCompare<T>(fieldName2, true, //
+                        CompareMode.GREATER_OR_EQUALS, type, minVal);
+
+        ICriterion leMax = max == null ? null
+                : new FieldCompare<T>(fieldName1, true, //
+                        CompareMode.LESS_OR_EQUALS, type, maxVal);
+
+        if (min == null)
+            return leMax;
+        if (max == null)
+            return geMin;
+
+        Junction or = new Junction();
+        or.add(leMax);
+        or.add(geMin);
+        return or;
     }
 
 }

@@ -2,6 +2,9 @@ package net.bodz.lily.criteria;
 
 import java.util.Collection;
 
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.typer.Typers;
+import net.bodz.bas.typer.std.IParser;
 import net.bodz.lily.criterion.CompareMode;
 import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.FieldBetween;
@@ -15,12 +18,14 @@ public class FieldCriterionBuilder<fin_target, This, T>
 
     String fieldName;
     Class<T> type;
+    IParser<T> parser;
 
     public FieldCriterionBuilder(String fieldName, Class<T> type, fin_target finishTarget,
             IReceiver<? super ICriterion> receiver) {
         super(finishTarget, receiver);
         this.fieldName = fieldName;
         this.type = type;
+        this.parser = Typers.getTyper(type, IParser.class);
     }
 
     public Class<T> getValueType() {
@@ -152,6 +157,34 @@ public class FieldCriterionBuilder<fin_target, This, T>
         or.add(makeIsNull());
         or.add(makeOutside(start, end, includeEnd));
         return or;
+    }
+
+    public fin_target textBetween(String min, String max)
+            throws ParseException {
+        return send(makeTextBetween(min, max));
+    }
+
+    public ICriterion makeTextBetween(String min, String max)
+            throws ParseException {
+        if (min == null && max == null)
+            // return True;
+            throw new NullPointerException("both min and max are null");
+        T minVal = min == null ? null : parser.parse(min);
+        T maxVal = max == null ? null : parser.parse(max);
+
+        ICriterion geMin = min == null ? null
+                : new FieldCompare<T>(fieldName, true, //
+                        CompareMode.GREATER_OR_EQUALS, type, minVal);
+
+        ICriterion leMax = max == null ? null
+                : new FieldCompare<T>(fieldName, true, //
+                        CompareMode.LESS_OR_EQUALS, type, maxVal);
+
+        if (min == null)
+            return leMax;
+        if (max == null)
+            return geMin;
+        return makeBetween(minVal, maxVal);
     }
 
 }

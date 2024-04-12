@@ -22,7 +22,7 @@ public class Person
 
     static final IEntityTypeInfo TYPE = EntityTypes.getTypeInfo(Person.class);
 
-    ExtraAttributes attrs = new ExtraAttributes(TYPE);
+    ExtraAttributes attributes = new ExtraAttributes(TYPE);
 
     public String getHello() {
         return "world";
@@ -34,13 +34,13 @@ public class Person
 
     // @Internal
     public IAttributes getAttributes() {
-        return attrs;
+        return attributes;
     }
 
     @Override
     public void readObject(ResultSet rs)
             throws SQLException {
-        attrs.readObject(rs);
+        attributes.readObject(rs);
     }
 
 }

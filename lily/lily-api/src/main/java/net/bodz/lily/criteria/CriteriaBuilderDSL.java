@@ -15,80 +15,84 @@ public abstract class CriteriaBuilderDSL<This>
         implements
             IReceiver<ICriterion> {
 
+    protected String qualify(String fieldName) {
+        return fieldName;
+    }
+
     protected <T extends Number> NumberField<T> number(String fieldName, Class<T> type) {
-        return new NumberField<T>(fieldName, type);
+        return new NumberField<T>(qualify(fieldName), type);
     }
 
     protected IntegerField integer(String fieldName) {
-        return new IntegerField(fieldName);
+        return new IntegerField(qualify(fieldName));
     }
 
     protected ByteField _byte(String fieldName) {
-        return new ByteField(fieldName);
+        return new ByteField(qualify(fieldName));
     }
 
     protected ShortField _short(String fieldName) {
-        return new ShortField(fieldName);
+        return new ShortField(qualify(fieldName));
     }
 
     protected LongField _long(String fieldName) {
-        return new LongField(fieldName);
+        return new LongField(qualify(fieldName));
     }
 
     protected FloatField _float(String fieldName) {
-        return new FloatField(fieldName);
+        return new FloatField(qualify(fieldName));
     }
 
     protected DoubleField _double(String fieldName) {
-        return new DoubleField(fieldName);
+        return new DoubleField(qualify(fieldName));
     }
 
     protected BigIntegerField bigInteger(String fieldName) {
-        return new BigIntegerField(fieldName);
+        return new BigIntegerField(qualify(fieldName));
     }
 
     protected BigDecimalField bigDecimal(String fieldName) {
-        return new BigDecimalField(fieldName);
+        return new BigDecimalField(qualify(fieldName));
     }
 
     protected CharField _char(String fieldName) {
-        return new CharField(fieldName);
+        return new CharField(qualify(fieldName));
     }
 
     protected StringField string(String fieldName) {
-        return new StringField(fieldName);
+        return new StringField(qualify(fieldName));
     }
 
     protected BooleanField bool(String fieldName) {
-        return new BooleanField(fieldName);
+        return new BooleanField(qualify(fieldName));
     }
 
     protected <T> DateField<T> date(String fieldName, Class<T> type) {
-        return new DateField<T>(fieldName, type);
+        return new DateField<T>(qualify(fieldName), type);
     }
 
     protected InstantField instant(String fieldName) {
-        return new InstantField(fieldName);
+        return new InstantField(qualify(fieldName));
     }
 
     protected ZonedDateTimeField zonedDateTime(String fieldName) {
-        return new ZonedDateTimeField(fieldName);
+        return new ZonedDateTimeField(qualify(fieldName));
     }
 
     protected OffsetDateTimeField offsetDateTime(String fieldName) {
-        return new OffsetDateTimeField(fieldName);
+        return new OffsetDateTimeField(qualify(fieldName));
     }
 
     protected LocalDateTimeField localDateTime(String fieldName) {
-        return new LocalDateTimeField(fieldName);
+        return new LocalDateTimeField(qualify(fieldName));
     }
 
     protected LocalDateField localDate(String fieldName) {
-        return new LocalDateField(fieldName);
+        return new LocalDateField(qualify(fieldName));
     }
 
     protected LocalTimeField localTime(String fieldName) {
-        return new LocalTimeField(fieldName);
+        return new LocalTimeField(qualify(fieldName));
     }
 
     public class NumberField<T extends Number>
