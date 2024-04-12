@@ -2,10 +2,23 @@ package net.bodz.bas.servlet.config;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import net.bodz.bas.c.javax.servlet.http.*;
+import net.bodz.bas.c.javax.servlet.http.IHttpSessionActivationListener;
+import net.bodz.bas.c.javax.servlet.http.IHttpSessionAttributeListener;
+import net.bodz.bas.c.javax.servlet.http.IHttpSessionBindingListener;
+import net.bodz.bas.c.javax.servlet.http.IHttpSessionListener;
+import net.bodz.bas.c.javax.servlet.http.IServletContextAttributeListener;
+import net.bodz.bas.c.javax.servlet.http.IServletContextListener;
+import net.bodz.bas.c.javax.servlet.http.IServletRequestAttributeListener;
+import net.bodz.bas.c.javax.servlet.http.IServletRequestListener;
 import net.bodz.bas.c.object.UseNet;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.io.BTreeOut;
@@ -33,7 +46,7 @@ public class ServletContextConfig {
 
     String hostName;
     List<Integer> portNumbers = new ArrayList<>();
-    String contextPath = "";
+    String contextPath = "/";
 
     List<String> welcomeFiles = new ArrayList<String>();
     Map<String, String> initParamMap = new HashMap<String, String>();
