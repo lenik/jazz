@@ -1,6 +1,7 @@
 package net.bodz.lily.schema.account;
 
 import java.net.InetAddress;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Table;
 
+import net.bodz.bas.db.ibatis.IResultSetForm;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
@@ -36,7 +38,8 @@ public class User
         extends _User_stuff
         implements
             IUser,
-            IAttributed {
+            IAttributed,
+            IResultSetForm {
 
     private static final long serialVersionUID = 1L;
 
@@ -182,6 +185,11 @@ public class User
 
     public void setRunningState(UserRun runningState) {
         this.runningState = runningState;
+    }
+
+    @Override
+    public void readObject(ResultSet rs) {
+        System.out.println("READ RS");
     }
 
 }

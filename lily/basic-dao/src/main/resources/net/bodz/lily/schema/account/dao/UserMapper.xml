@@ -37,22 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="objlist_sql"><![CDATA[
         select
-            a.id, 
-            a."type", 
-            a."name", 
-            a.label, 
-            a.description, 
-            a.icon, 
-            a.priority, 
-            a.flags, 
-            a."state", 
-            a.creation, 
-            a.lastmod, 
-            a."version", 
-            a.props, 
-            a.gid0, 
-            a.referer, 
-            a.person, 
+            a.*,
             person.id person_id, 
             person.uid person_uid, 
             person.gid person_gid, 
@@ -149,22 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="objedit_sql"><![CDATA[
         select
-            a.id, 
-            a."type", 
-            a."name", 
-            a.label, 
-            a.description, 
-            a.icon, 
-            a.priority, 
-            a.flags, 
-            a."state", 
-            a.creation, 
-            a.lastmod, 
-            a."version", 
-            a.props, 
-            a.gid0, 
-            a.referer, 
-            a.person, 
+            a.*,
             person.id person_id, 
             person.uid person_uid, 
             person.gid person_gid, 
@@ -277,6 +247,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="select" resultMap="objlist_map">
+        <include refid="objedit_sql" />
+        <where>
+            <if test="_parameter != null">a.id = #{id}</if>
+        </where>
+    </select>
+
+    <select id="selectv" resultMap="objlist_map">
         <include refid="objedit_sql" />
         <where>
             <if test="_parameter != null">a.id = #{id}</if>
