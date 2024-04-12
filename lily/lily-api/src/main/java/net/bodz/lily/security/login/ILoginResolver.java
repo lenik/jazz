@@ -53,7 +53,7 @@ public interface ILoginResolver {
             out.entry("user", user);
         }
 
-        public LoginResult toLoginResult(ILoginTokenManager manager) {
+        public LoginResult toLoginResult(ILoginManager manager) {
             LoginResult result = new LoginResult(this, true);
             if (isSuccess())
                 result.token = manager.newToken(user);
@@ -61,7 +61,7 @@ public interface ILoginResolver {
         }
 
         @Deprecated
-        public static LoginResult toLoginResult(Result r, ILoginTokenManager manager) {
+        public static LoginResult toLoginResult(Result r, ILoginManager manager) {
             if (r == null)
                 return new LoginResult().fail("not available.");
             else

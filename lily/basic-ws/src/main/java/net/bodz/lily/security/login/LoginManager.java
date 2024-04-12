@@ -48,6 +48,11 @@ public class LoginManager
         }
     }
 
+    @Override
+    public LoginToken newToken(IUser user) {
+        return new LoginToken(user);
+    }
+
     boolean debug = true;
     int window = 1_000;
     int distance = 10 * 60; // 10 minutes
@@ -155,7 +160,7 @@ public class LoginManager
         try {
             sms.addSmsListener(log);
             // if (!debug)
-            if (!sms.sendPrepared(phone, usage, shortCode, timeout))
+            if (! sms.sendPrepared(phone, usage, shortCode, timeout))
                 return resp.fail("sms isn't available.");
         } catch (Exception e) {
             return resp.fail(e, "send sms error: " + e.getMessage());
@@ -184,7 +189,7 @@ public class LoginManager
         if (password == null)
             return result.fail("password isn't specified.");
 
-        if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
+        if (! crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
 
         UserOps_PhoneId ops = new UserOps_PhoneId(dataContext);
@@ -201,7 +206,7 @@ public class LoginManager
         if (password == null)
             return result.fail("password isn't specified.");
 
-        if (!crypto.checkShortVerificationCode(email, ecr, result).exists())
+        if (! crypto.checkShortVerificationCode(email, ecr, result).exists())
             return result.fail("Invalid code.");
 
         return result.fail("Not implemented.");
@@ -217,7 +222,7 @@ public class LoginManager
         if (password == null)
             return result.fail("password isn't specified.");
 
-        if (!crypto.checkShortVerificationCode(phone, ecr, result).exists())
+        if (! crypto.checkShortVerificationCode(phone, ecr, result).exists())
             return result.fail("Invalid code.");
 
         UserOps_PhoneId ops = new UserOps_PhoneId(dataContext);
@@ -234,7 +239,7 @@ public class LoginManager
         if (password == null)
             return result.fail("password isn't specified.");
 
-        if (!crypto.checkShortVerificationCode(email, ecr, result).exists())
+        if (! crypto.checkShortVerificationCode(email, ecr, result).exists())
             return result.fail("Invalid code.");
 
         return result.fail("Not implemented.");

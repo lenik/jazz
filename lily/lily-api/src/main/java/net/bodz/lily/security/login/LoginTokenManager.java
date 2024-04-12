@@ -3,8 +3,6 @@ package net.bodz.lily.security.login;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.lily.security.IUser;
-
 public class LoginTokenManager
         implements
             ILoginTokenManager {
@@ -15,11 +13,10 @@ public class LoginTokenManager
     Map<Long, LoginToken> tokens = new HashMap<>();
 
     @Override
-    public LoginToken newToken(IUser user) {
+    public synchronized void saveToken(LoginToken token) {
         long id = nextId++;
-        LoginToken token = new LoginToken(this, id, user);
+        token.id = id;
         tokens.put(id, token);
-        return token;
     }
 
     @Override

@@ -45,20 +45,22 @@ public class LoginToken
 
     private long transaction;
 
-    private LoginToken() {
-    }
-
-    LoginToken(ILoginTokenManager manager, long id, IUser user) {
+    LoginToken(IUser user) {
         if (user == null)
             throw new NullPointerException("user");
-        this.id = id;
         this.user = user;
         this.secret = user.getSecret();
         this.transaction = next();
     }
 
-    public static LoginToken create() {
-        return new LoginToken();
+    private LoginToken() {
+    }
+
+    public static LoginToken fromJson(JsonObject o, JsonFormOptions opts)
+            throws ParseException {
+        LoginToken token = new LoginToken();
+        token.jsonIn(o);
+        return token;
     }
 
     public long getId() {

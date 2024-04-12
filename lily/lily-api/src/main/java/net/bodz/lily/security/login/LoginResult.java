@@ -53,10 +53,9 @@ public class LoginResult
             serverChallenge = o.getString("sc");
             return true;
         case "token":
-            JsonObject tokenNode = o.getJsonObject("token");
-            if (tokenNode != null) {
-                this.token = LoginToken.create();
-                token.jsonIn(tokenNode, opts);
+            JsonObject jo_token = o.getJsonObject("token");
+            if (jo_token != null) {
+                this.token = LoginToken.fromJson(jo_token, opts);
             }
             return true;
         }

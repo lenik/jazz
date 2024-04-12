@@ -2,6 +2,7 @@ package net.bodz.lily.security.login;
 
 import net.bodz.bas.site.json.IJsonResponse;
 import net.bodz.bas.t.variant.IVariantMap;
+import net.bodz.lily.security.IUser;
 
 public interface ILoginManager {
 
@@ -11,6 +12,8 @@ public interface ILoginManager {
     String LOGIN = "login";
     String REGISTER = "register";
     String RESET_PASSWORD = "reset-password";
+
+    LoginToken newToken(IUser user);
 
     /**
      * @return server challenge

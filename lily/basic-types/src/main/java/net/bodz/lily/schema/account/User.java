@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
+import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.typer.std.MutableAttributes;
 import net.bodz.lily.security.IUser;
 
 /**
@@ -33,7 +35,8 @@ import net.bodz.lily.security.IUser;
 public class User
         extends _User_stuff
         implements
-            IUser {
+            IUser,
+            IAttributed {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,6 +44,8 @@ public class User
     public static final int ID_Admin = 1;
     public static final int ID_DefaultUser = 2;
     public static final int ID_Guest = 3;
+
+    MutableAttributes attributes;
 
     private List<Group> groups = new ArrayList<>();
     private List<UserSecret> secrets = new ArrayList<>();
@@ -56,6 +61,15 @@ public class User
         id(id);
         setName(name);
         setFullName(fullName);
+    }
+
+    @Override
+    public <T> T getAttribute(String name, T defaultValue) {
+        return null;
+    }
+
+    @Override
+    public void setAttribute(String name, Object value) {
     }
 
     public List<Group> getGroups() {

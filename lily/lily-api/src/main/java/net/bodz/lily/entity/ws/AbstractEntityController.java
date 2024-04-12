@@ -412,6 +412,10 @@ public abstract class AbstractEntityController<T>
     }
 
     String[] findColumnForProperty(String propertyName) {
+        IProperty keyProperty = typeInfo.getPrimaryKeyProperty(propertyName);
+        if (keyProperty != null)
+            return new String[] { propertyName };
+
         if (typeInfo.isColumnPresent(propertyName))
             return new String[] { propertyName };
 
