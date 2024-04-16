@@ -65,9 +65,7 @@ public abstract class AbstractMapperProxy
                         sb.append(", ");
                     Object o = args[i];
                     String s = JavaLang.toJavaLiteral(o, maxLen);
-                    sb.append('"');
                     sb.append(s);
-                    sb.append('"');
                 }
             sb.append(")");
         }
