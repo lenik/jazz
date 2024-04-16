@@ -2,7 +2,6 @@ package net.bodz.lily.entity.manager.cmd;
 
 import net.bodz.bas.content.IReset;
 import net.bodz.bas.content.ResetPolicy;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -121,7 +120,7 @@ class CreateProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
 
         String idStr = map.getString("templateId");

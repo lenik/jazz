@@ -7,7 +7,6 @@ import java.util.Map;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
@@ -162,12 +161,12 @@ public abstract class AbstractCriteriaBuilder<This>
 
     @Override
     public final void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         readObject(map, columnAndThenProps);
     }
 
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
-            throws LoaderException, ParseException {
+            throws ParseException {
         stack.clear();
         Composite composite = defaultCombine();
         composite.readObject(map, typeInferrer);

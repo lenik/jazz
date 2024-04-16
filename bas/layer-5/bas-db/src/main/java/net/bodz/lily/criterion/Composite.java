@@ -10,7 +10,6 @@ import java.util.Set;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonOut;
@@ -215,12 +214,12 @@ public abstract class Composite
     @Deprecated
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         readObject(map, (stack) -> Object.class);
     }
 
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferer)
-            throws LoaderException, ParseException {
+            throws ParseException {
         IStack<String> fieldNameStack = new ArrayStack<>();
 
         for (String key : map.keySet()) {

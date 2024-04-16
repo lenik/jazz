@@ -2,7 +2,6 @@ package net.bodz.lily.concrete.util;
 
 import java.util.Map;
 
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.IntegerRange;
 import net.bodz.bas.t.range.RangeVarsFn;
@@ -23,7 +22,7 @@ public class CalendarPeriodCriteriaBuilder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         yearsRange = RangeVarsFn.getFrom(map, "years", yearsRange);
         monthsRange = RangeVarsFn.getFrom(map, "months", monthsRange);
         daysRange = RangeVarsFn.getFrom(map, "days", daysRange);

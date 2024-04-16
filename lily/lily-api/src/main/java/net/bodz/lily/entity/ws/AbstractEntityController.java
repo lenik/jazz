@@ -24,7 +24,6 @@ import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.html.viz.IHtmlViewContext;
@@ -369,11 +368,7 @@ public abstract class AbstractEntityController<T>
         ICriteriaBuilder<?> criteria = getEntityTypeInfo().newCriteriaBuilder();
         if (criteria instanceof IVarMapForm) {
             IVarMapForm form = (IVarMapForm) criteria;
-            try {
-                form.readObject(q);
-            } catch (LoaderException e) {
-                throw new ParseException("error load " + criteria.getClass(), e);
-            }
+            form.readObject(q);
         }
 
         Orders propertyOrders = selectOptions.getOrders();
@@ -397,12 +392,14 @@ public abstract class AbstractEntityController<T>
         return result;
     }
 
-    protected List<?> fetchDataList(IVariantMap<String> q, ICriteriaBuilder<?> criteria, SelectOptions selectOptions) {
+    protected List<?> fetchDataList(IVariantMap<String> q, ICriteriaBuilder<?> criteria, SelectOptions selectOptions)
+            throws ParseException {
         IEntityMapper<?> mapper = getMapper();
         return mapper.filter(criteria.get(), selectOptions);
     }
 
-    protected long fetchDataCount(IVariantMap<String> q, ICriteriaBuilder<?> criteria) {
+    protected long fetchDataCount(IVariantMap<String> q, ICriteriaBuilder<?> criteria)
+            throws ParseException {
         IEntityMapper<?> mapper = getMapper();
         return mapper.count(criteria.get());
     }

@@ -6,7 +6,6 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.repr.content.FileContent;
@@ -169,7 +168,7 @@ class ResolveProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
 
         jsonFormOptions = new JsonFormOptions();

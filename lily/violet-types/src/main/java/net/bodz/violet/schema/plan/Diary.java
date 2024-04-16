@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.res.HaveAttachments;
 import net.bodz.bas.site.json.JsonArrayList;
@@ -31,7 +30,7 @@ public class Diary
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
 
         JsonArrayList partiesList = (JsonArrayList) map.get("parties");

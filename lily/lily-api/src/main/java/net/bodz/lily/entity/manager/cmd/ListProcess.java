@@ -6,7 +6,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.content.FileContent;
@@ -112,7 +111,7 @@ public class ListProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
         tableData.readObject(map);
         this.parameterMap = map;

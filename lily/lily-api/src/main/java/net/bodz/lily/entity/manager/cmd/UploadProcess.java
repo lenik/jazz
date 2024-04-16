@@ -2,7 +2,6 @@ package net.bodz.lily.entity.manager.cmd;
 
 import java.io.File;
 
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.repr.path.ServiceTargetException;
 import net.bodz.bas.servlet.ctx.IAnchor;
@@ -49,7 +48,7 @@ public class UploadProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
         String idString = map.getString("id");
         if (idString != null) {

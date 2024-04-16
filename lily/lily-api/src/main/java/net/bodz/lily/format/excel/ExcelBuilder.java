@@ -9,7 +9,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.repr.content.FileContent;
@@ -42,7 +41,7 @@ public abstract class ExcelBuilder
             throws FormatException {
         try {
             readObject(q);
-        } catch (LoaderException | ParseException e) {
+        } catch (ParseException e) {
             throw new IllegalArgumentException("Failed to parse parameters: " + e.getMessage(), e);
         }
         return build();
@@ -120,9 +119,8 @@ public abstract class ExcelBuilder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
-        VarMapLoader loader = new VarMapLoader();
-        loader.load(getClass(), this, map);
+            throws ParseException {
+        VarMapLoader.defaultParse(this, map);
     }
 
     @Override

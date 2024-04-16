@@ -14,7 +14,6 @@ import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.fmt.records.CsvRecords;
@@ -106,7 +105,7 @@ public class ImportProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         encoding = map.getString("encoding", encoding);
         delim = map.getString("delim", delim);
     }

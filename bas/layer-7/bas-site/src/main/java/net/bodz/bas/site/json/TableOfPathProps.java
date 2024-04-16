@@ -10,7 +10,6 @@ import java.util.Map;
 
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -188,7 +187,7 @@ public class TableOfPathProps
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws ParseException {
         forDataTable = map.getBoolean(Q_FOR_DATATABLE, forDataTable);
 
         String columns = map.getString(Q_COLUMNS);

@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.fmt.json.JsonVariant;
@@ -260,7 +259,7 @@ public abstract class CoMessage<Id>
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
     }
 

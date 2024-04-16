@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Table;
 
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.bean.DetailLevel;
 import net.bodz.bas.meta.decl.Priority;
@@ -79,7 +78,7 @@ public class TransportOrder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
 
         List<TransportOrderItem> items = getItems();

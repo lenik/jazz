@@ -3,7 +3,6 @@ package net.bodz.lily.concrete;
 import java.time.ZonedDateTime;
 
 import net.bodz.bas.c.string.StringPred;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.bas.t.variant.MutableVariant;
@@ -70,7 +69,7 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
 
     @Override
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map, typeInferrer);
 
         String searchText = map.getString("search-text");

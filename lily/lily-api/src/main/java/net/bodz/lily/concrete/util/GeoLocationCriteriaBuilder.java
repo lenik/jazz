@@ -2,7 +2,7 @@ package net.bodz.lily.concrete.util;
 
 import java.util.Map;
 
-import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.range.DoubleRange;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -65,7 +65,7 @@ public class GeoLocationCriteriaBuilder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException {
+            throws ParseException {
         distance = map.getDouble("distance");
         regionId = map.getInt("region.id");
     }

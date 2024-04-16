@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.persistence.Column;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -206,9 +205,8 @@ public abstract class StructRow
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
-        VarMapLoader loader = new VarMapLoader();
-        loader.load(getClass(), this, map);
+            throws ParseException {
+        VarMapLoader.defaultParse(this, map);
     }
 
     @Override

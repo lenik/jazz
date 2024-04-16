@@ -3,7 +3,6 @@ package net.bodz.lily.entity.manager.cmd;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.entity.IId;
@@ -72,7 +71,7 @@ class DeleteProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         List<Object> idList = new ArrayList<>();
 
         String idString = map.getString("id");

@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.content.IReset;
 import net.bodz.bas.db.ibatis.IncludeMapperXml;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFormOptions;
@@ -411,7 +410,7 @@ public abstract class CoObject
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
         super.readObject(map);
 
 //        JsonVarMap propsMap = (JsonVarMap) map.get("properties");

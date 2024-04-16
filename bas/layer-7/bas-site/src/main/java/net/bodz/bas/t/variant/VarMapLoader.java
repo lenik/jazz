@@ -1,10 +1,19 @@
 package net.bodz.bas.t.variant;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.ITypeProvider;
@@ -66,7 +75,7 @@ public class VarMapLoader {
         }
 
         if (remain == null) {
-            if (!property.isWritable()) {
+            if (! property.isWritable()) {
                 // can be transient or derived, and all
                 // logger.warn("Ignored readonly property: " + path);
                 return;
@@ -95,7 +104,7 @@ public class VarMapLoader {
 
         boolean dirty = false;
         if (pVal == null) {
-            if (!autoCreate)
+            if (! autoCreate)
                 return;
             try {
                 pVal = pClass.getConstructor().newInstance();
@@ -155,7 +164,7 @@ public class VarMapLoader {
             if (rval instanceof ILookupMap) {
                 ILookupMap<String, ?> rmap = ILookupMap.class.cast(rval);
                 if (lval == null) {
-                    if (!autoCreate) {
+                    if (! autoCreate) {
                         logger.warn("Skipped to load nested map on null property.");
                         return;
                     }
@@ -232,6 +241,17 @@ public class VarMapLoader {
                 throw new RuntimeException(e.getMessage(), e);
             }
         return null;
+    }
+
+    public static void defaultParse(Object o, IVariantMap<String> q)
+            throws ParseException {
+        VarMapLoader loader = new VarMapLoader();
+        Class<?> type = o.getClass();
+        try {
+            loader.load(type, o, q);
+        } catch (LoaderException e) {
+            throw new ParseException("Error load " + type + ": " + e.getMessage(), e);
+        }
     }
 
 }

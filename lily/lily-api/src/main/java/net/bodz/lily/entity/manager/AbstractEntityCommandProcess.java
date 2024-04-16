@@ -9,7 +9,6 @@ import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.JsonFn;
@@ -240,7 +239,7 @@ public abstract class AbstractEntityCommandProcess
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
+            throws ParseException {
     }
 
     @Override

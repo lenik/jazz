@@ -10,7 +10,6 @@ import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 
 import net.bodz.bas.c.java.util.regex.UnixStyleVarExpander;
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.ITreeOut;
@@ -103,7 +102,7 @@ public abstract class MarkdownBuilder
             throws FormatException {
         try {
             readObject(q);
-        } catch (LoaderException | ParseException e) {
+        } catch (ParseException e) {
             throw new IllegalArgumentException("Failed to parse parameters: " + e.getMessage(), e);
         }
         return buildMarkdown();
@@ -167,9 +166,8 @@ public abstract class MarkdownBuilder
 
     @Override
     public void readObject(IVariantMap<String> map)
-            throws LoaderException, ParseException {
-        VarMapLoader loader = new VarMapLoader();
-        loader.load(getClass(), this, map);
+            throws ParseException {
+        VarMapLoader.defaultParse(this, map);
     }
 
     @Override
