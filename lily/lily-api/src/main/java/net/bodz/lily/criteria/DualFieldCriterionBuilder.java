@@ -1,8 +1,6 @@
 package net.bodz.lily.criteria;
 
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.typer.Typers;
-import net.bodz.bas.typer.std.IParser;
 import net.bodz.lily.criterion.CompareMode;
 import net.bodz.lily.criterion.Disjunction;
 import net.bodz.lily.criterion.FieldBetween;
@@ -17,15 +15,12 @@ public class DualFieldCriterionBuilder<fin_target, This, T>
 
     String fieldName1;
     String fieldName2;
-    Class<T> type;
-    IParser<T> parser;
 
     public DualFieldCriterionBuilder(String fieldName1, String fieldName2, Class<T> type, fin_target finishTarget,
             IReceiver<? super ICriterion> receiver) {
         super(fieldName1, type, finishTarget, receiver);
         this.fieldName1 = fieldName1;
         this.fieldName2 = fieldName2;
-        parser = Typers.getTyper(type, IParser.class);
     }
 
     @Override
