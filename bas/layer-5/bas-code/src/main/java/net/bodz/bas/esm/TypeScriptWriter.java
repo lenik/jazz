@@ -112,9 +112,4 @@ public class TypeScriptWriter
         return bufOut;
     }
 
-    @Override
-    public String toString() {
-        return getWrapped().toString();
-    }
-
 }

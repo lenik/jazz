@@ -27,11 +27,6 @@ public class DecoratedPrimitive2d
         super(_orig);
     }
 
-    @Override
-    public String toString() {
-        return getWrapped().toString();
-    }
-
     /** ⇱ Implementation Of {@link IPrimitive2d}. */
     /* _____________________________ */static section.iface __BASE__;
 

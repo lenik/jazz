@@ -9,7 +9,9 @@ import java.io.Serializable;
  * object, but not by extending that object's type. This allows you to do so at runtime.
  */
 public abstract class AbstractDecorator<T>
-        implements IWrapper<T>, Serializable {
+        implements
+            IWrapper<T>,
+            Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,6 +24,11 @@ public abstract class AbstractDecorator<T>
     @Override
     public T getWrapped() {
         return _orig;
+    }
+
+    @Override
+    public String toString() {
+        return getWrapped().toString();
     }
 
 }
