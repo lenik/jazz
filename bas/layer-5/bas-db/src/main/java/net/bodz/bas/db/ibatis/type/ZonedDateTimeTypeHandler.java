@@ -17,6 +17,10 @@ import net.bodz.bas.db.ibatis.AliasedType;
 public class ZonedDateTimeTypeHandler
         extends AbstractTemporalTypeHandler<ZonedDateTime> {
 
+    public ZonedDateTimeTypeHandler() {
+        super(ZonedDateTime.class);
+    }
+
     @Override
     protected ZonedDateTime toTemporal(Object o) {
         if (o.getClass() == ZonedDateTime.class)

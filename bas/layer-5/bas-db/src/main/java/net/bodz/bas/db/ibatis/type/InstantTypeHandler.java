@@ -15,6 +15,10 @@ import net.bodz.bas.db.ibatis.AliasedType;
 public class InstantTypeHandler
         extends AbstractTemporalTypeHandler<Instant> {
 
+    public InstantTypeHandler() {
+        super(Instant.class);
+    }
+
     @Override
     protected Instant toTemporal(Object o) {
         if (o.getClass() == Instant.class)

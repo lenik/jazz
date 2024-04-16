@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +22,12 @@ public abstract class AbstractTemporalTypeHandler<T extends TemporalAccessor>
     static final int DEFAULT_YEAR = 2000;
     static final int DEFAULT_MONTH = 1;
     static final int DEFAULT_DAY = 1;
+
+    final Class<T> type;
+
+    public AbstractTemporalTypeHandler(Class<T> type) {
+        this.type = type;
+    }
 
     protected LocalDateTime toLocalDateTime(T val) {
         return LocalDateTime.of( //
@@ -87,46 +94,58 @@ public abstract class AbstractTemporalTypeHandler<T extends TemporalAccessor>
     @Override
     public T getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        Object obj = rs.getObject(columnName);
-        if (obj == null)
-            return null;
+        try {
+            return rs.getObject(columnName, type);
+        } catch (SQLFeatureNotSupportedException e) {
+            Object obj = rs.getObject(columnName);
+            if (obj == null)
+                return null;
 
-        T temporal = toTemporal(obj);
-        if (temporal != null)
-            return temporal;
+            T temporal = toTemporal(obj);
+            if (temporal != null)
+                return temporal;
 
-        Timestamp timestamp = rs.getTimestamp(columnName);
-        return toTemporal(timestamp);
+            T val = rs.getObject(columnName, type);
+            return toTemporal(val);
+        }
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        Object obj = rs.getObject(columnIndex);
-        if (obj == null)
-            return null;
+        try {
+            return rs.getObject(columnIndex, type);
+        } catch (SQLFeatureNotSupportedException e) {
+            Object obj = rs.getObject(columnIndex);
+            if (obj == null)
+                return null;
 
-        T temporal = toTemporal(obj);
-        if (temporal != null)
-            return temporal;
+            T temporal = toTemporal(obj);
+            if (temporal != null)
+                return temporal;
 
-        Timestamp timestamp = rs.getTimestamp(columnIndex);
-        return toTemporal(timestamp);
+            Timestamp timestamp = rs.getTimestamp(columnIndex);
+            return toTemporal(timestamp);
+        }
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        Object obj = cs.getObject(columnIndex);
-        if (obj == null)
-            return null;
+        try {
+            return cs.getObject(columnIndex, type);
+        } catch (SQLFeatureNotSupportedException e) {
+            Object obj = cs.getObject(columnIndex);
+            if (obj == null)
+                return null;
 
-        T temporal = toTemporal(obj);
-        if (temporal != null)
-            return temporal;
+            T temporal = toTemporal(obj);
+            if (temporal != null)
+                return temporal;
 
-        Timestamp timestamp = cs.getTimestamp(columnIndex);
-        return toTemporal(timestamp);
+            Timestamp timestamp = cs.getTimestamp(columnIndex);
+            return toTemporal(timestamp);
+        }
     }
 
 }

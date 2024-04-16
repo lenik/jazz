@@ -21,6 +21,10 @@ import net.bodz.bas.db.ibatis.AliasedType;
 public class OffsetTimeTypeHandler
         extends AbstractTemporalTypeHandler<OffsetTime> {
 
+    public OffsetTimeTypeHandler() {
+        super(OffsetTime.class);
+    }
+
     @Override
     protected LocalDateTime toLocalDateTime(OffsetTime val) {
         return LocalDateTime.of( //

@@ -20,6 +20,10 @@ import net.bodz.bas.db.ibatis.AliasedType;
 public class LocalTimeTypeHandler
         extends AbstractTemporalTypeHandler<LocalTime> {
 
+    public LocalTimeTypeHandler() {
+        super(LocalTime.class);
+    }
+
     @Override
     protected LocalDateTime toLocalDateTime(LocalTime val) {
         return LocalDateTime.of( //

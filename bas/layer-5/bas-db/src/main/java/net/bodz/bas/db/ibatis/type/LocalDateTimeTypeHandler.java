@@ -17,6 +17,10 @@ import net.bodz.bas.db.ibatis.AliasedType;
 public class LocalDateTimeTypeHandler
         extends AbstractTemporalTypeHandler<LocalDateTime> {
 
+    public LocalDateTimeTypeHandler() {
+        super(LocalDateTime.class);
+    }
+
     @Override
     protected LocalDateTime toTemporal(Object o) {
         if (o.getClass() == LocalDateTime.class)
