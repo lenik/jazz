@@ -31,7 +31,7 @@ public interface ISqlDialect {
 
     String sqlDateFormat(String javaDateTimeFormat);
 
-    String toDate(String quotedDateStr, String sqlDateFormat);
+    String toDate(String dateStr, String sqlDateFormat);
 
     String qDate(java.util.Date date);
 

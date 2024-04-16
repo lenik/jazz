@@ -76,8 +76,9 @@ public abstract class AbstractSqlDialect
     }
 
     @Override
-    public String toDate(String quotedDateStr, String sqlDateFormat) {
-        return "to_date(" + quotedDateStr + ", " + sqlDateFormat + ")";
+    public String toDate(String dateStr, String sqlDateFormat) {
+        String sql = "to_date(" + qString(dateStr) + ", " + qString(sqlDateFormat) + ")";
+        return sql;
     }
 
     protected String qRawDate(String rawDateLiteral) {
