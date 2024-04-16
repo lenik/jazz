@@ -1,4 +1,4 @@
-package net.bodz.bas.db.ibatis;
+package net.bodz.bas.db.ibatis.hack;
 
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
@@ -10,6 +10,9 @@ import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+
+import net.bodz.bas.db.ibatis.CustomResultSetHandler;
+import net.bodz.bas.db.ibatis.IResultSetForm;
 
 public class MyConfiguration
         extends Configuration {

@@ -24,6 +24,7 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import net.bodz.bas.c.loader.ClassLoaders;
 import net.bodz.bas.c.type.TypeIndex;
+import net.bodz.bas.db.ibatis.hack.MyConfiguration;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.LoadException;
 import net.bodz.bas.log.Logger;
