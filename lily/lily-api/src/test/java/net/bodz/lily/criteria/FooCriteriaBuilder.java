@@ -38,8 +38,8 @@ public class FooCriteriaBuilder
 
         FooCriteriaBuilder b = new FooCriteriaBuilder();
         b.name.notEq("Tom")//
-                .or().age.lessThan(20).girl.isFalse() //
-                /*  */.or().girl.isTrue().age.lessThan(30).end().end() //
+                .aboveOr().age.lessThan(20).girl.isFalse() //
+                /*  */.aboveOr().girl.isTrue().age.lessThan(30).end().end() //
                 .not().salary.lessThan(new BigDecimal(1000)).end() //
                 .age.greaterThan(8).girl.isTrue();
 

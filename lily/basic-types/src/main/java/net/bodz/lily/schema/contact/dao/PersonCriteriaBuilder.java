@@ -13,7 +13,7 @@ public class PersonCriteriaBuilder
     @Override
     public void query(String text) {
         super.query(text);
-        or().gender.like(text).end();
+        aboveOr().gender.like(text).end();
     }
 
 }

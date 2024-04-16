@@ -8,7 +8,11 @@ public interface ICriteriaBuilder<This> {
 
     // self_t and(self_t other);
 
-    This or();
+    // default This or() { return orOther(); }
+
+    This aboveOr();
+
+    This beginOr();
 
     This not();
 

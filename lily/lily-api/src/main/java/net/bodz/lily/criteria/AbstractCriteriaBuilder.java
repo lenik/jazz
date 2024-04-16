@@ -6,14 +6,11 @@ import java.util.Map;
 
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.LoaderException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.bas.t.list.ArrayStack;
-import net.bodz.bas.t.list.IStack;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.Composite;
@@ -33,7 +30,7 @@ public abstract class AbstractCriteriaBuilder<This>
             IVarMapForm {
 
     protected final IEntityTypeInfo typeInfo;
-    protected IStack<Composite> stack = new ArrayStack<>();
+    CompositeStack stack = new CompositeStack();
 
     public AbstractCriteriaBuilder() {
         ForEntityType aForEntityType = getClass().getAnnotation(ForEntityType.class);
@@ -57,7 +54,7 @@ public abstract class AbstractCriteriaBuilder<This>
 
     @Override
     public ICriterion get() {
-        return stack.top();
+        return stack.top().composite;
     }
 
     Composite defaultCombine() {
@@ -66,7 +63,7 @@ public abstract class AbstractCriteriaBuilder<This>
 
     @Override
     public This not() {
-        Composite top = stack.top();
+        Composite top = stack.top().composite;
         Composite other = defaultCombine();
         Not not = new Not();
         // not.add(other);
@@ -78,49 +75,51 @@ public abstract class AbstractCriteriaBuilder<This>
     }
 
     @Override
-    public This or() {
-        Composite other = defaultCombine();
+    public This aboveOr() {
+        Composite other = new Junction();
+        stack.push(other, ReduceMode.OR);
+        return _this();
+    }
 
-        ICriterion top = stack.top(); // .reduce();
-        if (top instanceof Disjunction) {
-            // Disjunction disj = (Disjunction) top;
-            // disj.add(other);
-        } else {
-            Disjunction disj = new Disjunction();
-            disj.add(top);
-            // disj.add(other);
-            Composite restore = defaultCombine();
-            restore.add(disj);
-            stack.replaceTop(restore);
-        }
-
-        stack.push(other);
-
+    @Override
+    public This beginOr() {
+        Disjunction or = new Disjunction();
+        stack.push(or);
         return _this();
     }
 
     @Override
     public This end() {
-        ICriterion other = stack.pop(); // .reduce();
-        Composite top = stack.top();
-        if (top instanceof Disjunction) {
-            top.add(other);
-        } else if (top instanceof Junction) { // restore-and
-            ICriterion last = top.getLast();
-            if (last instanceof Composite) {
-                Composite lastComposite = (Composite) last;
-                lastComposite.add(other);
-            } else
-                throw new IllegalUsageError("top.last isn't composite");
-        } else
-            throw new IllegalUsageError("unexpected top type");
-        // stack.replaceTop(top.reduce());
+        CriterionStackFrame frame = stack.pop();
+        ICriterion ret = frame.composite.reduce();
+        if (ret == null)
+            return _this();
+
+        CriterionStackFrame topFrame = stack.top();
+        Composite top = topFrame.composite;
+        switch (frame.mode) {
+        case APPEND:
+            top.add(ret);
+            break;
+        case OR:
+            if (top instanceof Disjunction) {
+                top.add(ret);
+            } else {
+                Disjunction or = new Disjunction();
+                or.add(top.reduce());
+                or.add(ret);
+                top = new Junction();
+                top.add(or.reduce());
+                topFrame.composite = top; // replace stack top.
+            }
+            break;
+        }
         return _this();
     }
 
     @Override
     public void receive(ICriterion value) {
-        Composite top = stack.top();
+        Composite top = stack.top().composite;
         top.add(value);
     }
 

@@ -199,6 +199,8 @@ public abstract class Composite
     }
 
     public boolean add(ICriterion e) {
+        if (e == null)
+            return false;
         return list.add(e);
     }
 

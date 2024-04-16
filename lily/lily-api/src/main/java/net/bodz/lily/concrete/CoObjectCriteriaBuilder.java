@@ -42,8 +42,8 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
         if (text == null || text.isEmpty())
             return;
         String pattern = "%" + text + "%";
-        or().label.like(pattern).end();
-        or().description.like(pattern).end();
+        aboveOr().label.like(pattern).end();
+        aboveOr().description.like(pattern).end();
 
         MutableVariant textVar = MutableVariant.wrap(text);
         if (StringPred.isDecimal(text)) {
@@ -53,7 +53,7 @@ public class CoObjectCriteriaBuilder<self_t extends CoObjectCriteriaBuilder<self
             if (idField != null) {
                 Class<?> valueType = idField.getValueType();
                 Number id = (Number) textVar.convert(valueType);
-                or();
+                aboveOr();
                 idField.eq(id);
                 end();
             }
