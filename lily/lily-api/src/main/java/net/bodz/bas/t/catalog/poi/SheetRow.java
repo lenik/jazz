@@ -161,11 +161,11 @@ public class SheetRow
         return map;
     }
 
-    public List<Pair<Integer, String>> toPairs() {
-        return toPairs((String text) -> ! text.isEmpty());
+    public List<Pair<Integer, String>> toIndexTextPairs() {
+        return toIndexTextPairs((String text) -> ! text.isEmpty());
     }
 
-    public List<Pair<Integer, String>> toPairs(Predicate<String> predicate) {
+    public List<Pair<Integer, String>> toIndexTextPairs(Predicate<String> predicate) {
         List<Pair<Integer, String>> pairs = new ArrayList<>();
         int nCell = getCellCount();
         for (int iCell = 0; iCell < nCell; iCell++) {
@@ -173,7 +173,6 @@ public class SheetRow
             String cellText = cell.getText();
             if (cellText == null)
                 continue;
-            cellText = cellText.trim();
             if (! predicate.test(cellText))
                 continue;
             pairs.add(Pair.of(iCell, cellText));

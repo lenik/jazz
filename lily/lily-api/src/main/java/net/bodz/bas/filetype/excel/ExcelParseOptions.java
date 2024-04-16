@@ -1,15 +1,11 @@
 package net.bodz.bas.filetype.excel;
 
-public class ExcelParseOptions {
+import net.bodz.bas.t.catalog.TableParseOptions;
+
+public class ExcelParseOptions
+        extends TableParseOptions {
 
     public boolean useRawText;
-
     public boolean ignoreEmptyRows = true;
-
-    public boolean renameConflictColumns;
-    public int renameTryMax = 100;
-
-    public boolean autoType;
-    public int maxSamples; // scan from the top
 
 }

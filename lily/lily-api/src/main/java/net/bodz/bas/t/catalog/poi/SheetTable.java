@@ -16,12 +16,12 @@ import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.fmt.xml.IXmlForm;
 import net.bodz.bas.fmt.xml.IXmlOutput;
 import net.bodz.bas.fmt.xml.xq.IElement;
-import net.bodz.bas.t.catalog.CsvTable;
 import net.bodz.bas.t.catalog.IMutableRow;
 import net.bodz.bas.t.catalog.IRow;
 import net.bodz.bas.t.catalog.ISchema;
 import net.bodz.bas.t.catalog.MutableTable;
 import net.bodz.bas.t.catalog.TableOid;
+import net.bodz.bas.t.catalog.Tables;
 
 public class SheetTable
         extends MutableTable
@@ -85,6 +85,16 @@ public class SheetTable
 
     public List<? extends SheetColumn> getColumns() {
         return metadata.getColumns();
+    }
+
+    public int computeColumnCount() {
+        int maxCellCount = 0;
+        for (IRow row : rows) {
+            int cellCount = row.getCellCount();
+            if (cellCount > maxCellCount)
+                maxCellCount = cellCount;
+        }
+        return maxCellCount;
     }
 
     @Override
@@ -153,7 +163,7 @@ public class SheetTable
                     String name = th.getData().toString();
 
                     if (options.renameConflictColumns)
-                        name = CsvTable.renameConflict(meta, name, options.renameTryMax);
+                        name = Tables.renameConflict(meta, name, options.renameTryMax);
 
                     meta.addNewColumn(name); // .setJavaClass(String.class);
                 }

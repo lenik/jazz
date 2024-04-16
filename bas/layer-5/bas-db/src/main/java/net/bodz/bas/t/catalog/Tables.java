@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.err.DuplicatedKeyException;
+
 public class Tables {
 
     public static List<TableOid> id(List<? extends ITableMetadata> list) {
@@ -30,6 +32,18 @@ public class Tables {
         List<T> sorted = sortInCreationOrder(tableList, directory, autoLoadConnection);
         Collections.reverse(sorted);
         return sorted;
+    }
+
+    public static String renameConflict(IRowSetMetadata columns, String name, int max) {
+        if (columns.getColumn(name) == null)
+            return name;
+        for (int i = 1; i <= max; i++) {
+            String newName = name + "_" + i;
+            IColumnMetadata existing = columns.getColumn(newName);
+            if (existing == null)
+                return newName;
+        }
+        throw new DuplicatedKeyException("column duplicated: " + name);
     }
 
 }

@@ -126,12 +126,19 @@ public class SheetCell
         CellType type = pCell.getCellType();
         // text = pCell.toString();
         // ExcelUtil.getCellValue();
-        setText(ExcelUtil.getCellText(pCell));
+
+        String cellText = ExcelUtil.getCellText(pCell);
+        if (options.trimText)
+            cellText = options.trimText(cellText);
+        setText(cellText);
 
         if (options.useRawText) {
             if (pCell instanceof XSSFCell) {
                 XSSFCell xssfCell = (XSSFCell) pCell;
-                setText(xssfCell.getRawValue());
+                String rawValue = xssfCell.getRawValue();
+                if (options.trimText)
+                    rawValue = options.trimText(rawValue);
+                setText(rawValue);
             }
         }
 
@@ -149,7 +156,7 @@ public class SheetCell
 
         case FORMULA:
             CellValue pCellValue = getBook().evaluator.evaluate(pCell);
-            readObjectFromEvaluated(pCellValue, pCell);
+            readObjectFromEvaluated(pCellValue, pCell, options);
             break;
 
         case NUMERIC:
@@ -162,7 +169,10 @@ public class SheetCell
 
         case BLANK:
         case STRING:
-            data = pCell.getStringCellValue();
+            String str = pCell.getStringCellValue();
+            if (options.trimText)
+                str = options.trimText(str);
+            data = str;
             break;
 
         default:
@@ -172,7 +182,7 @@ public class SheetCell
         setData(data);
     }
 
-    public void readObjectFromEvaluated(CellValue pCellVal, Cell pCell) {
+    public void readObjectFromEvaluated(CellValue pCellVal, Cell pCell, ExcelParseOptions options) {
         CellType type = pCellVal.getCellType();
         setText(pCellVal.formatAsString());
         Object data = null;
@@ -196,7 +206,10 @@ public class SheetCell
 
         case BLANK:
         case STRING:
-            data = pCellVal.getStringValue();
+            String str = pCellVal.getStringValue();
+            if (options.trimText)
+                str = options.trimText(str);
+            data = str;
             break;
 
         default:
