@@ -48,6 +48,8 @@ public class SelectOptions
     }
 
     public Orders getOrders() {
+        if (orders == null || orders.size() == 0)
+            return null;
         return orders;
     }
 
