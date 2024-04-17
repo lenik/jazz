@@ -3,7 +3,7 @@ package net.bodz.bas.scanner.ztx965n;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import net.bodz.bas.c.java.util.DateTimes;
+import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.BCharOut;
 

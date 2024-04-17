@@ -61,7 +61,8 @@ public class LocalTimeTypeHandler
     @Override
     protected LocalTime toTemporal(Timestamp timestamp) {
         Instant instant = Instant.ofEpochMilli(timestamp.getTime());
-        return LocalTime.ofInstant(instant, ZoneOffset.UTC);
+        // return LocalTime.ofInstant(instant, ZoneOffset.UTC);
+        return instant.atOffset(ZoneOffset.UTC).toLocalTime();
     }
 
 }

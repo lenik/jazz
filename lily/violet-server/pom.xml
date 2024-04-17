@@ -28,5 +28,9 @@
             <version>3.8.3</version>
         </dependency>
     </dependencies>
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
     <name>Violet :: Web Server</name>
 </project>

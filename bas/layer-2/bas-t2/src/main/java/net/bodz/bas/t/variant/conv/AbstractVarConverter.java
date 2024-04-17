@@ -269,13 +269,15 @@ public abstract class AbstractVarConverter<T>
     @Override
     public LocalDate toLocalDate(T value) {
         Instant instant = toInstant(value);
-        return LocalDate.ofInstant(instant, ZoneId.systemDefault());
+        // return LocalDate.ofInstant(instant, ZoneId.systemDefault());
+        return instant.atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     @Override
     public LocalTime toLocalTime(T value) {
         Instant instant = toInstant(value);
-        return LocalTime.ofInstant(instant, ZoneId.systemDefault());
+        // return LocalTime.ofInstant(instant, ZoneId.systemDefault());
+        return instant.atZone(ZoneId.systemDefault()).toLocalTime();
     }
 
     @Override

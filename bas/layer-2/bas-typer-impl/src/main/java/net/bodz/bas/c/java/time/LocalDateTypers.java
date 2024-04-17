@@ -53,7 +53,8 @@ public class LocalDateTypers
         int before = prng.nextInt();
         Instant sampleInstant = fromTheYear(-before);
         ZoneId zoneId = getRandomZoneId(prng);
-        return LocalDate.ofInstant(sampleInstant, zoneId);
+        // return LocalDate.ofInstant(sampleInstant, zoneId);
+        return sampleInstant.atZone(zoneId).toLocalDate();
     }
 
 }

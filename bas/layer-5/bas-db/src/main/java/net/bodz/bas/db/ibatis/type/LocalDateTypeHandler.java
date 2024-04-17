@@ -55,7 +55,8 @@ public class LocalDateTypeHandler
     @Override
     protected LocalDate toTemporal(Timestamp timestamp) {
         Instant instant = Instant.ofEpochMilli(timestamp.getTime());
-        return LocalDate.ofInstant(instant, ZoneOffset.UTC);
+        // return LocalDate.ofInstant(instant, ZoneOffset.UTC);
+        return instant.atOffset(ZoneOffset.UTC).toLocalDate();
     }
 
 }

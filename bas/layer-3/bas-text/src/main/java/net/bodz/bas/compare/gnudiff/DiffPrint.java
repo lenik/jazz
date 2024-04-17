@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 
-import net.bodz.bas.c.java.util.DateTimes;
+import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.fn.legacy.Pred1;
 
 /**

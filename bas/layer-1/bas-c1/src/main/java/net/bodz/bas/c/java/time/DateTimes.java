@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.util;
+package net.bodz.bas.c.java.time;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -63,13 +63,15 @@ public class DateTimes
 
     public static LocalDate convert(java.sql.Date sqlDate) {
         Instant instant = Instant.ofEpochMilli(sqlDate.getTime());
-        LocalDate localDate = LocalDate.ofInstant(instant, ZoneId.systemDefault());
+        // LocalDate localDate = LocalDate.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate;
     }
 
     public static LocalTime convert(java.sql.Time sqlTime) {
         Instant instant = Instant.ofEpochMilli(sqlTime.getTime());
-        LocalTime localTime = LocalTime.ofInstant(instant, ZoneId.systemDefault());
+        // LocalTime localTime = LocalTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalTime localTime = instant.atZone(ZoneId.systemDefault()).toLocalTime();
         return localTime;
     }
 

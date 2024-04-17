@@ -2,8 +2,8 @@ package net.bodz.bas.t.variant.conv;
 
 import java.util.Calendar;
 
+import net.bodz.bas.c.java.text.Dates;
 import net.bodz.bas.c.java.util.Calendars;
-import net.bodz.bas.c.java.util.Dates;
 import net.bodz.bas.err.TypeConvertException;
 
 public class CalendarVarConverter

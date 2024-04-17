@@ -1,4 +1,4 @@
-package net.bodz.bas.c.java.util;
+package net.bodz.bas.c.java.time;
 
 import java.time.format.DateTimeFormatter;
 

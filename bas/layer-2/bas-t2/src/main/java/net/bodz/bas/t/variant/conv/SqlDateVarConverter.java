@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import net.bodz.bas.c.java.util.DateTimes;
+import net.bodz.bas.c.java.time.DateTimes;
 import net.bodz.bas.err.TypeConvertException;
 
 public class SqlDateVarConverter

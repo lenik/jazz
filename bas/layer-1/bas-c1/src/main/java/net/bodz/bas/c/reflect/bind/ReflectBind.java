@@ -17,7 +17,8 @@ public class ReflectBind {
     }
 
     public static void _setFieldForce(Object o, Field field, Object value) {
-        boolean old = field.canAccess(o);
+//        boolean old = field.canAccess(o);
+        boolean old = field.isAccessible();
         if (!old)
             field.setAccessible(true);
         try {

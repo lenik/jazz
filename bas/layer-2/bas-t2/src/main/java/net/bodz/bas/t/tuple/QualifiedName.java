@@ -22,7 +22,7 @@ public class QualifiedName {
     }
 
     public static QualifiedName of(Class<?> clazz) {
-        return new QualifiedName(clazz.getPackageName(), clazz.getSimpleName());
+        return new QualifiedName(clazz.getPackage().getName(), clazz.getSimpleName());
     }
 
     public static QualifiedName parse(String fullName) {
