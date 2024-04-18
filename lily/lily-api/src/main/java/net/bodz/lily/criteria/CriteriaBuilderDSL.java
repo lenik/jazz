@@ -16,7 +16,12 @@ public abstract class CriteriaBuilderDSL<This>
             IReceiver<ICriterion> {
 
     protected String qualify(String fieldName) {
-        return fieldName;
+//        ISqlDialect dialect = DataApps.getPreferred().getDataContext().getOptions().getType().getSqlFormat();
+//        fieldName = dialect.qNameSmart(fieldName);
+        if (fieldName.contains("."))
+            return fieldName;
+        else
+            return "a." + fieldName;
     }
 
     protected <T extends Number> NumberField<T> number(String fieldName, Class<T> type) {
