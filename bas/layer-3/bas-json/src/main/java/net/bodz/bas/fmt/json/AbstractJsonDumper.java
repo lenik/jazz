@@ -137,6 +137,11 @@ public abstract class AbstractJsonDumper<self_t>
 
     protected boolean dumpVariant(@NotNull Object obj, int depth)
             throws IOException, FormatException {
+        if (obj == null) {
+            out.value(null);
+            return true;
+        }
+
         Class<?> type = obj.getClass();
         if (type.isEnum()) {
             out.value(obj);
