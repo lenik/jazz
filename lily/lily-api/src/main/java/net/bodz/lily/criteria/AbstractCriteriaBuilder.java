@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ibatis.IGenericMapper;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.potato.PotatoTypes;
 import net.bodz.bas.potato.element.IProperty;
+import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.Composite;
@@ -29,7 +31,12 @@ public abstract class AbstractCriteriaBuilder<This>
             IVarMapForm {
 
     protected final IEntityTypeInfo typeInfo;
+    final ITypeInferrer typeInferrer;
+
     CompositeStack stack = new CompositeStack();
+
+    @Deprecated
+    final IType cbType = PotatoTypes.getInstance().getType(getClass());
 
     public AbstractCriteriaBuilder() {
         ForEntityType aForEntityType = getClass().getAnnotation(ForEntityType.class);
@@ -42,6 +49,7 @@ public abstract class AbstractCriteriaBuilder<This>
 
         Class<?> entityType = entityTypes[0];
         typeInfo = EntityTypes.getTypeInfo(entityType);
+        typeInferrer = new ColumnAndThenProps(typeInfo);
 
         stack.push(new Junction());
     }
@@ -118,8 +126,27 @@ public abstract class AbstractCriteriaBuilder<This>
 
     @Override
     public void receive(ICriterion value) {
+        if (stack.isEmpty())
+            throw new IllegalUsageException("stack empty");
         Composite top = stack.top().composite;
         top.add(value);
+    }
+
+    @Override
+    public FieldCriterionBuilder<?, ?, Object> getField(String name) {
+        IProperty property = cbType.getProperty(name);
+        if (property == null)
+            return null;
+        if (! FieldCriterionBuilder.class.isAssignableFrom(property.getPropertyClass()))
+            return null;
+
+        try {
+            @SuppressWarnings("unchecked")
+            FieldCriterionBuilder<?, ?, Object> value = (FieldCriterionBuilder<?, ?, Object>) property.getValue(this);
+            return value;
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalUsageException("can't get value for property " + name, e);
+        }
     }
 
     public <T> List<T> filter(IGenericMapper<T> mapper) {
@@ -131,46 +158,33 @@ public abstract class AbstractCriteriaBuilder<This>
         return mapper.filter(criterion, options);
     }
 
-    class ColumnAndThenProps
-            implements
-                ITypeInferrer {
-
-        @Override
-        public Class<?> getFieldType(List<String> fieldNames) {
-            if (fieldNames == null)
-                throw new NullPointerException("fieldNames");
-            if (fieldNames.isEmpty())
-                throw new IllegalArgumentException("no field name");
-            if (fieldNames.size() != 1)
-                throw new NotImplementedException();
-
-            // column-name, property-path
-            String head = fieldNames.get(0);
-
-            IProperty property = typeInfo.getPropertyForColumn(head);
-            if (property == null)
-                throw new IllegalArgumentException("invalid column name: " + head);
-
-            Class<?> propertyType = property.getPropertyClass();
-            return propertyType;
-        }
-
+    @Override
+    public String toString() {
+        return Nullables.toString(get());
     }
-
-    final ITypeInferrer columnAndThenProps = new ColumnAndThenProps();
 
     @Override
     public final void readObject(IVariantMap<String> map)
             throws ParseException {
-        readObject(map, columnAndThenProps);
+        readObject(map, typeInferrer);
     }
 
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
             throws ParseException {
         stack.clear();
+
         Composite composite = defaultCombine();
         composite.readObject(map, typeInferrer);
         stack.push(composite);
+
+        for (String key : map.keySet()) {
+            FieldCriterionBuilder<?, ?, Object> field = getField(key);
+            if (field != null) {
+                String param = map.getString(key);
+                Object val = field.parse(param);
+                field.eq(val);
+            }
+        }
     }
 
     @Override

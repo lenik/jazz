@@ -20,4 +20,6 @@ public interface ICriteriaBuilder<This> {
 
     This end();
 
+    FieldCriterionBuilder<?, ?, Object> getField(String name);
+
 }

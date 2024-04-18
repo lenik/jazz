@@ -32,6 +32,14 @@ public class FieldCriterionBuilder<fin_target, This, T>
         return type;
     }
 
+    public T parse(String s)
+            throws ParseException {
+        if (s == null)
+            return null;
+        else
+            return parser.parse(s);
+    }
+
     @SuppressWarnings("unchecked")
     protected NumberExprCriteriaBuilder<This> number(String expr) {
         return new NumberExprCriteriaBuilder<This>(expr, (This) this, receiver);
