@@ -230,8 +230,9 @@ public abstract class Composite
 
             int colon = key.indexOf(':');
             String opName = null;
-            if (colon == -1) // :eq is required in query string.
+            if (colon == -1) { // :eq is required in query string. {
                 continue;
+            }
 
             opName = key.substring(colon + 1);
             key = key.substring(0, colon);

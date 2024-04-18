@@ -104,7 +104,7 @@ public class SQLFormatter
     @Override
     public void fieldBetween(FieldBetween<?> fieldBetween) {
         fieldv(fieldBetween.yes ? "between" : "not between", //
-                fieldBetween, "and", fieldBetween.min, fieldBetween.max);
+                fieldBetween, " and ", fieldBetween.min, fieldBetween.max);
     }
 
     @Override
