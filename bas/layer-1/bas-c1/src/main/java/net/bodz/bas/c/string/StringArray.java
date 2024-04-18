@@ -21,13 +21,16 @@ public class StringArray {
     }
 
     public static String join(String separator, Object array) {
+        return join(separator, array, 0, Array.getLength(array));
+    }
+
+    public static String join(String separator, Object array, int off, int len) {
         if (array == null)
             throw new NullPointerException("array");
         if (! array.getClass().isArray())
             throw new IllegalArgumentException("Not an array: " + array.getClass());
         StringBuilder buffer = null;
-        int len = Array.getLength(array);
-        for (int i = 0; i < len; i++) {
+        for (int i = off; i < len; i++) {
             if (buffer == null)
                 buffer = new StringBuilder();
             else
