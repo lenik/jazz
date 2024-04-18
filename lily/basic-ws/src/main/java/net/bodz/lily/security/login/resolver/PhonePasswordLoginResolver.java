@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.bodz.bas.crypto.trans.FlyingIndex;
 import net.bodz.bas.db.ctx.DataContext;
-import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.schema.account.User;
 import net.bodz.lily.schema.account.UserSecret;
@@ -16,7 +15,8 @@ import net.bodz.lily.security.login.ISignatureChecker;
 
 public class PhonePasswordLoginResolver
         extends DataBackedLoginResolver
-        implements ILoginConsts {
+        implements
+            ILoginConsts {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
@@ -55,7 +55,7 @@ public class PhonePasswordLoginResolver
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretCriteriaBuilder().phone.eq(phone).get(), SelectOptions.ALL);
+                new UserSecretCriteriaBuilder().phone.eq(phone).get());
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", phone);
 

@@ -41,7 +41,7 @@ public class UserOps_PhoneId
         // 1. check if phone is in use
         List<UserOtherId> oids = oidMapper.filter(new UserOtherIdCriteriaBuilder()//
                 .otherId.eq(phone).get());
-        if (!oids.isEmpty())
+        if (! oids.isEmpty())
             return resp.fail("Phone is already used.");
 
         // 2. auto create a user (random name)
@@ -51,7 +51,8 @@ public class UserOps_PhoneId
             String name = "user-" + phone;
             if (dup != 0)
                 name += "-" + dup;
-            List<User> dups = userMapper.filter(new UserCriteriaBuilder().name.eq(name).get(), SelectOptions.ALL);
+            List<User> dups = userMapper.filter(new UserCriteriaBuilder().name.eq(name).get(), //
+                    SelectOptions.TOP10);
             if (dups.isEmpty()) {
                 user.setName(name);
                 break;
@@ -81,7 +82,8 @@ public class UserOps_PhoneId
         LoginResult resp = new LoginResult();
         // 1. find the corresponding user
         List<UserOtherId> oids = oidMapper.filter(//
-                new UserOtherIdCriteriaBuilder().otherId.eq(phone).get(), SelectOptions.ALL);
+                new UserOtherIdCriteriaBuilder().otherId.eq(phone).get(), //
+                SelectOptions.TOP10);
         if (oids.isEmpty())
             return resp.fail("Phone number isn't used by any user.");
         if (oids.size() > 1)
@@ -150,7 +152,7 @@ public class UserOps_PhoneId
     boolean checkInUse(IMutableJsonResponse resp, String phone) {
         // 2. check if the phone is in use.
         List<UserOtherId> oids = oidMapper.filter(//
-                new UserOtherIdCriteriaBuilder().otherId.eq(phone).get(), SelectOptions.ALL);
+                new UserOtherIdCriteriaBuilder().otherId.eq(phone).get(), SelectOptions.TOP10);
         if (oids.isEmpty())
             return false;
 

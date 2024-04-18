@@ -16,7 +16,8 @@ import net.bodz.lily.security.login.ISignatureChecker;
 
 public class EmailPasswordLoginResolver
         extends DataBackedLoginResolver
-        implements ILoginConsts {
+        implements
+            ILoginConsts {
 
     protected UserSecretMapper userSecretMapper;
     protected UserOtherIdMapper userOtherIdMapper;
@@ -58,7 +59,7 @@ public class EmailPasswordLoginResolver
 
         User matchedUser = users.get(0);
         List<UserSecret> userSecrets = userSecretMapper.filter(//
-                new UserSecretCriteriaBuilder().email.eq(email).get(), SelectOptions.ALL);
+                new UserSecretCriteriaBuilder().email.eq(email).get(), SelectOptions.TOP10);
         if (userSecrets.isEmpty())
             return failed("User %s has no secret.", email);
 
