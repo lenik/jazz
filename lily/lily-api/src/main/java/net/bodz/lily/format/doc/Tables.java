@@ -17,11 +17,11 @@ public class Tables {
 
     public static void convert(Table table, IRowSet rows) {
         IRowSetMetadata metadata = rows.getMetadata();
-        int n = metadata.getColumnCount();
+        int nColumn = metadata.getColumnCount();
 
         // column title
         TableRow headRow = table.rows.append();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nColumn; i++) {
             IColumnMetadata column = metadata.getColumn(i);
             String label = column.getLabel();
             if (label == null)
@@ -52,9 +52,12 @@ public class Tables {
         for (IRow row : rows.getRows()) {
             TableRow tr = table.rows.append();
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < nColumn; i++) {
                 // IColumnMetadata column = metadata.getColumn(i);
-                ICell cell = row.getCell(i);
+                ICell cell = null;
+                if (i < row.getCellCount())
+                    cell = row.getCell(i);
+
                 String str = null;
                 if (cell != null) {
                     IVariant data = cell.getDataVar();
