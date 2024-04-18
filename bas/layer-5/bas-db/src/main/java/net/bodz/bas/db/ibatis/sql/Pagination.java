@@ -53,4 +53,16 @@ public class Pagination {
         this.offset = offset;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        long pageSize = limit;
+        long pageIndex = offset / limit;
+        sb.append(pageSize + "*" + pageIndex);
+
+        sb.append(" (" + offset + "+" + limit + ")");
+        return sb.toString();
+    }
+
 }

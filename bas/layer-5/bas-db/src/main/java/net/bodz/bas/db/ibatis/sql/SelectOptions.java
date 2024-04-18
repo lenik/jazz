@@ -1,5 +1,7 @@
 package net.bodz.bas.db.ibatis.sql;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
@@ -70,13 +72,32 @@ public class SelectOptions
     }
 
     @Override
-    public void readObject(IVariantMap<String> map) {
-        page = null;
+    public String toString() {
+        List<String> list = new ArrayList<>();
+        if (orders != null)
+            list.add("order " + orders);
+        else
+            list.add("NoOrder");
 
+        if (page != null)
+            list.add("page " + page);
+        else
+            list.add("ALL");
+
+        return list.toString();
+    }
+
+    @Override
+    public void readObject(IVariantMap<String> map) {
         Long offset = map.getLong(K_OFFSET);
         Long limit = map.getLong(K_LIMIT);
-        if (offset != null && limit != null) {
-            page = new Pagination(limit, offset);
+        if (offset != null || limit != null) {
+            if (page == null)
+                page = new Pagination();
+            if (offset != null)
+                page.offset = offset;
+            if (limit != null)
+                page.limit = limit;
         }
 
         Long _pageIndex = map.getLong(K_PAGE_INDEX);
@@ -84,7 +105,8 @@ public class SelectOptions
         Integer _pageSize = map.getInt(K_PAGE_SIZE);
 
         if (_pageIndex != null || _pageNumber != null || _pageSize != null) {
-            page = new Pagination();
+            if (page == null)
+                page = new Pagination();
 
             int pageSize = _pageSize == null ? 100 : _pageSize.intValue();
             page.setLimit(pageSize);
@@ -106,7 +128,10 @@ public class SelectOptions
         throw new NotImplementedException();
     }
 
-    public static final SelectOptions FIRST = new SelectOptions(new Pagination(1, 0));
+    public static final SelectOptions TOP1 = new SelectOptions(new Pagination(1, 0));
+    public static final SelectOptions TOP10 = new SelectOptions(new Pagination(10, 0));
+    public static final SelectOptions TOP100 = new SelectOptions(new Pagination(100, 0));
+    public static final SelectOptions TOP1000 = new SelectOptions(new Pagination(1000, 0));
     public static final SelectOptions ALL = new SelectOptions();
 
 }
