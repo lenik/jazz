@@ -20,6 +20,8 @@ public class ResolvedEntity
             IPathDispatchable,
             IJsonForm {
 
+    public int consumedTokenCount;
+
     public String idFieldStrings[];
     public Object idFields[];
     public Object id;
@@ -50,7 +52,7 @@ public class ResolvedEntity
             out.entry("error", "null entity.");
             return;
         }
-        if (!(entity instanceof IJsonForm)) {
+        if (! (entity instanceof IJsonForm)) {
             out.entry("error", "can't convert to JSON: " + entity);
             return;
         }

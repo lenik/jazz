@@ -1,6 +1,5 @@
 package net.bodz.lily.entity.ws;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,7 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.sql.Orders;
+import net.bodz.bas.db.ibatis.sql.Pagination;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
@@ -48,12 +48,10 @@ import net.bodz.bas.std.rfc.http.CacheControlMode;
 import net.bodz.bas.std.rfc.http.CacheRevalidationMode;
 import net.bodz.bas.std.rfc.http.ICacheControl;
 import net.bodz.bas.t.file.ArrayPathFields;
-import net.bodz.bas.t.tuple.Split;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.app.IDataApplication;
 import net.bodz.lily.app.IDataApplicationAware;
-import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.criteria.ICriteriaBuilder;
 import net.bodz.lily.entity.format.ITableSheetBuilder;
 import net.bodz.lily.entity.manager.EntityCommands;
@@ -67,6 +65,7 @@ import net.bodz.lily.entity.manager.cmd.IDataFetcher;
 import net.bodz.lily.entity.type.DefaultEntityTypeInfo;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
+import net.bodz.lily.meta.DefaultLimit;
 import net.bodz.lily.security.AccessControl;
 
 @AccessControl
@@ -287,62 +286,22 @@ public abstract class AbstractEntityController<T>
     @Override
     public IPathArrival dispatchToEntity(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
-        int idColumnCount = typeInfo.getIdColumnCount();
-        assert idColumnCount >= 1;
+        ResolveMethods<T> methods = new ResolveMethods<T>(typeInfo, getMapper());
 
-        String[] heads = tokens.peek(idColumnCount);
-        if (heads == null)
-            return null;
+        IPathArrival arrival = methods.byIdPath(previous, tokens, q);
+        if (arrival != null)
+            return arrival;
 
-        Split name_ext = Split.nameExtension(heads[idColumnCount - 1]);
-        heads[idColumnCount - 1] = name_ext.a;
+        arrival = methods.byFieldPath(previous, tokens, q);
+        if (arrival != null)
+            return arrival;
 
-        Object[] idvec;
-        try {
-            idvec = typeInfo.parseIdColumns(heads);
-        } catch (ParseException e) {
-            throw new PathDispatchException(String.format(//
-                    "error parse id fields %s: %s", //
-                    Arrays.asList(heads), e.getMessage()), e);
+        if (arrival == null) {
+            // obj = outOfTruth(idVec);
+            // if (obj == null)
+            // return null;
         }
-
-        Object id;
-        try {
-            id = typeInfo.newId(idvec);
-        } catch (ReflectiveOperationException e) {
-            throw new PathDispatchException(String.format(//
-                    "error create id from %s: %s", //
-                    Arrays.asList(idvec), e.getMessage()), e);
-        }
-
-        IEntityMapper<T> mapper = getMapper();
-
-        T obj;
-        try {
-            obj = mapper.select(id);
-        } catch (Exception e) {
-            String err = String.format("Error select %s from %s: %s", id, getEntityType().getSimpleName(),
-                    e.getMessage());
-            logger.error(e, err);
-            return null;
-        }
-
-        if (obj == null) {
-            obj = outOfTruth(id);
-            if (obj == null)
-                return null;
-        }
-
-        // if (tokens.available() > idColumnCount)
-        // return PathArrival.shift(idColumnCount, previous, this, obj, tokens);
-
-        ResolvedEntity target = new ResolvedEntity();
-        target.idFieldStrings = heads;
-        target.idFields = idvec;
-        target.id = id;
-        target.entity = (StructRow) obj;
-        target.preferredExtension = name_ext.b;
-        return PathArrival.shift(idColumnCount, previous, this, target, tokens);
+        return null;
     }
 
     protected T outOfTruth(Object id) {
@@ -405,7 +364,17 @@ public abstract class AbstractEntityController<T>
     }
 
     protected SelectOptions newSelectOptions() {
-        return new SelectOptions();
+        SelectOptions options = new SelectOptions();
+
+        DefaultLimit aDefaultLimit = typeInfo.getEntityClass().getAnnotation(DefaultLimit.class);
+        if (aDefaultLimit != null) {
+            long defaultLimit = aDefaultLimit.value();
+            Pagination pagination = new Pagination();
+            pagination.setLimit(defaultLimit);
+            options.setPage(pagination);
+        }
+
+        return options;
     }
 
     String[] findColumnForProperty(String propertyName) {
