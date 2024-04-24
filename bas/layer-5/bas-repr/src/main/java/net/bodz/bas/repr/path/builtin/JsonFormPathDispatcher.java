@@ -45,8 +45,10 @@ public class JsonFormPathDispatcher
         }
 
         int n = tokens.available();
-        String[] lav = tokens.peek(n);
+        if (n == 0)
+            return PathArrival.shift(0, previous, this, jo, tokens);
 
+        String[] lav = tokens.peek(n);
         JsonObjectTreeResolveResult result = JsonObjectTreeResolver.resolveVerbose(jo, lav);
         return PathArrival.shift(result.validCount, previous, this, result.stoppedAt, tokens);
     }
