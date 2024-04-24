@@ -382,8 +382,10 @@ public abstract class AbstractEntityController<T>
             return new String[] { propertyName };
 
         IProperty keyProperty = typeInfo.getPrimaryKeyProperty(propertyName);
-        if (keyProperty != null)
-            return new String[] { propertyName };
+        if (keyProperty != null) {
+            String[] keyColumns = typeInfo.getPrimaryKeyColumns();
+            return keyColumns;
+        }
 
         if (typeInfo.isColumnPresent(propertyName))
             return new String[] { propertyName };
