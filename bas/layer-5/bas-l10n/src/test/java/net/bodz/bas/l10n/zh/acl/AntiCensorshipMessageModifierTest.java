@@ -9,7 +9,7 @@ import org.junit.Test;
 public class AntiCensorshipMessageModifierTest
         extends Assert {
 
-    AntiCensorshipMessageModifier modifier = new AntiCensorshipMessageModifier();
+    AntiCensorshipMessageModifier modifier = AntiCensorshipMessageModifier.INSTANCE;
 
     @Test
     public void nomatch() {
@@ -28,6 +28,11 @@ public class AntiCensorshipMessageModifierTest
     public void match2() {
         String output = modifier.apply("共产共产党共共产党");
         System.out.println(output);
+    }
+
+    public static void main(String[] args) {
+        AntiCensorshipMessageModifier mod = AntiCensorshipMessageModifier.INSTANCE;
+
     }
 
 }

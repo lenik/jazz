@@ -32,10 +32,10 @@ public class ByteArray2ByteSeq
         return array[start + index];
     }
 
-    @Override
-    public ByteSequence subSequence(int start, int end) {
-        return new ByteArray2ByteSeq(array, this.start + start, this.start + end);
-    }
+//    @Override
+//    public ByteSequence subSequence(int start, int end) {
+//        return new ByteArray2ByteSeq(array, this.start + start, this.start + end);
+//    }
 
     @Override
     public Iterator<Byte> iterator() {

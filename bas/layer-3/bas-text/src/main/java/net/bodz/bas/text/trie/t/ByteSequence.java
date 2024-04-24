@@ -6,6 +6,6 @@ public interface ByteSequence {
 
     byte byteAt(int index);
 
-    ByteSequence subSequence(int start, int end);
+//    ByteSequence subSequence(int start, int end);
 
 }

@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ICharIn;
-import net.bodz.bas.text.trie.CharTrie;
-import net.bodz.bas.text.trie.CharTrie.Node;
+import net.bodz.bas.text.trie.DefaultCharTrie;
+import net.bodz.bas.text.trie.DefaultNode;
 
 /**
  * a push-style parser.
  */
 public class TrieParser<sym> {
 
-    CharTrie<sym> trie;
-    Node<sym> root;
-    private Node<sym> cur;
+    DefaultCharTrie<sym> trie;
+    DefaultNode<Character, sym> root;
+    private DefaultNode<Character, sym> cur;
 
     ICharIn in;
     // int lineStart = 1, columnStart = 1;
@@ -27,7 +27,7 @@ public class TrieParser<sym> {
 
     ITokenCallback<sym> callback;
 
-    public TrieParser(CharTrie<sym> trie, ICharIn in, ITokenCallback<sym> callback) {
+    public TrieParser(DefaultCharTrie<sym> trie, ICharIn in, ITokenCallback<sym> callback) {
         this.trie = trie;
         this.root = trie.getRoot();
         this.cur = root;
@@ -41,11 +41,11 @@ public class TrieParser<sym> {
         return this;
     }
 
-    public CharTrie<sym> getTrie() {
+    public DefaultCharTrie<sym> getTrie() {
         return trie;
     }
 
-    public void setTrie(CharTrie<sym> trie) {
+    public void setTrie(DefaultCharTrie<sym> trie) {
         this.trie = trie;
     }
 
@@ -71,9 +71,9 @@ public class TrieParser<sym> {
                 cur = cur.getChild(ch);
                 if (cur.isDefined()) { // TODO lookahead.
                     if (otherbuf.hasContent())
-                        if (!otherbuf.commit(callback))
+                        if (! otherbuf.commit(callback))
                             return;
-                    if (!symbuf.commit(callback, cur.getData()))
+                    if (! symbuf.commit(callback, cur.getData()))
                         return;
                     cur = root;
                 }
@@ -92,7 +92,7 @@ public class TrieParser<sym> {
                 line = line + 1;
                 column = 0;
                 if (breakLines)
-                    if (!otherbuf.commit(callback))
+                    if (! otherbuf.commit(callback))
                         return;
                 break;
             default:
@@ -101,7 +101,7 @@ public class TrieParser<sym> {
         }
 
         if (otherbuf.hasContent())
-            if (!otherbuf.commit(callback))
+            if (! otherbuf.commit(callback))
                 return;
     }
 
@@ -120,7 +120,7 @@ public class TrieParser<sym> {
         }
 
         public void append(char ch) {
-            if (!hasContentAndMark) {
+            if (! hasContentAndMark) {
                 startLine = line;
                 startColumn = column;
                 hasContentAndMark = true;
@@ -131,7 +131,7 @@ public class TrieParser<sym> {
         public void append(String str) {
             if (str.isEmpty())
                 return;
-            if (!hasContentAndMark) {
+            if (! hasContentAndMark) {
                 startLine = line;
                 startColumn = column;
                 hasContentAndMark = true;
@@ -140,9 +140,9 @@ public class TrieParser<sym> {
         }
 
         public void transferTo(TextBuf other) {
-            if (!hasContentAndMark)
+            if (! hasContentAndMark)
                 return;
-            if (!other.hasContentAndMark) {
+            if (! other.hasContentAndMark) {
                 other.startLine = startLine;
                 other.startColumn = startColumn;
                 other.hasContentAndMark = true;

@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.t.iterator.PrefetchedIterator;
-import net.bodz.bas.text.trie.CharTrie;
-import net.bodz.bas.text.trie.CharTrie.Node;
+import net.bodz.bas.text.trie.DefaultCharTrie;
+import net.bodz.bas.text.trie.DefaultNode;
 
 /**
  * a pull-style parser.
@@ -15,9 +15,9 @@ public class TrieTokenizer<sym>
         implements
             Iterable<Token<sym>> {
 
-    CharTrie<sym> trie;
-    Node<sym> root;
-    Node<sym> cur;
+    DefaultCharTrie<sym> trie;
+    DefaultNode<Character, sym> root;
+    DefaultNode<Character, sym> cur;
 
     ICharIn in;
     int lineStart = 1, columnStart = 1;
@@ -29,18 +29,18 @@ public class TrieTokenizer<sym>
     TextBuf symbuf = new TextBuf(100);
     TextBuf cbuf = new TextBuf(4000);
 
-    public TrieTokenizer(CharTrie<sym> trie, ICharIn in) {
+    public TrieTokenizer(DefaultCharTrie<sym> trie, ICharIn in) {
         this.trie = trie;
         this.root = trie.getRoot();
         this.cur = root;
         this.in = in;
     }
 
-    public CharTrie<sym> getTrie() {
+    public DefaultCharTrie<sym> getTrie() {
         return trie;
     }
 
-    public void setTrie(CharTrie<sym> trie) {
+    public void setTrie(DefaultCharTrie<sym> trie) {
         this.trie = trie;
     }
 
@@ -61,7 +61,7 @@ public class TrieTokenizer<sym>
             throws IOException {
         char ch;
         for (;;) {
-            if (!lookAhead.isEmpty()) {
+            if (! lookAhead.isEmpty()) {
                 ch = lookAhead.shift();
                 if (lookAhead.startLine != -1) {
                     nextLine = lookAhead.startLine;

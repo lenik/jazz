@@ -4,10 +4,11 @@ import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.decl.Replacement;
+import net.bodz.bas.t.vector.Vector;
 
 public class TextReplacer {
 
-    private final CharTrie<String> trie = new CharTrie<String>();
+    private final DefaultCharTrie<String> trie = new DefaultCharTrie<String>();
     private boolean wholeOnly = true;
 
     public TextReplacer(boolean wholeOnly) {
@@ -19,50 +20,54 @@ public class TextReplacer {
             throw new NullPointerException("pattern");
         if (replacement == null)
             throw new NullPointerException("replacement");
-        trie.resolve(pattern).define(replacement);
+        trie.findOrCreate(pattern).setData(replacement);
         return this;
     }
 
     public String transform(String input) {
-        StringBuilder sb = new StringBuilder(input.length());
-        int[] heads = trie.scanTries(input);
+        int inputLength = input.length();
+        StringBuilder buf = new StringBuilder(inputLength);
+        Vector<DefaultNode<Character, String>> matchv = trie.findAll(input);
         int pos = 0;
-        for (int i = 0; i < heads.length; i++) {
-            int head = heads[i];
-            if (head != -1) {
-                if (wholeOnly) {
-                    boolean whole = true;
-                    if (head >= 1) {
-                        char back = input.charAt(head - 1);
-                        if (!boundaryTest(back))
-                            whole = false;
-                    }
-                    if (i + 1 < heads.length) {
-                        char ahead = input.charAt(i + 1);
-                        if (!boundaryTest(ahead))
-                            whole = false;
-                    }
-                    if (!whole)
-                        continue;
+        for (int i = 0; i < inputLength; i++) {
+            DefaultNode<Character, String> match = matchv.get(i);
+            if (match == null)
+                continue;
+
+            int matchLen = match.depth;
+            int matchStart = i - (matchLen - 1);
+            if (wholeOnly) {
+                boolean whole = true;
+                if (matchLen >= 1 && matchStart - 1 >= 0) {
+                    char charBeforeMach = input.charAt(matchStart - 1);
+                    if (! boundaryTest(charBeforeMach))
+                        whole = false;
                 }
-                sb.append(input.substring(pos, head));
-
-                String word = input.substring(head, i + 1);
-                String replacement = trie.resolve(word).getData();
-                sb.append(replacement);
-
-                pos = i + 1;
+                if (i + 1 < inputLength) {
+                    char charAheadMatch = input.charAt(i + 1);
+                    if (! boundaryTest(charAheadMatch))
+                        whole = false;
+                }
+                if (! whole)
+                    continue;
             }
+
+            int unmatchLen = matchStart - pos;
+            buf.append(input, pos, unmatchLen);
+
+            String replacement = match.getData();
+            buf.append(replacement);
+
+            pos = i + 1;
         }
 
         String remaining = input.substring(pos);
-        sb.append(remaining);
-
-        return sb.toString();
+        buf.append(remaining);
+        return buf.toString();
     }
 
     boolean boundaryTest(int codepoint) {
-        return !Character.isAlphabetic(codepoint);
+        return ! Character.isAlphabetic(codepoint);
     }
 
     public void loadReplacements() {
@@ -79,11 +84,11 @@ public class TextReplacer {
 
             String oldName = oldType.getName();
             String newName = newType.getName();
-            CharTrie.Node<String> node = trie.resolve(oldName);
+            DefaultNode<Character, String> node = trie.findOrCreate(oldName);
             if (node != null && node.getData() != null)
                 throw new DuplicatedKeyException(oldName, node, "node data: " + node.getData());
 
-            node.define(newName);
+            node.setData(newName);
         }
     }
 

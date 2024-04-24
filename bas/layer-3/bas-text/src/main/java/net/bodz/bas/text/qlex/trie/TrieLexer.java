@@ -6,24 +6,24 @@ import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.ICharIn;
 import net.bodz.bas.io.StringCharIn;
-import net.bodz.bas.text.trie.CharTrie;
-import net.bodz.bas.text.trie.CharTrie.Node;
+import net.bodz.bas.text.trie.DefaultCharTrie;
+import net.bodz.bas.text.trie.DefaultNode;
 
 public class TrieLexer<sym> {
 
-    CharTrie<sym> trie;
+    DefaultCharTrie<sym> trie;
 
     public TrieLexer() {
-        trie = new CharTrie<sym>();
+        trie = new DefaultCharTrie<sym>();
     }
 
-    public Node<sym> declare(CharSequence k, sym symbol) {
-        Node<sym> overlapped = trie.findOverlap(k);
+    public DefaultNode<Character, sym> declare(CharSequence k, sym symbol) {
+        DefaultNode<Character, sym> overlapped = trie.findShortestDefinedPrefix(k);
         if (overlapped != null)
             throw new DuplicatedKeyException(k, overlapped);
 
-        Node<sym> node = trie.resolve(k);
-        node.define(symbol);
+        DefaultNode<Character, sym> node = trie.findOrCreate(k);
+        node.setData(symbol);
         return node;
     }
 

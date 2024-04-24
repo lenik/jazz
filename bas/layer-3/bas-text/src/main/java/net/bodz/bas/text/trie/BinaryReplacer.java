@@ -6,10 +6,11 @@ import net.bodz.bas.c.type.IndexedTypes;
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.meta.decl.Replacement;
+import net.bodz.bas.t.vector.Vector;
 
 public class BinaryReplacer {
 
-    private final ByteTrie<byte[]> trie = new ByteTrie<byte[]>();
+    private final DefaultByteTrie<byte[]> trie = new DefaultByteTrie<>();
     private boolean wholeOnly = true;
 
     public BinaryReplacer(boolean wholeOnly) {
@@ -21,48 +22,53 @@ public class BinaryReplacer {
             throw new NullPointerException("pattern");
         if (replacement == null)
             throw new NullPointerException("replacement");
-        trie.resolve(pattern).define(replacement);
+        trie.findOrCreate(pattern).setData(replacement);
         return this;
     }
 
     public byte[] transform(byte[] input) {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream(input.length);
-        int[] heads = trie.scanTries(input);
+        int inputLength = input.length;
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(inputLength);
+        Vector<DefaultNode<Byte, byte[]>> matchv = trie.findAll(input);
         int pos = 0;
-        for (int i = 0; i < heads.length; i++) {
-            int head = heads[i];
-            if (head != -1) {
-                if (wholeOnly) {
-                    boolean whole = true;
-                    if (head >= 1) {
-                        int back = input[head - 1] & 0xFF;
-                        if (!boundaryTest(back))
-                            whole = false;
-                    }
-                    if (i + 1 < heads.length) {
-                        int ahead = input[i + 1] & 0xFF;
-                        if (!boundaryTest(ahead))
-                            whole = false;
-                    }
-                    if (!whole)
-                        continue;
+        for (int i = 0; i < inputLength; i++) {
+            DefaultNode<Byte, byte[]> match = matchv.get(i);
+            if (match == null)
+                continue;
+
+            int matchLen = match.depth;
+            int matchStart = i - (matchLen - 1);
+            if (wholeOnly) {
+                boolean whole = true;
+                if (matchLen >= 1 && matchStart - 1 >= 0) {
+                    int byteBeforeMach = input[matchStart - 1] & 0xFF;
+                    if (! boundaryTest(byteBeforeMach))
+                        whole = false;
                 }
-                buf.write(input, pos, head - pos);
-
-                byte[] replacement = trie.resolve(input, head, i + 1).getData();
-                buf.write(replacement, 0, replacement.length);
-
-                pos = i + 1;
+                if (i + 1 < inputLength) {
+                    int byteAheadMatch = input[i + 1] & 0xFF;
+                    if (! boundaryTest(byteAheadMatch))
+                        whole = false;
+                }
+                if (! whole)
+                    continue;
             }
+
+            int unmatchLen = matchStart - pos;
+            buf.write(input, pos, unmatchLen);
+
+            byte[] replacement = match.getData();
+            buf.write(replacement, 0, replacement.length);
+
+            pos = i + 1;
         }
 
-        buf.write(input, pos, input.length - pos);
-
+        buf.write(input, pos, inputLength - pos);
         return buf.toByteArray();
     }
 
     boolean boundaryTest(int codepoint) {
-        return !Character.isAlphabetic(codepoint);
+        return ! Character.isAlphabetic(codepoint);
     }
 
     public void loadReplacements() {
@@ -78,11 +84,11 @@ public class BinaryReplacer {
 
             byte[] olddata = oldType.getName().getBytes();
             byte[] newdata = newType.getName().getBytes();
-            ByteTrie.Node<byte[]> node = trie.resolve(olddata);
+            DefaultNode<Byte, byte[]> node = trie.findOrCreate(olddata);
             if (node != null && node.getData() != null)
                 throw new DuplicatedKeyException(olddata, node, "node data: " + node.getData());
 
-            node.define(newdata);
+            node.setData(newdata);
         }
     }
 

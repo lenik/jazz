@@ -24,11 +24,11 @@ public class ByteList2ByteSeq
         return list.get(index);
     }
 
-    @Override
-    public ByteSequence subSequence(int start, int end) {
-        List<Byte> subList = list.subList(start, end);
-        return new ByteList2ByteSeq(subList);
-    }
+//    @Override
+//    public ByteSequence subSequence(int start, int end) {
+//        List<Byte> subList = list.subList(start, end);
+//        return new ByteList2ByteSeq(subList);
+//    }
 
     @Override
     public Iterator<Byte> iterator() {
