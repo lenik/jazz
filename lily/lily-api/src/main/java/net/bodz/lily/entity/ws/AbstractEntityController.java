@@ -130,7 +130,7 @@ public abstract class AbstractEntityController<T>
 
     void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
         if (! replaceExisting) {
-            if (locator.checkOverlap(cmd))
+            if (locator.checkConflict(cmd))
                 throw new DuplicatedKeyException();
         }
         locator.add(cmd);

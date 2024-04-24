@@ -7,16 +7,19 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.t.order.PriorityComparator;
-import net.bodz.bas.t.preorder.PrefixMap;
+import net.bodz.bas.text.trie.DefaultCharTrie;
+import net.bodz.bas.text.trie.DefaultNode;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 
 public class CommandLocator {
 
     Map<String, IEntityCommandType> idMap = new HashMap<>();
-    Map<String, IEntityCommandType> nameMap = new HashMap<>();
-    PrefixMap<IEntityCommandType> namePrefixMap = new PrefixMap<>();
-    Map<String, IEntityCommandType> contentNameMap = new HashMap<>();
-    PrefixMap<IEntityCommandType> contentNamePrefixMap = new PrefixMap<>();
+    DefaultCharTrie<IEntityCommandType> trie = new DefaultCharTrie<>();
+    DefaultCharTrie<IEntityCommandType> contentTrie = new DefaultCharTrie<>();
+
+//    Map<RequestKey, IEntityCommandType> keyMap = new HashMap<>();
+//    PrefixMap<IEntityCommandType> prefixMap = new PrefixMap<>();
+
     Set<String> otherIds = new HashSet<>();
     Set<IEntityCommandType> others = new TreeSet<>(PriorityComparator.INSTANCE);
 
@@ -27,30 +30,22 @@ public class CommandLocator {
         return idMap.containsKey(id);
     }
 
-    public boolean checkOverlap(IEntityCommandType command) {
+    public boolean checkConflict(IEntityCommandType command) {
         if (contains(command))
             return true;
-
         String[] names = command.getCommandNames();
-        for (String name : names)
-            if (name.endsWith("*")) {
-                String prefix = name.substring(0, name.length() - 1);
-                if (command.isContentCommand()) {
-                    if (contentNamePrefixMap.containsKey(prefix))
-                        return true;
-                } else {
-                    if (namePrefixMap.containsKey(prefix))
-                        return true;
-                }
+        for (String name : names) {
+            boolean wildcard = name.endsWith("*");
+            if (wildcard)
+                name = name.substring(0, name.length() - 1);
+            if (command.isContentCommand()) {
+                if (contentTrie.isDefined(name))
+                    return true;
             } else {
-                if (command.isContentCommand()) {
-                    if (contentNameMap.containsKey(name))
-                        return true;
-                } else {
-                    if (nameMap.containsKey(name))
-                        return true;
-                }
+                if (trie.isDefined(name))
+                    return true;
             }
+        }
         return false;
     }
 
@@ -61,20 +56,18 @@ public class CommandLocator {
         String[] names = command.getCommandNames();
         if (names.length > 0) {
             for (String name : command.getCommandNames()) {
-                if (name.endsWith("*")) {
-                    String prefix = name.substring(0, name.length() - 1);
-                    if (command.isContentCommand()) {
-                        contentNamePrefixMap.put(prefix, command);
-                    } else {
-                        namePrefixMap.put(prefix, command);
-                    }
-                } else {
-                    if (command.isContentCommand()) {
-                        contentNameMap.put(name, command);
-                    } else {
-                        nameMap.put(name, command);
-                    }
-                }
+                boolean wildcard = name.endsWith("*");
+                if (wildcard)
+                    name = name.substring(0, name.length() - 1);
+
+                DefaultNode<Character, IEntityCommandType> node;
+                if (command.isContentCommand())
+                    node = contentTrie.findOrCreate(name);
+                else
+                    node = trie.findOrCreate(name);
+
+                node.setWildcard(wildcard);
+                node.setData(command);
             }
         } else {
             otherIds.add(id);
@@ -89,19 +82,13 @@ public class CommandLocator {
         String[] names = command.getCommandNames();
         if (names.length > 0) {
             for (String name : command.getCommandNames()) {
-                if (name.endsWith("*")) {
-                    String prefix = name.substring(0, name.length() - 1);
-                    if (command.isContentCommand()) {
-                        contentNamePrefixMap.remove(prefix);
-                    } else {
-                        namePrefixMap.remove(prefix);
-                    }
+                boolean wildcard = name.endsWith("*");
+                if (wildcard)
+                    name = name.substring(0, name.length() - 1);
+                if (command.isContentCommand()) {
+                    contentTrie.remove(name);
                 } else {
-                    if (command.isContentCommand()) {
-                        contentNameMap.remove(name);
-                    } else {
-                        nameMap.remove(name);
-                    }
+                    trie.remove(name);
                 }
             }
         } else {
@@ -112,10 +99,8 @@ public class CommandLocator {
 
     public void clear() {
         idMap.clear();
-        nameMap.clear();
-        namePrefixMap.clear();
-        contentNameMap.clear();
-        contentNamePrefixMap.clear();
+        trie.clear();
+        contentTrie.clear();
         otherIds.clear();
         others.clear();
     }
@@ -129,14 +114,12 @@ public class CommandLocator {
         if (cmd != null)
             return cmd;
 
-        cmd = nameMap.get(name);
-        if (cmd != null)
-            return cmd;
-
-        cmd = namePrefixMap.meet(name);
-        if (cmd != null)
-            return cmd;
-
+        DefaultNode<Character, IEntityCommandType> node = trie.findLongestDefinedPrefix(name);
+        if (node == null)
+            return null;
+        int matchLen = node.getDepth();
+        if (matchLen == name.length() || node.isWildcard())
+            return node.getData();
         return null;
     }
 
@@ -145,14 +128,13 @@ public class CommandLocator {
         if (cmd != null)
             return cmd;
 
-        cmd = contentNameMap.get(name);
-        if (cmd != null)
-            return cmd;
+        DefaultNode<Character, IEntityCommandType> node = contentTrie.findLongestDefinedPrefix(name);
+        if (node == null)
+            return null;
 
-        cmd = contentNamePrefixMap.meet(name);
-        if (cmd != null)
-            return cmd;
-
+        int matchLen = node.getDepth();
+        if (matchLen == name.length() || node.isWildcard())
+            return node.getData();
         return null;
     }
 
