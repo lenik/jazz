@@ -127,7 +127,7 @@ class ResolveProcess
             varMapForm.readObject(parameters);
         }
 
-        JsonWrapper data = JsonWrapper.wrap(resolvedEntity, "data");
+        JsonWrapper data = JsonWrapper.wrap(resolvedEntity);
         data.setOptions(jsonFormOptions);
 
         switch (format) {
