@@ -5,7 +5,15 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.LoadException;
@@ -485,6 +493,7 @@ public class DefaultSchemaMetadata
                 return table;
 
             case VIEW:
+            case MATERIALIZED_VIEW:
                 DefaultViewMetadata view = new DefaultViewMetadata(DefaultSchemaMetadata.this);
                 view.getJDBCMetaDataHandler().table(rs);
                 if (mode == SelectMode.EXCLUDE)

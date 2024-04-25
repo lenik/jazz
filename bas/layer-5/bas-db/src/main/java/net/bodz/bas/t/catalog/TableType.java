@@ -8,6 +8,7 @@ public enum TableType {
     UNKNOWN,
 
     VIEW,
+    MATERIALIZED_VIEW,
 
     TABLE,
     SYSTEM_TABLE,
@@ -69,6 +70,9 @@ public enum TableType {
 
         case "VIEW":
             return VIEW;
+
+        case "MATERIALIZED VIEW":
+            return MATERIALIZED_VIEW;
 
         case "GLOBAL TEMPORARY":
             return GLOBAL_TEMP;
