@@ -12,6 +12,7 @@ import net.bodz.bas.fmt.json.IJsonForm;
 import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
+import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.typer.std.MutableAttributes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
@@ -34,8 +35,18 @@ public class ExtraAttributes
         int n = meta.getColumnCount();
         for (int i = 1; i <= n; i++) {
             String columnName = meta.getColumnName(i);
-            if (columnName.contains("_"))
-                continue;
+
+            if (columnName.contains("_")) {
+                int ul = columnName.indexOf('_');
+                String alias = columnName.substring(0, ul);
+                // String column = columnName.substring(ul + 1);
+                IProperty aliasProp = typeInfo.getPropertyForColumn(alias);
+                if (aliasProp != null)
+                    continue;
+//                IProperty refProp = typeInfo.getProperty(alias);
+//                if (refProp != null)
+//                    continue;
+            }
 
             if (typeInfo.isColumnPresent(columnName))
                 continue;
