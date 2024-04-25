@@ -97,6 +97,7 @@ public class PathDispatchServlet
         resp.setHeader("X-Powered-By", "Jazz BAS Repr/Html Server 2.0");
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Headers", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "*");
         if ("OPTIONS".equals(_req.getMethod()))
             return;
 
