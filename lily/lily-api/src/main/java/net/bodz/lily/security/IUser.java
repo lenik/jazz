@@ -1,11 +1,11 @@
 package net.bodz.lily.security;
 
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.typer.std.IAttributes;
 
 public interface IUser
         extends
-            IAttributed,
+            IAttributes,
             IJsonForm {
 
     Integer id();

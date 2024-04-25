@@ -75,7 +75,7 @@ public class LoginToken
         return user;
     }
 
-    long getTransaction() {
+    public long getTransaction() {
         return transaction;
     }
 
@@ -280,6 +280,10 @@ public class LoginToken
             out.entry("id", user.id());
             out.entry("name", user.getName());
             out.entry("fullName", user.getFullName());
+            for (String attr : user.getAttributeNames()) {
+                Object val = user.getAttribute(attr);
+                out.entry(attr, val);
+            }
             out.endObject();
         }
     }

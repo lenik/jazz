@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,7 @@ import net.bodz.bas.db.ibatis.IResultSetForm;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
+import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.lily.concrete.util.ExtraAttributes;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -75,13 +77,23 @@ public class User
     }
 
     @Override
+    public Collection<String> getAttributeNames() {
+        return attributes.getAttributeNames();
+    }
+
+    @Override
+    public <T> T getAttribute(String name) {
+        return attributes.getAttribute(name);
+    }
+
+    @Override
     public <T> T getAttribute(String name, T defaultValue) {
         return attributes.getAttribute(name, defaultValue);
     }
 
     @Override
-    public void setAttribute(String name, Object value) {
-        attributes.setAttribute(name, value);
+    public ITyperFamily<?> getAttributeTypers(String attributeName) {
+        return attributes.getAttributeTypers(attributeName);
     }
 
     public List<Group> getGroups() {
