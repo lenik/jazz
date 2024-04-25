@@ -9,6 +9,8 @@ public class DecoratedTreeOutTest {
     class Dto
             extends DecoratedTreeOut {
 
+        private static final long serialVersionUID = 1L;
+
         public Dto(ITreeOut _orig) {
             super(_orig);
         }

@@ -59,6 +59,11 @@ public class ObBeanInfo
         return bi.getIcon(iconKind);
     }
 
+    @Override
+    public String toString() {
+        return bi.getBeanDescriptor().getName();
+    }
+
     public static ObBeanInfo convert(BeanInfo o) {
         if (o == null)
             return null;

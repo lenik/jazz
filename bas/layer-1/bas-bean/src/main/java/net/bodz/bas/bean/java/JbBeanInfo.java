@@ -74,6 +74,11 @@ public class JbBeanInfo
         return bi.getIcon(iconKind);
     }
 
+    @Override
+    public String toString() {
+        return bi.getBeanDescriptor().getName();
+    }
+
     public static JbBeanInfo convert(BeanInfo o) {
         if (o == null)
             return null;
