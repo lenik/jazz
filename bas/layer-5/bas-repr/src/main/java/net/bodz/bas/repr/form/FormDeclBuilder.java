@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.meta.bean.DetailLevel;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.mda.xjdoc.model.IElementDoc;
@@ -75,6 +76,14 @@ public class FormDeclBuilder {
         if ((modifiers & modifierMask) != modifierPattern)
             return false;
 
+        if (property.isAnnotationPresent(Internal.class))
+            return false;
+
+//        if (property.isAnnotationPresent(Derived.class))
+//            return false;
+
+        if (property.getName().equals("ETag"))
+            System.out.println();
         int detailLevel = property.getDetailLevel();
         if (detailLevel > maxDetailLevel)
             return false;
