@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.OffsetDateTime;
 
 import net.bodz.bas.c.java.time.DateTimes;
+import net.bodz.bas.meta.bean.Internal;
 
 public interface ICacheControl {
 
@@ -12,6 +13,7 @@ public interface ICacheControl {
      *
      * @return Non-<code>null</code> value.
      */
+    @Internal
     CacheControlMode getCacheControlMode();
 
     /**
@@ -19,6 +21,7 @@ public interface ICacheControl {
      *
      * @return Non-<code>null</code> value.
      */
+    @Internal
     CacheRevalidationMode getCacheRevalidationMode();
 
     /**
@@ -27,6 +30,7 @@ public interface ICacheControl {
      * @return The number of seconds from the time of the request you wish the representation to be fresh for. Returns
      *         positive integer or zero.
      */
+    @Internal
     int getMaxAge();
 
     /**
@@ -43,6 +47,7 @@ public interface ICacheControl {
      * the same. Comparing ETags only makes sense with respect to one URL—ETags for resources obtained from different
      * URLs may or may not be equal, so no meaning can be inferred from their comparison.
      */
+    @Internal
     default String getETag() {
         OffsetDateTime lastModified = getLastModified();
         String etag = DateTimes.ISO8601.format(lastModified);
@@ -58,6 +63,7 @@ public interface ICacheControl {
      *
      * @return <code>true</code> for weak validation.
      */
+    @Internal
     boolean isWeakValidation();
 
 }

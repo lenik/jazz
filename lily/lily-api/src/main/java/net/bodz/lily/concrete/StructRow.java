@@ -220,6 +220,7 @@ public abstract class StructRow
     protected Boolean overrided_jsonIn = false;
     protected Boolean overrided_jsonOut = false;
 
+    @Internal
     @Override
     public boolean isJsonInByLoader() {
         if (overrided_jsonIn == null)
@@ -261,6 +262,7 @@ public abstract class StructRow
         }
     }
 
+    @Internal
     @Override
     public boolean isJsonOutByDumper() {
         if (overrided_jsonOut == null)
