@@ -16,7 +16,7 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.t.file.IPathFields;
 import net.bodz.lily.concrete.StructRow;
 import net.bodz.lily.entity.IId;
-import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 import net.bodz.lily.entity.manager.IJdbcRowOpListener;
@@ -26,21 +26,23 @@ import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.entity.manager.RowOpListeners;
 
 public class SaveProcess
-        extends AbstractContentCommandProcess
+        extends AbstractEntityCommandProcess
         implements
             IJsonForm {
 
     boolean createNew;
-
     boolean hasId;
     Object id;
 
+    ResolvedEntity resolvedEntity;
     JsonObject contentJson;
 
     public SaveProcess(IEntityCommandType type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+        super(type, context);
         Class<?> entityClass = typeInfo.getEntityClass();
         hasId = IId.class.isAssignableFrom(entityClass);
+
+        this.resolvedEntity = resolvedEntity;
     }
 
     @Override

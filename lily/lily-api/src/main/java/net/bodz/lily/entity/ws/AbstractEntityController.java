@@ -1,5 +1,8 @@
 package net.bodz.lily.entity.ws;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,6 @@ import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.sql.Orders;
 import net.bodz.bas.db.ibatis.sql.Pagination;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
-import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
@@ -41,6 +43,7 @@ import net.bodz.bas.repr.path.ITokenQueue;
 import net.bodz.bas.repr.path.PathArrival;
 import net.bodz.bas.repr.path.PathDispatchException;
 import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.servlet.ctx.CurrentHttpService;
 import net.bodz.bas.site.json.TableOfPathProps;
 import net.bodz.bas.site.vhost.VirtualHostScope;
 import net.bodz.bas.std.rfc.http.AbstractCacheControl;
@@ -59,6 +62,8 @@ import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 import net.bodz.lily.entity.manager.ResolvedEntity;
+import net.bodz.lily.entity.manager.cmd.ContentDeleteCommand;
+import net.bodz.lily.entity.manager.cmd.ContentSaveCommand;
 import net.bodz.lily.entity.manager.cmd.DataFetchResult;
 import net.bodz.lily.entity.manager.cmd.FetchCommand;
 import net.bodz.lily.entity.manager.cmd.IDataFetcher;
@@ -67,6 +72,8 @@ import net.bodz.lily.entity.type.IEntityTypeInfo;
 import net.bodz.lily.format.excel.DefaultListingExcel;
 import net.bodz.lily.meta.DefaultLimit;
 import net.bodz.lily.security.AccessControl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @AccessControl
 @VirtualHostScope
@@ -130,8 +137,7 @@ public abstract class AbstractEntityController<T>
 
     void addCommand(IEntityCommandType cmd, boolean replaceExisting) {
         if (! replaceExisting) {
-            if (locator.checkConflict(cmd))
-                throw new DuplicatedKeyException();
+            locator.checkConflict(cmd);
         }
         locator.add(cmd);
     }
@@ -246,32 +252,65 @@ public abstract class AbstractEntityController<T>
     @Override
     public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens, IVariantMap<String> q)
             throws PathDispatchException {
+        HttpServletRequest request = CurrentHttpService.getRequest();
+        String method = request.getMethod();
+
         String token = tokens.peek();
         if (token == null)
             return null;
 
-        IEntityCommandType command = locator.findName(token);
-        if (command != null)
-            return processDispatch(command, null, previous, tokens, q);
-
         IPathArrival arrival;
+
+        Collection<IEntityCommandType> commands = locator.findName(token);
+        if (commands != null)
+            for (IEntityCommandType command : commands)
+                if (command.isAcceptedMethod(method)) {
+                    arrival = processDispatch(command, null, previous, tokens, q);
+                    if (arrival != null)
+                        return arrival;
+                }
+
         if (hasId && (arrival = dispatchToEntity(previous, tokens, q)) != null) {
             previous = arrival;
             ResolvedEntity resolvedEntity = (ResolvedEntity) arrival.getTarget();
 
             token = tokens.peek();
-            if (token == null)
-                command = locator.get(FetchCommand.ID);
-            else
-                command = locator.findContentName(token);
+            if (token == null) {
+                IEntityCommandType command = null;
+                switch (method) {
+                case "GET":
+                    command = locator.get(FetchCommand.ID);
+                    break;
+                case "PUT":
+                case "POST":
+                case "PATCH":
+                    command = locator.get(ContentSaveCommand.ID);
+                    break;
+                case "DELETE":
+                    command = locator.get(ContentDeleteCommand.ID);
+                    break;
+                }
+                if (command != null)
+                    commands = Arrays.asList(command);
+                else
+                    commands = Collections.emptySet();
+            } else {
+                commands = locator.findContentName(token);
+            }
 
-            if (command != null)
-                return processDispatch(command, resolvedEntity, previous, tokens, q, //
-                        token == null ? 0 : 1);
+            if (commands != null)
+                for (IEntityCommandType command : commands)
+                    if (command.isAcceptedMethod(method)) {
+                        arrival = processDispatch(command, resolvedEntity, previous, tokens, q, //
+                                token == null ? 0 : 1);
+                        if (arrival != null)
+                            return arrival;
+                    }
 
             for (IEntityCommandType other : locator.getOthers())
-                if (other.checkPathValid(previous, tokens, q))
-                    return processDispatch(command, resolvedEntity, previous, tokens, q, 0);
+                if (other.isAcceptedMethod(method))
+                    if (other.checkPathValid(previous, tokens, q))
+                        arrival = processDispatch(other, resolvedEntity, previous, tokens, q, 0);
 
             if (token != null)
                 return arrival;

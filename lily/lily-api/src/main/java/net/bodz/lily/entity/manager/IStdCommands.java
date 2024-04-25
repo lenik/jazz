@@ -2,6 +2,9 @@ package net.bodz.lily.entity.manager;
 
 public interface IStdCommands {
 
+    String ID_CONTENT_SAVE = "contentSave";
+    String ID_CONTENT_DELETE = "contentDelete";
+
     String ID_COUNT = "count";
     String ID_DELETE = "delete";
     String ID_FETCH = "fetch";
@@ -10,7 +13,6 @@ public interface IStdCommands {
     String ID_ATTACHMENT_RESOLVE = "attachmentResolve";
     String ID_LIST = "list";
     String ID_SAVE = "save";
-    String ID_SAVE_CONTENT = "saveContent";
     String ID_UPLOAD = "upload";
     String ID_IMPORT = "import";
 

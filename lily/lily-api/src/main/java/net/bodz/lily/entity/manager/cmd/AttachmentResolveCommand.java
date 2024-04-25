@@ -17,6 +17,7 @@ public class AttachmentResolveCommand
 
     public static final String ID = IStdCommands.ID_ATTACHMENT_RESOLVE;
     public static final String[] NAMES = { "attachment", "file" };
+    public static final String[] METHODS = { "GET" };
 
     public AttachmentResolveCommand() {
         super(ID);
@@ -25,6 +26,11 @@ public class AttachmentResolveCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

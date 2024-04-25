@@ -11,6 +11,7 @@ public class ImportCommand
 
     public static final String ID = IStdCommands.ID_IMPORT;
     public static final String[] NAMES = { "import", "importCsv", "importExcel" };
+    public static final String[] METHODS = { "POST", "PUT" };
 
     public ImportCommand() {
         super(ID);
@@ -19,6 +20,11 @@ public class ImportCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

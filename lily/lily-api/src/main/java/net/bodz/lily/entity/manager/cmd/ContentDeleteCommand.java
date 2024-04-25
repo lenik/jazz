@@ -1,21 +1,21 @@
 package net.bodz.lily.entity.manager.cmd;
 
-import net.bodz.lily.entity.attachment.IHaveAttachments;
+import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.manager.AbstractEntityCommandType;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.IStdCommands;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 
-@ForEntityType(IHaveAttachments.class)
-public class GetIncomingFileCommand
+@ForEntityType(IId.class)
+public class ContentDeleteCommand
         extends AbstractEntityCommandType {
 
-    public static final String ID = IStdCommands.ID_GET_INCOMING_FILE;
-    public static final String[] NAMES = { "incoming" };
-    public static final String[] METHODS = { "GET" };
+    public static final String ID = IStdCommands.ID_CONTENT_DELETE;
+    public static final String[] NAMES = { "delete", "del", "rm" };
+    public static final String[] METHODS = { "DELETE" };
 
-    public GetIncomingFileCommand() {
+    public ContentDeleteCommand() {
         super(ID);
     }
 
@@ -30,8 +30,13 @@ public class GetIncomingFileCommand
     }
 
     @Override
-    public GetIncomingFileProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        return new GetIncomingFileProcess(this, context);
+    public boolean isContentCommand() {
+        return true;
+    }
+
+    @Override
+    public DeleteProcess defaultCreateProcess(IEntityCommandContext context, ResolvedEntity resolvedEntity) {
+        return new DeleteProcess(this, context, resolvedEntity);
     }
 
 }

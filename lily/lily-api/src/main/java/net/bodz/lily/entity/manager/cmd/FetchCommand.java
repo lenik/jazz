@@ -20,7 +20,7 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.format.IMarkdownBuilder;
 import net.bodz.lily.entity.format.IWordDocBuilder;
 import net.bodz.lily.entity.format.WordUtils;
-import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.AbstractEntityCommandType;
 import net.bodz.lily.entity.manager.ForEntityType;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
@@ -34,6 +34,7 @@ public class FetchCommand
 
     public static final String ID = IStdCommands.ID_FETCH;
     public static final String[] NAMES = { "fetch" };
+    public static final String[] METHODS = { "GET" };
 
     public FetchCommand() {
         super(ID);
@@ -42,6 +43,11 @@ public class FetchCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override
@@ -57,7 +63,9 @@ public class FetchCommand
 }
 
 class ResolveProcess
-        extends AbstractContentCommandProcess {
+        extends AbstractEntityCommandProcess {
+
+    ResolvedEntity resolvedEntity;
 
     JsonFormOptions jsonFormOptions;
 
@@ -73,7 +81,8 @@ class ResolveProcess
     IWordDocBuilder docxBuilder;
 
     public ResolveProcess(FetchCommand type, IEntityCommandContext context, ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+        super(type, context);
+        this.resolvedEntity = resolvedEntity;
     }
 
     @Override

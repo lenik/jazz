@@ -14,6 +14,7 @@ public class ListCommand
 
     public static final String ID = IStdCommands.ID_LIST;
     public static final String[] NAMES = { "__data*", "list" };
+    public static final String[] METHODS = { "GET" };
 
     public ListCommand() {
         super(ID);
@@ -22,6 +23,11 @@ public class ListCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

@@ -1,26 +1,23 @@
 package net.bodz.lily.entity.ws;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.err.DuplicatedKeyException;
 import net.bodz.bas.t.order.PriorityComparator;
-import net.bodz.bas.text.trie.DefaultCharTrie;
-import net.bodz.bas.text.trie.DefaultNode;
 import net.bodz.lily.entity.manager.IEntityCommandType;
 
 public class CommandLocator {
 
     Map<String, IEntityCommandType> idMap = new HashMap<>();
-    DefaultCharTrie<IEntityCommandType> trie = new DefaultCharTrie<>();
-    DefaultCharTrie<IEntityCommandType> contentTrie = new DefaultCharTrie<>();
 
-//    Map<RequestKey, IEntityCommandType> keyMap = new HashMap<>();
-//    PrefixMap<IEntityCommandType> prefixMap = new PrefixMap<>();
+    ECTrie trie = new ECTrie();
+    ECTrie contentTrie = new ECTrie();
 
-    Set<String> otherIds = new HashSet<>();
     Set<IEntityCommandType> others = new TreeSet<>(PriorityComparator.INSTANCE);
 
     public boolean contains(IEntityCommandType command) {
@@ -30,26 +27,30 @@ public class CommandLocator {
         return idMap.containsKey(id);
     }
 
-    public boolean checkConflict(IEntityCommandType command) {
+    public void checkConflict(IEntityCommandType command) {
         if (contains(command))
-            return true;
+            throw new DuplicatedKeyException("id: " + command.getUniqueId());
+
         String[] names = command.getCommandNames();
         for (String name : names) {
             boolean wildcard = name.endsWith("*");
             if (wildcard)
                 name = name.substring(0, name.length() - 1);
-            if (command.isContentCommand()) {
-                if (contentTrie.isDefined(name))
-                    return true;
-            } else {
-                if (trie.isDefined(name))
-                    return true;
-            }
+
+            ECNode node;
+            if (command.isContentCommand())
+                node = contentTrie.find(name);
+            else
+                node = trie.find(name);
+
+            if (node != null)
+                for (IEntityCommandType prev : node.getCommands()) {
+                    ECmds.checkConflict(prev, command);
+                }
         }
-        return false;
     }
 
-    public void add(IEntityCommandType command) {
+    public boolean add(IEntityCommandType command) {
         String id = command.getUniqueId();
         idMap.put(id, command);
 
@@ -60,18 +61,19 @@ public class CommandLocator {
                 if (wildcard)
                     name = name.substring(0, name.length() - 1);
 
-                DefaultNode<Character, IEntityCommandType> node;
+                ECNode node;
                 if (command.isContentCommand())
                     node = contentTrie.findOrCreate(name);
                 else
                     node = trie.findOrCreate(name);
 
                 node.setWildcard(wildcard);
-                node.setData(command);
+                node.addCommand(command);
             }
+            return true;
         } else {
-            otherIds.add(id);
             others.add(command);
+            return false;
         }
     }
 
@@ -92,7 +94,6 @@ public class CommandLocator {
                 }
             }
         } else {
-            otherIds.remove(id);
             others.remove(command);
         }
     }
@@ -101,7 +102,6 @@ public class CommandLocator {
         idMap.clear();
         trie.clear();
         contentTrie.clear();
-        otherIds.clear();
         others.clear();
     }
 
@@ -109,12 +109,12 @@ public class CommandLocator {
         return idMap.get(id);
     }
 
-    public IEntityCommandType findName(String name) {
+    public Set<IEntityCommandType> findName(String name) {
         IEntityCommandType cmd = idMap.get(name);
         if (cmd != null)
-            return cmd;
+            return new HashSet<>(Arrays.asList(cmd));
 
-        DefaultNode<Character, IEntityCommandType> node = trie.findLongestDefinedPrefix(name);
+        ECNode node = trie.findLongestDefinedPrefix(name);
         if (node == null)
             return null;
         int matchLen = node.getDepth();
@@ -123,12 +123,12 @@ public class CommandLocator {
         return null;
     }
 
-    public IEntityCommandType findContentName(String name) {
+    public Set<IEntityCommandType> findContentName(String name) {
         IEntityCommandType cmd = idMap.get(name);
         if (cmd != null)
-            return cmd;
+            return new HashSet<>(Arrays.asList(cmd));
 
-        DefaultNode<Character, IEntityCommandType> node = contentTrie.findLongestDefinedPrefix(name);
+        ECNode node = contentTrie.findLongestDefinedPrefix(name);
         if (node == null)
             return null;
 

@@ -19,7 +19,7 @@ import net.bodz.lily.entity.IId;
 import net.bodz.lily.entity.attachment.IAttachment;
 import net.bodz.lily.entity.attachment.IAttachmentListing;
 import net.bodz.lily.entity.attachment.IHaveAttachments;
-import net.bodz.lily.entity.manager.AbstractContentCommandProcess;
+import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.IEntityCommandContext;
 import net.bodz.lily.entity.manager.ResolvedEntity;
 import net.bodz.lily.storage.IVolume;
@@ -28,15 +28,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class AttachmentResolveProcess
-        extends AbstractContentCommandProcess {
+        extends AbstractEntityCommandProcess {
 
     static final Logger logger = LoggerFactory.getLogger(AttachmentResolveProcess.class);
 
     JsonFormOptions jsonFormOptions;
+    ResolvedEntity resolvedEntity;
 
     public AttachmentResolveProcess(AttachmentResolveCommand type, IEntityCommandContext context,
             ResolvedEntity resolvedEntity) {
-        super(type, context, resolvedEntity);
+        super(type, context);
+        this.resolvedEntity = resolvedEntity;
     }
 
     @Override

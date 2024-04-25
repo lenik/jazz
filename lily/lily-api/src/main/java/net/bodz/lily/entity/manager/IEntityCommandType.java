@@ -21,6 +21,18 @@ public interface IEntityCommandType
     }
 
     /**
+     * The method name is case sensitive, usually it should be in upper case.
+     */
+    String[] getAcceptedMethods();
+
+    default boolean isAcceptedMethod(String method) {
+        for (String a : getAcceptedMethods())
+            if (a.equals(method))
+                return true;
+        return false;
+    }
+
+    /**
      * content command can be dispatched by: <code>/FooBar/(id)/cmd</code>
      *
      * instead of <code>/FooBar/cmd</code>

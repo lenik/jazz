@@ -19,6 +19,8 @@ import net.bodz.bas.c.primitive.Primitives;
 import net.bodz.bas.db.ibatis.IMapper;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.source.NotUsed;
 import net.bodz.bas.potato.element.IProperty;
 import net.bodz.bas.potato.element.IType;
@@ -36,6 +38,8 @@ import net.bodz.lily.entity.StrVar;
 public class DefaultEntityTypeInfo
         implements
             IEntityTypeInfo {
+
+    static final Logger logger = LoggerFactory.getLogger(DefaultEntityTypeInfo.class);
 
     final Class<?> entityClass;
     final IType potatoType;

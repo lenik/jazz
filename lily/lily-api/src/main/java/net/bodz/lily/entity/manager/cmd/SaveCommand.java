@@ -13,7 +13,12 @@ public class SaveCommand
         extends AbstractEntityCommandType {
 
     public static final String ID = IStdCommands.ID_SAVE;
-    public static final String[] NAMES = { "save", "saveNew", "update" };
+
+    // save = update | saveNew
+    public static final String[] NAMES = { "save", "update", "saveNew", };
+
+    // PUT for save | update, PATCH for update, POST for save | saveNew
+    public static final String[] METHODS = { "PUT", "PATCH", "POST" };
 
     public SaveCommand() {
         super(ID);
@@ -22,6 +27,11 @@ public class SaveCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

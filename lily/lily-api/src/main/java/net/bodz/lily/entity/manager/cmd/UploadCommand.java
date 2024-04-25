@@ -13,6 +13,7 @@ public class UploadCommand
 
     public static final String ID = IStdCommands.ID_UPLOAD;
     public static final String[] NAMES = { ID };
+    public static final String[] METHODS = { "POST", "PUT" };
 
     public static final String K_NULL_ID = "incoming";
 
@@ -23,6 +24,11 @@ public class UploadCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

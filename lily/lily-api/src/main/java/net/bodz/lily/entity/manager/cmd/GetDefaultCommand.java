@@ -24,6 +24,7 @@ public class GetDefaultCommand
 
     public static final String ID = IStdCommands.ID_GET_DEFAULT;
     public static final String[] NAMES = { "default", "new" };
+    public static final String[] METHODS = { "GET" };
 
     public GetDefaultCommand() {
         super(ID);
@@ -32,6 +33,11 @@ public class GetDefaultCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override

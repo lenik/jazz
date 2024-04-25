@@ -15,6 +15,7 @@ public class CountCommand
 
     public static final String ID = IStdCommands.ID_COUNT;
     public static final String[] NAMES = { "count", "nRow" };
+    public static final String[] METHODS = { "GET" };
 
     public CountCommand() {
         super(ID);
@@ -23,6 +24,11 @@ public class CountCommand
     @Override
     public String[] getCommandNames() {
         return NAMES;
+    }
+
+    @Override
+    public String[] getAcceptedMethods() {
+        return METHODS;
     }
 
     @Override
