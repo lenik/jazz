@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 
 import net.bodz.bas.bean.api.IBeanInfo;
 import net.bodz.bas.bean.api.IPropertyDescriptor;
@@ -88,10 +89,16 @@ public class DefaultEntityTypeInfo
 
         for (IProperty property : potatoType.getProperties()) {
             Column aColumn = property.getAnnotation(Column.class);
-            if (aColumn == null)
-                continue;
-            propertyMap.put(property.getName(), property);
-            columnPropertyMap.put(aColumn.name(), property);
+            if (aColumn != null) {
+                propertyMap.put(property.getName(), property);
+                columnPropertyMap.put(aColumn.name(), property);
+            }
+
+            JoinColumn aJoinColumn = property.getAnnotation(JoinColumn.class);
+            if (aJoinColumn != null) {
+                propertyMap.put(property.getName(), property);
+                // columnPropertyMap.put(aJoinColumn.name(), property);
+            }
         }
     }
 
