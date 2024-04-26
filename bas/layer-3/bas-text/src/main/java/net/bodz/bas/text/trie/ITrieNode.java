@@ -2,7 +2,7 @@ package net.bodz.bas.text.trie;
 
 import java.util.Set;
 
-public interface ITrieNode<char_t, T, self_t> {
+public interface ITrieNode<char_t, T, self_t extends ITrieNode<char_t, T, self_t>> {
 
     self_t getParent();
 
@@ -43,5 +43,9 @@ public interface ITrieNode<char_t, T, self_t> {
     void clear();
 
     boolean accept(ITrieNodeVisitor<self_t> visitor);
+
+    default boolean accept_leaf(ILeafNodeVisitor<char_t, T, self_t> visitor) {
+        return accept(visitor);
+    }
 
 }
