@@ -1,227 +1,198 @@
 package net.bodz.bas.repr.path;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.net.URI;
+import java.net.URL;
 
 import net.bodz.bas.meta.decl.ThreadUnsafe;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @ThreadUnsafe
 public class TokenQueue
-        // extends AbstractHttpRequestProcessor
-        implements ITokenQueue, Serializable, Cloneable {
+        extends BasicTokenQueue
+        implements
+            ITokenQueue {
 
     private static final long serialVersionUID = 1L;
 
-    private final String[] tokens;
-    private final boolean entered;
-    private int index;
-    private boolean stopped;
+    final String method;
+    final String scheme;
+    final String host;
+    final int port;
+    final String userInfo;
+    final String query;
+    final String fragment;
 
     public TokenQueue(String[] tokens, boolean entered) {
-        if (tokens == null)
-            throw new NullPointerException("tokens");
-        this.tokens = tokens;
-        this.entered = entered;
+        super(tokens, entered);
+        this.method = null;
+        this.scheme = null;
+        this.host = null;
+        this.port = 0;
+        this.userInfo = null;
+        this.query = null;
+        this.fragment = null;
     }
 
-    public TokenQueue(String path) {
-        if (path == null)
-            throw new NullPointerException("path");
+    public TokenQueue(String method, String scheme, String host, int port, String userInfo, String query,
+            String fragment, String[] tokens, boolean entered) {
+        super(tokens, entered);
+        this.method = method;
+        this.scheme = scheme;
+        this.host = host;
+        this.port = port;
+        this.userInfo = userInfo;
+        this.query = query;
+        this.fragment = fragment;
+    }
 
-        if (path.isEmpty()) {
-            this.tokens = new String[0];
-            this.entered = false;
-            return;
-        }
+    public static TokenQueue ofPath(String path) {
+        return new Builder().path(path).build();
+    }
 
-        entered = path.charAt(path.length() - 1) == '/';
-
-        List<String> tokens = new ArrayList<String>(20);
-        int start = 0;
-        int slash;
-        while ((slash = path.indexOf('/', start)) != -1) {
-            if (slash > start) { // skip empty tokens like '//', and trailing token.
-                String token = path.substring(start, slash);
-                tokens.add(token);
-            }
-            start = slash + 1;
-        }
-
-        // start = 0 or (lastSlash + 1)
-        if (path.length() > start) {
-            String token = path.substring(start);
-            tokens.add(token);
-        }
-
-        this.tokens = tokens.toArray(new String[0]);
+    public static TokenQueue ofRequest(HttpServletRequest req) {
+        return new Builder().request(req).build();
     }
 
     @Override
     public TokenQueue clone() {
-        TokenQueue o = new TokenQueue(tokens, entered);
-        o.index = index;
-        o.stopped = stopped;
+        TokenQueue o = new TokenQueue(method, scheme, host, port, userInfo, query, fragment, tokens, entered);
+        o.initState(this);
         return o;
     }
 
     @Override
-    public int available() {
-        return tokens.length - index;
+    public String getMethod() {
+        return method;
     }
 
     @Override
-    public String getRemainingPath() {
-        int remaining = tokens.length - index;
-        if (remaining == 0)
-            return null;
-
-        StringBuilder buf = new StringBuilder(remaining * 20);
-        for (int i = index; i < tokens.length; i++) {
-            if (i != index)
-                buf.append('/');
-            buf.append(tokens[i]);
-        }
-        return buf.toString();
+    public String getScheme() {
+        return scheme;
     }
 
     @Override
-    public boolean isEntered() {
-        return entered;
+    public String getHost() {
+        return host;
     }
 
     @Override
-    public boolean isEmpty() {
-        return index >= tokens.length;
+    public int getPort() {
+        return port;
     }
 
     @Override
-    public void skip(int n) {
-        int index = this.index + n;
-        if (index > tokens.length)
-            throw new IllegalArgumentException("Skip to underflow: " + n);
-        this.index = index;
+    public String getUserInfo() {
+        return userInfo;
     }
 
     @Override
-    public String[] shift(int n) {
-        if (index + n > tokens.length)
-            return null;
-        String[] copy = Arrays.copyOfRange(tokens, index, index + n);
-        index += n;
-        return copy;
+    public String getQuery() {
+        return query;
     }
 
     @Override
-    public String[] shiftAll() {
-        return shift(available());
+    public String getFragment() {
+        return fragment;
     }
 
-    @Override
-    public String shift() {
-        if (index >= tokens.length)
-            return null;
-        return tokens[index++];
-    }
+    public static class Builder
+            extends BasicTokenQueue.Builder {
 
-    @Override
-    public Integer shiftInt() {
-        Integer n = peekInt();
-        if (n != null)
-            index++;
-        return n;
-    }
+        String method;
+        String scheme;
+        String host;
+        int port;
+        String userInfo;
+        String query;
+        String fragment;
 
-    @Override
-    public Long shiftLong() {
-        Long n = peekLong();
-        if (n != null)
-            index++;
-        return n;
-    }
-
-    @Override
-    public final String peek() {
-        return peekAt(0);
-    }
-
-    @Override
-    public String peekAt(int offset) {
-        int index = this.index + offset;
-        if (index >= tokens.length)
-            return null;
-        return tokens[index];
-    }
-
-    @Override
-    public final Integer peekInt() {
-        return peekIntAt(0);
-    }
-
-    @Override
-    public Integer peekIntAt(int offset) {
-        int index = this.index + offset;
-        if (index >= tokens.length)
-            return null;
-        if (!isNumber(tokens[index]))
-            return null;
-        return Integer.valueOf(tokens[index]);
-    }
-
-    @Override
-    public final Long peekLong() {
-        return peekLongAt(0);
-    }
-
-    @Override
-    public Long peekLongAt(int offset) {
-        int index = this.index + offset;
-        if (index >= tokens.length)
-            return null;
-        if (!isNumber(tokens[index]))
-            return null;
-        long n = Long.parseLong(tokens[index]);
-        return n;
-    }
-
-    @Override
-    public boolean isStopped() {
-        return stopped;
-    }
-
-    @Override
-    public void stop() {
-        this.stopped = true;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder buf = new StringBuilder();
-        for (int i = 0; i < index; i++) {
-            if (i != 0)
-                buf.append('/');
-            buf.append(tokens[i]);
+        public Builder method(String method) {
+            this.method = method;
+            return this;
         }
 
-        // "a/b <---> /c"
-        buf.append(" → ");
+        public Builder request(HttpServletRequest req) {
+            method = req.getMethod();
+            scheme = req.getScheme();
+            host = req.getServerName();
+            port = req.getServerPort();
+            query = req.getQueryString();
 
-        for (int i = index; i < tokens.length; i++) {
-            buf.append('/');
-            buf.append(tokens[i]);
-        }
-        return buf.toString();
-    }
+            String pathInfo = req.getPathInfo();
+            if (pathInfo.startsWith("/"))
+                pathInfo = pathInfo.substring(1);
+            path(pathInfo);
 
-    static boolean isNumber(String str) {
-        int i = str.length();
-        while (--i >= 0) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9')
-                return false;
+            return this;
         }
-        return true;
+
+        public Builder context(URI uri) {
+            scheme = uri.getScheme();
+            host = uri.getHost();
+            port = uri.getPort();
+            userInfo = uri.getUserInfo();
+            query = uri.getQuery();
+            fragment = uri.getFragment();
+            return this;
+        }
+
+        public Builder context(URL url) {
+            scheme = url.getProtocol();
+            host = url.getHost();
+            port = url.getPort();
+            userInfo = url.getUserInfo();
+            query = url.getQuery();
+            fragment = url.getRef();
+            return this;
+        }
+
+        public Builder scheme(String scheme) {
+            this.scheme = scheme;
+            return this;
+        }
+
+        public Builder host(String host) {
+            this.host = host;
+            return this;
+        }
+
+        public Builder port(int port) {
+            this.port = port;
+            return this;
+        }
+
+        public Builder userInfo(String userInfo) {
+            this.userInfo = userInfo;
+            return this;
+        }
+
+        public Builder query(String query) {
+            this.query = query;
+            return this;
+        }
+
+        public Builder fragment(String fragment) {
+            this.fragment = fragment;
+            return this;
+        }
+
+        @Override
+        public Builder path(String path) {
+            super.path(path);
+            return this;
+        }
+
+        TokenQueue buildSimple() {
+            return new TokenQueue(tokens, entered);
+        }
+
+        @Override
+        public TokenQueue build() {
+            TokenQueue o = new TokenQueue(method, scheme, host, port, userInfo, query, fragment, tokens, entered);
+            return o;
+        }
+
     }
 
 }

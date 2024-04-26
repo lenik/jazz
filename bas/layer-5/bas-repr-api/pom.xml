@@ -40,6 +40,11 @@
             <version>0.0.1-SNAPSHOT</version>
             <optional>false</optional>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty.toolchain</groupId>
+            <artifactId>jetty-jakarta-servlet-api</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 5 :: Repr Api</name>
 </project>

@@ -36,7 +36,7 @@ public interface IPathDispatcher
      */
     default IPathArrival dispatch(Object startObject, String path, IVariantMap<String> q)
             throws PathDispatchException {
-        TokenQueue tokens = new TokenQueue(path);
+        TokenQueue tokens = TokenQueue.ofPath(path);
         PathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = dispatch(start, startObject, tokens, q);
         if (! tokens.isEmpty())

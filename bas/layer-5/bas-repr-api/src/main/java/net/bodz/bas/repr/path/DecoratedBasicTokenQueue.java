@@ -2,55 +2,20 @@ package net.bodz.bas.repr.path;
 
 import net.bodz.bas.t.model.AbstractDecorator;
 
-public abstract class DecoratedTokenQueue
-        extends AbstractDecorator<ITokenQueue>
+public abstract class DecoratedBasicTokenQueue
+        extends AbstractDecorator<IBasicTokenQueue>
         implements
-            ITokenQueue {
+            IBasicTokenQueue {
 
     private static final long serialVersionUID = 1L;
 
-    public DecoratedTokenQueue(ITokenQueue _orig) {
+    public DecoratedBasicTokenQueue(IBasicTokenQueue _orig) {
         super(_orig);
     }
 
     @Override
-    public ITokenQueue clone() {
+    public IBasicTokenQueue clone() {
         return getWrapped().clone();
-    }
-
-    @Override
-    public String getMethod() {
-        return getWrapped().getMethod();
-    }
-
-    @Override
-    public String getScheme() {
-        return getWrapped().getScheme();
-    }
-
-    @Override
-    public String getHost() {
-        return getWrapped().getHost();
-    }
-
-    @Override
-    public int getPort() {
-        return getWrapped().getPort();
-    }
-
-    @Override
-    public String getUserInfo() {
-        return getWrapped().getUserInfo();
-    }
-
-    @Override
-    public String getQuery() {
-        return getWrapped().getQuery();
-    }
-
-    @Override
-    public String getFragment() {
-        return getWrapped().getFragment();
     }
 
     @Override

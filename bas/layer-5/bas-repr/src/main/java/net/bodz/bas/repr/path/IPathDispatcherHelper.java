@@ -6,10 +6,10 @@ public interface IPathDispatcherHelper {
 
     default Object dispatchTest(IPathDispatcher pd, Object startObject, String path, IVariantMap<String> q)
             throws PathDispatchException {
-        TokenQueue tokens = new TokenQueue(path);
+        TokenQueue tokens = TokenQueue.ofPath(path);
         IPathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = pd.dispatch(start, startObject, tokens, q);
-        if (result == null || !tokens.isEmpty())
+        if (result == null || ! tokens.isEmpty())
             throw new IncompleteDispatchException(tokens.toString());
         return result.getTarget();
     }
@@ -18,7 +18,7 @@ public interface IPathDispatcherHelper {
             throws PathDispatchException {
         IPathArrival start = new PathArrival(startObject, tokens.getRemainingPath());
         IPathArrival result = pd.dispatch(start, startObject, tokens, q);
-        if (result == null || !tokens.isEmpty())
+        if (result == null || ! tokens.isEmpty())
             throw new IncompleteDispatchException(tokens.toString());
         return result.getTarget();
     }

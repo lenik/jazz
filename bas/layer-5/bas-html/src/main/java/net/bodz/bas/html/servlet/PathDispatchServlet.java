@@ -105,13 +105,10 @@ public class PathDispatchServlet
         req.setAttribute(HttpServletReqEx.ATTRIBUTE_KEY, req);
         req.setAttribute(HttpSnapManager.ATTRIBUTE_KEY, snapManager);
 
-        if (!IHttpRequestProcessor.fn.applyAll(req, resp))
+        if (! IHttpRequestProcessor.fn.applyAll(req, resp))
             return;
 
-        String pathInfo = req.getPathInfo();
-        if (pathInfo.startsWith("/"))
-            pathInfo = pathInfo.substring(1);
-        TokenQueue tokenQueue = new TokenQueue(pathInfo);
+        TokenQueue tokenQueue = TokenQueue.ofRequest(req);
         IVariantMap<String> q = VariantMaps.fromRequest(req);
         req.setAttribute(ITokenQueue.ATTRIBUTE_KEY, tokenQueue);
         req.setAttribute(IVariantMap.class, q);
@@ -140,7 +137,7 @@ public class PathDispatchServlet
         if (target == NoRender.INSTANCE)
             return;
 
-        if (!tokenQueue.isEmpty() && !tokenQueue.isStopped()) {
+        if (! tokenQueue.isEmpty() && ! tokenQueue.isStopped()) {
             logger.error("Incomplete-Dispatch: " + tokenQueue);
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, //
                     "Path-Remaining: " + tokenQueue.getRemainingPath());
@@ -150,7 +147,7 @@ public class PathDispatchServlet
         req.setAttribute(IHttpViewBuilderFactory.ATTRIBUTE_KEY, viewBuilderFactory);
         req.setAttribute(IArtifactManager.ATTRIBUTE_KEY, IndexedArtifactManager.getInstance());
 
-        ContentType contentType = ContentType.forPath(pathInfo);
+        ContentType contentType = ContentType.forPath(req.getPathInfo());
         ViewBuilderSet<Object> viewBuilders = viewBuilderFactory.getViewBuilders(target.getClass());
         IHttpViewBuilder<Object> viewBuilder = ContentFamily.findFirstFor(viewBuilders, contentType);
         if (viewBuilder == null)
@@ -177,7 +174,7 @@ public class PathDispatchServlet
                 union.add((IQueryable) a.getTarget());
 
         DefaultHtmlViewContext ctx = new DefaultHtmlViewContext(req, resp);
-        if (!union.isEmpty())
+        if (! union.isEmpty())
             ctx.setQueryContext(union);
 
         boolean isHtml = false;
@@ -217,7 +214,7 @@ public class PathDispatchServlet
                 viewBuilder.buildHttpViewStart(ctx, resp, ref);
             } catch (ViewBuilderException e) {
                 throw new ServletException(String.format(//
-                        "Failed to build view for %s: %s", pathInfo, e.getMessage()), e);
+                        "Failed to build view for %s: %s", req.getPathInfo(), e.getMessage()), e);
             }
         } // if is-html.
     }
