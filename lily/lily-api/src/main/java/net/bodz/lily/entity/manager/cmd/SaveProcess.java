@@ -63,13 +63,17 @@ public class SaveProcess
             throws Exception {
         // 1. Prepare the object to be saved
         StructRow obj;
-        if (createNew) {
-            obj = (StructRow) typeInfo.getEntityClass().getConstructor().newInstance();
+        if (resolvedEntity != null) {
+            obj = resolvedEntity.entity;
         } else {
-            obj = (StructRow) getEntityMapper().select(id);
-            if (obj == null)
-                throw new NoSuchKeyException(String.format(//
-                        "Invalid entity id: \"%s\"", id));
+            if (createNew) {
+                obj = (StructRow) typeInfo.getEntityClass().getConstructor().newInstance();
+            } else {
+                obj = (StructRow) getEntityMapper().select(id);
+                if (obj == null)
+                    throw new NoSuchKeyException(String.format(//
+                            "Invalid entity id: \"%s\"", id));
+            }
         }
 
         IJsonForm jsonForm = obj;
@@ -113,6 +117,8 @@ public class SaveProcess
 
         if (hasId)
             result.setHeader("id", id);
+
+        result.setData(obj);
 
         return result.succeed();
     }
@@ -159,21 +165,26 @@ public class SaveProcess
     @Override
     public void jsonIn(JsonObject o, JsonFormOptions opts)
             throws ParseException {
-        if (hasId) {
-            String[] names = typeInfo.getPrimaryKeyPropertyNames();
-            String[] params = new String[names.length];
-            for (int i = 0; i < names.length; i++) {
-                String property = names[i];
-                String param = o.getString(property);
-                if (params == null)
-                    throw new IllegalArgumentException("pk-column[" + i + "] isn't specified.");
-                params[i] = param;
-            }
-            this.id = typeInfo.parseId(params);
-            if (id == null)
-                this.createNew = true;
+        if (resolvedEntity != null) {
+            // createNew = undefined;
+            // createNew = false;
         } else {
-            throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
+            if (hasId) {
+                String[] names = typeInfo.getPrimaryKeyPropertyNames();
+                String[] params = new String[names.length];
+                for (int i = 0; i < names.length; i++) {
+                    String property = names[i];
+                    String param = o.getString(property);
+                    if (params == null)
+                        throw new IllegalArgumentException("pk-column[" + i + "] isn't specified.");
+                    params[i] = param;
+                }
+                this.id = typeInfo.parseId(params);
+                if (id == null)
+                    this.createNew = true;
+            } else {
+                throw new UnsupportedOperationException("id isn't supported: " + typeInfo.getEntityClass());
+            }
         }
         this.contentJson = o;
     }
