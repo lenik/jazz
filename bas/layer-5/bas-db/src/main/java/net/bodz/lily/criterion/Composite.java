@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
@@ -215,10 +216,12 @@ public abstract class Composite
     @Override
     public void readObject(IVariantMap<String> map)
             throws ParseException {
-        readObject(map, (stack) -> Object.class);
+        readObject(map, //
+                (String name) -> name, //
+                (stack) -> Object.class);
     }
 
-    public void readObject(IVariantMap<String> map, ITypeInferrer typeInferer)
+    public void readObject(IVariantMap<String> map, Function<String, String> qualifier, ITypeInferrer typeInferer)
             throws ParseException {
         IStack<String> fieldNameStack = new ArrayStack<>();
 
@@ -235,14 +238,14 @@ public abstract class Composite
             }
 
             opName = key.substring(colon + 1);
-            key = key.substring(0, colon);
+            String fieldName = key.substring(0, colon);
 
             if (opName.startsWith("~")) {
                 negate = ! negate;
                 opName = opName.substring(1);
             }
 
-            fieldNameStack.push(key);
+            fieldNameStack.push(fieldName);
             try {
                 Class<?> fieldType = typeInferer.getFieldType(fieldNameStack);
 
@@ -254,13 +257,13 @@ public abstract class Composite
                     throw new ParseException("Non field-criterion opName: " + opName);
 
                 FieldCriterion fieldCriterion = (FieldCriterion) criterion;
-                fieldCriterion.fieldName = key;
+                fieldCriterion.fieldName = qualifier.apply(fieldName);
                 fieldCriterion.yes = ! negate;
 
                 try {
                     fieldCriterion.parseObject(val, typeInferer, fieldNameStack);
                 } catch (Exception e) {
-                    throw new ParseException("failed to parse " + key + ": " + e.getMessage(), e);
+                    throw new ParseException("failed to parse " + fieldName + ": " + e.getMessage(), e);
                 }
                 add(fieldCriterion);
             } finally {

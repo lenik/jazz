@@ -3,6 +3,7 @@ package net.bodz.lily.criteria;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.db.ibatis.IGenericMapper;
@@ -171,10 +172,12 @@ public abstract class AbstractCriteriaBuilder<This>
 
     public void readObject(IVariantMap<String> map, ITypeInferrer typeInferrer)
             throws ParseException {
+        Function<String, String> qualifier = (String name) -> qualify(name);
+
         stack.clear();
 
         Composite composite = defaultCombine();
-        composite.readObject(map, typeInferrer);
+        composite.readObject(map, qualifier, typeInferrer);
         stack.push(composite);
 
         for (String key : map.keySet()) {
