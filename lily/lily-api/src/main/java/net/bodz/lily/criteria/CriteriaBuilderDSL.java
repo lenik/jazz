@@ -277,71 +277,71 @@ public abstract class CriteriaBuilderDSL<This>
     }
 
     protected <T extends Number> DualNumberField<T> dualNumber(String fieldName1, String fieldName2, Class<T> type) {
-        return new DualNumberField<T>(fieldName1, fieldName2, type);
+        return new DualNumberField<T>(qualify(fieldName1), qualify(fieldName2), type);
     }
 
     protected DualIntegerField dualInteger(String fieldName1, String fieldName2) {
-        return new DualIntegerField(fieldName1, fieldName2);
+        return new DualIntegerField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualByteField dualByte(String fieldName1, String fieldName2) {
-        return new DualByteField(fieldName1, fieldName2);
+        return new DualByteField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualShortField dualShort(String fieldName1, String fieldName2) {
-        return new DualShortField(fieldName1, fieldName2);
+        return new DualShortField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualLongField dualLong(String fieldName1, String fieldName2) {
-        return new DualLongField(fieldName1, fieldName2);
+        return new DualLongField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualFloatField dualFloat(String fieldName1, String fieldName2) {
-        return new DualFloatField(fieldName1, fieldName2);
+        return new DualFloatField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualDoubleField dualDouble(String fieldName1, String fieldName2) {
-        return new DualDoubleField(fieldName1, fieldName2);
+        return new DualDoubleField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualBigIntegerField dualBigInteger(String fieldName1, String fieldName2) {
-        return new DualBigIntegerField(fieldName1, fieldName2);
+        return new DualBigIntegerField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualBigDecimalField dualBigDecimal(String fieldName1, String fieldName2) {
-        return new DualBigDecimalField(fieldName1, fieldName2);
+        return new DualBigDecimalField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualStringField dualString(String fieldName1, String fieldName2) {
-        return new DualStringField(fieldName1, fieldName2);
+        return new DualStringField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualInstantField dualInstant(String fieldName1, String fieldName2) {
-        return new DualInstantField(fieldName1, fieldName2);
+        return new DualInstantField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualZonedDateTimeField dualZonedDateTime(String fieldName1, String fieldName2) {
-        return new DualZonedDateTimeField(fieldName1, fieldName2);
+        return new DualZonedDateTimeField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualOffsetDateTimeField dualOffsetDateTime(String fieldName1, String fieldName2) {
-        return new DualOffsetDateTimeField(fieldName1, fieldName2);
+        return new DualOffsetDateTimeField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualLocalDateTimeField dualLocalDateTime(String fieldName1, String fieldName2) {
-        return new DualLocalDateTimeField(fieldName1, fieldName2);
+        return new DualLocalDateTimeField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualLocalDateField dualLocalDate(String fieldName1, String fieldName2) {
-        return new DualLocalDateField(fieldName1, fieldName2);
+        return new DualLocalDateField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected DualLocalTimeField dualLocalTime(String fieldName1, String fieldName2) {
-        return new DualLocalTimeField(fieldName1, fieldName2);
+        return new DualLocalTimeField(qualify(fieldName1), qualify(fieldName2));
     }
 
     protected <T> DualDateField<T> dualDate(String fieldName1, String fieldName2, Class<T> type) {
-        return new DualDateField<T>(fieldName1, fieldName2, type);
+        return new DualDateField<T>(qualify(fieldName1), qualify(fieldName2), type);
     }
 
     public class DualNumberField<T>
