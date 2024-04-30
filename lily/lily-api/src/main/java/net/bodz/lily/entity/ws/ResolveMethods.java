@@ -137,6 +137,9 @@ public class ResolveMethods<T> {
             }
 
             FieldCriterionBuilder<?, ?, Object> field = criteria.getField(fieldName);
+            if (field == null)
+                throw new IllegalArgumentException("Undefined field name: " + fieldName);
+
             try {
                 Object fieldVal = field.parse(fieldStr);
                 field.eq(fieldVal);
