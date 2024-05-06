@@ -17,9 +17,12 @@ public class SelectOptions
     public static final String K_PAGE_INDEX = "page.index";
     public static final String K_PAGE_NUMBER = "page.number";
     public static final String K_PAGE_SIZE = "page.size";
+    public static final String K_COUNT_LIMIT = "limit";
     public static final String K_ORDERS = "order";
 
     private Pagination page;
+    private long limit; // max-limit, count-limit
+
     private Orders orders;
 
     public SelectOptions() {
@@ -47,6 +50,14 @@ public class SelectOptions
             page = new Pagination();
         page.setLimitOffset(limit, offset);
         return this;
+    }
+
+    public long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(long limit) {
+        this.limit = limit;
     }
 
     public Orders getOrders() {
@@ -84,6 +95,9 @@ public class SelectOptions
         else
             list.add("ALL");
 
+        if (limit != 0)
+            list.add("limit " + limit);
+
         return list.toString();
     }
 
@@ -117,6 +131,8 @@ public class SelectOptions
             if (_pageNumber != null)
                 page.setPageNumber(_pageNumber.longValue());
         }
+
+        limit = map.getLong(K_COUNT_LIMIT, limit);
 
         String orderBy = map.getString(K_ORDERS);
         if (orderBy != null)
