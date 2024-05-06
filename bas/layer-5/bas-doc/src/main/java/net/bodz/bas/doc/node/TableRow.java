@@ -54,7 +54,7 @@ public class TableRow
         for (int i = 0; i < n; i++) {
             boolean last = i == n - 1;
             TableCell cell = cells.get(i);
-            if (!last)
+            if (! last)
                 a.append(Table.CELL_SEP);
             cell.buildText(a);
         }
@@ -88,22 +88,25 @@ public class TableRow
         lastCell.setColumnSpan(nEmpty + 1);
     }
 
-    public synchronized void updateHMerge() {
-        int n = cells.size();
-        int mergeMore = 0;
-        TableCell orig = null;
-        for (int c = 0; c < n; c++) {
-            TableCell cell = cells.get(c);
-            if (mergeMore > 0) {
-                cell.mergedTo = orig;
-                mergeMore--;
+    /**
+     * Update all cell.mergeTo in this row.
+     */
+    public synchronized void updateHMergeTo() {
+        int nCol = cells.size();
+        int colSpanRemains = 0;
+        TableCell mergeFrom = null;
+        for (int iCol = 0; iCol < nCol; iCol++) {
+            TableCell cell = cells.get(iCol);
+            if (colSpanRemains > 0) {
+                cell.mergedTo = mergeFrom;
+                colSpanRemains--;
             } else {
                 if (cell.mergedTo != null) // v-orig
                     cell = cell.mergedTo;
                 int span = cell.getColumnSpan();
                 if (span > 1) {
-                    orig = cell;
-                    mergeMore = span - 1;
+                    mergeFrom = cell;
+                    colSpanRemains = span - 1;
                 } else {
                     // orig = null;
                     // mergeMore = 0;

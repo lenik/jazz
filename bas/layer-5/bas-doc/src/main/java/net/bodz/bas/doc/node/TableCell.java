@@ -79,7 +79,7 @@ public class TableCell
         this.rowSpan = rowSpan;
     }
 
-    @Override
+    @Override 
     public void accept(IDocVisitor visitor) {
         int index = getChildIndex();
         visitor.tableCell(this, index);

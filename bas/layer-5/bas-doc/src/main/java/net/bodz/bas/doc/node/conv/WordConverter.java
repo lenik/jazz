@@ -11,19 +11,38 @@ import org.apache.poi.ooxml.POIXMLProperties.CoreProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.FileMagic;
 import org.apache.poi.util.Units;
-import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.xwpf.usermodel.Borders;
+import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.doc.node.*;
-import net.bodz.bas.doc.node.Document;
 import net.bodz.bas.doc.node.util.IListStyle;
 import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.doc.property.HorizAlignment;
 import net.bodz.bas.doc.property.MeasureLength;
 import net.bodz.bas.doc.word.DocNum;
 import net.bodz.bas.doc.word.INumStyles;
-import net.bodz.bas.doc.word.xwpf.*;
+import net.bodz.bas.doc.word.xwpf.IXwHavePars;
+import net.bodz.bas.doc.word.xwpf.IXwHaveRuns;
+import net.bodz.bas.doc.word.xwpf.IXwNode;
+import net.bodz.bas.doc.word.xwpf.XwDocument;
+import net.bodz.bas.doc.word.xwpf.XwNodeType;
+import net.bodz.bas.doc.word.xwpf.XwPar;
+import net.bodz.bas.doc.word.xwpf.XwPredicates;
+import net.bodz.bas.doc.word.xwpf.XwRun;
+import net.bodz.bas.doc.word.xwpf.XwTable;
+import net.bodz.bas.doc.word.xwpf.XwTableCell;
+import net.bodz.bas.doc.word.xwpf.XwTableRow;
+import net.bodz.bas.doc.word.xwpf.XwUtils;
 import net.bodz.bas.io.res.IStreamInputSource;
 import net.bodz.bas.io.res.builtin.FileResource;
 import net.bodz.bas.log.Logger;
@@ -83,11 +102,11 @@ public class WordConverter
         String editor = doc.editor.getText();
 
         CoreProperties corePr = _document.getProperties().getCoreProperties();
-        if (!Nullables.isEmpty(title))
+        if (! Nullables.isEmpty(title))
             corePr.setTitle(title);
-        if (!Nullables.isEmpty(author))
+        if (! Nullables.isEmpty(author))
             corePr.setCreator(author);
-        if (!Nullables.isEmpty(editor))
+        if (! Nullables.isEmpty(editor))
             corePr.setLastModifiedByUser(editor);
 
         super.document(doc);
@@ -178,8 +197,8 @@ public class WordConverter
         look.setFirstColumn(table.firstColumns > 0);
         look.setLastRow(table.lastRows > 0);
         look.setLastColumn(table.lastColumns > 0);
-        look.setNoHBand(!table.hBands);
-        look.setNoVBand(!table.vBands);
+        look.setNoHBand(! table.hBands);
+        look.setNoVBand(! table.vBands);
 
         if (styleName != null) {
             tblPr.unsetTblBorders();
@@ -194,12 +213,42 @@ public class WordConverter
             borderSingleAuto(borders.addNewInsideV(), 0, 0);
         }
 
-        table.updateCellMerges();
+        CTTblGrid tblGrid = tbl.getTblGrid();
+        if (tblGrid == null)
+            tblGrid = tbl.addNewTblGrid();
+        int maxColumnCount = table.getMaxColumnCount();
+        for (int iCol = 0; iCol < maxColumnCount; iCol++) {
+            CTTblGridCol gridCol = tblGrid.addNewGridCol();
+            gridCol.setW(1 * 1440); // 1-inch
+        }
+
+        table.updateMergeTos();
+        // table.dumpMergeTos(Stdio.cout);
 
         XwTable x_table = new XwTable(_table);
         stack.push(x_table);
         super.table(table);
         stack.pop();
+
+//        for (int col = 0; col < maxColumnCount; col++) {
+//            CTTblWidth tblWidth = CTTblWidth.Factory.newInstance();
+//            tblWidth.setW(BigInteger.valueOf(1 * 1440));
+//            tblWidth.setType(STTblWidth.DXA);
+//            for (int row = 0; row < rowCount; row++) {
+//                XWPFTableCell _cell = _table.getRow(row).getCell(col);
+//                if (_cell == null)
+//                    continue;
+//                CTTcPr tcPr = _cell.getCTTc().getTcPr();
+//                if (tcPr != null) {
+//                    tcPr.setTcW(tblWidth);
+//                } else {
+//                    tcPr = CTTcPr.Factory.newInstance();
+//                    tcPr.setTcW(tblWidth);
+//                    _table.getRow(row).getCell(col).getCTTc().setTcPr(tcPr);
+//                }
+//            }
+//        }
+
     }
 
     void borderSingleAuto(CTBorder border, int size, int space) {
@@ -279,20 +328,25 @@ public class WordConverter
         }
 
         CTTc tc = _cell.getCTTc();
-        CTTcPr pr = tc.isSetTcPr() ? tc.getTcPr() : tc.addNewTcPr();
+        CTTcPr tcPr = tc.isSetTcPr() ? tc.getTcPr() : tc.addNewTcPr();
 
         int colSpan = orig.getColumnSpan();
         if (colSpan > 1) {
-            CTDecimalNumber gridSpan = pr.addNewGridSpan();
+            CTDecimalNumber gridSpan = tcPr.addNewGridSpan();
             gridSpan.setVal(BigInteger.valueOf(colSpan));
+
+            CTHMerge hMerge = CTHMerge.Factory.newInstance();
+            hMerge.setVal(STMerge.RESTART);
+            tcPr.setHMerge(hMerge);
+
         }
 
         if (cell.getRow() != orig.getRow())
-            pr.addNewVMerge();
+            tcPr.addNewVMerge();
         else {
             int rowSpan = cell.getRowSpan();
             if (rowSpan > 1) {
-                CTVMerge vMerge = pr.addNewVMerge();
+                CTVMerge vMerge = tcPr.addNewVMerge();
                 vMerge.setVal(STMerge.RESTART);
             }
         }
@@ -309,7 +363,7 @@ public class WordConverter
 
     @Override
     public void textPar(TextPar textPar) {
-        if (!textParHandlerStack.isEmpty()) {
+        if (! textParHandlerStack.isEmpty()) {
             textParHandlerStack.top().handleTextPar(textPar);
             return;
         }

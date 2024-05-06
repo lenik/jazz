@@ -95,45 +95,51 @@ public class Table
         return rows.append();
     }
 
-    public synchronized void updateCellMerges() {
+    /**
+     * Update cell.mergeTo of all cells.
+     */
+    public synchronized void updateMergeTos() {
         int maxColumnCount = getMaxColumnCount();
-        for (int c = 0; c < maxColumnCount; c++)
-            updateVMerge(c);
-        updateHMerge();
+        for (int iCol = 0; iCol < maxColumnCount; iCol++)
+            updateVMergeTo(iCol);
+        updateHMergeTos();
     }
 
-    synchronized void updateHMerge() {
+    synchronized void updateHMergeTos() {
         for (TableRow row : rows)
-            row.updateHMerge();
+            row.updateHMergeTo();
     }
 
-    synchronized void updateVMerge(int columnIndex) {
-        int n = rows.size();
-        int mergeMore = 0;
-        TableCell orig = null;
-        for (int r = 0; r < n; r++) {
-            TableRow row = rows.get(r);
-            int cc = row.getChildCount();
-            if (columnIndex >= cc)
+    /**
+     * update all cell.mergeTo in a specific column
+     */
+    synchronized void updateVMergeTo(int iCol) {
+        int nRow = rows.size();
+        int rowSpanRemains = 0;
+        TableCell mergeFrom = null;
+        for (int iRow = 0; iRow < nRow; iRow++) {
+            TableRow row = rows.get(iRow);
+            int nCol = row.getChildCount();
+            if (iCol >= nCol)
                 continue;
-            TableCell cell = row.cells.get(columnIndex);
-            if (mergeMore > 0) {
-                cell.mergedTo = orig;
-                mergeMore--;
+            TableCell cell = row.cells.get(iCol);
+            if (rowSpanRemains > 0) {
+                cell.mergedTo = mergeFrom;
+                rowSpanRemains--;
             } else {
                 int span = cell.getRowSpan();
                 if (span > 1) {
-                    mergeMore = span - 1;
-                    orig = cell;
+                    rowSpanRemains = span - 1;
+                    mergeFrom = cell;
                 } else {
-                    // mergeMore = 0;
-                    // orig = null;
+                    // rowSpanRemains = 0;
+                    // mergeFrom = null;
                 }
             }
         }
     }
 
-    public void dumpMerges(IPrintOut out) {
+    public void dumpMergeTos(IPrintOut out) {
         int h = rows.size();
         for (int y = 0; y < h; y++) {
             TableRow row = rows.get(y);
