@@ -51,7 +51,7 @@ class Dummy<T>
     }
 
     @Override
-    public long count(ICriterion mask) {
+    public long count(ICriterion criteria, SelectOptions options) {
         return 0;
     }
 

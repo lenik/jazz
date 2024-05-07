@@ -34,7 +34,11 @@ public interface ICommonDataOps<T> {
      */
     long deleteFor(@Param("c") ICriterion criteria);
 
-    long count(@Param("c") ICriterion criteria);
+    long count(@Param("c") ICriterion criteria, @Param("opt") SelectOptions options);
+
+    default long count(@Param("c") ICriterion criteria) {
+        return count(criteria, SelectOptions.ALL);
+    }
 
     default List<T> filter(@Param("c") ICriterion criteria) {
         return filter(criteria, SelectOptions.ALL);

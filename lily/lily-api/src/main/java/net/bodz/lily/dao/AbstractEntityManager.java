@@ -53,8 +53,8 @@ public class AbstractEntityManager<T, //
     }
 
     @Override
-    public long count(ICriterion criteria) {
-        return mapper.count(criteria);
+    public long count(ICriterion criteria, SelectOptions options) {
+        return mapper.count(criteria, options);
     }
 
 //    @Override

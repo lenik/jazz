@@ -381,7 +381,7 @@ public abstract class AbstractEntityController<T>
         result.range = list;
         if (wantCount) {
             if (selectOptions.getPage() != null) {
-                long count = fetchDataCount(q, criteria);
+                long count = fetchDataCount(q, criteria, selectOptions);
                 result.count = count;
             } else {
                 result.count = list.size();
@@ -396,10 +396,10 @@ public abstract class AbstractEntityController<T>
         return mapper.filter(criteria.get(), selectOptions);
     }
 
-    protected long fetchDataCount(IVariantMap<String> q, ICriteriaBuilder<?> criteria)
+    protected long fetchDataCount(IVariantMap<String> q, ICriteriaBuilder<?> criteria, SelectOptions selectOptions)
             throws ParseException {
         IEntityMapper<?> mapper = getMapper();
-        return mapper.count(criteria.get());
+        return mapper.count(criteria.get(), selectOptions);
     }
 
     protected SelectOptions newSelectOptions() {
