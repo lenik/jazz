@@ -18,6 +18,8 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.filetype.excel.ExcelParseOptions;
 import net.bodz.bas.fmt.records.CsvRecords;
 import net.bodz.bas.io.res.ResFn;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.repr.form.PropertyChain;
 import net.bodz.bas.repr.path.ServiceTargetException;
 import net.bodz.bas.servlet.ctx.IAnchor;
@@ -25,16 +27,7 @@ import net.bodz.bas.site.file.UploadHandler;
 import net.bodz.bas.site.file.UploadResult;
 import net.bodz.bas.site.file.UploadedFileInfo;
 import net.bodz.bas.site.json.JsonResult;
-import net.bodz.bas.t.catalog.CsvTable;
-import net.bodz.bas.t.catalog.DefaultColumnMetadata;
-import net.bodz.bas.t.catalog.DefaultTableMetadata;
-import net.bodz.bas.t.catalog.ICell;
-import net.bodz.bas.t.catalog.IColumnMetadata;
-import net.bodz.bas.t.catalog.IMutableCell;
-import net.bodz.bas.t.catalog.IRow;
-import net.bodz.bas.t.catalog.ITableMetadata;
-import net.bodz.bas.t.catalog.MutableRow;
-import net.bodz.bas.t.catalog.MutableTable;
+import net.bodz.bas.t.catalog.*;
 import net.bodz.bas.t.catalog.poi.SheetBook;
 import net.bodz.bas.t.catalog.poi.SheetTable;
 import net.bodz.bas.t.variant.IVariantMap;
@@ -51,6 +44,8 @@ import com.github.pjfanning.xlsx.StreamingReader;
 
 public class ImportProcess
         extends AbstractEntityCommandProcess {
+
+    static final Logger logger = LoggerFactory.getLogger(ImportProcess.class);
 
     String encoding;
     String delim;
@@ -164,6 +159,10 @@ public class ImportProcess
             DefaultColumnMetadata column = (DefaultColumnMetadata) table.getColumn(i);
             String columnName = column.getName();
             PropertyChain fieldProp = context.resolveFieldProp(columnName);
+            if (fieldProp == null) {
+                logger.error("can't find field for column name: " + columnName);
+                continue;
+            }
             fieldProps[i] = fieldProp;
             Class<?> type = fieldProp.getPropertyClass();
             column.setJavaClass(type);
@@ -235,6 +234,9 @@ public class ImportProcess
                     continue;
 
                 PropertyChain fieldProp = fieldProps[iCol];
+                if (fieldProp == null)
+                    continue;
+
                 Class<?> propType = fieldProp.getPropertyClass();
                 Class<?> boxed = Primitives.box(propType);
                 if (cellVal != null && ! boxed.isAssignableFrom(cellVal.getClass()))
