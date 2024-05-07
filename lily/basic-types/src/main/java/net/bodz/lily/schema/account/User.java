@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.db.ibatis.IResultSetForm;
+import net.bodz.bas.meta.bean.Internal;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
@@ -76,6 +77,7 @@ public class User
         return attributes;
     }
 
+    @Internal
     @Override
     public Collection<String> getAttributeNames() {
         return attributes.getAttributeNames();
