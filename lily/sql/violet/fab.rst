@@ -33,12 +33,6 @@ class-map {
         fabodrl
     net.bodz.lily.concrete.CoMessage: \
         fabodr
-    net.bodz.lily.concrete.IdEntity: \
-        fabproc_sn, \
-        fabstdproc_in, \
-        fabstdtester, \
-        fabtrack_op, \
-        fabtrack_test_parm
 }
 
 table-name {

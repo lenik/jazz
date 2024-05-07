@@ -28,8 +28,6 @@ class-map {
         _cat
     net.bodz.lily.concrete.CoCode: \
         _schema
-    net.bodz.lily.concrete.IdEntity: \
-        _formparm
     net.bodz.lily.schema.meta.AbstractDefinition: \
         _form \
         _parm \

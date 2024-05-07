@@ -30,9 +30,6 @@ class-map {
         diaryrev_vote, \
         plan_vote, \
         plando_vote
-    net.bodz.lily.concrete.IdEntity: \
-        diary_party, \
-        plan_party
 }
 
 table-name {

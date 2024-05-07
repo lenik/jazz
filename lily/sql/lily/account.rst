@@ -11,8 +11,6 @@ class-map {
     net.bodz.lily.concrete.CoPrincipal: \
         group, \
         user
-    net.bodz.lily.concrete.IdEntity: \
-        usersec
 }
 
 table-name {
