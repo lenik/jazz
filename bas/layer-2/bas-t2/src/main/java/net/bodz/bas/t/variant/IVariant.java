@@ -19,6 +19,14 @@ public interface IVariant {
 
     <T> T get(T defaultValue);
 
+    default boolean isNull() {
+        return get() == null;
+    }
+
+    default boolean isNotNull() {
+        return get() != null;
+    }
+
     /**
      * Get the value as a scalar.
      *
