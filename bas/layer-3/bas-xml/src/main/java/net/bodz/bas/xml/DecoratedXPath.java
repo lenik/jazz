@@ -3,7 +3,6 @@ package net.bodz.bas.xml;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathEvaluationResult;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFunctionResolver;
@@ -87,30 +86,6 @@ public class DecoratedXPath
     public String evaluate(String expression, InputSource source)
             throws XPathExpressionException {
         return getWrapped().evaluate(expression, source);
-    }
-
-    @Override
-    public <T> T evaluateExpression(String expression, Object item, Class<T> type)
-            throws XPathExpressionException {
-        return getWrapped().evaluateExpression(expression, item, type);
-    }
-
-    @Override
-    public XPathEvaluationResult<?> evaluateExpression(String expression, Object item)
-            throws XPathExpressionException {
-        return getWrapped().evaluateExpression(expression, item);
-    }
-
-    @Override
-    public <T> T evaluateExpression(String expression, InputSource source, Class<T> type)
-            throws XPathExpressionException {
-        return getWrapped().evaluateExpression(expression, source, type);
-    }
-
-    @Override
-    public XPathEvaluationResult<?> evaluateExpression(String expression, InputSource source)
-            throws XPathExpressionException {
-        return getWrapped().evaluateExpression(expression, source);
     }
 
 }

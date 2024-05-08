@@ -16,7 +16,7 @@ import net.bodz.bas.err.UnexpectedException;
 
 public class DomFn {
 
-    static DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newDefaultInstance();
+    static DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 
     public static Document parseXml(String xml)
             throws ParseException {
