@@ -22,7 +22,6 @@ import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.db.ctx.IDataContextAware;
 import net.bodz.bas.db.ibatis.IEntityMapper;
 import net.bodz.bas.db.ibatis.sql.Orders;
-import net.bodz.bas.db.ibatis.sql.Pagination;
 import net.bodz.bas.db.ibatis.sql.SelectOptions;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.err.IllegalUsageException;
@@ -405,15 +404,21 @@ public abstract class AbstractEntityController<T>
     protected SelectOptions newSelectOptions() {
         SelectOptions options = new SelectOptions();
 
-        DefaultLimit aDefaultLimit = typeInfo.getEntityClass().getAnnotation(DefaultLimit.class);
-        if (aDefaultLimit != null) {
-            long defaultLimit = aDefaultLimit.value();
-            Pagination pagination = new Pagination();
-            pagination.setLimit(defaultLimit);
-            options.setPage(pagination);
+        Long defaultLimit = getDefaultLimit();
+        if (defaultLimit != null) {
+            options.setLimit(defaultLimit);
         }
 
         return options;
+    }
+
+    protected Long getDefaultLimit() {
+        DefaultLimit aDefaultLimit = typeInfo.getEntityClass().getAnnotation(DefaultLimit.class);
+        if (aDefaultLimit != null) {
+            long defaultLimit = aDefaultLimit.value();
+            return defaultLimit;
+        }
+        return null;
     }
 
     String[] findColumnForProperty(String propertyName) {
