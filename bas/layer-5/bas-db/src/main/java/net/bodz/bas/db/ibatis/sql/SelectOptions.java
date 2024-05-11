@@ -1,63 +1,28 @@
 package net.bodz.bas.db.ibatis.sql;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVarMapForm;
 import net.bodz.bas.t.variant.IVariantMap;
 
 public class SelectOptions
+        extends SelectionRange
         implements
             IVarMapForm {
 
-    public static final String K_OFFSET = "page.offset";
-    public static final String K_LIMIT = "page.limit";
-    public static final String K_PAGE_INDEX = "page.index";
-    public static final String K_PAGE_NUMBER = "page.number";
-    public static final String K_PAGE_SIZE = "page.size";
-    public static final String K_COUNT_LIMIT = "limit";
-    public static final String K_ORDERS = "order";
-
-    private Pagination page;
-    private long limit; // max-limit, count-limit
+    public static final String K_ORDER = "order";
 
     private Orders orders;
 
     public SelectOptions() {
+        super();
     }
 
-    public SelectOptions(Pagination page) {
-        this.page = page;
+    public SelectOptions(long offset) {
+        super(offset);
     }
 
-    public SelectOptions(Pagination page, Orders orders) {
-        this.page = page;
-        this.orders = orders;
-    }
-
-    public Pagination getPage() {
-        return page;
-    }
-
-    public void setPage(Pagination page) {
-        this.page = page;
-    }
-
-    public SelectOptions page(int limit, int offset) {
-        if (page == null)
-            page = new Pagination();
-        page.setLimitOffset(limit, offset);
-        return this;
-    }
-
-    public long getLimit() {
-        return limit;
-    }
-
-    public void setLimit(long limit) {
-        this.limit = limit;
+    public SelectOptions(long offset, long limit) {
+        super(offset, limit);
     }
 
     public Orders getOrders() {
@@ -84,70 +49,31 @@ public class SelectOptions
 
     @Override
     public String toString() {
-        List<String> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+
         if (orders != null)
-            list.add("order " + orders);
+            sb.append(", order " + orders);
         else
-            list.add("NoOrder");
+            sb.append(", no-order");
 
-        if (page != null)
-            list.add("page " + page);
-        else
-            list.add("ALL");
-
-        if (limit != 0)
-            list.add("limit " + limit);
-
-        return list.toString();
+        return sb.toString();
     }
 
     @Override
-    public void readObject(IVariantMap<String> map) {
-        Long offset = map.getLong(K_OFFSET);
-        Long limit = map.getLong(K_LIMIT);
-        if (offset != null || limit != null) {
-            if (page == null)
-                page = new Pagination();
-            if (offset != null)
-                page.offset = offset;
-            if (limit != null)
-                page.limit = limit;
-        }
+    public void readObject(IVariantMap<String> map)
+            throws ParseException {
+        super.readObject(map);
 
-        Long _pageIndex = map.getLong(K_PAGE_INDEX);
-        Long _pageNumber = map.getLong(K_PAGE_NUMBER);
-        Integer _pageSize = map.getInt(K_PAGE_SIZE);
-
-        if (_pageIndex != null || _pageNumber != null || _pageSize != null) {
-            if (page == null)
-                page = new Pagination();
-
-            int pageSize = _pageSize == null ? 100 : _pageSize.intValue();
-            page.setLimit(pageSize);
-
-            if (_pageIndex != null)
-                page.setPageIndex(_pageIndex.longValue());
-
-            if (_pageNumber != null)
-                page.setPageNumber(_pageNumber.longValue());
-        }
-
-        limit = map.getLong(K_COUNT_LIMIT, limit);
-
-        String orderBy = map.getString(K_ORDERS);
-        if (orderBy != null)
-            orders = Orders.parse(orderBy);
+        String orderStr = map.getString(K_ORDER);
+        if (orderStr != null)
+            orders = Orders.parse(orderStr);
     }
 
-    @Override
-    public void writeObject(Map<String, Object> map) {
-        throw new NotImplementedException();
-    }
-
-    public static final SelectOptions TOP1 = new SelectOptions(new Pagination(1, 0));
-    public static final SelectOptions TOP10 = new SelectOptions(new Pagination(10, 0));
-    public static final SelectOptions TOP100 = new SelectOptions(new Pagination(100, 0));
-    public static final SelectOptions TOP1000 = new SelectOptions(new Pagination(1000, 0));
+    public static final SelectOptions TOP1 = new SelectOptions(0, 1);
+    public static final SelectOptions TOP10 = new SelectOptions(0, 10);
+    public static final SelectOptions TOP100 = new SelectOptions(0, 100);
+    public static final SelectOptions TOP1000 = new SelectOptions(0, 1000);
     public static final SelectOptions ALL = new SelectOptions();
 
 }

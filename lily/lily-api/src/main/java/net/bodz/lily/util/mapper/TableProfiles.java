@@ -78,7 +78,7 @@ public class TableProfiles
 
         SelectOptions opts = new SelectOptions();
         opts.order("id", false);
-        opts.page(limit, 0);
+        opts.pageByIndex(0, limit);
         List<entity_t> list = mapper.filter(j, opts);
         return list;
     }

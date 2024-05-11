@@ -380,7 +380,7 @@ public abstract class AbstractEntityController<T>
         DataFetchResult result = new DataFetchResult();
         result.range = list;
         if (wantCount) {
-            if (selectOptions.getPage() != null) {
+            if (selectOptions.isCountNeeded()) {
                 long count = fetchDataCount(q, criteria, selectOptions);
                 result.count = count;
             } else {
