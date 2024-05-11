@@ -15,8 +15,8 @@ public class SelectionRange
 
     public static final String K_OFFSET = "offset";
     public static final String K_LIMIT = "limit";
-    public static final String K_PAGE_INDEX = "pageIndex";
-    public static final String K_PAGE_NUMBER = "pageNumber";
+    public static final String K_PAGE_INDEX[] = { "pageIndex", "pageInd" };
+    public static final String K_PAGE_NUMBER[] = { "pageNumber", "pageNum" };
     public static final String K_PAGE_SIZE = "pageSize";
 
     public static final String UNLIMIT_LITERAL = "unlimit";
@@ -39,7 +39,11 @@ public class SelectionRange
     }
 
     public boolean isRangeSpecified() {
-        return offset != 0 || isLimited();
+        if (offset != UNDEFINED && offset != 0)
+            return true;
+        if (isLimited())
+            return true;
+        return false;
     }
 
     @Override
@@ -209,24 +213,45 @@ public class SelectionRange
             throws ParseException {
 
         offset = map.getLong(K_OFFSET, offset);
+
         if (UNLIMIT_LITERAL.equals(map.getString(K_LIMIT)))
             limit = UNLIMIT;
         else
             limit = map.getLong(K_LIMIT, limit);
 
-        if (UNLIMIT_LITERAL.equals(map.getString(K_PAGE_SIZE)))
-            limit = UNLIMIT;
-        else {
-            Integer _pageSize = map.getInt(K_PAGE_SIZE);
-            int pageSize = _pageSize == null ? 100 : _pageSize.intValue();
-            setPageSize(pageSize);
+        Long _pageIndex = null;
+        Long _pageNumber = null;
+        for (String k : K_PAGE_INDEX) {
+            Long val = map.getLong(k);
+            if (val != null) {
+                _pageIndex = val;
+                break;
+            }
+        }
+        for (String k : K_PAGE_NUMBER) {
+            Long val = map.getLong(k);
+            if (val != null) {
+                _pageNumber = val;
+                break;
+            }
         }
 
-        Long _pageIndex = map.getLong(K_PAGE_INDEX);
+        long pageSize = UNDEFINED;
+        if (UNLIMIT_LITERAL.equals(map.getString(K_PAGE_SIZE)))
+            limit = pageSize = UNLIMIT;
+        else {
+            Long _pageSize = map.getLong(K_PAGE_SIZE);
+            pageSize = _pageSize == null ? UNDEFINED : _pageSize.longValue();
+        }
+
+        if (_pageIndex != null || _pageNumber != null) {
+            setPageSize(pageSize == UNDEFINED ? 100 : pageSize);
+        }
+
         if (_pageIndex != null)
+
             setPageIndex(_pageIndex.longValue());
 
-        Long _pageNumber = map.getLong(K_PAGE_NUMBER);
         if (_pageNumber != null)
             setPageNumber(_pageNumber.longValue());
     }
