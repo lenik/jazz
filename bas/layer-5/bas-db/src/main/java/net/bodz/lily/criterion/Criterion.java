@@ -47,12 +47,20 @@ public abstract class Criterion
         return buf.toString();
     }
 
-    public String getSqlCondition() {
-        // thread-context?
-        return getSqlCondition(SqlDialects.POSTGRESQL);
+    public String getAndSqlCondition() {
+        return getSqlCondition("and");
     }
 
-    public String getSqlCondition(ISqlDialect dialect) {
+    public String getOrSqlCondition() {
+        return getSqlCondition("or");
+    }
+
+    public String getSqlCondition(String joiner) {
+        // thread-context?
+        return getSqlCondition(SqlDialects.POSTGRESQL, joiner);
+    }
+
+    public String getSqlCondition(ISqlDialect dialect, String joiner) {
         ICriterion node = reduce();
         if (node == null)
             return "";
@@ -61,9 +69,10 @@ public abstract class Criterion
         SQLFormatter formatter = new SQLFormatter(buf, dialect);
         node.accept(formatter);
         String sql = buf.toString();
-        if (sql.equals("()"))
+        if (sql.isEmpty() || sql.equals("()"))
             return "";
-        return sql;
+        else
+            return joiner + " " + sql;
     }
 
 }
