@@ -74,8 +74,7 @@
     </sql>
 
     <sql id="filtconds">
-        <!-- co -->
-        <include refid="co.modefilt" />
+        ${c.andSqlCondition}
     </sql>
 
     <select id="all" resultMap="objlist_map">
