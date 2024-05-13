@@ -14,7 +14,11 @@ import net.bodz.bas.meta.source.SerializableForm;
 @SerializableForm
 public interface IXmlForm {
 
-    default void readObject(Element element)
+    default boolean wantAttributeContext() {
+        return false;
+    }
+
+    default /* final */ void readObject(Element element)
             throws ParseException, LoaderException {
         QElement wrapped = QElement.wrap(element);
         readObject(wrapped);
@@ -31,7 +35,7 @@ public interface IXmlForm {
         XmlFn.dump(this, out);
     }
 
-    default void readObjectBoxed(IElement parent)
+    default /* final */ void readObjectBoxed(IElement parent)
             throws ParseException, LoaderException {
         String tagName = getClass().getSimpleName();
         for (IElement child : parent.selectByTag(tagName)) {
