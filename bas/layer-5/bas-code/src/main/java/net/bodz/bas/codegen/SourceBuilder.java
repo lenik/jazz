@@ -132,9 +132,9 @@ public abstract class SourceBuilder<model_t> {
 
         case DIFF_PATCH_CREATE:
             patchedLines = oldFileLines;
+            break;
+
         case DIFF_PATCH_UPGRADE:
-            patchFile = getPatchFile(fileInfo);
-            patchStatus = 0;
             if (patchFile.exists()) {
                 // String patchLocalPath = fileInfo.getLocalPath() + ".patch";
                 File tmpGenFile = File.createTempFile(fileInfo.getName(), fileInfo.getDotExtension());

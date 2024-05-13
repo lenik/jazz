@@ -31,8 +31,8 @@ public class FileDiff {
         if (row1 == row2)
             return SAME;
         AtomMap<String> map = new AtomMap<String>();
-        MutableRow<Integer> aRow1 = map.atomize(row1);
-        MutableRow<Integer> aRow2 = map.atomize(row2);
+        MutableRow<Integer> aRow1 = row1 == null ? new MutableRow<>() : map.atomize(row1);
+        MutableRow<Integer> aRow2 = row2 == null ? new MutableRow<>() : map.atomize(row2);
         EditList<Integer> aDiffs = atomsComparator.compare(aRow1, aRow2);
         return map.restore(linesComparator, aDiffs);
     }
