@@ -3,6 +3,7 @@ package net.bodz.bas.codegen;
 import java.io.File;
 import java.nio.file.Path;
 
+import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.system.SysProps;
 import net.bodz.bas.t.tuple.Split;
 
@@ -85,6 +86,28 @@ public class MutableFileInfo
             fileName = extension;
         else
             fileName = Split.nameExtension(fileName).a + "." + extension;
+    }
+
+    @Override
+    public String getDotExtension() {
+        int lastDot = fileName.lastIndexOf('.');
+        if (lastDot == -1)
+            return "";
+        else
+            return fileName.substring(lastDot);
+    }
+
+    public void setDotExtension(String dotExtension) {
+        int lastDot = fileName.lastIndexOf('.');
+        if (lastDot == -1) {
+            if (! Nullables.isEmpty(dotExtension))
+                fileName += dotExtension;
+        } else {
+            String name = fileName.substring(0, lastDot);
+            if (! Nullables.isEmpty(dotExtension))
+                name += dotExtension;
+            fileName = name;
+        }
     }
 
     @Override

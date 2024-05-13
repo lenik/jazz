@@ -39,6 +39,13 @@ public interface IFileInfo {
      */
     String getExtension();
 
+    /**
+     * Extension name with dot (<code>.</code>).
+     *
+     * @return empty string if none.
+     */
+    String getDotExtension();
+
     String getPath();
 
     /**
