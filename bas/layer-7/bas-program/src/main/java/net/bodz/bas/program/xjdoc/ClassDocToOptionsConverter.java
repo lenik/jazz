@@ -18,15 +18,23 @@ import net.bodz.bas.bean.api.Introspectors;
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.err.LazyLoadException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.i18n.dom.iString;
 import net.bodz.bas.i18n.dom.StrFn;
+import net.bodz.bas.i18n.dom.iString;
+import net.bodz.bas.log.Logger;
+import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.potato.element.IType;
 import net.bodz.bas.potato.provider.bean.BeanProperty;
 import net.bodz.bas.potato.provider.bean.BeanTypeProvider;
 import net.bodz.bas.potato.provider.reflect.FieldProperty;
 import net.bodz.bas.potato.provider.reflect.ReflectTypeProvider_declared;
 import net.bodz.bas.potato.provider.reflect.ReflectType_declared;
-import net.bodz.bas.program.model.*;
+import net.bodz.bas.program.model.FieldOption;
+import net.bodz.bas.program.model.IMutableOptionGroup;
+import net.bodz.bas.program.model.IOptionGroup;
+import net.bodz.bas.program.model.MethodOption;
+import net.bodz.bas.program.model.MutableOptionGroup;
+import net.bodz.bas.program.model.PropertyOption;
+import net.bodz.bas.program.model.SyntaxUsage;
 import net.bodz.mda.xjdoc.XjdocLoaderException;
 import net.bodz.mda.xjdoc.Xjdocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -38,6 +46,8 @@ import net.bodz.mda.xjdoc.util.MethodId;
 public class ClassDocToOptionsConverter
         implements
             IMapEntryLoader<Class<?>, IOptionGroup> {
+
+    static final Logger logger = LoggerFactory.getLogger(ClassDocToOptionsConverter.class);
 
     boolean xjdocRequired = true;
 
@@ -182,7 +192,7 @@ public class ClassDocToOptionsConverter
 
         if (includeSuperclass) {
             Class<?> superclass = clazz.getSuperclass();
-            if (!superclass.getName().startsWith("java.")) {
+            if (! superclass.getName().startsWith("java.")) {
                 parent = convertTree(superclass, parent);
                 parent = compact(parent);
             }
@@ -253,8 +263,10 @@ public class ClassDocToOptionsConverter
             for (Entry<String, String> entry : usageMap.entrySet()) {
                 String id = entry.getKey();
                 String script = entry.getValue();
-                if (script == null)
-                    throw new NullPointerException("script");
+                if (script == null) {
+                    logger.warn("null script for usage entry of key " + id);
+                    continue;
+                }
                 SyntaxUsage usage = new SyntaxUsage(id, script);
                 group.addUsage(usage);
             }
@@ -312,7 +324,7 @@ public class ClassDocToOptionsConverter
 
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (!isIncluded(field))
+                if (! isIncluded(field))
                     continue;
 
                 if (includeNonPublic)
@@ -336,7 +348,7 @@ public class ClassDocToOptionsConverter
 
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
-                if (!isIncluded(method))
+                if (! isIncluded(method))
                     continue;
                 if (usedMethods.contains(method))
                     continue;
@@ -364,11 +376,11 @@ public class ClassDocToOptionsConverter
     boolean isIncluded(Member member) {
         int modifiers = member.getModifiers();
 
-        if (!includeNonPublic)
-            if (!Modifier.isPublic(modifiers))
+        if (! includeNonPublic)
+            if (! Modifier.isPublic(modifiers))
                 return false;
 
-        if (!includeStatic)
+        if (! includeStatic)
             if (Modifier.isStatic(modifiers))
                 return false;
 
@@ -381,7 +393,7 @@ public class ClassDocToOptionsConverter
 
         String descriptor = (String) doc.getTag("option");
         if (descriptor == null)
-            if (!xjdocRequired)
+            if (! xjdocRequired)
                 return "";
 
         return descriptor;
