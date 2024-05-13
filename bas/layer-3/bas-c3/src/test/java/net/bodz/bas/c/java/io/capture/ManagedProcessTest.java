@@ -117,7 +117,7 @@ public class ManagedProcessTest {
 
     public static void main(String[] args)
             throws Throwable {
-        Process catproc = Processes.shellExec("cat");
+        Process catproc = new ProcessBuilder().command("cat").start();
         ManagedProcess mp = new ManagedProcess();
         mp.takeOver(catproc);
     }

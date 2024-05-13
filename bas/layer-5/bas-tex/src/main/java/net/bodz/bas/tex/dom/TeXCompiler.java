@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import net.bodz.bas.c.java.io.FileTree;
-import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.io.res.ResFn;
 import net.bodz.bas.io.res.tools.StreamReading;
@@ -49,14 +48,14 @@ public class TeXCompiler {
 
         String[] cmdv = { "cooltex", "-abj", jobName, texFile.getPath() };
         try {
-            Process process = Processes.exec(cmdv);
-            Processes.iocap(process, System.out);
+            Process process = new ProcessBuilder().command(cmdv).start();
+            process.waitFor();
         } catch (Exception e) {
             logger.error(e, "Exec failed.");
             return null;
         }
 
-        if (!pdfFile.exists())
+        if (! pdfFile.exists())
             return null;
 
         byte[] pdf = ResFn.file(pdfFile).to(StreamReading.class).read();

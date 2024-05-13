@@ -21,7 +21,6 @@ import org.xml.sax.SAXException;
 
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.FileTree;
-import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.net.URLClassLoaders;
 import net.bodz.bas.c.java.nio.TreeDeleteOption;
 import net.bodz.bas.c.m2.ArtifactId;
@@ -476,7 +475,7 @@ public class LibUpdater
         opts.add(src.getPath());
         opts.add(dst.getPath());
         String[] args = opts.toArray(new String[0]);
-        Processes.exec(args);
+        new ProcessBuilder().command(args).start();
     }
 
     void println(String message) {

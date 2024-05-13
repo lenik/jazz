@@ -7,10 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.io.process.OsShell;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 
+@Deprecated
 public class Processes {
 
     static final Logger logger = LoggerFactory.getLogger(Processes.class);
@@ -18,25 +19,6 @@ public class Processes {
     public static Process exec(String... cmdarray)
             throws IOException {
         return Runtime.getRuntime().exec(cmdarray);
-    }
-
-    private static String[] shvec;
-    private static String shprefix;
-    static {
-        String os = System.getProperty("os.name");
-        if (os.startsWith("Windows")) {
-            String comspec = System.getenv("COMSPEC");
-            if (comspec == null)
-                comspec = "cmd";
-            shvec = new String[] { comspec, "/c" };
-        } else {
-            String shell = System.getenv("SHELL");
-            if (shell == null)
-                shell = "sh";
-            shvec = new String[] { shell, "-c" };
-            // shvec = new String[] { shell };
-        }
-        shprefix = StringArray.join(" ", shvec) + " ";
     }
 
     static String quote(String cmdline) {
@@ -48,21 +30,21 @@ public class Processes {
     public static Process shellExec(String command)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        String cmdline = shprefix + quote(command);
+        String cmdline = OsShell.shellCmdPrefix + quote(command);
         return runtime.exec(cmdline);
     }
 
     public static Process shellExec(String command, String[] envp)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        String cmdline = shprefix + quote(command);
+        String cmdline = OsShell.shellCmdPrefix + quote(command);
         return runtime.exec(cmdline, envp);
     }
 
     public static Process shellExec(String command, String[] envp, File dir)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        String cmdline = shprefix + quote(command);
+        String cmdline = OsShell.shellCmdPrefix + quote(command);
         return runtime.exec(cmdline, envp, dir);
     }
 

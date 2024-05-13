@@ -44,7 +44,7 @@ public class ReaderInputStream
                 CoderResult result = encoder.encode(charbuf, bytebuf, end);
                 if (result.isOverflow())
                     throw new UnexpectedException("bytebuf overflow");
-                assert !result.isError() : "encode error";
+                assert ! result.isError() : "encode error";
             }
             bytebuf.flip();
         }
@@ -54,7 +54,7 @@ public class ReaderInputStream
     @Override
     public int read()
             throws IOException {
-        if (!bytebuf.hasRemaining()) {
+        if (! bytebuf.hasRemaining()) {
             int c = reader.read();
             if (c == -1)
                 return -1;

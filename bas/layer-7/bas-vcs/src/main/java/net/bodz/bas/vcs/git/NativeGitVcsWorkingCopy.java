@@ -2,11 +2,11 @@ package net.bodz.bas.vcs.git;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.c.java.io.capture.Processes;
+import net.bodz.bas.io.process.MyProcessBuilder;
+import net.bodz.bas.io.process.ProcessWrapper;
 import net.bodz.bas.io.res.builtin.StringSource;
 import net.bodz.bas.io.res.tools.StreamReading;
 import net.bodz.bas.log.Logger;
@@ -28,7 +28,7 @@ public class NativeGitVcsWorkingCopy
     public Iterable<IVcsLogEntry> log(String name, VcsLogOptions options)
             throws IOException, InterruptedException {
         File file = new File(getDirectory(), name);
-        if (!file.exists())
+        if (! file.exists())
             logger.warn("Non-existing file: " + file);
 
         List<String> cmdl = new ArrayList<String>();
@@ -57,8 +57,11 @@ public class NativeGitVcsWorkingCopy
         String[] cmdv = cmdl.toArray(new String[0]);
         // logger.debug("Execute: ", StringArray.join(" ", cmdv));
 
-        Process process = Runtime.getRuntime().exec(cmdv, null, getDirectory());
-        String result = Processes.iocap(process, Charset.defaultCharset());
+        ProcessWrapper process = new MyProcessBuilder()//
+                .command(cmdv)//
+                .directory(getDirectory())//
+                .start();
+        String result = process.waitForRunData().getOutputText();
         Iterable<String> lines = new StringSource(result).to(StreamReading.class).lines();
         return NativeGitLogParser.parse(this, lines, options);
     }
@@ -67,7 +70,7 @@ public class NativeGitVcsWorkingCopy
     public Iterable<String> getDiff(String name, String version)
             throws IOException, InterruptedException {
         File file = new File(getDirectory(), name);
-        if (!file.exists())
+        if (! file.exists())
             logger.warn("Non-existing file: " + file);
 
         List<String> cmdl = new ArrayList<String>();
@@ -84,8 +87,11 @@ public class NativeGitVcsWorkingCopy
         String[] cmdv = cmdl.toArray(new String[0]);
         // logger.debug("Execute: ", StringArray.join(" ", cmdv));
 
-        Process process = Runtime.getRuntime().exec(cmdv, null, getDirectory());
-        String result = Processes.iocap(process, Charset.defaultCharset());
+        ProcessWrapper process = new MyProcessBuilder()//
+                .command(cmdv)//
+                .directory(getDirectory())//
+                .start();
+        String result = process.waitForRunData().getOutputText();
         return new StringSource(result).to(StreamReading.class).lines();
     }
 

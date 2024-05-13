@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 
-import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.nio.Charsets;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
@@ -61,7 +60,9 @@ public class SiteGraph_svg
 
         InputStream svgIn;
         try {
-            Process proc = Processes.exec("/usr/bin/dot", "-Tsvg", tempDotFile.getPath());
+            Process proc = new ProcessBuilder()//
+                    .command("/usr/bin/dot", "-Tsvg", tempDotFile.getPath())//
+                    .start();
             svgIn = proc.getInputStream();
 
             ByteArrayOutputStream buf = new ByteArrayOutputStream(10000);

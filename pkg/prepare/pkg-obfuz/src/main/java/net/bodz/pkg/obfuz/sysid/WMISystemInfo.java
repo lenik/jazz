@@ -2,12 +2,12 @@ package net.bodz.pkg.obfuz.sysid;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 
-import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.java.util.Arrays;
 import net.bodz.bas.c.system.SystemInfo;
+import net.bodz.bas.io.process.MyProcessBuilder;
+import net.bodz.bas.io.process.ProcessWrapper;
 import net.bodz.bas.t.variant.MutableVariantMap;
 
 public class WMISystemInfo
@@ -76,15 +76,15 @@ public class WMISystemInfo
 
     static String wmic(String... args)
             throws WMIException {
-        if (!wmiSupported)
+        if (! wmiSupported)
             throw new WMIException("WMI isn't supported on this system");
-        if (!wmicProgram.canExecute())
+        if (! wmicProgram.canExecute())
             throw new WMIException("wmic utility isn't existed: " + wmicProgram);
         try {
             String[] cmdarray = Arrays.prepend(wmicProgram.getPath(), args);
-            Process wmicProcess = Processes.shellExec(cmdarray);
-            Charset charset = Charset.defaultCharset();
-            String output = Processes.iocap(wmicProcess, charset);
+            ProcessWrapper process = new MyProcessBuilder()//
+                    .command(cmdarray).start();
+            String output = process.waitForRunData().getOutputText();
             return output;
         } catch (IOException e) {
             throw new WMIException(e.getMessage(), e);

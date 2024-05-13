@@ -2,20 +2,21 @@ package net.bodz.bas.script;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.script.ScriptEngine;
 
-import net.bodz.bas.c.java.io.capture.Processes;
 import net.bodz.bas.c.org.json.JsonBuffer;
 import net.bodz.bas.err.FormatException;
 import net.bodz.bas.fmt.json.IJsonDumper;
 import net.bodz.bas.fn.EvalException;
 import net.bodz.bas.io.IPrintOut;
 import net.bodz.bas.io.Stdio;
+import net.bodz.bas.io.process.MyProcessBuilder;
+import net.bodz.bas.io.process.ProcessWrapper;
+import net.bodz.bas.io.process.RunData;
 import net.bodz.bas.log.Logger;
 import net.bodz.bas.log.LoggerFactory;
 import net.bodz.bas.meta.build.ProgramName;
@@ -159,14 +160,17 @@ public class SimpleJsRunner
         byte[] jsonBytes = json.getBytes("utf-8");
         InputStream jsonIn = new ByteArrayInputStream(jsonBytes);
 
-        Process jq = Processes.exec("jq", ".");
-        ByteArrayOutputStream outbuf = new ByteArrayOutputStream();
+        ProcessWrapper process = new MyProcessBuilder().command("jq", ".").start();
+        process.supplyInput(jsonIn);
+
+        RunData runData;
         try {
-            Processes.iocap(jq, jsonIn, outbuf, outbuf);
+            runData = process.mergeOutputAndError().waitForRunData();
+
         } catch (InterruptedException e) {
             return null;
         }
-        String pretty = outbuf.toString("utf-8");
+        String pretty = runData.getOutputText();
         return pretty;
     }
 
