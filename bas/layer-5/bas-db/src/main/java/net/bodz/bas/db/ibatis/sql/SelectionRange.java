@@ -112,8 +112,12 @@ public class SelectionRange
         if (offset != 0)
             return true;
 
-        if (isLimited())
-            return limit < countLimit;
+        if (isLimited()) {
+            if (isCountLimited())
+                return limit < countLimit;
+            else
+                return true;
+        }
 
         return false;
     }
@@ -243,13 +247,14 @@ public class SelectionRange
             Long _pageSize = map.getLong(K_PAGE_SIZE);
             pageSize = _pageSize == null ? UNDEFINED : _pageSize.longValue();
         }
-
         if (_pageIndex != null || _pageNumber != null) {
-            setPageSize(pageSize == UNDEFINED ? 100 : pageSize);
+            if (pageSize == UNDEFINED)
+                pageSize = 100;
         }
+        if (pageSize != UNDEFINED)
+            setPageSize(pageSize);
 
         if (_pageIndex != null)
-
             setPageIndex(_pageIndex.longValue());
 
         if (_pageNumber != null)
