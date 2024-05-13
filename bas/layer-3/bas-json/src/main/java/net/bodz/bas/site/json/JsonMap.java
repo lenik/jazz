@@ -20,8 +20,6 @@ import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.repr.form.SortOrder;
 import net.bodz.bas.typer.std.MutableTypedAttributes;
 
-import section.obj;
-
 /**
  * @see net.bodz.bas.c.org.json.JsonStrFormTypeHandler
  */
@@ -134,7 +132,7 @@ public class JsonMap
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        if ((Class<?>) obj.class != JsonMap.class)
+        if ((Class<?>) obj.getClass() != JsonMap.class)
             return false;
         JsonMap o = (JsonMap) obj;
         if (! Nullables.equals(map, o.map))
