@@ -37,12 +37,9 @@ public abstract class AbstractViewBuilder<T>
         return null;
     }
 
+    @Override
     public <_T> _T getAttribute(String name, _T defaultValue) {
         return defaultValue;
-    }
-
-    @Override
-    public void setAttribute(String name, Object value) {
     }
 
     @Override

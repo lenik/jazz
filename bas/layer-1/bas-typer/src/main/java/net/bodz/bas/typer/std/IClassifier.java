@@ -2,6 +2,7 @@ package net.bodz.bas.typer.std;
 
 import java.util.Map;
 
+import net.bodz.bas.rtx.IAttributes;
 import net.bodz.bas.rtx.IOptions;
 
 public interface IClassifier<T>

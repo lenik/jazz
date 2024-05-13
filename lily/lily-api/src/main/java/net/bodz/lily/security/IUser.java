@@ -1,7 +1,7 @@
 package net.bodz.lily.security;
 
 import net.bodz.bas.fmt.json.IJsonForm;
-import net.bodz.bas.typer.std.IAttributes;
+import net.bodz.bas.rtx.IAttributes;
 
 public interface IUser
         extends

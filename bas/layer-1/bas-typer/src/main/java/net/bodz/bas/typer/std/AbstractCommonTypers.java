@@ -8,6 +8,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.decl.ThreadUnsafe;
+import net.bodz.bas.rtx.IAttributes;
 import net.bodz.bas.rtx.IOptions;
 import net.bodz.bas.rtx.QueryException;
 

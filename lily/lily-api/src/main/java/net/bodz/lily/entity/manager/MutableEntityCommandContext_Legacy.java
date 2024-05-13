@@ -1,13 +1,14 @@
 package net.bodz.lily.entity.manager;
 
+import java.util.Set;
+
 import net.bodz.bas.db.ctx.DataContext;
 import net.bodz.bas.repr.path.DefaultTokenProcessor;
 import net.bodz.bas.repr.path.IPathArrival;
 import net.bodz.bas.repr.path.ITokenQueue;
-import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.rtx.MutableAttributes;
 import net.bodz.bas.site.json.JsonResult;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.typer.std.MutableAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class MutableEntityCommandContext_Legacy
 
     private static final long serialVersionUID = 1L;
 
-    IAttributed attributes = new MutableAttributes();
+    MutableAttributes attributes = new MutableAttributes();
 
     IVariantMap<String> parameters;
 
@@ -39,6 +40,16 @@ public class MutableEntityCommandContext_Legacy
     }
 
     @Override
+    public Set<String> getAttributeNames() {
+        return attributes.getAttributeNames();
+    }
+
+    @Override
+    public boolean isAttributePresent(String name) {
+        return attributes.isAttributePresent(name);
+    }
+
+    @Override
     public <T> T getAttribute(String name, T defaultValue) {
         return attributes.getAttribute(name, defaultValue);
     }
@@ -46,6 +57,11 @@ public class MutableEntityCommandContext_Legacy
     @Override
     public void setAttribute(String name, Object value) {
         attributes.setAttribute(name, value);
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        attributes.removeAttribute(name);
     }
 
     @Override
@@ -66,6 +82,7 @@ public class MutableEntityCommandContext_Legacy
         this.request = request;
     }
 
+    @Override
     public HttpServletResponse getResponse() {
         return response;
     }

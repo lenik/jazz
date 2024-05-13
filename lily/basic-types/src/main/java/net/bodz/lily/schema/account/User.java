@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,11 +11,10 @@ import java.util.Set;
 import javax.persistence.Table;
 
 import net.bodz.bas.db.ibatis.IResultSetForm;
-import net.bodz.bas.meta.bean.Internal;
+import net.bodz.bas.meta.bean.JsonRedundant;
 import net.bodz.bas.meta.bean.Transient;
 import net.bodz.bas.meta.cache.Derived;
 import net.bodz.bas.meta.decl.Redundant;
-import net.bodz.bas.typer.std.ITyperFamily;
 import net.bodz.lily.concrete.util.ExtraAttributes;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
@@ -77,10 +75,15 @@ public class User
         return attributes;
     }
 
-    @Internal
+    @JsonRedundant
     @Override
-    public Collection<String> getAttributeNames() {
+    public Set<String> getAttributeNames() {
         return attributes.getAttributeNames();
+    }
+
+    @Override
+    public boolean isAttributePresent(String name) {
+        return attributes.isAttributePresent(name);
     }
 
     @Override
@@ -91,11 +94,6 @@ public class User
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
         return attributes.getAttribute(name, defaultValue);
-    }
-
-    @Override
-    public ITyperFamily<?> getAttributeTypers(String attributeName) {
-        return attributes.getAttributeTypers(attributeName);
     }
 
     public List<Group> getGroups() {

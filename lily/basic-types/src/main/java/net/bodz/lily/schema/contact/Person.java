@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.Table;
 
 import net.bodz.bas.db.ibatis.IResultSetForm;
-import net.bodz.bas.typer.std.IAttributes;
+import net.bodz.bas.rtx.IAttributes;
 import net.bodz.lily.concrete.util.ExtraAttributes;
 import net.bodz.lily.entity.type.EntityTypes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;

@@ -1,12 +1,12 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.typer.std.EmptyAttributes;
-import net.bodz.bas.typer.std.IAttributes;
+import net.bodz.bas.rtx.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 public abstract class AbstractVfsDevice
-        implements IVfsDevice {
+        implements
+            IVfsDevice {
 
     private final IVfsDriver driver;
     private final String deviceSpec;
@@ -42,7 +42,7 @@ public abstract class AbstractVfsDevice
 
     @Override
     public IAttributes getAttributes() {
-        return EmptyAttributes.getInstance();
+        return IAttributes.NULL;
     }
 
     @Override
@@ -88,7 +88,7 @@ public abstract class AbstractVfsDevice
 
     /**
      * Resolve local file, without following any symlink.
-     * 
+     *
      * @param localPath
      *            Non-empty local pathname.
      * @return Local file resolved.
@@ -101,7 +101,7 @@ public abstract class AbstractVfsDevice
 
     /**
      * Resolve local file, without following any symlink.
-     * 
+     *
      * @param _path
      *            Parsed local path. Non-<code>null</code>.
      * @return Local file resolved.

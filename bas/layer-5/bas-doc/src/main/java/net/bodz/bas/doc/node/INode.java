@@ -7,13 +7,13 @@ import net.bodz.bas.doc.node.util.DocNodeDumper;
 import net.bodz.bas.io.ICharOut;
 import net.bodz.bas.io.ITreeOut;
 import net.bodz.bas.io.impl.TreeOutImpl;
-import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.rtx.IMutableAttributes;
 import net.bodz.bas.t.list.IListEx;
 import net.bodz.bas.t.stack.TypePredicate;
 
 public interface INode
         extends
-            IAttributed {
+            IMutableAttributes {
 
     INode getParent();
 

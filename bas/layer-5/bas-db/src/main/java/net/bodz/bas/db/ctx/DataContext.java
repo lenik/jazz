@@ -6,8 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -33,13 +32,15 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.rtx.IMutableAttributes;
 import net.bodz.bas.rtx.IQueryable;
+import net.bodz.bas.rtx.MutableAttributes;
 
 public class DataContext
         implements
             IQueryable,
             Closeable,
-            IAttributed,
+            IMutableAttributes,
             IJsonForm,
             SqlSessionFactory {
 
@@ -49,7 +50,7 @@ public class DataContext
     private IDataSourceProvider dataSourceProvider;
     private DataSource dataSource;
     private IbatisMapperProvider mapperProvider;
-    private Map<String, Object> attributes;
+    private MutableAttributes attributes;
 
     public DataContext(ConnectOptions opts) {
         if (opts == null)
@@ -63,7 +64,7 @@ public class DataContext
             throw new NullPointerException("dataSource");
 
         mapperProvider = new IbatisMapperProvider(dataSource);
-        attributes = new HashMap<String, Object>();
+        attributes = new MutableAttributes();
     }
 
     @SuppressWarnings("unchecked")
@@ -153,24 +154,29 @@ public class DataContext
     /** ⇱ Implementation Of {@link IAttributed}. */
     /* _____________________________ */static section.iface __ATTRS__;
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T getAttribute(String name) {
-        return (T) attributes.get(name);
+    public Set<String> getAttributeNames() {
+        return attributes.getAttributeNames();
+    }
+
+    @Override
+    public boolean isAttributePresent(String name) {
+        return attributes.isAttributePresent(name);
     }
 
     @Override
     public <T> T getAttribute(String name, T defaultValue) {
-        @SuppressWarnings("unchecked")
-        T value = (T) attributes.get(name);
-        if (value == null)
-            value = defaultValue;
-        return value;
+        return attributes.getAttribute(name, defaultValue);
     }
 
     @Override
     public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
+        attributes.setAttribute(name, value);
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        attributes.removeAttribute(name);
     }
 
     /** ⇱ Implementation Of {@link IJsonForm}. */
@@ -182,7 +188,7 @@ public class DataContext
         JsonObject _options = o.getJsonObject("options");
         if (_options != null)
             options.jsonIn(_options, opts);
-        o.getMap("attributes", attributes, null, (Object jso) -> jso);
+        o.getMap("attributes", attributes.getAttributeMap(), null, (Object jso) -> jso);
     }
 
     @Override

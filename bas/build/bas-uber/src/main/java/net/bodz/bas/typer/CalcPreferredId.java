@@ -2,7 +2,16 @@ package net.bodz.bas.typer;
 
 import java.security.MessageDigest;
 
-import net.bodz.bas.typer.std.*;
+import net.bodz.bas.rtx.IAttributes;
+import net.bodz.bas.typer.std.IBasicTyperFamily;
+import net.bodz.bas.typer.std.IClassifier;
+import net.bodz.bas.typer.std.IFormatter;
+import net.bodz.bas.typer.std.IInstanceStore;
+import net.bodz.bas.typer.std.IParser;
+import net.bodz.bas.typer.std.ISampleGenerator;
+import net.bodz.bas.typer.std.ISearcher;
+import net.bodz.bas.typer.std.ITextFormat;
+import net.bodz.bas.typer.std.IValidator;
 
 public class CalcPreferredId {
 

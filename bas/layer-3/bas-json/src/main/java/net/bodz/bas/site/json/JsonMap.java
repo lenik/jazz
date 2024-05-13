@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import net.bodz.bas.c.object.Nullables;
 import net.bodz.bas.c.org.json.JsonValueWrapper;
@@ -18,7 +17,8 @@ import net.bodz.bas.fmt.json.JsonVariant;
 import net.bodz.bas.json.JsonBuilder;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.meta.bean.Transient;
-import net.bodz.bas.rtx.IAttributed;
+import net.bodz.bas.repr.form.SortOrder;
+import net.bodz.bas.typer.std.MutableTypedAttributes;
 
 import section.obj;
 
@@ -26,22 +26,26 @@ import section.obj;
  * @see net.bodz.bas.c.org.json.JsonStrFormTypeHandler
  */
 public class JsonMap
+        extends MutableTypedAttributes
         implements
             Serializable,
-            IJsonForm,
-            IAttributed {
+            IJsonForm {
 
     private static final long serialVersionUID = 1L;
 
-    Map<String, Object> map;
     JsonFormOptions opts = JsonFormOptions.DEFAULT;
+    final Map<String, Object> map = super.attributeMap;
 
     public JsonMap() {
-        this(new TreeMap<String, Object>());
+        super();
+    }
+
+    public JsonMap(SortOrder order) {
+        super(order);
     }
 
     public JsonMap(Map<String, Object> map) {
-        this.map = map;
+        super(map);
     }
 
     @Transient
@@ -77,29 +81,6 @@ public class JsonMap
             // out.value(value);
             JsonFn.writeObject(out, value, opts);
         }
-    }
-
-    /** ⇱ Implementation Of {@link IAttributed}. */
-    /* _____________________________ */static section.iface __ATTRS__;
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T getAttribute(String name) {
-        return (T) map.get(name);
-    }
-
-    @Override
-    public <T> T getAttribute(String name, T defaultValue) {
-        @SuppressWarnings("unchecked")
-        T val = (T) map.get(name);
-        if (val == null)
-            val = defaultValue;
-        return val;
-    }
-
-    @Override
-    public void setAttribute(String name, Object value) {
-        map.put(name, value);
     }
 
     public JsonVariant getJsonVar()

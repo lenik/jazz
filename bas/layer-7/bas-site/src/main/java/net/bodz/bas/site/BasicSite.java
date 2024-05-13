@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.JazzBasProject;
@@ -30,7 +31,7 @@ import net.bodz.bas.t.project.IJazzModule;
 import net.bodz.bas.t.project.IJazzProject;
 import net.bodz.bas.t.project.JazzProjects;
 import net.bodz.bas.t.variant.IVariantMap;
-import net.bodz.bas.typer.std.MutableAttributes;
+import net.bodz.bas.typer.std.MutableTypedAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -48,7 +49,7 @@ public abstract class BasicSite
     public static final String K_UPLOAD = "upload";
 
     private IQueryable queryContext;
-    private MutableAttributes attributes = new MutableAttributes();
+    private MutableTypedAttributes attributes = new MutableTypedAttributes();
 
     private Map<String, IJazzModule> modules = new TreeMap<String, IJazzModule>();
     protected final ServiceMap serviceMap;
@@ -72,6 +73,16 @@ public abstract class BasicSite
     }
 
     @Override
+    public Set<String> getAttributeNames() {
+        return attributes.getAttributeNames();
+    }
+
+    @Override
+    public boolean isAttributePresent(String name) {
+        return attributes.isAttributePresent(name);
+    }
+
+    @Override
     public <T> T getAttribute(String name, T defaultValue) {
         return attributes.getAttribute(name, defaultValue);
     }
@@ -79,6 +90,11 @@ public abstract class BasicSite
     @Override
     public void setAttribute(String name, Object value) {
         attributes.setAttribute(name, value);
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        attributes.removeAttribute(name);
     }
 
     public Map<String, IJazzModule> getModules() {

@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.err.FormatException;
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.fmt.api.ElementHandlerException;
 import net.bodz.bas.fmt.json.IJsonForm;
@@ -24,7 +23,6 @@ import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.rtx.IQueryable;
 import net.bodz.bas.rtx.QueryException;
 import net.bodz.bas.site.ISiteRoot;
-import net.bodz.bas.typer.std.ITyperFamily;
 
 public class MutableVirtualHost
         extends MutableElement
@@ -59,7 +57,7 @@ public class MutableVirtualHost
 
     @Override
     public boolean hasParameter() {
-        return !parameters.isEmpty();
+        return ! parameters.isEmpty();
     }
 
     @Override
@@ -93,6 +91,11 @@ public class MutableVirtualHost
     }
 
     @Override
+    public boolean isAttributePresent(String name) {
+        return attributes.containsKey(name);
+    }
+
+    @Override
     public Set<String> getAttributeNames() {
         return attributes.keySet();
     }
@@ -108,7 +111,7 @@ public class MutableVirtualHost
         @SuppressWarnings("unchecked")
         T value = (T) attributes.get(name);
         if (value == null)
-            if (!attributes.containsKey(name))
+            if (! attributes.containsKey(name))
                 return defaultValue;
         return value;
     }
@@ -121,16 +124,6 @@ public class MutableVirtualHost
     @Override
     public void removeAttribute(String name) {
         attributes.remove(name);
-    }
-
-    @Override
-    public ITyperFamily<?> getAttributeTypers(String attributeName) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void setAttributeTypers(String name, ITyperFamily<?> typers) {
-        throw new NotImplementedException();
     }
 
     @Override

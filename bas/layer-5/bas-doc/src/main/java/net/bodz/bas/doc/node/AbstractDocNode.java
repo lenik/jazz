@@ -1,19 +1,17 @@
 package net.bodz.bas.doc.node;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.io.BCharOut;
 import net.bodz.bas.t.list.AutoLists;
 import net.bodz.bas.t.list.IListEx;
+import net.bodz.bas.typer.std.MutableTypedAttributes;
 
 public abstract class AbstractDocNode
+        extends MutableTypedAttributes
         implements
             INode {
 
     final INode parent;
-    final Map<String, Object> attributes = new HashMap<>();
 
     String styleClass;
     Color color;
@@ -22,17 +20,6 @@ public abstract class AbstractDocNode
 
     public AbstractDocNode(INode parent) {
         this.parent = parent;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T getAttribute(String name, T defaultValue) {
-        return (T) attributes.get(name);
-    }
-
-    @Override
-    public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
     }
 
     @Override

@@ -13,11 +13,11 @@ import net.bodz.bas.fmt.json.IJsonOut;
 import net.bodz.bas.fmt.json.JsonFormOptions;
 import net.bodz.bas.json.JsonObject;
 import net.bodz.bas.potato.element.IProperty;
-import net.bodz.bas.typer.std.MutableAttributes;
+import net.bodz.bas.typer.std.MutableTypedAttributes;
 import net.bodz.lily.entity.type.IEntityTypeInfo;
 
 public class ExtraAttributes
-        extends MutableAttributes
+        extends MutableTypedAttributes
         implements
             IJsonForm,
             IResultSetForm {
