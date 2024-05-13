@@ -2,12 +2,12 @@ package net.bodz.bas.doc.node;
 
 import net.bodz.bas.doc.property.Color;
 import net.bodz.bas.io.BCharOut;
+import net.bodz.bas.rtx.MutableAttributes;
 import net.bodz.bas.t.list.AutoLists;
 import net.bodz.bas.t.list.IListEx;
-import net.bodz.bas.typer.std.MutableTypedAttributes;
 
 public abstract class AbstractDocNode
-        extends MutableTypedAttributes
+        extends MutableAttributes
         implements
             INode {
 

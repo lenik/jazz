@@ -3,6 +3,8 @@ package net.bodz.bas.doc.word.xwpf;
 import java.io.IOException;
 import java.util.List;
 
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -16,6 +18,11 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.STStyleType.Enum;
 import net.bodz.bas.doc.word.StyleIds;
 import net.bodz.bas.doc.word.Styles;
 import net.bodz.bas.doc.word.XwNumbering;
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.xq.IElement;
 import net.bodz.bas.t.variant.IVariant;
 
 public class XwDocument
@@ -108,6 +115,24 @@ public class XwDocument
             lastPar = pars.get(pars.size() - 1);
         XWPFRun run = lastPar.createRun();
         run.setText(text);
+    }
+
+    @Override
+    public void readObject(IElement element)
+            throws ParseException, LoaderException {
+    }
+
+    @Override
+    public void writeObject(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        out.beginElement("document");
+
+        for (XWPFParagraph _par : _document.getParagraphs()) {
+            XwPar par = new XwPar(this, _par);
+            par.writeObject(out);
+        }
+
+        out.endElement();
     }
 
 }

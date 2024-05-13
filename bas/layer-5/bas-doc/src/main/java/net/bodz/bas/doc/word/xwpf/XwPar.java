@@ -2,12 +2,23 @@ package net.bodz.bas.doc.word.xwpf;
 
 import java.util.List;
 
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFldChar;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTJc;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTPPr;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STFldCharType;
+
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.LoaderException;
+import net.bodz.bas.err.ParseException;
+import net.bodz.bas.fmt.xml.IXmlOutput;
+import net.bodz.bas.fmt.xml.xq.IElement;
 
 public class XwPar
         extends AbstractXwNode
@@ -79,6 +90,39 @@ public class XwPar
         cTR3.setFldCharArray(new CTFldChar[] { END });
 
         return run1;
+    }
+
+    @Override
+    public void readObject(IElement element)
+            throws ParseException, LoaderException {
+    }
+
+    @Override
+    public void writeObject(IXmlOutput out)
+            throws XMLStreamException, FormatException {
+        CTP cTP = _paragraph.getCTP();
+        if (cTP != null) {
+            out.beginElement("P");
+
+            CTPPr pPr = _paragraph.getCTPPr();
+            if (pPr != null) {
+                out.beginElement("Pr");
+
+                CTJc jc = pPr.getJc();
+                if (jc != null)
+                    out.attributeNotNull("jc", jc.getVal());
+
+                out.endElement();
+            }
+
+            // cTP.getRArray();
+            for (XWPFRun _run : _paragraph.getRuns()) {
+                XwRun run = new XwRun(this, _run);
+                run.writeObject(out);
+            }
+
+            out.endElement();
+        }
     }
 
 }
