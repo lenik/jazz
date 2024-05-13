@@ -3,7 +3,14 @@ package net.bodz.bas.codegen;
 import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.compare.dmp.*;
+import net.bodz.bas.compare.dmp.AtomMap;
+import net.bodz.bas.compare.dmp.CharsComparator;
+import net.bodz.bas.compare.dmp.CsIntsComparator;
+import net.bodz.bas.compare.dmp.DMPConfig;
+import net.bodz.bas.compare.dmp.EditList;
+import net.bodz.bas.compare.dmp.LinesComparator;
+import net.bodz.bas.compare.dmp.PatchList;
+import net.bodz.bas.compare.dmp.TrimmedLinesComparator;
 import net.bodz.bas.text.row.IRow;
 import net.bodz.bas.text.row.MutableRow;
 import net.bodz.bas.text.row.StringRow;
@@ -17,8 +24,12 @@ public class FileDiff {
     static LinesComparator linesComparator = new LinesComparator(config);
     static TrimmedLinesComparator trimmedLinesComparator = new TrimmedLinesComparator(config);
 
+    static final EditList<String> SAME = new EditList<String>(linesComparator);
+
     public static EditList<String> compareByLines(IRow<String> row1, IRow<String> row2)
             throws IOException {
+        if (row1 == row2)
+            return SAME;
         AtomMap<String> map = new AtomMap<String>();
         MutableRow<Integer> aRow1 = map.atomize(row1);
         MutableRow<Integer> aRow2 = map.atomize(row2);
