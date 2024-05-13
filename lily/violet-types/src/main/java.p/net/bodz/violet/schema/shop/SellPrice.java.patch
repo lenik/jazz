@@ -1,0 +1,25 @@
+--- codegen//tmp/SellPrice8955690024047651900.java	2024-05-13 11:34:40.845631662 +0800
++++ user//tmp/SellPrice8955690024047651900.java	2024-05-13 11:34:40.845631662 +0800
+@@ -1,11 +1,22 @@
+ package net.bodz.violet.schema.shop;
+ 
++import java.math.BigDecimal;
++
+ import javax.persistence.Table;
+ 
++
++/**
++ * 物品销售价格
++ */
+ @Table(schema = SellPrice.SCHEMA_NAME, name = SellPrice.TABLE_NAME)
+ public class SellPrice
+         extends _SellPrice_stuff {
+ 
+     private static final long serialVersionUID = 1L;
+ 
++
++    public void setPrice(double price) {
++        BigDecimal d = new BigDecimal(price);
++        setPrice(d);
++    }
+ }

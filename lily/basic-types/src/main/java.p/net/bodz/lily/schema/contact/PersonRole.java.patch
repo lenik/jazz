@@ -1,0 +1,12 @@
+--- codegen//tmp/PersonRole7446138299403179755.java	2024-05-13 11:28:55.303176461 +0800
++++ user//tmp/PersonRole7446138299403179755.java	2024-05-13 11:28:55.303176461 +0800
+@@ -2,6 +2,9 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * 职位关联
++ */
+ @Table(schema = PersonRole.SCHEMA_NAME, name = PersonRole.TABLE_NAME)
+ public class PersonRole
+         extends _PersonRole_stuff {

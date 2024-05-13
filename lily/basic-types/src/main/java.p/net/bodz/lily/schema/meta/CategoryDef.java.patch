@@ -1,0 +1,13 @@
+--- codegen//tmp/CategoryDef15705466750828600508.java	2024-05-13 11:31:55.655001357 +0800
++++ user//tmp/CategoryDef15705466750828600508.java	2024-05-13 11:31:55.655001357 +0800
+@@ -2,6 +2,10 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @label Category
++ * @label.zh.cn 类別
++ */
+ @Table(schema = CategoryDef.SCHEMA_NAME, name = CategoryDef.TABLE_NAME)
+ public class CategoryDef
+         extends _CategoryDef_stuff<CategoryDef> {

@@ -1,0 +1,14 @@
+--- codegen//tmp/StoreItem14884001526211455138.java	2024-05-13 11:34:44.173761070 +0800
++++ user//tmp/StoreItem14884001526211455138.java	2024-05-13 11:34:44.173761070 +0800
+@@ -2,6 +2,11 @@
+ 
+ import javax.persistence.Table;
+ 
++import net.bodz.lily.entity.PrimaryKeyColumns;
++import net.bodz.lily.entity.PrimaryKeyProperties;
++
++@PrimaryKeyColumns("id")
++@PrimaryKeyProperties("id")
+ @Table(schema = StoreItem.SCHEMA_NAME, name = StoreItem.TABLE_NAME)
+ public class StoreItem
+         extends _StoreItem_stuff {

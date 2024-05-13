@@ -1,0 +1,14 @@
+--- codegen//tmp/OffStoreItem507218837915836165.java	2024-05-13 11:34:42.761706183 +0800
++++ user//tmp/OffStoreItem507218837915836165.java	2024-05-13 11:34:42.761706183 +0800
+@@ -2,6 +2,11 @@
+ 
+ import javax.persistence.Table;
+ 
++import net.bodz.lily.entity.PrimaryKeyColumns;
++import net.bodz.lily.entity.PrimaryKeyProperties;
++
++@PrimaryKeyColumns("id")
++@PrimaryKeyProperties("id")
+ @Table(schema = OffStoreItem.SCHEMA_NAME, name = OffStoreItem.TABLE_NAME)
+ public class OffStoreItem
+         extends _OffStoreItem_stuff {

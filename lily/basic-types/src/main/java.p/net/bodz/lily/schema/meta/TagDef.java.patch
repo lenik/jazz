@@ -1,0 +1,13 @@
+--- codegen//tmp/TagDef14717452688522363286.java	2024-05-13 11:31:56.307028418 +0800
++++ user//tmp/TagDef14717452688522363286.java	2024-05-13 11:31:56.307028418 +0800
+@@ -2,6 +2,10 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @label Tag
++ * @label.zh.cn 标签
++ */
+ @Table(schema = TagDef.SCHEMA_NAME, name = TagDef.TABLE_NAME)
+ public class TagDef
+         extends _TagDef_stuff<TagDef> {

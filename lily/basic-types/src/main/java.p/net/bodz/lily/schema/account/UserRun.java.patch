@@ -1,0 +1,31 @@
+--- codegen//tmp/UserRun8078930157631041478.java	2024-05-13 11:31:58.423116189 +0800
++++ user//tmp/UserRun8078930157631041478.java	2024-05-13 11:31:58.423116189 +0800
+@@ -1,7 +1,10 @@
+ package net.bodz.lily.schema.account;
+ 
++import java.time.OffsetDateTime;
++
+ import javax.persistence.Table;
+ 
++import net.bodz.bas.meta.decl.Redundant;
+ import net.bodz.lily.entity.PrimaryKeyColumns;
+ import net.bodz.lily.entity.PrimaryKeyProperties;
+ 
+@@ -13,4 +16,17 @@
+ 
+     private static final long serialVersionUID = 1L;
+ 
++    static final int ONLINE = 1;
++    static final int OFFLINE = 2;
++
++    @Redundant
++    public String getStateText() {
++        return super.getLabel();
++    }
++
++    @Redundant
++    public OffsetDateTime getActiveTime() {
++        return super.getLastModified();
++    }
++
+ }

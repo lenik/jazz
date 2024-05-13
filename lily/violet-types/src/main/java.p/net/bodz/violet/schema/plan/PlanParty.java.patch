@@ -1,0 +1,14 @@
+--- codegen//tmp/PlanParty15696847919939576521.java	2024-05-13 11:34:42.921712404 +0800
++++ user//tmp/PlanParty15696847919939576521.java	2024-05-13 11:34:42.921712404 +0800
+@@ -2,6 +2,11 @@
+ 
+ import javax.persistence.Table;
+ 
++import net.bodz.lily.entity.PrimaryKeyColumns;
++import net.bodz.lily.entity.PrimaryKeyProperties;
++
++@PrimaryKeyColumns("id")
++@PrimaryKeyProperties("id")
+ @Table(schema = PlanParty.SCHEMA_NAME, name = PlanParty.TABLE_NAME)
+ public class PlanParty
+         extends _PlanParty_stuff {

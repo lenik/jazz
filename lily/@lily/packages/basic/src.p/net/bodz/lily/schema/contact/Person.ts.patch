@@ -1,0 +1,17 @@
+--- codegen//tmp/Person16344411522159917007.ts	2024-05-13 11:31:57.495077706 +0800
++++ user//tmp/Person16344411522159917007.ts	2024-05-13 11:31:57.495077706 +0800
+@@ -1,6 +1,5 @@
+ import type { List } from "@skeljs/core/src/lang/basetype";
+ 
+-import IAttributes from "../../../bas/rtx/IAttributes";
+ import PersonTypeInfo from "./PersonTypeInfo";
+ import _Person_stuff from "./_Person_stuff";
+ 
+@@ -13,7 +12,6 @@
+         return this._typeInfo;
+     }
+ 
+-    attributes?: IAttributes
+     hello?: string
+     peers?: List<string>
+ 

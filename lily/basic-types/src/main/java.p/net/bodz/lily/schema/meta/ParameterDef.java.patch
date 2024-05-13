@@ -1,0 +1,13 @@
+--- codegen//tmp/ParameterDef4442821582432771654.java	2024-05-13 11:31:55.971014475 +0800
++++ user//tmp/ParameterDef4442821582432771654.java	2024-05-13 11:31:55.971014475 +0800
+@@ -2,6 +2,10 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @label Parameter
++ * @label.zh.cn 参数
++ */
+ @Table(schema = ParameterDef.SCHEMA_NAME, name = ParameterDef.TABLE_NAME)
+ public class ParameterDef
+         extends _ParameterDef_stuff<ParameterDef> {

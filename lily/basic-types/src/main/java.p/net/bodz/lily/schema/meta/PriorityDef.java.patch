@@ -1,0 +1,13 @@
+--- codegen//tmp/PriorityDef2222352052212062901.java	2024-05-13 11:31:56.179023107 +0800
++++ user//tmp/PriorityDef2222352052212062901.java	2024-05-13 11:31:56.179023107 +0800
+@@ -2,6 +2,10 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @label Priority
++ * @label.zh.cn 优先级
++ */
+ @Table(schema = PriorityDef.SCHEMA_NAME, name = PriorityDef.TABLE_NAME)
+ public class PriorityDef
+         extends _PriorityDef_stuff<PriorityDef> {

@@ -1,0 +1,13 @@
+--- codegen//tmp/PhaseDef14042040983822759360.java	2024-05-13 11:31:56.115020451 +0800
++++ user//tmp/PhaseDef14042040983822759360.java	2024-05-13 11:31:56.115020451 +0800
+@@ -2,6 +2,10 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @label Phase
++ * @label.zh.cn 阶段
++ */
+ @Table(schema = PhaseDef.SCHEMA_NAME, name = PhaseDef.TABLE_NAME)
+ public class PhaseDef
+         extends _PhaseDef_stuff {

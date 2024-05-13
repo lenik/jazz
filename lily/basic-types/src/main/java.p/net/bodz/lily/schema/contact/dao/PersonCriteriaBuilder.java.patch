@@ -1,0 +1,22 @@
+--- codegen//tmp/PersonCriteriaBuilder16703701735366873757.java	2024-05-13 11:31:57.459076213 +0800
++++ user//tmp/PersonCriteriaBuilder16703701735366873757.java	2024-05-13 11:31:57.459076213 +0800
+@@ -1,6 +1,19 @@
+ package net.bodz.lily.schema.contact.dao;
+ 
++import net.bodz.lily.criteria.NumberFieldCriterionBuilder;
++
+ public class PersonCriteriaBuilder
+         extends _PersonCriteriaBuilder_stuff<PersonCriteriaBuilder> {
+ 
++    @Override
++    public NumberFieldCriterionBuilder<?, ?> getIdField() {
++        return id;
++    }
++
++    @Override
++    public void query(String text) {
++        super.query(text);
++        aboveOr().gender.like(text).end();
++    }
++
+ }

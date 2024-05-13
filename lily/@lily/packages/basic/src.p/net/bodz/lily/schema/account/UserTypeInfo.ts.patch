@@ -1,0 +1,19 @@
+--- codegen//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
++++ user//tmp/UserTypeInfo7884676764164525655.ts	2024-05-13 11:31:58.343112872 +0800
+@@ -1,7 +1,6 @@
+ import { BOOLEAN, INET_ADDRESS, INT, LIST, SET, STRING } from "@skeljs/core/src/lang/baseinfo";
+ import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+ 
+-import { ExtraAttributes_TYPE } from "../../concrete/util/ExtraAttributesTypeInfo";
+ import { Group_TYPE } from "./GroupTypeInfo";
+ import User from "./User";
+ import { UserOtherId_TYPE } from "./UserOtherIdTypeInfo";
+@@ -30,8 +29,6 @@
+     override preamble() {
+         super.preamble();
+         this.declare({
+-            attributeNames: property({ type: SET(STRING), validator: this.validators.validateAttributeNames }),
+-            attributes: property({ type: ExtraAttributes_TYPE, validator: this.validators.validateAttributes }),
+             groupIds: property({ type: SET(INT), validator: this.validators.validateGroupIds }),
+             groups: property({ type: LIST(Group_TYPE), validator: this.validators.validateGroups }),
+             ids: property({ type: LIST(UserOtherId_TYPE), validator: this.validators.validateIds }),

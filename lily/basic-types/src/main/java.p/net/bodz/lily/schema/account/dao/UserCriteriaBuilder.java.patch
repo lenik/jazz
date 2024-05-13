@@ -1,0 +1,18 @@
+--- codegen//tmp/UserCriteriaBuilder9268670142825926816.java	2024-05-13 11:31:58.319111877 +0800
++++ user//tmp/UserCriteriaBuilder9268670142825926816.java	2024-05-13 11:31:58.319111877 +0800
+@@ -3,4 +3,15 @@
+ public class UserCriteriaBuilder
+         extends _UserCriteriaBuilder_stuff<UserCriteriaBuilder> {
+ 
++    public final IntegerField categoryId = integer("cat");
++
++    // join with Group-Member
++    public final IntegerField groupId = integer("g_id");
++    public final StringField groupLabel = string("g_label");
++
++    // join with UserSecret
++    public final StringField password = string("password");
++    public final StringField email = string("email");
++    public final StringField phone = string("phone");
++
+ }

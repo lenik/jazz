@@ -1,0 +1,49 @@
+--- codegen//tmp/UserMapper4126674113294215610.java	2024-05-13 11:31:58.327112208 +0800
++++ user//tmp/UserMapper4126674113294215610.java	2024-05-13 11:31:58.327112208 +0800
+@@ -1,10 +1,46 @@
+ package net.bodz.lily.schema.account.dao;
+ 
++import java.util.List;
++
++import org.apache.ibatis.annotations.Param;
++
+ import net.bodz.bas.db.ibatis.IEntityMapper;
++import net.bodz.lily.schema.account.Group;
+ import net.bodz.lily.schema.account.User;
++import net.bodz.lily.schema.account.UserOtherIdType;
+ 
++/**
++ * @mapper.xml UserMapper.xml
++ */
+ public interface UserMapper
+         extends
+             IEntityMapper<User> {
+ 
++    User selectByName(@Param("name") String name);
++
++    List<User> selectByOtherId(//
++            @Param("type") UserOtherIdType type, //
++            @Param("oid") String oid);
++
++    List<User> selectByPhoneNumber(//
++            @Param("phone") String mobile);
++
++    List<User> selectByEmail(//
++            @Param("email") String email);
++
++    List<User> findForLogin(//
++            @Param("name") String name, //
++            @Param("password") String password);
++
++    List<User> forGroupId(int groupId);
++
++    default List<User> forGroup(Group group) {
++        if (group == null)
++            throw new NullPointerException("group");
++        Integer id = group.getId();
++        if (id == null)
++            throw new NullPointerException("group.id");
++        return forGroupId(id);
++    }
++
+ }

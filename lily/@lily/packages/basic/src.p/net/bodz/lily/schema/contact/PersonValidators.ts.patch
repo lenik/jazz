@@ -1,0 +1,20 @@
+--- codegen//tmp/PersonValidators8384153574590209837.ts	2024-05-13 11:31:57.503078038 +0800
++++ user//tmp/PersonValidators8384153574590209837.ts	2024-05-13 11:31:57.503078038 +0800
+@@ -1,7 +1,6 @@
+ import type { List } from "@skeljs/core/src/lang/basetype";
+ import { ValidateResult } from "@skeljs/core/src/ui/types";
+ 
+-import type IAttributes from "../../../bas/rtx/IAttributes";
+ import type PersonTypeInfo from "./PersonTypeInfo";
+ import _Person_stuff_Validators from "./_Person_stuff_Validators";
+ 
+@@ -15,9 +14,6 @@
+         return this._type as PersonTypeInfo;
+     }
+ 
+-    validateAttributes(val: IAttributes) {
+-    }
+-
+     validateHello(val: string) {
+     }
+ 

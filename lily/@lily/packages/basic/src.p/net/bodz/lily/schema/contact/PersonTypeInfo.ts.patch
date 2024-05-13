@@ -1,0 +1,18 @@
+--- codegen//tmp/PersonTypeInfo6241385117835712077.ts	2024-05-13 11:31:57.483077208 +0800
++++ user//tmp/PersonTypeInfo6241385117835712077.ts	2024-05-13 11:31:57.483077208 +0800
+@@ -1,7 +1,6 @@
+ import { LIST, STRING } from "@skeljs/core/src/lang/baseinfo";
+ import { property } from "@skeljs/dba/src/net/bodz/lily/entity/EntityType";
+ 
+-import { IAttributes_TYPE } from "../../../bas/rtx/IAttributesTypeInfo";
+ import Person from "./Person";
+ import PersonValidators from "./PersonValidators";
+ import _Person_stuff_TypeInfo from "./_Person_stuff_TypeInfo";
+@@ -24,7 +23,6 @@
+     override preamble() {
+         super.preamble();
+         this.declare({
+-            attributes: property({ type: IAttributes_TYPE, validator: this.validators.validateAttributes }),
+             hello: property({ type: STRING, validator: this.validators.validateHello }),
+             peers: property({ type: LIST(STRING), validator: this.validators.validatePeers }),
+         });

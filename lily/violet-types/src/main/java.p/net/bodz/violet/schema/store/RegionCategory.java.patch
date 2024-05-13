@@ -1,0 +1,20 @@
+--- codegen//tmp/RegionCategory1789653275693370607.java	2024-05-13 11:34:43.485734329 +0800
++++ user//tmp/RegionCategory1789653275693370607.java	2024-05-13 11:34:43.485734329 +0800
+@@ -2,10 +2,17 @@
+ 
+ import javax.persistence.Table;
+ 
++
++/**
++ * 区域分类
++ */
+ @Table(schema = RegionCategory.SCHEMA_NAME, name = RegionCategory.TABLE_NAME)
+ public class RegionCategory
+         extends _RegionCategory_stuff<RegionCategory> {
+ 
+     private static final long serialVersionUID = 1L;
+ 
++    public static final int ID_Abstracts = 1;
++    public static final int ID_Templates = 2;
++
+ }

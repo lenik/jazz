@@ -1,0 +1,21 @@
+--- codegen//tmp/ZoneCategory1620577559916869920.java	2024-05-13 11:31:59.039141726 +0800
++++ user//tmp/ZoneCategory1620577559916869920.java	2024-05-13 11:31:59.039141726 +0800
+@@ -2,10 +2,18 @@
+ 
+ import javax.persistence.Table;
+ 
++/**
++ * @see Zone
++ */
+ @Table(schema = ZoneCategory.SCHEMA_NAME, name = ZoneCategory.TABLE_NAME)
+ public class ZoneCategory
+         extends _ZoneCategory_stuff<ZoneCategory> {
+ 
+     private static final long serialVersionUID = 1L;
+ 
++    public static final int ID_Abstract = 1;
++    public static final int ID_Gov = 2;
++    public static final int ID_Building = 3;
++    public static final int ID_Floor = 4;
++    public static final int ID_Room = 5;
+ }

@@ -1,0 +1,9 @@
+--- codegen//tmp/OrganizationMapper13298595235345844599.java	2024-05-13 11:31:57.315070240 +0800
++++ user//tmp/OrganizationMapper13298595235345844599.java	2024-05-13 11:31:57.315070240 +0800
+@@ -7,4 +7,6 @@
+         extends
+             IEntityMapper<Organization> {
+ 
++    Organization selectByTaxId(String taxId);
++
+ }

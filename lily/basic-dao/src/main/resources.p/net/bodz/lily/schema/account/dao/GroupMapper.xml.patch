@@ -1,0 +1,21 @@
+--- codegen//tmp/GroupMapper7695617514861389913.xml	2024-05-13 11:31:57.223066424 +0800
++++ user//tmp/GroupMapper7695617514861389913.xml	2024-05-13 11:31:57.223066424 +0800
+@@ -149,6 +149,18 @@
+         </where>
+     </select>
+ 
++    <select id="forUserId" resultMap="objlist_map">
++        select
++            g.*
++        from group_user x
++            left join "group" g on x."group" = g.id
++        <where>
++            x."user" = #{id}
++            <include refid="filtconds" />
++        </where>
++        <include refid="co.opts" />
++    </select>
++    
+     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id"><![CDATA[
+         insert into "group"(
+             "name",
