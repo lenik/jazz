@@ -3,7 +3,7 @@ package net.bodz.bas.repr.position;
 public class AbstractInstanceManagerPositionProvider
         extends SingleObjectPositionProvider {
 
-    private Class<?> instanceType;
+    Class<?> instanceType;
 
     public AbstractInstanceManagerPositionProvider(Class<?> instanceType) {
         if (instanceType == null)

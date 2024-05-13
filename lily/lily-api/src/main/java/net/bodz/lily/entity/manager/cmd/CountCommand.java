@@ -1,8 +1,11 @@
 package net.bodz.lily.entity.manager.cmd;
 
+import java.util.function.Function;
+
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.t.variant.IVariantMap;
 import net.bodz.lily.criterion.ICriterion;
+import net.bodz.lily.criterion.ITypeInferrer;
 import net.bodz.lily.criterion.Junction;
 import net.bodz.lily.entity.manager.AbstractEntityCommandProcess;
 import net.bodz.lily.entity.manager.AbstractEntityCommandType;
@@ -54,12 +57,21 @@ class CountProcess
         return totalCount;
     }
 
+    @Deprecated
     @Override
     public void readObject(IVariantMap<String> map)
             throws ParseException {
         super.readObject(map);
         Junction j = new Junction();
         j.readObject(map);
+        this.criteria = j;
+    }
+
+    public void readObject(IVariantMap<String> map, Function<String, String> qualifier, ITypeInferrer typeInferer)
+            throws ParseException {
+        super.readObject(map);
+        Junction j = new Junction();
+        j.readObject(map, qualifier, typeInferer);
         this.criteria = j;
     }
 

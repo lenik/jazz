@@ -21,10 +21,12 @@ public class ThreadGroupInfo {
         return group.getMaxPriority();
     }
 
+    @Deprecated
     public boolean isDaemon() {
         return group.isDaemon();
     }
 
+    @Deprecated
     public boolean isDestroyed() {
         return group.isDestroyed();
     }

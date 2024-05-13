@@ -68,6 +68,7 @@ public class ThreadInfo {
         return new StackTraceInfo(stackTrace);
     }
 
+    @Deprecated
     public long getId() {
         return thread.getId();
     }

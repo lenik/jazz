@@ -14,7 +14,7 @@ public abstract class ArrayTypers<T>
     public static final String textformSeparator = ",";
 
     private final Class<T> valueType;
-    private IParser<T> valueParser;
+//    private IParser<T> valueParser;
 
     public ArrayTypers(Class<T> valueType) {
         super(Arrays.getArrayType(valueType));

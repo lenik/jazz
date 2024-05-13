@@ -4,7 +4,7 @@ public abstract class AbstractTypeProvider
         implements
             ITypeProvider {
 
-    private final int infoset;
+    final int infoset;
 
     public AbstractTypeProvider(int infoset) {
         this.infoset = infoset;
