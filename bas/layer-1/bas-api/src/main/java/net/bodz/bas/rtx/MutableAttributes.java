@@ -70,20 +70,9 @@ public class MutableAttributes
         attributeMap.remove(name);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0xf5a440eb;
-        hash += attributeMap.hashCode();
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (! (obj instanceof MutableAttributes))
+    public boolean contentEquals(MutableAttributes o) {
+        if (o == null)
             return false;
-        MutableAttributes o = (MutableAttributes) obj;
         if (! attributeMap.equals(o.attributeMap))
             return false;
         return true;
